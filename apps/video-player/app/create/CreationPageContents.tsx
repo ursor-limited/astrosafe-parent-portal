@@ -322,27 +322,7 @@ function CreationPageContents(props: { details: IVideo }) {
           pt="50px"
           pb="18px"
           flex={1}
-        >
-          <Stack direction="row" spacing="12px" alignItems="center">
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              PART OF THE
-            </Typography>
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <a href={"https://astrosafe.co/"} target={"_blank"}>
-                <Image src={Logo} width={80} height={80} alt="Astro logo" />
-              </a>
-            </Stack>
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              FAMILY OF TOOLS
-            </Typography>
-          </Stack>
-        </Stack>
+        ></Stack>
       </Stack>
     </Stack>
   ) : (

@@ -145,13 +145,12 @@ function VideoPageContents(props: { details: IVideo }) {
 
         <Stack
           width="100%"
+          height="200px"
           alignItems="center"
           justifyContent="flex-end"
-          pt="50px"
-          pb="18px"
           flex={1}
         >
-          <Stack direction="row" spacing="12px" alignItems="center">
+          <Stack direction="row" spacing="12px" alignItems="center" pb="20px">
             <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
               PART OF THE
             </Typography>
