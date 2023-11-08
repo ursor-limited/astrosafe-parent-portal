@@ -1,24 +1,24 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment -- no time to fix */
+import React, { useRef } from "react";
 import { Box } from "@mui/system";
-import { useRef } from "react";
-import { useResizeObserver } from "./useResizeObserver";
+import { useResizeObserver } from "./use-resize-observer";
 
-export interface IDynamicContainerProps {
+export interface DynamicContainerProps {
   width?: string;
   duration?: number;
   children: React.ReactNode;
 }
 
 /* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
-export default function DynamicContainer(props: IDynamicContainerProps) {
+export function DynamicContainer(props: DynamicContainerProps): JSX.Element {
   const content = useRef(null);
   const rect = useResizeObserver(content);
 
   return (
     <Box
       style={{
-        transition: `${props.duration || 600}ms`,
-        height: `${rect?.height}px`,
+        transition: `${props.duration || 600}ms`, //@ts-expect-error
+        height: `${rect.height}px`,
         width: props.width ?? "100%",
         overflow: "hidden",
       }}

@@ -3,14 +3,12 @@
 import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import Play from "@/images/play.svg";
-import Sync from "@/images/icons/Sync.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
-import { PALETTE } from "@/palette";
-import Typography from "./Typography";
 import { createPortal } from "react-dom";
+import { PALETTE, Typography } from "ui";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 

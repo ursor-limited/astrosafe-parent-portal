@@ -5,20 +5,19 @@ import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/logo.svg";
 import Image from "next/image";
-import Typography from "@/components/Typography";
 import ApiController, { IVideo } from "@/app/api";
 import Background from "@/images/background.png";
 import PlayerLogo from "@/images/playerLogo.png";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { PALETTE } from "@/palette";
 import { Slider } from "@mui/material";
-import UrsorButton from "@/components/UrsorButton";
-import UrsorInputField from "@/components/UrsorInputField";
 import DurationLabel from "../v/[videoId]/DurationLabel";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/components/utils";
+import UrsorInputField from "@/components/ursor-input-field";
+import { PALETTE } from "../../../../packages/ui/palette";
+import { UrsorButton } from "ui";
 
 const Player = dynamic(
   () => import("@/components/Player"),
@@ -130,7 +129,7 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
       >
         <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT}px`} />
-        <Stack width={`${VIDEO_WIDTH}px`} spacing="30px">
+        <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
           <Stack width="100%" position="relative" overflow="visible">
             <Stack width="100%" spacing="5px">
               <UrsorInputField
@@ -238,6 +237,24 @@ function CreationPageContents(props: { details: IVideo }) {
                 spacing="44px"
                 justifyContent="center"
                 width="100%"
+                sx={{
+                  ".MuiSlider-root": { color: "transparent !important" },
+                  ".MuiSlider-rail": {
+                    opacity: 0.4,
+                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                  },
+                  ".MuiSlider-track": {
+                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                  },
+                  ".MuiSlider-thumb": {
+                    "&:nth-child(3)": {
+                      background: "#F279C5",
+                    },
+                    "&:nth-child(4)": {
+                      background: "#FD9B41",
+                    },
+                  },
+                }}
               >
                 <DurationLabel
                   value={range[0]}
@@ -271,11 +288,12 @@ function CreationPageContents(props: { details: IVideo }) {
             ) : null}
             {/* <Typography color={PALETTE.font.light}>{duration}</Typography> */}
           </Stack>
-          <Stack width="100%" alignItems="center">
+          <Stack pt="40px" width="100%" alignItems="center">
             <div>
               <UrsorButton
-                variant="secondary"
-                mode="dark"
+                dark
+                size="large"
+                variant="tertiary"
                 onClick={
                   submit
                   //setEditing(!editing);
@@ -303,27 +321,7 @@ function CreationPageContents(props: { details: IVideo }) {
           pt="50px"
           pb="18px"
           flex={1}
-        >
-          <Stack direction="row" spacing="12px" alignItems="center">
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              PART OF THE
-            </Typography>
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <a href={"https://astrosafe.co/"} target={"_blank"}>
-                <Image src={Logo} width={80} height={80} alt="Astro logo" />
-              </a>
-            </Stack>
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              FAMILY OF TOOLS
-            </Typography>
-          </Stack>
-        </Stack>
+        ></Stack>
       </Stack>
     </Stack>
   ) : (

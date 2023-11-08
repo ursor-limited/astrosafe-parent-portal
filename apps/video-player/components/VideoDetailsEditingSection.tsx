@@ -2,18 +2,14 @@
 
 import { IVideo } from "@/components/Player";
 import { Stack } from "@mui/system";
-import UrsorFadeIn from "./UrsorFadeIn";
-import DynamicContainer from "./DynamicContainer";
-import UrsorInputField from "./UrsorInputField";
-import Typography from "./Typography";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import ApiController from "@/app/api";
-import { PALETTE } from "@/palette";
-import UrsorButton from "./UrsorButton";
 import Image from "next/image";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Pencil from "@/images/icons/Pencil.svg";
+import { PALETTE, Typography, UrsorButton } from "ui";
+import UrsorInputField from "./ursor-input-field";
 
 const VideoDetailsEditingSection = (props: { details: IVideo }) => {
   const [title, setTitle] = useState<string>("");
@@ -84,46 +80,44 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
               )}
             </Stack>
           ) : null} */}
-      <UrsorFadeIn duration={800} delay={300}>
-        <DynamicContainer>
-          <Stack width="100%" spacing="5px">
-            {isCreator && editing ? (
-              <UrsorInputField
-                value={title}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
-                }
-                placeholder="Title"
-                width="100%"
-                backgroundColor={PALETTE.secondary.grey[2]}
-                leftAlign
-                onEnterKey={save}
-              />
-            ) : (
-              <Typography bold variant="large" color={PALETTE.font.light}>
-                {title}
-              </Typography>
-            )}
-            {isCreator && editing ? (
-              <UrsorInputField
-                value={description}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(event.target.value)
-                }
-                placeholder="Description"
-                width="100%"
-                backgroundColor={PALETTE.secondary.grey[2]}
-                leftAlign
-                onEnterKey={save}
-              />
-            ) : !description && isCreator ? (
-              <Typography color="rgba(255,255,255,0.5)">
-                No description yet.
-              </Typography>
-            ) : (
-              <Typography color={PALETTE.font.light}>{description}</Typography>
-            )}
-            {/* {isCreator ? (
+      <Stack width="100%" spacing="5px">
+        {isCreator && editing ? (
+          <UrsorInputField
+            value={title}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(event.target.value)
+            }
+            placeholder="Title"
+            width="100%"
+            backgroundColor={PALETTE.secondary.grey[2]}
+            leftAlign
+            onEnterKey={save}
+          />
+        ) : (
+          <Typography bold variant="large" color={PALETTE.font.light}>
+            {title}
+          </Typography>
+        )}
+        {isCreator && editing ? (
+          <UrsorInputField
+            value={description}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setDescription(event.target.value)
+            }
+            placeholder="Description"
+            width="100%"
+            backgroundColor={PALETTE.secondary.grey[2]}
+            leftAlign
+            onEnterKey={save}
+          />
+        ) : !description && isCreator ? (
+          <Typography color="rgba(255,255,255,0.5)">
+            No description yet.
+          </Typography>
+        ) : (
+          <Typography color={PALETTE.font.light}>{description}</Typography>
+        )}
+        {/* {isCreator ? (
               <Stack width="100%" alignItems="flex-end">
                 <div>
                   <UrsorButton
@@ -136,9 +130,7 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
                 </div>
               </Stack>
             ) : null} */}
-          </Stack>
-        </DynamicContainer>
-      </UrsorFadeIn>
+      </Stack>
       {isCreator ? (
         <Stack
           direction="row"

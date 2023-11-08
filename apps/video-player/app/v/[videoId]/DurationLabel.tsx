@@ -1,9 +1,8 @@
-import Typography from "@/components/Typography";
 import { Stack } from "@mui/system";
 import ChevronLeftLight from "@/images/icons/ChevronLeftLight.svg";
 import Image from "next/image";
-import { PALETTE } from "@/palette";
 import { useEffect, useState } from "react";
+import { PALETTE, Typography } from "ui";
 
 export default function DurationLabel(props: {
   value: number;

@@ -1,8 +1,6 @@
-"use client";
-
-import { Box, SxProps, useTheme } from "@mui/system";
 import React from "react";
-import { PALETTE } from "../palette";
+import type { SxProps } from "@mui/system";
+import { Box } from "@mui/system";
 
 export const DEFAULT_FONT_WEIGHT = 300;
 export const BOLD_FONT_WEIGHT = 500;
@@ -65,7 +63,7 @@ const DEFAULT_BOLD: UrsorTypographyVariant[] = [
   "h5",
 ];
 
-export interface ITypographyProps {
+export interface TypographyProps {
   variant?: UrsorTypographyVariant;
   bold?: boolean;
   faded?: boolean;
@@ -76,22 +74,18 @@ export interface ITypographyProps {
   children: React.ReactNode;
 }
 
-export default function Typography(props: ITypographyProps) {
-  const theme = useTheme();
+export function Typography(props: TypographyProps): JSX.Element {
   return (
     <Box
       //fontFamily={"Rubik"}
+      color={props.color}
+      fontSize={`${FONT_SIZES[props.variant ?? "normal"]}px`}
       fontWeight={
         props.bold || (props.variant && DEFAULT_BOLD.includes(props.variant))
           ? BOLD_FONT_WEIGHT
           : DEFAULT_FONT_WEIGHT
       }
-      fontSize={`${FONT_SIZES[props.variant ?? "normal"]}px`}
       lineHeight={`${LINE_HEIGHTS[props.variant ?? "normal"]}px`}
-      color={
-        props.color ??
-        (theme.palette.mode === "dark" ? PALETTE.font.light : PALETTE.font.dark)
-      }
       sx={{
         ...props.sx,
         ...(props.faded

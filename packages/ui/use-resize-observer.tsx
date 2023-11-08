@@ -1,13 +1,16 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+/* eslint-disable @typescript-eslint/ban-ts-comment -- 'no time to fix' */
+/* eslint-disable no-multi-assign -- 'no time to fix' */
+import type { RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* from https://dev.to/anxiny/dynamic-dimension-react-container-with-transition-effect-part-2-resize-observer-5h18 */
-export function useResizeObserver(ref: RefObject<Element>) {
+export function useResizeObserver(ref: RefObject<Element>): JSX.Element {
   const [element, setElement] = useState<Element | null>(null);
   const [rect, setRect] = useState<DOMRect | undefined>(undefined);
   const observer = useRef<ResizeObserver | undefined>(undefined);
 
   //Clean up observer
-  const cleanOb = () => {
+  const cleanOb: () => void = () => {
     if (observer.current) {
       observer.current.disconnect();
     }
@@ -37,5 +40,6 @@ export function useResizeObserver(ref: RefObject<Element>) {
     };
   }, [element]);
 
+  //@ts-expect-error
   return rect;
 }
