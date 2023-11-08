@@ -1,22 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/logo.svg";
 import Image from "next/image";
-import Typography from "@/components/Typography";
-import ApiController, { IVideo } from "@/app/api";
+import { IVideo } from "@/app/api";
 import Background from "@/images/background.png";
 import PlayerLogo from "@/images/playerLogo.png";
-//import Player from "@/components/Player";
 import VideoDetailsEditingSection from "@/components/VideoDetailsEditingSection";
 import Link from "next/link";
-import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
-import { PALETTE } from "@/palette";
-import { Slider } from "@mui/material";
-import DurationLabel from "./DurationLabel";
+import { Typography } from "ui";
 
 const Player = dynamic(
   () => import("@/components/Player"),
