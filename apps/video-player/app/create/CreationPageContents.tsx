@@ -130,7 +130,7 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
       >
         <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT}px`} />
-        <Stack width={`${VIDEO_WIDTH}px`} spacing="30px">
+        <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
           <Stack width="100%" position="relative" overflow="visible">
             <Stack width="100%" spacing="5px">
               <UrsorInputField
@@ -238,6 +238,24 @@ function CreationPageContents(props: { details: IVideo }) {
                 spacing="44px"
                 justifyContent="center"
                 width="100%"
+                sx={{
+                  ".MuiSlider-root": { color: "transparent !important" },
+                  ".MuiSlider-rail": {
+                    opacity: 0.4,
+                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                  },
+                  ".MuiSlider-track": {
+                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                  },
+                  ".MuiSlider-thumb": {
+                    "&:nth-child(3)": {
+                      background: "#F279C5",
+                    },
+                    "&:nth-child(4)": {
+                      background: "#FD9B41",
+                    },
+                  },
+                }}
               >
                 <DurationLabel
                   value={range[0]}
@@ -271,11 +289,12 @@ function CreationPageContents(props: { details: IVideo }) {
             ) : null}
             {/* <Typography color={PALETTE.font.light}>{duration}</Typography> */}
           </Stack>
-          <Stack width="100%" alignItems="center">
+          <Stack pt="40px" width="100%" alignItems="center">
             <div>
               <UrsorButton
-                variant="secondary"
-                mode="dark"
+                dark
+                size="large"
+                variant="tertiary"
                 onClick={
                   submit
                   //setEditing(!editing);
