@@ -5,20 +5,19 @@ import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/logo.svg";
 import Image from "next/image";
-import Typography from "@/components/Typography";
 import ApiController, { IVideo } from "@/app/api";
 import Background from "@/images/background.png";
 import PlayerLogo from "@/images/playerLogo.png";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { PALETTE } from "@/palette";
 import { Slider } from "@mui/material";
-import UrsorButton from "@/components/UrsorButton";
-import UrsorInputField from "@/components/UrsorInputField";
 import DurationLabel from "../v/[videoId]/DurationLabel";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/components/utils";
+import UrsorInputField from "@/components/ursor-input-field";
+import { PALETTE } from "../../../../packages/ui/palette";
+import { UrsorButton } from "ui";
 
 const Player = dynamic(
   () => import("@/components/Player"),

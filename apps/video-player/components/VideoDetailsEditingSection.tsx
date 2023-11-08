@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import UrsorFadeIn from "./UrsorFadeIn";
 import DynamicContainer from "./DynamicContainer";
 import UrsorInputField from "./UrsorInputField";
-import Typography from "./Typography";
+import Typography from "../../../packages/ui/typography";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import ApiController from "@/app/api";

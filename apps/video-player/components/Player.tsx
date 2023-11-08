@@ -9,7 +9,7 @@ import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE } from "@/palette";
-import Typography from "./Typography";
+import Typography from "../../../packages/ui/typography";
 import { createPortal } from "react-dom";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
