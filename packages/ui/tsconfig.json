@@ -1,5 +1,5 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": ["."],
+  "include": [".", "../../apps/video-player/components/ursor-input-field.js"],
   "exclude": ["dist", "build", "node_modules"]
 }
