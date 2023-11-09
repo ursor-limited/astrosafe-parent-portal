@@ -3,6 +3,7 @@
 import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import Play from "@/images/play.svg";
+import Sync from "@/images/icons/Sync.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
@@ -75,16 +76,6 @@ const Player = (props: {
     useState<boolean>(false);
   const [ended, setEnded] = useState<boolean>(false);
 
-  // const [currentTime, setCurrentTime] = useState<number>(0);
-  // useEffect(() => {
-  //   if (!playing) return;
-  //   const interval = setInterval(
-  //     () => setCurrentTime(videoElement?.target.playerInfo.currentTime),
-  //     1000
-  //   );
-  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  // }, [playing]);
-
   /////////////////////////
   /* YOUTUBE specific */
   /////////////////////////
@@ -151,10 +142,39 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
 
-  useEffect(
-    () => props.setDuration(player?.getDuration()),
-    [player?.getDuration()]
-  );
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  useEffect(() => {
+    if (!player?.getCurrentTime || !playing) return;
+    const interval = setInterval(
+      () =>
+        props.provider === "vimeo"
+          ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
+          : setCurrentTime(player.getCurrentTime()),
+      500
+    );
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [player, playing, props.provider]);
+  useEffect(() => {
+    if (
+      (playing && props.endTime && currentTime > props.endTime) ||
+      (playing && props.startTime && currentTime < props.startTime)
+    ) {
+      props.provider === "vimeo"
+        ? player?.setCurrentTime(props.startTime ?? 0)
+        : player?.seekTo(props.startTime ?? 0);
+      props.provider === "vimeo" ? player?.pause() : player?.pauseVideo();
+      setPlaying(false);
+      setEnded(true);
+    }
+  }, [props.endTime, currentTime, props.startTime, player]);
+
+  useEffect(() => {
+    props.provider === "vimeo"
+      ? player?.getDuration().then((d: number) => {
+          props.setDuration(d);
+        })
+      : props.setDuration(player?.getDuration());
+  }, [player?.getDuration()]);
 
   useEffect(() => {
     if (!provider || !document) return;
@@ -260,6 +280,8 @@ const Player = (props: {
                     }${
                       props.endTime ? `end=${props.endTime}&` : ""
                     }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+                  : props.startTime
+                  ? `${props.url}#t=${props.startTime}`
                   : props.url
               }
               //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
@@ -310,7 +332,12 @@ const Player = (props: {
                   transitionTimingFunction: BEZIER,
                 }}
               >
-                <Image src={Play} width={114} height={114} alt="Play" />
+                <Image
+                  src={ended ? Sync : Play}
+                  width={114}
+                  height={114}
+                  alt="Play"
+                />
               </Stack>
             </Stack>
             <Stack
