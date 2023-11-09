@@ -342,15 +342,16 @@ const Player = (props: {
         <Stack
           position="absolute"
           top={0}
+          right={0}
           //right={0}
           width={
-            "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
+            props.provider === "vimeo" ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
-          //borderRadius="0 0 0 14px"
+          borderRadius={props.provider === "vimeo" ? "0 0 0 14px" : undefined}
           height={props.provider === "vimeo" ? "120px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
-            opacity: overallHovering || !playing ? 1 : 0,
+            opacity: overallHovering && playing ? 1 : 0,
             backdropFilter: "blur(38px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
@@ -378,11 +379,11 @@ const Player = (props: {
           left="20px"
           top="20px"
           sx={{
-            transform: `rotate(${!playing ? 720 : 0}deg) translateX(${
-              !playing ? 0 : -200
+            transform: `rotate(${!playing ? 360 : 0}deg) translateX(${
+              !playing ? 0 : -150
             }px)`,
             transformOrigin: "center",
-            transition: "1s",
+            transition: "1.3s",
             transitionTimingFunction: "ease-out",
             svg: {
               path: {
@@ -406,7 +407,7 @@ const Player = (props: {
             height={23}
             alt="Astro kitemark"
             style={{
-              transform: `rotate(${starHovering ? 20 : 0}deg)`,
+              transform: `rotate(${playing ? -540 : starHovering ? 20 : 0}deg)`,
               transition: "1s",
             }}
           />

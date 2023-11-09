@@ -48,7 +48,7 @@ export const Footer = () => {
           </Typography>
         </Stack>
         <Stack width="280px" sx={{ textAlign: "center" }}>
-          <Typography bold variant="large" color={PALETTE.secondary.grey[3]}>
+          <Typography bold variant="large" color={PALETTE.secondary.grey[4]}>
             A Browser for Education that puts Kids first.
           </Typography>
         </Stack>
