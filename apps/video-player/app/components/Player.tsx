@@ -14,7 +14,7 @@ const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
 const VIDEO_DISABLINGS = ["fs", "rel"];
 
-const PADDING_TOP = "100px";
+export const PADDING_TOP = "120px";
 
 const fadeIn = keyframes`
 from {
@@ -54,9 +54,11 @@ const Player = (props: {
   provider: "youtube" | "vimeo";
   width: number;
   height: number;
+  top: string;
   setDuration: (duration: number) => void;
   startTime?: number;
   endTime?: number;
+  showUrlBar?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -110,7 +112,6 @@ const Player = (props: {
     } else {
       setTimeout(() => setYoutubePauseOverlay(false), 500);
     }
-    console.log(status);
   }
 
   // useEffect(
@@ -198,6 +199,10 @@ const Player = (props: {
     };
   }, [handleUserKeyPress]);
 
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [pressed, setPressed] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+
   return document
     ? createPortal(
         <Stack
@@ -208,7 +213,7 @@ const Player = (props: {
           left={0}
           right={0}
           position="absolute"
-          top={fullScreen ? 0 : PADDING_TOP}
+          top={fullScreen ? 0 : props.top}
           alignItems="center"
           //p="100px"
           sx={{
@@ -216,6 +221,7 @@ const Player = (props: {
             transitionTimingFunction: "ease-out",
           }}
           zIndex={99999}
+          spacing="12px"
         >
           <Stack
             width={fullScreen ? "100%" : `${props.width}px`}

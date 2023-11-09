@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
+import { Stack } from "@mui/system";
+import Background from "@/images/background.png";
+import Logo from "@/images/logo.svg";
+import Link from "next/link";
+import Image from "next/image";
+import { UrsorButton } from "ui";
+import { Header } from "./components/header";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -16,7 +23,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={rubik.className}>{children}</body>
+      <body className={rubik.className}>
+        <Stack
+          height="100vh"
+          width="100vw"
+          sx={{
+            backgroundImage: `url(${Background.src})`,
+            backgroundSize: "cover",
+            boxSizing: "border-box",
+          }}
+          spacing="10px"
+        >
+          <Header />
+          {children}
+        </Stack>
+      </body>
     </html>
   );
 }

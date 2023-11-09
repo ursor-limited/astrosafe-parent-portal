@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-sort-props -- want to have paddings in the current order */
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { PALETTE } from "./palette";
@@ -122,7 +123,7 @@ export const BORDER_COLORS: Record<
 
 export interface UrsorButtonProps {
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: ButtonVariant;
   size?: ButtonSize;
   backgroundColor?: string;
@@ -153,8 +154,10 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     <Stack
       alignItems="center"
       bgcolor={BACKGROUND_COLORS[mode][variant]?.[state]}
+      border={`2px solid ${BORDER_COLORS[mode][variant]?.[state]}`}
       borderRadius={`${HEIGHTS[size] / 2}px`}
       boxSizing="border-box"
+      direction="row"
       height={HEIGHTS[size]}
       justifyContent="center"
       onClick={props.onClick}
@@ -172,19 +175,28 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         setPressed(false);
       }}
       px={`${PADDINGS[size].x}px`}
+      pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
+      pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
+      spacing="10px"
       sx={{
         cursor: "pointer",
         transition: "0.2s",
       }}
+      width="fit-content"
     >
+      {props.startIcon}
       <Typography
         bold
         color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}
         noWrap
+        sx={{
+          transition: "0.2s",
+        }}
         variant={size}
       >
         {props.children}
       </Typography>
+      {props.endIcon}
     </Stack>
   );
 }
