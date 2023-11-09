@@ -3,6 +3,7 @@
 import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import Play from "@/images/play.svg";
+import Sync from "@/images/icons/Sync.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
@@ -145,14 +146,24 @@ const Player = (props: {
   useEffect(() => {
     if (!player?.getCurrentTime || !playing || props.provider !== "vimeo")
       return;
-    player.getCurrentTime().then((x) => console.log("www", x));
     const interval = setInterval(
       () =>
         player.getCurrentTime().then((time: number) => setCurrentTime(time)),
       500
     );
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [player?.getCurrentTime, playing, props.provider]);
+  }, [player, playing, props.provider]);
+  useEffect(() => {
+    if (
+      (playing && props.endTime && currentTime > props.endTime) ||
+      (playing && props.startTime && currentTime < props.startTime)
+    ) {
+      player?.setCurrentTime(props.startTime ?? 0);
+      player?.pause();
+      setPlaying(false);
+      setEnded(true);
+    }
+  }, [props.endTime, currentTime, props.startTime, player]);
 
   useEffect(() => {
     props.provider === "vimeo"
@@ -266,6 +277,8 @@ const Player = (props: {
                     }${
                       props.endTime ? `end=${props.endTime}&` : ""
                     }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+                  : props.startTime
+                  ? `${props.url}#t=${props.startTime}`
                   : props.url
               }
               //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
@@ -316,7 +329,12 @@ const Player = (props: {
                   transitionTimingFunction: BEZIER,
                 }}
               >
-                <Image src={Play} width={114} height={114} alt="Play" />
+                <Image
+                  src={ended ? Sync : Play}
+                  width={114}
+                  height={114}
+                  alt="Play"
+                />
               </Stack>
             </Stack>
             <Stack
