@@ -144,11 +144,12 @@ const Player = (props: {
 
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
-    if (!player?.getCurrentTime || !playing || props.provider !== "vimeo")
-      return;
+    if (!player?.getCurrentTime || !playing) return;
     const interval = setInterval(
       () =>
-        player.getCurrentTime().then((time: number) => setCurrentTime(time)),
+        props.provider === "vimeo"
+          ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
+          : setCurrentTime(player.getCurrentTime()),
       500
     );
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
@@ -158,8 +159,10 @@ const Player = (props: {
       (playing && props.endTime && currentTime > props.endTime) ||
       (playing && props.startTime && currentTime < props.startTime)
     ) {
-      player?.setCurrentTime(props.startTime ?? 0);
-      player?.pause();
+      props.provider === "vimeo"
+        ? player?.setCurrentTime(props.startTime ?? 0)
+        : player?.seekTo(props.startTime ?? 0);
+      props.provider === "vimeo" ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
       setEnded(true);
     }
