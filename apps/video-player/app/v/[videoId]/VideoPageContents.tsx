@@ -3,15 +3,11 @@
 import React, { useState } from "react";
 import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
-import Logo from "@/images/logo.svg";
+import Clipboard from "@/images/icons/Clipboard.svg";
 import Image from "next/image";
 import { IVideo } from "@/app/api";
-import Background from "@/images/background.png";
-import PlayerLogo from "@/images/playerLogo.png";
-import VideoDetailsEditingSection from "@/app/components/VideoDetailsEditingSection";
-import Link from "next/link";
 import dynamic from "next/dynamic";
-import { Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { HEADER_HEIGHT } from "@/app/components/header";
 
 const Player = dynamic(
@@ -48,60 +44,58 @@ function VideoPageContents(props: { details: IVideo }) {
       <Stack
         flex={1}
         px="60px"
-        justifyContent="center"
+        //justifyContent="center"
         alignItems="center"
         position="relative"
         height="100vh"
         width="100vw"
       >
         {/* <Image src={Background} alt='Background'  */}
-        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 40}px`} />
-        <Stack width={`${VIDEO_WIDTH}px`}>
-          <VideoDetailsEditingSection details={props.details} />
-          <Stack direction="row">
-            {/* <Stack
-              height="3px"
-              width="100%"
-              bgcolor={PALETTE.secondary.orange[2]}
-            /> */}
-            {/* {duration && range ? (
+        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 35}px`} />
+        <Stack
+          flex={1}
+          width={`${VIDEO_WIDTH}px`}
+          justifyContent="space-between"
+        >
+          <Stack spacing="6px">
+            <Typography bold variant="large" color={PALETTE.font.light}>
+              {props.details.title}
+            </Typography>
+            {props.details.description ? (
+              <Typography bold variant="large" color={PALETTE.font.light}>
+                {props.details.description}
+              </Typography>
+            ) : null}
+          </Stack>
+          <Stack>
+            <Stack width="100%" justifyContent="center" pb="20px">
               <Stack
-                direction="row"
-                spacing="44px"
-                justifyContent="center"
                 width="100%"
+                px="12px"
+                py="8px"
+                bgcolor="rgba(0,0,0,0.3)"
+                borderRadius="12px"
+                direction="row"
+                justifyContent="space-between"
               >
-                <DurationLabel
-                  value={range[0]}
-                  incrementCallback={() =>
-                    setRange([Math.min(duration, range[0] + 1), range[1]])
-                  }
-                  decrementCallback={() =>
-                    setRange([Math.max(0, range[0] - 1), range[1]])
-                  }
-                />
-                <Slider
-                  min={0}
-                  max={duration}
-                  valueLabelDisplay="off"
-                  getAriaLabel={() => "Temperature range"}
-                  value={range}
-                  onChange={(event: Event, newValue: number | number[]) => {
-                    setRange(newValue as number[]);
-                  }}
-                />
-                <DurationLabel
-                  value={range[1]}
-                  incrementCallback={() =>
-                    setRange([range[0], Math.min(duration, range[1] + 1)])
-                  }
-                  decrementCallback={() =>
-                    setRange([range[0], Math.max(0, range[1] - 1)])
-                  }
-                />
+                <Typography variant="small" color="rgba(255,255,255,0.8)">
+                  {window.location.href}
+                </Typography>
+                <Stack direction="row" spacing="5px">
+                  <Typography
+                    variant="small"
+                    bold
+                    color="rgba(255,255,255,0.8)"
+                  >
+                    Copy
+                  </Typography>
+                  <Image src={Clipboard} width={16} alt="Copy" />
+                </Stack>
               </Stack>
-            ) : null} */}
-            {/* <Typography color={PALETTE.font.light}>{duration}</Typography> */}
+            </Stack>
+            {/* <UrsorButton  size="small">
+Share 
+            </UrsorButton> */}
           </Stack>
         </Stack>
         {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
@@ -110,8 +104,8 @@ function VideoPageContents(props: { details: IVideo }) {
       <UrsorButton variant="secondary" onClick={() => setPlaying(false)}>
         Pause
       </UrsorButton> */}
-
-        <Stack
+        <Stack />
+        {/* <Stack
           width="100%"
           height="200px"
           alignItems="center"
@@ -137,7 +131,7 @@ function VideoPageContents(props: { details: IVideo }) {
               FAMILY OF TOOLS
             </Typography>
           </Stack>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Player
         key={props.details.id}

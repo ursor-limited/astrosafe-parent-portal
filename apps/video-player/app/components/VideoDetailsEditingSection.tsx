@@ -17,6 +17,11 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
     props.details?.title && setTitle(props.details.title);
   }, [props.details?.title]);
 
+  const [url, setUrl] = useState<string>("");
+  useEffect(() => {
+    props.details?.url && setUrl(props.details.url);
+  }, [props.details?.url]);
+
   const [description, setDescription] = useState<string>("");
   useEffect(() => {
     props.details?.description && setDescription(props.details.description);
@@ -81,23 +86,22 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
             </Stack>
           ) : null} */}
       <Stack width="100%" spacing="5px">
-        {isCreator && editing ? (
-          <UrsorInputField
-            value={title}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(event.target.value)
-            }
-            placeholder="Title"
-            width="100%"
-            backgroundColor={PALETTE.secondary.grey[2]}
-            leftAlign
-            onEnterKey={save}
-          />
-        ) : (
-          <Typography bold variant="large" color={PALETTE.font.light}>
-            {title}
-          </Typography>
-        )}
+        <Typography bold variant="large" color={PALETTE.font.light}>
+          {title}
+        </Typography>
+        <Stack width="100%" justifyContent="center">
+          <Stack
+            px="12px"
+            py="8px"
+            bgcolor="rgba(0,0,0,0.3)"
+            borderRadius="12px"
+          >
+            <Typography variant="small" color="rgba(255,255,255,0.8)">
+              {window.location.href}
+            </Typography>
+          </Stack>
+        </Stack>
+        {/* <UrsorButton dark variant="secondary">Share</UrsorButton> */}
         {isCreator && editing ? (
           <UrsorInputField
             value={description}
@@ -142,7 +146,7 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
             <div>
               <UrsorButton
                 variant="secondary"
-                mode="dark"
+                dark
                 //onClick={() => navigate("/")}
                 //onClick={() => { if (editing){save()} else { () => setEditing(true))}}}
                 //onClick={editing ? (() => save()) : (() => setEditing(true)))}

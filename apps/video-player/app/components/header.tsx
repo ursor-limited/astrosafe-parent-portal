@@ -21,7 +21,7 @@ export const Header = () => {
       px="28px"
     >
       <Stack width="fit-content">
-        <Link href="/">
+        <Link href="https://astrosafe.co/">
           <Stack
             sx={{
               cursor: "pointer",
