@@ -5,6 +5,7 @@ import Image from "next/image";
 import Play from "@/images/play.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
+import Clipboard from "@/images/icons/Clipboard.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -216,7 +217,27 @@ const Player = (props: {
             transitionTimingFunction: "ease-out",
           }}
           zIndex={99999}
+          spacing="12px"
         >
+          <Stack
+            width="100%"
+            px="12px"
+            py="8px"
+            bgcolor="rgba(0,0,0,0.3)"
+            borderRadius="12px"
+            direction="row"
+            justifyContent="space-between"
+          >
+            <Typography variant="small" color="rgba(255,255,255,0.75)">
+              {window.location.href}
+            </Typography>
+            <Stack direction="row" spacing="5px" sx={{ opacity: 0.75 }}>
+              <Typography variant="small" bold color="rgb(255,255,255)">
+                Copy
+              </Typography>
+              <Image src={Clipboard} width={16} alt="Copy" />
+            </Stack>
+          </Stack>
           <Stack
             width={fullScreen ? "100%" : `${props.width}px`}
             height={fullScreen ? "100%" : `${props.height}px`}

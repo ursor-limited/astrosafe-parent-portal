@@ -67,7 +67,7 @@ function VideoPageContents(props: { details: IVideo }) {
               </Typography>
             ) : null}
           </Stack>
-          <Stack>
+          {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">
               <Stack
                 width="100%"
@@ -93,10 +93,7 @@ function VideoPageContents(props: { details: IVideo }) {
                 </Stack>
               </Stack>
             </Stack>
-            {/* <UrsorButton  size="small">
-Share 
-            </UrsorButton> */}
-          </Stack>
+          </Stack> */}
         </Stack>
         {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
         Play
