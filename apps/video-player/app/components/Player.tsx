@@ -53,8 +53,8 @@ const Player = (props: {
   // captionsOn: boolean;
   //preHovering: boolean;
   provider: "youtube" | "vimeo";
-  width: string;
-  height: string;
+  width: number;
+  height: number;
   top: string;
   setDuration: (duration: number) => void;
   startTime?: number;
@@ -206,7 +206,7 @@ const Player = (props: {
   };
 
   const [fullScreen, setFullScreen] = useState<boolean>(false);
-  useEffect(() => props.setFullscreen(fullScreen), [fullScreen]);
+  useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
 
   const handleUserKeyPress = useCallback((event: any) => {
     if (event.code === "Space") {
@@ -221,16 +221,20 @@ const Player = (props: {
     };
   }, [handleUserKeyPress]);
 
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [pressed, setPressed] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+
   return (
     <Stack
-      width={props.width}
-      height={props.height}
+      width={fullScreen ? "100vw" : `${props.width}px`}
+      height={fullScreen ? "100vh" : `${props.height}px`}
       marginLeft="auto"
       marginRight="auto"
       left={0}
       right={0}
       //position="absolute"
-      top={fullScreen ? 0 : props.top}
+      //top={fullScreen ? 0 : props.top}
       alignItems="center"
       //p="100px"
       sx={{
@@ -241,8 +245,8 @@ const Player = (props: {
       spacing="12px"
     >
       <Stack
-        width={props.width}
-        height={props.height}
+        width={fullScreen ? "100vw" : `${props.width}px`}
+        height={fullScreen ? "100vh" : `${props.height}px`}
         borderRadius={fullScreen ? 0 : "14px"}
         boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
         overflow="hidden"

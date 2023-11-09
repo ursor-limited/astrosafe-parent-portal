@@ -10,7 +10,8 @@ import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
 
 export const HEADER_HEIGHT = 86;
 
-export const Header = (props: { collapsed: boolean }) => {
+//export const Header = (props: { collapsed: boolean }) => {
+export const Header = () => {
   return (
     <Stack
       direction="row"
@@ -20,6 +21,9 @@ export const Header = (props: { collapsed: boolean }) => {
       alignItems="center"
       justifyContent="space-between"
       px="28px"
+      // sx={{
+      //   display: props.collapsed ? "none" : undefined,
+      // }}
     >
       <Stack width="fit-content">
         <Link href="https://astrosafe.co/">
