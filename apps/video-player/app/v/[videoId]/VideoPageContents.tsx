@@ -137,7 +137,7 @@ function VideoPageContents(props: { details: IVideo }) {
           </Stack>
         </Stack> */}
       </Stack>
-      <Player
+      {/* <Player
         key={props.details.id}
         url={props.details.url}
         provider={provider}
@@ -148,7 +148,7 @@ function VideoPageContents(props: { details: IVideo }) {
         top="171px"
         setDuration={(d) => setDuration(d)}
         showUrlBar
-      />
+      /> */}
       <UrlBar />
     </>
   ) : (

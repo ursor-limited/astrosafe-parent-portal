@@ -16,6 +16,7 @@ export const Header = () => {
       direction="row"
       width="100%"
       height={`${86}px`}
+      minHeight={`${86}px`}
       alignItems="center"
       justifyContent="space-between"
       px="28px"

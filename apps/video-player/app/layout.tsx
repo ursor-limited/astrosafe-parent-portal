@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { UrsorButton } from "ui";
 import { Header } from "./components/header";
+import { Footer } from "./components/footer";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -26,6 +27,8 @@ export default function RootLayout({
       <body className={rubik.className}>
         <Stack
           height="100vh"
+          minHeight="100vh"
+          overflow="scroll"
           width="100vw"
           sx={{
             backgroundImage: `url(${Background.src})`,
@@ -36,6 +39,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Footer />
         </Stack>
       </body>
     </html>
