@@ -122,7 +122,7 @@ export const BORDER_COLORS: Record<
 
 export interface UrsorButtonProps {
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: ButtonVariant;
   size?: ButtonSize;
   backgroundColor?: string;
@@ -153,6 +153,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     <Stack
       alignItems="center"
       bgcolor={BACKGROUND_COLORS[mode][variant]?.[state]}
+      border={`2px solid ${BORDER_COLORS[mode][variant]?.[state]}`}
       borderRadius={`${HEIGHTS[size] / 2}px`}
       boxSizing="border-box"
       height={HEIGHTS[size]}
@@ -176,11 +177,15 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         cursor: "pointer",
         transition: "0.2s",
       }}
+      width="fit-content"
     >
       <Typography
         bold
         color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}
         noWrap
+        sx={{
+          transition: "0.2s",
+        }}
         variant={size}
       >
         {props.children}

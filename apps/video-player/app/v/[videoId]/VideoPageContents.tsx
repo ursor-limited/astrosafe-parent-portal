@@ -8,13 +8,13 @@ import Image from "next/image";
 import { IVideo } from "@/app/api";
 import Background from "@/images/background.png";
 import PlayerLogo from "@/images/playerLogo.png";
-import VideoDetailsEditingSection from "@/components/VideoDetailsEditingSection";
+import VideoDetailsEditingSection from "@/app/components/VideoDetailsEditingSection";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Typography } from "ui";
 
 const Player = dynamic(
-  () => import("@/components/Player"),
+  () => import("@/app/components/Player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -43,35 +43,7 @@ function VideoPageContents(props: { details: IVideo }) {
   //   duration && setRange([0, duration]);
   // }, [duration]);
   return props.details && provider ? (
-    <Stack
-      height="100vh"
-      width="100vw"
-      sx={{
-        backgroundImage: `url(${Background.src})`,
-        backgroundSize: "cover",
-        boxSizing: "border-box",
-      }}
-      spacing="10px"
-    >
-      <Stack width="100%">
-        <Stack width="fit-content">
-          <Link href="/">
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <Image
-                width={165}
-                src={PlayerLogo}
-                alt="Safe video player logo."
-              />
-            </Stack>
-          </Link>
-        </Stack>
-      </Stack>
+    <>
       <Stack
         flex={1}
         px="60px"
@@ -176,7 +148,7 @@ function VideoPageContents(props: { details: IVideo }) {
         height={VIDEO_HEIGHT}
         setDuration={(d) => setDuration(d)}
       />
-    </Stack>
+    </>
   ) : (
     <></>
   );

@@ -6,7 +6,6 @@ import { Stack } from "@mui/system";
 import Logo from "@/images/logo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
-import Background from "@/images/background.png";
 import PlayerLogo from "@/images/playerLogo.png";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
@@ -14,13 +13,13 @@ import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
 import DurationLabel from "../v/[videoId]/DurationLabel";
 import { useRouter, useSearchParams } from "next/navigation";
-import { deNoCookiefy, noCookiefy } from "@/components/utils";
-import UrsorInputField from "@/components/ursor-input-field";
+import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
+import UrsorInputField from "@/app/components/ursor-input-field";
 import { PALETTE } from "../../../../packages/ui/palette";
 import { UrsorButton } from "ui";
 
 const Player = dynamic(
-  () => import("@/components/Player"),
+  () => import("@/app/components/Player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -83,35 +82,7 @@ function CreationPageContents(props: { details: IVideo }) {
     }).then((v) => router.push(`/v/${v.id}`));
 
   return props.details && provider && url ? (
-    <Stack
-      height="100vh"
-      width="100vw"
-      sx={{
-        backgroundImage: `url(${Background.src})`,
-        backgroundSize: "cover",
-        boxSizing: "border-box",
-      }}
-      spacing="10px"
-    >
-      <Stack width="100%">
-        <Stack width="fit-content">
-          <Link href="/">
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <Image
-                width={165}
-                src={PlayerLogo}
-                alt="Safe video player logo."
-              />
-            </Stack>
-          </Link>
-        </Stack>
-      </Stack>
+    <>
       <Player
         url={url}
         provider={provider}
@@ -323,7 +294,7 @@ function CreationPageContents(props: { details: IVideo }) {
           flex={1}
         ></Stack>
       </Stack>
-    </Stack>
+    </>
   ) : (
     <></>
   );

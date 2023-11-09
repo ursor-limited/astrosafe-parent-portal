@@ -1,6 +1,6 @@
 "use client";
 
-import { IVideo } from "@/components/Player";
+import { IVideo } from "@/app/components/Player";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
