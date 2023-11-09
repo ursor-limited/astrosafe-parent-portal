@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Clipboard from "@/images/icons/Clipboard.svg";
@@ -9,9 +9,15 @@ import { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { HEADER_HEIGHT } from "@/app/components/header";
+import { createPortal } from "react-dom";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
+const UrlBar = dynamic(
+  () => import("@/app/components/url-bar"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -39,6 +45,7 @@ function VideoPageContents(props: { details: IVideo }) {
   // useEffect(() => {
   //   duration && setRange([0, duration]);
   // }, [duration]);
+
   return props.details && provider ? (
     <>
       <Stack
@@ -51,18 +58,18 @@ function VideoPageContents(props: { details: IVideo }) {
         width="100vw"
       >
         {/* <Image src={Background} alt='Background'  */}
-        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 35}px`} />
+        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} />
         <Stack
           flex={1}
           width={`${VIDEO_WIDTH}px`}
           justifyContent="space-between"
         >
-          <Stack spacing="6px">
+          <Stack spacing="5px">
             <Typography bold variant="large" color={PALETTE.font.light}>
               {props.details.title}
             </Typography>
             {props.details.description ? (
-              <Typography bold variant="large" color={PALETTE.font.light}>
+              <Typography color={PALETTE.font.light}>
                 {props.details.description}
               </Typography>
             ) : null}
@@ -138,8 +145,11 @@ function VideoPageContents(props: { details: IVideo }) {
         endTime={props.details.endTime}
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
+        top="171px"
         setDuration={(d) => setDuration(d)}
+        showUrlBar
       />
+      <UrlBar />
     </>
   ) : (
     <></>

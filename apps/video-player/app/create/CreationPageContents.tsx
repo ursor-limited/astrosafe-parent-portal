@@ -6,12 +6,12 @@ import { Stack } from "@mui/system";
 import Logo from "@/images/logo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
-import PlayerLogo from "@/images/playerLogo.png";
+import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
-import DurationLabel from "../v/[videoId]/DurationLabel";
+import DurationLabel from "../v/[videoId]/duration-label";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
 import UrsorInputField from "@/app/components/ursor-input-field";
@@ -24,7 +24,7 @@ const Player = dynamic(
 );
 
 const PADDING_TOP = "100px";
-const VIDEO_WIDTH = 845;
+export const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
 // export const getStaticProps = (async (context) => {
@@ -69,13 +69,14 @@ function CreationPageContents(props: { details: IVideo }) {
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
-    duration && setRange([0, duration]);
-  }, [duration]);
+    !range && duration && setRange([0, duration]);
+  }, [duration, range]);
 
   const router = useRouter();
   const submit = () =>
     ApiController.createVideo({
       title,
+      description,
       url,
       startTime: range?.[0],
       endTime: range?.[1],
@@ -89,6 +90,7 @@ function CreationPageContents(props: { details: IVideo }) {
         width={VIDEO_WIDTH}
         height={VIDEO_HEIGHT}
         setDuration={(d) => setDuration(d)}
+        top="120px"
       />
       <Stack
         flex={1}
@@ -99,7 +101,7 @@ function CreationPageContents(props: { details: IVideo }) {
         height="100vh"
         width="100vw"
       >
-        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT}px`} />
+        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 40}px`} />
         <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
           <Stack width="100%" position="relative" overflow="visible">
             <Stack width="100%" spacing="5px">
@@ -218,10 +220,10 @@ function CreationPageContents(props: { details: IVideo }) {
                     background: "linear-gradient(90deg,#F279C5,#FD9B41)",
                   },
                   ".MuiSlider-thumb": {
-                    "&:nth-child(3)": {
+                    "&:nth-of-type(3)": {
                       background: "#F279C5",
                     },
-                    "&:nth-child(4)": {
+                    "&:nth-of-type(4)": {
                       background: "#FD9B41",
                     },
                   },
@@ -270,7 +272,15 @@ function CreationPageContents(props: { details: IVideo }) {
                   //setEditing(!editing);
                 }
                 endIcon={
-                  <Image src={Pencil} width={17} height={17} alt="Pencil" />
+                  <Image
+                    src={ChevronLeft}
+                    width={23}
+                    height={23}
+                    alt="Pencil"
+                    style={{
+                      transform: "rotate(180deg)",
+                    }}
+                  />
                 }
               >
                 Create

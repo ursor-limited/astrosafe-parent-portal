@@ -5,7 +5,6 @@ import Image from "next/image";
 import Play from "@/images/play.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
-import Clipboard from "@/images/icons/Clipboard.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -55,9 +54,11 @@ const Player = (props: {
   provider: "youtube" | "vimeo";
   width: number;
   height: number;
+  top: string;
   setDuration: (duration: number) => void;
   startTime?: number;
   endTime?: number;
+  showUrlBar?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -111,7 +112,6 @@ const Player = (props: {
     } else {
       setTimeout(() => setYoutubePauseOverlay(false), 500);
     }
-    console.log(status);
   }
 
   // useEffect(
@@ -213,7 +213,7 @@ const Player = (props: {
           left={0}
           right={0}
           position="absolute"
-          top={fullScreen ? 0 : PADDING_TOP}
+          top={fullScreen ? 0 : props.top}
           alignItems="center"
           //p="100px"
           sx={{
@@ -223,60 +223,6 @@ const Player = (props: {
           zIndex={99999}
           spacing="12px"
         >
-          <Stack
-            width="100%"
-            px="12px"
-            py="8px"
-            bgcolor={hovering ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.3)"}
-            borderRadius="12px"
-            direction="row"
-            justifyContent="space-between"
-            onClick={() => {
-              setCopied(true);
-              navigator.clipboard.writeText(window.location.href);
-            }}
-            sx={{
-              transition: "0.2s",
-              cursor: "pointer",
-            }}
-            onMouseDown={() => {
-              setPressed(true);
-            }}
-            onMouseEnter={() => {
-              setHovering(true);
-            }}
-            onMouseLeave={() => {
-              setHovering(false);
-              setPressed(false);
-            }}
-            onMouseUp={() => {
-              setPressed(false);
-            }}
-          >
-            <Typography
-              variant="small"
-              color={
-                hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.75)"
-              }
-              sx={{
-                transition: "0.2s",
-              }}
-            >
-              {window.location.href}
-            </Typography>
-            {copied ? (
-              <Typography variant="small" bold color="rgba(255,255,255,0.9)">
-                Copied to Clipboard
-              </Typography>
-            ) : (
-              <Stack direction="row" spacing="5px" sx={{ opacity: 0.9 }}>
-                <Typography variant="small" bold color="rgb(255,255,255)">
-                  Share
-                </Typography>
-                <Image src={Clipboard} width={16} alt="Copy" />
-              </Stack>
-            )}
-          </Stack>
           <Stack
             width={fullScreen ? "100%" : `${props.width}px`}
             height={fullScreen ? "100%" : `${props.height}px`}

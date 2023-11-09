@@ -15,7 +15,7 @@ export default function DurationLabel(props: {
     <Stack
       direction="row"
       spacing="5px"
-      width="80px"
+      width="90px"
       alignItems="center"
       justifyContent="center"
     >
