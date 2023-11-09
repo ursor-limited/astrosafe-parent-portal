@@ -199,6 +199,10 @@ const Player = (props: {
     };
   }, [handleUserKeyPress]);
 
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [pressed, setPressed] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+
   return document
     ? createPortal(
         <Stack
@@ -223,20 +227,55 @@ const Player = (props: {
             width="100%"
             px="12px"
             py="8px"
-            bgcolor="rgba(0,0,0,0.3)"
+            bgcolor={hovering ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.3)"}
             borderRadius="12px"
             direction="row"
             justifyContent="space-between"
+            onClick={() => {
+              setCopied(true);
+              navigator.clipboard.writeText(window.location.href);
+            }}
+            sx={{
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+            onMouseDown={() => {
+              setPressed(true);
+            }}
+            onMouseEnter={() => {
+              setHovering(true);
+            }}
+            onMouseLeave={() => {
+              setHovering(false);
+              setPressed(false);
+            }}
+            onMouseUp={() => {
+              setPressed(false);
+            }}
           >
-            <Typography variant="small" color="rgba(255,255,255,0.75)">
+            <Typography
+              variant="small"
+              color={
+                hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.75)"
+              }
+              sx={{
+                transition: "0.2s",
+              }}
+            >
               {window.location.href}
             </Typography>
-            <Stack direction="row" spacing="5px" sx={{ opacity: 0.75 }}>
-              <Typography variant="small" bold color="rgb(255,255,255)">
-                Copy
+            {copied ? (
+              <Typography variant="small" bold color="rgba(255,255,255,0.9)">
+                Copied to Clipboard
               </Typography>
-              <Image src={Clipboard} width={16} alt="Copy" />
-            </Stack>
+            ) : (
+              <Stack direction="row" spacing="5px" sx={{ opacity: 0.9 }}>
+                <Typography variant="small" bold color="rgb(255,255,255)">
+                  Share
+                </Typography>
+                <Image src={Clipboard} width={16} alt="Copy" />
+              </Stack>
+            )}
           </Stack>
           <Stack
             width={fullScreen ? "100%" : `${props.width}px`}
