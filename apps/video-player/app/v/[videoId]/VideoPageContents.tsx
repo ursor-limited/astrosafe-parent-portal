@@ -8,8 +8,9 @@ import Image from "next/image";
 import { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { HEADER_HEIGHT } from "@/app/components/header";
+import { HEADER_HEIGHT, Header } from "@/app/components/header";
 import { createPortal } from "react-dom";
+import { Footer } from "@/app/components/footer";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -45,9 +46,11 @@ function VideoPageContents(props: { details: IVideo }) {
   // useEffect(() => {
   //   duration && setRange([0, duration]);
   // }, [duration]);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   return props.details && provider ? (
     <>
+      <Header collapsed={fullscreen} />
       <Stack
         flex={1}
         px="60px"
@@ -67,12 +70,33 @@ function VideoPageContents(props: { details: IVideo }) {
           provider={provider}
           startTime={props.details.startTime}
           endTime={props.details.endTime}
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
+          width={`${VIDEO_WIDTH}px`}
+          height={`${VIDEO_HEIGHT}px`}
           top="0px"
           setDuration={(d) => setDuration(d)}
           showUrlBar
+          setFullscreen={setFullscreen}
         />
+        {fullscreen
+          ? createPortal(
+              <Stack position="absolute" top={0} left={0} zIndex={9999}>
+                <Player
+                  key={props.details.id}
+                  url={props.details.url}
+                  provider={provider}
+                  startTime={props.details.startTime}
+                  endTime={props.details.endTime}
+                  width={"100vw"}
+                  height={"100vh"}
+                  top="0px"
+                  setDuration={(d) => setDuration(d)}
+                  showUrlBar
+                  setFullscreen={setFullscreen}
+                />
+              </Stack>,
+              document.body
+            )
+          : null}
         {/* <Image src={Background} alt='Background'  */}
         {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
         <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
@@ -149,6 +173,7 @@ function VideoPageContents(props: { details: IVideo }) {
           </Stack>
         </Stack> */}
       </Stack>
+      <Footer />
     </>
   ) : (
     <></>

@@ -37,9 +37,9 @@ export default function RootLayout({
           }}
           spacing="10px"
         >
-          <Header />
+          {/* <Header /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </Stack>
       </body>
     </html>

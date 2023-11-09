@@ -10,7 +10,7 @@ import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
 
 export const HEADER_HEIGHT = 86;
 
-export const Header = () => {
+export const Header = (props: { collapsed: boolean }) => {
   return (
     <Stack
       direction="row"
