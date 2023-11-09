@@ -75,16 +75,6 @@ const Player = (props: {
     useState<boolean>(false);
   const [ended, setEnded] = useState<boolean>(false);
 
-  // const [currentTime, setCurrentTime] = useState<number>(0);
-  // useEffect(() => {
-  //   if (!playing) return;
-  //   const interval = setInterval(
-  //     () => setCurrentTime(videoElement?.target.playerInfo.currentTime),
-  //     1000
-  //   );
-  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  // }, [playing]);
-
   /////////////////////////
   /* YOUTUBE specific */
   /////////////////////////
@@ -151,10 +141,26 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
 
-  useEffect(
-    () => props.setDuration(player?.getDuration()),
-    [player?.getDuration()]
-  );
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  useEffect(() => {
+    if (!player?.getCurrentTime || !playing || props.provider !== "vimeo")
+      return;
+    player.getCurrentTime().then((x) => console.log("www", x));
+    const interval = setInterval(
+      () =>
+        player.getCurrentTime().then((time: number) => setCurrentTime(time)),
+      500
+    );
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [player?.getCurrentTime, playing, props.provider]);
+
+  useEffect(() => {
+    props.provider === "vimeo"
+      ? player?.getDuration().then((d: number) => {
+          props.setDuration(d);
+        })
+      : props.setDuration(player?.getDuration());
+  }, [player?.getDuration()]);
 
   useEffect(() => {
     if (!provider || !document) return;
