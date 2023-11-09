@@ -14,7 +14,7 @@ const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
 const VIDEO_DISABLINGS = ["fs", "rel"];
 
-const PADDING_TOP = "100px";
+export const PADDING_TOP = "120px";
 
 const fadeIn = keyframes`
 from {

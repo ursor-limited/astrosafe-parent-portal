@@ -19,7 +19,7 @@ import { PALETTE } from "../../../../packages/ui/palette";
 import { UrsorButton } from "ui";
 
 const Player = dynamic(
-  () => import("@/app/components/Player"),
+  () => import("@/app/components/player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 

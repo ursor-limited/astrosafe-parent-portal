@@ -8,12 +8,14 @@ import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/kiteMark.svg";
 import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
 
+export const HEADER_HEIGHT = 86;
+
 export const Header = () => {
   return (
     <Stack
       direction="row"
       width="100%"
-      height="86px"
+      height={`${86}px`}
       alignItems="center"
       justifyContent="space-between"
       px="28px"

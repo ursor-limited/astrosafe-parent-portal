@@ -12,9 +12,10 @@ import VideoDetailsEditingSection from "@/app/components/VideoDetailsEditingSect
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Typography } from "ui";
+import { HEADER_HEIGHT } from "@/app/components/header";
 
 const Player = dynamic(
-  () => import("@/app/components/Player"),
+  () => import("@/app/components/player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -54,7 +55,7 @@ function VideoPageContents(props: { details: IVideo }) {
         width="100vw"
       >
         {/* <Image src={Background} alt='Background'  */}
-        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT}px`} />
+        <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 40}px`} />
         <Stack width={`${VIDEO_WIDTH}px`}>
           <VideoDetailsEditingSection details={props.details} />
           <Stack direction="row">
@@ -128,9 +129,9 @@ function VideoPageContents(props: { details: IVideo }) {
                 transition: "0.2s",
               }}
             >
-              <a href={"https://astrosafe.co/"} target={"_blank"}>
+              <Link href={"https://astrosafe.co/"} target={"_blank"}>
                 <Image src={Logo} width={80} height={80} alt="Astro logo" />
-              </a>
+              </Link>
             </Stack>
             <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
               FAMILY OF TOOLS
