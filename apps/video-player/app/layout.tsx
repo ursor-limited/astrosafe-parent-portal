@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ zIndex: 999999999999 }}>
       <body className={rubik.className}>
         <Stack
           height="100vh"

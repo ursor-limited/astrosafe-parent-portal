@@ -10,6 +10,7 @@ import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { PALETTE, Typography } from "ui";
+import { useHover } from "react-aria";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
@@ -214,6 +215,9 @@ const Player = (props: {
     }
   }, []);
 
+  const [mouseIsOutsideWindow, setMouseIsOutsideWindow] =
+    useState<boolean>(false);
+
   useEffect(() => {
     window.addEventListener("keydown", handleUserKeyPress);
     return () => {
@@ -221,9 +225,45 @@ const Player = (props: {
     };
   }, [handleUserKeyPress]);
 
+  const handleMouseEnterWindow = useCallback(() => {
+    //setOverallHovering(false);
+    setOverlayHovering(true);
+    //setTimeout(() => setOverlayHovering(false), [3000]);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mouseenter", handleMouseEnterWindow);
+    return () => {
+      document.removeEventListener("mouseenter", handleMouseEnterWindow);
+    };
+  }, [document, handleMouseEnterWindow]);
+
+  const handleMouseLeaveWindow = useCallback(() => {
+    //setOverallHovering(false);
+    // setOverlayHovering(true);
+    // setTimeout(() => setOverlayHovering(false), 3000);
+    setMouseIsOutsideWindow(true);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("mouseleave", handleMouseLeaveWindow);
+    return () => {
+      document.removeEventListener("mouseleave", handleMouseLeaveWindow);
+    };
+  }, [document, handleMouseLeaveWindow]);
+
   const [hovering, setHovering] = useState<boolean>(false);
   const [pressed, setPressed] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
+
+  const [iframe, setIFrame] = useState<HTMLIFrameElement | null>(null);
+
+  // let { hoverProps, isHovered } = useHover({
+  //   // onHoverStart: (e) =>
+  //   //   setEvents((events) => [...events, `hover start with ${e.pointerType}`]),
+  //   // onHoverEnd: (e) =>
+  //   //   setEvents((events) => [...events, `hover end with ${e.pointerType}`]),
+  // });
 
   return (
     <Stack
@@ -243,6 +283,9 @@ const Player = (props: {
       }}
       //zIndex={99999}
       spacing="12px"
+      onMouseEnter={() => setOverlayHovering(true)}
+      onMouseLeave={() => setOverlayHovering(false)}
+      onMouseMove={() => setOverlayHovering(true)}
     >
       <Stack
         width={fullScreen ? "100vw" : `${props.width}px`}
@@ -257,10 +300,11 @@ const Player = (props: {
           transitionTimingFunction: "ease-out",
           //transform: `rotate(${props.fullScreen ? 360 : 0}deg)`,
         }}
-        onMouseEnter={() => setOverallHovering(true)}
-        onMouseLeave={() => setTimeout(() => setOverallHovering(false), 200)}
       >
         <iframe
+          onMouseEnter={() => setOverlayHovering(true)}
+          onMouseLeave={() => setOverlayHovering(false)}
+          ref={setIFrame}
           id="player"
           title="Player"
           width={fullScreen ? "100%" : props.width}
@@ -303,8 +347,16 @@ const Player = (props: {
           width="100%"
           height="100%"
           sx={{
-            pointerEvents: youtubePauseOverlay ? undefined : "none",
+            //opacity: youtubePauseOverlay ? 1 : 0,
+            pointerEvents:
+              youtubePauseOverlay || mouseIsOutsideWindow ? undefined : "none",
           }}
+          onMouseEnter={() => {
+            setOverlayHovering(true);
+            setMouseIsOutsideWindow(false);
+          }}
+          onMouseLeave={() => setOverlayHovering(false)} //@ts-ignore
+          //onClick={(event) => iframe?.dispatchEvent(event)}
         />
         <Stack
           position="absolute"
@@ -320,8 +372,6 @@ const Player = (props: {
           }}
           justifyContent="center"
           alignItems="center"
-          onMouseEnter={() => setOverlayHovering(true)}
-          onMouseLeave={() => setOverlayHovering(false)}
           onClick={resume}
         >
           <Stack
@@ -351,7 +401,7 @@ const Player = (props: {
           height={props.provider === "vimeo" ? "120px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
-            opacity: overallHovering && playing ? 1 : 0,
+            opacity: overlayHovering && playing ? 1 : 0,
             backdropFilter: "blur(38px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
@@ -445,7 +495,7 @@ const Player = (props: {
           right="0px"
           pr="19px"
           sx={{
-            opacity: !playing || overallHovering ? 1 : 0,
+            opacity: !playing || overlayHovering ? 1 : 0,
             svg: {
               rect: {
                 stroke: "rgba(255,255,255,0.5)",

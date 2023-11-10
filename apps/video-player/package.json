@@ -19,6 +19,7 @@
     "axios-retry": "^3.8.1",
     "next": "14.0.1",
     "react": "^18",
+    "react-aria": "^3.30.0",
     "react-dom": "^18",
     "sharp": "^0.32.6",
     "ui": "workspace:*",
