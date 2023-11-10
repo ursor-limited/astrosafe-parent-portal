@@ -60,7 +60,7 @@ const Player = (props: {
   startTime?: number;
   endTime?: number;
   showUrlBar?: boolean;
-  setFullscreen: (fs: boolean) => void;
+  setFullscreen?: (fs: boolean) => void;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -256,10 +256,12 @@ const Player = (props: {
     () =>
       setUrl(
         props.provider === "youtube"
-          ? `${props.url.replace(
-              "youtube.com",
-              "youtube-nocookie.com"
-            )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+          ? // ? `${props.url.replace(
+            //     "youtube.com"
+            //     "youtube-nocookie.com"
+            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              // don't use nocookie, as it forces the youtube logo in there
               props.startTime ? `start=${props.startTime}&` : ""
             }${
               props.endTime ? `end=${props.endTime}&` : ""
@@ -270,6 +272,8 @@ const Player = (props: {
       ),
     [props.endTime, props.startTime, props.url, props.provider]
   );
+
+  console.log(url);
 
   return (
     <Stack
@@ -410,8 +414,8 @@ const Player = (props: {
             position="absolute"
             right={0}
             bottom={0}
-            width="100px"
-            height="50px"
+            width={fullScreen ? "180px" : "130px"}
+            height="60px"
           />
         ) : null}
         <Stack
@@ -512,29 +516,31 @@ const Player = (props: {
           >
             <CaptionsIcon width="24px" height="24px" />
           </Stack> */}
-          <Stack
-            sx={{
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-            onClick={() => setFullScreen(!fullScreen)}
-          >
-            {fullScreen ? (
-              <Image
-                src={NormalScreenIcon}
-                width={24}
-                height={24}
-                alt="Full screen"
-              />
-            ) : (
-              <Image
-                src={FullScreenIcon}
-                width={24}
-                height={24}
-                alt="Full screen"
-              />
-            )}
-          </Stack>
+          {props.setFullscreen ? (
+            <Stack
+              sx={{
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+              }}
+              onClick={() => setFullScreen(!fullScreen)}
+            >
+              {fullScreen ? (
+                <Image
+                  src={NormalScreenIcon}
+                  width={24}
+                  height={24}
+                  alt="Full screen"
+                />
+              ) : (
+                <Image
+                  src={FullScreenIcon}
+                  width={24}
+                  height={24}
+                  alt="Full screen"
+                />
+              )}
+            </Stack>
+          ) : null}
         </Stack>
       </Stack>
     </Stack>
