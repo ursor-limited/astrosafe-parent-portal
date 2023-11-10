@@ -10,6 +10,7 @@ import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { createPortal } from "react-dom";
+import { useWindowSize } from "usehooks-ts";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
@@ -273,7 +274,25 @@ const Player = (props: {
     [props.endTime, props.startTime, props.url, props.provider]
   );
 
-  console.log(url);
+  const { width, height } = useWindowSize();
+
+  const [videoWidth, setVideoWidth] = useState<number>(0);
+  useEffect(() => {
+    const windowAspectRatio = width / height;
+    const videoAspectRatio = 16 / 9;
+    setVideoWidth(
+      windowAspectRatio < videoAspectRatio ? width : height * videoAspectRatio
+    );
+  }, [width, height]);
+
+  const [videoHeight, setVideoHeight] = useState<number>(0);
+  useEffect(() => {
+    const windowAspectRatio = width / height;
+    const videoAspectRatio = 16 / 9;
+    setVideoHeight(
+      windowAspectRatio > videoAspectRatio ? height : width / videoAspectRatio
+    );
+  }, [width, height]);
 
   return (
     <Stack
@@ -283,7 +302,6 @@ const Player = (props: {
       marginRight="auto"
       left={0}
       right={0}
-      alignItems="center"
       //p="100px"
       // sx={{
       //   transition: "0.7s",
@@ -294,10 +312,12 @@ const Player = (props: {
       onMouseEnter={() => setOverlayHovering(true)}
       onMouseLeave={() => setOverlayHovering(false)}
       onMouseMove={() => setOverlayHovering(true)}
+      justifyContent="center"
+      alignItems="center"
     >
       <Stack
-        width={fullScreen ? "100vw" : `${props.width}px`}
-        height={fullScreen ? "100vh" : `${props.height}px`}
+        width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
+        height={fullScreen ? videoHeight || "100vh" : `${props.height}px`}
         borderRadius={fullScreen ? 0 : "14px"}
         boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
         overflow="hidden"
@@ -392,7 +412,7 @@ const Player = (props: {
             props.provider === "vimeo" ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
           borderRadius={props.provider === "vimeo" ? "0 0 0 14px" : undefined}
-          height={props.provider === "vimeo" ? "120px" : "60px"}
+          height={props.provider === "vimeo" ? "130px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
             opacity: overlayHovering && playing ? 1 : 0,
@@ -414,7 +434,7 @@ const Player = (props: {
             position="absolute"
             right={0}
             bottom={0}
-            width={fullScreen ? "180px" : "130px"}
+            width={fullScreen ? `${videoWidth * 0.1}px` : "130px"}
             height="60px"
           />
         ) : null}
