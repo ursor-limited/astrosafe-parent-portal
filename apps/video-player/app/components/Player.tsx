@@ -53,16 +53,14 @@ const Player = (props: {
   // captionsOn: boolean;
   //preHovering: boolean;
   provider: "youtube" | "vimeo";
-  width?: number | string;
-  height?: number | string;
+  width: number;
+  height: number;
   top: string;
   setDuration: (duration: number) => void;
   startTime?: number;
   endTime?: number;
   showUrlBar?: boolean;
-  //setFullscreen: (fs: boolean) => void;
-  fullScreen?: boolean;
-  fullScreenCallback?: () => void;
+  setFullscreen: (fs: boolean) => void;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -207,8 +205,8 @@ const Player = (props: {
     }
   };
 
-  // const [fullScreen, setFullScreen] = useState<boolean>(false);
-  // useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
+  const [fullScreen, setFullScreen] = useState<boolean>(false);
+  useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
 
   const handleUserKeyPress = useCallback((event: any) => {
     if (event.code === "Space") {
@@ -275,18 +273,18 @@ const Player = (props: {
 
   return (
     <Stack
-      width={props.width ?? "100%"}
-      height={props.height ?? "100%"}
-      // marginLeft="auto"
-      // marginRight="auto"
-      // left={0}
-      // right={0}
+      width={fullScreen ? "100vw" : `${props.width}px`}
+      height={fullScreen ? "100vh" : `${props.height}px`}
+      marginLeft="auto"
+      marginRight="auto"
+      left={0}
+      right={0}
       alignItems="center"
       //p="100px"
-      sx={{
-        transition: "0.7s",
-        transitionTimingFunction: "ease-out",
-      }}
+      // sx={{
+      //   transition: "0.7s",
+      //   transitionTimingFunction: "ease-out",
+      // }}
       //zIndex={99999}
       spacing="12px"
       onMouseEnter={() => setOverlayHovering(true)}
@@ -294,16 +292,16 @@ const Player = (props: {
       onMouseMove={() => setOverlayHovering(true)}
     >
       <Stack
-        width={props.width ?? "100%"}
-        height={props.height ?? "100%"}
-        borderRadius={props.fullScreen ? 0 : "14px"}
+        width={fullScreen ? "100vw" : `${props.width}px`}
+        height={fullScreen ? "100vh" : `${props.height}px`}
+        borderRadius={fullScreen ? 0 : "14px"}
         boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
         overflow="hidden"
         position="relative"
         sx={{
           cursor: "pointer",
-          transition: "0.7s",
-          transitionTimingFunction: "ease-out",
+          // transition: "0.7s",
+          // transitionTimingFunction: "ease-out",
           //transform: `rotate(${props.fullScreen ? 360 : 0}deg)`,
         }}
       >
@@ -312,12 +310,12 @@ const Player = (props: {
           onMouseLeave={() => setOverlayHovering(false)}
           id="player"
           title="Player"
-          width={props.width ?? "100%"}
-          height={props.height ?? "100%"}
-          style={{
-            transition: "0.7s",
-            transitionTimingFunction: "ease-out",
-          }}
+          width={fullScreen ? "100%" : props.width}
+          height={fullScreen ? "100%" : props.height}
+          // style={{
+          //   transition: "0.7s",
+          //   transitionTimingFunction: "ease-out",
+          // }}
           src={url}
           //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
@@ -325,32 +323,6 @@ const Player = (props: {
           //allowFullScreen="allowFullScreen"
           frameBorder={0}
         />
-
-        {/* {fullScreen
-          ? createPortal(
-              <Stack width="100vw" height="100vh" position="absolute" top={0}>
-                <iframe
-                  onMouseEnter={() => setOverlayHovering(true)}
-                  onMouseLeave={() => setOverlayHovering(false)}
-                  id="player"
-                  title="Player"
-                  width={"100%"}
-                  height={"100%"}
-                  style={{
-                    transition: "0.7s",
-                    transitionTimingFunction: "ease-out",
-                  }}
-                  src={url}
-                  //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
-                  //@ts-ignore
-                  //allowFullScreen="allowFullScreen"
-                  frameBorder={0}
-                />
-              </Stack>,
-              document.body
-            )
-          : null} */}
         {/* <Stack
           position="absolute"
           top={0}
@@ -545,9 +517,9 @@ const Player = (props: {
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
             }}
-            onClick={props.fullScreenCallback}
+            onClick={() => setFullScreen(!fullScreen)}
           >
-            {props.fullScreen ? (
+            {fullScreen ? (
               <Image
                 src={NormalScreenIcon}
                 width={24}

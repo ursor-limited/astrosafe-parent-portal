@@ -11,7 +11,6 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import { HEADER_HEIGHT, Header } from "@/app/components/header";
 import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
-import { useWindowSize } from "usehooks-ts";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -49,11 +48,9 @@ function VideoPageContents(props: { details: IVideo }) {
   // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
-  const { width, height } = useWindowSize();
-
   return props.details && provider ? (
     <>
-      <Header />
+      {!fullscreen ? <Header /> : null}
       <Stack
         flex={1}
         px="60px"
@@ -64,57 +61,37 @@ function VideoPageContents(props: { details: IVideo }) {
         // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="10px"
-        pb={"100px"}
+        pb={!fullscreen ? "100px" : undefined}
       >
-        <UrlBar />
+        {!fullscreen ? <UrlBar /> : null}
         <Player
           key={props.details.id}
           url={props.details.url}
           provider={provider}
           startTime={props.details.startTime}
           endTime={props.details.endTime}
-          width={`${VIDEO_WIDTH}px`}
-          height={`${VIDEO_HEIGHT}px`}
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
           top="0px"
           setDuration={(d) => setDuration(d)}
           showUrlBar
-          fullScreenCallback={() => setFullscreen(true)}
+          setFullscreen={setFullscreen}
         />
-        {fullscreen
-          ? createPortal(
-              <Stack width="100vw" height="100vh" position="absolute" top={0}>
-                <Player
-                  key={props.details.id}
-                  url={props.details.url}
-                  provider={provider}
-                  startTime={props.details.startTime}
-                  endTime={props.details.endTime}
-                  top="0px"
-                  setDuration={(d) => setDuration(d)}
-                  showUrlBar
-                  fullScreen
-                  fullScreenCallback={() => setFullscreen(false)}
-                />
-              </Stack>,
-              document.body
-            )
-          : null}
-
         {/* <Image src={Background} alt='Background'  */}
         {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
-
-        <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
-          <Stack spacing="5px">
-            <Typography bold variant="large" color={PALETTE.font.light}>
-              {props.details.title}
-            </Typography>
-            {props.details.description ? (
-              <Typography color={PALETTE.font.light}>
-                {props.details.description}
+        {!fullscreen ? (
+          <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
+            <Stack spacing="5px">
+              <Typography bold variant="large" color={PALETTE.font.light}>
+                {props.details.title}
               </Typography>
-            ) : null}
-          </Stack>
-          {/* <Stack>
+              {props.details.description ? (
+                <Typography color={PALETTE.font.light}>
+                  {props.details.description}
+                </Typography>
+              ) : null}
+            </Stack>
+            {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">
               <Stack
                 width="100%"
@@ -141,7 +118,8 @@ function VideoPageContents(props: { details: IVideo }) {
               </Stack>
             </Stack>
           </Stack> */}
-        </Stack>
+          </Stack>
+        ) : null}
         {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
         Play
       </UrsorButton>
@@ -177,7 +155,7 @@ function VideoPageContents(props: { details: IVideo }) {
           </Stack>
         </Stack> */}
       </Stack>
-      <Footer />
+      {!fullscreen ? <Footer /> : null}
     </>
   ) : (
     <></>
