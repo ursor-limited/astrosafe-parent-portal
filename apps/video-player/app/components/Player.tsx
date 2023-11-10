@@ -8,9 +8,7 @@ import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { PALETTE, Typography } from "ui";
-import { useHover } from "react-aria";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 

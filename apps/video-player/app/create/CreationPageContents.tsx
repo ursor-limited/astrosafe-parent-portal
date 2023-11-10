@@ -88,7 +88,7 @@ function CreationPageContents(props: { details: IVideo }) {
 
   return props.details && provider && url ? (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? <Header noCreateNew /> : null}
       <Stack
         flex={1}
         justifyContent="center"

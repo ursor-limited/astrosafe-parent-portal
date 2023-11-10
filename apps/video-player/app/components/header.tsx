@@ -11,7 +11,7 @@ import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
 export const HEADER_HEIGHT = 86;
 
 //export const Header = (props: { collapsed: boolean }) => {
-export const Header = () => {
+export const Header = (props: { noCreateNew?: boolean }) => {
   return (
     <Stack
       direction="row"
@@ -39,17 +39,19 @@ export const Header = () => {
         </Link>
       </Stack>
       <Stack direction="row" spacing="12px">
-        <Link href={"https://astrosafe.co/"} target={"_blank"}>
-          <UrsorButton
-            dark
-            variant="secondary"
-            startIcon={
-              <Image src={ChevronLeft} height={20} alt="Chevron left" />
-            }
-          >
-            Create new
-          </UrsorButton>
-        </Link>
+        {!props.noCreateNew ? (
+          <Link href={"https://astrosafe.co/"} target={"_blank"}>
+            <UrsorButton
+              dark
+              variant="secondary"
+              startIcon={
+                <Image src={ChevronLeft} height={20} alt="Chevron left" />
+              }
+            >
+              Create new
+            </UrsorButton>
+          </Link>
+        ) : null}
         <Link href={"https://astrosafe.co/"} target={"_blank"}>
           <UrsorButton
             dark
