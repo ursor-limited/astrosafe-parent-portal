@@ -21,7 +21,7 @@ import { Footer } from "../components/footer";
 import { HEADER_HEIGHT, Header } from "../components/header";
 
 const Player = dynamic(
-  () => import("@/app/components/player"),
+  () => import("@/app/components/Player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 

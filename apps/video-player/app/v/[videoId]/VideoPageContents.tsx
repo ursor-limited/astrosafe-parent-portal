@@ -13,7 +13,7 @@ import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
 
 const Player = dynamic(
-  () => import("@/app/components/player"),
+  () => import("@/app/components/Player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
