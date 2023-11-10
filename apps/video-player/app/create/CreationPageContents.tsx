@@ -88,14 +88,14 @@ function CreationPageContents(props: { details: IVideo }) {
 
   return props.details && provider && url ? (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? <Header noCreateNew /> : null}
       <Stack
         flex={1}
         justifyContent="center"
         alignItems="center"
         position="relative"
-        height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        //height={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        //minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="20px"
       >

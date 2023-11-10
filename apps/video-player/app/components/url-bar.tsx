@@ -71,7 +71,7 @@ const UrlBar = () => {
       ) : (
         <Stack direction="row" spacing="5px" sx={{ opacity: 0.9 }}>
           <Typography variant="small" bold color="rgb(255,255,255)">
-            Share
+            Share safe video link
           </Typography>
           <Image src={Clipboard} width={16} alt="Copy" />
         </Stack>

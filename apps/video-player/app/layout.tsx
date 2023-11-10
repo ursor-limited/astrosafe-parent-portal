@@ -10,6 +10,8 @@ import { UrsorButton } from "ui";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 
+export const HIDE_SCROLLBAR = { "::-webkit-scrollbar": { display: "none" } };
+
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ zIndex: 999999999999 }}>
       <body className={rubik.className}>
         <Stack
           height="100vh"
@@ -34,6 +36,7 @@ export default function RootLayout({
             backgroundImage: `url(${Background.src})`,
             backgroundSize: "cover",
             boxSizing: "border-box",
+            ...HIDE_SCROLLBAR,
           }}
           spacing="10px"
         >

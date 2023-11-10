@@ -57,8 +57,8 @@ function VideoPageContents(props: { details: IVideo }) {
         justifyContent="center"
         alignItems="center"
         position="relative"
-        height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        // height={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="10px"
         pb={!fullscreen ? "100px" : undefined}
@@ -77,7 +77,6 @@ function VideoPageContents(props: { details: IVideo }) {
           showUrlBar
           setFullscreen={setFullscreen}
         />
-
         {/* <Image src={Background} alt='Background'  */}
         {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
         {!fullscreen ? (
