@@ -9,6 +9,7 @@ import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
+import { createPortal } from "react-dom";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
@@ -52,14 +53,16 @@ const Player = (props: {
   // captionsOn: boolean;
   //preHovering: boolean;
   provider: "youtube" | "vimeo";
-  width: number;
-  height: number;
+  width?: number | string;
+  height?: number | string;
   top: string;
   setDuration: (duration: number) => void;
   startTime?: number;
   endTime?: number;
   showUrlBar?: boolean;
-  setFullscreen: (fs: boolean) => void;
+  //setFullscreen: (fs: boolean) => void;
+  fullScreen?: boolean;
+  fullScreenCallback?: () => void;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -204,8 +207,8 @@ const Player = (props: {
     }
   };
 
-  const [fullScreen, setFullScreen] = useState<boolean>(false);
-  useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
+  // const [fullScreen, setFullScreen] = useState<boolean>(false);
+  // useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
 
   const handleUserKeyPress = useCallback((event: any) => {
     if (event.code === "Space") {
@@ -250,29 +253,34 @@ const Player = (props: {
     };
   }, [document, handleMouseLeaveWindow]);
 
-  const [hovering, setHovering] = useState<boolean>(false);
-  const [pressed, setPressed] = useState<boolean>(false);
-  const [copied, setCopied] = useState<boolean>(false);
-
-  const [iframe, setIFrame] = useState<HTMLIFrameElement | null>(null);
-
-  // let { hoverProps, isHovered } = useHover({
-  //   // onHoverStart: (e) =>
-  //   //   setEvents((events) => [...events, `hover start with ${e.pointerType}`]),
-  //   // onHoverEnd: (e) =>
-  //   //   setEvents((events) => [...events, `hover end with ${e.pointerType}`]),
-  // });
+  const [url, setUrl] = useState<string | undefined>(undefined);
+  useEffect(
+    () =>
+      setUrl(
+        props.provider === "youtube"
+          ? `${props.url.replace(
+              "youtube.com",
+              "youtube-nocookie.com"
+            )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              props.startTime ? `start=${props.startTime}&` : ""
+            }${
+              props.endTime ? `end=${props.endTime}&` : ""
+            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+          : props.startTime
+          ? `${props.url}#t=${props.startTime}`
+          : props.url
+      ),
+    [props.endTime, props.startTime, props.url, props.provider]
+  );
 
   return (
     <Stack
-      width={fullScreen ? "100vw" : `${props.width}px`}
-      height={fullScreen ? "100vh" : `${props.height}px`}
-      marginLeft="auto"
-      marginRight="auto"
-      left={0}
-      right={0}
-      //position="absolute"
-      //top={fullScreen ? 0 : props.top}
+      width={props.width ?? "100%"}
+      height={props.height ?? "100%"}
+      // marginLeft="auto"
+      // marginRight="auto"
+      // left={0}
+      // right={0}
       alignItems="center"
       //p="100px"
       sx={{
@@ -286,9 +294,9 @@ const Player = (props: {
       onMouseMove={() => setOverlayHovering(true)}
     >
       <Stack
-        width={fullScreen ? "100vw" : `${props.width}px`}
-        height={fullScreen ? "100vh" : `${props.height}px`}
-        borderRadius={fullScreen ? 0 : "14px"}
+        width={props.width ?? "100%"}
+        height={props.height ?? "100%"}
+        borderRadius={props.fullScreen ? 0 : "14px"}
         boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
         overflow="hidden"
         position="relative"
@@ -302,35 +310,47 @@ const Player = (props: {
         <iframe
           onMouseEnter={() => setOverlayHovering(true)}
           onMouseLeave={() => setOverlayHovering(false)}
-          ref={setIFrame}
           id="player"
           title="Player"
-          width={fullScreen ? "100%" : props.width}
-          height={fullScreen ? "100%" : props.height}
+          width={props.width ?? "100%"}
+          height={props.height ?? "100%"}
           style={{
             transition: "0.7s",
             transitionTimingFunction: "ease-out",
           }}
-          src={
-            props.provider === "youtube"
-              ? `${props.url.replace(
-                  "youtube.com",
-                  "youtube-nocookie.com"
-                )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-                  props.startTime ? `start=${props.startTime}&` : ""
-                }${
-                  props.endTime ? `end=${props.endTime}&` : ""
-                }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
-              : props.startTime
-              ? `${props.url}#t=${props.startTime}`
-              : props.url
-          }
+          src={url}
           //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
           //@ts-ignore
           //allowFullScreen="allowFullScreen"
           frameBorder={0}
         />
+
+        {/* {fullScreen
+          ? createPortal(
+              <Stack width="100vw" height="100vh" position="absolute" top={0}>
+                <iframe
+                  onMouseEnter={() => setOverlayHovering(true)}
+                  onMouseLeave={() => setOverlayHovering(false)}
+                  id="player"
+                  title="Player"
+                  width={"100%"}
+                  height={"100%"}
+                  style={{
+                    transition: "0.7s",
+                    transitionTimingFunction: "ease-out",
+                  }}
+                  src={url}
+                  //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
+                  //@ts-ignore
+                  //allowFullScreen="allowFullScreen"
+                  frameBorder={0}
+                />
+              </Stack>,
+              document.body
+            )
+          : null} */}
         {/* <Stack
           position="absolute"
           top={0}
@@ -525,9 +545,9 @@ const Player = (props: {
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
             }}
-            onClick={() => setFullScreen(!fullScreen)}
+            onClick={props.fullScreenCallback}
           >
-            {fullScreen ? (
+            {props.fullScreen ? (
               <Image
                 src={NormalScreenIcon}
                 width={24}

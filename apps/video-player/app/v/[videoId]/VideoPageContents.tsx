@@ -11,6 +11,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import { HEADER_HEIGHT, Header } from "@/app/components/header";
 import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
+import { useWindowSize } from "usehooks-ts";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -48,51 +49,72 @@ function VideoPageContents(props: { details: IVideo }) {
   // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
+  const { width, height } = useWindowSize();
+
   return props.details && provider ? (
     <>
-      {!fullscreen ? <Header /> : null}
+      <Header />
       <Stack
         flex={1}
         px="60px"
         justifyContent="center"
         alignItems="center"
         position="relative"
-        height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        // height={`calc(100vh - ${HEADER_HEIGHT}px)`}
+        // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="10px"
-        pb={!fullscreen ? "100px" : undefined}
+        pb={"100px"}
       >
-        {!fullscreen ? <UrlBar /> : null}
+        <UrlBar />
         <Player
           key={props.details.id}
           url={props.details.url}
           provider={provider}
           startTime={props.details.startTime}
           endTime={props.details.endTime}
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
+          width={`${VIDEO_WIDTH}px`}
+          height={`${VIDEO_HEIGHT}px`}
           top="0px"
           setDuration={(d) => setDuration(d)}
           showUrlBar
-          setFullscreen={setFullscreen}
+          fullScreenCallback={() => setFullscreen(true)}
         />
+        {fullscreen
+          ? createPortal(
+              <Stack width="100vw" height="100vh" position="absolute" top={0}>
+                <Player
+                  key={props.details.id}
+                  url={props.details.url}
+                  provider={provider}
+                  startTime={props.details.startTime}
+                  endTime={props.details.endTime}
+                  top="0px"
+                  setDuration={(d) => setDuration(d)}
+                  showUrlBar
+                  fullScreen
+                  fullScreenCallback={() => setFullscreen(false)}
+                />
+              </Stack>,
+              document.body
+            )
+          : null}
 
         {/* <Image src={Background} alt='Background'  */}
         {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
-        {!fullscreen ? (
-          <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
-            <Stack spacing="5px">
-              <Typography bold variant="large" color={PALETTE.font.light}>
-                {props.details.title}
+
+        <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
+          <Stack spacing="5px">
+            <Typography bold variant="large" color={PALETTE.font.light}>
+              {props.details.title}
+            </Typography>
+            {props.details.description ? (
+              <Typography color={PALETTE.font.light}>
+                {props.details.description}
               </Typography>
-              {props.details.description ? (
-                <Typography color={PALETTE.font.light}>
-                  {props.details.description}
-                </Typography>
-              ) : null}
-            </Stack>
-            {/* <Stack>
+            ) : null}
+          </Stack>
+          {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">
               <Stack
                 width="100%"
@@ -119,8 +141,7 @@ function VideoPageContents(props: { details: IVideo }) {
               </Stack>
             </Stack>
           </Stack> */}
-          </Stack>
-        ) : null}
+        </Stack>
         {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
         Play
       </UrsorButton>
@@ -156,7 +177,7 @@ function VideoPageContents(props: { details: IVideo }) {
           </Stack>
         </Stack> */}
       </Stack>
-      {!fullscreen ? <Footer /> : null}
+      <Footer />
     </>
   ) : (
     <></>
