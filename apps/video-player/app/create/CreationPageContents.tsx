@@ -28,6 +28,8 @@ const Player = dynamic(
 const PADDING_TOP = "100px";
 export const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
+const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
+const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.2)";
 
 // export const getStaticProps = (async (context) => {
 //   //const videoDetails = ApiController.getVideoDetails(videoId)
@@ -149,10 +151,11 @@ function CreationPageContents(props: { details: IVideo }) {
               }
               placeholder="Url"
               width="100%"
-              backgroundColor="#204054"
+              backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
               borderRadius="12px"
               bold
-              color="rgba(255,255,255,0.86)"
+              color={INPUT_FIELD_TEXT_COLOR}
+              backgroundBlur
             />
           </CreationPageInputSection>
           <Player
@@ -177,7 +180,9 @@ function CreationPageContents(props: { details: IVideo }) {
                     }
                     placeholder="Title"
                     width="100%"
-                    backgroundColor={PALETTE.secondary.grey[2]}
+                    backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                    color={INPUT_FIELD_TEXT_COLOR}
+                    backgroundBlur
                   />
                 </CreationPageInputSection>
 
@@ -189,7 +194,9 @@ function CreationPageContents(props: { details: IVideo }) {
                     }
                     placeholder="Description"
                     width="100%"
-                    backgroundColor={PALETTE.secondary.grey[2]}
+                    backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                    color={INPUT_FIELD_TEXT_COLOR}
+                    backgroundBlur
                   />
                 </CreationPageInputSection>
 
