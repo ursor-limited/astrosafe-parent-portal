@@ -37,7 +37,7 @@ export default function UrsorInputField(props) {
     background: props.backgroundColor ?? PALETTE.secondary.grey[1],
     border: border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
     outline: props.outline,
-    backdropFilter: props.backgroundBlur ? 'blur(5px)' : undefined
+    backdropFilter: props.backgroundBlur
   };
 
   if (error) {

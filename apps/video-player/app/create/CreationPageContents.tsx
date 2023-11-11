@@ -29,7 +29,8 @@ const PADDING_TOP = "100px";
 export const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
-const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.2)";
+const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.22)";
+const BACKGROUND_BLUR = "blur(5px)";
 
 // export const getStaticProps = (async (context) => {
 //   //const videoDetails = ApiController.getVideoDetails(videoId)
@@ -49,9 +50,21 @@ const CreationPageInputSection = (props: {
   children: React.ReactNode;
 }) => (
   <Stack width="100%" spacing="5px" justifyContent="center" alignItems="center">
-    <Typography variant="medium" bold color="rgba(255,255,255,0.53)">
-      {props.title}
-    </Typography>
+    <Stack
+      sx={
+        {
+          // background: "linear-gradient(20deg, #0AE799, #1D62F6)",
+          // "-webkit-text-fill-color": "transparent",
+          // backgroundClip: "text",
+          // "-webkit-background-clip": "text",
+          // opacity: 0.5,
+        }
+      }
+    >
+      <Typography variant="medium" bold color="rgba(255,255,255,0.5)">
+        {props.title}
+      </Typography>
+    </Stack>
     {props.children}
   </Stack>
 );
@@ -119,7 +132,7 @@ function CreationPageContents(props: { details: IVideo }) {
           alignItems="center"
           pb="46px"
         >
-          <Image width={100} src={Logo} alt="Astro" />
+          <Image width={96} src={Logo} alt="Astro" />
           <Stack
             sx={{
               background: "linear-gradient(76deg, #F279C5, #FD9B41)",
@@ -155,7 +168,7 @@ function CreationPageContents(props: { details: IVideo }) {
               borderRadius="12px"
               bold
               color={INPUT_FIELD_TEXT_COLOR}
-              backgroundBlur
+              backgroundBlur={BACKGROUND_BLUR}
             />
           </CreationPageInputSection>
           <Player
@@ -182,7 +195,7 @@ function CreationPageContents(props: { details: IVideo }) {
                     width="100%"
                     backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
                     color={INPUT_FIELD_TEXT_COLOR}
-                    backgroundBlur
+                    backgroundBlur={BACKGROUND_BLUR}
                   />
                 </CreationPageInputSection>
 
@@ -196,12 +209,21 @@ function CreationPageContents(props: { details: IVideo }) {
                     width="100%"
                     backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
                     color={INPUT_FIELD_TEXT_COLOR}
-                    backgroundBlur
+                    backgroundBlur={BACKGROUND_BLUR}
                   />
                 </CreationPageInputSection>
 
                 <CreationPageInputSection title="You can also adjust the time">
-                  <Stack direction="row" width="100%">
+                  <Stack
+                    direction="row"
+                    width="100%"
+                    bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
+                    borderRadius="12px"
+                    p="30px"
+                    sx={{
+                      backdropFilter: BACKGROUND_BLUR,
+                    }}
+                  >
                     {/* <Stack
               height="3px"
               width="100%"
@@ -351,7 +373,7 @@ function CreationPageContents(props: { details: IVideo }) {
             ) : null} */}
             </Stack>
 
-            <Stack pt="40px" width="100%" alignItems="center">
+            <Stack pt="26px" width="100%" alignItems="center">
               <div>
                 <UrsorButton
                   dark
@@ -361,6 +383,7 @@ function CreationPageContents(props: { details: IVideo }) {
                     submit
                     //setEditing(!editing);
                   }
+                  backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                   endIcon={
                     <Image
                       src={ChevronLeft}
