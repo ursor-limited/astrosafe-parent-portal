@@ -25,13 +25,14 @@ export default function UrsorInputField(props) {
     onBlur,
     focusDelay,
     paddingLeft,
+    borderRadius
   } = props;
 
   const customSx = {
     width: width ?? DEFAULT_WIDTH,
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
-    borderRadius: BORDER_RADIUS,
+    borderRadius: props.borderRadius ?? BORDER_RADIUS,
     background: props.backgroundColor ?? PALETTE.secondary.grey[1],
     border: border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
     outline: props.outline,

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
-import Logo from "@/images/logo.svg";
+import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
 import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
@@ -111,6 +111,7 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
         spacing="20px"
       >
+        <Image width={200} src={Logo} alt="Astro" />
         <Stack
           sx={{
             background: "linear-gradient(76deg, #F279C5, #FD9B41)",
@@ -119,21 +120,44 @@ function CreationPageContents(props: { details: IVideo }) {
             "-webkit-background-clip": "text",
           }}
         >
-          <Stack width="750px" sx={{ textAlign: "center" }}>
+          <Stack width="430px" sx={{ textAlign: "center" }}>
             <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
-              Create your Video link
+              Create your safe video link
             </Typography>
           </Stack>
         </Stack>
-        <Player
-          url={url}
-          provider={provider}
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
-          setDuration={(d) => setDuration(d)}
-          top="120px"
-          setFullscreen={setFullscreen}
-        />
+        <Stack position="relative">
+          <Stack
+            position="absolute"
+            width="100%"
+            height="20px"
+            bgcolor="#204054"
+            top="60px"
+          />
+          <CreationPageInputSection title="YouTube or Vimeo url">
+            <UrsorInputField
+              value={url}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDescription(event.target.value)
+              }
+              placeholder="Url"
+              width="100%"
+              backgroundColor="#204054"
+              borderRadius="12px"
+              bold
+              color="rgba(255,255,255,0.86)"
+            />
+          </CreationPageInputSection>
+          <Player
+            url={url}
+            provider={provider}
+            width={VIDEO_WIDTH}
+            height={VIDEO_HEIGHT}
+            setDuration={(d) => setDuration(d)}
+            top="120px"
+            setFullscreen={setFullscreen}
+          />
+        </Stack>
         {!fullscreen ? (
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
             <Stack width="100%" position="relative" overflow="visible">
@@ -147,7 +171,6 @@ function CreationPageContents(props: { details: IVideo }) {
                     placeholder="Title"
                     width="100%"
                     backgroundColor={PALETTE.secondary.grey[2]}
-                    leftAlign
                   />
                 </CreationPageInputSection>
 
@@ -160,7 +183,6 @@ function CreationPageContents(props: { details: IVideo }) {
                     placeholder="Description"
                     width="100%"
                     backgroundColor={PALETTE.secondary.grey[2]}
-                    leftAlign
                   />
                 </CreationPageInputSection>
 
