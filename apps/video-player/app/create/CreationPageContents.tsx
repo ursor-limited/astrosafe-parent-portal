@@ -111,6 +111,20 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
         spacing="20px"
       >
+        <Stack
+          sx={{
+            background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+            "-webkit-text-fill-color": "transparent",
+            backgroundClip: "text",
+            "-webkit-background-clip": "text",
+          }}
+        >
+          <Stack width="750px" sx={{ textAlign: "center" }}>
+            <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
+              Create your Video link
+            </Typography>
+          </Stack>
+        </Stack>
         <Player
           url={url}
           provider={provider}
