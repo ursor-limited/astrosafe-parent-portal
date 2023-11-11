@@ -111,19 +111,26 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
         spacing="20px"
       >
-        <Image width={200} src={Logo} alt="Astro" />
         <Stack
-          sx={{
-            background: "linear-gradient(76deg, #F279C5, #FD9B41)",
-            "-webkit-text-fill-color": "transparent",
-            backgroundClip: "text",
-            "-webkit-background-clip": "text",
-          }}
+          spacing="15px"
+          justifyContent="center"
+          alignItems="center"
+          pb="46px"
         >
-          <Stack width="430px" sx={{ textAlign: "center" }}>
-            <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
-              Create your safe video link
-            </Typography>
+          <Image width={100} src={Logo} alt="Astro" />
+          <Stack
+            sx={{
+              background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+              "-webkit-text-fill-color": "transparent",
+              backgroundClip: "text",
+              "-webkit-background-clip": "text",
+            }}
+          >
+            <Stack width="430px" sx={{ textAlign: "center" }}>
+              <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
+                Create your safe video link
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
         <Stack position="relative">
