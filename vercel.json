@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/blog",
+      "destination": "https://www.astrosafe.co/blog"
+    },
+    { 
+      "source": "/",
+      "destination": "https://www.astrosafe.co"
+    },
+    { 
+      "source": "",
+      "destination": "https://www.astrosafe.co"
+    }
+  ]
+}
