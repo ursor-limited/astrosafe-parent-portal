@@ -4,6 +4,10 @@
       "source": "/blog",
       "destination": "https://www.astrosafe.co/blog"
     },
+    {
+      "source": "/tools",
+      "destination": "https://www.astrosafe.co/tools"
+    },
     { 
       "source": "/",
       "destination": "https://www.astrosafe.co"
