@@ -113,6 +113,8 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
+  const [playing, setPlaying] = useState<boolean>(false);
+
   return props.details && provider && url ? (
     <>
       {!fullscreen ? <Header noCreateNew /> : null}
@@ -170,9 +172,12 @@ function CreationPageContents(props: { details: IVideo }) {
               color={INPUT_FIELD_TEXT_COLOR}
             />
             <Stack
-              p="2px"
+              p={playing ? 0 : "2px"}
               borderRadius="15px"
-              sx={{ background: "linear-gradient(50deg, #F279C5, #FD9B41)" }}
+              sx={{
+                transition: "0.2s",
+                background: "linear-gradient(50deg, #F279C5, #FD9B41)",
+              }}
             >
               <Player
                 url={url}
@@ -182,6 +187,7 @@ function CreationPageContents(props: { details: IVideo }) {
                 setDuration={(d) => setDuration(d)}
                 top="120px"
                 setFullscreen={setFullscreen}
+                playingCallback={(p) => setPlaying(p)}
                 noGlow
               />
             </Stack>

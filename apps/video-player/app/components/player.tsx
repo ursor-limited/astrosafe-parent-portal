@@ -53,6 +53,7 @@ const Player = (props: {
   // captionsCallback: () => void;
   // captionsOn: boolean;
   //preHovering: boolean;
+  playingCallback?: (playing: boolean) => void;
   provider: "youtube" | "vimeo";
   width: number;
   height: number;
@@ -74,6 +75,10 @@ const Player = (props: {
   const [overallHovering, setOverallHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
+  useEffect(
+    () => props.playingCallback?.(playing),
+    [playing, props.playingCallback]
+  );
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
     useState<boolean>(false);
