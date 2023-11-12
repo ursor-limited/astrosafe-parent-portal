@@ -62,6 +62,7 @@ const Player = (props: {
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
+  noGlow?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -319,7 +320,11 @@ const Player = (props: {
         width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
         height={fullScreen ? videoHeight || "100vh" : `${props.height}px`}
         borderRadius={fullScreen ? 0 : "14px"}
-        boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
+        boxShadow={
+          !props.noGlow && !playing
+            ? "0 0 60px rgba(255,255,255,0.2)"
+            : undefined
+        }
         overflow="hidden"
         position="relative"
         sx={{

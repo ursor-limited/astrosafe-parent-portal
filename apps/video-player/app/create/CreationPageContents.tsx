@@ -148,15 +148,15 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           </Stack>
         </Stack>
-        <Stack position="relative">
+        <CreationPageInputSection title="YouTube or Vimeo url">
           <Stack
-            position="absolute"
-            width="100%"
-            height="20px"
-            bgcolor="#204054"
-            top="60px"
-          />
-          <CreationPageInputSection title="YouTube or Vimeo url">
+            bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
+            px="20px"
+            pb="20px"
+            boxSizing="border-box"
+            borderRadius="18px"
+            sx={{ backdropFilter: BACKGROUND_BLUR }}
+          >
             <UrsorInputField
               value={url}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -164,23 +164,29 @@ function CreationPageContents(props: { details: IVideo }) {
               }
               placeholder="Url"
               width="100%"
-              backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+              backgroundColor="transparent"
               borderRadius="12px"
               bold
               color={INPUT_FIELD_TEXT_COLOR}
-              backgroundBlur={BACKGROUND_BLUR}
             />
-          </CreationPageInputSection>
-          <Player
-            url={url}
-            provider={provider}
-            width={VIDEO_WIDTH}
-            height={VIDEO_HEIGHT}
-            setDuration={(d) => setDuration(d)}
-            top="120px"
-            setFullscreen={setFullscreen}
-          />
-        </Stack>
+            <Stack
+              p="2px"
+              borderRadius="15px"
+              sx={{ background: "linear-gradient(50deg, #F279C5, #FD9B41)" }}
+            >
+              <Player
+                url={url}
+                provider={provider}
+                width={VIDEO_WIDTH - 43}
+                height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
+                setDuration={(d) => setDuration(d)}
+                top="120px"
+                setFullscreen={setFullscreen}
+                noGlow
+              />
+            </Stack>
+          </Stack>
+        </CreationPageInputSection>
         {!fullscreen ? (
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
             <Stack width="100%" position="relative" overflow="visible">
