@@ -5,18 +5,6 @@
         "destination": "https://www.astrosafe.co/blog"
     },
     {
-        "source": "/blog/:blogid(\\[w-]+)",
-        "destination": "https://www.astrosafe.co/blog/:blogid"
-    },  
-    {
-        "source": "/tutorials",
-        "destination": "https://www.astrosafe.co/tutorials"
-    },
-    {
-        "source": "/tutorials/:tutorialid(\\[w-]+)",
-        "destination": "https://www.astrosafe.co/tutorials/:tutorialid"
-    },
-    {
         "source": "/tools",
         "destination": "https://www.astrosafe.co/tools"
     },
