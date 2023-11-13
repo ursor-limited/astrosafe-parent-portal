@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
@@ -26,6 +26,15 @@ const Player = dynamic(
   () => import("@/app/components/player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
+
+export const spin = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(180deg);
+}
+`;
 
 const PADDING_TOP = "100px";
 export const VIDEO_WIDTH = 845;
@@ -124,8 +133,11 @@ function CreationPageContents(props: { details: IVideo }) {
     duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const router = useRouter();
-  const submit = () =>
+  const submit = () => {
+    setLoading(true);
     ApiController.createVideo({
       title,
       description,
@@ -133,6 +145,7 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
     }).then((v) => router.push(`/v/${v.id}`));
+  };
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
@@ -144,10 +157,12 @@ function CreationPageContents(props: { details: IVideo }) {
         justifyContent="center"
         alignItems="center"
         position="relative"
-        //height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        //minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="20px"
+        sx={{
+          opacity: !loading ? 1 : 0,
+          transition: "0.5s",
+        }}
       >
         {!fullscreen ? (
           <Stack
@@ -463,6 +478,32 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           </Stack>
         ) : null}
+      </Stack>
+      <Stack
+        position="absolute"
+        top={0}
+        width="100vw"
+        height="100vh"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          opacity: loading ? 1 : 0,
+          transition: "0.5s",
+          pointerEvents: "none",
+        }}
+      >
+        <Stack
+          sx={{
+            width: "48px",
+            height: "47px",
+            background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+            "-webkit-mask-image": `url(${Kitemark.src})`,
+            maskImage: `url(${Kitemark.src})`,
+            animation: `${spin} 2s linear infinite`,
+          }}
+        >
+          {/* <Image src={Kitemark} height={100} width={100} alt="Loading" /> */}
+        </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </>
