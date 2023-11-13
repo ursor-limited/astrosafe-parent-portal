@@ -2,75 +2,75 @@
   "rewrites": [
     {
         "source": "/video",
-        "destination": "https://ursor.webflow.io/video"
+        "destination": "https://ursorinternet.com/video"
     },
     {
         "source": "/blog",
-        "destination": "https://ursor.webflow.io/blog"
+        "destination": "https://ursorinternet.com/blog"
     },
     {
         "source": "/blog/:blogid([a-zA-Z0-9-]+)",
-        "destination": "https://ursor.webflow.io/blog/:blogid"
+        "destination": "https://ursorinternet.com/blog/:blogid"
     },  
     {
         "source": "/tutorials",
-        "destination": "https://ursor.webflow.io/tutorials"
+        "destination": "https://ursorinternet.com/tutorials"
     },
     {
         "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
-        "destination": "https://ursor.webflow.io/tutorials/:tutorialid"
+        "destination": "https://ursorinternet.com/tutorials/:tutorialid"
     },
     {
         "source": "/tools",
-        "destination": "https://ursor.webflow.io/tools"
+        "destination": "https://ursorinternet.com/tools"
     },
     {
         "source": "/compare",
-        "destination": "https://ursor.webflow.io/compare"
+        "destination": "https://ursorinternet.com/compare"
     },
     {
         "source": "/about",
-        "destination": "https://ursor.webflow.io/about"
+        "destination": "https://ursorinternet.com/about"
     },
     {
         "source": "/privacy-policy",
-        "destination": "https://ursor.webflow.io/privacy-policy"
+        "destination": "https://ursorinternet.com/privacy-policy"
     },
     {
         "source": "/faqs",
-        "destination": "https://ursor.webflow.io/faqs"
+        "destination": "https://ursorinternet.com/faqs"
     },
     {
         "source": "/terms-and-conditions",
-        "destination": "https://ursor.webflow.io/terms-and-conditions"
+        "destination": "https://ursorinternet.com/terms-and-conditions"
     },
     {
         "source": "/child-privacy-policy",
-        "destination": "https://ursor.webflow.io/child-privacy-policy"
+        "destination": "https://ursorinternet.com/child-privacy-policy"
     },
     {
         "source": "/book-demo",
-        "destination": "https://ursor.webflow.io/book-demo"
+        "destination": "https://ursorinternet.com/book-demo"
     },
     {
         "source": "/websites-for-kids",
-        "destination": "https://ursor.webflow.io/websites-for-kids"
+        "destination": "https://ursorinternet.com/websites-for-kids"
     },
     {
         "source": "/chore-charts-for-kids",
-        "destination": "https://ursor.webflow.io/chore-charts-for-kids"
+        "destination": "https://ursorinternet.com/chore-charts-for-kids"
     },
     {
         "source": "/15-minutes-meditation-for-family-time-and-kids",
-        "destination": "https://ursor.webflow.io/15-minutes-meditation-for-family-time-and-kids"
+        "destination": "https://ursorinternet.com/15-minutes-meditation-for-family-time-and-kids"
     },
     { 
         "source": "/",
-        "destination": "https://ursor.webflow.io/"
+        "destination": "https://ursorinternet.com/"
     },
     { 
         "source": "",
-        "destination": "https://ursor.webflow.io"
+        "destination": "https://ursorinternet.com"
     }
   ]
 }
