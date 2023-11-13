@@ -103,6 +103,16 @@ function CreationPageContents(props: { details: IVideo }) {
       });
   }, [originalUrl]);
 
+  useEffect(() => {
+    provider === "youtube" &&
+      url &&
+      ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
+        (result) => {
+          setDescription(result.description);
+        }
+      );
+  }, [provider, url]);
+
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
