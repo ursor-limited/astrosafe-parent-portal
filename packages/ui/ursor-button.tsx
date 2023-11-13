@@ -127,6 +127,7 @@ export interface UrsorButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   backgroundColor?: string;
+  hoverOpacity?: number;
   fontColor?: string;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -181,6 +182,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       sx={{
         cursor: "pointer",
         transition: "0.2s",
+        background: props.backgroundColor,
+        opacity: state === "hover" ? props.hoverOpacity : undefined,
       }}
       width="fit-content"
     >
