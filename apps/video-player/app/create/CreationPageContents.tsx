@@ -429,6 +429,7 @@ function CreationPageContents(props: { details: IVideo }) {
                     //setEditing(!editing);
                   }
                   backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                  hoverOpacity={0.7}
                   endIcon={
                     <Image
                       src={ChevronLeft}
