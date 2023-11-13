@@ -78,8 +78,16 @@ function CreationPageContents(props: { details: IVideo }) {
   }, [props.details?.description]);
 
   const searchParams = useSearchParams();
-  const originalUrl = decodeURIComponent(searchParams.get("url") ?? "");
-  const provider = originalUrl.includes("vimeo") ? "vimeo" : "youtube";
+  const [originalUrl, setOriginalUrl] = useState<string>("");
+  useEffect(
+    () => setOriginalUrl(decodeURIComponent(searchParams.get("url") ?? "")),
+    [searchParams]
+  );
+  const [provider, zetProvider] = useState<"youtube" | "vimeo">("youtube");
+  useEffect(
+    () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
+    [originalUrl]
+  );
   const [url, setUrl] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   useEffect(() => {
@@ -128,71 +136,75 @@ function CreationPageContents(props: { details: IVideo }) {
         width="100vw"
         spacing="20px"
       >
-        <Stack
-          spacing="15px"
-          justifyContent="center"
-          alignItems="center"
-          pb="46px"
-        >
-          <Image width={96} src={Logo} alt="Astro" />
+        {!fullscreen ? (
           <Stack
-            sx={{
-              background: "linear-gradient(76deg, #F279C5, #FD9B41)",
-              "-webkit-text-fill-color": "transparent",
-              backgroundClip: "text",
-              "-webkit-background-clip": "text",
-            }}
+            spacing="15px"
+            justifyContent="center"
+            alignItems="center"
+            pb="46px"
           >
-            <Stack width="430px" sx={{ textAlign: "center" }}>
-              <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
-                Create your safe video link
-              </Typography>
-            </Stack>
-          </Stack>
-        </Stack>
-        <CreationPageInputSection title="YouTube or Vimeo url">
-          <Stack
-            bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
-            px="20px"
-            pb="20px"
-            boxSizing="border-box"
-            borderRadius="18px"
-            sx={{ backdropFilter: BACKGROUND_BLUR }}
-          >
-            <UrsorInputField
-              value={url}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setDescription(event.target.value)
-              }
-              placeholder="Url"
-              width="100%"
-              backgroundColor="transparent"
-              borderRadius="12px"
-              bold
-              color={INPUT_FIELD_TEXT_COLOR}
-            />
+            <Image width={96} src={Logo} alt="Astro" />
             <Stack
-              p={playing ? 0 : "2px"}
-              borderRadius="15px"
               sx={{
-                transition: "0.2s",
-                background: "linear-gradient(50deg, #F279C5, #FD9B41)",
+                background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+                "-webkit-text-fill-color": "transparent",
+                backgroundClip: "text",
+                "-webkit-background-clip": "text",
               }}
             >
-              <Player
-                url={url}
-                provider={provider}
-                width={VIDEO_WIDTH - 43}
-                height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => setDuration(d)}
-                top="120px"
-                setFullscreen={setFullscreen}
-                playingCallback={(p) => setPlaying(p)}
-                noGlow
-              />
+              <Stack width="430px" sx={{ textAlign: "center" }}>
+                <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
+                  Create your safe video link
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
-        </CreationPageInputSection>
+        ) : null}
+        {!fullscreen ? (
+          <CreationPageInputSection title="YouTube or Vimeo url">
+            <Stack
+              bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
+              px="20px"
+              pb="20px"
+              boxSizing="border-box"
+              borderRadius="18px"
+              sx={{ backdropFilter: BACKGROUND_BLUR }}
+            >
+              <UrsorInputField
+                value={url}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setOriginalUrl(event.target.value)
+                }
+                placeholder="Url"
+                width="100%"
+                backgroundColor="transparent"
+                borderRadius="12px"
+                bold
+                color={INPUT_FIELD_TEXT_COLOR}
+              />
+              <Stack
+                p={playing ? 0 : "1.8px"}
+                borderRadius="15px"
+                sx={{
+                  transition: "0.3s",
+                  background: "linear-gradient(50deg, #F279C5, #FD9B41)",
+                }}
+              >
+                <Player
+                  url={url}
+                  provider={provider}
+                  width={VIDEO_WIDTH - 43}
+                  height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
+                  setDuration={(d) => setDuration(d)}
+                  top="120px"
+                  setFullscreen={setFullscreen}
+                  playingCallback={(p) => setPlaying(p)}
+                  noGlow
+                />
+              </Stack>
+            </Stack>
+          </CreationPageInputSection>
+        ) : null}
         {!fullscreen ? (
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
             <Stack width="100%" position="relative" overflow="visible">

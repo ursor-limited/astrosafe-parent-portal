@@ -88,6 +88,7 @@ const Player = (props: {
   /* YOUTUBE specific */
   /////////////////////////
   function onPlayerReady(event: any) {
+    console.log(props.provider, "2222", event);
     setPlayer(event.target);
     setPlaying(false);
     //console.log(player?.getDuration());
@@ -184,8 +185,17 @@ const Player = (props: {
       : props.setDuration(player?.getDuration());
   }, [player?.getDuration()]);
 
+  const removePreviousScript = () => {
+    const scripts = document.getElementsByTagName("script");
+    const previousScript = [...scripts].find(
+      (s) => s.src.includes("youtube") || s.src.includes("vimeo")
+    );
+    previousScript?.parentNode?.removeChild(previousScript);
+  };
+
   useEffect(() => {
     if (!provider || !document) return;
+    removePreviousScript();
     var tag = document.createElement("script");
     tag.src =
       provider === "youtube"
@@ -300,7 +310,7 @@ const Player = (props: {
     );
   }, [width, height]);
 
-  return (
+  return url?.includes(props.provider) ? ( // if you change between vimeo and youtube, there is a moment when the provider and the url and mismatched
     <Stack
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
@@ -426,7 +436,7 @@ const Player = (props: {
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
             opacity: overlayHovering && playing ? 1 : 0,
-            backdropFilter: "blur(38px)",
+            backdropFilter: "blur(30px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
             svg: {
@@ -574,6 +584,8 @@ const Player = (props: {
         </Stack>
       </Stack>
     </Stack>
+  ) : (
+    <></>
   );
 };
 

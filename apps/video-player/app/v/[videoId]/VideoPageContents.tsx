@@ -53,6 +53,7 @@ function VideoPageContents(props: { details: IVideo }) {
       {!fullscreen ? <Header /> : null}
       <Stack
         flex={1}
+        minHeight="100vh"
         px="60px"
         justifyContent="center"
         alignItems="center"
