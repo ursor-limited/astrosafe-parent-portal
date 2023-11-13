@@ -48,6 +48,8 @@ function VideoPageContents(props: { details: IVideo }) {
   // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
+  console.log(props.details.description);
+
   return props.details && provider ? (
     <>
       {!fullscreen ? <Header /> : null}
@@ -86,11 +88,16 @@ function VideoPageContents(props: { details: IVideo }) {
               <Typography bold variant="large" color={PALETTE.font.light}>
                 {props.details.title}
               </Typography>
-              {props.details.description ? (
-                <Typography color={PALETTE.font.light}>
-                  {props.details.description}
-                </Typography>
-              ) : null}
+
+              <Stack spacing="5px">
+                {(props.details.description?.split("\n") ?? []).map(
+                  (line, i) => (
+                    <Typography key={i} color={PALETTE.font.light}>
+                      {line}
+                    </Typography>
+                  )
+                )}
+              </Stack>
             </Stack>
             {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">

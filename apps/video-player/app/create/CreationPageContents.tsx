@@ -101,6 +101,7 @@ function CreationPageContents(props: { details: IVideo }) {
       .then((details) => {
         setUrl(noCookiefy(extractUrl(details.html)));
         setTitle(details.title);
+        setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
       });
   }, [originalUrl]);
 
