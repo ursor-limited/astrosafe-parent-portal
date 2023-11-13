@@ -88,7 +88,6 @@ const Player = (props: {
   /* YOUTUBE specific */
   /////////////////////////
   function onPlayerReady(event: any) {
-    console.log(props.provider, "2222", event);
     setPlayer(event.target);
     setPlaying(false);
     //console.log(player?.getDuration());
@@ -135,7 +134,7 @@ const Player = (props: {
 
   const [player, setPlayer] = useState<any | undefined>(undefined);
   function loadVideo() {
-    if (provider === "youtube") {
+    if (url?.includes("youtube")) {
       //@ts-ignore
       window.YT.ready(onYoutubeReady);
     } else {
@@ -155,7 +154,7 @@ const Player = (props: {
   useEffect(
     () =>
       setUrl(
-        props.provider === "youtube"
+        props.url?.includes("youtube")
           ? // ? `${props.url.replace(
             //     "youtube.com"
             //     "youtube-nocookie.com"
@@ -170,7 +169,7 @@ const Player = (props: {
           ? `${props.url}#t=${props.startTime}`
           : props.url
       ),
-    [props.endTime, props.startTime, props.url, props.provider]
+    [props.endTime, props.startTime, props.url]
   );
 
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -178,34 +177,34 @@ const Player = (props: {
     if (!player?.getCurrentTime || !playing) return;
     const interval = setInterval(
       () =>
-        props.provider === "vimeo"
+        url?.includes("vimeo")
           ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
           : setCurrentTime(player.getCurrentTime()),
       500
     );
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [player, playing, props.provider]);
+  }, [player, playing, url]);
   useEffect(() => {
     if (
       (playing && props.endTime && currentTime > props.endTime) ||
       (playing && props.startTime && currentTime < props.startTime)
     ) {
-      props.provider === "vimeo"
+      url?.includes("vimeo")
         ? player?.setCurrentTime(props.startTime ?? 0)
         : player?.seekTo(props.startTime ?? 0);
-      props.provider === "vimeo" ? player?.pause() : player?.pauseVideo();
+      url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
       setEnded(true);
     }
   }, [props.endTime, currentTime, props.startTime, player]);
 
   useEffect(() => {
-    props.provider === "vimeo"
+    url?.includes("vimeo")
       ? player?.getDuration?.().then?.((d: number) => {
           props.setDuration(d);
         })
       : props.setDuration(player?.getDuration());
-  }, [player?.getDuration, url, props.provider, player]);
+  }, [player?.getDuration, url, player]);
 
   const removePreviousScript = () => {
     const scripts = document.getElementsByTagName("script");
@@ -216,30 +215,29 @@ const Player = (props: {
   };
 
   useEffect(() => {
-    if (!provider || !document) return;
+    if (!url || !document) return;
     removePreviousScript();
     var tag = document.createElement("script");
-    tag.src =
-      provider === "youtube"
-        ? "https://www.youtube.com/iframe_api"
-        : "https://player.vimeo.com/api/player.js";
+    tag.src = url?.includes("youtube")
+      ? "https://www.youtube.com/iframe_api"
+      : "https://player.vimeo.com/api/player.js";
     //@ts-ignore
     var firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
     tag.onload = loadVideo;
-  }, [provider, document]);
+  }, [url, document]);
 
   const resume = () => {
     setEnded(false);
     if (
-      provider === "youtube" &&
+      url?.includes("youtube") &&
       (player?.playerInfo.playerState === 2 ||
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
       //setPlaying(true);
-    } else if (provider === "vimeo") {
+    } else if (url?.includes("vimeo")) {
       player?.play();
     }
   };
@@ -310,7 +308,7 @@ const Player = (props: {
     );
   }, [width, height]);
 
-  return url?.includes(props.provider) ? ( // if you change between vimeo and youtube, there is a moment when the provider and the url and mismatched
+  return (
     <Stack
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
@@ -423,10 +421,10 @@ const Player = (props: {
           right={0}
           //right={0}
           width={
-            props.provider === "vimeo" ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
+            url?.includes("vimeo") ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
-          borderRadius={props.provider === "vimeo" ? "0 0 0 14px" : undefined}
-          height={props.provider === "vimeo" ? "130px" : "60px"}
+          borderRadius={url?.includes("vimeo") ? "0 0 0 14px" : undefined}
+          height={url?.includes("vimeo") ? "130px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
             opacity: overlayHovering && playing ? 1 : 0,
@@ -443,7 +441,7 @@ const Player = (props: {
           justifyContent="space-between"
           alignItems="center"
         />
-        {props.provider === "vimeo" ? (
+        {url?.includes("vimeo") ? (
           <Stack
             position="absolute"
             right={0}
@@ -578,8 +576,6 @@ const Player = (props: {
         </Stack>
       </Stack>
     </Stack>
-  ) : (
-    <></>
   );
 };
 
