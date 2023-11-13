@@ -122,7 +122,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
     duration && setRange([0, duration]);
-  }, [Math.floor(duration / 3)]);
+  }, [Math.floor((duration ?? 0) / 3)]);
 
   const router = useRouter();
   const submit = () =>
