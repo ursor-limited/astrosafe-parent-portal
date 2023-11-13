@@ -53,6 +53,10 @@
         "destination": "https://www.ursorinternet.com/book-demo"
     },
     {
+        "source": "/sign-up",
+        "destination": "https://www.ursorinternet.com/sign-up"
+    },
+    {
         "source": "/websites-for-kids",
         "destination": "https://www.ursorinternet.com/websites-for-kids"
     },
