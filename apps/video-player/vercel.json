@@ -1,11 +1,15 @@
 {
   "rewrites": [
     {
+        "source": "/video",
+        "destination": "https://www.astrosafe.co/video"
+    },
+    {
         "source": "/blog",
         "destination": "https://www.astrosafe.co/blog"
     },
     {
-        "source": "/blog/:blogid(\\^[w-]+\\$)",
+        "source": "/blog/:blogid([a-zA-Z0-9-]+)",
         "destination": "https://www.astrosafe.co/blog/:blogid"
     },  
     {
@@ -13,7 +17,7 @@
         "destination": "https://www.astrosafe.co/tutorials"
     },
     {
-        "source": "/tutorials/:tutorialid(\\d+)",
+        "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
         "destination": "https://www.astrosafe.co/tutorials/:tutorialid"
     },
     {
@@ -62,7 +66,7 @@
     },
     { 
         "source": "/",
-        "destination": "https://www.astrosafe.co"
+        "destination": "https://www.astrosafe.co/"
     },
     { 
         "source": "",
