@@ -52,7 +52,6 @@ function VideoPageContents(props: { details: IVideo }) {
     <>
       {!fullscreen ? <Header /> : null}
       <Stack
-        flex={1}
         minHeight="100vh"
         px="60px"
         justifyContent="center"
@@ -63,6 +62,7 @@ function VideoPageContents(props: { details: IVideo }) {
         width="100vw"
         spacing="10px"
         pb={!fullscreen ? "100px" : undefined}
+        overflow="scroll"
       >
         {!fullscreen ? <UrlBar /> : null}
         <Player
@@ -81,7 +81,11 @@ function VideoPageContents(props: { details: IVideo }) {
         {/* <Image src={Background} alt='Background'  */}
         {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
         {!fullscreen ? (
-          <Stack width={`${VIDEO_WIDTH}px`} justifyContent="space-between">
+          <Stack
+            width={`${VIDEO_WIDTH}px`}
+            justifyContent="space-between"
+            overflow="scroll"
+          >
             <Stack spacing="5px">
               <Typography bold variant="large" color={PALETTE.font.light}>
                 {props.details.title}
