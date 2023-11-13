@@ -114,10 +114,7 @@ function CreationPageContents(props: { details: IVideo }) {
     setPlaying(false);
     url?.includes("youtube") &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
-        (result) => {
-          console.log(result);
-          setDescription(result.description);
-        }
+        (result) => setDescription(result.description)
       );
   }, [url]);
 
@@ -235,10 +232,7 @@ function CreationPageContents(props: { details: IVideo }) {
                 provider={provider}
                 width={VIDEO_WIDTH - 43}
                 height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => {
-                  console.log(url, d);
-                  d && setDuration(d);
-                }}
+                setDuration={(d) => d && setDuration(d)}
                 top="120px"
                 setFullscreen={setFullscreen}
                 playingCallback={(p) => setPlaying(p)}

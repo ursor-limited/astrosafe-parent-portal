@@ -92,8 +92,6 @@ const Player = (props: {
   function onPlayerReady(event: any) {
     setPlayer(event.target);
     setPlaying(false);
-    //console.log(player?.getDuration());
-    //props.setDuration(player?.getDuration());
   }
 
   function onPlayerStateChange(event: any) {
