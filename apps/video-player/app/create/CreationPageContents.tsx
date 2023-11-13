@@ -7,6 +7,7 @@ import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
 import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
+import Kitemark from "@/images/kiteMark.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -435,7 +436,7 @@ function CreationPageContents(props: { details: IVideo }) {
                       src={ChevronLeft}
                       width={23}
                       height={23}
-                      alt="Pencil"
+                      alt="Chevron left"
                       style={{
                         transform: "rotate(180deg)",
                       }}
@@ -467,7 +468,34 @@ function CreationPageContents(props: { details: IVideo }) {
       {!fullscreen ? <Footer /> : null}
     </>
   ) : (
-    <></>
+    <Stack
+      spacing="30px"
+      width="100vw"
+      height="100vh"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Typography variant="h3" color="rgba(255,255,255,0.7)">
+        We don't have a page with this url.
+      </Typography>
+      <Image
+        src={Kitemark}
+        height={60}
+        width={60}
+        style={{ opacity: 0.7, transform: "rotate(26deg)" }}
+        alt="Star"
+      />
+      <UrsorButton
+        size="large"
+        dark
+        variant="tertiary"
+        startIcon={
+          <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
+        }
+      >
+        Let's try again
+      </UrsorButton>
+    </Stack>
   );
 }
 
