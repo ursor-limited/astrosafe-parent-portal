@@ -151,6 +151,28 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
 
+  const [url, setUrl] = useState<string | undefined>(undefined);
+  useEffect(
+    () =>
+      setUrl(
+        props.provider === "youtube"
+          ? // ? `${props.url.replace(
+            //     "youtube.com"
+            //     "youtube-nocookie.com"
+            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              // don't use nocookie, as it forces the youtube logo in there
+              props.startTime ? `start=${props.startTime}&` : ""
+            }${
+              props.endTime ? `end=${props.endTime}&` : ""
+            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+          : props.startTime
+          ? `${props.url}#t=${props.startTime}`
+          : props.url
+      ),
+    [props.endTime, props.startTime, props.url, props.provider]
+  );
+
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
@@ -179,11 +201,11 @@ const Player = (props: {
 
   useEffect(() => {
     props.provider === "vimeo"
-      ? player?.getDuration().then((d: number) => {
+      ? player?.getDuration?.().then?.((d: number) => {
           props.setDuration(d);
         })
       : props.setDuration(player?.getDuration());
-  }, [player?.getDuration()]);
+  }, [player?.getDuration, url, props.provider, player]);
 
   const removePreviousScript = () => {
     const scripts = document.getElementsByTagName("script");
@@ -267,28 +289,6 @@ const Player = (props: {
       document.removeEventListener("mouseleave", handleMouseLeaveWindow);
     };
   }, [document, handleMouseLeaveWindow]);
-
-  const [url, setUrl] = useState<string | undefined>(undefined);
-  useEffect(
-    () =>
-      setUrl(
-        props.provider === "youtube"
-          ? // ? `${props.url.replace(
-            //     "youtube.com"
-            //     "youtube-nocookie.com"
-            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-              // don't use nocookie, as it forces the youtube logo in there
-              props.startTime ? `start=${props.startTime}&` : ""
-            }${
-              props.endTime ? `end=${props.endTime}&` : ""
-            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
-          : props.startTime
-          ? `${props.url}#t=${props.startTime}`
-          : props.url
-      ),
-    [props.endTime, props.startTime, props.url, props.provider]
-  );
 
   const { width, height } = useWindowSize();
 

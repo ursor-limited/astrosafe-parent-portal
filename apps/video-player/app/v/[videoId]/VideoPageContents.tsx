@@ -48,8 +48,6 @@ function VideoPageContents(props: { details: IVideo }) {
   // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
-  console.log(props.details.description);
-
   return props.details && provider ? (
     <>
       {!fullscreen ? <Header /> : null}

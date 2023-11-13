@@ -48,24 +48,27 @@ const BACKGROUND_BLUR = "blur(5px)";
 
 const CreationPageInputSection = (props: {
   title: string;
+  hideTitle?: boolean;
   children: React.ReactNode;
 }) => (
   <Stack width="100%" spacing="5px" justifyContent="center" alignItems="center">
-    <Stack
-      sx={
-        {
-          // background: "linear-gradient(20deg, #0AE799, #1D62F6)",
-          // "-webkit-text-fill-color": "transparent",
-          // backgroundClip: "text",
-          // "-webkit-background-clip": "text",
-          // opacity: 0.5,
+    {!props.hideTitle ? (
+      <Stack
+        sx={
+          {
+            // background: "linear-gradient(20deg, #0AE799, #1D62F6)",
+            // "-webkit-text-fill-color": "transparent",
+            // backgroundClip: "text",
+            // "-webkit-background-clip": "text",
+            // opacity: 0.5,
+          }
         }
-      }
-    >
-      <Typography variant="medium" bold color="rgba(255,255,255,0.5)">
-        {props.title}
-      </Typography>
-    </Stack>
+      >
+        <Typography variant="medium" bold color="rgba(255,255,255,0.5)">
+          {props.title}
+        </Typography>
+      </Stack>
+    ) : null}
     {props.children}
   </Stack>
 );
@@ -118,8 +121,8 @@ function CreationPageContents(props: { details: IVideo }) {
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
-    !range && duration && setRange([0, duration]);
-  }, [duration, range]);
+    duration && setRange([0, duration]);
+  }, [Math.floor(duration / 3)]);
 
   const router = useRouter();
   const submit = () =>
@@ -172,16 +175,20 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           </Stack>
         ) : null}
-        {!fullscreen ? (
-          <CreationPageInputSection title="YouTube or Vimeo url">
-            <Stack
-              bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
-              px="20px"
-              pb="20px"
-              boxSizing="border-box"
-              borderRadius="18px"
-              sx={{ backdropFilter: BACKGROUND_BLUR }}
-            >
+
+        <CreationPageInputSection
+          title="YouTube or Vimeo url"
+          hideTitle={fullscreen}
+        >
+          <Stack
+            bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
+            px={fullscreen ? 0 : "20px"}
+            pb={fullscreen ? 0 : "20px"}
+            boxSizing="border-box"
+            borderRadius="18px"
+            sx={{ backdropFilter: BACKGROUND_BLUR }}
+          >
+            {!fullscreen ? (
               <UrsorInputField
                 value={url}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -194,29 +201,31 @@ function CreationPageContents(props: { details: IVideo }) {
                 bold
                 color={INPUT_FIELD_TEXT_COLOR}
               />
-              <Stack
-                p={playing ? 0 : "1.8px"}
-                borderRadius="15px"
-                sx={{
-                  transition: "0.3s",
-                  background: "linear-gradient(50deg, #F279C5, #FD9B41)",
-                }}
-              >
-                <Player
-                  url={url}
-                  provider={provider}
-                  width={VIDEO_WIDTH - 43}
-                  height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                  setDuration={(d) => setDuration(d)}
-                  top="120px"
-                  setFullscreen={setFullscreen}
-                  playingCallback={(p) => setPlaying(p)}
-                  noGlow
-                />
-              </Stack>
+            ) : null}
+            <Stack
+              p={fullscreen || playing ? 0 : "1.8px"}
+              borderRadius="15px"
+              sx={{
+                transition: "0.3s",
+                background: fullscreen
+                  ? "none"
+                  : "linear-gradient(50deg, #F279C5, #FD9B41)",
+              }}
+            >
+              <Player
+                url={url}
+                provider={provider}
+                width={VIDEO_WIDTH - 43}
+                height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
+                setDuration={(d) => setDuration(d)}
+                top="120px"
+                setFullscreen={setFullscreen}
+                playingCallback={(p) => setPlaying(p)}
+                noGlow
+              />
             </Stack>
-          </CreationPageInputSection>
-        ) : null}
+          </Stack>
+        </CreationPageInputSection>
         {!fullscreen ? (
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
             <Stack width="100%" position="relative" overflow="visible">
