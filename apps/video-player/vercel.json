@@ -2,75 +2,75 @@
   "rewrites": [
     {
         "source": "/video",
-        "destination": "https://www.astrosafe.co/video"
+        "destination": "https://ursor.webflow.io/video"
     },
     {
         "source": "/blog",
-        "destination": "https://www.astrosafe.co/blog"
+        "destination": "https://ursor.webflow.io/blog"
     },
     {
         "source": "/blog/:blogid([a-zA-Z0-9-]+)",
-        "destination": "https://www.astrosafe.co/blog/:blogid"
+        "destination": "https://ursor.webflow.io/blog/:blogid"
     },  
     {
         "source": "/tutorials",
-        "destination": "https://www.astrosafe.co/tutorials"
+        "destination": "https://ursor.webflow.io/tutorials"
     },
     {
         "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
-        "destination": "https://www.astrosafe.co/tutorials/:tutorialid"
+        "destination": "https://ursor.webflow.io/tutorials/:tutorialid"
     },
     {
         "source": "/tools",
-        "destination": "https://www.astrosafe.co/tools"
+        "destination": "https://ursor.webflow.io/tools"
     },
     {
         "source": "/compare",
-        "destination": "https://www.astrosafe.co/compare"
+        "destination": "https://ursor.webflow.io/compare"
     },
     {
         "source": "/about",
-        "destination": "https://www.astrosafe.co/about"
+        "destination": "https://ursor.webflow.io/about"
     },
     {
         "source": "/privacy-policy",
-        "destination": "https://www.astrosafe.co/privacy-policy"
+        "destination": "https://ursor.webflow.io/privacy-policy"
     },
     {
         "source": "/faqs",
-        "destination": "https://www.astrosafe.co/faqs"
+        "destination": "https://ursor.webflow.io/faqs"
     },
     {
         "source": "/terms-and-conditions",
-        "destination": "https://www.astrosafe.co/terms-and-conditions"
+        "destination": "https://ursor.webflow.io/terms-and-conditions"
     },
     {
         "source": "/child-privacy-policy",
-        "destination": "https://www.astrosafe.co/child-privacy-policy"
+        "destination": "https://ursor.webflow.io/child-privacy-policy"
     },
     {
         "source": "/book-demo",
-        "destination": "https://www.astrosafe.co/book-demo"
+        "destination": "https://ursor.webflow.io/book-demo"
     },
     {
         "source": "/websites-for-kids",
-        "destination": "https://www.astrosafe.co/websites-for-kids"
+        "destination": "https://ursor.webflow.io/websites-for-kids"
     },
     {
         "source": "/chore-charts-for-kids",
-        "destination": "https://www.astrosafe.co/chore-charts-for-kids"
+        "destination": "https://ursor.webflow.io/chore-charts-for-kids"
     },
     {
         "source": "/15-minutes-meditation-for-family-time-and-kids",
-        "destination": "https://www.astrosafe.co/15-minutes-meditation-for-family-time-and-kids"
+        "destination": "https://ursor.webflow.io/15-minutes-meditation-for-family-time-and-kids"
     },
     { 
         "source": "/",
-        "destination": "https://www.astrosafe.co/"
+        "destination": "https://ursor.webflow.io/"
     },
     { 
         "source": "",
-        "destination": "https://www.astrosafe.co"
+        "destination": "https://ursor.webflow.io"
     }
   ]
 }
