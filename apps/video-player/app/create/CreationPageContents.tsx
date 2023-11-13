@@ -15,6 +15,7 @@ import DurationLabel from "../v/[videoId]/duration-label";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
 import UrsorInputField from "@/app/components/ursor-input-field";
+import UrsorTextField from "@/app/components/ursor-text-field";
 import { PALETTE } from "../../../../packages/ui/palette";
 import { Typography, UrsorButton } from "ui";
 import { Footer } from "../components/footer";
@@ -234,7 +235,7 @@ function CreationPageContents(props: { details: IVideo }) {
                 </CreationPageInputSection>
 
                 <CreationPageInputSection title="Or add your own description?">
-                  <UrsorInputField
+                  <UrsorTextField
                     value={description}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                       setDescription(event.target.value)
@@ -252,7 +253,7 @@ function CreationPageContents(props: { details: IVideo }) {
                     direction="row"
                     width="100%"
                     bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
-                    borderRadius="12px"
+                    borderRadius="10px"
                     p="30px"
                     sx={{
                       backdropFilter: BACKGROUND_BLUR,

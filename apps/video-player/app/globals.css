@@ -20,3 +20,7 @@ body {
   color: rgb(var(--foreground-rgb));
   /* background-image: url('background.png') */
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
