@@ -202,15 +202,13 @@ const Player = (props: {
   }, [props.endTime, currentTime, props.startTime, player]);
 
   useEffect(() => {
-    player?.getDuration?.().then?.((d: number) => {
-      props.setDuration(d);
-    });
-    // url?.includes("vimeo")
-    //   ? player?.getDuration?.().then?.((d: number) => {
-    //       props.setDuration(d);
-    //     })
-    //   : props.setDuration(player?.getDuration());
-  }, [player?.getDuration, url, player]);
+    if (!url) return;
+    url.includes("vimeo")
+      ? player?.getDuration?.().then?.((d: number) => {
+          props.setDuration(d);
+        })
+      : props.setDuration(player?.getDuration());
+  }, [player?.getDuration, url, player?.origin]);
 
   const removePreviousScript = () => {
     const scripts = document.getElementsByTagName("script");

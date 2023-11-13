@@ -235,7 +235,10 @@ function CreationPageContents(props: { details: IVideo }) {
                 provider={provider}
                 width={VIDEO_WIDTH - 43}
                 height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => d && setDuration(d)}
+                setDuration={(d) => {
+                  console.log(url, d);
+                  d && setDuration(d);
+                }}
                 top="120px"
                 setFullscreen={setFullscreen}
                 playingCallback={(p) => setPlaying(p)}
