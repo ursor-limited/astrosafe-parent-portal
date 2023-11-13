@@ -191,7 +191,7 @@ function CreationPageContents(props: { details: IVideo }) {
           >
             {!fullscreen ? (
               <UrsorInputField
-                value={url}
+                value={originalUrl}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setOriginalUrl(event.target.value)
                 }
@@ -485,16 +485,18 @@ function CreationPageContents(props: { details: IVideo }) {
         style={{ opacity: 0.7, transform: "rotate(26deg)" }}
         alt="Star"
       />
-      <UrsorButton
-        size="large"
-        dark
-        variant="tertiary"
-        startIcon={
-          <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
-        }
-      >
-        Let's try again
-      </UrsorButton>
+      <Link href={"https://astrosafe.co/"} target={"_blank"}>
+        <UrsorButton
+          size="large"
+          dark
+          variant="tertiary"
+          startIcon={
+            <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
+          }
+        >
+          Let's try again
+        </UrsorButton>
+      </Link>
     </Stack>
   );
 }
