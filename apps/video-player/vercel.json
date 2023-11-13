@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+        "source": "/video",
+        "destination": "https://www.astrosafe.co/video"
+    },
+    {
         "source": "/blog",
         "destination": "https://www.astrosafe.co/blog"
     },
@@ -62,7 +66,7 @@
     },
     { 
         "source": "/",
-        "destination": "https://www.astrosafe.co"
+        "destination": "https://www.astrosafe.co/"
     },
     { 
         "source": "",
