@@ -493,7 +493,7 @@ function CreationPageContents(props: { details: IVideo }) {
       justifyContent="center"
     >
       <Typography variant="h3" color="rgba(255,255,255,0.7)">
-        We don't have a page with this url.
+        We don`t have a page with this url.
       </Typography>
       <Image
         src={Kitemark}
@@ -511,7 +511,7 @@ function CreationPageContents(props: { details: IVideo }) {
             <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
           }
         >
-          Let's try again
+          Let`s try again
         </UrsorButton>
       </Link>
     </Stack>
