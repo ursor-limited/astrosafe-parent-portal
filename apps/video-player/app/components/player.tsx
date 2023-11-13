@@ -68,10 +68,10 @@ const Player = (props: {
   noGlow?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
-  const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
-    undefined
-  );
-  useEffect(() => setProvider(props.provider), [props.provider]);
+  // const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
+  //   undefined
+  // );
+  // useEffect(() => setProvider(props.provider), [props.provider]);
 
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [overallHovering, setOverallHovering] = useState<boolean>(false);
@@ -146,6 +146,7 @@ const Player = (props: {
       playah.on("play", () => setPlaying(true));
       setPlayer(playah);
     }
+    setPlaying(false);
   }
 
   /////////////////////////
@@ -201,11 +202,14 @@ const Player = (props: {
   }, [props.endTime, currentTime, props.startTime, player]);
 
   useEffect(() => {
-    url?.includes("vimeo")
-      ? player?.getDuration?.().then?.((d: number) => {
-          props.setDuration(d);
-        })
-      : props.setDuration(player?.getDuration());
+    player?.getDuration?.().then?.((d: number) => {
+      props.setDuration(d);
+    });
+    // url?.includes("vimeo")
+    //   ? player?.getDuration?.().then?.((d: number) => {
+    //       props.setDuration(d);
+    //     })
+    //   : props.setDuration(player?.getDuration());
   }, [player?.getDuration, url, player]);
 
   const removePreviousScript = () => {

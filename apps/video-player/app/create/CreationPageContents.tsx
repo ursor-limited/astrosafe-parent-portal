@@ -77,6 +77,7 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
+  const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   useEffect(() => {
     props.details?.description && setDescription(props.details.description);
@@ -110,6 +111,7 @@ function CreationPageContents(props: { details: IVideo }) {
   }, [originalUrl]);
 
   useEffect(() => {
+    setPlaying(false);
     provider === "youtube" &&
       url &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
@@ -136,8 +138,6 @@ function CreationPageContents(props: { details: IVideo }) {
     }).then((v) => router.push(`/v/${v.id}`));
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
-
-  const [playing, setPlaying] = useState<boolean>(false);
 
   return props.details && provider && url ? (
     <>
@@ -235,7 +235,7 @@ function CreationPageContents(props: { details: IVideo }) {
                 provider={provider}
                 width={VIDEO_WIDTH - 43}
                 height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => setDuration(d)}
+                setDuration={(d) => d && setDuration(d)}
                 top="120px"
                 setFullscreen={setFullscreen}
                 playingCallback={(p) => setPlaying(p)}
@@ -466,21 +466,6 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           </Stack>
         ) : null}
-        {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
-        Play
-      </UrsorButton>
-      <UrsorButton variant="secondary" onClick={() => setPlaying(false)}>
-        Pause
-      </UrsorButton> */}
-
-        {/* <Stack
-          width="100%"
-          alignItems="center"
-          justifyContent="flex-end"
-          pt="50px"
-          pb="18px"
-          flex={1}
-        ></Stack> */}
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </>
