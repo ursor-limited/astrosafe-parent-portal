@@ -16,6 +16,8 @@ const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
 const VIDEO_DISABLINGS = ["fs", "rel"];
 
+const BORDER_RADIUS = "14px";
+
 export const PADDING_TOP = "120px";
 
 const fadeIn = keyframes`
@@ -322,11 +324,12 @@ const Player = (props: {
       onMouseMove={() => setOverlayHovering(true)}
       justifyContent="center"
       alignItems="center"
+      borderRadius={fullScreen ? 0 : BORDER_RADIUS}
+      overflow="clip"
     >
       <Stack
         width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
         height={fullScreen ? videoHeight || "100vh" : `${props.height}px`}
-        borderRadius={fullScreen ? 0 : "14px"}
         boxShadow={
           !props.noGlow && !playing
             ? "0 0 60px rgba(255,255,255,0.2)"
@@ -387,6 +390,7 @@ const Player = (props: {
         <Stack
           position="absolute"
           top={0}
+          borderRadius={BORDER_RADIUS}
           width="100%"
           height="100%"
           bgcolor={`rgba(0,0,0,${overlayHovering ? 0.6 : 0.72})`}
@@ -423,7 +427,11 @@ const Player = (props: {
           width={
             url?.includes("vimeo") ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
-          borderRadius={url?.includes("vimeo") ? "0 0 0 14px" : undefined}
+          borderRadius={
+            url?.includes("vimeo")
+              ? `0 ${BORDER_RADIUS} 0 ${BORDER_RADIUS}`
+              : `${BORDER_RADIUS} ${BORDER_RADIUS} 0 0`
+          }
           height={url?.includes("vimeo") ? "130px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,

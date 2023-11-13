@@ -204,15 +204,32 @@ function CreationPageContents(props: { details: IVideo }) {
               />
             ) : null}
             <Stack
-              p={fullscreen || playing ? 0 : "1.8px"}
+              p="1.8px"
               borderRadius="15px"
-              sx={{
-                transition: "0.3s",
-                background: fullscreen
-                  ? "none"
-                  : "linear-gradient(50deg, #F279C5, #FD9B41)",
-              }}
+              overflow="hidden"
+              sx={{ backdropFilter: "none" }}
+              // sx={{
+              //   transition: "0.3s",
+              //   background: fullscreen
+              //     ? "none"
+              //     : "linear-gradient(50deg, #F279C5, #FD9B41)",
+              // }}
+              position="relative"
             >
+              <Stack
+                top={0}
+                left={0}
+                width="100%"
+                height="100%"
+                position="absolute"
+                sx={{
+                  opacity: playing ? 0 : 1,
+                  transition: "0.3s",
+                  background: fullscreen
+                    ? "none"
+                    : "linear-gradient(50deg, #F279C5, #FD9B41)",
+                }}
+              />
               <Player
                 url={url}
                 provider={provider}
