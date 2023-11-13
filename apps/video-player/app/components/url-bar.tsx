@@ -5,7 +5,7 @@ import { Typography } from "ui";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
-import { VIDEO_WIDTH } from "../create/CreationPageContents";
+import { VIDEO_WIDTH } from "../video/create/CreationPageContents";
 import Clipboard from "@/images/icons/Clipboard.svg";
 
 const UrlBar = () => {
