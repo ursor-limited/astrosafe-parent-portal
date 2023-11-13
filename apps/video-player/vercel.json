@@ -13,7 +13,7 @@
         "destination": "https://www.astrosafe.co/tutorials"
     },
     {
-        "source": "/tutorials/:tutorialid(\\d+)",
+        "source": "/tutorials/:tutorialid(\\w+)",
         "destination": "https://www.astrosafe.co/tutorials/:tutorialid"
     },
     {
