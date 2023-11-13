@@ -53,6 +53,7 @@ const Player = (props: {
   // captionsCallback: () => void;
   // captionsOn: boolean;
   //preHovering: boolean;
+  playingCallback?: (playing: boolean) => void;
   provider: "youtube" | "vimeo";
   width: number;
   height: number;
@@ -62,6 +63,7 @@ const Player = (props: {
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
+  noGlow?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -73,6 +75,10 @@ const Player = (props: {
   const [overallHovering, setOverallHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
+  useEffect(
+    () => props.playingCallback?.(playing),
+    [playing, props.playingCallback]
+  );
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
     useState<boolean>(false);
@@ -82,6 +88,7 @@ const Player = (props: {
   /* YOUTUBE specific */
   /////////////////////////
   function onPlayerReady(event: any) {
+    console.log(props.provider, "2222", event);
     setPlayer(event.target);
     setPlaying(false);
     //console.log(player?.getDuration());
@@ -144,6 +151,28 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
 
+  const [url, setUrl] = useState<string | undefined>(undefined);
+  useEffect(
+    () =>
+      setUrl(
+        props.provider === "youtube"
+          ? // ? `${props.url.replace(
+            //     "youtube.com"
+            //     "youtube-nocookie.com"
+            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              // don't use nocookie, as it forces the youtube logo in there
+              props.startTime ? `start=${props.startTime}&` : ""
+            }${
+              props.endTime ? `end=${props.endTime}&` : ""
+            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+          : props.startTime
+          ? `${props.url}#t=${props.startTime}`
+          : props.url
+      ),
+    [props.endTime, props.startTime, props.url, props.provider]
+  );
+
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
@@ -172,14 +201,23 @@ const Player = (props: {
 
   useEffect(() => {
     props.provider === "vimeo"
-      ? player?.getDuration().then((d: number) => {
+      ? player?.getDuration?.().then?.((d: number) => {
           props.setDuration(d);
         })
       : props.setDuration(player?.getDuration());
-  }, [player?.getDuration()]);
+  }, [player?.getDuration, url, props.provider, player]);
+
+  const removePreviousScript = () => {
+    const scripts = document.getElementsByTagName("script");
+    const previousScript = [...scripts].find(
+      (s) => s.src.includes("youtube") || s.src.includes("vimeo")
+    );
+    previousScript?.parentNode?.removeChild(previousScript);
+  };
 
   useEffect(() => {
     if (!provider || !document) return;
+    removePreviousScript();
     var tag = document.createElement("script");
     tag.src =
       provider === "youtube"
@@ -252,28 +290,6 @@ const Player = (props: {
     };
   }, [document, handleMouseLeaveWindow]);
 
-  const [url, setUrl] = useState<string | undefined>(undefined);
-  useEffect(
-    () =>
-      setUrl(
-        props.provider === "youtube"
-          ? // ? `${props.url.replace(
-            //     "youtube.com"
-            //     "youtube-nocookie.com"
-            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-              // don't use nocookie, as it forces the youtube logo in there
-              props.startTime ? `start=${props.startTime}&` : ""
-            }${
-              props.endTime ? `end=${props.endTime}&` : ""
-            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
-          : props.startTime
-          ? `${props.url}#t=${props.startTime}`
-          : props.url
-      ),
-    [props.endTime, props.startTime, props.url, props.provider]
-  );
-
   const { width, height } = useWindowSize();
 
   const [videoWidth, setVideoWidth] = useState<number>(0);
@@ -294,7 +310,7 @@ const Player = (props: {
     );
   }, [width, height]);
 
-  return (
+  return url?.includes(props.provider) ? ( // if you change between vimeo and youtube, there is a moment when the provider and the url and mismatched
     <Stack
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
@@ -319,7 +335,11 @@ const Player = (props: {
         width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
         height={fullScreen ? videoHeight || "100vh" : `${props.height}px`}
         borderRadius={fullScreen ? 0 : "14px"}
-        boxShadow={!playing ? "0 0 60px rgba(255,255,255,0.2)" : undefined}
+        boxShadow={
+          !props.noGlow && !playing
+            ? "0 0 60px rgba(255,255,255,0.2)"
+            : undefined
+        }
         overflow="hidden"
         position="relative"
         sx={{
@@ -416,7 +436,7 @@ const Player = (props: {
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
             opacity: overlayHovering && playing ? 1 : 0,
-            backdropFilter: "blur(38px)",
+            backdropFilter: "blur(30px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
             svg: {
@@ -564,6 +584,8 @@ const Player = (props: {
         </Stack>
       </Stack>
     </Stack>
+  ) : (
+    <></>
   );
 };
 

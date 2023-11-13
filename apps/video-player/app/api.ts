@@ -12,7 +12,8 @@ const BACKEND_URLS = {
   development: "http://localhost:8080",
   staging:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
-  production: "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+  production:
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
@@ -23,13 +24,13 @@ const get = (route: string) =>
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
   );
 
-  const post = (route: string, body: any) =>
+const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
     {
       method: "POST",
-      headers: {'Content-Type': 'application/json'},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     }
   );
@@ -40,7 +41,7 @@ const patch = (route: string, body: any) =>
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
     {
       method: "PATCH",
-      headers: {'Content-Type': 'application/json'},
+      headers: { "Content-Type": "application/json" },
       body,
     }
   );
@@ -80,6 +81,12 @@ class ApiController {
       response.json()
     );
     //return api.get(`/video/${id}`).then((response: any) => response.data);
+  }
+
+  static async getYoutubeVideoDetails(id: string) {
+    return get(`video/youtubeVideoDetails/${id}/description`).then(
+      (response: any) => response.json()
+    );
   }
   // static async updateVideo(id: string, details: Partial<IVideo>) {
   //   return api
