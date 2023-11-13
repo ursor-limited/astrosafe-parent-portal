@@ -2,75 +2,79 @@
   "rewrites": [
     {
         "source": "/video",
-        "destination": "https://ursorinternet.com/video"
+        "destination": "https://www.ursorinternet.com/video"
     },
     {
         "source": "/blog",
-        "destination": "https://ursorinternet.com/blog"
+        "destination": "https://www.ursorinternet.com/blog"
     },
     {
         "source": "/blog/:blogid([a-zA-Z0-9-]+)",
-        "destination": "https://ursorinternet.com/blog/:blogid"
+        "destination": "https://www.ursorinternet.com/blog/:blogid"
     },  
     {
         "source": "/tutorials",
-        "destination": "https://ursorinternet.com/tutorials"
+        "destination": "https://www.ursorinternet.com/tutorials"
     },
     {
         "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
-        "destination": "https://ursorinternet.com/tutorials/:tutorialid"
+        "destination": "https://www.ursorinternet.com/tutorials/:tutorialid"
     },
     {
         "source": "/tools",
-        "destination": "https://ursorinternet.com/tools"
+        "destination": "https://www.ursorinternet.com/tools"
     },
     {
         "source": "/compare",
-        "destination": "https://ursorinternet.com/compare"
+        "destination": "https://www.ursorinternet.com/compare"
     },
     {
         "source": "/about",
-        "destination": "https://ursorinternet.com/about"
+        "destination": "https://www.ursorinternet.com/about"
     },
     {
         "source": "/privacy-policy",
-        "destination": "https://ursorinternet.com/privacy-policy"
+        "destination": "https://www.ursorinternet.com/privacy-policy"
     },
     {
         "source": "/faqs",
-        "destination": "https://ursorinternet.com/faqs"
+        "destination": "https://www.ursorinternet.com/faqs"
     },
     {
         "source": "/terms-and-conditions",
-        "destination": "https://ursorinternet.com/terms-and-conditions"
+        "destination": "https://www.ursorinternet.com/terms-and-conditions"
     },
     {
         "source": "/child-privacy-policy",
-        "destination": "https://ursorinternet.com/child-privacy-policy"
+        "destination": "https://www.ursorinternet.com/child-privacy-policy"
     },
     {
         "source": "/book-demo",
-        "destination": "https://ursorinternet.com/book-demo"
+        "destination": "https://www.ursorinternet.com/book-demo"
+    },
+    {
+        "source": "/sign-up",
+        "destination": "https://www.ursorinternet.com/sign-up"
     },
     {
         "source": "/websites-for-kids",
-        "destination": "https://ursorinternet.com/websites-for-kids"
+        "destination": "https://www.ursorinternet.com/websites-for-kids"
     },
     {
         "source": "/chore-charts-for-kids",
-        "destination": "https://ursorinternet.com/chore-charts-for-kids"
+        "destination": "https://www.ursorinternet.com/chore-charts-for-kids"
     },
     {
         "source": "/15-minutes-meditation-for-family-time-and-kids",
-        "destination": "https://ursorinternet.com/15-minutes-meditation-for-family-time-and-kids"
+        "destination": "https://www.ursorinternet.com/15-minutes-meditation-for-family-time-and-kids"
     },
     { 
         "source": "/",
-        "destination": "https://ursorinternet.com/"
+        "destination": "https://www.ursorinternet.com/"
     },
     { 
         "source": "",
-        "destination": "https://ursorinternet.com"
+        "destination": "https://www.ursorinternet.com"
     }
   ]
 }
