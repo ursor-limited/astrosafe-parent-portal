@@ -398,7 +398,7 @@ const Player = (props: {
             transition: "0.2s",
             opacity: ended || !playing ? 1 : 0,
             pointerEvents: playing && !ended ? "none" : undefined,
-            backdropFilter: "blur(5px)",
+            backdropFilter: "blur(13px)",
           }}
           justifyContent="center"
           alignItems="center"
@@ -425,7 +425,7 @@ const Player = (props: {
           right={0}
           //right={0}
           width={
-            url?.includes("vimeo") ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
+            url?.includes("vimeo") && playing ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
           borderRadius={
             url?.includes("vimeo")
@@ -436,6 +436,8 @@ const Player = (props: {
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
             opacity: overlayHovering && playing ? 1 : 0,
+            transition: !overlayHovering || !playing ? "0.2s" : 0,
+            transitionDelay: !overlayHovering || !playing ? "0.3s" : 0,
             backdropFilter: "blur(30px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
