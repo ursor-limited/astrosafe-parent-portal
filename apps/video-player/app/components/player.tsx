@@ -318,12 +318,6 @@ const Player = (props: {
       marginRight="auto"
       left={0}
       right={0}
-      //p="100px"
-      // sx={{
-      //   transition: "0.7s",
-      //   transitionTimingFunction: "ease-out",
-      // }}
-      //zIndex={99999}
       spacing="12px"
       onMouseEnter={() => setOverlayHovering(true)}
       onMouseLeave={() => setOverlayHovering(false)}
