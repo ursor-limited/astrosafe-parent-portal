@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 //import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
@@ -12,20 +12,29 @@ import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
-import DurationLabel from "../v/[videoId]/duration-label";
+import DurationLabel from "../../v/[videoId]/duration-label";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
 import UrsorInputField from "@/app/components/ursor-input-field";
 import UrsorTextField from "@/app/components/ursor-text-field";
-import { PALETTE } from "../../../../packages/ui/palette";
+import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton } from "ui";
-import { Footer } from "../components/footer";
-import { HEADER_HEIGHT, Header } from "../components/header";
+import { Footer } from "../../components/footer";
+import { HEADER_HEIGHT, Header } from "../../components/header";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
+
+export const spin = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(180deg);
+}
+`;
 
 const PADDING_TOP = "100px";
 export const VIDEO_WIDTH = 845;
@@ -77,6 +86,7 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
+  const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   useEffect(() => {
     props.details?.description && setDescription(props.details.description);
@@ -110,14 +120,12 @@ function CreationPageContents(props: { details: IVideo }) {
   }, [originalUrl]);
 
   useEffect(() => {
-    provider === "youtube" &&
-      url &&
+    setPlaying(false);
+    url?.includes("youtube") &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
-        (result) => {
-          setDescription(result.description);
-        }
+        (result) => setDescription(result.description)
       );
-  }, [provider, url]);
+  }, [url]);
 
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number[] | undefined>(undefined);
@@ -125,8 +133,11 @@ function CreationPageContents(props: { details: IVideo }) {
     duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const router = useRouter();
-  const submit = () =>
+  const submit = () => {
+    setLoading(true);
     ApiController.createVideo({
       title,
       description,
@@ -134,10 +145,9 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
     }).then((v) => router.push(`/v/${v.id}`));
+  };
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
-
-  const [playing, setPlaying] = useState<boolean>(false);
 
   return props.details && provider && url ? (
     <>
@@ -147,10 +157,12 @@ function CreationPageContents(props: { details: IVideo }) {
         justifyContent="center"
         alignItems="center"
         position="relative"
-        //height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        //minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         spacing="20px"
+        sx={{
+          opacity: !loading ? 1 : 0,
+          transition: "1s",
+        }}
       >
         {!fullscreen ? (
           <Stack
@@ -235,7 +247,7 @@ function CreationPageContents(props: { details: IVideo }) {
                 provider={provider}
                 width={VIDEO_WIDTH - 43}
                 height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => setDuration(d)}
+                setDuration={(d) => d && setDuration(d)}
                 top="120px"
                 setFullscreen={setFullscreen}
                 playingCallback={(p) => setPlaying(p)}
@@ -466,21 +478,32 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           </Stack>
         ) : null}
-        {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
-        Play
-      </UrsorButton>
-      <UrsorButton variant="secondary" onClick={() => setPlaying(false)}>
-        Pause
-      </UrsorButton> */}
-
-        {/* <Stack
-          width="100%"
-          alignItems="center"
-          justifyContent="flex-end"
-          pt="50px"
-          pb="18px"
-          flex={1}
-        ></Stack> */}
+      </Stack>
+      <Stack
+        position="absolute"
+        top={0}
+        width="100vw"
+        height="100vh"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          opacity: loading ? 1 : 0,
+          transition: "1s",
+          pointerEvents: "none",
+        }}
+      >
+        <Stack
+          sx={{
+            width: "48px",
+            height: "47px",
+            background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+            "-webkit-mask-image": `url(${Kitemark.src})`,
+            maskImage: `url(${Kitemark.src})`,
+            animation: `${spin} 2s linear infinite`,
+          }}
+        >
+          {/* <Image src={Kitemark} height={100} width={100} alt="Loading" /> */}
+        </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </>
