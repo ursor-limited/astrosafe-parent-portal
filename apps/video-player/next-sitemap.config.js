@@ -1,5 +1,5 @@
 module.exports = {
-    siteUrl: 'https://astrosafe.co',
+    siteUrl: 'https://www.astrosafe.co',
     generateRobotsTxt: true,
     sitemapSize: 7000,
   }

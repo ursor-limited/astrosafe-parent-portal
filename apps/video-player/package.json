@@ -4,11 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm run generate-sitemap && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postbuild": "next-sitemap --config=next-sitemap.config.js",
-    "generate-sitemap": "next-sitemap --config=next-sitemap.config.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
