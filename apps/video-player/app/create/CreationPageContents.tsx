@@ -161,7 +161,7 @@ function CreationPageContents(props: { details: IVideo }) {
         spacing="20px"
         sx={{
           opacity: !loading ? 1 : 0,
-          transition: "0.5s",
+          transition: "1s",
         }}
       >
         {!fullscreen ? (
@@ -488,7 +488,7 @@ function CreationPageContents(props: { details: IVideo }) {
         alignItems="center"
         sx={{
           opacity: loading ? 1 : 0,
-          transition: "0.5s",
+          transition: "1s",
           pointerEvents: "none",
         }}
       >

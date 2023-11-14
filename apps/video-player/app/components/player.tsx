@@ -314,6 +314,8 @@ const Player = (props: {
     <Stack
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
+      minWidth={fullScreen ? "100vw" : `${props.width}px`}
+      minHeight={fullScreen ? "100vh" : `${props.height}px`}
       marginLeft="auto"
       marginRight="auto"
       left={0}
