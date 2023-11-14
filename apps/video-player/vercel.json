@@ -70,11 +70,11 @@
     },
     { 
         "source": "/",
-        "destination": "https://proxy.astrosafe.co"
+        "destination": "https://proxy.astrosafe.co/"
     },
     { 
         "source": "",
-        "destination": "https://proxy.astrosafe.co"
+        "destination": "https://proxy.astrosafe.co/"
     }
   ]
 }
