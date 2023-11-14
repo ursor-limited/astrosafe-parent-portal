@@ -12,15 +12,15 @@ import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
-import DurationLabel from "../v/[videoId]/duration-label";
+import DurationLabel from "../../v/[videoId]/duration-label";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
 import UrsorInputField from "@/app/components/ursor-input-field";
 import UrsorTextField from "@/app/components/ursor-text-field";
-import { PALETTE } from "../../../../packages/ui/palette";
+import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton } from "ui";
-import { Footer } from "../components/footer";
-import { HEADER_HEIGHT, Header } from "../components/header";
+import { Footer } from "../../components/footer";
+import { HEADER_HEIGHT, Header } from "../../components/header";
 
 const Player = dynamic(
   () => import("@/app/components/player"),

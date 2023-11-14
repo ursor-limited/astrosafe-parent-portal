@@ -1,72 +1,80 @@
 {
   "rewrites": [
     {
-        "source": "/blog",
-        "destination": "https://www.astrosafe.co/blog"
+        "source": "/video",
+        "destination": "https://www.ursorinternet.com/video"
     },
     {
-        "source": "/blog/:blogid(\\^[w-]+\\$)",
-        "destination": "https://www.astrosafe.co/blog/:blogid"
+        "source": "/blog",
+        "destination": "https://www.ursorinternet.com/blog"
+    },
+    {
+        "source": "/blog/:blogid([a-zA-Z0-9-]+)",
+        "destination": "https://www.ursorinternet.com/blog/:blogid"
     },  
     {
         "source": "/tutorials",
-        "destination": "https://www.astrosafe.co/tutorials"
+        "destination": "https://www.ursorinternet.com/tutorials"
     },
     {
-        "source": "/tutorials/:tutorialid(\\d+)",
-        "destination": "https://www.astrosafe.co/tutorials/:tutorialid"
+        "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
+        "destination": "https://www.ursorinternet.com/tutorials/:tutorialid"
     },
     {
         "source": "/tools",
-        "destination": "https://www.astrosafe.co/tools"
+        "destination": "https://www.ursorinternet.com/tools"
     },
     {
         "source": "/compare",
-        "destination": "https://www.astrosafe.co/compare"
+        "destination": "https://www.ursorinternet.com/compare"
     },
     {
         "source": "/about",
-        "destination": "https://www.astrosafe.co/about"
+        "destination": "https://www.ursorinternet.com/about"
     },
     {
         "source": "/privacy-policy",
-        "destination": "https://www.astrosafe.co/privacy-policy"
+        "destination": "https://www.ursorinternet.com/privacy-policy"
     },
     {
         "source": "/faqs",
-        "destination": "https://www.astrosafe.co/faqs"
+        "destination": "https://www.ursorinternet.com/faqs"
     },
     {
         "source": "/terms-and-conditions",
-        "destination": "https://www.astrosafe.co/terms-and-conditions"
+        "destination": "https://www.ursorinternet.com/terms-and-conditions"
     },
     {
         "source": "/child-privacy-policy",
-        "destination": "https://www.astrosafe.co/child-privacy-policy"
+        "destination": "https://www.ursorinternet.com/child-privacy-policy"
     },
     {
         "source": "/book-demo",
-        "destination": "https://www.astrosafe.co/book-demo"
+        "destination": "https://www.ursorinternet.com/book-demo"
+    },
+    {
+        "source": "/sign-up",
+        "destination": "https://www.ursorinternet.com/sign-up"
     },
     {
         "source": "/websites-for-kids",
-        "destination": "https://www.astrosafe.co/websites-for-kids"
+        "destination": "https://www.ursorinternet.com/websites-for-kids"
     },
     {
         "source": "/chore-charts-for-kids",
-        "destination": "https://www.astrosafe.co/chore-charts-for-kids"
+        "destination": "https://www.ursorinternet.com/chore-charts-for-kids"
     },
     {
         "source": "/15-minutes-meditation-for-family-time-and-kids",
-        "destination": "https://www.astrosafe.co/15-minutes-meditation-for-family-time-and-kids"
+        "destination": "https://www.ursorinternet.com/15-minutes-meditation-for-family-time-and-kids"
     },
     { 
         "source": "/",
-        "destination": "https://www.astrosafe.co"
+        "destination": "https://www.ursorinternet.com"
     },
     { 
         "source": "",
-        "destination": "https://www.astrosafe.co"
+        "destination": "https://www.ursorinternet.com"
     }
   ]
 }

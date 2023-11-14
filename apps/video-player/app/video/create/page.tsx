@@ -1,5 +1,5 @@
 import React from "react";
-import ApiController from "../api";
+import ApiController from "../../api";
 import CreationPageContents from "./CreationPageContents";
 
 async function CreationPage({ params }: { params: { videoId: string } }) {
