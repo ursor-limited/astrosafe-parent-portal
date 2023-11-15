@@ -260,7 +260,7 @@ function CreationPageContents(props: { details: IVideo }) {
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
             <Stack width="100%" position="relative" overflow="visible">
               <Stack width="100%" spacing="32px">
-                <CreationPageInputSection title="Want to change the title?">
+                <CreationPageInputSection title="Title">
                   <UrsorInputField
                     value={title}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -274,7 +274,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   />
                 </CreationPageInputSection>
 
-                <CreationPageInputSection title="Or add your own description?">
+                <CreationPageInputSection title="Description">
                   <UrsorTextField
                     value={description}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -288,7 +288,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   />
                 </CreationPageInputSection>
 
-                <CreationPageInputSection title="You can also adjust the time">
+                <CreationPageInputSection title="Select a start time and end time">
                   <Stack
                     direction="row"
                     width="100%"
