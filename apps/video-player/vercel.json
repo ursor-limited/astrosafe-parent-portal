@@ -11,7 +11,27 @@
     {
         "source": "/blog/:blogid([a-zA-Z0-9-]+)",
         "destination": "https://proxy.astrosafe.co/blog/:blogid"
+    },
+    {
+        "source": "/app",
+        "destination": "https://proxy.astrosafe.co/app"
     },  
+    {
+        "source": "/app/:apppage([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/app/:apppage"
+    },
+    {
+        "source": "/features",
+        "destination": "https://proxy.astrosafe.co/features"
+    },  
+    {
+        "source": "/features/:featurespage([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/features/:featurespage"
+    },
+    {
+        "source": "/search",
+        "destination": "https://proxy.astrosafe.co/search"
+    },
     {
         "source": "/tutorials",
         "destination": "https://proxy.astrosafe.co/tutorials"
