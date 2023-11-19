@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 async function fetchAndRenameSitemap(sitemapUrl: string):  Promise<ISitemap[]> {
   try {
     // Fetch the sitemap
+    //
     const response = await axios.get(sitemapUrl);
     const sitemapText = response.data;
 
