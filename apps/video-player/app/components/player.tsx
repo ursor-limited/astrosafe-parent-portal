@@ -338,9 +338,6 @@ const Player = (props: {
         position="relative"
         sx={{
           cursor: "pointer",
-          transition: "0.7s",
-          // transitionTimingFunction: "ease-out",
-          //transform: `rotate(${props.fullScreen ? 360 : 0}deg)`,
         }}
       >
         <iframe
@@ -389,7 +386,7 @@ const Player = (props: {
         <Stack
           position="absolute"
           top={0}
-          borderRadius={BORDER_RADIUS}
+          borderRadius={fullScreen ? undefined : BORDER_RADIUS}
           width="100%"
           height="100%"
           bgcolor={`rgba(0,0,0,${overlayHovering ? 0.6 : 0.72})`}

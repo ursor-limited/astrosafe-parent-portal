@@ -64,7 +64,7 @@ function VideoPageContents(props: { details: IVideo }) {
         pb={!fullscreen ? "100px" : undefined}
         //overflow="scroll"
         spacing="14px"
-        pt="70px"
+        pt={fullscreen ? 0 : "70px"}
       >
         {!fullscreen ? (
           <Stack width={`904px`}>
@@ -73,7 +73,7 @@ function VideoPageContents(props: { details: IVideo }) {
         ) : null}
         <Stack
           spacing="10px"
-          py="24px"
+          py={fullscreen ? 0 : "24px"}
           px="28px"
           borderRadius="12px"
           bgcolor="rgba(0,0,0,0.15)"
@@ -81,19 +81,21 @@ function VideoPageContents(props: { details: IVideo }) {
             backdropFilter: "blur(7px)",
           }}
         >
-          <Stack
-            sx={{
-              background: "linear-gradient(45deg, #F279C5, #FD9B41)",
-              "-webkit-text-fill-color": "transparent",
-              backgroundClip: "text",
-              "-webkit-background-clip": "text",
-            }}
-            width="fit-content"
-          >
-            <Typography bold variant="h4" color={PALETTE.font.light}>
-              {props.details.title}
-            </Typography>
-          </Stack>
+          {!fullscreen ? (
+            <Stack
+              sx={{
+                background: "linear-gradient(45deg, #F279C5, #FD9B41)",
+                "-webkit-text-fill-color": "transparent",
+                backgroundClip: "text",
+                "-webkit-background-clip": "text",
+              }}
+              width="fit-content"
+            >
+              <Typography bold variant="h4" color={PALETTE.font.light}>
+                {props.details.title}
+              </Typography>
+            </Stack>
+          ) : null}
           <Stack
             p="1.8px"
             borderRadius="15px"
@@ -137,10 +139,15 @@ function VideoPageContents(props: { details: IVideo }) {
               width={`${VIDEO_WIDTH}px`}
               justifyContent="space-between"
               overflow="scroll"
-              pt="12px"
+              pt="5px"
               //px="16px"
             >
-              <Stack p="20px" bgcolor={"rgba(0,0,0,0.3)"} borderRadius="12px">
+              <Stack
+                py="20px"
+                px="30px"
+                bgcolor={"rgba(0,0,0,0.3)"}
+                borderRadius="12px"
+              >
                 <Stack spacing="5px">
                   {(props.details.description?.split("\n") ?? []).map(
                     (line, i) => (

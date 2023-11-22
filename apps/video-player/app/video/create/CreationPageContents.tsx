@@ -181,54 +181,56 @@ function CreationPageContents(props: { details: IVideo }) {
         ) : null}
 
         <Stack spacing="15px">
-          <Stack direction="row" spacing="14px" alignItems="flex-end">
-            <Stack flex={1}>
-              <CreationPageInputSection title="Title">
-                <UrsorInputField
-                  value={title}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setTitle(event.target.value)
-                  }
-                  placeholder="Title"
-                  width="100%"
-                  backgroundColor={"rgba(0,0,0,0.25)"}
-                  color={INPUT_FIELD_TEXT_COLOR}
-                  backgroundBlur="blur(3px)"
-                  leftAlign
-                  boldValue
-                  fontSize={FONT_SIZES["large"]}
-                  height="53px"
-                />
-              </CreationPageInputSection>
-            </Stack>
-
-            <Stack>
-              <UrsorButton
-                dark
-                size="large"
-                variant="tertiary"
-                onClick={
-                  submit
-                  //setEditing(!editing);
-                }
-                backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-                hoverOpacity={0.7}
-                endIcon={
-                  <Image
-                    src={ChevronLeft}
-                    width={23}
-                    height={23}
-                    alt="Chevron left"
-                    style={{
-                      transform: "rotate(180deg)",
-                    }}
+          {fullscreen ? (
+            <Stack direction="row" spacing="14px" alignItems="flex-end">
+              <Stack flex={1}>
+                <CreationPageInputSection title="Title">
+                  <UrsorInputField
+                    value={title}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setTitle(event.target.value)
+                    }
+                    placeholder="Title"
+                    width="100%"
+                    backgroundColor={"rgba(0,0,0,0.25)"}
+                    color={INPUT_FIELD_TEXT_COLOR}
+                    backgroundBlur="blur(3px)"
+                    leftAlign
+                    boldValue
+                    fontSize={FONT_SIZES["large"]}
+                    height="53px"
                   />
-                }
-              >
-                Complete
-              </UrsorButton>
+                </CreationPageInputSection>
+              </Stack>
+
+              <Stack>
+                <UrsorButton
+                  dark
+                  size="large"
+                  variant="tertiary"
+                  onClick={
+                    submit
+                    //setEditing(!editing);
+                  }
+                  backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                  hoverOpacity={0.7}
+                  endIcon={
+                    <Image
+                      src={ChevronLeft}
+                      width={23}
+                      height={23}
+                      alt="Chevron left"
+                      style={{
+                        transform: "rotate(180deg)",
+                      }}
+                    />
+                  }
+                >
+                  Complete
+                </UrsorButton>
+              </Stack>
             </Stack>
-          </Stack>
+          ) : null}
           {/* <Stack
             p="1.8px"
             borderRadius="15px"
