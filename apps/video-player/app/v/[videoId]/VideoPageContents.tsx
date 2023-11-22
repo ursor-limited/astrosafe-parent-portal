@@ -67,19 +67,20 @@ function VideoPageContents(props: { details: IVideo }) {
         pt={fullscreen ? 0 : "70px"}
       >
         {!fullscreen ? (
-          <Stack width={`904px`}>
+          <Stack width={VIDEO_WIDTH} pb="70px">
             <UrlBar />
           </Stack>
         ) : null}
         <Stack
-          spacing="10px"
-          py={fullscreen ? 0 : "24px"}
-          px="28px"
-          borderRadius="12px"
-          bgcolor="rgba(0,0,0,0.15)"
-          sx={{
-            backdropFilter: "blur(7px)",
-          }}
+          spacing="18px"
+          alignItems="center"
+          // py={fullscreen ? 0 : "24px"}
+          //px="28px"
+          //borderRadius="12px"
+          //bgcolor="rgba(0,0,0,0.15)"
+          // sx={{
+          //   backdropFilter: "blur(7px)",
+          // }}
         >
           {!fullscreen ? (
             <Stack
@@ -141,11 +142,12 @@ function VideoPageContents(props: { details: IVideo }) {
               overflow="scroll"
               pt="5px"
               //px="16px"
+              sx={{ backdropFilter: "blur(7px)" }}
             >
               <Stack
                 py="20px"
                 px="30px"
-                bgcolor={"rgba(0,0,0,0.3)"}
+                bgcolor={"rgba(0,0,0,0.15)"}
                 borderRadius="12px"
               >
                 <Stack spacing="5px">

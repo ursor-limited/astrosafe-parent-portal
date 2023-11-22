@@ -141,7 +141,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   return props.details && provider && url ? (
-    <>
+    <Stack>
       {!fullscreen ? <Header noCreateNew /> : null}
       <Stack
         flex={1}
@@ -181,7 +181,7 @@ function CreationPageContents(props: { details: IVideo }) {
         ) : null}
 
         <Stack spacing="15px">
-          {fullscreen ? (
+          {!fullscreen ? (
             <Stack direction="row" spacing="14px" alignItems="flex-end">
               <Stack flex={1}>
                 <CreationPageInputSection title="Title">
@@ -551,7 +551,7 @@ function CreationPageContents(props: { details: IVideo }) {
         </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
-    </>
+    </Stack>
   ) : (
     <Stack
       spacing="30px"
