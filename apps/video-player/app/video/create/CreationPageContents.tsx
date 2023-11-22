@@ -20,7 +20,7 @@ import UrsorTextField from "@/app/components/ursor-text-field";
 import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
-import { HEADER_HEIGHT, Header } from "../../components/header";
+import { Header } from "../../components/header";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -190,13 +190,13 @@ function CreationPageContents(props: { details: IVideo }) {
                   }
                   placeholder="Title"
                   width="100%"
-                  backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                  backgroundColor={"rgba(0,0,0,0.25)"}
                   color={INPUT_FIELD_TEXT_COLOR}
-                  backgroundBlur={BACKGROUND_BLUR}
+                  backgroundBlur="blur(3px)"
                   leftAlign
                   boldValue
                 />
-              </CreationPageInputSection>{" "}
+              </CreationPageInputSection>
             </Stack>
 
             <Stack>
@@ -256,7 +256,6 @@ function CreationPageContents(props: { details: IVideo }) {
             top="120px"
             setFullscreen={setFullscreen}
             playingCallback={(p) => setPlaying(p)}
-            noGlow
           />
           {/* </Stack> */}
         </Stack>
