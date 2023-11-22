@@ -64,6 +64,24 @@ function VideoPageContents(props: { details: IVideo }) {
         pb={!fullscreen ? "100px" : undefined}
         overflow="scroll"
       >
+        <Stack
+          width={VIDEO_WIDTH * 0.8}
+          sx={{
+            background: "linear-gradient(45deg, #F279C5, #FD9B41)",
+            "-webkit-text-fill-color": "transparent",
+            backgroundClip: "text",
+            "-webkit-background-clip": "text",
+          }}
+        >
+          <Typography
+            bold
+            variant="large"
+            color={PALETTE.font.light}
+            sx={{ textAlign: "center" }}
+          >
+            {props.details.title}
+          </Typography>
+        </Stack>
         {!fullscreen ? <UrlBar /> : null}
         <Player
           key={props.details.id}
@@ -87,20 +105,13 @@ function VideoPageContents(props: { details: IVideo }) {
             overflow="scroll"
           >
             <Stack spacing="5px">
-              <Typography bold variant="large" color={PALETTE.font.light}>
-                {props.details.title}
-              </Typography>
-
-              <Stack spacing="5px">
-                {(props.details.description?.split("\n") ?? []).map(
-                  (line, i) => (
-                    <Typography key={i} color={PALETTE.font.light}>
-                      {line}
-                    </Typography>
-                  )
-                )}
-              </Stack>
+              {(props.details.description?.split("\n") ?? []).map((line, i) => (
+                <Typography key={i} color={PALETTE.font.light}>
+                  {line}
+                </Typography>
+              ))}
             </Stack>
+
             {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">
               <Stack

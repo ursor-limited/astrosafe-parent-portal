@@ -1,7 +1,7 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { Typography } from "ui";
+import { Typography, UrsorButton } from "ui";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
@@ -27,12 +27,14 @@ const UrlBar = () => {
       // right={0}
       //top="120px"
       //position="absolute"
+      height="50px"
       px="18px"
       py="8px"
-      bgcolor={hovering ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.3)"}
+      bgcolor={hovering ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.3)"}
       borderRadius="12px"
       direction="row"
       justifyContent="space-between"
+      alignItems="center"
       onClick={() => {
         setCopied(true);
         navigator.clipboard.writeText(currentPageUrl);
@@ -69,12 +71,17 @@ const UrlBar = () => {
           Copied to Clipboard
         </Typography>
       ) : (
-        <Stack direction="row" spacing="5px" sx={{ opacity: 0.9 }}>
-          <Typography variant="small" bold color="rgb(255,255,255)">
-            Share safe video link
-          </Typography>
-          <Image src={Clipboard} width={16} alt="Copy" />
-        </Stack>
+        <UrsorButton
+          endIcon={
+            <Image src={Clipboard.src} width={16} height={16} alt="Copy" />
+          }
+          dark
+          variant="tertiary"
+          onClick={() => null}
+          size="small"
+        >
+          Share safe video link
+        </UrsorButton>
       )}
     </Stack>
   ) : null;
