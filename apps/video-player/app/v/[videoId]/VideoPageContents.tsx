@@ -137,46 +137,20 @@ function VideoPageContents(props: { details: IVideo }) {
               width={`${VIDEO_WIDTH}px`}
               justifyContent="space-between"
               overflow="scroll"
-              pt="2px"
+              pt="12px"
               //px="16px"
             >
-              <Stack spacing="5px">
-                {(props.details.description?.split("\n") ?? []).map(
-                  (line, i) => (
-                    <Typography key={i} color="rgba(255,255,255,0.8)">
-                      {line}
-                    </Typography>
-                  )
-                )}
-              </Stack>
-
-              {/* <Stack>
-            <Stack width="100%" justifyContent="center" pb="20px">
-              <Stack
-                width="100%"
-                px="12px"
-                py="8px"
-                bgcolor="rgba(0,0,0,0.3)"
-                borderRadius="12px"
-                direction="row"
-                justifyContent="space-between"
-              >
-                <Typography variant="small" color="rgba(255,255,255,0.8)">
-                  {window.location.href}
-                </Typography>
-                <Stack direction="row" spacing="5px">
-                  <Typography
-                    variant="small"
-                    bold
-                    color="rgba(255,255,255,0.8)"
-                  >
-                    Copy
-                  </Typography>
-                  <Image src={Clipboard} width={16} alt="Copy" />
+              <Stack p="20px" bgcolor={"rgba(0,0,0,0.3)"} borderRadius="12px">
+                <Stack spacing="5px">
+                  {(props.details.description?.split("\n") ?? []).map(
+                    (line, i) => (
+                      <Typography key={i} color="rgba(255,255,255,0.8)">
+                        {line}
+                      </Typography>
+                    )
+                  )}
                 </Stack>
               </Stack>
-            </Stack>
-          </Stack> */}
             </Stack>
           ) : null}
           {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>

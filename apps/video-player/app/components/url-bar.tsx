@@ -25,7 +25,7 @@ const UrlBar = () => {
       // right={0}
       //top="120px"
       //position="absolute"
-      spacing="5px"
+      spacing="20px"
       height="76px"
       px="28px"
       py="8px"
@@ -69,9 +69,11 @@ const UrlBar = () => {
       </Typography>
 
       {copied ? (
-        <Typography bold color="rgba(255,255,255,0.9)">
-          Copied to Clipboard
-        </Typography>
+        <Stack>
+          <Typography noWrap bold color="rgba(255,255,255,0.9)">
+            Copied to Clipboard
+          </Typography>
+        </Stack>
       ) : (
         <UrsorButton
           endIcon={
