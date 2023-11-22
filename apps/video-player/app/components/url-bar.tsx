@@ -37,7 +37,7 @@ const UrlBar = () => {
       overflow="hidden"
       onClick={() => {
         setCopied(true);
-        navigator.clipboard.writeText(currentPageUrl);
+        navigator.clipboard.writeText(currentPageUrl.split("?")[0]);
       }}
       sx={{
         transition: "0.2s",
@@ -65,7 +65,7 @@ const UrlBar = () => {
           transition: "0.2s",
         }}
       >
-        {currentPageUrl}
+        {currentPageUrl.split("?")[0]}
       </Typography>
 
       {copied ? (
@@ -75,16 +75,25 @@ const UrlBar = () => {
           </Typography>
         </Stack>
       ) : (
-        <UrsorButton
-          endIcon={
-            <Image src={Clipboard.src} width={16} height={16} alt="Copy" />
-          }
-          dark
-          variant="tertiary"
-          onClick={() => null}
+        <Stack
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.8 },
+            transition: "0.2s",
+          }}
         >
-          Share safe video link
-        </UrsorButton>
+          <UrsorButton
+            endIcon={
+              <Image src={Clipboard.src} width={16} height={16} alt="Copy" />
+            }
+            dark
+            variant="tertiary"
+            onClick={() => null}
+            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+          >
+            Share safe video link
+          </UrsorButton>
+        </Stack>
       )}
     </Stack>
   ) : null;

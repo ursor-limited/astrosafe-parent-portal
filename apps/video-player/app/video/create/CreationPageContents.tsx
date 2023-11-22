@@ -135,7 +135,7 @@ function CreationPageContents(props: { details: IVideo }) {
       url,
       startTime: range?.[0],
       endTime: range?.[1],
-    }).then((v) => router.push(`/v/${v.id}`));
+    }).then((v) => router.push(`/v/${v.id}?share=1`));
   };
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
