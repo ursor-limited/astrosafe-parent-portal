@@ -21,6 +21,7 @@ import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
+import { FONT_SIZES } from "ui/typography";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -195,6 +196,8 @@ function CreationPageContents(props: { details: IVideo }) {
                   backgroundBlur="blur(3px)"
                   leftAlign
                   boldValue
+                  fontSize={FONT_SIZES["large"]}
+                  height="53px"
                 />
               </CreationPageInputSection>
             </Stack>
@@ -202,6 +205,7 @@ function CreationPageContents(props: { details: IVideo }) {
             <Stack>
               <UrsorButton
                 dark
+                size="large"
                 variant="tertiary"
                 onClick={
                   submit
