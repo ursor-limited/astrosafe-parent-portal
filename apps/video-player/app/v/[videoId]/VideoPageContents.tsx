@@ -84,15 +84,36 @@ function VideoPageContents(props: { details: IVideo }) {
         >
           {!fullscreen ? (
             <Stack
+              // sx={{
+              //   background: `linear-gradient(45deg, #FFFFFF, ${PALETTE.secondary.purple[2]})`,
+              //   "-webkit-text-fill-color": "transparent",
+              //   backgroundClip: "text",
+              //   "-webkit-background-clip": "text",
+              // }}
+              width={VIDEO_WIDTH}
               sx={{
-                background: "linear-gradient(45deg, #F279C5, #FD9B41)",
-                "-webkit-text-fill-color": "transparent",
-                backgroundClip: "text",
-                "-webkit-background-clip": "text",
+                opacity: 0.78,
               }}
-              width="fit-content"
+              alignItems="center"
             >
-              <Typography bold variant="h4" color={PALETTE.font.light}>
+              <Typography
+                bold
+                variant={
+                  props.details.title.length < 10
+                    ? "h0"
+                    : props.details.title.length < 18
+                    ? "h2"
+                    : props.details.title.length < 25
+                    ? "h3"
+                    : props.details.title.length < 35
+                    ? "h4"
+                    : "h5"
+                }
+                color={PALETTE.font.light}
+                sx={{
+                  textAlign: "center",
+                }}
+              >
                 {props.details.title}
               </Typography>
             </Stack>
