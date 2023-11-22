@@ -61,20 +61,10 @@ const CreationPageInputSection = (props: {
   hideTitle?: boolean;
   children: React.ReactNode;
 }) => (
-  <Stack width="100%" spacing="5px" justifyContent="center" alignItems="center">
+  <Stack width="100%" spacing="3px" justifyContent="center">
     {!props.hideTitle ? (
-      <Stack
-        sx={
-          {
-            // background: "linear-gradient(20deg, #0AE799, #1D62F6)",
-            // "-webkit-text-fill-color": "transparent",
-            // backgroundClip: "text",
-            // "-webkit-background-clip": "text",
-            // opacity: 0.5,
-          }
-        }
-      >
-        <Typography variant="medium" bold color="rgba(255,255,255,0.5)">
+      <Stack pl="2px">
+        <Typography variant="small" bold color="rgba(255,255,255,0.55)">
           {props.title}
         </Typography>
       </Stack>
@@ -180,8 +170,8 @@ function CreationPageContents(props: { details: IVideo }) {
                 "-webkit-background-clip": "text",
               }}
             >
-              <Stack width="430px" sx={{ textAlign: "center" }}>
-                <Typography variant="h1" color={PALETTE.secondary.purple[2]}>
+              <Stack width="300px" sx={{ textAlign: "center" }}>
+                <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
                   Create your safe video link
                 </Typography>
               </Stack>
@@ -189,78 +179,107 @@ function CreationPageContents(props: { details: IVideo }) {
           </Stack>
         ) : null}
 
-        <CreationPageInputSection
-          title="YouTube or Vimeo url"
-          hideTitle={fullscreen}
-        >
-          <Stack
-            bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
-            px={fullscreen ? 0 : "20px"}
-            pb={fullscreen ? 0 : "20px"}
-            boxSizing="border-box"
-            borderRadius="18px"
-            sx={{ backdropFilter: BACKGROUND_BLUR }}
-          >
-            {!fullscreen ? (
-              <UrsorInputField
-                value={originalUrl}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setOriginalUrl(event.target.value)
+        <Stack spacing="15px">
+          <Stack direction="row" spacing="14px" alignItems="flex-end">
+            <Stack flex={1}>
+              <CreationPageInputSection title="Title">
+                <UrsorInputField
+                  value={title}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setTitle(event.target.value)
+                  }
+                  placeholder="Title"
+                  width="100%"
+                  backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                  color={INPUT_FIELD_TEXT_COLOR}
+                  backgroundBlur={BACKGROUND_BLUR}
+                  leftAlign
+                  boldValue
+                />
+              </CreationPageInputSection>{" "}
+            </Stack>
+
+            <Stack>
+              <UrsorButton
+                dark
+                variant="tertiary"
+                onClick={
+                  submit
+                  //setEditing(!editing);
                 }
-                placeholder="Url"
-                width="100%"
-                backgroundColor="transparent"
-                borderRadius="12px"
-                bold
-                color={INPUT_FIELD_TEXT_COLOR}
-              />
-            ) : null}
-            <Stack
-              p="1.8px"
-              borderRadius="15px"
-              overflow="hidden"
-              sx={{ backdropFilter: "none" }}
-              // sx={{
-              //   transition: "0.3s",
-              //   background: fullscreen
-              //     ? "none"
-              //     : "linear-gradient(50deg, #F279C5, #FD9B41)",
-              // }}
-              position="relative"
-            >
-              <Stack
-                top={0}
-                left={0}
-                width="100%"
-                height="100%"
-                position="absolute"
-                sx={{
-                  opacity: playing ? 0 : 1,
-                  transition: "0.3s",
-                  background: fullscreen
-                    ? "none"
-                    : "linear-gradient(50deg, #F279C5, #FD9B41)",
-                }}
-              />
-              <Player
-                url={url}
-                provider={provider}
-                width={VIDEO_WIDTH - 43}
-                height={VIDEO_HEIGHT - (43 * VIDEO_HEIGHT) / VIDEO_WIDTH}
-                setDuration={(d) => d && setDuration(d)}
-                top="120px"
-                setFullscreen={setFullscreen}
-                playingCallback={(p) => setPlaying(p)}
-                noGlow
-              />
+                backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                hoverOpacity={0.7}
+                endIcon={
+                  <Image
+                    src={ChevronLeft}
+                    width={23}
+                    height={23}
+                    alt="Chevron left"
+                    style={{
+                      transform: "rotate(180deg)",
+                    }}
+                  />
+                }
+              >
+                Complete
+              </UrsorButton>
             </Stack>
           </Stack>
-        </CreationPageInputSection>
+          {/* <Stack
+            p="1.8px"
+            borderRadius="15px"
+            overflow="hidden"
+            sx={{ backdropFilter: "none" }}
+            position="relative"
+          >
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              sx={{
+                opacity: playing ? 0 : 1,
+                transition: "0.3s",
+                background: fullscreen
+                  ? "none"
+                  : "linear-gradient(50deg, #F279C5, #FD9B41)",
+              }}
+            /> */}
+
+          <Player
+            url={url}
+            provider={provider}
+            width={VIDEO_WIDTH}
+            height={VIDEO_HEIGHT}
+            setDuration={(d) => d && setDuration(d)}
+            top="120px"
+            setFullscreen={setFullscreen}
+            playingCallback={(p) => setPlaying(p)}
+            noGlow
+          />
+          {/* </Stack> */}
+        </Stack>
+
         {!fullscreen ? (
           <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
-            <Stack width="100%" position="relative" overflow="visible">
-              <Stack width="100%" spacing="32px">
-                <CreationPageInputSection title="Want to change the title?">
+            <Stack
+              width="100%"
+              position="relative"
+              overflow="visible"
+              alignItems="center"
+            >
+              <Stack
+                width="100%"
+                spacing="32px"
+                p="20px"
+                bgcolor={"rgba(0,0,0,0.15)"}
+                sx={{
+                  backdropFilter: "blur(7px)",
+                }}
+                borderRadius="12px"
+              >
+                {/* <CreationPageInputSection title="Want to change the title?">
                   <UrsorInputField
                     value={title}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -272,9 +291,9 @@ function CreationPageContents(props: { details: IVideo }) {
                     color={INPUT_FIELD_TEXT_COLOR}
                     backgroundBlur={BACKGROUND_BLUR}
                   />
-                </CreationPageInputSection>
+                </CreationPageInputSection> */}
 
-                <CreationPageInputSection title="Or add your own description?">
+                <CreationPageInputSection title="Description">
                   <UrsorTextField
                     value={description}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -288,7 +307,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   />
                 </CreationPageInputSection>
 
-                <CreationPageInputSection title="You can also adjust the time">
+                <CreationPageInputSection title="Start and end time">
                   <Stack
                     direction="row"
                     width="100%"
@@ -448,7 +467,7 @@ function CreationPageContents(props: { details: IVideo }) {
             ) : null} */}
             </Stack>
 
-            <Stack pt="26px" width="100%" alignItems="center">
+            {/* <Stack pt="26px" width="100%" alignItems="center">
               <div>
                 <UrsorButton
                   dark
@@ -475,7 +494,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   Complete
                 </UrsorButton>
               </div>
-            </Stack>
+            </Stack> */}
           </Stack>
         ) : null}
       </Stack>
