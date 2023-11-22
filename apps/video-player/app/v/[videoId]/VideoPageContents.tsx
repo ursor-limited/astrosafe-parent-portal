@@ -63,7 +63,7 @@ function VideoPageContents(props: { details: IVideo }) {
         width="100vw"
         pb={!fullscreen ? "100px" : undefined}
         //overflow="scroll"
-        spacing="12px"
+        spacing="14px"
         pt="70px"
       >
         {!fullscreen ? (
@@ -90,7 +90,7 @@ function VideoPageContents(props: { details: IVideo }) {
             }}
             width="fit-content"
           >
-            <Typography bold variant="large" color={PALETTE.font.light}>
+            <Typography bold variant="h4" color={PALETTE.font.light}>
               {props.details.title}
             </Typography>
           </Stack>
@@ -137,8 +137,8 @@ function VideoPageContents(props: { details: IVideo }) {
               width={`${VIDEO_WIDTH}px`}
               justifyContent="space-between"
               overflow="scroll"
-              pt="5px"
-              px="16px"
+              pt="2px"
+              //px="16px"
             >
               <Stack spacing="5px">
                 {(props.details.description?.split("\n") ?? []).map(

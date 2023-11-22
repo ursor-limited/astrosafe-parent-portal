@@ -25,14 +25,16 @@ const UrlBar = () => {
       // right={0}
       //top="120px"
       //position="absolute"
-      height="50px"
-      px="18px"
+      spacing="5px"
+      height="76px"
+      px="28px"
       py="8px"
       bgcolor={hovering ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.15)"}
-      borderRadius="12px"
+      borderRadius="14px"
       direction="row"
       justifyContent="space-between"
       alignItems="center"
+      overflow="hidden"
       onClick={() => {
         setCopied(true);
         navigator.clipboard.writeText(currentPageUrl);
@@ -56,16 +58,18 @@ const UrlBar = () => {
       }}
     >
       <Typography
-        variant="small"
-        color={hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.75)"}
+        bold
+        noWrap
+        color={hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)"}
         sx={{
           transition: "0.2s",
         }}
       >
         {currentPageUrl}
       </Typography>
+
       {copied ? (
-        <Typography variant="small" bold color="rgba(255,255,255,0.9)">
+        <Typography bold color="rgba(255,255,255,0.9)">
           Copied to Clipboard
         </Typography>
       ) : (
@@ -76,7 +80,6 @@ const UrlBar = () => {
           dark
           variant="tertiary"
           onClick={() => null}
-          size="small"
         >
           Share safe video link
         </UrsorButton>

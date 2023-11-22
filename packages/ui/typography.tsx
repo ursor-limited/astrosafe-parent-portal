@@ -76,9 +76,9 @@ export interface TypographyProps {
 
 export function Typography(props: TypographyProps): JSX.Element {
   return (
-    <Stack
+    <Box
       //fontFamily={"Rubik"}
-      width="fit-content"
+      maxWidth="fit-content"
       color={props.color}
       fontSize={`${FONT_SIZES[props.variant ?? "normal"]}px`}
       fontWeight={
@@ -113,6 +113,6 @@ export function Typography(props: TypographyProps): JSX.Element {
       }}
     >
       {props.children}
-    </Stack>
+    </Box>
   );
 }
