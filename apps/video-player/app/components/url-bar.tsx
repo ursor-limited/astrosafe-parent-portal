@@ -3,9 +3,7 @@
 import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
 import Image from "next/image";
-import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
-import { VIDEO_WIDTH } from "../video/create/CreationPageContents";
 import Clipboard from "@/images/icons/Clipboard.svg";
 
 const UrlBar = () => {
@@ -20,7 +18,7 @@ const UrlBar = () => {
   return currentPageUrl ? (
     <Stack
       //zIndex={99998}
-      width={VIDEO_WIDTH}
+      width="100%"
       // marginLeft="auto"
       // marginRight="auto"
       // left={0}
@@ -30,7 +28,7 @@ const UrlBar = () => {
       height="50px"
       px="18px"
       py="8px"
-      bgcolor={hovering ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.3)"}
+      bgcolor={hovering ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.15)"}
       borderRadius="12px"
       direction="row"
       justifyContent="space-between"

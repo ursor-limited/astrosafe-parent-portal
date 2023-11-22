@@ -1,6 +1,6 @@
 import React from "react";
 import type { SxProps } from "@mui/system";
-import { Box } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 
 export const DEFAULT_FONT_WEIGHT = 300;
 export const BOLD_FONT_WEIGHT = 500;
@@ -76,8 +76,9 @@ export interface TypographyProps {
 
 export function Typography(props: TypographyProps): JSX.Element {
   return (
-    <Box
+    <Stack
       //fontFamily={"Rubik"}
+      width="fit-content"
       color={props.color}
       fontSize={`${FONT_SIZES[props.variant ?? "normal"]}px`}
       fontWeight={
@@ -112,6 +113,6 @@ export function Typography(props: TypographyProps): JSX.Element {
       }}
     >
       {props.children}
-    </Box>
+    </Stack>
   );
 }

@@ -52,7 +52,6 @@ function VideoPageContents(props: { details: IVideo }) {
     <>
       {!fullscreen ? <Header /> : null}
       <Stack
-        minHeight="100vh"
         px="60px"
         justifyContent="center"
         alignItems="center"
@@ -61,10 +60,11 @@ function VideoPageContents(props: { details: IVideo }) {
         // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
         pb={!fullscreen ? "100px" : undefined}
-        overflow="scroll"
+        //overflow="scroll"
+        spacing="12px"
       >
         {!fullscreen ? (
-          <Stack pb="80px">
+          <Stack width={`904px`}>
             <UrlBar />
           </Stack>
         ) : null}
@@ -79,20 +79,15 @@ function VideoPageContents(props: { details: IVideo }) {
           }}
         >
           <Stack
-            width={VIDEO_WIDTH}
             sx={{
               background: "linear-gradient(45deg, #F279C5, #FD9B41)",
               "-webkit-text-fill-color": "transparent",
               backgroundClip: "text",
               "-webkit-background-clip": "text",
             }}
+            width="fit-content"
           >
-            <Typography
-              bold
-              variant="large"
-              color={PALETTE.font.light}
-              //sx={{ textAlign: "center" }}
-            >
+            <Typography bold variant="large" color={PALETTE.font.light}>
               {props.details.title}
             </Typography>
           </Stack>
