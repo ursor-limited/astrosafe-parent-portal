@@ -48,6 +48,8 @@ function VideoPageContents(props: { details: IVideo }) {
   // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
+  const [playing, setPlaying] = useState<boolean>(false);
+
   return props.details && provider ? (
     <>
       {!fullscreen ? <Header /> : null}
@@ -62,6 +64,7 @@ function VideoPageContents(props: { details: IVideo }) {
         pb={!fullscreen ? "100px" : undefined}
         //overflow="scroll"
         spacing="12px"
+        pt="70px"
       >
         {!fullscreen ? (
           <Stack width={`904px`}>
@@ -96,12 +99,6 @@ function VideoPageContents(props: { details: IVideo }) {
             borderRadius="15px"
             overflow="hidden"
             sx={{ backdropFilter: "none" }}
-            // sx={{
-            //   transition: "0.3s",
-            //   background: fullscreen
-            //     ? "none"
-            //     : "linear-gradient(50deg, #F279C5, #FD9B41)",
-            // }}
             position="relative"
           >
             <Stack
@@ -111,7 +108,7 @@ function VideoPageContents(props: { details: IVideo }) {
               height="100%"
               position="absolute"
               sx={{
-                //opacity: playing ? 0 : 1,
+                opacity: playing ? 0 : 1,
                 transition: "0.3s",
                 background: fullscreen
                   ? "none"
@@ -130,6 +127,7 @@ function VideoPageContents(props: { details: IVideo }) {
               setDuration={(d) => setDuration(d)}
               showUrlBar
               setFullscreen={setFullscreen}
+              playingCallback={(p) => setPlaying(p)}
             />
           </Stack>
           {/* <Image src={Background} alt='Background'  */}

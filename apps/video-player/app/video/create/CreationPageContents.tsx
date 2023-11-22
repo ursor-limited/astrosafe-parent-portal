@@ -251,17 +251,38 @@ function CreationPageContents(props: { details: IVideo }) {
               }}
             /> */}
 
-          <Player
-            url={url}
-            provider={provider}
-            width={VIDEO_WIDTH}
-            height={VIDEO_HEIGHT}
-            setDuration={(d) => d && setDuration(d)}
-            top="120px"
-            setFullscreen={setFullscreen}
-            playingCallback={(p) => setPlaying(p)}
-          />
-          {/* </Stack> */}
+          <Stack
+            p="1.8px"
+            borderRadius="15px"
+            overflow="hidden"
+            sx={{ backdropFilter: "none" }}
+            position="relative"
+          >
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              sx={{
+                opacity: playing ? 0 : 1,
+                transition: "0.3s",
+                background: fullscreen
+                  ? "none"
+                  : "linear-gradient(90deg, #F279C5, #FD9B41)",
+              }}
+            />
+            <Player
+              url={url}
+              provider={provider}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
+              setDuration={(d) => d && setDuration(d)}
+              top="120px"
+              setFullscreen={setFullscreen}
+              playingCallback={(p) => setPlaying(p)}
+            />
+          </Stack>
         </Stack>
 
         {!fullscreen ? (
