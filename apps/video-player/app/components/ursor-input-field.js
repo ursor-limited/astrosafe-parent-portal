@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
+import { FONT_SIZES } from "ui/typography";
 import { PALETTE } from "ui";
 
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
+export const BOLD_FONT_WEIGHT = 600;
 
 export default function UrsorInputField(props) {
   const {
@@ -26,7 +27,8 @@ export default function UrsorInputField(props) {
     focusDelay,
     paddingLeft,
     borderRadius,
-    backgroundBlur
+    backgroundBlur,
+    boldValue
   } = props;
 
   const customSx = {
@@ -53,7 +55,7 @@ export default function UrsorInputField(props) {
       textOverflow: "ellipsis",
       fontSize: props.fontSize ?? FONT_SIZES["normal"],
       color: props.color ?? PALETTE.font.dark,
-      fontWeight: !!value && !props.noBold ? BOLD_FONT_WEIGHT : "unset",
+      fontWeight: props.boldValue || (!!value && !props.noBold) ? BOLD_FONT_WEIGHT : "unset",
       lineHeight: "100%",
       transition: "0.2s",
     

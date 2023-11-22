@@ -1,11 +1,9 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { Typography } from "ui";
+import { Typography, UrsorButton } from "ui";
 import Image from "next/image";
-import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
-import { VIDEO_WIDTH } from "../video/create/CreationPageContents";
 import Clipboard from "@/images/icons/Clipboard.svg";
 
 const UrlBar = () => {
@@ -20,19 +18,23 @@ const UrlBar = () => {
   return currentPageUrl ? (
     <Stack
       //zIndex={99998}
-      width={VIDEO_WIDTH}
+      width="100%"
       // marginLeft="auto"
       // marginRight="auto"
       // left={0}
       // right={0}
       //top="120px"
       //position="absolute"
-      px="18px"
+      spacing="20px"
+      height="76px"
+      px="28px"
       py="8px"
-      bgcolor={hovering ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.3)"}
-      borderRadius="12px"
+      bgcolor={hovering ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.15)"}
+      borderRadius="14px"
       direction="row"
       justifyContent="space-between"
+      alignItems="center"
+      overflow="hidden"
       onClick={() => {
         setCopied(true);
         navigator.clipboard.writeText(currentPageUrl);
@@ -56,25 +58,33 @@ const UrlBar = () => {
       }}
     >
       <Typography
-        variant="small"
-        color={hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.75)"}
+        bold
+        noWrap
+        color={hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)"}
         sx={{
           transition: "0.2s",
         }}
       >
         {currentPageUrl}
       </Typography>
+
       {copied ? (
-        <Typography variant="small" bold color="rgba(255,255,255,0.9)">
-          Copied to Clipboard
-        </Typography>
-      ) : (
-        <Stack direction="row" spacing="5px" sx={{ opacity: 0.9 }}>
-          <Typography variant="small" bold color="rgb(255,255,255)">
-            Share safe video link
+        <Stack>
+          <Typography noWrap bold color="rgba(255,255,255,0.9)">
+            Copied to Clipboard
           </Typography>
-          <Image src={Clipboard} width={16} alt="Copy" />
         </Stack>
+      ) : (
+        <UrsorButton
+          endIcon={
+            <Image src={Clipboard.src} width={16} height={16} alt="Copy" />
+          }
+          dark
+          variant="tertiary"
+          onClick={() => null}
+        >
+          Share safe video link
+        </UrsorButton>
       )}
     </Stack>
   ) : null;

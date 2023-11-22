@@ -24,10 +24,8 @@ export default function UrsorTextField(props) {
           fontSize: props.fontSize ?? FONT_SIZES["normal"],
           textAlign: "center",
           color: props.color ?? PALETTE.font.dark,
-          fontWeight: !!value ? BOLD_FONT_WEIGHT : "unset",
           padding: "0 !important",
           lineHeight: `${LINE_HEIGHTS.normal}px`,
-          backdropFilter: props.backgroundBlur,
         },
         form: {
           autoComplete: "off",
@@ -50,6 +48,7 @@ export default function UrsorTextField(props) {
         borderRadius: "8px",
         outline: props.outline,
         background: props.backgroundColor ?? PALETTE.secondary.grey[1],
+        backdropFilter: props.backgroundBlur,
         "& fieldset": { border: "none" },
       }}
       onChange={onChange}
