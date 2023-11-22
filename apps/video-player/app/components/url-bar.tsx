@@ -37,7 +37,7 @@ const UrlBar = () => {
       overflow="hidden"
       onClick={() => {
         setCopied(true);
-        navigator.clipboard.writeText(currentPageUrl);
+        navigator.clipboard.writeText(currentPageUrl.split("?")[0]);
       }}
       sx={{
         transition: "0.2s",
@@ -65,7 +65,7 @@ const UrlBar = () => {
           transition: "0.2s",
         }}
       >
-        {currentPageUrl}
+        {currentPageUrl.split("?")[0]}
       </Typography>
 
       {copied ? (

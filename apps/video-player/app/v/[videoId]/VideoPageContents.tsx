@@ -39,13 +39,9 @@ const VIDEO_HEIGHT = 475;
 //   videoDetails: IVideo;
 // }>;
 
-function VideoPageContents(props: { details: IVideo }) {
+function VideoPageContents(props: { details: IVideo; share: boolean }) {
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
-  // const [range, setRange] = useState<number[] | undefined>(undefined);
-  // useEffect(() => {
-  //   duration && setRange([0, duration]);
-  // }, [duration]);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const [playing, setPlaying] = useState<boolean>(false);
@@ -66,7 +62,7 @@ function VideoPageContents(props: { details: IVideo }) {
         spacing="14px"
         pt={fullscreen ? 0 : "70px"}
       >
-        {!fullscreen ? (
+        {!fullscreen && props.share ? (
           <Stack width={VIDEO_WIDTH} pb="70px">
             <UrlBar />
           </Stack>
