@@ -60,59 +60,104 @@ function VideoPageContents(props: { details: IVideo }) {
         // height={`calc(100vh - ${HEADER_HEIGHT}px)`}
         // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
         width="100vw"
-        spacing="10px"
         pb={!fullscreen ? "100px" : undefined}
         overflow="scroll"
       >
+        {!fullscreen ? (
+          <Stack pb="80px">
+            <UrlBar />
+          </Stack>
+        ) : null}
         <Stack
-          width={VIDEO_WIDTH * 0.8}
+          spacing="10px"
+          py="24px"
+          px="28px"
+          borderRadius="12px"
+          bgcolor="rgba(0,0,0,0.15)"
           sx={{
-            background: "linear-gradient(45deg, #F279C5, #FD9B41)",
-            "-webkit-text-fill-color": "transparent",
-            backgroundClip: "text",
-            "-webkit-background-clip": "text",
+            backdropFilter: "blur(7px)",
           }}
         >
-          <Typography
-            bold
-            variant="large"
-            color={PALETTE.font.light}
-            sx={{ textAlign: "center" }}
-          >
-            {props.details.title}
-          </Typography>
-        </Stack>
-        {!fullscreen ? <UrlBar /> : null}
-        <Player
-          key={props.details.id}
-          url={props.details.url}
-          provider={provider}
-          startTime={props.details.startTime}
-          endTime={props.details.endTime}
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
-          top="0px"
-          setDuration={(d) => setDuration(d)}
-          showUrlBar
-          setFullscreen={setFullscreen}
-        />
-        {/* <Image src={Background} alt='Background'  */}
-        {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
-        {!fullscreen ? (
           <Stack
-            width={`${VIDEO_WIDTH}px`}
-            justifyContent="space-between"
-            overflow="scroll"
+            width={VIDEO_WIDTH}
+            sx={{
+              background: "linear-gradient(45deg, #F279C5, #FD9B41)",
+              "-webkit-text-fill-color": "transparent",
+              backgroundClip: "text",
+              "-webkit-background-clip": "text",
+            }}
           >
-            <Stack spacing="5px">
-              {(props.details.description?.split("\n") ?? []).map((line, i) => (
-                <Typography key={i} color={PALETTE.font.light}>
-                  {line}
-                </Typography>
-              ))}
-            </Stack>
+            <Typography
+              bold
+              variant="large"
+              color={PALETTE.font.light}
+              //sx={{ textAlign: "center" }}
+            >
+              {props.details.title}
+            </Typography>
+          </Stack>
+          <Stack
+            p="1.8px"
+            borderRadius="15px"
+            overflow="hidden"
+            sx={{ backdropFilter: "none" }}
+            // sx={{
+            //   transition: "0.3s",
+            //   background: fullscreen
+            //     ? "none"
+            //     : "linear-gradient(50deg, #F279C5, #FD9B41)",
+            // }}
+            position="relative"
+          >
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              sx={{
+                //opacity: playing ? 0 : 1,
+                transition: "0.3s",
+                background: fullscreen
+                  ? "none"
+                  : "linear-gradient(90deg, #F279C5, #FD9B41)",
+              }}
+            />
+            <Player
+              key={props.details.id}
+              url={props.details.url}
+              provider={provider}
+              startTime={props.details.startTime}
+              endTime={props.details.endTime}
+              width={VIDEO_WIDTH}
+              height={VIDEO_HEIGHT}
+              top="0px"
+              setDuration={(d) => setDuration(d)}
+              showUrlBar
+              setFullscreen={setFullscreen}
+            />
+          </Stack>
+          {/* <Image src={Background} alt='Background'  */}
+          {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
+          {!fullscreen ? (
+            <Stack
+              width={`${VIDEO_WIDTH}px`}
+              justifyContent="space-between"
+              overflow="scroll"
+              pt="5px"
+              px="16px"
+            >
+              <Stack spacing="5px">
+                {(props.details.description?.split("\n") ?? []).map(
+                  (line, i) => (
+                    <Typography key={i} color="rgba(255,255,255,0.8)">
+                      {line}
+                    </Typography>
+                  )
+                )}
+              </Stack>
 
-            {/* <Stack>
+              {/* <Stack>
             <Stack width="100%" justifyContent="center" pb="20px">
               <Stack
                 width="100%"
@@ -139,16 +184,16 @@ function VideoPageContents(props: { details: IVideo }) {
               </Stack>
             </Stack>
           </Stack> */}
-          </Stack>
-        ) : null}
-        {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
+            </Stack>
+          ) : null}
+          {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
         Play
       </UrsorButton>
       <UrsorButton variant="secondary" onClick={() => setPlaying(false)}>
         Pause
       </UrsorButton> */}
 
-        {/* <Stack
+          {/* <Stack
           width="100%"
           height="200px"
           alignItems="center"
@@ -175,6 +220,7 @@ function VideoPageContents(props: { details: IVideo }) {
             </Typography>
           </Stack>
         </Stack> */}
+        </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </>
