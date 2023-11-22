@@ -305,20 +305,6 @@ function CreationPageContents(props: { details: IVideo }) {
                 }}
                 borderRadius="12px"
               >
-                {/* <CreationPageInputSection title="Want to change the title?">
-                  <UrsorInputField
-                    value={title}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setTitle(event.target.value)
-                    }
-                    placeholder="Title"
-                    width="100%"
-                    backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                    color={INPUT_FIELD_TEXT_COLOR}
-                    backgroundBlur={BACKGROUND_BLUR}
-                  />
-                </CreationPageInputSection> */}
-
                 <CreationPageInputSection title="Description">
                   <UrsorTextField
                     value={description}

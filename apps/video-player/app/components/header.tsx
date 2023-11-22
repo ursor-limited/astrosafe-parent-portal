@@ -40,7 +40,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
       </Stack>
       <Stack direction="row" spacing="12px">
         {!props.noCreateNew ? (
-          <Link href={"https://astrosafe.co/"} target={"_blank"}>
+          <Link href={"https://astrosafe.co/video"} target={"_blank"}>
             <UrsorButton
               dark
               variant="secondary"
