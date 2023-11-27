@@ -48,7 +48,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
 
   return props.details && provider ? (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? <Header noCreateNew={!props.share} /> : null}
       <Stack
         px="60px"
         justifyContent="center"
@@ -152,7 +152,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
           </Stack>
           {/* <Image src={Background} alt='Background'  */}
           {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
-          {!fullscreen ? (
+          {!fullscreen && props.details.description ? (
             <Stack
               width={`${VIDEO_WIDTH}px`}
               justifyContent="space-between"

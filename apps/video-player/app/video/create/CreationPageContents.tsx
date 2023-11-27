@@ -539,36 +539,37 @@ function CreationPageContents(props: { details: IVideo }) {
       {!fullscreen ? <Footer /> : null}
     </Stack>
   ) : (
-    <Stack
-      spacing="30px"
-      width="100vw"
-      height="100vh"
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Typography variant="h3" color="rgba(255,255,255,0.7)">
-        We don`t have a page with this url.
-      </Typography>
-      <Image
-        src={Kitemark}
-        height={60}
-        width={60}
-        style={{ opacity: 0.7, transform: "rotate(26deg)" }}
-        alt="Star"
-      />
-      <Link href={"https://astrosafe.co/"} target={"_blank"}>
-        <UrsorButton
-          size="large"
-          dark
-          variant="tertiary"
-          startIcon={
-            <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
-          }
-        >
-          Let`s try again
-        </UrsorButton>
-      </Link>
-    </Stack>
+    <></>
+    // <Stack
+    //   spacing="30px"
+    //   width="100vw"
+    //   height="100vh"
+    //   alignItems="center"
+    //   justifyContent="center"
+    // >
+    //   <Typography variant="h3" color="rgba(255,255,255,0.7)">
+    //     We don`t have a page with this url.
+    //   </Typography>
+    //   <Image
+    //     src={Kitemark}
+    //     height={60}
+    //     width={60}
+    //     style={{ opacity: 0.7, transform: "rotate(26deg)" }}
+    //     alt="Star"
+    //   />
+    //   <Link href={"https://astrosafe.co/"} target={"_blank"}>
+    //     <UrsorButton
+    //       size="large"
+    //       dark
+    //       variant="tertiary"
+    //       startIcon={
+    //         <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
+    //       }
+    //     >
+    //       Let`s try again
+    //     </UrsorButton>
+    //   </Link>
+    // </Stack>
   );
 }
 
