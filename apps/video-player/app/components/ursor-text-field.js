@@ -2,9 +2,10 @@ import React from "react";
 import { TextField } from "@mui/material";
 import { DEFAULT_WIDTH } from "./ursor-input-field";
 import { PALETTE } from "ui";
-import { BOLD_FONT_WEIGHT, FONT_SIZES, LINE_HEIGHTS } from "ui/typography";
+import { FONT_SIZES, LINE_HEIGHTS } from "ui/typography";
 
 const N_ROWS = 3;
+const BOLD_FONT_WEIGHT = 600;
 
 export default function UrsorTextField(props) {
   const {
@@ -22,10 +23,11 @@ export default function UrsorTextField(props) {
       inputProps={{
         style: {
           fontSize: props.fontSize ?? FONT_SIZES["normal"],
-          textAlign: "center",
+          textAlign: props.centerAlign ? "center" : undefined,
           color: props.color ?? PALETTE.font.dark,
           padding: "0 !important",
           lineHeight: `${LINE_HEIGHTS.normal}px`,
+          fontWeight: props.boldValue ? BOLD_FONT_WEIGHT : undefined,
         },
         form: {
           autoComplete: "off",

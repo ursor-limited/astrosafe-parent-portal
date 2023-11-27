@@ -229,7 +229,10 @@ const Player = (props: {
     tag.onload = loadVideo;
   }, [url, document]);
 
+  const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
+
   const resume = () => {
+    setHasBegunPlaying(true);
     setEnded(false);
     if (
       url?.includes("youtube") &&
@@ -394,7 +397,8 @@ const Player = (props: {
             transition: "0.2s",
             opacity: ended || !playing ? 1 : 0,
             pointerEvents: playing && !ended ? "none" : undefined,
-            backdropFilter: "blur(13px)",
+            backdropFilter: hasBegunPlaying ? "blur(13px)" : undefined,
+            //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
           }}
           justifyContent="center"
           alignItems="center"
