@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
+const withSvgr = require("next-svgr");
 
-module.exports = {
+module.exports = withSvgr({
     reactStrictMode: true,
     transpilePackages: ["ui"],
     async redirects() {
@@ -11,4 +12,4 @@ module.exports = {
           permanent: true,
         }]
       }
-  };
+  })

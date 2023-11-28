@@ -129,7 +129,7 @@ export interface UrsorButtonProps {
   backgroundColor?: string;
   hoverOpacity?: number;
   fontColor?: string;
-  startIcon?: React.ReactNode;
+  startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   endIcon?: React.ReactNode;
   disabled?: boolean;
   dark?: boolean;
@@ -176,18 +176,24 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         setPressed(false);
       }}
       px={`${PADDINGS[size].x}px`}
-      pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
-      pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
-      spacing="10px"
+      pl={props.startIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
+      pr={props.endIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
+      spacing="7px"
       sx={{
         cursor: "pointer",
         transition: "0.2s",
         background: props.backgroundColor,
         opacity: state === "hover" ? props.hoverOpacity : undefined,
+        svg: {
+          path: {
+            fill: BORDER_COLORS[mode][variant]?.[state],
+            transition: "0.2s",
+          },
+        },
       }}
       width="fit-content"
     >
-      {props.startIcon}
+      {props.startIcon ? <props.startIcon height={24} width={24} /> : null}
       <Typography
         bold
         color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}

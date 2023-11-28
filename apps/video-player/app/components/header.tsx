@@ -3,10 +3,10 @@
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
-import { UrsorButton } from "ui";
+import { PALETTE, UrsorButton } from "ui";
 import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/kiteMark.svg";
-import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
+import ChevronLeftLight from "@/images/icons/ChevronLeftLight.svg";
 
 export const HEADER_HEIGHT = 86;
 
@@ -41,13 +41,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
       <Stack direction="row" spacing="12px">
         {!props.noCreateNew ? (
           <Link href={"https://astrosafe.co/video"} target={"_blank"}>
-            <UrsorButton
-              dark
-              variant="secondary"
-              startIcon={
-                <Image src={ChevronLeft} height={20} alt="Chevron left" />
-              }
-            >
+            <UrsorButton dark variant="secondary" startIcon={ChevronLeftLight}>
               Create new
             </UrsorButton>
           </Link>

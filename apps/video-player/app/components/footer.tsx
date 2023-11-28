@@ -69,14 +69,7 @@ export const Footer = () => {
                   style={{ opacity: 0.65 }}
                 />
               }
-              startIcon={
-                <Image
-                  src={Kitemark}
-                  height={10}
-                  alt="Astro kitemark"
-                  style={{ opacity: 0.65 }}
-                />
-              }
+              startIcon={Kitemark}
             >
               Try Astro for free
             </UrsorButton>
