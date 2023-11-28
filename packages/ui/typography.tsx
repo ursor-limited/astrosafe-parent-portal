@@ -1,6 +1,6 @@
 import React from "react";
 import type { SxProps } from "@mui/system";
-import { Box, Stack } from "@mui/system";
+import { Box } from "@mui/system";
 
 export const DEFAULT_FONT_WEIGHT = 300;
 export const BOLD_FONT_WEIGHT = 500;

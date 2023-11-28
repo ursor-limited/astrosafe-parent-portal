@@ -411,12 +411,11 @@ const Player = (props: {
               transitionTimingFunction: BEZIER,
             }}
           >
-            <Image
-              src={ended ? Sync : Play}
-              width={114}
-              height={114}
-              alt="Play"
-            />
+            {ended ? (
+              <Sync width={114} height={114} />
+            ) : (
+              <Play width={114} height={114} />
+            )}
           </Stack>
         </Stack>
         <Stack
@@ -487,11 +486,9 @@ const Player = (props: {
           onMouseEnter={() => setStarHovering(true)}
           onMouseLeave={() => setStarHovering(false)}
         >
-          <Image
-            src={KiteMark}
+          <KiteMark
             width={23}
             height={23}
-            alt="Astro kitemark"
             style={{
               transform: `rotate(${playing ? -540 : starHovering ? 20 : 0}deg)`,
               transition: "1s",
@@ -567,19 +564,9 @@ const Player = (props: {
               onClick={() => setFullScreen(!fullScreen)}
             >
               {fullScreen ? (
-                <Image
-                  src={NormalScreenIcon}
-                  width={24}
-                  height={24}
-                  alt="Full screen"
-                />
+                <NormalScreenIcon width={24} height={24} />
               ) : (
-                <Image
-                  src={FullScreenIcon}
-                  width={24}
-                  height={24}
-                  alt="Full screen"
-                />
+                <FullScreenIcon width={24} height={24} />
               )}
             </Stack>
           ) : null}

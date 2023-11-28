@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import Logo from "@/images/logo.svg";
-import FooterBackground from "@/images/footerBackground.svg";
+import FooterBackground from "@/images/footerBackground.png";
 import FooterScreenshot from "@/images/footerScreenshot.png";
 
 export const HEADER_HEIGHT = 86;
@@ -61,22 +61,10 @@ export const Footer = () => {
           <Link href="https://www.astrosafe.co/book-demo" target={"_blank"}>
             <UrsorButton
               size="large"
-              endIcon={
-                <Image
-                  src={Kitemark}
-                  height={10}
-                  alt="Astro kitemark"
-                  style={{ opacity: 0.65 }}
-                />
-              }
-              startIcon={
-                <Image
-                  src={Kitemark}
-                  height={10}
-                  alt="Astro kitemark"
-                  style={{ opacity: 0.65 }}
-                />
-              }
+              endIcon={Kitemark}
+              startIcon={Kitemark}
+              iconSize="9px"
+              iconColor="rgba(255,255,255,0.6)"
             >
               Try Astro for free
             </UrsorButton>
