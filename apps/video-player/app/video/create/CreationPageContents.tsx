@@ -6,7 +6,7 @@ import { Stack, keyframes } from "@mui/system";
 import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
-import ChevronLeft from "@/images/icons/ChevronLeftLight.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Kitemark from "@/images/kiteMark.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
@@ -162,7 +162,7 @@ function CreationPageContents(props: { details: IVideo }) {
             alignItems="center"
             pb="46px"
           >
-            <Image width={96} src={Logo} alt="Astro" />
+            <Logo width={96} src={Logo} />
             <Stack
               sx={{
                 background: "linear-gradient(76deg, #F279C5, #FD9B41)",
@@ -224,17 +224,8 @@ function CreationPageContents(props: { details: IVideo }) {
                       }
                       backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                       hoverOpacity={0.7}
-                      endIcon={
-                        <Image
-                          src={ChevronLeft}
-                          width={23}
-                          height={23}
-                          alt="Chevron left"
-                          style={{
-                            transform: "rotate(180deg)",
-                          }}
-                        />
-                      }
+                      endIcon={ChevronRight}
+                      iconColor={PALETTE.font.light}
                     >
                       Create link
                     </UrsorButton>
@@ -266,6 +257,11 @@ function CreationPageContents(props: { details: IVideo }) {
                     py="6px"
                     sx={{
                       backdropFilter: BACKGROUND_BLUR,
+                      svg: {
+                        path: {
+                          fill: PALETTE.font.light,
+                        },
+                      },
                     }}
                   >
                     {duration && range ? (

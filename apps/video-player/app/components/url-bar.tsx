@@ -83,9 +83,7 @@ const UrlBar = () => {
           }}
         >
           <UrsorButton
-            endIcon={
-              <Image src={Clipboard.src} width={16} height={16} alt="Copy" />
-            }
+            endIcon={Clipboard}
             dark
             variant="tertiary"
             onClick={() => null}

@@ -130,7 +130,9 @@ export interface UrsorButtonProps {
   hoverOpacity?: number;
   fontColor?: string;
   startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  endIcon?: React.ReactNode;
+  endIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  iconSize?: string;
+  iconColor?: string;
   disabled?: boolean;
   dark?: boolean;
 }
@@ -178,7 +180,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       px={`${PADDINGS[size].x}px`}
       pl={props.startIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
       pr={props.endIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
-      spacing="7px"
+      spacing="12px"
       sx={{
         cursor: "pointer",
         transition: "0.2s",
@@ -186,14 +188,19 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
           path: {
-            fill: BORDER_COLORS[mode][variant]?.[state],
+            fill: props.iconColor || BORDER_COLORS[mode][variant]?.[state],
             transition: "0.2s",
           },
         },
       }}
       width="fit-content"
     >
-      {props.startIcon ? <props.startIcon height={24} width={24} /> : null}
+      {props.startIcon ? (
+        <props.startIcon
+          height={props.iconSize || 20}
+          width={props.iconSize || 20}
+        />
+      ) : null}
       <Typography
         bold
         color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}
@@ -205,7 +212,12 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       >
         {props.children}
       </Typography>
-      {props.endIcon}
+      {props.endIcon ? (
+        <props.endIcon
+          height={props.iconSize || 20}
+          width={props.iconSize || 20}
+        />
+      ) : null}
     </Stack>
   );
 }

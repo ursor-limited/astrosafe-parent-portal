@@ -1,6 +1,5 @@
 import { Stack } from "@mui/system";
-import ChevronLeftLight from "@/images/icons/ChevronLeftLight.svg";
-import Image from "next/image";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 
@@ -29,12 +28,7 @@ export default function DurationLabel(props: {
         }}
         onClick={props.decrementCallback}
       >
-        <Image
-          src={ChevronLeftLight}
-          width={18}
-          height={18}
-          alt="Chevron left"
-        />
+        <ChevronLeft width={18} height={18} />
       </Stack>
       <Typography color={PALETTE.font.light} bold>
         {`${value > 3600 ? Math.floor(value / 3600) : ""}${
@@ -53,11 +47,9 @@ export default function DurationLabel(props: {
         }}
         onClick={props.incrementCallback}
       >
-        <Image
-          src={ChevronLeftLight}
+        <ChevronLeft
           width={18}
           height={18}
-          alt="Chevron right"
           style={{ transform: "rotate(180deg)" }}
         />
       </Stack>

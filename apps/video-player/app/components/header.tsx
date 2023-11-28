@@ -6,7 +6,7 @@ import Link from "next/link";
 import { PALETTE, UrsorButton } from "ui";
 import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/kiteMark.svg";
-import ChevronLeftLight from "@/images/icons/ChevronLeftLight.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 
 export const HEADER_HEIGHT = 86;
 
@@ -34,14 +34,19 @@ export const Header = (props: { noCreateNew?: boolean }) => {
               transition: "0.2s",
             }}
           >
-            <Image width={80} src={Logo} alt="Astro" />
+            <Logo width={80} />
           </Stack>
         </Link>
       </Stack>
       <Stack direction="row" spacing="12px">
         {!props.noCreateNew ? (
           <Link href={"https://astrosafe.co/video"} target={"_blank"}>
-            <UrsorButton dark variant="secondary" startIcon={ChevronLeftLight}>
+            <UrsorButton
+              dark
+              variant="secondary"
+              startIcon={ChevronLeft}
+              iconSize="22px"
+            >
               Create new
             </UrsorButton>
           </Link>
@@ -50,7 +55,9 @@ export const Header = (props: { noCreateNew?: boolean }) => {
           <UrsorButton
             dark
             variant="tertiary"
-            endIcon={<Image src={Kitemark} height={14} alt="Astro kitemark" />}
+            endIcon={Kitemark}
+            iconColor="rgba(255,255,255,0.7)"
+            iconSize="14px"
           >
             Discover AstroSafe
           </UrsorButton>

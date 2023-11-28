@@ -179,9 +179,7 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
 
                 //   setEditing(!editing);
                 // }}
-                endIcon={
-                  <Image src={Pencil} width={17} height={17} alt="Pencil" />
-                }
+                endIcon={Pencil}
               >
                 {editing ? "Save" : "Edit"}
               </UrsorButton>
@@ -202,14 +200,7 @@ const VideoDetailsEditingSection = (props: { details: IVideo }) => {
                   navigator.clipboard.writeText(window.location.href);
                   setCopiedUrl(true);
                 }}
-                endIcon={
-                  <Image
-                    src={ArrowUpRight}
-                    width={24}
-                    height={24}
-                    alt="Arrow up right"
-                  />
-                }
+                endIcon={ArrowUpRight}
               >
                 Share
               </UrsorButton>
