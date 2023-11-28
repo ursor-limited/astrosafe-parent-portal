@@ -22,6 +22,7 @@ import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import { FONT_SIZES } from "ui/typography";
+import ForbiddenVideoView from "./ForbiddenVideoView";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -40,9 +41,9 @@ to {
 const PADDING_TOP = "100px";
 export const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
-const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
-const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.1)";
-const BACKGROUND_BLUR = "blur(3px)";
+export const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
+export const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.1)";
+export const BACKGROUND_BLUR = "blur(3px)";
 
 // export const getStaticProps = (async (context) => {
 //   //const videoDetails = ApiController.getVideoDetails(videoId)
@@ -83,6 +84,9 @@ function CreationPageContents(props: { details: IVideo }) {
     props.details?.description && setDescription(props.details.description);
   }, [props.details?.description]);
 
+  const [showForbiddenVideoView, setShowForbiddenVideoView] =
+    useState<boolean>(false);
+
   const searchParams = useSearchParams();
   const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
@@ -104,9 +108,13 @@ function CreationPageContents(props: { details: IVideo }) {
     )
       .then((response) => response.json())
       .then((details) => {
-        setUrl(noCookiefy(extractUrl(details.html)));
-        setTitle(details.title);
-        setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+        if (details.error?.includes("403")) {
+          setShowForbiddenVideoView(true);
+        } else {
+          setUrl(noCookiefy(extractUrl(details.html)));
+          setTitle(details.title);
+          setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+        }
       });
   }, [originalUrl]);
 
@@ -530,6 +538,8 @@ function CreationPageContents(props: { details: IVideo }) {
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </Stack>
+  ) : showForbiddenVideoView ? (
+    <ForbiddenVideoView />
   ) : (
     <></>
   );

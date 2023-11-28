@@ -450,15 +450,14 @@ const Player = (props: {
           justifyContent="space-between"
           alignItems="center"
         />
-        {url?.includes("vimeo") ? (
-          <Stack
-            position="absolute"
-            right={0}
-            bottom={0}
-            width={fullScreen ? `${videoWidth * 0.1}px` : "130px"}
-            height="60px"
-          />
-        ) : null}
+
+        <Stack
+          position="absolute"
+          right={0}
+          bottom={0}
+          width={fullScreen ? `${videoWidth * 0.1}px` : "130px"}
+          height={props.provider === "vimeo" ? "60px" : "50px"}
+        />
         <Stack
           position="absolute"
           left="20px"
