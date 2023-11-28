@@ -18,7 +18,7 @@ export default function ForbiddenVideoView() {
       minHeight="100vh"
       justifyContent="center"
       alignItems="center"
-      spacing="36px"
+      spacing="36px" 
     >
       <Stack
         sx={{
