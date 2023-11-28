@@ -7,7 +7,7 @@ import Logo from "@/images/playerLogo.svg";
 import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
-import Kitemark from "@/images/kiteMark.svg";
+import Kitemark from "@/images/coloredKitemark.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -520,51 +520,18 @@ function CreationPageContents(props: { details: IVideo }) {
       >
         <Stack
           sx={{
-            width: "48px",
-            height: "47px",
-            background: "linear-gradient(76deg, #F279C5, #FD9B41)",
-            "-webkit-mask-image": `url(${Kitemark.src})`,
-            maskImage: `url(${Kitemark.src})`,
+            width: "70px",
+            height: "70px",
             animation: `${spin} 2s linear infinite`,
           }}
         >
-          {/* <Image src={Kitemark} height={100} width={100} alt="Loading" /> */}
+          <Kitemark height={70} width={70} />
         </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
     </Stack>
   ) : (
     <></>
-    // <Stack
-    //   spacing="30px"
-    //   width="100vw"
-    //   height="100vh"
-    //   alignItems="center"
-    //   justifyContent="center"
-    // >
-    //   <Typography variant="h3" color="rgba(255,255,255,0.7)">
-    //     We don`t have a page with this url.
-    //   </Typography>
-    //   <Image
-    //     src={Kitemark}
-    //     height={60}
-    //     width={60}
-    //     style={{ opacity: 0.7, transform: "rotate(26deg)" }}
-    //     alt="Star"
-    //   />
-    //   <Link href={"https://astrosafe.co/"} target={"_blank"}>
-    //     <UrsorButton
-    //       size="large"
-    //       dark
-    //       variant="tertiary"
-    //       startIcon={
-    //         <Image src={ChevronLeft} width={23} height={23} alt="Chevron" />
-    //       }
-    //     >
-    //       Let`s try again
-    //     </UrsorButton>
-    //   </Link>
-    // </Stack>
   );
 }
 
