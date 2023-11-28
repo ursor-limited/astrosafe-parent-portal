@@ -45,19 +45,6 @@ export const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
 export const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.1)";
 export const BACKGROUND_BLUR = "blur(3px)";
 
-// export const getStaticProps = (async (context) => {
-//   //const videoDetails = ApiController.getVideoDetails(videoId)
-//   return {
-//     props: {
-//       videoDetails: await ApiController.getVideoDetails(
-//         context.params?.videoId as string
-//       ), //projects: data.projects
-//     },
-//   };
-// }) satisfies GetStaticProps<{
-//   videoDetails: IVideo;
-// }>;
-
 const CreationPageInputSection = (props: {
   title: string;
   hideTitle?: boolean;
@@ -147,206 +134,211 @@ function CreationPageContents(props: { details: IVideo }) {
   };
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
+  // props.details && provider && url ? (
 
-  return props.details && provider && url ? (
-    <Stack>
+  // <Stack>
+  //   {!fullscreen ? <Header noCreateNew /> : null}
+
+  return (
+    <>
       {!fullscreen ? <Header noCreateNew /> : null}
-      <Stack
-        flex={1}
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-        width="100vw"
-        spacing="20px"
-        sx={{
-          opacity: !loading ? 1 : 0,
-          transition: "1s",
-        }}
-      >
-        {!fullscreen ? (
-          <Stack
-            spacing="15px"
-            justifyContent="center"
-            alignItems="center"
-            pb="46px"
-          >
-            <Logo width={96} src={Logo} />
-            <Stack
-              sx={{
-                background: "linear-gradient(76deg, #F279C5, #FD9B41)",
-                "-webkit-text-fill-color": "transparent",
-                backgroundClip: "text",
-                "-webkit-background-clip": "text",
-              }}
-            >
-              <Stack sx={{ textAlign: "center" }}>
-                <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
-                  Create your safe video link
-                </Typography>
-              </Stack>
-            </Stack>
-          </Stack>
-        ) : null}
-
-        <Stack spacing="42px">
+      {props.details && provider && url ? (
+        <Stack
+          flex={1}
+          justifyContent="center"
+          alignItems="center"
+          position="relative"
+          width="100vw"
+          spacing="20px"
+          sx={{
+            opacity: !loading ? 1 : 0,
+            transition: "1s",
+          }}
+        >
           {!fullscreen ? (
-            <Stack>
+            <Stack
+              spacing="15px"
+              justifyContent="center"
+              alignItems="center"
+              pb="46px"
+            >
+              <Logo width={96} src={Logo} />
               <Stack
-                width="100%"
-                spacing="32px"
-                p="20px"
-                bgcolor={"rgba(0,0,0,0.15)"}
                 sx={{
-                  backdropFilter: "blur(7px)",
+                  background: "linear-gradient(76deg, #F279C5, #FD9B41)",
+                  "-webkit-text-fill-color": "transparent",
+                  backgroundClip: "text",
+                  "-webkit-background-clip": "text",
                 }}
-                borderRadius="12px"
               >
-                <Stack direction="row" spacing="16px" alignItems="flex-end">
-                  <CreationPageInputSection title="Title">
-                    <UrsorInputField
-                      value={title}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setTitle(event.target.value)
-                      }
-                      placeholder="Add a title"
-                      width="100%"
-                      backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                      color={INPUT_FIELD_TEXT_COLOR}
-                      backgroundBlur="blur(3px)"
-                      leftAlign
-                      boldValue
-                    />
-                  </CreationPageInputSection>
-                  <Stack
-                    sx={{
-                      opacity: title ? 1 : 0.5,
-                      pointerEvents: title ? undefined : "none",
-                    }}
-                  >
-                    <UrsorButton
-                      dark
-                      variant="tertiary"
-                      onClick={
-                        submit
-                        //setEditing(!editing);
-                      }
-                      backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-                      hoverOpacity={0.7}
-                      endIcon={ChevronRight}
-                      iconColor={PALETTE.font.light}
-                    >
-                      Create link
-                    </UrsorButton>
-                  </Stack>
+                <Stack sx={{ textAlign: "center" }}>
+                  <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+                    Create your safe video link
+                  </Typography>
                 </Stack>
-
-                <CreationPageInputSection title="Description">
-                  <UrsorTextField
-                    value={description}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setDescription(event.target.value)
-                    }
-                    placeholder="Add a description"
-                    width="100%"
-                    backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                    color={INPUT_FIELD_TEXT_COLOR}
-                    backgroundBlur={BACKGROUND_BLUR}
-                    boldValue
-                  />
-                </CreationPageInputSection>
-
-                <CreationPageInputSection title="Start and end time">
-                  <Stack
-                    direction="row"
-                    width="100%"
-                    bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
-                    borderRadius="8px"
-                    px="30px"
-                    py="6px"
-                    sx={{
-                      backdropFilter: BACKGROUND_BLUR,
-                      svg: {
-                        path: {
-                          fill: PALETTE.font.light,
-                        },
-                      },
-                    }}
-                  >
-                    {duration && range ? (
-                      <Stack
-                        direction="row"
-                        spacing="44px"
-                        justifyContent="center"
-                        width="100%"
-                        sx={{
-                          ".MuiSlider-root": {
-                            color: "transparent !important",
-                          },
-                          ".MuiSlider-rail": {
-                            opacity: 0.4,
-                            background:
-                              "linear-gradient(90deg,#F279C5,#FD9B41)",
-                          },
-                          ".MuiSlider-track": {
-                            background:
-                              "linear-gradient(90deg,#F279C5,#FD9B41)",
-                          },
-                          ".MuiSlider-thumb": {
-                            "&:nth-of-type(3)": {
-                              background: "#F279C5",
-                            },
-                            "&:nth-of-type(4)": {
-                              background: "#FD9B41",
-                            },
-                          },
-                        }}
-                      >
-                        <DurationLabel
-                          value={range[0]}
-                          incrementCallback={() =>
-                            setRange([
-                              Math.min(duration, range[0] + 1),
-                              range[1],
-                            ])
-                          }
-                          decrementCallback={() =>
-                            setRange([Math.max(0, range[0] - 1), range[1]])
-                          }
-                        />
-                        <Slider
-                          min={0}
-                          max={duration}
-                          valueLabelDisplay="off"
-                          getAriaLabel={() => "Temperature range"}
-                          value={range}
-                          onChange={(
-                            event: Event,
-                            newValue: number | number[]
-                          ) => {
-                            setRange(newValue as number[]);
-                          }}
-                        />
-                        <DurationLabel
-                          value={range[1]}
-                          incrementCallback={() =>
-                            setRange([
-                              range[0],
-                              Math.min(duration, range[1] + 1),
-                            ])
-                          }
-                          decrementCallback={() =>
-                            setRange([range[0], Math.max(0, range[1] - 1)])
-                          }
-                        />
-                      </Stack>
-                    ) : null}
-                    {/* <Typography color={PALETTE.font.light}>{duration}</Typography> */}
-                  </Stack>
-                </CreationPageInputSection>
               </Stack>
             </Stack>
           ) : null}
-          {/* <Stack
+
+          <Stack spacing="42px">
+            {!fullscreen ? (
+              <Stack>
+                <Stack
+                  width="100%"
+                  spacing="32px"
+                  p="20px"
+                  bgcolor={"rgba(0,0,0,0.15)"}
+                  sx={{
+                    backdropFilter: "blur(7px)",
+                  }}
+                  borderRadius="12px"
+                >
+                  <Stack direction="row" spacing="16px" alignItems="flex-end">
+                    <CreationPageInputSection title="Title">
+                      <UrsorInputField
+                        value={title}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => setTitle(event.target.value)}
+                        placeholder="Add a title"
+                        width="100%"
+                        backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                        color={INPUT_FIELD_TEXT_COLOR}
+                        backgroundBlur="blur(3px)"
+                        leftAlign
+                        boldValue
+                      />
+                    </CreationPageInputSection>
+                    <Stack
+                      sx={{
+                        opacity: title ? 1 : 0.5,
+                        pointerEvents: title ? undefined : "none",
+                      }}
+                    >
+                      <UrsorButton
+                        dark
+                        variant="tertiary"
+                        onClick={
+                          submit
+                          //setEditing(!editing);
+                        }
+                        backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                        hoverOpacity={0.7}
+                        endIcon={ChevronRight}
+                        iconColor={PALETTE.font.light}
+                      >
+                        Create link
+                      </UrsorButton>
+                    </Stack>
+                  </Stack>
+
+                  <CreationPageInputSection title="Description">
+                    <UrsorTextField
+                      value={description}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        setDescription(event.target.value)
+                      }
+                      placeholder="Add a description"
+                      width="100%"
+                      backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                      color={INPUT_FIELD_TEXT_COLOR}
+                      backgroundBlur={BACKGROUND_BLUR}
+                      boldValue
+                    />
+                  </CreationPageInputSection>
+
+                  <CreationPageInputSection title="Start and end time">
+                    <Stack
+                      direction="row"
+                      width="100%"
+                      bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
+                      borderRadius="8px"
+                      px="30px"
+                      py="6px"
+                      sx={{
+                        backdropFilter: BACKGROUND_BLUR,
+                        svg: {
+                          path: {
+                            fill: PALETTE.font.light,
+                          },
+                        },
+                      }}
+                    >
+                      {duration && range ? (
+                        <Stack
+                          direction="row"
+                          spacing="44px"
+                          justifyContent="center"
+                          width="100%"
+                          sx={{
+                            ".MuiSlider-root": {
+                              color: "transparent !important",
+                            },
+                            ".MuiSlider-rail": {
+                              opacity: 0.4,
+                              background:
+                                "linear-gradient(90deg,#F279C5,#FD9B41)",
+                            },
+                            ".MuiSlider-track": {
+                              background:
+                                "linear-gradient(90deg,#F279C5,#FD9B41)",
+                            },
+                            ".MuiSlider-thumb": {
+                              "&:nth-of-type(3)": {
+                                background: "#F279C5",
+                              },
+                              "&:nth-of-type(4)": {
+                                background: "#FD9B41",
+                              },
+                            },
+                          }}
+                        >
+                          <DurationLabel
+                            value={range[0]}
+                            incrementCallback={() =>
+                              setRange([
+                                Math.min(duration, range[0] + 1),
+                                range[1],
+                              ])
+                            }
+                            decrementCallback={() =>
+                              setRange([Math.max(0, range[0] - 1), range[1]])
+                            }
+                          />
+                          <Slider
+                            min={0}
+                            max={duration}
+                            valueLabelDisplay="off"
+                            getAriaLabel={() => "Temperature range"}
+                            value={range}
+                            onChange={(
+                              event: Event,
+                              newValue: number | number[]
+                            ) => {
+                              setRange(newValue as number[]);
+                            }}
+                          />
+                          <DurationLabel
+                            value={range[1]}
+                            incrementCallback={() =>
+                              setRange([
+                                range[0],
+                                Math.min(duration, range[1] + 1),
+                              ])
+                            }
+                            decrementCallback={() =>
+                              setRange([range[0], Math.max(0, range[1] - 1)])
+                            }
+                          />
+                        </Stack>
+                      ) : null}
+                      {/* <Typography color={PALETTE.font.light}>{duration}</Typography> */}
+                    </Stack>
+                  </CreationPageInputSection>
+                </Stack>
+              </Stack>
+            ) : null}
+            {/* <Stack
             p="1.8px"
             borderRadius="15px"
             overflow="hidden"
@@ -368,49 +360,49 @@ function CreationPageContents(props: { details: IVideo }) {
               }}
             /> */}
 
-          <Stack
-            p="1.8px"
-            borderRadius="15px"
-            overflow="hidden"
-            sx={{ backdropFilter: "none" }}
-            position="relative"
-          >
             <Stack
-              top={0}
-              left={0}
-              width="100%"
-              height="100%"
-              position="absolute"
-              sx={{
-                opacity: playing ? 0 : 1,
-                transition: "0.3s",
-                background: fullscreen
-                  ? "none"
-                  : "linear-gradient(90deg, #F279C5, #FD9B41)",
-              }}
-            />
-            <Player
-              url={url}
-              provider={provider}
-              width={VIDEO_WIDTH}
-              height={VIDEO_HEIGHT}
-              setDuration={(d) => d && setDuration(d)}
-              top="120px"
-              setFullscreen={setFullscreen}
-              playingCallback={(p) => setPlaying(p)}
-            />
-          </Stack>
-        </Stack>
-
-        {!fullscreen ? (
-          <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
-            <Stack
-              width="100%"
+              p="1.8px"
+              borderRadius="15px"
+              overflow="hidden"
+              sx={{ backdropFilter: "none" }}
               position="relative"
-              overflow="visible"
-              alignItems="center"
             >
-              {/* {isCreator ? (
+              <Stack
+                top={0}
+                left={0}
+                width="100%"
+                height="100%"
+                position="absolute"
+                sx={{
+                  opacity: playing ? 0 : 1,
+                  transition: "0.3s",
+                  background: fullscreen
+                    ? "none"
+                    : "linear-gradient(90deg, #F279C5, #FD9B41)",
+                }}
+              />
+              <Player
+                url={url}
+                provider={provider}
+                width={VIDEO_WIDTH}
+                height={VIDEO_HEIGHT}
+                setDuration={(d) => d && setDuration(d)}
+                top="120px"
+                setFullscreen={setFullscreen}
+                playingCallback={(p) => setPlaying(p)}
+              />
+            </Stack>
+          </Stack>
+
+          {!fullscreen ? (
+            <Stack width={`${VIDEO_WIDTH}px`} spacing="12px">
+              <Stack
+                width="100%"
+                position="relative"
+                overflow="visible"
+                alignItems="center"
+              >
+                {/* {isCreator ? (
               <Stack
                 direction="row"
                 width="100%"
@@ -480,9 +472,9 @@ function CreationPageContents(props: { details: IVideo }) {
                 </Stack>
               </Stack>
             ) : null} */}
-            </Stack>
+              </Stack>
 
-            {/* <Stack pt="26px" width="100%" alignItems="center">
+              {/* <Stack pt="26px" width="100%" alignItems="center">
               <div>
                 <UrsorButton
                   dark
@@ -510,9 +502,13 @@ function CreationPageContents(props: { details: IVideo }) {
                 </UrsorButton>
               </div>
             </Stack> */}
-          </Stack>
-        ) : null}
-      </Stack>
+            </Stack>
+          ) : null}
+        </Stack>
+      ) : showForbiddenVideoView ? (
+        <ForbiddenVideoView />
+      ) : null}
+      {!fullscreen ? <Footer /> : null}
       <Stack
         position="absolute"
         top={0}
@@ -536,12 +532,7 @@ function CreationPageContents(props: { details: IVideo }) {
           <Kitemark height={70} width={70} />
         </Stack>
       </Stack>
-      {!fullscreen ? <Footer /> : null}
-    </Stack>
-  ) : showForbiddenVideoView ? (
-    <ForbiddenVideoView />
-  ) : (
-    <></>
+    </>
   );
 }
 

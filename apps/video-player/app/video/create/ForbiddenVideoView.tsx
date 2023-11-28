@@ -13,7 +13,13 @@ export default function ForbiddenVideoView() {
   const [url, setUrl] = useState<string>("");
   const router = useRouter();
   return (
-    <Stack flex={1} justifyContent="center" alignItems="center" spacing="36px">
+    <Stack
+      height="100vh"
+      minHeight="100vh"
+      justifyContent="center"
+      alignItems="center"
+      spacing="36px"
+    >
       <Stack
         sx={{
           background: "linear-gradient(76deg, #F279C5, #FD9B41)",
@@ -64,7 +70,7 @@ export default function ForbiddenVideoView() {
             endIcon={ChevronRight}
             iconColor={PALETTE.font.light}
           >
-            Let's go again
+            {"Let's go again"}
           </UrsorButton>
         </Stack>
       </Stack>
