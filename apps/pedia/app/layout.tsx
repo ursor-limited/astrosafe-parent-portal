@@ -31,11 +31,12 @@ export default function RootLayout({
             boxSizing: "border-box",
           }}
           spacing="10px"
+          position="relative"
         >
-          {children}
-        </Stack>
-        <Stack width="100%" position="fixed" bottom={0} zIndex={0}>
-          <SpaceGlow width="100%" height="auto" />
+          <Stack zIndex={1}>{children}</Stack>
+          <Stack width="100%" position="fixed" bottom={0} zIndex={0}>
+            <SpaceGlow width="auto" height="auto" />
+          </Stack>
         </Stack>
       </body>
     </html>
