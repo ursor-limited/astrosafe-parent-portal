@@ -2,7 +2,7 @@ import React from "react";
 import type { SxProps } from "@mui/system";
 import { Box } from "@mui/system";
 
-export const DEFAULT_FONT_WEIGHT = 300;
+export const DEFAULT_FONT_WEIGHT = 327;
 export const BOLD_FONT_WEIGHT = 460;
 
 export const getMaxLinesStyle = (n: number) => ({

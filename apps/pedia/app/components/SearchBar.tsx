@@ -6,8 +6,6 @@ import _ from "lodash";
 import { PALETTE } from "ui/palette";
 import { FONT_SIZES, LINE_HEIGHTS } from "ui/typography";
 
-const FADE_DURATION = 400;
-
 export const fadeIn = keyframes`
 from {
   opacity: 0;
@@ -58,8 +56,7 @@ export default function SearchBar() {
               width: "100%",
               height: "100%",
               fontSize: FONT_SIZES.medium,
-              fontFamily: "Rubik",
-              fontWeight: "500 !important",
+              fontWeight: "520 !important",
               textAlign: "left",
               color: PALETTE.secondary.grey[5],
               paddingLeft: "20px",
@@ -114,7 +111,7 @@ export default function SearchBar() {
             cursor: "pointer",
           }}
         >
-          <SearchIcon width={25} height={25} />
+          <SearchIcon width={20} height={20} />
         </Stack>
       </Stack>
     </Stack>
