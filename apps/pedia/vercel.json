@@ -1,0 +1,100 @@
+{
+  "rewrites": [
+    {
+        "source": "/video",
+        "destination": "https://proxy.astrosafe.co/video"
+    },
+    {
+        "source": "/blog",
+        "destination": "https://proxy.astrosafe.co/blog"
+    },
+    {
+        "source": "/blog/:blogid([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/blog/:blogid"
+    },
+    {
+        "source": "/app",
+        "destination": "https://proxy.astrosafe.co/app"
+    },  
+    {
+        "source": "/app/:apppage([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/app/:apppage"
+    },
+    {
+        "source": "/features",
+        "destination": "https://proxy.astrosafe.co/features"
+    },  
+    {
+        "source": "/features/:featurespage([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/features/:featurespage"
+    },
+    {
+        "source": "/search",
+        "destination": "https://proxy.astrosafe.co/search"
+    },
+    {
+        "source": "/tutorials",
+        "destination": "https://proxy.astrosafe.co/tutorials"
+    },
+    {
+        "source": "/tutorials/:tutorialid([a-zA-Z0-9-]+)",
+        "destination": "https://proxy.astrosafe.co/tutorials/:tutorialid"
+    },
+    {
+        "source": "/tools",
+        "destination": "https://proxy.astrosafe.co/tools"
+    },
+    {
+        "source": "/compare",
+        "destination": "https://proxy.astrosafe.co/compare"
+    },
+    {
+        "source": "/about",
+        "destination": "https://proxy.astrosafe.co/about"
+    },
+    {
+        "source": "/privacy-policy",
+        "destination": "https://proxy.astrosafe.co/privacy-policy"
+    },
+    {
+        "source": "/faqs",
+        "destination": "https://proxy.astrosafe.co/faqs"
+    },
+    {
+        "source": "/terms-and-conditions",
+        "destination": "https://proxy.astrosafe.co/terms-and-conditions"
+    },
+    {
+        "source": "/child-privacy-policy",
+        "destination": "https://proxy.astrosafe.co/child-privacy-policy"
+    },
+    {
+        "source": "/book-demo",
+        "destination": "https://proxy.astrosafe.co/book-demo"
+    },
+    {
+        "source": "/sign-up",
+        "destination": "https://proxy.astrosafe.co/sign-up"
+    },
+    {
+        "source": "/websites-for-kids",
+        "destination": "https://proxy.astrosafe.co/websites-for-kids"
+    },
+    {
+        "source": "/chore-charts-for-kids",
+        "destination": "https://proxy.astrosafe.co/chore-charts-for-kids"
+    },
+    {
+        "source": "/15-minutes-meditation-for-family-time-and-kids",
+        "destination": "https://proxy.astrosafe.co/15-minutes-meditation-for-family-time-and-kids"
+    },
+    { 
+        "source": "/",
+        "destination": "https://proxy.astrosafe.co"
+    },
+    { 
+        "source": "/",
+        "destination": "https://proxy.astrosafe.co/"
+    }
+  ]
+}

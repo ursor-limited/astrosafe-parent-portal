@@ -24,6 +24,12 @@ export const HEIGHTS: Record<ButtonSize, number> = {
   small: 28,
 };
 
+export const ICON_SIZES: Record<ButtonSize, number> = {
+  large: 26,
+  medium: 20,
+  small: 20,
+};
+
 export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
   large: { x: 32, y: 12 },
   medium: {
@@ -197,8 +203,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     >
       {props.startIcon ? (
         <props.startIcon
-          height={props.iconSize || 20}
-          width={props.iconSize || 20}
+          height={ICON_SIZES[props.size || "medium"]}
+          width={ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
       <Typography
@@ -214,8 +220,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       </Typography>
       {props.endIcon ? (
         <props.endIcon
-          height={props.iconSize || 20}
-          width={props.iconSize || 20}
+          height={ICON_SIZES[props.size || "medium"]}
+          width={ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
     </Stack>
