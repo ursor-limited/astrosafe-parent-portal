@@ -194,7 +194,10 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
           path: {
-            fill: props.iconColor || BORDER_COLORS[mode][variant]?.[state],
+            fill:
+              props.iconColor ||
+              BORDER_COLORS[mode][variant]?.[state] ||
+              PALETTE.font.light,
             transition: "0.2s",
           },
         },
