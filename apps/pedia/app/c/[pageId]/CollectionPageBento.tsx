@@ -31,7 +31,7 @@ export function ContentPagePreviewCard(props: {
         transition: "0.2s",
         cursor: "pointer",
       }}
-      onClick={() => router.push(`/c/${props.pageId}`)}
+      onClick={() => router.push(`/p/${props.pageId}`)}
       p="20px"
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
