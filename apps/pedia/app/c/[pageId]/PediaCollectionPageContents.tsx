@@ -8,6 +8,7 @@ import {
   IPediaPage,
 } from "@/app/p/[pageId]/PediaPageContents";
 import LayoutCard from "@/app/components/LayoutCard";
+import { Stack } from "@mui/system";
 
 const N_COLUMNS = 12;
 export const GRID_SPACING = 24;
@@ -26,11 +27,15 @@ export default function PediaCollectionPageContents(
     width && setColumnWidth((width - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  return props.pageDetails ? (
-    <LayoutCard title={props.pageDetails.title}>
-      <CollectionPageBento pages={props.childPages} />
-    </LayoutCard>
-  ) : (
-    <></>
+  return (
+    <Stack width="100vw" height="100vh" alignItems="center">
+      {props.pageDetails ? (
+        <LayoutCard title={props.pageDetails.title}>
+          <CollectionPageBento pages={props.childPages} />
+        </LayoutCard>
+      ) : (
+        <></>
+      )}
+    </Stack>
   );
 }

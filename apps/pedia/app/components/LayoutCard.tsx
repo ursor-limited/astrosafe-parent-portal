@@ -19,7 +19,7 @@ interface ILayoutCardProps {
 export default function LayoutCard(props: ILayoutCardProps) {
   const router = useRouter();
   return (
-    <Stack flex={1} alignItems="center" overflow="scroll">
+    <Stack width="100%" height="100%" alignItems="center" overflow="scroll">
       <Header />
       <Stack
         flex={1}
@@ -130,11 +130,20 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   </Stack>
                 ) : null}
               </Stack>
-              <Typography color={PALETTE.secondary.grey[3]}>
-                {`${props.parents?.[0]?.title} knowledge for Kids aged ${
-                  props.selectedAge
-                }-${(props.selectedAge ?? 0) + 1}`}
-              </Typography>
+              <Stack spacing="5px" direction="row">
+                <Typography color={PALETTE.secondary.grey[3]}>
+                  {`${
+                    props.parents?.[0]?.title || props.title
+                  } knowledge for Kids`}
+                </Typography>
+                {props.selectedAge ? (
+                  <Typography color={PALETTE.secondary.grey[3]}>
+                    {`aged ${props.selectedAge}-${
+                      (props.selectedAge ?? 0) + 1
+                    }`}
+                  </Typography>
+                ) : null}
+              </Stack>
             </Stack>
           </Stack>
           {props.children}
