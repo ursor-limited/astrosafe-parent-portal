@@ -45,6 +45,7 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
           />
           <Stack
             width="400px"
+            alignItems="center"
             sx={{
               background: "linear-gradient(-45deg, #F279C5, #1D62F6)",
               "-webkit-text-fill-color": "transparent",
@@ -68,6 +69,7 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
                 alignItems="center"
                 height="140px"
                 width="100%"
+                pb="10px"
               >
                 <Typography bold color={PALETTE.secondary.grey[4]}>
                   Score
