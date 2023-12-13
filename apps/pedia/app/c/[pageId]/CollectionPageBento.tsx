@@ -4,6 +4,7 @@ import { getImageSize } from "react-image-size";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
 import { IPediaPage } from "@/app/p/[pageId]/PediaPageContents";
+import _ from "lodash";
 
 export const GRID_SPACING = 24;
 
@@ -34,17 +35,140 @@ export function ContentPagePreviewCard(props: {
       p="20px"
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
+      overflow="hidden"
     >
       <Typography
         variant="h4"
         color={PALETTE.font.light}
-        sx={{ textShadow: "0 0 25px rgba(0,0,0,0.7)" }}
+        sx={{
+          textShadow: "0 0 25px rgba(0,0,0,0.7)",
+          textAlign: props.titleOnRight ? "right" : undefined,
+        }}
       >
         {props.title}
       </Typography>
     </Stack>
   );
 }
+
+const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
+  <Stack height="594px" direction="row" spacing={`${GRID_SPACING}px`}>
+    <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+      {props.chunk[0] ? (
+        <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
+          <ContentPagePreviewCard
+            title={props.chunk[0].title}
+            imageUrl={props.chunk[0].mainCard.imageUrl}
+            pageId={props.chunk[0].id}
+          />
+          {props.chunk[1] ? (
+            <ContentPagePreviewCard
+              title={props.chunk[1].title}
+              imageUrl={props.chunk[1].mainCard.imageUrl}
+              pageId={props.chunk[1].id}
+            />
+          ) : null}
+        </Stack>
+      ) : null}
+      {props.chunk[2] ? (
+        <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+          <ContentPagePreviewCard
+            title={props.chunk[2].title}
+            imageUrl={props.chunk[2].mainCard.imageUrl}
+            pageId={props.chunk[2].id}
+            titleAtBottom
+            titleOnRight
+          />
+        </Stack>
+      ) : null}
+    </Stack>
+    {props.chunk[3] ? (
+      <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+        <ContentPagePreviewCard
+          title={props.chunk[3].title}
+          imageUrl={props.chunk[3].mainCard.imageUrl}
+          pageId={props.chunk[3].id}
+        />
+      </Stack>
+    ) : null}
+  </Stack>
+);
+
+const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
+  <Stack height="320px" direction="row" spacing={`${GRID_SPACING}px`}>
+    <ContentPagePreviewCard
+      title={props.chunk[0].title}
+      imageUrl={props.chunk[0].mainCard.imageUrl}
+      pageId={props.chunk[0].id}
+    />
+    {props.chunk[1] ? (
+      <ContentPagePreviewCard
+        title={props.chunk[1].title}
+        imageUrl={props.chunk[1].mainCard.imageUrl}
+        pageId={props.chunk[1].id}
+        titleAtBottom
+        titleOnRight
+      />
+    ) : null}
+    {props.chunk[2] ? (
+      <ContentPagePreviewCard
+        title={props.chunk[2].title}
+        imageUrl={props.chunk[2].mainCard.imageUrl}
+        pageId={props.chunk[2].id}
+      />
+    ) : null}
+    {props.chunk[3] ? (
+      <ContentPagePreviewCard
+        title={props.chunk[3].title}
+        imageUrl={props.chunk[3].mainCard.imageUrl}
+        pageId={props.chunk[3].id}
+        titleAtBottom
+        titleOnRight
+      />
+    ) : null}
+  </Stack>
+);
+
+const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
+  <Stack height="594px" direction="row" spacing={`${GRID_SPACING}px`}>
+    <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+      <ContentPagePreviewCard
+        title={props.chunk[0].title}
+        imageUrl={props.chunk[0].mainCard.imageUrl}
+        pageId={props.chunk[0].id}
+      />
+    </Stack>
+    <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+      {props.chunk[1] ? (
+        <ContentPagePreviewCard
+          title={props.chunk[1].title}
+          imageUrl={props.chunk[1].mainCard.imageUrl}
+          pageId={props.chunk[1].id}
+          titleAtBottom
+          titleOnRight
+        />
+      ) : null}
+      {props.chunk[2] ? (
+        <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
+          {props.chunk[2] ? (
+            <ContentPagePreviewCard
+              title={props.chunk[2].title}
+              imageUrl={props.chunk[2].mainCard.imageUrl}
+              pageId={props.chunk[2].id}
+            />
+          ) : null}
+          {props.chunk[3] ? (
+            <ContentPagePreviewCard
+              title={props.chunk[3].title}
+              imageUrl={props.chunk[3].mainCard.imageUrl}
+              pageId={props.chunk[3].id}
+            />
+          ) : null}
+        </Stack>
+      ) : null}
+    </Stack>
+  </Stack>
+);
 
 export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
@@ -54,33 +178,21 @@ export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
     ).then((dims) => setOriginalImageSizes(dims));
   }, [props.pages]);
   return (
-    <Stack height="594px" direction="row" spacing={`${GRID_SPACING}px`}>
-      <Stack flex={1} spacing={`${GRID_SPACING}px`}>
-        <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
-          <ContentPagePreviewCard
-            title={props.pages[0].title}
-            imageUrl={props.pages[0].mainCard.imageUrl}
-            pageId={props.pages[0].id}
-          />
-          <ContentPagePreviewCard
-            title={props.pages[1].title}
-            imageUrl={props.pages[1].mainCard.imageUrl}
-            pageId={props.pages[1].id}
-          />
-        </Stack>
-        <ContentPagePreviewCard
-          title={props.pages[2].title}
-          imageUrl={props.pages[2].mainCard.imageUrl}
-          pageId={props.pages[2].id}
-          titleAtBottom
-          titleOnRight
-        />
-      </Stack>
-      <ContentPagePreviewCard
-        title={props.pages[3].title}
-        imageUrl={props.pages[3].mainCard.imageUrl}
-        pageId={props.pages[3].id}
-      />
+    <Stack spacing={`${GRID_SPACING}px`}>
+      {_.chunk([...props.pages, ...props.pages, ...props.pages], 4).map(
+        (chunkRow, i) =>
+          chunkRow.length === 3 ? (
+            <ChunkRow2 key={i} chunk={chunkRow} />
+          ) : i % 4 === 0 ? (
+            <ChunkRow1 key={i} chunk={chunkRow} />
+          ) : i % 4 === 1 ? (
+            <ChunkRow2 key={i} chunk={chunkRow} />
+          ) : i % 4 === 2 ? (
+            <ChunkRow3 key={i} chunk={chunkRow} />
+          ) : (
+            <ChunkRow2 key={i} chunk={chunkRow} />
+          )
+      )}
     </Stack>
   );
 }
