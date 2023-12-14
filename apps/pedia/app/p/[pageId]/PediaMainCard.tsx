@@ -34,7 +34,22 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
         boxSizing: "border-box",
       }}
       position="relative"
-    />
+      px="25px"
+      py="22px"
+      boxSizing="border-box"
+    >
+      {props.title ? (
+        <Typography
+          variant="h4"
+          color={PALETTE.font.light}
+          sx={{
+            textShadow: "0 0 25px rgba(0,0,0,0.7)",
+          }}
+        >
+          {props.title}
+        </Typography>
+      ) : null}
+    </Stack>
     <Stack spacing="12px" px="20px" py="17px" boxSizing="border-box">
       {props.facts.map((fact, i) => (
         <Stack
