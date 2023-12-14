@@ -516,10 +516,10 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography bold color={PALETTE.secondary.grey[4]}>
+          <Typography bold color={PALETTE.secondary.grey[4]} noWrap>
             {fact.title}
           </Typography>
-          <Typography color={PALETTE.secondary.grey[4]}>
+          <Typography color={PALETTE.secondary.grey[4]} noWrap>
             {fact.content}
           </Typography>
         </Stack>
@@ -539,10 +539,14 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
 
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
+  const [bentoRef, setBentoRef] = useState<HTMLElement | null>(null);
   const [columnWidth, setColumnWidth] = useState<number>(0);
   useEffect(() => {
-    width && setColumnWidth((width - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
+    const w = bentoRef?.getBoundingClientRect().width;
+    w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
+
+  console.log(columnWidth);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
@@ -553,7 +557,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
           selectedAge={selectedAge}
           parents={props.parentPages}
         >
-          <Stack spacing="94px" alignItems="center">
+          <Stack ref={setBentoRef} spacing="94px" alignItems="center">
             <Bento
               mainCardDetails={props.pageDetails.mainCard}
               imageCardDetails={props.pageDetails.images}

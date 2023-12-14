@@ -3,7 +3,7 @@ import axiosRetry from "axios-retry";
 import { Auth } from "aws-amplify";
 
 const BACKEND_URLS = {
-  dev: "http://localhost:8080",
+  dev: "http://localhost:8081",
   staging:
     "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
   prod: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",

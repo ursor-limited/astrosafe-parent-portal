@@ -9,7 +9,7 @@ export interface IVideo {
 }
 
 const BACKEND_URLS = {
-  development: "http://localhost:8080",
+  development: "http://localhost:8081",
   staging:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
   production:

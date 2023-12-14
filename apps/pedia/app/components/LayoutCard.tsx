@@ -134,7 +134,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 <Typography color={PALETTE.secondary.grey[3]}>
                   {`${
                     props.parents?.[0]?.title || props.title
-                  } knowledge for Kids`}
+                  } knowledge and fun facts for Kids`}
                 </Typography>
                 {props.selectedAge ? (
                   <Typography color={PALETTE.secondary.grey[3]}>

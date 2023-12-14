@@ -33,7 +33,7 @@ const getSpecialCharactersRemovedString = (x: string) =>
 export default function SearchBar() {
   const [value, setValue] = useState<string>("");
   const submitSearch = () => {
-    window.location.href = `/search?q=${value}`;
+    window.location.href = `http://dev.kids.astrosafe.co/search?q=${value}`;
   };
 
   const PADDING = 10;
