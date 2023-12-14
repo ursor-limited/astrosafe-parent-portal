@@ -12,6 +12,7 @@ import { PALETTE } from "ui/palette";
 import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
+import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -19,7 +20,6 @@ const BORDER_RADIUS = "12px";
 const ROW_HEIGHT = 311;
 const FACT_CARD_HEIGHT = "97px";
 const FACT_ROW_HEIGHT = "391px";
-const MAIN_CARD_HEIGHT = "576px";
 const TEXT_CARD_Y_PADDING = 20;
 const BEZIER = "cubic-bezier(.32,.82,.24,.98)";
 const TEXT_CARD_TRANSITION_DURATION = 800;
@@ -473,60 +473,6 @@ const Bento = (props: {
     </>
   );
 };
-
-interface IFact {
-  title: string;
-  content: string;
-}
-
-interface IPediaMainCard {
-  title: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  imageUrl: string;
-  facts: IFact[];
-}
-
-const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
-  <Stack
-    borderRadius="12px"
-    bgcolor={PALETTE.secondary.grey[1]}
-    width={`${props.width}px`}
-    height={MAIN_CARD_HEIGHT}
-    minHeight={MAIN_CARD_HEIGHT}
-    boxSizing="border-box"
-    boxShadow="0 0 25px rgba(0,0,0,0.05)"
-    overflow="hidden"
-  >
-    <Stack
-      width={`${props.width}px`}
-      height="380px"
-      sx={{
-        backgroundImage: `url(${props.imageUrl})`,
-        backgroundSize: "cover",
-        boxSizing: "border-box",
-      }}
-      position="relative"
-    />
-    <Stack spacing="12px" px="20px" py="17px" boxSizing="border-box">
-      {props.facts.map((fact, i) => (
-        <Stack
-          key={i}
-          direction="row"
-          borderRadius="10px"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Typography bold color={PALETTE.secondary.grey[4]} noWrap>
-            {fact.title}
-          </Typography>
-          <Typography color={PALETTE.secondary.grey[4]} noWrap>
-            {fact.content}
-          </Typography>
-        </Stack>
-      ))}
-    </Stack>
-  </Stack>
-);
 
 export interface IPediaPageContentsProps {
   pageDetails: IPediaPage;
