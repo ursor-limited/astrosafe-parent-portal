@@ -546,8 +546,6 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  console.log(columnWidth);
-
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
       {props.pageDetails ? (
