@@ -137,7 +137,7 @@ export interface UrsorButtonProps {
   fontColor?: string;
   startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   endIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  iconSize?: string;
+  iconSize?: number;
   iconColor?: string;
   disabled?: boolean;
   dark?: boolean;
@@ -206,8 +206,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     >
       {props.startIcon ? (
         <props.startIcon
-          height={ICON_SIZES[props.size || "medium"]}
-          width={ICON_SIZES[props.size || "medium"]}
+          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
       <Typography
@@ -223,8 +223,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       </Typography>
       {props.endIcon ? (
         <props.endIcon
-          height={ICON_SIZES[props.size || "medium"]}
-          width={ICON_SIZES[props.size || "medium"]}
+          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
     </Stack>

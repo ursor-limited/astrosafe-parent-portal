@@ -45,7 +45,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
               dark
               variant="secondary"
               startIcon={ChevronLeft}
-              iconSize="22px"
+              iconSize={22}
             >
               Create new
             </UrsorButton>
@@ -57,7 +57,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
             variant="tertiary"
             endIcon={Kitemark}
             iconColor="rgba(255,255,255,0.7)"
-            iconSize="8px"
+            iconSize={15}
           >
             Discover AstroSafe
           </UrsorButton>
