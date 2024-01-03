@@ -24,6 +24,12 @@ export const HEIGHTS: Record<ButtonSize, number> = {
   small: 28,
 };
 
+export const ICON_SIZES: Record<ButtonSize, number> = {
+  large: 26,
+  medium: 20,
+  small: 20,
+};
+
 export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
   large: { x: 32, y: 12 },
   medium: {
@@ -131,7 +137,7 @@ export interface UrsorButtonProps {
   fontColor?: string;
   startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   endIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
-  iconSize?: string;
+  iconSize?: number;
   iconColor?: string;
   disabled?: boolean;
   dark?: boolean;
@@ -188,7 +194,10 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
           path: {
-            fill: props.iconColor || BORDER_COLORS[mode][variant]?.[state],
+            fill:
+              props.iconColor ||
+              BORDER_COLORS[mode][variant]?.[state] ||
+              PALETTE.font.light,
             transition: "0.2s",
           },
         },
@@ -197,8 +206,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     >
       {props.startIcon ? (
         <props.startIcon
-          height={props.iconSize || 20}
-          width={props.iconSize || 20}
+          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
       <Typography
@@ -214,8 +223,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       </Typography>
       {props.endIcon ? (
         <props.endIcon
-          height={props.iconSize || 20}
-          width={props.iconSize || 20}
+          height={props.iconSize || ICON_SIZES[props.size || "medium"]}
+          width={props.iconSize || ICON_SIZES[props.size || "medium"]}
         />
       ) : null}
     </Stack>

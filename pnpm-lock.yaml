@@ -21,6 +21,103 @@ importers:
         specifier: latest
         version: 1.10.16
 
+  apps/pedia:
+    dependencies:
+      '@emotion/react':
+        specifier: ^11.11.1
+        version: 11.11.1(@types/react@18.2.5)(react@18.2.0)
+      '@emotion/styled':
+        specifier: ^11.11.0
+        version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.5)(react@18.2.0)
+      '@mui/material':
+        specifier: ^5.14.16
+        version: 5.14.17(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/system':
+        specifier: ^5.14.16
+        version: 5.14.17(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react@18.2.0)
+      '@sentry/react':
+        specifier: ^7.77.0
+        version: 7.77.0(react@18.2.0)
+      '@svgr/webpack':
+        specifier: ^8.1.0
+        version: 8.1.0(typescript@5.2.2)
+      axios:
+        specifier: ^1.6.0
+        version: 1.6.0
+      axios-retry:
+        specifier: ^3.8.1
+        version: 3.8.1
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      lottie-react:
+        specifier: ^2.4.0
+        version: 2.4.0(react-dom@18.2.0)(react@18.2.0)
+      next:
+        specifier: 14.0.1
+        version: 14.0.1(@babel/core@7.22.11)(react-dom@18.2.0)(react@18.2.0)
+      next-svgr:
+        specifier: ^0.0.2
+        version: 0.0.2
+      react:
+        specifier: ^18
+        version: 18.2.0
+      react-dom:
+        specifier: ^18
+        version: 18.2.0(react@18.2.0)
+      react-fade-in:
+        specifier: ^2.0.1
+        version: 2.0.1(react@18.2.0)
+      react-image-size:
+        specifier: ^2.3.2
+        version: 2.3.2(react-dom@18.2.0)(react@18.2.0)
+      sharp:
+        specifier: ^0.32.6
+        version: 0.32.6
+      ui:
+        specifier: workspace:*
+        version: link:../../packages/ui
+      usehooks-ts:
+        specifier: ^2.9.1
+        version: 2.9.1(react-dom@18.2.0)(react@18.2.0)
+      xmldom:
+        specifier: ^0.6.0
+        version: 0.6.0
+    devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.202
+        version: 4.14.202
+      '@types/node':
+        specifier: ^20
+        version: 20.5.2
+      '@types/react':
+        specifier: ^18
+        version: 18.2.5
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.2.3
+      '@types/xmldom':
+        specifier: ^0.1.34
+        version: 0.1.34
+      autoprefixer:
+        specifier: ^10.0.1
+        version: 10.4.16(postcss@8.4.31)
+      eslint:
+        specifier: ^8
+        version: 8.48.0
+      eslint-config-next:
+        specifier: 14.0.1
+        version: 14.0.1(eslint@8.48.0)(typescript@5.2.2)
+      postcss:
+        specifier: ^8
+        version: 8.4.31
+      tailwindcss:
+        specifier: ^3.3.0
+        version: 3.3.5
+      typescript:
+        specifier: ^5
+        version: 5.2.2
+
   apps/video-player:
     dependencies:
       '@emotion/react':
@@ -2445,6 +2542,10 @@ packages:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
     dev: true
 
+  /@types/lodash@4.14.202:
+    resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+    dev: true
+
   /@types/minimatch@5.1.2:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: true
@@ -2463,10 +2564,6 @@ packages:
 
   /@types/prop-types@15.7.10:
     resolution: {integrity: sha512-mxSnDQxPqsZxmeShFH+uwQ4kO4gcJcGahjjMFeLbKE95IAZiiZyiEepGZjtXJ7hN/yfu0bu9xN2ajcU0JcxX6A==}
-    dev: false
-
-  /@types/prop-types@15.7.5:
-    resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
 
   /@types/q@1.5.8:
     resolution: {integrity: sha512-hroOstUScF6zhIi+5+x0dzqrHA1EJi+Irri6b1fxolMTqqHIV/Cg77EtnQcZqZCu8hR3mX2BzIxN4/GzI68Kfw==}
@@ -2487,7 +2584,7 @@ packages:
   /@types/react@18.2.5:
     resolution: {integrity: sha512-RuoMedzJ5AOh23Dvws13LU9jpZHIc/k90AgmK7CecAYeWmSr3553L4u5rk4sWAPBuQosfT7HmTfG4Rg5o4nGEA==}
     dependencies:
-      '@types/prop-types': 15.7.5
+      '@types/prop-types': 15.7.10
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
 
@@ -5728,7 +5825,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -5742,6 +5838,21 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     dependencies:
       js-tokens: 4.0.0
+
+  /lottie-react@2.4.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pDJGj+AQlnlyHvOHFK7vLdsDcvbuqvwPZdMlJ360wrzGFurXeKPr8SiRCjLf3LrNYKANQtSsh5dz9UYQHuqx4w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      lottie-web: 5.12.2
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /lottie-web@5.12.2:
+    resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
+    dev: false
 
   /lower-case-first@1.0.2:
     resolution: {integrity: sha512-UuxaYakO7XeONbKrZf5FEgkantPf5DUqDayzP5VXZrtRPdH86s4kN47I8B3TW10S4QKiE3ziHNf3kRN//okHjA==}
@@ -6547,6 +6658,24 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-fade-in@2.0.1(react@18.2.0):
+    resolution: {integrity: sha512-oqS/WT4znaXEHmL+yo0IDUDY7uC9K4RP35j1SdRUEBspR09B2iIC0i8oJ28tPOr6Ez/L2aktF9p89j+DbsTVNw==}
+    peerDependencies:
+      react: ^16.8 || 17
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /react-image-size@2.3.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-0kRdhVlsZ1fEBOQZM4KK8uQEWkQUBJj38npDqCI4WSJEM/C1I6qzvYhbw2gM6vfy/ZFwLWxiJcncONMIg1sm4Q==}
+    peerDependencies:
+      react: '>=16.9.0'
+      react-dom: '>=16.9.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -6813,6 +6942,7 @@ packages:
 
   /semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
+    hasBin: true
     dev: true
 
   /semver@6.3.1:

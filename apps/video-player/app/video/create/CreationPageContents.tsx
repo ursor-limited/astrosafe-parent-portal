@@ -2,14 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
-//import CaptionsIcon from "./images/icons/Captions.svg";
 import Logo from "@/images/playerLogo.svg";
-import Image from "next/image";
 import ApiController, { IVideo } from "@/app/api";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Kitemark from "@/images/coloredKitemark.svg";
-import Pencil from "@/images/icons/Pencil.svg";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
 import DurationLabel from "../../v/[videoId]/duration-label";
@@ -21,7 +17,6 @@ import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
-import { FONT_SIZES } from "ui/typography";
 import ForbiddenVideoView from "./ForbiddenVideoView";
 
 const Player = dynamic(
