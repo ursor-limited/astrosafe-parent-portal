@@ -57,7 +57,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
             variant="tertiary"
             endIcon={Kitemark}
             iconColor="rgba(255,255,255,0.7)"
-            iconSize="14px"
+            iconSize="8px"
           >
             Discover AstroSafe
           </UrsorButton>

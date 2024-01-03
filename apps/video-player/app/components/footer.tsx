@@ -63,7 +63,7 @@ export const Footer = () => {
               size="large"
               endIcon={Kitemark}
               startIcon={Kitemark}
-              iconSize="9px"
+              iconSize="3px"
               iconColor="rgba(255,255,255,0.6)"
             >
               Try Astro for free
