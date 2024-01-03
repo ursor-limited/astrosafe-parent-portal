@@ -34,8 +34,8 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
         boxSizing: "border-box",
       }}
       position="relative"
-      px="25px"
-      py="22px"
+      px="20px"
+      py="20px"
       boxSizing="border-box"
     >
       {props.title ? (
