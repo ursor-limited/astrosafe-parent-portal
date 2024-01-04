@@ -11,12 +11,11 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
+    `${BACKEND_URLS['staging']}/${route}`
   );
 
 class ApiController {
   static async getPage(id: string) { //@ts-ignore
-    console.log(`${BACKEND_URLS[process.env.NODE_ENV]}}`)
     return get(`pedia/${id}`).then(
       (response: any) => response.json()
     );
