@@ -3,7 +3,7 @@ const BACKEND_URLS = {
   staging:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
   production:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
@@ -11,7 +11,7 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS['staging']}/${route}`
+    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
   );
 
 class ApiController {
