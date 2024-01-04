@@ -4,12 +4,5 @@ const withSvgr = require("next-svgr");
 module.exports = withSvgr({
     reactStrictMode: true,
     transpilePackages: ["ui"],
-    async redirects() {
-      return [
-        {
-          source: '/v',
-          destination: '/video',
-          permanent: true,
-        }]
-      }
+    assetPrefix: "https://astro-monorepo-pedia.vercel.app"
   })
