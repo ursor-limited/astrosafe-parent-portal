@@ -6,7 +6,7 @@
     },
     {
         "source": "/p/:pediaId([a-zA-Z0-9-]+)",
-        "destination": "astro-monorepo-pedia.vercel.app/p/:pediaId"
+        "destination": "https://astro-monorepo-pedia.vercel.app/p/:pediaId"
     },
     {
         "source": "/blog",
