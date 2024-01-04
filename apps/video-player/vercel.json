@@ -5,6 +5,10 @@
         "destination": "https://proxy.astrosafe.co/video"
     },
     {
+        "source": "/p/:pediaId([a-zA-Z0-9-]+)",
+        "destination": "astro-monorepo-pedia.vercel.app/p/:pediaId"
+    },
+    {
         "source": "/blog",
         "destination": "https://proxy.astrosafe.co/blog"
     },
