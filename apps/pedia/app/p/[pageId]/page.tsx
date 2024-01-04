@@ -4,7 +4,7 @@ import PediaPageContents from "./PediaPageContents";
 
 async function VideoPage({ params }: { params: { pageId: string } }) {
   const pageDetails = await ApiController.getPage(params.pageId);
-  console.log(pageDetails);
+  console.log("ii");
   return pageDetails ? (
     <PediaPageContents
       pageDetails={pageDetails.page}
