@@ -1,12 +1,12 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
-import { Auth } from "aws-amplify";
 
 const BACKEND_URLS = {
-  dev: "http://localhost:8081",
+  development: "http://localhost:8081",
   staging:
-    "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
-  prod: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
+  production:
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
 
 const api = axios.create({
