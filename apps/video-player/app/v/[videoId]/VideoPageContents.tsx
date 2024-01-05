@@ -13,6 +13,8 @@ import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 
+const MAGICAL_BORDER_THICKNESS = 1.8;
+
 const Player = dynamic(
   () => import("@/app/components/player"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
@@ -102,7 +104,10 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               //   backgroundClip: "text",
               //   "-webkit-background-clip": "text",
               // }}
-              width={VIDEO_WIDTH}
+              width={
+                Math.min(playerWidth, VIDEO_WIDTH) -
+                2 * MAGICAL_BORDER_THICKNESS
+              }
               sx={{
                 opacity: 0.78,
               }}
@@ -132,7 +137,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
           ) : null}
           <Stack width="90vw" boxSizing="border-box" ref={setPlayerWidthRef}>
             <Stack
-              p="1.8px"
+              p={`${MAGICAL_BORDER_THICKNESS}px`}
               borderRadius="15px"
               overflow="hidden"
               sx={{ backdropFilter: "none" }}
@@ -160,7 +165,10 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
                 startTime={props.details.startTime}
                 endTime={props.details.endTime}
                 noKitemark={playerWidth < VIDEO_WIDTH}
-                width={Math.min(playerWidth, VIDEO_WIDTH)}
+                width={
+                  Math.min(playerWidth, VIDEO_WIDTH) -
+                  2 * MAGICAL_BORDER_THICKNESS
+                }
                 height={
                   Math.min(playerWidth, VIDEO_WIDTH) *
                   (VIDEO_HEIGHT / VIDEO_WIDTH)
