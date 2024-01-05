@@ -13,6 +13,8 @@ import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
+import { useRouter } from "next/navigation";
+import { Header } from "@/app/components/Header";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -492,14 +494,39 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
+  const router = useRouter();
+
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
+      <Header />
+      <Stack direction="row" spacing="12px">
+        {props.parentPages?.map((p) => (
+          <Stack
+            key={p.id}
+            height="37px"
+            borderRadius="8px"
+            px="12px"
+            boxSizing="border-box"
+            bgcolor="rgb(255,255,255)"
+            justifyContent="center"
+            sx={{
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+            onClick={() => router.push(`/c/${p.id}`)}
+          >
+            <Typography bold>{p.title}</Typography>
+          </Stack>
+        ))}
+      </Stack>
       {props.pageDetails ? (
         <LayoutCard
           title={props.pageDetails.title}
           setSelectedAge={setSelectedAge}
           selectedAge={selectedAge}
-          parents={props.parentPages}
+          category={props.parentPages[0].title}
+          //parents={props.parentPages}
         >
           <Stack ref={setBentoRef} spacing="94px" alignItems="center">
             <Bento

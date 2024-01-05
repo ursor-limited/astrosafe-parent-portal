@@ -12,7 +12,8 @@ interface ILayoutCardProps {
   title: string;
   selectedAge?: number;
   setSelectedAge?: (age: number) => void;
-  parents?: IPediaCollectionPage[];
+  category?: string;
+  //parents?: IPediaCollectionPage[];
   children: React.ReactNode;
 }
 
@@ -20,7 +21,6 @@ export default function LayoutCard(props: ILayoutCardProps) {
   const router = useRouter();
   return (
     <Stack width="100%" height="100%" alignItems="center" overflow="scroll">
-      <Header />
       <Stack
         flex={1}
         width="100%"
@@ -38,27 +38,6 @@ export default function LayoutCard(props: ILayoutCardProps) {
           spacing={`${GRID_SPACING}px`}
         >
           <Stack spacing="36px">
-            <Stack direction="row" spacing="12px">
-              {props.parents?.map((p) => (
-                <Stack
-                  key={p.id}
-                  height="37px"
-                  borderRadius="8px"
-                  px="12px"
-                  boxSizing="border-box"
-                  bgcolor="rgb(255,255,255)"
-                  justifyContent="center"
-                  sx={{
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => router.push(`/c/${p.id}`)}
-                >
-                  <Typography bold>{p.title}</Typography>
-                </Stack>
-              ))}
-            </Stack>
             <Stack>
               <Stack
                 direction="row"
@@ -67,6 +46,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 sx={{
                   transform: "translateX(-3px)",
                 }}
+                pt="24px"
               >
                 <Typography variant="h2">{props.title}</Typography>
                 {props.selectedAge ? (
@@ -130,20 +110,23 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   </Stack>
                 ) : null}
               </Stack>
-              <Stack spacing="5px" direction="row">
-                <Typography color={PALETTE.secondary.grey[3]}>
-                  {`${
-                    props.parents?.[0]?.title || props.title
-                  } knowledge and fun facts for Kids`}
-                </Typography>
-                {props.selectedAge ? (
+              {props.category ? (
+                <Stack spacing="5px" direction="row">
                   <Typography color={PALETTE.secondary.grey[3]}>
-                    {`aged ${props.selectedAge}-${
-                      (props.selectedAge ?? 0) + 1
-                    }`}
+                    {`${
+                      props.category
+                      //props.parents?.[0]?.title || props.title
+                    } knowledge and fun facts for Kids`}
                   </Typography>
-                ) : null}
-              </Stack>
+                  {props.selectedAge ? (
+                    <Typography color={PALETTE.secondary.grey[3]}>
+                      {`aged ${props.selectedAge}-${
+                        (props.selectedAge ?? 0) + 1
+                      }`}
+                    </Typography>
+                  ) : null}
+                </Stack>
+              ) : null}
             </Stack>
           </Stack>
           {props.children}

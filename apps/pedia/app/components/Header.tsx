@@ -35,7 +35,7 @@ export const Header = (props: { noCreateNew?: boolean }) => {
             "&:hover": { opacity: 0.8 },
             transition: "0.2s",
           }}
-          width="130px"
+          width="170px"
         >
           <Logo width={80} />
         </Stack>
