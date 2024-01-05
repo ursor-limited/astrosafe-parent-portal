@@ -15,13 +15,14 @@ export default function SuggestionsSection(props: {
       boxSizing="border-box"
       height="400px"
       width="80%"
+      alignItems="center"
     >
       <Stack width="100%" alignItems="center" pb="20px" spacing="20px">
         <Typography variant="h4" bold color={PALETTE.secondary.grey[5]}>
           Why not have a look at these too?
         </Typography>
       </Stack>
-      <Stack direction="row" spacing="12px">
+      <Stack direction="row" spacing="12px" pb="20px">
         {props.parentPages?.map((p) => (
           <Stack
             key={p.id}
@@ -36,7 +37,6 @@ export default function SuggestionsSection(props: {
               transition: "0.2s",
               cursor: "pointer",
             }}
-            boxShadow="0 0 25px rgba(0,0,0,0.2)"
             onClick={() => router.push(`/c/${p.id}`)}
           >
             <Typography bold>{p.title}</Typography>

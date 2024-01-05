@@ -9,6 +9,7 @@ import {
 } from "@/app/p/[pageId]/PediaPageContents";
 import LayoutCard from "@/app/components/LayoutCard";
 import { Stack } from "@mui/system";
+import { Header } from "@/app/components/Header";
 
 const N_COLUMNS = 12;
 export const GRID_SPACING = 24;
@@ -29,6 +30,7 @@ export default function PediaCollectionPageContents(
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
+      <Header />
       {props.pageDetails ? (
         <LayoutCard title={props.pageDetails.title}>
           <CollectionPageBento pages={props.childPages} />
