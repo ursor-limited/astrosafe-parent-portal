@@ -14,17 +14,23 @@ interface ILayoutCardProps {
   setSelectedAge?: (age: number) => void;
   category?: string;
   //parents?: IPediaCollectionPage[];
+  paddingTop?: string;
   children: React.ReactNode;
 }
 
 export default function LayoutCard(props: ILayoutCardProps) {
   const router = useRouter();
   return (
-    <Stack width="100%" height="100%" alignItems="center" overflow="scroll">
+    <Stack
+      width="100%"
+      height="100%"
+      alignItems="center"
+      overflow="scroll"
+      pt={props.paddingTop}
+    >
       <Stack
         flex={1}
         width="100%"
-        pt="60px"
         boxSizing="border-box"
         position="relative"
         alignItems="center"

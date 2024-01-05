@@ -497,9 +497,9 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   const router = useRouter();
 
   return (
-    <Stack width="100vw" height="100vh" alignItems="center">
-      <Header />
-      <Stack direction="row" spacing="12px" pb="24px">
+    <Stack width="100vw" height="100vh" alignItems="center" spacing="45px">
+      <Header parentPages={props.parentPages} />
+      {/* <Stack direction="row" spacing="12px" pb="20px">
         {props.parentPages?.map((p) => (
           <Stack
             key={p.id}
@@ -519,7 +519,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
             <Typography bold>{p.title}</Typography>
           </Stack>
         ))}
-      </Stack>
+      </Stack> */}
       {props.pageDetails ? (
         <LayoutCard
           title={props.pageDetails.title}
@@ -527,6 +527,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
           selectedAge={selectedAge}
           category={props.parentPages[0].title}
           //parents={props.parentPages}
+          paddingTop="42px"
         >
           <Stack ref={setBentoRef} spacing="94px" alignItems="center">
             <Bento
