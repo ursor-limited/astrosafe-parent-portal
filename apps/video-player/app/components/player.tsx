@@ -66,6 +66,7 @@ const Player = (props: {
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
   noGlow?: boolean;
+  noKitemark?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   // const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -315,6 +316,8 @@ const Player = (props: {
 
   return (
     <Stack
+      // width="100vw"
+      // minWidth="100vw"
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
       minWidth={fullScreen ? "100vw" : `${props.width}px`}
@@ -458,42 +461,46 @@ const Player = (props: {
           width={fullScreen ? `${videoWidth * 0.1}px` : "130px"}
           height={props.provider === "vimeo" ? "60px" : "50px"}
         />
-        <Stack
-          position="absolute"
-          left="20px"
-          top="20px"
-          sx={{
-            transform: `rotate(${!playing ? 360 : 0}deg) translateX(${
-              !playing ? 0 : -150
-            }px)`,
-            transformOrigin: "center",
-            transition: "1.3s",
-            transitionTimingFunction: "ease-out",
-            svg: {
-              path: {
-                fill: !starHovering
-                  ? "rgba(255,255,255,0.8)"
-                  : PALETTE.secondary.blue[2],
-                transform: `rotate(${starHovering ? 20 : 0}deg)`,
-                transformOrigin: "center",
-                transition: "1s",
+        {!props.noKitemark ? (
+          <Stack
+            position="absolute"
+            left="20px"
+            top="20px"
+            sx={{
+              transform: `rotate(${!playing ? 360 : 0}deg) translateX(${
+                !playing ? 0 : -150
+              }px)`,
+              transformOrigin: "center",
+              transition: "1.3s",
+              transitionTimingFunction: "ease-out",
+              svg: {
+                path: {
+                  fill: !starHovering
+                    ? "rgba(255,255,255,0.8)"
+                    : PALETTE.secondary.blue[2],
+                  transform: `rotate(${starHovering ? 20 : 0}deg)`,
+                  transformOrigin: "center",
+                  transition: "1s",
+                },
               },
-            },
-          }}
-          flex={1}
-          overflow="visible"
-          onMouseEnter={() => setStarHovering(true)}
-          onMouseLeave={() => setStarHovering(false)}
-        >
-          <KiteMark
-            width={23}
-            height={23}
-            style={{
-              transform: `rotate(${playing ? -540 : starHovering ? 20 : 0}deg)`,
-              transition: "1s",
             }}
-          />
-        </Stack>
+            flex={1}
+            overflow="visible"
+            onMouseEnter={() => setStarHovering(true)}
+            onMouseLeave={() => setStarHovering(false)}
+          >
+            <KiteMark
+              width={23}
+              height={23}
+              style={{
+                transform: `rotate(${
+                  playing ? -540 : starHovering ? 20 : 0
+                }deg)`,
+                transition: "1s",
+              }}
+            />
+          </Stack>
+        ) : null}
         <Stack
           position="absolute"
           top="19px"

@@ -11,6 +11,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import { HEADER_HEIGHT, Header } from "@/app/components/header";
 import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
+import { useWindowSize } from "usehooks-ts";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -45,6 +46,21 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const [playing, setPlaying] = useState<boolean>(false);
+
+  const { width } = useWindowSize();
+
+  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
+    null
+  );
+
+  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
+  useEffect(
+    () =>
+      setPlayerWidth(
+        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+      ),
+    [playerWidthRef, width]
+  );
 
   return props.details && provider ? (
     <>
@@ -114,42 +130,50 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               </Typography>
             </Stack>
           ) : null}
-          <Stack
-            p="1.8px"
-            borderRadius="15px"
-            overflow="hidden"
-            sx={{ backdropFilter: "none" }}
-            position="relative"
-          >
+          <Stack width="90vw" boxSizing="border-box" ref={setPlayerWidthRef}>
             <Stack
-              top={0}
-              left={0}
-              width="100%"
-              height="100%"
-              position="absolute"
-              sx={{
-                opacity: playing ? 0 : 1,
-                transition: "0.3s",
-                background: fullscreen
-                  ? "none"
-                  : "linear-gradient(90deg, #F279C5, #FD9B41)",
-              }}
-            />
-            <Player
-              key={props.details.id}
-              url={props.details.url}
-              provider={provider}
-              startTime={props.details.startTime}
-              endTime={props.details.endTime}
-              width={VIDEO_WIDTH}
-              height={VIDEO_HEIGHT}
-              top="0px"
-              setDuration={(d) => setDuration(d)}
-              showUrlBar
-              setFullscreen={setFullscreen}
-              playingCallback={(p) => setPlaying(p)}
-            />
+              p="1.8px"
+              borderRadius="15px"
+              overflow="hidden"
+              sx={{ backdropFilter: "none" }}
+              position="relative"
+            >
+              <Stack
+                top={0}
+                left={0}
+                width="100%"
+                height="100%"
+                position="absolute"
+                sx={{
+                  opacity: playing ? 0 : 1,
+                  transition: "0.3s",
+                  background: fullscreen
+                    ? "none"
+                    : "linear-gradient(90deg, #F279C5, #FD9B41)",
+                }}
+              />
+              {/* <Stack width="100vw" px="30px"> */}
+              <Player
+                key={props.details.id}
+                url={props.details.url}
+                provider={provider}
+                startTime={props.details.startTime}
+                endTime={props.details.endTime}
+                noKitemark={playerWidth < VIDEO_WIDTH}
+                width={Math.min(playerWidth, VIDEO_WIDTH)}
+                height={
+                  Math.min(playerWidth, VIDEO_WIDTH) *
+                  (VIDEO_HEIGHT / VIDEO_WIDTH)
+                }
+                top="0px"
+                setDuration={(d) => setDuration(d)}
+                showUrlBar
+                setFullscreen={setFullscreen}
+                playingCallback={(p) => setPlaying(p)}
+              />
+            </Stack>
           </Stack>
+          {/* </Stack> */}
           {/* <Image src={Background} alt='Background'  */}
           {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
           {!fullscreen && props.details.description ? (
@@ -179,40 +203,6 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               </Stack>
             </Stack>
           ) : null}
-          {/* <UrsorButton variant="secondary" onClick={() => setPlaying(true)}>
-        Play
-      </UrsorButton>
-      <UrsorButton variant="secondary" onClick={() => setPlaying(false)}>
-        Pause
-      </UrsorButton> */}
-
-          {/* <Stack
-          width="100%"
-          height="200px"
-          alignItems="center"
-          justifyContent="flex-end"
-          flex={1}
-        >
-          <Stack direction="row" spacing="12px" alignItems="center" pb="20px">
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              PART OF THE
-            </Typography>
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <Link href={"https://astrosafe.co/"} target={"_blank"}>
-                <Image src={Logo} width={80} height={80} alt="Astro logo" />
-              </Link>
-            </Stack>
-            <Typography bold variant="small" color={"rgba(255,255,255,0.7)"}>
-              FAMILY OF TOOLS
-            </Typography>
-          </Stack>
-        </Stack> */}
         </Stack>
       </Stack>
       {!fullscreen ? <Footer /> : null}
