@@ -70,23 +70,29 @@ export interface TypographyProps {
   noWrap?: boolean;
   color?: string;
   maxLines?: number;
+  scale?: number;
   sx?: SxProps;
   children: React.ReactNode;
 }
 
 export function Typography(props: TypographyProps): JSX.Element {
+  props.scale && console.log(props.scale);
   return (
     <Box
       //fontFamily={"Rubik"}
       maxWidth="fit-content"
       color={props.color}
-      fontSize={`${FONT_SIZES[props.variant ?? "normal"]}px`}
+      fontSize={`${
+        (props.scale || 1) * FONT_SIZES[props.variant ?? "normal"]
+      }px`}
       fontWeight={
         props.bold || (props.variant && DEFAULT_BOLD.includes(props.variant))
           ? BOLD_FONT_WEIGHT
           : DEFAULT_FONT_WEIGHT
       }
-      lineHeight={`${LINE_HEIGHTS[props.variant ?? "normal"]}px`}
+      lineHeight={`${
+        (props.scale || 1) * LINE_HEIGHTS[props.variant ?? "normal"]
+      }px`}
       sx={{
         ...props.sx,
         ...(props.faded

@@ -56,7 +56,7 @@ export default function SearchBar() {
               width: "100%",
               height: "100%",
               fontSize: FONT_SIZES.medium,
-              fontWeight: "520 !important",
+              fontWeight: "550 !important",
               textAlign: "left",
               color: PALETTE.secondary.grey[5],
               paddingLeft: "20px",

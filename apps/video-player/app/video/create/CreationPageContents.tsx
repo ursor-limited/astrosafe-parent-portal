@@ -18,6 +18,8 @@ import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
+import { useWindowSize } from "usehooks-ts";
+import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -134,6 +136,21 @@ function CreationPageContents(props: { details: IVideo }) {
   // <Stack>
   //   {!fullscreen ? <Header noCreateNew /> : null}
 
+  const { width } = useWindowSize();
+
+  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
+    null
+  );
+
+  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
+  useEffect(
+    () =>
+      setPlayerWidth(
+        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+      ),
+    [playerWidthRef, width]
+  );
+
   return (
     <>
       {!fullscreen ? <Header noCreateNew /> : null}
@@ -167,7 +184,13 @@ function CreationPageContents(props: { details: IVideo }) {
                 }}
               >
                 <Stack sx={{ textAlign: "center" }}>
-                  <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+                  <Typography
+                    variant="h3"
+                    color={PALETTE.secondary.purple[2]}
+                    scale={
+                      Math.min(playerWidth * 1.2, VIDEO_WIDTH) / VIDEO_WIDTH
+                    }
+                  >
                     Create your safe video link
                   </Typography>
                 </Stack>
@@ -175,11 +198,14 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           ) : null}
 
-          <Stack spacing="42px">
+          <Stack spacing="42px" alignItems="center">
             {!fullscreen ? (
               <Stack>
                 <Stack
-                  width="100%"
+                  minWidth={
+                    Math.min(playerWidth, VIDEO_WIDTH) -
+                    2 * MAGICAL_BORDER_THICKNESS
+                  }
                   spacing="32px"
                   p="20px"
                   bgcolor={"rgba(0,0,0,0.15)"}
@@ -354,38 +380,52 @@ function CreationPageContents(props: { details: IVideo }) {
                   : "linear-gradient(50deg, #F279C5, #FD9B41)",
               }}
             /> */}
-
             <Stack
-              p="1.8px"
-              borderRadius="15px"
-              overflow="hidden"
-              sx={{ backdropFilter: "none" }}
-              position="relative"
+              width={fullscreen ? "100vw" : "90vw"}
+              boxSizing="border-box"
+              ref={setPlayerWidthRef}
             >
               <Stack
-                top={0}
-                left={0}
-                width="100%"
-                height="100%"
-                position="absolute"
-                sx={{
-                  opacity: playing ? 0 : 1,
-                  transition: "0.3s",
-                  background: fullscreen
-                    ? "none"
-                    : "linear-gradient(90deg, #F279C5, #FD9B41)",
-                }}
-              />
-              <Player
-                url={url}
-                provider={provider}
-                width={VIDEO_WIDTH}
-                height={VIDEO_HEIGHT}
-                setDuration={(d) => d && setDuration(d)}
-                top="120px"
-                setFullscreen={setFullscreen}
-                playingCallback={(p) => setPlaying(p)}
-              />
+                p={`${MAGICAL_BORDER_THICKNESS}px`}
+                borderRadius="15px"
+                overflow="hidden"
+                sx={{ backdropFilter: "none" }}
+                position="relative"
+              >
+                <Stack
+                  top="50%"
+                  left="50%"
+                  borderRadius="15px"
+                  width={Math.min(playerWidth, VIDEO_WIDTH)}
+                  height="100%"
+                  position="absolute"
+                  sx={{
+                    transform: "translate(-50%, -50%)",
+                    opacity: playing ? 0 : 1,
+                    transition: "0.3s",
+                    background: fullscreen
+                      ? "none"
+                      : "linear-gradient(90deg, #F279C5, #FD9B41)",
+                  }}
+                />
+                <Player
+                  url={url}
+                  provider={provider}
+                  width={
+                    Math.min(playerWidth, VIDEO_WIDTH) -
+                    2 * MAGICAL_BORDER_THICKNESS
+                  }
+                  height={
+                    Math.min(playerWidth, VIDEO_WIDTH) *
+                    (VIDEO_HEIGHT / VIDEO_WIDTH)
+                  }
+                  setDuration={(d) => d && setDuration(d)}
+                  noKitemark={playerWidth < VIDEO_WIDTH}
+                  top="120px"
+                  setFullscreen={setFullscreen}
+                  playingCallback={(p) => setPlaying(p)}
+                />
+              </Stack>
             </Stack>
           </Stack>
 
@@ -503,7 +543,9 @@ function CreationPageContents(props: { details: IVideo }) {
       ) : showForbiddenVideoView ? (
         <ForbiddenVideoView />
       ) : null}
-      {!fullscreen ? <Footer /> : null}
+      {!fullscreen ? (
+        <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
+      ) : null}
       <Stack
         position="absolute"
         top={0}
