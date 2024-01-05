@@ -15,6 +15,7 @@ import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
 import SpaceGlow from "@/images/spaceGlow.svg";
+import { Footer } from "@/app/components/footer";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -568,7 +569,8 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
         ) : null}
         <Stack minHeight="20px" />
         <Stack width="100%">
-          <SpaceGlow width="auto" height="auto" />
+          {/* <SpaceGlow width="auto" height="auto" /> */}
+          <Footer />
         </Stack>
       </Stack>
     </Stack>
