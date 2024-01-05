@@ -219,7 +219,9 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
           ) : null}
         </Stack>
       </Stack>
-      {!fullscreen ? <Footer /> : null}
+      {!fullscreen ? (
+        <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
+      ) : null}
     </>
   ) : (
     <></>
