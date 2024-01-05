@@ -59,7 +59,12 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
           alignItems="center"
           justifyContent="space-between"
         >
-          <Typography bold color={PALETTE.secondary.grey[4]} noWrap>
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[4]}
+            noWrap
+            htmlTag="h3"
+          >
             {fact.title}
           </Typography>
           <Typography color={PALETTE.secondary.grey[4]} noWrap>

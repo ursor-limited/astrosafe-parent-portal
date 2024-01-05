@@ -39,6 +39,7 @@ export function ContentPagePreviewCard(props: {
     >
       <Typography
         variant="h4"
+        htmlTag="h3"
         color={PALETTE.font.light}
         sx={{
           textShadow: "0 0 25px rgba(0,0,0,0.7)",

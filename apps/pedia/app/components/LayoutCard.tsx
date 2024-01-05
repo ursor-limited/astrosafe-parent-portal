@@ -48,7 +48,9 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 }}
                 pt="24px"
               >
-                <Typography variant="h2">{props.title}</Typography>
+                <Typography variant="h2" htmlTag="h1">
+                  {props.title}
+                </Typography>
                 {props.selectedAge ? (
                   <Stack direction="row" spacing="16px" alignItems="center">
                     <Typography
@@ -112,14 +114,11 @@ export default function LayoutCard(props: ILayoutCardProps) {
               </Stack>
               {props.category ? (
                 <Stack spacing="5px" direction="row">
-                  <Typography color={PALETTE.secondary.grey[3]}>
-                    {`${
-                      props.category
-                      //props.parents?.[0]?.title || props.title
-                    } knowledge and fun facts for Kids`}
+                  <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">
+                    {`${props.category} knowledge and fun facts for Kids`}
                   </Typography>
                   {props.selectedAge ? (
-                    <Typography color={PALETTE.secondary.grey[3]}>
+                    <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">
                       {`aged ${props.selectedAge}-${
                         (props.selectedAge ?? 0) + 1
                       }`}

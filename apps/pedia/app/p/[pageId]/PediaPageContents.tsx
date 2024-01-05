@@ -227,7 +227,12 @@ const TextBlockCard = (props: {
         }}
         ref={setTextElement}
       >
-        <Typography variant="large" bold color={PALETTE.secondary.grey[5]}>
+        <Typography
+          variant="large"
+          bold
+          color={PALETTE.secondary.grey[5]}
+          htmlTag="h3"
+        >
           {props.title}
         </Typography>
         <Stack spacing="8px">

@@ -39,7 +39,9 @@ export default function SuggestionsSection(props: {
             }}
             onClick={() => router.push(`/c/${p.id}`)}
           >
-            <Typography bold>{p.title}</Typography>
+            <Typography bold htmlTag="h3">
+              {p.title}
+            </Typography>
           </Stack>
         ))}
       </Stack>

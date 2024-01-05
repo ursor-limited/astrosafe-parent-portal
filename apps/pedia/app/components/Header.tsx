@@ -3,15 +3,12 @@
 import { Stack } from "@mui/system";
 import Logo from "@/images/logoWhite.svg";
 import ChevronRight from "@/images/icons/ChevronRightIcon.svg";
-import { Typography, UrsorButton } from "ui";
-import { useRouter } from "next/navigation";
-import { IPediaCollectionPage } from "../p/[pageId]/PediaPageContents";
+import { UrsorButton } from "ui";
 
 export const HEADER_HEIGHT = 86;
 
 //export const Header = (props: { collapsed: boolean }) => {
 export const Header = (props: { noCreateNew?: boolean }) => {
-  const router = useRouter();
   return (
     <Stack
       //position="absolute"
