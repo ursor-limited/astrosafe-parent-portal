@@ -13,11 +13,10 @@ export default function SuggestionsSection(props: {
     <Stack
       borderRadius="12px"
       boxSizing="border-box"
-      height="400px"
       width="80%"
       alignItems="center"
     >
-      <Stack width="100%" alignItems="center" pb="20px" spacing="20px">
+      <Stack width="100%" alignItems="center" pb="15px">
         <Typography variant="h4" bold color={PALETTE.secondary.grey[5]}>
           Why not have a look at these too?
         </Typography>
@@ -45,7 +44,7 @@ export default function SuggestionsSection(props: {
           </Stack>
         ))}
       </Stack>
-      <Stack direction="row" spacing="24px" flex={1}>
+      <Stack minHeight="280px" direction="row" spacing="24px" flex={1}>
         {props.suggestedPages.map((sp, i) => (
           <ContentPagePreviewCard
             key={sp.id}
