@@ -11,7 +11,7 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 export const HEADER_HEIGHT = 86;
 
 //export const Header = (props: { collapsed: boolean }) => {
-export const Header = (props: { noCreateNew?: boolean }) => {
+export const Header = (props: { noCreateNew?: boolean; noLogo?: boolean }) => {
   return (
     <Stack
       direction="row"
@@ -25,19 +25,21 @@ export const Header = (props: { noCreateNew?: boolean }) => {
       //   display: props.collapsed ? "none" : undefined,
       // }}
     >
-      <Stack width="fit-content">
-        <Link href="https://astrosafe.co/">
-          <Stack
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.8 },
-              transition: "0.2s",
-            }}
-          >
-            <Logo width={80} />
-          </Stack>
-        </Link>
-      </Stack>
+      {!props.noLogo ? (
+        <Stack width="fit-content">
+          <Link href="https://astrosafe.co/">
+            <Stack
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.8 },
+                transition: "0.2s",
+              }}
+            >
+              <Logo width={80} />
+            </Stack>
+          </Link>
+        </Stack>
+      ) : null}
       <Stack direction="row" spacing="12px">
         {!props.noCreateNew ? (
           <Link href={"https://astrosafe.co/video"} target={"_blank"}>
