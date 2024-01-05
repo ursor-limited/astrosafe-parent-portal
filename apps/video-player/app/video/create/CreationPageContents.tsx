@@ -202,7 +202,10 @@ function CreationPageContents(props: { details: IVideo }) {
             {!fullscreen ? (
               <Stack>
                 <Stack
-                  width="100%"
+                  minWidth={
+                    Math.min(playerWidth, VIDEO_WIDTH) -
+                    2 * MAGICAL_BORDER_THICKNESS
+                  }
                   spacing="32px"
                   p="20px"
                   bgcolor={"rgba(0,0,0,0.15)"}
