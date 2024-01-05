@@ -13,8 +13,8 @@ import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
-import { useRouter } from "next/navigation";
 import { Header } from "@/app/components/Header";
+import SpaceGlow from "@/images/spaceGlow.svg";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -523,39 +523,43 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
           </Stack>
         ))}
       </Stack> */}
-      {props.pageDetails ? (
-        <LayoutCard
-          title={props.pageDetails.title}
-          setSelectedAge={setSelectedAge}
-          selectedAge={selectedAge}
-          category={props.parentPages[0].title}
-          //parents={props.parentPages}
-          paddingTop="38px"
-        >
-          <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-            <Bento
-              mainCardDetails={props.pageDetails.mainCard}
-              imageCardDetails={props.pageDetails.images}
-              textCardDetails={
-                props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
-                  ?.blocks ?? []
-              }
-              fact={props.pageDetails.funFact}
-              columnWidth={columnWidth}
-            />
-            {props.pageDetails.questions &&
-            props.pageDetails.questions.length > 0 ? (
-              <QuestionsCard questions={props.pageDetails.questions} />
-            ) : null}
-            {props.suggestedPages.length > 0 ? (
-              <SuggestionsSection
-                suggestedPages={props.suggestedPages}
-                parentPages={props.parentPages}
+      <Stack>
+        {props.pageDetails ? (
+          <LayoutCard
+            title={props.pageDetails.title}
+            setSelectedAge={setSelectedAge}
+            selectedAge={selectedAge}
+            category={props.parentPages[0].title}
+            //parents={props.parentPages}
+          >
+            <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+              <Bento
+                mainCardDetails={props.pageDetails.mainCard}
+                imageCardDetails={props.pageDetails.images}
+                textCardDetails={
+                  props.pageDetails.textBlocks.find(
+                    (b) => b.age === selectedAge
+                  )?.blocks ?? []
+                }
+                fact={props.pageDetails.funFact}
+                columnWidth={columnWidth}
               />
-            ) : null}
-          </Stack>
-        </LayoutCard>
-      ) : null}
+              {props.pageDetails.questions &&
+              props.pageDetails.questions.length > 0 ? (
+                <QuestionsCard questions={props.pageDetails.questions} />
+              ) : null}
+              {props.suggestedPages.length > 0 ? (
+                <SuggestionsSection
+                  suggestedPages={props.suggestedPages}
+                  parentPages={props.parentPages}
+                />
+              ) : null}
+              <div />
+            </Stack>
+          </LayoutCard>
+        ) : null}
+        <Stack minHeight="50px" />
+      </Stack>
     </Stack>
   );
 }
