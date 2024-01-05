@@ -135,7 +135,11 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               </Typography>
             </Stack>
           ) : null}
-          <Stack width="90vw" boxSizing="border-box" ref={setPlayerWidthRef}>
+          <Stack
+            width={fullscreen ? "100vw" : "90vw"}
+            boxSizing="border-box"
+            ref={setPlayerWidthRef}
+          >
             <Stack
               p={`${MAGICAL_BORDER_THICKNESS}px`}
               borderRadius="15px"
@@ -144,12 +148,14 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               position="relative"
             >
               <Stack
-                top={0}
-                left={0}
-                width="100%"
+                top="50%"
+                left="50%"
+                borderRadius="15px"
+                width={Math.min(playerWidth, VIDEO_WIDTH)}
                 height="100%"
                 position="absolute"
                 sx={{
+                  transform: "translate(-50%, -50%)",
                   opacity: playing ? 0 : 1,
                   transition: "0.3s",
                   background: fullscreen
