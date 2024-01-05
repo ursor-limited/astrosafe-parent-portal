@@ -14,6 +14,7 @@ import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
+const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -66,7 +67,12 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
 
   return props.details && provider ? (
     <>
-      {!fullscreen ? <Header noCreateNew={!props.share} /> : null}
+      {!fullscreen ? (
+        <Header
+          noCreateNew={!props.share}
+          noLogo={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
+        />
+      ) : null}
       <Stack
         px="60px"
         justifyContent="center"
@@ -81,7 +87,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
         pt={fullscreen ? 0 : "70px"}
       >
         {!fullscreen && props.share ? (
-          <Stack width={VIDEO_WIDTH} pb="70px">
+          <Stack width={Math.min(playerWidth, VIDEO_WIDTH)} pb="70px">
             <UrlBar />
           </Stack>
         ) : null}
@@ -192,7 +198,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
           {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
           {!fullscreen && props.details.description ? (
             <Stack
-              width={`${VIDEO_WIDTH}px`}
+              width={`${Math.min(playerWidth, VIDEO_WIDTH)}px`}
               justifyContent="space-between"
               overflow="scroll"
               pt="5px"
