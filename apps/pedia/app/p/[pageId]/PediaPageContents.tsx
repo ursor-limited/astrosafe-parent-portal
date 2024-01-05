@@ -499,7 +499,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
       <Header />
-      <Stack direction="row" spacing="12px">
+      <Stack direction="row" spacing="12px" pb="24px">
         {props.parentPages?.map((p) => (
           <Stack
             key={p.id}
