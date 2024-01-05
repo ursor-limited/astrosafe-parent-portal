@@ -76,7 +76,6 @@ export interface TypographyProps {
 }
 
 export function Typography(props: TypographyProps): JSX.Element {
-  props.scale && console.log(props.scale);
   return (
     <Box
       //fontFamily={"Rubik"}
