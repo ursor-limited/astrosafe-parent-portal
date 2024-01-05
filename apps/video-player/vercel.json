@@ -9,6 +9,10 @@
         "destination": "https://astro-monorepo-pedia.vercel.app/p/:pediaId"
     },
     {
+        "source": "/c/:pediaCollectionId([a-zA-Z0-9-]+)",
+        "destination": "https://astro-monorepo-pedia.vercel.app/c/:pediaCollectionId"
+    },
+    {
         "source": "/blog",
         "destination": "https://proxy.astrosafe.co/blog"
     },
