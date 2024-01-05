@@ -491,13 +491,21 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
 
   /* needed for the platform row's proper scrollability */
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
   const [bentoRef, setBentoRef] = useState<HTMLElement | null>(null);
   const [columnWidth, setColumnWidth] = useState<number>(0);
   useEffect(() => {
     const w = bentoRef?.getBoundingClientRect().width;
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
+
+  // const [reachedLayoutCardBottom, setReachedLayoutCardBottom] =
+  //   useState<boolean>(false);
+
+  // const handleScroll = (e: any) =>
+  //   setReachedLayoutCardBottom(
+  //     e.target.scrollHeight - e.target.scrollTop === height
+  //   );
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -558,7 +566,10 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
             </Stack>
           </LayoutCard>
         ) : null}
-        <Stack minHeight="50px" />
+        <Stack minHeight="20px" />
+        <Stack width="100%">
+          <SpaceGlow width="auto" height="auto" />
+        </Stack>
       </Stack>
     </Stack>
   );

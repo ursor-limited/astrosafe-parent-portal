@@ -52,7 +52,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                     props.selectedAge
                   }-${
                     (props.selectedAge ?? 0) + 1
-                  }`}. Pedia is a member of Astro's suite of  safe and focused educational tools for teachers, parents and students.`}
+                  }`}. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
                 </Typography>
                 {/* {props.selectedAge ? (
                   <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">
