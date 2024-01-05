@@ -18,6 +18,7 @@ import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
+import { useWindowSize } from "usehooks-ts";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -133,6 +134,21 @@ function CreationPageContents(props: { details: IVideo }) {
 
   // <Stack>
   //   {!fullscreen ? <Header noCreateNew /> : null}
+
+  const { width } = useWindowSize();
+
+  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
+    null
+  );
+
+  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
+  useEffect(
+    () =>
+      setPlayerWidth(
+        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+      ),
+    [playerWidthRef, width]
+  );
 
   return (
     <>
@@ -503,7 +519,9 @@ function CreationPageContents(props: { details: IVideo }) {
       ) : showForbiddenVideoView ? (
         <ForbiddenVideoView />
       ) : null}
-      {!fullscreen ? <Footer /> : null}
+      {!fullscreen ? (
+        <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
+      ) : null}
       <Stack
         position="absolute"
         top={0}
