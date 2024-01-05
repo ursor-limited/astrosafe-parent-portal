@@ -13,7 +13,7 @@ import { createPortal } from "react-dom";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 
-const MAGICAL_BORDER_THICKNESS = 1.8;
+export const MAGICAL_BORDER_THICKNESS = 1.8;
 
 const Player = dynamic(
   () => import("@/app/components/player"),
