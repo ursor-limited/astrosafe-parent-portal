@@ -494,11 +494,9 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  const router = useRouter();
-
   return (
-    <Stack width="100vw" height="100vh" alignItems="center" spacing="45px">
-      <Header parentPages={props.parentPages} />
+    <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
+      <Header />
       {/* <Stack direction="row" spacing="12px" pb="20px">
         {props.parentPages?.map((p) => (
           <Stack
@@ -527,7 +525,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
           selectedAge={selectedAge}
           category={props.parentPages[0].title}
           //parents={props.parentPages}
-          paddingTop="42px"
+          paddingTop="38px"
         >
           <Stack ref={setBentoRef} spacing="94px" alignItems="center">
             <Bento
@@ -545,7 +543,10 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
               <QuestionsCard questions={props.pageDetails.questions} />
             ) : null}
             {props.suggestedPages.length > 0 ? (
-              <SuggestionsSection suggestedPages={props.suggestedPages} />
+              <SuggestionsSection
+                suggestedPages={props.suggestedPages}
+                parentPages={props.parentPages}
+              />
             ) : null}
           </Stack>
         </LayoutCard>

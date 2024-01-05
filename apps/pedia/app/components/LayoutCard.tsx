@@ -21,13 +21,7 @@ interface ILayoutCardProps {
 export default function LayoutCard(props: ILayoutCardProps) {
   const router = useRouter();
   return (
-    <Stack
-      width="100%"
-      height="100%"
-      alignItems="center"
-      overflow="scroll"
-      pt={props.paddingTop}
-    >
+    <Stack width="100%" height="100%" alignItems="center" pt={props.paddingTop}>
       <Stack
         flex={1}
         width="100%"
