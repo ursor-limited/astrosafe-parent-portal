@@ -16,6 +16,7 @@ import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
 import { Footer } from "@/app/components/footer";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { isMobile } from "react-device-detect";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -174,17 +175,17 @@ const TextBlockCard = (props: {
     [textElement?.offsetHeight, textElement?.scrollHeight]
   );
 
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <Stack
       flex={1}
       position="relative"
       sx={{
-        "&:hover": { opacity: 0.7 },
+        opacity: hovering ? 0.7 : 1,
         transition: "0.2s",
-        cursor: "pointer",
       }}
       boxSizing="border-box"
-      onClick={props.onClick}
       overflow={props.fitContent ? undefined : "hidden"}
       boxShadow="0 0 20px rgba(0,0,0,0.05)"
       bgcolor={PALETTE.secondary.grey[1]}
@@ -193,10 +194,17 @@ const TextBlockCard = (props: {
       {!props.fitContent ? (
         <Stack
           position="absolute"
+          onMouseLeave={() => {
+            setHovering(false);
+          }}
+          onMouseEnter={() => {
+            setHovering(true);
+          }}
           width="100%"
-          height="42%"
+          height="30%"
           bottom={0}
           sx={{
+            cursor: "pointer",
             opacity: expanded || !showGradient ? 0 : 1,
             pointerEvents: expanded ? "none" : undefined,
             transition: "0.6s",
@@ -215,6 +223,7 @@ const TextBlockCard = (props: {
           justifyContent="flex-end"
           alignItems="flex-end"
           p={`${GRID_SPACING}px`}
+          onClick={props.onClick}
         >
           <PlusIcon width="26px" height="26px" />
         </Stack>
@@ -344,6 +353,17 @@ function TextSectionPopover(
     </Dialog>
   );
 }
+
+const MobileColumn = (props: {
+  mainCardDetails: IPediaMainCard;
+  textCardDetails: IPediaTextBlock[];
+  imageCardDetails: IPediaImage[];
+  fact: string;
+}) => (
+  <Stack spacing="10px" px="30px" width="100%" height="100%">
+    <PediaMainCard {...props.mainCardDetails} />
+  </Stack>
+);
 
 const Bento = (props: {
   mainCardDetails: IPediaMainCard;
@@ -517,45 +537,57 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      <Stack>
-        {props.pageDetails ? (
-          <LayoutCard
-            title={props.pageDetails.title}
-            setSelectedAge={setSelectedAge}
-            selectedAge={selectedAge}
-            category={props.parentPages[0].title}
-          >
-            <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-              <Bento
-                mainCardDetails={props.pageDetails.mainCard}
-                imageCardDetails={props.pageDetails.images}
-                textCardDetails={
-                  props.pageDetails.textBlocks.find(
-                    (b) => b.age === selectedAge
-                  )?.blocks ?? []
-                }
-                fact={props.pageDetails.funFact}
-                columnWidth={columnWidth}
-              />
-              {props.pageDetails.questions &&
-              props.pageDetails.questions.length > 0 ? (
-                <QuestionsCard questions={props.pageDetails.questions} />
-              ) : null}
-              {props.suggestedPages.length > 0 ? (
-                <SuggestionsSection
-                  suggestedPages={props.suggestedPages}
-                  parentPages={props.parentPages}
+      {!isMobile || true ? (
+        <MobileColumn
+          mainCardDetails={props.pageDetails.mainCard}
+          imageCardDetails={props.pageDetails.images}
+          textCardDetails={
+            props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
+              ?.blocks ?? []
+          }
+          fact={props.pageDetails.funFact}
+        />
+      ) : (
+        <Stack>
+          {props.pageDetails ? (
+            <LayoutCard
+              title={props.pageDetails.title}
+              setSelectedAge={setSelectedAge}
+              selectedAge={selectedAge}
+              category={props.parentPages[0].title}
+            >
+              <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+                <Bento
+                  mainCardDetails={props.pageDetails.mainCard}
+                  imageCardDetails={props.pageDetails.images}
+                  textCardDetails={
+                    props.pageDetails.textBlocks.find(
+                      (b) => b.age === selectedAge
+                    )?.blocks ?? []
+                  }
+                  fact={props.pageDetails.funFact}
+                  columnWidth={columnWidth}
                 />
-              ) : null}
-              <div />
-            </Stack>
-          </LayoutCard>
-        ) : null}
-        <Stack minHeight="20px" />
-        <Stack width="100%">
-          <Footer />
+                {props.pageDetails.questions &&
+                props.pageDetails.questions.length > 0 ? (
+                  <QuestionsCard questions={props.pageDetails.questions} />
+                ) : null}
+                {props.suggestedPages.length > 0 ? (
+                  <SuggestionsSection
+                    suggestedPages={props.suggestedPages}
+                    parentPages={props.parentPages}
+                  />
+                ) : null}
+                <div />
+              </Stack>
+            </LayoutCard>
+          ) : null}
+          <Stack minHeight="20px" />
+          <Stack width="100%">
+            <Footer />
+          </Stack>
         </Stack>
-      </Stack>
+      )}
     </Stack>
   );
 }
