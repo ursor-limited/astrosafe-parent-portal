@@ -2,14 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-//import CaptionsIcon from "./images/icons/Captions.svg";
-import Clipboard from "@/images/icons/Clipboard.svg";
-import Image from "next/image";
 import { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
-import { PALETTE, Typography, UrsorButton } from "ui";
-import { HEADER_HEIGHT, Header } from "@/app/components/header";
-import { createPortal } from "react-dom";
+import { PALETTE, Typography } from "ui";
+import { Header } from "@/app/components/header";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 
@@ -65,6 +61,9 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
     [playerWidthRef, width]
   );
 
+  const [mobile, setMobile] = useState<boolean>(false);
+  useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
+
   return props.details && provider ? (
     <>
       {!fullscreen ? (
@@ -88,7 +87,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
       >
         {!fullscreen && props.share ? (
           <Stack width={Math.min(playerWidth, VIDEO_WIDTH)} pb="70px">
-            <UrlBar />
+            <UrlBar mobile={mobile} />
           </Stack>
         ) : null}
         <Stack
@@ -176,7 +175,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
                 provider={provider}
                 startTime={props.details.startTime}
                 endTime={props.details.endTime}
-                noKitemark={playerWidth < VIDEO_WIDTH}
+                noKitemark={mobile}
                 width={
                   Math.min(playerWidth, VIDEO_WIDTH) -
                   2 * MAGICAL_BORDER_THICKNESS
