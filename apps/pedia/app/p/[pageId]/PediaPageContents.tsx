@@ -14,8 +14,8 @@ import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
-import SpaceGlow from "@/images/spaceGlow.svg";
 import { Footer } from "@/app/components/footer";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -194,7 +194,7 @@ const TextBlockCard = (props: {
         <Stack
           position="absolute"
           width="100%"
-          height="56%"
+          height="42%"
           bottom={0}
           sx={{
             opacity: expanded || !showGradient ? 0 : 1,
@@ -206,8 +206,18 @@ const TextBlockCard = (props: {
               PALETTE.secondary.grey[1],
               0
             )})`,
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[5],
+              },
+            },
           }}
-        />
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          p={`${GRID_SPACING}px`}
+        >
+          <PlusIcon width="26px" height="26px" />
+        </Stack>
       ) : null}
       <Stack
         height={expanded ? expandedHeight : "100%"}
@@ -366,7 +376,7 @@ const Bento = (props: {
           <TextBlockCard
             title={props.textCardDetails[0]?.title ?? ""}
             content={props.textCardDetails[0]?.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
           />
         </Stack>
         <Stack
@@ -436,7 +446,9 @@ const Bento = (props: {
           <TextBlockCard
             title={td.title ?? ""}
             content={td.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() =>
+              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
+            }
           />
         </Stack>
       ) : (
@@ -444,7 +456,9 @@ const Bento = (props: {
           <TextBlockCard
             title={td.title ?? ""}
             content={td.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() =>
+              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
+            }
           />
         </Stack>
       ),
@@ -500,38 +514,9 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  // const [reachedLayoutCardBottom, setReachedLayoutCardBottom] =
-  //   useState<boolean>(false);
-
-  // const handleScroll = (e: any) =>
-  //   setReachedLayoutCardBottom(
-  //     e.target.scrollHeight - e.target.scrollTop === height
-  //   );
-
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {/* <Stack direction="row" spacing="12px" pb="20px">
-        {props.parentPages?.map((p) => (
-          <Stack
-            key={p.id}
-            height="37px"
-            borderRadius="8px"
-            px="12px"
-            boxSizing="border-box"
-            bgcolor="rgb(255,255,255)"
-            justifyContent="center"
-            sx={{
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              cursor: "pointer",
-            }}
-            onClick={() => router.push(`/c/${p.id}`)}
-          >
-            <Typography bold>{p.title}</Typography>
-          </Stack>
-        ))}
-      </Stack> */}
       <Stack>
         {props.pageDetails ? (
           <LayoutCard
@@ -539,7 +524,6 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
             setSelectedAge={setSelectedAge}
             selectedAge={selectedAge}
             category={props.parentPages[0].title}
-            //parents={props.parentPages}
           >
             <Stack ref={setBentoRef} spacing="94px" alignItems="center">
               <Bento
@@ -569,7 +553,6 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
         ) : null}
         <Stack minHeight="20px" />
         <Stack width="100%">
-          {/* <SpaceGlow width="auto" height="auto" /> */}
           <Footer />
         </Stack>
       </Stack>
