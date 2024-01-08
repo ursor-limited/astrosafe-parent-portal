@@ -174,6 +174,7 @@ export default function QuestionsCard(props: {
                     />
                   </Stack>
                   <Typography
+                    color={PALETTE.font.dark}
                     sx={{
                       transition: "0.2s",
                       opacity:

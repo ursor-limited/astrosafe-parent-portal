@@ -16,6 +16,7 @@ import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
 import { Footer } from "@/app/components/footer";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import X from "@/images/icons/X.svg";
 import { isMobile } from "react-device-detect";
 
 const N_COLUMNS = 12;
@@ -310,6 +311,8 @@ const FactCard = (props: { fact: string }) => (
 function TextSectionPopover(
   props: IPediaTextBlock & { open: boolean; closeCallback: () => void }
 ) {
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [pressed, setPressed] = useState<boolean>(false);
   return (
     <Dialog
       transitionDuration={800}
@@ -338,9 +341,38 @@ function TextSectionPopover(
         }}
         spacing="12px"
       >
-        <Typography variant="large" bold color={PALETTE.secondary.grey[5]}>
-          {props.title}
-        </Typography>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography variant="large" bold color={PALETTE.secondary.grey[5]}>
+            {props.title}
+          </Typography>
+          <Stack
+            onMouseDown={() => {
+              setPressed(true);
+            }}
+            onMouseEnter={() => {
+              setHovering(true);
+            }}
+            onMouseLeave={() => {
+              setHovering(false);
+              setPressed(false);
+            }}
+            onMouseUp={() => {
+              setPressed(false);
+            }}
+            sx={{
+              opacity: pressed || hovering ? 0.7 : 1,
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+            onClick={props.closeCallback}
+          >
+            <X width="26px" height="26px" />
+          </Stack>
+        </Stack>
         <Stack spacing="8px">
           {props.content.map((c, index) => (
             <Typography
@@ -429,6 +461,13 @@ const MobileColumn = (props: {
           <Footer fontScale={width / 700} />
         </Stack>
       </Stack>
+      {selectedTextCardId ? (
+        <TextSectionPopover
+          open={true}
+          closeCallback={() => setSelectedTextCardId(undefined)}
+          {...props.textCardDetails.find((tb) => tb.id === selectedTextCardId)!}
+        />
+      ) : null}
     </Stack>
   );
 };
