@@ -85,13 +85,17 @@ export interface IPediaCollectionPage {
   parentId: string;
 }
 
-const ImageCard = (props: { url: string; caption?: string; width: number }) => {
+const ImageCard = (props: {
+  url: string;
+  caption?: string;
+  width?: number;
+}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <Stack
       position="relative"
-      height="100%"
-      width={`${props.width}px`}
+      height={"100%"}
+      width={props.width ? `${props.width}px` : "100%"}
       borderRadius={BORDER_RADIUS}
       overflow="hidden"
       onClick={() => setExpanded(!expanded)}
@@ -355,15 +359,57 @@ function TextSectionPopover(
 }
 
 const MobileColumn = (props: {
+  title: string;
   mainCardDetails: IPediaMainCard;
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
   fact: string;
-}) => (
-  <Stack spacing="10px" px="30px" width="100%" height="100%">
-    <PediaMainCard {...props.mainCardDetails} />
-  </Stack>
-);
+}) => {
+  const [selectedTextCardId, setSelectedTextCardId] = useState<
+    string | undefined
+  >(undefined);
+  return (
+    <Stack>
+      <Typography variant="h4" htmlTag="h1">
+        {props.title}
+      </Typography>
+      <Stack spacing="12px" px="30px" width="100%" height="100%">
+        <PediaMainCard {...props.mainCardDetails} />
+        <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT}>
+          <TextBlockCard
+            key="overview"
+            title={props.textCardDetails[0]?.title ?? ""}
+            content={props.textCardDetails[0]?.content ?? []}
+            onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+          />
+        </Stack>
+        {props.textCardDetails
+          .slice(1)
+          .map((td, i) => [
+            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`image${i}`}>
+              <ImageCard
+                url={props.imageCardDetails[i].url}
+                caption={props.imageCardDetails[i].caption}
+              />
+            </Stack>,
+            ...(i === props.imageCardDetails.length - 1
+              ? [<FactCard key="fact" fact={props.fact} />]
+              : []),
+            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`text${i}`}>
+              <TextBlockCard
+                title={props.textCardDetails[i + 1]?.title ?? ""}
+                content={props.textCardDetails[i + 1]?.content ?? []}
+                onClick={() =>
+                  setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
+                }
+              />
+            </Stack>,
+          ])
+          .flat()}
+      </Stack>
+    </Stack>
+  );
+};
 
 const Bento = (props: {
   mainCardDetails: IPediaMainCard;
@@ -537,8 +583,9 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {!isMobile || true ? (
+      {isMobile ? (
         <MobileColumn
+          title={props.pageDetails.title}
           mainCardDetails={props.pageDetails.mainCard}
           imageCardDetails={props.pageDetails.images}
           textCardDetails={
