@@ -19,7 +19,7 @@ const ByteStepper = dynamic(
 
 export default function QuestionsCard(props: {
   questions: IPediaQuestion[];
-  mobile: boolean;
+  mobile?: boolean;
 }) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
     undefined
@@ -56,7 +56,11 @@ export default function QuestionsCard(props: {
               "-webkit-background-clip": "text",
             }}
           >
-            <Typography variant="h5" htmlTag="h3" sx={{ textAlign: "center" }}>
+            <Typography
+              variant={props.mobile ? "h5" : "h4"}
+              htmlTag="h3"
+              sx={{ textAlign: "center" }}
+            >
               {questionIndex === props.questions.length
                 ? "Nice!"
                 : props.questions[questionIndex].question}

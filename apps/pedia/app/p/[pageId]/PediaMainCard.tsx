@@ -12,6 +12,7 @@ interface IPediaMainCard {
   title?: string;
   imageUrl: string;
   facts: IFact[];
+  mobile?: boolean;
 }
 
 const PediaMainCard = (
@@ -42,7 +43,7 @@ const PediaMainCard = (
     >
       {props.title ? (
         <Typography
-          variant="h4"
+          variant={props.mobile ? "h5" : "h4"}
           color={PALETTE.font.light}
           sx={{
             textShadow: "0 0 25px rgba(0,0,0,0.7)",
@@ -65,11 +66,16 @@ const PediaMainCard = (
             bold
             color={PALETTE.secondary.grey[4]}
             noWrap
+            variant={props.mobile ? "tiny" : "normal"}
             htmlTag="h3"
           >
             {fact.title}
           </Typography>
-          <Typography color={PALETTE.secondary.grey[4]} noWrap>
+          <Typography
+            color={PALETTE.secondary.grey[4]}
+            noWrap
+            variant={props.mobile ? "tiny" : "normal"}
+          >
             {fact.content}
           </Typography>
         </Stack>

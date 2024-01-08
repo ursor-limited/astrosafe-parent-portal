@@ -3,48 +3,72 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import { IPediaCollectionPage, IPediaPage } from "./PediaPageContents";
 import { useRouter } from "next/navigation";
+import { Grid } from "@mui/material";
 
 export default function SuggestionsSection(props: {
   suggestedPages: IPediaPage[];
   parentPages: IPediaCollectionPage[];
+  mobile?: boolean;
 }) {
   const router = useRouter();
   return (
     <Stack
       borderRadius="12px"
       boxSizing="border-box"
-      width="80%"
+      width={props.mobile ? "100%" : "80%"}
       alignItems="center"
+      spacing="15px"
     >
-      <Stack width="100%" alignItems="center" pb="15px">
-        <Typography variant="h4" bold color={PALETTE.secondary.grey[5]}>
+      <Stack width="100%" alignItems="center">
+        <Typography
+          variant={props.mobile ? "h5" : "h4"}
+          bold
+          color={props.mobile ? PALETTE.font.light : PALETTE.secondary.grey[5]}
+          sx={{
+            textAlign: "center",
+          }}
+        >
           Why not have a look at these too?
         </Typography>
       </Stack>
-      <Stack direction="row" spacing="12px" pb="20px">
+      {/* <Stack direction="row" spacing="12px" pb="20px" width="80%"> */}
+      <Grid
+        container
+        gap="12px"
+        width={props.mobile ? "90%" : undefined}
+        justifyContent="center"
+      >
         {props.parentPages?.map((p) => (
-          <Stack
-            key={p.id}
-            height="37px"
-            borderRadius="8px"
-            px="12px"
-            boxSizing="border-box"
-            bgcolor="rgb(255,255,255)"
-            justifyContent="center"
-            sx={{
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              cursor: "pointer",
-            }}
-            onClick={() => router.push(`/c/${p.id}`)}
-          >
-            <Typography bold htmlTag="h3">
-              {p.title}
-            </Typography>
-          </Stack>
+          <Grid key={p.id} item>
+            <Stack
+              key={p.id}
+              height="37px"
+              borderRadius="8px"
+              px="12px"
+              boxSizing="border-box"
+              bgcolor="rgb(255,255,255)"
+              justifyContent="center"
+              sx={{
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                cursor: "pointer",
+              }}
+              onClick={() => router.push(`/c/${p.id}`)}
+            >
+              <Typography bold htmlTag="h3">
+                {p.title}
+              </Typography>
+            </Stack>
+          </Grid>
         ))}
-      </Stack>
-      <Stack minHeight="280px" direction="row" spacing="24px" flex={1}>
+      </Grid>
+      <Stack
+        minHeight={props.mobile ? "170px" : "280px"}
+        direction="row"
+        spacing={props.mobile ? "12px" : "24px"}
+        width={props.mobile ? "100%" : undefined}
+        flex={1}
+      >
         {props.suggestedPages.map((sp, i) => (
           <ContentPagePreviewCard
             key={sp.id}
@@ -53,6 +77,7 @@ export default function SuggestionsSection(props: {
             pageId={sp.id}
             titleAtBottom={i === 1}
             titleOnRight={i === 1 || i === 2}
+            mobile={props.mobile}
           />
         ))}
       </Stack>

@@ -16,6 +16,7 @@ export function ContentPagePreviewCard(props: {
   pageId: string;
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
+  mobile?: boolean;
 }) {
   const router = useRouter();
   return (
@@ -32,17 +33,18 @@ export function ContentPagePreviewCard(props: {
         cursor: "pointer",
       }}
       onClick={() => router.push(`/p/${props.pageId}`)}
-      p="20px"
+      p={props.mobile ? "10px" : "20px"}
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
       overflow="hidden"
     >
       <Typography
-        variant="h4"
+        variant={props.mobile ? "normal" : "h4"}
+        bold
         htmlTag="h3"
         color={PALETTE.font.light}
         sx={{
-          textShadow: "0 0 25px rgba(0,0,0,0.86)",
+          textShadow: "0 0 25px rgba(0,0,0,0.9)",
           textAlign: props.titleOnRight ? "right" : undefined,
         }}
       >

@@ -366,6 +366,8 @@ const MobileColumn = (props: {
   imageCardDetails: IPediaImage[];
   fact: string;
   questions: IPediaQuestion[];
+  suggestedPages: IPediaPage[];
+  parentPages: IPediaCollectionPage[];
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -409,15 +411,19 @@ const MobileColumn = (props: {
           ])
           .flat()}
         {props.questions && props.questions.length > 0 ? (
-          <QuestionsCard questions={props.questions} mobile />
+          <Stack pt="48px">
+            <QuestionsCard questions={props.questions} mobile />
+          </Stack>
         ) : null}
         <Stack minHeight="30px" />
-        {/* {props.suggestedPages.length > 0 ? (
+        {props.suggestedPages.length > 0 ? (
           <SuggestionsSection
             suggestedPages={props.suggestedPages}
             parentPages={props.parentPages}
+            mobile
           />
-        ) : null} */}
+        ) : null}
+        <Stack minHeight="30px" />
       </Stack>
     </Stack>
   );
@@ -608,8 +614,9 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
             }
             fact={props.pageDetails.funFact}
             questions={props.pageDetails.questions}
+            suggestedPages={props.suggestedPages}
+            parentPages={props.parentPages}
           />
-          <Stack height="50px" />
         </Stack>
       ) : (
         <Stack>
