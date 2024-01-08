@@ -282,18 +282,17 @@ const FactCard = (props: { fact: string }) => (
     bgcolor={PALETTE.secondary.purple[2]}
     borderRadius="12px"
     height="fit-content"
-    //maxHeight={FACT_CARD_HEIGHT}
     p={`${GRID_SPACING}px`}
     boxSizing="border-box"
     justifyContent="center"
     alignItems="flex-end"
+    spacing="10px"
   >
     <Stack
       width="100%"
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      spacing="16px"
     >
       <Star height="18px" width="18px" />
       <Typography variant="large" bold color={PALETTE.font.light} noWrap>
@@ -301,7 +300,9 @@ const FactCard = (props: { fact: string }) => (
       </Typography>
     </Stack>
     <Stack direction="row" alignItems="flex-end">
-      <Typography color={PALETTE.font.light}>{props.fact}</Typography>
+      <Typography color={PALETTE.font.light} sx={{ textAlign: "right" }}>
+        {props.fact}
+      </Typography>
     </Stack>
   </Stack>
 );
@@ -364,6 +365,7 @@ const MobileColumn = (props: {
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
   fact: string;
+  questions: IPediaQuestion[];
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -406,6 +408,16 @@ const MobileColumn = (props: {
             </Stack>,
           ])
           .flat()}
+        {props.questions && props.questions.length > 0 ? (
+          <QuestionsCard questions={props.questions} mobile />
+        ) : null}
+        <Stack minHeight="30px" />
+        {/* {props.suggestedPages.length > 0 ? (
+          <SuggestionsSection
+            suggestedPages={props.suggestedPages}
+            parentPages={props.parentPages}
+          />
+        ) : null} */}
       </Stack>
     </Stack>
   );
@@ -583,17 +595,22 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
+
       {isMobile || true ? (
-        <MobileColumn
-          title={props.pageDetails.title}
-          mainCardDetails={props.pageDetails.mainCard}
-          imageCardDetails={props.pageDetails.images}
-          textCardDetails={
-            props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
-              ?.blocks ?? []
-          }
-          fact={props.pageDetails.funFact}
-        />
+        <Stack width="100%" height="100%">
+          <MobileColumn
+            title={props.pageDetails.title}
+            mainCardDetails={props.pageDetails.mainCard}
+            imageCardDetails={props.pageDetails.images}
+            textCardDetails={
+              props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
+                ?.blocks ?? []
+            }
+            fact={props.pageDetails.funFact}
+            questions={props.pageDetails.questions}
+          />
+          <Stack height="50px" />
+        </Stack>
       ) : (
         <Stack>
           {props.pageDetails ? (
