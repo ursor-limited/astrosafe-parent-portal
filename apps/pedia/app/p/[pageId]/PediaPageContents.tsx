@@ -12,7 +12,10 @@ import { PALETTE } from "ui/palette";
 import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
-import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
+import PediaMainCard, {
+  IPediaMainCard,
+  MAIN_CARD_HEIGHT,
+} from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
 import { Footer } from "@/app/components/footer";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
@@ -35,12 +38,6 @@ export const BACKDROP_STYLE = {
   backdropFilter: "blur(3px)",
   backgroundColor: "rgba(0, 0, 0, 0.3) !important",
 };
-
-interface IPediaMainCard {
-  //icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  imageUrl: string;
-  facts: IPediaFact[];
-}
 
 interface IPediaTextBlock {
   id: string;
