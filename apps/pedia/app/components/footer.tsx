@@ -11,6 +11,7 @@ import FooterScreenshot from "@/images/footerScreenshot.png";
 export const HEADER_HEIGHT = 86;
 
 export const Footer = (props: { fontScale?: number }) => {
+  console.log(FooterScreenshot);
   return (
     <Stack
       direction="row"
@@ -92,8 +93,11 @@ export const Footer = (props: { fontScale?: number }) => {
           </Typography>
         </Stack>
         <Stack width={`${(props.fontScale || 1) * 100}%`} alignItems="center">
-          <Image src={FooterScreenshot} width={700} alt="Footer" />
-          <Image src={FooterBackground} width={700} alt="Footer" />
+          <Image
+            src={"/_next/static/media/footerScreenshot.d486d781.png"}
+            width={700}
+            alt="Footer"
+          />
           {/* <Stack
             width="700px"
             height="500px"
