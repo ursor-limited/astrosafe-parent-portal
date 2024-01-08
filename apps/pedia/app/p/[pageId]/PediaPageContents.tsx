@@ -605,7 +605,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {isMobile || true ? (
+      {isMobile ? (
         <Stack width="100%" height="100%">
           <MobileColumn
             title={props.pageDetails.title}
