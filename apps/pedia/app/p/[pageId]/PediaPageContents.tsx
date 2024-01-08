@@ -22,7 +22,8 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents";
-// import { isMobile } from "react-device-detect";
+
+export const dynamic = "force-dynamic";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
