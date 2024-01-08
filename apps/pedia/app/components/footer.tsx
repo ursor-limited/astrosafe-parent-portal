@@ -51,8 +51,8 @@ export const Footer = (props: { fontScale?: number }) => {
                 color={PALETTE.secondary.purple[2]}
                 scale={props.fontScale}
               >
-                SafeTube is a free tool developed by Astro, the safe Browser
-                built for the Classroom
+                Pedia is a free tool developed by Astro, the safe Browser built
+                for the Classroom
               </Typography>
             </Stack>
           </Stack>

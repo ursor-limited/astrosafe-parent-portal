@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import Background from "@/images/backgrounds/dark.png";
 import { Metadata } from "next";
 import SpaceGlow from "@/images/spaceGlow.svg";
+import UrsorFadeIn from "./components/UrsorFadeIn";
 
 const rubik = Rubik({ subsets: ["latin"] });
 

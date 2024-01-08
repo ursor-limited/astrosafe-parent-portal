@@ -17,7 +17,9 @@ import { Header } from "@/app/components/Header";
 import { Footer } from "@/app/components/footer";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import X from "@/images/icons/X.svg";
-import { isMobile } from "react-device-detect";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents";
+// import { isMobile } from "react-device-detect";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -27,7 +29,7 @@ const FACT_CARD_HEIGHT = "97px";
 const FACT_ROW_HEIGHT = "391px";
 const TEXT_CARD_Y_PADDING = 20;
 const BEZIER = "cubic-bezier(.32,.82,.24,.98)";
-const TEXT_CARD_TRANSITION_DURATION = 800;
+const TEXT_CARD_TRANSITION_DURATION = 870;
 
 export const BACKDROP_STYLE = {
   backdropFilter: "blur(3px)",
@@ -497,7 +499,7 @@ const Bento = (props: {
       maxHeight={MAIN_CARD_HEIGHT}
       overflow="hidden"
     >
-      <PediaMainCard {...props.mainCardDetails} width={getWidthOfColumns(4)} />
+      <PediaMainCard {...props.mainCardDetails} width={getWidthOfColumns(5)} />
       <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
         <Stack maxHeight="50%" overflow="hidden">
           <TextBlockCard
@@ -639,67 +641,74 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   useEffect(() => {
     const w = bentoRef?.getBoundingClientRect().width;
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
-  }, [width]);
+  }, [width, bentoRef]);
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
       {isMobile ? (
-        <Stack width="100%" height="100%">
-          <MobileColumn
-            title={props.pageDetails.title}
-            mainCardDetails={props.pageDetails.mainCard}
-            imageCardDetails={props.pageDetails.images}
-            textCardDetails={
-              props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
-                ?.blocks ?? []
-            }
-            fact={props.pageDetails.funFact}
-            questions={props.pageDetails.questions}
-            suggestedPages={props.suggestedPages}
-            parentPages={props.parentPages}
-          />
-        </Stack>
-      ) : (
-        <Stack>
-          {props.pageDetails ? (
-            <LayoutCard
+        <UrsorFadeIn duration={1000}>
+          <Stack width="100%" height="100%">
+            <MobileColumn
               title={props.pageDetails.title}
-              setSelectedAge={setSelectedAge}
-              selectedAge={selectedAge}
-              category={props.parentPages[0].title}
-            >
-              <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-                <Bento
-                  mainCardDetails={props.pageDetails.mainCard}
-                  imageCardDetails={props.pageDetails.images}
-                  textCardDetails={
-                    props.pageDetails.textBlocks.find(
-                      (b) => b.age === selectedAge
-                    )?.blocks ?? []
-                  }
-                  fact={props.pageDetails.funFact}
-                  columnWidth={columnWidth}
-                />
-                {props.pageDetails.questions &&
-                props.pageDetails.questions.length > 0 ? (
-                  <QuestionsCard questions={props.pageDetails.questions} />
-                ) : null}
-                {props.suggestedPages.length > 0 ? (
-                  <SuggestionsSection
-                    suggestedPages={props.suggestedPages}
-                    parentPages={props.parentPages}
-                  />
-                ) : null}
-                <div />
-              </Stack>
-            </LayoutCard>
-          ) : null}
-          <Stack minHeight="20px" />
-          <Stack width="100%">
-            <Footer />
+              mainCardDetails={props.pageDetails.mainCard}
+              imageCardDetails={props.pageDetails.images}
+              textCardDetails={
+                props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
+                  ?.blocks ?? []
+              }
+              fact={props.pageDetails.funFact}
+              questions={props.pageDetails.questions}
+              suggestedPages={props.suggestedPages}
+              parentPages={props.parentPages}
+            />
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
+      ) : (
+        <UrsorFadeIn delay={500} duration={1000}>
+          <Stack>
+            {props.pageDetails ? (
+              <LayoutCard
+                title={props.pageDetails.title}
+                setSelectedAge={setSelectedAge}
+                selectedAge={selectedAge}
+                category={props.parentPages[0].title}
+              >
+                <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+                  <Bento
+                    mainCardDetails={props.pageDetails.mainCard}
+                    imageCardDetails={props.pageDetails.images}
+                    textCardDetails={
+                      props.pageDetails.textBlocks.find(
+                        (b) => b.age === selectedAge
+                      )?.blocks ?? []
+                    }
+                    fact={props.pageDetails.funFact}
+                    columnWidth={columnWidth}
+                  />
+                  {props.pageDetails.questions &&
+                  props.pageDetails.questions.length > 0 ? (
+                    <QuestionsCard questions={props.pageDetails.questions} />
+                  ) : null}
+                  {props.suggestedPages.length > 0 ? (
+                    <SuggestionsSection
+                      suggestedPages={props.suggestedPages}
+                      parentPages={props.parentPages}
+                    />
+                  ) : null}
+                  <div />
+                </Stack>
+              </LayoutCard>
+            ) : null}
+            <Stack minHeight="20px" />
+            <Stack width="100%">
+              <Footer />
+            </Stack>
+          </Stack>
+        </UrsorFadeIn>
       )}
     </Stack>
   );
