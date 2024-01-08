@@ -11,7 +11,7 @@ import FooterScreenshot from "@/images/footerScreenshot.png";
 export const HEADER_HEIGHT = 86;
 
 export const Footer = (props: { fontScale?: number }) => {
-  console.log(FooterScreenshot);
+  console.log(FooterScreenshot, FooterScreenshot.src);
   return (
     <Stack
       direction="row"
