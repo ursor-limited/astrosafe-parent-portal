@@ -93,6 +93,17 @@ export const Footer = (props: { fontScale?: number }) => {
         </Stack>
         <Stack width={`${(props.fontScale || 1) * 100}%`} alignItems="center">
           <Image src={FooterScreenshot} width={700} alt="Footer" />
+          <Image src={FooterBackground} width={700} alt="Footer" />
+          {/* <Stack
+            width="700px"
+            height="500px"
+            // height=''
+            sx={{
+              backgroundImage: `url(${FooterScreenshot.src})`,
+              backgroundSize: "cover",
+              boxSizing: "border-box",
+            }}
+          /> */}
         </Stack>
       </Stack>
     </Stack>
