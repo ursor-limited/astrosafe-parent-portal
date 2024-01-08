@@ -19,7 +19,7 @@ export const Footer = (props: { fontScale?: number }) => {
       minHeight="100vh"
       alignItems="center"
       justifyContent="center"
-      px="32px"
+      // px="32px"
     >
       <Stack
         maxWidth="1100px"
@@ -34,6 +34,7 @@ export const Footer = (props: { fontScale?: number }) => {
           backgroundSize: "cover",
           boxSizing: "border-box",
         }}
+        spacing="12px"
       >
         <Stack spacing="20px" alignItems="center">
           <Stack
@@ -68,7 +69,13 @@ export const Footer = (props: { fontScale?: number }) => {
             </Typography>
           </Stack>
         </Stack>
-        <Stack pt="12px" alignItems="center" spacing="3px">
+        <Stack
+          // pb={
+          //   props.fontScale ? Math.max(0, 1 - props.fontScale) * 5 : undefined
+          // }
+          alignItems="center"
+          spacing="3px"
+        >
           <Link href="https://www.astrosafe.co/book-demo" target={"_blank"}>
             <UrsorButton
               size="large"

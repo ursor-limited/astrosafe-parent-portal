@@ -12,22 +12,25 @@ interface IPediaMainCard {
   title?: string;
   imageUrl: string;
   facts: IFact[];
+  mobile?: boolean;
 }
 
-const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
+const PediaMainCard = (
+  props: IPediaMainCard & { width?: number; mobile?: boolean }
+) => (
   <Stack
     borderRadius="12px"
     bgcolor={PALETTE.secondary.grey[1]}
-    width={`${props.width}px`}
-    height={MAIN_CARD_HEIGHT}
-    minHeight={MAIN_CARD_HEIGHT}
+    width={props.width ? `${props.width}px` : "100%"}
+    height={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
+    minHeight={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
     boxSizing="border-box"
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
-    overflow="hidden"
   >
     <Stack
-      width={`${props.width}px`}
-      height="380px"
+      borderRadius="12px 12px 0 0"
+      width={props.width ? `${props.width}px` : "100%"}
+      height={props.mobile ? "310px" : "380px"}
       sx={{
         backgroundImage: `url(${props.imageUrl})`,
         backgroundSize: "cover",
@@ -40,7 +43,7 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
     >
       {props.title ? (
         <Typography
-          variant="h4"
+          variant={props.mobile ? "h5" : "h4"}
           color={PALETTE.font.light}
           sx={{
             textShadow: "0 0 25px rgba(0,0,0,0.7)",
@@ -63,11 +66,16 @@ const PediaMainCard = (props: IPediaMainCard & { width: number }) => (
             bold
             color={PALETTE.secondary.grey[4]}
             noWrap
+            variant={props.mobile ? "tiny" : "normal"}
             htmlTag="h3"
           >
             {fact.title}
           </Typography>
-          <Typography color={PALETTE.secondary.grey[4]} noWrap>
+          <Typography
+            color={PALETTE.secondary.grey[4]}
+            noWrap
+            variant={props.mobile ? "tiny" : "normal"}
+          >
             {fact.content}
           </Typography>
         </Stack>

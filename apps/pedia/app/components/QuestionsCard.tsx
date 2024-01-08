@@ -17,7 +17,10 @@ const ByteStepper = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
+export default function QuestionsCard(props: {
+  questions: IPediaQuestion[];
+  mobile?: boolean;
+}) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
     undefined
   );
@@ -28,7 +31,7 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
   return (
     <Stack width="100%" alignItems="center">
       <Stack
-        width="502px"
+        width={props.mobile ? "100%" : "502px"}
         height="363px"
         alignItems="center"
         justifyContent="space-between"
@@ -44,7 +47,7 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
             step={questionIndex}
           />
           <Stack
-            width="400px"
+            width={props.mobile ? "80%" : "400px"}
             alignItems="center"
             sx={{
               background: "linear-gradient(-45deg, #F279C5, #1D62F6)",
@@ -53,7 +56,11 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
               "-webkit-background-clip": "text",
             }}
           >
-            <Typography variant="h4" htmlTag="h3" sx={{ textAlign: "center" }}>
+            <Typography
+              variant={props.mobile ? "h5" : "h4"}
+              htmlTag="h3"
+              sx={{ textAlign: "center" }}
+            >
               {questionIndex === props.questions.length
                 ? "Nice!"
                 : props.questions[questionIndex].question}

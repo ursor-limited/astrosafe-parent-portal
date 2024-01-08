@@ -14,8 +14,9 @@ import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
-import SpaceGlow from "@/images/spaceGlow.svg";
 import { Footer } from "@/app/components/footer";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { isMobile } from "react-device-detect";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -84,13 +85,17 @@ export interface IPediaCollectionPage {
   parentId: string;
 }
 
-const ImageCard = (props: { url: string; caption?: string; width: number }) => {
+const ImageCard = (props: {
+  url: string;
+  caption?: string;
+  width?: number;
+}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <Stack
       position="relative"
-      height="100%"
-      width={`${props.width}px`}
+      height={"100%"}
+      width={props.width ? `${props.width}px` : "100%"}
       borderRadius={BORDER_RADIUS}
       overflow="hidden"
       onClick={() => setExpanded(!expanded)}
@@ -174,17 +179,17 @@ const TextBlockCard = (props: {
     [textElement?.offsetHeight, textElement?.scrollHeight]
   );
 
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <Stack
       flex={1}
       position="relative"
       sx={{
-        "&:hover": { opacity: 0.7 },
+        opacity: hovering ? 0.7 : 1,
         transition: "0.2s",
-        cursor: "pointer",
       }}
       boxSizing="border-box"
-      onClick={props.onClick}
       overflow={props.fitContent ? undefined : "hidden"}
       boxShadow="0 0 20px rgba(0,0,0,0.05)"
       bgcolor={PALETTE.secondary.grey[1]}
@@ -193,10 +198,17 @@ const TextBlockCard = (props: {
       {!props.fitContent ? (
         <Stack
           position="absolute"
+          onMouseLeave={() => {
+            setHovering(false);
+          }}
+          onMouseEnter={() => {
+            setHovering(true);
+          }}
           width="100%"
-          height="56%"
+          height="30%"
           bottom={0}
           sx={{
+            cursor: "pointer",
             opacity: expanded || !showGradient ? 0 : 1,
             pointerEvents: expanded ? "none" : undefined,
             transition: "0.6s",
@@ -206,8 +218,19 @@ const TextBlockCard = (props: {
               PALETTE.secondary.grey[1],
               0
             )})`,
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[5],
+              },
+            },
           }}
-        />
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          p={`${GRID_SPACING}px`}
+          onClick={props.onClick}
+        >
+          <PlusIcon width="26px" height="26px" />
+        </Stack>
       ) : null}
       <Stack
         height={expanded ? expandedHeight : "100%"}
@@ -259,18 +282,17 @@ const FactCard = (props: { fact: string }) => (
     bgcolor={PALETTE.secondary.purple[2]}
     borderRadius="12px"
     height="fit-content"
-    //maxHeight={FACT_CARD_HEIGHT}
     p={`${GRID_SPACING}px`}
     boxSizing="border-box"
     justifyContent="center"
     alignItems="flex-end"
+    spacing="10px"
   >
     <Stack
       width="100%"
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      spacing="16px"
     >
       <Star height="18px" width="18px" />
       <Typography variant="large" bold color={PALETTE.font.light} noWrap>
@@ -278,7 +300,9 @@ const FactCard = (props: { fact: string }) => (
       </Typography>
     </Stack>
     <Stack direction="row" alignItems="flex-end">
-      <Typography color={PALETTE.font.light}>{props.fact}</Typography>
+      <Typography color={PALETTE.font.light} sx={{ textAlign: "right" }}>
+        {props.fact}
+      </Typography>
     </Stack>
   </Stack>
 );
@@ -335,6 +359,80 @@ function TextSectionPopover(
   );
 }
 
+const MobileColumn = (props: {
+  title: string;
+  mainCardDetails: IPediaMainCard;
+  textCardDetails: IPediaTextBlock[];
+  imageCardDetails: IPediaImage[];
+  fact: string;
+  questions: IPediaQuestion[];
+  suggestedPages: IPediaPage[];
+  parentPages: IPediaCollectionPage[];
+}) => {
+  const [selectedTextCardId, setSelectedTextCardId] = useState<
+    string | undefined
+  >(undefined);
+  const { width } = useWindowSize();
+  return (
+    <Stack px="30px" width="100%" height="100%" spacing="12px">
+      <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
+        {props.title}
+      </Typography>
+      <Stack spacing="12px" width="100%" height="100%">
+        <PediaMainCard {...props.mainCardDetails} mobile />
+        <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT}>
+          <TextBlockCard
+            key="overview"
+            title={props.textCardDetails[0]?.title ?? ""}
+            content={props.textCardDetails[0]?.content ?? []}
+            onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+          />
+        </Stack>
+        {props.textCardDetails
+          .slice(1)
+          .map((td, i) => [
+            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`image${i}`}>
+              <ImageCard
+                url={props.imageCardDetails[i].url}
+                caption={props.imageCardDetails[i].caption}
+              />
+            </Stack>,
+            ...(i === props.imageCardDetails.length - 1
+              ? [<FactCard key="fact" fact={props.fact} />]
+              : []),
+            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`text${i}`}>
+              <TextBlockCard
+                title={props.textCardDetails[i + 1]?.title ?? ""}
+                content={props.textCardDetails[i + 1]?.content ?? []}
+                onClick={() =>
+                  setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
+                }
+              />
+            </Stack>,
+          ])
+          .flat()}
+        {props.questions && props.questions.length > 0 ? (
+          <Stack pt="48px">
+            <QuestionsCard questions={props.questions} mobile />
+          </Stack>
+        ) : null}
+        <Stack minHeight="30px" />
+        {props.suggestedPages.length > 0 ? (
+          <SuggestionsSection
+            suggestedPages={props.suggestedPages}
+            parentPages={props.parentPages}
+            mobile
+          />
+        ) : null}
+        <Stack minHeight="30px" />
+        <Stack width="100%">
+          <Footer fontScale={width / 700} />
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
+
 const Bento = (props: {
   mainCardDetails: IPediaMainCard;
   textCardDetails: IPediaTextBlock[];
@@ -366,7 +464,7 @@ const Bento = (props: {
           <TextBlockCard
             title={props.textCardDetails[0]?.title ?? ""}
             content={props.textCardDetails[0]?.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
           />
         </Stack>
         <Stack
@@ -436,7 +534,9 @@ const Bento = (props: {
           <TextBlockCard
             title={td.title ?? ""}
             content={td.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() =>
+              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
+            }
           />
         </Stack>
       ) : (
@@ -444,7 +544,9 @@ const Bento = (props: {
           <TextBlockCard
             title={td.title ?? ""}
             content={td.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[1]?.id)}
+            onClick={() =>
+              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
+            }
           />
         </Stack>
       ),
@@ -500,79 +602,66 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  // const [reachedLayoutCardBottom, setReachedLayoutCardBottom] =
-  //   useState<boolean>(false);
-
-  // const handleScroll = (e: any) =>
-  //   setReachedLayoutCardBottom(
-  //     e.target.scrollHeight - e.target.scrollTop === height
-  //   );
-
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {/* <Stack direction="row" spacing="12px" pb="20px">
-        {props.parentPages?.map((p) => (
-          <Stack
-            key={p.id}
-            height="37px"
-            borderRadius="8px"
-            px="12px"
-            boxSizing="border-box"
-            bgcolor="rgb(255,255,255)"
-            justifyContent="center"
-            sx={{
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              cursor: "pointer",
-            }}
-            onClick={() => router.push(`/c/${p.id}`)}
-          >
-            <Typography bold>{p.title}</Typography>
-          </Stack>
-        ))}
-      </Stack> */}
-      <Stack>
-        {props.pageDetails ? (
-          <LayoutCard
+      {isMobile ? (
+        <Stack width="100%" height="100%">
+          <MobileColumn
             title={props.pageDetails.title}
-            setSelectedAge={setSelectedAge}
-            selectedAge={selectedAge}
-            category={props.parentPages[0].title}
-            //parents={props.parentPages}
-          >
-            <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-              <Bento
-                mainCardDetails={props.pageDetails.mainCard}
-                imageCardDetails={props.pageDetails.images}
-                textCardDetails={
-                  props.pageDetails.textBlocks.find(
-                    (b) => b.age === selectedAge
-                  )?.blocks ?? []
-                }
-                fact={props.pageDetails.funFact}
-                columnWidth={columnWidth}
-              />
-              {props.pageDetails.questions &&
-              props.pageDetails.questions.length > 0 ? (
-                <QuestionsCard questions={props.pageDetails.questions} />
-              ) : null}
-              {props.suggestedPages.length > 0 ? (
-                <SuggestionsSection
-                  suggestedPages={props.suggestedPages}
-                  parentPages={props.parentPages}
-                />
-              ) : null}
-              <div />
-            </Stack>
-          </LayoutCard>
-        ) : null}
-        <Stack minHeight="20px" />
-        <Stack width="100%">
-          {/* <SpaceGlow width="auto" height="auto" /> */}
-          <Footer />
+            mainCardDetails={props.pageDetails.mainCard}
+            imageCardDetails={props.pageDetails.images}
+            textCardDetails={
+              props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
+                ?.blocks ?? []
+            }
+            fact={props.pageDetails.funFact}
+            questions={props.pageDetails.questions}
+            suggestedPages={props.suggestedPages}
+            parentPages={props.parentPages}
+          />
         </Stack>
-      </Stack>
+      ) : (
+        <Stack>
+          {props.pageDetails ? (
+            <LayoutCard
+              title={props.pageDetails.title}
+              setSelectedAge={setSelectedAge}
+              selectedAge={selectedAge}
+              category={props.parentPages[0].title}
+            >
+              <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+                <Bento
+                  mainCardDetails={props.pageDetails.mainCard}
+                  imageCardDetails={props.pageDetails.images}
+                  textCardDetails={
+                    props.pageDetails.textBlocks.find(
+                      (b) => b.age === selectedAge
+                    )?.blocks ?? []
+                  }
+                  fact={props.pageDetails.funFact}
+                  columnWidth={columnWidth}
+                />
+                {props.pageDetails.questions &&
+                props.pageDetails.questions.length > 0 ? (
+                  <QuestionsCard questions={props.pageDetails.questions} />
+                ) : null}
+                {props.suggestedPages.length > 0 ? (
+                  <SuggestionsSection
+                    suggestedPages={props.suggestedPages}
+                    parentPages={props.parentPages}
+                  />
+                ) : null}
+                <div />
+              </Stack>
+            </LayoutCard>
+          ) : null}
+          <Stack minHeight="20px" />
+          <Stack width="100%">
+            <Footer />
+          </Stack>
+        </Stack>
+      )}
     </Stack>
   );
 }
