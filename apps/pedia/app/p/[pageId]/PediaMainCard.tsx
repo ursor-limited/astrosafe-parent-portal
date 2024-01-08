@@ -34,6 +34,7 @@ const PediaMainCard = (
       sx={{
         backgroundImage: `url(${props.imageUrl})`,
         backgroundSize: "cover",
+        backgroundPosition: "center",
         boxSizing: "border-box",
       }}
       position="relative"

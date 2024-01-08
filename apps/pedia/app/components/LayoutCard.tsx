@@ -4,6 +4,8 @@ import { Header } from "./Header";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
 import AgeSelection from "./AgeSelection";
+import { useWindowSize } from "usehooks-ts";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 
 export const GRID_SPACING = 24;
 
@@ -20,7 +22,7 @@ interface ILayoutCardProps {
 }
 
 export default function LayoutCard(props: ILayoutCardProps) {
-  const router = useRouter();
+  const { width } = useWindowSize();
   return (
     <Stack width="100%" height="100%" alignItems="center" pt={props.paddingTop}>
       <Stack
@@ -32,7 +34,9 @@ export default function LayoutCard(props: ILayoutCardProps) {
       >
         <Stack
           flex={1}
-          width="75%"
+          width={`${
+            75 + 15 * ((1790 - width) / (1790 - MOBILE_WINDOW_WIDTH_THRESHOLD))
+          }%`}
           borderRadius="16px"
           bgcolor={PALETTE.secondary.grey[2]}
           p={`${GRID_SPACING}px`}
