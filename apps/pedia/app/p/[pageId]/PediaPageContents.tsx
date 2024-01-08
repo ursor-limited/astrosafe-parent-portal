@@ -369,12 +369,12 @@ const MobileColumn = (props: {
     string | undefined
   >(undefined);
   return (
-    <Stack>
-      <Typography variant="h4" htmlTag="h1">
+    <Stack px="30px" width="100%" height="100%" spacing="12px">
+      <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
         {props.title}
       </Typography>
-      <Stack spacing="12px" px="30px" width="100%" height="100%">
-        <PediaMainCard {...props.mainCardDetails} />
+      <Stack spacing="12px" width="100%" height="100%">
+        <PediaMainCard {...props.mainCardDetails} mobile />
         <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT}>
           <TextBlockCard
             key="overview"
@@ -583,7 +583,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {isMobile ? (
+      {isMobile || true ? (
         <MobileColumn
           title={props.pageDetails.title}
           mainCardDetails={props.pageDetails.mainCard}

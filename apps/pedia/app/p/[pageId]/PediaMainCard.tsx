@@ -14,20 +14,23 @@ interface IPediaMainCard {
   facts: IFact[];
 }
 
-const PediaMainCard = (props: IPediaMainCard & { width?: number }) => (
+const PediaMainCard = (
+  props: IPediaMainCard & { width?: number; mobile?: boolean }
+) => (
   <Stack
     borderRadius="12px"
     bgcolor={PALETTE.secondary.grey[1]}
     width={props.width ? `${props.width}px` : "100%"}
-    height={MAIN_CARD_HEIGHT}
-    minHeight={MAIN_CARD_HEIGHT}
+    height={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
+    minHeight={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
     boxSizing="border-box"
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
-    overflow="hidden"
+    // overflow="hidden"
   >
     <Stack
+      borderRadius="12px 12px 0 0"
       width={props.width ? `${props.width}px` : "100%"}
-      height="380px"
+      height={props.mobile ? "310px" : "380px"}
       sx={{
         backgroundImage: `url(${props.imageUrl})`,
         backgroundSize: "cover",
