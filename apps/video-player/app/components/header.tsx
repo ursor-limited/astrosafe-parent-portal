@@ -11,7 +11,10 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 export const HEADER_HEIGHT = 86;
 
 //export const Header = (props: { collapsed: boolean }) => {
-export const Header = (props: { noCreateNew?: boolean; noLogo?: boolean }) => {
+export const Header = (props: {
+  noCreateNew?: boolean;
+  noDiscover?: boolean;
+}) => {
   return (
     <Stack
       direction="row"
@@ -25,21 +28,19 @@ export const Header = (props: { noCreateNew?: boolean; noLogo?: boolean }) => {
       //   display: props.collapsed ? "none" : undefined,
       // }}
     >
-      {!props.noLogo ? (
-        <Stack width="fit-content">
-          <Link href="https://astrosafe.co/">
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <Logo width={80} />
-            </Stack>
-          </Link>
-        </Stack>
-      ) : null}
+      <Stack width="fit-content">
+        <Link href="https://astrosafe.co/">
+          <Stack
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.8 },
+              transition: "0.2s",
+            }}
+          >
+            <Logo width={80} />
+          </Stack>
+        </Link>
+      </Stack>
       <Stack direction="row" spacing="12px">
         {!props.noCreateNew ? (
           <Link href={"https://astrosafe.co/video"} target={"_blank"}>
@@ -53,17 +54,19 @@ export const Header = (props: { noCreateNew?: boolean; noLogo?: boolean }) => {
             </UrsorButton>
           </Link>
         ) : null}
-        <Link href={"https://astrosafe.co/"} target={"_blank"}>
-          <UrsorButton
-            dark
-            variant="tertiary"
-            endIcon={Kitemark}
-            iconColor="rgba(255,255,255,0.7)"
-            iconSize={15}
-          >
-            Discover AstroSafe
-          </UrsorButton>
-        </Link>
+        {!props.noDiscover ? (
+          <Link href={"https://astrosafe.co/"} target={"_blank"}>
+            <UrsorButton
+              dark
+              variant="tertiary"
+              endIcon={Kitemark}
+              iconColor="rgba(255,255,255,0.7)"
+              iconSize={15}
+            >
+              Discover AstroSafe
+            </UrsorButton>
+          </Link>
+        ) : null}
       </Stack>
     </Stack>
   );

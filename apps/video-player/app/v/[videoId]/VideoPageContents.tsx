@@ -69,7 +69,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
       {!fullscreen ? (
         <Header
           noCreateNew={!props.share}
-          noLogo={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
+          noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
         />
       ) : null}
       <Stack

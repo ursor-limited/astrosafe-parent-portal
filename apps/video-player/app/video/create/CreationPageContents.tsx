@@ -151,6 +151,9 @@ function CreationPageContents(props: { details: IVideo }) {
     [playerWidthRef, width]
   );
 
+  const [mobile, setMobile] = useState<boolean>(false);
+  useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
+
   return (
     <>
       {!fullscreen ? <Header noCreateNew /> : null}
@@ -274,7 +277,7 @@ function CreationPageContents(props: { details: IVideo }) {
                       width="100%"
                       bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
                       borderRadius="8px"
-                      px="30px"
+                      px={mobile ? "10px" : "30px"}
                       py="6px"
                       sx={{
                         backdropFilter: BACKGROUND_BLUR,
@@ -288,7 +291,7 @@ function CreationPageContents(props: { details: IVideo }) {
                       {duration && range ? (
                         <Stack
                           direction="row"
-                          spacing="44px"
+                          spacing={mobile ? "20px" : "44px"}
                           justifyContent="center"
                           width="100%"
                           sx={{
