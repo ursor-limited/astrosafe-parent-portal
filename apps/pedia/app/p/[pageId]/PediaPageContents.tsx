@@ -13,8 +13,9 @@ import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
 import PediaMainCard, { MAIN_CARD_HEIGHT } from "./PediaMainCard";
-import { useRouter } from "next/navigation";
 import { Header } from "@/app/components/Header";
+import SpaceGlow from "@/images/spaceGlow.svg";
+import { Footer } from "@/app/components/footer";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -227,7 +228,12 @@ const TextBlockCard = (props: {
         }}
         ref={setTextElement}
       >
-        <Typography variant="large" bold color={PALETTE.secondary.grey[5]}>
+        <Typography
+          variant="large"
+          bold
+          color={PALETTE.secondary.grey[5]}
+          htmlTag="h3"
+        >
           {props.title}
         </Typography>
         <Stack spacing="8px">
@@ -486,7 +492,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
 
   /* needed for the platform row's proper scrollability */
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
   const [bentoRef, setBentoRef] = useState<HTMLElement | null>(null);
   const [columnWidth, setColumnWidth] = useState<number>(0);
   useEffect(() => {
@@ -494,11 +500,17 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
     w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
   }, [width]);
 
-  const router = useRouter();
+  // const [reachedLayoutCardBottom, setReachedLayoutCardBottom] =
+  //   useState<boolean>(false);
+
+  // const handleScroll = (e: any) =>
+  //   setReachedLayoutCardBottom(
+  //     e.target.scrollHeight - e.target.scrollTop === height
+  //   );
 
   return (
-    <Stack width="100vw" height="100vh" alignItems="center" spacing="45px">
-      <Header parentPages={props.parentPages} />
+    <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
+      <Header />
       {/* <Stack direction="row" spacing="12px" pb="20px">
         {props.parentPages?.map((p) => (
           <Stack
@@ -520,36 +532,47 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
           </Stack>
         ))}
       </Stack> */}
-      {props.pageDetails ? (
-        <LayoutCard
-          title={props.pageDetails.title}
-          setSelectedAge={setSelectedAge}
-          selectedAge={selectedAge}
-          category={props.parentPages[0].title}
-          //parents={props.parentPages}
-          paddingTop="42px"
-        >
-          <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-            <Bento
-              mainCardDetails={props.pageDetails.mainCard}
-              imageCardDetails={props.pageDetails.images}
-              textCardDetails={
-                props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
-                  ?.blocks ?? []
-              }
-              fact={props.pageDetails.funFact}
-              columnWidth={columnWidth}
-            />
-            {props.pageDetails.questions &&
-            props.pageDetails.questions.length > 0 ? (
-              <QuestionsCard questions={props.pageDetails.questions} />
-            ) : null}
-            {props.suggestedPages.length > 0 ? (
-              <SuggestionsSection suggestedPages={props.suggestedPages} />
-            ) : null}
-          </Stack>
-        </LayoutCard>
-      ) : null}
+      <Stack>
+        {props.pageDetails ? (
+          <LayoutCard
+            title={props.pageDetails.title}
+            setSelectedAge={setSelectedAge}
+            selectedAge={selectedAge}
+            category={props.parentPages[0].title}
+            //parents={props.parentPages}
+          >
+            <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+              <Bento
+                mainCardDetails={props.pageDetails.mainCard}
+                imageCardDetails={props.pageDetails.images}
+                textCardDetails={
+                  props.pageDetails.textBlocks.find(
+                    (b) => b.age === selectedAge
+                  )?.blocks ?? []
+                }
+                fact={props.pageDetails.funFact}
+                columnWidth={columnWidth}
+              />
+              {props.pageDetails.questions &&
+              props.pageDetails.questions.length > 0 ? (
+                <QuestionsCard questions={props.pageDetails.questions} />
+              ) : null}
+              {props.suggestedPages.length > 0 ? (
+                <SuggestionsSection
+                  suggestedPages={props.suggestedPages}
+                  parentPages={props.parentPages}
+                />
+              ) : null}
+              <div />
+            </Stack>
+          </LayoutCard>
+        ) : null}
+        <Stack minHeight="20px" />
+        <Stack width="100%">
+          {/* <SpaceGlow width="auto" height="auto" /> */}
+          <Footer />
+        </Stack>
+      </Stack>
     </Stack>
   );
 }

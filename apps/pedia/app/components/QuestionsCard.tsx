@@ -53,7 +53,7 @@ export default function QuestionsCard(props: { questions: IPediaQuestion[] }) {
               "-webkit-background-clip": "text",
             }}
           >
-            <Typography variant="h4" sx={{ textAlign: "center" }}>
+            <Typography variant="h4" htmlTag="h3" sx={{ textAlign: "center" }}>
               {questionIndex === props.questions.length
                 ? "Nice!"
                 : props.questions[questionIndex].question}

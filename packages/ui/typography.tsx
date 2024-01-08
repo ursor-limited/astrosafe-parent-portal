@@ -72,6 +72,7 @@ export interface TypographyProps {
   maxLines?: number;
   scale?: number;
   sx?: SxProps;
+  htmlTag?: keyof JSX.IntrinsicElements;
   children: React.ReactNode;
 }
 
@@ -117,7 +118,11 @@ export function Typography(props: TypographyProps): JSX.Element {
           : null),
       }}
     >
-      {props.children}
+      {props.htmlTag ? (
+        <props.htmlTag>{props.children}</props.htmlTag>
+      ) : (
+        props.children
+      )}
     </Box>
   );
 }

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Clipboard from "@/images/icons/Clipboard.svg";
 
-const UrlBar = () => {
+const UrlBar = (props: { mobile: boolean }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pressed, setPressed] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -17,21 +17,14 @@ const UrlBar = () => {
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
   return currentPageUrl ? (
     <Stack
-      //zIndex={99998}
       width="100%"
-      // marginLeft="auto"
-      // marginRight="auto"
-      // left={0}
-      // right={0}
-      //top="120px"
-      //position="absolute"
-      spacing="20px"
-      height="76px"
+      spacing={props.mobile ? "6px" : "20px"}
+      height={props.mobile ? undefined : "76px"}
       px="28px"
       py="8px"
       bgcolor={hovering ? "rgba(0,0,0,0.3)" : "rgba(0,0,0,0.15)"}
       borderRadius="14px"
-      direction="row"
+      direction={props.mobile ? undefined : "row"}
       justifyContent="space-between"
       alignItems="center"
       overflow="hidden"
