@@ -93,7 +93,7 @@ export const Footer = (props: { fontScale?: number }) => {
           </Typography>
         </Stack>
         <Stack width={`${(props.fontScale || 1) * 100}%`} alignItems="center">
-          <Image src={FooterScreenshot} width={700} alt="Footer" />
+          <Image src={FooterScreenshot} unoptimized width={700} alt="Footer" />
           {/* <Stack
             width="700px"
             height="500px"
