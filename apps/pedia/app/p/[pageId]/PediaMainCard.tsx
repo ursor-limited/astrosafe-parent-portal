@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 
-export const MAIN_CARD_HEIGHT = "576px";
+export const MAIN_CARD_HEIGHT = "545px";
 
 interface IFact {
   title: string;
@@ -12,7 +12,7 @@ interface IPediaMainCard {
   title?: string;
   imageUrl: string;
   facts: IFact[];
-  mobile?: boolean;
+  color: string;
 }
 
 const PediaMainCard = (
@@ -20,12 +20,16 @@ const PediaMainCard = (
 ) => (
   <Stack
     borderRadius="12px"
-    bgcolor={PALETTE.secondary.grey[1]}
+    sx={{
+      background: `linear-gradient(0deg, #ffffff, ${props.color || "#ffffff"})`,
+    }}
     width={props.width ? `${props.width}px` : "100%"}
     height={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
     minHeight={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
     boxSizing="border-box"
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
+    p="16px"
+    pt={0}
   >
     <Stack
       borderRadius="12px 12px 0 0"
@@ -33,7 +37,8 @@ const PediaMainCard = (
       height={props.mobile ? "310px" : "380px"}
       sx={{
         backgroundImage: `url(${props.imageUrl})`,
-        backgroundSize: "cover",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         boxSizing: "border-box",
       }}
@@ -54,7 +59,14 @@ const PediaMainCard = (
         </Typography>
       ) : null}
     </Stack>
-    <Stack spacing="12px" px="20px" py="17px" boxSizing="border-box">
+    <Stack
+      spacing="8px"
+      px="15px"
+      py="12px"
+      boxSizing="border-box"
+      bgcolor="rgb(255,255,255)"
+      borderRadius="10px"
+    >
       {props.facts.map((fact, i) => (
         <Stack
           key={i}
@@ -67,7 +79,7 @@ const PediaMainCard = (
             bold
             color={PALETTE.secondary.grey[4]}
             noWrap
-            variant={props.mobile ? "tiny" : "normal"}
+            variant={props.mobile ? "tiny" : "small"}
             htmlTag="h3"
           >
             {fact.title}
@@ -75,7 +87,7 @@ const PediaMainCard = (
           <Typography
             color={PALETTE.secondary.grey[4]}
             noWrap
-            variant={props.mobile ? "tiny" : "normal"}
+            variant={props.mobile ? "tiny" : "small"}
           >
             {fact.content}
           </Typography>
