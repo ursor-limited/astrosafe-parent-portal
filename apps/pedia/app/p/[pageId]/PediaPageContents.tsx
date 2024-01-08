@@ -372,6 +372,7 @@ const MobileColumn = (props: {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
   >(undefined);
+  const { width } = useWindowSize();
   return (
     <Stack px="30px" width="100%" height="100%" spacing="12px">
       <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
@@ -424,6 +425,9 @@ const MobileColumn = (props: {
           />
         ) : null}
         <Stack minHeight="30px" />
+        <Stack width="100%">
+          <Footer fontScale={width / 700} />
+        </Stack>
       </Stack>
     </Stack>
   );
@@ -601,7 +605,6 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-
       {isMobile || true ? (
         <Stack width="100%" height="100%">
           <MobileColumn

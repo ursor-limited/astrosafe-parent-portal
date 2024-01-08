@@ -19,7 +19,7 @@ export const Footer = (props: { fontScale?: number }) => {
       minHeight="100vh"
       alignItems="center"
       justifyContent="center"
-      px="32px"
+      // px="32px"
     >
       <Stack
         maxWidth="1100px"
