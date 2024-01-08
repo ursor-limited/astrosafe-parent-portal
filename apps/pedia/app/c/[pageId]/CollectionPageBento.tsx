@@ -5,6 +5,7 @@ import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
 import { IPediaPage } from "@/app/p/[pageId]/PediaPageContents";
 import _ from "lodash";
+import { UrsorTypographyVariant } from "ui/typography";
 
 export const GRID_SPACING = 24;
 
@@ -17,6 +18,7 @@ export function ContentPagePreviewCard(props: {
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
   mobile?: boolean;
+  fontSize?: UrsorTypographyVariant;
 }) {
   const router = useRouter();
   return (
@@ -39,7 +41,7 @@ export function ContentPagePreviewCard(props: {
       overflow="hidden"
     >
       <Typography
-        variant={props.mobile ? "normal" : "h4"}
+        variant={props.fontSize || (props.mobile ? "normal" : "h4")}
         bold
         htmlTag="h3"
         color={PALETTE.font.light}

@@ -11,7 +11,6 @@ import FooterScreenshot from "@/images/footerScreenshot.png";
 export const HEADER_HEIGHT = 86;
 
 export const Footer = (props: { fontScale?: number }) => {
-  console.log(FooterScreenshot, FooterScreenshot.src);
   return (
     <Stack
       direction="row"
@@ -20,7 +19,6 @@ export const Footer = (props: { fontScale?: number }) => {
       minHeight="100vh"
       alignItems="center"
       justifyContent="center"
-      // px="32px"
     >
       <Stack
         maxWidth="1100px"
@@ -70,13 +68,7 @@ export const Footer = (props: { fontScale?: number }) => {
             </Typography>
           </Stack>
         </Stack>
-        <Stack
-          // pb={
-          //   props.fontScale ? Math.max(0, 1 - props.fontScale) * 5 : undefined
-          // }
-          alignItems="center"
-          spacing="3px"
-        >
+        <Stack alignItems="center" spacing="3px">
           <Link href="https://www.astrosafe.co/book-demo" target={"_blank"}>
             <UrsorButton
               size="large"
@@ -94,16 +86,6 @@ export const Footer = (props: { fontScale?: number }) => {
         </Stack>
         <Stack width={`${(props.fontScale || 1) * 100}%`} alignItems="center">
           <Image src={FooterScreenshot} unoptimized width={700} alt="Footer" />
-          {/* <Stack
-            width="700px"
-            height="500px"
-            // height=''
-            sx={{
-              backgroundImage: `url(${FooterScreenshot.src})`,
-              backgroundSize: "cover",
-              boxSizing: "border-box",
-            }}
-          /> */}
         </Stack>
       </Stack>
     </Stack>
