@@ -8,7 +8,7 @@ interface IFact {
   content: string;
 }
 
-interface IPediaMainCard {
+export interface IPediaMainCard {
   title?: string;
   imageUrl: string;
   facts: IFact[];
