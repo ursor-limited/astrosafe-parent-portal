@@ -404,6 +404,7 @@ const MobileColumn = (props: {
     string | undefined
   >(undefined);
   const { width } = useWindowSize();
+  console.log(props.mainCardDetails);
   return (
     <Stack px="30px" width="100%" height="100%" spacing="12px">
       <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
