@@ -15,7 +15,8 @@ const get = (route: string) =>
   );
 
 class ApiController {
-  static async getPage(id: string) { //@ts-ignore
+  static async getPage(id: string) {     //@ts-ignore
+    console.log(`${BACKEND_URLS[process.env.NODE_ENV]}/pedia/${id}`)
     return get(`pedia/${id}`).then(
       (response: any) => response.json()
     );
