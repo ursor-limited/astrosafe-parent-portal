@@ -21,7 +21,8 @@ import { Footer } from "@/app/components/footer";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
+import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -93,7 +94,6 @@ const ImageCard = (props: {
   return (
     <Stack
       position="relative"
-      height={"100%"}
       width={props.width ? `${props.width}px` : "100%"}
       borderRadius={BORDER_RADIUS}
       overflow="hidden"
@@ -107,6 +107,7 @@ const ImageCard = (props: {
         sx={{
           backgroundImage: `url(${props.url})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
           boxSizing: "border-box",
         }}
       />
@@ -143,7 +144,7 @@ const TextBlockCard = (props: {
   content: string[];
   noCollapse?: boolean;
   onClick: () => void;
-  fitContent?: boolean;
+  //fitContent?: boolean;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [changing, setChanging] = useState<boolean>(false);
@@ -189,12 +190,12 @@ const TextBlockCard = (props: {
         transition: "0.2s",
       }}
       boxSizing="border-box"
-      overflow={props.fitContent ? undefined : "hidden"}
+      //overflow={props.fitContent ? undefined : "hidden"}
       boxShadow="0 0 20px rgba(0,0,0,0.05)"
       bgcolor={PALETTE.secondary.grey[1]}
       borderRadius={BORDER_RADIUS}
     >
-      {!props.fitContent ? (
+      {/* {!props.fitContent ? (
         <Stack
           position="absolute"
           onMouseLeave={() => {
@@ -230,10 +231,11 @@ const TextBlockCard = (props: {
         >
           <PlusIcon width="26px" height="26px" />
         </Stack>
-      ) : null}
+      ) : null} */}
       <Stack
         height={expanded ? expandedHeight : "100%"}
-        width={props.fitContent ? "fit-content" : "100%"}
+        //width={props.fitContent ? "fit-content" : "100%"}
+        width="100%"
         top={0}
         left={0}
         p={`${GRID_SPACING}px`}
@@ -242,7 +244,7 @@ const TextBlockCard = (props: {
           props.noCollapse || expanded ? `${TEXT_CARD_Y_PADDING}px` : undefined
         }
         boxSizing="border-box"
-        overflow={props.fitContent ? undefined : "hidden"}
+        //overflow={props.fitContent ? undefined : "hidden"}
         spacing="7px"
         sx={{
           transition: `${TEXT_CARD_TRANSITION_DURATION}ms`,
@@ -470,6 +472,84 @@ const MobileColumn = (props: {
   );
 };
 
+const BentoRow = (props: {
+  textCardDetails: IPediaTextBlock;
+  imageCardDetails: IPediaImage;
+  fact: string;
+  imageWidth: number;
+  reversed: boolean;
+  originalImageDimensions: { width: number; height: number };
+}) => {
+  const { width } = useWindowSize();
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  //const [rowHeight, setRowHeight]
+  const [hideImage, setHideImage] = useState<boolean>(false);
+
+  const textLengthWindowSizeRatio =
+    props.textCardDetails.content.join(" ").split(" ").length / width;
+
+  useEffect(() => {
+    const originalAspectRatio =
+      props.originalImageDimensions.width /
+      props.originalImageDimensions.height;
+    const textLengthWindowSizeRatio =
+      props.textCardDetails.content.join(" ").length / width;
+    console.log(textLengthWindowSizeRatio * originalAspectRatio);
+    setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.5);
+  }, [
+    textLengthWindowSizeRatio,
+    props.textCardDetails.content,
+    width,
+    props.originalImageDimensions.height,
+    props.originalImageDimensions.width,
+  ]);
+
+  // useEffect(() => {
+  //   const originalAspectRatio =
+  //     props.originalImageDimensions.width /
+  //     props.originalImageDimensions.height;
+  //   const newAspectRatio =
+  //     (ref?.getBoundingClientRect().width || 1) /
+  //     (ref?.getBoundingClientRect().height || 1);
+  //   setHideImage(originalAspectRatio - newAspectRatio > 0.5);
+  // }, [
+  //   ref,
+  //   width,
+  //   props.originalImageDimensions.height,
+  //   props.originalImageDimensions.width,
+  // ]);
+  const blocks = [
+    <Stack key="text" flex={1} ref={setRef}>
+      <TextBlockCard
+        title={props.textCardDetails.title ?? ""}
+        content={props.textCardDetails.content ?? []}
+        onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
+      />
+    </Stack>,
+    ...(hideImage
+      ? []
+      : [
+          <ImageCard
+            key="image"
+            url={props.imageCardDetails.url}
+            caption={props.imageCardDetails.caption}
+            width={props.imageWidth}
+          />,
+        ]),
+  ];
+  return (
+    <Stack
+      //height={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
+      //minHeight={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
+      width="100%"
+      direction="row"
+      spacing={`${GRID_SPACING}px`}
+    >
+      {props.reversed ? _.reverse(blocks) : blocks}
+    </Stack>
+  );
+};
+
 const Bento = (props: {
   mainCardDetails: IPediaMainCard;
   textCardDetails: IPediaTextBlock[];
@@ -495,8 +575,13 @@ const Bento = (props: {
       maxHeight={MAIN_CARD_HEIGHT}
       overflow="hidden"
     >
-      <PediaMainCard {...props.mainCardDetails} width={getWidthOfColumns(5)} />
-      <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
+      <PediaMainCard {...props.mainCardDetails} width={getWidthOfColumns(6)} />
+      <TextBlockCard
+        title={props.textCardDetails[0]?.title ?? ""}
+        content={props.textCardDetails[0]?.content ?? []}
+        onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+      />
+      {/* <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
         <Stack maxHeight="50%" overflow="hidden">
           <TextBlockCard
             title={props.textCardDetails[0]?.title ?? ""}
@@ -521,7 +606,7 @@ const Bento = (props: {
             width={getWidthOfColumns(3)}
           />
         </Stack>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
   const [factRowIndex, setFactRowIndex] = useState<number | undefined>(
@@ -535,7 +620,9 @@ const Bento = (props: {
     []
   );
 
-  const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
+  const [originalImageSizes, setOriginalImageSizes] = useState<
+    { width: number; height: number }[]
+  >([]);
   useEffect(() => {
     Promise.all(
       props.imageCardDetails.map((image) => getImageSize(image.url))
@@ -563,50 +650,72 @@ const Bento = (props: {
   );
 
   const rows = props.textCardDetails
-    .slice(2, props.textCardDetails.length)
-    .map((td, i) => [
-      i === factRowIndex ? (
-        <Stack key={td.id} flex={1} spacing={`${GRID_SPACING}px`}>
-          <FactCard fact={props.fact} />
-          <TextBlockCard
-            title={td.title ?? ""}
-            content={td.content ?? []}
-            onClick={() =>
-              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
-            }
-          />
-        </Stack>
+    .slice(1, props.textCardDetails.length)
+    .map((td, i) =>
+      originalImageSizes[i] ? (
+        <BentoRow
+          key={td.id}
+          textCardDetails={props.textCardDetails[i + 1]}
+          imageCardDetails={props.imageCardDetails[i]}
+          fact={props.fact}
+          originalImageDimensions={originalImageSizes[i]}
+          imageWidth={getWidthOfColumns(imageColumnsN[i])}
+          reversed={!!(i % 2)}
+        />
       ) : (
-        <Stack key={td.id} flex={1}>
-          <TextBlockCard
-            title={td.title ?? ""}
-            content={td.content ?? []}
-            onClick={() =>
-              setSelectedTextCardId(props.textCardDetails[i + 2]?.id)
-            }
-          />
-        </Stack>
-      ),
-      <ImageCard
-        key="image"
-        url={props.imageCardDetails[i + 1].url}
-        caption={props.imageCardDetails[i + 1].caption}
-        width={getWidthOfColumns(imageColumnsN[i])}
-      />,
-    ])
-    .map((pair, i) => (i % 2 ? pair : _.reverse(pair.slice())))
-    .map((pair, i) => (
-      <Stack
-        key={i}
-        height={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-        minHeight={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-        width="100%"
-        direction="row"
-        spacing={`${GRID_SPACING}px`}
-      >
-        {pair}
-      </Stack>
-    ));
+        <></>
+      )
+    );
+
+  // const rows = props.textCardDetails
+  //   .slice(1, props.textCardDetails.length)
+  //   .map((td, i) => {
+  //     const originalAspectRatio = originalImageSizes[i].width / originalImageSizes[i].height
+  //     const
+  //     return [
+  //       i === factRowIndex ? (
+  //         <Stack key={td.id} flex={1} spacing={`${GRID_SPACING}px`}>
+  //           <FactCard fact={props.fact} />
+  //           <TextBlockCard
+  //             title={td.title ?? ""}
+  //             content={td.content ?? []}
+  //             onClick={() =>
+  //               setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
+  //             }
+  //           />
+  //         </Stack>
+  //       ) : (
+  //         <Stack key={td.id} flex={1}>
+  //           <TextBlockCard
+  //             title={td.title ?? ""}
+  //             content={td.content ?? []}
+  //             onClick={() =>
+  //               setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
+  //             }
+  //           />
+  //         </Stack>
+  //       ),
+  //       <ImageCard
+  //         key="image"
+  //         url={props.imageCardDetails[i].url}
+  //         caption={props.imageCardDetails[i].caption}
+  //         width={getWidthOfColumns(imageColumnsN[i])}
+  //       />,
+  //     ];
+  //   })
+  //   .map((pair, i) => (i % 2 ? pair : _.reverse(pair.slice())))
+  //   .map((pair, i) => (
+  //     <Stack
+  //       key={i}
+  //       //height={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
+  //       //minHeight={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
+  //       width="100%"
+  //       direction="row"
+  //       spacing={`${GRID_SPACING}px`}
+  //     >
+  //       {pair}
+  //     </Stack>
+  //   ));
   return (
     <>
       <Stack spacing={`${GRID_SPACING}px`}>{[firstRow, ...rows]}</Stack>
@@ -642,11 +751,48 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
+  const [boo, setBoo] = useState<boolean>(false);
+
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
       {props.pageDetails ? (
-        <Stack>
+        <Stack onClick={() => setBoo(true)}>
+          {/* <ReactCarousel
+            carouselConfig={{
+              transform: {
+                rotateY: {
+                  [BEFORE]: () => "rotateY(25deg)",
+                  [CENTER]: () => "rotateY(0deg)",
+                  [AFTER]: () => "rotateY(-25deg)",
+                },
+              },
+            }}
+            // itemBackgroundStyle={{
+            //   backgroundColor: "#ece4db",
+            //   borderRadius: "3px",
+            //   boxShadow: "8px 12px 14px -6px black",
+            // }}
+            // containerBackgroundStyle={{
+            //   filter: "blur(7px)",
+            //   backgroundColor: "rgba(62, 212, 214, 0.3)",
+            // }}
+            //carouselHeight="600px"
+          >
+            {(boo
+              ? _.reverse(props.pageDetails.images)
+              : props.pageDetails.images
+            ).map((image, index) => (
+              <Stack key={image.id} height="200px" width="200px">
+                <ImageCard
+                  key={image.id}
+                  url={image.url}
+                  caption={image.caption}
+                  width={300}
+                />
+              </Stack>
+            ))}
+          </ReactCarousel> */}
           {isMobile ? (
             <UrsorFadeIn duration={1000}>
               <Stack width="100%" height="100%">
