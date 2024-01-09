@@ -6,6 +6,8 @@ const BACKEND_URLS = {
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
 
+export const dynamic = 'force-dynamic';
+
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
 const get = (route: string) =>
@@ -15,8 +17,7 @@ const get = (route: string) =>
   );
 
 class ApiController {
-  static async getPage(id: string) {     //@ts-ignore
-    console.log(`${BACKEND_URLS[process.env.NODE_ENV]}/pedia/${id}`)
+  static async getPage(id: string) { //@ts-ignore
     return get(`pedia/${id}`).then(
       (response: any) => response.json()
     );
