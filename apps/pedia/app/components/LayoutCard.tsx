@@ -44,30 +44,28 @@ export default function LayoutCard(props: ILayoutCardProps) {
           spacing={`${GRID_SPACING}px`}
         >
           <Stack>
-            {props.category ? (
-              <Stack spacing="5px" direction="row">
-                <Typography
-                  variant="small"
-                  color={PALETTE.secondary.grey[3]}
-                  htmlTag="h2"
-                >
-                  {`${
-                    props.category
-                  } knowledge and fun facts for Kids ${`aged ${
-                    props.selectedAge
-                  }-${
-                    (props.selectedAge ?? 0) + 1
-                  }`}. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
-                </Typography>
-                {/* {props.selectedAge ? (
+            <Stack spacing="5px" direction="row">
+              <Typography
+                variant="small"
+                color={PALETTE.secondary.grey[3]}
+                htmlTag="h2"
+              >
+                {`${
+                  props.category || "Awesome"
+                } knowledge and fun facts for Kids ${`aged ${
+                  props.selectedAge
+                }-${
+                  (props.selectedAge ?? 0) + 1
+                }`}. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
+              </Typography>
+              {/* {props.selectedAge ? (
                   <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">
                     {`aged ${props.selectedAge}-${
                       (props.selectedAge ?? 0) + 1
                     }`}
                   </Typography>
                 ) : null} */}
-              </Stack>
-            ) : null}
+            </Stack>
 
             <Stack
               direction="row"
