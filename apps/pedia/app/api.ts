@@ -8,21 +8,23 @@ const BACKEND_URLS = {
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
+export const dynamic = "force-dynamic";
+
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
+    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    { cache: "no-store" }
   );
 
 class ApiController {
-  static async getPage(id: string) { //@ts-ignore
-    return get(`pedia/${id}`).then(
-      (response: any) => response.json()
-    );
+  static async getPage(id: string) {
+    //@ts-ignore
+    return get(`pedia/${id}`).then((response: any) => response.json());
   }
   static async getCollectionPage(id: string) {
-    return get(`pedia/collection/${id}`).then(
-      (response: any) => response.json()
+    return get(`pedia/collection/${id}`).then((response: any) =>
+      response.json()
     );
   }
 }
