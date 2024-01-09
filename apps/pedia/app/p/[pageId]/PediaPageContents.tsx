@@ -674,7 +674,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
                     title={props.pageDetails.title}
                     setSelectedAge={setSelectedAge}
                     selectedAge={selectedAge}
-                    category={props.parentPages[0].title}
+                    category={props.parentPages[0]?.title}
                   >
                     <Stack ref={setBentoRef} spacing="94px" alignItems="center">
                       <Bento
