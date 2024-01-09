@@ -645,66 +645,75 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {isMobile ? (
-        <UrsorFadeIn duration={1000}>
-          <Stack width="100%" height="100%">
-            <MobileColumn
-              title={props.pageDetails.title}
-              mainCardDetails={props.pageDetails.mainCard}
-              imageCardDetails={props.pageDetails.images}
-              textCardDetails={
-                props.pageDetails.textBlocks.find((b) => b.age === selectedAge)
-                  ?.blocks ?? []
-              }
-              fact={props.pageDetails.funFact}
-              questions={props.pageDetails.questions}
-              suggestedPages={props.suggestedPages}
-              parentPages={props.parentPages}
-            />
-          </Stack>
-        </UrsorFadeIn>
-      ) : (
-        <UrsorFadeIn delay={500} duration={1000}>
-          <Stack>
-            {props.pageDetails ? (
-              <LayoutCard
-                title={props.pageDetails.title}
-                setSelectedAge={setSelectedAge}
-                selectedAge={selectedAge}
-                category={props.parentPages[0].title}
-              >
-                <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-                  <Bento
-                    mainCardDetails={props.pageDetails.mainCard}
-                    imageCardDetails={props.pageDetails.images}
-                    textCardDetails={
-                      props.pageDetails.textBlocks.find(
-                        (b) => b.age === selectedAge
-                      )?.blocks ?? []
-                    }
-                    fact={props.pageDetails.funFact}
-                    columnWidth={columnWidth}
-                  />
-                  {props.pageDetails.questions &&
-                  props.pageDetails.questions.length > 0 ? (
-                    <QuestionsCard questions={props.pageDetails.questions} />
-                  ) : null}
-                  {props.suggestedPages.length > 0 ? (
-                    <SuggestionsSection
-                      suggestedPages={props.suggestedPages}
-                      parentPages={props.parentPages}
-                    />
-                  ) : null}
-                  <div />
+      {props.pageDetails ? (
+        <Stack>
+          {isMobile ? (
+            <UrsorFadeIn duration={1000}>
+              <Stack width="100%" height="100%">
+                <MobileColumn
+                  title={props.pageDetails.title}
+                  mainCardDetails={props.pageDetails.mainCard}
+                  imageCardDetails={props.pageDetails.images}
+                  textCardDetails={
+                    props.pageDetails.textBlocks.find(
+                      (b) => b.age === selectedAge
+                    )?.blocks ?? []
+                  }
+                  fact={props.pageDetails.funFact}
+                  questions={props.pageDetails.questions}
+                  suggestedPages={props.suggestedPages}
+                  parentPages={props.parentPages}
+                />
+              </Stack>
+            </UrsorFadeIn>
+          ) : (
+            <UrsorFadeIn delay={500} duration={1000}>
+              <Stack>
+                {props.pageDetails ? (
+                  <LayoutCard
+                    title={props.pageDetails.title}
+                    setSelectedAge={setSelectedAge}
+                    selectedAge={selectedAge}
+                    category={props.parentPages[0].title}
+                  >
+                    <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+                      <Bento
+                        mainCardDetails={props.pageDetails.mainCard}
+                        imageCardDetails={props.pageDetails.images}
+                        textCardDetails={
+                          props.pageDetails.textBlocks.find(
+                            (b) => b.age === selectedAge
+                          )?.blocks ?? []
+                        }
+                        fact={props.pageDetails.funFact}
+                        columnWidth={columnWidth}
+                      />
+                      {props.pageDetails.questions &&
+                      props.pageDetails.questions.length > 0 ? (
+                        <QuestionsCard
+                          questions={props.pageDetails.questions}
+                        />
+                      ) : null}
+                      {props.suggestedPages.length > 0 ? (
+                        <SuggestionsSection
+                          suggestedPages={props.suggestedPages}
+                          parentPages={props.parentPages}
+                        />
+                      ) : null}
+                      <div />
+                    </Stack>
+                  </LayoutCard>
+                ) : null}
+                <Stack minHeight="20px" />
+                <Stack width="100%">
+                  <Footer />
                 </Stack>
-              </LayoutCard>
-            ) : null}
-            <Stack minHeight="20px" />
-            <Stack width="100%">
-              <Footer />
-            </Stack>
-          </Stack>
-        </UrsorFadeIn>
+              </Stack>
+            </UrsorFadeIn>
+          )}
+        </Stack>
+      ) : (
+        <></>
       )}
     </Stack>
   );
