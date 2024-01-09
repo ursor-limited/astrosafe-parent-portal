@@ -14,6 +14,7 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 export function ContentPagePreviewCard(props: {
   title: string;
   imageUrl: string;
+  color: string;
   pageId: string;
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
@@ -25,6 +26,7 @@ export function ContentPagePreviewCard(props: {
     <Stack
       flex={1}
       borderRadius="16px"
+      bgcolor={props.color}
       sx={{
         backgroundImage: `url(${props.imageUrl})`,
         backgroundSize: "cover",
@@ -46,7 +48,7 @@ export function ContentPagePreviewCard(props: {
         htmlTag="h3"
         color={PALETTE.font.light}
         sx={{
-          textShadow: "0 0 25px rgba(0,0,0,0.9)",
+          textShadow: "0 0 35px rgba(0,0,0,0.9)",
           textAlign: props.titleOnRight ? "right" : undefined,
         }}
       >
@@ -64,12 +66,14 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
           <ContentPagePreviewCard
             title={props.chunk[0].title}
             imageUrl={props.chunk[0].mainCard.imageUrl}
+            color={props.chunk[0].mainCard.color}
             pageId={props.chunk[0].id}
           />
           {props.chunk[1] ? (
             <ContentPagePreviewCard
               title={props.chunk[1].title}
               imageUrl={props.chunk[1].mainCard.imageUrl}
+              color={props.chunk[1].mainCard.color}
               pageId={props.chunk[1].id}
             />
           ) : null}
@@ -80,6 +84,7 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
           <ContentPagePreviewCard
             title={props.chunk[2].title}
             imageUrl={props.chunk[2].mainCard.imageUrl}
+            color={props.chunk[2].mainCard.color}
             pageId={props.chunk[2].id}
             titleAtBottom
             titleOnRight
@@ -92,6 +97,7 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
         <ContentPagePreviewCard
           title={props.chunk[3].title}
           imageUrl={props.chunk[3].mainCard.imageUrl}
+          color={props.chunk[3].mainCard.color}
           pageId={props.chunk[3].id}
         />
       </Stack>
@@ -104,12 +110,14 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
     <ContentPagePreviewCard
       title={props.chunk[0].title}
       imageUrl={props.chunk[0].mainCard.imageUrl}
+      color={props.chunk[0].mainCard.color}
       pageId={props.chunk[0].id}
     />
     {props.chunk[1] ? (
       <ContentPagePreviewCard
         title={props.chunk[1].title}
         imageUrl={props.chunk[1].mainCard.imageUrl}
+        color={props.chunk[1].mainCard.color}
         pageId={props.chunk[1].id}
         titleAtBottom
         titleOnRight
@@ -119,6 +127,7 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
       <ContentPagePreviewCard
         title={props.chunk[2].title}
         imageUrl={props.chunk[2].mainCard.imageUrl}
+        color={props.chunk[2].mainCard.color}
         pageId={props.chunk[2].id}
       />
     ) : null}
@@ -126,6 +135,7 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
       <ContentPagePreviewCard
         title={props.chunk[3].title}
         imageUrl={props.chunk[3].mainCard.imageUrl}
+        color={props.chunk[3].mainCard.color}
         pageId={props.chunk[3].id}
         titleAtBottom
         titleOnRight
@@ -140,6 +150,7 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
       <ContentPagePreviewCard
         title={props.chunk[0].title}
         imageUrl={props.chunk[0].mainCard.imageUrl}
+        color={props.chunk[0].mainCard.color}
         pageId={props.chunk[0].id}
       />
     </Stack>
@@ -148,6 +159,7 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
         <ContentPagePreviewCard
           title={props.chunk[1].title}
           imageUrl={props.chunk[1].mainCard.imageUrl}
+          color={props.chunk[1].mainCard.color}
           pageId={props.chunk[1].id}
           titleAtBottom
           titleOnRight
@@ -159,6 +171,7 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
             <ContentPagePreviewCard
               title={props.chunk[2].title}
               imageUrl={props.chunk[2].mainCard.imageUrl}
+              color={props.chunk[2].mainCard.color}
               pageId={props.chunk[2].id}
             />
           ) : null}
@@ -166,6 +179,7 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
             <ContentPagePreviewCard
               title={props.chunk[3].title}
               imageUrl={props.chunk[3].mainCard.imageUrl}
+              color={props.chunk[3].mainCard.color}
               pageId={props.chunk[3].id}
             />
           ) : null}
