@@ -23,6 +23,7 @@ import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
 import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
+import Image from "next/image";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -33,6 +34,7 @@ const FACT_ROW_HEIGHT = "391px";
 const TEXT_CARD_Y_PADDING = 20;
 const BEZIER = "cubic-bezier(.32,.82,.24,.98)";
 const TEXT_CARD_TRANSITION_DURATION = 870;
+const MAX_MOBILE_IMAGE_HEIGHT = 430;
 
 export const BACKDROP_STYLE = {
   backdropFilter: "blur(3px)",
@@ -89,11 +91,12 @@ const ImageCard = (props: {
   url: string;
   caption?: string;
   width?: number;
+  height?: number;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <Stack
-      height="100%"
+      height={props.height ? `${props.height}px` : "100%"}
       position="relative"
       width={props.width ? `${props.width}px` : "100%"}
       borderRadius={BORDER_RADIUS}
@@ -406,34 +409,47 @@ const MobileColumn = (props: {
     string | undefined
   >(undefined);
   const { width } = useWindowSize();
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+
+  const [originalImageSizes, setOriginalImageSizes] = useState<
+    { width: number; height: number }[]
+  >([]);
+  useEffect(() => {
+    Promise.all(
+      props.imageCardDetails.map((image) => getImageSize(image.url))
+    ).then((dims) => setOriginalImageSizes(dims));
+  }, []);
+
   return (
-    <Stack px="30px" width="100%" height="100%" spacing="12px">
+    <Stack px="30px" width="100%" height="100%" spacing="12px" ref={setRef}>
       <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
         {props.title}
       </Typography>
       <Stack spacing="12px" width="100%" height="100%">
         <PediaMainCard {...props.mainCardDetails} mobile />
-        <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT}>
-          <TextBlockCard
-            key="overview"
-            title={props.textCardDetails[0]?.title ?? ""}
-            content={props.textCardDetails[0]?.content ?? []}
-            onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
-          />
-        </Stack>
+        <TextBlockCard
+          key="overview"
+          title={props.textCardDetails[0]?.title ?? ""}
+          content={props.textCardDetails[0]?.content ?? []}
+          onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+        />
         {props.textCardDetails
           .slice(1)
           .map((td, i) => [
-            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`image${i}`}>
+            <Stack key={`image${i}`}>
               <ImageCard
                 url={props.imageCardDetails[i].url}
                 caption={props.imageCardDetails[i].caption}
+                height={Math.min(
+                  MAX_MOBILE_IMAGE_HEIGHT,
+                  (ref?.getBoundingClientRect().width ?? 0) *
+                    ((originalImageSizes[i]?.height ?? 1) /
+                      (originalImageSizes[i]?.width ?? 1))
+                )}
               />
             </Stack>,
-            ...(i === props.imageCardDetails.length - 1
-              ? [<FactCard key="fact" fact={props.fact} />]
-              : []),
-            <Stack height={ROW_HEIGHT} minHeight={ROW_HEIGHT} key={`text${i}`}>
+            <FactCard key="fact" fact={props.fact} />,
+            <Stack key={`text${i}`}>
               <TextBlockCard
                 title={props.textCardDetails[i + 1]?.title ?? ""}
                 content={props.textCardDetails[i + 1]?.content ?? []}
