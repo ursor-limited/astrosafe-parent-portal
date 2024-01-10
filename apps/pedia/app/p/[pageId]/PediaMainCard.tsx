@@ -1,3 +1,4 @@
+import UrsorParticles from "@/app/components/UrsorParticles";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 
@@ -31,6 +32,7 @@ const PediaMainCard = (
     p="16px"
     pt={0}
   >
+    <UrsorParticles />
     <Stack
       borderRadius="12px 12px 0 0"
       width={props.width ? `${props.width}px` : "100%"}

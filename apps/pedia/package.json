@@ -27,7 +27,9 @@
     "react-dom": "^18",
     "react-fade-in": "^2.0.1",
     "react-image-size": "^2.3.2",
+    "react-tsparticles": "^2.12.2",
     "sharp": "^0.32.6",
+    "tsparticles": "^3.0.3",
     "ui": "workspace:*",
     "usehooks-ts": "^2.9.1",
     "xmldom": "^0.6.0"

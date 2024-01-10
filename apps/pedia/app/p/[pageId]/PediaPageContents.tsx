@@ -22,8 +22,13 @@ import { Footer } from "@/app/components/footer";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
-import Byte from "@/app/components/Byte";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Byte = dynamic(
+  () => import("@/app/components/Byte"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const STAR_COLORS: SecondaryColor[] = [
   "purple",
