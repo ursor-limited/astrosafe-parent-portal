@@ -8,7 +8,7 @@ import { Dialog } from "@mui/material";
 import { getImageSize } from "react-image-size";
 import Star from "@/images/Star.svg";
 import { Typography } from "ui/typography";
-import { PALETTE } from "ui/palette";
+import { PALETTE, SecondaryColor } from "ui/palette";
 import LayoutCard, { AGES } from "@/app/components/LayoutCard";
 import SuggestionsSection from "./SuggestionsSection";
 import QuestionsCard from "@/app/components/QuestionsCard";
@@ -22,6 +22,14 @@ import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
 import Byte from "@/app/components/Byte";
+
+const STAR_COLORS: SecondaryColor[] = [
+  "purple",
+  "pink",
+  "orange",
+  "green",
+  "blue",
+];
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -276,49 +284,81 @@ const TextBlockCard = (props: {
   );
 };
 
-const FactsCard = (props: { facts: string[] }) => (
-  <Stack
-    bgcolor="rgb(255,255,255)"
-    borderRadius="12px"
-    height="fit-content"
-    p={`${GRID_SPACING}px`}
-    boxSizing="border-box"
-    justifyContent="center"
-    spacing="16px"
-    minWidth="100%"
-    maxWidth={0}
-  >
-    <Stack direction="row" spacing="18px" alignItems="center">
-      <Stack
-        sx={{
-          transform: "translateY(-2px)",
-        }}
-      >
-        <Byte size={32} />
-      </Stack>
-      <Typography variant="large" bold noWrap color={PALETTE.secondary.grey[5]}>
-        Did you know?
-      </Typography>
-    </Stack>
-    <Stack spacing="8px" maxWidth="80%">
-      {props.facts.map((fact) => (
+const FactsCard = (props: { facts: string[] }) => {
+  const [colors, setColors] = useState<string[]>([]);
+  useEffect(
+    () =>
+      setColors(
+        _.sampleSize(STAR_COLORS, props.facts.length).map(
+          (colorName) => PALETTE.secondary[colorName][_.random(2, 3)]
+        )
+      ),
+    [props.facts]
+  );
+  return (
+    <Stack
+      bgcolor="rgb(255,255,255)"
+      borderRadius="12px"
+      height="fit-content"
+      p={`${GRID_SPACING}px`}
+      boxSizing="border-box"
+      justifyContent="center"
+      spacing="16px"
+      minWidth="100%"
+      maxWidth={0}
+    >
+      <Stack direction="row" spacing="18px" alignItems="center">
         <Stack
-          key={fact}
-          direction="row"
           sx={{
-            background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
+            transform: "translateY(-2px)",
           }}
-          borderRadius="12px"
-          px="16px"
-          py="10px"
-          width="fit-content"
         >
-          <Typography>{fact}</Typography>
+          <Byte size={32} />
         </Stack>
-      ))}
+        <Typography
+          variant="large"
+          bold
+          noWrap
+          color={PALETTE.secondary.grey[5]}
+        >
+          Did you know?
+        </Typography>
+      </Stack>
+      <Stack spacing="8px" maxWidth="80%">
+        {props.facts.map((fact, i) => (
+          <Stack
+            key={fact}
+            direction="row"
+            sx={{
+              background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
+            }}
+            borderRadius="12px"
+            px="16px"
+            py="10px"
+            width="fit-content"
+          >
+            <Typography>{fact}</Typography>
+            <Stack
+              pl="14px"
+              height="100%"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                svg: {
+                  path: {
+                    fill: colors[i],
+                  },
+                },
+              }}
+            >
+              <Star height="14px" width="14px" />
+            </Stack>
+          </Stack>
+        ))}
+      </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 function TextSectionPopover(
   props: IPediaTextBlock & { open: boolean; closeCallback: () => void }
