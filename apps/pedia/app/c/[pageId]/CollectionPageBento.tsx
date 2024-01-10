@@ -3,7 +3,7 @@ import { Box, Stack, alpha } from "@mui/system";
 import { getImageSize } from "react-image-size";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-import { IPediaPage } from "@/app/p/[pageId]/PediaPageContents";
+import { IPediaPage } from "@/app/p/[urlId]/PediaPageContents";
 import _ from "lodash";
 import { UrsorTypographyVariant } from "ui/typography";
 

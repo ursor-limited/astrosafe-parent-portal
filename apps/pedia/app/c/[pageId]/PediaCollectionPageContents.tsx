@@ -8,7 +8,7 @@ import CollectionPageBento, {
 import {
   IPediaCollectionPage,
   IPediaPage,
-} from "@/app/p/[pageId]/PediaPageContents";
+} from "@/app/p/[urlId]/PediaPageContents";
 import LayoutCard from "@/app/components/LayoutCard";
 import { Stack } from "@mui/system";
 import { Header } from "@/app/components/Header";
