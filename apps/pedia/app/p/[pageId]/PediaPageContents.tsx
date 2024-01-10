@@ -24,6 +24,7 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import AgeSelection from "@/app/components/AgeSelection";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -485,13 +486,21 @@ const MobileColumn = (props: {
     ).then((dims) => setOriginalImageSizes(dims));
   }, []);
 
+  const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
+
   return (
-    <Stack px="30px" width="100%" height="100%" spacing="12px" ref={setRef}>
-      <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
+    <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
+      <Stack width="100%" alignItems="flex-end">
+        <AgeSelection
+          setSelectedAge={setSelectedAge}
+          selectedAge={selectedAge}
+        />
+      </Stack>
+      {/* <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
         {props.title}
-      </Typography>
+      </Typography> */}
       <Stack spacing="12px" width="100%" height="100%">
-        <PediaMainCard {...props.mainCardDetails} mobile />
+        <PediaMainCard title={props.title} {...props.mainCardDetails} mobile />
         <TextBlockCard
           key="overview"
           title={props.textCardDetails[0]?.title ?? ""}
