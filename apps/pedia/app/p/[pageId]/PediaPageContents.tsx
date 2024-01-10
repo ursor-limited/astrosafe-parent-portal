@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack, alpha, borderRadius } from "@mui/system";
+import { Stack } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Dialog } from "@mui/material";
 import { getImageSize } from "react-image-size";
 import Star from "@/images/Star.svg";
+import SpeechBubbleArrowHead from "@/images/byteSpeechBubbleArrowhead.png";
 import { Typography } from "ui/typography";
 import { PALETTE, SecondaryColor } from "ui/palette";
 import LayoutCard, { AGES } from "@/app/components/LayoutCard";
@@ -22,6 +23,7 @@ import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
 import Byte from "@/app/components/Byte";
+import Image from "next/image";
 
 const STAR_COLORS: SecondaryColor[] = [
   "purple",
@@ -307,7 +309,7 @@ const FactsCard = (props: { facts: string[] }) => {
       minWidth="100%"
       maxWidth={0}
     >
-      <Stack direction="row" spacing="18px" alignItems="center">
+      <Stack direction="row" spacing="15px" alignItems="center">
         <Stack
           sx={{
             transform: "translateY(-2px)",
@@ -324,7 +326,7 @@ const FactsCard = (props: { facts: string[] }) => {
           Did you know?
         </Typography>
       </Stack>
-      <Stack spacing="8px" maxWidth="80%">
+      <Stack spacing="8px" pl="32px">
         {props.facts.map((fact, i) => (
           <Stack
             key={fact}
@@ -336,11 +338,21 @@ const FactsCard = (props: { facts: string[] }) => {
             px="16px"
             py="10px"
             width="fit-content"
+            position="relative"
           >
+            {i === 0 ? (
+              <Stack position="absolute" top="-5px" left="-1px">
+                <Image
+                  src={SpeechBubbleArrowHead}
+                  width={10}
+                  height={10}
+                  alt="Pencil"
+                />
+              </Stack>
+            ) : null}
             <Typography>{fact}</Typography>
             <Stack
               pl="14px"
-              height="100%"
               alignItems="center"
               justifyContent="center"
               sx={{
