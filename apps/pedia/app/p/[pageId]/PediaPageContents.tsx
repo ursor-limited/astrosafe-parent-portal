@@ -348,11 +348,16 @@ const FactsCard = (props: { facts: string[] }) => {
           >
             {i === 0 ? (
               <Stack position="absolute" top="-5px" left="-1px">
-                <Image
-                  src={SpeechBubbleArrowHead}
-                  width={10}
-                  height={10}
-                  alt="Pencil"
+                <Stack
+                  flex={1}
+                  minHeight="10px"
+                  minWidth="10px"
+                  sx={{
+                    backgroundImage: `url(${SpeechBubbleArrowHead.src})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    boxSizing: "border-box",
+                  }}
                 />
               </Stack>
             ) : null}
