@@ -18,12 +18,9 @@ import PediaMainCard, {
 } from "./PediaMainCard";
 import { Header } from "@/app/components/Header";
 import { Footer } from "@/app/components/footer";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
-import ReactCarousel, { AFTER, CENTER, BEFORE } from "react-carousel-animated";
-import Image from "next/image";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -105,7 +102,6 @@ const ImageCard = (props: {
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
     >
-      {/* <img width="auto" height="100%" src={props.url} alt={props.caption} /> */}
       <Stack
         flex={1}
         sx={{
@@ -118,23 +114,14 @@ const ImageCard = (props: {
       {props.caption ? (
         <Stack
           width="100%"
-          height="40px"
-          position="absolute"
           alignItems="center"
           justifyContent="center"
-          top={0}
-          left={0}
           px="20px"
+          py="10px"
           boxSizing="border-box"
           bgcolor="rgba(0,0,0,0.45)"
-          sx={{
-            opacity: expanded ? 1 : 0,
-            transition: "0.6s",
-            transitionTimingFunction: BEZIER,
-            backdropFilter: "blur(4px)",
-          }}
         >
-          <Typography variant="small" color={PALETTE.font.light}>
+          <Typography variant="tiny" color={PALETTE.font.light}>
             {props.caption}
           </Typography>
         </Stack>
