@@ -13,14 +13,11 @@ export default function AgeSelection(props: IAgeSelectionProps) {
       <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
         For ages
       </Typography>
-
       <Stack
         direction="row"
         justifyContent="center"
         spacing="6px"
         height="34px"
-        //   bgcolor={PALETTE.secondary.grey[3]}
-        //   border={`3px solid ${PALETTE.secondary.grey[3]}`}
         bgcolor="rgba(255,255,255)"
         p="3px"
         borderRadius="30px"
@@ -35,9 +32,8 @@ export default function AgeSelection(props: IAgeSelectionProps) {
             bgcolor={
               props.selectedAge === age
                 ? PALETTE.secondary.purple[2]
-                : undefined //PALETTE.secondary.grey[3]
+                : undefined
             }
-            // bgcolor="rgb(255,255,255)"
             sx={{
               "&:hover": {
                 transition: "0.2s",

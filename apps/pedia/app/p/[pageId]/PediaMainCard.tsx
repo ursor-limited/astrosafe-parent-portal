@@ -1,3 +1,4 @@
+import UrsorParticles from "@/app/components/UrsorParticles";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 
@@ -29,8 +30,34 @@ const PediaMainCard = (
     boxSizing="border-box"
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
     p="16px"
-    pt={0}
+    pt={props.title ? undefined : 0}
+    position="relative"
   >
+    <Stack
+      position="absolute"
+      top={0}
+      left={0}
+      height="100%"
+      width="100%"
+      sx={{
+        "#tsparticles": {
+          height: "100%",
+        },
+      }}
+    >
+      <UrsorParticles />
+    </Stack>
+    {props.title ? (
+      <Typography
+        variant={props.mobile ? "h5" : "h4"}
+        color="rgb(255,255,255)"
+        // sx={{
+        //   textShadow: "0 0 25px rgba(0,0,0,0.7)",
+        // }}
+      >
+        {props.title}
+      </Typography>
+    ) : null}
     <Stack
       borderRadius="12px 12px 0 0"
       width={props.width ? `${props.width}px` : "100%"}
@@ -45,20 +72,9 @@ const PediaMainCard = (
       position="relative"
       px="20px"
       py="20px"
+      pt={props.title ? 0 : "20px"}
       boxSizing="border-box"
-    >
-      {props.title ? (
-        <Typography
-          variant={props.mobile ? "h5" : "h4"}
-          color={PALETTE.font.light}
-          sx={{
-            textShadow: "0 0 25px rgba(0,0,0,0.7)",
-          }}
-        >
-          {props.title}
-        </Typography>
-      ) : null}
-    </Stack>
+    />
     <Stack
       spacing="8px"
       px="15px"
@@ -66,6 +82,7 @@ const PediaMainCard = (
       boxSizing="border-box"
       bgcolor="rgb(255,255,255)"
       borderRadius="10px"
+      zIndex={1}
     >
       {props.facts.map((fact, i) => (
         <Stack

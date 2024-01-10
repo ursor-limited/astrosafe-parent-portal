@@ -17,7 +17,7 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 const N_COLUMNS = 12;
 export const GRID_SPACING = 24;
 const MOBILE_VIEW_IMAGE_HEIGHT = "200px";
-export const MOBILE_WINDOW_WIDTH_THRESHOLD = 800;
+export const MOBILE_WINDOW_WIDTH_THRESHOLD = 960;
 
 export interface IMobileCollectionPageColumn {
   pages: IPediaPage[];

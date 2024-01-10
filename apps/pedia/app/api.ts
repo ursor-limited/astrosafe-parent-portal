@@ -14,7 +14,7 @@ const get = (route: string) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
-    { cache: "no-store" }
+    { cache: "no-store" } // need this in order to show updated pages
   );
 
 class ApiController {
