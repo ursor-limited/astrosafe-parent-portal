@@ -28,7 +28,10 @@ export default function UrsorParticles() {
             value: "#ffffff",
           },
           shape: {
-            type: "circle",
+            type: "polygon",
+            polygon: {
+              sides: 6,
+            },
           },
           opacity: {
             value: 1,
@@ -54,6 +57,10 @@ export default function UrsorParticles() {
             enable: true,
             speed: 0.5,
             direction: "none",
+            angle: {
+              offset: 45,
+              value: 5,
+            },
             random: true,
             straight: false,
             out_mode: "out",
