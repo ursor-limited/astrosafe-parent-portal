@@ -361,7 +361,7 @@ const FactsCard = (props: { facts: string[] }) => {
                 />
               </Stack>
             ) : null}
-            <Typography>{fact}</Typography>
+            <Typography color={PALETTE.font.dark}>{fact}</Typography>
             <Stack
               pl="14px"
               alignItems="center"
