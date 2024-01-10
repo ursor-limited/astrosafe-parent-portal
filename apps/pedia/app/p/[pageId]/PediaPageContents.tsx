@@ -93,6 +93,7 @@ const ImageCard = (props: {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <Stack
+      height="100%"
       position="relative"
       width={props.width ? `${props.width}px` : "100%"}
       borderRadius={BORDER_RADIUS}
@@ -484,6 +485,7 @@ const BentoRow = (props: {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   //const [rowHeight, setRowHeight]
   const [hideImage, setHideImage] = useState<boolean>(false);
+  const [factUnderImage, setFactUnderImage] = useState<boolean>(false);
 
   const textLengthWindowSizeRatio =
     props.textCardDetails.content.join(" ").split(" ").length / width;
@@ -494,8 +496,8 @@ const BentoRow = (props: {
       props.originalImageDimensions.height;
     const textLengthWindowSizeRatio =
       props.textCardDetails.content.join(" ").length / width;
-    console.log(textLengthWindowSizeRatio * originalAspectRatio);
-    setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.5);
+    setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.65);
+    setFactUnderImage(textLengthWindowSizeRatio * originalAspectRatio > 1.1);
   }, [
     textLengthWindowSizeRatio,
     props.textCardDetails.content,
@@ -519,22 +521,30 @@ const BentoRow = (props: {
   //   props.originalImageDimensions.width,
   // ]);
   const blocks = [
-    <Stack key="text" flex={1} ref={setRef}>
+    <Stack key="text" flex={1} ref={setRef} spacing={`${GRID_SPACING}px`}>
       <TextBlockCard
+        key="text"
         title={props.textCardDetails.title ?? ""}
         content={props.textCardDetails.content ?? []}
         onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
       />
+      {!factUnderImage || hideImage ? (
+        <FactCard fact={props.fact} key="fact" />
+      ) : (
+        <></>
+      )}
     </Stack>,
     ...(hideImage
       ? []
       : [
-          <ImageCard
-            key="image"
-            url={props.imageCardDetails.url}
-            caption={props.imageCardDetails.caption}
-            width={props.imageWidth}
-          />,
+          <Stack key="image" spacing={`${GRID_SPACING}px`}>
+            <ImageCard
+              url={props.imageCardDetails.url}
+              caption={props.imageCardDetails.caption}
+              width={props.imageWidth}
+            />
+            {factUnderImage ? <FactCard fact={props.fact} key="fact" /> : <></>}
+          </Stack>,
         ]),
   ];
   return (
