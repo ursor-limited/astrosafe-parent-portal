@@ -49,7 +49,7 @@ const PediaMainCard = (
     </Stack>
     {props.title ? (
       <Typography
-        variant={props.mobile ? "h5" : "h4"}
+        variant={props.mobile && props.title.length > 16 ? "h5" : "h4"}
         color="rgb(255,255,255)"
         // sx={{
         //   textShadow: "0 0 25px rgba(0,0,0,0.7)",
