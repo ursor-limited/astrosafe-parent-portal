@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack, alpha } from "@mui/system";
+import { Stack, alpha, borderRadius } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Dialog } from "@mui/material";
@@ -21,6 +21,7 @@ import { Footer } from "@/app/components/footer";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionPageContents"; //@ts-ignore
+import Byte from "@/app/components/Byte";
 
 const N_COLUMNS = 12;
 const GRID_SPACING = 24;
@@ -74,7 +75,7 @@ export interface IPediaPage {
   mainCard: IPediaMainCard;
   textBlocks: { age: number; blocks: IPediaTextBlock[] }[];
   images: IPediaImage[];
-  funFact: string;
+  facts: string[][];
   questions: IPediaQuestion[];
 }
 
@@ -275,32 +276,46 @@ const TextBlockCard = (props: {
   );
 };
 
-const FactCard = (props: { fact: string }) => (
+const FactsCard = (props: { facts: string[] }) => (
   <Stack
-    bgcolor={PALETTE.secondary.purple[2]}
+    bgcolor="rgb(255,255,255)"
     borderRadius="12px"
     height="fit-content"
     p={`${GRID_SPACING}px`}
     boxSizing="border-box"
     justifyContent="center"
-    alignItems="flex-end"
-    spacing="10px"
+    spacing="16px"
+    minWidth="100%"
+    maxWidth={0}
   >
-    <Stack
-      width="100%"
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Star height="18px" width="18px" />
-      <Typography variant="large" bold color={PALETTE.font.light} noWrap>
+    <Stack direction="row" spacing="18px" alignItems="center">
+      <Stack
+        sx={{
+          transform: "translateY(-2px)",
+        }}
+      >
+        <Byte size={32} />
+      </Stack>
+      <Typography variant="large" bold noWrap color={PALETTE.secondary.grey[5]}>
         Did you know?
       </Typography>
     </Stack>
-    <Stack direction="row" alignItems="flex-end">
-      <Typography color={PALETTE.font.light} sx={{ textAlign: "right" }}>
-        {props.fact}
-      </Typography>
+    <Stack spacing="8px" maxWidth="80%">
+      {props.facts.map((fact) => (
+        <Stack
+          key={fact}
+          direction="row"
+          sx={{
+            background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
+          }}
+          borderRadius="12px"
+          px="16px"
+          py="10px"
+          width="fit-content"
+        >
+          <Typography>{fact}</Typography>
+        </Stack>
+      ))}
     </Stack>
   </Stack>
 );
@@ -393,7 +408,7 @@ const MobileColumn = (props: {
   mainCardDetails: IPediaMainCard;
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
-  fact: string;
+  facts: IPediaPage["facts"];
   questions: IPediaQuestion[];
   suggestedPages: IPediaPage[];
   parentPages: IPediaCollectionPage[];
@@ -441,7 +456,7 @@ const MobileColumn = (props: {
                 )}
               />
             </Stack>,
-            <FactCard key="fact" fact={props.fact} />,
+            <FactsCard key="fact" facts={props.facts[i]} />,
             <Stack key={`text${i}`}>
               <TextBlockCard
                 title={props.textCardDetails[i + 1]?.title ?? ""}
@@ -485,7 +500,7 @@ const MobileColumn = (props: {
 const BentoRow = (props: {
   textCardDetails: IPediaTextBlock;
   imageCardDetails: IPediaImage;
-  fact: string;
+  facts: string[];
   imageWidth: number;
   reversed: boolean;
   originalImageDimensions: { width: number; height: number };
@@ -538,7 +553,7 @@ const BentoRow = (props: {
         onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
       />
       {!factUnderImage || hideImage ? (
-        <FactCard fact={props.fact} key="fact" />
+        <FactsCard facts={props.facts} key="fact" />
       ) : (
         <></>
       )}
@@ -552,7 +567,11 @@ const BentoRow = (props: {
               caption={props.imageCardDetails.caption}
               width={props.imageWidth}
             />
-            {factUnderImage ? <FactCard fact={props.fact} key="fact" /> : <></>}
+            {factUnderImage ? (
+              <FactsCard facts={props.facts} key="fact" />
+            ) : (
+              <></>
+            )}
           </Stack>,
         ]),
   ];
@@ -573,7 +592,7 @@ const Bento = (props: {
   mainCardDetails: IPediaMainCard;
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
-  fact: string;
+  facts: IPediaPage["facts"];
   columnWidth: number;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
@@ -628,16 +647,6 @@ const Bento = (props: {
       </Stack> */}
     </Stack>
   );
-  const [factRowIndex, setFactRowIndex] = useState<number | undefined>(
-    undefined
-  );
-  useEffect(
-    () =>
-      setFactRowIndex(
-        1 + Math.floor(Math.random() * (props.textCardDetails.length - 3))
-      ),
-    []
-  );
 
   const [originalImageSizes, setOriginalImageSizes] = useState<
     { width: number; height: number }[]
@@ -657,7 +666,7 @@ const Bento = (props: {
           Math.min(
             7,
             Math.max(
-              2,
+              3,
               Math.round(
                 dims.width / dims.height / (props.columnWidth / ROW_HEIGHT)
               )
@@ -676,7 +685,7 @@ const Bento = (props: {
           key={td.id}
           textCardDetails={props.textCardDetails[i + 1]}
           imageCardDetails={props.imageCardDetails[i]}
-          fact={props.fact}
+          facts={props.facts[i]}
           originalImageDimensions={originalImageSizes[i]}
           imageWidth={getWidthOfColumns(imageColumnsN[i])}
           reversed={!!(i % 2)}
@@ -824,7 +833,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
                       (b) => b.age === selectedAge
                     )?.blocks ?? []
                   }
-                  fact={props.pageDetails.funFact}
+                  facts={props.pageDetails.facts}
                   questions={props.pageDetails.questions}
                   suggestedPages={props.suggestedPages}
                   parentPages={props.parentPages}
@@ -850,7 +859,7 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
                             (b) => b.age === selectedAge
                           )?.blocks ?? []
                         }
-                        fact={props.pageDetails.funFact}
+                        facts={props.pageDetails.facts}
                         columnWidth={columnWidth}
                       />
                       {props.pageDetails.questions &&

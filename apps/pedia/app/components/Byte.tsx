@@ -33,16 +33,21 @@ function ByteAnimation(props: IByteAnimationProps) {
 }
 
 export interface IStepsByteControllerProps {
-  animation: ByteAnimation;
+  animation?: ByteAnimation;
   delay?: number;
+  size?: number;
 }
 
 export default function Byte(props: IStepsByteControllerProps) {
   const [animation, setAnimation] = useState<ByteAnimation | null>(null);
 
   useEffect(() => {
-    (animation || !noTransitionFromNull.includes(props.animation)) &&
-      setTimeout(() => setAnimation(props.animation), props.delay ?? 0);
+    (animation ||
+      !noTransitionFromNull.includes(props.animation || "appear")) &&
+      setTimeout(
+        () => setAnimation(props.animation || "appear"),
+        props.delay ?? 0
+      );
   }, [props.animation]);
 
   const noTransitionFromNull: ByteAnimation[] = ["disappear"];
@@ -58,7 +63,8 @@ export default function Byte(props: IStepsByteControllerProps) {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width={HEIGHT}
+      width={props.size || HEIGHT}
+      height={props.size || HEIGHT}
     >
       {animation ? (
         <ByteAnimation
