@@ -114,12 +114,18 @@ const ImageCard = (props: {
       {props.caption ? (
         <Stack
           width="100%"
+          position="absolute"
           alignItems="center"
           justifyContent="center"
+          bottom={0}
+          left={0}
           px="20px"
           py="10px"
           boxSizing="border-box"
           bgcolor="rgba(0,0,0,0.45)"
+          sx={{
+            backdropFilter: "blur(4px)",
+          }}
         >
           <Typography variant="tiny" color={PALETTE.font.light}>
             {props.caption}
