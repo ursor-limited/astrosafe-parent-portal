@@ -15,37 +15,20 @@ export default function UrsorParticles() {
       id="tsparticles"
       init={particlesInit}
       options={{
-        fullScreen: { enable: true, zIndex: -1 },
-        background: {
-          color: {
-            value: "#0D2839",
-          },
-        },
+        fullScreen: { enable: false },
         particles: {
           number: {
-            value: 20,
+            value: 30,
             density: {
               enable: true,
-              value_area: 800,
+              value_area: 120,
             },
           },
           color: {
             value: "#ffffff",
           },
           shape: {
-            type: "image",
-            stroke: {
-              width: 0,
-              color: "#000000",
-            },
-            polygon: {
-              nb_sides: 5,
-            },
-            image: {
-              src: "https://uploads-ssl.webflow.com/60f56c56947f0f11b1881929/62850526e7d401cdfd7b487f_URSOR-PinkStar.png",
-              width: 100,
-              height: 100,
-            },
+            type: "circle",
           },
           opacity: {
             value: 1,
@@ -58,7 +41,7 @@ export default function UrsorParticles() {
             },
           },
           size: {
-            value: 10,
+            value: 5,
             random: true,
             anim: {
               enable: false,
@@ -69,7 +52,7 @@ export default function UrsorParticles() {
           },
           move: {
             enable: true,
-            speed: 1,
+            speed: 0.5,
             direction: "none",
             random: true,
             straight: false,

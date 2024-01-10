@@ -334,7 +334,7 @@ const FactsCard = (props: { facts: string[] }) => {
       <Stack spacing="8px" pl="32px">
         {props.facts.map((fact, i) => (
           <Stack
-            key={fact}
+            key={i}
             direction="row"
             sx={{
               background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
@@ -513,7 +513,7 @@ const MobileColumn = (props: {
                 )}
               />
             </Stack>,
-            <FactsCard key="fact" facts={props.facts[i]} />,
+            <FactsCard key={`fact${i}`} facts={props.facts[i]} />,
             <Stack key={`text${i}`}>
               <TextBlockCard
                 title={props.textCardDetails[i + 1]?.title ?? ""}

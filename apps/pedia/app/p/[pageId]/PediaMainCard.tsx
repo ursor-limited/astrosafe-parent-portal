@@ -31,8 +31,22 @@ const PediaMainCard = (
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
     p="16px"
     pt={0}
+    position="relative"
   >
-    <UrsorParticles />
+    <Stack
+      position="absolute"
+      top={0}
+      left={0}
+      height="100%"
+      width="100%"
+      sx={{
+        "#tsparticles": {
+          height: "100%",
+        },
+      }}
+    >
+      <UrsorParticles />
+    </Stack>
     <Stack
       borderRadius="12px 12px 0 0"
       width={props.width ? `${props.width}px` : "100%"}
@@ -68,6 +82,7 @@ const PediaMainCard = (
       boxSizing="border-box"
       bgcolor="rgb(255,255,255)"
       borderRadius="10px"
+      zIndex={1}
     >
       {props.facts.map((fact, i) => (
         <Stack
