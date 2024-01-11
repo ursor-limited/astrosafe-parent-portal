@@ -10,7 +10,7 @@ import X from "@/images/icons/X.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import dynamic from "next/dynamic";
-import { IPediaQuestion } from "../p/[pageId]/PediaPageContents";
+import { IPediaQuestion } from "../p/[urlId]/PediaPageContents";
 
 const ByteStepper = dynamic(
   () => import("./ByteStepper"),

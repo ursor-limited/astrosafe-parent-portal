@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { IPediaCollectionPage } from "../p/[pageId]/PediaPageContents";
+import { IPediaCollectionPage } from "../p/[urlId]/PediaPageContents";
 import { Header } from "./Header";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
