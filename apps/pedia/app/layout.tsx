@@ -33,9 +33,6 @@ export default function RootLayout({
             alt="Astro background"
             className="object-cover"
             fill
-            loader={({ src }) => {
-              return src;
-            }}
           />
           <Stack zIndex={1}>{children}</Stack>
           <Stack width="100%" position="fixed" bottom={0} zIndex={0}>
