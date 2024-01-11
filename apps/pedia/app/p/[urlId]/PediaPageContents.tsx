@@ -48,7 +48,7 @@ const FACT_ROW_HEIGHT = "391px";
 const TEXT_CARD_Y_PADDING = 20;
 const BEZIER = "cubic-bezier(.32,.82,.24,.98)";
 const TEXT_CARD_TRANSITION_DURATION = 870;
-const MAX_MOBILE_IMAGE_HEIGHT = 430;
+const MAX_MOBILE_IMAGE_HEIGHT = 515;
 
 export const BACKDROP_STYLE = {
   backdropFilter: "blur(3px)",
@@ -591,7 +591,7 @@ const BentoRow = (props: {
       props.originalImageDimensions.height;
     const textLengthWindowSizeRatio =
       props.textCardDetails.content.join(" ").length / width;
-    setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.65);
+    setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.9);
     setFactUnderImage(textLengthWindowSizeRatio * originalAspectRatio > 1.1);
   }, [
     textLengthWindowSizeRatio,

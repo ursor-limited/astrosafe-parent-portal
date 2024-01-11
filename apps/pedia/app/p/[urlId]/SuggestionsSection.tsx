@@ -4,6 +4,7 @@ import { PALETTE, Typography } from "ui";
 import { IPediaCollectionPage, IPediaPage } from "./PediaPageContents";
 import { useRouter } from "next/navigation";
 import { Grid } from "@mui/material";
+import { useWindowSize } from "usehooks-ts";
 
 export default function SuggestionsSection(props: {
   suggestedPages: IPediaPage[];
@@ -11,6 +12,7 @@ export default function SuggestionsSection(props: {
   mobile?: boolean;
 }) {
   const router = useRouter();
+  const { width } = useWindowSize();
   return (
     <Stack
       borderRadius="12px"
@@ -63,7 +65,7 @@ export default function SuggestionsSection(props: {
         ))}
       </Grid>
       <Stack
-        minHeight={props.mobile ? "170px" : "280px"}
+        minHeight={props.mobile ? `${Math.max(170, width / 3)}px` : "280px"}
         direction="row"
         spacing={props.mobile ? "12px" : "24px"}
         width={props.mobile ? "100%" : undefined}
