@@ -32,6 +32,7 @@ export default function RootLayout({
             src={Background}
             alt="Astro background"
             className="object-cover"
+            unoptimized
             fill
           />
           <Stack zIndex={1}>{children}</Stack>
