@@ -6,7 +6,7 @@ module.exports = withSvgr({
   transpilePackages: ["ui"],
   images: {
     domains: [
-      'https://www.astrosafe.co',
+      'https://astrosafe.co',
       'https://astro-monorepo-pedia.vercel.app',
     ]
   },
