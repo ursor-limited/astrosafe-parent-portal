@@ -28,13 +28,17 @@ export const Footer = (props: { fontScale?: number }) => {
         borderRadius="16px"
         alignItems="center"
         justifyContent="space-between"
-        sx={{
-          backgroundImage: `url(${FooterBackground.src})`,
-          backgroundSize: "cover",
-          boxSizing: "border-box",
-        }}
+        overflow="hidden"
         spacing="12px"
+        position="relative"
       >
+        <Image
+          src={FooterBackground}
+          alt="Astro footer background"
+          //className="object-cover"
+          fill
+          style={{ zIndex: -1 }}
+        />
         <Stack spacing="20px" alignItems="center">
           <Stack
             sx={{

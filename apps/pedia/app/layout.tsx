@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import Background from "@/images/backgrounds/darkSmall.png";
 import { Metadata } from "next";
 import SpaceGlow from "@/images/spaceGlow.svg";
-import UrsorFadeIn from "./components/UrsorFadeIn";
+import Image from "next/image";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -26,14 +26,14 @@ export default function RootLayout({
           minHeight="100vh"
           overflow="scroll"
           width="100vw"
-          sx={{
-            backgroundImage: `url(${Background.src})`,
-            backgroundSize: "cover",
-            boxSizing: "border-box",
-          }}
-          spacing="10px"
           position="relative"
         >
+          <Image
+            src={Background}
+            alt="Astro background"
+            className="object-cover"
+            fill
+          />
           <Stack zIndex={1}>{children}</Stack>
           <Stack width="100%" position="fixed" bottom={0} zIndex={0}>
             <SpaceGlow width="auto" height="auto" />
