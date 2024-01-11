@@ -1,7 +1,7 @@
 import { Rubik } from "next/font/google";
 import "./globals.css";
 import { Stack } from "@mui/system";
-import Background from "@/images/backgrounds/dark.png";
+import Background from "@/images/backgrounds/darkSmall.png";
 import { Metadata } from "next";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import UrsorFadeIn from "./components/UrsorFadeIn";
