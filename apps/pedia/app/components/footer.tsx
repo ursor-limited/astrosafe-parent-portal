@@ -38,6 +38,9 @@ export const Footer = (props: { fontScale?: number }) => {
           //className="object-cover"
           fill
           style={{ zIndex: -1 }}
+          loader={({ src }) => {
+            return src;
+          }}
         />
         <Stack spacing="20px" alignItems="center">
           <Stack
