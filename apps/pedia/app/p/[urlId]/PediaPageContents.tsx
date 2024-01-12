@@ -684,7 +684,10 @@ const Bento = (props: {
       maxHeight={MAIN_CARD_HEIGHT}
       overflow="hidden"
     >
-      <PediaMainCard {...props.mainCardDetails} width={getWidthOfColumns(6)} />
+      <PediaMainCard
+        {...props.mainCardDetails}
+        width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
+      />
       <TextBlockCard
         title={props.textCardDetails[0]?.title ?? ""}
         content={props.textCardDetails[0]?.content ?? []}
