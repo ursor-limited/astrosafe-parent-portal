@@ -11,6 +11,7 @@ import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import dynamic from "next/dynamic";
 import { IPediaQuestion } from "../p/[urlId]/PediaPageContents";
+import { useWindowSize } from "usehooks-ts";
 
 export const DEFAULT_WIDTH = 502;
 
@@ -32,16 +33,18 @@ export default function QuestionsCard(props: {
   const [questionIndex, setQuestionIndex] = useState<number>(0);
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
+
+  const { width } = useWindowSize();
   return (
     <Stack width="100%" alignItems="center">
       <Stack
-        ref={setRef}
         minWidth={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
         height="363px"
         alignItems="center"
         justifyContent="space-between"
         py="27px"
-        px="40px"
+        px={props.mobile ? undefined : "40px"}
+        boxSizing="border-box"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         spacing="24px"
@@ -50,7 +53,7 @@ export default function QuestionsCard(props: {
           <ByteStepper
             nSteps={props.questions.length + 1}
             step={questionIndex}
-            //scale={0.5}
+            scale={Math.min(1, width / (DEFAULT_WIDTH * 1.1))}
           />
           <Stack
             width={props.mobile ? "80%" : "400px"}
