@@ -22,22 +22,8 @@ const UrlBar = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-const PADDING_TOP = "100px";
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
-
-// export const getStaticProps = (async (context) => {
-//   //const videoDetails = ApiController.getVideoDetails(videoId)
-//   return {
-//     props: {
-//       videoDetails: await ApiController.getVideoDetails(
-//         context.params?.videoId as string
-//       ), //projects: data.projects
-//     },
-//   };
-// }) satisfies GetStaticProps<{
-//   videoDetails: IVideo;
-// }>;
 
 function VideoPageContents(props: { details: IVideo; share: boolean }) {
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
