@@ -1,11 +1,14 @@
 import { Stack } from "@mui/system";
-import { IPediaCollectionPage } from "../p/[urlId]/PediaPageContents";
-import { Header } from "./Header";
+import { PediaAge } from "../p/[urlId]/PediaPageContents";
 import { PALETTE, Typography } from "ui";
-import { useRouter } from "next/navigation";
 import AgeSelection from "./AgeSelection";
 import { useWindowSize } from "usehooks-ts";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
+
+export const PediaAgeDisplayNames: Record<PediaAge, string> = {
+  student: "4 - 7",
+  scholar: "7 +",
+};
 
 export const GRID_SPACING = 24;
 
@@ -13,8 +16,8 @@ export const AGES = [5, 7, 9];
 
 interface ILayoutCardProps {
   title: string;
-  selectedAge?: number;
-  setSelectedAge?: (age: number) => void;
+  selectedAge?: PediaAge;
+  setSelectedAge?: (age: PediaAge) => void;
   category?: string;
   //parents?: IPediaCollectionPage[];
   paddingTop?: string;
@@ -52,11 +55,11 @@ export default function LayoutCard(props: ILayoutCardProps) {
               >
                 {`${
                   props.category || "Awesome"
-                } knowledge and fun facts for Kids ${`aged ${
+                } knowledge and fun facts for Kids${
                   props.selectedAge
-                }-${
-                  (props.selectedAge ?? 0) + 1
-                }`}. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
+                    ? ` aged ${PediaAgeDisplayNames[props.selectedAge]}`
+                    : ""
+                }. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
               </Typography>
               {/* {props.selectedAge ? (
                   <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">

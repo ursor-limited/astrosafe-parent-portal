@@ -72,7 +72,7 @@ export interface IPediaStat {
   content: string;
 }
 
-interface IPediaAnswer {
+interface IPediaOption {
   id: string;
   value: string;
 }
@@ -80,9 +80,11 @@ interface IPediaAnswer {
 export interface IPediaQuestion {
   id: string;
   question: string;
-  options: IPediaAnswer[];
+  options: IPediaOption[];
   answer: string;
 }
+
+export type PediaAge = "student" | "scholar";
 
 export interface IPediaPage {
   id: string;
@@ -90,7 +92,7 @@ export interface IPediaPage {
   title: string;
   mainImage: string;
   stats: IPediaStat[];
-  textBlocks: { _id: string; age: number; blocks: IPediaTextBlock[] }[];
+  textBlocks: { _id: string; age: PediaAge; blocks: IPediaTextBlock[] }[];
   images: IPediaImage[];
   facts: string[];
   color: string;
@@ -475,8 +477,6 @@ const MobileColumn = (props: {
   imageCardDetails: IPediaImage[];
   facts: IPediaPage["facts"];
   questions: IPediaQuestion[];
-  // suggestedPages: IPediaPage[];
-  // parentPages: IPediaCollectionPage[];
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -493,7 +493,7 @@ const MobileColumn = (props: {
     ).then((dims) => setOriginalImageSizes(dims));
   }, []);
 
-  const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
+  const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
   return (
     <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
@@ -509,7 +509,7 @@ const MobileColumn = (props: {
           key="overview"
           title={props.textCardDetails[0]?.title ?? ""}
           content={props.textCardDetails[0]?.content ?? []}
-          onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+          onClick={() => setSelectedTextCardId(props.textCardDetails[0]?._id)}
         />
         {props.textCardDetails
           .slice(1)
@@ -539,7 +539,7 @@ const MobileColumn = (props: {
                 title={props.textCardDetails[i + 1]?.title ?? ""}
                 content={props.textCardDetails[i + 1]?.content ?? []}
                 onClick={() =>
-                  setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
+                  setSelectedTextCardId(props.textCardDetails[i + 1]?._id)
                 }
               />
             </Stack>,
@@ -567,7 +567,9 @@ const MobileColumn = (props: {
         <TextSectionPopover
           open={true}
           closeCallback={() => setSelectedTextCardId(undefined)}
-          {...props.textCardDetails.find((tb) => tb.id === selectedTextCardId)!}
+          {...props.textCardDetails.find(
+            (tb) => tb._id === selectedTextCardId
+          )!}
         />
       ) : null}
     </Stack>
@@ -699,7 +701,7 @@ const Bento = (props: {
         content={[
           "The cockatoos were first defined as a subfamily Cacatuinae within the parrot family Psittacidae by the English naturalist George Robert Gray in 1840, with Cacatua the first listed and type genus.[10] This group has alternately been considered as either a full or subfamily by different authorities. The American ornithologist James Lee Peters in his 1937 Check-list of Birds of the World and Sibley and Monroe in 1990 maintained it as a subfamily, while parrot expert Joseph Forshaw classified it as a family in 1973.[11] Subsequent molecular studies indicate that the earliest offshoot from the original parrot ancestors were the New Zealand parrots of the family Strigopidae, and following this the cockatoos, now a well-defined group or clade, split off from the remaining parrots, which then radiated across the Southern Hemisphere and diversified into the many species of parrots, parakeets, macaws, lories, lorikeets, lovebirds and other true parrots of the superfamily Psittacoidea",
         ]}
-        onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+        onClick={() => setSelectedTextCardId(props.textCardDetails[0]?._id)}
       />
       {/* <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
         <Stack maxHeight="50%" overflow="hidden">
@@ -764,7 +766,7 @@ const Bento = (props: {
     .map((td, i) =>
       originalImageSizes[i] ? (
         <BentoRow
-          key={td.id}
+          key={td._id}
           textCardDetails={props.textCardDetails[i + 1]}
           imageCardDetails={props.imageCardDetails[i]}
           facts={
@@ -837,7 +839,9 @@ const Bento = (props: {
         <TextSectionPopover
           open={true}
           closeCallback={() => setSelectedTextCardId(undefined)}
-          {...props.textCardDetails.find((tb) => tb.id === selectedTextCardId)!}
+          {...props.textCardDetails.find(
+            (tb) => tb._id === selectedTextCardId
+          )!}
         />
       ) : null}
     </>
@@ -845,7 +849,7 @@ const Bento = (props: {
 };
 
 export default function PediaPageContents(props: IPediaPage) {
-  const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
+  const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
@@ -858,8 +862,6 @@ export default function PediaPageContents(props: IPediaPage) {
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
-  console.log(props.textBlocks);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -941,9 +943,8 @@ export default function PediaPageContents(props: IPediaPage) {
                     }}
                     imageCardDetails={props.images}
                     textCardDetails={
-                      props.textBlocks
-                      // props.textBlocks.find((b) => b.age === selectedAge)
-                      //   ?.blocks ?? []
+                      props.textBlocks.find((b) => b.age === selectedAge)
+                        ?.blocks ?? []
                     }
                     facts={props.facts}
                     columnWidth={columnWidth}
