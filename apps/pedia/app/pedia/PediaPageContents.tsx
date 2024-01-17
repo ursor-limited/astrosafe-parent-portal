@@ -92,7 +92,7 @@ export interface IPediaPage {
   title: string;
   mainImage: string;
   stats: IPediaStat[];
-  textBlocks: { _id: string; level: PediaAge; blocks: IPediaTextBlock[] }[];
+  textBlocks: { _id: string; age: PediaAge; blocks: IPediaTextBlock[] }[];
   images: IPediaImage[];
   facts: string[];
   color: string;
@@ -495,8 +495,6 @@ const MobileColumn = (props: {
 
   const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
-  console.log("wwwww", props.facts);
-
   return (
     <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
       <Stack width="100%" alignItems="flex-end">
@@ -851,7 +849,7 @@ const Bento = (props: {
 };
 
 export default function PediaPageContents(props: IPediaPage) {
-  const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
+  const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
@@ -918,8 +916,8 @@ export default function PediaPageContents(props: IPediaPage) {
                 }}
                 imageCardDetails={props.images} //@ts-ignore
                 textCardDetails={
-                  props.textBlocks.find((b) => b.level === selectedAge)
-                    ?.blocks ?? []
+                  props.textBlocks.find((b) => b.age === selectedAge)?.blocks ??
+                  []
                 }
                 facts={props.facts}
                 questions={props.questions}
@@ -945,7 +943,7 @@ export default function PediaPageContents(props: IPediaPage) {
                     }}
                     imageCardDetails={props.images}
                     textCardDetails={
-                      props.textBlocks.find((b) => b.level === selectedAge)
+                      props.textBlocks.find((b) => b.age === selectedAge)
                         ?.blocks ?? []
                     }
                     facts={props.facts}
