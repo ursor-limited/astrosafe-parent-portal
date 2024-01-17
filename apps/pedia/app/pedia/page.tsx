@@ -1,5 +1,5 @@
 import React from "react";
-import PediaLandingPageContents from "./PediaPageContents";
+import PediaLandingPageContents from "./PediaLandingPageContents";
 
 async function PediaLandingPage() {
   return <PediaLandingPageContents />;

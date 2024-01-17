@@ -3,7 +3,6 @@ import "./globals.css";
 import { Stack } from "@mui/system";
 import Background from "@/images/backgrounds/darkSmall.png";
 import { Metadata } from "next";
-import SpaceGlow from "@/images/spaceGlow.svg";
 import Image from "next/image";
 
 const rubik = Rubik({ subsets: ["latin"] });
@@ -36,9 +35,6 @@ export default function RootLayout({
             fill
           />
           <Stack zIndex={1}>{children}</Stack>
-          <Stack width="100%" position="fixed" bottom={0} zIndex={0}>
-            <SpaceGlow width="auto" height="auto" />
-          </Stack>
         </Stack>
       </body>
     </html>
