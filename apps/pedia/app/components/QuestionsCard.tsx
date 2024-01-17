@@ -21,6 +21,7 @@ export default function QuestionsCard(props: {
   questions: IPediaQuestion[];
   mobile?: boolean;
 }) {
+  console.log(props.questions);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
     undefined
   );
@@ -98,7 +99,7 @@ export default function QuestionsCard(props: {
               pointerEvents: selectedAnswer ? "none" : undefined,
             }}
           >
-            {props.questions[questionIndex].answers.map((a) => (
+            {props.questions[questionIndex].options.map((a) => (
               <Grid key={a.id} item>
                 <Stack
                   key={a.id}
@@ -117,8 +118,7 @@ export default function QuestionsCard(props: {
                     outline:
                       selectedAnswer === a.id
                         ? `2px solid ${
-                            props.questions[questionIndex].correctAnswer ===
-                            a.id
+                            props.questions[questionIndex].answer === a.id
                               ? PALETTE.secondary.green[3]
                               : PALETTE.secondary.orange[3]
                           }`
@@ -223,8 +223,7 @@ export default function QuestionsCard(props: {
               questionIndex === props.questions.length
                 ? SyncIcon
                 : !selectedAnswer ||
-                  selectedAnswer ===
-                    props.questions[questionIndex].correctAnswer
+                  selectedAnswer === props.questions[questionIndex].answer
                 ? ChevronRightIcon
                 : X
             }
@@ -232,7 +231,7 @@ export default function QuestionsCard(props: {
               if (questionIndex === props.questions.length) {
                 setQuestionIndex(0);
               } else if (
-                selectedAnswer === props.questions[questionIndex].correctAnswer
+                selectedAnswer === props.questions[questionIndex].answer
               ) {
                 setQuestionIndex(questionIndex + 1);
               }
@@ -242,7 +241,7 @@ export default function QuestionsCard(props: {
             {questionIndex === props.questions.length
               ? "Start over"
               : !selectedAnswer ||
-                selectedAnswer === props.questions[questionIndex].correctAnswer
+                selectedAnswer === props.questions[questionIndex].answer
               ? questionIndex === props.questions.length - 1
                 ? "Complete"
                 : "Next Question"

@@ -65,15 +65,15 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
         <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
           <ContentPagePreviewCard
             title={props.chunk[0].title}
-            imageUrl={props.chunk[0].mainCard.imageUrl}
-            color={props.chunk[0].mainCard.color}
+            imageUrl={props.chunk[0].mainImage}
+            color={props.chunk[0].color}
             pageId={props.chunk[0].id}
           />
           {props.chunk[1] ? (
             <ContentPagePreviewCard
               title={props.chunk[1].title}
-              imageUrl={props.chunk[1].mainCard.imageUrl}
-              color={props.chunk[1].mainCard.color}
+              imageUrl={props.chunk[1].mainImage}
+              color={props.chunk[1].color}
               pageId={props.chunk[1].id}
             />
           ) : null}
@@ -83,8 +83,8 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
         <Stack flex={1} spacing={`${GRID_SPACING}px`}>
           <ContentPagePreviewCard
             title={props.chunk[2].title}
-            imageUrl={props.chunk[2].mainCard.imageUrl}
-            color={props.chunk[2].mainCard.color}
+            imageUrl={props.chunk[2].mainImage}
+            color={props.chunk[2].color}
             pageId={props.chunk[2].id}
             titleAtBottom
             titleOnRight
@@ -96,8 +96,8 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
       <Stack flex={1} spacing={`${GRID_SPACING}px`}>
         <ContentPagePreviewCard
           title={props.chunk[3].title}
-          imageUrl={props.chunk[3].mainCard.imageUrl}
-          color={props.chunk[3].mainCard.color}
+          imageUrl={props.chunk[3].mainImage}
+          color={props.chunk[3].color}
           pageId={props.chunk[3].id}
         />
       </Stack>
@@ -109,15 +109,15 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
   <Stack height="320px" direction="row" spacing={`${GRID_SPACING}px`}>
     <ContentPagePreviewCard
       title={props.chunk[0].title}
-      imageUrl={props.chunk[0].mainCard.imageUrl}
-      color={props.chunk[0].mainCard.color}
+      imageUrl={props.chunk[0].mainImage}
+      color={props.chunk[0].color}
       pageId={props.chunk[0].id}
     />
     {props.chunk[1] ? (
       <ContentPagePreviewCard
         title={props.chunk[1].title}
-        imageUrl={props.chunk[1].mainCard.imageUrl}
-        color={props.chunk[1].mainCard.color}
+        imageUrl={props.chunk[1].mainImage}
+        color={props.chunk[1].color}
         pageId={props.chunk[1].id}
         titleAtBottom
         titleOnRight
@@ -126,16 +126,16 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
     {props.chunk[2] ? (
       <ContentPagePreviewCard
         title={props.chunk[2].title}
-        imageUrl={props.chunk[2].mainCard.imageUrl}
-        color={props.chunk[2].mainCard.color}
+        imageUrl={props.chunk[2].mainImage}
+        color={props.chunk[2].color}
         pageId={props.chunk[2].id}
       />
     ) : null}
     {props.chunk[3] ? (
       <ContentPagePreviewCard
         title={props.chunk[3].title}
-        imageUrl={props.chunk[3].mainCard.imageUrl}
-        color={props.chunk[3].mainCard.color}
+        imageUrl={props.chunk[3].mainImage}
+        color={props.chunk[3].color}
         pageId={props.chunk[3].id}
         titleAtBottom
         titleOnRight
@@ -149,8 +149,8 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
     <Stack flex={1} spacing={`${GRID_SPACING}px`}>
       <ContentPagePreviewCard
         title={props.chunk[0].title}
-        imageUrl={props.chunk[0].mainCard.imageUrl}
-        color={props.chunk[0].mainCard.color}
+        imageUrl={props.chunk[0].mainImage}
+        color={props.chunk[0].color}
         pageId={props.chunk[0].id}
       />
     </Stack>
@@ -158,8 +158,8 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
       {props.chunk[1] ? (
         <ContentPagePreviewCard
           title={props.chunk[1].title}
-          imageUrl={props.chunk[1].mainCard.imageUrl}
-          color={props.chunk[1].mainCard.color}
+          imageUrl={props.chunk[1].mainImage}
+          color={props.chunk[1].color}
           pageId={props.chunk[1].id}
           titleAtBottom
           titleOnRight
@@ -170,16 +170,16 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
           {props.chunk[2] ? (
             <ContentPagePreviewCard
               title={props.chunk[2].title}
-              imageUrl={props.chunk[2].mainCard.imageUrl}
-              color={props.chunk[2].mainCard.color}
+              imageUrl={props.chunk[2].mainImage}
+              color={props.chunk[2].color}
               pageId={props.chunk[2].id}
             />
           ) : null}
           {props.chunk[3] ? (
             <ContentPagePreviewCard
               title={props.chunk[3].title}
-              imageUrl={props.chunk[3].mainCard.imageUrl}
-              color={props.chunk[3].mainCard.color}
+              imageUrl={props.chunk[3].mainImage}
+              color={props.chunk[3].color}
               pageId={props.chunk[3].id}
             />
           ) : null}
@@ -192,9 +192,9 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
 export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
   useEffect(() => {
-    Promise.all(
-      props.pages.map((page) => getImageSize(page.mainCard.imageUrl))
-    ).then((dims) => setOriginalImageSizes(dims));
+    Promise.all(props.pages.map((page) => getImageSize(page.mainImage))).then(
+      (dims) => setOriginalImageSizes(dims)
+    );
   }, [props.pages]);
   return (
     <Stack spacing={`${GRID_SPACING}px`}>

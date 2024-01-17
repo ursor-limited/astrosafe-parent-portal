@@ -56,7 +56,7 @@ export const BACKDROP_STYLE = {
 };
 
 interface IPediaTextBlock {
-  id: string;
+  _id: string;
   title: string;
   content: string[];
 }
@@ -67,7 +67,7 @@ interface IPediaImage {
   caption?: string;
 }
 
-interface IPediaFact {
+export interface IPediaStat {
   title: string;
   content: string;
 }
@@ -80,18 +80,20 @@ interface IPediaAnswer {
 export interface IPediaQuestion {
   id: string;
   question: string;
-  answers: IPediaAnswer[];
-  correctAnswer: string;
+  options: IPediaAnswer[];
+  answer: string;
 }
 
 export interface IPediaPage {
   id: string;
+  urlId: string;
   title: string;
-  parentId: string;
-  mainCard: IPediaMainCard;
-  textBlocks: { age: number; blocks: IPediaTextBlock[] }[];
+  mainImage: string;
+  stats: IPediaStat[];
+  textBlocks: { _id: string; age: number; blocks: IPediaTextBlock[] }[];
   images: IPediaImage[];
-  facts: string[][];
+  facts: string[];
+  color: string;
   questions: IPediaQuestion[];
 }
 
@@ -473,8 +475,8 @@ const MobileColumn = (props: {
   imageCardDetails: IPediaImage[];
   facts: IPediaPage["facts"];
   questions: IPediaQuestion[];
-  suggestedPages: IPediaPage[];
-  parentPages: IPediaCollectionPage[];
+  // suggestedPages: IPediaPage[];
+  // parentPages: IPediaCollectionPage[];
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -501,9 +503,6 @@ const MobileColumn = (props: {
           selectedAge={selectedAge}
         />
       </Stack>
-      {/* <Typography variant="h4" htmlTag="h1" color={PALETTE.font.light}>
-        {props.title}
-      </Typography> */}
       <Stack spacing="12px" width="100%" height="100%">
         <PediaMainCard title={props.title} {...props.mainCardDetails} mobile />
         <TextBlockCard
@@ -527,7 +526,14 @@ const MobileColumn = (props: {
                 )}
               />
             </Stack>,
-            <FactsCard key={`fact${i}`} facts={props.facts[i]} />,
+            <FactsCard
+              key={`fact${i}`}
+              facts={
+                i === props.textCardDetails.length - 1
+                  ? props.facts.slice(-3)
+                  : [props.facts[i]]
+              }
+            />,
             <Stack key={`text${i}`}>
               <TextBlockCard
                 title={props.textCardDetails[i + 1]?.title ?? ""}
@@ -545,13 +551,13 @@ const MobileColumn = (props: {
           </Stack>
         ) : null}
         <Stack minHeight="30px" />
-        {props.suggestedPages.length > 0 ? (
+        {/* {props.suggestedPages.length > 0 ? (
           <SuggestionsSection
             suggestedPages={props.suggestedPages}
             parentPages={props.parentPages}
             mobile
           />
-        ) : null}
+        ) : null} */}
         <Stack minHeight="30px" />
         <Stack width="100%">
           <Footer fontScale={width / 700} />
@@ -666,6 +672,7 @@ const Bento = (props: {
   facts: IPediaPage["facts"];
   columnWidth: number;
 }) => {
+  console.log(props.facts);
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
   >(undefined);
@@ -679,18 +686,19 @@ const Bento = (props: {
       flex={1}
       direction="row"
       spacing={`${GRID_SPACING}px`}
-      height={MAIN_CARD_HEIGHT}
       minHeight={MAIN_CARD_HEIGHT}
-      maxHeight={MAIN_CARD_HEIGHT}
-      overflow="hidden"
+      //maxHeight={MAIN_CARD_HEIGHT}
     >
       <PediaMainCard
-        {...props.mainCardDetails}
+        {..._.omit(props.mainCardDetails, "title")}
         width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
       />
       <TextBlockCard
         title={props.textCardDetails[0]?.title ?? ""}
-        content={props.textCardDetails[0]?.content ?? []}
+        //content={props.textCardDetails[0]?.content ?? []}
+        content={[
+          "The cockatoos were first defined as a subfamily Cacatuinae within the parrot family Psittacidae by the English naturalist George Robert Gray in 1840, with Cacatua the first listed and type genus.[10] This group has alternately been considered as either a full or subfamily by different authorities. The American ornithologist James Lee Peters in his 1937 Check-list of Birds of the World and Sibley and Monroe in 1990 maintained it as a subfamily, while parrot expert Joseph Forshaw classified it as a family in 1973.[11] Subsequent molecular studies indicate that the earliest offshoot from the original parrot ancestors were the New Zealand parrots of the family Strigopidae, and following this the cockatoos, now a well-defined group or clade, split off from the remaining parrots, which then radiated across the Southern Hemisphere and diversified into the many species of parrots, parakeets, macaws, lories, lorikeets, lovebirds and other true parrots of the superfamily Psittacoidea",
+        ]}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
       />
       {/* <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
@@ -759,7 +767,11 @@ const Bento = (props: {
           key={td.id}
           textCardDetails={props.textCardDetails[i + 1]}
           imageCardDetails={props.imageCardDetails[i]}
-          facts={props.facts[i]}
+          facts={
+            i === props.textCardDetails.length - 1
+              ? props.facts.slice(-3)
+              : [props.facts[i]]
+          }
           originalImageDimensions={originalImageSizes[i]}
           imageWidth={getWidthOfColumns(imageColumnsN[i])}
           reversed={!!(i % 2)}
@@ -832,13 +844,7 @@ const Bento = (props: {
   );
 };
 
-export interface IPediaPageContentsProps {
-  pageDetails: IPediaPage;
-  parentPages: IPediaCollectionPage[];
-  suggestedPages: IPediaPage[];
-}
-
-export default function PediaPageContents(props: IPediaPageContentsProps) {
+export default function PediaPageContents(props: IPediaPage) {
   const [selectedAge, setSelectedAge] = useState<number>(AGES[AGES.length - 1]);
 
   /* needed for the platform row's proper scrollability */
@@ -853,14 +859,14 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const [boo, setBoo] = useState<boolean>(false);
+  console.log(props.textBlocks);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      {props.pageDetails ? (
-        <Stack onClick={() => setBoo(true)}>
-          {/* <ReactCarousel
+
+      <Stack>
+        {/* <ReactCarousel
             carouselConfig={{
               transform: {
                 rotateY: {
@@ -895,74 +901,74 @@ export default function PediaPageContents(props: IPediaPageContentsProps) {
               </Stack>
             ))}
           </ReactCarousel> */}
-          {isMobile ? (
-            <UrsorFadeIn duration={1000}>
-              <Stack width="100%" height="100%">
-                <MobileColumn
-                  title={props.pageDetails.title}
-                  mainCardDetails={props.pageDetails.mainCard}
-                  imageCardDetails={props.pageDetails.images}
-                  textCardDetails={
-                    props.pageDetails.textBlocks.find(
-                      (b) => b.age === selectedAge
-                    )?.blocks ?? []
-                  }
-                  facts={props.pageDetails.facts}
-                  questions={props.pageDetails.questions}
-                  suggestedPages={props.suggestedPages}
-                  parentPages={props.parentPages}
-                />
-              </Stack>
-            </UrsorFadeIn>
-          ) : (
-            <UrsorFadeIn delay={500} duration={1000}>
-              <Stack>
-                {props.pageDetails ? (
-                  <LayoutCard
-                    title={props.pageDetails.title}
-                    setSelectedAge={setSelectedAge}
-                    selectedAge={selectedAge}
-                    category={props.parentPages[0]?.title}
-                  >
-                    <Stack ref={setBentoRef} spacing="94px" alignItems="center">
-                      <Bento
-                        mainCardDetails={props.pageDetails.mainCard}
-                        imageCardDetails={props.pageDetails.images}
-                        textCardDetails={
-                          props.pageDetails.textBlocks.find(
-                            (b) => b.age === selectedAge
-                          )?.blocks ?? []
-                        }
-                        facts={props.pageDetails.facts}
-                        columnWidth={columnWidth}
-                      />
-                      {props.pageDetails.questions &&
-                      props.pageDetails.questions.length > 0 ? (
-                        <QuestionsCard
-                          questions={props.pageDetails.questions}
-                        />
-                      ) : null}
-                      {props.suggestedPages.length > 0 ? (
-                        <SuggestionsSection
-                          suggestedPages={props.suggestedPages}
-                          parentPages={props.parentPages}
-                        />
-                      ) : null}
-                      <div />
-                    </Stack>
-                  </LayoutCard>
-                ) : null}
-                <Stack minHeight="20px" />
-                <Stack width="100%">
-                  <Footer />
+        {isMobile ? (
+          <UrsorFadeIn duration={1000}>
+            <Stack width="100%" height="100%">
+              <MobileColumn
+                title={props.title}
+                mainCardDetails={{
+                  title: props.title,
+                  color: props.color,
+                  imageUrl: props.mainImage,
+                  stats: props.stats,
+                }}
+                imageCardDetails={props.images} //@ts-ignore
+                textCardDetails={
+                  props.textBlocks.find((b) => b.age === selectedAge)?.blocks ??
+                  []
+                }
+                facts={props.facts}
+                questions={props.questions}
+              />
+            </Stack>
+          </UrsorFadeIn>
+        ) : (
+          <UrsorFadeIn delay={500} duration={1000}>
+            <Stack>
+              <LayoutCard
+                title={props.title}
+                setSelectedAge={setSelectedAge}
+                selectedAge={selectedAge}
+                //category={props.parentPages[0]?.title}
+              >
+                <Stack ref={setBentoRef} spacing="94px" alignItems="center">
+                  <Bento
+                    mainCardDetails={{
+                      title: props.title,
+                      color: props.color,
+                      imageUrl: props.mainImage,
+                      stats: props.stats,
+                    }}
+                    imageCardDetails={props.images}
+                    textCardDetails={
+                      props.textBlocks
+                      // props.textBlocks.find((b) => b.age === selectedAge)
+                      //   ?.blocks ?? []
+                    }
+                    facts={props.facts}
+                    columnWidth={columnWidth}
+                  />
+                  {props.questions && props.questions.length > 0 ? (
+                    <QuestionsCard questions={props.questions} />
+                  ) : null}
+                  {/* {props.suggestedPages.length > 0 ? (
+                    <SuggestionsSection
+                      suggestedPages={props.suggestedPages}
+                      parentPages={props.parentPages}
+                    />
+                  ) : null} */}
+                  <div />
                 </Stack>
+              </LayoutCard>
+
+              <Stack minHeight="20px" />
+              <Stack width="100%">
+                <Footer />
               </Stack>
-            </UrsorFadeIn>
-          )}
-        </Stack>
-      ) : (
-        <></>
-      )}
+            </Stack>
+          </UrsorFadeIn>
+        )}
+      </Stack>
     </Stack>
   );
 }

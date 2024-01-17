@@ -1,14 +1,14 @@
 import React from "react";
 import ApiController from "@/app/api";
-import PediaPageContents from "./PediaPageContents";
+import PediaPageContents, { IPediaPage } from "./PediaPageContents";
 
 async function VideoPage({ params }: { params: { urlId: string } }) {
-  const pageDetails = await ApiController.getPage(params.urlId);
+  const pageDetails = (await ApiController.getPage(params.urlId)) as IPediaPage;
   return pageDetails ? (
     <PediaPageContents
-      pageDetails={pageDetails.page}
-      parentPages={pageDetails.parentPages ?? []}
-      suggestedPages={pageDetails.suggestedPages ?? []}
+      {...pageDetails}
+      // parentPages={pageDetails.parentPages ?? []}
+      // suggestedPages={pageDetails.suggestedPages ?? []}
     />
   ) : (
     <></>

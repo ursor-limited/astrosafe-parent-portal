@@ -75,8 +75,8 @@ export default function SuggestionsSection(props: {
           <ContentPagePreviewCard
             key={sp.id}
             title={sp.title}
-            imageUrl={sp.mainCard.imageUrl}
-            color={sp.mainCard.color}
+            imageUrl={sp.mainImage}
+            color={sp.color}
             pageId={sp.id}
             titleAtBottom={i === 1}
             titleOnRight={i === 1 || i === 2}

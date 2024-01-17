@@ -1,37 +1,40 @@
 import UrsorParticles from "@/app/components/UrsorParticles";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
+import { IPediaPage, IPediaStat } from "./PediaPageContents";
+import _ from "lodash";
 
 export const MAIN_CARD_HEIGHT = "545px";
-
-interface IFact {
-  title: string;
-  content: string;
-}
 
 export interface IPediaMainCard {
   title?: string;
   imageUrl: string;
-  facts: IFact[];
+  stats: IPediaStat[];
   color: string;
 }
 
-const PediaMainCard = (
-  props: IPediaMainCard & { width?: number; mobile?: boolean }
-) => (
+const PediaMainCard = (props: {
+  title?: IPediaPage["title"];
+  imageUrl: IPediaPage["mainImage"];
+  stats?: IPediaPage["stats"];
+  color: IPediaPage["color"];
+  width?: number;
+  mobile?: boolean;
+}) => (
   <Stack
     borderRadius="12px"
     sx={{
       background: `linear-gradient(0deg, #ffffff, ${props.color || "#ffffff"})`,
     }}
     width={props.width ? `${props.width}px` : "100%"}
-    height={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
+    height={props.mobile ? "fit-content" : undefined}
     minHeight={props.mobile ? "fit-content" : MAIN_CARD_HEIGHT}
     boxSizing="border-box"
     boxShadow="0 0 25px rgba(0,0,0,0.05)"
     p="16px"
     pt={props.title ? undefined : 0}
     position="relative"
+    justifyContent="flex-end"
   >
     <Stack
       position="absolute"
@@ -51,14 +54,12 @@ const PediaMainCard = (
       <Typography
         variant={props.mobile && props.title.length > 16 ? "h5" : "h4"}
         color="rgb(255,255,255)"
-        // sx={{
-        //   textShadow: "0 0 25px rgba(0,0,0,0.7)",
-        // }}
       >
         {props.title}
       </Typography>
     ) : null}
     <Stack
+      flex={props.mobile ? undefined : 1}
       borderRadius="12px 12px 0 0"
       width={props.width ? `${props.width}px` : "100%"}
       height={props.mobile ? "310px" : "380px"}
@@ -84,7 +85,7 @@ const PediaMainCard = (
       borderRadius="10px"
       zIndex={1}
     >
-      {props.facts.map((fact, i) => (
+      {props.stats?.map((fact, i) => (
         <Stack
           key={i}
           direction="row"
