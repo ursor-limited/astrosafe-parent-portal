@@ -772,7 +772,7 @@ const Bento = (props: {
           textCardDetails={props.textCardDetails[i + 1]}
           imageCardDetails={props.imageCardDetails[i]}
           facts={
-            i === props.textCardDetails.length - 1
+            i === props.textCardDetails.length - 2
               ? props.facts.slice(-3)
               : [props.facts[i]]
           }
