@@ -1,50 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { FONT_SIZES } from "./typography";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
+import { Input, InputAdornment } from "@mui/material";
 import { PALETTE } from "./palette";
+import { FONT_SIZES } from "./typography";
 
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
 export const BOLD_FONT_WEIGHT = 600;
 
-export interface IUrsorInputFieldProps {}
+export interface UrsorInputFieldProps {
+  width?: string;
+  height?: string;
+  borderRadius?: string;
+  backgroundColor?: string;
+  border?: string;
+  outline?: string;
+  backgroundBlur?: string;
+  password?: boolean;
+  paddingLeft?: string;
+  leftAlign?: boolean;
+  fontSize?: string;
+  color?: string;
+  boldValue?: boolean;
+  noBold?: boolean;
+  value?: string;
+  onEnterKey?: () => void;
+  onBlur?: () => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  endIcon?: JSX.Element;
+}
 
-export function UrsorInputField(props: IUrsorInputFieldProps): JSX.Element {
-  // const {
-  //   error,
-  //   onChange,
-  //   onEnterKey,
-  //   value,
-  //   placeholder,
-  //   width,
-  //   register,
-  //   leftAlign,
-  //   white,
-  //   border,
-  //   outline,
-  //   password,
-  //   onBlur,
-  //   focusDelay,
-  //   paddingLeft,
-  //   borderRadius,
-  //   backgroundBlur,
-  //   boldValue,
-  // } = props;
-
+export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
   const customSx = {
-    width: width ?? DEFAULT_WIDTH,
+    width: props.width ?? DEFAULT_WIDTH,
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
     borderRadius: props.borderRadius ?? BORDER_RADIUS,
     background: props.backgroundColor ?? PALETTE.secondary.grey[1],
-    border: border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
+    border: props.border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
   };
-
-  if (error) {
-    customSx["border"] = "2px solid red";
-  }
 
   const inputProps = {
     type: props.password ? "password" : undefined,
@@ -53,10 +50,10 @@ export function UrsorInputField(props: IUrsorInputFieldProps): JSX.Element {
       paddingRight: props.leftAlign ? "34px" : 0,
       textAlign: props.leftAlign ? "left" : "center",
       textOverflow: "ellipsis",
-      fontSize: props.fontSize ?? FONT_SIZES["normal"],
+      fontSize: props.fontSize ?? FONT_SIZES.normal,
       color: props.color ?? PALETTE.font.dark,
       fontWeight:
-        props.boldValue || (!!value && !props.noBold)
+        props.boldValue || (props.value && !props.noBold)
           ? BOLD_FONT_WEIGHT
           : "unset",
       lineHeight: "100%",
@@ -67,43 +64,27 @@ export function UrsorInputField(props: IUrsorInputFieldProps): JSX.Element {
     },
   };
 
-  const getIsBelowScreen = () =>
-    ref?.getBoundingClientRect().bottom > window.innerHeight; // prevents a jump to the bottom of the worksheet
-
-  const [ref, setRef] = useState();
-  const [isBelowScreen, setIsBelowScreen] = useState(false);
-  useEffect(() => {
-    if (props.autoFocus && props.focusDelay && ref) {
-      setTimeout(() => {
-        !getIsBelowScreen() && ref.focus();
-      }, props.focusDelay);
-    }
-  }, [props.focusDelay, ref]);
-
   return (
     <Input
-      inputRef={setRef}
-      autoFocus={props.autoFocus && !props.focusDelay}
-      inputProps={inputProps}
+      disableUnderline
       endAdornment={
         props.endIcon ? (
-          <InputAdornment sx={{ pr: "11px" }} position="end">
+          <InputAdornment position="end" sx={{ pr: "11px" }}>
             {props.endIcon}
           </InputAdornment>
         ) : null
-      }
-      value={value}
-      disableUnderline={true}
-      sx={customSx}
-      onChange={onChange}
+      } //@ts-expect-error -- idiotic issue, fix later
+      inputProps={inputProps}
+      onBlur={props.onBlur}
+      onChange={props.onChange}
       onKeyPress={(event) => {
         if (event.key === "Enter") {
-          onEnterKey?.();
-          ref.blur();
+          props.onEnterKey?.();
         }
       }}
-      placeholder={placeholder}
-      onBlur={props.onBlur}
+      placeholder={props.placeholder}
+      sx={customSx}
+      value={props.value}
     />
   );
 }
