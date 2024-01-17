@@ -12,6 +12,8 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import dynamic from "next/dynamic";
 import { IPediaQuestion } from "../p/[urlId]/PediaPageContents";
 
+export const DEFAULT_WIDTH = 502;
+
 const ByteStepper = dynamic(
   () => import("./ByteStepper"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
@@ -21,7 +23,6 @@ export default function QuestionsCard(props: {
   questions: IPediaQuestion[];
   mobile?: boolean;
 }) {
-  console.log(props.questions);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>(
     undefined
   );
@@ -29,15 +30,18 @@ export default function QuestionsCard(props: {
     undefined
   );
   const [questionIndex, setQuestionIndex] = useState<number>(0);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
   return (
     <Stack width="100%" alignItems="center">
       <Stack
-        width={props.mobile ? "100%" : "502px"}
+        ref={setRef}
+        minWidth={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
         height="363px"
         alignItems="center"
         justifyContent="space-between"
         py="27px"
-        boxSizing="border-box"
+        px="40px"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         spacing="24px"
@@ -46,6 +50,7 @@ export default function QuestionsCard(props: {
           <ByteStepper
             nSteps={props.questions.length + 1}
             step={questionIndex}
+            //scale={0.5}
           />
           <Stack
             width={props.mobile ? "80%" : "400px"}
