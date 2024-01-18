@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { IPediaPage } from "@/app/p/[urlId]/PediaPageContents";
 import _ from "lodash";
 import { UrsorTypographyVariant } from "ui/typography";
-import Image from "next/image";
+import PageIllustration from "@/images/page.png";
 
 export const GRID_SPACING = 24;
 
@@ -21,17 +21,15 @@ export function ContentPagePreviewCard(props: {
   titleOnRight?: boolean;
   mobile?: boolean;
   fontSize?: UrsorTypographyVariant;
+  loading?: boolean;
 }) {
   const router = useRouter();
   return (
     <Stack
       flex={1}
       borderRadius="16px"
-      bgcolor={props.color}
+      bgcolor={props.loading ? PALETTE.secondary.grey[2] : props.color}
       sx={{
-        // backgroundImage: `url(${props.imageUrl})`,
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
         "&:hover": { opacity: 0.7 },
         transition: "0.2s",
         cursor: "pointer",
@@ -46,7 +44,7 @@ export function ContentPagePreviewCard(props: {
         variant={props.fontSize || (props.mobile ? "normal" : "h4")}
         bold
         htmlTag="h3"
-        color={PALETTE.font.light}
+        color={props.loading ? PALETTE.secondary.grey[3] : PALETTE.font.light}
         sx={{
           textAlign: props.titleOnRight ? "right" : undefined,
         }}
@@ -56,11 +54,15 @@ export function ContentPagePreviewCard(props: {
       <Stack
         flex={1}
         sx={{
-          backgroundImage: `url(${props.imageUrl})`,
+          backgroundImage: `url(${
+            props.loading ? PageIllustration.src : props.imageUrl
+          })`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           boxSizing: "border-box",
+          filter: props.loading ? "grayscale(100%)" : undefined,
+          transform: props.loading ? "scale(0.7)" : undefined,
         }}
       />
     </Stack>
@@ -198,7 +200,7 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
   </Stack>
 );
 
-const ChunkRow = (props: { chunk: IPediaPage[] }) => (
+const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
   <Stack spacing={`${GRID_SPACING}px`}>
     {props.chunk[0] ? (
       <Stack
@@ -213,6 +215,7 @@ const ChunkRow = (props: { chunk: IPediaPage[] }) => (
             imageUrl={props.chunk[0].mainImage}
             color={props.chunk[0].color}
             pageId={props.chunk[0].id}
+            loading={props.loading}
           />
         </Stack>
         {props.chunk[1] ? (
@@ -222,6 +225,7 @@ const ChunkRow = (props: { chunk: IPediaPage[] }) => (
               imageUrl={props.chunk[1].mainImage}
               color={props.chunk[1].color}
               pageId={props.chunk[1].id}
+              loading={props.loading}
             />
           </Stack>
         ) : null}
@@ -232,6 +236,7 @@ const ChunkRow = (props: { chunk: IPediaPage[] }) => (
               imageUrl={props.chunk[2].mainImage}
               color={props.chunk[2].color}
               pageId={props.chunk[2].id}
+              loading={props.loading}
             />
           </Stack>
         ) : null}
@@ -245,6 +250,7 @@ const ChunkRow = (props: { chunk: IPediaPage[] }) => (
             imageUrl={props.chunk[3].mainImage}
             color={props.chunk[3].color}
             pageId={props.chunk[3].id}
+            loading={props.loading}
           />
         </Stack>
       </Stack>
@@ -252,14 +258,22 @@ const ChunkRow = (props: { chunk: IPediaPage[] }) => (
   </Stack>
 );
 
-export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
+export default function CollectionPageBento(props: {
+  pages: IPediaPage[];
+  loading?: boolean;
+}) {
   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
   useEffect(() => {
     Promise.all(props.pages.map((page) => getImageSize(page.mainImage))).then(
       (dims) => setOriginalImageSizes(dims)
     );
   }, [props.pages]);
-  return <ChunkRow chunk={[...props.pages, ...props.pages]} />;
+  return (
+    <ChunkRow
+      chunk={[...props.pages, ...props.pages]}
+      loading={props.loading}
+    />
+  );
 }
 
 // nice row layouts

@@ -16,6 +16,7 @@ export const AGES = [5, 7, 9];
 
 interface ILayoutCardProps {
   title: string;
+  titleColor?: string;
   selectedAge?: PediaAge;
   setSelectedAge?: (age: PediaAge) => void;
   category?: string;
@@ -41,7 +42,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
             75 + 15 * ((1790 - width) / (1790 - MOBILE_WINDOW_WIDTH_THRESHOLD))
           }%`}
           borderRadius="16px"
-          bgcolor={PALETTE.secondary.grey[2]}
+          bgcolor={PALETTE.secondary.grey[1]}
           p={`${GRID_SPACING}px`}
           //pb={0}
           spacing={`${GRID_SPACING}px`}
@@ -79,7 +80,11 @@ export default function LayoutCard(props: ILayoutCardProps) {
               }}
               pt="60px"
             >
-              <Typography variant="h2" htmlTag="h1">
+              <Typography
+                variant="h2"
+                htmlTag="h1"
+                color={props.titleColor || PALETTE.secondary.grey[5]}
+              >
                 {props.title}
               </Typography>
               {props.selectedAge ? (
