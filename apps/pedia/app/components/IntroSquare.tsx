@@ -32,7 +32,7 @@ export const IntroSquare = (props: {
         loader={({ src }) => {
           return src;
         }}
-        alt="Footer"
+        alt="Intro square"
       />
     </Stack>
     <Stack spacing="2px" alignItems="center">

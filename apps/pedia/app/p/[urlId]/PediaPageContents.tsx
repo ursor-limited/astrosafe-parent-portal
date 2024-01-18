@@ -102,7 +102,7 @@ export interface IPediaPage {
 export interface IPediaCollectionPage {
   id: string;
   title: string;
-  parentId: string;
+  articles: string[];
 }
 
 const ImageCard = (props: {
@@ -676,7 +676,6 @@ const Bento = (props: {
   facts: IPediaPage["facts"];
   columnWidth: number;
 }) => {
-  console.log(props.facts);
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
   >(undefined);

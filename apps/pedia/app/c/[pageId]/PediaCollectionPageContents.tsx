@@ -50,7 +50,7 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
 
 export interface IPediaCollectionPageProps {
   pageDetails: IPediaCollectionPage;
-  childPages: IPediaPage[];
+  articles: IPediaPage[];
 }
 
 export default function PediaCollectionPageContents(
@@ -68,16 +68,28 @@ export default function PediaCollectionPageContents(
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
       <Header />
-      {isMobile ? (
+      {isMobile && props.pageDetails ? (
         <Stack width="100%" height="100%">
           <UrsorFadeIn duration={1000}>
-            <MobileCollectionPageColumn pages={props.childPages} />
+            <MobileCollectionPageColumn pages={props.articles} />
           </UrsorFadeIn>
         </Stack>
       ) : props.pageDetails ? (
-        <LayoutCard title={props.pageDetails.title}>
+        <LayoutCard
+          title={props.pageDetails.title}
+          category={
+            props.articles
+              .slice(0, -1)
+              .map((a) => a.title)
+              .join(", ") +
+            ` and ${props.articles[props.articles.length - 1].title}`
+          }
+          // subtitle={`${props.articles
+          //   .map((a) => a.title)
+          //   .join(", ")} facts for kids.`}
+        >
           <UrsorFadeIn delay={500} duration={1000}>
-            <CollectionPageBento pages={props.childPages} />
+            <CollectionPageBento pages={props.articles} />
           </UrsorFadeIn>
         </LayoutCard>
       ) : (

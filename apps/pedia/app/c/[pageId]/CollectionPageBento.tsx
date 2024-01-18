@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { IPediaPage } from "@/app/p/[urlId]/PediaPageContents";
 import _ from "lodash";
 import { UrsorTypographyVariant } from "ui/typography";
+import Image from "next/image";
 
 export const GRID_SPACING = 24;
 
@@ -28,10 +29,9 @@ export function ContentPagePreviewCard(props: {
       borderRadius="16px"
       bgcolor={props.color}
       sx={{
-        backgroundImage: `url(${props.imageUrl})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-
+        // backgroundImage: `url(${props.imageUrl})`,
+        // backgroundSize: "cover",
+        // backgroundPosition: "center",
         "&:hover": { opacity: 0.7 },
         transition: "0.2s",
         cursor: "pointer",
@@ -48,12 +48,21 @@ export function ContentPagePreviewCard(props: {
         htmlTag="h3"
         color={PALETTE.font.light}
         sx={{
-          textShadow: "0 0 35px rgba(0,0,0,0.9)",
           textAlign: props.titleOnRight ? "right" : undefined,
         }}
       >
         {props.title}
       </Typography>
+      <Stack
+        flex={1}
+        sx={{
+          backgroundImage: `url(${props.imageUrl})`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          boxSizing: "border-box",
+        }}
+      />
     </Stack>
   );
 }
@@ -189,6 +198,60 @@ const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
   </Stack>
 );
 
+const ChunkRow = (props: { chunk: IPediaPage[] }) => (
+  <Stack spacing={`${GRID_SPACING}px`}>
+    {props.chunk[0] ? (
+      <Stack
+        flex={1}
+        minHeight="358px"
+        spacing={`${GRID_SPACING}px`}
+        direction="row"
+      >
+        <Stack width="27%">
+          <ContentPagePreviewCard
+            title={props.chunk[0].title}
+            imageUrl={props.chunk[0].mainImage}
+            color={props.chunk[0].color}
+            pageId={props.chunk[0].id}
+          />
+        </Stack>
+        {props.chunk[1] ? (
+          <Stack width="27%">
+            <ContentPagePreviewCard
+              title={props.chunk[1].title}
+              imageUrl={props.chunk[1].mainImage}
+              color={props.chunk[1].color}
+              pageId={props.chunk[1].id}
+            />
+          </Stack>
+        ) : null}
+        {props.chunk[2] ? (
+          <Stack flex={1}>
+            <ContentPagePreviewCard
+              title={props.chunk[2].title}
+              imageUrl={props.chunk[2].mainImage}
+              color={props.chunk[2].color}
+              pageId={props.chunk[2].id}
+            />
+          </Stack>
+        ) : null}
+      </Stack>
+    ) : null}
+    {props.chunk[3] ? (
+      <Stack flex={1}>
+        <Stack minHeight="238px" width={`calc(54% + ${GRID_SPACING}px)`}>
+          <ContentPagePreviewCard
+            title={props.chunk[3].title}
+            imageUrl={props.chunk[3].mainImage}
+            color={props.chunk[3].color}
+            pageId={props.chunk[3].id}
+          />
+        </Stack>
+      </Stack>
+    ) : null}
+  </Stack>
+);
+
 export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
   useEffect(() => {
@@ -196,22 +259,34 @@ export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
       (dims) => setOriginalImageSizes(dims)
     );
   }, [props.pages]);
-  return (
-    <Stack spacing={`${GRID_SPACING}px`}>
-      {_.chunk([...props.pages, ...props.pages, ...props.pages], 4).map(
-        (chunkRow, i) =>
-          chunkRow.length === 3 ? (
-            <ChunkRow2 key={i} chunk={chunkRow} />
-          ) : i % 4 === 0 ? (
-            <ChunkRow1 key={i} chunk={chunkRow} />
-          ) : i % 4 === 1 ? (
-            <ChunkRow2 key={i} chunk={chunkRow} />
-          ) : i % 4 === 2 ? (
-            <ChunkRow3 key={i} chunk={chunkRow} />
-          ) : (
-            <ChunkRow2 key={i} chunk={chunkRow} />
-          )
-      )}
-    </Stack>
-  );
+  return <ChunkRow chunk={[...props.pages, ...props.pages]} />;
 }
+
+// nice row layouts
+
+// export default function CollectionPageBento(props: { pages: IPediaPage[] }) {
+//   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
+//   useEffect(() => {
+//     Promise.all(props.pages.map((page) => getImageSize(page.mainImage))).then(
+//       (dims) => setOriginalImageSizes(dims)
+//     );
+//   }, [props.pages]);
+//   return (
+//     <Stack spacing={`${GRID_SPACING}px`}>
+//       {_.chunk([...props.pages], 4).map(
+//         (chunkRow, i) =>
+//           chunkRow.length === 3 ? (
+//             <ChunkRow2 key={i} chunk={chunkRow} />
+//           ) : i % 4 === 0 ? (
+//             <ChunkRow1 key={i} chunk={chunkRow} />
+//           ) : i % 4 === 1 ? (
+//             <ChunkRow2 key={i} chunk={chunkRow} />
+//           ) : i % 4 === 2 ? (
+//             <ChunkRow3 key={i} chunk={chunkRow} />
+//           ) : (
+//             <ChunkRow2 key={i} chunk={chunkRow} />
+//           )
+//       )}
+//     </Stack>
+//   );
+// }
