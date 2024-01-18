@@ -42,7 +42,7 @@ export const CreationBox = () => {
   };
   return (
     <Stack
-      bgcolor="rgba(0,0,0,0.2)"
+      bgcolor="rgba(0,0,0,0.16)"
       px="24px"
       py="20px"
       maxWidth="733px"
