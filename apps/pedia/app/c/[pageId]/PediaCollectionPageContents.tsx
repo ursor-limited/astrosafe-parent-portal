@@ -17,6 +17,7 @@ import { PALETTE, Typography, UrsorInputField } from "ui";
 import { ByteAnimation } from "@/app/components/Byte";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import dynamic from "next/dynamic";
+import ApiController from "@/app/api";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -116,6 +117,7 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
 export interface IPediaCollectionPageProps {
   pageDetails: IPediaCollectionPage;
   articles: IPediaPage[];
+  //titleUpdateCallback: (title: string) => void;
 }
 
 export default function PediaCollectionPageContents(
@@ -168,7 +170,7 @@ export default function PediaCollectionPageContents(
           </Stack>
         ) : props.pageDetails ? (
           <LayoutCard
-            title={props.pageDetails.title}
+            title={titleInputValue}
             titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
             category={
               props.articles
@@ -208,7 +210,11 @@ export default function PediaCollectionPageContents(
         open={editTitleDialogOpen}
         button={{
           text: "Complete",
-          callback: () => null,
+          callback: () =>
+            ApiController.updateCollectionTitle(
+              props.pageDetails.id,
+              titleInputValue
+            ).then(() => setEditTitleDialogOpen(false)),
         }}
         onCloseCallback={() => setEditTitleDialogOpen(false)}
       >
