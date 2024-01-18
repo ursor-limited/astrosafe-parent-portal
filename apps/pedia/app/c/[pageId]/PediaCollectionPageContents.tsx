@@ -34,8 +34,8 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
         >
           <ContentPagePreviewCard
             title={p.title}
-            imageUrl={p.mainCard.imageUrl}
-            color={p.mainCard.imageUrl}
+            imageUrl={p.mainImage}
+            color={p.color}
             pageId={p.id}
             titleAtBottom
             titleOnRight={!!(i % 2)}
