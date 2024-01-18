@@ -23,13 +23,10 @@ export const IntroSquare = (props: {
     alignItems="center"
     boxSizing="border-box"
     px="35px"
-    py="30px"
+    py="35px"
     justifyContent="space-between"
   >
-    <Stack
-      width={props.imageHeight ? undefined : "215px"}
-      height={props.imageHeight}
-    >
+    <Stack width="194px" height="194px">
       <Image
         src={props.image}
         loader={({ src }) => {

@@ -51,7 +51,7 @@ export default function PediaLandingPageContents() {
             image={IntroSquareImage1}
             title="Bespoke knowledge"
             text="Creates a unique set of Articles, using only the topics you want."
-            imageHeight="30px"
+            imageHeight="190px"
           />
           <IntroSquare
             image={IntroSquareImage2}
@@ -62,6 +62,7 @@ export default function PediaLandingPageContents() {
             image={IntroSquareImage3}
             title="Safe sharing"
             text="Share your Articles by a safe link no one can tamper with or edit without consent."
+            imageHeight="190px"
           />
         </Stack>
       </Stack>

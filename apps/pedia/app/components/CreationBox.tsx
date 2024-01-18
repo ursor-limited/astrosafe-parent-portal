@@ -71,7 +71,7 @@ export const CreationBox = () => {
           </Stack>
           <Stack
             direction="row"
-            spacing="8px"
+            spacing="12px"
             sx={{
               opacity: topics.length === MAX_TOPICS ? 0.55 : 1,
               pointerEvents: topics.length === MAX_TOPICS ? "none" : undefined,
