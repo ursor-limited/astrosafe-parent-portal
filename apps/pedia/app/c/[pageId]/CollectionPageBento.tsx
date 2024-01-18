@@ -16,7 +16,7 @@ export function ContentPagePreviewCard(props: {
   title: string;
   imageUrl: string;
   color: string;
-  pageId: string;
+  urlId: string;
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
   mobile?: boolean;
@@ -34,7 +34,7 @@ export function ContentPagePreviewCard(props: {
         transition: "0.2s",
         cursor: "pointer",
       }}
-      onClick={() => router.push(`/p/${props.pageId}`)}
+      onClick={() => router.push(`/p/${props.urlId}`)}
       p={props.mobile ? "10px" : "20px"}
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
@@ -78,14 +78,14 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
             title={props.chunk[0].title}
             imageUrl={props.chunk[0].mainImage}
             color={props.chunk[0].color}
-            pageId={props.chunk[0].id}
+            urlId={props.chunk[0].urlId}
           />
           {props.chunk[1] ? (
             <ContentPagePreviewCard
               title={props.chunk[1].title}
               imageUrl={props.chunk[1].mainImage}
               color={props.chunk[1].color}
-              pageId={props.chunk[1].id}
+              urlId={props.chunk[1].urlId}
             />
           ) : null}
         </Stack>
@@ -96,7 +96,7 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
             title={props.chunk[2].title}
             imageUrl={props.chunk[2].mainImage}
             color={props.chunk[2].color}
-            pageId={props.chunk[2].id}
+            urlId={props.chunk[2].urlId}
             titleAtBottom
             titleOnRight
           />
@@ -109,7 +109,7 @@ const ChunkRow1 = (props: { chunk: IPediaPage[] }) => (
           title={props.chunk[3].title}
           imageUrl={props.chunk[3].mainImage}
           color={props.chunk[3].color}
-          pageId={props.chunk[3].id}
+          urlId={props.chunk[3].urlId}
         />
       </Stack>
     ) : null}
@@ -122,14 +122,14 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
       title={props.chunk[0].title}
       imageUrl={props.chunk[0].mainImage}
       color={props.chunk[0].color}
-      pageId={props.chunk[0].id}
+      urlId={props.chunk[0].urlId}
     />
     {props.chunk[1] ? (
       <ContentPagePreviewCard
         title={props.chunk[1].title}
         imageUrl={props.chunk[1].mainImage}
         color={props.chunk[1].color}
-        pageId={props.chunk[1].id}
+        urlId={props.chunk[1].urlId}
         titleAtBottom
         titleOnRight
       />
@@ -139,7 +139,7 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
         title={props.chunk[2].title}
         imageUrl={props.chunk[2].mainImage}
         color={props.chunk[2].color}
-        pageId={props.chunk[2].id}
+        urlId={props.chunk[2].urlId}
       />
     ) : null}
     {props.chunk[3] ? (
@@ -147,7 +147,7 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
         title={props.chunk[3].title}
         imageUrl={props.chunk[3].mainImage}
         color={props.chunk[3].color}
-        pageId={props.chunk[3].id}
+        urlId={props.chunk[3].urlId}
         titleAtBottom
         titleOnRight
       />
@@ -155,50 +155,50 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
   </Stack>
 );
 
-const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
-  <Stack height="594px" direction="row" spacing={`${GRID_SPACING}px`}>
-    <Stack flex={1} spacing={`${GRID_SPACING}px`}>
-      <ContentPagePreviewCard
-        title={props.chunk[0].title}
-        imageUrl={props.chunk[0].mainImage}
-        color={props.chunk[0].color}
-        pageId={props.chunk[0].id}
-      />
-    </Stack>
-    <Stack flex={1} spacing={`${GRID_SPACING}px`}>
-      {props.chunk[1] ? (
-        <ContentPagePreviewCard
-          title={props.chunk[1].title}
-          imageUrl={props.chunk[1].mainImage}
-          color={props.chunk[1].color}
-          pageId={props.chunk[1].id}
-          titleAtBottom
-          titleOnRight
-        />
-      ) : null}
-      {props.chunk[2] ? (
-        <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
-          {props.chunk[2] ? (
-            <ContentPagePreviewCard
-              title={props.chunk[2].title}
-              imageUrl={props.chunk[2].mainImage}
-              color={props.chunk[2].color}
-              pageId={props.chunk[2].id}
-            />
-          ) : null}
-          {props.chunk[3] ? (
-            <ContentPagePreviewCard
-              title={props.chunk[3].title}
-              imageUrl={props.chunk[3].mainImage}
-              color={props.chunk[3].color}
-              pageId={props.chunk[3].id}
-            />
-          ) : null}
-        </Stack>
-      ) : null}
-    </Stack>
-  </Stack>
-);
+// const ChunkRow3 = (props: { chunk: IPediaPage[] }) => (
+//   <Stack height="594px" direction="row" spacing={`${GRID_SPACING}px`}>
+//     <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+//       <ContentPagePreviewCard
+//         title={props.chunk[0].title}
+//         imageUrl={props.chunk[0].mainImage}
+//         color={props.chunk[0].color}
+//         pageId={props.chunk[0].id}
+//       />
+//     </Stack>
+//     <Stack flex={1} spacing={`${GRID_SPACING}px`}>
+//       {props.chunk[1] ? (
+//         <ContentPagePreviewCard
+//           title={props.chunk[1].title}
+//           imageUrl={props.chunk[1].mainImage}
+//           color={props.chunk[1].color}
+//           pageId={props.chunk[1].id}
+//           titleAtBottom
+//           titleOnRight
+//         />
+//       ) : null}
+//       {props.chunk[2] ? (
+//         <Stack flex={1} spacing={`${GRID_SPACING}px`} direction="row">
+//           {props.chunk[2] ? (
+//             <ContentPagePreviewCard
+//               title={props.chunk[2].title}
+//               imageUrl={props.chunk[2].mainImage}
+//               color={props.chunk[2].color}
+//               pageId={props.chunk[2].id}
+//             />
+//           ) : null}
+//           {props.chunk[3] ? (
+//             <ContentPagePreviewCard
+//               title={props.chunk[3].title}
+//               imageUrl={props.chunk[3].mainImage}
+//               color={props.chunk[3].color}
+//               pageId={props.chunk[3].id}
+//             />
+//           ) : null}
+//         </Stack>
+//       ) : null}
+//     </Stack>
+//   </Stack>
+// );
 
 const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
   <Stack spacing={`${GRID_SPACING}px`}>
@@ -214,7 +214,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
             title={props.chunk[0].title}
             imageUrl={props.chunk[0].mainImage}
             color={props.chunk[0].color}
-            pageId={props.chunk[0].id}
+            urlId={props.chunk[0].urlId}
             loading={props.loading}
           />
         </Stack>
@@ -224,7 +224,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
               title={props.chunk[1].title}
               imageUrl={props.chunk[1].mainImage}
               color={props.chunk[1].color}
-              pageId={props.chunk[1].id}
+              urlId={props.chunk[1].urlId}
               loading={props.loading}
             />
           </Stack>
@@ -235,7 +235,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
               title={props.chunk[2].title}
               imageUrl={props.chunk[2].mainImage}
               color={props.chunk[2].color}
-              pageId={props.chunk[2].id}
+              urlId={props.chunk[2].urlId}
               loading={props.loading}
             />
           </Stack>
@@ -249,7 +249,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
             title={props.chunk[3].title}
             imageUrl={props.chunk[3].mainImage}
             color={props.chunk[3].color}
-            pageId={props.chunk[3].id}
+            urlId={props.chunk[3].urlId}
             loading={props.loading}
           />
         </Stack>

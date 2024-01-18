@@ -4,6 +4,7 @@ import { PALETTE, Typography } from "ui";
 import AgeSelection from "./AgeSelection";
 import { useWindowSize } from "usehooks-ts";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
+import PencilIcon from "@/images/icons/PencilIcon.svg";
 
 export const PediaAgeDisplayNames: Record<PediaAge, string> = {
   student: "4 - 7",
@@ -22,6 +23,7 @@ interface ILayoutCardProps {
   category?: string;
   //parents?: IPediaCollectionPage[];
   paddingTop?: string;
+  editTitleCallback?: () => void;
   children: React.ReactNode;
 }
 
@@ -54,9 +56,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 color={PALETTE.secondary.grey[3]}
                 htmlTag="h2"
               >
-                {`${
-                  props.category || "Awesome"
-                } knowledge and fun facts for Kids${
+                {`${props.title} knowledge and fun facts for Kids${
                   props.selectedAge
                     ? ` aged ${PediaAgeDisplayNames[props.selectedAge]}`
                     : ""
@@ -80,13 +80,38 @@ export default function LayoutCard(props: ILayoutCardProps) {
               }}
               pt="60px"
             >
-              <Typography
-                variant="h2"
-                htmlTag="h1"
-                color={props.titleColor || PALETTE.secondary.grey[5]}
+              <Stack
+                direction="row"
+                spacing="20px"
+                alignItems="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
               >
-                {props.title}
-              </Typography>
+                <Typography
+                  variant="h2"
+                  htmlTag="h1"
+                  color={props.titleColor || PALETTE.secondary.grey[5]}
+                >
+                  {props.title}
+                </Typography>
+                {props.editTitleCallback ? (
+                  <Stack
+                    onClick={props.editTitleCallback}
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <PencilIcon height="32px" width="32px" />
+                  </Stack>
+                ) : null}
+              </Stack>
               {props.selectedAge ? (
                 <AgeSelection
                   setSelectedAge={props.setSelectedAge}
