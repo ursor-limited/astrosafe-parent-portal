@@ -184,8 +184,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         setPressed(false);
       }}
       px={`${PADDINGS[size].x}px`}
-      pl={props.startIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
-      pr={props.endIcon ? `${0.6 * PADDINGS[size].x}px` : undefined}
+      pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
+      pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       spacing="12px"
       sx={{
         cursor: "pointer",

@@ -1,33 +1,35 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
-import { AGES } from "./LayoutCard";
+import { AGES, PediaAgeDisplayNames } from "./LayoutCard";
+import { PediaAge } from "../p/[urlId]/PediaPageContents";
 
 export interface IAgeSelectionProps {
-  selectedAge?: number;
-  setSelectedAge?: (age: number) => void;
+  selectedAge?: PediaAge;
+  setSelectedAge?: (age: PediaAge) => void;
 }
 
 export default function AgeSelection(props: IAgeSelectionProps) {
   return (
-    <Stack direction="row" spacing="16px" alignItems="center">
+    <Stack direction="row" spacing="14px" alignItems="center">
       <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
         For ages
       </Typography>
       <Stack
         direction="row"
         justifyContent="center"
-        spacing="6px"
         height="34px"
         bgcolor="rgba(255,255,255)"
         p="3px"
         borderRadius="30px"
       >
-        {AGES.map((age) => (
+        {["student", "scholar"].map((age) => (
           <Stack
             key={age}
             height="100%"
+            width="66px"
             borderRadius="30px"
             justifyContent="center"
+            alignItems="center"
             px="16px"
             bgcolor={
               props.selectedAge === age
@@ -44,7 +46,7 @@ export default function AgeSelection(props: IAgeSelectionProps) {
                     : undefined,
               },
             }}
-            onClick={() => props.setSelectedAge?.(age)}
+            onClick={() => props.setSelectedAge?.(age as PediaAge)}
           >
             <Typography
               variant="small"
@@ -54,7 +56,9 @@ export default function AgeSelection(props: IAgeSelectionProps) {
                   ? "rgb(255,255,255)"
                   : PALETTE.secondary.grey[3]
               }
-            >{`${age}-${age + 1}`}</Typography>
+            >
+              {PediaAgeDisplayNames[age as PediaAge]}
+            </Typography>
           </Stack>
         ))}
       </Stack>

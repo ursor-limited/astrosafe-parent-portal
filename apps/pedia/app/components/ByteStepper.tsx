@@ -6,7 +6,7 @@ import { PALETTE } from "ui/palette";
 import Byte, { ByteAnimation } from "./Byte";
 import { fadeOut } from "./SearchBar";
 
-const SPACING = "62px";
+const SPACING = 62;
 const CIRCLE_SIZE = 24;
 const CIRCLE_BORDER_THICKNESS = 2;
 const ROUNDING = "20px";
@@ -22,6 +22,7 @@ const PULSE_PERIOD = "1.4s";
 export interface IByteStepperProps {
   nSteps: number;
   step: number;
+  scale?: number;
 }
 
 export const pulse = keyframes`
@@ -72,7 +73,11 @@ export default function ByteStepper(props: IByteStepperProps) {
           animationIterationCount: "infinite",
         }}
       >
-        <Byte animation={animation} delay={delay} />
+        <Byte
+          animation={animation}
+          delay={delay} //@ts-ignore
+          size={Math.sqrt(props.scale || 1) * 45}
+        />
       </Box>
     </Stack>
   );
@@ -81,7 +86,7 @@ export default function ByteStepper(props: IByteStepperProps) {
     <Box
       position="relative"
       width="fit-content"
-      height={CIRCLE_SIZE}
+      height={(props.scale || 1) * CIRCLE_SIZE}
       overflow="visible"
       sx={{ background: PALETTE.secondary.grey[1] }}
       borderRadius={ROUNDING}
@@ -90,7 +95,7 @@ export default function ByteStepper(props: IByteStepperProps) {
         <Box
           width={`calc(${
             props.step > 0 && props.step < props.nSteps - 1
-              ? CIRCLE_SIZE / 2
+              ? ((props.scale || 1) * CIRCLE_SIZE) / 2
               : 0
           }px + ${(100 * props.step) / (props.nSteps - 1)}%)`}
           height="100%"
@@ -105,14 +110,18 @@ export default function ByteStepper(props: IByteStepperProps) {
           zIndex={BAR_Z_INDEX}
         />
       </Box>
-      <Stack direction="row" spacing={SPACING} overflow="visible">
+      <Stack
+        direction="row"
+        spacing={`${(props.scale || 1) * SPACING}px`}
+        overflow="visible"
+      >
         {[...Array(props.nSteps).keys()].map((n) => {
           return (
             <Stack key={n} overflow="visible" alignItems="center">
               <Box
                 sx={{
-                  width: CIRCLE_SIZE,
-                  height: CIRCLE_SIZE,
+                  width: (props.scale || 1) * CIRCLE_SIZE,
+                  height: (props.scale || 1) * CIRCLE_SIZE,
                 }}
               >
                 {getCircle(n === 0)}

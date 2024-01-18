@@ -11,6 +11,9 @@ import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import dynamic from "next/dynamic";
 import { IPediaQuestion } from "../p/[urlId]/PediaPageContents";
+import { useWindowSize } from "usehooks-ts";
+
+export const DEFAULT_WIDTH = 502;
 
 const ByteStepper = dynamic(
   () => import("./ByteStepper"),
@@ -28,14 +31,19 @@ export default function QuestionsCard(props: {
     undefined
   );
   const [questionIndex, setQuestionIndex] = useState<number>(0);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+
+  const { width } = useWindowSize();
   return (
     <Stack width="100%" alignItems="center">
       <Stack
-        width={props.mobile ? "100%" : "502px"}
+        minWidth={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
         height="363px"
         alignItems="center"
         justifyContent="space-between"
         py="27px"
+        px={props.mobile ? undefined : "40px"}
         boxSizing="border-box"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
@@ -45,6 +53,7 @@ export default function QuestionsCard(props: {
           <ByteStepper
             nSteps={props.questions.length + 1}
             step={questionIndex}
+            scale={Math.min(1, width / (DEFAULT_WIDTH * 1.1))}
           />
           <Stack
             width={props.mobile ? "80%" : "400px"}
@@ -98,7 +107,7 @@ export default function QuestionsCard(props: {
               pointerEvents: selectedAnswer ? "none" : undefined,
             }}
           >
-            {props.questions[questionIndex].answers.map((a) => (
+            {props.questions[questionIndex].options.map((a) => (
               <Grid key={a.id} item>
                 <Stack
                   key={a.id}
@@ -117,8 +126,7 @@ export default function QuestionsCard(props: {
                     outline:
                       selectedAnswer === a.id
                         ? `2px solid ${
-                            props.questions[questionIndex].correctAnswer ===
-                            a.id
+                            props.questions[questionIndex].answer === a.id
                               ? PALETTE.secondary.green[3]
                               : PALETTE.secondary.orange[3]
                           }`
@@ -223,8 +231,7 @@ export default function QuestionsCard(props: {
               questionIndex === props.questions.length
                 ? SyncIcon
                 : !selectedAnswer ||
-                  selectedAnswer ===
-                    props.questions[questionIndex].correctAnswer
+                  selectedAnswer === props.questions[questionIndex].answer
                 ? ChevronRightIcon
                 : X
             }
@@ -232,7 +239,7 @@ export default function QuestionsCard(props: {
               if (questionIndex === props.questions.length) {
                 setQuestionIndex(0);
               } else if (
-                selectedAnswer === props.questions[questionIndex].correctAnswer
+                selectedAnswer === props.questions[questionIndex].answer
               ) {
                 setQuestionIndex(questionIndex + 1);
               }
@@ -242,7 +249,7 @@ export default function QuestionsCard(props: {
             {questionIndex === props.questions.length
               ? "Start over"
               : !selectedAnswer ||
-                selectedAnswer === props.questions[questionIndex].correctAnswer
+                selectedAnswer === props.questions[questionIndex].answer
               ? questionIndex === props.questions.length - 1
                 ? "Complete"
                 : "Next Question"

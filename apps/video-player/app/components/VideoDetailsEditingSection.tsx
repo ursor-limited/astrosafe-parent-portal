@@ -5,7 +5,6 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import ApiController from "@/app/api";
-import Image from "next/image";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
