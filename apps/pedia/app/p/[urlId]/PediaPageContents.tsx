@@ -495,8 +495,6 @@ const MobileColumn = (props: {
 
   const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
-  console.log("wwwww", props.facts);
-
   return (
     <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
       <Stack width="100%" alignItems="flex-end">

@@ -43,7 +43,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
           borderRadius="16px"
           bgcolor={PALETTE.secondary.grey[2]}
           p={`${GRID_SPACING}px`}
-          pb={0}
+          //pb={0}
           spacing={`${GRID_SPACING}px`}
         >
           <Stack>

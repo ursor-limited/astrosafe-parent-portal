@@ -10,14 +10,28 @@ import {
   IPediaPage,
 } from "@/app/p/[urlId]/PediaPageContents";
 import LayoutCard from "@/app/components/LayoutCard";
-import { Stack } from "@mui/system";
+import { Box, Stack, keyframes } from "@mui/system";
 import { Header } from "@/app/components/Header";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { Typography } from "ui";
+import Byte from "@/app/components/Byte";
 
 const N_COLUMNS = 12;
 export const GRID_SPACING = 24;
 const MOBILE_VIEW_IMAGE_HEIGHT = "200px";
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 960;
+
+const PULSE_AMPLITUDE = "3px";
+const PULSE_PERIOD = "2s";
+
+export const pulse = keyframes`
+  from {
+    transform: translateY(-${PULSE_AMPLITUDE})
+  }
+  to {
+    transform: translateY(${PULSE_AMPLITUDE})
+  }
+`;
 
 export interface IMobileCollectionPageColumn {
   pages: IPediaPage[];
@@ -66,8 +80,32 @@ export default function PediaCollectionPageContents(
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   return (
-    <Stack width="100vw" height="100vh" alignItems="center">
+    <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
+      <Stack alignItems="center" spacing="3px" pb="66px">
+        <Box
+          sx={{
+            animation: `${pulse} ${PULSE_PERIOD} ease-in-out`,
+            animationDirection: "alternate",
+            animationIterationCount: "infinite",
+          }}
+        >
+          <Byte animation="loading" size={45} loop />
+        </Box>
+        <Stack
+          sx={{
+            background: "linear-gradient(0deg, #6596FF, #7B61FF)",
+            "-webkit-text-fill-color": "transparent",
+            backgroundClip: "text",
+            "-webkit-background-clip": "text",
+          }}
+        >
+          <Typography variant="h4">Creating your new Collection</Typography>
+        </Stack>
+        <Typography color="rgba(255,255,255,0.45)" bold>
+          This may take a few minutes.
+        </Typography>
+      </Stack>
       {isMobile && props.pageDetails ? (
         <Stack width="100%" height="100%">
           <UrsorFadeIn duration={1000}>
