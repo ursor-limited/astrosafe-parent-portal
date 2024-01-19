@@ -55,7 +55,7 @@ export function CollectionPageNotification(
 ) {
   return (
     <Stack alignItems="center">
-      <Stack direction="row" alignItems="center" spacing="8px">
+      <Stack direction="row" alignItems="center" spacing="12px">
         <Box
           sx={{
             animation: `${pulse} ${PULSE_PERIOD} ease-in-out`,
@@ -139,10 +139,10 @@ export default function PediaCollectionPageContents(
     useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(true);
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 8000);
-    setTimeout(() => setEditTitleDialogOpen(true), 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 8000);
+  //   setTimeout(() => setEditTitleDialogOpen(true), 3000);
+  // }, []);
 
   const [titleInputValue, setTitleInputValue] = useState<string>("");
   useEffect(() => {

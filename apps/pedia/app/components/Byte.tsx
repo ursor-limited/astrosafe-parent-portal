@@ -22,6 +22,7 @@ export interface IByteAnimationProps {
   callback: () => void;
   lottieJson: any;
   loop?: boolean;
+  size?: number;
 }
 
 function ByteAnimation(props: IByteAnimationProps) {
@@ -31,7 +32,7 @@ function ByteAnimation(props: IByteAnimationProps) {
     loop: !!props.loop,
     onComplete: props.callback,
   };
-  const { View } = useLottie(options, { height: HEIGHT });
+  const { View } = useLottie(options, { height: props.size || HEIGHT });
   return View;
 }
 
@@ -76,6 +77,7 @@ export default function Byte(props: IStepsByteControllerProps) {
           lottieJson={JSONS[animation]}
           callback={callbacks[animation]}
           loop={props.loop}
+          size={props.size}
         />
       ) : null}
     </Box>

@@ -7,10 +7,16 @@ import { IPediaPage } from "@/app/p/[urlId]/PediaPageContents";
 import _ from "lodash";
 import { UrsorTypographyVariant } from "ui/typography";
 import PageIllustration from "@/images/page.png";
+import dynamic from "next/dynamic";
 
 export const GRID_SPACING = 24;
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
+
+const Byte = dynamic(
+  () => import("@/app/components/Byte"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export function ContentPagePreviewCard(props: {
   title: string;
@@ -33,6 +39,7 @@ export function ContentPagePreviewCard(props: {
         "&:hover": { opacity: 0.7 },
         transition: "0.2s",
         cursor: "pointer",
+        filter: props.loading ? "grayscale(100%)" : undefined,
       }}
       onClick={() => router.push(`/p/${props.urlId}`)}
       p={props.mobile ? "10px" : "20px"}
@@ -51,20 +58,33 @@ export function ContentPagePreviewCard(props: {
       >
         {props.title}
       </Typography>
-      <Stack
-        flex={1}
-        sx={{
-          backgroundImage: `url(${
-            props.loading ? PageIllustration.src : props.imageUrl
-          })`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          boxSizing: "border-box",
-          filter: props.loading ? "grayscale(100%)" : undefined,
-          transform: props.loading ? "scale(0.7)" : undefined,
-        }}
-      />
+      {props.loading ? (
+        <Stack
+          flex={1}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            transform: "translate(-5px, -10px)",
+            opacity: 0.4,
+          }}
+        >
+          <Byte animation="loading" loop size={75} />
+        </Stack>
+      ) : (
+        <Stack
+          flex={1}
+          sx={{
+            backgroundImage: `url(${
+              props.loading ? PageIllustration.src : props.imageUrl
+            })`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            boxSizing: "border-box",
+            transform: props.loading ? "scale(0.7)" : undefined,
+          }}
+        />
+      )}
     </Stack>
   );
 }
