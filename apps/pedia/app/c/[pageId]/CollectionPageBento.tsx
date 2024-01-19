@@ -1,13 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Box, Stack, alpha } from "@mui/system";
 import { getImageSize } from "react-image-size";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { useRouter } from "next/navigation";
 import { IPediaPage } from "@/app/p/[urlId]/PediaPageContents";
 import _ from "lodash";
 import { UrsorTypographyVariant } from "ui/typography";
 import PageIllustration from "@/images/page.png";
 import dynamic from "next/dynamic";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 export const GRID_SPACING = 24;
 
@@ -85,6 +88,33 @@ export function ContentPagePreviewCard(props: {
           }}
         />
       )}
+      <Stack
+        width="100%"
+        justifyContent="flex-end"
+        direction="row"
+        spacing="8px"
+      >
+        <UrsorButton dark size="small">
+          Open
+        </UrsorButton>
+        <UrsorActionButton
+          background={PALETTE.secondary.grey[1]}
+          size="28px"
+          actions={[
+            {
+              text: "Open",
+              icon: ArrowLeftIcon,
+              kallback: () => router.push(`/p/${props.urlId}`),
+            },
+            {
+              text: "Remove",
+              icon: TrashcanIcon,
+              kallback: () => null,
+              color: PALETTE.system.red,
+            },
+          ]}
+        />
+      </Stack>
     </Stack>
   );
 }

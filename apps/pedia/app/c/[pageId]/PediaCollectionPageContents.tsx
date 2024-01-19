@@ -138,11 +138,11 @@ export default function PediaCollectionPageContents(
   const [editTitleDialogOpen, setEditTitleDialogOpen] =
     useState<boolean>(false);
 
-  const [loading, setLoading] = useState<boolean>(true);
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 8000);
-  //   setTimeout(() => setEditTitleDialogOpen(true), 3000);
-  // }, []);
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 8000);
+    setTimeout(() => setEditTitleDialogOpen(true), 3000);
+  }, []);
 
   const [titleInputValue, setTitleInputValue] = useState<string>("");
   useEffect(() => {
