@@ -31,11 +31,15 @@ const patch = (route: string, body: any) =>
 class ApiController {
   static async getPage(id: string) {
     //@ts-ignore
-    return get(`pedia/${id}`).then((response: any) => response.json());
+    return get(`pedia/article/${id}`).then((response: any) => response.json());
   }
   static async getAllArticles() {
     //@ts-ignore
-    return get(`pedia`).then((response: any) => response.json());
+    return get(`pedia/allArticles`).then((response: any) => response.json());
+  }
+  static async getAllCollections() {
+    //@ts-ignore
+    return get(`pedia/allCollections`).then((response: any) => response.json());
   }
   static async getCollectionPage(id: string) {
     return get(`pedia/collection/${id}`).then((response: any) =>

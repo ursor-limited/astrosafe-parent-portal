@@ -9,10 +9,14 @@ import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPage
 import { PALETTE, Typography } from "ui";
 import { CreationBox } from "../components/CreationBox";
 
-import { IPediaPage } from "../p/[urlId]/PediaPageContents";
+import {
+  IPediaCollectionPage,
+  IPediaPage,
+} from "../p/[urlId]/PediaPageContents";
 import ApiController from "../api";
 import { Grid } from "@mui/material";
 import UrsorFadeIn from "../components/UrsorFadeIn";
+import { useRouter } from "next/navigation";
 
 export function PediaArticleCard(props: {
   title: string;
@@ -61,11 +65,82 @@ export function PediaArticleCard(props: {
   );
 }
 
+export function PediaCollectionCard(props: {
+  title: string;
+  images: { url: string; color: string }[];
+}) {
+  return (
+    <Stack
+      width="247px"
+      height="189px"
+      borderRadius="12px"
+      spacing="5px"
+      bgcolor="rgb(255,255,255)"
+      overflow="hidden"
+      p="4px"
+    >
+      <Stack
+        height="107px"
+        direction="row"
+        overflow="hidden"
+        spacing="4px"
+        borderRadius="10px 10px 0 0"
+      >
+        <Stack
+          width="164px"
+          minWidth="164px"
+          height="100%"
+          bgcolor={props.images[0].color}
+        >
+          <Stack
+            flex={1}
+            sx={{
+              backgroundImage: `url(${props.images[0].url})`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+          />
+        </Stack>
+        <Stack spacing="4px" flex={1}>
+          <Stack flex={1} bgcolor={props.images[1].color}>
+            <Stack
+              flex={1}
+              sx={{
+                backgroundImage: `url(${props.images[1].url})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+              }}
+            />
+          </Stack>
+          <Stack flex={1} bgcolor={props.images[2].color}>
+            <Stack
+              flex={1}
+              sx={{
+                backgroundImage: `url(${props.images[2].url})`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+              }}
+            />
+          </Stack>
+        </Stack>
+      </Stack>
+      <Typography variant="medium" bold color={PALETTE.secondary.grey[5]}>
+        {props.title}
+      </Typography>
+    </Stack>
+  );
+}
+
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
 
 export function PediaTabSwitch(props: {
   selected: "articles" | "collections";
   callback: (category: "articles" | "collections") => void;
+  nArticles: number;
+  nCollections: number;
 }) {
   return (
     <Stack
@@ -92,7 +167,12 @@ export function PediaTabSwitch(props: {
           transition: "0.2s",
           cursor: "pointer",
         }}
+        direction="row"
+        spacing="8px"
       >
+        <Typography bold variant="large" color="rgba(255,255,255,0.8)">
+          {props.nArticles}
+        </Typography>
         <Typography bold variant="large" color="rgba(255,255,255,0.8)">
           Articles
         </Typography>
@@ -116,7 +196,12 @@ export function PediaTabSwitch(props: {
           transition: "0.2s",
           cursor: "pointer",
         }}
+        direction="row"
+        spacing="8px"
       >
+        <Typography bold variant="large" color="rgba(255,255,255,0.8)">
+          {props.nCollections}
+        </Typography>
         <Typography bold variant="large" color="rgba(255,255,255,0.8)">
           Collections
         </Typography>
@@ -132,13 +217,24 @@ export default function PediaHomePageContents() {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   const [articles, setArticles] = useState<IPediaPage[]>([]);
+  const [collections, setCollections] = useState<
+    {
+      page: IPediaCollectionPage;
+      images: { url: string; color: string }[];
+    }[]
+  >([]);
   useEffect(() => {
     ApiController.getAllArticles().then((articles) => setArticles(articles));
+    ApiController.getAllCollections().then((collections) =>
+      setCollections(collections)
+    );
   }, []);
 
   const [selectedTab, setSelectedTab] = useState<"articles" | "collections">(
     "articles"
   );
+
+  const router = useRouter();
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -174,6 +270,8 @@ export default function PediaHomePageContents() {
           <PediaTabSwitch
             selected={selectedTab}
             callback={(category) => setSelectedTab(category)}
+            nArticles={articles.length}
+            nCollections={collections.length}
           />
           <Stack
             bgcolor="rgba(0,0,0,0.16)"
@@ -183,19 +281,50 @@ export default function PediaHomePageContents() {
             borderRadius="24px"
           >
             <Grid container gap="22px">
-              {articles
-                .filter((a) => a.color && a.mainImage)
-                .map((a, i) => (
-                  <Grid key={a.id} item>
-                    <UrsorFadeIn duration={800} delay={i * 100}>
-                      <PediaArticleCard
-                        title={a.title}
-                        imageUrl={a.mainImage}
-                        color={a.color}
-                      />
-                    </UrsorFadeIn>
-                  </Grid>
-                ))}
+              {selectedTab === "articles"
+                ? articles
+                    .filter((a) => a.color && a.mainImage)
+                    .map((a, i) => (
+                      <Grid
+                        key={a.id}
+                        item
+                        onClick={() => router.push(`/p/${a.urlId}`)}
+                        sx={{
+                          "&:hover": { opacity: 0.7 },
+                          transition: "0.2s",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <UrsorFadeIn duration={800} delay={i * 100}>
+                          <PediaArticleCard
+                            title={a.title}
+                            imageUrl={a.mainImage}
+                            color={a.color}
+                          />
+                        </UrsorFadeIn>
+                      </Grid>
+                    ))
+                : collections
+                    .filter((c) => c.page.articles)
+                    .map((c, i) => (
+                      <Grid
+                        key={c.page.id}
+                        item
+                        onClick={() => router.push(`/c/${c.page.id}`)}
+                        sx={{
+                          "&:hover": { opacity: 0.7 },
+                          transition: "0.2s",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <UrsorFadeIn duration={800} delay={i * 100}>
+                          <PediaCollectionCard
+                            title={c.page.title}
+                            images={c.images}
+                          />
+                        </UrsorFadeIn>
+                      </Grid>
+                    ))}
             </Grid>
           </Stack>
         </Stack>

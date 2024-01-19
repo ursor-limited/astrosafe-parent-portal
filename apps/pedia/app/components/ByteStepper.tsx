@@ -3,8 +3,14 @@
 import React from "react";
 import { Box, keyframes, Stack } from "@mui/system";
 import { PALETTE } from "ui/palette";
-import Byte, { ByteAnimation } from "./Byte";
+import { ByteAnimation } from "./Byte";
 import { fadeOut } from "./SearchBar";
+import dynamic from "next/dynamic";
+
+const Byte = dynamic(
+  () => import("@/app/components/Byte"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const SPACING = 62;
 const CIRCLE_SIZE = 24;
