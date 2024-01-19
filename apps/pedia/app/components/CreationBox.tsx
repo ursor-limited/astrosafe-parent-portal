@@ -1,10 +1,11 @@
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PaintBrushIcon from "@/images/icons/PaintBrushIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "./UrsorFadeIn";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;
@@ -40,6 +41,9 @@ export const CreationBox = () => {
     setTopics([...topics, value]);
     setValue("");
   };
+
+  const { loginWithPopup } = useAuth0();
+
   return (
     <Stack
       bgcolor="rgba(0,0,0,0.16)"
@@ -146,7 +150,7 @@ export const CreationBox = () => {
       <UrsorButton
         dark
         variant="tertiary"
-        onClick={() => null}
+        onClick={loginWithPopup}
         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
         hoverOpacity={0.7}
         endIcon={PaintBrushIcon}

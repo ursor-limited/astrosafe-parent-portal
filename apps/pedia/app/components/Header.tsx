@@ -3,22 +3,17 @@
 import { Stack } from "@mui/system";
 import Logo from "@/images/logoWhite.svg";
 import ChevronRight from "@/images/icons/ChevronRightIcon.svg";
-import { UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const HEADER_HEIGHT = 86;
+export const ASTRO_MAGICAL_GRADIENT =
+  "linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)";
 
-//export const Header = (props: { collapsed: boolean }) => {
 export const Header = (props: { noCreateNew?: boolean }) => {
+  const { user, loginWithPopup, logout } = useAuth0();
   return (
     <Stack
-      //position="absolute"
-      // zIndex={999}
-      // top={0}
-      // left={0}
-      //bgcolor="rgba(0,0,0,0.05)"
-      // sx={{
-      //   backdropFilter: "blur(8px)",
-      // }}
       direction="row"
       width="100%"
       height={`${86}px`}
@@ -56,15 +51,48 @@ export const Header = (props: { noCreateNew?: boolean }) => {
           }}
           rel="noreferrer"
         >
-          <UrsorButton
-            dark
-            variant="tertiary"
-            onClick={() => null}
-            endIcon={ChevronRight}
-          >
-            Get Browser
-          </UrsorButton>
+          {user ? (
+            <UrsorButton dark variant="secondary" onClick={() => null}>
+              Try ASTRO
+            </UrsorButton>
+          ) : (
+            <UrsorButton
+              dark
+              variant="tertiary"
+              onClick={() => null}
+              endIcon={ChevronRight}
+            >
+              Get Browser
+            </UrsorButton>
+          )}
         </a>
+        {user ? (
+          <Stack
+            p="2px"
+            boxSizing="border-box"
+            sx={{
+              background: ASTRO_MAGICAL_GRADIENT,
+            }}
+            borderRadius="100%"
+            height="42px"
+            width="42px"
+          >
+            <Stack
+              flex={1}
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor="#253D4D"
+            >
+              <Typography bold color={PALETTE.font.light}>
+                {(
+                  user.name?.split(" ")[0][0] +
+                  (user.name?.split(" ")[1][0] || "")
+                ).toUpperCase()}
+              </Typography>
+            </Stack>
+          </Stack>
+        ) : null}
       </Stack>
     </Stack>
   );
