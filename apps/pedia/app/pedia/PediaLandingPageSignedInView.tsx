@@ -17,7 +17,7 @@ import ApiController from "../api";
 import { Grid } from "@mui/material";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 
 export function PediaArticleCard(props: {
   title: string;
@@ -217,6 +217,8 @@ export default function PediaLandingPageSignedInView() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
+  const { user } = useAuth0();
+
   const [articles, setArticles] = useState<IPediaPage[]>([]);
   const [collections, setCollections] = useState<
     {
@@ -225,11 +227,15 @@ export default function PediaLandingPageSignedInView() {
     }[]
   >([]);
   useEffect(() => {
-    ApiController.getAllArticles().then((articles) => setArticles(articles));
-    ApiController.getAllCollections().then((collections) =>
-      setCollections(collections)
-    );
-  }, []);
+    user?.email &&
+      ApiController.getAllArticles(user.email).then((articles) =>
+        setArticles(articles)
+      );
+    user?.email &&
+      ApiController.getAllCollections(user.email).then((collections) =>
+        setCollections(collections)
+      );
+  }, [user?.email]);
 
   const [selectedTab, setSelectedTab] = useState<"articles" | "collections">(
     "articles"
@@ -252,98 +258,104 @@ export default function PediaLandingPageSignedInView() {
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
         <Header />
         <Stack spacing="50px" alignItems="center">
-          <Stack maxWidth="780px" spacing="6px">
-            <Stack
-              sx={{
-                background: "linear-gradient(150deg, #F279C5, #FD9B41)",
-                "-webkit-text-fill-color": "transparent",
-                backgroundClip: "text",
-                "-webkit-background-clip": "text",
-              }}
-              alignItems="center"
-            >
-              <Typography variant="h1">Your Dashboard</Typography>
+          <UrsorFadeIn duration={800}>
+            <Stack maxWidth="780px" spacing="6px">
+              <Stack
+                sx={{
+                  background: "linear-gradient(150deg, #F279C5, #FD9B41)",
+                  "-webkit-text-fill-color": "transparent",
+                  backgroundClip: "text",
+                  "-webkit-background-clip": "text",
+                }}
+                alignItems="center"
+              >
+                <Typography variant="h1">Your Dashboard</Typography>
+              </Stack>
+              <Typography
+                variant="h5"
+                color="rgba(255,255,255,0.8)"
+                sx={{ textAlign: "center", lineHeight: "28px" }}
+              >
+                Create new contents, or browse your library.
+              </Typography>
             </Stack>
-            <Typography
-              variant="h5"
-              color="rgba(255,255,255,0.8)"
-              sx={{ textAlign: "center", lineHeight: "28px" }}
-            >
-              Create new contents, or browse your library.
-            </Typography>
-          </Stack>
-          <Stack alignItems="center" spacing="6px">
-            <Typography variant="normal" bold color="rgba(255,255,255,0.8)">
-              Create an Article or a Collection
-            </Typography>
-            <CreationBox />
-          </Stack>
-          <Stack spacing="14px" alignItems="center">
-            <PediaTabSwitch
-              selected={selectedTab}
-              callback={(category) => setSelectedTab(category)}
-              nArticles={articles.length}
-              nCollections={collections.length}
-            />
-            <Stack
-              bgcolor="rgba(0,0,0,0.16)"
-              px="50px"
-              py="50px"
-              width="1158px"
-              borderRadius="24px"
-              sx={{
-                background:
-                  "linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0))",
-              }}
-            >
-              <Grid container gap="22px">
-                {selectedTab === "articles"
-                  ? articles
-                      .filter((a) => a.color && a.mainImage)
-                      .map((a, i) => (
-                        <Grid
-                          key={a.id}
-                          item
-                          onClick={() => router.push(`/p/${a.urlId}`)}
-                          sx={{
-                            "&:hover": { opacity: 0.7 },
-                            transition: "0.2s",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <UrsorFadeIn duration={800} delay={i * 100}>
-                            <PediaArticleCard
-                              title={a.title}
-                              imageUrl={a.mainImage}
-                              color={a.color}
-                            />
-                          </UrsorFadeIn>
-                        </Grid>
-                      ))
-                  : collections
-                      .filter((c) => c.page.articles)
-                      .map((c, i) => (
-                        <Grid
-                          key={c.page.id}
-                          item
-                          onClick={() => router.push(`/c/${c.page.id}`)}
-                          sx={{
-                            "&:hover": { opacity: 0.7 },
-                            transition: "0.2s",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <UrsorFadeIn duration={800} delay={i * 100}>
-                            <PediaCollectionCard
-                              title={c.page.title}
-                              images={c.images}
-                            />
-                          </UrsorFadeIn>
-                        </Grid>
-                      ))}
-              </Grid>
+          </UrsorFadeIn>
+          <UrsorFadeIn delay={200} duration={800}>
+            <Stack alignItems="center" spacing="6px">
+              <Typography variant="normal" bold color="rgba(255,255,255,0.8)">
+                Create an Article or a Collection
+              </Typography>
+              <CreationBox />
             </Stack>
-          </Stack>
+          </UrsorFadeIn>
+          <UrsorFadeIn delay={400} duration={800}>
+            <Stack spacing="14px" alignItems="center">
+              <PediaTabSwitch
+                selected={selectedTab}
+                callback={(category) => setSelectedTab(category)}
+                nArticles={articles.length}
+                nCollections={collections.length}
+              />
+              <Stack
+                bgcolor="rgba(0,0,0,0.16)"
+                px="50px"
+                py="50px"
+                width="1158px"
+                borderRadius="24px"
+                sx={{
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0))",
+                }}
+              >
+                <Grid container gap="22px">
+                  {selectedTab === "articles"
+                    ? articles
+                        .filter((a) => a.color && a.mainImage)
+                        .map((a, i) => (
+                          <Grid
+                            key={a.id}
+                            item
+                            onClick={() => router.push(`/p/${a.urlId}`)}
+                            sx={{
+                              "&:hover": { opacity: 0.7 },
+                              transition: "0.2s",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <UrsorFadeIn duration={800} delay={i * 100}>
+                              <PediaArticleCard
+                                title={a.title}
+                                imageUrl={a.mainImage}
+                                color={a.color}
+                              />
+                            </UrsorFadeIn>
+                          </Grid>
+                        ))
+                    : collections
+                        .filter((c) => c.page.articles)
+                        .map((c, i) => (
+                          <Grid
+                            key={c.page.id}
+                            item
+                            onClick={() => router.push(`/c/${c.page.id}`)}
+                            sx={{
+                              "&:hover": { opacity: 0.7 },
+                              transition: "0.2s",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <UrsorFadeIn duration={800} delay={i * 100}>
+                              <PediaCollectionCard
+                                title={c.page.title}
+                                images={c.images}
+                              />
+                            </UrsorFadeIn>
+                          </Grid>
+                        ))}
+                </Grid>
+              </Stack>
+            </Stack>
+          </UrsorFadeIn>
         </Stack>
       </Stack>
     </Auth0Provider>

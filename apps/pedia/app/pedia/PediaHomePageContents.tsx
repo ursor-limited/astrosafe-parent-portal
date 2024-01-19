@@ -10,9 +10,11 @@ import PediaLandingPageSignedOutView from "./PediaLandingPageSignedOutView";
 export default function PediaHomePageContents() {
   /* needed for the platform row's proper scrollability */
 
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
 
-  return user ? (
+  return isLoading ? (
+    <></>
+  ) : user ? (
     <PediaLandingPageSignedInView />
   ) : (
     <PediaLandingPageSignedOutView />
