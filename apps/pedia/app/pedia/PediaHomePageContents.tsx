@@ -174,7 +174,7 @@ export function PediaTabSwitch(props: {
           {props.nArticles}
         </Typography>
         <Typography bold variant="large" color="rgba(255,255,255,0.8)">
-          Articles
+          {`Article${props.nArticles > 1 ? "s" : ""}`}
         </Typography>
       </Stack>
       <Stack
@@ -203,7 +203,7 @@ export function PediaTabSwitch(props: {
           {props.nCollections}
         </Typography>
         <Typography bold variant="large" color="rgba(255,255,255,0.8)">
-          Collections
+          {`Collection${props.nCollections > 1 ? "s" : ""}`}
         </Typography>
       </Stack>
     </Stack>
