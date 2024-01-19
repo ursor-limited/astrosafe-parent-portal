@@ -9,7 +9,7 @@ import { UrsorTypographyVariant } from "ui/typography";
 import PageIllustration from "@/images/page.png";
 import dynamic from "next/dynamic";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
+import ArrowUpRightIcon from "@/images/icons/ArrowUpRightIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 export const GRID_SPACING = 24;
@@ -33,68 +33,97 @@ export function ContentPagePreviewCard(props: {
   loading?: boolean;
 }) {
   const router = useRouter();
+  const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
       flex={1}
       borderRadius="16px"
-      bgcolor={props.loading ? PALETTE.secondary.grey[2] : props.color}
+      bgcolor={
+        props.loading
+          ? PALETTE.secondary.grey[2]
+          : hovering
+          ? alpha(props.color, 0.6)
+          : props.color
+      }
       sx={{
-        "&:hover": { opacity: 0.7 },
-        transition: "0.2s",
         cursor: "pointer",
+        transition: "0.2s",
         filter: props.loading ? "grayscale(100%)" : undefined,
       }}
-      onClick={() => router.push(`/p/${props.urlId}`)}
-      p={props.mobile ? "10px" : "20px"}
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
       overflow="hidden"
+      position="relative"
     >
-      <Typography
-        variant={props.fontSize || (props.mobile ? "normal" : "h4")}
-        bold
-        htmlTag="h3"
-        color={props.loading ? PALETTE.secondary.grey[3] : PALETTE.font.light}
-        sx={{
-          textAlign: props.titleOnRight ? "right" : undefined,
+      <Stack
+        p={props.mobile ? "10px" : "20px"}
+        pb={props.mobile ? "40px" : "50px"}
+        flex={1}
+        onClick={() => router.push(`/p/${props.urlId}`)}
+        onMouseEnter={() => {
+          setHovering(true);
+        }}
+        onMouseLeave={() => {
+          setHovering(false);
         }}
       >
-        {props.title}
-      </Typography>
-      {props.loading ? (
-        <Stack
-          flex={1}
-          justifyContent="center"
-          alignItems="center"
+        <Typography
+          variant={props.fontSize || (props.mobile ? "normal" : "h4")}
+          bold
+          htmlTag="h3"
+          color={props.loading ? PALETTE.secondary.grey[3] : PALETTE.font.light}
           sx={{
-            transform: "translate(-5px, -10px)",
-            opacity: 0.4,
+            textAlign: props.titleOnRight ? "right" : undefined,
           }}
         >
-          <Byte animation="loading" loop size={75} />
-        </Stack>
-      ) : (
-        <Stack
-          flex={1}
-          sx={{
-            backgroundImage: `url(${
-              props.loading ? PageIllustration.src : props.imageUrl
-            })`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            boxSizing: "border-box",
-            transform: props.loading ? "scale(0.7)" : undefined,
-          }}
-        />
-      )}
+          {props.title}
+        </Typography>
+        {props.loading ? (
+          <Stack
+            flex={1}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              transform: "translate(-5px, -10px)",
+              opacity: 0.4,
+            }}
+          >
+            <Byte animation="loading" loop size={75} />
+          </Stack>
+        ) : (
+          <Stack
+            flex={1}
+            sx={{
+              backgroundImage: `url(${
+                props.loading ? PageIllustration.src : props.imageUrl
+              })`,
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              boxSizing: "border-box",
+              transition: "0.3s ease-out",
+              transform: props.loading
+                ? "scale(0.7)"
+                : hovering
+                ? "scale(1.07)"
+                : undefined,
+            }}
+          />
+        )}
+      </Stack>
       <Stack
-        width="100%"
         justifyContent="flex-end"
         direction="row"
         spacing="8px"
+        position="absolute"
+        bottom={props.mobile ? "10px" : "20px"}
+        right={props.mobile ? "10px" : "20px"}
       >
-        <UrsorButton dark size="small">
+        <UrsorButton
+          dark
+          size="small"
+          onClick={() => router.push(`/p/${props.urlId}`)}
+        >
           Open
         </UrsorButton>
         <UrsorActionButton
@@ -103,7 +132,7 @@ export function ContentPagePreviewCard(props: {
           actions={[
             {
               text: "Open",
-              icon: ArrowLeftIcon,
+              icon: ArrowUpRightIcon,
               kallback: () => router.push(`/p/${props.urlId}`),
             },
             {
