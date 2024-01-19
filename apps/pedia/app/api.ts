@@ -16,9 +16,6 @@ const get = (route: string, query?: string) =>
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}${
       query ? `?${new URLSearchParams(query)}` : ""
     }`,
-    // `${BACKEND_URLS[process.env.NODE_ENV]}/${route}` + query
-    //   ? `?${new URLSearchParams(query)}`
-    //   : "",
     { cache: "no-store" } // need this in order to show updated pages
   );
 
