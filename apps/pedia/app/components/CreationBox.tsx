@@ -5,7 +5,7 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PaintBrushIcon from "@/images/icons/PaintBrushIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "./UrsorFadeIn";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;

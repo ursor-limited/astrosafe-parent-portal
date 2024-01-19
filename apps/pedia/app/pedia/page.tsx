@@ -1,10 +1,8 @@
 import React from "react";
-import PediaLandingPageContents from "./PediaLandingPageContents";
-import PediaHomePageContents from "./PediaHomePageContents";
-import { Stack } from "@mui/system";
+import AuthWrapper from "./AuthWrapper";
 
 async function PediaLandingPage() {
-  return <PediaHomePageContents />;
+  return <AuthWrapper />;
 }
 
 export default PediaLandingPage;

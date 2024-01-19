@@ -29,7 +29,7 @@ export const GRID_SPACING = 24;
 const MOBILE_VIEW_IMAGE_HEIGHT = "200px";
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 960;
 
-const PULSE_AMPLITUDE = "3px";
+const PULSE_AMPLITUDE = "2px";
 const PULSE_PERIOD = "2s";
 
 const TITLE_CHARACTER_LIMIT = 40;
@@ -54,29 +54,32 @@ export function CollectionPageNotification(
   props: ICollectionPageNotificationProps
 ) {
   return (
-    <Stack alignItems="center" spacing="3px" pb="66px">
-      <Box
-        sx={{
-          animation: `${pulse} ${PULSE_PERIOD} ease-in-out`,
-          animationDirection: "alternate",
-          animationIterationCount: "infinite",
-        }}
-      >
-        <Byte
-          animation={props.animation}
-          size={45}
-          loop={props.animation === "loading"}
-        />
-      </Box>
-      <Stack
-        sx={{
-          background: props.titleBackground,
-          "-webkit-text-fill-color": "transparent",
-          backgroundClip: "text",
-          "-webkit-background-clip": "text",
-        }}
-      >
-        <Typography variant="h4">{props.title}</Typography>
+    <Stack alignItems="center">
+      <Stack direction="row" alignItems="center" spacing="8px">
+        <Box
+          sx={{
+            animation: `${pulse} ${PULSE_PERIOD} ease-in-out`,
+            animationDirection: "alternate",
+            animationIterationCount: "infinite",
+          }}
+          pb="4px"
+        >
+          <Byte
+            animation={props.animation}
+            size={30}
+            loop={props.animation === "loading"}
+          />
+        </Box>
+        <Stack
+          sx={{
+            background: props.titleBackground,
+            "-webkit-text-fill-color": "transparent",
+            backgroundClip: "text",
+            "-webkit-background-clip": "text",
+          }}
+        >
+          <Typography variant="h5">{props.title}</Typography>
+        </Stack>
       </Stack>
       <Typography color="rgba(255,255,255,0.45)" bold>
         {props.subtitle}
@@ -150,53 +153,62 @@ export default function PediaCollectionPageContents(
     <>
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
         <Header />
-        <CollectionPageNotification
-          title={
-            loading ? "Creating your new Collection" : "Collection created"
-          }
-          subtitle={loading ? "This may take a few minutes." : "Enjoy!"}
-          animation={loading ? "loading" : "celebration"}
-          titleBackground={
-            loading
-              ? "linear-gradient(0deg, #6596FF, #7B61FF)"
-              : "linear-gradient(2deg, #0AE799, #1D62F6)"
-          }
-        />
-        {isMobile && props.pageDetails ? (
-          <Stack width="100%" height="100%">
-            <UrsorFadeIn duration={1000}>
-              <MobileCollectionPageColumn pages={props.articles} />
-            </UrsorFadeIn>
-          </Stack>
-        ) : props.pageDetails ? (
-          <LayoutCard
-            title={titleInputValue}
-            titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
-            category={
-              props.articles
-                .slice(0, -1)
-                .map((a) => a.title)
-                .join(", ") +
-              ` and ${props.articles[props.articles.length - 1].title}`
+        <Stack spacing="20px" width="100%">
+          <CollectionPageNotification
+            title={
+              loading ? "Creating your new Collection" : "Collection created"
             }
-            // subtitle={`${props.articles
-            //   .map((a) => a.title)
-            //   .join(", ")} facts for kids.`}
-            editTitleCallback={() => setEditTitleDialogOpen(true)}
-          >
-            <Stack
-              sx={{
-                opacity: loading ? 0.6 : 1,
-              }}
-            >
-              <UrsorFadeIn delay={500} duration={1000}>
-                <CollectionPageBento pages={props.articles} loading={loading} />
+            subtitle={
+              loading
+                ? "This may take a few minutes."
+                : "You can edit this at any time."
+            }
+            animation={loading ? "loading" : "celebration"}
+            titleBackground={
+              loading
+                ? "linear-gradient(0deg, #6596FF, #7B61FF)"
+                : "linear-gradient(4deg, #0AE799, #1D62F6)"
+            }
+          />
+          {isMobile && props.pageDetails ? (
+            <Stack width="100%" height="100%">
+              <UrsorFadeIn duration={1000}>
+                <MobileCollectionPageColumn pages={props.articles} />
               </UrsorFadeIn>
             </Stack>
-          </LayoutCard>
-        ) : (
-          <></>
-        )}
+          ) : props.pageDetails ? (
+            <LayoutCard
+              title={titleInputValue}
+              titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
+              category={
+                props.articles
+                  .slice(0, -1)
+                  .map((a) => a.title)
+                  .join(", ") +
+                ` and ${props.articles[props.articles.length - 1].title}`
+              }
+              // subtitle={`${props.articles
+              //   .map((a) => a.title)
+              //   .join(", ")} facts for kids.`}
+              editTitleCallback={() => setEditTitleDialogOpen(true)}
+            >
+              <Stack
+                sx={{
+                  opacity: loading ? 0.6 : 1,
+                }}
+              >
+                <UrsorFadeIn delay={500} duration={1000}>
+                  <CollectionPageBento
+                    pages={props.articles}
+                    loading={loading}
+                  />
+                </UrsorFadeIn>
+              </Stack>
+            </LayoutCard>
+          ) : (
+            <></>
+          )}
+        </Stack>
       </Stack>
       <UrsorDialog
         width="738px"

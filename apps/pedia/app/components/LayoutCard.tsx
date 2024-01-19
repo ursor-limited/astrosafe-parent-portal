@@ -46,31 +46,9 @@ export default function LayoutCard(props: ILayoutCardProps) {
           borderRadius="16px"
           bgcolor={PALETTE.secondary.grey[1]}
           p={`${GRID_SPACING}px`}
-          //pb={0}
-          spacing={`${GRID_SPACING}px`}
+          spacing={`${GRID_SPACING * 0.8}px`}
         >
           <Stack>
-            <Stack spacing="5px" direction="row">
-              <Typography
-                variant="small"
-                color={PALETTE.secondary.grey[3]}
-                htmlTag="h2"
-              >
-                {`${props.title} knowledge and fun facts for Kids${
-                  props.selectedAge
-                    ? ` aged ${PediaAgeDisplayNames[props.selectedAge]}`
-                    : ""
-                }. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
-              </Typography>
-              {/* {props.selectedAge ? (
-                  <Typography color={PALETTE.secondary.grey[3]} htmlTag="h2">
-                    {`aged ${props.selectedAge}-${
-                      (props.selectedAge ?? 0) + 1
-                    }`}
-                  </Typography>
-                ) : null} */}
-            </Stack>
-
             <Stack
               direction="row"
               alignItems="center"
@@ -118,6 +96,19 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   selectedAge={props.selectedAge}
                 />
               ) : null}
+            </Stack>
+            <Stack pt="12px">
+              <Typography
+                variant="small"
+                color={PALETTE.secondary.grey[3]}
+                htmlTag="h2"
+              >
+                {`${props.title} knowledge and fun facts for Kids${
+                  props.selectedAge
+                    ? ` aged ${PediaAgeDisplayNames[props.selectedAge]}`
+                    : ""
+                }. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
+              </Typography>
             </Stack>
           </Stack>
           {props.children}
