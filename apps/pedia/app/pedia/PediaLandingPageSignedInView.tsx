@@ -291,6 +291,10 @@ export default function PediaLandingPageSignedInView() {
               py="50px"
               width="1158px"
               borderRadius="24px"
+              sx={{
+                background:
+                  "linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0))",
+              }}
             >
               <Grid container gap="22px">
                 {selectedTab === "articles"
