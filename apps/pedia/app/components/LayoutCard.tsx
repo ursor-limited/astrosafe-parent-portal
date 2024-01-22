@@ -5,6 +5,7 @@ import AgeSelection from "./AgeSelection";
 import { useWindowSize } from "usehooks-ts";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import PencilIcon from "@/images/icons/PencilIcon.svg";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 
 export const PediaAgeDisplayNames: Record<PediaAge, string> = {
   student: "4 - 7",
@@ -25,6 +26,8 @@ interface ILayoutCardProps {
   paddingTop?: string;
   editTitleCallback?: () => void;
   editButton?: boolean;
+  editingOn?: boolean;
+  editingCallback?: () => void;
   children: React.ReactNode;
 }
 
@@ -55,11 +58,11 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 <UrsorButton
                   dark
                   backgroundColor="rgb(255,255,255)"
-                  onClick={() => null}
-                  endIcon={PencilIcon}
+                  onClick={props.editingCallback}
+                  endIcon={props.editingOn ? CheckIcon : PencilIcon}
                   iconSize={18}
                 >
-                  Edit
+                  {props.editingOn ? "Complete" : "Edit"}
                 </UrsorButton>
               </Stack>
             ) : null}

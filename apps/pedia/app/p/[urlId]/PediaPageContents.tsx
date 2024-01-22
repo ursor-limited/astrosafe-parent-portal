@@ -163,6 +163,7 @@ const TextBlockCard = (props: {
   content: string[];
   noCollapse?: boolean;
   onClick: () => void;
+  editing?: boolean;
   //fitContent?: boolean;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -201,7 +202,7 @@ const TextBlockCard = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
 
   return (
-    <Regenerable on={true} callback={() => null}>
+    <Regenerable on={!!props.editing} callback={() => null}>
       <Stack
         flex={1}
         position="relative"
@@ -548,6 +549,7 @@ const BentoRow = (props: {
   imageWidth: number;
   reversed: boolean;
   originalImageDimensions: { width: number; height: number };
+  editing?: boolean;
 }) => {
   const { width } = useWindowSize();
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -595,6 +597,7 @@ const BentoRow = (props: {
         title={props.textCardDetails.title ?? ""}
         content={props.textCardDetails.content ?? []}
         onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
+        editing={props.editing}
       />
       {!factUnderImage || hideImage ? (
         <FactsCard facts={props.facts} key="fact" />
@@ -637,6 +640,7 @@ const Bento = (props: {
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
   facts: IPediaPage["facts"];
+  editing: boolean;
   columnWidth: number;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
@@ -666,6 +670,7 @@ const Bento = (props: {
           "The cockatoos were first defined as a subfamily Cacatuinae within the parrot family Psittacidae by the English naturalist George Robert Gray in 1840, with Cacatua the first listed and type genus.[10] This group has alternately been considered as either a full or subfamily by different authorities. The American ornithologist James Lee Peters in his 1937 Check-list of Birds of the World and Sibley and Monroe in 1990 maintained it as a subfamily, while parrot expert Joseph Forshaw classified it as a family in 1973.[11] Subsequent molecular studies indicate that the earliest offshoot from the original parrot ancestors were the New Zealand parrots of the family Strigopidae, and following this the cockatoos, now a well-defined group or clade, split off from the remaining parrots, which then radiated across the Southern Hemisphere and diversified into the many species of parrots, parakeets, macaws, lories, lorikeets, lovebirds and other true parrots of the superfamily Psittacoidea",
         ]}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?._id)}
+        editing={props.editing}
       />
       {/* <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
         <Stack maxHeight="50%" overflow="hidden">
@@ -741,6 +746,7 @@ const Bento = (props: {
           originalImageDimensions={originalImageSizes[i]}
           imageWidth={getWidthOfColumns(imageColumnsN[i])}
           reversed={!!(i % 2)}
+          editing={props.editing}
         />
       ) : (
         <></>
@@ -827,6 +833,8 @@ export default function PediaPageContents(props: IPediaPage) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
+  const [editing, setEditing] = useState<boolean>(false);
+
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
@@ -896,6 +904,8 @@ export default function PediaPageContents(props: IPediaPage) {
                 setSelectedAge={setSelectedAge}
                 selectedAge={selectedAge}
                 editButton
+                editingOn={editing}
+                editingCallback={() => setEditing(!editing)}
                 //category={props.parentPages[0]?.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
@@ -913,6 +923,7 @@ export default function PediaPageContents(props: IPediaPage) {
                     }
                     facts={props.facts}
                     columnWidth={columnWidth}
+                    editing={editing}
                   />
                   {props.questions && props.questions.length > 0 ? (
                     <QuestionsCard questions={props.questions} />
