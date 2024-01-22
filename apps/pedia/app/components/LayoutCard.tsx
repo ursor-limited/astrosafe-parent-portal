@@ -6,6 +6,7 @@ import { useWindowSize } from "usehooks-ts";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import PencilIcon from "@/images/icons/PencilIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 
 export const PediaAgeDisplayNames: Record<PediaAge, string> = {
   student: "4 - 7",
@@ -28,6 +29,7 @@ interface ILayoutCardProps {
   editButton?: boolean;
   editingOn?: boolean;
   editingCallback?: () => void;
+  collectionPageId?: string;
   children: React.ReactNode;
 }
 
@@ -53,8 +55,38 @@ export default function LayoutCard(props: ILayoutCardProps) {
           spacing={`${GRID_SPACING * 0.8}px`}
         >
           <Stack>
-            {props.editButton ? (
-              <Stack direction="row" width="100%" justifyContent="flex-end">
+            <Stack
+              direction="row"
+              width="100%"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              {props.collectionPageId ? (
+                <Stack
+                  direction="row"
+                  spacing="10px"
+                  alignItems="center"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.secondary.grey[5],
+                      },
+                    },
+                  }}
+                >
+                  <ChevronLeftIcon height="20px" />
+                  <Typography
+                    bold
+                    variant="medium"
+                    color={PALETTE.secondary.grey[5]}
+                  >
+                    {props.collectionPageId}
+                  </Typography>
+                </Stack>
+              ) : (
+                <Stack />
+              )}
+              {props.editButton ? (
                 <UrsorButton
                   dark
                   backgroundColor="rgb(255,255,255)"
@@ -65,8 +97,10 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 >
                   {props.editingOn ? "Complete" : "Edit"}
                 </UrsorButton>
-              </Stack>
-            ) : null}
+              ) : (
+                <Stack />
+              )}
+            </Stack>
             <Stack
               direction="row"
               alignItems="center"

@@ -200,6 +200,7 @@ export default function PediaCollectionPageContents(
                 <UrsorFadeIn delay={500} duration={1000}>
                   <CollectionPageBento
                     pages={props.articles}
+                    collectionPageId={props.pageDetails.id}
                     loading={loading}
                   />
                 </UrsorFadeIn>

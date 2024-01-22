@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Box, Stack, alpha } from "@mui/system";
 import { getImageSize } from "react-image-size";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -26,6 +26,7 @@ export function ContentPagePreviewCard(props: {
   imageUrl: string;
   color: string;
   urlId: string;
+  collectionPageId?: string;
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
   mobile?: boolean;
@@ -34,6 +35,10 @@ export function ContentPagePreviewCard(props: {
 }) {
   const router = useRouter();
   const [hovering, setHovering] = useState<boolean>(false);
+  const openPage = useCallback(
+    () => router.push(`/p/${props.urlId}?c=${props.collectionPageId}`),
+    [props.urlId, props.collectionPageId, router]
+  );
   return (
     <Stack
       flex={1}
@@ -59,7 +64,7 @@ export function ContentPagePreviewCard(props: {
         p={props.mobile ? "10px" : "20px"}
         pb={props.mobile ? "40px" : "50px"}
         flex={1}
-        onClick={() => router.push(`/p/${props.urlId}`)}
+        onClick={openPage}
         onMouseEnter={() => {
           setHovering(true);
         }}
@@ -119,11 +124,7 @@ export function ContentPagePreviewCard(props: {
         bottom={props.mobile ? "10px" : "20px"}
         right={props.mobile ? "10px" : "20px"}
       >
-        <UrsorButton
-          dark
-          size="small"
-          onClick={() => router.push(`/p/${props.urlId}`)}
-        >
+        <UrsorButton dark size="small" onClick={openPage}>
           Open
         </UrsorButton>
         <UrsorActionButton
@@ -133,7 +134,7 @@ export function ContentPagePreviewCard(props: {
             {
               text: "Open",
               icon: ArrowUpRightIcon,
-              kallback: () => router.push(`/p/${props.urlId}`),
+              kallback: openPage,
             },
             {
               text: "Remove",
@@ -279,7 +280,11 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
 //   </Stack>
 // );
 
-const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
+const ChunkRow = (props: {
+  chunk: IPediaPage[];
+  loading?: boolean;
+  collectionPageId: string;
+}) => (
   <Stack spacing={`${GRID_SPACING}px`}>
     {props.chunk[0] ? (
       <Stack
@@ -294,6 +299,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
             imageUrl={props.chunk[0].mainImage}
             color={props.chunk[0].color}
             urlId={props.chunk[0].urlId}
+            collectionPageId={props.collectionPageId}
             loading={props.loading}
           />
         </Stack>
@@ -304,6 +310,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
               imageUrl={props.chunk[1].mainImage}
               color={props.chunk[1].color}
               urlId={props.chunk[1].urlId}
+              collectionPageId={props.collectionPageId}
               loading={props.loading}
             />
           </Stack>
@@ -315,6 +322,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
               imageUrl={props.chunk[2].mainImage}
               color={props.chunk[2].color}
               urlId={props.chunk[2].urlId}
+              collectionPageId={props.collectionPageId}
               loading={props.loading}
             />
           </Stack>
@@ -340,6 +348,7 @@ const ChunkRow = (props: { chunk: IPediaPage[]; loading?: boolean }) => (
 export default function CollectionPageBento(props: {
   pages: IPediaPage[];
   loading?: boolean;
+  collectionPageId: string;
 }) {
   const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
   useEffect(() => {
@@ -351,6 +360,7 @@ export default function CollectionPageBento(props: {
     <ChunkRow
       chunk={[...props.pages, ...props.pages]}
       loading={props.loading}
+      collectionPageId={props.collectionPageId}
     />
   );
 }

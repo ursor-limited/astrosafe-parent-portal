@@ -1,12 +1,18 @@
 import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";
 import SyncIcon from "@/images/icons/SyncIcon.svg";
-import Byte from "./Byte";
+import dynamic from "next/dynamic";
+
+const Byte = dynamic(
+  () => import("@/app/components/Byte"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 interface IRegenerableProps {
   on: boolean;
   callback: () => void;
   loading?: boolean;
+  bottomButton?: boolean;
   children: React.ReactNode;
 }
 
@@ -20,12 +26,17 @@ export default function Regenerable(props: IRegenerableProps) {
       }}
       position="relative"
       borderRadius="12px"
-      overflow="hidden"
       flex={1}
     >
       {props.children}
       {props.on && !props.loading ? (
-        <Stack position="absolute" right="24px" top="-15px" zIndex={2}>
+        <Stack
+          position="absolute"
+          right="24px"
+          top={props.bottomButton ? undefined : "-15px"}
+          bottom={props.bottomButton ? "-15px" : undefined}
+          zIndex={2}
+        >
           <UrsorButton
             dark
             //variant="tertiary"

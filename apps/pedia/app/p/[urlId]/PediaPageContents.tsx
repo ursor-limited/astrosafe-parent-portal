@@ -98,6 +98,7 @@ export interface IPediaPage {
   facts: string[];
   color: string;
   questions: IPediaQuestion[];
+  collectionPageId?: string;
 }
 
 export interface IPediaCollectionPage {
@@ -212,7 +213,7 @@ const TextBlockCard = (props: {
         }}
         boxSizing="border-box"
         boxShadow="0 0 20px rgba(0,0,0,0.05)"
-        bgcolor={PALETTE.secondary.grey[1]}
+        bgcolor="rgb(255,255,255)"
         borderRadius={BORDER_RADIUS}
       >
         <Stack
@@ -907,6 +908,7 @@ export default function PediaPageContents(props: IPediaPage) {
                 editButton
                 editingOn={editing}
                 editingCallback={() => setEditing(!editing)}
+                collectionPageId={props.collectionPageId}
                 //category={props.parentPages[0]?.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">

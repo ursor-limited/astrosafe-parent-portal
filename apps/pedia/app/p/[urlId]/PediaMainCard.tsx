@@ -81,7 +81,7 @@ const PediaMainCard = (props: {
       />
     </Regenerable>
     <Stack>
-      <Regenerable on={!!props.editing} callback={() => null}>
+      <Regenerable on={!!props.editing} callback={() => null} bottomButton>
         <Stack px="16px">
           <Stack
             spacing="8px"
