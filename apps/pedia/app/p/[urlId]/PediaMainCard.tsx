@@ -36,6 +36,7 @@ const PediaMainCard = (props: {
     pt={props.title ? undefined : 0}
     position="relative"
     justifyContent="flex-end"
+    spacing="2px"
   >
     <Stack
       position="absolute"
@@ -79,43 +80,46 @@ const PediaMainCard = (props: {
         boxSizing="border-box"
       />
     </Regenerable>
-    <Stack p="16px" py="3px">
-      <Stack
-        spacing="8px"
-        px="15px"
-        py="12px"
-        boxSizing="border-box"
-        bgcolor="rgb(255,255,255)"
-        borderRadius="10px"
-        zIndex={1}
-      >
-        {props.stats?.map((fact, i) => (
+    <Stack>
+      <Regenerable on={!!props.editing} callback={() => null}>
+        <Stack px="16px">
           <Stack
-            key={i}
-            direction="row"
-            borderRadius="10px"
-            alignItems="center"
-            justifyContent="space-between"
+            spacing="8px"
+            px="15px"
+            py="12px"
+            boxSizing="border-box"
+            bgcolor="rgb(255,255,255)"
+            borderRadius="12px"
+            zIndex={1}
           >
-            <Typography
-              bold
-              color={PALETTE.secondary.grey[4]}
-              noWrap
-              variant={props.mobile ? "tiny" : "small"}
-              htmlTag="h3"
-            >
-              {fact.title}
-            </Typography>
-            <Typography
-              color={PALETTE.secondary.grey[4]}
-              noWrap
-              variant={props.mobile ? "tiny" : "small"}
-            >
-              {fact.content}
-            </Typography>
+            {props.stats?.map((fact, i) => (
+              <Stack
+                key={i}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography
+                  bold
+                  color={PALETTE.secondary.grey[4]}
+                  noWrap
+                  variant={props.mobile ? "tiny" : "small"}
+                  htmlTag="h3"
+                >
+                  {fact.title}
+                </Typography>
+                <Typography
+                  color={PALETTE.secondary.grey[4]}
+                  noWrap
+                  variant={props.mobile ? "tiny" : "small"}
+                >
+                  {fact.content}
+                </Typography>
+              </Stack>
+            ))}
           </Stack>
-        ))}
-      </Stack>
+        </Stack>
+      </Regenerable>
     </Stack>
   </Stack>
 );

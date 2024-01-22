@@ -22,7 +22,7 @@ export default function Regenerable(props: IRegenerableProps) {
     >
       {props.children}
       {props.on ? (
-        <Stack position="absolute" right="24px" top="-15px">
+        <Stack position="absolute" right="24px" top="-15px" zIndex={2}>
           <UrsorButton
             dark
             //variant="tertiary"
@@ -31,6 +31,7 @@ export default function Regenerable(props: IRegenerableProps) {
             startIcon={SyncIcon}
             iconSize={18}
             size="small"
+            shadow
           >
             Regenerate
           </UrsorButton>

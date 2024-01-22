@@ -61,6 +61,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   onClick={props.editingCallback}
                   endIcon={props.editingOn ? CheckIcon : PencilIcon}
                   iconSize={18}
+                  shadow
                 >
                   {props.editingOn ? "Complete" : "Edit"}
                 </UrsorButton>

@@ -188,7 +188,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       spacing="12px"
-      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.1)" : undefined}
+      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.05)" : undefined}
       sx={{
         cursor: "pointer",
         transition: "0.2s",
