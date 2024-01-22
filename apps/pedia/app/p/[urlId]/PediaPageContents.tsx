@@ -662,6 +662,7 @@ const Bento = (props: {
       <PediaMainCard
         {..._.omit(props.mainCardDetails, "title")}
         width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
+        editing={props.editing}
       />
       <TextBlockCard
         title={props.textCardDetails[0]?.title ?? ""}
