@@ -177,35 +177,37 @@ export default function PediaCollectionPageContents(
               </UrsorFadeIn>
             </Stack>
           ) : props.pageDetails ? (
-            <LayoutCard
-              title={titleInputValue}
-              titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
-              category={
-                props.articles
-                  .slice(0, -1)
-                  .map((a) => a.title)
-                  .join(", ") +
-                ` and ${props.articles[props.articles.length - 1].title}`
-              }
-              // subtitle={`${props.articles
-              //   .map((a) => a.title)
-              //   .join(", ")} facts for kids.`}
-              editTitleCallback={() => setEditTitleDialogOpen(true)}
-            >
-              <Stack
-                sx={{
-                  opacity: loading ? 0.6 : 1,
-                }}
+            <UrsorFadeIn duration={800}>
+              <LayoutCard
+                title={titleInputValue}
+                titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
+                category={
+                  props.articles
+                    .slice(0, -1)
+                    .map((a) => a.title)
+                    .join(", ") +
+                  ` and ${props.articles[props.articles.length - 1].title}`
+                }
+                // subtitle={`${props.articles
+                //   .map((a) => a.title)
+                //   .join(", ")} facts for kids.`}
+                editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
-                <UrsorFadeIn delay={500} duration={1000}>
-                  <CollectionPageBento
-                    pages={props.articles}
-                    collectionPageId={props.pageDetails.id}
-                    loading={loading}
-                  />
-                </UrsorFadeIn>
-              </Stack>
-            </LayoutCard>
+                <Stack
+                  sx={{
+                    opacity: loading ? 0.6 : 1,
+                  }}
+                >
+                  <UrsorFadeIn delay={500} duration={1000}>
+                    <CollectionPageBento
+                      pages={props.articles}
+                      collectionPageId={props.pageDetails.id}
+                      loading={loading}
+                    />
+                  </UrsorFadeIn>
+                </Stack>
+              </LayoutCard>
+            </UrsorFadeIn>
           ) : (
             <></>
           )}

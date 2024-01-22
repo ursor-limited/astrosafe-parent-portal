@@ -99,6 +99,7 @@ export interface IPediaPage {
   color: string;
   questions: IPediaQuestion[];
   collectionPageId?: string;
+  collectionPageTitle?: string;
 }
 
 export interface IPediaCollectionPage {
@@ -820,7 +821,10 @@ const Bento = (props: {
   );
 };
 
-export default function PediaPageContents(props: IPediaPage) {
+export default function PediaPageContents(props: {
+  articleDetails: IPediaPage;
+  collectionDetails: IPediaCollectionPage;
+}) {
   const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
 
   /* needed for the platform row's proper scrollability */
@@ -881,20 +885,21 @@ export default function PediaPageContents(props: IPediaPage) {
           <UrsorFadeIn duration={1000}>
             <Stack width="100%" height="100%">
               <MobileColumn
-                title={props.title}
+                title={props.articleDetails.title}
                 mainCardDetails={{
-                  title: props.title,
-                  color: props.color,
-                  imageUrl: props.mainImage,
-                  stats: props.stats,
+                  title: props.articleDetails.title,
+                  color: props.articleDetails.color,
+                  imageUrl: props.articleDetails.mainImage,
+                  stats: props.articleDetails.stats,
                 }}
-                imageCardDetails={props.images} //@ts-ignore
+                imageCardDetails={props.articleDetails.images} //@ts-ignore
                 textCardDetails={
-                  props.textBlocks.find((b) => b.level === selectedAge)
-                    ?.blocks ?? []
+                  props.articleDetails.textBlocks.find(
+                    (b) => b.level === selectedAge
+                  )?.blocks ?? []
                 }
-                facts={props.facts}
-                questions={props.questions}
+                facts={props.articleDetails.facts}
+                questions={props.articleDetails.questions}
               />
             </Stack>
           </UrsorFadeIn>
@@ -902,34 +907,36 @@ export default function PediaPageContents(props: IPediaPage) {
           <UrsorFadeIn delay={500} duration={1000}>
             <Stack>
               <LayoutCard
-                title={props.title}
+                title={props.articleDetails.title}
                 setSelectedAge={setSelectedAge}
                 selectedAge={selectedAge}
                 editButton
                 editingOn={editing}
                 editingCallback={() => setEditing(!editing)}
-                collectionPageId={props.collectionPageId}
-                //category={props.parentPages[0]?.title}
+                collectionPageId={props.collectionDetails.id}
+                collectionPageTitle={props.collectionDetails.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
                   <Bento
                     mainCardDetails={{
-                      title: props.title,
-                      color: props.color,
-                      imageUrl: props.mainImage,
-                      stats: props.stats,
+                      title: props.articleDetails.title,
+                      color: props.articleDetails.color,
+                      imageUrl: props.articleDetails.mainImage,
+                      stats: props.articleDetails.stats,
                     }}
-                    imageCardDetails={props.images}
+                    imageCardDetails={props.articleDetails.images}
                     textCardDetails={
-                      props.textBlocks.find((b) => b.level === selectedAge)
-                        ?.blocks ?? []
+                      props.articleDetails.textBlocks.find(
+                        (b) => b.level === selectedAge
+                      )?.blocks ?? []
                     }
-                    facts={props.facts}
+                    facts={props.articleDetails.facts}
                     columnWidth={columnWidth}
                     editing={editing}
                   />
-                  {props.questions && props.questions.length > 0 ? (
-                    <QuestionsCard questions={props.questions} />
+                  {props.articleDetails.questions &&
+                  props.articleDetails.questions.length > 0 ? (
+                    <QuestionsCard questions={props.articleDetails.questions} />
                   ) : null}
                   {/* {props.suggestedPages.length > 0 ? (
                     <SuggestionsSection

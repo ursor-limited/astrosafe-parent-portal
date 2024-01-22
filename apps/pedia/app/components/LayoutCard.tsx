@@ -7,6 +7,7 @@ import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPage
 import PencilIcon from "@/images/icons/PencilIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
+import { useRouter } from "next/navigation";
 
 export const PediaAgeDisplayNames: Record<PediaAge, string> = {
   student: "4 - 7",
@@ -30,11 +31,13 @@ interface ILayoutCardProps {
   editingOn?: boolean;
   editingCallback?: () => void;
   collectionPageId?: string;
+  collectionPageTitle?: string;
   children: React.ReactNode;
 }
 
 export default function LayoutCard(props: ILayoutCardProps) {
   const { width } = useWindowSize();
+  const router = useRouter();
   return (
     <Stack width="100%" height="100%" alignItems="center" pt={props.paddingTop}>
       <Stack
@@ -67,12 +70,16 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   spacing="10px"
                   alignItems="center"
                   sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.8 },
+                    transition: "0.2s",
                     svg: {
                       path: {
                         fill: PALETTE.secondary.grey[5],
                       },
                     },
                   }}
+                  onClick={() => router.push(`/c/${props.collectionPageId}`)}
                 >
                   <ChevronLeftIcon height="20px" />
                   <Typography
@@ -80,7 +87,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
                     variant="medium"
                     color={PALETTE.secondary.grey[5]}
                   >
-                    {props.collectionPageId}
+                    {props.collectionPageTitle}
                   </Typography>
                 </Stack>
               ) : (

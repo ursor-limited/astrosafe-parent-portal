@@ -10,7 +10,7 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
 export const dynamic = "force-dynamic";
 
-const get = (route: string, query?: string) =>
+const get = (route: string, query?: Record<string, string>) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.NODE_ENV]}/${route}${
@@ -31,9 +31,14 @@ const patch = (route: string, body: any) =>
   );
 
 class ApiController {
-  static async getPage(id: string) {
+  static async getArticleAndCollection(
+    articleId: string,
+    collectionId: string
+  ) {
     //@ts-ignore
-    return get(`pedia/article/${id}`).then((response: any) => response.json());
+    return get(`pedia/article/${articleId}`, { collectionId }).then(
+      (response: any) => response.json()
+    );
   }
   static async getAllArticles(authorId: string) {
     //@ts-ignore
