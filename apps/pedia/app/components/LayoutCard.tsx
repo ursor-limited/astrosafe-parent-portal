@@ -24,6 +24,7 @@ interface ILayoutCardProps {
   //parents?: IPediaCollectionPage[];
   paddingTop?: string;
   editTitleCallback?: () => void;
+  editButton?: boolean;
   children: React.ReactNode;
 }
 
@@ -49,18 +50,19 @@ export default function LayoutCard(props: ILayoutCardProps) {
           spacing={`${GRID_SPACING * 0.8}px`}
         >
           <Stack>
-            <Stack direction="row" width="100%" justifyContent="flex-end">
-              <UrsorButton
-                dark
-                backgroundColor="rgb(255,255,255)"
-                onClick={() => null}
-                endIcon={PencilIcon}
-                //fontColor={PALETTE.font.dark}
-                iconSize={18}
-              >
-                Edit
-              </UrsorButton>
-            </Stack>
+            {props.editButton ? (
+              <Stack direction="row" width="100%" justifyContent="flex-end">
+                <UrsorButton
+                  dark
+                  backgroundColor="rgb(255,255,255)"
+                  onClick={() => null}
+                  endIcon={PencilIcon}
+                  iconSize={18}
+                >
+                  Edit
+                </UrsorButton>
+              </Stack>
+            ) : null}
             <Stack
               direction="row"
               alignItems="center"

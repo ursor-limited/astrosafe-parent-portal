@@ -25,6 +25,7 @@ import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionP
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import AgeSelection from "@/app/components/AgeSelection";
+import Regenerable from "@/app/components/Regenerable";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -200,99 +201,63 @@ const TextBlockCard = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
 
   return (
-    <Stack
-      flex={1}
-      position="relative"
-      sx={{
-        opacity: hovering ? 0.7 : 1,
-        transition: "0.2s",
-      }}
-      boxSizing="border-box"
-      //overflow={props.fitContent ? undefined : "hidden"}
-      boxShadow="0 0 20px rgba(0,0,0,0.05)"
-      bgcolor={PALETTE.secondary.grey[1]}
-      borderRadius={BORDER_RADIUS}
-    >
-      {/* {!props.fitContent ? (
-        <Stack
-          position="absolute"
-          onMouseLeave={() => {
-            setHovering(false);
-          }}
-          onMouseEnter={() => {
-            setHovering(true);
-          }}
-          width="100%"
-          height="30%"
-          bottom={0}
-          sx={{
-            cursor: "pointer",
-            opacity: expanded || !showGradient ? 0 : 1,
-            pointerEvents: expanded ? "none" : undefined,
-            transition: "0.6s",
-            background: `linear-gradient(0deg, ${
-              PALETTE.secondary.grey[1]
-            }, ${alpha(PALETTE.secondary.grey[1], 0.65)}, ${alpha(
-              PALETTE.secondary.grey[1],
-              0
-            )})`,
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[5],
-              },
-            },
-          }}
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          p={`${GRID_SPACING}px`}
-          onClick={props.onClick}
-        >
-          <PlusIcon width="26px" height="26px" />
-        </Stack>
-      ) : null} */}
+    <Regenerable on={true} callback={() => null}>
       <Stack
-        height={expanded ? expandedHeight : "100%"}
-        //width={props.fitContent ? "fit-content" : "100%"}
-        width="100%"
-        top={0}
-        left={0}
-        p={`${GRID_SPACING}px`}
-        pt={"19px"}
-        pb={
-          props.noCollapse || expanded ? `${TEXT_CARD_Y_PADDING}px` : undefined
-        }
-        boxSizing="border-box"
-        //overflow={props.fitContent ? undefined : "hidden"}
-        spacing="7px"
+        flex={1}
+        position="relative"
         sx={{
-          transition: `${TEXT_CARD_TRANSITION_DURATION}ms`,
-          transitionTimingFunction: BEZIER,
+          opacity: hovering ? 0.7 : 1,
+          transition: "0.2s",
         }}
-        ref={setTextElement}
+        boxSizing="border-box"
+        boxShadow="0 0 20px rgba(0,0,0,0.05)"
+        bgcolor={PALETTE.secondary.grey[1]}
+        borderRadius={BORDER_RADIUS}
       >
-        <Typography
-          variant="large"
-          bold
-          color={PALETTE.secondary.grey[5]}
-          htmlTag="h3"
+        <Stack
+          height={expanded ? expandedHeight : "100%"}
+          width="100%"
+          top={0}
+          left={0}
+          p={`${GRID_SPACING}px`}
+          pt={"19px"}
+          pb={
+            props.noCollapse || expanded
+              ? `${TEXT_CARD_Y_PADDING}px`
+              : undefined
+          }
+          boxSizing="border-box"
+          spacing="7px"
+          sx={{
+            transition: `${TEXT_CARD_TRANSITION_DURATION}ms`,
+            transitionTimingFunction: BEZIER,
+          }}
+          ref={setTextElement}
         >
-          {props.title}
-        </Typography>
-        <Stack spacing="8px">
-          {props.content.map((c, i) => (
-            <Typography
-              key={i}
-              color={PALETTE.secondary.grey[5]}
-              sx={{
-                lineHeight: "26px",
-              }}
-            >
-              {c}
-            </Typography>
-          ))}
+          <Typography
+            variant="large"
+            bold
+            color={PALETTE.secondary.grey[5]}
+            htmlTag="h3"
+          >
+            {props.title}
+          </Typography>
+          <Stack spacing="8px">
+            {props.content.map((c, i) => (
+              <Typography
+                key={i}
+                color={PALETTE.secondary.grey[5]}
+                sx={{
+                  lineHeight: "26px",
+                }}
+              >
+                {c}
+              </Typography>
+            ))}
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </Regenerable>
   );
 };
 
@@ -930,6 +895,7 @@ export default function PediaPageContents(props: IPediaPage) {
                 title={props.title}
                 setSelectedAge={setSelectedAge}
                 selectedAge={selectedAge}
+                editButton
                 //category={props.parentPages[0]?.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
