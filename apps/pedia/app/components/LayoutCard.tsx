@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { PediaAge } from "../p/[urlId]/PediaPageContents";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import AgeSelection from "./AgeSelection";
 import { useWindowSize } from "usehooks-ts";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
@@ -49,6 +49,18 @@ export default function LayoutCard(props: ILayoutCardProps) {
           spacing={`${GRID_SPACING * 0.8}px`}
         >
           <Stack>
+            <Stack direction="row" width="100%" justifyContent="flex-end">
+              <UrsorButton
+                dark
+                backgroundColor="rgb(255,255,255)"
+                onClick={() => null}
+                endIcon={PencilIcon}
+                //fontColor={PALETTE.font.dark}
+                iconSize={18}
+              >
+                Edit
+              </UrsorButton>
+            </Stack>
             <Stack
               direction="row"
               alignItems="center"

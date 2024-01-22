@@ -9,7 +9,12 @@ import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
-import UrsorPopover from "./UrsorPopover";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const HEADER_HEIGHT = 86;
 export const ASTRO_MAGICAL_GRADIENT =

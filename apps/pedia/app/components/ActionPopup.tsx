@@ -1,7 +1,13 @@
 import React from "react";
 import { Stack } from "@mui/system";
-import UrsorPopover, { IUrsorPopoverProps } from "./UrsorPopover";
+import { IUrsorPopoverProps } from "./UrsorPopover";
 import { PALETTE, Typography } from "ui";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const SPACING = "8px";
 const ICON_SIZE = "16px";

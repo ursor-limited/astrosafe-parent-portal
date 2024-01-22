@@ -190,13 +190,14 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       sx={{
         cursor: "pointer",
         transition: "0.2s",
-        background: props.backgroundColor,
+        background: state === "enabled" ? props.backgroundColor : undefined,
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
           path: {
             fill:
               props.iconColor ||
-              BORDER_COLORS[mode][variant]?.[state] ||
+              props.fontColor ||
+              FONT_COLORS[mode][variant]?.[state] ||
               PALETTE.font.light,
             transition: "0.2s",
           },
@@ -212,7 +213,11 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       ) : null}
       <Typography
         bold
-        color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}
+        color={
+          props.fontColor ??
+          FONT_COLORS[mode][variant]?.[state] ??
+          PALETTE.font.dark
+        }
         noWrap
         sx={{
           transition: "0.2s",
