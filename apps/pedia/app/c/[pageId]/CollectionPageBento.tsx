@@ -360,8 +360,11 @@ const ChunkRow = (props: {
       </Stack>
     ) : null}
     {props.chunk[3] ? (
-      <Stack flex={1}>
-        <Stack minHeight="238px" width={`calc(54% + ${GRID_SPACING}px)`}>
+      <Stack minHeight="238px" direction="row" spacing={`${GRID_SPACING}px`}>
+        <Stack
+          width={!props.chunk[4] ? `calc(54% + ${GRID_SPACING}px)` : undefined}
+          flex={props.chunk[4] ? 1 : undefined}
+        >
           <ContentPagePreviewCard
             title={props.chunk[3].title}
             imageUrl={props.chunk[3].mainImage}
@@ -370,6 +373,20 @@ const ChunkRow = (props: {
             loading={props.loading}
           />
         </Stack>
+
+        {props.chunk[4] ? (
+          <Stack flex={1}>
+            <Stack flex={1}>
+              <ContentPagePreviewCard
+                title={props.chunk[4].title}
+                imageUrl={props.chunk[4].mainImage}
+                color={props.chunk[4].color}
+                urlId={props.chunk[4].urlId}
+                loading={props.loading}
+              />
+            </Stack>
+          </Stack>
+        ) : null}
       </Stack>
     ) : null}
   </Stack>
