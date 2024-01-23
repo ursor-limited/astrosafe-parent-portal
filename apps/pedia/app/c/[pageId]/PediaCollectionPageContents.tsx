@@ -154,6 +154,7 @@ export default function PediaCollectionPageContents(
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
         <Header />
         <Stack spacing="20px" width="100%">
+          <Stack height="20px" />
           {/* <CollectionPageNotification
             title={
               loading ? "Creating your new Collection" : "Collection created"
