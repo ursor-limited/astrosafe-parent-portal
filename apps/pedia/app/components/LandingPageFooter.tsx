@@ -93,6 +93,7 @@ export const LandingPageFooter = () => {
                 }}
                 alt="Linkedin link"
                 style={{
+                  cursor: "pointer",
                   borderRadius: "100%",
                   background: PALETTE.primary.navy,
                 }}
@@ -112,6 +113,7 @@ export const LandingPageFooter = () => {
                 }}
                 alt="Facebook link"
                 style={{
+                  cursor: "pointer",
                   borderRadius: "100%",
                   background: PALETTE.primary.navy,
                 }}
@@ -131,6 +133,7 @@ export const LandingPageFooter = () => {
                 }}
                 alt="Instagram link"
                 style={{
+                  cursor: "pointer",
                   borderRadius: "100%",
                   background: PALETTE.primary.navy,
                 }}
@@ -148,6 +151,7 @@ export const LandingPageFooter = () => {
                 }}
                 alt="Instagram link"
                 style={{
+                  cursor: "pointer",
                   borderRadius: "100%",
                   background: PALETTE.primary.navy,
                 }}
@@ -167,6 +171,7 @@ export const LandingPageFooter = () => {
                 }}
                 alt="Instagram link"
                 style={{
+                  cursor: "pointer",
                   borderRadius: "100%",
                   background: PALETTE.primary.navy,
                 }}
