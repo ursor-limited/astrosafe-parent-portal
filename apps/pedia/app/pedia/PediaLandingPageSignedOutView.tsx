@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
@@ -25,6 +25,15 @@ import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
 import { IntroBox } from "../components/IntroBox";
 import Image from "next/image";
+
+export const getPulse = (y: number, amplitude: number) => keyframes`
+  from {
+    transform: translateY(${y - amplitude}px)
+  }
+  to {
+    transform: translateY(${y + amplitude}px)
+  }
+`;
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -68,9 +77,9 @@ export default function PediaLandingPageSignedOutView() {
           </Typography>
         </Stack>
         <CreationBox />
-        <Stack width="100%">
+        <Stack width="100%" position="relative">
           <Stack
-            width="100%"
+            width="fit-content"
             position="absolute"
             zIndex={-1}
             left={0}
@@ -104,14 +113,27 @@ export default function PediaLandingPageSignedOutView() {
             position="relative"
             width="100%"
             justifyContent="center"
+            zIndex={2}
           >
-            <IntroBox
-              title="Select"
-              content="Enter the titles of the Articles you want to create and click the +"
-            />
             <Stack
               sx={{
-                transform: "translateY(57px)",
+                animation: `${getPulse(0, 10)} 3.2s ease-in-out`,
+                animationDirection: "alternate",
+                animationIterationCount: "infinite",
+              }}
+            >
+              <IntroBox
+                title="Select"
+                content="Enter the titles of the Articles you want to create and click the +"
+              />
+            </Stack>
+            <Stack
+              sx={{
+                // transform: "translateY(57px)",
+                animation: `${getPulse(55, 12)} 3s ease-in-out`,
+                animationDelay: 0.5,
+                animationDirection: "alternate",
+                animationIterationCount: "infinite",
               }}
             >
               <IntroBox
@@ -121,7 +143,10 @@ export default function PediaLandingPageSignedOutView() {
             </Stack>
             <Stack
               sx={{
-                transform: "translateY(19px)",
+                // transform: "translateY(57px)",
+                animation: `${getPulse(20, 15)} 4s ease-in-out`,
+                animationDirection: "alternate",
+                animationIterationCount: "infinite",
               }}
             >
               <IntroBox
