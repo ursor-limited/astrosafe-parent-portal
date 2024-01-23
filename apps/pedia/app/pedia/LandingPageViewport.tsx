@@ -25,7 +25,7 @@ export default function LandingPageViewport(props: {
             variant="h3"
             bold
             color={PALETTE.secondary.grey[5]}
-            sx={{ textAlign: "center" }}
+            sx={{ textAlign: "center", fontWeight: 470 }}
           >
             {props.title}
           </Typography>

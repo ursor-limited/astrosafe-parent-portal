@@ -36,7 +36,7 @@ export default function PediaLandingPageSignedOutView() {
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
       <Stack spacing="36px" alignItems="center">
-        <Stack maxWidth="780px" spacing="6px">
+        <Stack maxWidth="780px" spacing="6px" alignItems="center">
           <Stack
             sx={{
               background: "linear-gradient(150deg, #F279C5, #FD9B41)",
@@ -45,15 +45,21 @@ export default function PediaLandingPageSignedOutView() {
               "-webkit-background-clip": "text",
             }}
             alignItems="center"
+            width="700px"
           >
-            <Typography variant="h1">
+            <Typography
+              variant="h1"
+              sx={{
+                textAlign: "center",
+              }}
+            >
               AstroPedia - Create Wikipedia articles for kids
             </Typography>
           </Stack>
           <Typography
             variant="h5"
             color="rgba(255,255,255,0.8)"
-            sx={{ textAlign: "center", lineHeight: "28px" }}
+            sx={{ textAlign: "center", lineHeight: "28px", width: "660px" }}
           >
             AstroPedia generates safe encyclopedic articles for kids. Create
             your own or explore our collection!
