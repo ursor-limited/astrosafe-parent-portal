@@ -911,8 +911,8 @@ export default function PediaPageContents(props: {
                 editButton
                 editingOn={editing}
                 editingCallback={() => setEditing(!editing)}
-                collectionPageId={props.collectionDetails.id}
-                collectionPageTitle={props.collectionDetails.title}
+                collectionPageId={props.collectionDetails?.id}
+                collectionPageTitle={props.collectionDetails?.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
                   <Bento

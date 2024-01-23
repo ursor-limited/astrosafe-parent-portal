@@ -370,6 +370,7 @@ const ChunkRow = (props: {
             imageUrl={props.chunk[3].mainImage}
             color={props.chunk[3].color}
             urlId={props.chunk[3].urlId}
+            collectionPageId={props.collectionPageId}
             loading={props.loading}
           />
         </Stack>
@@ -382,6 +383,7 @@ const ChunkRow = (props: {
                 imageUrl={props.chunk[4].mainImage}
                 color={props.chunk[4].color}
                 urlId={props.chunk[4].urlId}
+                collectionPageId={props.collectionPageId}
                 loading={props.loading}
               />
             </Stack>
