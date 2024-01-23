@@ -14,7 +14,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 export const GRID_SPACING = 24;
 
-const LIGHT_TEXT_THRESHOLD = 200;
+const LIGHT_TEXT_THRESHOLD = 215;
 
 const getRelativeLuminance = (rgb: number[]) =>
   0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
