@@ -40,7 +40,7 @@ export default function Regenerable(props: IRegenerableProps) {
           <UrsorButton
             dark
             //variant="tertiary"
-            backgroundColor="rgb(255,255,255)"
+            //backgroundColor="rgb(255,255,255)"
             onClick={() => null}
             startIcon={SyncIcon}
             iconSize={18}

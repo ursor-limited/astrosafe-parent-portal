@@ -96,7 +96,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
               {props.editButton ? (
                 <UrsorButton
                   dark
-                  backgroundColor="rgb(255,255,255)"
+                  //backgroundColor="rgb(255,255,255)"
                   onClick={props.editingCallback}
                   endIcon={props.editingOn ? CheckIcon : PencilIcon}
                   iconSize={18}

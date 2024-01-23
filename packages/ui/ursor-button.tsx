@@ -60,7 +60,7 @@ export const BACKGROUND_COLORS: Record<
   },
   dark: {
     primary: {
-      enabled: PALETTE.secondary.grey[1],
+      enabled: "rgb(255,255,255)",
       hover: PALETTE.secondary.purple[2],
       pressed: PALETTE.secondary.grey[1],
     },
@@ -192,7 +192,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       sx={{
         cursor: "pointer",
         transition: "0.2s",
-        background: state === "enabled" ? props.backgroundColor : undefined,
+        background: props.backgroundColor,
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
           path: {
