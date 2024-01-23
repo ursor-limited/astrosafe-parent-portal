@@ -12,6 +12,9 @@ export const IntroBox = (props: { title: string; content: string }) => {
       p="24px"
       alignItems="center"
       justifyContent="space-between"
+      sx={{
+        backdropFilter: "blur(3px)",
+      }}
     >
       <Typography variant="medium" bold color={PALETTE.font.light}>
         {props.title}

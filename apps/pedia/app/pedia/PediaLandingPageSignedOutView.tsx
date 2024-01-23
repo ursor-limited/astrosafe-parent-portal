@@ -12,6 +12,7 @@ import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
 import IntroSquareImage2 from "@/images/IntroSquareImage2.png";
 import IntroSquareImage3 from "@/images/IntroSquareImage3.png";
+import ShootingStar from "@/images/ShootingStar.png";
 import UsersIllustration1 from "@/images/UsersIllustration1.png";
 import UsersIllustration2 from "@/images/UsersIllustration2.png";
 import UsersIllustration3 from "@/images/UsersIllustration3.png";
@@ -23,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
 import { IntroBox } from "../components/IntroBox";
+import Image from "next/image";
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -35,7 +37,7 @@ export default function PediaLandingPageSignedOutView() {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      <Stack spacing="36px" alignItems="center">
+      <Stack spacing="36px" alignItems="center" width="100%" pb="50px">
         <Stack maxWidth="780px" spacing="6px" alignItems="center">
           <Stack
             sx={{
@@ -66,19 +68,68 @@ export default function PediaLandingPageSignedOutView() {
           </Typography>
         </Stack>
         <CreationBox />
-        <Stack direction="row" spacing="50px">
-          <IntroBox
-            title="Select"
-            content="Enter the titles of the Articles you want to create and click the +"
-          />
-          <IntroBox
-            title="Create"
-            content="Once you’ve got a collection of articles, click Create."
-          />
-          <IntroBox
-            title="Generate"
-            content="Your Articles will take a few minutes to generate and voila!"
-          />
+        <Stack width="100%">
+          <Stack
+            width="100%"
+            position="absolute"
+            zIndex={-1}
+            left={0}
+            right={0}
+            top="41px"
+            marginLeft="auto"
+            marginRight="auto"
+          >
+            <Image
+              src={ShootingStar.src}
+              width={1321}
+              height={110}
+              loader={({ src }) => {
+                return src;
+              }}
+              alt="Intro square"
+              style={
+                {
+                  // position: "relative",
+                  // left: 0,
+                  // right: 0,
+                  // marginLeft: "auto",
+                  // marginRight: "auto",
+                }
+              }
+            />
+          </Stack>
+          <Stack
+            direction="row"
+            spacing="50px"
+            position="relative"
+            width="100%"
+            justifyContent="center"
+          >
+            <IntroBox
+              title="Select"
+              content="Enter the titles of the Articles you want to create and click the +"
+            />
+            <Stack
+              sx={{
+                transform: "translateY(57px)",
+              }}
+            >
+              <IntroBox
+                title="Create"
+                content="Once you’ve got a collection of articles, click Create."
+              />
+            </Stack>
+            <Stack
+              sx={{
+                transform: "translateY(19px)",
+              }}
+            >
+              <IntroBox
+                title="Generate"
+                content="Your Articles will take a few minutes to generate and voila!"
+              />
+            </Stack>
+          </Stack>
         </Stack>
         {/* <Stack direction="row" spacing="32px">
           <IntroSquare
@@ -108,7 +159,7 @@ export default function PediaLandingPageSignedOutView() {
         >
           <SpaceGlow width="auto" height="auto" />
         </Stack>
-        <Stack spacing="100px" bgcolor="rgb(255,255,255)">
+        <Stack spacing="150px" bgcolor="rgb(255,255,255)">
           <LandingPageViewport
             supertitle="Our collection"
             subtitle="Single Articles and Collections created by the community and vetted
