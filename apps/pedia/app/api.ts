@@ -10,21 +10,57 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
 export const dynamic = "force-dynamic";
 
-const get = (route: string) =>
+const get = (route: string, query?: Record<string, string>) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}${
+      query ? `?${new URLSearchParams(query)}` : ""
+    }`,
     { cache: "no-store" } // need this in order to show updated pages
   );
 
-class ApiController {
-  static async getPage(id: string) {
+const patch = (route: string, body: any) =>
+  fetch(
     //@ts-ignore
-    return get(`pedia/${id}`).then((response: any) => response.json());
+    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
+
+class ApiController {
+  static async getArticleAndCollection(
+    articleId: string,
+    collectionId: string
+  ) {
+    //@ts-ignore
+    return get(`pedia/article/${articleId}`, { collectionId }).then(
+      (response: any) => response.json()
+    );
+  }
+  static async getAllArticles(authorId: string) {
+    //@ts-ignore
+    return get(`pedia/allArticles`, { authorId }).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getAllCollections(authorId: string) {
+    //@ts-ignore
+    return get(`pedia/allCollections`, { authorId }).then((response: any) =>
+      response.json()
+    );
   }
   static async getCollectionPage(id: string) {
     return get(`pedia/collection/${id}`).then((response: any) =>
       response.json()
+    );
+  }
+  static async updateCollectionTitle(id: string, title: string) {
+    //@ts-ignore
+    return patch(`pedia/collection/${id}/title`, { title }).then(
+      (response: any) => response.json()
     );
   }
 }

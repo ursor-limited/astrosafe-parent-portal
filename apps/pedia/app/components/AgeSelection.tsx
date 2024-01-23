@@ -21,6 +21,8 @@ export default function AgeSelection(props: IAgeSelectionProps) {
         bgcolor="rgba(255,255,255)"
         p="3px"
         borderRadius="30px"
+        boxShadow="0 0 20px rgba(0,0,0,0.018)"
+        // border="1px solid rgba(0,0,0,0.1)"
       >
         {["student", "scholar"].map((age) => (
           <Stack
@@ -32,9 +34,7 @@ export default function AgeSelection(props: IAgeSelectionProps) {
             alignItems="center"
             px="16px"
             bgcolor={
-              props.selectedAge === age
-                ? PALETTE.secondary.purple[2]
-                : undefined
+              props.selectedAge === age ? PALETTE.secondary.grey[4] : undefined
             }
             sx={{
               "&:hover": {
@@ -54,7 +54,7 @@ export default function AgeSelection(props: IAgeSelectionProps) {
               color={
                 props.selectedAge === age
                   ? "rgb(255,255,255)"
-                  : PALETTE.secondary.grey[3]
+                  : PALETTE.secondary.grey[4]
               }
             >
               {PediaAgeDisplayNames[age as PediaAge]}

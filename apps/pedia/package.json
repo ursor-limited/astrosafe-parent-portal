@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.16",
@@ -27,6 +28,7 @@
     "react-dom": "^18",
     "react-fade-in": "^2.0.1",
     "react-image-size": "^2.3.2",
+    "react-popper": "^2.3.0",
     "react-tsparticles": "^2.12.2",
     "sharp": "^0.32.6",
     "tsparticles": "^2.0.6",

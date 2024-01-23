@@ -1,10 +1,12 @@
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PaintBrushIcon from "@/images/icons/PaintBrushIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "./UrsorFadeIn";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import DynamicContainer from "./DynamicContainer";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;
@@ -40,9 +42,12 @@ export const CreationBox = () => {
     setTopics([...topics, value]);
     setValue("");
   };
+
+  const { loginWithPopup } = useAuth0();
+
   return (
     <Stack
-      bgcolor="rgba(0,0,0,0.2)"
+      bgcolor="rgba(0,0,0,0.16)"
       px="24px"
       py="20px"
       maxWidth="733px"
@@ -107,6 +112,8 @@ export const CreationBox = () => {
               alignItems="center"
               borderRadius="100%"
               sx={{
+                opacity: value || topics.length === MAX_TOPICS ? 1 : 0.4,
+                pointerEvents: value ? undefined : "none",
                 "&:hover": { opacity: 0.7 },
                 transition: "0.2s",
                 cursor: "pointer",
@@ -122,9 +129,9 @@ export const CreationBox = () => {
             </Stack>
           </Stack>
         </Stack>
-        <Stack direction="row" flexWrap="wrap" spacing="8px">
-          {topics.length > 0 ? (
-            topics.map((t) => (
+        <DynamicContainer fullWidth duration={600}>
+          <Stack direction="row" flexWrap="wrap" spacing="8px">
+            {topics.map((t) => (
               <UrsorFadeIn key={t} duration={600}>
                 <TopicTag
                   value={t}
@@ -133,20 +140,14 @@ export const CreationBox = () => {
                   }
                 />
               </UrsorFadeIn>
-            ))
-          ) : (
-            <Stack direction="row" spacing="8px" sx={{ opacity: 0.25 }}>
-              <TopicTag value="e.g." deletionCallback={() => null} />
-              <TopicTag value="cat" deletionCallback={() => null} />
-              <TopicTag value="mouse" deletionCallback={() => null} />
-            </Stack>
-          )}
-        </Stack>
+            ))}
+          </Stack>
+        </DynamicContainer>
       </Stack>
       <UrsorButton
         dark
         variant="tertiary"
-        onClick={() => null}
+        onClick={loginWithPopup}
         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
         hoverOpacity={0.7}
         endIcon={PaintBrushIcon}

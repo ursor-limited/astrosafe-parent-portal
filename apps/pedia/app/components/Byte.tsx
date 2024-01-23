@@ -5,30 +5,34 @@ import { useLottie } from "lottie-react";
 import byteAppear from "@/lotties/byteAppear.json";
 import byteDisappear from "@/lotties/byteDisappear.json";
 import byteCelebration from "@/lotties/byteCelebration.json";
+import byteLoading from "@/lotties/byteLoading.json";
 import { Box } from "@mui/system";
 
 const HEIGHT = 45;
 
-export type ByteAnimation = "appear" | "disappear" | "celebration";
+export type ByteAnimation = "appear" | "disappear" | "celebration" | "loading";
 const JSONS: Record<ByteAnimation, any> = {
   appear: byteAppear,
   disappear: byteDisappear,
   celebration: byteCelebration,
+  loading: byteLoading,
 };
 
 export interface IByteAnimationProps {
   callback: () => void;
   lottieJson: any;
+  loop?: boolean;
+  size?: number;
 }
 
 function ByteAnimation(props: IByteAnimationProps) {
   const options = {
     animationData: props.lottieJson,
     autoplay: true,
-    loop: false,
+    loop: !!props.loop,
     onComplete: props.callback,
   };
-  const { View } = useLottie(options, { height: HEIGHT });
+  const { View } = useLottie(options, { height: props.size || HEIGHT });
   return View;
 }
 
@@ -36,6 +40,7 @@ export interface IStepsByteControllerProps {
   animation?: ByteAnimation;
   delay?: number;
   size?: number;
+  loop?: boolean;
 }
 
 export default function Byte(props: IStepsByteControllerProps) {
@@ -56,6 +61,7 @@ export default function Byte(props: IStepsByteControllerProps) {
     appear: () => null,
     disappear: () => setAnimation(null),
     celebration: () => null,
+    loading: () => null,
   };
 
   return (
@@ -70,6 +76,8 @@ export default function Byte(props: IStepsByteControllerProps) {
         <ByteAnimation
           lottieJson={JSONS[animation]}
           callback={callbacks[animation]}
+          loop={props.loop}
+          size={props.size}
         />
       ) : null}
     </Box>

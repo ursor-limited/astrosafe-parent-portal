@@ -60,7 +60,7 @@ export const BACKGROUND_COLORS: Record<
   },
   dark: {
     primary: {
-      enabled: PALETTE.secondary.grey[1],
+      enabled: "rgb(255,255,255)",
       hover: PALETTE.secondary.purple[2],
       pressed: PALETTE.secondary.grey[1],
     },
@@ -141,6 +141,7 @@ export interface UrsorButtonProps {
   iconColor?: string;
   disabled?: boolean;
   dark?: boolean;
+  shadow?: boolean;
 }
 
 export function UrsorButton(props: UrsorButtonProps): JSX.Element {
@@ -187,6 +188,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       spacing="12px"
+      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.05)" : undefined}
       sx={{
         cursor: "pointer",
         transition: "0.2s",
@@ -196,7 +198,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
           path: {
             fill:
               props.iconColor ||
-              BORDER_COLORS[mode][variant]?.[state] ||
+              props.fontColor ||
+              FONT_COLORS[mode][variant]?.[state] ||
               PALETTE.font.light,
             transition: "0.2s",
           },
@@ -212,7 +215,11 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       ) : null}
       <Typography
         bold
-        color={FONT_COLORS[mode][variant]?.[state] ?? PALETTE.font.dark}
+        color={
+          props.fontColor ??
+          FONT_COLORS[mode][variant]?.[state] ??
+          PALETTE.font.dark
+        }
         noWrap
         sx={{
           transition: "0.2s",

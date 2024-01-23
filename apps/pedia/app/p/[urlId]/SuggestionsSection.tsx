@@ -77,7 +77,7 @@ export default function SuggestionsSection(props: {
             title={sp.title}
             imageUrl={sp.mainImage}
             color={sp.color}
-            pageId={sp.id}
+            urlId={sp.urlId}
             titleAtBottom={i === 1}
             titleOnRight={i === 1 || i === 2}
             mobile={props.mobile}

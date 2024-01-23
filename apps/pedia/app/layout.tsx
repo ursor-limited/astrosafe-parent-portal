@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import Background from "@/images/backgrounds/darkSmall.png";
 import { Metadata } from "next";
 import Image from "next/image";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const rubik = Rubik({ subsets: ["latin"] });
 

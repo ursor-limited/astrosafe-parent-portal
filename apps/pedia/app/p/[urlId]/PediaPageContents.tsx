@@ -25,6 +25,7 @@ import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/c/[pageId]/PediaCollectionP
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import AgeSelection from "@/app/components/AgeSelection";
+import Regenerable from "@/app/components/Regenerable";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -97,12 +98,14 @@ export interface IPediaPage {
   facts: string[];
   color: string;
   questions: IPediaQuestion[];
+  collectionPageId?: string;
+  collectionPageTitle?: string;
 }
 
 export interface IPediaCollectionPage {
   id: string;
   title: string;
-  parentId: string;
+  articles: string[];
 }
 
 const ImageCard = (props: {
@@ -162,6 +165,7 @@ const TextBlockCard = (props: {
   content: string[];
   noCollapse?: boolean;
   onClick: () => void;
+  editing?: boolean;
   //fitContent?: boolean;
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -200,99 +204,63 @@ const TextBlockCard = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
 
   return (
-    <Stack
-      flex={1}
-      position="relative"
-      sx={{
-        opacity: hovering ? 0.7 : 1,
-        transition: "0.2s",
-      }}
-      boxSizing="border-box"
-      //overflow={props.fitContent ? undefined : "hidden"}
-      boxShadow="0 0 20px rgba(0,0,0,0.05)"
-      bgcolor={PALETTE.secondary.grey[1]}
-      borderRadius={BORDER_RADIUS}
-    >
-      {/* {!props.fitContent ? (
-        <Stack
-          position="absolute"
-          onMouseLeave={() => {
-            setHovering(false);
-          }}
-          onMouseEnter={() => {
-            setHovering(true);
-          }}
-          width="100%"
-          height="30%"
-          bottom={0}
-          sx={{
-            cursor: "pointer",
-            opacity: expanded || !showGradient ? 0 : 1,
-            pointerEvents: expanded ? "none" : undefined,
-            transition: "0.6s",
-            background: `linear-gradient(0deg, ${
-              PALETTE.secondary.grey[1]
-            }, ${alpha(PALETTE.secondary.grey[1], 0.65)}, ${alpha(
-              PALETTE.secondary.grey[1],
-              0
-            )})`,
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[5],
-              },
-            },
-          }}
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          p={`${GRID_SPACING}px`}
-          onClick={props.onClick}
-        >
-          <PlusIcon width="26px" height="26px" />
-        </Stack>
-      ) : null} */}
+    <Regenerable on={!!props.editing} callback={() => null}>
       <Stack
-        height={expanded ? expandedHeight : "100%"}
-        //width={props.fitContent ? "fit-content" : "100%"}
-        width="100%"
-        top={0}
-        left={0}
-        p={`${GRID_SPACING}px`}
-        pt={"19px"}
-        pb={
-          props.noCollapse || expanded ? `${TEXT_CARD_Y_PADDING}px` : undefined
-        }
-        boxSizing="border-box"
-        //overflow={props.fitContent ? undefined : "hidden"}
-        spacing="7px"
+        flex={1}
+        position="relative"
         sx={{
-          transition: `${TEXT_CARD_TRANSITION_DURATION}ms`,
-          transitionTimingFunction: BEZIER,
+          opacity: hovering ? 0.7 : 1,
+          transition: "0.2s",
         }}
-        ref={setTextElement}
+        boxSizing="border-box"
+        boxShadow="0 0 20px rgba(0,0,0,0.05)"
+        bgcolor="rgb(255,255,255)"
+        borderRadius={BORDER_RADIUS}
       >
-        <Typography
-          variant="large"
-          bold
-          color={PALETTE.secondary.grey[5]}
-          htmlTag="h3"
+        <Stack
+          height={expanded ? expandedHeight : "100%"}
+          width="100%"
+          top={0}
+          left={0}
+          p={`${GRID_SPACING}px`}
+          pt={"19px"}
+          pb={
+            props.noCollapse || expanded
+              ? `${TEXT_CARD_Y_PADDING}px`
+              : undefined
+          }
+          boxSizing="border-box"
+          spacing="7px"
+          sx={{
+            transition: `${TEXT_CARD_TRANSITION_DURATION}ms`,
+            transitionTimingFunction: BEZIER,
+          }}
+          ref={setTextElement}
         >
-          {props.title}
-        </Typography>
-        <Stack spacing="8px">
-          {props.content.map((c, i) => (
-            <Typography
-              key={i}
-              color={PALETTE.secondary.grey[5]}
-              sx={{
-                lineHeight: "26px",
-              }}
-            >
-              {c}
-            </Typography>
-          ))}
+          <Typography
+            variant="large"
+            bold
+            color={PALETTE.secondary.grey[5]}
+            htmlTag="h3"
+          >
+            {props.title}
+          </Typography>
+          <Stack spacing="8px">
+            {props.content.map((c, i) => (
+              <Typography
+                key={i}
+                color={PALETTE.secondary.grey[5]}
+                sx={{
+                  lineHeight: "26px",
+                }}
+              >
+                {c}
+              </Typography>
+            ))}
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </Regenerable>
   );
 };
 
@@ -495,8 +463,6 @@ const MobileColumn = (props: {
 
   const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
 
-  console.log("wwwww", props.facts);
-
   return (
     <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
       <Stack width="100%" alignItems="flex-end">
@@ -585,6 +551,7 @@ const BentoRow = (props: {
   imageWidth: number;
   reversed: boolean;
   originalImageDimensions: { width: number; height: number };
+  editing?: boolean;
 }) => {
   const { width } = useWindowSize();
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -632,6 +599,7 @@ const BentoRow = (props: {
         title={props.textCardDetails.title ?? ""}
         content={props.textCardDetails.content ?? []}
         onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
+        editing={props.editing}
       />
       {!factUnderImage || hideImage ? (
         <FactsCard facts={props.facts} key="fact" />
@@ -674,9 +642,9 @@ const Bento = (props: {
   textCardDetails: IPediaTextBlock[];
   imageCardDetails: IPediaImage[];
   facts: IPediaPage["facts"];
+  editing: boolean;
   columnWidth: number;
 }) => {
-  console.log(props.facts);
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
   >(undefined);
@@ -696,6 +664,7 @@ const Bento = (props: {
       <PediaMainCard
         {..._.omit(props.mainCardDetails, "title")}
         width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
+        editing={props.editing}
       />
       <TextBlockCard
         title={props.textCardDetails[0]?.title ?? ""}
@@ -704,6 +673,7 @@ const Bento = (props: {
           "The cockatoos were first defined as a subfamily Cacatuinae within the parrot family Psittacidae by the English naturalist George Robert Gray in 1840, with Cacatua the first listed and type genus.[10] This group has alternately been considered as either a full or subfamily by different authorities. The American ornithologist James Lee Peters in his 1937 Check-list of Birds of the World and Sibley and Monroe in 1990 maintained it as a subfamily, while parrot expert Joseph Forshaw classified it as a family in 1973.[11] Subsequent molecular studies indicate that the earliest offshoot from the original parrot ancestors were the New Zealand parrots of the family Strigopidae, and following this the cockatoos, now a well-defined group or clade, split off from the remaining parrots, which then radiated across the Southern Hemisphere and diversified into the many species of parrots, parakeets, macaws, lories, lorikeets, lovebirds and other true parrots of the superfamily Psittacoidea",
         ]}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?._id)}
+        editing={props.editing}
       />
       {/* <Stack overflow="hidden" flex={1} spacing={`${GRID_SPACING}px`}>
         <Stack maxHeight="50%" overflow="hidden">
@@ -779,6 +749,7 @@ const Bento = (props: {
           originalImageDimensions={originalImageSizes[i]}
           imageWidth={getWidthOfColumns(imageColumnsN[i])}
           reversed={!!(i % 2)}
+          editing={props.editing}
         />
       ) : (
         <></>
@@ -850,7 +821,10 @@ const Bento = (props: {
   );
 };
 
-export default function PediaPageContents(props: IPediaPage) {
+export default function PediaPageContents(props: {
+  articleDetails: IPediaPage;
+  collectionDetails: IPediaCollectionPage;
+}) {
   const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
 
   /* needed for the platform row's proper scrollability */
@@ -864,6 +838,8 @@ export default function PediaPageContents(props: IPediaPage) {
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
+
+  const [editing, setEditing] = useState<boolean>(false);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -909,20 +885,21 @@ export default function PediaPageContents(props: IPediaPage) {
           <UrsorFadeIn duration={1000}>
             <Stack width="100%" height="100%">
               <MobileColumn
-                title={props.title}
+                title={props.articleDetails.title}
                 mainCardDetails={{
-                  title: props.title,
-                  color: props.color,
-                  imageUrl: props.mainImage,
-                  stats: props.stats,
+                  title: props.articleDetails.title,
+                  color: props.articleDetails.color,
+                  imageUrl: props.articleDetails.mainImage,
+                  stats: props.articleDetails.stats,
                 }}
-                imageCardDetails={props.images} //@ts-ignore
+                imageCardDetails={props.articleDetails.images} //@ts-ignore
                 textCardDetails={
-                  props.textBlocks.find((b) => b.level === selectedAge)
-                    ?.blocks ?? []
+                  props.articleDetails.textBlocks.find(
+                    (b) => b.level === selectedAge
+                  )?.blocks ?? []
                 }
-                facts={props.facts}
-                questions={props.questions}
+                facts={props.articleDetails.facts}
+                questions={props.articleDetails.questions}
               />
             </Stack>
           </UrsorFadeIn>
@@ -930,29 +907,36 @@ export default function PediaPageContents(props: IPediaPage) {
           <UrsorFadeIn delay={500} duration={1000}>
             <Stack>
               <LayoutCard
-                title={props.title}
+                title={props.articleDetails.title}
                 setSelectedAge={setSelectedAge}
                 selectedAge={selectedAge}
-                //category={props.parentPages[0]?.title}
+                editButton
+                editingOn={editing}
+                editingCallback={() => setEditing(!editing)}
+                collectionPageId={props.collectionDetails.id}
+                collectionPageTitle={props.collectionDetails.title}
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
                   <Bento
                     mainCardDetails={{
-                      title: props.title,
-                      color: props.color,
-                      imageUrl: props.mainImage,
-                      stats: props.stats,
+                      title: props.articleDetails.title,
+                      color: props.articleDetails.color,
+                      imageUrl: props.articleDetails.mainImage,
+                      stats: props.articleDetails.stats,
                     }}
-                    imageCardDetails={props.images}
+                    imageCardDetails={props.articleDetails.images}
                     textCardDetails={
-                      props.textBlocks.find((b) => b.level === selectedAge)
-                        ?.blocks ?? []
+                      props.articleDetails.textBlocks.find(
+                        (b) => b.level === selectedAge
+                      )?.blocks ?? []
                     }
-                    facts={props.facts}
+                    facts={props.articleDetails.facts}
                     columnWidth={columnWidth}
+                    editing={editing}
                   />
-                  {props.questions && props.questions.length > 0 ? (
-                    <QuestionsCard questions={props.questions} />
+                  {props.articleDetails.questions &&
+                  props.articleDetails.questions.length > 0 ? (
+                    <QuestionsCard questions={props.articleDetails.questions} />
                   ) : null}
                   {/* {props.suggestedPages.length > 0 ? (
                     <SuggestionsSection
