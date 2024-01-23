@@ -36,7 +36,7 @@ class ApiController {
     collectionId: string
   ) {
     //@ts-ignore
-    return get(`pedia/article/${articleId}`, { collectionId }).then(
+    return get(`pedia/article/${articleId}`, collectionId ? { collectionId } : undefined).then(
       (response: any) => response.json()
     );
   }
