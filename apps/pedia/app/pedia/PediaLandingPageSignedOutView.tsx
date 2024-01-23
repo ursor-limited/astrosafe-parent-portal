@@ -22,6 +22,7 @@ import { IntroSquare2 } from "../components/IntroSquare2";
 import { useRouter } from "next/navigation";
 import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
+import { IntroBox } from "../components/IntroBox";
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -45,19 +46,35 @@ export default function PediaLandingPageSignedOutView() {
             }}
             alignItems="center"
           >
-            <Typography variant="h1">Create some sweet Articles</Typography>
+            <Typography variant="h1">
+              AstroPedia - Create Wikipedia articles for kids
+            </Typography>
           </Stack>
           <Typography
             variant="h5"
             color="rgba(255,255,255,0.8)"
             sx={{ textAlign: "center", lineHeight: "28px" }}
           >
-            AstroPedia is the safe, focused and magical encyclopedia for kids.
-            Add topics below to create an Article, or a Collection of Articles.
+            AstroPedia generates safe encyclopedic articles for kids. Create
+            your own or explore our collection!
           </Typography>
         </Stack>
         <CreationBox />
-        <Stack direction="row" spacing="32px">
+        <Stack direction="row" spacing="50px">
+          <IntroBox
+            title="Select"
+            content="Enter the titles of the Articles you want to create and click the +"
+          />
+          <IntroBox
+            title="Create"
+            content="Once you’ve got a collection of articles, click Create."
+          />
+          <IntroBox
+            title="Generate"
+            content="Your Articles will take a few minutes to generate and voila!"
+          />
+        </Stack>
+        {/* <Stack direction="row" spacing="32px">
           <IntroSquare
             image={IntroSquareImage1}
             title="Bespoke knowledge"
@@ -75,7 +92,7 @@ export default function PediaLandingPageSignedOutView() {
             text="Share your Articles by a safe link no one can tamper with or edit without consent."
             imageHeight="190px"
           />
-        </Stack>
+        </Stack> */}
       </Stack>
       <Stack width="100%">
         <Stack
