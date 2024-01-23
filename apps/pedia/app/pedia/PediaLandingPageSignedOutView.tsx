@@ -12,8 +12,13 @@ import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
 import IntroSquareImage2 from "@/images/IntroSquareImage2.png";
 import IntroSquareImage3 from "@/images/IntroSquareImage3.png";
+import UsersIllustration1 from "@/images/UsersIllustration1.png";
+import UsersIllustration2 from "@/images/UsersIllustration2.png";
+import UsersIllustration3 from "@/images/UsersIllustration3.png";
+import BenefitsIllustration1 from "@/images/BenefitsIllustration1.png";
 import SpaceGlow from "@/images/spaceGlow.svg";
-import { Auth0Provider } from "@auth0/auth0-react";
+import LandingPageViewport from "./LandingPageViewport";
+import { IntroSquare2 } from "../components/IntroSquare2";
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -22,17 +27,6 @@ export default function PediaLandingPageSignedOutView() {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   return (
-    // <Auth0Provider
-    //   domain={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_DOMAIN as string}
-    //   clientId={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_CLIENT_ID as string}
-    //   authorizationParams={{
-    //     audience: "https://api-gateway-authorizer",
-    //     redirect_uri: process.env
-    //       .NEXT_PUBLIC_REACT_APP_AUTH0_REDIRECT_URL as string,
-    //   }}
-    //   useRefreshTokens={true}
-    //   useRefreshTokensFallback={true}
-    // >
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
       <Stack spacing="36px" alignItems="center">
@@ -86,45 +80,63 @@ export default function PediaLandingPageSignedOutView() {
         >
           <SpaceGlow width="auto" height="auto" />
         </Stack>
-        <Stack
-          flex={1}
-          bgcolor="rgb(255,255,255)"
-          py="30px"
-          alignItems="center"
-          zIndex={1} // covers the SpaceGlow's bottom border
-        >
-          <Stack spacing="13px" maxWidth="516px" alignItems="center">
-            <Stack spacing="6px" alignItems="center">
-              <Typography
-                variant="large"
-                bold
-                color={PALETTE.secondary.grey[4]}
-              >
-                Our collection
-              </Typography>
-              <Typography
-                variant="h3"
-                bold
-                color={PALETTE.secondary.grey[5]}
-                sx={{ textAlign: "center" }}
-              >
-                Browse our ever-growing collection of content
-              </Typography>
+        <Stack spacing="100px" bgcolor="rgb(255,255,255)">
+          <LandingPageViewport
+            supertitle="Our collection"
+            subtitle="Single Articles and Collections created by the community and vetted
+          by our team."
+            title="Browse our ever-growing collection of content"
+          >
+            <Stack />
+          </LandingPageViewport>
+          <LandingPageViewport
+            supertitle="Benefits"
+            subtitle="Lets add some engaging copy here, guys."
+            title="Why use AstroPedia?"
+          >
+            <Stack direction="row" spacing="22px">
+              <IntroSquare2
+                image={BenefitsIllustration1}
+                title="Create your own Articles"
+                text="Choose the topics you want to create Wikipedia articles on!"
+              />
+              <IntroSquare2
+                image={IntroSquareImage1}
+                title="Engaging content"
+                text="The Articles contain facts, stats, images and quizzes. And a toggle to change the reading age!"
+              />
+              <IntroSquare2
+                image={IntroSquareImage3}
+                title="Share your goodies"
+                text="Once the Articles are created you can share the link to spread the knowledge!"
+              />
             </Stack>
-            <Stack maxWidth="455px">
-              <Typography
-                bold
-                color={PALETTE.secondary.grey[4]}
-                sx={{ textAlign: "center" }}
-              >
-                Single Articles and Collections created by the community and
-                vetted by our team.
-              </Typography>
+          </LandingPageViewport>
+          <LandingPageViewport
+            supertitle="Who uses AstroPedia"
+            subtitle="AstroPedia was built with the education environment in mind."
+            title="AstroPedia keeps kids engaged"
+          >
+            <Stack direction="row" spacing="22px">
+              <IntroSquare2
+                image={UsersIllustration1}
+                title="Teachers"
+                text="Teachas tend to luv os."
+              />
+              <IntroSquare2
+                image={UsersIllustration2}
+                title="Schools"
+                text="AstroPedia be perfect for Skools."
+              />
+              <IntroSquare2
+                image={UsersIllustration3}
+                title="Parents"
+                text="Parents too luv os."
+              />
             </Stack>
-          </Stack>
+          </LandingPageViewport>
         </Stack>
       </Stack>
     </Stack>
-    // </Auth0Provider>
   );
 }
