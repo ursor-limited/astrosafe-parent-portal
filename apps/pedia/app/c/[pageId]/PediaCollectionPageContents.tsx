@@ -139,10 +139,10 @@ export default function PediaCollectionPageContents(
     useState<boolean>(false);
 
   const [loading, setLoading] = useState<boolean>(false);
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 8000);
-    setTimeout(() => setEditTitleDialogOpen(true), 3000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setLoading(false), 8000);
+  //   setTimeout(() => setEditTitleDialogOpen(true), 3000);
+  // }, []);
 
   const [titleInputValue, setTitleInputValue] = useState<string>("");
   useEffect(() => {
@@ -154,7 +154,7 @@ export default function PediaCollectionPageContents(
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
         <Header />
         <Stack spacing="20px" width="100%">
-          <CollectionPageNotification
+          {/* <CollectionPageNotification
             title={
               loading ? "Creating your new Collection" : "Collection created"
             }
@@ -169,7 +169,7 @@ export default function PediaCollectionPageContents(
                 ? "linear-gradient(0deg, #6596FF, #7B61FF)"
                 : "linear-gradient(4deg, #0AE799, #1D62F6)"
             }
-          />
+          /> */}
           {isMobile && props.pageDetails ? (
             <Stack width="100%" height="100%">
               <UrsorFadeIn duration={1000}>

@@ -669,9 +669,7 @@ const Bento = (props: {
       <TextBlockCard
         title={props.textCardDetails[0]?.title ?? ""}
         //content={props.textCardDetails[0]?.content ?? []}
-        content={[
-          "The cockatoos were first defined as a subfamily Cacatuinae within the parrot family Psittacidae by the English naturalist George Robert Gray in 1840, with Cacatua the first listed and type genus.[10] This group has alternately been considered as either a full or subfamily by different authorities. The American ornithologist James Lee Peters in his 1937 Check-list of Birds of the World and Sibley and Monroe in 1990 maintained it as a subfamily, while parrot expert Joseph Forshaw classified it as a family in 1973.[11] Subsequent molecular studies indicate that the earliest offshoot from the original parrot ancestors were the New Zealand parrots of the family Strigopidae, and following this the cockatoos, now a well-defined group or clade, split off from the remaining parrots, which then radiated across the Southern Hemisphere and diversified into the many species of parrots, parakeets, macaws, lories, lorikeets, lovebirds and other true parrots of the superfamily Psittacoidea",
-        ]}
+        content={props.textCardDetails[0]?.content ?? []}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?._id)}
         editing={props.editing}
       />

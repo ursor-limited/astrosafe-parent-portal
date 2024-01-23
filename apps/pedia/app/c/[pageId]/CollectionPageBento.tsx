@@ -14,6 +14,30 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 export const GRID_SPACING = 24;
 
+const LIGHT_TEXT_THRESHOLD = 200;
+
+const getRelativeLuminance = (rgb: number[]) =>
+  0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+
+export function hexToRgb(hex: string) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return [
+    parseInt(result?.[1] ?? "", 16),
+    parseInt(result?.[2] ?? "", 16),
+    parseInt(result?.[3] ?? "", 16),
+  ];
+}
+
+export function rgbToHex(r: number, g: number, b: number) {
+  return (
+    "#" +
+    ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1).toUpperCase()
+  );
+}
+
+export const shouldBeLightText = (color: string) =>
+  getRelativeLuminance(hexToRgb(color)) < LIGHT_TEXT_THRESHOLD;
+
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
 const Byte = dynamic(
@@ -76,7 +100,13 @@ export function ContentPagePreviewCard(props: {
           variant={props.fontSize || (props.mobile ? "normal" : "h4")}
           bold
           htmlTag="h3"
-          color={props.loading ? PALETTE.secondary.grey[3] : PALETTE.font.light}
+          color={
+            props.loading
+              ? PALETTE.secondary.grey[3]
+              : shouldBeLightText(props.color)
+              ? PALETTE.font.light
+              : "rgba(0,0,0,0.5)"
+          }
           sx={{
             textAlign: props.titleOnRight ? "right" : undefined,
           }}
@@ -358,7 +388,7 @@ export default function CollectionPageBento(props: {
   }, [props.pages]);
   return (
     <ChunkRow
-      chunk={[...props.pages, ...props.pages]}
+      chunk={props.pages}
       loading={props.loading}
       collectionPageId={props.collectionPageId}
     />
