@@ -17,14 +17,64 @@ import UsersIllustration2 from "@/images/UsersIllustration2.png";
 import UsersIllustration3 from "@/images/UsersIllustration3.png";
 import BenefitsIllustration1 from "@/images/BenefitsIllustration1.png";
 import SpaceGlow from "@/images/spaceGlow.svg";
+import Logo from "@/images/logoDark.svg";
 import LandingPageViewport from "./LandingPageViewport";
 import { IntroSquare2 } from "../components/IntroSquare2";
+import { useRouter } from "next/navigation";
+
+const PAGES_URLS = [
+  {
+    title: "Home",
+    url: "/",
+  },
+  {
+    title: "Blog",
+    url: "/blog",
+  },
+  {
+    title: "Tutorials",
+    url: "/tutorials",
+  },
+  {
+    title: "Tools",
+    url: "/tools",
+  },
+  {
+    title: "Compare",
+    url: "/compare",
+  },
+];
+
+const COMPANY_URLS = [
+  {
+    title: "About",
+    url: "/about",
+  },
+  {
+    title: "Privacy",
+    url: "/privacy",
+  },
+  {
+    title: "FAQ's",
+    url: "/faqs",
+  },
+  {
+    title: "TSC's",
+    url: "/terms-and-conditions",
+  },
+  {
+    title: "Child Privacy Policy",
+    url: "/child-privacy-policy",
+  },
+];
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
+
+  const router = useRouter();
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -135,6 +185,62 @@ export default function PediaLandingPageSignedOutView() {
               />
             </Stack>
           </LandingPageViewport>
+          <Stack
+            direction="row"
+            height="236px"
+            width="100%"
+            bgcolor={PALETTE.secondary.grey[1]}
+            px="160px"
+            py="35px"
+            justifyContent="space-between"
+          >
+            <Stack width="280px" height="100%" justifyContent="space-between">
+              <Stack spacing="10px">
+                <Logo width="80px" height="28px" />
+
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                  }}
+                >
+                  A safe space for kids to discover, learn, and play online.
+                </Typography>
+              </Stack>
+              <Typography variant="tiny" color={PALETTE.secondary.grey[4]}>
+                All rights reserved 2024™
+              </Typography>
+            </Stack>
+            <Stack direction="row">
+              <Stack spacing="15px">
+                <Typography
+                  variant="medium"
+                  sx={{
+                    fontWeight: 470,
+                  }}
+                >
+                  Pages
+                </Typography>
+                <Stack spacing="7px">
+                  {PAGES_URLS.map((p) => (
+                    <Stack
+                      key={p.url}
+                      onClick={() => router.push(`/p/${a.urlId}`)}
+                    >
+                      <Typography
+                        variant="small"
+                        color={PALETTE.secondary.grey[4]}
+                        sx={{
+                          fontWeight: 390,
+                        }}
+                      >
+                        {p.title}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
