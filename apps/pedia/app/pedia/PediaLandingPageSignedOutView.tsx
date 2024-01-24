@@ -25,6 +25,13 @@ import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
 import { IntroBox } from "../components/IntroBox";
 import Image from "next/image";
+import Slider from "react-slick";
+import {
+  IPediaCollectionPage,
+  IPediaPage,
+} from "../p/[urlId]/PediaPageContents";
+import { useAuth0 } from "@auth0/auth0-react";
+import ApiController from "../api";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -42,6 +49,26 @@ export default function PediaLandingPageSignedOutView() {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   const router = useRouter();
+
+  const { user } = useAuth0();
+
+  const [articles, setArticles] = useState<IPediaPage[]>([]);
+  const [collections, setCollections] = useState<
+    {
+      page: IPediaCollectionPage;
+      images: { url: string; color: string }[];
+    }[]
+  >([]);
+  useEffect(() => {
+    user?.email &&
+      ApiController.getAllArticles(user.email).then((articles) =>
+        setArticles(articles)
+      );
+    user?.email &&
+      ApiController.getAllCollections(user.email).then((collections) =>
+        setCollections(collections)
+      );
+  }, [user?.email]);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -191,7 +218,26 @@ export default function PediaLandingPageSignedOutView() {
           by our team."
             title="Browse our ever-growing collection of content"
           >
-            <Stack />
+            <Slider speed={500}>
+              <div>
+                <h3>1</h3>
+              </div>
+              <div>
+                <h3>2</h3>
+              </div>
+              <div>
+                <h3>3</h3>
+              </div>
+              <div>
+                <h3>4</h3>
+              </div>
+              <div>
+                <h3>5</h3>
+              </div>
+              <div>
+                <h3>6</h3>
+              </div>
+            </Slider>
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Benefits"
