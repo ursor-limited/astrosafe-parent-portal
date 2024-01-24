@@ -164,12 +164,6 @@ const LandingPageCarousel = (props: {
   );
 };
 
-function arrayRotate(arr: any[], count: number) {
-  const len = arr.length;
-  arr.push(...arr.splice(0, ((-count % len) + len) % len));
-  return arr;
-}
-
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
@@ -354,7 +348,7 @@ export default function PediaLandingPageSignedOutView() {
               </Typography>
               <LandingPageCarousel
                 yPadding={40}
-                items={arrayRotate(articles, 2).map((a, i) => (
+                items={_.sortBy(articles, (a) => a.title).map((a, i) => (
                   <Stack
                     key={i}
                     alignItems="center"
