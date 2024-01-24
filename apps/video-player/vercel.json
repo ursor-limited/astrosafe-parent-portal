@@ -6,7 +6,7 @@
     },
     {
         "source": "/pedia",
-        "destination": "https://proxy.astrosafe.co/pedia"
+        "destination":  "https://astro-monorepo-pedia.vercel.app/pedia"
     },
     {
         "source": "/p/:pediaId([a-zA-Z0-9-]+)",
