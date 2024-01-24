@@ -39,6 +39,7 @@ import {
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
+import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -163,6 +164,12 @@ const LandingPageCarousel = (props: {
   );
 };
 
+function arrayRotate(arr: any[], count: number) {
+  const len = arr.length;
+  arr.push(...arr.splice(0, ((-count % len) + len) % len));
+  return arr;
+}
+
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
@@ -181,15 +188,13 @@ export default function PediaLandingPageSignedOutView() {
     }[]
   >([]);
   useEffect(() => {
-    user?.email &&
-      ApiController.getAllArticles(user.email).then((articles) =>
-        setArticles(articles)
-      );
-    user?.email &&
-      ApiController.getAllCollections(user.email).then((collections) =>
-        setCollections(collections)
-      );
-  }, [user?.email]);
+    ApiController.getAllArticles().then((articles) =>
+      setArticles(articles.filter((a: any) => a.color))
+    );
+    ApiController.getAllCollections().then((collections) =>
+      setCollections(collections)
+    );
+  }, []);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -349,7 +354,7 @@ export default function PediaLandingPageSignedOutView() {
               </Typography>
               <LandingPageCarousel
                 yPadding={40}
-                items={[...articles, ...articles].map((a, i) => (
+                items={arrayRotate(articles, 2).map((a, i) => (
                   <Stack
                     key={i}
                     alignItems="center"
@@ -382,9 +387,24 @@ export default function PediaLandingPageSignedOutView() {
                           }/p/${a.urlId}`}
                           rel="noopener noreferrer"
                         >
-                          <UrsorButton dark size="small" fontColor={a.color}>
-                            Open
-                          </UrsorButton>
+                          <Stack
+                            sx={{
+                              "&:hover": { opacity: 0.6 },
+                              transition: "0.2s",
+                            }}
+                          >
+                            <UrsorButton
+                              size="small"
+                              backgroundColor={
+                                shouldBeLightText(a.color)
+                                  ? "rgb(255,255,255)"
+                                  : "rgba(0,0,0,0.5)"
+                              }
+                              fontColor={a.color}
+                            >
+                              Open
+                            </UrsorButton>
+                          </Stack>
                         </a>
                       }
                     />
@@ -412,30 +432,43 @@ export default function PediaLandingPageSignedOutView() {
                   ...collections,
                   ...collections,
                 ].map((c, i) => (
-                  <Stack
-                    key={i}
-                    alignItems="center"
-                    sx={{
-                      "&:hover": { opacity: 0.7 },
-                      transition: "0.2s",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <a
-                      target="_blank"
-                      href={`${
-                        process.env.NODE_ENV === "development"
-                          ? "http://localhost:3000"
-                          : "https://www.astrosafe.co"
-                      }/c/${c.page.id}`}
-                      rel="noopener noreferrer"
-                    >
-                      <PediaCollectionCard
-                        title={c.page.title}
-                        images={c.images}
-                        shadow
-                      />
-                    </a>
+                  <Stack key={i} alignItems="center">
+                    <PediaCollectionCard
+                      title={c.page.title}
+                      images={c.images}
+                      shadow
+                      button={
+                        <a
+                          target="_blank"
+                          href={`${
+                            process.env.NODE_ENV === "development"
+                              ? "http://localhost:3000"
+                              : "https://www.astrosafe.co"
+                          }/c/${c.page.id}`}
+                          rel="noopener noreferrer"
+                        >
+                          <Stack
+                            sx={{
+                              "&:hover": { opacity: 0.6 },
+                              transition: "0.2s",
+                            }}
+                          >
+                            <UrsorButton
+                              size="small"
+                              variant="secondary"
+                              //variant="ghost"
+                              // fontColor={c.images[0].color}
+                              borderColor="transparent"
+                              //backgroundColor={`linear-gradient(90deg, ${c.images[0].color}, ${c.images[2].color})`}
+                              //backgroundColor="rgb(255,255,255)"
+                              fontColor={PALETTE.secondary.grey[5]}
+                            >
+                              Open
+                            </UrsorButton>
+                          </Stack>
+                        </a>
+                      }
+                    />
                   </Stack>
                 ))}
               />

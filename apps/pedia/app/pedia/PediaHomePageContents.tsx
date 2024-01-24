@@ -15,7 +15,7 @@ export default function PediaHomePageContents() {
   return isLoading ? (
     <></>
   ) : user ? (
-    <PediaLandingPageSignedOutView />
+    <PediaLandingPageSignedInView />
   ) : (
     <PediaLandingPageSignedOutView />
   );
