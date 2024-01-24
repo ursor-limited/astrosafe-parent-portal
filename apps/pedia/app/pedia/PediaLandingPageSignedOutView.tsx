@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
@@ -35,6 +35,7 @@ import ApiController from "../api";
 import { PediaArticleCard } from "./PediaLandingPageSignedInView";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -45,13 +46,51 @@ export const getPulse = (y: number, amplitude: number) => keyframes`
   }
 `;
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
+function NextArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <Stack
+      className={className}
+      bgcolor="rgb(255,255,255)"
+      borderRadius="100%"
+      width="95px"
+      height="95px"
+      boxShadow="0 0 25px rgba(0,0,0,0.05)"
+      onClick={onClick}
+      style={{
+        ...style,
+        display: "block",
+        width: "60px",
+        height: "60px",
+        background: "rgb(255,255,255)",
+        boxShadow: "0 0 25px rgba(0,0,0,0.05)",
+        "&:hover": { opacity: 0.7 },
+        transition: "0.2s",
+        cursor: "pointer",
+      }}
+    ></Stack>
+  );
+}
+
+const CarouselButton = (props: { onClick: () => void }) => (
+  <Stack
+    bgcolor="rgb(255,255,255)"
+    borderRadius="100%"
+    width="60px"
+    height="60px"
+    boxShadow="0 0 20px rgba(0,0,0,0.06)"
+    onClick={props.onClick}
+    sx={{
+      "&:hover": { opacity: 0.6 },
+      transition: "0.2s",
+      cursor: "pointer",
+    }}
+    justifyContent="center"
+    alignItems="center"
+  >
+    <ChevronLeft height="38px" width="38px" />
+  </Stack>
+);
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -81,49 +120,30 @@ export default function PediaLandingPageSignedOutView() {
       );
   }, [user?.email]);
 
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: 0,
+    arrows: false,
+  };
+
+  const [sliderRef, setSliderRef] = useState<HTMLElement | null>(null);
+
+  const next = () => {
+    //@ts-ignore
+    sliderRef.slickNext();
+  };
+  const previous = () => {
+    //@ts-ignore
+    sliderRef.slickPrev();
+  };
+
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-      <div>
-        <Slider {...settings}>
-          {articles.map((a, i) => (
-            <div
-              key={i}
-              style={{
-                width: "300px",
-                height: "300px",
-                // background: "cyan",
-                // marginLeft: "10px",
-                // borderRadius: "12px",
-              }}
-            >
-              <PediaArticleCard
-                title={a.title}
-                imageUrl={a.mainImage}
-                color={a.color}
-              />
-            </div>
-          ))}
-          {/* <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div> */}
-        </Slider>
-      </div>
       <Stack spacing="36px" alignItems="center" width="100%" pb="50px">
         <Stack maxWidth="780px" spacing="6px" alignItems="center">
           <Stack
@@ -269,7 +289,54 @@ export default function PediaLandingPageSignedOutView() {
           by our team."
             title="Browse our ever-growing collection of content"
           >
-            <Stack />
+            <Stack
+              direction="row"
+              width="100%"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                ".slick-slide": {
+                  transition: "0.4s ease-out",
+                  display: "flex !important",
+                  justifyContent: "center",
+                },
+                ".slick-center": {
+                  transform: "scale(1.3)",
+                  transformOrigin: "center",
+                },
+                ".slick-list": {
+                  paddingLeft: "unset !important",
+                  paddingRight: "unset !important",
+                  paddingTop: "50px !important",
+                  paddingBottom: "50px !important",
+                },
+              }}
+            >
+              <CarouselButton onClick={previous} />
+              <div style={{ width: "54%", height: "100%" }}>
+                {/* <Stack direction="row" spacing="10px" flex={1}> */}
+                {/* @ts-ignore */}
+                <Slider ref={setSliderRef} {...settings}>
+                  {[...articles, ...articles].map((a, i) => (
+                    <Stack key={i} alignItems="center">
+                      <PediaArticleCard
+                        title={a.title}
+                        imageUrl={a.mainImage}
+                        color={a.color}
+                      />
+                    </Stack>
+                  ))}
+                </Slider>
+                {/* </Stack> */}
+              </div>
+              <Stack
+                sx={{
+                  transform: "rotate(180deg)",
+                }}
+              >
+                <CarouselButton onClick={next} />
+              </Stack>
+            </Stack>
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Benefits"
