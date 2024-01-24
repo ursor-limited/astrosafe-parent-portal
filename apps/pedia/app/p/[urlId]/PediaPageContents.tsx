@@ -828,11 +828,11 @@ export default function PediaPageContents(props: {
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
   const [bentoRef, setBentoRef] = useState<HTMLElement | null>(null);
-  const [columnWidth, setColumnWidth] = useState<number>(0);
-  useEffect(() => {
-    const w = bentoRef?.getBoundingClientRect().width;
-    w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
-  }, [width, bentoRef]);
+  const [columnWidth, setColumnWidth] = useState<number>(85);
+  // useEffect(() => {
+  //   const w = bentoRef?.getBoundingClientRect().width;
+  //   w && setColumnWidth((w - GRID_SPACING) / N_COLUMNS - GRID_SPACING);
+  // }, [width, bentoRef]);
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
