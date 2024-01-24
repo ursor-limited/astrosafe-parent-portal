@@ -33,6 +33,8 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import ApiController from "../api";
 import { PediaArticleCard } from "./PediaLandingPageSignedInView";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -42,6 +44,14 @@ export const getPulse = (y: number, amplitude: number) => keyframes`
     transform: translateY(${y + amplitude}px)
   }
 `;
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
@@ -74,6 +84,46 @@ export default function PediaLandingPageSignedOutView() {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
+      <div>
+        <Slider {...settings}>
+          {articles.map((a, i) => (
+            <div
+              key={i}
+              style={{
+                width: "300px",
+                height: "300px",
+                // background: "cyan",
+                // marginLeft: "10px",
+                // borderRadius: "12px",
+              }}
+            >
+              <PediaArticleCard
+                title={a.title}
+                imageUrl={a.mainImage}
+                color={a.color}
+              />
+            </div>
+          ))}
+          {/* <div>
+            <h3>1</h3>
+          </div>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div> */}
+        </Slider>
+      </div>
       <Stack spacing="36px" alignItems="center" width="100%" pb="50px">
         <Stack maxWidth="780px" spacing="6px" alignItems="center">
           <Stack
@@ -219,44 +269,7 @@ export default function PediaLandingPageSignedOutView() {
           by our team."
             title="Browse our ever-growing collection of content"
           >
-            <Slider speed={500}>
-              {articles.map((a, i) => (
-                <div
-                  key={i}
-                  style={{
-                    width: "300px",
-                    height: "300px",
-                    // background: "cyan",
-                    // marginLeft: "10px",
-                    // borderRadius: "12px",
-                  }}
-                >
-                  <PediaArticleCard
-                    title={a.title}
-                    imageUrl={a.mainImage}
-                    color={a.color}
-                  />
-                </div>
-              ))}
-              {/* <div>
-                <h3>1</h3>
-              </div>
-              <div>
-                <h3>2</h3>
-              </div>
-              <div>
-                <h3>3</h3>
-              </div>
-              <div>
-                <h3>4</h3>
-              </div>
-              <div>
-                <h3>5</h3>
-              </div>
-              <div>
-                <h3>6</h3>
-              </div> */}
-            </Slider>
+            <Stack />
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Benefits"

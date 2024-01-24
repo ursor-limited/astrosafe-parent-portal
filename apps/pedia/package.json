@@ -32,6 +32,7 @@
     "react-slick": "^0.29.0",
     "react-tsparticles": "^2.12.2",
     "sharp": "^0.32.6",
+    "slick-carousel": "^1.8.1",
     "swiper": "^11.0.5",
     "tsparticles": "^2.0.6",
     "ui": "workspace:*",
