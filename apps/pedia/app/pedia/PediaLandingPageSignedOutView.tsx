@@ -350,12 +350,30 @@ export default function PediaLandingPageSignedOutView() {
               <LandingPageCarousel
                 yPadding={40}
                 items={[...articles, ...articles].map((a, i) => (
-                  <Stack key={i} alignItems="center">
-                    <PediaArticleCard
-                      title={a.title}
-                      imageUrl={a.mainImage}
-                      color={a.color}
-                    />
+                  <Stack
+                    key={i}
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <a
+                      target="_blank"
+                      href={`${
+                        process.env.NODE_ENV === "development"
+                          ? "http://localhost:3000"
+                          : "https://www.astrosafe.co"
+                      }/p/${a.urlId}`}
+                      rel="noopener noreferrer"
+                    >
+                      <PediaArticleCard
+                        title={a.title}
+                        imageUrl={a.mainImage}
+                        color={a.color}
+                      />
+                    </a>
                   </Stack>
                 ))}
               />
@@ -379,12 +397,30 @@ export default function PediaLandingPageSignedOutView() {
                   ...collections,
                   ...collections,
                 ].map((c, i) => (
-                  <Stack key={i} alignItems="center">
-                    <PediaCollectionCard
-                      title={c.page.title}
-                      images={c.images}
-                      shadow
-                    />
+                  <Stack
+                    key={i}
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <a
+                      target="_blank"
+                      href={`${
+                        process.env.NODE_ENV === "development"
+                          ? "http://localhost:3000"
+                          : "https://www.astrosafe.co"
+                      }/c/${c.page.id}`}
+                      rel="noopener noreferrer"
+                    >
+                      <PediaCollectionCard
+                        title={c.page.title}
+                        images={c.images}
+                        shadow
+                      />
+                    </a>
                   </Stack>
                 ))}
               />

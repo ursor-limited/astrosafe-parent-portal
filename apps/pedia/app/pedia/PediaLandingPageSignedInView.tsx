@@ -80,7 +80,7 @@ export function PediaCollectionCard(props: {
       bgcolor="rgb(255,255,255)"
       overflow="hidden"
       p="4px"
-      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.08)" : undefined}
+      boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.07)" : undefined}
     >
       <Stack
         height="107px"
