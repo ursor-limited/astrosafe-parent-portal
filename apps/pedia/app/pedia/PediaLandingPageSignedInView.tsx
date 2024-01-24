@@ -69,6 +69,7 @@ export function PediaArticleCard(props: {
 export function PediaCollectionCard(props: {
   title: string;
   images: { url: string; color: string }[];
+  shadow?: boolean;
 }) {
   return (
     <Stack
@@ -79,6 +80,7 @@ export function PediaCollectionCard(props: {
       bgcolor="rgb(255,255,255)"
       overflow="hidden"
       p="4px"
+      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.08)" : undefined}
     >
       <Stack
         height="107px"
