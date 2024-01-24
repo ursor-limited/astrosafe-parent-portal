@@ -32,6 +32,7 @@ import {
 } from "../p/[urlId]/PediaPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
 import ApiController from "../api";
+import { PediaArticleCard } from "./PediaLandingPageSignedInView";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -219,7 +220,25 @@ export default function PediaLandingPageSignedOutView() {
             title="Browse our ever-growing collection of content"
           >
             <Slider speed={500}>
-              <div>
+              {articles.map((a, i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: "300px",
+                    height: "300px",
+                    // background: "cyan",
+                    // marginLeft: "10px",
+                    // borderRadius: "12px",
+                  }}
+                >
+                  <PediaArticleCard
+                    title={a.title}
+                    imageUrl={a.mainImage}
+                    color={a.color}
+                  />
+                </div>
+              ))}
+              {/* <div>
                 <h3>1</h3>
               </div>
               <div>
@@ -236,7 +255,7 @@ export default function PediaLandingPageSignedOutView() {
               </div>
               <div>
                 <h3>6</h3>
-              </div>
+              </div> */}
             </Slider>
           </LandingPageViewport>
           <LandingPageViewport

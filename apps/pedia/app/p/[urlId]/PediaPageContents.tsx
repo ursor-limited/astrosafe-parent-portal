@@ -842,7 +842,6 @@ export default function PediaPageContents(props: {
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header />
-
       <Stack>
         {/* <ReactCarousel
             carouselConfig={{
