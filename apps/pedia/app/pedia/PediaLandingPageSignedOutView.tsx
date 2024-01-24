@@ -6,7 +6,7 @@ import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { CreationBox } from "../components/CreationBox";
 import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
@@ -144,7 +144,7 @@ const LandingPageCarousel = (props: {
       }}
     >
       <CarouselButton onClick={previous} />
-      <div style={{ width: "54%", height: "100%" }}>
+      <div style={{ width: "950px", height: "100%" }}>
         {/* <Stack direction="row" spacing="10px" flex={1}> */}
         {/* @ts-ignore */}
         <Slider ref={setSliderRef} {...settings}>
@@ -353,13 +353,13 @@ export default function PediaLandingPageSignedOutView() {
                   <Stack
                     key={i}
                     alignItems="center"
-                    sx={{
-                      "&:hover": { opacity: 0.7 },
-                      transition: "0.2s",
-                      cursor: "pointer",
-                    }}
+                    // sx={{
+                    //   "&:hover": { opacity: 0.7 },
+                    //   transition: "0.2s",
+                    //   cursor: "drag",
+                    // }}
                   >
-                    <a
+                    {/* <a
                       target="_blank"
                       href={`${
                         process.env.NODE_ENV === "development"
@@ -367,13 +367,28 @@ export default function PediaLandingPageSignedOutView() {
                           : "https://www.astrosafe.co"
                       }/p/${a.urlId}`}
                       rel="noopener noreferrer"
-                    >
-                      <PediaArticleCard
-                        title={a.title}
-                        imageUrl={a.mainImage}
-                        color={a.color}
-                      />
-                    </a>
+                    > */}
+                    <PediaArticleCard
+                      title={a.title}
+                      imageUrl={a.mainImage}
+                      color={a.color}
+                      button={
+                        <a
+                          target="_blank"
+                          href={`${
+                            process.env.NODE_ENV === "development"
+                              ? "http://localhost:3000"
+                              : "https://www.astrosafe.co"
+                          }/p/${a.urlId}`}
+                          rel="noopener noreferrer"
+                        >
+                          <UrsorButton dark size="small" fontColor={a.color}>
+                            Open
+                          </UrsorButton>
+                        </a>
+                      }
+                    />
+                    {/* </a> */}
                   </Stack>
                 ))}
               />

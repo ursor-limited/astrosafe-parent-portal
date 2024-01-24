@@ -6,7 +6,7 @@ import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { CreationBox } from "../components/CreationBox";
 
 import {
@@ -23,6 +23,7 @@ export function PediaArticleCard(props: {
   title: string;
   imageUrl: string;
   color: string;
+  button?: JSX.Element;
 }) {
   return (
     <Stack
@@ -61,6 +62,9 @@ export function PediaArticleCard(props: {
             backgroundPosition: "center",
           }}
         />
+        <Stack width="100%" alignItems="flex-end">
+          {props.button}
+        </Stack>
       </Stack>
     </Stack>
   );
