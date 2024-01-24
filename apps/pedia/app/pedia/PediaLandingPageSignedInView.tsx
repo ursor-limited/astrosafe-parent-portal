@@ -6,7 +6,7 @@ import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { CreationBox } from "../components/CreationBox";
 
 import {
@@ -18,11 +18,13 @@ import { Grid } from "@mui/material";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
 
 export function PediaArticleCard(props: {
   title: string;
   imageUrl: string;
   color: string;
+  button?: JSX.Element;
 }) {
   return (
     <Stack
@@ -49,7 +51,14 @@ export function PediaArticleCard(props: {
           )})`,
         }}
       >
-        <Typography variant="h5" color={PALETTE.font.light}>
+        <Typography
+          variant="h5"
+          color={
+            shouldBeLightText(props.color)
+              ? PALETTE.font.light
+              : "rgba(0,0,0,0.5)"
+          }
+        >
           {props.title}
         </Typography>
         <Stack
@@ -61,6 +70,9 @@ export function PediaArticleCard(props: {
             backgroundPosition: "center",
           }}
         />
+        <Stack width="100%" alignItems="flex-end">
+          {props.button}
+        </Stack>
       </Stack>
     </Stack>
   );
@@ -69,6 +81,8 @@ export function PediaArticleCard(props: {
 export function PediaCollectionCard(props: {
   title: string;
   images: { url: string; color: string }[];
+  shadow?: boolean;
+  button?: JSX.Element;
 }) {
   return (
     <Stack
@@ -79,6 +93,7 @@ export function PediaCollectionCard(props: {
       bgcolor="rgb(255,255,255)"
       overflow="hidden"
       p="4px"
+      boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.07)" : undefined}
     >
       <Stack
         height="107px"
@@ -131,6 +146,11 @@ export function PediaCollectionCard(props: {
       <Typography variant="medium" bold color={PALETTE.secondary.grey[5]}>
         {props.title}
       </Typography>
+      {props.button ? (
+        <Stack flex={1} alignItems="flex-end" justifyContent="flex-end">
+          {props.button}
+        </Stack>
+      ) : null}
     </Stack>
   );
 }

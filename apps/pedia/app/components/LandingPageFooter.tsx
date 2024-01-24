@@ -64,8 +64,8 @@ export const LandingPageFooter = () => {
         direction="row"
         height="236px"
         width="100%"
-        maxWidth="1320px"
-        px="5px"
+        maxWidth="calc(1320px + 2 * 24px)"
+        px="24px"
         py="35px"
         justifyContent="space-between"
       >

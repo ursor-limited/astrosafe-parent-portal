@@ -133,6 +133,7 @@ export interface UrsorButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   backgroundColor?: string;
+  borderColor?: string;
   hoverOpacity?: number;
   fontColor?: string;
   startIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -164,7 +165,9 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
     <Stack
       alignItems="center"
       bgcolor={BACKGROUND_COLORS[mode][variant]?.[state]}
-      border={`2px solid ${BORDER_COLORS[mode][variant]?.[state]}`}
+      border={`2px solid ${
+        props.borderColor || BORDER_COLORS[mode][variant]?.[state]
+      }`}
       borderRadius={`${HEIGHTS[size] / 2}px`}
       boxSizing="border-box"
       direction="row"

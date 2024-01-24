@@ -40,15 +40,15 @@ class ApiController {
       (response: any) => response.json()
     );
   }
-  static async getAllArticles(authorId: string) {
+  static async getAllArticles(authorId?: string) {
     //@ts-ignore
-    return get(`pedia/allArticles`, { authorId }).then((response: any) =>
+    return get(`pedia/allArticles`, authorId ? { authorId } : undefined).then((response: any) =>
       response.json()
     );
   }
-  static async getAllCollections(authorId: string) {
+  static async getAllCollections(authorId?: string) {
     //@ts-ignore
-    return get(`pedia/allCollections`, { authorId }).then((response: any) =>
+    return get(`pedia/allCollections`, authorId ? { authorId } : undefined).then((response: any) =>
       response.json()
     );
   }

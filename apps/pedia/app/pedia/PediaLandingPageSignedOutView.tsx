@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { CreationBox } from "../components/CreationBox";
 import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
@@ -25,6 +25,21 @@ import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
 import { IntroBox } from "../components/IntroBox";
 import Image from "next/image";
+import Slider from "react-slick";
+import {
+  IPediaCollectionPage,
+  IPediaPage,
+} from "../p/[urlId]/PediaPageContents";
+import { useAuth0 } from "@auth0/auth0-react";
+import ApiController from "../api";
+import {
+  PediaArticleCard,
+  PediaCollectionCard,
+} from "./PediaLandingPageSignedInView";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
+import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
 
 export const getPulse = (y: number, amplitude: number) => keyframes`
   from {
@@ -35,6 +50,126 @@ export const getPulse = (y: number, amplitude: number) => keyframes`
   }
 `;
 
+function NextArrow(props: any) {
+  const { className, style, onClick } = props;
+  return (
+    <Stack
+      className={className}
+      bgcolor="rgb(255,255,255)"
+      borderRadius="100%"
+      width="95px"
+      height="95px"
+      boxShadow="0 0 25px rgba(0,0,0,0.05)"
+      onClick={onClick}
+      style={{
+        ...style,
+        display: "block",
+        width: "60px",
+        height: "60px",
+        background: "rgb(255,255,255)",
+        boxShadow: "0 0 25px rgba(0,0,0,0.05)",
+        "&:hover": { opacity: 0.7 },
+        transition: "0.2s",
+        cursor: "pointer",
+      }}
+    ></Stack>
+  );
+}
+
+const CarouselButton = (props: { onClick: () => void }) => (
+  <Stack
+    bgcolor="rgb(255,255,255)"
+    borderRadius="100%"
+    width="60px"
+    height="60px"
+    boxShadow="0 0 20px rgba(0,0,0,0.06)"
+    onClick={props.onClick}
+    sx={{
+      "&:hover": { opacity: 0.6 },
+      transition: "0.2s",
+      cursor: "pointer",
+    }}
+    justifyContent="center"
+    alignItems="center"
+  >
+    <ChevronLeft height="38px" width="38px" />
+  </Stack>
+);
+
+const LandingPageCarousel = (props: {
+  items: JSX.Element[];
+  yPadding: number;
+}) => {
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: 0,
+    arrows: false,
+  };
+
+  const [sliderRef, setSliderRef] = useState<HTMLElement | null>(null);
+
+  const next = () => {
+    //@ts-ignore
+    sliderRef.slickNext();
+  };
+  const previous = () => {
+    //@ts-ignore
+    sliderRef.slickPrev();
+  };
+  return (
+    <Stack
+      direction="row"
+      width="100%"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        ".slick-slide": {
+          transition: "0.4s ease-out",
+          display: "flex !important",
+          justifyContent: "center",
+        },
+        ".slick-center": {
+          transform: "scale(1.3)",
+          transformOrigin: "center",
+        },
+        ".slick-list": {
+          paddingLeft: "unset !important",
+          paddingRight: "unset !important",
+          paddingTop: `${props.yPadding}px !important`,
+          paddingBottom: `${props.yPadding}px !important`,
+        },
+      }}
+    >
+      <CarouselButton onClick={previous} />
+      <div style={{ width: "950px", height: "100%" }}>
+        {/* <Stack direction="row" spacing="10px" flex={1}> */}
+        {/* @ts-ignore */}
+        <Slider ref={setSliderRef} {...settings}>
+          {props.items}
+        </Slider>
+        {/* </Stack> */}
+      </div>
+      <Stack
+        sx={{
+          transform: "rotate(180deg)",
+        }}
+      >
+        <CarouselButton onClick={next} />
+      </Stack>
+    </Stack>
+  );
+};
+
+function arrayRotate(arr: any[], count: number) {
+  const len = arr.length;
+  arr.push(...arr.splice(0, ((-count % len) + len) % len));
+  return arr;
+}
+
 export default function PediaLandingPageSignedOutView() {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
@@ -42,6 +177,24 @@ export default function PediaLandingPageSignedOutView() {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   const router = useRouter();
+
+  const { user } = useAuth0();
+
+  const [articles, setArticles] = useState<IPediaPage[]>([]);
+  const [collections, setCollections] = useState<
+    {
+      page: IPediaCollectionPage;
+      images: { url: string; color: string }[];
+    }[]
+  >([]);
+  useEffect(() => {
+    ApiController.getAllArticles().then((articles) =>
+      setArticles(articles.filter((a: any) => a.color))
+    );
+    ApiController.getAllCollections().then((collections) =>
+      setCollections(collections)
+    );
+  }, []);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -191,7 +344,135 @@ export default function PediaLandingPageSignedOutView() {
           by our team."
             title="Browse our ever-growing collection of content"
           >
-            <Stack />
+            <Stack pt="20px" spacing="8px" width="100%" alignItems="center">
+              <Typography
+                variant="large"
+                bold
+                color={PALETTE.secondary.grey[3]}
+              >
+                Browse Articles
+              </Typography>
+              <LandingPageCarousel
+                yPadding={40}
+                items={arrayRotate(articles, 2).map((a, i) => (
+                  <Stack
+                    key={i}
+                    alignItems="center"
+                    // sx={{
+                    //   "&:hover": { opacity: 0.7 },
+                    //   transition: "0.2s",
+                    //   cursor: "drag",
+                    // }}
+                  >
+                    {/* <a
+                      target="_blank"
+                      href={`${
+                        process.env.NODE_ENV === "development"
+                          ? "http://localhost:3000"
+                          : "https://www.astrosafe.co"
+                      }/p/${a.urlId}`}
+                      rel="noopener noreferrer"
+                    > */}
+                    <PediaArticleCard
+                      title={a.title}
+                      imageUrl={a.mainImage}
+                      color={a.color}
+                      button={
+                        <a
+                          target="_blank"
+                          href={`${
+                            process.env.NODE_ENV === "development"
+                              ? "http://localhost:3000"
+                              : "https://www.astrosafe.co"
+                          }/p/${a.urlId}`}
+                          rel="noopener noreferrer"
+                        >
+                          <Stack
+                            sx={{
+                              "&:hover": { opacity: 0.6 },
+                              transition: "0.2s",
+                            }}
+                          >
+                            <UrsorButton
+                              size="small"
+                              backgroundColor={
+                                shouldBeLightText(a.color)
+                                  ? "rgb(255,255,255)"
+                                  : "rgba(0,0,0,0.5)"
+                              }
+                              fontColor={a.color}
+                            >
+                              Open
+                            </UrsorButton>
+                          </Stack>
+                        </a>
+                      }
+                    />
+                    {/* </a> */}
+                  </Stack>
+                ))}
+              />
+            </Stack>
+            <Stack width="100%" alignItems="center">
+              <Typography
+                variant="large"
+                bold
+                color={PALETTE.secondary.grey[3]}
+                sx={{
+                  transform: "translateY(12px)",
+                }}
+              >
+                Browse Collections
+              </Typography>
+              <LandingPageCarousel
+                yPadding={50}
+                items={[
+                  ...collections,
+                  ...collections,
+                  ...collections,
+                  ...collections,
+                ].map((c, i) => (
+                  <Stack key={i} alignItems="center">
+                    <PediaCollectionCard
+                      title={c.page.title}
+                      images={c.images}
+                      shadow
+                      button={
+                        <a
+                          target="_blank"
+                          href={`${
+                            process.env.NODE_ENV === "development"
+                              ? "http://localhost:3000"
+                              : "https://www.astrosafe.co"
+                          }/c/${c.page.id}`}
+                          rel="noopener noreferrer"
+                        >
+                          <Stack
+                            sx={{
+                              "&:hover": { opacity: 0.6 },
+                              transition: "0.2s",
+                            }}
+                          >
+                            <UrsorButton
+                              size="small"
+                              variant="secondary"
+                              //variant="ghost"
+                              // fontColor={c.images[0].color}
+                              borderColor="transparent"
+                              //backgroundColor={`linear-gradient(90deg, ${c.images[0].color}, ${c.images[2].color})`}
+                              //backgroundColor="rgb(255,255,255)"
+                              fontColor={PALETTE.secondary.grey[5]}
+                            >
+                              Open
+                            </UrsorButton>
+                          </Stack>
+                        </a>
+                      }
+                    />
+                  </Stack>
+                ))}
+              />
+            </Stack>
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Benefits"
