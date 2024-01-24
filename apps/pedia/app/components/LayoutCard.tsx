@@ -39,14 +39,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
   const { width } = useWindowSize();
   const router = useRouter();
   return (
-    // <Stack width="100%" height="100%" alignItems="center" pt={props.paddingTop}>
-    <Stack
-      width="1843px"
-      minWidth="1843px"
-      height="100%"
-      alignItems="center"
-      pt={props.paddingTop}
-    >
+    <Stack width="100%" height="100%" alignItems="center" pt={props.paddingTop}>
       <Stack
         flex={1}
         width="100%"
