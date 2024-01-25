@@ -472,7 +472,7 @@ const MobileColumn = (props: {
         />
       </Stack>
       <Stack spacing="12px" width="100%" height="100%">
-        <PediaMainCard title={props.title} {...props.mainCardDetails} mobile />
+        <PediaMainCard mobile title={props.title} {...props.mainCardDetails} />
         <TextBlockCard
           key="overview"
           title={props.textCardDetails[0]?.title ?? ""}
@@ -841,7 +841,7 @@ export default function PediaPageContents(props: {
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-      <Header />
+      <Header mobile={isMobile} />
       <Stack>
         {/* <ReactCarousel
             carouselConfig={{
