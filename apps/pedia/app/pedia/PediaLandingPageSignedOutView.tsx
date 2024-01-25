@@ -158,7 +158,7 @@ export default function PediaLandingPageSignedOutView(props: {
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header mobile={props.mobile} />
       <Stack
-        spacing={props.mobile ? "16px" : "36px"}
+        spacing="36px"
         alignItems="center"
         width="100%"
         pb={props.mobile ? "20px" : "50px"}

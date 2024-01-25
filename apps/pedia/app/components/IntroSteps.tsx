@@ -98,7 +98,7 @@ export const IntroSteps = (props: { mobile: boolean }) => {
             width="fit-content"
             position="absolute"
             zIndex={-1}
-            top="-16px"
+            top="-40px"
             left={0}
             right={0}
             marginLeft="auto"
