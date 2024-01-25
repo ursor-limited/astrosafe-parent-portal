@@ -5,7 +5,7 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PaintBrushIcon from "@/images/icons/PaintBrushIcon.svg";
 import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "./UrsorFadeIn";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import DynamicContainer from "./DynamicContainer";
 
 const MAX_TOPICS = 4;
@@ -50,14 +50,14 @@ export const CreationBox = (props: { mobile: boolean }) => {
       bgcolor="rgba(0,0,0,0.16)"
       px="24px"
       py="20px"
-      maxWidth="733px"
-      width="733px"
+      maxWidth={props.mobile ? "93%" : "733px"}
+      width={props.mobile ? "93%" : "733px"}
       borderRadius="16px"
       alignItems="center"
-      spacing="24px"
+      spacing={props.mobile ? 0 : "24px"}
     >
-      <Stack spacing="8px">
-        <Stack spacing="4px">
+      <Stack spacing="8px" width={props.mobile ? "100%" : undefined}>
+        <Stack spacing="4px" width={props.mobile ? "100%" : undefined}>
           <Stack direction="row" spacing="9px">
             <Typography variant="small" bold color="rgba(255,255,255,0.6)">
               Topics added:
@@ -81,12 +81,13 @@ export const CreationBox = (props: { mobile: boolean }) => {
               opacity: topics.length === MAX_TOPICS ? 0.55 : 1,
               pointerEvents: topics.length === MAX_TOPICS ? "none" : undefined,
             }}
+            width={props.mobile ? "100%" : undefined}
           >
             <Stack
               direction="row"
               spacing="8px"
               alignItems="center"
-              width="519px"
+              width={props.mobile ? "100%" : "519px"}
             >
               <UrsorInputField
                 value={value}
@@ -144,18 +145,25 @@ export const CreationBox = (props: { mobile: boolean }) => {
           </Stack>
         </DynamicContainer>
       </Stack>
-      <UrsorButton
-        dark
-        variant="tertiary"
-        onClick={loginWithPopup}
-        backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-        hoverOpacity={0.7}
-        endIcon={PaintBrushIcon}
-        iconColor={PALETTE.font.light}
-        iconSize={16}
+      <Stack
+        sx={{
+          opacity: topics.length > 0 ? 1 : 0.5,
+          pointerEvents: topics.length === 0 ? "none" : undefined,
+        }}
       >
-        Create
-      </UrsorButton>
+        <UrsorButton
+          dark
+          variant="tertiary"
+          onClick={loginWithPopup}
+          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+          hoverOpacity={0.7}
+          endIcon={PaintBrushIcon}
+          iconColor={PALETTE.font.light}
+          iconSize={16}
+        >
+          Create
+        </UrsorButton>
+      </Stack>
     </Stack>
   );
 };
