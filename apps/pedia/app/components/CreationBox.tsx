@@ -35,7 +35,7 @@ const TopicTag = (props: { value: string; deletionCallback: () => void }) => (
   </Stack>
 );
 
-export const CreationBox = (props: { mobile: boolean }) => {
+export const CreationBox = (props: { mobile?: boolean }) => {
   const [value, setValue] = useState<string>("");
   const [topics, setTopics] = useState<string[]>([]);
   const addTopic = () => {
