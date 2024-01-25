@@ -53,32 +53,34 @@ const PediaMainCard = (props: {
       <UrsorParticles />
     </Stack>
     {props.title ? (
-      <Typography
-        variant={props.mobile && props.title.length > 16 ? "h5" : "h4"}
-        color="rgb(255,255,255)"
-      >
-        {props.title}
-      </Typography>
+      <Stack pl="16px" pt="12px">
+        <Typography
+          variant={props.mobile && props.title.length > 16 ? "h5" : "h4"}
+          color="rgb(255,255,255)"
+        >
+          {props.title}
+        </Typography>
+      </Stack>
     ) : null}
     <Regenerable on={!!props.editing} callback={() => null}>
-      <Stack
-        flex={props.mobile ? undefined : 1}
-        borderRadius="12px 12px 0 0"
-        width={props.width ? `${props.width}px` : "100%"}
-        height={props.mobile ? "310px" : "380px"}
-        sx={{
-          backgroundImage: `url(${props.imageUrl})`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          boxSizing: "border-box",
-        }}
-        position="relative"
-        px="20px"
-        py="20px"
-        pt={props.title ? 0 : "20px"}
-        boxSizing="border-box"
-      />
+      <Stack flex={1} px={props.mobile ? "20px" : undefined}>
+        <Stack
+          flex={props.mobile ? undefined : 1}
+          borderRadius="12px 12px 0 0"
+          width={props.width ? `${props.width}px` : "100%"}
+          height={props.mobile ? "310px" : "380px"}
+          sx={{
+            backgroundImage: `url(${props.imageUrl})`,
+            backgroundSize: "contain",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            boxSizing: "border-box",
+          }}
+          position="relative"
+          pt={props.title ? 0 : "20px"}
+          boxSizing="border-box"
+        />
+      </Stack>
     </Regenerable>
     <Stack>
       <Regenerable on={!!props.editing} callback={() => null} bottomButton>
