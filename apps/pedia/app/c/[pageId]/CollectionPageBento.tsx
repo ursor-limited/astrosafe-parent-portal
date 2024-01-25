@@ -97,7 +97,7 @@ export function ContentPagePreviewCard(props: {
         }}
       >
         <Typography
-          variant={props.fontSize || (props.mobile ? "normal" : "h4")}
+          variant={props.fontSize || (props.mobile ? "large" : "h4")}
           bold
           htmlTag="h3"
           color={
@@ -109,6 +109,7 @@ export function ContentPagePreviewCard(props: {
           }
           sx={{
             textAlign: props.titleOnRight ? "right" : undefined,
+            paddingLeft: "4px",
           }}
         >
           {props.title}

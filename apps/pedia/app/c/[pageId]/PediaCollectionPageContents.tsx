@@ -89,12 +89,16 @@ export function CollectionPageNotification(
 }
 
 export interface IMobileCollectionPageColumn {
+  title: string;
   pages: IPediaPage[];
 }
 
 export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
   return (
     <Stack px="30px" height="100%" width="100%" spacing="12px">
+      <Typography variant="h5" color={PALETTE.font.light}>
+        {props.title}
+      </Typography>
       {props.pages.map((p, i) => (
         <Stack
           height={MOBILE_VIEW_IMAGE_HEIGHT}
@@ -106,7 +110,7 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
             imageUrl={p.mainImage}
             color={p.color}
             urlId={p.urlId}
-            fontSize="h5"
+            mobile
           />
         </Stack>
       ))}
@@ -172,7 +176,10 @@ export default function PediaCollectionPageContents(
           {isMobile && props.pageDetails ? (
             <Stack width="100%" height="100%">
               <UrsorFadeIn duration={1000}>
-                <MobileCollectionPageColumn pages={props.articles} />
+                <MobileCollectionPageColumn
+                  title={props.pageDetails.title}
+                  pages={props.articles}
+                />
               </UrsorFadeIn>
             </Stack>
           ) : props.pageDetails ? (
