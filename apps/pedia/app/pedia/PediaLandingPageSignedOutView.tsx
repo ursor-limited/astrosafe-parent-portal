@@ -216,7 +216,7 @@ export default function PediaLandingPageSignedOutView(props: {
         <Stack
           spacing="150px"
           bgcolor="rgb(255,255,255)"
-          pt={props.mobile ? "15px" : 0}
+          pt={props.mobile ? "25px" : 0}
           zIndex={1}
         >
           <LandingPageViewport
@@ -238,24 +238,7 @@ export default function PediaLandingPageSignedOutView(props: {
                 mobile={props.mobile}
                 yPadding={props.mobile ? 30 : 40}
                 items={_.sortBy(articles, (a) => a.title).map((a, i) => (
-                  <Stack
-                    key={i}
-                    alignItems="center"
-                    // sx={{
-                    //   "&:hover": { opacity: 0.7 },
-                    //   transition: "0.2s",
-                    //   cursor: "drag",
-                    // }}
-                  >
-                    {/* <a
-                      target="_blank"
-                      href={`${
-                        process.env.NODE_ENV === "development"
-                          ? "http://localhost:3000"
-                          : "https://www.astrosafe.co"
-                      }/p/${a.urlId}`}
-                      rel="noopener noreferrer"
-                    > */}
+                  <Stack key={i} alignItems="center">
                     <PediaArticleCard
                       small={props.mobile}
                       title={a.title}
@@ -278,7 +261,7 @@ export default function PediaLandingPageSignedOutView(props: {
                             }}
                           >
                             <UrsorButton
-                              size="tiny"
+                              size={props.mobile ? "tiny" : "small"}
                               backgroundColor={
                                 shouldBeLightText(a.color)
                                   ? "rgb(255,255,255)"
@@ -292,7 +275,6 @@ export default function PediaLandingPageSignedOutView(props: {
                         </a>
                       }
                     />
-                    {/* </a> */}
                   </Stack>
                 ))}
               />
@@ -310,7 +292,7 @@ export default function PediaLandingPageSignedOutView(props: {
               </Typography>
               <LandingPageCarousel
                 mobile={props.mobile}
-                yPadding={50}
+                yPadding={props.mobile ? 40 : 50}
                 items={[
                   ...collections,
                   ...collections,
@@ -319,6 +301,7 @@ export default function PediaLandingPageSignedOutView(props: {
                 ].map((c, i) => (
                   <Stack key={i} alignItems="center">
                     <PediaCollectionCard
+                      small={props.mobile}
                       title={c.page.title}
                       images={c.images}
                       shadow
@@ -339,13 +322,9 @@ export default function PediaLandingPageSignedOutView(props: {
                             }}
                           >
                             <UrsorButton
-                              size="small"
+                              size={props.mobile ? "tiny" : "small"}
                               variant="secondary"
-                              //variant="ghost"
-                              // fontColor={c.images[0].color}
                               borderColor="transparent"
-                              //backgroundColor={`linear-gradient(90deg, ${c.images[0].color}, ${c.images[2].color})`}
-                              //backgroundColor="rgb(255,255,255)"
                               fontColor={PALETTE.secondary.grey[5]}
                             >
                               Open
