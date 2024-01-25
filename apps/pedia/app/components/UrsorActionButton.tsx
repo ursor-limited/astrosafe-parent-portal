@@ -10,9 +10,11 @@ const LARGE_SIZE = "20px";
 export interface IUrsorActionButtonProps {
   actions: IActionPopupItem[];
   size?: string;
+  iconSize?: string;
   large?: boolean;
   light?: boolean;
   background?: string;
+  fontColor?: string;
   buttonClickCallback?: () => void;
 }
 
@@ -40,7 +42,9 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           svg: {
             transform: "rotate(90deg)",
             path: {
-              fill: props.light ? PALETTE.font.light : PALETTE.font.dark,
+              fill:
+                props.fontColor ||
+                (props.light ? PALETTE.font.light : PALETTE.font.dark),
             },
           },
         }}
@@ -51,8 +55,8 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }}
       >
         <MoreIcon
-          height={props.large ? LARGE_SIZE : DEFAULT_SIZE}
-          width={props.large ? LARGE_SIZE : DEFAULT_SIZE}
+          height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
+          width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
         />
       </Stack>
     </ActionPopup>

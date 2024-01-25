@@ -154,12 +154,28 @@ export function ContentPagePreviewCard(props: {
         bottom={props.mobile ? "10px" : "20px"}
         right={props.mobile ? "10px" : "20px"}
       >
-        <UrsorButton dark size="small" onClick={openPage}>
+        <UrsorButton
+          dark
+          size="small"
+          fontColor={props.color}
+          backgroundColor={
+            shouldBeLightText(props.color)
+              ? "rgb(255,255,255)"
+              : "rgba(0,0,0,0.5)"
+          }
+          onClick={openPage}
+        >
           Open
         </UrsorButton>
         <UrsorActionButton
-          background={PALETTE.secondary.grey[1]}
+          background={
+            shouldBeLightText(props.color)
+              ? "rgb(255,255,255)"
+              : "rgba(0,0,0,0.5)"
+          }
+          fontColor={props.color}
           size="28px"
+          iconSize="13px"
           actions={[
             {
               text: "Open",

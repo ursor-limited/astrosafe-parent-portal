@@ -106,8 +106,6 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
             imageUrl={p.mainImage}
             color={p.color}
             urlId={p.urlId}
-            titleAtBottom
-            titleOnRight={!!(i % 2)}
             fontSize="h5"
           />
         </Stack>
@@ -152,7 +150,7 @@ export default function PediaCollectionPageContents(
   return (
     <>
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-        <Header />
+        <Header mobile={isMobile} />
         <Stack spacing="20px" width="100%">
           <Stack height="20px" />
           {/* <CollectionPageNotification
