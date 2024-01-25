@@ -1,6 +1,7 @@
 import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import ShootingStar from "@/images/ShootingStar.png";
+import ShootingStarMobile from "@/images/ShootingStarMobile.png";
 import { IntroBox } from "./IntroBox";
 
 export const getPulse = (
@@ -92,55 +93,77 @@ export const IntroSteps = (props: { mobile: boolean }) => {
           </Stack>
         </>
       ) : (
-        <Stack
-          width="93%"
-          pt="5px"
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          spacing="10%"
-        >
+        <Stack width="93%" position="relative">
           <Stack
-            sx={{
-              animation: `${getPulse(0, 10, "y")} 3.2s ease-in-out`,
-              animationDirection: "alternate",
-              animationIterationCount: "infinite",
-            }}
-            spacing="20px"
+            width="fit-content"
+            position="absolute"
+            zIndex={-1}
+            top="-16px"
+            left={0}
+            right={0}
+            marginLeft="auto"
+            marginRight="auto"
           >
-            <IntroBox
-              title="Select"
-              content="Enter the titles of the Articles you want to create and click the +"
-              mobile
+            <Image
+              src={ShootingStarMobile.src}
+              width={266}
+              height={253}
+              loader={({ src }) => {
+                return src;
+              }}
+              alt="Intro square"
             />
+          </Stack>
+          <Stack
+            width="100%"
+            pt="5px"
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing="10%"
+          >
             <Stack
               sx={{
-                // transform: "translateY(57px)",
-                animation: `${getPulse(10, 12, "y")} 3s ease-in-out`,
-                animationDelay: 0.5,
+                animation: `${getPulse(0, 10, "y")} 3.2s ease-in-out`,
+                animationDirection: "alternate",
+                animationIterationCount: "infinite",
+              }}
+              spacing="20px"
+            >
+              <IntroBox
+                title="Select"
+                content="Enter the titles of the Articles you want to create and click the +"
+                mobile
+              />
+              <Stack
+                sx={{
+                  // transform: "translateY(57px)",
+                  animation: `${getPulse(10, 12, "y")} 3s ease-in-out`,
+                  animationDelay: 0.5,
+                  animationDirection: "alternate",
+                  animationIterationCount: "infinite",
+                }}
+              >
+                <IntroBox
+                  title="Create"
+                  content="Once you’ve got a collection of articles, click Create."
+                  mobile
+                />
+              </Stack>
+            </Stack>
+            <Stack
+              sx={{
+                animation: `${getPulse(0, 15, "y")} 4s ease-in-out`,
                 animationDirection: "alternate",
                 animationIterationCount: "infinite",
               }}
             >
               <IntroBox
-                title="Create"
-                content="Once you’ve got a collection of articles, click Create."
+                title="Generate"
+                content="Your Articles will take a few minutes to generate and voila!"
                 mobile
               />
             </Stack>
-          </Stack>
-          <Stack
-            sx={{
-              animation: `${getPulse(0, 15, "y")} 4s ease-in-out`,
-              animationDirection: "alternate",
-              animationIterationCount: "infinite",
-            }}
-          >
-            <IntroBox
-              title="Generate"
-              content="Your Articles will take a few minutes to generate and voila!"
-              mobile
-            />
           </Stack>
         </Stack>
       )}
