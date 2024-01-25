@@ -59,6 +59,7 @@ const ContactSection = (props: { mobile?: boolean }) => (
         fontWeight: 500,
         textAlign: props.mobile ? "center" : undefined,
       }}
+      color={PALETTE.font.dark}
     >
       Contact
     </Typography>
@@ -178,6 +179,7 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 textAlign: props.mobile ? "center" : undefined,
                 width: props.mobile ? "230px" : undefined,
               }}
+              color={PALETTE.font.dark}
             >
               A safe space for kids to discover, learn, and play online.
             </Typography>

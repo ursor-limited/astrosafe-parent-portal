@@ -15,6 +15,7 @@ export const FooterList = (props: {
         sx={{
           fontWeight: 500,
         }}
+        color={PALETTE.font.dark}
       >
         {props.title}
       </Typography>
