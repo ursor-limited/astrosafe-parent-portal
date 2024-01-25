@@ -344,7 +344,10 @@ export default function PediaLandingPageSignedOutView(props: {
             title="Why use AstroPedia?"
             mobile={props.mobile}
           >
-            <Stack direction="row" spacing="22px">
+            <Stack
+              direction={props.mobile ? "column" : "row"}
+              spacing={props.mobile ? "16px" : "22px"}
+            >
               <IntroSquare2
                 image={BenefitsIllustration1}
                 title="Create your own Articles"
@@ -368,7 +371,10 @@ export default function PediaLandingPageSignedOutView(props: {
             title="AstroPedia keeps kids engaged"
             mobile={props.mobile}
           >
-            <Stack direction="row" spacing="22px">
+            <Stack
+              direction={props.mobile ? "column" : "row"}
+              spacing={props.mobile ? "16px" : "22px"}
+            >
               <IntroSquare2
                 image={UsersIllustration1}
                 title="Teachers"
