@@ -24,12 +24,13 @@ export function PediaArticleCard(props: {
   title: string;
   imageUrl: string;
   color: string;
+  small?: boolean;
   button?: JSX.Element;
 }) {
   return (
     <Stack
-      width="247px"
-      height="247px"
+      width={props.small ? "190px" : "247px"}
+      height={props.small ? "190px" : "247px"}
       borderRadius="16px"
       spacing="5px"
       position="relative"
@@ -42,7 +43,7 @@ export function PediaArticleCard(props: {
         width="100%"
         height="100%"
         position="absolute"
-        p="20px"
+        p={props.small ? "14px" : "20px"}
         boxSizing="border-box"
         sx={{
           background: `linear-gradient(180deg, ${props.color}, ${alpha(
@@ -52,7 +53,8 @@ export function PediaArticleCard(props: {
         }}
       >
         <Typography
-          variant="h5"
+          variant={props.small ? "medium" : "h5"}
+          bold
           color={
             shouldBeLightText(props.color)
               ? PALETTE.font.light
@@ -82,29 +84,30 @@ export function PediaCollectionCard(props: {
   title: string;
   images: { url: string; color: string }[];
   shadow?: boolean;
+  small?: boolean;
   button?: JSX.Element;
 }) {
   return (
     <Stack
-      width="247px"
-      height="189px"
+      width={props.small ? "190px" : "247px"}
+      height={props.small ? "150px" : "189px"}
       borderRadius="12px"
       spacing="5px"
       bgcolor="rgb(255,255,255)"
       overflow="hidden"
-      p="4px"
+      p={props.small ? "3px" : "4px"}
       boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.07)" : undefined}
     >
       <Stack
-        height="107px"
+        height={props.small ? "94px" : "107px"}
         direction="row"
         overflow="hidden"
-        spacing="4px"
+        spacing={props.small ? "3px" : "4px"}
         borderRadius="10px 10px 0 0"
       >
         <Stack
-          width="164px"
-          minWidth="164px"
+          width={props.small ? "120px" : "164px"}
+          minWidth={props.small ? "120px" : "164px"}
           height="100%"
           bgcolor={props.images[0].color}
         >
@@ -118,7 +121,7 @@ export function PediaCollectionCard(props: {
             }}
           />
         </Stack>
-        <Stack spacing="4px" flex={1}>
+        <Stack spacing={props.small ? "3px" : "4px"} flex={1}>
           <Stack flex={1} bgcolor={props.images[1].color}>
             <Stack
               flex={1}
@@ -143,7 +146,11 @@ export function PediaCollectionCard(props: {
           </Stack>
         </Stack>
       </Stack>
-      <Typography variant="medium" bold color={PALETTE.secondary.grey[5]}>
+      <Typography
+        variant={props.small ? "small" : "medium"}
+        bold
+        color={PALETTE.secondary.grey[5]}
+      >
         {props.title}
       </Typography>
       {props.button ? (
@@ -231,7 +238,9 @@ export function PediaTabSwitch(props: {
   );
 }
 
-export default function PediaLandingPageSignedInView() {
+export default function PediaLandingPageSignedInView(props: {
+  mobile: boolean;
+}) {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);

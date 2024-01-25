@@ -98,7 +98,7 @@ const ProfilePopupButton = (props: {
   );
 };
 
-export const Header = (props: { noCreateNew?: boolean }) => {
+export const Header = (props: { noCreateNew?: boolean; mobile: boolean }) => {
   const { user, logout, loginWithPopup } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
@@ -106,11 +106,11 @@ export const Header = (props: { noCreateNew?: boolean }) => {
     <Stack
       direction="row"
       width="100%"
-      height={`${86}px`}
-      minHeight={`${86}px`}
+      height={`${props.mobile ? 70 : 86}px`}
+      minHeight={`${props.mobile ? 70 : 86}px`}
       alignItems="center"
       justifyContent="space-between"
-      px="30px"
+      px={props.mobile ? "20px" : "30px"}
       boxSizing="border-box"
     >
       <a
@@ -143,29 +143,31 @@ export const Header = (props: { noCreateNew?: boolean }) => {
             Log in
           </UrsorButton>
         ) : null}
-        <a
-          target="_blank"
-          href="https://astrosafe.co"
-          style={{
-            textDecoration: "none",
-          }}
-          rel="noreferrer"
-        >
-          {user ? (
-            <UrsorButton dark variant="secondary" onClick={() => null}>
-              Try ASTRO
-            </UrsorButton>
-          ) : (
-            <UrsorButton
-              dark
-              variant="tertiary"
-              onClick={() => null}
-              endIcon={ChevronRight}
-            >
-              Get Browser
-            </UrsorButton>
-          )}
-        </a>
+        {!props.mobile ? (
+          <a
+            target="_blank"
+            href="https://astrosafe.co"
+            style={{
+              textDecoration: "none",
+            }}
+            rel="noreferrer"
+          >
+            {user ? (
+              <UrsorButton dark variant="secondary" onClick={() => null}>
+                Try ASTRO
+              </UrsorButton>
+            ) : (
+              <UrsorButton
+                dark
+                variant="tertiary"
+                onClick={() => null}
+                endIcon={ChevronRight}
+              >
+                Get Browser
+              </UrsorButton>
+            )}
+          </a>
+        ) : null}
         {user ? (
           <Stack
             sx={{

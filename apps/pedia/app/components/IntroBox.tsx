@@ -1,22 +1,31 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 
-export const IntroBox = (props: { title: string; content: string }) => {
+export const IntroBox = (props: {
+  title: string;
+  content: string;
+  mobile?: boolean;
+}) => {
   return (
     <Stack
-      width="277px"
-      height="116px"
+      width={props.mobile ? undefined : "277px"}
+      height={props.mobile ? undefined : "116px"}
       boxSizing="border-box"
       borderRadius="16px"
       bgcolor="rgba(0,0,0,0.2)"
-      p="24px"
+      p={props.mobile ? "16px" : "24px"}
       alignItems="center"
-      justifyContent="space-between"
+      justifyContent={props.mobile ? "center" : "space-between"}
       sx={{
-        backdropFilter: "blur(3px)",
+        backdropFilter: props.mobile ? "blur(2px)" : "blur(3px)",
       }}
+      spacing={props.mobile ? "5px" : undefined}
     >
-      <Typography variant="medium" bold color={PALETTE.font.light}>
+      <Typography
+        variant={props.mobile ? "normal" : "medium"}
+        bold
+        color={PALETTE.font.light}
+      >
         {props.title}
       </Typography>
       <Typography

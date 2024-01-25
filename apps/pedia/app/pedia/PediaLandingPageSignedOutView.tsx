@@ -12,7 +12,6 @@ import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
 import IntroSquareImage2 from "@/images/IntroSquareImage2.png";
 import IntroSquareImage3 from "@/images/IntroSquareImage3.png";
-import ShootingStar from "@/images/ShootingStar.png";
 import UsersIllustration1 from "@/images/UsersIllustration1.png";
 import UsersIllustration2 from "@/images/UsersIllustration2.png";
 import UsersIllustration3 from "@/images/UsersIllustration3.png";
@@ -23,8 +22,6 @@ import { IntroSquare2 } from "../components/IntroSquare2";
 import { useRouter } from "next/navigation";
 import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
-import { IntroBox } from "../components/IntroBox";
-import Image from "next/image";
 import Slider from "react-slick";
 import {
   IPediaCollectionPage,
@@ -40,41 +37,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
 import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
-
-export const getPulse = (y: number, amplitude: number) => keyframes`
-  from {
-    transform: translateY(${y - amplitude}px)
-  }
-  to {
-    transform: translateY(${y + amplitude}px)
-  }
-`;
-
-function NextArrow(props: any) {
-  const { className, style, onClick } = props;
-  return (
-    <Stack
-      className={className}
-      bgcolor="rgb(255,255,255)"
-      borderRadius="100%"
-      width="95px"
-      height="95px"
-      boxShadow="0 0 25px rgba(0,0,0,0.05)"
-      onClick={onClick}
-      style={{
-        ...style,
-        display: "block",
-        width: "60px",
-        height: "60px",
-        background: "rgb(255,255,255)",
-        boxShadow: "0 0 25px rgba(0,0,0,0.05)",
-        "&:hover": { opacity: 0.7 },
-        transition: "0.2s",
-        cursor: "pointer",
-      }}
-    ></Stack>
-  );
-}
+import { IntroSteps } from "../components/IntroSteps";
 
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
@@ -99,6 +62,7 @@ const CarouselButton = (props: { onClick: () => void }) => (
 const LandingPageCarousel = (props: {
   items: JSX.Element[];
   yPadding: number;
+  mobile?: boolean;
 }) => {
   const settings = {
     infinite: true,
@@ -108,6 +72,7 @@ const LandingPageCarousel = (props: {
     centerMode: true,
     centerPadding: 0,
     arrows: false,
+    touchThreshold: 100,
   };
 
   const [sliderRef, setSliderRef] = useState<HTMLElement | null>(null);
@@ -144,8 +109,8 @@ const LandingPageCarousel = (props: {
         },
       }}
     >
-      <CarouselButton onClick={previous} />
-      <div style={{ width: "950px", height: "100%" }}>
+      {!props.mobile ? <CarouselButton onClick={previous} /> : null}
+      <div style={{ width: props.mobile ? "700px" : "950px", height: "100%" }}>
         {/* <Stack direction="row" spacing="10px" flex={1}> */}
         {/* @ts-ignore */}
         <Slider ref={setSliderRef} {...settings}>
@@ -153,23 +118,22 @@ const LandingPageCarousel = (props: {
         </Slider>
         {/* </Stack> */}
       </div>
-      <Stack
-        sx={{
-          transform: "rotate(180deg)",
-        }}
-      >
-        <CarouselButton onClick={next} />
-      </Stack>
+      {!props.mobile ? (
+        <Stack
+          sx={{
+            transform: "rotate(180deg)",
+          }}
+        >
+          <CarouselButton onClick={next} />
+        </Stack>
+      ) : null}
     </Stack>
   );
 };
 
-export default function PediaLandingPageSignedOutView() {
-  /* needed for the platform row's proper scrollability */
-  const { width } = useWindowSize();
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
+export default function PediaLandingPageSignedOutView(props: {
+  mobile: boolean;
+}) {
   const router = useRouter();
 
   const { user } = useAuth0();
@@ -192,9 +156,19 @@ export default function PediaLandingPageSignedOutView() {
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-      <Header />
-      <Stack spacing="36px" alignItems="center" width="100%" pb="50px">
-        <Stack maxWidth="780px" spacing="6px" alignItems="center">
+      <Header mobile={props.mobile} />
+      <Stack
+        spacing="36px"
+        alignItems="center"
+        width="100%"
+        pb={props.mobile ? "20px" : "50px"}
+      >
+        <Stack
+          maxWidth={props.mobile ? undefined : "780px"}
+          spacing={props.mobile ? "10px" : "6px"}
+          alignItems="center"
+          pt={props.mobile ? "13px" : undefined}
+        >
           <Stack
             sx={{
               background: "linear-gradient(150deg, #F279C5, #FD9B41)",
@@ -203,10 +177,10 @@ export default function PediaLandingPageSignedOutView() {
               "-webkit-background-clip": "text",
             }}
             alignItems="center"
-            width="700px"
+            width={props.mobile ? "70%" : "700px"}
           >
             <Typography
-              variant="h1"
+              variant={props.mobile ? "h5" : "h1"}
               sx={{
                 textAlign: "center",
               }}
@@ -215,113 +189,21 @@ export default function PediaLandingPageSignedOutView() {
             </Typography>
           </Stack>
           <Typography
-            variant="h5"
+            variant={props.mobile ? "normal" : "h5"}
+            bold
             color="rgba(255,255,255,0.8)"
-            sx={{ textAlign: "center", lineHeight: "28px", width: "660px" }}
+            sx={{
+              textAlign: "center",
+              lineHeight: props.mobile ? "22px" : "28px",
+              width: props.mobile ? "350px" : "660px",
+            }}
           >
             AstroPedia generates safe encyclopedic articles for kids. Create
             your own or explore our collection!
           </Typography>
         </Stack>
-        <CreationBox />
-        <Stack width="100%" position="relative">
-          <Stack
-            width="fit-content"
-            position="absolute"
-            zIndex={-1}
-            left={0}
-            right={0}
-            top="41px"
-            marginLeft="auto"
-            marginRight="auto"
-          >
-            <Image
-              src={ShootingStar.src}
-              width={1321}
-              height={110}
-              loader={({ src }) => {
-                return src;
-              }}
-              alt="Intro square"
-              style={
-                {
-                  // position: "relative",
-                  // left: 0,
-                  // right: 0,
-                  // marginLeft: "auto",
-                  // marginRight: "auto",
-                }
-              }
-            />
-          </Stack>
-          <Stack
-            direction="row"
-            spacing="50px"
-            position="relative"
-            width="100%"
-            justifyContent="center"
-            zIndex={2}
-          >
-            <Stack
-              sx={{
-                animation: `${getPulse(0, 10)} 3.2s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Select"
-                content="Enter the titles of the Articles you want to create and click the +"
-              />
-            </Stack>
-            <Stack
-              sx={{
-                // transform: "translateY(57px)",
-                animation: `${getPulse(55, 12)} 3s ease-in-out`,
-                animationDelay: 0.5,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Create"
-                content="Once you’ve got a collection of articles, click Create."
-              />
-            </Stack>
-            <Stack
-              sx={{
-                // transform: "translateY(57px)",
-                animation: `${getPulse(20, 15)} 4s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Generate"
-                content="Your Articles will take a few minutes to generate and voila!"
-              />
-            </Stack>
-          </Stack>
-        </Stack>
-        {/* <Stack direction="row" spacing="32px">
-          <IntroSquare
-            image={IntroSquareImage1}
-            title="Bespoke knowledge"
-            text="Creates a unique set of Articles, using only the topics you want."
-            imageHeight="190px"
-          />
-          <IntroSquare
-            image={IntroSquareImage2}
-            title="Age-appropriateness"
-            text="Toggle between two age-appropriate languages, for younger and older kids."
-          />
-          <IntroSquare
-            image={IntroSquareImage3}
-            title="Safe sharing"
-            text="Share your Articles by a safe link no one can tamper with or edit without consent."
-            imageHeight="190px"
-          />
-        </Stack> */}
+        <CreationBox mobile={props.mobile} />
+        <IntroSteps mobile={props.mobile} />
       </Stack>
       <Stack width="100%">
         <Stack
@@ -331,43 +213,34 @@ export default function PediaLandingPageSignedOutView() {
         >
           <SpaceGlow width="auto" height="auto" />
         </Stack>
-        <Stack spacing="150px" bgcolor="rgb(255,255,255)">
+        <Stack
+          spacing="150px"
+          bgcolor="rgb(255,255,255)"
+          pt={props.mobile ? "25px" : 0}
+          zIndex={1}
+        >
           <LandingPageViewport
             supertitle="Our collection"
             subtitle="Single Articles and Collections created by the community and vetted
           by our team."
             title="Browse our ever-growing collection of content"
+            mobile={props.mobile}
           >
             <Stack pt="20px" spacing="8px" width="100%" alignItems="center">
               <Typography
-                variant="large"
+                variant={props.mobile ? "normal" : "large"}
                 bold
                 color={PALETTE.secondary.grey[3]}
               >
                 Browse Articles
               </Typography>
               <LandingPageCarousel
-                yPadding={40}
+                mobile={props.mobile}
+                yPadding={props.mobile ? 30 : 40}
                 items={_.sortBy(articles, (a) => a.title).map((a, i) => (
-                  <Stack
-                    key={i}
-                    alignItems="center"
-                    // sx={{
-                    //   "&:hover": { opacity: 0.7 },
-                    //   transition: "0.2s",
-                    //   cursor: "drag",
-                    // }}
-                  >
-                    {/* <a
-                      target="_blank"
-                      href={`${
-                        process.env.NODE_ENV === "development"
-                          ? "http://localhost:3000"
-                          : "https://www.astrosafe.co"
-                      }/p/${a.urlId}`}
-                      rel="noopener noreferrer"
-                    > */}
+                  <Stack key={i} alignItems="center">
                     <PediaArticleCard
+                      small={props.mobile}
                       title={a.title}
                       imageUrl={a.mainImage}
                       color={a.color}
@@ -388,7 +261,7 @@ export default function PediaLandingPageSignedOutView() {
                             }}
                           >
                             <UrsorButton
-                              size="small"
+                              size={props.mobile ? "tiny" : "small"}
                               backgroundColor={
                                 shouldBeLightText(a.color)
                                   ? "rgb(255,255,255)"
@@ -402,14 +275,13 @@ export default function PediaLandingPageSignedOutView() {
                         </a>
                       }
                     />
-                    {/* </a> */}
                   </Stack>
                 ))}
               />
             </Stack>
             <Stack width="100%" alignItems="center">
               <Typography
-                variant="large"
+                variant={props.mobile ? "normal" : "large"}
                 bold
                 color={PALETTE.secondary.grey[3]}
                 sx={{
@@ -419,7 +291,8 @@ export default function PediaLandingPageSignedOutView() {
                 Browse Collections
               </Typography>
               <LandingPageCarousel
-                yPadding={50}
+                mobile={props.mobile}
+                yPadding={props.mobile ? 40 : 50}
                 items={[
                   ...collections,
                   ...collections,
@@ -428,6 +301,7 @@ export default function PediaLandingPageSignedOutView() {
                 ].map((c, i) => (
                   <Stack key={i} alignItems="center">
                     <PediaCollectionCard
+                      small={props.mobile}
                       title={c.page.title}
                       images={c.images}
                       shadow
@@ -448,13 +322,9 @@ export default function PediaLandingPageSignedOutView() {
                             }}
                           >
                             <UrsorButton
-                              size="small"
+                              size={props.mobile ? "tiny" : "small"}
                               variant="secondary"
-                              //variant="ghost"
-                              // fontColor={c.images[0].color}
                               borderColor="transparent"
-                              //backgroundColor={`linear-gradient(90deg, ${c.images[0].color}, ${c.images[2].color})`}
-                              //backgroundColor="rgb(255,255,255)"
                               fontColor={PALETTE.secondary.grey[5]}
                             >
                               Open
@@ -472,8 +342,12 @@ export default function PediaLandingPageSignedOutView() {
             supertitle="Benefits"
             subtitle="Lets add some engaging copy here, guys."
             title="Why use AstroPedia?"
+            mobile={props.mobile}
           >
-            <Stack direction="row" spacing="22px">
+            <Stack
+              direction={props.mobile ? "column" : "row"}
+              spacing={props.mobile ? "16px" : "22px"}
+            >
               <IntroSquare2
                 image={BenefitsIllustration1}
                 title="Create your own Articles"
@@ -495,8 +369,12 @@ export default function PediaLandingPageSignedOutView() {
             supertitle="Who uses AstroPedia"
             subtitle="AstroPedia was built with the education environment in mind."
             title="AstroPedia keeps kids engaged"
+            mobile={props.mobile}
           >
-            <Stack direction="row" spacing="22px">
+            <Stack
+              direction={props.mobile ? "column" : "row"}
+              spacing={props.mobile ? "16px" : "22px"}
+            >
               <IntroSquare2
                 image={UsersIllustration1}
                 title="Teachers"
@@ -515,8 +393,8 @@ export default function PediaLandingPageSignedOutView() {
             </Stack>
           </LandingPageViewport>
           <Stack width="100%">
-            <LandingPageFAQSection />
-            <LandingPageFooter />
+            <LandingPageFAQSection mobile={props.mobile} />
+            <LandingPageFooter mobile={props.mobile} />
           </Stack>
         </Stack>
       </Stack>

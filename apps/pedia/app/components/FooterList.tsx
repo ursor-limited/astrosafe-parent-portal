@@ -5,10 +5,11 @@ import { PALETTE, Typography } from "ui";
 export const FooterList = (props: {
   title: string;
   items: { title: string; url: string }[];
+  mobile?: boolean;
 }) => {
   const router = useRouter();
   return (
-    <Stack spacing="15px">
+    <Stack spacing="15px" alignItems={props.mobile ? "center" : undefined}>
       <Typography
         variant="medium"
         sx={{
@@ -17,7 +18,10 @@ export const FooterList = (props: {
       >
         {props.title}
       </Typography>
-      <Stack spacing="7px">
+      <Stack
+        spacing={props.mobile ? "8px" : "7px"}
+        alignItems={props.mobile ? "center" : undefined}
+      >
         {props.items.map((p) => (
           <Stack key={p.url} onClick={() => router.push(p.url)}>
             <Typography
