@@ -394,7 +394,7 @@ export default function PediaLandingPageSignedOutView(props: {
           </LandingPageViewport>
           <Stack width="100%">
             <LandingPageFAQSection mobile={props.mobile} />
-            <LandingPageFooter />
+            <LandingPageFooter mobile={props.mobile} />
           </Stack>
         </Stack>
       </Stack>

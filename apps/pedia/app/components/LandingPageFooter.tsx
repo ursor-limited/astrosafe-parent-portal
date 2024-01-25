@@ -51,7 +51,97 @@ const COMPANY_URLS = [
   },
 ];
 
-export const LandingPageFooter = () => {
+const ContactSection = (props: { mobile?: boolean }) => (
+  <Stack spacing="15px" alignItems={props.mobile ? "center" : undefined}>
+    <Typography
+      variant="medium"
+      sx={{
+        fontWeight: 500,
+        textAlign: props.mobile ? "center" : undefined,
+      }}
+    >
+      Contact
+    </Typography>
+    <Stack spacing="7px">
+      <Stack
+        onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+        spacing="7px"
+        alignItems={props.mobile ? "center" : undefined}
+      >
+        <Typography
+          variant="small"
+          color={PALETTE.secondary.grey[4]}
+          sx={{
+            fontWeight: 390,
+            "&:hover": { color: PALETTE.secondary.purple[2] },
+            cursor: "pointer",
+            transition: "0.2s",
+            textAlign: props.mobile ? "center" : undefined,
+          }}
+        >
+          hello@astrosafe.co
+        </Typography>
+        <Stack alignItems={props.mobile ? "center" : undefined}>
+          {props.mobile ? (
+            <Typography
+              variant="small"
+              color={PALETTE.secondary.grey[4]}
+              sx={{
+                fontWeight: 390,
+                textAlign: props.mobile ? "center" : undefined,
+              }}
+            >
+              URSOR LIMITED, Company number 13594628
+            </Typography>
+          ) : (
+            <>
+              <Typography
+                variant="small"
+                color={PALETTE.secondary.grey[4]}
+                sx={{
+                  fontWeight: 390,
+                }}
+              >
+                URSOR LIMITED, Company
+              </Typography>
+              <Typography
+                variant="small"
+                color={PALETTE.secondary.grey[4]}
+                sx={{
+                  fontWeight: 390,
+                }}
+              >
+                number 13594628
+              </Typography>
+            </>
+          )}
+          <Typography
+            variant="small"
+            color={PALETTE.secondary.grey[4]}
+            sx={{
+              fontWeight: 390,
+              textAlign: props.mobile ? "center" : undefined,
+            }}
+          >
+            404, 301 Kingsland Road,
+          </Typography>
+          <Typography
+            variant="small"
+            color={PALETTE.secondary.grey[4]}
+            sx={{
+              fontWeight: 390,
+              textAlign: props.mobile ? "center" : undefined,
+            }}
+          >
+            E8 4DS, UK
+          </Typography>
+        </Stack>
+      </Stack>
+    </Stack>
+  </Stack>
+);
+
+export const LandingPageFooter = (props: { mobile?: boolean }) => {
   const router = useRouter();
   return (
     <Stack
@@ -61,33 +151,45 @@ export const LandingPageFooter = () => {
       bgcolor="rgb(255,255,255)"
     >
       <Stack
-        direction="row"
-        height="236px"
+        direction={props.mobile ? "column" : "row"}
+        height={props.mobile ? undefined : "236px"}
         width="100%"
         maxWidth="calc(1320px + 2 * 24px)"
         px="24px"
         py="35px"
         justifyContent="space-between"
+        spacing={props.mobile ? "50px" : undefined}
       >
-        <Stack width="280px" height="100%" justifyContent="space-between">
-          <Stack spacing="12px">
+        <Stack
+          width={props.mobile ? "100%" : "280px"}
+          height="100%"
+          justifyContent="space-between"
+          alignItems={props.mobile ? "center" : undefined}
+          spacing={props.mobile ? "18px" : undefined}
+        >
+          <Stack
+            spacing={props.mobile ? "18px" : "12px"}
+            alignItems={props.mobile ? "center" : undefined}
+          >
             <Logo width="85px" height="30px" />
             <Typography
               sx={{
-                fontWeight: 400,
+                fontWeight: props.mobile ? 350 : 400,
+                textAlign: props.mobile ? "center" : undefined,
+                width: props.mobile ? "230px" : undefined,
               }}
             >
               A safe space for kids to discover, learn, and play online.
             </Typography>
           </Stack>
-          <Stack direction="row" spacing="9px">
+          <Stack direction="row" spacing={props.mobile ? "12px" : "9px"}>
             <Stack
               onClick={() => router.push("https://www.linkedin.com/astrosafe/")}
             >
               <Image
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f34eb206d77199d60e_LinkedIN_white.png"
-                width={30}
-                height={30}
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
                 loader={({ src }) => {
                   return src;
                 }}
@@ -106,8 +208,8 @@ export const LandingPageFooter = () => {
             >
               <Image
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3e6d738f557cae3b2_Facebook_white.png"
-                width={30}
-                height={30}
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
                 loader={({ src }) => {
                   return src;
                 }}
@@ -126,8 +228,8 @@ export const LandingPageFooter = () => {
             >
               <Image
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f26e765647afa2a993_Instagram_white.png"
-                width={30}
-                height={30}
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
                 loader={({ src }) => {
                   return src;
                 }}
@@ -144,8 +246,8 @@ export const LandingPageFooter = () => {
             >
               <Image
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3ffe78e45ab0d4527_Twitter_white.png"
-                width={30}
-                height={30}
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
                 loader={({ src }) => {
                   return src;
                 }}
@@ -164,8 +266,8 @@ export const LandingPageFooter = () => {
             >
               <Image
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3fda9947f5b91d938_Telegram_white.png"
-                width={30}
-                height={30}
+                width={props.mobile ? 28 : 30}
+                height={props.mobile ? 28 : 30}
                 loader={({ src }) => {
                   return src;
                 }}
@@ -182,79 +284,27 @@ export const LandingPageFooter = () => {
             All rights reserved 2024™
           </Typography>
         </Stack>
-        <Stack width="50%" direction="row" justifyContent="space-between">
-          <FooterList title="Pages" items={PAGES_URLS} />
-          <FooterList title="Company" items={COMPANY_URLS} />
-          <Stack spacing="15px">
-            <Typography
-              variant="medium"
-              sx={{
-                fontWeight: 500,
-              }}
-            >
-              Contact
-            </Typography>
-            <Stack spacing="7px">
-              <Stack
-                onClick={() =>
-                  (window.location.href = "mailto:hello@astrosafe.co")
-                }
-                spacing="7px"
-              >
-                <Typography
-                  variant="small"
-                  color={PALETTE.secondary.grey[4]}
-                  sx={{
-                    fontWeight: 390,
-                    "&:hover": { color: PALETTE.secondary.purple[2] },
-                    cursor: "pointer",
-                    transition: "0.2s",
-                  }}
-                >
-                  hello@astrosafe.co
-                </Typography>
-                <Stack>
-                  <Typography
-                    variant="small"
-                    color={PALETTE.secondary.grey[4]}
-                    sx={{
-                      fontWeight: 390,
-                    }}
-                  >
-                    URSOR LIMITED, Company
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color={PALETTE.secondary.grey[4]}
-                    sx={{
-                      fontWeight: 390,
-                    }}
-                  >
-                    number 13594628
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color={PALETTE.secondary.grey[4]}
-                    sx={{
-                      fontWeight: 390,
-                    }}
-                  >
-                    404, 301 Kingsland Road,
-                  </Typography>
-                  <Typography
-                    variant="small"
-                    color={PALETTE.secondary.grey[4]}
-                    sx={{
-                      fontWeight: 390,
-                    }}
-                  >
-                    E8 4DS, UK
-                  </Typography>
-                </Stack>
+        {props.mobile ? (
+          <Stack spacing="50px">
+            <Stack width="100%" direction="row" justifyContent="space-between">
+              <Stack flex={1}>
+                <FooterList mobile title="Pages" items={PAGES_URLS} />
+              </Stack>
+              <Stack flex={1}>
+                <FooterList mobile title="Company" items={COMPANY_URLS} />
               </Stack>
             </Stack>
+            <Stack width="100%">
+              <ContactSection mobile />
+            </Stack>
           </Stack>
-        </Stack>
+        ) : (
+          <Stack width="50%" direction="row" justifyContent="space-between">
+            <FooterList title="Pages" items={PAGES_URLS} />
+            <FooterList title="Company" items={COMPANY_URLS} />
+            <ContactSection />
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );

@@ -54,7 +54,7 @@ export const CreationBox = (props: { mobile: boolean }) => {
       width={props.mobile ? "93%" : "733px"}
       borderRadius="16px"
       alignItems="center"
-      spacing={props.mobile ? 0 : "24px"}
+      spacing={props.mobile ? (topics.length > 0 ? "8px" : 0) : "24px"}
     >
       <Stack spacing="8px" width={props.mobile ? "100%" : undefined}>
         <Stack spacing="4px" width={props.mobile ? "100%" : undefined}>
