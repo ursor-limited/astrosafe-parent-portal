@@ -33,6 +33,8 @@ export const IntroBox = (props: {
         color={PALETTE.font.light}
         sx={{
           textAlign: "center",
+          fontSize: 12,
+          lineHeight: "18px",
         }}
       >
         {props.content}

@@ -21,7 +21,9 @@ const TopicTag = (props: { value: string; deletionCallback: () => void }) => (
     alignItems="center"
     direction="row"
   >
-    <Typography bold>{props.value}</Typography>
+    <Typography color={PALETTE.font.dark} bold>
+      {props.value}
+    </Typography>
     <Stack
       sx={{
         "&:hover": { opacity: 0.7 },
