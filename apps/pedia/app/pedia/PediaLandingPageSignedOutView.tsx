@@ -164,12 +164,9 @@ const LandingPageCarousel = (props: {
   );
 };
 
-export default function PediaLandingPageSignedOutView() {
-  /* needed for the platform row's proper scrollability */
-  const { width } = useWindowSize();
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
+export default function PediaLandingPageSignedOutView(props: {
+  mobile: boolean;
+}) {
   const router = useRouter();
 
   const { user } = useAuth0();
@@ -192,9 +189,14 @@ export default function PediaLandingPageSignedOutView() {
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-      <Header />
-      <Stack spacing="36px" alignItems="center" width="100%" pb="50px">
-        <Stack maxWidth="780px" spacing="6px" alignItems="center">
+      <Header mobile={props.mobile} />
+      <Stack spacing="36px" alignItems="center" width="100%" pb={"50px"}>
+        <Stack
+          maxWidth={props.mobile ? undefined : "780px"}
+          spacing={props.mobile ? "10px" : "6px"}
+          alignItems="center"
+          pt={props.mobile ? "13px" : undefined}
+        >
           <Stack
             sx={{
               background: "linear-gradient(150deg, #F279C5, #FD9B41)",
@@ -203,10 +205,10 @@ export default function PediaLandingPageSignedOutView() {
               "-webkit-background-clip": "text",
             }}
             alignItems="center"
-            width="700px"
+            width={props.mobile ? "68%" : "700px"}
           >
             <Typography
-              variant="h1"
+              variant={props.mobile ? "h5" : "h1"}
               sx={{
                 textAlign: "center",
               }}
@@ -215,15 +217,20 @@ export default function PediaLandingPageSignedOutView() {
             </Typography>
           </Stack>
           <Typography
-            variant="h5"
+            variant={props.mobile ? "normal" : "h5"}
+            bold
             color="rgba(255,255,255,0.8)"
-            sx={{ textAlign: "center", lineHeight: "28px", width: "660px" }}
+            sx={{
+              textAlign: "center",
+              lineHeight: props.mobile ? "22px" : "28px",
+              width: props.mobile ? "350px" : "660px",
+            }}
           >
             AstroPedia generates safe encyclopedic articles for kids. Create
             your own or explore our collection!
           </Typography>
         </Stack>
-        <CreationBox />
+        <CreationBox mobile={props.mobile} />
         <Stack width="100%" position="relative">
           <Stack
             width="fit-content"

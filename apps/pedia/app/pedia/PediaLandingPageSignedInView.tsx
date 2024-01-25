@@ -231,7 +231,9 @@ export function PediaTabSwitch(props: {
   );
 }
 
-export default function PediaLandingPageSignedInView() {
+export default function PediaLandingPageSignedInView(props: {
+  mobile: boolean;
+}) {
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
