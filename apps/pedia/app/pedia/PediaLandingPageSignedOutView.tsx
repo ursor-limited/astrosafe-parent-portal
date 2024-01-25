@@ -12,7 +12,6 @@ import { IntroSquare } from "../components/IntroSquare";
 import IntroSquareImage1 from "@/images/IntroSquareImage1.png";
 import IntroSquareImage2 from "@/images/IntroSquareImage2.png";
 import IntroSquareImage3 from "@/images/IntroSquareImage3.png";
-import ShootingStar from "@/images/ShootingStar.png";
 import UsersIllustration1 from "@/images/UsersIllustration1.png";
 import UsersIllustration2 from "@/images/UsersIllustration2.png";
 import UsersIllustration3 from "@/images/UsersIllustration3.png";
@@ -23,8 +22,6 @@ import { IntroSquare2 } from "../components/IntroSquare2";
 import { useRouter } from "next/navigation";
 import { LandingPageFooter } from "../components/LandingPageFooter";
 import { LandingPageFAQSection } from "../components/LandingPageFAQSection";
-import { IntroBox } from "../components/IntroBox";
-import Image from "next/image";
 import Slider from "react-slick";
 import {
   IPediaCollectionPage,
@@ -40,41 +37,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
 import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
-
-export const getPulse = (y: number, amplitude: number) => keyframes`
-  from {
-    transform: translateY(${y - amplitude}px)
-  }
-  to {
-    transform: translateY(${y + amplitude}px)
-  }
-`;
-
-function NextArrow(props: any) {
-  const { className, style, onClick } = props;
-  return (
-    <Stack
-      className={className}
-      bgcolor="rgb(255,255,255)"
-      borderRadius="100%"
-      width="95px"
-      height="95px"
-      boxShadow="0 0 25px rgba(0,0,0,0.05)"
-      onClick={onClick}
-      style={{
-        ...style,
-        display: "block",
-        width: "60px",
-        height: "60px",
-        background: "rgb(255,255,255)",
-        boxShadow: "0 0 25px rgba(0,0,0,0.05)",
-        "&:hover": { opacity: 0.7 },
-        transition: "0.2s",
-        cursor: "pointer",
-      }}
-    ></Stack>
-  );
-}
+import { IntroSteps } from "../components/IntroSteps";
 
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
@@ -194,7 +157,7 @@ export default function PediaLandingPageSignedOutView(props: {
         spacing={props.mobile ? "16px" : "36px"}
         alignItems="center"
         width="100%"
-        pb={"50px"}
+        pb={props.mobile ? "20px" : "50px"}
       >
         <Stack
           maxWidth={props.mobile ? undefined : "780px"}
@@ -236,104 +199,7 @@ export default function PediaLandingPageSignedOutView(props: {
           </Typography>
         </Stack>
         <CreationBox mobile={props.mobile} />
-        <Stack width="100%" position="relative">
-          <Stack
-            width="fit-content"
-            position="absolute"
-            zIndex={-1}
-            left={0}
-            right={0}
-            top="41px"
-            marginLeft="auto"
-            marginRight="auto"
-          >
-            <Image
-              src={ShootingStar.src}
-              width={1321}
-              height={110}
-              loader={({ src }) => {
-                return src;
-              }}
-              alt="Intro square"
-              style={
-                {
-                  // position: "relative",
-                  // left: 0,
-                  // right: 0,
-                  // marginLeft: "auto",
-                  // marginRight: "auto",
-                }
-              }
-            />
-          </Stack>
-          <Stack
-            direction="row"
-            spacing="50px"
-            position="relative"
-            width="100%"
-            justifyContent="center"
-            zIndex={2}
-          >
-            <Stack
-              sx={{
-                animation: `${getPulse(0, 10)} 3.2s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Select"
-                content="Enter the titles of the Articles you want to create and click the +"
-              />
-            </Stack>
-            <Stack
-              sx={{
-                // transform: "translateY(57px)",
-                animation: `${getPulse(55, 12)} 3s ease-in-out`,
-                animationDelay: 0.5,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Create"
-                content="Once you’ve got a collection of articles, click Create."
-              />
-            </Stack>
-            <Stack
-              sx={{
-                // transform: "translateY(57px)",
-                animation: `${getPulse(20, 15)} 4s ease-in-out`,
-                animationDirection: "alternate",
-                animationIterationCount: "infinite",
-              }}
-            >
-              <IntroBox
-                title="Generate"
-                content="Your Articles will take a few minutes to generate and voila!"
-              />
-            </Stack>
-          </Stack>
-        </Stack>
-        {/* <Stack direction="row" spacing="32px">
-          <IntroSquare
-            image={IntroSquareImage1}
-            title="Bespoke knowledge"
-            text="Creates a unique set of Articles, using only the topics you want."
-            imageHeight="190px"
-          />
-          <IntroSquare
-            image={IntroSquareImage2}
-            title="Age-appropriateness"
-            text="Toggle between two age-appropriate languages, for younger and older kids."
-          />
-          <IntroSquare
-            image={IntroSquareImage3}
-            title="Safe sharing"
-            text="Share your Articles by a safe link no one can tamper with or edit without consent."
-            imageHeight="190px"
-          />
-        </Stack> */}
+        <IntroSteps mobile={props.mobile} />
       </Stack>
       <Stack width="100%">
         <Stack
