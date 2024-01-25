@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PaintBrushIcon from "@/images/icons/PaintBrushIcon.svg";
@@ -7,6 +7,7 @@ import X from "@/images/icons/X.svg";
 import UrsorFadeIn from "./UrsorFadeIn";
 import { useAuth0 } from "@auth0/auth0-react";
 import DynamicContainer from "./DynamicContainer";
+import { Grid } from "@mui/material";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;
@@ -133,18 +134,20 @@ export const CreationBox = (props: { mobile?: boolean }) => {
           </Stack>
         </Stack>
         <DynamicContainer fullWidth duration={600}>
-          <Stack direction="row" flexWrap="wrap" spacing="8px">
+          <Grid container gap="8px" width="100%">
             {topics.map((t) => (
-              <UrsorFadeIn key={t} duration={600}>
-                <TopicTag
-                  value={t}
-                  deletionCallback={() =>
-                    setTopics(topics.filter((topic) => topic !== t))
-                  }
-                />
-              </UrsorFadeIn>
+              <Grid item>
+                <UrsorFadeIn key={t} duration={600}>
+                  <TopicTag
+                    value={t}
+                    deletionCallback={() =>
+                      setTopics(topics.filter((topic) => topic !== t))
+                    }
+                  />
+                </UrsorFadeIn>
+              </Grid>
             ))}
-          </Stack>
+          </Grid>
         </DynamicContainer>
       </Stack>
       <Stack
