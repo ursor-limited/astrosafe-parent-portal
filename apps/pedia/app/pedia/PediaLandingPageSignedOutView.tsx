@@ -177,7 +177,7 @@ export default function PediaLandingPageSignedOutView(props: {
               "-webkit-background-clip": "text",
             }}
             alignItems="center"
-            width={props.mobile ? "70%" : "700px"}
+            width={props.mobile ? "86%" : "700px"}
           >
             <Typography
               variant={props.mobile ? "h5" : "h1"}
@@ -185,7 +185,15 @@ export default function PediaLandingPageSignedOutView(props: {
                 textAlign: "center",
               }}
             >
-              AstroPedia - Create Wikipedia articles for kids
+              AstroPedia - Create
+            </Typography>
+            <Typography
+              variant={props.mobile ? "h5" : "h1"}
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              Wikipedia articles for kids
             </Typography>
           </Stack>
           <Typography
