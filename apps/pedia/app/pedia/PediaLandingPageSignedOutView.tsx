@@ -162,7 +162,6 @@ export default function PediaLandingPageSignedOutView(props: {
         alignItems="center"
         width="100%"
         pb={props.mobile ? "20px" : "50px"}
-        overflow="hidden"
       >
         <Stack
           maxWidth={props.mobile ? undefined : "780px"}
@@ -214,7 +213,7 @@ export default function PediaLandingPageSignedOutView(props: {
         <CreationBox mobile={props.mobile} />
         <IntroSteps mobile={props.mobile} />
       </Stack>
-      <Stack width="100%">
+      <Stack width="100%" overflow="hidden">
         <Stack
           sx={{
             transform: "translateY(1px)",
