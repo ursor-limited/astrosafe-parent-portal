@@ -541,6 +541,7 @@ const MobileColumn = (props: {
           )!}
         />
       ) : null}
+      <Footer fontScale={Math.min(1, width / 800)} />
     </Stack>
   );
 };

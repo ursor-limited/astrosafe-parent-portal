@@ -38,6 +38,7 @@ import "slick-carousel/slick/slick-theme.css";
 import ChevronLeft from "@/images/icons/ChevronLeftIcon.svg";
 import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
 import { IntroSteps } from "../components/IntroSteps";
+import { COLORED_CARD_TITLE_DARK_COLOR } from "../p/[urlId]/PediaMainCard";
 
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
@@ -279,7 +280,7 @@ export default function PediaLandingPageSignedOutView(props: {
                               backgroundColor={
                                 shouldBeLightText(a.color)
                                   ? "rgb(255,255,255)"
-                                  : "rgba(0,0,0,0.5)"
+                                  : COLORED_CARD_TITLE_DARK_COLOR
                               }
                               fontColor={a.color}
                             >

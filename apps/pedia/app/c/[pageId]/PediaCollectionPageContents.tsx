@@ -92,6 +92,7 @@ export function CollectionPageNotification(
 export interface IMobileCollectionPageColumn {
   title: string;
   pages: IPediaPage[];
+  collectionPageId: string;
 }
 
 export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
@@ -111,6 +112,7 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
             imageUrl={p.mainImage}
             color={p.color}
             urlId={p.urlId}
+            collectionPageId={props.collectionPageId}
             mobile
           />
         </Stack>
@@ -180,6 +182,7 @@ export default function PediaCollectionPageContents(
                 <MobileCollectionPageColumn
                   title={props.pageDetails.title}
                   pages={props.articles}
+                  collectionPageId={props.pageDetails.id}
                 />
                 <Stack width="100%" px="30px">
                   <Footer fontScale={Math.min(1, width / 800)} />

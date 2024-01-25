@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRightIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import { COLORED_CARD_TITLE_DARK_COLOR } from "@/app/p/[urlId]/PediaMainCard";
 
 export const GRID_SPACING = 24;
 
@@ -105,7 +106,7 @@ export function ContentPagePreviewCard(props: {
               ? PALETTE.secondary.grey[3]
               : shouldBeLightText(props.color)
               ? PALETTE.font.light
-              : "rgba(0,0,0,0.5)"
+              : COLORED_CARD_TITLE_DARK_COLOR
           }
           sx={{
             textAlign: props.titleOnRight ? "right" : undefined,
@@ -162,7 +163,7 @@ export function ContentPagePreviewCard(props: {
           backgroundColor={
             shouldBeLightText(props.color)
               ? "rgb(255,255,255)"
-              : "rgba(0,0,0,0.5)"
+              : COLORED_CARD_TITLE_DARK_COLOR
           }
           onClick={openPage}
         >
@@ -172,7 +173,7 @@ export function ContentPagePreviewCard(props: {
           background={
             shouldBeLightText(props.color)
               ? "rgb(255,255,255)"
-              : "rgba(0,0,0,0.5)"
+              : COLORED_CARD_TITLE_DARK_COLOR
           }
           fontColor={props.color}
           size="28px"
