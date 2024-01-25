@@ -213,7 +213,7 @@ export default function PediaLandingPageSignedOutView(props: {
         <CreationBox mobile={props.mobile} />
         <IntroSteps mobile={props.mobile} />
       </Stack>
-      <Stack width="100%" overflow="hidden">
+      <Stack width="100%">
         <Stack
           sx={{
             transform: "translateY(1px)",
@@ -234,7 +234,13 @@ export default function PediaLandingPageSignedOutView(props: {
             title="Browse our ever-growing collection of content"
             mobile={props.mobile}
           >
-            <Stack pt="20px" spacing="8px" width="100%" alignItems="center">
+            <Stack
+              pt="20px"
+              spacing="8px"
+              width="100%"
+              alignItems="center"
+              overflow="hidden"
+            >
               <Typography
                 variant={props.mobile ? "normal" : "large"}
                 bold
@@ -287,7 +293,7 @@ export default function PediaLandingPageSignedOutView(props: {
                 ))}
               />
             </Stack>
-            <Stack width="100%" alignItems="center">
+            <Stack width="100%" alignItems="center" overflow="hidden">
               <Typography
                 variant={props.mobile ? "normal" : "large"}
                 bold
