@@ -18,6 +18,7 @@ import { ByteAnimation } from "@/app/components/Byte";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import dynamic from "next/dynamic";
 import ApiController from "@/app/api";
+import { Footer } from "@/app/components/footer";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -180,6 +181,9 @@ export default function PediaCollectionPageContents(
                   title={props.pageDetails.title}
                   pages={props.articles}
                 />
+                <Stack width="100%" px="30px">
+                  <Footer fontScale={Math.min(1, width / 800)} />
+                </Stack>
               </UrsorFadeIn>
             </Stack>
           ) : props.pageDetails ? (
@@ -194,9 +198,6 @@ export default function PediaCollectionPageContents(
                     .join(", ") +
                   ` and ${props.articles[props.articles.length - 1].title}`
                 }
-                // subtitle={`${props.articles
-                //   .map((a) => a.title)
-                //   .join(", ")} facts for kids.`}
                 editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
                 <Stack
