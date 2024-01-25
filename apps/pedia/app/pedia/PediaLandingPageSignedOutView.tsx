@@ -62,6 +62,7 @@ const CarouselButton = (props: { onClick: () => void }) => (
 const LandingPageCarousel = (props: {
   items: JSX.Element[];
   yPadding: number;
+  mobile?: boolean;
 }) => {
   const settings = {
     infinite: true,
@@ -71,6 +72,7 @@ const LandingPageCarousel = (props: {
     centerMode: true,
     centerPadding: 0,
     arrows: false,
+    touchThreshold: 100,
   };
 
   const [sliderRef, setSliderRef] = useState<HTMLElement | null>(null);
@@ -107,8 +109,8 @@ const LandingPageCarousel = (props: {
         },
       }}
     >
-      <CarouselButton onClick={previous} />
-      <div style={{ width: "950px", height: "100%" }}>
+      {!props.mobile ? <CarouselButton onClick={previous} /> : null}
+      <div style={{ width: props.mobile ? "700px" : "950px", height: "100%" }}>
         {/* <Stack direction="row" spacing="10px" flex={1}> */}
         {/* @ts-ignore */}
         <Slider ref={setSliderRef} {...settings}>
@@ -116,13 +118,15 @@ const LandingPageCarousel = (props: {
         </Slider>
         {/* </Stack> */}
       </div>
-      <Stack
-        sx={{
-          transform: "rotate(180deg)",
-        }}
-      >
-        <CarouselButton onClick={next} />
-      </Stack>
+      {!props.mobile ? (
+        <Stack
+          sx={{
+            transform: "rotate(180deg)",
+          }}
+        >
+          <CarouselButton onClick={next} />
+        </Stack>
+      ) : null}
     </Stack>
   );
 };
@@ -173,7 +177,7 @@ export default function PediaLandingPageSignedOutView(props: {
               "-webkit-background-clip": "text",
             }}
             alignItems="center"
-            width={props.mobile ? "68%" : "700px"}
+            width={props.mobile ? "70%" : "700px"}
           >
             <Typography
               variant={props.mobile ? "h5" : "h1"}
@@ -209,23 +213,30 @@ export default function PediaLandingPageSignedOutView(props: {
         >
           <SpaceGlow width="auto" height="auto" />
         </Stack>
-        <Stack spacing="150px" bgcolor="rgb(255,255,255)">
+        <Stack
+          spacing="150px"
+          bgcolor="rgb(255,255,255)"
+          pt={props.mobile ? "15px" : 0}
+          zIndex={1}
+        >
           <LandingPageViewport
             supertitle="Our collection"
             subtitle="Single Articles and Collections created by the community and vetted
           by our team."
             title="Browse our ever-growing collection of content"
+            mobile={props.mobile}
           >
             <Stack pt="20px" spacing="8px" width="100%" alignItems="center">
               <Typography
-                variant="large"
+                variant={props.mobile ? "normal" : "large"}
                 bold
                 color={PALETTE.secondary.grey[3]}
               >
                 Browse Articles
               </Typography>
               <LandingPageCarousel
-                yPadding={40}
+                mobile={props.mobile}
+                yPadding={props.mobile ? 30 : 40}
                 items={_.sortBy(articles, (a) => a.title).map((a, i) => (
                   <Stack
                     key={i}
@@ -246,6 +257,7 @@ export default function PediaLandingPageSignedOutView(props: {
                       rel="noopener noreferrer"
                     > */}
                     <PediaArticleCard
+                      small={props.mobile}
                       title={a.title}
                       imageUrl={a.mainImage}
                       color={a.color}
@@ -266,7 +278,7 @@ export default function PediaLandingPageSignedOutView(props: {
                             }}
                           >
                             <UrsorButton
-                              size="small"
+                              size="tiny"
                               backgroundColor={
                                 shouldBeLightText(a.color)
                                   ? "rgb(255,255,255)"
@@ -287,7 +299,7 @@ export default function PediaLandingPageSignedOutView(props: {
             </Stack>
             <Stack width="100%" alignItems="center">
               <Typography
-                variant="large"
+                variant={props.mobile ? "normal" : "large"}
                 bold
                 color={PALETTE.secondary.grey[3]}
                 sx={{
@@ -297,6 +309,7 @@ export default function PediaLandingPageSignedOutView(props: {
                 Browse Collections
               </Typography>
               <LandingPageCarousel
+                mobile={props.mobile}
                 yPadding={50}
                 items={[
                   ...collections,
@@ -350,6 +363,7 @@ export default function PediaLandingPageSignedOutView(props: {
             supertitle="Benefits"
             subtitle="Lets add some engaging copy here, guys."
             title="Why use AstroPedia?"
+            mobile={props.mobile}
           >
             <Stack direction="row" spacing="22px">
               <IntroSquare2
@@ -373,6 +387,7 @@ export default function PediaLandingPageSignedOutView(props: {
             supertitle="Who uses AstroPedia"
             subtitle="AstroPedia was built with the education environment in mind."
             title="AstroPedia keeps kids engaged"
+            mobile={props.mobile}
           >
             <Stack direction="row" spacing="22px">
               <IntroSquare2

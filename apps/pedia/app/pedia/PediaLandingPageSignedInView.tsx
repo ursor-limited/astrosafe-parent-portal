@@ -24,12 +24,13 @@ export function PediaArticleCard(props: {
   title: string;
   imageUrl: string;
   color: string;
+  small?: boolean;
   button?: JSX.Element;
 }) {
   return (
     <Stack
-      width="247px"
-      height="247px"
+      width={props.small ? "190px" : "247px"}
+      height={props.small ? "190px" : "247px"}
       borderRadius="16px"
       spacing="5px"
       position="relative"
@@ -42,7 +43,7 @@ export function PediaArticleCard(props: {
         width="100%"
         height="100%"
         position="absolute"
-        p="20px"
+        p={props.small ? "14px" : "20px"}
         boxSizing="border-box"
         sx={{
           background: `linear-gradient(180deg, ${props.color}, ${alpha(
@@ -52,7 +53,8 @@ export function PediaArticleCard(props: {
         }}
       >
         <Typography
-          variant="h5"
+          variant={props.small ? "medium" : "h5"}
+          bold
           color={
             shouldBeLightText(props.color)
               ? PALETTE.font.light

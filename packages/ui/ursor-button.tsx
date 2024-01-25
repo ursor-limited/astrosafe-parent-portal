@@ -12,7 +12,7 @@ export type ButtonVariant = "primary" | "secondary" | "tertiary";
 // | "nippon"
 // | "transparentRed"
 // | "green";
-export type ButtonSize = "large" | "medium" | "small";
+export type ButtonSize = "large" | "medium" | "small" | "tiny";
 
 type ButtonState = "enabled" | "hover" | "pressed";
 
@@ -22,12 +22,14 @@ export const HEIGHTS: Record<ButtonSize, number> = {
   large: 52,
   medium: 42,
   small: 28,
+  tiny: 20,
 };
 
 export const ICON_SIZES: Record<ButtonSize, number> = {
   large: 26,
   medium: 20,
   small: 20,
+  tiny: 16,
 };
 
 export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
@@ -39,6 +41,10 @@ export const PADDINGS: Record<ButtonSize, { x: number; y: number }> = {
   small: {
     x: 16,
     y: 4,
+  },
+  tiny: {
+    x: 12,
+    y: 2,
   },
 };
 
