@@ -136,8 +136,8 @@ export const CreationBox = (props: { mobile?: boolean }) => {
         <DynamicContainer fullWidth duration={600}>
           <Grid container gap="8px" width="100%">
             {topics.map((t) => (
-              <Grid item>
-                <UrsorFadeIn key={t} duration={600}>
+              <Grid item key={t}>
+                <UrsorFadeIn duration={600}>
                   <TopicTag
                     value={t}
                     deletionCallback={() =>
