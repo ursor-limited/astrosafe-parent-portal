@@ -469,6 +469,7 @@ const MobileColumn = (props: {
         <AgeSelection
           setSelectedAge={setSelectedAge}
           selectedAge={selectedAge}
+          color={props.mainCardDetails.color}
         />
       </Stack>
       <Stack spacing="12px" width="100%" height="100%">
