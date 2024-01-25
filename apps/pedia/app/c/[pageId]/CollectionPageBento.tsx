@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRightIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import { COLORED_CARD_TITLE_DARK_COLOR } from "@/app/p/[urlId]/PediaMainCard";
 
 export const GRID_SPACING = 24;
 
@@ -97,7 +98,7 @@ export function ContentPagePreviewCard(props: {
         }}
       >
         <Typography
-          variant={props.fontSize || (props.mobile ? "normal" : "h4")}
+          variant={props.fontSize || (props.mobile ? "large" : "h4")}
           bold
           htmlTag="h3"
           color={
@@ -105,10 +106,11 @@ export function ContentPagePreviewCard(props: {
               ? PALETTE.secondary.grey[3]
               : shouldBeLightText(props.color)
               ? PALETTE.font.light
-              : "rgba(0,0,0,0.5)"
+              : COLORED_CARD_TITLE_DARK_COLOR
           }
           sx={{
             textAlign: props.titleOnRight ? "right" : undefined,
+            paddingLeft: "4px",
           }}
         >
           {props.title}
@@ -154,12 +156,28 @@ export function ContentPagePreviewCard(props: {
         bottom={props.mobile ? "10px" : "20px"}
         right={props.mobile ? "10px" : "20px"}
       >
-        <UrsorButton dark size="small" onClick={openPage}>
+        <UrsorButton
+          dark
+          size="small"
+          fontColor={props.color}
+          backgroundColor={
+            shouldBeLightText(props.color)
+              ? "rgb(255,255,255)"
+              : COLORED_CARD_TITLE_DARK_COLOR
+          }
+          onClick={openPage}
+        >
           Open
         </UrsorButton>
         <UrsorActionButton
-          background={PALETTE.secondary.grey[1]}
+          background={
+            shouldBeLightText(props.color)
+              ? "rgb(255,255,255)"
+              : COLORED_CARD_TITLE_DARK_COLOR
+          }
+          fontColor={props.color}
           size="28px"
+          iconSize="13px"
           actions={[
             {
               text: "Open",

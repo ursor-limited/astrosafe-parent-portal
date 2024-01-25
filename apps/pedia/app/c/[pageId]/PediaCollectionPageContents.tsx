@@ -18,6 +18,7 @@ import { ByteAnimation } from "@/app/components/Byte";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import dynamic from "next/dynamic";
 import ApiController from "@/app/api";
+import { Footer } from "@/app/components/footer";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -89,12 +90,17 @@ export function CollectionPageNotification(
 }
 
 export interface IMobileCollectionPageColumn {
+  title: string;
   pages: IPediaPage[];
+  collectionPageId: string;
 }
 
 export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
   return (
     <Stack px="30px" height="100%" width="100%" spacing="12px">
+      <Typography variant="h5" color={PALETTE.font.light}>
+        {props.title}
+      </Typography>
       {props.pages.map((p, i) => (
         <Stack
           height={MOBILE_VIEW_IMAGE_HEIGHT}
@@ -106,9 +112,8 @@ export function MobileCollectionPageColumn(props: IMobileCollectionPageColumn) {
             imageUrl={p.mainImage}
             color={p.color}
             urlId={p.urlId}
-            titleAtBottom
-            titleOnRight={!!(i % 2)}
-            fontSize="h5"
+            collectionPageId={props.collectionPageId}
+            mobile
           />
         </Stack>
       ))}
@@ -152,7 +157,7 @@ export default function PediaCollectionPageContents(
   return (
     <>
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-        <Header />
+        <Header mobile={isMobile} />
         <Stack spacing="20px" width="100%">
           <Stack height="20px" />
           {/* <CollectionPageNotification
@@ -174,7 +179,11 @@ export default function PediaCollectionPageContents(
           {isMobile && props.pageDetails ? (
             <Stack width="100%" height="100%">
               <UrsorFadeIn duration={1000}>
-                <MobileCollectionPageColumn pages={props.articles} />
+                <MobileCollectionPageColumn
+                  title={props.pageDetails.title}
+                  pages={props.articles}
+                  collectionPageId={props.pageDetails.id}
+                />
               </UrsorFadeIn>
             </Stack>
           ) : props.pageDetails ? (
@@ -189,9 +198,6 @@ export default function PediaCollectionPageContents(
                     .join(", ") +
                   ` and ${props.articles[props.articles.length - 1].title}`
                 }
-                // subtitle={`${props.articles
-                //   .map((a) => a.title)
-                //   .join(", ")} facts for kids.`}
                 editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
                 <Stack
@@ -212,6 +218,9 @@ export default function PediaCollectionPageContents(
           ) : (
             <></>
           )}
+        </Stack>
+        <Stack width="100%" px="30px">
+          <Footer fontScale={Math.min(1, width / 700)} />
         </Stack>
       </Stack>
       <UrsorDialog

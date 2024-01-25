@@ -4,8 +4,10 @@ import { PALETTE, Typography } from "ui";
 import { IPediaPage, IPediaStat } from "./PediaPageContents";
 import _ from "lodash";
 import Regenerable from "@/app/components/Regenerable";
+import { shouldBeLightText } from "@/app/c/[pageId]/CollectionPageBento";
 
 export const MAIN_CARD_HEIGHT = "545px";
+export const COLORED_CARD_TITLE_DARK_COLOR = "rgba(0,0,0,0.5)";
 
 export interface IPediaMainCard {
   title?: string;
@@ -53,10 +55,14 @@ const PediaMainCard = (props: {
       <UrsorParticles />
     </Stack>
     {props.title ? (
-      <Stack pl="16px" pt="12px">
+      <Stack pl="16px" pt="12px" sx={{ zIndex: 1 }}>
         <Typography
           variant={props.mobile && props.title.length > 16 ? "h5" : "h4"}
-          color="rgb(255,255,255)"
+          color={
+            shouldBeLightText(props.color)
+              ? "rgb(255,255,255)"
+              : COLORED_CARD_TITLE_DARK_COLOR
+          }
         >
           {props.title}
         </Typography>

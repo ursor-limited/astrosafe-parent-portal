@@ -469,6 +469,7 @@ const MobileColumn = (props: {
         <AgeSelection
           setSelectedAge={setSelectedAge}
           selectedAge={selectedAge}
+          color={props.mainCardDetails.color}
         />
       </Stack>
       <Stack spacing="12px" width="100%" height="100%">
@@ -526,10 +527,10 @@ const MobileColumn = (props: {
             mobile
           />
         ) : null} */}
-        <Stack minHeight="30px" />
+        {/* <Stack minHeight="30px" />
         <Stack width="100%">
           <Footer fontScale={width / 700} />
-        </Stack>
+        </Stack> */}
       </Stack>
       {selectedTextCardId ? (
         <TextSectionPopover
@@ -945,13 +946,16 @@ export default function PediaPageContents(props: {
                 </Stack>
               </LayoutCard>
 
-              <Stack minHeight="20px" />
+              {/* <Stack minHeight="20px" />
               <Stack width="100%">
                 <Footer />
-              </Stack>
+              </Stack> */}
             </Stack>
           </UrsorFadeIn>
         )}
+        <Stack width="100%" px={isMobile ? "30px" : 0}>
+          <Footer fontScale={Math.min(1, width / 700)} />
+        </Stack>
       </Stack>
     </Stack>
   );

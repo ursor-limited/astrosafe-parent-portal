@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Stack, alpha, color } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { CreationBox } from "../components/CreationBox";
-
 import {
   IPediaCollectionPage,
   IPediaPage,
@@ -19,6 +18,7 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import { shouldBeLightText } from "../c/[pageId]/CollectionPageBento";
+import { COLORED_CARD_TITLE_DARK_COLOR } from "../p/[urlId]/PediaMainCard";
 
 export function PediaArticleCard(props: {
   title: string;
@@ -58,7 +58,7 @@ export function PediaArticleCard(props: {
           color={
             shouldBeLightText(props.color)
               ? PALETTE.font.light
-              : "rgba(0,0,0,0.5)"
+              : COLORED_CARD_TITLE_DARK_COLOR
           }
         >
           {props.title}

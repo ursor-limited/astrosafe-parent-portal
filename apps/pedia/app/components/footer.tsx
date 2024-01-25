@@ -58,8 +58,8 @@ export const Footer = (props: { fontScale?: number }) => {
                 color={PALETTE.secondary.purple[2]}
                 scale={props.fontScale}
               >
-                Pedia is a free tool developed by Astro, the safe Browser built
-                for the Classroom
+                AstroPedia is a free tool developed by Astro, the safe Browser
+                built for the Classroom
               </Typography>
             </Stack>
           </Stack>
