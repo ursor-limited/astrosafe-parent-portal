@@ -527,10 +527,10 @@ const MobileColumn = (props: {
             mobile
           />
         ) : null} */}
-        <Stack minHeight="30px" />
+        {/* <Stack minHeight="30px" />
         <Stack width="100%">
           <Footer fontScale={width / 700} />
-        </Stack>
+        </Stack> */}
       </Stack>
       {selectedTextCardId ? (
         <TextSectionPopover
@@ -541,7 +541,6 @@ const MobileColumn = (props: {
           )!}
         />
       ) : null}
-      <Footer fontScale={Math.min(1, width / 800)} />
     </Stack>
   );
 };
@@ -947,13 +946,16 @@ export default function PediaPageContents(props: {
                 </Stack>
               </LayoutCard>
 
-              <Stack minHeight="20px" />
+              {/* <Stack minHeight="20px" />
               <Stack width="100%">
                 <Footer />
-              </Stack>
+              </Stack> */}
             </Stack>
           </UrsorFadeIn>
         )}
+        <Stack width="100%" px={isMobile ? "30px" : 0}>
+          <Footer fontScale={Math.min(1, width / 700)} />
+        </Stack>
       </Stack>
     </Stack>
   );

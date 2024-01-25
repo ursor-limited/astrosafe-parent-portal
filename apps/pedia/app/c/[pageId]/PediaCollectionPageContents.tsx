@@ -184,9 +184,6 @@ export default function PediaCollectionPageContents(
                   pages={props.articles}
                   collectionPageId={props.pageDetails.id}
                 />
-                <Stack width="100%" px="30px">
-                  <Footer fontScale={Math.min(1, width / 800)} />
-                </Stack>
               </UrsorFadeIn>
             </Stack>
           ) : props.pageDetails ? (
@@ -221,6 +218,9 @@ export default function PediaCollectionPageContents(
           ) : (
             <></>
           )}
+        </Stack>
+        <Stack width="100%" px="30px">
+          <Footer fontScale={Math.min(1, width / 700)} />
         </Stack>
       </Stack>
       <UrsorDialog
