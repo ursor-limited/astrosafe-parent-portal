@@ -162,6 +162,7 @@ export default function PediaLandingPageSignedOutView(props: {
         alignItems="center"
         width="100%"
         pb={props.mobile ? "20px" : "50px"}
+        overflow="hidden"
       >
         <Stack
           maxWidth={props.mobile ? undefined : "780px"}
