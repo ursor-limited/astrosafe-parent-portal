@@ -84,7 +84,7 @@ const Player = (props: {
   useEffect(() => {
     playing &&
       props.provider === "vimeo" &&
-      useTimeout(() => setOverlayHovering(false), 2000);
+      setTimeout(() => setOverlayHovering(false), 2000);
   }, [playing]);
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
