@@ -22,6 +22,7 @@ import {
   shouldBeLightText,
 } from "../c/[pageId]/CollectionPageBento";
 import { COLORED_CARD_TITLE_DARK_COLOR } from "../p/[urlId]/PediaMainCard";
+import { Footer } from "../components/footer";
 
 export function PediaArticleCard(props: {
   title: string;
@@ -500,6 +501,9 @@ export default function PediaLandingPageSignedInView(props: {
                   </Grid>
                 </Stack>
               )}
+            </Stack>
+            <Stack width="100%" px="30px">
+              <Footer fontScale={Math.min(1, width / 700)} />
             </Stack>
           </UrsorFadeIn>
         </Stack>
