@@ -10,7 +10,7 @@ import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { createPortal } from "react-dom";
-import { useWindowSize } from "usehooks-ts";
+import { useTimeout, useWindowSize } from "usehooks-ts";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
@@ -75,13 +75,17 @@ const Player = (props: {
   // useEffect(() => setProvider(props.provider), [props.provider]);
 
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
-  const [overallHovering, setOverallHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
   useEffect(
     () => props.playingCallback?.(playing),
     [playing, props.playingCallback]
   );
+  useEffect(() => {
+    playing &&
+      props.provider === "vimeo" &&
+      useTimeout(() => setOverlayHovering(false), 2000);
+  }, [playing]);
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
     useState<boolean>(false);

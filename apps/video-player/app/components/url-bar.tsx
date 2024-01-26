@@ -56,14 +56,17 @@ const UrlBar = (props: { mobile: boolean }) => {
         color={hovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.7)"}
         sx={{
           transition: "0.2s",
+          maxWidth: props.mobile ? 0 : undefined,
+          minWidth: props.mobile ? "100%" : undefined,
+          textAlign: "center",
         }}
       >
         {currentPageUrl.split("?")[0]}
       </Typography>
 
       {copied ? (
-        <Stack>
-          <Typography noWrap bold color="rgba(255,255,255,0.9)">
+        <Stack height="40px" justifyContent="center">
+          <Typography noWrap bold color="rgba(255,255,255,0.7)">
             Copied to Clipboard
           </Typography>
         </Stack>
