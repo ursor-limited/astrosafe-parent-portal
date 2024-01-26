@@ -357,7 +357,7 @@ const Player = (props: {
           src={url}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
         />
-        {/* <Stack
+        <Stack
           position="absolute"
           top={0}
           width="100%"
@@ -499,7 +499,7 @@ const Player = (props: {
             Here at Astro, we&apos;re on a mission to create a safer and more
             delightful internet. 😊
           </Typography>
-        </Stack> */}
+        </Stack>
 
         <Stack
           direction="row"
