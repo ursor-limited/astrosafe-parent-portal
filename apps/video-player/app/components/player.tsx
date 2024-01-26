@@ -82,9 +82,7 @@ const Player = (props: {
     [playing, props.playingCallback]
   );
   useEffect(() => {
-    overlayHovering &&
-      props.provider === "vimeo" &&
-      setTimeout(() => setOverlayHovering(false), 2000);
+    overlayHovering && setTimeout(() => setOverlayHovering(false), 2000);
   }, [props.provider, overlayHovering]);
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
@@ -441,7 +439,7 @@ const Player = (props: {
           height={url?.includes("vimeo") ? "130px" : "60px"}
           sx={{
             //transform: `translateY(${overallHovering ? 0 : "-60px"})`,
-            opacity: 0, //overlayHovering && playing ? 1 : 0,
+            opacity: overlayHovering && playing ? 1 : 0,
             transition: !overlayHovering || !playing ? "0.2s" : 0,
             transitionDelay: !overlayHovering || !playing ? "0.3s" : 0,
             backdropFilter: "blur(30px)",
