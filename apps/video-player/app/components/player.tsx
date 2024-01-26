@@ -8,7 +8,7 @@ import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { createPortal } from "react-dom";
 import { useTimeout, useWindowSize } from "usehooks-ts";
 
@@ -238,6 +238,7 @@ const Player = (props: {
   const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
 
   const resume = () => {
+    console.log("333");
     setHasBegunPlaying(true);
     setEnded(false);
     if (
@@ -246,9 +247,11 @@ const Player = (props: {
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
+      console.log("0ccc");
       player?.playVideo();
       //setPlaying(true);
     } else if (url?.includes("vimeo")) {
+      console.log("0-0-0ddddd");
       player?.play();
     }
   };
@@ -412,7 +415,7 @@ const Player = (props: {
           right={0}
           //right={0}
           width={
-            url?.includes("vimeo") && playing ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
+            url?.includes("vimeo") ? "62px" : "100%" //overallHovering ? "100%" : 0 //overallHovering && props.playing && props.fullScreen ? "100%" : "80px"
           }
           borderRadius={
             url?.includes("vimeo")
@@ -493,6 +496,7 @@ const Player = (props: {
           sx={{
             opacity: starHovering ? 1 : 0,
             transition: "0.8s",
+            pointerEvents: "none",
           }}
         >
           <Typography color="rgba(255,255,255)">
