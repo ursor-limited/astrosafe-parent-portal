@@ -391,7 +391,6 @@ function CreationPageContents(props: { details: IVideo }) {
               <Stack
                 p={`${MAGICAL_BORDER_THICKNESS}px`}
                 borderRadius="15px"
-                overflow="hidden"
                 sx={{ backdropFilter: "none" }}
                 position="relative"
               >
@@ -427,6 +426,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   top="120px"
                   setFullscreen={setFullscreen}
                   playingCallback={(p) => setPlaying(p)}
+                  mobile={mobile}
                 />
               </Stack>
             </Stack>

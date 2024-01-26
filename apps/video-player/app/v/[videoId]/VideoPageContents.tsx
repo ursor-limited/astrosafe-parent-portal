@@ -169,6 +169,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
                 showUrlBar
                 setFullscreen={setFullscreen}
                 playingCallback={(p) => setPlaying(p)}
+                mobile={mobile}
               />
             </Stack>
           </Stack>
