@@ -129,7 +129,6 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
             <Stack
               p={`${MAGICAL_BORDER_THICKNESS}px`}
               borderRadius="15px"
-              overflow="hidden"
               sx={{ backdropFilter: "none" }}
               position="relative"
             >
@@ -192,7 +191,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               <Stack
                 py="20px"
                 px="30px"
-                bgcolor={"rgba(0,0,0,0.15)"}
+                bgcolor={"rgba(0,0,0,0.2)"}
                 borderRadius="12px"
               >
                 <Stack spacing="5px">
