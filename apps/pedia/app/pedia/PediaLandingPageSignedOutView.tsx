@@ -211,7 +211,7 @@ export default function PediaLandingPageSignedOutView(props: {
             your own or explore our collection!
           </Typography>
         </Stack>
-        <Stack width="92%">
+        <Stack width="92%" alignItems="center">
           <CreationBox mobile={props.mobile} />
         </Stack>
         <IntroSteps mobile={props.mobile} />
