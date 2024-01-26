@@ -322,8 +322,6 @@ const Player = (props: {
 
   return (
     <Stack
-      // width="100vw"
-      // minWidth="100vw"
       width={fullScreen ? "100vw" : `${props.width}px`}
       height={fullScreen ? "100vh" : `${props.height}px`}
       minWidth={fullScreen ? "100vw" : `${props.width}px`}
@@ -338,8 +336,6 @@ const Player = (props: {
       onMouseMove={() => setOverlayHovering(true)}
       justifyContent="center"
       alignItems="center"
-
-      //overflow="clip"
     >
       <Stack
         width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
@@ -359,26 +355,10 @@ const Player = (props: {
           title="Player"
           width={fullScreen ? "100%" : props.width}
           height={fullScreen ? "100%" : props.height}
-          // style={{
-          //   transition: "0.7s",
-          //   transitionTimingFunction: "ease-out",
-          // }}
           src={url}
-          //src="https://player.vimeo.com/video/274713351?h=6410c8a64f"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
-          //@ts-ignore
-          //allowFullScreen="allowFullScreen"
-          frameBorder={0}
         />
         {/* <Stack
-          position="absolute"
-          top={0}
-          right={0}
-          width={overallHovering ? "100%" : "80px"}
-          //borderRadius="0 0 0 14px"
-          height="60px"
-        /> */}
-        <Stack
           position="absolute"
           top={0}
           width="100%"
@@ -520,17 +500,7 @@ const Player = (props: {
             Here at Astro, we&apos;re on a mission to create a safer and more
             delightful internet. 😊
           </Typography>
-        </Stack>
-
-        {/* {playing ? (
-              <Stack
-                position="absolute"
-                width="53px"
-                height="100px"
-                bottom={0}
-                right={0}
-              />
-            ) : null} */}
+        </Stack> */}
 
         <Stack
           direction="row"
@@ -551,22 +521,6 @@ const Player = (props: {
             },
           }}
         >
-          {/* <Stack
-            sx={{
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-              svg: {
-                path: {
-                  fill: props.captionsOn
-                    ? PALETTE.secondary.orange[3]
-                    : "rgba(255,255,255,0.7)",
-                },
-              },
-            }}
-            onClick={props.captionsCallback}
-          >
-            <CaptionsIcon width="24px" height="24px" />
-          </Stack> */}
           {props.setFullscreen ? (
             <Stack
               sx={{
