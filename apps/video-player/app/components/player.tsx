@@ -67,6 +67,7 @@ const Player = (props: {
   setFullscreen?: (fs: boolean) => void;
   noGlow?: boolean;
   noKitemark?: boolean;
+  mobile?: boolean;
   //youtubePauseOverlay: boolean;
 }) => {
   // const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -83,8 +84,9 @@ const Player = (props: {
   );
   useEffect(() => {
     (playing || overlayHovering) &&
+      props.mobile &&
       setTimeout(() => setOverlayHovering(false), 3000);
-  }, [props.provider, playing, overlayHovering]);
+  }, [props.mobile, props.provider, playing, overlayHovering]);
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
     useState<boolean>(false);
