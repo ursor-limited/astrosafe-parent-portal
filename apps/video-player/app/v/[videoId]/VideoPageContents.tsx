@@ -71,11 +71,6 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
         spacing="14px"
         pt={fullscreen ? 0 : "70px"}
       >
-        {!fullscreen && props.share ? (
-          <Stack width={Math.min(playerWidth, VIDEO_WIDTH)} pb="70px">
-            <UrlBar mobile={mobile} />
-          </Stack>
-        ) : null}
         <Stack
           spacing="18px"
           alignItems="center"
@@ -178,6 +173,11 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               />
             </Stack>
           </Stack>
+          {!fullscreen ? (
+            <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
+              <UrlBar mobile={mobile} />
+            </Stack>
+          ) : null}
           {/* </Stack> */}
           {/* <Image src={Background} alt='Background'  */}
           {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
@@ -186,7 +186,6 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               width={`${Math.min(playerWidth, VIDEO_WIDTH)}px`}
               justifyContent="space-between"
               overflow="scroll"
-              pt="5px"
               //px="16px"
               sx={{ backdropFilter: "blur(7px)" }}
             >
