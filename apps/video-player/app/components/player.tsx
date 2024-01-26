@@ -1,7 +1,6 @@
 "use client";
 
 import { Stack, keyframes } from "@mui/system";
-import Image from "next/image";
 import Play from "@/images/play.svg";
 import Sync from "@/images/icons/Sync.svg";
 import FullScreenIcon from "@/images/icons/FullScreen.svg";
@@ -9,8 +8,7 @@ import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import { createPortal } from "react-dom";
-import { useTimeout, useWindowSize } from "usehooks-ts";
+import { useWindowSize } from "usehooks-ts";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
@@ -19,24 +17,6 @@ const VIDEO_DISABLINGS = ["fs", "rel"];
 const BORDER_RADIUS = "14px";
 
 export const PADDING_TOP = "120px";
-
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
-`;
-
-const fadeOut = keyframes`
-from {
-  opacity: 1;
-}
-to {
-  opacity: 0;
-}
-`;
 
 export interface IVideo {
   id: string;
@@ -47,14 +27,7 @@ export interface IVideo {
 }
 
 const Player = (props: {
-  //playing: boolean;
-  //clickCallback: () => void;
   url: string;
-  //fullScreen?: boolean;
-  //fullScreenCallback?: () => void;
-  // captionsCallback: () => void;
-  // captionsOn: boolean;
-  //preHovering: boolean;
   playingCallback?: (playing: boolean) => void;
   provider: "youtube" | "vimeo";
   width: number;
@@ -68,13 +41,7 @@ const Player = (props: {
   noGlow?: boolean;
   noKitemark?: boolean;
   mobile?: boolean;
-  //youtubePauseOverlay: boolean;
 }) => {
-  // const [provider, setProvider] = useState<"youtube" | "vimeo" | undefined>(
-  //   undefined
-  // );
-  // useEffect(() => setProvider(props.provider), [props.provider]);
-
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
   const [playing, setPlaying] = useState<boolean>(false);
@@ -446,7 +413,11 @@ const Player = (props: {
           position="absolute"
           right={0}
           bottom={0}
-          width={fullScreen ? `${videoWidth * 0.1}px` : "130px"}
+          width={
+            fullScreen
+              ? `${videoWidth * (props.provider === "vimeo" ? 0.28 : 0.2)}px`
+              : "130px"
+          }
           height={props.provider === "vimeo" ? "60px" : "50px"}
         />
         {!props.noKitemark ? (
