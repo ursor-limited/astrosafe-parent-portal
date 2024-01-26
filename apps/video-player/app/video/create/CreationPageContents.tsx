@@ -19,7 +19,10 @@ import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
 import { useWindowSize } from "usehooks-ts";
-import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
+import {
+  HIDE_LOGO_PLAYER_WIDTH_THRESHOLD,
+  MAGICAL_BORDER_THICKNESS,
+} from "@/app/v/[videoId]/VideoPageContents";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -156,7 +159,12 @@ function CreationPageContents(props: { details: IVideo }) {
 
   return (
     <>
-      {!fullscreen ? <Header noCreateNew /> : null}
+      {!fullscreen ? (
+        <Header
+          noCreateNew
+          noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
+        />
+      ) : null}
       {props.details && provider && url ? (
         <Stack
           flex={1}
