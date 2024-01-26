@@ -1,6 +1,7 @@
 import React from "react";
 import FadeIn from "react-fade-in";
 import { Box } from "@mui/material";
+import { Stack } from "@mui/system";
 
 export const FULL_SIZE_CLASSNAME = "fullSize";
 
@@ -9,12 +10,13 @@ export interface IUrsorFadeInProps {
   delay?: number;
   fullWidth?: boolean;
   fullHeight?: boolean;
+  centerAlign?: boolean;
   children: React.ReactNode;
 }
 
 export default function UrsorFadeIn(props: IUrsorFadeInProps) {
   return (
-    <Box
+    <Stack
       height={props.fullHeight ? "100%" : "auto"}
       width={props.fullWidth ? "100%" : "auto"}
       sx={{
@@ -22,6 +24,8 @@ export default function UrsorFadeIn(props: IUrsorFadeInProps) {
           height: props.fullHeight ? "100%" : "auto",
           width: props.fullWidth ? "100%" : "auto",
           overflow: "visible",
+          display: props.centerAlign ? "flex" : undefined,
+          justifyContent: props.centerAlign ? "center" : undefined,
         },
       }}
       overflow="visible"
@@ -34,6 +38,6 @@ export default function UrsorFadeIn(props: IUrsorFadeInProps) {
       >
         {props.children}
       </FadeIn>
-    </Box>
+    </Stack>
   );
 }

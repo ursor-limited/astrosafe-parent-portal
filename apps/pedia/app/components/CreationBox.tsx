@@ -46,15 +46,15 @@ export const CreationBox = (props: { mobile?: boolean }) => {
     setValue("");
   };
 
-  const { loginWithPopup } = useAuth0();
+  const { loginWithPopup, loginWithRedirect } = useAuth0();
 
   return (
     <Stack
       bgcolor="rgba(0,0,0,0.16)"
       px="24px"
       py="20px"
-      maxWidth={props.mobile ? "93%" : "733px"}
-      width={props.mobile ? "93%" : "733px"}
+      maxWidth={props.mobile ? "100%" : "733px"}
+      width={props.mobile ? "100%" : "733px"}
       borderRadius="16px"
       alignItems="center"
       spacing={props.mobile ? (topics.length > 0 ? "8px" : 0) : "24px"}
@@ -159,7 +159,7 @@ export const CreationBox = (props: { mobile?: boolean }) => {
         <UrsorButton
           dark
           variant="tertiary"
-          onClick={loginWithPopup}
+          onClick={props.mobile ? loginWithRedirect : loginWithPopup}
           backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
           hoverOpacity={0.7}
           endIcon={PaintBrushIcon}
