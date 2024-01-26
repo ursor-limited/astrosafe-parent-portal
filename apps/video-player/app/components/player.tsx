@@ -82,8 +82,8 @@ const Player = (props: {
     [playing, props.playingCallback]
   );
   useEffect(() => {
-    playing ||
-      (overlayHovering && setTimeout(() => setOverlayHovering(false), 3000));
+    (playing || overlayHovering) &&
+      setTimeout(() => setOverlayHovering(false), 3000);
   }, [props.provider, playing, overlayHovering]);
 
   const [youtubePauseOverlay, setYoutubePauseOverlay] =
