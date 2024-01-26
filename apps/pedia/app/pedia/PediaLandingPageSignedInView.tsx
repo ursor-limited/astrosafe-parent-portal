@@ -88,11 +88,12 @@ export function PediaCollectionCard(props: {
   images: { url: string; color: string }[];
   shadow?: boolean;
   small?: boolean;
+  fullWidth?: boolean;
   button?: JSX.Element;
 }) {
   return (
     <Stack
-      width={props.small ? "190px" : "247px"}
+      width={props.fullWidth ? "100%" : props.small ? "190px" : "247px"}
       height={props.small ? "150px" : "189px"}
       borderRadius="12px"
       spacing="5px"
@@ -377,24 +378,66 @@ export default function PediaLandingPageSignedInView(props: {
                 nCollections={collections.length}
                 small={props.mobile}
               />
-              {props.mobile && selectedTab === "articles" ? (
+              {props.mobile ? (
                 <Stack width="92%" spacing="12px">
-                  {articles.map((p) => (
-                    <Stack
-                      key={p.id}
-                      height="170px"
-                      minHeight="170px"
-                      width="100%"
-                    >
-                      <ContentPagePreviewCard
-                        title={p.title}
-                        imageUrl={p.mainImage}
-                        color={p.color}
-                        urlId={p.urlId}
-                        mobile
-                      />
-                    </Stack>
-                  ))}
+                  {selectedTab === "articles"
+                    ? articles.map((p) => (
+                        <Stack
+                          key={p.id}
+                          height="170px"
+                          minHeight="170px"
+                          width="100%"
+                        >
+                          <ContentPagePreviewCard
+                            title={p.title}
+                            imageUrl={p.mainImage}
+                            color={p.color}
+                            urlId={p.urlId}
+                            mobile
+                          />
+                        </Stack>
+                      ))
+                    : collections.map((c) => (
+                        <Stack
+                          key={c.page.id}
+                          height="180px"
+                          minHeight="180px"
+                          width="100%"
+                        >
+                          <PediaCollectionCard
+                            fullWidth
+                            title={c.page.title}
+                            images={c.images}
+                            button={
+                              <a
+                                target="_blank"
+                                href={`${
+                                  process.env.NODE_ENV === "development"
+                                    ? "http://localhost:3000"
+                                    : "https://www.astrosafe.co"
+                                }/c/${c.page.id}`}
+                                rel="noopener noreferrer"
+                              >
+                                <Stack
+                                  sx={{
+                                    "&:hover": { opacity: 0.6 },
+                                    transition: "0.2s",
+                                  }}
+                                >
+                                  <UrsorButton
+                                    size="small"
+                                    variant="secondary"
+                                    borderColor="transparent"
+                                    fontColor={PALETTE.secondary.grey[5]}
+                                  >
+                                    Open
+                                  </UrsorButton>
+                                </Stack>
+                              </a>
+                            }
+                          />
+                        </Stack>
+                      ))}
                 </Stack>
               ) : (
                 <Stack
