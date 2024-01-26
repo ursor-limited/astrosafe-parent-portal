@@ -35,7 +35,11 @@ export const PopupList = (props: {
         alignItems="center"
       >
         {item.icon ? <item.icon height={ICON_SIZE} width={ICON_SIZE} /> : null}
-        <Typography color={item.color} variant="normal" bold>
+        <Typography
+          color={item.color || PALETTE.font.dark}
+          variant="normal"
+          bold
+        >
           {item.text}
         </Typography>
       </Stack>
