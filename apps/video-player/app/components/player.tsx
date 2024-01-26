@@ -416,7 +416,7 @@ const Player = (props: {
           bottom={0}
           width={
             fullScreen
-              ? `${videoWidth * (props.provider === "vimeo" ? 0.28 : 0.2)}px`
+              ? `${videoWidth * (props.provider === "vimeo" ? 0.3 : 0.2)}px`
               : "130px"
           }
           height={props.provider === "vimeo" ? "60px" : "50px"}
