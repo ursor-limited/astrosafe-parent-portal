@@ -3,6 +3,7 @@ import "./globals.css";
 import { Stack } from "@mui/system";
 import Background from "@/images/background.png";
 import { Metadata } from "next";
+import { PALETTE } from "ui";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ zIndex: 999999999999 }}>
+      <meta name="theme-color" content={PALETTE.primary.navy} />
       <body className={rubik.className}>
         <Stack
           height="100vh"

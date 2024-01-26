@@ -8,7 +8,7 @@ import FullScreenIcon from "@/images/icons/FullScreen.svg";
 import NormalScreenIcon from "@/images/icons/NormalScreen.svg";
 import KiteMark from "@/images/kiteMark.svg";
 import { useCallback, useEffect, useState } from "react";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography } from "ui";
 import { createPortal } from "react-dom";
 import { useTimeout, useWindowSize } from "usehooks-ts";
 

@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-sort-props -- want to have paddings in the current order */
+"use client";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { PALETTE } from "./palette";

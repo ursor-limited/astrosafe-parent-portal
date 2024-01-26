@@ -10,7 +10,7 @@ import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
-const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
+export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
 
 const Player = dynamic(
   () => import("@/app/components/player"),
