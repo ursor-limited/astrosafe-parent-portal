@@ -99,7 +99,7 @@ const ProfilePopupButton = (props: {
 };
 
 export const Header = (props: { noCreateNew?: boolean; mobile?: boolean }) => {
-  const { user, logout, loginWithPopup } = useAuth0();
+  const { user, logout, loginWithPopup, loginWithRedirect } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
   return (
@@ -137,7 +137,7 @@ export const Header = (props: { noCreateNew?: boolean; mobile?: boolean }) => {
           <UrsorButton
             dark
             variant="secondary"
-            onClick={loginWithPopup}
+            onClick={props.mobile ? loginWithRedirect : loginWithPopup}
             endIcon={PersonIcon}
           >
             Log in

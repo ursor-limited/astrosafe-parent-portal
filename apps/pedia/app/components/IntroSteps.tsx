@@ -93,7 +93,7 @@ export const IntroSteps = (props: { mobile: boolean }) => {
           </Stack>
         </>
       ) : (
-        <Stack width="93%" position="relative">
+        <Stack width="92%" position="relative">
           <Stack
             width="fit-content"
             position="absolute"
