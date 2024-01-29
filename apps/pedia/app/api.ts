@@ -30,27 +30,40 @@ const patch = (route: string, body: any) =>
     }
   );
 
+const post = (route: string, body: any) =>
+  fetch(
+    //@ts-ignore
+    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
+
 class ApiController {
   static async getArticleAndCollection(
     articleId: string,
     collectionId: string
   ) {
     //@ts-ignore
-    return get(`pedia/article/${articleId}`, collectionId ? { collectionId } : undefined).then(
-      (response: any) => response.json()
-    );
+    return get(
+      `pedia/article/${articleId}`,
+      collectionId ? { collectionId } : undefined
+    ).then((response: any) => response.json());
   }
   static async getAllArticles(authorId?: string) {
     //@ts-ignore
-    return get(`pedia/allArticles`, authorId ? { authorId } : undefined).then((response: any) =>
-      response.json()
+    return get(`pedia/allArticles`, authorId ? { authorId } : undefined).then(
+      (response: any) => response.json()
     );
   }
   static async getAllCollections(authorId?: string) {
     //@ts-ignore
-    return get(`pedia/allCollections`, authorId ? { authorId } : undefined).then((response: any) =>
-      response.json()
-    );
+    return get(
+      `pedia/allCollections`,
+      authorId ? { authorId } : undefined
+    ).then((response: any) => response.json());
   }
   static async getCollectionPage(id: string) {
     return get(`pedia/collection/${id}`).then((response: any) =>
@@ -61,6 +74,12 @@ class ApiController {
     //@ts-ignore
     return patch(`pedia/collection/${id}/title`, { title }).then(
       (response: any) => response.json()
+    );
+  }
+  static async createArticle(title: string) {
+    //@ts-ignore
+    return post("pedia/article", { title }).then((response: any) =>
+      response.json()
     );
   }
 }

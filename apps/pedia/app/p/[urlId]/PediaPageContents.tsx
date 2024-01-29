@@ -66,6 +66,7 @@ interface IPediaImage {
   id: string;
   url: string;
   caption?: string;
+  provider: "pexels" | "unsplash";
 }
 
 export interface IPediaStat {

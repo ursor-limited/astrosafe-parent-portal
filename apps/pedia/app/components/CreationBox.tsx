@@ -8,6 +8,7 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import { useAuth0 } from "@auth0/auth0-react";
 import DynamicContainer from "./DynamicContainer";
 import { Grid } from "@mui/material";
+import ApiController from "../api";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;
@@ -159,7 +160,7 @@ export const CreationBox = (props: { mobile?: boolean }) => {
         <UrsorButton
           dark
           variant="tertiary"
-          onClick={props.mobile ? loginWithRedirect : loginWithPopup}
+          onClick={() => ApiController.createArticle(topics[0])}
           backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
           hoverOpacity={0.7}
           endIcon={PaintBrushIcon}
