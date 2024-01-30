@@ -27,6 +27,7 @@ const patch = (route: string, body: any) =>
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      cache: "no-store",
     }
   );
 
@@ -38,6 +39,7 @@ const post = (route: string, body: any) =>
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      cache: "no-store",
     }
   );
 
@@ -91,6 +93,12 @@ class ApiController {
   static async createCollection(articleTitles: string[], authorId: string) {
     //@ts-ignore
     return post("pedia/collection", { articleTitles, authorId }).then(
+      (response: any) => response.json()
+    );
+  }
+  static async createCollectionArticles(id: string) {
+    //@ts-ignore
+    return post(`pedia/collection/createArticles`, { id }).then(
       (response: any) => response.json()
     );
   }
