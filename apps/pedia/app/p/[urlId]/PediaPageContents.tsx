@@ -108,6 +108,7 @@ export interface IPediaCollectionPage {
   title: string;
   articles: string[]; // ids
   authorId: string;
+  createdAt: string;
 }
 
 const ImageCard = (props: {
