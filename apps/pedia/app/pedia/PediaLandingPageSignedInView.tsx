@@ -114,12 +114,12 @@ export function PediaCollectionCard(props: {
           width={props.small ? "120px" : "164px"}
           minWidth={props.small ? "120px" : "164px"}
           height="100%"
-          bgcolor={props.images[0].color}
+          bgcolor={props.images[0]?.color}
         >
           <Stack
             flex={1}
             sx={{
-              backgroundImage: `url(${props.images[0].url})`,
+              backgroundImage: `url(${props.images[0]?.url})`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
@@ -127,22 +127,22 @@ export function PediaCollectionCard(props: {
           />
         </Stack>
         <Stack spacing={props.small ? "3px" : "4px"} flex={1}>
-          <Stack flex={1} bgcolor={props.images[1].color}>
+          <Stack flex={1} bgcolor={props.images[1]?.color}>
             <Stack
               flex={1}
               sx={{
-                backgroundImage: `url(${props.images[1].url})`,
+                backgroundImage: `url(${props.images[1]?.url})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
               }}
             />
           </Stack>
-          <Stack flex={1} bgcolor={props.images[2].color}>
+          <Stack flex={1} bgcolor={props.images[2]?.color}>
             <Stack
               flex={1}
               sx={{
-                backgroundImage: `url(${props.images[2].url})`,
+                backgroundImage: `url(${props.images[2]?.url})`,
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
