@@ -207,15 +207,15 @@ export default function PediaCollectionPageContents(
             <UrsorFadeIn duration={800}>
               <LayoutCard
                 title={titleInputValue}
-                category={
-                  props.articles && props.articles.length > 0
-                    ? props.articles
-                        .slice(0, -1)
-                        .map((a) => a.title)
-                        .join(", ") +
-                      ` and ${props.articles[props.articles.length - 1].title}`
-                    : undefined
-                }
+                // category={
+                //   props.articles && props.articles.length > 0
+                //     ? props.articles
+                //         .slice(0, -1)
+                //         .map((a) => a.title)
+                //         .join(", ") +
+                //       ` and ${props.articles[props.articles.length - 1].title}`
+                //     : undefined
+                // }
                 editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
                 <Stack>

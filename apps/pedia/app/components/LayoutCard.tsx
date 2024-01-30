@@ -23,7 +23,6 @@ interface ILayoutCardProps {
   titleColor?: string;
   selectedAge?: PediaAge;
   setSelectedAge?: (age: PediaAge) => void;
-  category?: string;
   //parents?: IPediaCollectionPage[];
   paddingTop?: string;
   editTitleCallback?: () => void;
@@ -162,10 +161,12 @@ export default function LayoutCard(props: ILayoutCardProps) {
                 color={PALETTE.secondary.grey[3]}
                 htmlTag="h2"
               >
-                {`${props.title} knowledge and fun facts for Kids${
+                {`Knowledge and fun facts for Kids${
                   props.selectedAge
                     ? ` aged ${PediaAgeDisplayNames[props.selectedAge]}`
                     : ""
+                } about ${
+                  props.title.split(":")[0]
                 }. Pedia is a member of Astro's suite of safe and focused educational tools for teachers, parents and students.`}
               </Typography>
             </Stack>
