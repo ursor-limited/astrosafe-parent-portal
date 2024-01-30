@@ -19,6 +19,7 @@ import UrsorDialog from "@/app/components/UrsorDialog";
 import dynamic from "next/dynamic";
 import ApiController from "@/app/api";
 import { Footer } from "@/app/components/footer";
+import moment from "moment";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -33,7 +34,9 @@ export const MOBILE_WINDOW_WIDTH_THRESHOLD = 960;
 const PULSE_AMPLITUDE = "2px";
 const PULSE_PERIOD = "2s";
 
-const TITLE_CHARACTER_LIMIT = 40;
+const TITLE_CHARACTER_LIMIT = 50;
+
+const CREATION_NOTIFICATION_DISPLAY_THRESHOLD = 10; // seconds
 
 export const pulse = keyframes`
   from {
@@ -140,19 +143,48 @@ export default function PediaCollectionPageContents(
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const [editTitleDialogOpen, setEditTitleDialogOpen] =
-    useState<boolean>(false);
+  const [articles, setArticles] = useState<IPediaPage[]>([]);
+  useEffect(() => setArticles(props.articles), [props.articles]);
 
   const [loading, setLoading] = useState<boolean>(false);
-  // useEffect(() => {
-  //   setTimeout(() => setLoading(false), 8000);
-  //   setTimeout(() => setEditTitleDialogOpen(true), 3000);
-  // }, []);
+  useEffect(() => setLoading(!articles.every((a) => a.mainImage)), [articles]);
+
+  const [editTitleDialogOpen, setEditTitleDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => setEditTitleDialogOpen(loading), 5000);
+  }, [loading]);
+
+  useEffect(() => {
+    if (!loading) return;
+    const interval = setInterval(
+      () =>
+        ApiController.getCollectionArticles(props.pageDetails.id).then((a) =>
+          setArticles(a)
+        ),
+      4000
+    );
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [loading]);
 
   const [titleInputValue, setTitleInputValue] = useState<string>("");
   useEffect(() => {
-    setTitleInputValue(props.pageDetails.title);
+    setTitleInputValue(props.pageDetails.title.slice(0, TITLE_CHARACTER_LIMIT));
   }, [props.pageDetails.title]);
+
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+  console.log(
+    props.pageDetails.createdAt,
+    moment().diff(props.pageDetails.createdAt, "seconds")
+  );
+  useEffect(
+    () =>
+      setShowNotification(
+        moment().diff(props.pageDetails.createdAt, "seconds") <
+          CREATION_NOTIFICATION_DISPLAY_THRESHOLD
+      ),
+    [props.pageDetails.createdAt]
+  );
 
   return (
     <>
@@ -160,28 +192,30 @@ export default function PediaCollectionPageContents(
         <Header mobile={isMobile} />
         <Stack spacing="20px" width="100%">
           <Stack height="20px" />
-          {/* <CollectionPageNotification
-            title={
-              loading ? "Creating your new Collection" : "Collection created"
-            }
-            subtitle={
-              loading
-                ? "This may take a few minutes."
-                : "You can edit this at any time."
-            }
-            animation={loading ? "loading" : "celebration"}
-            titleBackground={
-              loading
-                ? "linear-gradient(0deg, #6596FF, #7B61FF)"
-                : "linear-gradient(4deg, #0AE799, #1D62F6)"
-            }
-          /> */}
+          {showNotification ? (
+            <CollectionPageNotification
+              title={
+                loading ? "Creating your new Collection" : "Collection created"
+              }
+              subtitle={
+                loading
+                  ? "This may take a few minutes."
+                  : "You can edit this at any time."
+              }
+              animation={loading ? "loading" : "celebration"}
+              titleBackground={
+                loading
+                  ? "linear-gradient(0deg, #6596FF, #7B61FF)"
+                  : "linear-gradient(4deg, #0AE799, #1D62F6)"
+              }
+            />
+          ) : null}
           {isMobile && props.pageDetails ? (
             <Stack width="100%" height="100%">
               <UrsorFadeIn duration={1000}>
                 <MobileCollectionPageColumn
                   title={props.pageDetails.title}
-                  pages={props.articles}
+                  pages={articles}
                   collectionPageId={props.pageDetails.id}
                 />
               </UrsorFadeIn>
@@ -190,26 +224,22 @@ export default function PediaCollectionPageContents(
             <UrsorFadeIn duration={800}>
               <LayoutCard
                 title={titleInputValue}
-                titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
-                category={
-                  props.articles
-                    .slice(0, -1)
-                    .map((a) => a.title)
-                    .join(", ") +
-                  ` and ${props.articles[props.articles.length - 1].title}`
-                }
+                // category={
+                //   props.articles && props.articles.length > 0
+                //     ? props.articles
+                //         .slice(0, -1)
+                //         .map((a) => a.title)
+                //         .join(", ") +
+                //       ` and ${props.articles[props.articles.length - 1].title}`
+                //     : undefined
+                // }
                 editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
-                <Stack
-                  sx={{
-                    opacity: loading ? 0.6 : 1,
-                  }}
-                >
+                <Stack>
                   <UrsorFadeIn delay={500} duration={1000}>
                     <CollectionPageBento
-                      pages={props.articles}
+                      articles={articles}
                       collectionPageId={props.pageDetails.id}
-                      loading={loading}
                     />
                   </UrsorFadeIn>
                 </Stack>

@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { IPediaQuestion } from "../p/[urlId]/PediaPageContents";
 import { useWindowSize } from "usehooks-ts";
 
-export const DEFAULT_WIDTH = 502;
+export const DEFAULT_WIDTH = 602;
 
 const ByteStepper = dynamic(
   () => import("./ByteStepper"),
@@ -32,14 +32,13 @@ export default function QuestionsCard(props: {
   );
   const [questionIndex, setQuestionIndex] = useState<number>(0);
 
-  const [ref, setRef] = useState<HTMLElement | null>(null);
-
   const { width } = useWindowSize();
   return (
     <Stack width="100%" alignItems="center">
       <Stack
         minWidth={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
-        height="363px"
+        maxWidth={props.mobile ? undefined : `${DEFAULT_WIDTH}px`}
+        minHeight="363px"
         alignItems="center"
         justifyContent="space-between"
         py="27px"

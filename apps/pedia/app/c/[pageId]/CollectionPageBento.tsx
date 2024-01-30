@@ -12,6 +12,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRightIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { COLORED_CARD_TITLE_DARK_COLOR } from "@/app/p/[urlId]/PediaMainCard";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const GRID_SPACING = 24;
 
@@ -48,15 +49,16 @@ const Byte = dynamic(
 
 export function ContentPagePreviewCard(props: {
   title: string;
-  imageUrl: string;
-  color: string;
+  imageUrl?: string;
+  color?: string;
   urlId: string;
   collectionPageId?: string;
   titleAtBottom?: boolean;
   titleOnRight?: boolean;
   mobile?: boolean;
   fontSize?: UrsorTypographyVariant;
-  loading?: boolean;
+  pageIllustration?: boolean;
+  //loading?: boolean;
 }) {
   const router = useRouter();
   const [hovering, setHovering] = useState<boolean>(false);
@@ -64,21 +66,24 @@ export function ContentPagePreviewCard(props: {
     () => router.push(`/p/${props.urlId}?c=${props.collectionPageId}`),
     [props.urlId, props.collectionPageId, router]
   );
+  // const [loading, setLoading] = useState<boolean>(false);
+  // useEffect(() => setLoading(!!props.imageUrl), [props.imageUrl]);
   return (
     <Stack
       flex={1}
       borderRadius="16px"
       bgcolor={
-        props.loading
+        !props.color
           ? PALETTE.secondary.grey[2]
           : hovering
           ? alpha(props.color, 0.6)
           : props.color
       }
       sx={{
-        cursor: "pointer",
+        opacity: !props.imageUrl ? 0.5 : 1,
+        cursor: props.imageUrl ? "pointer" : undefined,
         transition: "0.2s",
-        filter: props.loading ? "grayscale(100%)" : undefined,
+        filter: !props.imageUrl ? "grayscale(100%)" : undefined,
       }}
       justifyContent={props.titleAtBottom ? "flex-end" : undefined}
       alignItems={props.titleOnRight ? "flex-end" : undefined}
@@ -89,7 +94,7 @@ export function ContentPagePreviewCard(props: {
         p={props.mobile ? "10px" : "20px"}
         pb={props.mobile ? "40px" : "50px"}
         flex={1}
-        onClick={openPage}
+        onClick={() => (props.imageUrl ? openPage() : undefined)}
         onMouseEnter={() => {
           setHovering(true);
         }}
@@ -102,7 +107,7 @@ export function ContentPagePreviewCard(props: {
           bold
           htmlTag="h3"
           color={
-            props.loading
+            !props.color
               ? PALETTE.secondary.grey[3]
               : shouldBeLightText(props.color)
               ? PALETTE.font.light
@@ -115,7 +120,7 @@ export function ContentPagePreviewCard(props: {
         >
           {props.title}
         </Typography>
-        {props.loading ? (
+        {!props.imageUrl && !props.pageIllustration ? (
           <Stack
             flex={1}
             justifyContent="center"
@@ -128,71 +133,77 @@ export function ContentPagePreviewCard(props: {
             <Byte animation="loading" loop size={75} />
           </Stack>
         ) : (
-          <Stack
-            flex={1}
-            sx={{
-              backgroundImage: `url(${
-                props.loading ? PageIllustration.src : props.imageUrl
-              })`,
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              boxSizing: "border-box",
-              transition: "0.3s ease-out",
-              transform: props.loading
-                ? "scale(0.7)"
-                : hovering
-                ? "scale(1.07)"
-                : undefined,
-            }}
-          />
+          <UrsorFadeIn duration={800} fullHeight fullWidth>
+            <Stack
+              height="100%"
+              sx={{
+                backgroundImage: `url(${
+                  props.pageIllustration ? PageIllustration.src : props.imageUrl
+                })`,
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                boxSizing: "border-box",
+                transition: "0.3s ease-out",
+                transform: props.pageIllustration
+                  ? "scale(0.7)"
+                  : hovering
+                  ? "scale(1.07)"
+                  : undefined,
+              }}
+            />
+          </UrsorFadeIn>
         )}
       </Stack>
-      <Stack
-        justifyContent="flex-end"
-        direction="row"
-        spacing="8px"
-        position="absolute"
-        bottom={props.mobile ? "10px" : "20px"}
-        right={props.mobile ? "10px" : "20px"}
-      >
-        <UrsorButton
-          dark
-          size="small"
-          fontColor={props.color}
-          backgroundColor={
-            shouldBeLightText(props.color)
-              ? "rgb(255,255,255)"
-              : COLORED_CARD_TITLE_DARK_COLOR
-          }
-          onClick={openPage}
-        >
-          Open
-        </UrsorButton>
-        <UrsorActionButton
-          background={
-            shouldBeLightText(props.color)
-              ? "rgb(255,255,255)"
-              : COLORED_CARD_TITLE_DARK_COLOR
-          }
-          fontColor={props.color}
-          size="28px"
-          iconSize="13px"
-          actions={[
-            {
-              text: "Open",
-              icon: ArrowUpRightIcon,
-              kallback: openPage,
-            },
-            {
-              text: "Remove",
-              icon: TrashcanIcon,
-              kallback: () => null,
-              color: PALETTE.system.red,
-            },
-          ]}
-        />
-      </Stack>
+      {props.color ? (
+        <UrsorFadeIn duration={800}>
+          <Stack
+            justifyContent="flex-end"
+            direction="row"
+            spacing="8px"
+            position="absolute"
+            bottom={props.mobile ? "10px" : "20px"}
+            right={props.mobile ? "10px" : "20px"}
+          >
+            <UrsorButton
+              dark
+              size="small"
+              fontColor={props.color}
+              backgroundColor={
+                shouldBeLightText(props.color)
+                  ? "rgb(255,255,255)"
+                  : COLORED_CARD_TITLE_DARK_COLOR
+              }
+              onClick={openPage}
+            >
+              Open
+            </UrsorButton>
+            <UrsorActionButton
+              background={
+                shouldBeLightText(props.color)
+                  ? "rgb(255,255,255)"
+                  : COLORED_CARD_TITLE_DARK_COLOR
+              }
+              fontColor={props.color}
+              size="28px"
+              iconSize="13px"
+              actions={[
+                {
+                  text: "Open",
+                  icon: ArrowUpRightIcon,
+                  kallback: openPage,
+                },
+                {
+                  text: "Remove",
+                  icon: TrashcanIcon,
+                  kallback: () => null,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          </Stack>
+        </UrsorFadeIn>
+      ) : null}
     </Stack>
   );
 }
@@ -330,7 +341,7 @@ const ChunkRow2 = (props: { chunk: IPediaPage[] }) => (
 
 const ChunkRow = (props: {
   chunk: IPediaPage[];
-  loading?: boolean;
+  //loading?: boolean;
   collectionPageId: string;
 }) => (
   <Stack spacing={`${GRID_SPACING}px`}>
@@ -348,7 +359,7 @@ const ChunkRow = (props: {
             color={props.chunk[0].color}
             urlId={props.chunk[0].urlId}
             collectionPageId={props.collectionPageId}
-            loading={props.loading}
+            //={!!props.chunk[0].textBlocks}
           />
         </Stack>
         {props.chunk[1] ? (
@@ -359,7 +370,7 @@ const ChunkRow = (props: {
               color={props.chunk[1].color}
               urlId={props.chunk[1].urlId}
               collectionPageId={props.collectionPageId}
-              loading={props.loading}
+              //loading={!!props.chunk[1].textBlocks}
             />
           </Stack>
         ) : null}
@@ -371,7 +382,7 @@ const ChunkRow = (props: {
               color={props.chunk[2].color}
               urlId={props.chunk[2].urlId}
               collectionPageId={props.collectionPageId}
-              loading={props.loading}
+              //loading={!!props.chunk[2].textBlocks}
             />
           </Stack>
         ) : null}
@@ -389,7 +400,7 @@ const ChunkRow = (props: {
             color={props.chunk[3].color}
             urlId={props.chunk[3].urlId}
             collectionPageId={props.collectionPageId}
-            loading={props.loading}
+            //loading={!!props.chunk[3].textBlocks}
           />
         </Stack>
 
@@ -402,7 +413,7 @@ const ChunkRow = (props: {
                 color={props.chunk[4].color}
                 urlId={props.chunk[4].urlId}
                 collectionPageId={props.collectionPageId}
-                loading={props.loading}
+                //loading={!!props.chunk[4].textBlocks}
               />
             </Stack>
           </Stack>
@@ -413,20 +424,14 @@ const ChunkRow = (props: {
 );
 
 export default function CollectionPageBento(props: {
-  pages: IPediaPage[];
-  loading?: boolean;
+  articles: IPediaPage[];
+  //loading?: boolean;
   collectionPageId: string;
 }) {
-  const [originalImageSizes, setOriginalImageSizes] = useState<any[]>([]);
-  useEffect(() => {
-    Promise.all(props.pages.map((page) => getImageSize(page.mainImage))).then(
-      (dims) => setOriginalImageSizes(dims)
-    );
-  }, [props.pages]);
   return (
     <ChunkRow
-      chunk={props.pages}
-      loading={props.loading}
+      chunk={props.articles} //// make the fields optional,
+      //loading={props.loading}
       collectionPageId={props.collectionPageId}
     />
   );

@@ -66,6 +66,7 @@ interface IPediaImage {
   id: string;
   url: string;
   caption?: string;
+  provider: "pexels" | "unsplash";
 }
 
 export interface IPediaStat {
@@ -105,7 +106,9 @@ export interface IPediaPage {
 export interface IPediaCollectionPage {
   id: string;
   title: string;
-  articles: string[];
+  articles: string[]; // ids
+  authorId: string;
+  createdAt: string;
 }
 
 const ImageCard = (props: {
@@ -483,18 +486,20 @@ const MobileColumn = (props: {
         {props.textCardDetails
           .slice(1)
           .map((td, i) => [
-            <Stack key={`image${i}`}>
-              <ImageCard
-                url={props.imageCardDetails[i].url}
-                caption={props.imageCardDetails[i].caption}
-                height={Math.min(
-                  MAX_MOBILE_IMAGE_HEIGHT,
-                  (ref?.getBoundingClientRect().width ?? 0) *
-                    ((originalImageSizes[i]?.height ?? 1) /
-                      (originalImageSizes[i]?.width ?? 1))
-                )}
-              />
-            </Stack>,
+            props.imageCardDetails[i] ? (
+              <Stack key={`image${i}`}>
+                <ImageCard
+                  url={props.imageCardDetails[i].url}
+                  caption={props.imageCardDetails[i].caption}
+                  height={Math.min(
+                    MAX_MOBILE_IMAGE_HEIGHT,
+                    (ref?.getBoundingClientRect().width ?? 0) *
+                      ((originalImageSizes[i]?.height ?? 1) /
+                        (originalImageSizes[i]?.width ?? 1))
+                  )}
+                />
+              </Stack>
+            ) : null,
             <FactsCard
               key={`fact${i}`}
               facts={
@@ -547,11 +552,11 @@ const MobileColumn = (props: {
 
 const BentoRow = (props: {
   textCardDetails: IPediaTextBlock;
-  imageCardDetails: IPediaImage;
+  imageCardDetails?: IPediaImage;
   facts: string[];
   imageWidth: number;
   reversed: boolean;
-  originalImageDimensions: { width: number; height: number };
+  originalImageDimensions?: { width: number; height: number };
   editing?: boolean;
 }) => {
   const { width } = useWindowSize();
@@ -564,6 +569,7 @@ const BentoRow = (props: {
     props.textCardDetails.content.join(" ").split(" ").length / width;
 
   useEffect(() => {
+    if (!props.originalImageDimensions) return;
     const originalAspectRatio =
       props.originalImageDimensions.width /
       props.originalImageDimensions.height;
@@ -575,8 +581,8 @@ const BentoRow = (props: {
     textLengthWindowSizeRatio,
     props.textCardDetails.content,
     width,
-    props.originalImageDimensions.height,
-    props.originalImageDimensions.width,
+    props.originalImageDimensions?.height,
+    props.originalImageDimensions?.width,
   ]);
 
   // useEffect(() => {
@@ -608,7 +614,7 @@ const BentoRow = (props: {
         <></>
       )}
     </Stack>,
-    ...(hideImage
+    ...(hideImage || !props.imageCardDetails
       ? []
       : [
           <Stack key="image" spacing={`${GRID_SPACING}px`}>
@@ -734,26 +740,22 @@ const Bento = (props: {
 
   const rows = props.textCardDetails
     .slice(1, props.textCardDetails.length)
-    .map((td, i) =>
-      originalImageSizes[i] ? (
-        <BentoRow
-          key={td._id}
-          textCardDetails={props.textCardDetails[i + 1]}
-          imageCardDetails={props.imageCardDetails[i]}
-          facts={
-            i === props.textCardDetails.length - 2
-              ? props.facts.slice(-3)
-              : [props.facts[i]]
-          }
-          originalImageDimensions={originalImageSizes[i]}
-          imageWidth={getWidthOfColumns(imageColumnsN[i])}
-          reversed={!!(i % 2)}
-          editing={props.editing}
-        />
-      ) : (
-        <></>
-      )
-    );
+    .map((td, i) => (
+      <BentoRow
+        key={td._id}
+        textCardDetails={props.textCardDetails[i + 1]}
+        imageCardDetails={props.imageCardDetails[i]}
+        facts={
+          i === props.textCardDetails.length - 2
+            ? props.facts.slice(-3)
+            : [props.facts[i]]
+        }
+        originalImageDimensions={originalImageSizes[i]}
+        imageWidth={getWidthOfColumns(imageColumnsN[i])}
+        reversed={!!(i % 2)}
+        editing={props.editing}
+      />
+    ));
 
   // const rows = props.textCardDetails
   //   .slice(1, props.textCardDetails.length)
@@ -825,6 +827,8 @@ export default function PediaPageContents(props: {
   collectionDetails: IPediaCollectionPage;
 }) {
   const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
+
+  console.log(props.articleDetails);
 
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
