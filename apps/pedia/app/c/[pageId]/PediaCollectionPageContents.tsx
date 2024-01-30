@@ -143,7 +143,24 @@ export default function PediaCollectionPageContents(
   const [editTitleDialogOpen, setEditTitleDialogOpen] =
     useState<boolean>(false);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [articles, setArticles] = useState<IPediaPage[]>([]);
+  useEffect(() => setArticles(props.articles), [props.articles]);
+
+  const [loading, setLoading] = useState<boolean>(true);
+  useEffect(() => setLoading(!articles.every((a) => a.mainImage)), [articles]);
+
+  useEffect(() => {
+    if (!loading) return;
+    const interval = setInterval(
+      () =>
+        ApiController.getCollectionArticles(props.pageDetails.id).then((a) =>
+          setArticles(a)
+        ),
+      4000
+    );
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [loading]);
+
   // useEffect(() => {
   //   setTimeout(() => setLoading(false), 8000);
   //   setTimeout(() => setEditTitleDialogOpen(true), 3000);
@@ -160,7 +177,7 @@ export default function PediaCollectionPageContents(
         <Header mobile={isMobile} />
         <Stack spacing="20px" width="100%">
           <Stack height="20px" />
-          {/* <CollectionPageNotification
+          <CollectionPageNotification
             title={
               loading ? "Creating your new Collection" : "Collection created"
             }
@@ -175,7 +192,7 @@ export default function PediaCollectionPageContents(
                 ? "linear-gradient(0deg, #6596FF, #7B61FF)"
                 : "linear-gradient(4deg, #0AE799, #1D62F6)"
             }
-          /> */}
+          />
           {isMobile && props.pageDetails ? (
             <Stack width="100%" height="100%">
               <UrsorFadeIn duration={1000}>
@@ -190,26 +207,22 @@ export default function PediaCollectionPageContents(
             <UrsorFadeIn duration={800}>
               <LayoutCard
                 title={titleInputValue}
-                titleColor={loading ? PALETTE.secondary.grey[4] : undefined}
                 category={
-                  props.articles
-                    .slice(0, -1)
-                    .map((a) => a.title)
-                    .join(", ") +
-                  ` and ${props.articles[props.articles.length - 1].title}`
+                  props.articles && props.articles.length > 0
+                    ? props.articles
+                        .slice(0, -1)
+                        .map((a) => a.title)
+                        .join(", ") +
+                      ` and ${props.articles[props.articles.length - 1].title}`
+                    : undefined
                 }
                 editTitleCallback={() => setEditTitleDialogOpen(true)}
               >
-                <Stack
-                  sx={{
-                    opacity: loading ? 0.6 : 1,
-                  }}
-                >
+                <Stack>
                   <UrsorFadeIn delay={500} duration={1000}>
                     <CollectionPageBento
-                      pages={props.articles}
+                      articles={props.articles}
                       collectionPageId={props.pageDetails.id}
-                      loading={loading}
                     />
                   </UrsorFadeIn>
                 </Stack>

@@ -106,7 +106,8 @@ export interface IPediaPage {
 export interface IPediaCollectionPage {
   id: string;
   title: string;
-  articles: string[];
+  articles: string[]; // ids
+  authorId: string;
 }
 
 const ImageCard = (props: {
@@ -826,6 +827,8 @@ export default function PediaPageContents(props: {
   collectionDetails: IPediaCollectionPage;
 }) {
   const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
+
+  console.log(props.articleDetails);
 
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
