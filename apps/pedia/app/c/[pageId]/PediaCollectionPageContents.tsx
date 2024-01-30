@@ -153,7 +153,7 @@ export default function PediaCollectionPageContents(
     useState<boolean>(false);
   useEffect(() => {
     setTimeout(() => setEditTitleDialogOpen(loading), 5000);
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     if (!loading) return;

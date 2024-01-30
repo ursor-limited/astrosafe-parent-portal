@@ -58,6 +58,7 @@ export function ContentPagePreviewCard(props: {
   mobile?: boolean;
   fontSize?: UrsorTypographyVariant;
   pageIllustration?: boolean;
+  //loading?: boolean;
 }) {
   const router = useRouter();
   const [hovering, setHovering] = useState<boolean>(false);
@@ -80,7 +81,7 @@ export function ContentPagePreviewCard(props: {
       }
       sx={{
         opacity: !props.imageUrl ? 0.5 : 1,
-        cursor: "pointer",
+        cursor: props.imageUrl ? "pointer" : undefined,
         transition: "0.2s",
         filter: !props.imageUrl ? "grayscale(100%)" : undefined,
       }}
@@ -93,7 +94,7 @@ export function ContentPagePreviewCard(props: {
         p={props.mobile ? "10px" : "20px"}
         pb={props.mobile ? "40px" : "50px"}
         flex={1}
-        onClick={openPage}
+        onClick={() => (props.imageUrl ? openPage() : undefined)}
         onMouseEnter={() => {
           setHovering(true);
         }}
@@ -358,7 +359,7 @@ const ChunkRow = (props: {
             color={props.chunk[0].color}
             urlId={props.chunk[0].urlId}
             collectionPageId={props.collectionPageId}
-            //loading={props.loading}
+            //={!!props.chunk[0].textBlocks}
           />
         </Stack>
         {props.chunk[1] ? (
@@ -369,7 +370,7 @@ const ChunkRow = (props: {
               color={props.chunk[1].color}
               urlId={props.chunk[1].urlId}
               collectionPageId={props.collectionPageId}
-              //loading={props.loading}
+              //loading={!!props.chunk[1].textBlocks}
             />
           </Stack>
         ) : null}
@@ -381,7 +382,7 @@ const ChunkRow = (props: {
               color={props.chunk[2].color}
               urlId={props.chunk[2].urlId}
               collectionPageId={props.collectionPageId}
-              //loading={props.loading}
+              //loading={!!props.chunk[2].textBlocks}
             />
           </Stack>
         ) : null}
@@ -399,6 +400,7 @@ const ChunkRow = (props: {
             color={props.chunk[3].color}
             urlId={props.chunk[3].urlId}
             collectionPageId={props.collectionPageId}
+            //loading={!!props.chunk[3].textBlocks}
           />
         </Stack>
 
@@ -411,6 +413,7 @@ const ChunkRow = (props: {
                 color={props.chunk[4].color}
                 urlId={props.chunk[4].urlId}
                 collectionPageId={props.collectionPageId}
+                //loading={!!props.chunk[4].textBlocks}
               />
             </Stack>
           </Stack>
