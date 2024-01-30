@@ -48,7 +48,7 @@ export const CreationBox = (props: { mobile?: boolean }) => {
     setValue("");
   };
 
-  const { user } = useAuth0();
+  const { user, loginWithPopup, loginWithRedirect } = useAuth0();
 
   const router = useRouter();
 
@@ -164,9 +164,18 @@ export const CreationBox = (props: { mobile?: boolean }) => {
           dark
           variant="tertiary"
           onClick={() =>
-            ApiController.createCollection(topics, user?.email ?? "").then(
-              (collection) => router.push(`/c/${collection.id}`)
-            )
+            user?.email
+              ? ApiController.createCollection(topics, user?.email ?? "")
+                  .then((collection) => {
+                    router.push(`/c/${collection.id}`);
+                    return collection.id;
+                  })
+                  .then((collectionId) =>
+                    ApiController.createCollectionArticles(collectionId)
+                  )
+              : props.mobile
+              ? loginWithRedirect()
+              : loginWithPopup()
           }
           backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
           hoverOpacity={0.7}
