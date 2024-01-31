@@ -22,6 +22,9 @@ export default function LandingPageViewport(props: {
             variant={props.mobile ? "normal" : "large"}
             bold
             color={PALETTE.secondary.grey[4]}
+            sx={{
+              fontWeight: 500,
+            }}
           >
             {props.supertitle}
           </Typography>
@@ -31,7 +34,7 @@ export default function LandingPageViewport(props: {
             color={PALETTE.secondary.grey[5]}
             sx={{
               textAlign: "center",
-              fontWeight: 470,
+              fontWeight: 500,
               width: props.mobile ? "300px" : undefined,
             }}
           >
@@ -44,6 +47,7 @@ export default function LandingPageViewport(props: {
             color={PALETTE.secondary.grey[4]}
             variant={props.mobile ? "small" : "normal"}
             sx={{
+              fontWeight: 400,
               textAlign: "center",
               width: props.mobile ? "280px" : undefined,
             }}

@@ -55,6 +55,9 @@ export const Footer = (props: { fontScale?: number }) => {
             <Stack width="70%" sx={{ textAlign: "center" }}>
               <Typography
                 variant="h2"
+                sx={{
+                  fontWeight: 490,
+                }}
                 color={PALETTE.secondary.purple[2]}
                 scale={props.fontScale}
               >

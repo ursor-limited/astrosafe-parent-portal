@@ -136,6 +136,7 @@ export const LandingPageFAQSection = (props: { mobile?: boolean }) => {
             color={PALETTE.secondary.grey[5]}
             sx={{
               textAlign: "center",
+              fontWeight: 500,
             }}
           >
             Learn more about AstroPedia
