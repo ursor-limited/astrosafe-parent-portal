@@ -162,7 +162,7 @@ export default function PediaCollectionPageContents(
         ApiController.getCollectionArticles(props.pageDetails.id).then((a) =>
           setArticles(a)
         ),
-      4000
+      5000
     );
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [loading]);
@@ -173,10 +173,6 @@ export default function PediaCollectionPageContents(
   }, [props.pageDetails.title]);
 
   const [showNotification, setShowNotification] = useState<boolean>(false);
-  console.log(
-    props.pageDetails.createdAt,
-    moment().diff(props.pageDetails.createdAt, "seconds")
-  );
   useEffect(
     () =>
       setShowNotification(
