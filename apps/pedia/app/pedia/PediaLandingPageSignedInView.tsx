@@ -23,7 +23,54 @@ import {
 } from "../c/[pageId]/CollectionPageBento";
 import { COLORED_CARD_TITLE_DARK_COLOR } from "../p/[urlId]/PediaMainCard";
 import { Footer } from "../components/footer";
+import Byte from "../components/Byte";
 
+function PlaceholderArticleCard(props: { small?: boolean }) {
+  return (
+    <Stack
+      width={props.small ? "190px" : "247px"}
+      height={props.small ? "190px" : "247px"}
+      borderRadius="16px"
+      spacing="5px"
+      position="relative"
+      bgcolor="rgba(255,255,255,0.2)"
+      overflow="hidden"
+      sx={{
+        backdropFilter: "blur(4px)",
+      }}
+    >
+      <Stack
+        top={0}
+        left={0}
+        width="100%"
+        height="100%"
+        position="absolute"
+        p={props.small ? "14px" : "20px"}
+        boxSizing="border-box"
+      >
+        <Typography
+          variant={props.small ? "medium" : "h5"}
+          bold
+          color="rgba(255,255,255,0.36)"
+        >
+          Article
+        </Typography>
+        <Stack
+          flex={1}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            opacity: 0.25,
+            transform: "translateY(-10px)",
+            filter: "brightness(2) grayscale(100%)",
+          }}
+        >
+          <Byte animation="loading" loop size={60} />
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+}
 export function PediaArticleCard(props: {
   title: string;
   imageUrl: string;
@@ -285,13 +332,21 @@ export default function PediaLandingPageSignedInView(props: {
       images: { url: string; color: string }[];
     }[]
   >([]);
+
+  const [loadingArticles, setLoadingArticles] = useState<boolean>(false);
+  const [loadingCollections, setLoadingCollections] = useState<boolean>(false);
+
   useEffect(() => {
+    setLoadingArticles(true);
     ApiController.getAllArticles().then((articles) =>
       setArticles(articles.filter((a: any) => a.color))
     );
+    //.then(() => setLoadingArticles(false));
+    setLoadingCollections(true);
     ApiController.getAllCollections().then((collections) =>
       setCollections(collections)
     );
+    //.then(() => setLoadingCollections(false));
   }, []);
 
   const [selectedTab, setSelectedTab] = useState<"articles" | "collections">(
@@ -457,8 +512,15 @@ export default function PediaLandingPageSignedInView(props: {
                   }}
                 >
                   <Grid container gap="22px">
-                    {selectedTab === "articles"
-                      ? articles
+                    {selectedTab === "articles" ? (
+                      loadingArticles ? (
+                        <Stack direction="row" spacing="22px">
+                          <PlaceholderArticleCard />
+                          <PlaceholderArticleCard />
+                          <PlaceholderArticleCard />
+                        </Stack>
+                      ) : (
+                        articles
                           .filter((a) => a.color && a.mainImage)
                           .map((a, i) => (
                             <Grid
@@ -480,27 +542,30 @@ export default function PediaLandingPageSignedInView(props: {
                               </UrsorFadeIn>
                             </Grid>
                           ))
-                      : collections
-                          .filter((c) => c.page.articles)
-                          .map((c, i) => (
-                            <Grid
-                              key={c.page.id}
-                              item
-                              onClick={() => router.push(`/c/${c.page.id}`)}
-                              sx={{
-                                "&:hover": { opacity: 0.7 },
-                                transition: "0.2s",
-                                cursor: "pointer",
-                              }}
-                            >
-                              <UrsorFadeIn duration={800} delay={i * 100}>
-                                <PediaCollectionCard
-                                  title={c.page.title}
-                                  images={c.images}
-                                />
-                              </UrsorFadeIn>
-                            </Grid>
-                          ))}
+                      )
+                    ) : (
+                      collections
+                        .filter((c) => c.page.articles)
+                        .map((c, i) => (
+                          <Grid
+                            key={c.page.id}
+                            item
+                            onClick={() => router.push(`/c/${c.page.id}`)}
+                            sx={{
+                              "&:hover": { opacity: 0.7 },
+                              transition: "0.2s",
+                              cursor: "pointer",
+                            }}
+                          >
+                            <UrsorFadeIn duration={800} delay={i * 100}>
+                              <PediaCollectionCard
+                                title={c.page.title}
+                                images={c.images}
+                              />
+                            </UrsorFadeIn>
+                          </Grid>
+                        ))
+                    )}
                   </Grid>
                 </Stack>
               )}
