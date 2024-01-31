@@ -115,7 +115,7 @@ export const Header = (props: { noCreateNew?: boolean; mobile?: boolean }) => {
     >
       <a
         target="_blank"
-        href="astrosafe.co"
+        href="http://astrosafe.co"
         style={{
           textDecoration: "none",
         }}
