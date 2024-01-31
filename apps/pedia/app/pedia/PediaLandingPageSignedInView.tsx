@@ -60,7 +60,7 @@ function PlaceholderArticleCard(props: { small?: boolean }) {
           justifyContent="center"
           alignItems="center"
           sx={{
-            opacity: 0.25,
+            opacity: 0.2,
             transform: "translateY(-10px)",
             filter: "brightness(2) grayscale(100%)",
           }}
@@ -223,6 +223,8 @@ export function PediaTabSwitch(props: {
   nArticles: number;
   nCollections: number;
   small?: boolean;
+  loadingArticles?: boolean;
+  loadingCollections?: boolean;
 }) {
   return (
     <Stack
@@ -256,13 +258,15 @@ export function PediaTabSwitch(props: {
         direction="row"
         spacing="8px"
       >
-        <Typography
-          bold
-          variant={props.small ? "normal" : "large"}
-          color="rgba(255,255,255,0.8)"
-        >
-          {props.nArticles}
-        </Typography>
+        {!props.loadingArticles ? (
+          <Typography
+            bold
+            variant={props.small ? "normal" : "large"}
+            color="rgba(255,255,255,0.8)"
+          >
+            {props.nArticles}
+          </Typography>
+        ) : null}
         <Typography
           bold
           variant={props.small ? "normal" : "large"}
@@ -296,13 +300,16 @@ export function PediaTabSwitch(props: {
         direction="row"
         spacing="8px"
       >
-        <Typography
-          bold
-          variant={props.small ? "normal" : "large"}
-          color="rgba(255,255,255,0.8)"
-        >
-          {props.nCollections}
-        </Typography>
+        {!props.loadingCollections ? (
+          <Typography
+            bold
+            variant={props.small ? "normal" : "large"}
+            color="rgba(255,255,255,0.8)"
+          >
+            {props.nCollections}
+          </Typography>
+        ) : null}
+
         <Typography
           bold
           variant={props.small ? "normal" : "large"}
@@ -436,6 +443,8 @@ export default function PediaLandingPageSignedInView(props: {
                 nArticles={articles.length}
                 nCollections={collections.length}
                 small={props.mobile}
+                loadingArticles={loadingArticles}
+                loadingCollections={loadingCollections}
               />
               {props.mobile ? (
                 <Stack width="92%" spacing="12px">
