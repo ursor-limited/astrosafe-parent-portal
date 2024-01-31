@@ -332,7 +332,10 @@ export default function PediaLandingPageSignedInView(props: {
                 }}
                 alignItems="center"
               >
-                <Typography variant={props.mobile ? "h5" : "h1"}>
+                <Typography
+                  variant={props.mobile ? "h5" : "h1"}
+                  sx={{ fontWeight: 480 }}
+                >
                   Your Dashboard
                 </Typography>
               </Stack>

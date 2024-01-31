@@ -828,8 +828,6 @@ export default function PediaPageContents(props: {
 }) {
   const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
 
-  console.log(props.articleDetails);
-
   /* needed for the platform row's proper scrollability */
   const { width, height } = useWindowSize();
   const [bentoRef, setBentoRef] = useState<HTMLElement | null>(null);

@@ -132,6 +132,9 @@ export default function LayoutCard(props: ILayoutCardProps) {
                   variant="h2"
                   htmlTag="h1"
                   color={props.titleColor || PALETTE.secondary.grey[5]}
+                  sx={{
+                    fontWeight: 490,
+                  }}
                 >
                   {props.title}
                 </Typography>

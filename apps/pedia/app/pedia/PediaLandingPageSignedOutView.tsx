@@ -184,6 +184,7 @@ export default function PediaLandingPageSignedOutView(props: {
               variant={props.mobile ? "h5" : "h1"}
               sx={{
                 textAlign: "center",
+                fontWeight: 480,
               }}
             >
               AstroPedia - Create
@@ -192,6 +193,7 @@ export default function PediaLandingPageSignedOutView(props: {
               variant={props.mobile ? "h5" : "h1"}
               sx={{
                 textAlign: "center",
+                fontWeight: 480,
               }}
             >
               Wikipedia articles for kids
