@@ -527,7 +527,7 @@ export default function PediaLandingPageSignedInView(props: {
                           <PlaceholderArticleCard />
                         </Stack>
                       ) : (
-                        articles
+                        _.reverse(articles)
                           .filter((a) => a.color && a.mainImage)
                           .map((a, i) => (
                             <Grid
@@ -551,7 +551,7 @@ export default function PediaLandingPageSignedInView(props: {
                           ))
                       )
                     ) : (
-                      collections
+                      _.reverse(collections)
                         .filter((c) => c.page.articles)
                         .map((c, i) => (
                           <Grid
