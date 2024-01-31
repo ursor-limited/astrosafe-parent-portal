@@ -165,13 +165,14 @@ export const CreationBox = (props: { mobile?: boolean }) => {
           variant="tertiary"
           onClick={() =>
             user?.email
-              ? ApiController.createCollection(topics, user?.email ?? "")
-                  .then((collection) => {
+              ? ApiController.createCollection(topics, user?.email ?? "").then(
+                  (collection) => {
                     ApiController.createCollectionArticles(collection.id);
                     return collection.id;
-                  })
-                  .then((collectionId) => router.push(`/c/${collectionId}`))
-              : props.mobile
+                  }
+                )
+              : //.then((collectionId) => router.push(`/c/${collectionId}`))
+              props.mobile
               ? loginWithRedirect()
               : loginWithPopup()
           }
