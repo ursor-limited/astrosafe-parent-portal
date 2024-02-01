@@ -41,10 +41,15 @@ const VideoCard = (props: IVideo) => (
     minWidth="299px"
     height="253px"
     borderRadius="12px"
-    border="4px solid rgba(255,255,255,0.6)"
-    bgcolor="rgba(255,255,255)"
+    //border="4px solid rgba(255,255,255,0.4)"
+    //bgcolor="rgba(255,255,255)"
+    bgcolor="rgba(0,0,0, 0.3)"
+    p="4px"
     overflow="hidden"
     spacing="8px"
+    sx={{
+      backdropFilter: "blur(4px)",
+    }}
   >
     <Stack
       height="163px"
@@ -55,6 +60,7 @@ const VideoCard = (props: IVideo) => (
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
+      borderRadius="11px 11px 0 0"
       position="relative"
       bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
     >
@@ -75,10 +81,15 @@ const VideoCard = (props: IVideo) => (
       </Stack>
     </Stack>
     <Stack flex={1} justifyContent="space-between">
-      <Typography variant="medium" bold maxLines={2}>
+      <Typography
+        color="rgba(255,255,255,0.7)"
+        variant="medium"
+        bold
+        maxLines={2}
+      >
         {props.title}
       </Typography>
-      <Typography variant="small">
+      <Typography color="rgba(255,255,255,0.7)" variant="small">
         {getFormattedDate(props.createdAt)}
       </Typography>
     </Stack>
