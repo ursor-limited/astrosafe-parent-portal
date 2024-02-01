@@ -11,6 +11,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import moment from "moment";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -21,6 +22,39 @@ const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
 const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
+
+export const getFormattedDate = (date: string) =>
+  moment(date).format("Do MMMM YYYY");
+
+const VideoCard = (props: IVideo) => (
+  <Stack width="299px" minWidth="299px" height="253px">
+    <Stack
+      height="144px"
+      width="100%"
+      sx={{
+        backgroundImage: `url(${"https://hs.mediadelivery.fi/img/658/edc2d19006ddc760e02cdd127a9e2950.jpg.webp"})`,
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+      position="relative"
+    >
+      <Stack position="absolute" top="8px" right="8px">
+        <UrsorButton variant="secondary" size="small">
+          Share
+        </UrsorButton>
+      </Stack>
+    </Stack>
+    <Stack flex={1} alignItems="space-between">
+      <Typography variant="medium" bold maxLines={2}>
+        {props.title}
+      </Typography>
+      <Typography variant="small">
+        {getFormattedDate(props.createdAt)}
+      </Typography>
+    </Stack>
+  </Stack>
+);
 
 function DashboardPageContents() {
   const { width } = useWindowSize();

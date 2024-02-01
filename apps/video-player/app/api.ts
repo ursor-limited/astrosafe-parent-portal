@@ -6,6 +6,7 @@ export interface IVideo {
   description?: string;
   startTime?: number;
   endTime?: number;
+  createdAt: string;
 }
 
 const BACKEND_URLS = {
