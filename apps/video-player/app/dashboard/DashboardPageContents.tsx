@@ -44,6 +44,7 @@ const VideoCard = (props: IVideo) => (
     border="4px solid rgba(255,255,255,0.6)"
     bgcolor="rgba(255,255,255)"
     overflow="hidden"
+    spacing="8px"
   >
     <Stack
       height="163px"
@@ -73,7 +74,7 @@ const VideoCard = (props: IVideo) => (
         </UrsorButton>
       </Stack>
     </Stack>
-    <Stack flex={1} alignItems="space-between">
+    <Stack flex={1} justifyContent="space-between">
       <Typography variant="medium" bold maxLines={2}>
         {props.title}
       </Typography>
@@ -194,7 +195,7 @@ function DashboardPageContents() {
         </Stack>
         <DynamicContainer fullWidth duration={600}>
           <Stack flex={1} alignItems="center">
-            <Grid container gap="8px" width="80%">
+            <Grid container gap="32px" width="80%">
               {videos.map((v, i) => (
                 <Grid item key={v.id}>
                   <UrsorFadeIn duration={600} delay={i * 120}>
