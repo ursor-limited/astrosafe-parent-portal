@@ -4,10 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { Header } from "@/app/components/header";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
+import { useAuth0 } from "@auth0/auth0-react";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -25,7 +28,34 @@ const UrlBar = dynamic(
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
-function VideoPageContents(props: { details: IVideo; share: boolean }) {
+const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
+const SigninPromptBar = (props: { signInCallback: () => void }) => (
+  <Stack
+    position="fixed"
+    zIndex={999999}
+    width="100%"
+    height="76px"
+    justifyContent="center"
+    alignItems="center"
+    sx={{ background: GRADIENT }}
+    direction="row"
+    spacing="20px"
+  >
+    <Typography variant="large" bold color={PALETTE.font.light}>
+      Sign in within 30 min to save and share your Safe Video.
+    </Typography>
+    <UrsorButton
+      dark
+      endIcon={PersonIcon}
+      fontColor="#F88A83"
+      onClick={props.signInCallback}
+    >
+      Sign in
+    </UrsorButton>
+  </Stack>
+);
+
+function VideoPageContents(props: { details: IVideo }) {
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
@@ -50,14 +80,16 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
+  const { user, loginWithPopup } = useAuth0();
+
   return props.details && provider ? (
     <>
-      {!fullscreen ? (
-        <Header
-          noCreateNew={!props.share}
-          noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
-        />
+      {!user ? (
+        <UrsorFadeIn duration={1000} delay={3000}>
+          <SigninPromptBar signInCallback={loginWithPopup} />
+        </UrsorFadeIn>
       ) : null}
+      {!fullscreen ? <Header /> : null}
       <Stack
         px="60px"
         justifyContent="center"
@@ -173,7 +205,7 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
               />
             </Stack>
           </Stack>
-          {!fullscreen ? (
+          {!fullscreen && user ? (
             <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
               <UrlBar mobile={mobile} />
             </Stack>

@@ -23,6 +23,7 @@ import {
   HIDE_LOGO_PLAYER_WIDTH_THRESHOLD,
   MAGICAL_BORDER_THICKNESS,
 } from "@/app/v/[videoId]/VideoPageContents";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -67,6 +68,7 @@ const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 function CreationPageContents(props: { details: IVideo }) {
   const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   useEffect(() => {
     props.details?.description && setDescription(props.details.description);
   }, [props.details?.description]);
@@ -109,7 +111,10 @@ function CreationPageContents(props: { details: IVideo }) {
     setPlaying(false);
     url?.includes("youtube") &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
-        (result) => setDescription(result.description)
+        (result) => {
+          setDescription(result.description);
+          setThumbnailUrl(result.thumbnailUrl);
+        }
       );
   }, [url]);
 
@@ -128,9 +133,11 @@ function CreationPageContents(props: { details: IVideo }) {
       title,
       description,
       url,
+      thumbnailUrl,
       startTime: range?.[0],
       endTime: range?.[1],
-    }).then((v) => router.push(`/v/${v.id}?share=1`));
+      creatorId: user?.email,
+    }).then((v) => router.push(`/v/${v.id}`));
   };
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
@@ -157,14 +164,11 @@ function CreationPageContents(props: { details: IVideo }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
+  const { user } = useAuth0();
+
   return (
     <>
-      {!fullscreen ? (
-        <Header
-          noCreateNew
-          noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
-        />
-      ) : null}
+      {!fullscreen ? <Header /> : null}
       {props.details && provider && url ? (
         <Stack
           flex={1}

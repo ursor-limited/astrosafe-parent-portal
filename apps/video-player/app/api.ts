@@ -4,8 +4,10 @@ export interface IVideo {
   url: string;
   title: string;
   description?: string;
+  thumbnailUrl?: string;
   startTime?: number;
   endTime?: number;
+  createdAt: string;
 }
 
 const BACKEND_URLS = {
@@ -74,15 +76,20 @@ class ApiController {
   static async getVideoDetails(id: string) {
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
-    //return api.get(`/video/${id}`).then((response: any) => response.data);
+  }
+  static async getUserVideos(id: string) {
+    //@ts-ignore
+    return get(`video/user/${id}`).then((response: any) => response.json());
+  }
+  static async getNumberOfUserVideos(id: string) {
+    //@ts-ignore
+    return get(`video/user/${id}/nVideos`).then((response: any) => response.json());
   }
   static async updateVideo(id: string, details: Partial<IVideo>) {
     return patch(`video/${id}`, details).then((response: any) =>
       response.json()
     );
-    //return api.get(`/video/${id}`).then((response: any) => response.data);
   }
-
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(
       (response: any) => response.json()
