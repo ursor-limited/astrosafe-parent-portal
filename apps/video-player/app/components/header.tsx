@@ -12,6 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
 import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
+import UpgradeDialog from "./UpgradeDialog";
 
 export const HEADER_HEIGHT = 86;
 
@@ -100,9 +101,10 @@ export const Header = (props: {
   mobile?: boolean;
   nVideos?: number;
 }) => {
-  const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
+  const { user, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   return (
     <Stack
       direction="row"
@@ -211,7 +213,12 @@ export const Header = (props: {
                         Videos left
                       </Typography>
                     </Stack>
-                    <UrsorButton dark variant="tertiary" size="small">
+                    <UrsorButton
+                      dark
+                      variant="tertiary"
+                      size="small"
+                      onClick={() => setUpgradeDialogOpen(true)}
+                    >
                       Upgrade
                     </UrsorButton>
                   </Stack>
@@ -243,6 +250,10 @@ export const Header = (props: {
           </Stack>
         </Stack>
       ) : null}
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
+      />
     </Stack>
   );
 };

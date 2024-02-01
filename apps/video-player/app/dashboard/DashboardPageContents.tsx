@@ -20,6 +20,7 @@ import DynamicContainer from "../components/DynamicContainer";
 import _ from "lodash";
 import Image from "next/image";
 import NotificationContext from "../components/NotificationContext";
+import UpgradeDialog from "../components/UpgradeDialog";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -45,7 +46,7 @@ const UpgradePromptBar = () => (
       maxWidth="50%"
       justifyContent="center"
       alignItems="center"
-      zIndex={999999}
+      zIndex={2}
       borderRadius="12px"
       top="21px"
       sx={{
@@ -205,6 +206,8 @@ function DashboardPageContents() {
     [videos]
   );
 
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
   return (
     <Stack flex={1} position="relative">
       <UpgradePromptBar />
@@ -246,7 +249,12 @@ function DashboardPageContents() {
                     Videos created
                   </Typography>
                 </Stack>
-                <UrsorButton size="small" variant="tertiary" dark>
+                <UrsorButton
+                  size="small"
+                  variant="tertiary"
+                  dark
+                  onClick={() => setUpgradeDialogOpen(true)}
+                >
                   Upgrade
                 </UrsorButton>
               </Stack>
@@ -308,6 +316,10 @@ function DashboardPageContents() {
           </Stack>
         </DynamicContainer>
       </Stack>
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
+      />
     </Stack>
   );
 }
