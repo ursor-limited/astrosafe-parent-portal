@@ -7,12 +7,14 @@ import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/coloredKitemark.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
 import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import UpgradeDialog from "./UpgradeDialog";
+import ApiController from "../api";
+import UrsorFadeIn from "./UrsorFadeIn";
 
 export const HEADER_HEIGHT = 86;
 
@@ -99,12 +101,18 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   showUpgradeButton?: boolean;
   mobile?: boolean;
-  nVideos?: number;
 }) => {
   const { user, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [nVideos, setNVideos] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    user?.email &&
+      ApiController.getNumberOfUserVideos(user.email).then((n) =>
+        setNVideos(n)
+      );
+  }, [user?.email]);
   return (
     <Stack
       direction="row"
@@ -132,123 +140,128 @@ export const Header = (props: {
         </Link>
       </Stack>
       {user ? (
-        <Stack direction="row" spacing="12px">
-          {props.showUpgradeButton ? (
-            <UrsorButton
-              dark
-              variant="secondary"
-              endIcon={Kitemark}
-              iconSize={13}
-              iconSpin
-              useNaturalIconColor
-              //or={PALETTE.secondary.pink[2]}
+        <UrsorFadeIn duration={800}>
+          <Stack direction="row" spacing="12px">
+            {props.showUpgradeButton ? (
+              <UrsorButton
+                dark
+                variant="secondary"
+                endIcon={Kitemark}
+                iconSize={13}
+                iconSpin
+                useNaturalIconColor
+                onClick={() => setUpgradeDialogOpen(true)}
+              >
+                Unlock more Videos
+              </UrsorButton>
+            ) : (
+              <UrsorButton
+                dark
+                variant="tertiary"
+                onClick={() => router.push("/dashboard")}
+                endIcon={Kitemark}
+                iconSize={13}
+                iconSpin
+                iconColor="rgba(255,255,255,0.7)"
+              >
+                Go to Dashboard
+              </UrsorButton>
+            )}
+            <Stack
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+              }}
             >
-              Unlock more Videos
-            </UrsorButton>
-          ) : (
-            <UrsorButton
-              dark
-              variant="tertiary"
-              onClick={() => router.push("/dashboard")}
-              endIcon={Kitemark}
-              iconSize={13}
-              iconSpin
-              iconColor="rgba(255,255,255,0.7)"
-            >
-              Go to Dashboard
-            </UrsorButton>
-          )}
-          <Stack
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-            }}
-          >
-            <UrsorPopover
-              open={profilePopupOpen}
-              content={
-                <Stack minWidth="250px">
-                  <Stack
-                    height="40px"
-                    sx={{
-                      background: ASTRO_MAGICAL_GRADIENT,
-                      "-webkit-text-fill-color": "transparent",
-                      backgroundClip: "text",
-                      "-webkit-background-clip": "text",
-                    }}
-                    px="20px"
-                    justifyContent="center"
-                    borderBottom={`1px solid ${PALETTE.secondary.grey[2]}`}
-                  >
-                    <Typography bold variant="small">
-                      {user.email}
-                    </Typography>
-                  </Stack>
-                  <Stack
-                    height="40px"
-                    direction="row"
-                    spacing="6px"
-                    px="20px"
-                    width="100%"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Stack direction="row" spacing="4px">
-                      <Typography
-                        sx={{
-                          fontWeight: 500,
-                        }}
-                        bold
-                        variant="small"
-                        color={PALETTE.secondary.grey[5]}
-                      >{`${
-                        props.nVideos || 2
-                      }/${FREE_VIDEO_LIMIT}`}</Typography>
-                      <Typography
-                        bold
-                        variant="small"
-                        color={PALETTE.secondary.grey[5]}
-                      >
-                        Videos left
+              <UrsorPopover
+                open={profilePopupOpen}
+                content={
+                  <Stack minWidth="250px">
+                    <Stack
+                      height="40px"
+                      sx={{
+                        background: ASTRO_MAGICAL_GRADIENT,
+                        "-webkit-text-fill-color": "transparent",
+                        backgroundClip: "text",
+                        "-webkit-background-clip": "text",
+                      }}
+                      px="20px"
+                      justifyContent="center"
+                      borderBottom={`1px solid ${PALETTE.secondary.grey[2]}`}
+                    >
+                      <Typography bold variant="small">
+                        {user.email}
                       </Typography>
                     </Stack>
-                    <UrsorButton
-                      dark
-                      variant="tertiary"
-                      size="small"
-                      onClick={() => setUpgradeDialogOpen(true)}
-                    >
-                      Upgrade
-                    </UrsorButton>
+                    {nVideos ? (
+                      <Stack
+                        height="40px"
+                        direction="row"
+                        spacing="6px"
+                        px="20px"
+                        width="100%"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Stack direction="row" spacing="4px">
+                          <Typography
+                            sx={{
+                              fontWeight: 500,
+                            }}
+                            bold
+                            variant="small"
+                            color={PALETTE.secondary.grey[5]}
+                          >{`${Math.max(
+                            0,
+                            FREE_VIDEO_LIMIT - nVideos
+                          )}/${FREE_VIDEO_LIMIT}`}</Typography>
+                          <Typography
+                            bold
+                            variant="small"
+                            color={PALETTE.secondary.grey[5]}
+                          >
+                            Videos left
+                          </Typography>
+                        </Stack>
+                        <UrsorButton
+                          dark
+                          variant="tertiary"
+                          size="small"
+                          onClick={() => setUpgradeDialogOpen(true)}
+                        >
+                          Upgrade
+                        </UrsorButton>
+                      </Stack>
+                    ) : null}
+                    <ProfilePopupButton
+                      callback={() => logout()}
+                      icon={ListUnorderedIcon}
+                      text="Dashboard"
+                    />
+                    <ProfilePopupButton
+                      callback={() => logout()}
+                      icon={LogOutIcon}
+                      text="Log out"
+                    />
                   </Stack>
-                  <ProfilePopupButton
-                    callback={() => logout()}
-                    icon={ListUnorderedIcon}
-                    text="Dashboard"
-                  />
-                  <ProfilePopupButton
-                    callback={() => logout()}
-                    icon={LogOutIcon}
-                    text="Log out"
+                }
+                closeCallback={() => setProfilePopupOpen(false)}
+                placement="right"
+                noPadding
+              >
+                <Stack onClick={() => setProfilePopupOpen(true)}>
+                  <ProfileButton
+                    initials={(
+                      user.name?.split(" ")[0][0] +
+                      (user.name?.split(" ")[1][0] || "")
+                    ).toUpperCase()}
                   />
                 </Stack>
-              }
-              closeCallback={() => setProfilePopupOpen(false)}
-              placement="right"
-              noPadding
-            >
-              <Stack onClick={() => setProfilePopupOpen(true)}>
-                <ProfileButton
-                  initials={(
-                    user.name?.split(" ")[0][0] +
-                    (user.name?.split(" ")[1][0] || "")
-                  ).toUpperCase()}
-                />
-              </Stack>
-            </UrsorPopover>
+              </UrsorPopover>
+            </Stack>
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
       ) : null}
       <UpgradeDialog
         open={upgradeDialogOpen}
