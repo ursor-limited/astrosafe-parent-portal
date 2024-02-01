@@ -11,6 +11,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import Play from "@/images/play.svg";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 import { Grid } from "@mui/material";
@@ -118,6 +119,7 @@ const VideoCard = (props: IVideo) => {
           }}
           borderRadius="10px 10px 0 0"
           bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
+          position="relative"
         >
           {!props.thumbnailUrl ? (
             <Stack flex={1} justifyContent="center" alignItems="center">
@@ -129,6 +131,16 @@ const VideoCard = (props: IVideo) => {
               />
             </Stack>
           ) : null}
+          <Stack
+            flex={1}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
+            }}
+          >
+            <Play width="40px" height="40px" />
+          </Stack>
         </Stack>
         <Stack flex={1} justifyContent="space-between">
           <Typography
@@ -217,7 +229,7 @@ function DashboardPageContents() {
                 color={PALETTE.font.light}
               >{`${2}/${FREE_VIDEO_LIMIT}`}</Typography>
               <Typography variant="large" bold color="rgba(255,255,255,0.7)">
-                videos created
+                Videos created
               </Typography>
             </Stack>
             <UrsorButton size="small" variant="tertiary" dark>

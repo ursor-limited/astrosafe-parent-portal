@@ -208,7 +208,7 @@ export const Header = (props: {
                         variant="small"
                         color={PALETTE.secondary.grey[5]}
                       >
-                        videos left
+                        Videos left
                       </Typography>
                     </Stack>
                     <UrsorButton dark variant="tertiary" size="small">
