@@ -18,6 +18,7 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import DynamicContainer from "../components/DynamicContainer";
 import _ from "lodash";
 import Image from "next/image";
+import NotificationContext from "../components/NotificationContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -36,6 +37,11 @@ export const getFormattedDate = (date: string) =>
 
 const VideoCard = (props: IVideo) => {
   const router = useRouter();
+  const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
+    undefined
+  );
+  useEffect(() => setCurrentPageUrl(window?.location.href), []);
+  const notificationCtx = React.useContext(NotificationContext);
   return (
     <Stack
       width="299px"
@@ -51,7 +57,16 @@ const VideoCard = (props: IVideo) => {
       position="relative"
     >
       <Stack position="absolute" top="14px" right="14px" zIndex={2}>
-        <UrsorButton variant="secondary" size="small">
+        <UrsorButton
+          variant="secondary"
+          size="small"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              currentPageUrl ? currentPageUrl.split("?")[0] : ""
+            );
+            notificationCtx.success("Copied URL to Clipboard.");
+          }}
+        >
           Share
         </UrsorButton>
       </Stack>
