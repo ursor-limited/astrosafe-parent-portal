@@ -28,7 +28,7 @@ const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
 const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
-const SigninPromptBar = () => (
+const SigninPromptBar = (props: { signInCallback: () => void }) => (
   <Stack
     position="fixed"
     zIndex={999999}
@@ -41,9 +41,14 @@ const SigninPromptBar = () => (
     spacing="20px"
   >
     <Typography variant="large" bold color={PALETTE.font.light}>
-      Sign in to save and share your Safe Video.
+      Sign in within 30 min to save and share your Safe Video.
     </Typography>
-    <UrsorButton dark endIcon={PersonIcon} fontColor="#F88A83">
+    <UrsorButton
+      dark
+      endIcon={PersonIcon}
+      fontColor="#F88A83"
+      onClick={props.signInCallback}
+    >
       Sign in
     </UrsorButton>
   </Stack>
@@ -78,7 +83,7 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
-      {!user ? <SigninPromptBar /> : null}
+      {!user ? <SigninPromptBar signInCallback={loginWithPopup} /> : null}
       {!fullscreen ? (
         <Header
           noCreateNew={true}
@@ -200,7 +205,7 @@ function VideoPageContents(props: { details: IVideo }) {
               />
             </Stack>
           </Stack>
-          {!fullscreen ? (
+          {!fullscreen && user ? (
             <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
               <UrlBar mobile={mobile} />
             </Stack>
