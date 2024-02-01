@@ -28,73 +28,82 @@ const PLACEHOLDER_THUMBNAIL =
 export const FREE_VIDEO_LIMIT = 3;
 
 const VIDEO_WIDTH = 845;
-const VIDEO_HEIGHT = 475;
 
 const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
 
 export const getFormattedDate = (date: string) =>
   moment(date).format("Do MMMM YYYY");
 
-const VideoCard = (props: IVideo) => (
-  <Stack
-    width="299px"
-    minWidth="299px"
-    height="253px"
-    borderRadius="12px"
-    //border="4px solid rgba(255,255,255,0.4)"
-    //bgcolor="rgba(255,255,255)"
-    bgcolor="rgba(0,0,0, 0.3)"
-    p="4px"
-    overflow="hidden"
-    spacing="8px"
-    sx={{
-      backdropFilter: "blur(4px)",
-    }}
-  >
+const VideoCard = (props: IVideo) => {
+  const router = useRouter();
+  return (
     <Stack
-      height="163px"
-      width="100%"
+      width="299px"
+      minWidth="299px"
+      height="253px"
+      borderRadius="12px"
+      bgcolor="rgba(0,0,0, 0.3)"
+      p="4px"
+      overflow="hidden"
       sx={{
-        backgroundImage: `url(${props.thumbnailUrl})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backdropFilter: "blur(4px)",
       }}
-      borderRadius="11px 11px 0 0"
       position="relative"
-      bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
     >
-      {!props.thumbnailUrl ? (
-        <Stack flex={1} justifyContent="center" alignItems="center">
-          <Image
-            src={PLACEHOLDER_THUMBNAIL}
-            width={200}
-            height={100}
-            alt="Intro square"
-          />
-        </Stack>
-      ) : null}
-      <Stack position="absolute" top="10px" right="10px">
+      <Stack position="absolute" top="14px" right="14px" zIndex={2}>
         <UrsorButton variant="secondary" size="small">
           Share
         </UrsorButton>
       </Stack>
-    </Stack>
-    <Stack flex={1} justifyContent="space-between">
-      <Typography
-        color="rgba(255,255,255,0.7)"
-        variant="medium"
-        bold
-        maxLines={2}
+      <Stack
+        spacing="8px"
+        sx={{
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
+          cursor: "pointer",
+        }}
+        onClick={() => router.push(`/v/${props.id}`)}
       >
-        {props.title}
-      </Typography>
-      <Typography color="rgba(255,255,255,0.7)" variant="small">
-        {getFormattedDate(props.createdAt)}
-      </Typography>
+        <Stack
+          height="163px"
+          width="100%"
+          sx={{
+            backgroundImage: `url(${props.thumbnailUrl})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+          borderRadius="10px 10px 0 0"
+          bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
+        >
+          {!props.thumbnailUrl ? (
+            <Stack flex={1} justifyContent="center" alignItems="center">
+              <Image
+                src={PLACEHOLDER_THUMBNAIL}
+                width={200}
+                height={100}
+                alt="Intro square"
+              />
+            </Stack>
+          ) : null}
+        </Stack>
+        <Stack flex={1} justifyContent="space-between">
+          <Typography
+            color="rgba(255,255,255,0.7)"
+            variant="medium"
+            bold
+            maxLines={2}
+          >
+            {props.title}
+          </Typography>
+          <Typography color="rgba(255,255,255,0.7)" variant="small">
+            {getFormattedDate(props.createdAt)}
+          </Typography>
+        </Stack>
+      </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 function DashboardPageContents() {
   const { width } = useWindowSize();
