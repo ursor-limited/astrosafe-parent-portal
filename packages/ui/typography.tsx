@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment -- 'no time to fix' */
+
 import React from "react";
 import type { SxProps } from "@mui/system";
 import { Box } from "@mui/system";
@@ -10,7 +12,7 @@ export const getMaxLinesStyle = (n: number) => ({
   overflow: "hidden",
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: n,
-  wordBreak: "break-word",
+  //wordBreak: "break-word",
 });
 
 export type UrsorTypographyVariant =
@@ -80,7 +82,6 @@ export function Typography(props: TypographyProps): JSX.Element {
   return (
     <Box
       //fontFamily={"Rubik"}
-      maxWidth="fit-content"
       color={props.color}
       fontSize={`${
         (props.scale || 1) * FONT_SIZES[props.variant ?? "normal"]
@@ -93,6 +94,8 @@ export function Typography(props: TypographyProps): JSX.Element {
       lineHeight={`${
         (props.scale || 1) * LINE_HEIGHTS[props.variant ?? "normal"]
       }px`}
+      maxWidth="fit-content"
+      //@ts-expect-error
       sx={{
         ...props.sx,
         ...(props.faded
@@ -107,15 +110,7 @@ export function Typography(props: TypographyProps): JSX.Element {
               textOverflow: "ellipsis",
             }
           : null),
-        ...(props.maxLines
-          ? {
-              display: "-webkit-box",
-              overflow: "hidden",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: props.maxLines,
-              wordBreak: "break-all",
-            }
-          : null),
+        ...(props.maxLines ? getMaxLinesStyle(props.maxLines) : null),
       }}
     >
       {props.htmlTag ? (

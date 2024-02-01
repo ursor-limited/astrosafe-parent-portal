@@ -349,9 +349,9 @@ export default function PediaLandingPageSignedInView(props: {
       .then((articles) => setArticles(articles.filter((a: any) => a.color)))
       .then(() => setLoadingArticles(false));
     setLoadingCollections(true);
-    ApiController.getAllCollections()
-      .then((collections) => setCollections(collections))
-      .then(() => setLoadingCollections(false));
+    // ApiController.getAllCollections()
+    //   .then((collections) => setCollections(collections))
+    //   .then(() => setLoadingCollections(false));
   }, []);
 
   const [selectedTab, setSelectedTab] = useState<"articles" | "collections">(
@@ -527,7 +527,7 @@ export default function PediaLandingPageSignedInView(props: {
                           <PlaceholderArticleCard />
                         </Stack>
                       ) : (
-                        _.reverse(articles)
+                        _.reverse(articles.slice())
                           .filter((a) => a.color && a.mainImage)
                           .map((a, i) => (
                             <Grid
@@ -551,7 +551,7 @@ export default function PediaLandingPageSignedInView(props: {
                           ))
                       )
                     ) : (
-                      _.reverse(collections)
+                      _.reverse(collections.slice())
                         .filter((c) => c.page.articles)
                         .map((c, i) => (
                           <Grid
