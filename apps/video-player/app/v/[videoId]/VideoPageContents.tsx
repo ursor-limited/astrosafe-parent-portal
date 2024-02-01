@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { Header } from "@/app/components/header";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
+import { useAuth0 } from "@auth0/auth0-react";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -25,7 +27,29 @@ const UrlBar = dynamic(
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
-function VideoPageContents(props: { details: IVideo; share: boolean }) {
+const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
+const SigninPromptBar = () => (
+  <Stack
+    position="fixed"
+    zIndex={999999}
+    width="100%"
+    height="76px"
+    justifyContent="center"
+    alignItems="center"
+    sx={{ background: GRADIENT }}
+    direction="row"
+    spacing="20px"
+  >
+    <Typography variant="large" bold color={PALETTE.font.light}>
+      Sign in to save and share your Safe Video.
+    </Typography>
+    <UrsorButton dark endIcon={PersonIcon} fontColor="#F88A83">
+      Sign in
+    </UrsorButton>
+  </Stack>
+);
+
+function VideoPageContents(props: { details: IVideo }) {
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
@@ -50,11 +74,14 @@ function VideoPageContents(props: { details: IVideo; share: boolean }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
+  const { user, loginWithPopup } = useAuth0();
+
   return props.details && provider ? (
     <>
+      {!user ? <SigninPromptBar /> : null}
       {!fullscreen ? (
         <Header
-          noCreateNew={!props.share}
+          noCreateNew={true}
           noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
         />
       ) : null}
