@@ -191,7 +191,7 @@ function DashboardPageContents() {
                 videos created
               </Typography>
             </Stack>
-            <UrsorButton size="small" dark>
+            <UrsorButton size="small" variant="tertiary" dark>
               Upgrade
             </UrsorButton>
           </Stack>

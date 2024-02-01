@@ -211,7 +211,7 @@ export const Header = (props: {
                         videos left
                       </Typography>
                     </Stack>
-                    <UrsorButton dark strongShadow size="small">
+                    <UrsorButton dark variant="tertiary" size="small">
                       Upgrade
                     </UrsorButton>
                   </Stack>
