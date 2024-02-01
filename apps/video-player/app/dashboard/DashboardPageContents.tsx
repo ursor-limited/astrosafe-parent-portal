@@ -100,6 +100,7 @@ const VideoCard = (props: IVideo) => {
         </UrsorButton>
       </Stack>
       <Stack
+        flex={1}
         spacing="8px"
         sx={{
           "&:hover": { opacity: 0.6 },
@@ -136,6 +137,7 @@ const VideoCard = (props: IVideo) => {
             justifyContent="center"
             alignItems="center"
             sx={{
+              opacity: 0.9,
               background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
             }}
           >
@@ -197,6 +199,12 @@ function DashboardPageContents() {
 
   const router = useRouter();
 
+  const [creationDisabled, setCreationDisabled] = useState<boolean>(false);
+  useEffect(
+    () => videos && setCreationDisabled(videos.length >= FREE_VIDEO_LIMIT),
+    [videos]
+  );
+
   return (
     <Stack flex={1} position="relative">
       <UpgradePromptBar />
@@ -221,54 +229,71 @@ function DashboardPageContents() {
               Your SafeTube Dashboard
             </Typography>
           </Stack>
-          <Stack direction="row" alignItems="center" spacing="19px">
-            <Stack direction="row" alignItems="center" spacing="6px">
-              <Typography
-                variant="large"
-                bold
-                color={PALETTE.font.light}
-              >{`${2}/${FREE_VIDEO_LIMIT}`}</Typography>
-              <Typography variant="large" bold color="rgba(255,255,255,0.7)">
-                Videos created
-              </Typography>
-            </Stack>
-            <UrsorButton size="small" variant="tertiary" dark>
-              Upgrade
-            </UrsorButton>
-          </Stack>
+          {videos ? (
+            <UrsorFadeIn duration={800}>
+              <Stack direction="row" alignItems="center" spacing="19px">
+                <Stack direction="row" alignItems="center" spacing="6px">
+                  <Typography
+                    variant="large"
+                    bold
+                    color={PALETTE.font.light}
+                  >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
+                  <Typography
+                    variant="large"
+                    bold
+                    color="rgba(255,255,255,0.7)"
+                  >
+                    Videos created
+                  </Typography>
+                </Stack>
+                <UrsorButton size="small" variant="tertiary" dark>
+                  Upgrade
+                </UrsorButton>
+              </Stack>
+            </UrsorFadeIn>
+          ) : null}
         </Stack>
-        <Stack direction="row" spacing="10px">
-          <UrsorInputField
-            value={inputValue}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setInputValue(event.target.value)
-            }
-            placeholder="Enter Youtube or Vimeo URL"
-            width="645px"
-            leftAlign
-            boldValue
-          />
+        <UrsorFadeIn duration={800} delay={200}>
           <Stack
+            direction="row"
+            spacing="10px"
             sx={{
-              opacity: inputValue ? 1 : 0.5,
-              pointerEvents: inputValue ? undefined : "none",
+              opacity: creationDisabled ? 0.4 : 1,
+              pointerEvents: creationDisabled ? "none" : undefined,
             }}
           >
-            <UrsorButton
-              backgroundColor={GRADIENT}
-              hoverOpacity={0.7}
-              endIcon={ChevronRight}
-              iconColor={PALETTE.font.light}
-              onClick={() =>
-                router.push(
-                  `video/create?url=${encodeURIComponent(inputValue)}`
-                )
+            <UrsorInputField
+              value={inputValue}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setInputValue(event.target.value)
               }
+              placeholder="Enter Youtube or Vimeo URL"
+              width="645px"
+              leftAlign
+              boldValue
+            />
+            <Stack
+              sx={{
+                opacity: inputValue ? 1 : 0.5,
+                pointerEvents: inputValue ? undefined : "none",
+              }}
             >
-              Create Video
-            </UrsorButton>
+              <UrsorButton
+                backgroundColor={GRADIENT}
+                hoverOpacity={0.7}
+                endIcon={ChevronRight}
+                iconColor={PALETTE.font.light}
+                onClick={() =>
+                  router.push(
+                    `video/create?url=${encodeURIComponent(inputValue)}`
+                  )
+                }
+              >
+                Create Video
+              </UrsorButton>
+            </Stack>
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
         <DynamicContainer fullWidth duration={600}>
           <Stack flex={1} alignItems="center">
             <Grid container gap="32px" width="80%">

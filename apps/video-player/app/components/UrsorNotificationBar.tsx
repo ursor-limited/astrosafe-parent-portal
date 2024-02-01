@@ -7,7 +7,7 @@ import { NotificationType } from "./NotificationProvider";
 import { PALETTE, Typography } from "ui";
 import NotificationContext from "./NotificationContext";
 
-const HEIGHT = "48px";
+const HEIGHT = "44px";
 const WIDTH = "421px";
 const DURATION = 2000;
 const TOP_PADDING = "31px";
