@@ -50,6 +50,9 @@ export const Footer = (props: { fontScale: number }) => {
                 variant="h2"
                 color={PALETTE.secondary.purple[2]}
                 scale={props.fontScale}
+                sx={{
+                  fontWeight: 490,
+                }}
               >
                 SafeTube is a free tool developed by Astro, the safe Browser
                 built for the Classroom

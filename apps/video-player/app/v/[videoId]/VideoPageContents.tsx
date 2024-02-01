@@ -10,6 +10,7 @@ import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -83,13 +84,12 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
-      {!user ? <SigninPromptBar signInCallback={loginWithPopup} /> : null}
-      {!fullscreen ? (
-        <Header
-          noCreateNew={true}
-          noDiscover={playerWidth < HIDE_LOGO_PLAYER_WIDTH_THRESHOLD}
-        />
+      {!user ? (
+        <UrsorFadeIn duration={1000} delay={3000}>
+          <SigninPromptBar signInCallback={loginWithPopup} />
+        </UrsorFadeIn>
       ) : null}
+      {!fullscreen ? <Header /> : null}
       <Stack
         px="60px"
         justifyContent="center"

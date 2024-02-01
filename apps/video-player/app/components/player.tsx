@@ -18,14 +18,6 @@ const BORDER_RADIUS = "14px";
 
 export const PADDING_TOP = "120px";
 
-export interface IVideo {
-  id: string;
-  creatorId: string;
-  url: string;
-  title: string;
-  description?: string;
-}
-
 const Player = (props: {
   url: string;
   playingCallback?: (playing: boolean) => void;
