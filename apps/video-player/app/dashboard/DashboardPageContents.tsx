@@ -31,6 +31,34 @@ export const FREE_VIDEO_LIMIT = 3;
 const VIDEO_WIDTH = 845;
 
 const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
+const PROMPT_BAR_GRADIENT = "linear-gradient(0deg, #6596FF, #7B61FF)";
+
+const UpgradePromptBar = () => (
+  <Stack width="100%" justifyContent="center">
+    <Stack
+      position="absolute"
+      left={0}
+      right={0}
+      margin="auto auto"
+      height="44px"
+      maxWidth="50%"
+      justifyContent="center"
+      alignItems="center"
+      zIndex={999999}
+      borderRadius="12px"
+      top="21px"
+      sx={{
+        transition: "0.5s",
+        willChange: "transform",
+        background: PROMPT_BAR_GRADIENT,
+      }}
+    >
+      <Typography variant="medium" bold color={PALETTE.font.light}>
+        Upgrade to premium for unlimited Video creation
+      </Typography>
+    </Stack>
+  </Stack>
+);
 
 export const getFormattedDate = (date: string) =>
   moment(date).format("Do MMMM YYYY");
@@ -158,13 +186,14 @@ function DashboardPageContents() {
   const router = useRouter();
 
   return (
-    <>
+    <Stack flex={1} position="relative">
+      <UpgradePromptBar />
       <Header showUpgradeButton />
       <Stack
         spacing="40px"
         alignItems="center"
         justifyContent="center"
-        pt="40px"
+        pt="50px"
       >
         <Stack spacing="20px" alignItems="center">
           <Stack
@@ -242,7 +271,7 @@ function DashboardPageContents() {
           </Stack>
         </DynamicContainer>
       </Stack>
-    </>
+    </Stack>
   );
 }
 
