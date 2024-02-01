@@ -10,6 +10,7 @@ import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UrsorPopover from "./UrsorPopover";
+import { useRouter } from "next/navigation";
 
 export const HEADER_HEIGHT = 86;
 
@@ -99,6 +100,7 @@ export const Header = (props: {
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <Stack
       direction="row"
@@ -170,7 +172,7 @@ export const Header = (props: {
             <UrsorButton
               dark
               variant="tertiary"
-              onClick={props.mobile ? loginWithRedirect : loginWithPopup}
+              onClick={() => router.push("/dashboard")}
               endIcon={Kitemark}
               iconSize={13}
               iconSpin

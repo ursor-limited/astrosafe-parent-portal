@@ -17,9 +17,13 @@ import { Grid } from "@mui/material";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DynamicContainer from "../components/DynamicContainer";
 import _ from "lodash";
+import Image from "next/image";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
+
+const PLACEHOLDER_THUMBNAIL =
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
 
 const FREE_VIDEO_LIMIT = 3;
 
@@ -37,19 +41,45 @@ const VideoCard = (props: IVideo) => (
     minWidth="299px"
     height="253px"
     borderRadius="12px"
-    border="2px solid rgba(255,255,255,0.6)"
+    border="4px solid rgba(255,255,255,0.6)"
+    bgcolor="rgba(255,255,255)"
   >
     <Stack
-      height="144px"
+      minHeight="163px"
       width="100%"
-      sx={{
-        backgroundImage: `url(${props.thumbnailUrl})`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-      }}
+      // sx={{
+      //   backgroundImage: `url(${props.thumbnailUrl})`,
+      //   backgroundSize: "cover",
+      //   backgroundRepeat: "no-repeat",
+      //   backgroundPosition: "center",
+      // }}
       position="relative"
+      bgcolor={!props.thumbnailUrl ? PALETTE.secondary.grey[5] : undefined}
     >
+      {props.thumbnailUrl ? (
+        <Image
+          src={props.thumbnailUrl}
+          sizes="100vw"
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={500}
+          height={300}
+          // layout="responsive"
+          // objectFit={"contain"}
+          alt="Intro square"
+        />
+      ) : (
+        <Stack flex={1} justifyContent="center" alignItems="center">
+          <Image
+            src={PLACEHOLDER_THUMBNAIL}
+            width={200}
+            height={100}
+            alt="Intro square"
+          />
+        </Stack>
+      )}
       <Stack position="absolute" top="8px" right="8px">
         <UrsorButton variant="secondary" size="small">
           Share

@@ -4,7 +4,7 @@ export interface IVideo {
   url: string;
   title: string;
   description?: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
   startTime?: number;
   endTime?: number;
   createdAt: string;
