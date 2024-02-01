@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
+import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 
 export const HEADER_HEIGHT = 86;
 
@@ -97,6 +98,7 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   showUpgradeButton?: boolean;
   mobile?: boolean;
+  nVideos?: number;
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
@@ -127,33 +129,6 @@ export const Header = (props: {
           </Stack>
         </Link>
       </Stack>
-      {/* <Stack direction="row" spacing="12px">
-        {!props.noCreateNew ? (
-          <Link href={"https://astrosafe.co/video"} target={"_blank"}>
-            <UrsorButton
-              dark
-              variant="secondary"
-              startIcon={ChevronLeft}
-              iconSize={22}
-            >
-              Create new
-            </UrsorButton>
-          </Link>
-        ) : null}
-        {!props.noDiscover ? (
-          <Link href={"https://astrosafe.co/"} target={"_blank"}>
-            <UrsorButton
-              dark
-              variant="tertiary"
-              endIcon={Kitemark}
-              iconColor="rgba(255,255,255,0.7)"
-              iconSize={15}
-            >
-              Discover AstroSafe
-            </UrsorButton>
-          </Link>
-        ) : null}
-      </Stack> */}
       {user ? (
         <Stack direction="row" spacing="12px">
           {props.showUpgradeButton ? (
@@ -191,10 +166,9 @@ export const Header = (props: {
             <UrsorPopover
               open={profilePopupOpen}
               content={
-                <Stack>
+                <Stack minWidth="250px">
                   <Stack
                     height="40px"
-                    alignItems="center"
                     sx={{
                       background: ASTRO_MAGICAL_GRADIENT,
                       "-webkit-text-fill-color": "transparent",
@@ -208,6 +182,38 @@ export const Header = (props: {
                     <Typography bold variant="small">
                       {user.email}
                     </Typography>
+                  </Stack>
+                  <Stack
+                    height="40px"
+                    direction="row"
+                    spacing="6px"
+                    px="20px"
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Stack direction="row" spacing="4px">
+                      <Typography
+                        sx={{
+                          fontWeight: 500,
+                        }}
+                        bold
+                        variant="small"
+                        color={PALETTE.secondary.grey[5]}
+                      >{`${
+                        props.nVideos || 2
+                      }/${FREE_VIDEO_LIMIT}`}</Typography>
+                      <Typography
+                        bold
+                        variant="small"
+                        color={PALETTE.secondary.grey[5]}
+                      >
+                        videos left
+                      </Typography>
+                    </Stack>
+                    <UrsorButton dark strongShadow size="small">
+                      Upgrade
+                    </UrsorButton>
                   </Stack>
                   <ProfilePopupButton
                     callback={() => logout()}

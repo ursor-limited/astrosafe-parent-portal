@@ -25,7 +25,7 @@ export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
 
-const FREE_VIDEO_LIMIT = 3;
+export const FREE_VIDEO_LIMIT = 3;
 
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
