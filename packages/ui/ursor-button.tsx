@@ -1,9 +1,18 @@
 /* eslint-disable react/jsx-sort-props -- want to have paddings in the current order */
 "use client";
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { PALETTE } from "./palette";
 import { Typography } from "./typography";
+
+export const spin = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(180deg);
+}
+`;
 
 // tertiary is implemented here only for dark mode; the light mode implementation is in UrsorMagicalButton
 export type ButtonVariant = "primary" | "secondary" | "tertiary";
@@ -147,9 +156,12 @@ export interface UrsorButtonProps {
   endIcon?: React.FC<React.SVGProps<SVGSVGElement>>;
   iconSize?: number;
   iconColor?: string;
+  useNaturalIconColor?: boolean;
   disabled?: boolean;
   dark?: boolean;
   shadow?: boolean;
+  strongShadow?: boolean;
+  iconSpin?: boolean;
 }
 
 export function UrsorButton(props: UrsorButtonProps): JSX.Element {
@@ -198,19 +210,28 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
       spacing="12px"
-      boxShadow={props.shadow ? "0 0 20px rgba(0,0,0,0.05)" : undefined}
+      boxShadow={
+        // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis
+        props.strongShadow
+          ? "0 0 20px rgba(0,0,0,0.09)"
+          : props.shadow
+          ? "0 0 20px rgba(0,0,0,0.05)"
+          : undefined
+      }
       sx={{
         cursor: "pointer",
         transition: "0.2s",
         background: props.backgroundColor,
         opacity: state === "hover" ? props.hoverOpacity : undefined,
         svg: {
+          animation: props.iconSpin ? `${spin} 6s linear infinite` : undefined,
           path: {
-            fill:
-              props.iconColor ||
-              props.fontColor ||
-              FONT_COLORS[mode][variant]?.[state] ||
-              PALETTE.font.light,
+            fill: props.useNaturalIconColor
+              ? undefined
+              : props.iconColor ||
+                props.fontColor ||
+                FONT_COLORS[mode][variant]?.[state] ||
+                PALETTE.font.light,
             transition: "0.2s",
           },
         },
