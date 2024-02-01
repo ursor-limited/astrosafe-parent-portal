@@ -43,34 +43,21 @@ const VideoCard = (props: IVideo) => (
     borderRadius="12px"
     border="4px solid rgba(255,255,255,0.6)"
     bgcolor="rgba(255,255,255)"
+    overflow="hidden"
   >
     <Stack
-      minHeight="163px"
+      height="163px"
       width="100%"
-      // sx={{
-      //   backgroundImage: `url(${props.thumbnailUrl})`,
-      //   backgroundSize: "cover",
-      //   backgroundRepeat: "no-repeat",
-      //   backgroundPosition: "center",
-      // }}
+      sx={{
+        backgroundImage: `url(${props.thumbnailUrl})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
       position="relative"
-      bgcolor={!props.thumbnailUrl ? PALETTE.secondary.grey[5] : undefined}
+      bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
     >
-      {props.thumbnailUrl ? (
-        <Image
-          src={props.thumbnailUrl}
-          sizes="100vw"
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-          width={500}
-          height={300}
-          // layout="responsive"
-          // objectFit={"contain"}
-          alt="Intro square"
-        />
-      ) : (
+      {!props.thumbnailUrl ? (
         <Stack flex={1} justifyContent="center" alignItems="center">
           <Image
             src={PLACEHOLDER_THUMBNAIL}
@@ -79,8 +66,8 @@ const VideoCard = (props: IVideo) => (
             alt="Intro square"
           />
         </Stack>
-      )}
-      <Stack position="absolute" top="8px" right="8px">
+      ) : null}
+      <Stack position="absolute" top="10px" right="10px">
         <UrsorButton variant="secondary" size="small">
           Share
         </UrsorButton>
