@@ -349,9 +349,9 @@ export default function PediaLandingPageSignedInView(props: {
       .then((articles) => setArticles(articles.filter((a: any) => a.color)))
       .then(() => setLoadingArticles(false));
     setLoadingCollections(true);
-    ApiController.getAllCollections()
-      .then((collections) => setCollections(collections))
-      .then(() => setLoadingCollections(false));
+    // ApiController.getAllCollections()
+    //   .then((collections) => setCollections(collections))
+    //   .then(() => setLoadingCollections(false));
   }, []);
 
   const [selectedTab, setSelectedTab] = useState<"articles" | "collections">(
