@@ -56,7 +56,12 @@ const UpgradePromptBar = () => (
         background: PROMPT_BAR_GRADIENT,
       }}
     >
-      <Typography variant="medium" bold color={PALETTE.font.light}>
+      <Typography
+        variant="medium"
+        bold
+        color={PALETTE.font.light}
+        sx={{ textAlign: "center" }}
+      >
         Upgrade to premium for unlimited Video creation
       </Typography>
     </Stack>
@@ -231,7 +236,11 @@ function DashboardPageContents() {
             }}
             alignItems="center"
           >
-            <Typography variant="h1" color={PALETTE.font.light}>
+            <Typography
+              variant="h1"
+              color={PALETTE.font.light}
+              sx={{ textAlign: "center" }}
+            >
               Your SafeTube Dashboard
             </Typography>
           </Stack>
@@ -264,47 +273,49 @@ function DashboardPageContents() {
             </UrsorFadeIn>
           ) : null}
         </Stack>
-        <UrsorFadeIn duration={800} delay={200}>
+        {/* <UrsorFadeIn duration={800} delay={200}> */}
+        <Stack
+          width="100%"
+          maxWidth="800px"
+          direction="row"
+          spacing="10px"
+          sx={{
+            opacity: creationDisabled ? 0.4 : 1,
+            pointerEvents: creationDisabled ? "none" : undefined,
+          }}
+        >
+          <UrsorInputField
+            value={inputValue}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setInputValue(event.target.value)
+            }
+            placeholder="Enter Youtube or Vimeo URL"
+            width="100%"
+            leftAlign
+            boldValue
+          />
           <Stack
-            direction="row"
-            spacing="10px"
             sx={{
-              opacity: creationDisabled ? 0.4 : 1,
-              pointerEvents: creationDisabled ? "none" : undefined,
+              opacity: inputValue ? 1 : 0.5,
+              pointerEvents: inputValue ? undefined : "none",
             }}
           >
-            <UrsorInputField
-              value={inputValue}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setInputValue(event.target.value)
+            <UrsorButton
+              backgroundColor={GRADIENT}
+              hoverOpacity={0.7}
+              endIcon={ChevronRight}
+              iconColor={PALETTE.font.light}
+              onClick={() =>
+                router.push(
+                  `video/create?url=${encodeURIComponent(inputValue)}`
+                )
               }
-              placeholder="Enter Youtube or Vimeo URL"
-              width="645px"
-              leftAlign
-              boldValue
-            />
-            <Stack
-              sx={{
-                opacity: inputValue ? 1 : 0.5,
-                pointerEvents: inputValue ? undefined : "none",
-              }}
             >
-              <UrsorButton
-                backgroundColor={GRADIENT}
-                hoverOpacity={0.7}
-                endIcon={ChevronRight}
-                iconColor={PALETTE.font.light}
-                onClick={() =>
-                  router.push(
-                    `video/create?url=${encodeURIComponent(inputValue)}`
-                  )
-                }
-              >
-                Create Video
-              </UrsorButton>
-            </Stack>
+              Create Video
+            </UrsorButton>
           </Stack>
-        </UrsorFadeIn>
+        </Stack>
+        {/* </UrsorFadeIn> */}
 
         <Stack
           flex={1}
