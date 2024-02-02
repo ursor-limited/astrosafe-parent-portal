@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Stack, alpha } from "@mui/system";
+import { Stack, alpha, keyframes } from "@mui/system";
 import _ from "lodash";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
@@ -24,6 +24,8 @@ import {
 import { COLORED_CARD_TITLE_DARK_COLOR } from "../p/[urlId]/PediaMainCard";
 import { Footer } from "../components/footer";
 import Byte from "../components/Byte";
+import Star from "@/images/coloredStar.svg";
+import { spin } from "ui/ursor-button";
 
 function PlaceholderArticleCard(props: { small?: boolean }) {
   return (
@@ -382,6 +384,7 @@ export default function PediaLandingPageSignedInView(props: {
   );
 
   const buu = useThrottle(() => {
+    setLoading(true);
     titlesWaitingForGenerationUponSignIn &&
       ApiController.createCollection(
         titlesWaitingForGenerationUponSignIn,
@@ -410,209 +413,174 @@ export default function PediaLandingPageSignedInView(props: {
   // );
 
   useEffect(() => {
-    console.log(titlesWaitingForGenerationUponSignIn?.length, user?.email);
     user?.email && titlesWaitingForGenerationUponSignIn?.length && buu();
-    //createArticles();
   }, [titlesWaitingForGenerationUponSignIn?.length, user?.email]);
 
-  return (
-    <Auth0Provider
-      domain={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_DOMAIN as string}
-      clientId={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_CLIENT_ID as string}
-      authorizationParams={{
-        audience: "https://api-gateway-authorizer",
-        redirect_uri: process.env
-          .NEXT_PUBLIC_REACT_APP_AUTH0_REDIRECT_URL as string,
-      }}
-      useRefreshTokens={true}
-      useRefreshTokensFallback={true}
-    >
-      <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-        <Header mobile={props.mobile} noTopRightButton />
-        <Stack
-          spacing={props.mobile ? "40px" : "50px"}
-          alignItems="center"
-          pt={props.mobile ? "13px" : undefined}
-          width="100%"
-          //overflow="hidden"
-        >
-          <UrsorFadeIn duration={800}>
-            <Stack maxWidth="780px" spacing="6px">
-              <Stack
-                sx={{
-                  background: "linear-gradient(150deg, #F279C5, #FD9B41)",
-                  "-webkit-text-fill-color": "transparent",
-                  backgroundClip: "text",
-                  "-webkit-background-clip": "text",
-                }}
-                alignItems="center"
-              >
-                <Typography
-                  variant={props.mobile ? "h5" : "h1"}
-                  sx={{ fontWeight: 480 }}
-                >
-                  Your Dashboard
-                </Typography>
-              </Stack>
-              <Typography
-                variant={props.mobile ? "normal" : "h5"}
-                bold
-                color="rgba(255,255,255,0.8)"
-                sx={{
-                  textAlign: "center",
-                  lineHeight: props.mobile ? "20px" : "28px",
-                  width: props.mobile ? "200px" : undefined,
-                }}
-              >
-                Create new contents, or browse your library.
-              </Typography>
-            </Stack>
-          </UrsorFadeIn>
-          <UrsorFadeIn delay={200} duration={800} fullWidth centerAlign>
+  const [loading, setLoading] = useState<boolean>(false);
+
+  return !loading ? (
+    <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
+      <Header mobile={props.mobile} tryAstroButton />
+      <Stack
+        spacing={props.mobile ? "40px" : "50px"}
+        alignItems="center"
+        pt={props.mobile ? "13px" : undefined}
+        width="100%"
+        //overflow="hidden"
+      >
+        <UrsorFadeIn duration={800}>
+          <Stack maxWidth="780px" spacing="6px">
             <Stack
-              width="92%"
-              alignItems="center"
-              spacing={props.mobile ? "4px" : "6px"}
-            >
-              <Typography
-                variant={props.mobile ? "small" : "normal"}
-                bold
-                color="rgba(255,255,255,0.8)"
-              >
-                Create an Article or a Collection
-              </Typography>
-              <CreationBox mobile={props.mobile} />
-            </Stack>
-          </UrsorFadeIn>
-          <UrsorFadeIn delay={400} duration={800} fullWidth>
-            <Stack
-              width="100%"
-              spacing={props.mobile ? "12px" : "14px"}
+              sx={{
+                background: "linear-gradient(150deg, #F279C5, #FD9B41)",
+                "-webkit-text-fill-color": "transparent",
+                backgroundClip: "text",
+                "-webkit-background-clip": "text",
+              }}
               alignItems="center"
             >
-              <PediaTabSwitch
-                selected={selectedTab}
-                callback={(category) => setSelectedTab(category)}
-                nArticles={articles.length}
-                nCollections={collections.length}
-                small={props.mobile}
-                loadingArticles={loadingArticles}
-                loadingCollections={loadingCollections}
-              />
-              {props.mobile ? (
-                <Stack width="92%" spacing="12px">
-                  {selectedTab === "articles"
-                    ? articles.map((p) => (
-                        <Stack
-                          key={p.id}
-                          height="170px"
-                          minHeight="170px"
-                          width="100%"
-                        >
-                          <ContentPagePreviewCard
-                            title={p.title}
-                            imageUrl={p.mainImage}
-                            color={p.color}
-                            urlId={p.urlId}
-                            mobile
-                          />
-                        </Stack>
-                      ))
-                    : collections.map((c) => (
-                        <Stack
-                          key={c.page.id}
-                          height="180px"
-                          minHeight="180px"
-                          width="100%"
-                        >
-                          <PediaCollectionCard
-                            fullWidth
-                            title={c.page.title}
-                            images={c.images}
-                            button={
-                              <a
-                                target="_blank"
-                                href={`${
-                                  process.env.NODE_ENV === "development"
-                                    ? "http://localhost:3000"
-                                    : "https://www.astrosafe.co"
-                                }/c/${c.page.id}`}
-                                rel="noopener noreferrer"
-                              >
-                                <Stack
-                                  sx={{
-                                    "&:hover": { opacity: 0.6 },
-                                    transition: "0.2s",
-                                  }}
-                                >
-                                  <UrsorButton
-                                    size="small"
-                                    variant="secondary"
-                                    borderColor="transparent"
-                                    fontColor={PALETTE.secondary.grey[5]}
-                                  >
-                                    Open
-                                  </UrsorButton>
-                                </Stack>
-                              </a>
-                            }
-                          />
-                        </Stack>
-                      ))}
-                </Stack>
-              ) : (
-                <Stack
-                  bgcolor={props.mobile ? undefined : "rgba(0,0,0,0.16)"}
-                  px="50px"
-                  py="50px"
-                  width="1158px"
-                  borderRadius="24px"
-                  sx={{
-                    background: props.mobile
-                      ? undefined
-                      : "linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0))",
-                  }}
-                >
-                  <Grid container gap="22px">
-                    {selectedTab === "articles" ? (
-                      loadingArticles ? (
-                        <Stack direction="row" spacing="22px">
-                          <PlaceholderArticleCard />
-                          <PlaceholderArticleCard />
-                          <PlaceholderArticleCard />
-                        </Stack>
-                      ) : (
-                        _.reverse(articles.slice())
-                          .filter((a) => a.color && a.mainImage)
-                          .map((a, i) => (
-                            <Grid
-                              key={a.id}
-                              item
-                              onClick={() => router.push(`/p/${a.urlId}`)}
-                              sx={{
-                                "&:hover": { opacity: 0.7 },
-                                transition: "0.2s",
-                                cursor: "pointer",
-                              }}
+              <Typography
+                variant={props.mobile ? "h5" : "h1"}
+                sx={{ fontWeight: 480 }}
+              >
+                Your Dashboard
+              </Typography>
+            </Stack>
+            <Typography
+              variant={props.mobile ? "normal" : "h5"}
+              bold
+              color="rgba(255,255,255,0.8)"
+              sx={{
+                textAlign: "center",
+                lineHeight: props.mobile ? "20px" : "28px",
+                width: props.mobile ? "200px" : undefined,
+              }}
+            >
+              Create new contents, or browse your library.
+            </Typography>
+          </Stack>
+        </UrsorFadeIn>
+        <UrsorFadeIn delay={200} duration={800} fullWidth centerAlign>
+          <Stack
+            width="92%"
+            alignItems="center"
+            spacing={props.mobile ? "4px" : "6px"}
+          >
+            <Typography
+              variant={props.mobile ? "small" : "normal"}
+              bold
+              color="rgba(255,255,255,0.8)"
+            >
+              Create an Article or a Collection
+            </Typography>
+            <CreationBox mobile={props.mobile} />
+          </Stack>
+        </UrsorFadeIn>
+        <UrsorFadeIn delay={400} duration={800} fullWidth>
+          <Stack
+            width="100%"
+            spacing={props.mobile ? "12px" : "14px"}
+            alignItems="center"
+          >
+            <PediaTabSwitch
+              selected={selectedTab}
+              callback={(category) => setSelectedTab(category)}
+              nArticles={articles.length}
+              nCollections={collections.length}
+              small={props.mobile}
+              loadingArticles={loadingArticles}
+              loadingCollections={loadingCollections}
+            />
+            {props.mobile ? (
+              <Stack width="92%" spacing="12px">
+                {selectedTab === "articles"
+                  ? articles.map((p) => (
+                      <Stack
+                        key={p.id}
+                        height="170px"
+                        minHeight="170px"
+                        width="100%"
+                      >
+                        <ContentPagePreviewCard
+                          title={p.title}
+                          imageUrl={p.mainImage}
+                          color={p.color}
+                          urlId={p.urlId}
+                          mobile
+                        />
+                      </Stack>
+                    ))
+                  : collections.map((c) => (
+                      <Stack
+                        key={c.page.id}
+                        height="180px"
+                        minHeight="180px"
+                        width="100%"
+                      >
+                        <PediaCollectionCard
+                          fullWidth
+                          title={c.page.title}
+                          images={c.images}
+                          button={
+                            <a
+                              target="_blank"
+                              href={`${
+                                process.env.NODE_ENV === "development"
+                                  ? "http://localhost:3000"
+                                  : "https://www.astrosafe.co"
+                              }/c/${c.page.id}`}
+                              rel="noopener noreferrer"
                             >
-                              <UrsorFadeIn duration={800} delay={i * 100}>
-                                <PediaArticleCard
-                                  title={a.title}
-                                  imageUrl={a.mainImage}
-                                  color={a.color}
-                                />
-                              </UrsorFadeIn>
-                            </Grid>
-                          ))
-                      )
+                              <Stack
+                                sx={{
+                                  "&:hover": { opacity: 0.6 },
+                                  transition: "0.2s",
+                                }}
+                              >
+                                <UrsorButton
+                                  size="small"
+                                  variant="secondary"
+                                  borderColor="transparent"
+                                  fontColor={PALETTE.secondary.grey[5]}
+                                >
+                                  Open
+                                </UrsorButton>
+                              </Stack>
+                            </a>
+                          }
+                        />
+                      </Stack>
+                    ))}
+              </Stack>
+            ) : (
+              <Stack
+                bgcolor={props.mobile ? undefined : "rgba(0,0,0,0.16)"}
+                px="50px"
+                py="50px"
+                width="1158px"
+                borderRadius="24px"
+                sx={{
+                  background: props.mobile
+                    ? undefined
+                    : "linear-gradient(180deg, rgba(0,0,0,0.16), rgba(0,0,0,0))",
+                }}
+              >
+                <Grid container gap="22px">
+                  {selectedTab === "articles" ? (
+                    loadingArticles ? (
+                      <Stack direction="row" spacing="22px">
+                        <PlaceholderArticleCard />
+                        <PlaceholderArticleCard />
+                        <PlaceholderArticleCard />
+                      </Stack>
                     ) : (
-                      _.reverse(collections.slice())
-                        .filter((c) => c.page.articles)
-                        .map((c, i) => (
+                      _.reverse(articles.slice())
+                        .filter((a) => a.color && a.mainImage)
+                        .map((a, i) => (
                           <Grid
-                            key={c.page.id}
+                            key={a.id}
                             item
-                            onClick={() => router.push(`/c/${c.page.id}`)}
+                            onClick={() => router.push(`/p/${a.urlId}`)}
                             sx={{
                               "&:hover": { opacity: 0.7 },
                               transition: "0.2s",
@@ -620,24 +588,73 @@ export default function PediaLandingPageSignedInView(props: {
                             }}
                           >
                             <UrsorFadeIn duration={800} delay={i * 100}>
-                              <PediaCollectionCard
-                                title={c.page.title}
-                                images={c.images}
+                              <PediaArticleCard
+                                title={a.title}
+                                imageUrl={a.mainImage}
+                                color={a.color}
                               />
                             </UrsorFadeIn>
                           </Grid>
                         ))
-                    )}
-                  </Grid>
-                </Stack>
-              )}
-            </Stack>
-            <Stack width="100%" px="30px">
-              <Footer fontScale={Math.min(1, width / 700)} />
-            </Stack>
-          </UrsorFadeIn>
-        </Stack>
+                    )
+                  ) : (
+                    _.reverse(collections.slice())
+                      .filter((c) => c.page.articles)
+                      .map((c, i) => (
+                        <Grid
+                          key={c.page.id}
+                          item
+                          onClick={() => router.push(`/c/${c.page.id}`)}
+                          sx={{
+                            "&:hover": { opacity: 0.7 },
+                            transition: "0.2s",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <UrsorFadeIn duration={800} delay={i * 100}>
+                            <PediaCollectionCard
+                              title={c.page.title}
+                              images={c.images}
+                            />
+                          </UrsorFadeIn>
+                        </Grid>
+                      ))
+                  )}
+                </Grid>
+              </Stack>
+            )}
+          </Stack>
+          <Stack width="100%" px="30px">
+            <Footer fontScale={Math.min(1, width / 700)} />
+          </Stack>
+        </UrsorFadeIn>
       </Stack>
-    </Auth0Provider>
+    </Stack>
+  ) : (
+    <Stack
+      position="absolute"
+      top={0}
+      width="100vw"
+      height="100vh"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        opacity: loading ? 1 : 0,
+        transition: "1s",
+        pointerEvents: "none",
+      }}
+    >
+      <UrsorFadeIn duration={1000}>
+        <Stack
+          sx={{
+            width: "70px",
+            height: "70px",
+            animation: `${spin} 2s linear infinite`,
+          }}
+        >
+          <Star height={70} width={70} />
+        </Stack>
+      </UrsorFadeIn>
+    </Stack>
   );
 }

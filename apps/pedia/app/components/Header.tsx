@@ -7,6 +7,7 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
+import Star from "@/images/Star.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
@@ -103,7 +104,7 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   noCreateNew?: boolean;
   mobile?: boolean;
-  noTopRightButton?: boolean;
+  tryAstroButton?: boolean;
 }) => {
   const { user, logout, loginWithPopup, loginWithRedirect } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
@@ -150,37 +151,38 @@ export const Header = (props: {
             Log in
           </UrsorButton>
         ) : null}
-        {!props.noTopRightButton ? (
-          !props.mobile ? (
-            user ? (
+        {!props.mobile ? (
+          user && !props.tryAstroButton ? (
+            <UrsorButton
+              dark
+              variant="secondary"
+              onClick={() => router.push("/pedia")}
+              startIcon={ChevronLeftIcon}
+            >
+              Dashboard
+            </UrsorButton>
+          ) : (
+            <a
+              target="_blank"
+              href="https://astrosafe.co"
+              style={{
+                textDecoration: "none",
+              }}
+              rel="noreferrer"
+            >
               <UrsorButton
                 dark
-                variant="secondary"
-                onClick={() => router.push("/pedia")}
-                startIcon={ChevronLeftIcon}
+                variant="tertiary"
+                onClick={() => null}
+                endIcon={Star}
+                iconSize={13}
+                iconSpin
+                iconColor="rgba(255,255,255,0.7)"
               >
-                Dashboard
+                Get Browser
               </UrsorButton>
-            ) : (
-              <a
-                target="_blank"
-                href="https://astrosafe.co"
-                style={{
-                  textDecoration: "none",
-                }}
-                rel="noreferrer"
-              >
-                <UrsorButton
-                  dark
-                  variant="tertiary"
-                  onClick={() => null}
-                  endIcon={ChevronRight}
-                >
-                  Get Browser
-                </UrsorButton>
-              </a>
-            )
-          ) : null
+            </a>
+          )
         ) : null}
         {user ? (
           <Stack
