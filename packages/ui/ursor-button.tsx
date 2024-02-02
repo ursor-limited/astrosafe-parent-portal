@@ -213,7 +213,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       boxShadow={
         // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis
         props.strongShadow
-          ? "0 0 20px rgba(0,0,0,0.09)"
+          ? "0 0 20px rgba(0,0,0,0.08)"
           : props.shadow
           ? "0 0 20px rgba(0,0,0,0.05)"
           : undefined

@@ -45,7 +45,7 @@ export default function Regenerable(props: IRegenerableProps) {
             startIcon={SyncIcon}
             iconSize={18}
             size="small"
-            shadow
+            strongShadow
           >
             Regenerate
           </UrsorButton>

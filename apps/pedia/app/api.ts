@@ -1,3 +1,5 @@
+import { PediaAge } from "./p/[urlId]/PediaPageContents";
+
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   staging:
@@ -100,6 +102,12 @@ class ApiController {
     //@ts-ignore
     return post(`pedia/collection/createArticles`, { id }).then(
       (response: any) => response.json()
+    );
+  }
+  static async regenerateTextBlock(title: string) {
+    //@ts-ignore
+    return post("pedia/regenerate/textBlock", { title }).then((response: any) =>
+      response.json()
     );
   }
 }
