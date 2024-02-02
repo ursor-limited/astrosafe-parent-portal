@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -135,10 +135,6 @@ const LandingPageCarousel = (props: {
 export default function PediaLandingPageSignedOutView(props: {
   mobile: boolean;
 }) {
-  const router = useRouter();
-
-  const { user } = useAuth0();
-
   const [articles, setArticles] = useState<IPediaPage[]>([]);
   const [collections, setCollections] = useState<
     {
@@ -154,6 +150,15 @@ export default function PediaLandingPageSignedOutView(props: {
       setCollections(collections)
     );
   }, []);
+
+  const [titles, setTitles] = useState<string[]>([]);
+  // const [
+  //   titlesWaitingForGenerationUponSignIn,
+  //   setTitlesWaitingForGenerationUponSignIn,
+  // ] = useLocalStorage<string[] | undefined>(
+  //   "titlesWaitingForGenerationUponSignIn",
+  //   []
+  // );
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -214,7 +219,13 @@ export default function PediaLandingPageSignedOutView(props: {
           </Typography>
         </Stack>
         <Stack width="92%" alignItems="center">
-          <CreationBox mobile={props.mobile} />
+          <CreationBox
+            mobile={props.mobile}
+            //titlesCallback={(titles) => setTitles(titles)}
+            // willSignInCallback={() =>
+            //   setTitlesWaitingForGenerationUponSignIn(titles)
+            // }
+          />
         </Stack>
         <IntroSteps mobile={props.mobile} />
       </Stack>

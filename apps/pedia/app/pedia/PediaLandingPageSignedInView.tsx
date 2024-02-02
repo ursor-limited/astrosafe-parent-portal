@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Stack, alpha } from "@mui/system";
 import _ from "lodash";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -322,6 +322,19 @@ export function PediaTabSwitch(props: {
   );
 }
 
+function useThrottle(cb: any, delay: number) {
+  const options = { leading: true, trailing: false }; // add custom lodash options
+  const cbRef = useRef(cb);
+  // use mutable ref to make useCallback/throttle not depend on `cb` dep
+  useEffect(() => {
+    cbRef.current = cb;
+  });
+  return useCallback(
+    _.throttle((...args) => cbRef.current(...args), delay, options),
+    [delay]
+  );
+}
+
 export default function PediaLandingPageSignedInView(props: {
   mobile: boolean;
 }) {
@@ -359,6 +372,48 @@ export default function PediaLandingPageSignedInView(props: {
   );
 
   const router = useRouter();
+
+  const [
+    titlesWaitingForGenerationUponSignIn,
+    setTitlesWaitingForGenerationUponSignIn,
+  ] = useLocalStorage<string[] | undefined>(
+    "titlesWaitingForGenerationUponSignIn",
+    undefined
+  );
+
+  const buu = useThrottle(() => {
+    titlesWaitingForGenerationUponSignIn &&
+      ApiController.createCollection(
+        titlesWaitingForGenerationUponSignIn,
+        user?.email ?? ""
+      ).then((collection) => {
+        ApiController.createCollectionArticles(collection.id);
+        setTitlesWaitingForGenerationUponSignIn(undefined);
+        router.push(`/c/${collection.id}`);
+      });
+  }, 5000);
+
+  // const createArticles = useCallback(
+  //   _.throttle(() => {
+  //     console.log("4444 lol");
+  //     // titlesWaitingForGenerationUponSignIn &&
+  //     //   ApiController.createCollection(
+  //     //     titlesWaitingForGenerationUponSignIn,
+  //     //     user?.email ?? ""
+  //     //   ).then((collection) => {
+  //     //     ApiController.createCollectionArticles(collection.id);
+  //     //     setTitlesWaitingForGenerationUponSignIn(undefined);
+  //     //     router.push(`/c/${collection.id}`);
+  //     //   });
+  //   }, 5000),
+  //   [titlesWaitingForGenerationUponSignIn, user?.email]
+  // );
+
+  useEffect(() => {
+    console.log(titlesWaitingForGenerationUponSignIn?.length, user?.email);
+    user?.email && titlesWaitingForGenerationUponSignIn?.length && buu();
+    //createArticles();
+  }, [titlesWaitingForGenerationUponSignIn?.length, user?.email]);
 
   return (
     <Auth0Provider

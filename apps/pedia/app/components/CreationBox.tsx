@@ -10,11 +10,16 @@ import DynamicContainer from "./DynamicContainer";
 import { Grid } from "@mui/material";
 import ApiController from "../api";
 import { useRouter } from "next/navigation";
+import { useLocalStorage } from "usehooks-ts";
 
 const MAX_TOPICS = 4;
 const CHARACTER_LIMIT = 30;
 
-const TopicTag = (props: { value: string; deletionCallback: () => void }) => (
+const TopicTag = (props: {
+  value: string;
+  deletionCallback: () => void;
+  loadTitlesInLocalStorage?: boolean;
+}) => (
   <Stack
     bgcolor={PALETTE.secondary.grey[2]}
     height="32px"
@@ -40,17 +45,31 @@ const TopicTag = (props: { value: string; deletionCallback: () => void }) => (
   </Stack>
 );
 
-export const CreationBox = (props: { mobile?: boolean }) => {
+export const CreationBox = (props: {
+  mobile?: boolean;
+  titlesCallback?: (titles: string[]) => void;
+  willSignInCallback?: () => void;
+}) => {
   const [value, setValue] = useState<string>("");
   const [topics, setTopics] = useState<string[]>([]);
   const addTopic = () => {
     setTopics([...topics, value]);
+    //props.titlesCallback?.([...topics, value]);
+    setTitlesWaitingForGenerationUponSignIn([...topics, value]);
     setValue("");
   };
 
   const { user, loginWithPopup, loginWithRedirect } = useAuth0();
 
   const router = useRouter();
+
+  const [
+    titlesWaitingForGenerationUponSignIn,
+    setTitlesWaitingForGenerationUponSignIn,
+  ] = useLocalStorage<string[] | undefined>(
+    "titlesWaitingForGenerationUponSignIn",
+    []
+  );
 
   return (
     <Stack
@@ -144,9 +163,13 @@ export const CreationBox = (props: { mobile?: boolean }) => {
                 <UrsorFadeIn duration={600}>
                   <TopicTag
                     value={t}
-                    deletionCallback={() =>
-                      setTopics(topics.filter((topic) => topic !== t))
-                    }
+                    deletionCallback={() => {
+                      const updatedTopics = topics.filter(
+                        (topic) => topic !== t
+                      );
+                      setTopics(updatedTopics);
+                      setTitlesWaitingForGenerationUponSignIn(updatedTopics);
+                    }}
                   />
                 </UrsorFadeIn>
               </Grid>
@@ -163,18 +186,19 @@ export const CreationBox = (props: { mobile?: boolean }) => {
         <UrsorButton
           dark
           variant="tertiary"
-          onClick={() =>
-            user?.email
-              ? ApiController.createCollection(topics, user?.email ?? "")
-                  .then((collection) => {
-                    ApiController.createCollectionArticles(collection.id);
-                    return collection.id;
-                  })
-                  .then((collectionId) => router.push(`/c/${collectionId}`))
-              : props.mobile
-              ? loginWithRedirect()
-              : loginWithPopup()
-          }
+          onClick={() => {
+            if (user?.email) {
+              ApiController.createCollection(topics, user?.email ?? "")
+                .then((collection) => {
+                  ApiController.createCollectionArticles(collection.id);
+                  return collection.id;
+                })
+                .then((collectionId) => router.push(`/c/${collectionId}`));
+            } else {
+              props.willSignInCallback?.();
+              props.mobile ? loginWithRedirect() : loginWithPopup();
+            }
+          }}
           backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
           hoverOpacity={0.7}
           endIcon={PaintBrushIcon}

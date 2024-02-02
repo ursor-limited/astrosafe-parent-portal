@@ -105,7 +105,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 <Backdrop
                   sx={{
                     background: "rgba(0, 0, 0, 0.2)",
-                    backdropFilter: "blur(3px)",
                     zIndex: 2,
                   }}
                   open={props.open}
