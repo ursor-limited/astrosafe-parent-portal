@@ -57,10 +57,10 @@ export const BACKDROP_STYLE = {
   backgroundColor: "rgba(0, 0, 0, 0.3) !important",
 };
 
-interface IPediaTextBlock {
+export interface IPediaTextBlock {
   id: string;
   title: string;
-  content: string[];
+  contents: { level: PediaAge; value: string[] }[];
 }
 
 interface IPediaImage {
@@ -95,13 +95,11 @@ export interface IPediaPage {
   title: string;
   mainImage: string;
   stats: IPediaStat[];
-  textBlocks: { _id: string; level: PediaAge; blocks: IPediaTextBlock[] }[];
+  textBlocks: IPediaTextBlock[];
   images: IPediaImage[];
   facts: string[];
   color: string;
   questions: IPediaQuestion[];
-  collectionPageId?: string;
-  collectionPageTitle?: string;
 }
 
 export interface IPediaCollectionPage {
@@ -165,20 +163,25 @@ const ImageCard = (props: {
 };
 
 const TextBlockCard = (props: {
-  id: string;
-  title: string;
-  content: string[];
+  block: IPediaTextBlock;
   noCollapse?: boolean;
   onClick: () => void;
   editing?: boolean;
   regenerationCallback?: () => void;
   regenerating?: boolean;
+  selectedLevel: PediaAge;
   //fitContent?: boolean;
 }) => {
-  const [content, setContent] = useState<string[]>([]);
+  const [block, setBlock] = useState<IPediaTextBlock | undefined>(undefined);
   useEffect(() => {
-    setContent(props.content);
-  }, [props.content]);
+    setBlock(props.block);
+  }, [props.block]);
+
+  const regenerate = () =>
+    ApiController.regenerateTextBlock(props.block.id).then((newBlock) =>
+      setBlock(newBlock)
+    );
+
   const [expanded, setExpanded] = useState<boolean>(false);
   const [changing, setChanging] = useState<boolean>(false);
   const [textElement, setTextElement] = useState<HTMLDivElement | null>(null);
@@ -215,7 +218,7 @@ const TextBlockCard = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
 
   return (
-    <Regenerable on={!!props.editing} callback={props.regenerationCallback}>
+    <Regenerable on={!!props.editing} callback={regenerate}>
       <Stack
         flex={1}
         position="relative"
@@ -254,20 +257,22 @@ const TextBlockCard = (props: {
             color={PALETTE.secondary.grey[5]}
             htmlTag="h3"
           >
-            {props.title}
+            {block?.title}
           </Typography>
           <Stack spacing="8px">
-            {content.map((c, i) => (
-              <Typography
-                key={i}
-                color={PALETTE.secondary.grey[5]}
-                sx={{
-                  lineHeight: "26px",
-                }}
-              >
-                {c}
-              </Typography>
-            ))}
+            {block?.contents
+              ?.find((c) => c.level === props.selectedLevel)
+              ?.value?.map((c, i) => (
+                <Typography
+                  key={i}
+                  color={PALETTE.secondary.grey[5]}
+                  sx={{
+                    lineHeight: "26px",
+                  }}
+                >
+                  {c}
+                </Typography>
+              ))}
           </Stack>
         </Stack>
       </Stack>
@@ -367,7 +372,11 @@ const FactsCard = (props: { facts: string[] }) => {
 };
 
 function TextSectionPopover(
-  props: IPediaTextBlock & { open: boolean; closeCallback: () => void }
+  props: IPediaTextBlock & {
+    selectedLevel: PediaAge;
+    open: boolean;
+    closeCallback: () => void;
+  }
 ) {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pressed, setPressed] = useState<boolean>(false);
@@ -432,17 +441,19 @@ function TextSectionPopover(
           </Stack>
         </Stack>
         <Stack spacing="8px">
-          {props.content.map((c, index) => (
-            <Typography
-              key={index}
-              color={PALETTE.secondary.grey[5]}
-              sx={{
-                lineHeight: "26px",
-              }}
-            >
-              {c}
-            </Typography>
-          ))}
+          {props.contents
+            ?.find((c) => c.level === props.selectedLevel)
+            ?.value?.map((c, index) => (
+              <Typography
+                key={index}
+                color={PALETTE.secondary.grey[5]}
+                sx={{
+                  lineHeight: "26px",
+                }}
+              >
+                {c}
+              </Typography>
+            ))}
         </Stack>
       </Stack>
     </Dialog>
@@ -472,14 +483,14 @@ const MobileColumn = (props: {
     ).then((dims) => setOriginalImageSizes(dims));
   }, []);
 
-  const [selectedAge, setSelectedAge] = useState<PediaAge>("scholar");
+  const [selectedLevel, setSelectedLevel] = useState<PediaAge>("scholar");
 
   return (
     <Stack px="30px" width="100%" height="100%" spacing="24px" ref={setRef}>
       <Stack width="100%" alignItems="flex-end">
         <AgeSelection
-          setSelectedAge={setSelectedAge}
-          selectedAge={selectedAge}
+          setSelectedAge={setSelectedLevel}
+          selectedAge={selectedLevel}
           color={props.mainCardDetails.color}
         />
       </Stack>
@@ -487,9 +498,8 @@ const MobileColumn = (props: {
         <PediaMainCard mobile title={props.title} {...props.mainCardDetails} />
         <TextBlockCard
           key="overview"
-          id={props.textCardDetails[0].id}
-          title={props.textCardDetails[0]?.title ?? ""}
-          content={props.textCardDetails[0]?.content ?? []}
+          block={props.textCardDetails[0] ?? []}
+          selectedLevel={selectedLevel}
           onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
         />
         {props.textCardDetails
@@ -519,9 +529,8 @@ const MobileColumn = (props: {
             />,
             <Stack key={`text${i}`}>
               <TextBlockCard
-                id={props.textCardDetails[i + 1].id}
-                title={props.textCardDetails[i + 1]?.title ?? ""}
-                content={props.textCardDetails[i + 1]?.content ?? []}
+                block={props.textCardDetails[i + 1] ?? []}
+                selectedLevel={selectedLevel}
                 onClick={() =>
                   setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
                 }
@@ -551,6 +560,7 @@ const MobileColumn = (props: {
         <TextSectionPopover
           open={true}
           closeCallback={() => setSelectedTextCardId(undefined)}
+          selectedLevel={selectedLevel}
           {...props.textCardDetails.find((tb) => tb.id === selectedTextCardId)!}
         />
       ) : null}
@@ -566,15 +576,12 @@ const BentoRow = (props: {
   reversed: boolean;
   originalImageDimensions?: { width: number; height: number };
   editing?: boolean;
+  selectedLevel: PediaAge;
 }) => {
   const { width } = useWindowSize();
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  //const [rowHeight, setRowHeight]
   const [hideImage, setHideImage] = useState<boolean>(false);
   const [factUnderImage, setFactUnderImage] = useState<boolean>(false);
-
-  const textLengthWindowSizeRatio =
-    props.textCardDetails.content.join(" ").split(" ").length / width;
 
   useEffect(() => {
     if (!props.originalImageDimensions) return;
@@ -582,49 +589,27 @@ const BentoRow = (props: {
       props.originalImageDimensions.width /
       props.originalImageDimensions.height;
     const textLengthWindowSizeRatio =
-      props.textCardDetails.content.join(" ").length / width;
+      (props.textCardDetails.contents
+        ?.find((c) => c.level === props.selectedLevel)
+        ?.value.join(" ")
+        .split(" ").length ?? 0) / width;
     setHideImage(textLengthWindowSizeRatio * originalAspectRatio > 1.9);
     setFactUnderImage(textLengthWindowSizeRatio * originalAspectRatio > 1.1);
   }, [
-    textLengthWindowSizeRatio,
-    props.textCardDetails.content,
+    props.textCardDetails.contents,
     width,
     props.originalImageDimensions?.height,
     props.originalImageDimensions?.width,
   ]);
 
-  // useEffect(() => {
-  //   const originalAspectRatio =
-  //     props.originalImageDimensions.width /
-  //     props.originalImageDimensions.height;
-  //   const newAspectRatio =
-  //     (ref?.getBoundingClientRect().width || 1) /
-  //     (ref?.getBoundingClientRect().height || 1);
-  //   setHideImage(originalAspectRatio - newAspectRatio > 0.5);
-  // }, [
-  //   ref,
-  //   width,
-  //   props.originalImageDimensions.height,
-  //   props.originalImageDimensions.width,
-  // ]);
-  const [regeneratingTextBlockWithTitle, setRegeneratingTextBlockWithTitle] = useState<string | undefined>(undefined);
-  const regenerateTextBlock = (title: string) => {
-    setRegeneratingTextBlockWithTitle(title);
-    ApiController.regenerateTextBlock(title).then((newContent) => {
-      setContent(newContent.find(()));
-    });
-  };
-
   const blocks = [
     <Stack key="text" flex={1} ref={setRef} spacing={`${GRID_SPACING}px`}>
       <TextBlockCard
         key="text"
-        id={props.textCardDetails.id}
-        title={props.textCardDetails.title ?? ""}
-        content={props.textCardDetails.content ?? []}
-        onClick={() => null} //{() => setSelectedTextCardId(props.textCardDetails[i + 1]?.id)}
+        block={props.textCardDetails ?? []}
+        onClick={() => null}
         editing={props.editing}
-        regenerationCallback={() => regeneratingTextBlockWithTitle(props.textCardDetails.title)}
+        selectedLevel={props.selectedLevel}
       />
       {!factUnderImage || hideImage ? (
         <FactsCard facts={props.facts} key="fact" />
@@ -650,13 +635,7 @@ const BentoRow = (props: {
         ]),
   ];
   return (
-    <Stack
-      //height={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-      //minHeight={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-      width="100%"
-      direction="row"
-      spacing={`${GRID_SPACING}px`}
-    >
+    <Stack width="100%" direction="row" spacing={`${GRID_SPACING}px`}>
       {props.reversed ? _.reverse(blocks) : blocks}
     </Stack>
   );
@@ -669,6 +648,7 @@ const Bento = (props: {
   facts: IPediaPage["facts"];
   editing: boolean;
   columnWidth: number;
+  selectedLevel: PediaAge;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -692,9 +672,8 @@ const Bento = (props: {
         editing={props.editing}
       />
       <TextBlockCard
-        id={props.textCardDetails[0].id}
-        title={props.textCardDetails[0]?.title ?? ""}
-        content={props.textCardDetails[0]?.content ?? []}
+        block={props.textCardDetails[0] ?? []}
+        selectedLevel={props.selectedLevel}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
         editing={props.editing}
       />
@@ -746,58 +725,9 @@ const Bento = (props: {
         imageWidth={getWidthOfColumns(imageColumnsN[i])}
         reversed={!!(i % 2)}
         editing={props.editing}
+        selectedLevel={props.selectedLevel}
       />
     ));
-
-  // const rows = props.textCardDetails
-  //   .slice(1, props.textCardDetails.length)
-  //   .map((td, i) => {
-  //     const originalAspectRatio = originalImageSizes[i].width / originalImageSizes[i].height
-  //     const
-  //     return [
-  //       i === factRowIndex ? (
-  //         <Stack key={td.id} flex={1} spacing={`${GRID_SPACING}px`}>
-  //           <FactCard fact={props.fact} />
-  //           <TextBlockCard
-  //             title={td.title ?? ""}
-  //             content={td.content ?? []}
-  //             onClick={() =>
-  //               setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
-  //             }
-  //           />
-  //         </Stack>
-  //       ) : (
-  //         <Stack key={td.id} flex={1}>
-  //           <TextBlockCard
-  //             title={td.title ?? ""}
-  //             content={td.content ?? []}
-  //             onClick={() =>
-  //               setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
-  //             }
-  //           />
-  //         </Stack>
-  //       ),
-  //       <ImageCard
-  //         key="image"
-  //         url={props.imageCardDetails[i].url}
-  //         caption={props.imageCardDetails[i].caption}
-  //         width={getWidthOfColumns(imageColumnsN[i])}
-  //       />,
-  //     ];
-  //   })
-  //   .map((pair, i) => (i % 2 ? pair : _.reverse(pair.slice())))
-  //   .map((pair, i) => (
-  //     <Stack
-  //       key={i}
-  //       //height={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-  //       //minHeight={i === factRowIndex ? FACT_ROW_HEIGHT : `${ROW_HEIGHT}px`}
-  //       width="100%"
-  //       direction="row"
-  //       spacing={`${GRID_SPACING}px`}
-  //     >
-  //       {pair}
-  //     </Stack>
-  //   ));
   return (
     <>
       <Stack spacing={`${GRID_SPACING}px`}>{[firstRow, ...rows]}</Stack>
@@ -805,6 +735,7 @@ const Bento = (props: {
         <TextSectionPopover
           open={true}
           closeCallback={() => setSelectedTextCardId(undefined)}
+          selectedLevel={props.selectedLevel}
           {...props.textCardDetails.find((tb) => tb.id === selectedTextCardId)!}
         />
       ) : null}
@@ -816,7 +747,7 @@ export default function PediaPageContents(props: {
   articleDetails: IPediaPage;
   collectionDetails: IPediaCollectionPage;
 }) {
-  const [selectedAge, setSelectedAge] = useState<PediaAge>("student");
+  const [selectedLevel, setSelectedLevel] = useState<PediaAge>("student");
 
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
@@ -836,41 +767,6 @@ export default function PediaPageContents(props: {
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header mobile={isMobile} />
       <Stack>
-        {/* <ReactCarousel
-            carouselConfig={{
-              transform: {
-                rotateY: {
-                  [BEFORE]: () => "rotateY(25deg)",
-                  [CENTER]: () => "rotateY(0deg)",
-                  [AFTER]: () => "rotateY(-25deg)",
-                },
-              },
-            }}
-            // itemBackgroundStyle={{
-            //   backgroundColor: "#ece4db",
-            //   borderRadius: "3px",
-            //   boxShadow: "8px 12px 14px -6px black",
-            // }}
-            // containerBackgroundStyle={{
-            //   filter: "blur(7px)",
-            //   backgroundColor: "rgba(62, 212, 214, 0.3)",
-            // }}
-            //carouselHeight="600px"
-          >
-            {(boo
-              ? _.reverse(props.pageDetails.images)
-              : props.pageDetails.images
-            ).map((image, index) => (
-              <Stack key={image.id} height="200px" width="200px">
-                <ImageCard
-                  key={image.id}
-                  url={image.url}
-                  caption={image.caption}
-                  width={300}
-                />
-              </Stack>
-            ))}
-          </ReactCarousel> */}
         {isMobile ? (
           <UrsorFadeIn duration={1000}>
             <Stack width="100%" height="100%">
@@ -883,11 +779,7 @@ export default function PediaPageContents(props: {
                   stats: props.articleDetails.stats,
                 }}
                 imageCardDetails={props.articleDetails.images} //@ts-ignore
-                textCardDetails={
-                  props.articleDetails.textBlocks.find(
-                    (b) => b.level === selectedAge
-                  )?.blocks ?? []
-                }
+                textCardDetails={props.articleDetails.textBlocks}
                 facts={props.articleDetails.facts}
                 questions={props.articleDetails.questions}
               />
@@ -898,8 +790,8 @@ export default function PediaPageContents(props: {
             <Stack>
               <LayoutCard
                 title={props.articleDetails.title}
-                setSelectedAge={setSelectedAge}
-                selectedAge={selectedAge}
+                setSelectedAge={setSelectedLevel}
+                selectedAge={selectedLevel}
                 editButton
                 editingOn={editing}
                 editingCallback={() => setEditing(!editing)}
@@ -915,14 +807,11 @@ export default function PediaPageContents(props: {
                       stats: props.articleDetails.stats,
                     }}
                     imageCardDetails={props.articleDetails.images}
-                    textCardDetails={
-                      props.articleDetails.textBlocks.find(
-                        (b) => b.level === selectedAge
-                      )?.blocks ?? []
-                    }
+                    textCardDetails={props.articleDetails.textBlocks}
                     facts={props.articleDetails.facts}
                     columnWidth={columnWidth}
                     editing={editing}
+                    selectedLevel={selectedLevel}
                   />
                   {props.articleDetails.questions &&
                   props.articleDetails.questions.length > 0 ? (
