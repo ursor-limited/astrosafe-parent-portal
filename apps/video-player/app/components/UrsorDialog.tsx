@@ -35,6 +35,7 @@ export interface IDialogButtonDetails {
 export interface IUrsorDialogProps {
   open: boolean;
   width?: string;
+  maxWidth?: string;
   height?: string;
   loading?: boolean;
   title?: string;
@@ -115,7 +116,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         style: {
           //zIndex: zIndices.POPUP,
           width: props.width || WIDTH,
-          maxWidth: WIDTH,
+          maxWidth: props.maxWidth || WIDTH,
           minWidth: props.fitContent ? undefined : props.width || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
           //height: HEIGHT,

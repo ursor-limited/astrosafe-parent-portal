@@ -142,31 +142,35 @@ export const Header = (props: {
       {user ? (
         <UrsorFadeIn duration={800}>
           <Stack direction="row" spacing="12px">
-            {props.showUpgradeButton ? (
-              <UrsorButton
-                dark
-                variant="secondary"
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                useNaturalIconColor
-                onClick={() => setUpgradeDialogOpen(true)}
-              >
-                Unlock more Videos
-              </UrsorButton>
-            ) : (
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => router.push("/dashboard")}
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                iconColor="rgba(255,255,255,0.7)"
-              >
-                Go to Dashboard
-              </UrsorButton>
-            )}
+            {!props.mobile ? (
+              <Stack>
+                {props.showUpgradeButton ? (
+                  <UrsorButton
+                    dark
+                    variant="secondary"
+                    endIcon={Kitemark}
+                    iconSize={13}
+                    iconSpin
+                    useNaturalIconColor
+                    onClick={() => setUpgradeDialogOpen(true)}
+                  >
+                    Unlock more Videos
+                  </UrsorButton>
+                ) : (
+                  <UrsorButton
+                    dark
+                    variant="tertiary"
+                    onClick={() => router.push("/dashboard")}
+                    endIcon={Kitemark}
+                    iconSize={13}
+                    iconSpin
+                    iconColor="rgba(255,255,255,0.7)"
+                  >
+                    Go to Dashboard
+                  </UrsorButton>
+                )}
+              </Stack>
+            ) : null}
             <Stack
               sx={{
                 cursor: "pointer",

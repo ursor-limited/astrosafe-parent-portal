@@ -37,6 +37,7 @@ const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
 const PROMPT_BAR_GRADIENT = "linear-gradient(0deg, #6596FF, #7B61FF)";
 
 const UPGRADE_PROMPT_BAR_VISIBILITY_WINDOW_WIDTH_THRESHOLD = 1110;
+export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
 const UpgradePromptBar = () => (
   <Stack width="100%" justifyContent="center">
@@ -224,15 +225,20 @@ function DashboardPageContents() {
     [width]
   );
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
+
+  console.log(width);
+
   return (
     <Stack flex={1} position="relative">
       {!upgradePromptBarHidden ? <UpgradePromptBar /> : null}
-      <Header showUpgradeButton />
+      <Header showUpgradeButton mobile={isMobile} />
       <Stack
-        spacing="40px"
+        spacing={isMobile ? "26px" : "40px"}
         alignItems="center"
         justifyContent="center"
-        pt="50px"
+        pt={isMobile ? "30px" : "50px"}
         px="50px"
         width="100%"
         overflow="hidden"
@@ -248,9 +254,9 @@ function DashboardPageContents() {
             alignItems="center"
           >
             <Typography
-              variant="h1"
+              variant={isMobile ? "h3" : "h1"}
               color={PALETTE.font.light}
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "center", fontWeight: 480 }}
             >
               Your SafeTube Dashboard
             </Typography>
@@ -260,12 +266,12 @@ function DashboardPageContents() {
               <Stack direction="row" alignItems="center" spacing="19px">
                 <Stack direction="row" alignItems="center" spacing="6px">
                   <Typography
-                    variant="large"
+                    variant={isMobile ? "medium" : "large"}
                     bold
                     color={PALETTE.font.light}
                   >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
                   <Typography
-                    variant="large"
+                    variant={isMobile ? "medium" : "large"}
                     bold
                     color="rgba(255,255,255,0.7)"
                   >
@@ -288,12 +294,13 @@ function DashboardPageContents() {
         <Stack
           width="100%"
           maxWidth="800px"
-          direction="row"
+          direction={isMobile ? "column" : "row"}
           spacing="10px"
           sx={{
             opacity: creationDisabled ? 0.4 : 1,
             pointerEvents: creationDisabled ? "none" : undefined,
           }}
+          alignItems="center"
         >
           <UrsorInputField
             value={inputValue}
@@ -336,7 +343,11 @@ function DashboardPageContents() {
           overflow="hidden"
         >
           {/* <DynamicContainer fullWidth duration={600}> */}
-          <DynamicCardGrid cardWidth="272px" rowGap="28px" columnGap="28px">
+          <DynamicCardGrid
+            cardWidth="272px"
+            rowGap={isMobile ? "20px" : "28px"}
+            columnGap={isMobile ? "20px" : "28px"}
+          >
             {videos.map((v, i) => (
               <UrsorFadeIn key={v.id} duration={800} delay={i * 120}>
                 <VideoCard {...v} />

@@ -13,6 +13,7 @@ const UpgradeDialog = (props: { open: boolean; closeCallback: () => void }) => (
     open={props.open}
     button={{ text: "Upgrade", callback: () => null, icon: RocketIcon }}
     onCloseCallback={props.closeCallback}
+    width="90%"
   >
     <Stack
       height="380px"
