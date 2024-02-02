@@ -21,6 +21,7 @@ import _ from "lodash";
 import Image from "next/image";
 import NotificationContext from "../components/NotificationContext";
 import UpgradeDialog from "../components/UpgradeDialog";
+import DynamicCardGrid from "../components/DynamicCardGrid";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -74,8 +75,7 @@ const VideoCard = (props: IVideo) => {
   const notificationCtx = React.useContext(NotificationContext);
   return (
     <Stack
-      width="299px"
-      minWidth="299px"
+      width="100%"
       height="253px"
       borderRadius="12px"
       bgcolor="rgba(0,0,0, 0.3)"
@@ -217,6 +217,9 @@ function DashboardPageContents() {
         alignItems="center"
         justifyContent="center"
         pt="50px"
+        px="50px"
+        width="100%"
+        overflow="hidden"
       >
         <Stack spacing="20px" alignItems="center">
           <Stack
@@ -302,19 +305,24 @@ function DashboardPageContents() {
             </Stack>
           </Stack>
         </UrsorFadeIn>
-        <DynamicContainer fullWidth duration={600}>
-          <Stack flex={1} alignItems="center">
-            <Grid container gap="32px" width="80%">
-              {videos.map((v, i) => (
-                <Grid item key={v.id}>
-                  <UrsorFadeIn duration={600} delay={i * 120}>
-                    <VideoCard {...v} />
-                  </UrsorFadeIn>
-                </Grid>
-              ))}
-            </Grid>
-          </Stack>
-        </DynamicContainer>
+
+        <Stack
+          flex={1}
+          alignItems="center"
+          maxWidth="1254px"
+          width="100%"
+          overflow="hidden"
+        >
+          {/* <DynamicContainer fullWidth duration={600}> */}
+          <DynamicCardGrid cardWidth="272px" rowGap="28px" columnGap="28px">
+            {videos.map((v, i) => (
+              <UrsorFadeIn key={v.id} duration={800} delay={i * 120}>
+                <VideoCard {...v} />
+              </UrsorFadeIn>
+            ))}
+          </DynamicCardGrid>
+          {/* </DynamicContainer> */}
+        </Stack>
       </Stack>
       <UpgradeDialog
         open={upgradeDialogOpen}
