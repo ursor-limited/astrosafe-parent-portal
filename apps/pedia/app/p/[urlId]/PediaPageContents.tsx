@@ -787,7 +787,7 @@ export default function PediaPageContents(props: {
   articleDetails: IPediaPage;
   collectionDetails: IPediaCollectionPage;
 }) {
-  const [selectedLevel, setSelectedLevel] = useState<PediaAge>("student");
+  const [selectedLevel, setSelectedLevel] = useState<PediaAge>("scholar");
 
   /* needed for the platform row's proper scrollability */
   const { width } = useWindowSize();
