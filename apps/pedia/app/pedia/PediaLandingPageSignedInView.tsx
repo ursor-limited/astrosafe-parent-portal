@@ -383,8 +383,8 @@ export default function PediaLandingPageSignedInView(props: {
     undefined
   );
 
-  const buu = useThrottle(() => {
-    setLoading(true);
+  const createCollection = useThrottle(() => {
+    setWaitingForRedirectToCollectionPage(true);
     titlesWaitingForGenerationUponSignIn &&
       ApiController.createCollection(
         titlesWaitingForGenerationUponSignIn,
@@ -396,29 +396,18 @@ export default function PediaLandingPageSignedInView(props: {
       });
   }, 5000);
 
-  // const createArticles = useCallback(
-  //   _.throttle(() => {
-  //     console.log("4444 lol");
-  //     // titlesWaitingForGenerationUponSignIn &&
-  //     //   ApiController.createCollection(
-  //     //     titlesWaitingForGenerationUponSignIn,
-  //     //     user?.email ?? ""
-  //     //   ).then((collection) => {
-  //     //     ApiController.createCollectionArticles(collection.id);
-  //     //     setTitlesWaitingForGenerationUponSignIn(undefined);
-  //     //     router.push(`/c/${collection.id}`);
-  //     //   });
-  //   }, 5000),
-  //   [titlesWaitingForGenerationUponSignIn, user?.email]
-  // );
-
   useEffect(() => {
-    user?.email && titlesWaitingForGenerationUponSignIn?.length && buu();
+    user?.email &&
+      titlesWaitingForGenerationUponSignIn?.length &&
+      createCollection();
   }, [titlesWaitingForGenerationUponSignIn?.length, user?.email]);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [
+    waitingForRedirectToCollectionPage,
+    setWaitingForRedirectToCollectionPage,
+  ] = useState<boolean>(false);
 
-  return !loading ? (
+  return !waitingForRedirectToCollectionPage ? (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
       <Header mobile={props.mobile} tryAstroButton />
       <Stack
@@ -426,7 +415,6 @@ export default function PediaLandingPageSignedInView(props: {
         alignItems="center"
         pt={props.mobile ? "13px" : undefined}
         width="100%"
-        //overflow="hidden"
       >
         <UrsorFadeIn duration={800}>
           <Stack maxWidth="780px" spacing="6px">
@@ -473,7 +461,12 @@ export default function PediaLandingPageSignedInView(props: {
             >
               Create an Article or a Collection
             </Typography>
-            <CreationBox mobile={props.mobile} />
+            <CreationBox
+              mobile={props.mobile}
+              clickedCreateCallback={() =>
+                setWaitingForRedirectToCollectionPage(true)
+              }
+            />
           </Stack>
         </UrsorFadeIn>
         <UrsorFadeIn delay={400} duration={800} fullWidth>
@@ -638,18 +631,13 @@ export default function PediaLandingPageSignedInView(props: {
       height="100vh"
       justifyContent="center"
       alignItems="center"
-      sx={{
-        opacity: loading ? 1 : 0,
-        transition: "1s",
-        pointerEvents: "none",
-      }}
     >
       <UrsorFadeIn duration={1000}>
         <Stack
           sx={{
             width: "70px",
             height: "70px",
-            animation: `${spin} 2s linear infinite`,
+            animation: `${spin} 3s linear infinite`,
           }}
         >
           <Star height={70} width={70} />

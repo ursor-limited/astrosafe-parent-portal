@@ -48,7 +48,7 @@ const TopicTag = (props: {
 export const CreationBox = (props: {
   mobile?: boolean;
   titlesCallback?: (titles: string[]) => void;
-  willSignInCallback?: () => void;
+  clickedCreateCallback?: () => void;
 }) => {
   const [value, setValue] = useState<string>("");
   const [topics, setTopics] = useState<string[]>([]);
@@ -187,6 +187,7 @@ export const CreationBox = (props: {
           dark
           variant="tertiary"
           onClick={() => {
+            props.clickedCreateCallback?.();
             if (user?.email) {
               ApiController.createCollection(topics, user?.email ?? "")
                 .then((collection) => {
@@ -195,7 +196,6 @@ export const CreationBox = (props: {
                 })
                 .then((collectionId) => router.push(`/c/${collectionId}`));
             } else {
-              props.willSignInCallback?.();
               props.mobile ? loginWithRedirect() : loginWithPopup();
             }
           }}
