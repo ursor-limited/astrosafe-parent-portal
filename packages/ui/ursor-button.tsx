@@ -207,8 +207,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         setPressed(false);
       }}
       px={`${PADDINGS[size].x}px`}
-      pl={props.startIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
-      pr={props.endIcon ? `${0.8 * PADDINGS[size].x}px` : undefined}
+      pl={props.startIcon ? `${0.7 * PADDINGS[size].x}px` : undefined}
+      pr={props.endIcon ? `${0.7 * PADDINGS[size].x}px` : undefined}
       spacing="12px"
       boxShadow={
         // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis

@@ -428,7 +428,7 @@ export default function PediaLandingPageSignedInView(props: {
       useRefreshTokensFallback={true}
     >
       <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
-        <Header mobile={props.mobile} />
+        <Header mobile={props.mobile} noTopRightButton />
         <Stack
           spacing={props.mobile ? "40px" : "50px"}
           alignItems="center"

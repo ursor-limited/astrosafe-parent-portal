@@ -228,8 +228,6 @@ function DashboardPageContents() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  console.log(width);
-
   return (
     <Stack flex={1} position="relative">
       {!upgradePromptBarHidden ? <UpgradePromptBar /> : null}

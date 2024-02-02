@@ -6,10 +6,12 @@ import ChevronRight from "@/images/icons/ChevronRightIcon.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -98,10 +100,15 @@ const ProfilePopupButton = (props: {
   );
 };
 
-export const Header = (props: { noCreateNew?: boolean; mobile?: boolean }) => {
+export const Header = (props: {
+  noCreateNew?: boolean;
+  mobile?: boolean;
+  noTopRightButton?: boolean;
+}) => {
   const { user, logout, loginWithPopup, loginWithRedirect } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <Stack
       direction="row"
@@ -143,30 +150,37 @@ export const Header = (props: { noCreateNew?: boolean; mobile?: boolean }) => {
             Log in
           </UrsorButton>
         ) : null}
-        {!props.mobile ? (
-          <a
-            target="_blank"
-            href="https://astrosafe.co"
-            style={{
-              textDecoration: "none",
-            }}
-            rel="noreferrer"
-          >
-            {user ? (
-              <UrsorButton dark variant="secondary" onClick={() => null}>
-                Try ASTRO
-              </UrsorButton>
-            ) : (
+        {!props.noTopRightButton ? (
+          !props.mobile ? (
+            user ? (
               <UrsorButton
                 dark
-                variant="tertiary"
-                onClick={() => null}
-                endIcon={ChevronRight}
+                variant="secondary"
+                onClick={() => router.push("/pedia")}
+                startIcon={ChevronLeftIcon}
               >
-                Get Browser
+                Dashboard
               </UrsorButton>
-            )}
-          </a>
+            ) : (
+              <a
+                target="_blank"
+                href="https://astrosafe.co"
+                style={{
+                  textDecoration: "none",
+                }}
+                rel="noreferrer"
+              >
+                <UrsorButton
+                  dark
+                  variant="tertiary"
+                  onClick={() => null}
+                  endIcon={ChevronRight}
+                >
+                  Get Browser
+                </UrsorButton>
+              </a>
+            )
+          ) : null
         ) : null}
         {user ? (
           <Stack
