@@ -55,7 +55,7 @@ export const CreationBox = (props: {
   const addTopic = () => {
     setTopics([...topics, value]);
     //props.titlesCallback?.([...topics, value]);
-    setTitlesWaitingForGenerationUponSignIn([...topics, value]);
+    !user && setTitlesWaitingForGenerationUponSignIn([...topics, value]);
     setValue("");
   };
 
