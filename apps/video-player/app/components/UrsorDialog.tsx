@@ -114,22 +114,17 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       }}
       PaperProps={{
         style: {
-          //zIndex: zIndices.POPUP,
           width: props.width || WIDTH,
           maxWidth: props.maxWidth || WIDTH,
-          minWidth: props.fitContent ? undefined : props.width || WIDTH,
+          minWidth: props.fitContent
+            ? undefined
+            : props.maxWidth || props.width || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
-          //height: HEIGHT,
           minHeight: props.height || HEIGHT,
           borderRadius: BORDER_RADIUS,
         },
       }}
       sx={{
-        // ".MuiModal-root-MuiDialog-root": {
-        //   zIndex: undefined,
-        // },
-        //zIndex: ,
-        // zIndex: zIndices.POPUP,
         py: "10px",
         ".MuiBackdrop-root": {
           display: props.noBackdrop ? "none" : "visible",
