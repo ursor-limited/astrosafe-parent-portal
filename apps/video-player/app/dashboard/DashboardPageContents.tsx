@@ -36,6 +36,8 @@ const VIDEO_WIDTH = 845;
 const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
 const PROMPT_BAR_GRADIENT = "linear-gradient(0deg, #6596FF, #7B61FF)";
 
+const UPGRADE_PROMPT_BAR_VISIBILITY_WINDOW_WIDTH_THRESHOLD = 1110;
+
 const UpgradePromptBar = () => (
   <Stack width="100%" justifyContent="center">
     <Stack
@@ -44,7 +46,7 @@ const UpgradePromptBar = () => (
       right={0}
       margin="auto auto"
       height="44px"
-      maxWidth="50%"
+      maxWidth="40%"
       justifyContent="center"
       alignItems="center"
       zIndex={2}
@@ -212,10 +214,19 @@ function DashboardPageContents() {
   );
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [upgradePromptBarHidden, setUpgradePromptBarHidden] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setUpgradePromptBarHidden(
+        width < UPGRADE_PROMPT_BAR_VISIBILITY_WINDOW_WIDTH_THRESHOLD
+      ),
+    [width]
+  );
 
   return (
     <Stack flex={1} position="relative">
-      <UpgradePromptBar />
+      {!upgradePromptBarHidden ? <UpgradePromptBar /> : null}
       <Header showUpgradeButton />
       <Stack
         spacing="40px"
