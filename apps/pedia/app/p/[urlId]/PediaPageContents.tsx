@@ -168,7 +168,6 @@ const TextBlockCard = (props: {
   onClick: () => void;
   editing?: boolean;
   regenerationCallback?: () => void;
-  regenerating?: boolean;
   selectedLevel: PediaAge;
   //fitContent?: boolean;
 }) => {
@@ -177,10 +176,18 @@ const TextBlockCard = (props: {
     setBlock(props.block);
   }, [props.block]);
 
-  const regenerate = () =>
-    ApiController.regenerateTextBlock(props.block.id).then((newBlock) =>
-      setBlock(newBlock)
-    );
+  const [regenerating, setRegenerating] = useState<boolean>(false);
+  // const [byteCelebration, setByteCelebration] = useState<boolean>(true);
+  const regenerate = () => {
+    setRegenerating(true);
+    ApiController.regenerateTextBlock(props.block.id)
+      .then((newBlock) => setBlock(newBlock))
+      .then(() => {
+        setRegenerating(false);
+        // setByteCelebration(true);
+        // setTimeout(() => setByteCelebration(false), 2000);
+      });
+  };
 
   const [expanded, setExpanded] = useState<boolean>(false);
   const [changing, setChanging] = useState<boolean>(false);
@@ -218,7 +225,11 @@ const TextBlockCard = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
 
   return (
-    <Regenerable on={!!props.editing} callback={regenerate}>
+    <Regenerable
+      on={!!props.editing}
+      callback={regenerate}
+      regenerating={regenerating}
+    >
       <Stack
         flex={1}
         position="relative"
@@ -231,6 +242,35 @@ const TextBlockCard = (props: {
         bgcolor="rgb(255,255,255)"
         borderRadius={BORDER_RADIUS}
       >
+        {/* <Stack
+          position="absolute"
+          width="100%"
+          height="100%"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor="rgb(255,0,255)"
+          borderRadius={BORDER_RADIUS}
+          //border={`2px solid ${PALETTE.secondary.purple[2]}`}
+          sx={{
+            pointerEvents: "none",
+            opacity: regenerating || byteCelebration ? 1 : 0,
+            transition: "0.5s",
+          }}
+        >
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              transform: "translate(-5px, -10px)",
+            }}
+          >
+            <Byte
+              animation={byteCelebration ? "celebration" : "loading"}
+              loop
+              size={75}
+            />
+          </Stack>
+        </Stack> */}
         <Stack
           height={expanded ? expandedHeight : "100%"}
           width="100%"

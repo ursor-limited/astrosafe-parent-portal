@@ -104,9 +104,9 @@ class ApiController {
       (response: any) => response.json()
     );
   }
-  static async regenerateTextBlock(title: string) {
+  static async regenerateTextBlock(id: string) {
     //@ts-ignore
-    return post("pedia/regenerate/textBlock", { title }).then((response: any) =>
+    return post("pedia/regenerate/textBlock", { id }).then((response: any) =>
       response.json()
     );
   }

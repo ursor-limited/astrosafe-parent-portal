@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";
 import SyncIcon from "@/images/icons/SyncIcon.svg";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -11,12 +12,23 @@ const Byte = dynamic(
 interface IRegenerableProps {
   on: boolean;
   callback: () => void;
-  loading?: boolean;
+  regenerating?: boolean;
   bottomButton?: boolean;
   children: React.ReactNode;
 }
 
 export default function Regenerable(props: IRegenerableProps) {
+  const [showLoading, setShowLoading] = useState<boolean>(false);
+  const [byteCelebration, setByteCelebration] = useState<boolean>(false);
+  useEffect(() => {
+    setShowLoading(!!props.regenerating);
+  }, [props.regenerating]);
+  useEffect(() => {
+    if (showLoading && !props.regenerating) {
+      setByteCelebration(true);
+      setTimeout(() => setByteCelebration(false), 2000);
+    }
+  }, [showLoading, props.regenerating]);
   return (
     <Stack
       sx={{
@@ -29,7 +41,7 @@ export default function Regenerable(props: IRegenerableProps) {
       flex={1}
     >
       {props.children}
-      {props.on && !props.loading ? (
+      {props.on && !props.regenerating ? (
         <Stack
           position="absolute"
           right="24px"
@@ -41,7 +53,7 @@ export default function Regenerable(props: IRegenerableProps) {
             dark
             //variant="tertiary"
             //backgroundColor="rgb(255,255,255)"
-            onClick={() => null}
+            onClick={props.callback}
             startIcon={SyncIcon}
             iconSize={18}
             size="small"
@@ -51,29 +63,36 @@ export default function Regenerable(props: IRegenerableProps) {
           </UrsorButton>
         </Stack>
       ) : null}
-      {props.loading ? (
+
+      <Stack
+        position="absolute"
+        width="100%"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+        bgcolor="rgb(255,255,255)"
+        borderRadius="12px"
+        sx={{
+          outline: `2px solid ${PALETTE.secondary.purple[2]}`,
+          pointerEvents: "none",
+          opacity: showLoading || byteCelebration ? 1 : 0,
+          transition: "0.5s",
+        }}
+      >
         <Stack
-          position="absolute"
-          top={0}
-          left={0}
-          width="100%"
-          height="100%"
           justifyContent="center"
           alignItems="center"
-          bgcolor="rgb(255,255,255)"
+          sx={{
+            transform: "translate(-5px, 4px)",
+          }}
         >
-          <Stack
-            flex={1}
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              transform: "translate(-5px, -10px)",
-            }}
-          >
-            <Byte animation="loading" loop size={75} />
-          </Stack>
+          <Byte
+            animation={byteCelebration ? "celebration" : "loading"}
+            loop
+            size={75}
+          />
         </Stack>
-      ) : null}
+      </Stack>
     </Stack>
   );
 }
