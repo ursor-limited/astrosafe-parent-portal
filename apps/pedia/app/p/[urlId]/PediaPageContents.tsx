@@ -507,6 +507,7 @@ const MobileColumn = (props: {
   imageCardDetails: IPediaImage[];
   facts: IPediaPage["facts"];
   questions: IPediaQuestion[];
+  articleId: string;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -535,7 +536,12 @@ const MobileColumn = (props: {
         />
       </Stack>
       <Stack spacing="12px" width="100%" height="100%">
-        <PediaMainCard mobile title={props.title} {...props.mainCardDetails} />
+        <PediaMainCard
+          articleId={props.articleId}
+          mobile
+          title={props.title}
+          {...props.mainCardDetails}
+        />
         <TextBlockCard
           key="overview"
           block={props.textCardDetails[0] ?? []}
@@ -584,17 +590,6 @@ const MobileColumn = (props: {
           </Stack>
         ) : null}
         <Stack minHeight="30px" />
-        {/* {props.suggestedPages.length > 0 ? (
-          <SuggestionsSection
-            suggestedPages={props.suggestedPages}
-            parentPages={props.parentPages}
-            mobile
-          />
-        ) : null} */}
-        {/* <Stack minHeight="30px" />
-        <Stack width="100%">
-          <Footer fontScale={width / 700} />
-        </Stack> */}
       </Stack>
       {selectedTextCardId ? (
         <TextSectionPopover
@@ -689,6 +684,7 @@ const Bento = (props: {
   editing: boolean;
   columnWidth: number;
   selectedLevel: PediaAge;
+  articleId: string;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -710,6 +706,7 @@ const Bento = (props: {
         {..._.omit(props.mainCardDetails, "title")}
         width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
         editing={props.editing}
+        articleId={props.articleId}
       />
       <TextBlockCard
         block={props.textCardDetails[0] ?? []}
@@ -822,6 +819,7 @@ export default function PediaPageContents(props: {
                 textCardDetails={props.articleDetails.textBlocks}
                 facts={props.articleDetails.facts}
                 questions={props.articleDetails.questions}
+                articleId={props.articleDetails.id}
               />
             </Stack>
           </UrsorFadeIn>
@@ -852,6 +850,7 @@ export default function PediaPageContents(props: {
                     columnWidth={columnWidth}
                     editing={editing}
                     selectedLevel={selectedLevel}
+                    articleId={props.articleDetails.id}
                   />
                   {props.articleDetails.questions &&
                   props.articleDetails.questions.length > 0 ? (

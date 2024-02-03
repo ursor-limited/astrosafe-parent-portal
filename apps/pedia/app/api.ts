@@ -104,9 +104,15 @@ class ApiController {
       (response: any) => response.json()
     );
   }
-  static async regenerateTextBlock(id: string) {
+  static async regenerateTextBlock(textBlockId: string) {
     //@ts-ignore
-    return post("pedia/regenerate/textBlock", { id }).then((response: any) =>
+    return post("pedia/regenerate/textBlock", { textBlockId }).then((response: any) =>
+      response.json()
+    );
+  }
+  static async regenerateMainImage(articleId: string) {
+    //@ts-ignore
+    return post("pedia/regenerate/mainImage", { articleId }).then((response: any) =>
       response.json()
     );
   }
