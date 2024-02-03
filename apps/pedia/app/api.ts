@@ -116,6 +116,12 @@ class ApiController {
       response.json()
     );
   }
+  static async regenerateStats(articleId: string) {
+    //@ts-ignore
+    return post("pedia/regenerate/stats", { articleId }).then((response: any) =>
+      response.json()
+    );
+  }
   static async updateArticle(articleId: string, details: any) {
     //@ts-ignore
     return patch(`pedia/article/${articleId}`, details).then((response: any) =>

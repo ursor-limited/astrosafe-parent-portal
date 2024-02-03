@@ -15,6 +15,8 @@ interface IRegenerableProps {
   regenerating?: boolean;
   bottomButton?: boolean;
   extraButton?: JSX.Element;
+  fitContent?: boolean;
+  byteSize?: number;
   children: React.ReactNode;
 }
 
@@ -33,43 +35,46 @@ export default function Regenerable(props: IRegenerableProps) {
   return (
     <Stack
       sx={{
-        outline: props.on
-          ? `2px solid ${PALETTE.secondary.purple[2]}`
-          : undefined,
+        outline: `${props.on ? 2 : 0}px solid ${PALETTE.secondary.purple[2]}`,
+        transition: "0.5s",
       }}
       position="relative"
       borderRadius="12px"
-      flex={1}
+      flex={props.fitContent ? undefined : 1}
     >
       {props.children}
-      {props.on && !props.regenerating ? (
-        <Stack
-          position="absolute"
-          right="24px"
-          top={props.bottomButton ? undefined : "-15px"}
-          bottom={props.bottomButton ? "-15px" : undefined}
-          zIndex={2}
-          direction="row"
-          spacing="10px"
+      <Stack
+        position="absolute"
+        right="24px"
+        top={props.bottomButton ? undefined : "-15px"}
+        bottom={props.bottomButton ? "-15px" : undefined}
+        zIndex={2}
+        direction="row"
+        spacing="10px"
+        sx={{
+          opacity: props.on && !props.regenerating ? 1 : 0,
+          pointerEvents: props.on && !props.regenerating ? undefined : "none",
+          transition: "0.6s",
+        }}
+      >
+        {props.extraButton}
+        <UrsorButton
+          dark
+          //variant="tertiary"
+          //backgroundColor="rgb(255,255,255)"
+          onClick={props.callback}
+          startIcon={SyncIcon}
+          iconSize={18}
+          size="small"
+          strongShadow
         >
-          {props.extraButton}
-          <UrsorButton
-            dark
-            //variant="tertiary"
-            //backgroundColor="rgb(255,255,255)"
-            onClick={props.callback}
-            startIcon={SyncIcon}
-            iconSize={18}
-            size="small"
-            strongShadow
-          >
-            Regenerate
-          </UrsorButton>
-        </Stack>
-      ) : null}
+          Regenerate
+        </UrsorButton>
+      </Stack>
 
       <Stack
         position="absolute"
+        zIndex={2}
         width="100%"
         height="100%"
         justifyContent="center"
@@ -78,7 +83,7 @@ export default function Regenerable(props: IRegenerableProps) {
         borderRadius="12px"
         sx={{
           outline: `2px solid ${PALETTE.secondary.purple[2]}`,
-          pointerEvents: "none",
+          pointerEvents: showLoading || byteCelebration ? undefined : "none",
           opacity: showLoading || byteCelebration ? 1 : 0,
           transition: "0.5s",
         }}
@@ -87,13 +92,13 @@ export default function Regenerable(props: IRegenerableProps) {
           justifyContent="center"
           alignItems="center"
           sx={{
-            transform: "translate(-5px, 4px)",
+            transform: "translateX(-5px)",
           }}
         >
           <Byte
             animation={byteCelebration ? "celebration" : "loading"}
             loop
-            size={75}
+            size={props.byteSize || 75}
           />
         </Stack>
       </Stack>

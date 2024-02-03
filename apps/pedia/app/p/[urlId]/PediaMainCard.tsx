@@ -7,9 +7,14 @@ import Regenerable from "@/app/components/Regenerable";
 import { shouldBeLightText } from "@/app/c/[pageId]/CollectionPageBento";
 import ApiController from "@/app/api";
 import { useContext, useEffect, useState } from "react";
-import UrsorPopover from "@/app/components/UrsorPopover";
 import { SecondaryColor } from "ui/palette";
 import NotificationContext from "@/app/components/NotificationContext";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const MAIN_CARD_HEIGHT = "545px";
 export const COLORED_CARD_TITLE_DARK_COLOR = "rgba(0,0,0,0.5)";
@@ -149,15 +154,30 @@ const PediaMainCard = (props: {
   const [imageUrl, setImageUrl] = useState<string>("");
   useEffect(() => setImageUrl(props.imageUrl), [props.imageUrl]);
 
-  const [regenerating, setRegenerating] = useState<boolean>(false);
+  const [regeneratingImage, setRegeneratingImage] = useState<boolean>(false);
   const regenerateImage = () => {
-    setRegenerating(true);
+    setRegeneratingImage(true);
     props.incrementRegenerationCount?.();
     ApiController.regenerateMainImage(props.articleId)
       .then((url) => setImageUrl(url))
       .then(() => {
-        setRegenerating(false);
+        setRegeneratingImage(false);
         notificationCtx.success("Regenerated the Main Image.");
+      });
+  };
+
+  const [stats, setStats] = useState<IPediaStat[]>([]);
+  useEffect(() => setStats(props.stats || []), [props.stats]);
+
+  const [regeneratingStats, setRegeneratingStats] = useState<boolean>(false);
+  const regenerateStats = () => {
+    setRegeneratingStats(true);
+    props.incrementRegenerationCount?.();
+    ApiController.regenerateStats(props.articleId)
+      .then((newStats) => setStats(newStats))
+      .then(() => {
+        setRegeneratingStats(false);
+        notificationCtx.success("Regenerated the Stats.");
       });
   };
   const [color, setColor] = useState<string>("#ffffff");
@@ -209,7 +229,7 @@ const PediaMainCard = (props: {
       <Regenerable
         on={!!props.editing}
         callback={regenerateImage}
-        regenerating={regenerating}
+        regenerating={regeneratingImage}
         extraButton={
           <PaletteButton
             selected={color}
@@ -240,47 +260,52 @@ const PediaMainCard = (props: {
           />
         </Stack>
       </Regenerable>
-      <Stack>
-        <Regenerable on={!!props.editing} callback={() => null} bottomButton>
-          <Stack px="16px">
-            <Stack
-              spacing="8px"
-              px="15px"
-              py="12px"
-              boxSizing="border-box"
-              bgcolor="rgb(255,255,255)"
-              borderRadius="12px"
-              zIndex={1}
-            >
-              {props.stats?.map((fact, i) => (
-                <Stack
-                  key={i}
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="space-between"
+      <Regenerable
+        on={!!props.editing}
+        callback={regenerateStats}
+        regenerating={regeneratingStats}
+        bottomButton
+        fitContent
+        byteSize={58}
+      >
+        <Stack px="16px">
+          <Stack
+            spacing="8px"
+            px="15px"
+            py="12px"
+            boxSizing="border-box"
+            bgcolor="rgb(255,255,255)"
+            borderRadius="12px"
+            zIndex={1}
+          >
+            {stats?.map((fact, i) => (
+              <Stack
+                key={i}
+                direction="row"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Typography
+                  bold
+                  color={PALETTE.secondary.grey[4]}
+                  noWrap
+                  variant={props.mobile ? "tiny" : "small"}
+                  htmlTag="h3"
                 >
-                  <Typography
-                    bold
-                    color={PALETTE.secondary.grey[4]}
-                    noWrap
-                    variant={props.mobile ? "tiny" : "small"}
-                    htmlTag="h3"
-                  >
-                    {fact.title}
-                  </Typography>
-                  <Typography
-                    color={PALETTE.secondary.grey[4]}
-                    noWrap
-                    variant={props.mobile ? "tiny" : "small"}
-                  >
-                    {fact.content}
-                  </Typography>
-                </Stack>
-              ))}
-            </Stack>
+                  {fact.title}
+                </Typography>
+                <Typography
+                  color={PALETTE.secondary.grey[4]}
+                  noWrap
+                  variant={props.mobile ? "tiny" : "small"}
+                >
+                  {fact.content}
+                </Typography>
+              </Stack>
+            ))}
           </Stack>
-        </Regenerable>
-      </Stack>
+        </Stack>
+      </Regenerable>
     </Stack>
   );
 };

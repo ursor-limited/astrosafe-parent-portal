@@ -53,6 +53,7 @@ const TEXT_CARD_Y_PADDING = 20;
 const BEZIER = "cubic-bezier(.32,.82,.24,.98)";
 const TEXT_CARD_TRANSITION_DURATION = 870;
 const MAX_MOBILE_IMAGE_HEIGHT = 515;
+const MAX_REGENERATIONS = 3;
 
 export const BACKDROP_STYLE = {
   backdropFilter: "blur(3px)",
@@ -860,12 +861,26 @@ export default function PediaPageContents(props: {
                 collectionPageId={props.collectionDetails?.id}
                 collectionPageTitle={props.collectionDetails?.title}
                 topRightButton={
-                  <EditingMenuItems
-                    regenerationsLeft={Math.max(0, 3 - regenerationCount)}
-                    maxRegenerations={3}
-                    editingOn={editing}
-                    clickCallback={() => setEditing(!editing)}
-                  />
+                  <Stack
+                    sx={{
+                      opacity: regenerationCount >= MAX_REGENERATIONS ? 0.5 : 1,
+                      transition: "1s",
+                      pointerEvents:
+                        regenerationCount >= MAX_REGENERATIONS
+                          ? "none"
+                          : undefined,
+                    }}
+                  >
+                    <EditingMenuItems
+                      regenerationsLeft={Math.max(
+                        0,
+                        MAX_REGENERATIONS - regenerationCount
+                      )}
+                      maxRegenerations={MAX_REGENERATIONS}
+                      editingOn={editing}
+                      clickCallback={() => setEditing(!editing)}
+                    />
+                  </Stack>
                 }
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">

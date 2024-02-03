@@ -9,12 +9,17 @@ import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
 import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const HEADER_HEIGHT = 86;
 
