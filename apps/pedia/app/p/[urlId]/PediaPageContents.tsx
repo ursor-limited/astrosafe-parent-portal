@@ -817,13 +817,16 @@ export default function PediaPageContents(props: {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const [editing, setEditing] = useState<boolean>(false);
-
   const [regenerationCount, setRegenerationCount] = useState<number>(0);
   useEffect(
     () => setRegenerationCount(props.articleDetails.regenerationCount),
     [props.articleDetails.regenerationCount]
   );
+
+  const [editing, setEditing] = useState<boolean>(false);
+  useEffect(() => {
+    editing && setEditing(regenerationCount < MAX_REGENERATIONS);
+  }, [regenerationCount]);
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -863,7 +866,7 @@ export default function PediaPageContents(props: {
                 topRightButton={
                   <Stack
                     sx={{
-                      opacity: regenerationCount >= MAX_REGENERATIONS ? 0.5 : 1,
+                      opacity: regenerationCount >= MAX_REGENERATIONS ? 0.4 : 1,
                       transition: "1s",
                       pointerEvents:
                         regenerationCount >= MAX_REGENERATIONS
