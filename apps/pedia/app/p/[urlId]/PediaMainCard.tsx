@@ -142,6 +142,7 @@ const PediaMainCard = (props: {
   mobile?: boolean;
   editing?: boolean;
   articleId: string;
+  incrementRegenerationCount?: () => void;
 }) => {
   const notificationCtx = useContext(NotificationContext);
 
@@ -151,6 +152,7 @@ const PediaMainCard = (props: {
   const [regenerating, setRegenerating] = useState<boolean>(false);
   const regenerateImage = () => {
     setRegenerating(true);
+    props.incrementRegenerationCount?.();
     ApiController.regenerateMainImage(props.articleId)
       .then((url) => setImageUrl(url))
       .then(() => {

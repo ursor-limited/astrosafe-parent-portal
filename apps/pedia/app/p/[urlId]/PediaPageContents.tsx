@@ -102,6 +102,7 @@ export interface IPediaPage {
   facts: string[];
   color: string;
   questions: IPediaQuestion[];
+  regenerationCount: number;
 }
 
 export interface IPediaCollectionPage {
@@ -170,6 +171,7 @@ const TextBlockCard = (props: {
   onClick: () => void;
   editing?: boolean;
   regenerationCallback?: () => void;
+  incrementRegenerationCount?: () => void;
   selectedLevel: PediaAge;
   //fitContent?: boolean;
 }) => {
@@ -184,6 +186,7 @@ const TextBlockCard = (props: {
   // const [byteCelebration, setByteCelebration] = useState<boolean>(true);
   const regenerate = () => {
     setRegenerating(true);
+    props.incrementRegenerationCount?.();
     ApiController.regenerateTextBlock(props.block.id)
       .then((newBlock) => setBlock(newBlock))
       .then(() => {
@@ -513,6 +516,7 @@ const MobileColumn = (props: {
   facts: IPediaPage["facts"];
   questions: IPediaQuestion[];
   articleId: string;
+  incrementRegenerationCount?: () => void;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -546,12 +550,14 @@ const MobileColumn = (props: {
           mobile
           title={props.title}
           {...props.mainCardDetails}
+          incrementRegenerationCount={props.incrementRegenerationCount}
         />
         <TextBlockCard
           key="overview"
           block={props.textCardDetails[0] ?? []}
           selectedLevel={selectedLevel}
           onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
+          incrementRegenerationCount={props.incrementRegenerationCount}
         />
         {props.textCardDetails
           .slice(1)
@@ -585,6 +591,7 @@ const MobileColumn = (props: {
                 onClick={() =>
                   setSelectedTextCardId(props.textCardDetails[i + 1]?.id)
                 }
+                incrementRegenerationCount={props.incrementRegenerationCount}
               />
             </Stack>,
           ])
@@ -617,6 +624,7 @@ const BentoRow = (props: {
   originalImageDimensions?: { width: number; height: number };
   editing?: boolean;
   selectedLevel: PediaAge;
+  incrementRegenerationCount?: () => void;
 }) => {
   const { width } = useWindowSize();
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -650,6 +658,7 @@ const BentoRow = (props: {
         onClick={() => null}
         editing={props.editing}
         selectedLevel={props.selectedLevel}
+        incrementRegenerationCount={props.incrementRegenerationCount}
       />
       {!factUnderImage || hideImage ? (
         <FactsCard facts={props.facts} key="fact" />
@@ -690,6 +699,7 @@ const Bento = (props: {
   columnWidth: number;
   selectedLevel: PediaAge;
   articleId: string;
+  incrementRegenerationCount?: () => void;
 }) => {
   const [selectedTextCardId, setSelectedTextCardId] = useState<
     string | undefined
@@ -712,12 +722,14 @@ const Bento = (props: {
         width={getWidthOfColumns(props.columnWidth > 72 ? 5 : 6)}
         editing={props.editing}
         articleId={props.articleId}
+        incrementRegenerationCount={props.incrementRegenerationCount}
       />
       <TextBlockCard
         block={props.textCardDetails[0] ?? []}
         selectedLevel={props.selectedLevel}
         onClick={() => setSelectedTextCardId(props.textCardDetails[0]?.id)}
         editing={props.editing}
+        incrementRegenerationCount={props.incrementRegenerationCount}
       />
     </Stack>
   );
@@ -768,6 +780,7 @@ const Bento = (props: {
         reversed={!!(i % 2)}
         editing={props.editing}
         selectedLevel={props.selectedLevel}
+        incrementRegenerationCount={props.incrementRegenerationCount}
       />
     ));
   return (
@@ -804,6 +817,12 @@ export default function PediaPageContents(props: {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   const [editing, setEditing] = useState<boolean>(false);
+
+  const [regenerationCount, setRegenerationCount] = useState<number>(0);
+  useEffect(
+    () => setRegenerationCount(props.articleDetails.regenerationCount),
+    [props.articleDetails.regenerationCount]
+  );
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -842,8 +861,8 @@ export default function PediaPageContents(props: {
                 collectionPageTitle={props.collectionDetails?.title}
                 topRightButton={
                   <EditingMenuItems
-                    regenerationsLeft={3}
-                    maxRegenerations={5}
+                    regenerationsLeft={Math.max(0, 3 - regenerationCount)}
+                    maxRegenerations={3}
                     editingOn={editing}
                     clickCallback={() => setEditing(!editing)}
                   />
@@ -864,6 +883,9 @@ export default function PediaPageContents(props: {
                     editing={editing}
                     selectedLevel={selectedLevel}
                     articleId={props.articleDetails.id}
+                    incrementRegenerationCount={() =>
+                      setRegenerationCount((prev) => prev + 1)
+                    }
                   />
                   {props.articleDetails.questions &&
                   props.articleDetails.questions.length > 0 ? (
