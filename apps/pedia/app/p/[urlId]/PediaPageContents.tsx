@@ -28,6 +28,7 @@ import AgeSelection from "@/app/components/AgeSelection";
 import Regenerable from "@/app/components/Regenerable";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
+import EditingMenuItems from "@/app/components/EditingMenuItems";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -839,6 +840,14 @@ export default function PediaPageContents(props: {
                 editingCallback={() => setEditing(!editing)}
                 collectionPageId={props.collectionDetails?.id}
                 collectionPageTitle={props.collectionDetails?.title}
+                topRightButton={
+                  <EditingMenuItems
+                    regenerationsLeft={3}
+                    maxRegenerations={5}
+                    editingOn={editing}
+                    clickCallback={() => setEditing(!editing)}
+                  />
+                }
               >
                 <Stack ref={setBentoRef} spacing="94px" alignItems="center">
                   <Bento
