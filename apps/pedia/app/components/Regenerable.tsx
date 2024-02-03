@@ -14,6 +14,7 @@ interface IRegenerableProps {
   callback: () => void;
   regenerating?: boolean;
   bottomButton?: boolean;
+  extraButton?: JSX.Element;
   children: React.ReactNode;
 }
 
@@ -48,7 +49,10 @@ export default function Regenerable(props: IRegenerableProps) {
           top={props.bottomButton ? undefined : "-15px"}
           bottom={props.bottomButton ? "-15px" : undefined}
           zIndex={2}
+          direction="row"
+          spacing="10px"
         >
+          {props.extraButton}
           <UrsorButton
             dark
             //variant="tertiary"

@@ -116,6 +116,12 @@ class ApiController {
       response.json()
     );
   }
+  static async updateArticle(articleId: string, details: any) {
+    //@ts-ignore
+    return patch(`pedia/article/${articleId}`, details).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;

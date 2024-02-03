@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
@@ -27,6 +27,7 @@ import dynamic from "next/dynamic";
 import AgeSelection from "@/app/components/AgeSelection";
 import Regenerable from "@/app/components/Regenerable";
 import ApiController from "@/app/api";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const Byte = dynamic(
   () => import("@/app/components/Byte"),
@@ -171,6 +172,8 @@ const TextBlockCard = (props: {
   selectedLevel: PediaAge;
   //fitContent?: boolean;
 }) => {
+  const notificationCtx = useContext(NotificationContext);
+
   const [block, setBlock] = useState<IPediaTextBlock | undefined>(undefined);
   useEffect(() => {
     setBlock(props.block);
@@ -184,8 +187,9 @@ const TextBlockCard = (props: {
       .then((newBlock) => setBlock(newBlock))
       .then(() => {
         setRegenerating(false);
-        // setByteCelebration(true);
-        // setTimeout(() => setByteCelebration(false), 2000);
+        notificationCtx.success(
+          `Regenerated "${props.block.title}", for both Students and Scholars.`
+        );
       });
   };
 
