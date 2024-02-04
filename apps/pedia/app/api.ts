@@ -122,6 +122,12 @@ class ApiController {
       response.json()
     );
   }
+  static async regenerateFacts(articleId: string, factIds: string[]) {
+    //@ts-ignore
+    return post("pedia/regenerate/facts", { articleId, factIds }).then((response: any) =>
+      response.json()
+    );
+  }
   static async updateArticle(articleId: string, details: any) {
     //@ts-ignore
     return patch(`pedia/article/${articleId}`, details).then((response: any) =>

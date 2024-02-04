@@ -78,6 +78,11 @@ export interface IPediaStat {
   content: string;
 }
 
+export interface IPediaFact {
+  id: string;
+  value: string;
+}
+
 interface IPediaOption {
   id: string;
   value: string;
@@ -100,7 +105,7 @@ export interface IPediaPage {
   stats: IPediaStat[];
   textBlocks: IPediaTextBlock[];
   images: IPediaImage[];
-  facts: string[];
+  facts: IPediaFact[];
   color: string;
   questions: IPediaQuestion[];
   regenerationCount: number;
@@ -329,7 +334,20 @@ const TextBlockCard = (props: {
   );
 };
 
-const FactsCard = (props: { facts: string[] }) => {
+const FactsCard = (props: {
+  facts: IPediaFact[];
+  articleId: string;
+  editing?: boolean;
+  regenerationCallback?: () => void;
+  incrementRegenerationCount?: () => void;
+}) => {
+  const notificationCtx = useContext(NotificationContext);
+
+  const [facts, setFacts] = useState<IPediaFact[]>([]);
+  useEffect(() => {
+    setFacts(props.facts);
+  }, [props.facts]);
+
   const [colors, setColors] = useState<string[]>([]);
   useEffect(
     () =>
@@ -340,83 +358,108 @@ const FactsCard = (props: { facts: string[] }) => {
       ),
     [props.facts]
   );
+
+  const [regenerating, setRegenerating] = useState<boolean>(false);
+  // const [byteCelebration, setByteCelebration] = useState<boolean>(true);
+  const regenerate = () => {
+    setRegenerating(true);
+    props.incrementRegenerationCount?.();
+    ApiController.regenerateFacts(
+      props.articleId,
+      props.facts.map((f) => f.id)
+    )
+      .then((newFacts) => setFacts(newFacts))
+      .then(() => {
+        setRegenerating(false);
+        notificationCtx.success(
+          `Regenerated Fact${props.facts.length === 1 ? "" : "s"}.`
+        );
+      });
+  };
   return (
-    <Stack
-      bgcolor="rgb(255,255,255)"
-      borderRadius="12px"
-      height="fit-content"
-      p={`${GRID_SPACING}px`}
-      boxSizing="border-box"
-      justifyContent="center"
-      spacing="16px"
-      minWidth="100%"
-      maxWidth={0}
+    <Regenerable
+      on={!!props.editing}
+      callback={regenerate}
+      regenerating={regenerating}
+      byteSize={58}
     >
-      <Stack direction="row" spacing="15px" alignItems="center">
-        <Stack
-          sx={{
-            transform: "translateY(-2px)",
-          }}
-        >
-          <Byte size={32} />
-        </Stack>
-        <Typography
-          variant="large"
-          bold
-          noWrap
-          color={PALETTE.secondary.grey[5]}
-        >
-          Did you know?
-        </Typography>
-      </Stack>
-      <Stack spacing="8px" pl="32px">
-        {props.facts.map((fact, i) => (
+      <Stack
+        bgcolor="rgb(255,255,255)"
+        borderRadius="12px"
+        height="fit-content"
+        p={`${GRID_SPACING}px`}
+        boxSizing="border-box"
+        justifyContent="center"
+        spacing="16px"
+        minWidth="100%"
+        maxWidth={0}
+      >
+        <Stack direction="row" spacing="15px" alignItems="center">
           <Stack
-            key={i}
-            direction="row"
             sx={{
-              background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
+              transform: "translateY(-2px)",
             }}
-            borderRadius="12px"
-            px="16px"
-            py="10px"
-            width="fit-content"
-            position="relative"
           >
-            {i === 0 ? (
-              <Stack position="absolute" top="-5px" left="-1px">
-                <Stack
-                  flex={1}
-                  minHeight="10px"
-                  minWidth="10px"
-                  sx={{
-                    backgroundImage: `url(${SpeechBubbleArrowHead.src})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    boxSizing: "border-box",
-                  }}
-                />
-              </Stack>
-            ) : null}
-            <Typography color={PALETTE.font.dark}>{fact}</Typography>
-            <Stack
-              pl="14px"
-              alignItems="center"
-              justifyContent="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: colors[i],
-                  },
-                },
-              }}
-            >
-              <Star height="14px" width="14px" />
-            </Stack>
+            <Byte size={32} />
           </Stack>
-        ))}
+          <Typography
+            variant="large"
+            bold
+            noWrap
+            color={PALETTE.secondary.grey[5]}
+          >
+            Did you know?
+          </Typography>
+        </Stack>
+        <Stack spacing="8px" pl="32px">
+          {props.facts.map((fact, i) => (
+            <Stack
+              key={i}
+              direction="row"
+              sx={{
+                background: `linear-gradient(90deg, ${PALETTE.secondary.grey[2]}, ${PALETTE.secondary.grey[1]})`,
+              }}
+              borderRadius="12px"
+              px="16px"
+              py="10px"
+              width="fit-content"
+              position="relative"
+            >
+              {i === 0 ? (
+                <Stack position="absolute" top="-5px" left="-1px">
+                  <Stack
+                    flex={1}
+                    minHeight="10px"
+                    minWidth="10px"
+                    sx={{
+                      backgroundImage: `url(${SpeechBubbleArrowHead.src})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </Stack>
+              ) : null}
+              <Typography color={PALETTE.font.dark}>{fact.value}</Typography>
+              <Stack
+                pl="14px"
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: colors[i],
+                    },
+                  },
+                }}
+              >
+                <Star height="14px" width="14px" />
+              </Stack>
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
-    </Stack>
+    </Regenerable>
   );
 };
 
@@ -584,6 +627,8 @@ const MobileColumn = (props: {
                   ? props.facts.slice(-3)
                   : [props.facts[i]]
               }
+              articleId={props.articleId}
+              incrementRegenerationCount={props.incrementRegenerationCount}
             />,
             <Stack key={`text${i}`}>
               <TextBlockCard
@@ -617,9 +662,10 @@ const MobileColumn = (props: {
 };
 
 const BentoRow = (props: {
+  articleId: string;
   textCardDetails: IPediaTextBlock;
   imageCardDetails?: IPediaImage;
-  facts: string[];
+  facts: IPediaFact[];
   imageWidth: number;
   reversed: boolean;
   originalImageDimensions?: { width: number; height: number };
@@ -662,7 +708,12 @@ const BentoRow = (props: {
         incrementRegenerationCount={props.incrementRegenerationCount}
       />
       {!factUnderImage || hideImage ? (
-        <FactsCard facts={props.facts} key="fact" />
+        <FactsCard
+          facts={props.facts}
+          key="fact"
+          editing={props.editing}
+          articleId={props.articleId}
+        />
       ) : (
         <></>
       )}
@@ -677,7 +728,12 @@ const BentoRow = (props: {
               width={props.imageWidth}
             />
             {factUnderImage ? (
-              <FactsCard facts={props.facts} key="fact" />
+              <FactsCard
+                facts={props.facts}
+                key="fact"
+                editing={props.editing}
+                articleId={props.articleId}
+              />
             ) : (
               <></>
             )}
@@ -781,6 +837,7 @@ const Bento = (props: {
         reversed={!!(i % 2)}
         editing={props.editing}
         selectedLevel={props.selectedLevel}
+        articleId={props.articleId}
         incrementRegenerationCount={props.incrementRegenerationCount}
       />
     ));
