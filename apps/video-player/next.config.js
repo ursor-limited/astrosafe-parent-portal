@@ -18,9 +18,9 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://astro-monorepo-video-player.vercel.app"
+      ? "https://astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
-      ? "https://astro-monorepo-video-player-git-dev-astros-afe.vercel.app"
+      ? "https://dev.astrosafe.co"
       : undefined,
   async redirects() {
     return [
