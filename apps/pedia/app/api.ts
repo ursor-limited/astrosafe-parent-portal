@@ -106,14 +106,14 @@ class ApiController {
   }
   static async regenerateTextBlock(textBlockId: string) {
     //@ts-ignore
-    return post("pedia/regenerate/textBlock", { textBlockId }).then((response: any) =>
-      response.json()
+    return post("pedia/regenerate/textBlock", { textBlockId }).then(
+      (response: any) => response.json()
     );
   }
   static async regenerateMainImage(articleId: string) {
     //@ts-ignore
-    return post("pedia/regenerate/mainImage", { articleId }).then((response: any) =>
-      response.json()
+    return post("pedia/regenerate/mainImage", { articleId }).then(
+      (response: any) => response.json()
     );
   }
   static async regenerateStats(articleId: string) {
@@ -124,8 +124,14 @@ class ApiController {
   }
   static async regenerateFacts(articleId: string, factIds: string[]) {
     //@ts-ignore
-    return post("pedia/regenerate/facts", { articleId, factIds }).then((response: any) =>
-      response.json()
+    return post("pedia/regenerate/facts", { articleId, factIds }).then(
+      (response: any) => response.json()
+    );
+  }
+  static async regenerateQuestions(articleId: string) {
+    //@ts-ignore
+    return post("pedia/regenerate/questions", { articleId }).then(
+      (response: any) => response.json()
     );
   }
   static async updateArticle(articleId: string, details: any) {

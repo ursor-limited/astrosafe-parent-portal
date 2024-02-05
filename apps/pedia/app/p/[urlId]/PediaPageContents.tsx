@@ -644,7 +644,11 @@ const MobileColumn = (props: {
           .flat()}
         {props.questions && props.questions.length > 0 ? (
           <Stack pt="48px">
-            <QuestionsCard questions={props.questions} mobile />
+            <QuestionsCard
+              questions={props.questions}
+              mobile
+              articleId={props.articleId}
+            />
           </Stack>
         ) : null}
         <Stack minHeight="30px" />
@@ -964,7 +968,11 @@ export default function PediaPageContents(props: {
                   />
                   {props.articleDetails.questions &&
                   props.articleDetails.questions.length > 0 ? (
-                    <QuestionsCard questions={props.articleDetails.questions} />
+                    <QuestionsCard
+                      questions={props.articleDetails.questions}
+                      articleId={props.articleDetails.id}
+                      editing={editing}
+                    />
                   ) : null}
                   {/* {props.suggestedPages.length > 0 ? (
                     <SuggestionsSection
