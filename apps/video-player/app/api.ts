@@ -23,13 +23,13 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`
+    `${BACKEND_URLS["preview"]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS["preview"]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS["preview"]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -74,6 +74,7 @@ class ApiController {
     return post("video", details).then((response: any) => response.json());
   }
   static async getVideoDetails(id: string) {
+    console.log("eee", process.env.VERCEL_ENV);
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
   }
