@@ -10,11 +10,11 @@ import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
-import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
+import mixpanel from "mixpanel-browser";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -245,12 +245,15 @@ export const Header = (props: {
                       </Stack>
                     ) : null} */}
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => router.push("/dashboard")}
                       icon={ListUnorderedIcon}
                       text="Dashboard"
                     />
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => {
+                        logout();
+                        mixpanel.reset();
+                      }}
                       icon={LogOutIcon}
                       text="Log out"
                     />

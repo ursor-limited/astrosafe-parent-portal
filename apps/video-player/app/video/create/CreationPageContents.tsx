@@ -19,12 +19,19 @@ import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
 import { useWindowSize } from "usehooks-ts";
-import {
-  HIDE_LOGO_PLAYER_WIDTH_THRESHOLD,
-  MAGICAL_BORDER_THICKNESS,
-} from "@/app/v/[videoId]/VideoPageContents";
+import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
 import SignupPromptDialog from "@/app/components/SignupPromptDialog";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init(
+  process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+  {
+    debug: true,
+    track_pageview: false,
+    persistence: "localStorage",
+  }
+);
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -67,7 +74,14 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
+  useEffect(() => {
+    mixpanel?.track("creation page");
+  }, []);
+
   const { user } = useAuth0();
+  useEffect(() => {
+    user?.email && mixpanel.identify(user?.email);
+  }, [user?.email]);
 
   const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
@@ -271,7 +285,14 @@ function CreationPageContents(props: { details: IVideo }) {
                         variant="tertiary"
                         onClick={() => {
                           setReadyForSubmittingUponLoadingUser(true);
-                          user ? submit() : setSignupPromptDialogOpen(true);
+                          if (user) {
+                            submit();
+                          } else {
+                            mixpanel.track(
+                              "creation page - opened signup prompt dialog"
+                            );
+                            setSignupPromptDialogOpen(true);
+                          }
                         }}
                         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                         hoverOpacity={0.7}

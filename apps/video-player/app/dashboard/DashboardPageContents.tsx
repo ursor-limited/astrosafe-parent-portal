@@ -14,14 +14,22 @@ import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { Grid } from "@mui/material";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import DynamicContainer from "../components/DynamicContainer";
 import _ from "lodash";
 import Image from "next/image";
 import NotificationContext from "../components/NotificationContext";
 import UpgradeDialog from "../components/UpgradeDialog";
 import DynamicCardGrid from "../components/DynamicCardGrid";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init(
+  process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+  {
+    debug: true,
+    track_pageview: false,
+    persistence: "localStorage",
+  }
+);
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;

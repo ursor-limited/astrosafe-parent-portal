@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useAuth0 } from "@auth0/auth0-react";
+import mixpanel from "mixpanel-browser";
 
 const SignupPromptDialog = (props: {
   open: boolean;
@@ -23,6 +24,7 @@ const SignupPromptDialog = (props: {
         callback: () => {
           props.closeCallback();
           props.mobile ? loginWithRedirect() : loginWithPopup();
+          mixpanel.track("creation page - clicked signup button");
         },
         icon: ChevronRight,
       }}

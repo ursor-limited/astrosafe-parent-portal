@@ -13,6 +13,16 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NotificationContext from "@/app/components/NotificationContext";
 import moment from "moment";
+import mixpanel from "mixpanel-browser";
+
+mixpanel.init(
+  process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+  {
+    debug: true,
+    track_pageview: false,
+    persistence: "localStorage",
+  }
+);
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -58,6 +68,12 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
 );
 
 function VideoPageContents(props: { details: IVideo }) {
+  const { user, loginWithPopup } = useAuth0();
+
+  useEffect(() => {
+    user?.email && mixpanel.track("viewing page");
+  }, [user?.email]);
+
   const notificationCtx = React.useContext(NotificationContext);
 
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
@@ -83,8 +99,6 @@ function VideoPageContents(props: { details: IVideo }) {
 
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
-
-  const { user, loginWithPopup } = useAuth0();
 
   useEffect(() => {
     moment().diff(props.details.createdAt, "seconds") < 10 &&
