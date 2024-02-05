@@ -9,7 +9,7 @@ import { Header } from "@/app/components/header";
 import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
+import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
@@ -98,6 +98,8 @@ const VideoCard = (props: IVideo) => {
         <UrsorButton
           variant="secondary"
           size="small"
+          endIcon={ClippyIcon}
+          iconSize={15}
           onClick={() => {
             navigator.clipboard.writeText(
               currentPageUrl ? currentPageUrl.split("?")[0] : ""
