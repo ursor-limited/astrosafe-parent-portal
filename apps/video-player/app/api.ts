@@ -20,6 +20,8 @@ const BACKEND_URLS = {
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
+console.log("aaa", process.env.NODE_ENV);
+
 const get = (route: string) =>
   fetch(
     //@ts-ignore
@@ -83,7 +85,9 @@ class ApiController {
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}/nVideos`).then((response: any) => response.json());
+    return get(`video/user/${id}/nVideos`).then((response: any) =>
+      response.json()
+    );
   }
   static async updateVideo(id: string, details: Partial<IVideo>) {
     return patch(`video/${id}`, details).then((response: any) =>
