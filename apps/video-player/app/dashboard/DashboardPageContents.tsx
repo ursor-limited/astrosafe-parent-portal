@@ -240,6 +240,9 @@ function DashboardPageContents() {
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
   const urlIsInvalid = async () =>
+    !["youtube.com", "youtu.be", "vimeo.com"].some((x) =>
+      inputValue.includes(x)
+    ) &&
     !!(
       await fetch(
         `https://noembed.com/embed?url=${encodeURIComponent(
@@ -340,7 +343,7 @@ function DashboardPageContents() {
           <UrsorFadeIn duration={800}>
             <Stack
               position="absolute"
-              top="-28px"
+              bottom="-25px"
               left={0}
               bgcolor={PALETTE.system.red}
               py="5px"
@@ -387,13 +390,15 @@ function DashboardPageContents() {
                 hoverOpacity={0.7}
                 endIcon={ChevronRight}
                 iconColor={PALETTE.font.light}
-                onClick={
-                  async () => setInvalidUrl(await urlIsInvalid())
-
-                  // router.push(
-                  //   `video/create?url=${encodeURIComponent(inputValue)}`
-                  // )
-                }
+                onClick={async () => {
+                  if (await urlIsInvalid()) {
+                    setInvalidUrl(true);
+                  } else {
+                    router.push(
+                      `video/create?url=${encodeURIComponent(inputValue)}`
+                    );
+                  }
+                }}
               >
                 Create Video
               </UrsorButton>
