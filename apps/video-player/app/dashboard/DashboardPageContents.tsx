@@ -230,7 +230,7 @@ function DashboardPageContents() {
 
   return (
     <Stack flex={1} position="relative">
-      {!upgradePromptBarHidden ? <UpgradePromptBar /> : null}
+      {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
       <Header showUpgradeButton mobile={isMobile} />
       <Stack
         spacing={isMobile ? "26px" : "40px"}
@@ -259,7 +259,7 @@ function DashboardPageContents() {
               Your SafeTube Dashboard
             </Typography>
           </Stack>
-          {videos ? (
+          {/* {videos ? (
             <UrsorFadeIn duration={800}>
               <Stack direction="row" alignItems="center" spacing="19px">
                 <Stack direction="row" alignItems="center" spacing="6px">
@@ -286,7 +286,7 @@ function DashboardPageContents() {
                 </UrsorButton>
               </Stack>
             </UrsorFadeIn>
-          ) : null}
+          ) : null} */}
         </Stack>
         {/* <UrsorFadeIn duration={800} delay={200}> */}
         <Stack

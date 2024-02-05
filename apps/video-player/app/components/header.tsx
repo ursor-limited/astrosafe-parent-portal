@@ -150,18 +150,19 @@ export const Header = (props: {
             {!props.mobile ? (
               <Stack>
                 {props.showUpgradeButton ? (
-                  <UrsorButton
-                    dark
-                    variant="secondary"
-                    endIcon={Kitemark}
-                    iconSize={13}
-                    iconSpin
-                    useNaturalIconColor
-                    onClick={() => setUpgradeDialogOpen(true)}
-                  >
-                    Unlock more Videos
-                  </UrsorButton>
+                  <></>
                 ) : (
+                  // <UrsorButton
+                  //   dark
+                  //   variant="secondary"
+                  //   endIcon={Kitemark}
+                  //   iconSize={13}
+                  //   iconSpin
+                  //   useNaturalIconColor
+                  //   onClick={() => setUpgradeDialogOpen(true)}
+                  // >
+                  //   Unlock more Videos
+                  // </UrsorButton>
                   <UrsorButton
                     dark
                     variant="tertiary"
@@ -203,7 +204,7 @@ export const Header = (props: {
                         {user.email}
                       </Typography>
                     </Stack>
-                    {nVideos ? (
+                    {/* {nVideos ? (
                       <Stack
                         height="40px"
                         direction="row"
@@ -242,7 +243,7 @@ export const Header = (props: {
                           Upgrade
                         </UrsorButton>
                       </Stack>
-                    ) : null}
+                    ) : null} */}
                     <ProfilePopupButton
                       callback={() => logout()}
                       icon={ListUnorderedIcon}
