@@ -13,12 +13,14 @@ export interface IVideo {
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   staging:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/dev-safeplay-backend",
   production:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
+
+console.log("aaa", process.env.NODE_ENV);
 
 const get = (route: string) =>
   fetch(
@@ -83,7 +85,9 @@ class ApiController {
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}/nVideos`).then((response: any) => response.json());
+    return get(`video/user/${id}/nVideos`).then((response: any) =>
+      response.json()
+    );
   }
   static async updateVideo(id: string, details: Partial<IVideo>) {
     return patch(`video/${id}`, details).then((response: any) =>

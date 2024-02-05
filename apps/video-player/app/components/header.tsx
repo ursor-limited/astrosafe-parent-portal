@@ -9,12 +9,17 @@ import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
-import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
+import dynamic from "next/dynamic";
+import mixpanel from "mixpanel-browser";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const HEADER_HEIGHT = 86;
 
@@ -142,31 +147,36 @@ export const Header = (props: {
       {user ? (
         <UrsorFadeIn duration={800}>
           <Stack direction="row" spacing="12px">
-            {props.showUpgradeButton ? (
-              <UrsorButton
-                dark
-                variant="secondary"
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                useNaturalIconColor
-                onClick={() => setUpgradeDialogOpen(true)}
-              >
-                Unlock more Videos
-              </UrsorButton>
-            ) : (
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => router.push("/dashboard")}
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                iconColor="rgba(255,255,255,0.7)"
-              >
-                Go to Dashboard
-              </UrsorButton>
-            )}
+            {!props.mobile ? (
+              <Stack>
+                {props.showUpgradeButton ? (
+                  <></>
+                ) : (
+                  // <UrsorButton
+                  //   dark
+                  //   variant="secondary"
+                  //   endIcon={Kitemark}
+                  //   iconSize={13}
+                  //   iconSpin
+                  //   useNaturalIconColor
+                  //   onClick={() => setUpgradeDialogOpen(true)}
+                  // >
+                  //   Unlock more Videos
+                  // </UrsorButton>
+                  <UrsorButton
+                    dark
+                    variant="tertiary"
+                    onClick={() => router.push("/dashboard")}
+                    endIcon={Kitemark}
+                    iconSize={13}
+                    iconSpin
+                    iconColor="rgba(255,255,255,0.7)"
+                  >
+                    Create more Videos
+                  </UrsorButton>
+                )}
+              </Stack>
+            ) : null}
             <Stack
               sx={{
                 cursor: "pointer",
@@ -194,7 +204,7 @@ export const Header = (props: {
                         {user.email}
                       </Typography>
                     </Stack>
-                    {nVideos ? (
+                    {/* {nVideos ? (
                       <Stack
                         height="40px"
                         direction="row"
@@ -233,14 +243,17 @@ export const Header = (props: {
                           Upgrade
                         </UrsorButton>
                       </Stack>
-                    ) : null}
+                    ) : null} */}
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => router.push("/dashboard")}
                       icon={ListUnorderedIcon}
                       text="Dashboard"
                     />
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => {
+                        logout();
+                        mixpanel.reset();
+                      }}
                       icon={LogOutIcon}
                       text="Log out"
                     />
