@@ -10,6 +10,7 @@ module.exports = withSvgr({
       "https://www.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://astro-monorepo-video-player.vercel.app",
+      "https://astro-monorepo-video-player-git-dev-astros-afe.vercel.app",
       "ursorassets.s3.eu-west-1.amazonaws.com",
       "i.ytimg.com",
     ],
