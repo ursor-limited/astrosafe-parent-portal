@@ -21,6 +21,7 @@ import NotificationContext from "../components/NotificationContext";
 import UpgradeDialog from "../components/UpgradeDialog";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 import mixpanel from "mixpanel-browser";
+import { deNoCookiefy } from "../components/utils";
 
 mixpanel.init(
   process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
@@ -238,6 +239,17 @@ function DashboardPageContents() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
+  const urlIsInvalid = async () =>
+    !!(
+      await fetch(
+        `https://noembed.com/embed?url=${encodeURIComponent(
+          deNoCookiefy(inputValue)
+        )}`
+      ).then(async (result) => result.json())
+    ).error;
+
+  const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
+
   return (
     <Stack flex={1} position="relative">
       {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
@@ -299,11 +311,23 @@ function DashboardPageContents() {
           ) : null} */}
         </Stack>
         {/* <UrsorFadeIn duration={800} delay={200}> */}
+        {/* <Stack position="relative" width="100%" alignItems="center"> */}
+        {/* <Stack
+            position="absolute"
+            top={0}
+            left={0}
+            bgcolor={PALETTE.system.red}
+            py="5px"
+            px="10px"
+            borderRadius="6px"
+          >
+            <Typography color={PALETTE.font.light} bold variant="tiny">
+              Invalid Youtube or Vimeo URL
+            </Typography>
+          </Stack> */}
         <Stack
           width="100%"
           maxWidth="800px"
-          direction={isMobile ? "column" : "row"}
-          spacing="10px"
           sx={
             {
               // opacity: creationDisabled ? 0.4 : 1,
@@ -311,38 +335,72 @@ function DashboardPageContents() {
             }
           }
           alignItems="center"
+          position="relative"
         >
-          <UrsorInputField
-            value={inputValue}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setInputValue(event.target.value)
-            }
-            placeholder="Enter Youtube or Vimeo URL"
-            width="100%"
-            leftAlign
-            boldValue
-          />
-          <Stack
-            sx={{
-              opacity: inputValue ? 1 : 0.5,
-              pointerEvents: inputValue ? undefined : "none",
-            }}
-          >
-            <UrsorButton
-              backgroundColor={GRADIENT}
-              hoverOpacity={0.7}
-              endIcon={ChevronRight}
-              iconColor={PALETTE.font.light}
-              onClick={() =>
-                router.push(
-                  `video/create?url=${encodeURIComponent(inputValue)}`
-                )
-              }
+          <UrsorFadeIn duration={800}>
+            <Stack
+              position="absolute"
+              top="-28px"
+              left={0}
+              bgcolor={PALETTE.system.red}
+              py="5px"
+              width="166px"
+              minWidth="166px"
+              borderRadius="6px"
+              sx={{
+                opacity: invalidUrl ? 1 : 0,
+                transition: "0.2s",
+              }}
+              alignItems="center"
             >
-              Create Video
-            </UrsorButton>
+              <Typography color={PALETTE.font.light} bold variant="tiny">
+                Invalid Youtube or Vimeo URL
+              </Typography>
+            </Stack>
+          </UrsorFadeIn>
+
+          <Stack
+            width="100%"
+            spacing="10px"
+            direction={isMobile ? "column" : "row"}
+          >
+            <UrsorInputField
+              value={inputValue}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setInputValue(event.target.value);
+                setInvalidUrl(false);
+              }}
+              placeholder="Enter Youtube or Vimeo URL"
+              width="100%"
+              leftAlign
+              boldValue
+              color={invalidUrl ? PALETTE.system.red : undefined}
+            />
+            <Stack
+              sx={{
+                opacity: inputValue ? 1 : 0.5,
+                pointerEvents: inputValue ? undefined : "none",
+              }}
+            >
+              <UrsorButton
+                backgroundColor={GRADIENT}
+                hoverOpacity={0.7}
+                endIcon={ChevronRight}
+                iconColor={PALETTE.font.light}
+                onClick={
+                  async () => setInvalidUrl(await urlIsInvalid())
+
+                  // router.push(
+                  //   `video/create?url=${encodeURIComponent(inputValue)}`
+                  // )
+                }
+              >
+                Create Video
+              </UrsorButton>
+            </Stack>
           </Stack>
         </Stack>
+        {/* </Stack> */}
         {/* </UrsorFadeIn> */}
 
         <Stack
