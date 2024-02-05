@@ -291,7 +291,7 @@ function CreationPageContents(props: { details: IVideo }) {
                           } else {
                             // mixpanel.track(
                             //   "creation page - opened signup prompt dialog"
-                            // ) ;
+                            // )  ;
                             setSignupPromptDialogOpen(true);
                           }
                         }}
