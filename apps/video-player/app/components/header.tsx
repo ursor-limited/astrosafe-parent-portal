@@ -252,7 +252,7 @@ export const Header = (props: {
                     <ProfilePopupButton
                       callback={() => {
                         logout();
-                        mixpanel.reset();
+                        // mixpanel.reset();
                       }}
                       icon={LogOutIcon}
                       text="Log out"
