@@ -116,7 +116,6 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         style: {
           width: props.width || WIDTH,
           maxWidth: WIDTH,
-          minWidth: props.fitContent ? undefined : props.width || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
           minHeight: props.height || HEIGHT,
           borderRadius: BORDER_RADIUS,

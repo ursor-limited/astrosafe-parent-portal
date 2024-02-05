@@ -149,6 +149,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const router = useRouter();
   const submit = () => {
     setLoading(true);
+    mixpanel.track("video created");
     ApiController.createVideo({
       title,
       description,
