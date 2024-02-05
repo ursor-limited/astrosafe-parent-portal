@@ -16,8 +16,10 @@ module.exports = withSvgr({
     ],
   },
   assetPrefix:
-    process.env.NODE_ENV === "production"
+    process.env.VERCEL_ENV === "production"
       ? "https://astro-monorepo-video-player.vercel.app"
+      : process.env.VERCEL_ENV === "production"
+      ? "https://astro-monorepo-video-player-git-dev-astros-afe.vercel.app"
       : undefined,
   async redirects() {
     return [
