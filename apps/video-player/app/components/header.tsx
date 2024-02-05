@@ -171,7 +171,7 @@ export const Header = (props: {
                     iconSpin
                     iconColor="rgba(255,255,255,0.7)"
                   >
-                    Go to Dashboard
+                    Create more Videos
                   </UrsorButton>
                 )}
               </Stack>

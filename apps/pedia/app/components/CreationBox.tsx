@@ -53,6 +53,7 @@ export const CreationBox = (props: {
   const [value, setValue] = useState<string>("");
   const [topics, setTopics] = useState<string[]>([]);
   const addTopic = () => {
+    if (topics.length >= MAX_TOPICS) return;
     setTopics([...topics, value]);
     //props.titlesCallback?.([...topics, value]);
     !user && setTitlesWaitingForGenerationUponSignIn([...topics, value]);

@@ -142,7 +142,6 @@ export default function QuestionsCard(props: {
               }}
             >
               {questions[questionIndex].options.map((o) => {
-                console.log("---", selectedAnswer, o);
                 return (
                   <Grid key={o.id} item>
                     <Stack

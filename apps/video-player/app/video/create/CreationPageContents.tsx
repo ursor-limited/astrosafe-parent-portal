@@ -24,6 +24,7 @@ import {
   MAGICAL_BORDER_THICKNESS,
 } from "@/app/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
+import SignupPromptDialog from "@/app/components/SignupPromptDialog";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -166,6 +167,9 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const { user } = useAuth0();
 
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(false);
+
   return (
     <>
       {!fullscreen ? <Header /> : null}
@@ -254,9 +258,8 @@ function CreationPageContents(props: { details: IVideo }) {
                       <UrsorButton
                         dark
                         variant="tertiary"
-                        onClick={
-                          submit
-                          //setEditing(!editing);
+                        onClick={() =>
+                          user ? submit() : setSignupPromptDialogOpen(true)
                         }
                         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                         hoverOpacity={0.7}
@@ -584,6 +587,11 @@ function CreationPageContents(props: { details: IVideo }) {
           <Kitemark height={70} width={70} />
         </Stack>
       </Stack>
+      <SignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+        mobile={mobile}
+      />
     </>
   );
 }
