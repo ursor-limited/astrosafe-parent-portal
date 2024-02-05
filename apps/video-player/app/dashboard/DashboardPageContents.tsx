@@ -296,10 +296,12 @@ function DashboardPageContents() {
           maxWidth="800px"
           direction={isMobile ? "column" : "row"}
           spacing="10px"
-          sx={{
-            opacity: creationDisabled ? 0.4 : 1,
-            pointerEvents: creationDisabled ? "none" : undefined,
-          }}
+          sx={
+            {
+              // opacity: creationDisabled ? 0.4 : 1,
+              // pointerEvents: creationDisabled ? "none" : undefined,
+            }
+          }
           alignItems="center"
         >
           <UrsorInputField

@@ -67,6 +67,8 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
+  const { user } = useAuth0();
+
   const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
@@ -83,7 +85,9 @@ function CreationPageContents(props: { details: IVideo }) {
     () => setOriginalUrl(decodeURIComponent(searchParams.get("url") ?? "")),
     [searchParams]
   );
-  const [provider, zetProvider] = useState<"youtube" | "vimeo">("youtube");
+  const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
+    undefined
+  );
   useEffect(
     () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
     [originalUrl]
@@ -104,13 +108,14 @@ function CreationPageContents(props: { details: IVideo }) {
           setUrl(noCookiefy(extractUrl(details.html)));
           setTitle(details.title);
           setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          setThumbnailUrl(details.thumbnail_url);
         }
       });
   }, [originalUrl]);
 
   useEffect(() => {
     setPlaying(false);
-    url?.includes("youtube") &&
+    provider === "youtube" &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
         (result) => {
           setDescription(result.description);
@@ -140,6 +145,14 @@ function CreationPageContents(props: { details: IVideo }) {
       creatorId: user?.email,
     }).then((v) => router.push(`/v/${v.id}`));
   };
+  useEffect(() => {
+    user?.email && readyForSubmittingUponLoadingUser && submit();
+  }, [user?.email]);
+
+  const [
+    readyForSubmittingUponLoadingUser,
+    setReadyForSubmittingUponLoadingUser,
+  ] = useState<boolean>(false);
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   // props.details && provider && url ? (
@@ -164,8 +177,6 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
-
-  const { user } = useAuth0();
 
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
@@ -258,9 +269,10 @@ function CreationPageContents(props: { details: IVideo }) {
                       <UrsorButton
                         dark
                         variant="tertiary"
-                        onClick={() =>
-                          user ? submit() : setSignupPromptDialogOpen(true)
-                        }
+                        onClick={() => {
+                          setReadyForSubmittingUponLoadingUser(true);
+                          user ? submit() : setSignupPromptDialogOpen(true);
+                        }}
                         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                         hoverOpacity={0.7}
                         endIcon={ChevronRight}
