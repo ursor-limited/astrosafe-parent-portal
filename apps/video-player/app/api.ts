@@ -20,7 +20,7 @@ const BACKEND_URLS = {
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
-console.log("aaa", process.env.NODE_ENV);
+console.log("aa", process.env.NODE_ENV);
 
 const get = (route: string) =>
   fetch(
