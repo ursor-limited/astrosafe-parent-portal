@@ -111,7 +111,7 @@ const VideoCard = (props: IVideo) => {
           iconSize={15}
           onClick={() => {
             navigator.clipboard.writeText(
-              currentPageUrl ? currentPageUrl.split("?")[0] : ""
+              `https://www.astrosafe.co/v/${props.id}`
             );
             notificationCtx.success("Copied URL to Clipboard.");
           }}
