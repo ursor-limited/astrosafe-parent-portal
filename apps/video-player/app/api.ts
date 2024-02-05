@@ -20,18 +20,16 @@ const BACKEND_URLS = {
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
 
-console.log("a", process.env.NODE_ENV);
-
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
+    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.VERCEL_ENV]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
