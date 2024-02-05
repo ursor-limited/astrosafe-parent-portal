@@ -107,11 +107,11 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
-      {!user ? (
+      {/* {!user ? (
         <UrsorFadeIn duration={1000} delay={3000}>
           <SigninPromptBar signInCallback={loginWithPopup} />
         </UrsorFadeIn>
-      ) : null}
+      ) : null} */}
       {!fullscreen ? <Header /> : null}
       <Stack
         px="60px"

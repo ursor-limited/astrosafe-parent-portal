@@ -119,7 +119,8 @@ function CreationPageContents(props: { details: IVideo }) {
         if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          setUrl(noCookiefy(extractUrl(details.html)));
+          console.log("---", noCookiefy(extractUrl(details.html)));
+          setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
           setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
