@@ -13,10 +13,10 @@ const SignupPromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Sign up"
-      title="Sign up"
+      title="Create an account"
       subtitle={[
-        "Your Video Link is ready to be shared.",
-        "All you need to do is Sign Up.",
+        "Sign up to create your video, share it,",
+        "and store them all in one place.",
       ]}
       open={props.open}
       button={{
