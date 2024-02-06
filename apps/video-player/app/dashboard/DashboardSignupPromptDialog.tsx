@@ -22,7 +22,7 @@ const DashboardSignupPromptDialog = (props: {
         text: "Let's do it",
         callback: () => {
           props.mobile ? loginWithRedirect() : loginWithPopup();
-          mixpanel.track("creation page - clicked signup button");
+          mixpanel.track("dashboard page - clicked signup button");
         },
         icon: ChevronRight,
       }}
