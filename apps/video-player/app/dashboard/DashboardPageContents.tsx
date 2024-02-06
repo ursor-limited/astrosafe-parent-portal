@@ -373,6 +373,7 @@ function DashboardPageContents() {
               width="100%"
               spacing="10px"
               direction={isMobile ? "column" : "row"}
+              alignItems="center"
             >
               <UrsorInputField
                 value={inputValue}
@@ -442,7 +443,10 @@ function DashboardPageContents() {
           closeCallback={() => setUpgradeDialogOpen(false)}
         />
       </Stack>
-      <DashboardSignupPromptDialog open={!user && !isLoading} />
+      <DashboardSignupPromptDialog
+        mobile={isMobile}
+        open={!user && !isLoading}
+      />
     </>
   );
 }
