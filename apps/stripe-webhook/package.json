@@ -2,7 +2,7 @@
   "name": "stripe-webhook",
   "version": "1.0.0",
   "description": "A webhook for Astro's subscriptions.",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server.js"
   },
