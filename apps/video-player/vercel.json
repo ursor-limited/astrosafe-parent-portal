@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-        "source": "/robots.txt",
-        "destination": "/robots"
-    },
-    {
         "source": "/video",
         "destination": "https://proxy.astrosafe.co/video"
     },
