@@ -97,9 +97,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
     }s ease-in-out`,
   };
 
-  const EndIcon = React.isValidElement(props.button)
+  const PrimaryButtonEndIcon = React.isValidElement(props.button)
     ? undefined
     : (props.button as IDialogButtonDetails)?.icon;
+
+  const SecondaryButtonEndIcon = React.isValidElement(props.secondaryButton)
+    ? undefined
+    : (props.secondaryButton as IDialogButtonDetails)?.icon;
 
   const { width: windowWidth } = useWindowSize();
 
@@ -241,7 +245,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                   variant={
                     (props.button as IDialogButtonDetails).variant ?? "primary"
                   }
-                  endIcon={EndIcon}
+                  endIcon={PrimaryButtonEndIcon}
+                  width="100%"
                 >
                   {(props.button as IDialogButtonDetails).text}
                 </UrsorButton>
@@ -294,7 +299,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                         (props.secondaryButton as IDialogButtonDetails)
                           .variant ?? "secondary"
                       }
-                      endIcon={EndIcon}
+                      endIcon={SecondaryButtonEndIcon}
                     >
                       {(props.secondaryButton as IDialogButtonDetails).text}
                     </UrsorButton>

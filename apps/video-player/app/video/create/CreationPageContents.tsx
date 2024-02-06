@@ -18,7 +18,7 @@ import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
 import SignupPromptDialog from "@/app/components/SignupPromptDialog";
@@ -148,6 +148,9 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [freeVideoCreationCount, setFreeVideoCreationCount] =
+    useLocalStorage<number>("freeVideoCreationCount", 0);
+
   const router = useRouter();
   const submit = () => {
     setLoading(true);
@@ -160,7 +163,10 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
       creatorId: user?.email,
-    }).then((v) => router.push(`/v/${v.id}`));
+    }).then((v) => {
+      setFreeVideoCreationCount(freeVideoCreationCount + 1);
+      router.push(`/v/${v.id}`);
+    });
   };
   useEffect(() => {
     user?.email && readyForSubmittingUponLoadingUser && submit();
@@ -626,6 +632,7 @@ function CreationPageContents(props: { details: IVideo }) {
       <SignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
+        createCallback={submit}
         mobile={mobile}
       />
     </>

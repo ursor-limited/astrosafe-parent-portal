@@ -161,6 +161,7 @@ export interface UrsorButtonProps {
   dark?: boolean;
   shadow?: boolean;
   strongShadow?: boolean;
+  width?: string;
   iconSpin?: boolean;
 }
 
@@ -191,7 +192,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       boxSizing="border-box"
       direction="row"
       height={HEIGHTS[size]}
-      justifyContent="center"
+      justifyContent="space-between"
       onClick={props.onClick}
       onMouseDown={() => {
         setPressed(true);
@@ -236,7 +237,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
           },
         },
       }}
-      width="fit-content"
+      width={props.width || "fit-content"}
     >
       {props.startIcon ? (
         <props.startIcon
