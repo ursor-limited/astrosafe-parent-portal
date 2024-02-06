@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
  
 export default function robots(): MetadataRoute.Robots {
-  return {
+  return ((process.env.VERCEL_ENV === "production") ? {
     rules: [
       {
         userAgent: '*',
@@ -10,7 +10,15 @@ export default function robots(): MetadataRoute.Robots {
     ],
     host: "https://www.astrosafe.co",
     sitemap: 'https://astrosafe.co/sitemap.xml',
-  }
+  } : {
+    rules: [
+      {
+        userAgent: '*',
+        disallow: '/',
+      }
+    ],
+    host: "https://dev.astrosafe.co"
+  })
 }
 
 

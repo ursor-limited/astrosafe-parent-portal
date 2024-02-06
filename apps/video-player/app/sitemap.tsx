@@ -31,6 +31,7 @@ async function fetchAndRenameSitemap(sitemapUrl: string):  Promise<ISitemap[]> {
       }
     }
     urlArray.push({'url': 'https://www.astrosafe.co/video/create'})
+    urlArray.push({'url': 'https://www.isthislive.co'})
     // Create a new URL element for the new URL
   console.log(urlArray)
     return urlArray
