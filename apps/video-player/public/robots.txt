@@ -7,3 +7,4 @@ Host: https://www.astrosafe.co
 
 # Sitemaps
 Sitemap: https://astrosafe.co/sitemap.xml
+
