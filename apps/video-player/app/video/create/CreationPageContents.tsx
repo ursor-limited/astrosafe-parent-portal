@@ -65,16 +65,18 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
-  useEffect(() => {
-    mixpanel.init(
-      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
-      {
-        debug: true,
-        track_pageview: false,
-        persistence: "localStorage",
-      }
-    );
-  }, []);
+  useEffect(
+    () =>
+      mixpanel.init(
+        process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+        {
+          debug: true,
+          track_pageview: false,
+          persistence: "localStorage",
+        }
+      ),
+    []
+  );
   useEffect(() => {
     mixpanel?.track("creation page");
   }, []);
