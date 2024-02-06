@@ -22,6 +22,7 @@ import UpgradeDialog from "../components/UpgradeDialog";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 //import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
+import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -256,37 +257,38 @@ function DashboardPageContents() {
   // useEffect(() => mixpanel.track("dashboard page"), []);
 
   return (
-    <Stack flex={1} position="relative">
-      {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
-      <Header showUpgradeButton mobile={isMobile} />
-      <Stack
-        spacing={isMobile ? "26px" : "40px"}
-        alignItems="center"
-        justifyContent="center"
-        pt={isMobile ? "30px" : "50px"}
-        px="50px"
-        width="100%"
-        overflow="hidden"
-      >
-        <Stack spacing="20px" alignItems="center">
-          <Stack
-            sx={{
-              background: GRADIENT,
-              "-webkit-text-fill-color": "transparent",
-              backgroundClip: "text",
-              "-webkit-background-clip": "text",
-            }}
-            alignItems="center"
-          >
-            <Typography
-              variant={isMobile ? "h3" : "h1"}
-              color={PALETTE.font.light}
-              sx={{ textAlign: "center", fontWeight: 480 }}
+    <>
+      <Stack flex={1} position="relative">
+        {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
+        <Header showUpgradeButton mobile={isMobile} />
+        <Stack
+          spacing={isMobile ? "26px" : "40px"}
+          alignItems="center"
+          justifyContent="center"
+          pt={isMobile ? "30px" : "50px"}
+          px="50px"
+          width="100%"
+          overflow="hidden"
+        >
+          <Stack spacing="20px" alignItems="center">
+            <Stack
+              sx={{
+                background: GRADIENT,
+                "-webkit-text-fill-color": "transparent",
+                backgroundClip: "text",
+                "-webkit-background-clip": "text",
+              }}
+              alignItems="center"
             >
-              Your SafeTube Dashboard
-            </Typography>
-          </Stack>
-          {/* {videos ? (
+              <Typography
+                variant={isMobile ? "h3" : "h1"}
+                color={PALETTE.font.light}
+                sx={{ textAlign: "center", fontWeight: 480 }}
+              >
+                Your SafeTube Dashboard
+              </Typography>
+            </Stack>
+            {/* {videos ? (
             <UrsorFadeIn duration={800}>
               <Stack direction="row" alignItems="center" spacing="19px">
                 <Stack direction="row" alignItems="center" spacing="6px">
@@ -314,10 +316,10 @@ function DashboardPageContents() {
               </Stack>
             </UrsorFadeIn>
           ) : null} */}
-        </Stack>
-        {/* <UrsorFadeIn duration={800} delay={200}> */}
-        {/* <Stack position="relative" width="100%" alignItems="center"> */}
-        {/* <Stack
+          </Stack>
+          {/* <UrsorFadeIn duration={800} delay={200}> */}
+          {/* <Stack position="relative" width="100%" alignItems="center"> */}
+          {/* <Stack
             position="absolute"
             top={0}
             left={0}
@@ -330,113 +332,115 @@ function DashboardPageContents() {
               Invalid Youtube or Vimeo URL
             </Typography>
           </Stack> */}
-        <Stack
-          width="100%"
-          maxWidth="800px"
-          sx={
-            {
-              // opacity: creationDisabled ? 0.4 : 1,
-              // pointerEvents: creationDisabled ? "none" : undefined,
-            }
-          }
-          alignItems="center"
-          position="relative"
-        >
-          <UrsorFadeIn duration={800}>
-            <Stack
-              position="absolute"
-              bottom="-25px"
-              left={0}
-              bgcolor={PALETTE.system.red}
-              py="5px"
-              width="166px"
-              minWidth="166px"
-              borderRadius="6px"
-              sx={{
-                opacity: invalidUrl ? 1 : 0,
-                transition: "0.2s",
-              }}
-              alignItems="center"
-            >
-              <Typography color={PALETTE.font.light} bold variant="tiny">
-                Invalid Youtube or Vimeo URL
-              </Typography>
-            </Stack>
-          </UrsorFadeIn>
-
           <Stack
             width="100%"
-            spacing="10px"
-            direction={isMobile ? "column" : "row"}
+            maxWidth="800px"
+            sx={
+              {
+                // opacity: creationDisabled ? 0.4 : 1,
+                // pointerEvents: creationDisabled ? "none" : undefined,
+              }
+            }
+            alignItems="center"
+            position="relative"
           >
-            <UrsorInputField
-              value={inputValue}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setInputValue(event.target.value);
-                setInvalidUrl(false);
-              }}
-              placeholder="Enter Youtube or Vimeo URL"
-              width="100%"
-              leftAlign
-              boldValue
-              color={invalidUrl ? PALETTE.system.red : undefined}
-            />
+            <UrsorFadeIn duration={800}>
+              <Stack
+                position="absolute"
+                bottom="-25px"
+                left={0}
+                bgcolor={PALETTE.system.red}
+                py="5px"
+                width="166px"
+                minWidth="166px"
+                borderRadius="6px"
+                sx={{
+                  opacity: invalidUrl ? 1 : 0,
+                  transition: "0.2s",
+                }}
+                alignItems="center"
+              >
+                <Typography color={PALETTE.font.light} bold variant="tiny">
+                  Invalid Youtube or Vimeo URL
+                </Typography>
+              </Stack>
+            </UrsorFadeIn>
+
             <Stack
-              sx={{
-                opacity: inputValue ? 1 : 0.5,
-                pointerEvents: inputValue ? undefined : "none",
-              }}
+              width="100%"
+              spacing="10px"
+              direction={isMobile ? "column" : "row"}
             >
-              <UrsorButton
-                backgroundColor={GRADIENT}
-                hoverOpacity={0.7}
-                endIcon={ChevronRight}
-                iconColor={PALETTE.font.light}
-                onClick={async () => {
-                  if (await urlIsInvalid()) {
-                    setInvalidUrl(true);
-                  } else {
-                    router.push(
-                      `video/create?url=${encodeURIComponent(inputValue)}`
-                    );
-                  }
+              <UrsorInputField
+                value={inputValue}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setInputValue(event.target.value);
+                  setInvalidUrl(false);
+                }}
+                placeholder="Enter Youtube or Vimeo URL"
+                width="100%"
+                leftAlign
+                boldValue
+                color={invalidUrl ? PALETTE.system.red : undefined}
+              />
+              <Stack
+                sx={{
+                  opacity: inputValue ? 1 : 0.5,
+                  pointerEvents: inputValue ? undefined : "none",
                 }}
               >
-                Create Video
-              </UrsorButton>
+                <UrsorButton
+                  backgroundColor={GRADIENT}
+                  hoverOpacity={0.7}
+                  endIcon={ChevronRight}
+                  iconColor={PALETTE.font.light}
+                  onClick={async () => {
+                    if (await urlIsInvalid()) {
+                      setInvalidUrl(true);
+                    } else {
+                      router.push(
+                        `video/create?url=${encodeURIComponent(inputValue)}`
+                      );
+                    }
+                  }}
+                >
+                  Create Video
+                </UrsorButton>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
-        {/* </Stack> */}
-        {/* </UrsorFadeIn> */}
+          {/* </Stack> */}
+          {/* </UrsorFadeIn> */}
 
-        <Stack
-          flex={1}
-          alignItems="center"
-          maxWidth="1254px"
-          width="100%"
-          overflow="hidden"
-        >
-          {/* <DynamicContainer fullWidth duration={600}> */}
-          <DynamicCardGrid
-            cardWidth="272px"
-            rowGap={isMobile ? "20px" : "28px"}
-            columnGap={isMobile ? "20px" : "28px"}
+          <Stack
+            flex={1}
+            alignItems="center"
+            maxWidth="1254px"
+            width="100%"
+            overflow="hidden"
           >
-            {videos.map((v, i) => (
-              <UrsorFadeIn key={v.id} duration={800} delay={i * 120}>
-                <VideoCard {...v} />
-              </UrsorFadeIn>
-            ))}
-          </DynamicCardGrid>
-          {/* </DynamicContainer> */}
+            {/* <DynamicContainer fullWidth duration={600}> */}
+            <DynamicCardGrid
+              cardWidth="272px"
+              rowGap={isMobile ? "20px" : "28px"}
+              columnGap={isMobile ? "20px" : "28px"}
+            >
+              {videos.map((v, i) => (
+                <UrsorFadeIn key={v.id} duration={800} delay={i * 120}>
+                  <VideoCard {...v} />
+                </UrsorFadeIn>
+              ))}
+            </DynamicCardGrid>
+            {/* </DynamicContainer> */}
+          </Stack>
         </Stack>
+        <UpgradeDialog
+          open={upgradeDialogOpen}
+          closeCallback={() => setUpgradeDialogOpen(false)}
+        />
       </Stack>
-      <UpgradeDialog
-        open={upgradeDialogOpen}
-        closeCallback={() => setUpgradeDialogOpen(false)}
-      />
-    </Stack>
+      <DashboardSignupPromptDialog open={!user} />
+    </>
   );
 }
 
