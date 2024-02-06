@@ -253,6 +253,8 @@ function DashboardPageContents() {
     []
   );
 
+  useEffect(() => mixpanel.track("dashboard page"), []);
+
   return (
     <Stack flex={1} position="relative">
       {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
