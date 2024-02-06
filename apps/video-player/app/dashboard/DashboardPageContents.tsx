@@ -241,20 +241,20 @@ function DashboardPageContents() {
 
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
 
-  useEffect(
-    () =>
-      mixpanel.init(
-        process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
-        {
-          debug: true,
-          track_pageview: false,
-          persistence: "localStorage",
-        }
-      ),
-    []
-  );
+  useEffect(() => {
+    mixpanel.init(
+      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+      {
+        debug: true,
+        track_pageview: false,
+        persistence: "localStorage",
+      }
+    );
+  }, []);
 
-  useEffect(() => mixpanel.track("dashboard page"), []);
+  useEffect(() => {
+    mixpanel.track("dashboard page");
+  }, []);
 
   return (
     <>
