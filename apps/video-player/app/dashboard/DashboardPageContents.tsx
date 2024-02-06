@@ -3,13 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
-import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Header } from "@/app/components/header";
-import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import ClippyIcon from "@/images/icons/ClippyIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
@@ -99,7 +97,7 @@ const VideoCard = (props: IVideo) => {
         <UrsorButton
           variant="secondary"
           size="small"
-          endIcon={ClippyIcon}
+          endIcon={ShareIcon}
           iconSize={15}
           onClick={() => {
             navigator.clipboard.writeText(
@@ -368,7 +366,7 @@ function DashboardPageContents() {
 
             <Stack
               width="100%"
-              spacing="10px"
+              spacing="16px"
               direction={isMobile ? "column" : "row"}
               alignItems="center"
             >
@@ -416,7 +414,7 @@ function DashboardPageContents() {
           <Stack
             flex={1}
             alignItems="center"
-            maxWidth="1254px"
+            maxWidth="1000px"
             width="100%"
             overflow="hidden"
           >
