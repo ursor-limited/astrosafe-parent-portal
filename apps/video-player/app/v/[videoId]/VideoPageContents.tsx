@@ -107,13 +107,13 @@ function VideoPageContents(props: { details: IVideo }) {
   }, [user?.email]);
 
   return props.details && provider ? (
-    <>
+    <Stack flex={1} spacing="50px" justifyContent="center">
       {/* {!user ? (
         <UrsorFadeIn duration={1000} delay={3000}>
           <SigninPromptBar signInCallback={loginWithPopup} />
         </UrsorFadeIn>
       ) : null} */}
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? <Header createNewButton={!user} mobile={mobile} /> : null}
       <Stack
         px="60px"
         justifyContent="center"
@@ -125,7 +125,6 @@ function VideoPageContents(props: { details: IVideo }) {
         pb={!fullscreen ? "100px" : undefined}
         //overflow="scroll"
         spacing="14px"
-        pt={fullscreen ? 0 : "70px"}
       >
         <Stack
           spacing="18px"
@@ -268,7 +267,7 @@ function VideoPageContents(props: { details: IVideo }) {
       {!fullscreen ? (
         <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
       ) : null}
-    </>
+    </Stack>
   ) : (
     <></>
   );

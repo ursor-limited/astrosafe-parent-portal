@@ -7,6 +7,7 @@ import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/coloredKitemark.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
@@ -106,6 +107,7 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   showUpgradeButton?: boolean;
   mobile?: boolean;
+  createNewButton?: boolean;
 }) => {
   const { user, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
@@ -275,6 +277,15 @@ export const Header = (props: {
             </Stack>
           </Stack>
         </UrsorFadeIn>
+      ) : props.createNewButton ? (
+        <UrsorButton
+          dark
+          variant="tertiary"
+          startIcon={ChevronLeftIcon}
+          onClick={() => router.push("/video")}
+        >
+          Create new
+        </UrsorButton>
       ) : null}
       <UpgradeDialog
         open={upgradeDialogOpen}
