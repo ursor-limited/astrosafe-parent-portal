@@ -48,7 +48,7 @@ exports.handler = async function (event, context, callback) {
         const data2 = stripeEvent.data.object;
         console.log("deleted", data2);
         break;
-      case "invoice.paid":
+      case "invoice.payment_succeeded":
         const data5 = stripeEvent.data.object;
         console.log("paid", data5);
         break;

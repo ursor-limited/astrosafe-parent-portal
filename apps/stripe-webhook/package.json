@@ -4,11 +4,16 @@
   "description": "A webhook for Astro's subscriptions.",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js",
+    "prebuild": "rm -rf dist",
+    "build": "node build.js",
+    "postbuild": "cd dist && zip -r handler.zip handler.mjs*"
   },
+  "type": "module",
   "author": "ASTRO",
   "license": "ISC",
   "dependencies": {
+    "esbuild": "^0.20.0",
     "express": "^4.18.2",
     "stripe": "^14.15.0"
   }
