@@ -14,7 +14,7 @@ import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
-// import mixpanel from "mixpanel-browser";
+import mixpanel from "mixpanel-browser";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -252,7 +252,7 @@ export const Header = (props: {
                     <ProfilePopupButton
                       callback={() => {
                         logout();
-                        // mixpanel.reset();
+                        mixpanel.reset();
                       }}
                       icon={LogOutIcon}
                       text="Log out"
