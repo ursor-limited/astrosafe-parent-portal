@@ -20,7 +20,7 @@ import Image from "next/image";
 import NotificationContext from "../components/NotificationContext";
 import UpgradeDialog from "../components/UpgradeDialog";
 import DynamicCardGrid from "../components/DynamicCardGrid";
-import mixpanel from "mixpanel-browser";
+//import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
@@ -240,20 +240,20 @@ function DashboardPageContents() {
 
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
 
-  useEffect(
-    () =>
-      mixpanel.init(
-        process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
-        {
-          debug: true,
-          track_pageview: false,
-          persistence: "localStorage",
-        }
-      ),
-    []
-  );
+  // useEffect(
+  //   () =>
+  //     mixpanel.init(
+  //       process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+  //       {
+  //         debug: true,
+  //         track_pageview: false,
+  //         persistence: "localStorage",
+  //       }
+  //     ),
+  //   []
+  // );
 
-  useEffect(() => mixpanel.track("dashboard page"), []);
+  // useEffect(() => mixpanel.track("dashboard page"), []);
 
   return (
     <Stack flex={1} position="relative">
