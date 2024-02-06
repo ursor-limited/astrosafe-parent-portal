@@ -91,16 +91,18 @@ function VideoPageContents(props: { details: IVideo }) {
       notificationCtx.success("Video created.");
   }, [props.details.createdAt]);
 
-  useEffect(() => {
-    mixpanel.init(
-      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
-      {
-        debug: true,
-        track_pageview: false,
-        persistence: "localStorage",
-      }
-    );
-  }, []);
+  useEffect(
+    () =>
+      mixpanel.init(
+        process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+        {
+          debug: true,
+          track_pageview: false,
+          persistence: "localStorage",
+        }
+      ),
+    []
+  );
 
   useEffect(() => {
     user?.email && mixpanel.track("viewing page");
