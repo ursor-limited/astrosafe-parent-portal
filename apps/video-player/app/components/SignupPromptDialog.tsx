@@ -53,7 +53,10 @@ const SignupPromptDialog = (props: {
           ? undefined
           : {
               text: "Skip and Create",
-              callback: props.createCallback,
+              callback: () => {
+                props.createCallback();
+                props.closeCallback();
+              },
               icon: ChevronRight,
             }
       }
