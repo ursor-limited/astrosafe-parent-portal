@@ -193,7 +193,7 @@ function DashboardPageContents() {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
 
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -255,6 +255,9 @@ function DashboardPageContents() {
   // );
 
   // useEffect(() => mixpanel.track("dashboard page"), []);
+
+  // const [showSignupPromptDialog, setShowSignupPromptDialog] = useState<boolean>(false)
+  // useEffect(() => setShowSignupPromptDialog(user), [user])
 
   return (
     <>
@@ -439,7 +442,7 @@ function DashboardPageContents() {
           closeCallback={() => setUpgradeDialogOpen(false)}
         />
       </Stack>
-      <DashboardSignupPromptDialog open={!user} />
+      <DashboardSignupPromptDialog open={!user && !isLoading} />
     </>
   );
 }
