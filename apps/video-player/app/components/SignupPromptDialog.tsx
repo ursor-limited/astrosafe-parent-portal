@@ -23,18 +23,19 @@ const SignupPromptDialog = (props: {
       supertitle="Sign in"
       title={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
-          ? "Create an account"
-          : "Sign in to store Links"
+          ? "Create an Account"
+          : "Store all your Videos in one place"
       }
       subtitle={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? [
-              "You have reached the limit of free Videos.",
-              "To continue creating and sharing, please Sign In",
+              "You have reached your video limit, but don’t worry,",
+              "you can continue to create Videos with a free account.",
             ]
           : [
-              "If you want your safe Video Links",
-              "to be stored in a dashboard, Sign In.",
+              "Your video is ready.",
+              "Create an account to store your videos in a dashboard",
+              "and create unlimited videos.",
             ]
       }
       open={props.open}
@@ -65,6 +66,7 @@ const SignupPromptDialog = (props: {
       backButtonCallback={props.closeCallback}
       width="90%"
       maxWidth="630px"
+      titleMaxWidth="400px"
     >
       <GraphIllustration width="300px" height="300px" />
     </UrsorDialog>

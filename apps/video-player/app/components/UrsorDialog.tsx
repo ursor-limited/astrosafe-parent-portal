@@ -36,6 +36,7 @@ export interface IUrsorDialogProps {
   open: boolean;
   width?: string;
   maxWidth?: string;
+  titleMaxWidth?: string;
   height?: string;
   loading?: boolean;
   title?: string;
@@ -192,7 +193,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               </Typography>
             ) : null}
             {props.title ? (
-              <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+              <Typography
+                variant="h3"
+                color={PALETTE.secondary.purple[2]}
+                sx={{ maxWidth: props.titleMaxWidth }}
+              >
                 {props.title}
               </Typography>
             ) : null}
