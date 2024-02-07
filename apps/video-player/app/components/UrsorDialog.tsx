@@ -11,7 +11,7 @@ const WIDTH = "926px";
 const HEIGHT = "630px";
 export const BORDER_RADIUS = "24px";
 export const PADDING = "45px";
-const BUTTON_WIDTH = "343px";
+const BUTTON_WIDTH = "280px";
 export const DEFAULT_FADEIN_DURATION = 400;
 const LONG_FADEIN_DURATION = 2000;
 export const Z_INDEX = 999;
@@ -119,7 +119,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       PaperProps={{
         style: {
           width: props.width || WIDTH,
-          maxWidth: WIDTH,
+          maxWidth: props.maxWidth || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
           minHeight: props.height || HEIGHT,
           borderRadius: BORDER_RADIUS,
@@ -246,7 +246,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     (props.button as IDialogButtonDetails).variant ?? "primary"
                   }
                   endIcon={PrimaryButtonEndIcon}
-                  width="100%"
+                  width={BUTTON_WIDTH}
                 >
                   {(props.button as IDialogButtonDetails).text}
                 </UrsorButton>
@@ -300,6 +300,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                           .variant ?? "secondary"
                       }
                       endIcon={SecondaryButtonEndIcon}
+                      width={BUTTON_WIDTH}
                     >
                       {(props.secondaryButton as IDialogButtonDetails).text}
                     </UrsorButton>

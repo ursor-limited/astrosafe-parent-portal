@@ -192,7 +192,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       boxSizing="border-box"
       direction="row"
       height={HEIGHTS[size]}
-      justifyContent="space-between"
+      justifyContent="center"
       onClick={props.onClick}
       onMouseDown={() => {
         setPressed(true);

@@ -2,11 +2,12 @@ import { Stack } from "@mui/system";
 import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
+import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
 
-const FREE_VIDEO_LIMIT = 4;
+const FREE_VIDEO_LIMIT = 3;
 
 const SignupPromptDialog = (props: {
   open: boolean;
@@ -52,7 +53,7 @@ const SignupPromptDialog = (props: {
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? undefined
           : {
-              text: "Skip and Create",
+              text: "Skip",
               callback: () => {
                 props.createCallback();
                 props.closeCallback();
@@ -63,18 +64,9 @@ const SignupPromptDialog = (props: {
       onCloseCallback={props.closeCallback}
       backButtonCallback={props.closeCallback}
       width="90%"
-      maxWidth="880px"
+      maxWidth="630px"
     >
-      <Stack
-        height="380px"
-        width="300px"
-        sx={{
-          backgroundImage: `url(https://ursorassets.s3.eu-west-1.amazonaws.com/page.png)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          boxSizing: "border-box",
-        }}
-      />
+      <GraphIllustration width="300px" height="300px" />
     </UrsorDialog>
   );
 };
