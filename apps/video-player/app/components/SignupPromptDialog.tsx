@@ -5,6 +5,8 @@ import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
+import Image from "next/image";
+import { Stack } from "@mui/system";
 
 const FREE_VIDEO_LIMIT = 3;
 
@@ -67,7 +69,19 @@ const SignupPromptDialog = (props: {
       maxWidth="630px"
       titleMaxWidth="400px"
     >
-      <GraphIllustration width="300px" height="300px" />
+      <Stack borderRadius="12px" overflow="hidden">
+        <Image
+          src={
+            "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
+          }
+          loader={({ src }) => {
+            return src;
+          }}
+          width={415}
+          height={300}
+          alt="Screenshot"
+        />
+      </Stack>
     </UrsorDialog>
   );
 };

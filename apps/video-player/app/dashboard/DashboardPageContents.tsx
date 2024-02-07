@@ -83,9 +83,9 @@ const VideoCard = (props: IVideo) => {
   return (
     <Stack
       width="100%"
-      height="253px"
+      height="267px"
       borderRadius="12px"
-      bgcolor="rgba(0,0,0, 0.3)"
+      bgcolor="rgba(0,0,0,0.3)"
       p="4px"
       overflow="hidden"
       sx={{
