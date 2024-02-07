@@ -4,7 +4,7 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useRouter } from "next/navigation";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
-import { GRADIENT } from "@/app/dashboard/DashboardPageContents";
+import { GRADIENT, urlIsInvalid } from "@/app/dashboard/DashboardPageContents";
 
 export default function InvalidUrlView(props: { mobile: boolean }) {
   const [url, setUrl] = useState<string>("");
@@ -13,8 +13,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
   return (
     <Stack
-      height="100vh"
-      minHeight="100vh"
+      minHeight="40vh"
       justifyContent="center"
       alignItems="center"
       spacing="36px"
@@ -39,7 +38,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
         </Typography>
       </Stack>
       <Stack
-        width="100%"
+        width="50%"
         spacing="16px"
         direction={props.mobile ? "column" : "row"}
         alignItems="center"
@@ -72,7 +71,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
                 setInvalidUrl(true);
               } else {
                 router.push(
-                  `video/create?url=${encodeURIComponent(inputValue)}`
+                  `/video/create?url=${encodeURIComponent(inputValue)}`
                 );
               }
             }}
@@ -82,7 +81,6 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
         </Stack>
       </Stack>
       <UrsorButton
-        size="large"
         dark
         variant="tertiary"
         onClick={() => router.push("/video")}

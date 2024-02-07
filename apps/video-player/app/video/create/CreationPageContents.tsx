@@ -5,6 +5,7 @@ import { Stack, keyframes } from "@mui/system";
 import Logo from "@/images/playerLogo.svg";
 import ApiController, { IVideo } from "@/app/api";
 import Kitemark from "@/images/coloredKitemark.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
 import DurationLabel from "../../v/[videoId]/duration-label";
@@ -23,7 +24,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SignupPromptDialog from "@/app/components/SignupPromptDialog";
 import mixpanel from "mixpanel-browser";
 import InvalidUrlView from "./InvalidUrlView";
-import CreationInputField from "./CreationInputField";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -300,19 +300,85 @@ function CreationPageContents(props: { details: IVideo }) {
                   }}
                   borderRadius="12px"
                 >
-                  <CreationInputField
-                    callback={() => {
-                      setReadyForSubmittingUponLoadingUser(true);
-                      if (user) {
-                        submit();
-                      } else {
-                        mixpanel.track(
-                          "creation page - opened signup prompt dialog"
-                        );
-                        setSignupPromptDialogOpen(true);
-                      }
-                    }}
-                  />
+                  <Stack
+                    direction={mobile ? "column" : "row"}
+                    spacing="16px"
+                    alignItems={mobile ? "center" : "flex-end"}
+                    width="100%"
+                  >
+                    {mobile ? (
+                      <UrsorButton
+                        dark
+                        variant="tertiary"
+                        onClick={() => {
+                          setReadyForSubmittingUponLoadingUser(true);
+                          if (user) {
+                            submit();
+                          } else {
+                            mixpanel.track(
+                              "creation page - opened signup prompt dialog"
+                            );
+                            setSignupPromptDialogOpen(true);
+                          }
+                        }}
+                        backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                        hoverOpacity={0.7}
+                        endIcon={ChevronRight}
+                        iconColor={PALETTE.font.light}
+                      >
+                        Create link
+                      </UrsorButton>
+                    ) : null}
+                    <Stack width="100%">
+                      <CreationPageInputSection title="Title">
+                        <UrsorInputField
+                          value={title}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => setTitle(event.target.value)}
+                          placeholder="Add a title"
+                          width="100%"
+                          backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                          color={INPUT_FIELD_TEXT_COLOR}
+                          backgroundBlur="blur(3px)"
+                          leftAlign
+                          boldValue
+                        />
+                      </CreationPageInputSection>
+                    </Stack>
+                    {!mobile ? (
+                      <Stack
+                        sx={{
+                          opacity: title ? 1 : 0.5,
+                          pointerEvents: title ? undefined : "none",
+                        }}
+                        height={mobile ? "40px" : undefined}
+                        justifyContent="center"
+                      >
+                        <UrsorButton
+                          dark
+                          variant="tertiary"
+                          onClick={() => {
+                            setReadyForSubmittingUponLoadingUser(true);
+                            if (user) {
+                              submit();
+                            } else {
+                              mixpanel.track(
+                                "creation page - opened signup prompt dialog"
+                              );
+                              setSignupPromptDialogOpen(true);
+                            }
+                          }}
+                          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                          hoverOpacity={0.7}
+                          endIcon={ChevronRight}
+                          iconColor={PALETTE.font.light}
+                        >
+                          Create link
+                        </UrsorButton>
+                      </Stack>
+                    ) : null}
+                  </Stack>
 
                   <CreationPageInputSection title="Description">
                     <UrsorTextField
@@ -602,7 +668,7 @@ function CreationPageContents(props: { details: IVideo }) {
           ) : null}
         </Stack>
       ) : showInvalidUrlView ? (
-        <InvalidUrlView />
+        <InvalidUrlView mobile={mobile} />
       ) : showForbiddenVideoView ? (
         <ForbiddenVideoView />
       ) : null}

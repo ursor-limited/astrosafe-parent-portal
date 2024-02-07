@@ -176,7 +176,7 @@ const VideoCard = (props: IVideo) => {
   );
 };
 
-const urlIsInvalid = async (value: string) =>
+export const urlIsInvalid = async (value: string) =>
   !["youtube.com", "youtu.be", "vimeo.com"].some((x) => value.includes(x)) &&
   !!(
     await fetch(
