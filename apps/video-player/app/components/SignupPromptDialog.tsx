@@ -68,6 +68,7 @@ const SignupPromptDialog = (props: {
       width="90%"
       maxWidth="630px"
       titleMaxWidth="400px"
+      titleSize={props.mobile ? "h4" : "h3"}
     >
       {!props.mobile ? (
         <Stack borderRadius="12px" overflow="hidden">

@@ -6,6 +6,7 @@ import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { ButtonVariant, UrsorButton } from "ui/ursor-button";
 import { PALETTE, Typography } from "ui";
+import { UrsorTypographyVariant } from "ui/typography";
 
 const WIDTH = "926px";
 const HEIGHT = "630px";
@@ -42,6 +43,7 @@ export interface IUrsorDialogProps {
   title?: string;
   subtitle?: (string | JSX.Element)[];
   supertitle?: string;
+  titleSize?: UrsorTypographyVariant;
   button?: IDialogButtonDetails | JSX.Element;
   secondaryButton?: IDialogButtonDetails | JSX.Element;
   googleButton?: IDialogButtonDetails | JSX.Element;
@@ -132,6 +134,9 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           display: props.noBackdrop ? "none" : "visible",
           ...BACKDROP_STYLE,
         },
+        ".MuiDialog-container": {
+          overflow: "scroll",
+        },
       }}
     >
       <Stack
@@ -194,7 +199,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             ) : null}
             {props.title ? (
               <Typography
-                variant="h3"
+                variant={props.titleSize || "h3"}
                 color={PALETTE.secondary.purple[2]}
                 sx={{ maxWidth: props.titleMaxWidth }}
               >
