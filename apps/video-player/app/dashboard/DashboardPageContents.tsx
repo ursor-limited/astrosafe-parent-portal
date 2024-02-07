@@ -32,7 +32,7 @@ export const FREE_VIDEO_LIMIT = 3;
 
 const VIDEO_WIDTH = 845;
 
-const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
+export const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
 const PROMPT_BAR_GRADIENT = "linear-gradient(0deg, #6596FF, #7B61FF)";
 
 const UPGRADE_PROMPT_BAR_VISIBILITY_WINDOW_WIDTH_THRESHOLD = 1110;
@@ -176,6 +176,14 @@ const VideoCard = (props: IVideo) => {
   );
 };
 
+const urlIsInvalid = async (value: string) =>
+  !["youtube.com", "youtu.be", "vimeo.com"].some((x) => value.includes(x)) &&
+  !!(
+    await fetch(
+      `https://noembed.com/embed?url=${encodeURIComponent(deNoCookiefy(value))}`
+    ).then(async (result) => result.json())
+  ).error;
+
 function DashboardPageContents() {
   const { width } = useWindowSize();
 
@@ -228,18 +236,6 @@ function DashboardPageContents() {
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
-  const urlIsInvalid = async () =>
-    !["youtube.com", "youtu.be", "vimeo.com"].some((x) =>
-      inputValue.includes(x)
-    ) &&
-    !!(
-      await fetch(
-        `https://noembed.com/embed?url=${encodeURIComponent(
-          deNoCookiefy(inputValue)
-        )}`
-      ).then(async (result) => result.json())
-    ).error;
 
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
 
@@ -398,7 +394,7 @@ function DashboardPageContents() {
                   endIcon={ChevronRight}
                   iconColor={PALETTE.font.light}
                   onClick={async () => {
-                    if (await urlIsInvalid()) {
+                    if (await urlIsInvalid(inputValue)) {
                       setInvalidUrl(true);
                     } else {
                       router.push(
