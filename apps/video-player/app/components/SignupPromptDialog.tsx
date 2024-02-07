@@ -46,9 +46,12 @@ const SignupPromptDialog = (props: {
           props.closeCallback();
           props.mobile ? loginWithRedirect() : loginWithPopup();
           props.signinCallback();
-          mixpanel.track("creation page - clicked signup button", {
-            freeVideoCreationCount,
-          });
+          mixpanel.track(
+            `creation page popup - clicked sign in: ${freeVideoCreationCount}`,
+            {
+              freeVideoCreationCount,
+            }
+          );
         },
         icon: PersonIcon,
       }}
@@ -58,6 +61,12 @@ const SignupPromptDialog = (props: {
           : {
               text: "Skip to video",
               callback: () => {
+                mixpanel.track(
+                  `creation page popup - clicked skip: ${freeVideoCreationCount}`,
+                  {
+                    freeVideoCreationCount,
+                  }
+                );
                 props.createCallback();
                 props.closeCallback();
               },

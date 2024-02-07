@@ -17,6 +17,7 @@ import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
+import { useLocalStorage } from "usehooks-ts";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -104,7 +105,6 @@ const ProfilePopupButton = (props: {
   );
 };
 
-//export const Header = (props: { collapsed: boolean }) => {
 export const Header = (props: {
   showUpgradeButton?: boolean;
   showSigninButton?: boolean;
@@ -132,9 +132,6 @@ export const Header = (props: {
       alignItems="center"
       justifyContent="space-between"
       px="28px"
-      // sx={{
-      //   display: props.collapsed ? "none" : undefined,
-      // }}
     >
       <Stack width="fit-content">
         <Link href="https://astrosafe.co/">
@@ -155,7 +152,7 @@ export const Header = (props: {
           variant="tertiary"
           onClick={() => {
             props.mobile ? loginWithRedirect() : loginWithPopup();
-            //props.signinCallback?.();
+            mixpanel.track("clicked header sign up");
           }}
           endIcon={PersonIcon}
         >
