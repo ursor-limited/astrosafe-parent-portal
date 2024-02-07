@@ -44,7 +44,7 @@ const SignupPromptDialog = (props: {
         text: "Sign in",
         callback: () => {
           props.closeCallback();
-          props.mobile ? loginWithRedirect() : loginWithPopup();
+          props.mobile ? loginWithPopup() : loginWithPopup();
           props.signinCallback();
           mixpanel.track("creation page - clicked signup button", {
             freeVideoCreationCount,
