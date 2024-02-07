@@ -228,20 +228,16 @@ function VideoPageContents(props: { details: IVideo }) {
               />
             </Stack>
           </Stack>
-          {!fullscreen && user ? (
+          {!fullscreen ? (
             <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
               <UrlBar mobile={mobile} />
             </Stack>
           ) : null}
-          {/* </Stack> */}
-          {/* <Image src={Background} alt='Background'  */}
-          {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
           {!fullscreen && props.details.description ? (
             <Stack
               width={`${Math.min(playerWidth, VIDEO_WIDTH)}px`}
               justifyContent="space-between"
               overflow="scroll"
-              //px="16px"
               sx={{ backdropFilter: "blur(7px)" }}
             >
               <Stack

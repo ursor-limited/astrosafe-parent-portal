@@ -62,7 +62,6 @@ const SignupPromptDialog = (props: {
             }
       }
       onCloseCallback={props.closeCallback}
-      backButtonCallback={props.closeCallback}
       width="90%"
       maxWidth="630px"
       titleMaxWidth="400px"
