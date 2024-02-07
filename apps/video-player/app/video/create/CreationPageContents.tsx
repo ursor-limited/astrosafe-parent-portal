@@ -98,6 +98,13 @@ function CreationPageContents(props: { details: IVideo }) {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
+  useEffect(() => {
+    if (![...searchParams.entries()].length) {
+      router.push(user ? "/dashboard" : "/video");
+    }
+    setShowInvalidUrlView(!searchParams.get("url"));
+  }, [searchParams]);
+
   const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
     () =>
