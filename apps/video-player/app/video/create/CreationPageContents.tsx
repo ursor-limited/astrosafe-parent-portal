@@ -100,7 +100,12 @@ function CreationPageContents(props: { details: IVideo }) {
   const searchParams = useSearchParams();
   const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
-    () => setOriginalUrl(decodeURIComponent(searchParams.get("url") ?? "")),
+    () =>
+      setOriginalUrl(
+        decodeURIComponent(
+          (searchParams.get("url") ?? "").replace("/shorts/", "/embed/")
+        )
+      ),
     [searchParams]
   );
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
