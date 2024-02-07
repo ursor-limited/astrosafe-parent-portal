@@ -6,6 +6,9 @@ import { Metadata } from "next";
 import { PALETTE } from "ui";
 import NotificationProvider from "./components/NotificationProvider";
 import UrsorNotificationBar from "./components/UrsorNotificationBar";
+import dynamic from "next/dynamic";
+
+const Mixpanel = dynamic(() => import("@/app/Mixpanel"), { ssr: false });
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -24,6 +27,7 @@ export default function RootLayout({
     <html lang="en" style={{ zIndex: 999999999999 }}>
       <meta name="theme-color" content={PALETTE.primary.navy} />
       <body className={rubik.className}>
+        {/* <Mixpanel /> */}
         <Stack
           height="100vh"
           minHeight="100vh"
