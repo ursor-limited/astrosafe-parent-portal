@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import Logo from "@/images/playerLogo.svg";
 import ApiController, { IVideo } from "@/app/api";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Kitemark from "@/images/coloredKitemark.svg";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
@@ -23,6 +22,8 @@ import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
 import SignupPromptDialog from "@/app/components/SignupPromptDialog";
 import mixpanel from "mixpanel-browser";
+import InvalidUrlView from "./InvalidUrlView";
+import CreationInputField from "./CreationInputField";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -45,7 +46,7 @@ export const INPUT_FIELD_TEXT_COLOR = "rgba(255,255,255,0.86)";
 export const INPUT_FIELD_BACKGROUND_COLOR = "rgba(0,0,0,0.1)";
 export const BACKGROUND_BLUR = "blur(3px)";
 
-const CreationPageInputSection = (props: {
+export const CreationPageInputSection = (props: {
   title: string;
   hideTitle?: boolean;
   children: React.ReactNode;
@@ -94,6 +95,8 @@ function CreationPageContents(props: { details: IVideo }) {
   const [showForbiddenVideoView, setShowForbiddenVideoView] =
     useState<boolean>(false);
 
+  const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
+
   const searchParams = useSearchParams();
   const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
@@ -117,10 +120,11 @@ function CreationPageContents(props: { details: IVideo }) {
     )
       .then((response) => response.json())
       .then((details) => {
-        if (details.error?.includes("403")) {
+        if (!details.html) {
+          setShowInvalidUrlView(true);
+        } else if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          console.log("---", noCookiefy(extractUrl(details.html)));
           setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
           setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
@@ -296,85 +300,19 @@ function CreationPageContents(props: { details: IVideo }) {
                   }}
                   borderRadius="12px"
                 >
-                  <Stack
-                    direction={mobile ? "column" : "row"}
-                    spacing="16px"
-                    alignItems={mobile ? "center" : "flex-end"}
-                    width="100%"
-                  >
-                    {mobile ? (
-                      <UrsorButton
-                        dark
-                        variant="tertiary"
-                        onClick={() => {
-                          setReadyForSubmittingUponLoadingUser(true);
-                          if (user) {
-                            submit();
-                          } else {
-                            mixpanel.track(
-                              "creation page - opened signup prompt dialog"
-                            );
-                            setSignupPromptDialogOpen(true);
-                          }
-                        }}
-                        backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-                        hoverOpacity={0.7}
-                        endIcon={ChevronRight}
-                        iconColor={PALETTE.font.light}
-                      >
-                        Create link
-                      </UrsorButton>
-                    ) : null}
-                    <Stack width="100%">
-                      <CreationPageInputSection title="Title">
-                        <UrsorInputField
-                          value={title}
-                          onChange={(
-                            event: React.ChangeEvent<HTMLInputElement>
-                          ) => setTitle(event.target.value)}
-                          placeholder="Add a title"
-                          width="100%"
-                          backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                          color={INPUT_FIELD_TEXT_COLOR}
-                          backgroundBlur="blur(3px)"
-                          leftAlign
-                          boldValue
-                        />
-                      </CreationPageInputSection>
-                    </Stack>
-                    {!mobile ? (
-                      <Stack
-                        sx={{
-                          opacity: title ? 1 : 0.5,
-                          pointerEvents: title ? undefined : "none",
-                        }}
-                        height={mobile ? "40px" : undefined}
-                        justifyContent="center"
-                      >
-                        <UrsorButton
-                          dark
-                          variant="tertiary"
-                          onClick={() => {
-                            setReadyForSubmittingUponLoadingUser(true);
-                            if (user) {
-                              submit();
-                            } else {
-                              mixpanel.track(
-                                "creation page - opened signup prompt dialog"
-                              );
-                              setSignupPromptDialogOpen(true);
-                            }
-                          }}
-                          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-                          hoverOpacity={0.7}
-                          endIcon={ChevronRight}
-                          iconColor={PALETTE.font.light}
-                        >
-                          Create link
-                        </UrsorButton>
-                      </Stack>
-                    ) : null}
-                  </Stack>
+                  <CreationInputField
+                    callback={() => {
+                      setReadyForSubmittingUponLoadingUser(true);
+                      if (user) {
+                        submit();
+                      } else {
+                        mixpanel.track(
+                          "creation page - opened signup prompt dialog"
+                        );
+                        setSignupPromptDialogOpen(true);
+                      }
+                    }}
+                  />
 
                   <CreationPageInputSection title="Description">
                     <UrsorTextField
@@ -663,6 +601,8 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           ) : null}
         </Stack>
+      ) : showInvalidUrlView ? (
+        <InvalidUrlView />
       ) : showForbiddenVideoView ? (
         <ForbiddenVideoView />
       ) : null}
