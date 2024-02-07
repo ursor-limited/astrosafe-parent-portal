@@ -44,7 +44,7 @@ const SignupPromptDialog = (props: {
         text: "Sign in",
         callback: () => {
           props.closeCallback();
-          props.mobile ? loginWithRedirect() : loginWithPopup();
+          props.mobile ? loginWithPopup() : loginWithPopup();
           props.signinCallback();
           mixpanel.track(
             `creation page popup - clicked sign in: ${freeVideoCreationCount}`,
@@ -77,20 +77,25 @@ const SignupPromptDialog = (props: {
       width="90%"
       maxWidth="630px"
       titleMaxWidth="400px"
+      titleSize={props.mobile ? "h4" : "h3"}
     >
-      <Stack borderRadius="12px" overflow="hidden">
-        <Image
-          src={
-            "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
-          }
-          loader={({ src }) => {
-            return src;
-          }}
-          width={415}
-          height={300}
-          alt="Screenshot"
-        />
-      </Stack>
+      {!props.mobile ? (
+        <Stack borderRadius="12px" overflow="hidden">
+          <Image
+            src={
+              "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
+            }
+            loader={({ src }) => {
+              return src;
+            }}
+            width={415}
+            height={300}
+            alt="Screenshot"
+          />
+        </Stack>
+      ) : (
+        <GraphIllustration width={150} height={150} />
+      )}
     </UrsorDialog>
   );
 };

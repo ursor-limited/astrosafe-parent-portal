@@ -296,28 +296,13 @@ function CreationPageContents(props: { details: IVideo }) {
                   }}
                   borderRadius="12px"
                 >
-                  <Stack direction="row" spacing="16px" alignItems="flex-end">
-                    <CreationPageInputSection title="Title">
-                      <UrsorInputField
-                        value={title}
-                        onChange={(
-                          event: React.ChangeEvent<HTMLInputElement>
-                        ) => setTitle(event.target.value)}
-                        placeholder="Add a title"
-                        width="100%"
-                        backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                        color={INPUT_FIELD_TEXT_COLOR}
-                        backgroundBlur="blur(3px)"
-                        leftAlign
-                        boldValue
-                      />
-                    </CreationPageInputSection>
-                    <Stack
-                      sx={{
-                        opacity: title ? 1 : 0.5,
-                        pointerEvents: title ? undefined : "none",
-                      }}
-                    >
+                  <Stack
+                    direction={mobile ? "column" : "row"}
+                    spacing="16px"
+                    alignItems={mobile ? "center" : "flex-end"}
+                    width="100%"
+                  >
+                    {mobile ? (
                       <UrsorButton
                         dark
                         variant="tertiary"
@@ -339,7 +324,56 @@ function CreationPageContents(props: { details: IVideo }) {
                       >
                         Create link
                       </UrsorButton>
+                    ) : null}
+                    <Stack width="100%">
+                      <CreationPageInputSection title="Title">
+                        <UrsorInputField
+                          value={title}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => setTitle(event.target.value)}
+                          placeholder="Add a title"
+                          width="100%"
+                          backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                          color={INPUT_FIELD_TEXT_COLOR}
+                          backgroundBlur="blur(3px)"
+                          leftAlign
+                          boldValue
+                        />
+                      </CreationPageInputSection>
                     </Stack>
+                    {!mobile ? (
+                      <Stack
+                        sx={{
+                          opacity: title ? 1 : 0.5,
+                          pointerEvents: title ? undefined : "none",
+                        }}
+                        height={mobile ? "40px" : undefined}
+                        justifyContent="center"
+                      >
+                        <UrsorButton
+                          dark
+                          variant="tertiary"
+                          onClick={() => {
+                            setReadyForSubmittingUponLoadingUser(true);
+                            if (user) {
+                              submit();
+                            } else {
+                              mixpanel.track(
+                                "creation page - opened signup prompt dialog"
+                              );
+                              setSignupPromptDialogOpen(true);
+                            }
+                          }}
+                          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                          hoverOpacity={0.7}
+                          endIcon={ChevronRight}
+                          iconColor={PALETTE.font.light}
+                        >
+                          Create link
+                        </UrsorButton>
+                      </Stack>
+                    ) : null}
                   </Stack>
 
                   <CreationPageInputSection title="Description">

@@ -58,7 +58,7 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
 );
 
 function VideoPageContents(props: { details: IVideo }) {
-  const { user, loginWithPopup } = useAuth0();
+  const { user } = useAuth0();
 
   const notificationCtx = React.useContext(NotificationContext);
 
