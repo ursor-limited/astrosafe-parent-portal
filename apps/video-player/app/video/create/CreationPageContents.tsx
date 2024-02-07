@@ -77,7 +77,7 @@ function CreationPageContents(props: { details: IVideo }) {
     );
   }, []);
   useEffect(() => {
-    mixpanel?.track("creation page");
+    mixpanel?.track_pageview();
   }, []);
 
   const { user } = useAuth0();
@@ -142,7 +142,8 @@ function CreationPageContents(props: { details: IVideo }) {
           setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
-      });
+      })
+      .catch(() => setShowInvalidUrlView(true));
   }, [originalUrl]);
 
   useEffect(() => {
@@ -329,9 +330,7 @@ function CreationPageContents(props: { details: IVideo }) {
                           if (user) {
                             submit();
                           } else {
-                            mixpanel.track(
-                              "creation page - opened signup prompt dialog"
-                            );
+                            mixpanel.track("opened signup prompt dialog");
                             setSignupPromptDialogOpen(true);
                           }
                         }}

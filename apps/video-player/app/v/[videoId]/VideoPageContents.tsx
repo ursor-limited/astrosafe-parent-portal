@@ -96,14 +96,14 @@ function VideoPageContents(props: { details: IVideo }) {
       process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
       {
         debug: true,
-        track_pageview: false,
+        track_pageview: false, // since the video id is in the url, we use the pageview properly, so have to do it manually
         persistence: "localStorage",
       }
     );
   }, []);
 
   useEffect(() => {
-    user?.email && mixpanel.track("viewing page");
+    user?.email && mixpanel.track("video viewing page");
   }, [user?.email]);
 
   return props.details && provider ? (

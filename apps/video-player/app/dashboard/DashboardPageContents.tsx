@@ -253,7 +253,7 @@ function DashboardPageContents() {
   }, []);
 
   useEffect(() => {
-    mixpanel.track("dashboard page");
+    mixpanel.track_pageview();
   }, []);
 
   return (
@@ -398,7 +398,13 @@ function DashboardPageContents() {
                   onClick={async () => {
                     if (await urlIsInvalid(inputValue)) {
                       setInvalidUrl(true);
+                      mixpanel.track("clicked Create Video", {
+                        validUrl: false,
+                      });
                     } else {
+                      mixpanel.track("clicked Create Video", {
+                        validUrl: true,
+                      });
                       router.push(
                         `video/create?url=${encodeURIComponent(inputValue)}`
                       );
