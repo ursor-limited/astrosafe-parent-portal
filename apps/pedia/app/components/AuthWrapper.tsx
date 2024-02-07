@@ -1,13 +1,9 @@
 "use client";
 
 import React from "react";
-import _ from "lodash";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
-import PediaHomePageContents from "./PediaHomePageContents";
+import { Auth0Provider } from "@auth0/auth0-react";
 
-export default function AuthWrapper() {
-  /* needed for the platform row's proper scrollability */
-
+export default function AuthWrapper(props: { children: React.ReactNode }) {
   return (
     <Auth0Provider
       domain={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_DOMAIN as string}
@@ -20,7 +16,7 @@ export default function AuthWrapper() {
       useRefreshTokens={true}
       useRefreshTokensFallback={true}
     >
-      <PediaHomePageContents />
+      {props.children}
     </Auth0Provider>
   );
 }

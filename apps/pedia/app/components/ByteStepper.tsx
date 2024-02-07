@@ -20,7 +20,7 @@ const APPEAR_DELAY = 800;
 const BAR_DELAY = "0.6s";
 const BAR_LENGTH_CHANGE_DURATION = "0.7s";
 const BAR_BEZIER = "cubic-bezier(0.64, 0.27, 0.47, 1.53)";
-const BAR_Z_INDEX = 2;
+const BAR_Z_INDEX = 1;
 
 const PULSE_AMPLITUDE = "1.5px";
 const PULSE_PERIOD = "1.4s";

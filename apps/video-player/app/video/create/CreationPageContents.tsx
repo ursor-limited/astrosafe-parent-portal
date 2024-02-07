@@ -18,12 +18,11 @@ import { Typography, UrsorButton } from "ui";
 import { Footer } from "../../components/footer";
 import { Header } from "../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
-import { useWindowSize } from "usehooks-ts";
-import {
-  HIDE_LOGO_PLAYER_WIDTH_THRESHOLD,
-  MAGICAL_BORDER_THICKNESS,
-} from "@/app/v/[videoId]/VideoPageContents";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
+import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
+import SignupPromptDialog from "@/app/components/SignupPromptDialog";
+import mixpanel from "mixpanel-browser";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -66,6 +65,25 @@ const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
+  useEffect(() => {
+    mixpanel.init(
+      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+      {
+        debug: true,
+        track_pageview: false,
+        persistence: "localStorage",
+      }
+    );
+  }, []);
+  useEffect(() => {
+    mixpanel?.track("creation page");
+  }, []);
+
+  const { user } = useAuth0();
+  useEffect(() => {
+    user?.email && mixpanel.identify(user?.email);
+  }, [user?.email]);
+
   const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
@@ -82,7 +100,9 @@ function CreationPageContents(props: { details: IVideo }) {
     () => setOriginalUrl(decodeURIComponent(searchParams.get("url") ?? "")),
     [searchParams]
   );
-  const [provider, zetProvider] = useState<"youtube" | "vimeo">("youtube");
+  const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
+    undefined
+  );
   useEffect(
     () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
     [originalUrl]
@@ -100,16 +120,18 @@ function CreationPageContents(props: { details: IVideo }) {
         if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          setUrl(noCookiefy(extractUrl(details.html)));
+          console.log("---", noCookiefy(extractUrl(details.html)));
+          setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
           setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          setThumbnailUrl(details.thumbnail_url);
         }
       });
   }, [originalUrl]);
 
   useEffect(() => {
     setPlaying(false);
-    url?.includes("youtube") &&
+    provider === "youtube" &&
       ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
         (result) => {
           setDescription(result.description);
@@ -126,9 +148,28 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [freeVideoCreationCount, setFreeVideoCreationCount] =
+    useLocalStorage<number>("freeVideoCreationCount", 0);
+
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+
+  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
+    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
+
+  useEffect(() => {
+    if (user?.email && freeVideoIds.length > 0) {
+      ApiController.claimVideos(user.email, freeVideoIds);
+      setFreeVideoIds([]);
+    }
+  }, [user?.email, freeVideoIds.length]);
+
   const router = useRouter();
   const submit = () => {
     setLoading(true);
+    mixpanel.track("video created");
     ApiController.createVideo({
       title,
       description,
@@ -137,8 +178,28 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
       creatorId: user?.email,
-    }).then((v) => router.push(`/v/${v.id}`));
+    }).then(async (v) => {
+      if (user?.email) {
+        // if (freeVideoIds.length > 0) {
+        //   await ApiController.claimVideos(user.email, freeVideoIds);
+        //   setFreeVideoIds([]);
+        // }
+      } else {
+        setFreeVideoCreationCount(freeVideoCreationCount + 1);
+        setFreeVideoIds([...freeVideoIds, v.id]);
+      }
+      router.push(landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`);
+      setLandInDashboardAfterCreation(false);
+    });
   };
+  useEffect(() => {
+    user?.email && readyForSubmittingUponLoadingUser && submit();
+  }, [user?.email]);
+
+  const [
+    readyForSubmittingUponLoadingUser,
+    setReadyForSubmittingUponLoadingUser,
+  ] = useState<boolean>(false);
 
   const [fullscreen, setFullscreen] = useState<boolean>(false);
   // props.details && provider && url ? (
@@ -164,11 +225,17 @@ function CreationPageContents(props: { details: IVideo }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  const { user } = useAuth0();
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(false);
 
   return (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? (
+        <Header
+          showSigninButton={!user}
+          signinCallback={() => setLandInDashboardAfterCreation(true)}
+        />
+      ) : null}
       {props.details && provider && url ? (
         <Stack
           flex={1}
@@ -229,35 +296,27 @@ function CreationPageContents(props: { details: IVideo }) {
                   }}
                   borderRadius="12px"
                 >
-                  <Stack direction="row" spacing="16px" alignItems="flex-end">
-                    <CreationPageInputSection title="Title">
-                      <UrsorInputField
-                        value={title}
-                        onChange={(
-                          event: React.ChangeEvent<HTMLInputElement>
-                        ) => setTitle(event.target.value)}
-                        placeholder="Add a title"
-                        width="100%"
-                        backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
-                        color={INPUT_FIELD_TEXT_COLOR}
-                        backgroundBlur="blur(3px)"
-                        leftAlign
-                        boldValue
-                      />
-                    </CreationPageInputSection>
-                    <Stack
-                      sx={{
-                        opacity: title ? 1 : 0.5,
-                        pointerEvents: title ? undefined : "none",
-                      }}
-                    >
+                  <Stack
+                    direction={mobile ? "column" : "row"}
+                    spacing="16px"
+                    alignItems={mobile ? "center" : "flex-end"}
+                    width="100%"
+                  >
+                    {mobile ? (
                       <UrsorButton
                         dark
                         variant="tertiary"
-                        onClick={
-                          submit
-                          //setEditing(!editing);
-                        }
+                        onClick={() => {
+                          setReadyForSubmittingUponLoadingUser(true);
+                          if (user) {
+                            submit();
+                          } else {
+                            mixpanel.track(
+                              "creation page - opened signup prompt dialog"
+                            );
+                            setSignupPromptDialogOpen(true);
+                          }
+                        }}
                         backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
                         hoverOpacity={0.7}
                         endIcon={ChevronRight}
@@ -265,7 +324,56 @@ function CreationPageContents(props: { details: IVideo }) {
                       >
                         Create link
                       </UrsorButton>
+                    ) : null}
+                    <Stack width="100%">
+                      <CreationPageInputSection title="Title">
+                        <UrsorInputField
+                          value={title}
+                          onChange={(
+                            event: React.ChangeEvent<HTMLInputElement>
+                          ) => setTitle(event.target.value)}
+                          placeholder="Add a title"
+                          width="100%"
+                          backgroundColor={INPUT_FIELD_BACKGROUND_COLOR}
+                          color={INPUT_FIELD_TEXT_COLOR}
+                          backgroundBlur="blur(3px)"
+                          leftAlign
+                          boldValue
+                        />
+                      </CreationPageInputSection>
                     </Stack>
+                    {!mobile ? (
+                      <Stack
+                        sx={{
+                          opacity: title ? 1 : 0.5,
+                          pointerEvents: title ? undefined : "none",
+                        }}
+                        height={mobile ? "40px" : undefined}
+                        justifyContent="center"
+                      >
+                        <UrsorButton
+                          dark
+                          variant="tertiary"
+                          onClick={() => {
+                            setReadyForSubmittingUponLoadingUser(true);
+                            if (user) {
+                              submit();
+                            } else {
+                              mixpanel.track(
+                                "creation page - opened signup prompt dialog"
+                              );
+                              setSignupPromptDialogOpen(true);
+                            }
+                          }}
+                          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+                          hoverOpacity={0.7}
+                          endIcon={ChevronRight}
+                          iconColor={PALETTE.font.light}
+                        >
+                          Create link
+                        </UrsorButton>
+                      </Stack>
+                    ) : null}
                   </Stack>
 
                   <CreationPageInputSection title="Description">
@@ -584,6 +692,13 @@ function CreationPageContents(props: { details: IVideo }) {
           <Kitemark height={70} width={70} />
         </Stack>
       </Stack>
+      <SignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+        createCallback={submit}
+        signinCallback={() => setLandInDashboardAfterCreation(true)}
+        mobile={mobile}
+      />
     </>
   );
 }

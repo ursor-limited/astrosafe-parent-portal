@@ -12,8 +12,8 @@ export interface IVideo {
 
 const BACKEND_URLS = {
   development: "http://localhost:8081",
-  staging:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/dev/safeplay-backend",
+  preview:
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
   production:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
 };
@@ -23,13 +23,13 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`
+    `${BACKEND_URLS["preview"]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    `${BACKEND_URLS["preview"]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NODE_ENV]}/${route}`,
+    `${BACKEND_URLS["preview"]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -74,6 +74,7 @@ class ApiController {
     return post("video", details).then((response: any) => response.json());
   }
   static async getVideoDetails(id: string) {
+    console.log("envvv", process.env.VERCEL_ENV);
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
   }
@@ -83,7 +84,9 @@ class ApiController {
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}/nVideos`).then((response: any) => response.json());
+    return get(`video/user/${id}/nVideos`).then((response: any) =>
+      response.json()
+    );
   }
   static async updateVideo(id: string, details: Partial<IVideo>) {
     return patch(`video/${id}`, details).then((response: any) =>
@@ -93,6 +96,11 @@ class ApiController {
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(
       (response: any) => response.json()
+    );
+  }
+  static async claimVideos(creatorId: string, videoIds: string[]) {
+    return post("video/claim", { creatorId, videoIds }).then((response: any) =>
+      response.json()
     );
   }
   // static async updateVideo(id: string, details: Partial<IVideo>) {

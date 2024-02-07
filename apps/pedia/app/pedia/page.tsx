@@ -1,8 +1,13 @@
 import React from "react";
-import AuthWrapper from "./AuthWrapper";
+import AuthWrapper from "../components/AuthWrapper";
+import PediaHomePageContents from "./PediaHomePageContents";
 
 async function PediaLandingPage() {
-  return <AuthWrapper />;
+  return (
+    // <AuthWrapper>
+    <PediaHomePageContents />
+    // </AuthWrapper>
+  );
 }
 
 export default PediaLandingPage;

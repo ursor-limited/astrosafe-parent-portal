@@ -10,7 +10,9 @@ import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import NotificationContext from "@/app/components/NotificationContext";
+import moment from "moment";
+import mixpanel from "mixpanel-browser";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -42,7 +44,7 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
     spacing="20px"
   >
     <Typography variant="large" bold color={PALETTE.font.light}>
-      Sign in within 30 min to save and share your Safe Video.
+      Sign in within 30 min to save and share your safe video.
     </Typography>
     <UrsorButton
       dark
@@ -56,6 +58,10 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
 );
 
 function VideoPageContents(props: { details: IVideo }) {
+  const { user } = useAuth0();
+
+  const notificationCtx = React.useContext(NotificationContext);
+
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
@@ -80,16 +86,34 @@ function VideoPageContents(props: { details: IVideo }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  const { user, loginWithPopup } = useAuth0();
+  useEffect(() => {
+    moment().diff(props.details.createdAt, "seconds") < 10 &&
+      notificationCtx.success("Video created.");
+  }, [props.details.createdAt]);
+
+  useEffect(() => {
+    mixpanel.init(
+      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+      {
+        debug: true,
+        track_pageview: false,
+        persistence: "localStorage",
+      }
+    );
+  }, []);
+
+  useEffect(() => {
+    user?.email && mixpanel.track("viewing page");
+  }, [user?.email]);
 
   return props.details && provider ? (
-    <>
-      {!user ? (
+    <Stack flex={1} spacing="50px" justifyContent="center">
+      {/* {!user ? (
         <UrsorFadeIn duration={1000} delay={3000}>
           <SigninPromptBar signInCallback={loginWithPopup} />
         </UrsorFadeIn>
-      ) : null}
-      {!fullscreen ? <Header /> : null}
+      ) : null} */}
+      {!fullscreen ? <Header createNewButton={!user} mobile={mobile} /> : null}
       <Stack
         px="60px"
         justifyContent="center"
@@ -101,7 +125,6 @@ function VideoPageContents(props: { details: IVideo }) {
         pb={!fullscreen ? "100px" : undefined}
         //overflow="scroll"
         spacing="14px"
-        pt={fullscreen ? 0 : "70px"}
       >
         <Stack
           spacing="18px"
@@ -205,20 +228,16 @@ function VideoPageContents(props: { details: IVideo }) {
               />
             </Stack>
           </Stack>
-          {!fullscreen && user ? (
+          {!fullscreen ? (
             <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
               <UrlBar mobile={mobile} />
             </Stack>
           ) : null}
-          {/* </Stack> */}
-          {/* <Image src={Background} alt='Background'  */}
-          {/* <Stack width={`${VIDEO_WIDTH}px`} height={`${VIDEO_HEIGHT + 90}px`} /> */}
           {!fullscreen && props.details.description ? (
             <Stack
               width={`${Math.min(playerWidth, VIDEO_WIDTH)}px`}
               justifyContent="space-between"
               overflow="scroll"
-              //px="16px"
               sx={{ backdropFilter: "blur(7px)" }}
             >
               <Stack
@@ -244,7 +263,7 @@ function VideoPageContents(props: { details: IVideo }) {
       {!fullscreen ? (
         <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
       ) : null}
-    </>
+    </Stack>
   ) : (
     <></>
   );

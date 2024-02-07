@@ -31,6 +31,7 @@ interface ILayoutCardProps {
   editingCallback?: () => void;
   collectionPageId?: string;
   collectionPageTitle?: string;
+  topRightButton?: JSX.Element;
   children: React.ReactNode;
 }
 
@@ -92,20 +93,7 @@ export default function LayoutCard(props: ILayoutCardProps) {
               ) : (
                 <Stack />
               )}
-              {props.editButton ? (
-                <UrsorButton
-                  dark
-                  //backgroundColor="rgb(255,255,255)"
-                  onClick={props.editingCallback}
-                  endIcon={props.editingOn ? CheckIcon : PencilIcon}
-                  iconSize={18}
-                  shadow
-                >
-                  {props.editingOn ? "Complete" : "Edit"}
-                </UrsorButton>
-              ) : (
-                <Stack />
-              )}
+              {props.topRightButton || <Stack />}
             </Stack>
             <Stack
               direction="row"

@@ -6,12 +6,13 @@ import _ from "lodash";
 import { useWindowSize } from "usehooks-ts";
 import { ButtonVariant, UrsorButton } from "ui/ursor-button";
 import { PALETTE, Typography } from "ui";
+import { UrsorTypographyVariant } from "ui/typography";
 
 const WIDTH = "926px";
 const HEIGHT = "630px";
 export const BORDER_RADIUS = "24px";
 export const PADDING = "45px";
-const BUTTON_WIDTH = "343px";
+const BUTTON_WIDTH = "280px";
 export const DEFAULT_FADEIN_DURATION = 400;
 const LONG_FADEIN_DURATION = 2000;
 export const Z_INDEX = 999;
@@ -35,11 +36,14 @@ export interface IDialogButtonDetails {
 export interface IUrsorDialogProps {
   open: boolean;
   width?: string;
+  maxWidth?: string;
+  titleMaxWidth?: string;
   height?: string;
   loading?: boolean;
   title?: string;
   subtitle?: (string | JSX.Element)[];
   supertitle?: string;
+  titleSize?: UrsorTypographyVariant;
   button?: IDialogButtonDetails | JSX.Element;
   secondaryButton?: IDialogButtonDetails | JSX.Element;
   googleButton?: IDialogButtonDetails | JSX.Element;
@@ -96,9 +100,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
     }s ease-in-out`,
   };
 
-  const EndIcon = React.isValidElement(props.button)
+  const PrimaryButtonEndIcon = React.isValidElement(props.button)
     ? undefined
     : (props.button as IDialogButtonDetails)?.icon;
+
+  const SecondaryButtonEndIcon = React.isValidElement(props.secondaryButton)
+    ? undefined
+    : (props.secondaryButton as IDialogButtonDetails)?.icon;
 
   const { width: windowWidth } = useWindowSize();
 
@@ -113,27 +121,23 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       }}
       PaperProps={{
         style: {
-          //zIndex: zIndices.POPUP,
           width: props.width || WIDTH,
-          maxWidth: WIDTH,
-          minWidth: props.fitContent ? undefined : props.width || WIDTH,
+          maxWidth: props.maxWidth || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
-          //height: HEIGHT,
-          minHeight: props.height || HEIGHT,
+          //minHeight: props.height || HEIGHT,
+          height: "100%",
           borderRadius: BORDER_RADIUS,
         },
       }}
       sx={{
-        // ".MuiModal-root-MuiDialog-root": {
-        //   zIndex: undefined,
-        // },
-        //zIndex: ,
-        // zIndex: zIndices.POPUP,
         py: "10px",
         ".MuiBackdrop-root": {
           display: props.noBackdrop ? "none" : "visible",
           ...BACKDROP_STYLE,
         },
+        // ".MuiDialog-container": {
+        //   overflow: "scroll",
+        // },
       }}
     >
       <Stack
@@ -181,7 +185,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
-          overflow={props.noOverflowHidden ? undefined : "hidden"}
+          overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
           <Stack
             spacing="12px"
@@ -195,7 +199,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               </Typography>
             ) : null}
             {props.title ? (
-              <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+              <Typography
+                variant={props.titleSize || "h3"}
+                color={PALETTE.secondary.purple[2]}
+                sx={{ maxWidth: props.titleMaxWidth }}
+              >
                 {props.title}
               </Typography>
             ) : null}
@@ -231,7 +239,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             {props.children}
           </Stack>
 
-          <Stack spacing="8px">
+          <Stack spacing="8px" width="300px" maxWidth="100%">
             {!!props.button ? (
               React.isValidElement(props.button) ? (
                 props.button
@@ -248,7 +256,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                   variant={
                     (props.button as IDialogButtonDetails).variant ?? "primary"
                   }
-                  endIcon={EndIcon}
+                  endIcon={PrimaryButtonEndIcon}
+                  width="100%"
                 >
                   {(props.button as IDialogButtonDetails).text}
                 </UrsorButton>
@@ -301,7 +310,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                         (props.secondaryButton as IDialogButtonDetails)
                           .variant ?? "secondary"
                       }
-                      endIcon={EndIcon}
+                      endIcon={SecondaryButtonEndIcon}
+                      width="100%"
                     >
                       {(props.secondaryButton as IDialogButtonDetails).text}
                     </UrsorButton>

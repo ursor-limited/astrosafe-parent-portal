@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { Header } from "@/app/components/Header";
 import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../c/[pageId]/PediaCollectionPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -135,10 +135,6 @@ const LandingPageCarousel = (props: {
 export default function PediaLandingPageSignedOutView(props: {
   mobile: boolean;
 }) {
-  const router = useRouter();
-
-  const { user } = useAuth0();
-
   const [articles, setArticles] = useState<IPediaPage[]>([]);
   const [collections, setCollections] = useState<
     {
@@ -154,6 +150,15 @@ export default function PediaLandingPageSignedOutView(props: {
       setCollections(collections)
     );
   }, []);
+
+  const [titles, setTitles] = useState<string[]>([]);
+  // const [
+  //   titlesWaitingForGenerationUponSignIn,
+  //   setTitlesWaitingForGenerationUponSignIn,
+  // ] = useLocalStorage<string[] | undefined>(
+  //   "titlesWaitingForGenerationUponSignIn",
+  //   []
+  // );
 
   return (
     <Stack width="100vw" height="100vh" alignItems="center" overflow="scroll">
@@ -214,7 +219,13 @@ export default function PediaLandingPageSignedOutView(props: {
           </Typography>
         </Stack>
         <Stack width="92%" alignItems="center">
-          <CreationBox mobile={props.mobile} />
+          <CreationBox
+            mobile={props.mobile}
+            //titlesCallback={(titles) => setTitles(titles)}
+            // willSignInCallback={() =>
+            //   setTitlesWaitingForGenerationUponSignIn(titles)
+            // }
+          />
         </Stack>
         <IntroSteps mobile={props.mobile} />
       </Stack>
@@ -359,7 +370,7 @@ export default function PediaLandingPageSignedOutView(props: {
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Benefits"
-            subtitle="Lets add some engaging copy here, guys."
+            subtitle="AstroPedia lets you explore whatever topic you want!"
             title="Why use AstroPedia?"
             mobile={props.mobile}
           >
@@ -386,8 +397,8 @@ export default function PediaLandingPageSignedOutView(props: {
           </LandingPageViewport>
           <LandingPageViewport
             supertitle="Who uses AstroPedia"
-            subtitle="AstroPedia was built with the education environment in mind."
-            title="AstroPedia keeps kids engaged"
+            subtitle="AstroPedia articles keep kids engaged and makes teaching easy!"
+            title="AstroPedia is perfect for the classroom"
             mobile={props.mobile}
           >
             <Stack
@@ -396,18 +407,18 @@ export default function PediaLandingPageSignedOutView(props: {
             >
               <IntroSquare2
                 image={UsersIllustration1}
-                title="Teachers"
-                text="Teachas tend to luv os."
+                title="Parents"
+                text="Create your own articles for your child to research!"
               />
               <IntroSquare2
                 image={UsersIllustration2}
-                title="Schools"
-                text="AstroPedia be perfect for Skools."
+                title="Teachers"
+                text="Create a lesson in 5 minutes on the topics for your students!"
               />
               <IntroSquare2
                 image={UsersIllustration3}
-                title="Parents"
-                text="Parents too luv os."
+                title="Kids"
+                text="Learn all kinds of Facts and stats about whatever you’re interested in!"
               />
             </Stack>
           </LandingPageViewport>

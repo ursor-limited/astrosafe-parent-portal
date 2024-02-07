@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { useState } from "react";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
   INPUT_FIELD_BACKGROUND_COLOR,
@@ -18,7 +18,7 @@ export default function ForbiddenVideoView() {
       minHeight="100vh"
       justifyContent="center"
       alignItems="center"
-      spacing="36px" 
+      spacing="36px"
     >
       <Stack
         sx={{
@@ -39,7 +39,16 @@ export default function ForbiddenVideoView() {
           Please try another video.
         </Typography>
       </Stack>
-      <Stack direction="row" width="50%" spacing="20px">
+      <UrsorButton
+        size="large"
+        dark
+        variant="tertiary"
+        onClick={() => router.push("/video")}
+        startIcon={ChevronLeft}
+      >
+        Back to Creation
+      </UrsorButton>
+      {/* <Stack direction="row" width="50%" spacing="20px">
         <UrsorInputField
           value={url}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -73,7 +82,7 @@ export default function ForbiddenVideoView() {
             {"Let's go again"}
           </UrsorButton>
         </Stack>
-      </Stack>
+      </Stack> */}
     </Stack>
   );
 }

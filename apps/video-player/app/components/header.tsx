@@ -7,14 +7,22 @@ import Logo from "@/images/logo.svg";
 import Kitemark from "@/images/coloredKitemark.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import UrsorPopover from "./UrsorPopover";
 import { useRouter } from "next/navigation";
-import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
+import dynamic from "next/dynamic";
+import mixpanel from "mixpanel-browser";
+import { useLocalStorage } from "usehooks-ts";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const HEADER_HEIGHT = 86;
 
@@ -97,12 +105,14 @@ const ProfilePopupButton = (props: {
   );
 };
 
-//export const Header = (props: { collapsed: boolean }) => {
 export const Header = (props: {
   showUpgradeButton?: boolean;
+  showSigninButton?: boolean;
+  signinCallback?: () => void;
   mobile?: boolean;
+  createNewButton?: boolean;
 }) => {
-  const { user, logout } = useAuth0();
+  const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
@@ -122,9 +132,6 @@ export const Header = (props: {
       alignItems="center"
       justifyContent="space-between"
       px="28px"
-      // sx={{
-      //   display: props.collapsed ? "none" : undefined,
-      // }}
     >
       <Stack width="fit-content">
         <Link href="https://astrosafe.co/">
@@ -139,34 +146,52 @@ export const Header = (props: {
           </Stack>
         </Link>
       </Stack>
+      {props.showSigninButton ? (
+        <UrsorButton
+          dark
+          variant="tertiary"
+          onClick={() => {
+            props.mobile ? loginWithRedirect() : loginWithPopup();
+            mixpanel.track("clicked header sign up");
+          }}
+          endIcon={PersonIcon}
+        >
+          Sign in
+        </UrsorButton>
+      ) : null}
       {user ? (
         <UrsorFadeIn duration={800}>
           <Stack direction="row" spacing="12px">
-            {props.showUpgradeButton ? (
-              <UrsorButton
-                dark
-                variant="secondary"
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                useNaturalIconColor
-                onClick={() => setUpgradeDialogOpen(true)}
-              >
-                Unlock more Videos
-              </UrsorButton>
-            ) : (
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => router.push("/dashboard")}
-                endIcon={Kitemark}
-                iconSize={13}
-                iconSpin
-                iconColor="rgba(255,255,255,0.7)"
-              >
-                Go to Dashboard
-              </UrsorButton>
-            )}
+            {!props.mobile ? (
+              <Stack>
+                {props.showUpgradeButton ? (
+                  <></>
+                ) : (
+                  // <UrsorButton
+                  //   dark
+                  //   variant="secondary"
+                  //   endIcon={Kitemark}
+                  //   iconSize={13}
+                  //   iconSpin
+                  //   useNaturalIconColor
+                  //   onClick={() => setUpgradeDialogOpen(true)}
+                  // >
+                  //   Unlock more Videos
+                  // </UrsorButton>
+                  <UrsorButton
+                    dark
+                    variant="tertiary"
+                    onClick={() => router.push("/dashboard")}
+                    endIcon={Kitemark}
+                    iconSize={13}
+                    iconSpin
+                    iconColor="rgba(255,255,255,0.7)"
+                  >
+                    Create more Videos
+                  </UrsorButton>
+                )}
+              </Stack>
+            ) : null}
             <Stack
               sx={{
                 cursor: "pointer",
@@ -194,7 +219,7 @@ export const Header = (props: {
                         {user.email}
                       </Typography>
                     </Stack>
-                    {nVideos ? (
+                    {/* {nVideos ? (
                       <Stack
                         height="40px"
                         direction="row"
@@ -233,14 +258,17 @@ export const Header = (props: {
                           Upgrade
                         </UrsorButton>
                       </Stack>
-                    ) : null}
+                    ) : null} */}
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => router.push("/dashboard")}
                       icon={ListUnorderedIcon}
                       text="Dashboard"
                     />
                     <ProfilePopupButton
-                      callback={() => logout()}
+                      callback={() => {
+                        logout();
+                        mixpanel.reset();
+                      }}
                       icon={LogOutIcon}
                       text="Log out"
                     />
@@ -262,6 +290,15 @@ export const Header = (props: {
             </Stack>
           </Stack>
         </UrsorFadeIn>
+      ) : props.createNewButton ? (
+        <UrsorButton
+          dark
+          variant="tertiary"
+          startIcon={ChevronLeftIcon}
+          onClick={() => router.push("/video")}
+        >
+          Create new
+        </UrsorButton>
       ) : null}
       <UpgradeDialog
         open={upgradeDialogOpen}

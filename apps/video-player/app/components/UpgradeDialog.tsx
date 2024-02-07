@@ -7,12 +7,15 @@ const UpgradeDialog = (props: { open: boolean; closeCallback: () => void }) => (
     supertitle="Upgrade"
     title="Upgrade to Premium"
     subtitle={[
-      "By upgrading to Premium, you will get",
-      "unlimited videos, and help us become wealthy too.",
+      "Upgrade to create as many videos",
+      "as you want!",
     ]}
     open={props.open}
     button={{ text: "Upgrade", callback: () => null, icon: RocketIcon }}
     onCloseCallback={props.closeCallback}
+    backButtonCallback={props.closeCallback}
+    width="90%"
+    maxWidth="880px"
   >
     <Stack
       height="380px"
