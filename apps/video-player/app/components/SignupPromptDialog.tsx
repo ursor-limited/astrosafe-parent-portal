@@ -1,4 +1,3 @@
-import { Stack } from "@mui/system";
 import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";

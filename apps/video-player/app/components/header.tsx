@@ -108,6 +108,7 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   showUpgradeButton?: boolean;
   showSigninButton?: boolean;
+  signinCallback?: () => void;
   mobile?: boolean;
   createNewButton?: boolean;
 }) => {
@@ -152,9 +153,10 @@ export const Header = (props: {
         <UrsorButton
           dark
           variant="tertiary"
-          onClick={() =>
-            props.mobile ? loginWithRedirect() : loginWithPopup()
-          }
+          onClick={() => {
+            props.mobile ? loginWithRedirect() : loginWithPopup();
+            //props.signinCallback?.();
+          }}
           endIcon={PersonIcon}
         >
           Sign in

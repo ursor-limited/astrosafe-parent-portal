@@ -3,6 +3,7 @@ import UrsorDialog from "../components/UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
+import GraphIllustration from "@/images/GraphIllustration.svg";
 
 const DashboardSignupPromptDialog = (props: {
   open: boolean;
@@ -30,15 +31,7 @@ const DashboardSignupPromptDialog = (props: {
       maxWidth="880px"
       noCloseButton
     >
-      <Stack
-        height="380px"
-        width="300px"
-        sx={{
-          backgroundImage: `url(https://ursorassets.s3.eu-west-1.amazonaws.com/page.png)`,
-          backgroundSize: "cover",
-          boxSizing: "border-box",
-        }}
-      />
+      <GraphIllustration width="300px" height="300px" />
     </UrsorDialog>
   );
 };
