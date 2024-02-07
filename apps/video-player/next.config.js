@@ -18,7 +18,7 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://astrosafe.co"
+      ? "https://www.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,
