@@ -36,6 +36,10 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
           Please enter a valid Vimeo or YouTube link to create a safe video
           link.
         </Typography>
+        <Typography variant="medium" bold color="rgba(255,255,255,0.65)">
+          (Note that some videos have the permissions to create a safe link
+          turned off.)
+        </Typography>
       </Stack>
       <Stack
         width="50%"

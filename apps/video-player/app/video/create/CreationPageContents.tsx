@@ -98,9 +98,21 @@ function CreationPageContents(props: { details: IVideo }) {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
+  useEffect(() => {
+    if (![...searchParams.entries()].length) {
+      router.push(user ? "/dashboard" : "/video");
+    }
+    setShowInvalidUrlView(!searchParams.get("url"));
+  }, [searchParams]);
+
   const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
-    () => setOriginalUrl(decodeURIComponent(searchParams.get("url") ?? "")),
+    () =>
+      setOriginalUrl(
+        decodeURIComponent(
+          (searchParams.get("url") ?? "").replace("/shorts/", "/embed/")
+        )
+      ),
     [searchParams]
   );
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -192,7 +204,9 @@ function CreationPageContents(props: { details: IVideo }) {
         setFreeVideoCreationCount(freeVideoCreationCount + 1);
         setFreeVideoIds([...freeVideoIds, v.id]);
       }
-      router.push(landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`);
+      router.push(
+        user && landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`
+      );
       setLandInDashboardAfterCreation(false);
     });
   };
