@@ -24,18 +24,17 @@ const SignupPromptDialog = (props: {
       title={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? "Create an Account"
-          : "Store all your Videos in one place"
+          : "Store all your videos in one place"
       }
       subtitle={
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? [
               "You have reached your video limit, but don’t worry,",
-              "you can continue to create Videos with a free account.",
+              "you can continue to create videos with a free account.",
             ]
           : [
-              "Your video is ready.",
-              "Create an account to store your videos in a dashboard",
-              "and create unlimited videos.",
+              "Your video is ready. Create an account to store your",
+              "videos in a dashboard and create unlimited videos.",
             ]
       }
       open={props.open}
@@ -54,7 +53,7 @@ const SignupPromptDialog = (props: {
         freeVideoCreationCount >= FREE_VIDEO_LIMIT
           ? undefined
           : {
-              text: "Skip",
+              text: "Skip to video",
               callback: () => {
                 props.createCallback();
                 props.closeCallback();

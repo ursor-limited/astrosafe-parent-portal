@@ -44,7 +44,7 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
     spacing="20px"
   >
     <Typography variant="large" bold color={PALETTE.font.light}>
-      Sign in within 30 min to save and share your Safe Video.
+      Sign in within 30 min to save and share your safe video.
     </Typography>
     <UrsorButton
       dark

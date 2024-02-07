@@ -64,7 +64,7 @@ const UpgradePromptBar = () => (
         color={PALETTE.font.light}
         sx={{ textAlign: "center" }}
       >
-        Upgrade to premium for unlimited Video creation
+        Upgrade to premium for unlimited video creation
       </Typography>
     </Stack>
   </Stack>
@@ -403,7 +403,7 @@ function DashboardPageContents() {
                     }
                   }}
                 >
-                  Create Video
+                  Create video
                 </UrsorButton>
               </Stack>
             </Stack>
