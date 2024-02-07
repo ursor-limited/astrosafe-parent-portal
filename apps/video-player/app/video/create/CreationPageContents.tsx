@@ -151,6 +151,14 @@ function CreationPageContents(props: { details: IVideo }) {
   const [freeVideoCreationCount, setFreeVideoCreationCount] =
     useLocalStorage<number>("freeVideoCreationCount", 0);
 
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+
+  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
+    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
+
   const router = useRouter();
   const submit = () => {
     setLoading(true);
@@ -165,7 +173,8 @@ function CreationPageContents(props: { details: IVideo }) {
       creatorId: user?.email,
     }).then((v) => {
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      router.push(`/v/${v.id}`);
+      setFreeVideoIds([...freeVideoIds, v.id]);
+      router.push(landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`);
     });
   };
   useEffect(() => {
@@ -633,6 +642,7 @@ function CreationPageContents(props: { details: IVideo }) {
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
         createCallback={submit}
+        signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={mobile}
       />
     </>
