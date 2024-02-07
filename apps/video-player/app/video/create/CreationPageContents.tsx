@@ -204,7 +204,9 @@ function CreationPageContents(props: { details: IVideo }) {
         setFreeVideoCreationCount(freeVideoCreationCount + 1);
         setFreeVideoIds([...freeVideoIds, v.id]);
       }
-      router.push(landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`);
+      router.push(
+        user && landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`
+      );
       setLandInDashboardAfterCreation(false);
     });
   };
