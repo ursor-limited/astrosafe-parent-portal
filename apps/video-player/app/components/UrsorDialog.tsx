@@ -228,7 +228,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             {props.children}
           </Stack>
 
-          <Stack spacing="8px" width="300px">
+          <Stack spacing="8px" width="300px" maxWidth="100%">
             {!!props.button ? (
               React.isValidElement(props.button) ? (
                 props.button
