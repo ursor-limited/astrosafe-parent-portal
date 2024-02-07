@@ -7,7 +7,7 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Header } from "@/app/components/header";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import ShareIcon from "@/images/icons/ShareIcon.svg";
+import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
@@ -64,7 +64,7 @@ const UpgradePromptBar = () => (
         color={PALETTE.font.light}
         sx={{ textAlign: "center" }}
       >
-        Upgrade to premium for unlimited Video creation
+        Upgrade to premium for unlimited video creation
       </Typography>
     </Stack>
   </Stack>
@@ -83,9 +83,9 @@ const VideoCard = (props: IVideo) => {
   return (
     <Stack
       width="100%"
-      height="253px"
+      height="267px"
       borderRadius="12px"
-      bgcolor="rgba(0,0,0, 0.3)"
+      bgcolor="rgba(0,0,0,0.3)"
       p="4px"
       overflow="hidden"
       sx={{
@@ -93,18 +93,22 @@ const VideoCard = (props: IVideo) => {
       }}
       position="relative"
     >
-      <Stack position="absolute" top="14px" right="14px" zIndex={2}>
+      <Stack position="absolute" bottom="8px" right="4px" zIndex={2}>
         <UrsorButton
-          variant="secondary"
+          dark
+          variant="tertiary"
           size="small"
-          endIcon={ShareIcon}
+          endIcon={ClippyIcon}
           iconSize={15}
+          iconColor={PALETTE.font.light}
           onClick={() => {
             navigator.clipboard.writeText(
               `https://www.astrosafe.co/v/${props.id}`
             );
             notificationCtx.success("Copied URL to Clipboard.");
           }}
+          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+          hoverOpacity={0.7}
         >
           Share
         </UrsorButton>
@@ -403,7 +407,7 @@ function DashboardPageContents() {
                     }
                   }}
                 >
-                  Create Video
+                  Create video
                 </UrsorButton>
               </Stack>
             </Stack>
@@ -417,6 +421,7 @@ function DashboardPageContents() {
             maxWidth="1000px"
             width="100%"
             overflow="hidden"
+            pb="24px"
           >
             {/* <DynamicContainer fullWidth duration={600}> */}
             <DynamicCardGrid

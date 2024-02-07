@@ -151,6 +151,21 @@ function CreationPageContents(props: { details: IVideo }) {
   const [freeVideoCreationCount, setFreeVideoCreationCount] =
     useLocalStorage<number>("freeVideoCreationCount", 0);
 
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+
+  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
+    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
+
+  useEffect(() => {
+    if (user?.email && freeVideoIds.length > 0) {
+      ApiController.claimVideos(user.email, freeVideoIds);
+      setFreeVideoIds([]);
+    }
+  }, [user?.email, freeVideoIds.length]);
+
   const router = useRouter();
   const submit = () => {
     setLoading(true);
@@ -163,9 +178,18 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
       creatorId: user?.email,
-    }).then((v) => {
-      setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      router.push(`/v/${v.id}`);
+    }).then(async (v) => {
+      if (user?.email) {
+        // if (freeVideoIds.length > 0) {
+        //   await ApiController.claimVideos(user.email, freeVideoIds);
+        //   setFreeVideoIds([]);
+        // }
+      } else {
+        setFreeVideoCreationCount(freeVideoCreationCount + 1);
+        setFreeVideoIds([...freeVideoIds, v.id]);
+      }
+      router.push(landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`);
+      setLandInDashboardAfterCreation(false);
     });
   };
   useEffect(() => {
@@ -206,7 +230,12 @@ function CreationPageContents(props: { details: IVideo }) {
 
   return (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? (
+        <Header
+          showSigninButton={!user}
+          signinCallback={() => setLandInDashboardAfterCreation(true)}
+        />
+      ) : null}
       {props.details && provider && url ? (
         <Stack
           flex={1}
@@ -633,6 +662,7 @@ function CreationPageContents(props: { details: IVideo }) {
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
         createCallback={submit}
+        signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={mobile}
       />
     </>

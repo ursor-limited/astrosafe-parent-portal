@@ -36,6 +36,7 @@ export interface IUrsorDialogProps {
   open: boolean;
   width?: string;
   maxWidth?: string;
+  titleMaxWidth?: string;
   height?: string;
   loading?: boolean;
   title?: string;
@@ -192,7 +193,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               </Typography>
             ) : null}
             {props.title ? (
-              <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+              <Typography
+                variant="h3"
+                color={PALETTE.secondary.purple[2]}
+                sx={{ maxWidth: props.titleMaxWidth }}
+              >
                 {props.title}
               </Typography>
             ) : null}
@@ -228,7 +233,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             {props.children}
           </Stack>
 
-          <Stack spacing="8px">
+          <Stack spacing="8px" width="300px" maxWidth="100%">
             {!!props.button ? (
               React.isValidElement(props.button) ? (
                 props.button
@@ -246,7 +251,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     (props.button as IDialogButtonDetails).variant ?? "primary"
                   }
                   endIcon={PrimaryButtonEndIcon}
-                  width={BUTTON_WIDTH}
+                  width="100%"
                 >
                   {(props.button as IDialogButtonDetails).text}
                 </UrsorButton>
@@ -300,7 +305,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                           .variant ?? "secondary"
                       }
                       endIcon={SecondaryButtonEndIcon}
-                      width={BUTTON_WIDTH}
+                      width="100%"
                     >
                       {(props.secondaryButton as IDialogButtonDetails).text}
                     </UrsorButton>

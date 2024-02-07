@@ -74,7 +74,7 @@ class ApiController {
     return post("video", details).then((response: any) => response.json());
   }
   static async getVideoDetails(id: string) {
-    console.log('envvv', process.env.VERCEL_ENV)
+    console.log("envvv", process.env.VERCEL_ENV);
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
   }
@@ -96,6 +96,11 @@ class ApiController {
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(
       (response: any) => response.json()
+    );
+  }
+  static async claimVideos(creatorId: string, videoIds: string[]) {
+    return post("video/claim", { creatorId, videoIds }).then((response: any) =>
+      response.json()
     );
   }
   // static async updateVideo(id: string, details: Partial<IVideo>) {
