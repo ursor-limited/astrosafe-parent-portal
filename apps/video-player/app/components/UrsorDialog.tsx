@@ -124,7 +124,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           width: props.width || WIDTH,
           maxWidth: props.maxWidth || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
-          minHeight: props.height || HEIGHT,
+          //minHeight: props.height || HEIGHT,
+          height: "100%",
           borderRadius: BORDER_RADIUS,
         },
       }}
@@ -134,16 +135,16 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           display: props.noBackdrop ? "none" : "visible",
           ...BACKDROP_STYLE,
         },
-        ".MuiDialog-container": {
-          overflow: "scroll",
-        },
+        // ".MuiDialog-container": {
+        //   overflow: "scroll",
+        // },
       }}
     >
       <Stack
         position="relative"
         p={PADDING}
         borderRadius="25px"
-        overflow="hidden"
+        overflow="scroll"
         flex={1}
       >
         {props.backButtonCallback ? (
