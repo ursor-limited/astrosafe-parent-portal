@@ -1,26 +1,27 @@
-import type { MetadataRoute } from 'next'
- 
-export default function robots(): MetadataRoute.Robots {
-  return ((process.env.VERCEL_ENV === "production") ? {
-    rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-      }
-    ],
-    host: "https://www.astrosafe.co",
-    sitemap: 'https://astrosafe.co/sitemap.xml',
-  } : {
-    rules: [
-      {
-        userAgent: '*',
-        disallow: '/',
-      }
-    ],
-    host: "https://dev.astrosafe.co"
-  })
-}
+import type { MetadataRoute } from "next";
 
+export default function robots(): MetadataRoute.Robots {
+  return process.env.VERCEL_ENV === "production"
+    ? {
+        rules: [
+          {
+            userAgent: "*",
+            allow: "/",
+          },
+        ],
+        host: "https://www.astrosafe.co",
+        sitemap: "https://astrosafe.co/sitemap.xml",
+      }
+    : {
+        rules: [
+          {
+            userAgent: "*",
+            disallow: "/",
+          },
+        ],
+        host: "https://dev.astrosafe.co",
+      };
+}
 
 // export default function handler(req: any, res: any) {
 //     if (process.env.VERCEL_ENV === "production") {

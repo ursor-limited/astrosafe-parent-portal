@@ -23,13 +23,13 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`
+    `${BACKEND_URLS["production"]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`,
+    `${BACKEND_URLS["production"]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`,
+    `${BACKEND_URLS["production"]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
