@@ -8,6 +8,7 @@ import Kitemark from "@/images/coloredKitemark.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
@@ -106,10 +107,11 @@ const ProfilePopupButton = (props: {
 //export const Header = (props: { collapsed: boolean }) => {
 export const Header = (props: {
   showUpgradeButton?: boolean;
+  showSigninButton?: boolean;
   mobile?: boolean;
   createNewButton?: boolean;
 }) => {
-  const { user, logout } = useAuth0();
+  const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
@@ -146,6 +148,18 @@ export const Header = (props: {
           </Stack>
         </Link>
       </Stack>
+      {props.showSigninButton ? (
+        <UrsorButton
+          dark
+          variant="tertiary"
+          onClick={() =>
+            props.mobile ? loginWithRedirect() : loginWithPopup()
+          }
+          endIcon={PersonIcon}
+        >
+          Sign in
+        </UrsorButton>
+      ) : null}
       {user ? (
         <UrsorFadeIn duration={800}>
           <Stack direction="row" spacing="12px">

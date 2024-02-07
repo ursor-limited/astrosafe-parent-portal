@@ -206,7 +206,7 @@ function CreationPageContents(props: { details: IVideo }) {
 
   return (
     <>
-      {!fullscreen ? <Header /> : null}
+      {!fullscreen ? <Header showSigninButton={!user} /> : null}
       {props.details && provider && url ? (
         <Stack
           flex={1}
