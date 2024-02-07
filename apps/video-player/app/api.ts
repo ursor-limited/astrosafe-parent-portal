@@ -74,6 +74,7 @@ class ApiController {
     return post("video", details).then((response: any) => response.json());
   }
   static async getVideoDetails(id: string) {
+    console.log('envvv', process.env.VERCEL_ENV)
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
   }
