@@ -144,7 +144,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         position="relative"
         p={PADDING}
         borderRadius="25px"
-        overflow="scroll"
+        overflow="hidden"
         flex={1}
       >
         {props.backButtonCallback ? (
@@ -185,7 +185,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
-          overflow={props.noOverflowHidden ? undefined : "hidden"}
+          overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
           <Stack
             spacing="12px"
