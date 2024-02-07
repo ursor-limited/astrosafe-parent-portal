@@ -205,6 +205,8 @@ function DashboardPageContents() {
 
   const { user, isLoading } = useAuth0();
 
+  console.log(user, isLoading);
+
   const [inputValue, setInputValue] = useState<string>("");
 
   const [videos, setVideos] = useState<IVideo[]>([]);
