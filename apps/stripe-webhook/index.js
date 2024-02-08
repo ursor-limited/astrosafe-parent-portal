@@ -44,15 +44,12 @@ exports.handler = async function (event) {
         break;
       case "customer.subscription.updated":
         const data3 = stripeEvent.data.object;
-        console.log("updated", data3);
         break;
       case "customer.subscription.deleted":
         const data2 = stripeEvent.data.object;
-        console.log("deleted", data2);
         break;
       case "invoice.payment_succeeded":
         const data5 = stripeEvent.data.object;
-        console.log("paid", data5);
         break;
       default:
         console.log("Unhandled event type");
