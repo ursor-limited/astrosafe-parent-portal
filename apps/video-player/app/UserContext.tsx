@@ -1,7 +1,10 @@
+"use client";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import ApiController from "./api";
+import mixpanel from "mixpanel-browser";
 
 export interface ISafeTubeUser {
   auth0Id: string;
@@ -32,8 +35,15 @@ const UserProvider = (props: IUserProviderProps) => {
   );
   const { user } = useAuth0();
   useEffect(() => {
+    user?.email && mixpanel.track("signed in");
     user?.email &&
-      ApiController.getUser(user.email).then((u) => setSafeTubeUser(u));
+      ApiController.getUser(user.email).then((u) =>
+        u
+          ? setSafeTubeUser(u)
+          : ApiController.createUser(user.email!).then((u) =>
+              setSafeTubeUser(u)
+            )
+      );
   }, [user?.email]);
 
   return (

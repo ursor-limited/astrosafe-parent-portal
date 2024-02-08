@@ -21,6 +21,7 @@ import DynamicCardGrid from "../components/DynamicCardGrid";
 import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
+import { useUserContext } from "../UserContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -204,8 +205,8 @@ function DashboardPageContents() {
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
   const { user, isLoading } = useAuth0();
-
-  console.log(user, isLoading);
+  const safeTubeUser = useUserContext().user;
+  console.log(safeTubeUser, "00");
 
   const [inputValue, setInputValue] = useState<string>("");
 
