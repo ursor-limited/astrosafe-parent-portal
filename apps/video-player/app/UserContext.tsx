@@ -9,6 +9,7 @@ import mixpanel from "mixpanel-browser";
 export interface ISafeTubeUser {
   auth0Id: string;
   subscribed: boolean;
+  subscriptionDeletionDate?: number;
 }
 
 export interface IUserContext {
