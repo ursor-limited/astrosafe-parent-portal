@@ -7,10 +7,12 @@ import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import FooterBackground from "@/images/footerBackground.png";
 import FooterScreenshot from "@/images/footerScreenshot.png";
+import { useRouter } from "next/navigation";
 
 export const HEADER_HEIGHT = 86;
 
 export const Footer = (props: { fontScale: number }) => {
+  const router = useRouter();
   return (
     <Stack
       direction="row"
@@ -54,41 +56,50 @@ export const Footer = (props: { fontScale: number }) => {
                   fontWeight: 490,
                 }}
               >
-                SafeTube is a free tool developed by Astro, the safe Browser
-                built for the Classroom
+                SafeTube is a tool built by AstroSafe to help make the classroom
+                a little bit safer.
               </Typography>
             </Stack>
           </Stack>
-          <Stack maxWidth="70%" sx={{ textAlign: "center" }}>
+          <Stack maxWidth="40%" sx={{ textAlign: "center" }}>
             <Typography
               bold
               variant="large"
               color={PALETTE.secondary.grey[4]}
               scale={props.fontScale}
             >
-              Astro allows you to monitor your students online, and curate an
-              internet specifically for their learning.
+              Sign up to store your videos in a dashboard and create unlimited
+              videos.
             </Typography>
           </Stack>
         </Stack>
         <Stack pt="12px" alignItems="center" spacing="3px">
-          <Link href="https://www.astrosafe.co/book-demo" target={"_blank"}>
-            <UrsorButton
-              size="large"
-              endIcon={Kitemark}
-              startIcon={Kitemark}
-              iconSize={10}
-              iconColor="rgba(255,255,255,0.6)"
-            >
-              Try Astro for free
-            </UrsorButton>
-          </Link>
+          <UrsorButton
+            size="large"
+            endIcon={Kitemark}
+            startIcon={Kitemark}
+            iconSize={10}
+            iconColor="rgba(255,255,255,0.6)"
+            onClick={() => router.push("/dashboard")}
+          >
+            Start creating safe video links
+          </UrsorButton>
           <Typography variant="small" color="rgba(0,0,0,0.4)">
             No payment or credit card required.
           </Typography>
         </Stack>
-        <Stack width={`${props.fontScale * 100}%`} alignItems="center">
-          <Image src={FooterScreenshot} width={700} alt="Footer" />
+        <Stack alignItems="center" pt="5px">
+          <Image
+            src={
+              "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubeFooterScreenshot.png"
+            }
+            loader={({ src }) => {
+              return src;
+            }}
+            width={props.fontScale * 415}
+            height={props.fontScale * 300}
+            alt="Screenshot"
+          />
         </Stack>
       </Stack>
     </Stack>
