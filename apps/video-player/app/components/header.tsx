@@ -8,6 +8,7 @@ import Kitemark from "@/images/coloredKitemark.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -19,6 +20,7 @@ import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
 import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
+import { useUserContext } from "../UserContext";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -29,6 +31,9 @@ export const HEADER_HEIGHT = 86;
 
 export const ASTRO_MAGICAL_GRADIENT =
   "linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)";
+
+const STRIPE_CUSTOMER_PORTAL_URL =
+  "https://billing.stripe.com/p/login/test_8wMfZYfAK4M2fJe4gg";
 
 const ProfileButton = (props: { initials: string }) => (
   <Stack
@@ -109,9 +114,11 @@ const ProfilePopupButton = (props: {
 export const Header = (props: {
   showUpgradeButtons?: boolean;
   showSigninButton?: boolean;
+  createMoreVideosButton?: boolean;
   signinCallback?: () => void;
   mobile?: boolean;
   createNewButton?: boolean;
+  hidePopupDashboardButton?: boolean;
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
@@ -124,6 +131,7 @@ export const Header = (props: {
         setNVideos(n)
       );
   }, [user?.email]);
+  const safeTubeUser = useUserContext().user;
   return (
     <Stack
       direction="row"
@@ -177,7 +185,8 @@ export const Header = (props: {
                   >
                     Unlock more Videos
                   </UrsorButton>
-                ) : (
+                ) : null}
+                {props.createMoreVideosButton ? (
                   <UrsorButton
                     dark
                     variant="tertiary"
@@ -189,7 +198,7 @@ export const Header = (props: {
                   >
                     Create more Videos
                   </UrsorButton>
-                )}
+                ) : null}
               </Stack>
             ) : null}
             <Stack
@@ -219,7 +228,7 @@ export const Header = (props: {
                         {user.email}
                       </Typography>
                     </Stack>
-                    {nVideos && props.showUpgradeButtons ? (
+                    {nVideos && !safeTubeUser?.subscribed ? (
                       <Stack
                         height="40px"
                         direction="row"
@@ -259,11 +268,29 @@ export const Header = (props: {
                         </UrsorButton>
                       </Stack>
                     ) : null}
-                    <ProfilePopupButton
-                      callback={() => router.push("/dashboard")}
-                      icon={ListUnorderedIcon}
-                      text="Dashboard"
-                    />
+                    {!props.hidePopupDashboardButton ? (
+                      <ProfilePopupButton
+                        callback={() => router.push("/dashboard")}
+                        icon={ListUnorderedIcon}
+                        text="Dashboard"
+                      />
+                    ) : null}
+                    {nVideos && safeTubeUser?.subscribed ? (
+                      <a
+                        target="_blank"
+                        href={STRIPE_CUSTOMER_PORTAL_URL}
+                        style={{
+                          textDecoration: "none",
+                        }}
+                        rel="noreferrer"
+                      >
+                        <ProfilePopupButton
+                          callback={() => setProfilePopupOpen(false)}
+                          icon={CreditCardIcon}
+                          text="Manage plan"
+                        />
+                      </a>
+                    ) : null}
                     <ProfilePopupButton
                       callback={() => {
                         logout();

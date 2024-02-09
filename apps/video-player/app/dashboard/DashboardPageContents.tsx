@@ -218,7 +218,7 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   useEffect(() => {
     user?.email &&
       ApiController.getUserVideos(user.email).then((videos) =>
-        setVideos(_.reverse(videos).filter((v: any) => v.thumbnailUrl))
+        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
       );
   }, [user?.email]);
 
@@ -272,6 +272,7 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
         <Header
           showUpgradeButtons={!safeTubeUser?.subscribed}
           mobile={isMobile}
+          hidePopupDashboardButton
         />
         <Stack
           spacing={isMobile ? "26px" : "40px"}

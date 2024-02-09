@@ -113,7 +113,13 @@ function VideoPageContents(props: { details: IVideo }) {
           <SigninPromptBar signInCallback={loginWithPopup} />
         </UrsorFadeIn>
       ) : null} */}
-      {!fullscreen ? <Header createNewButton={!user} mobile={mobile} /> : null}
+      {!fullscreen ? (
+        <Header
+          createNewButton={!user}
+          mobile={mobile}
+          createMoreVideosButton={!mobile}
+        />
+      ) : null}
       <Stack
         px="60px"
         justifyContent="center"
