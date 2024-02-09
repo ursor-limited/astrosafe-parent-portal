@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
@@ -185,12 +185,17 @@ export const urlIsInvalid = async (value: string) =>
     ).then(async (result) => result.json())
   ).error;
 
-function DashboardPageContents() {
+function DashboardPageContents(props: { justSubscribed: boolean }) {
   const { width } = useWindowSize();
 
   const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
     null
   );
+
+  const notificationCtx = useContext(NotificationContext);
+  useEffect(() => {
+    props.justSubscribed && notificationCtx.success("Upgraded!");
+  }, [props.justSubscribed]);
 
   const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
   useEffect(
@@ -206,7 +211,6 @@ function DashboardPageContents() {
 
   const { user, isLoading } = useAuth0();
   const safeTubeUser = useUserContext().user;
-  console.log(safeTubeUser, "00");
 
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -221,10 +225,12 @@ function DashboardPageContents() {
   const router = useRouter();
 
   const [creationDisabled, setCreationDisabled] = useState<boolean>(false);
-  useEffect(
-    () => videos && setCreationDisabled(videos.length >= FREE_VIDEO_LIMIT),
-    [videos]
-  );
+  useEffect(() => {
+    videos &&
+      setCreationDisabled(
+        !safeTubeUser?.subscribed && videos.length >= FREE_VIDEO_LIMIT
+      );
+  }, [videos, safeTubeUser]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [upgradePromptBarHidden, setUpgradePromptBarHidden] =
@@ -260,8 +266,13 @@ function DashboardPageContents() {
   return (
     <>
       <Stack flex={1} position="relative">
-        {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
-        <Header showUpgradeButton mobile={isMobile} />
+        {!upgradePromptBarHidden && !safeTubeUser?.subscribed ? (
+          <UpgradePromptBar />
+        ) : null}
+        <Header
+          showUpgradeButtons={!safeTubeUser?.subscribed}
+          mobile={isMobile}
+        />
         <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"
@@ -289,34 +300,53 @@ function DashboardPageContents() {
                 Your SafeTube Dashboard
               </Typography>
             </Stack>
-            {/* {videos ? (
-            <UrsorFadeIn duration={800}>
-              <Stack direction="row" alignItems="center" spacing="19px">
-                <Stack direction="row" alignItems="center" spacing="6px">
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color={PALETTE.font.light}
-                  >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color="rgba(255,255,255,0.7)"
-                  >
-                    Videos created
-                  </Typography>
-                </Stack>
-                <UrsorButton
-                  size="small"
-                  variant="tertiary"
-                  dark
-                  onClick={() => setUpgradeDialogOpen(true)}
-                >
-                  Upgrade
-                </UrsorButton>
-              </Stack>
-            </UrsorFadeIn>
-          ) : null} */}
+            {videos ? (
+              <UrsorFadeIn duration={800}>
+                {safeTubeUser?.subscribed ? (
+                  <Stack direction="row" alignItems="center" spacing="6px">
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color={PALETTE.font.light}
+                    >
+                      {videos.length}
+                    </Typography>
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color="rgba(255,255,255,0.7)"
+                    >
+                      videos created
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Stack direction="row" alignItems="center" spacing="19px">
+                    <Stack direction="row" alignItems="center" spacing="6px">
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color={PALETTE.font.light}
+                      >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color="rgba(255,255,255,0.7)"
+                      >
+                        videos created
+                      </Typography>
+                    </Stack>
+                    <UrsorButton
+                      size="small"
+                      variant="tertiary"
+                      dark
+                      onClick={() => setUpgradeDialogOpen(true)}
+                    >
+                      Upgrade
+                    </UrsorButton>
+                  </Stack>
+                )}
+              </UrsorFadeIn>
+            ) : null}
           </Stack>
           {/* <UrsorFadeIn duration={800} delay={200}> */}
           {/* <Stack position="relative" width="100%" alignItems="center"> */}
@@ -336,12 +366,10 @@ function DashboardPageContents() {
           <Stack
             width="100%"
             maxWidth="800px"
-            sx={
-              {
-                // opacity: creationDisabled ? 0.4 : 1,
-                // pointerEvents: creationDisabled ? "none" : undefined,
-              }
-            }
+            sx={{
+              opacity: creationDisabled ? 0.4 : 1,
+              pointerEvents: creationDisabled ? "none" : undefined,
+            }}
             alignItems="center"
             position="relative"
           >

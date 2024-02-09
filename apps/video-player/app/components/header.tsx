@@ -18,6 +18,7 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
+import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -106,7 +107,7 @@ const ProfilePopupButton = (props: {
 };
 
 export const Header = (props: {
-  showUpgradeButton?: boolean;
+  showUpgradeButtons?: boolean;
   showSigninButton?: boolean;
   signinCallback?: () => void;
   mobile?: boolean;
@@ -164,20 +165,19 @@ export const Header = (props: {
           <Stack direction="row" spacing="12px">
             {!props.mobile ? (
               <Stack>
-                {props.showUpgradeButton ? (
-                  <></>
+                {props.showUpgradeButtons ? (
+                  <UrsorButton
+                    dark
+                    variant="secondary"
+                    endIcon={Kitemark}
+                    iconSize={13}
+                    iconSpin
+                    useNaturalIconColor
+                    onClick={() => setUpgradeDialogOpen(true)}
+                  >
+                    Unlock more Videos
+                  </UrsorButton>
                 ) : (
-                  // <UrsorButton
-                  //   dark
-                  //   variant="secondary"
-                  //   endIcon={Kitemark}
-                  //   iconSize={13}
-                  //   iconSpin
-                  //   useNaturalIconColor
-                  //   onClick={() => setUpgradeDialogOpen(true)}
-                  // >
-                  //   Unlock more Videos
-                  // </UrsorButton>
                   <UrsorButton
                     dark
                     variant="tertiary"
@@ -219,7 +219,7 @@ export const Header = (props: {
                         {user.email}
                       </Typography>
                     </Stack>
-                    {/* {nVideos ? (
+                    {nVideos && props.showUpgradeButtons ? (
                       <Stack
                         height="40px"
                         direction="row"
@@ -258,7 +258,7 @@ export const Header = (props: {
                           Upgrade
                         </UrsorButton>
                       </Stack>
-                    ) : null} */}
+                    ) : null}
                     <ProfilePopupButton
                       callback={() => router.push("/dashboard")}
                       icon={ListUnorderedIcon}

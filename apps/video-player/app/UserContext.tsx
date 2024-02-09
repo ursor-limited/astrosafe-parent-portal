@@ -13,6 +13,7 @@ export interface ISafeTubeUser {
 
 export interface IUserContext {
   user?: ISafeTubeUser;
+  paymentLink?: string;
 }
 
 const UserContext = createContext<IUserContext>({});
@@ -46,10 +47,21 @@ const UserProvider = (props: IUserProviderProps) => {
       );
   }, [user?.email]);
 
+  const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    user?.email &&
+      safeTubeUser &&
+      !safeTubeUser.subscribed &&
+      ApiController.getPaymentLink(user.email).then((link) =>
+        setPaymentLink(link)
+      );
+  }, [user?.email, safeTubeUser]);
+
   return (
     <UserContext.Provider
       value={{
         user: safeTubeUser,
+        paymentLink,
       }}
     >
       {props.children}

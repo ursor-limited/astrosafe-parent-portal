@@ -117,11 +117,11 @@ class ApiController {
       response.json()
     );
   }
-  // static async updateVideo(id: string, details: Partial<IVideo>) {
-  //   return api
-  //     .patch(`/video/${id}`, details)
-  //     .then((response: any) => response.data);
-  // }
+  static async getPaymentLink(auth0Id: string) {
+    return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;

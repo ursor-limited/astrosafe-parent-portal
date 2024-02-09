@@ -2,13 +2,14 @@ const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const axios = require("axios");
 
 const submitSubscriptionCreated = async (email) => {
-  console.log(email)
+  console.log(email);
   await axios
     .patch(
       `https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend/video/user/${email}/subscribe`
     )
-    .then((x) => console.log(x.data));
-}
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
+};
 
 exports.handler = async function (event) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -42,7 +43,7 @@ exports.handler = async function (event) {
     switch (eventType) {
       case "customer.subscription.created":
         const data = stripeEvent.data.object;
-        submitSubscriptionCreated(customerEmail);
+        await submitSubscriptionCreated(customerEmail);
         break;
       case "customer.subscription.updated":
         const data3 = stripeEvent.data.object;
