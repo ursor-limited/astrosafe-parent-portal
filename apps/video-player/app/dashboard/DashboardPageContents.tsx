@@ -9,6 +9,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import Star from "@/images/Star.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
 import { useRouter } from "next/navigation";
@@ -21,7 +22,7 @@ import DynamicCardGrid from "../components/DynamicCardGrid";
 import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
-import { useUserContext } from "../UserContext";
+import { ISafeTubeUser, useUserContext } from "../UserContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -71,7 +72,58 @@ const UpgradePromptBar = () => (
   </Stack>
 );
 
-export const getFormattedDate = (date: string) =>
+const RenewalPromptBar = (props: {
+  subscriptionDeletionDate: ISafeTubeUser["subscriptionDeletionDate"];
+}) => (
+  <Stack width="100%" justifyContent="center">
+    <Stack
+      position="absolute"
+      left={0}
+      right={0}
+      margin="auto auto"
+      py="10px"
+      maxWidth="40%"
+      justifyContent="center"
+      alignItems="center"
+      zIndex={2}
+      borderRadius="12px"
+      top="21px"
+      sx={{
+        transition: "0.5s",
+        willChange: "transform",
+        background: PROMPT_BAR_GRADIENT,
+      }}
+      direction="row"
+      spacing="30px"
+    >
+      <Typography
+        variant="medium"
+        bold
+        color={PALETTE.font.light}
+        sx={{ textAlign: "center" }}
+      >
+        {`Your subscription will end on ${getFormattedDate(
+          props.subscriptionDeletionDate!
+        )}`}
+      </Typography>
+      <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
+        <UrsorButton
+          backgroundColor="rgba(255,255,255)"
+          fontColor="#7183F7"
+          onClick={() => null}
+          endIcon={Star}
+          iconSize={13}
+          iconSpin
+          iconColor="rgba(113, 131, 247,0.5)"
+        >
+          Renew
+        </UrsorButton>
+      </Stack>
+    </Stack>
+  </Stack>
+);
+
+export const getFormattedDate = (date: string | number) =>
   moment(date).format("Do MMMM YYYY");
 
 const VideoCard = (props: IVideo) => {
@@ -266,9 +318,15 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   return (
     <>
       <Stack flex={1} position="relative">
-        {!upgradePromptBarHidden && !safeTubeUser?.subscribed ? (
-          <UpgradePromptBar />
-        ) : null}
+        <UrsorFadeIn delay={2000} duration={1100}>
+          {!upgradePromptBarHidden && !safeTubeUser?.subscribed ? (
+            <UpgradePromptBar />
+          ) : safeTubeUser?.subscriptionDeletionDate ? (
+            <RenewalPromptBar
+              subscriptionDeletionDate={safeTubeUser.subscriptionDeletionDate}
+            />
+          ) : null}
+        </UrsorFadeIn>
         <Header
           showUpgradeButtons={!safeTubeUser?.subscribed}
           mobile={isMobile}
@@ -302,7 +360,7 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
               </Typography>
             </Stack>
             {videos ? (
-              <UrsorFadeIn duration={800}>
+              <UrsorFadeIn duration={1100} delay={1500}>
                 {safeTubeUser?.subscribed ? (
                   <Stack direction="row" alignItems="center" spacing="6px">
                     <Typography

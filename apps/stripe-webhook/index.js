@@ -1,15 +1,29 @@
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const axios = require("axios");
 
-const submitSubscriptionCreated = async (email) => {
-  console.log(email);
-  await axios
+const BACKEND_URLS = {
+  development: "http://localhost:8081",
+  preview:
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
+  production:
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
+};
+
+const submitSubscriptionCreated = async (email) =>
+  axios
     .patch(
-      `https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend/video/user/${email}/subscribe`
+      `${BACKEND_URLS[process.env.NODE_ENV]}/video/user/${email}/subscribe`
     )
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
-};
+
+const submitSubscriptionDeleted = async (email) =>
+  axios
+    .patch(
+      `${BACKEND_URLS[process.env.NODE_ENV]}/video/user/${email}/unsubscribe`
+    )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
 
 exports.handler = async function (event) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -50,6 +64,7 @@ exports.handler = async function (event) {
         break;
       case "customer.subscription.deleted":
         const data2 = stripeEvent.data.object;
+        await submitSubscriptionDeleted(customerEmail);
         break;
       case "invoice.payment_succeeded":
         const data5 = stripeEvent.data.object;
