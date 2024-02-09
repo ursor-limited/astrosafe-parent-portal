@@ -7,10 +7,12 @@ import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import FooterBackground from "@/images/footerBackground.png";
 import FooterScreenshot from "@/images/footerScreenshot.png";
+import { useRouter } from "next/navigation";
 
 export const HEADER_HEIGHT = 86;
 
 export const Footer = (props: { fontScale: number }) => {
+  const router = useRouter();
   return (
     <Stack
       direction="row"
@@ -72,17 +74,16 @@ export const Footer = (props: { fontScale: number }) => {
           </Stack>
         </Stack>
         <Stack pt="12px" alignItems="center" spacing="3px">
-          <Link href="https://www.astrosafe.co/book-demo" target={"_blank"}>
-            <UrsorButton
-              size="large"
-              endIcon={Kitemark}
-              startIcon={Kitemark}
-              iconSize={10}
-              iconColor="rgba(255,255,255,0.6)"
-            >
-              Start creating safe video links
-            </UrsorButton>
-          </Link>
+          <UrsorButton
+            size="large"
+            endIcon={Kitemark}
+            startIcon={Kitemark}
+            iconSize={10}
+            iconColor="rgba(255,255,255,0.6)"
+            onClick={() => router.push("/dashboard")}
+          >
+            Start creating safe video links
+          </UrsorButton>
           <Typography variant="small" color="rgba(0,0,0,0.4)">
             No payment or credit card required.
           </Typography>
