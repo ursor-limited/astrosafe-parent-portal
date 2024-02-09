@@ -23,13 +23,13 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`
+    `${BACKEND_URLS["development"]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`,
+    `${BACKEND_URLS["development"]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["preview"]}/${route}`,
+    `${BACKEND_URLS["development"]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -80,7 +80,7 @@ class ApiController {
   }
   static async getUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}`).then((response: any) => response.json());
+    return get(`video/user/${id}/videos`).then((response: any) => response.json());
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
