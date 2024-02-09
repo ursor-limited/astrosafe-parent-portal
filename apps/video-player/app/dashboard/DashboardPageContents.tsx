@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
@@ -21,6 +21,7 @@ import DynamicCardGrid from "../components/DynamicCardGrid";
 import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
+import { useUserContext } from "../UserContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -32,7 +33,7 @@ export const FREE_VIDEO_LIMIT = 3;
 
 const VIDEO_WIDTH = 845;
 
-const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
+export const GRADIENT = "linear-gradient(150deg, #F279C5, #FD9B41)";
 const PROMPT_BAR_GRADIENT = "linear-gradient(0deg, #6596FF, #7B61FF)";
 
 const UPGRADE_PROMPT_BAR_VISIBILITY_WINDOW_WIDTH_THRESHOLD = 1110;
@@ -176,12 +177,25 @@ const VideoCard = (props: IVideo) => {
   );
 };
 
-function DashboardPageContents() {
+export const urlIsInvalid = async (value: string) =>
+  !["youtube.com", "youtu.be", "vimeo.com"].some((x) => value.includes(x)) &&
+  !!(
+    await fetch(
+      `https://noembed.com/embed?url=${encodeURIComponent(deNoCookiefy(value))}`
+    ).then(async (result) => result.json())
+  ).error;
+
+function DashboardPageContents(props: { justSubscribed: boolean }) {
   const { width } = useWindowSize();
 
   const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
     null
   );
+
+  const notificationCtx = useContext(NotificationContext);
+  useEffect(() => {
+    props.justSubscribed && notificationCtx.success("Upgraded!");
+  }, [props.justSubscribed]);
 
   const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
   useEffect(
@@ -196,6 +210,7 @@ function DashboardPageContents() {
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
   const { user, isLoading } = useAuth0();
+  const safeTubeUser = useUserContext().user;
 
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -203,17 +218,19 @@ function DashboardPageContents() {
   useEffect(() => {
     user?.email &&
       ApiController.getUserVideos(user.email).then((videos) =>
-        setVideos(_.reverse(videos).filter((v: any) => v.thumbnailUrl))
+        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
       );
   }, [user?.email]);
 
   const router = useRouter();
 
   const [creationDisabled, setCreationDisabled] = useState<boolean>(false);
-  useEffect(
-    () => videos && setCreationDisabled(videos.length >= FREE_VIDEO_LIMIT),
-    [videos]
-  );
+  useEffect(() => {
+    videos &&
+      setCreationDisabled(
+        !safeTubeUser?.subscribed && videos.length >= FREE_VIDEO_LIMIT
+      );
+  }, [videos, safeTubeUser]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [upgradePromptBarHidden, setUpgradePromptBarHidden] =
@@ -229,18 +246,6 @@ function DashboardPageContents() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const urlIsInvalid = async () =>
-    !["youtube.com", "youtu.be", "vimeo.com"].some((x) =>
-      inputValue.includes(x)
-    ) &&
-    !!(
-      await fetch(
-        `https://noembed.com/embed?url=${encodeURIComponent(
-          deNoCookiefy(inputValue)
-        )}`
-      ).then(async (result) => result.json())
-    ).error;
-
   const [invalidUrl, setInvalidUrl] = useState<boolean>(false);
 
   useEffect(() => {
@@ -255,14 +260,20 @@ function DashboardPageContents() {
   }, []);
 
   useEffect(() => {
-    mixpanel.track("dashboard page");
+    mixpanel.track_pageview();
   }, []);
 
   return (
     <>
       <Stack flex={1} position="relative">
-        {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
-        <Header showUpgradeButton mobile={isMobile} />
+        {!upgradePromptBarHidden && !safeTubeUser?.subscribed ? (
+          <UpgradePromptBar />
+        ) : null}
+        <Header
+          showUpgradeButtons={!safeTubeUser?.subscribed}
+          mobile={isMobile}
+          hidePopupDashboardButton
+        />
         <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"
@@ -290,34 +301,53 @@ function DashboardPageContents() {
                 Your SafeTube Dashboard
               </Typography>
             </Stack>
-            {/* {videos ? (
-            <UrsorFadeIn duration={800}>
-              <Stack direction="row" alignItems="center" spacing="19px">
-                <Stack direction="row" alignItems="center" spacing="6px">
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color={PALETTE.font.light}
-                  >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color="rgba(255,255,255,0.7)"
-                  >
-                    Videos created
-                  </Typography>
-                </Stack>
-                <UrsorButton
-                  size="small"
-                  variant="tertiary"
-                  dark
-                  onClick={() => setUpgradeDialogOpen(true)}
-                >
-                  Upgrade
-                </UrsorButton>
-              </Stack>
-            </UrsorFadeIn>
-          ) : null} */}
+            {videos ? (
+              <UrsorFadeIn duration={800}>
+                {safeTubeUser?.subscribed ? (
+                  <Stack direction="row" alignItems="center" spacing="6px">
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color={PALETTE.font.light}
+                    >
+                      {videos.length}
+                    </Typography>
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color="rgba(255,255,255,0.7)"
+                    >
+                      videos created
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Stack direction="row" alignItems="center" spacing="19px">
+                    <Stack direction="row" alignItems="center" spacing="6px">
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color={PALETTE.font.light}
+                      >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color="rgba(255,255,255,0.7)"
+                      >
+                        videos created
+                      </Typography>
+                    </Stack>
+                    <UrsorButton
+                      size="small"
+                      variant="tertiary"
+                      dark
+                      onClick={() => setUpgradeDialogOpen(true)}
+                    >
+                      Upgrade
+                    </UrsorButton>
+                  </Stack>
+                )}
+              </UrsorFadeIn>
+            ) : null}
           </Stack>
           {/* <UrsorFadeIn duration={800} delay={200}> */}
           {/* <Stack position="relative" width="100%" alignItems="center"> */}
@@ -337,12 +367,10 @@ function DashboardPageContents() {
           <Stack
             width="100%"
             maxWidth="800px"
-            sx={
-              {
-                // opacity: creationDisabled ? 0.4 : 1,
-                // pointerEvents: creationDisabled ? "none" : undefined,
-              }
-            }
+            sx={{
+              opacity: creationDisabled ? 0.4 : 1,
+              pointerEvents: creationDisabled ? "none" : undefined,
+            }}
             alignItems="center"
             position="relative"
           >
@@ -398,9 +426,15 @@ function DashboardPageContents() {
                   endIcon={ChevronRight}
                   iconColor={PALETTE.font.light}
                   onClick={async () => {
-                    if (await urlIsInvalid()) {
+                    if (await urlIsInvalid(inputValue)) {
                       setInvalidUrl(true);
+                      mixpanel.track("clicked Create Video", {
+                        validUrl: false,
+                      });
                     } else {
+                      mixpanel.track("clicked Create Video", {
+                        validUrl: true,
+                      });
                       router.push(
                         `video/create?url=${encodeURIComponent(inputValue)}`
                       );

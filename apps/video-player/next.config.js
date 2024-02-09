@@ -2,7 +2,7 @@
 const withSvgr = require("next-svgr");
 
 module.exports = withSvgr({
-  reactStrictMode: true,
+  reactStrictMode: false,
   transpilePackages: ["ui"],
   images: {
     domains: [
@@ -18,7 +18,7 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://astrosafe.co"
+      ? "https://www.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,

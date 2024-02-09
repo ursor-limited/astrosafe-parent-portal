@@ -13,17 +13,17 @@ const DashboardSignupPromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title="Sign in"
+      title="SafeTube sign in"
       subtitle={[
-        "Sign in to create videos, share them,",
-        "and store them all in one place.",
+        "Log in or create an account to store your videos in a dashboard",
+        "and create unlimited videos.",
       ]}
       open={props.open}
       button={{
         text: "Let's do it",
         callback: () => {
           props.mobile ? loginWithRedirect() : loginWithPopup();
-          mixpanel.track("dashboard page - clicked signup button");
+          mixpanel.track("clicked dashboard signup button");
         },
         icon: ChevronRight,
       }}

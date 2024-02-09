@@ -15,6 +15,7 @@ export default function AuthWrapper(props: { children: React.ReactNode }) {
       }}
       useRefreshTokens={true}
       useRefreshTokensFallback={true}
+      cacheLocation="localstorage"
     >
       {props.children}
     </Auth0Provider>
