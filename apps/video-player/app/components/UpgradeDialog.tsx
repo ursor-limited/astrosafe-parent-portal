@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 const UpgradeDialog = (props: { open: boolean; closeCallback: () => void }) => {
   const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
+  console.log(paymentLink, "---");
   return (
     <UrsorDialog
       supertitle="Upgrade"
