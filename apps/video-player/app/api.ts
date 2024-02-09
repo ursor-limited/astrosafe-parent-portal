@@ -80,7 +80,7 @@ class ApiController {
   }
   static async getUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}/videos`).then((response: any) => response.json());
+    return get(`video/user/${id}`).then((response: any) => response.json());
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
