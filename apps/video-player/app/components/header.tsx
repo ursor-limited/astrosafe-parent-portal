@@ -18,7 +18,6 @@ import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
-import { useLocalStorage } from "usehooks-ts";
 import { FREE_VIDEO_LIMIT } from "../dashboard/DashboardPageContents";
 import { useUserContext } from "../UserContext";
 

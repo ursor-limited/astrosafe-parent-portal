@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
@@ -259,7 +259,7 @@ export const urlIsInvalid = async (value: string) =>
     ).then(async (result) => result.json())
   ).error;
 
-function DashboardPageContents(props: { justSubscribed: boolean }) {
+function DashboardPageContents() {
   const { width } = useWindowSize();
 
   const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
@@ -267,9 +267,6 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   );
 
   const notificationCtx = useContext(NotificationContext);
-  useEffect(() => {
-    props.justSubscribed && notificationCtx.success("Upgraded!");
-  }, [props.justSubscribed]);
 
   const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
   useEffect(
@@ -336,6 +333,17 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   useEffect(() => {
     mixpanel.track_pageview();
   }, []);
+
+  const [subscribed, setSubscribed] = useLocalStorage<boolean>(
+    "subscribed",
+    false
+  );
+  useEffect(() => {
+    !subscribed &&
+      safeTubeUser?.subscribed &&
+      notificationCtx.success("Upgraded!");
+    safeTubeUser && setSubscribed(safeTubeUser.subscribed);
+  }, [safeTubeUser?.subscribed, subscribed]);
 
   return (
     <>
