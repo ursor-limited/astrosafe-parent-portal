@@ -4,8 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
-import { Header } from "@/app/components/header";
-import { useWindowSize } from "usehooks-ts";
+import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
@@ -74,56 +74,78 @@ const UpgradePromptBar = () => (
 
 const RenewalPromptBar = (props: {
   subscriptionDeletionDate: ISafeTubeUser["subscriptionDeletionDate"];
-}) => (
-  <Stack width="100%" justifyContent="center">
-    <Stack
-      position="absolute"
-      left={0}
-      right={0}
-      margin="auto auto"
-      py="10px"
-      maxWidth="40%"
-      justifyContent="center"
-      alignItems="center"
-      zIndex={2}
-      borderRadius="12px"
-      top="21px"
-      sx={{
-        transition: "0.5s",
-        willChange: "transform",
-        background: PROMPT_BAR_GRADIENT,
-      }}
-      direction="row"
-      spacing="30px"
-    >
-      <Typography
-        variant="medium"
-        bold
-        color={PALETTE.font.light}
-        sx={{ textAlign: "center" }}
+}) => {
+  const [hiddenAfterClick, setHiddenAfterClick] = useState<boolean>(false); // hide after clicking Renew, assuming that the user does indeed renew the subscription.
+  return hiddenAfterClick ? (
+    <></>
+  ) : (
+    <Stack width="100%" justifyContent="center">
+      <Stack
+        position="absolute"
+        left={0}
+        right={0}
+        margin="auto auto"
+        py="10px"
+        maxWidth="40%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex={2}
+        borderRadius="12px"
+        top="21px"
+        sx={{
+          transition: "0.5s",
+          willChange: "transform",
+          background: PROMPT_BAR_GRADIENT,
+        }}
+        direction="row"
+        spacing="20px"
       >
-        {`Your subscription will end on ${getFormattedDate(
-          props.subscriptionDeletionDate!
-        )}`}
-      </Typography>
-      <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
-        <UrsorButton
-          backgroundColor="rgba(255,255,255)"
-          fontColor="#7183F7"
-          onClick={() => null}
-          endIcon={Star}
-          iconSize={13}
-          iconSpin
-          iconColor="rgba(113, 131, 247,0.5)"
-        >
-          Renew
-        </UrsorButton>
+        <Stack direction="row" spacing="6px">
+          <Typography
+            variant="medium"
+            bold
+            color="rgba(255,255,255,0.8)"
+            sx={{ textAlign: "center" }}
+          >
+            Your subscription will end on
+          </Typography>
+          <Typography
+            variant="medium"
+            bold
+            color={PALETTE.font.light}
+            sx={{ textAlign: "center" }}
+          >
+            {moment.unix(props.subscriptionDeletionDate!).format("Do MMMM")}
+          </Typography>
+        </Stack>
+        <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
+          <a
+            target="_blank"
+            href={STRIPE_CUSTOMER_PORTAL_URL}
+            style={{
+              textDecoration: "none",
+            }}
+            rel="noreferrer"
+          >
+            <UrsorButton
+              backgroundColor="rgba(255,255,255)"
+              fontColor="#7183F7"
+              onClick={() => setHiddenAfterClick(true)}
+              endIcon={Star}
+              iconSize={13}
+              iconSpin
+              iconColor="rgba(113, 131, 247,0.5)"
+            >
+              Renew
+            </UrsorButton>
+          </a>
+        </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
-export const getFormattedDate = (date: string | number) =>
+export const getFormattedDate = (date: string) =>
   moment(date).format("Do MMMM YYYY");
 
 const VideoCard = (props: IVideo) => {
@@ -237,7 +259,7 @@ export const urlIsInvalid = async (value: string) =>
     ).then(async (result) => result.json())
   ).error;
 
-function DashboardPageContents(props: { justSubscribed: boolean }) {
+function DashboardPageContents() {
   const { width } = useWindowSize();
 
   const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
@@ -245,9 +267,6 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   );
 
   const notificationCtx = useContext(NotificationContext);
-  useEffect(() => {
-    props.justSubscribed && notificationCtx.success("Upgraded!");
-  }, [props.justSubscribed]);
 
   const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
   useEffect(
@@ -314,6 +333,17 @@ function DashboardPageContents(props: { justSubscribed: boolean }) {
   useEffect(() => {
     mixpanel.track_pageview();
   }, []);
+
+  const [subscribed, setSubscribed] = useLocalStorage<boolean>(
+    "subscribed",
+    false
+  );
+  useEffect(() => {
+    !subscribed &&
+      safeTubeUser?.subscribed &&
+      notificationCtx.success("Upgraded!");
+    safeTubeUser && setSubscribed(safeTubeUser.subscribed);
+  }, [safeTubeUser?.subscribed, subscribed]);
 
   return (
     <>

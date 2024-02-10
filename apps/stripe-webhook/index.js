@@ -20,7 +20,30 @@ const submitSubscriptionCreated = async (email) =>
 const submitSubscriptionDeleted = async (email) =>
   axios
     .patch(
-      `${BACKEND_URLS[process.env.NODE_ENV]}/video/user/${email}/unsubscribe`
+      `${
+        BACKEND_URLS[process.env.NODE_ENV]
+      }/video/user/${email}/deleteSubscription`
+    )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
+
+const submitSubscriptionRenewed = async (email) =>
+  axios
+    .patch(
+      `${
+        BACKEND_URLS[process.env.NODE_ENV]
+      }/video/user/${email}/renewSubscription`
+    )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
+
+const submitSubscriptionDeletionDate = async (email, deletionDate) =>
+  axios
+    .patch(
+      `${
+        BACKEND_URLS[process.env.NODE_ENV]
+      }/video/user/${email}/setSubscriptionDeletionDate`,
+      { deletionDate }
     )
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
@@ -60,14 +83,23 @@ exports.handler = async function (event) {
         await submitSubscriptionCreated(customerEmail);
         break;
       case "customer.subscription.updated":
-        const data3 = stripeEvent.data.object;
+        if (stripeEvent.data.object.cancel_at) {
+          console.log(customerEmail, stripeEvent.data.object.cancel_at);
+          await submitSubscriptionDeletionDate(
+            customerEmail,
+            stripeEvent.data.object.cancel_at
+          );
+        } else {
+          await submitSubscriptionRenewed(customerEmail);
+        }
         break;
       case "customer.subscription.deleted":
-        const data2 = stripeEvent.data.object;
         await submitSubscriptionDeleted(customerEmail);
         break;
+      case "customer.subscription.resumed":
+        // this one is currently not needed, because we do not have subscription pausing enabled. i.e. pausing/resuming is different from canceling/renewing
+        break;
       case "invoice.payment_succeeded":
-        const data5 = stripeEvent.data.object;
         break;
       default:
         console.log("Unhandled event type");
