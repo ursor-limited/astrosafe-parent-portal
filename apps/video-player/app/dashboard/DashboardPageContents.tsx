@@ -145,6 +145,63 @@ const RenewalPromptBar = (props: {
   );
 };
 
+const PaymentFailedPromptBar = () => {
+  const [hiddenAfterClick, setHiddenAfterClick] = useState<boolean>(false); // hide after clicking Renew, assuming that the user does indeed renew the subscription.
+  return hiddenAfterClick ? (
+    <></>
+  ) : (
+    <Stack width="100%" justifyContent="center">
+      <Stack
+        position="absolute"
+        left={0}
+        right={0}
+        margin="auto auto"
+        py="10px"
+        maxWidth="40%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex={2}
+        borderRadius="12px"
+        top="21px"
+        sx={{
+          transition: "0.5s",
+          willChange: "transform",
+          background: PALETTE.system.red,
+        }}
+        direction="row"
+        spacing="20px"
+      >
+        <Typography
+          variant="medium"
+          bold
+          color="rgba(255,255,255,0.8)"
+          sx={{ textAlign: "center" }}
+        >
+          For some reason, your latest payment failed
+        </Typography>
+        <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
+          <a
+            target="_blank"
+            href={STRIPE_CUSTOMER_PORTAL_URL}
+            style={{
+              textDecoration: "none",
+            }}
+            rel="noreferrer"
+          >
+            <UrsorButton
+              backgroundColor="rgba(255,255,255)"
+              fontColor={PALETTE.system.red}
+              onClick={() => setHiddenAfterClick(true)}
+            >
+              Try again
+            </UrsorButton>
+          </a>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
+
 export const getFormattedDate = (date: string) =>
   moment(date).format("Do MMMM YYYY");
 
@@ -356,9 +413,12 @@ function DashboardPageContents() {
               subscriptionDeletionDate={safeTubeUser.subscriptionDeletionDate}
             />
           ) : null}
+          {safeTubeUser?.paymentFailed ? <PaymentFailedPromptBar /> : null}
         </UrsorFadeIn>
         <Header
-          showUpgradeButtons={!safeTubeUser?.subscribed}
+          showUpgradeButtons={
+            !safeTubeUser?.subscribed && !safeTubeUser?.paymentFailed
+          }
           mobile={isMobile}
           hidePopupDashboardButton
         />
