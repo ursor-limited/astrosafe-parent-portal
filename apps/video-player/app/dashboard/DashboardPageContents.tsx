@@ -451,7 +451,7 @@ function DashboardPageContents() {
             </Stack>
             {videos ? (
               <UrsorFadeIn duration={1100} delay={1500}>
-                {safeTubeUser?.subscribed ? (
+                {safeTubeUser?.subscribed || safeTubeUser?.paymentFailed ? (
                   <Stack direction="row" alignItems="center" spacing="6px">
                     <Typography
                       variant={isMobile ? "medium" : "large"}
