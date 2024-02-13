@@ -23,6 +23,22 @@ import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import { ISafeTubeUser, useUserContext } from "../UserContext";
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  closestCenter,
+  DropAnimation,
+  defaultDropAnimationSideEffects,
+  DragOverlay,
+  DragOverEvent,
+  DragStartEvent,
+  DragEndEvent,
+  useDraggable,
+  useDroppable,
+} from "@dnd-kit/core";
+import Canvas from "./Canvas";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -422,6 +438,7 @@ function DashboardPageContents() {
           mobile={isMobile}
           hidePopupDashboardButton
         />
+        <Canvas />
         <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"
@@ -625,10 +642,10 @@ function DashboardPageContents() {
           closeCallback={() => setUpgradeDialogOpen(false)}
         />
       </Stack>
-      <DashboardSignupPromptDialog
+      {/* <DashboardSignupPromptDialog
         mobile={isMobile}
         open={!user && !isLoading}
-      />
+      /> */}
     </>
   );
 }
