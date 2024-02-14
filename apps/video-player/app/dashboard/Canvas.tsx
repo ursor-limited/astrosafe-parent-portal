@@ -1,3 +1,5 @@
+"use client";
+
 import {
   DndContext,
   useSensor,
@@ -15,9 +17,15 @@ import {
 } from "@dnd-kit/core";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import ImageUploader from "./ImageUploader";
 import AstroImage from "./AstroImage";
-import { PALETTE } from "ui";
+// import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(
+  () => import("react-quill"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export function Droppable(props: { id: string; children: React.ReactNode }) {
   const { isOver, setNodeRef } = useDroppable({
@@ -90,7 +98,7 @@ const Canvas = () => {
 
   const [draggingDisabled, setDraggingDisabled] = useState<boolean>(false);
 
-  console.log(draggingDisabled, "000");
+  const [value, setValue] = useState<string>("");
 
   return (
     // <DndContext onDragEnd={handleDragEnd}>
@@ -110,6 +118,21 @@ const Canvas = () => {
           }}
           draggingDisabled={draggingDisabled}
         > */}
+      <Stack
+        sx={{
+          ".ql-toolbar": {
+            background: "white",
+            fontFamily: "unset",
+            boxShadow: "0 0 20px rgba(0,0,0,0.1)",
+          },
+          ".ql-container": { fontFamily: "unset" },
+        }}
+        width="270px"
+        borderRadius="16px"
+        overflow="hidden"
+      >
+        <ReactQuill theme="snow" value={value} onChange={setValue} />
+      </Stack>
       <AstroImage
         resizingStartCallback={() => setDraggingDisabled(true)}
         resizingEndCallback={() => setDraggingDisabled(false)}
