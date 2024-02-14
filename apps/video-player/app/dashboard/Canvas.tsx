@@ -39,10 +39,12 @@ function Draggable(props: {
   translationCallback: (x: number, y: number) => void;
   x: number;
   y: number;
+  draggingDisabled: boolean;
   children: React.ReactNode;
 }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.id,
+    disabled: props.draggingDisabled,
   });
 
   //   const [x, setX] = useState<number>(0);
@@ -86,6 +88,10 @@ const Canvas = () => {
     setFinalY(finalY + y);
   };
 
+  const [draggingDisabled, setDraggingDisabled] = useState<boolean>(false);
+
+  console.log(draggingDisabled, "000");
+
   return (
     // <DndContext onDragEnd={handleDragEnd}>
     <Stack
@@ -94,17 +100,21 @@ const Canvas = () => {
       position="relative"
       bgcolor="rgba(255,255,255,0.8)"
     >
-      <Draggable
-        id="draggable"
-        x={finalX}
-        y={finalY}
-        translationCallback={(x, y) => {
-          setX(x);
-          setY(y);
-        }}
-      >
-        <AstroImage />
-      </Draggable>
+      {/* <Draggable
+          id="draggable"
+          x={finalX}
+          y={finalY}
+          translationCallback={(x, y) => {
+            setX(x);
+            setY(y);
+          }}
+          draggingDisabled={draggingDisabled}
+        > */}
+      <AstroImage
+        resizingStartCallback={() => setDraggingDisabled(true)}
+        resizingEndCallback={() => setDraggingDisabled(false)}
+      />
+      {/* </Draggable> */}
     </Stack>
     // </DndContext>
   );

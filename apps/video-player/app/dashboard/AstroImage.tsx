@@ -10,7 +10,10 @@ const DUMMY_URL =
 
 const DEFAULT_WIDTH = 300;
 
-const AstroImage = () => {
+const AstroImage = (props: {
+  resizingStartCallback: () => void;
+  resizingEndCallback: () => void;
+}) => {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
     undefined
@@ -29,26 +32,26 @@ const AstroImage = () => {
     );
   }, []);
   const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
-
-  const [pressed, setPressed] = useState<boolean>(false);
-  const [pressCoordinates, setPressCoordinates] = useState<
-    { x: number; y: number } | undefined
-  >(undefined);
+  const [x, setX] = useState<number>(DEFAULT_WIDTH);
+  const [y, setY] = useState<number>(DEFAULT_WIDTH);
 
   const mousePosition = useMousePosition();
 
-  const [dragDistanceX, setDragDistanceX] = useState<number>(0);
-  const [dragDistanceY, setDragDistanceY] = useState<number>(0);
+  const [scalePressCoordinates, setScalePressCoordinates] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+
+  const [scaleDragDistanceX, setScaleDragDistanceX] = useState<number>(0);
+  const [scaleDragDistanceY, setScaleDragDistanceY] = useState<number>(0);
   useEffect(
     () => {
-      if (pressCoordinates) {
-        setDragDistanceX((mousePosition.x ?? 0) - pressCoordinates.x);
-        setDragDistanceY((mousePosition.y ?? 0) - pressCoordinates.y);
+      if (scalePressCoordinates) {
+        setScaleDragDistanceX((mousePosition.x ?? 0) - scalePressCoordinates.x);
+        setScaleDragDistanceY((mousePosition.y ?? 0) - scalePressCoordinates.y);
       } else {
-        setDragDistanceX(0);
-        setDragDistanceY(0);
+        setScaleDragDistanceX(0);
+        setScaleDragDistanceY(0);
       }
-      [pressCoordinates, mousePosition.x, mousePosition.y];
     },
     //   setDragDistance(
     //     Math.sqrt(
@@ -56,10 +59,27 @@ const AstroImage = () => {
     //         Math.pow((mousePosition.y ?? 0) - pressCoordinates.y, 2)
     //     )
     //   ),
-    [pressCoordinates, mousePosition.x, mousePosition.y]
+    [scalePressCoordinates, mousePosition.x, mousePosition.y]
   );
-  //   const [scale, setScale] = useState<number>(1);
-  //useEffect(() => setWidth(DEFAULT_WIDTH + dragDistanceX), [dragDistanceX]);
+
+  const [positionPressCoordinates, setPositionPressCoordinates] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+  const [positionDragDistanceX, setPositionDragDistanceX] = useState<number>(0);
+  const [positionDragDistanceY, setPositionDragDistanceY] = useState<number>(0);
+  useEffect(() => {
+    if (positionPressCoordinates) {
+      setPositionDragDistanceX(
+        (mousePosition.x ?? 0) - positionPressCoordinates.x
+      );
+      setPositionDragDistanceY(
+        (mousePosition.y ?? 0) - positionPressCoordinates.y
+      );
+    } else {
+      setPositionDragDistanceX(0);
+      setPositionDragDistanceY(0);
+    }
+  }, [positionPressCoordinates, mousePosition.x, mousePosition.y]);
 
   return (
     <Stack
@@ -74,7 +94,9 @@ const AstroImage = () => {
       //     setDragDistanceX(0);
       //   }}
       //   border={`3px solid ${PALETTE.secondary.purple[2]}`}
-      position="relative"
+      position="absolute"
+      left={`${x + positionDragDistanceX}px`}
+      top={`${y + positionDragDistanceY}px`}
     >
       <ImageUploader
         previewUrlCallback={setPreviewImageUrl}
@@ -85,31 +107,38 @@ const AstroImage = () => {
         ref={setDropzoneRef}
       >
         <Stack
-          width={`${width + dragDistanceX}px`}
-          height={(width + dragDistanceX) / aspectRatio}
+          width={`${width + scaleDragDistanceX}px`}
+          height={(width + scaleDragDistanceX) / aspectRatio}
           sx={{
             backgroundImage: `url(${DUMMY_URL})`,
             backgroundSize: "contain",
           }}
           position="relative"
         >
-          {/* <Stack
+          <Stack
             top={0}
             left={0}
             height="100%"
             width="100%"
             position="absolute"
-            // onMouseDown={(event) => {
-            //   setPressCoordinates({ x: event.clientX, y: event.clientY });
-            //   setPressed(true);
-            // }}
-            // onMouseUp={() => {
-            //   setPressed(false);
-            //   setPressCoordinates(undefined);
-            //   setWidth(width + dragDistanceX);
-            //   setDragDistanceX(0);
-            // }}
-          /> */}
+            sx={{
+              pointerEvents: scalePressCoordinates ? "none" : undefined,
+              cursor: "move",
+            }}
+            onMouseDown={(event) => {
+              setPositionPressCoordinates({
+                x: event.clientX,
+                y: event.clientY,
+              });
+            }}
+            onMouseUp={() => {
+              setPositionPressCoordinates(undefined);
+              setX(x + positionDragDistanceX);
+              setY(y + positionDragDistanceY);
+              setPositionDragDistanceX(0);
+              setPositionDragDistanceY(0);
+            }}
+          />
           <Stack
             width="5px"
             pl="3px"
@@ -119,16 +148,17 @@ const AstroImage = () => {
             top={0}
             sx={{
               cursor: "ew-resize",
+              pointerEvents: positionPressCoordinates ? "none" : undefined,
             }}
             onMouseDown={(event) => {
-              setPressCoordinates({ x: event.clientX, y: event.clientY });
-              setPressed(true);
+              setScalePressCoordinates({ x: event.clientX, y: event.clientY });
+              props.resizingStartCallback();
             }}
             onMouseUp={() => {
-              setPressed(false);
-              setPressCoordinates(undefined);
-              setWidth(width + dragDistanceX);
-              setDragDistanceX(0);
+              setScalePressCoordinates(undefined);
+              setWidth(width + scaleDragDistanceX);
+              setScaleDragDistanceX(0);
+              props.resizingEndCallback();
             }}
           >
             <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
