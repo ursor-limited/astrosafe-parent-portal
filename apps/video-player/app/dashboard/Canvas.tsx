@@ -104,6 +104,8 @@ const Canvas = () => {
 
   const [value, setValue] = useState<string>("");
 
+  const [textAreaRef, setTextAreaRef] = useState<HTMLElement | null>(null);
+
   return (
     // <DndContext onDragEnd={handleDragEnd}>
     <Stack
@@ -122,7 +124,7 @@ const Canvas = () => {
           }}
           draggingDisabled={draggingDisabled}
         > */}
-      <AstroElementFrame defaultWidth={270}>
+      <AstroElementFrame defaultWidth={270} dynamicHeight>
         <Stack
           sx={{
             ".ql-toolbar": {
@@ -134,9 +136,10 @@ const Canvas = () => {
             ".ql-container": {
               fontFamily: "unset",
               borderRadius: "0 0 16px 16px",
+              height: "unset",
             },
           }}
-          maxWidth="100%"
+          ref={setTextAreaRef}
         >
           <ReactQuill theme="snow" value={value} onChange={setValue} />
         </Stack>

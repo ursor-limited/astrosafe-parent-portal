@@ -9,21 +9,28 @@ const DUMMY_URL =
   "https://images.aeonmedia.co/images/8eac4719-7f56-4d0a-9a32-aae431c8ca07/built-ecologies-emilio-ambasz-landscape-2-v2.jpg?width=828&quality=75&format=auto";
 
 const DEFAULT_WIDTH = 300;
+const DEFAULT_HEIGHT = 100;
 
 const AstroElementFrame = (props: {
   imageUrl?: string;
   defaultWidth?: number;
+  defaultHeight?: number;
+  dynamicHeight?: boolean;
   aspectRatio?: number;
   children?: React.ReactNode;
 }) => {
   const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
-  const [height, setHeight] = useState<number>(DEFAULT_WIDTH);
+  const [height, setHeight] = useState<number>(DEFAULT_HEIGHT);
   const [x, setX] = useState<number>(DEFAULT_WIDTH);
   const [y, setY] = useState<number>(DEFAULT_WIDTH);
 
   useEffect(() => {
     props.defaultWidth && setWidth(props.defaultWidth);
   }, [props.defaultWidth]);
+
+  useEffect(() => {
+    props.defaultHeight && setHeight(props.defaultHeight);
+  }, [props.defaultHeight]);
 
   const mousePosition = useMousePosition();
 
@@ -70,16 +77,40 @@ const AstroElementFrame = (props: {
       //width={props.defaultWidth}
       width={`${width + scaleDragDistanceX}px`}
       height={
-        props.aspectRatio
+        props.dynamicHeight
+          ? undefined
+          : props.aspectRatio
           ? (width + scaleDragDistanceX) / props.aspectRatio
           : `${height + scaleDragDistanceY}px`
       }
     >
       <Stack width="100%" height="100%" position="relative">
-        <Stack width="100%" height="100%" position="absolute" top={0} left={0}>
+        <Stack
+          top={0}
+          left={0}
+          height="100%"
+          width="100%"
+          sx={{
+            pointerEvents: scalePressCoordinates ? "none" : undefined,
+            cursor: "move",
+          }}
+          onMouseDown={(event) => {
+            setPositionPressCoordinates({
+              x: event.clientX,
+              y: event.clientY,
+            });
+          }}
+          onMouseUp={() => {
+            setPositionPressCoordinates(undefined);
+            setX(x + positionDragDistanceX);
+            setY(y + positionDragDistanceY);
+            setPositionDragDistanceX(0);
+            setPositionDragDistanceY(0);
+          }}
+        >
           {props.children}
         </Stack>
-        <Stack
+        {/* <Stack
           top={0}
           left={0}
           height="100%"
@@ -102,7 +133,7 @@ const AstroElementFrame = (props: {
             setPositionDragDistanceX(0);
             setPositionDragDistanceY(0);
           }}
-        />
+        /> */}
         <Stack
           width="5px"
           pl="3px"
