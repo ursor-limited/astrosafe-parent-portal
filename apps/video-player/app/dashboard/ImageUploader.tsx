@@ -102,21 +102,22 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
   return (
     <Box
       flex={1}
-      sx={{
-        pointerEvents: "none",
-        // opacity: isDragActive ? 0.5 : 1,
-        // transition: "0.2s",
-        // willChange: "opacity",
-      }}
+      sx={
+        {
+          //pointerEvents: "none",
+          // opacity: isDragActive ? 0.5 : 1,
+          // transition: "0.2s",
+          // willChange: "opacity",
+        }
+      }
     >
       <Dropzone
         onDragStateChange={setIsDragActive}
         onFileDrop={setResizedFile}
         //clickDisabled={props.clickDisabled}
         ref={ref}
-      >
-        {props.children}
-      </Dropzone>
+      />
+      {props.children}
     </Box>
   );
 });
