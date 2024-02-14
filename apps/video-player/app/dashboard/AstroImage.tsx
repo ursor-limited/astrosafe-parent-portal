@@ -58,7 +58,7 @@ const AstroImage = () => {
     [pressCoordinates, mousePosition.x, mousePosition.y]
   );
   //   const [scale, setScale] = useState<number>(1);
-  useEffect(() => setWidth(DEFAULT_WIDTH + dragDistanceX), [dragDistanceX]);
+  //useEffect(() => setWidth(DEFAULT_WIDTH + dragDistanceX), [dragDistanceX]);
 
   return (
     <Stack
@@ -69,6 +69,8 @@ const AstroImage = () => {
       onMouseUp={() => {
         setPressed(false);
         setPressCoordinates(undefined);
+        setWidth(width + dragDistanceX);
+        setDragDistanceX(0);
       }}
     >
       <ImageUploader
@@ -80,8 +82,8 @@ const AstroImage = () => {
         ref={setDropzoneRef}
       >
         <Stack
-          width={`${width}px`}
-          height={width / aspectRatio}
+          width={`${width + dragDistanceX}px`}
+          height={(width + dragDistanceX) / aspectRatio}
           sx={{
             backgroundImage: `url(${DUMMY_URL})`,
             backgroundSize: "contain",
