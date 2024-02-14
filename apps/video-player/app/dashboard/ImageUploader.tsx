@@ -111,12 +111,12 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
         }
       }
     >
-      <Dropzone
+      {/* <Dropzone
         onDragStateChange={setIsDragActive}
         onFileDrop={setResizedFile}
         //clickDisabled={props.clickDisabled}
         ref={ref}
-      />
+      /> */}
       {props.children}
     </Box>
   );

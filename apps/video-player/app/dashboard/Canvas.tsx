@@ -21,6 +21,10 @@ import AstroImage from "./AstroImage";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
+import AstroElementFrame from "./AstroElementFrame";
+
+const DUMMY_IMAGE_URL =
+  "https://images.aeonmedia.co/images/8eac4719-7f56-4d0a-9a32-aae431c8ca07/built-ecologies-emilio-ambasz-landscape-2-v2.jpg?width=828&quality=75&format=auto";
 
 const ReactQuill = dynamic(
   () => import("react-quill"),
@@ -118,25 +122,26 @@ const Canvas = () => {
           }}
           draggingDisabled={draggingDisabled}
         > */}
-      <Stack
-        sx={{
-          ".ql-toolbar": {
-            background: "white",
-            fontFamily: "unset",
-            boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-          },
-          ".ql-container": { fontFamily: "unset" },
-        }}
-        width="270px"
-        borderRadius="16px"
-        overflow="hidden"
-      >
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
-      </Stack>
-      <AstroImage
-        resizingStartCallback={() => setDraggingDisabled(true)}
-        resizingEndCallback={() => setDraggingDisabled(false)}
-      />
+      <AstroElementFrame defaultWidth={270}>
+        <Stack
+          sx={{
+            ".ql-toolbar": {
+              background: "white",
+              fontFamily: "unset",
+              boxShadow: "0 0 20px rgba(0,0,0,0.1)",
+              borderRadius: "16px 16px 0 0",
+            },
+            ".ql-container": {
+              fontFamily: "unset",
+              borderRadius: "0 0 16px 16px",
+            },
+          }}
+          maxWidth="100%"
+        >
+          <ReactQuill theme="snow" value={value} onChange={setValue} />
+        </Stack>
+      </AstroElementFrame>
+      <AstroImage url={DUMMY_IMAGE_URL} />
       {/* </Draggable> */}
     </Stack>
     // </DndContext>
