@@ -86,26 +86,26 @@ const Canvas = () => {
   };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-      <Stack
-        width="600px"
-        height="600px"
-        position="relative"
-        bgcolor="rgba(255,255,255,0.6)"
+    // <DndContext onDragEnd={handleDragEnd}>
+    <Stack
+      width="600px"
+      height="600px"
+      position="relative"
+      bgcolor="rgba(255,255,255,0.6)"
+    >
+      <Draggable
+        id="draggable"
+        x={finalX}
+        y={finalY}
+        translationCallback={(x, y) => {
+          setX(x);
+          setY(y);
+        }}
       >
-        <Draggable
-          id="draggable"
-          x={finalX}
-          y={finalY}
-          translationCallback={(x, y) => {
-            setX(x);
-            setY(y);
-          }}
-        >
-          <AstroImage />
-        </Draggable>
-      </Stack>
-    </DndContext>
+        <AstroImage />
+      </Draggable>
+    </Stack>
+    // </DndContext>
   );
 };
 
