@@ -3,6 +3,7 @@ import ImageUploader from "./ImageUploader";
 import { useEffect, useState } from "react";
 import { getImageSize } from "react-image-size";
 import useMousePosition from "./useMousePosition";
+import { PALETTE } from "ui";
 
 const DUMMY_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubeFooterScreenshot.png";
@@ -72,7 +73,20 @@ const AstroImage = () => {
         setWidth(width + dragDistanceX);
         setDragDistanceX(0);
       }}
+      border={`3px solid ${PALETTE.secondary.purple[2]}`}
+      position="relative"
     >
+      <Stack
+        bgcolor={PALETTE.secondary.green[2]}
+        width="3px"
+        height="100px"
+        position="absolute"
+        right={0}
+        top={0}
+        sx={{
+          cursor: "grab",
+        }}
+      />
       <ImageUploader
         previewUrlCallback={setPreviewImageUrl}
         downloadUrlCallback={(url, upload) => {

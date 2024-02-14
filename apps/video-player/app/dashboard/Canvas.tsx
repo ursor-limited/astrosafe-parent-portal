@@ -17,6 +17,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import AstroImage from "./AstroImage";
+import { PALETTE } from "ui";
 
 export function Droppable(props: { id: string; children: React.ReactNode }) {
   const { isOver, setNodeRef } = useDroppable({
@@ -91,7 +92,7 @@ const Canvas = () => {
       width="600px"
       height="600px"
       position="relative"
-      bgcolor="rgba(255,255,255,0.6)"
+      bgcolor="rgba(255,255,255,0.8)"
     >
       <Draggable
         id="draggable"
