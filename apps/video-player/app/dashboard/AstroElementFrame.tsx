@@ -17,6 +17,7 @@ const AstroElementFrame = (props: {
   defaultHeight?: number;
   dynamicHeight?: boolean;
   aspectRatio?: number;
+  noVerticalResizing?: boolean;
   children?: React.ReactNode;
 }) => {
   const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
@@ -82,6 +83,20 @@ const AstroElementFrame = (props: {
     }
   }, [scalePressCoordinatesBottom, mousePosition.x, mousePosition.y]);
 
+  const [scaleDragDistanceTop, setScaleDragDistanceTop] = useState<number>(0);
+  const [scalePressCoordinatesTop, setScalePressCoordinatesTop] = useState<
+    { x: number; y: number } | undefined
+  >(undefined);
+  useEffect(() => {
+    if (scalePressCoordinatesTop) {
+      setScaleDragDistanceTop(
+        scalePressCoordinatesTop.y - (mousePosition.y ?? 0)
+      );
+    } else {
+      setScaleDragDistanceTop(0);
+    }
+  }, [scalePressCoordinatesTop, mousePosition.x, mousePosition.y]);
+
   const [positionPressCoordinates, setPositionPressCoordinates] = useState<
     { x: number; y: number } | undefined
   >(undefined);
@@ -111,13 +126,19 @@ const AstroElementFrame = (props: {
         props.aspectRatio
       );
     } else {
-      return height + scaleDragDistanceBottom * 2;
+      return height + (scaleDragDistanceBottom + scaleDragDistanceTop) * 2;
     }
   };
 
   const getWidth = () => {
-    if (props.aspectRatio && scaleDragDistanceBottom) {
-      return (height + scaleDragDistanceBottom * 2) * props.aspectRatio;
+    if (
+      props.aspectRatio &&
+      (scaleDragDistanceBottom || scaleDragDistanceTop)
+    ) {
+      return (
+        (height + (scaleDragDistanceBottom + scaleDragDistanceTop) * 2) *
+        props.aspectRatio
+      );
     } else {
       return width + (scaleDragDistanceXRight + scaleDragDistanceXLeft) * 2;
     }
@@ -187,10 +208,10 @@ const AstroElementFrame = (props: {
         <Stack
           width="5px"
           pr="3px"
-          height="100%"
+          height="calc(100% + 10px)"
           position="absolute"
           left="-5px"
-          top={0}
+          top="-5px"
           sx={{
             cursor: "ew-resize",
             pointerEvents: positionPressCoordinates ? "none" : undefined,
@@ -213,10 +234,10 @@ const AstroElementFrame = (props: {
         <Stack
           width="5px"
           pl="3px"
-          height="100%"
+          height="calc(100% + 10px)"
           position="absolute"
           right="-5px"
-          top={0}
+          top="-5px"
           sx={{
             cursor: "ew-resize",
             pointerEvents: positionPressCoordinates ? "none" : undefined,
@@ -239,13 +260,16 @@ const AstroElementFrame = (props: {
         <Stack
           height="5px"
           pt="3px"
-          width="100%"
+          width="calc(100% + 10px)"
           position="absolute"
           bottom="-5px"
-          left={0}
+          left="-5px"
           sx={{
-            cursor: "ns-resize",
-            pointerEvents: positionPressCoordinates ? "none" : undefined,
+            cursor: props.noVerticalResizing ? undefined : "ns-resize",
+            pointerEvents:
+              props.noVerticalResizing || positionPressCoordinates
+                ? "none"
+                : undefined,
           }}
           onMouseDown={(event) => {
             setScalePressCoordinatesBottom({
@@ -258,6 +282,35 @@ const AstroElementFrame = (props: {
             setHeight(height + scaleDragDistanceBottom * 2);
             setWidth(getWidth());
             setScaleDragDistanceBottom(0);
+          }}
+        >
+          <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
+        </Stack>
+        <Stack
+          height="5px"
+          pb="3px"
+          width="calc(100% + 10px)"
+          position="absolute"
+          top="-5px"
+          left="-5px"
+          sx={{
+            cursor: props.noVerticalResizing ? undefined : "ns-resize",
+            pointerEvents:
+              props.noVerticalResizing || positionPressCoordinates
+                ? "none"
+                : undefined,
+          }}
+          onMouseDown={(event) => {
+            setScalePressCoordinatesTop({
+              x: event.clientX,
+              y: event.clientY,
+            });
+          }}
+          onMouseUp={() => {
+            setScalePressCoordinatesTop(undefined);
+            setHeight(height + scaleDragDistanceTop * 2);
+            setWidth(getWidth());
+            setScaleDragDistanceTop(0);
           }}
         >
           <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />

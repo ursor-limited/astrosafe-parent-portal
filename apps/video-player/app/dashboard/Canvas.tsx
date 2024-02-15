@@ -124,7 +124,7 @@ const Canvas = () => {
           }}
           draggingDisabled={draggingDisabled}
         > */}
-      <AstroElementFrame defaultWidth={270} dynamicHeight>
+      <AstroElementFrame defaultWidth={270} dynamicHeight noVerticalResizing>
         <Stack
           sx={{
             ".ql-toolbar": {
