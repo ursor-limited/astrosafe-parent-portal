@@ -51,9 +51,9 @@ Font.whitelist = [
 Quill.register(Font, true);
 
 // Modules object for setting up the Quill editor
-export const modules = {
+export const getModules = (id: string) => ({
   toolbar: {
-    container: "#toolbar",
+    container: `#${id}`,
     // handlers: {
     //   undo: undoChange,
     //   redo: redoChange,
@@ -64,7 +64,7 @@ export const modules = {
   //     maxStack: 100,
   //     userOnly: true,
   //   },
-};
+});
 
 // Formats objects for setting up the Quill editor
 export const formats = [
@@ -89,11 +89,11 @@ export const formats = [
 ];
 
 // Quill Toolbar component
-export const TextEditorToolbar = () => (
+export const TextEditorToolbar = (props: { id: string }) => (
   <div
-    id="toolbar"
+    id={props.id}
     style={{
-      background: "white",
+      background: "rgb(255,255,255)",
       fontFamily: "unset",
       boxShadow: "0 0 20px rgba(0,0,0,0.1)",
       borderRadius: "12px",

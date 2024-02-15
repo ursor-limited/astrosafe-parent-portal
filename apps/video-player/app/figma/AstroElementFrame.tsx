@@ -13,8 +13,10 @@ const DEFAULT_HEIGHT = 100;
 
 const AstroElementFrame = (props: {
   imageUrl?: string;
-  defaultWidth?: number;
-  defaultHeight?: number;
+  width?: number;
+  height?: number;
+  x?: number;
+  y?: number;
   dynamicHeight?: boolean;
   aspectRatio?: number;
   noVerticalResizing?: boolean;
@@ -24,20 +26,28 @@ const AstroElementFrame = (props: {
 }) => {
   const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
   const [height, setHeight] = useState<number>(DEFAULT_HEIGHT);
-  const [x, setX] = useState<number>(DEFAULT_WIDTH);
-  const [y, setY] = useState<number>(DEFAULT_WIDTH);
+  const [x, setX] = useState<number>(0);
+  const [y, setY] = useState<number>(0);
 
   useEffect(() => {
-    props.defaultWidth && setWidth(props.defaultWidth);
-  }, [props.defaultWidth]);
+    props.width && setWidth(props.width);
+  }, [props.width]);
+
+  useEffect(() => {
+    props.x && setX(props.x);
+  }, [props.x]);
+
+  useEffect(() => {
+    props.y && setY(props.y);
+  }, [props.y]);
 
   useEffect(() => {
     if (props.aspectRatio) {
       setHeight(DEFAULT_WIDTH / props.aspectRatio);
     } else {
-      props.defaultHeight && setHeight(props.defaultHeight);
+      props.height && setHeight(props.height);
     }
-  }, [props.defaultHeight, props.aspectRatio]);
+  }, [props.height, props.aspectRatio]);
 
   const mousePosition = useMousePosition();
 

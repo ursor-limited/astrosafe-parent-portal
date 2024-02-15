@@ -18,19 +18,15 @@ import {
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import AstroImage from "./AstroImage";
+import AstroText, { getNewTextDetails } from "./AstroText";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import AstroElementFrame from "./AstroElementFrame";
-import TextEditorToolbar, { modules, formats } from "./TextEditorToolBar";
-
-const DUMMY_IMAGE_URL =
-  "https://images.aeonmedia.co/images/8eac4719-7f56-4d0a-9a32-aae431c8ca07/built-ecologies-emilio-ambasz-landscape-2-v2.jpg?width=828&quality=75&format=auto";
-
-const ReactQuill = dynamic(
-  () => import("react-quill"),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
-);
+import TypographyIcon from "@/images/icons/TypographyIcon.svg";
+import ImageIcon from "@/images/icons/ImageIcon.svg";
+import TextEditorToolbar from "./TextEditorToolBar";
+import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 
 export function Droppable(props: { id: string; children: React.ReactNode }) {
   const { isOver, setNodeRef } = useDroppable({
@@ -90,73 +86,120 @@ function Draggable(props: {
   );
 }
 
+const ElementButton = (props: {
+  callback: () => void;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+}) => (
+  <Stack
+    width="43px"
+    height="43px"
+    justifyContent="center"
+    alignItems="center"
+    bgcolor="rgb(255,255,255)"
+    borderRadius="12px"
+    sx={{
+      cursor: "pointer",
+      "&:hover": { opacity: 0.7 },
+      transition: "0.2s",
+    }}
+    onClick={props.callback}
+  >
+    <props.icon height="16px" width="16px" />
+  </Stack>
+);
+
+export type AstroCanvasElement = "image" | "text";
+
+export interface IAstroCanvasElement {
+  id: string;
+  width: number;
+  height?: number;
+  x: number;
+  y: number;
+  type: AstroCanvasElement;
+  value: string;
+}
+
 const Canvas = (props: {
-  textEditorSelectionCallback: () => void;
-  textEditorDeselectionCallback: () => void;
+  // textEditorSelectionCallback: (id: string) => void;
+  // textEditorDeselectionCallback: () => void;
 }) => {
-  const [value, setValue] = useState<string>("");
-
-  const [textAreaRef, setTextAreaRef] = useState<HTMLElement | null>(null);
-
   const [selectedElement, setSelectedElement] = useState<string | undefined>(
     undefined
   );
+  const [elements, setElements] = useState<IAstroCanvasElement[]>([]);
 
-  useEffect(
-    () =>
-      selectedElement === "text"
-        ? props.textEditorSelectionCallback()
-        : props.textEditorDeselectionCallback(),
-    [selectedElement]
-  );
+  // useEffect(
+  //   () =>
+  //     selectedElement &&
+  //     elements.find((e) => e.id === selectedElement)?.type === "text"
+  //       ? props.textEditorSelectionCallback(selectedElement)
+  //       : props.textEditorDeselectionCallback(),
+  //   [selectedElement, elements]
+  // );
+
+  console.log("aa", elements, selectedElement);
 
   return (
-    <Stack
-      width="900px"
-      height="600px"
-      position="relative"
-      bgcolor="rgba(255,255,255,0.8)"
-    >
-      <Stack
-        flex={1}
-        onClick={() => setSelectedElement(undefined)}
-        zIndex={0}
-      />
-
-      <AstroElementFrame
-        defaultWidth={270}
-        dynamicHeight
-        noVerticalResizing
-        selectionCallback={() => setSelectedElement("text")}
-        selected={selectedElement === "text"}
-      >
-        <Stack
-          sx={{
-            ".ql-container": {
-              fontFamily: "unset",
-              borderRadius: "12px",
-              height: "unset",
-              border: "none",
-            },
-            ".ql-editor": {
-              padding: "3px",
-            },
-          }}
-          ref={setTextAreaRef}
-        >
-          <ReactQuill
-            theme="snow"
-            value={value}
-            onChange={setValue}
-            modules={modules}
-            formats={formats}
+    <Stack spacing="12px">
+      <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" spacing="10px">
+          <ElementButton
+            icon={TypographyIcon}
+            callback={() => {
+              setElements([
+                ...elements,
+                getNewTextDetails(
+                  `text${elements.length}`,
+                  CANVAS_WIDTH / 2,
+                  CANVAS_HEIGHT / 2
+                ),
+              ]);
+              setSelectedElement(`text${elements.length}`);
+              //setSelectedTextId(`text${elements.length}`);
+            }}
           />
+          <ElementButton icon={ImageIcon} callback={() => null} />
         </Stack>
-      </AstroElementFrame>
-      <AstroImage
-        url={DUMMY_IMAGE_URL}
-        selectionCallback={() => setSelectedElement("image")}
-        selected={selectedElement === "image"}
+        <Stack position="relative" flex={1}>
+          {elements
+            .filter((e) => e.type === "text")
+            .map((e) => (
+              <Stack
+                position="absolute"
+                top={0}
+                right={0}
+                key={e.id}
+                sx={{
+                  opacity: e.id === selectedElement ? 1 : 0,
+                  pointerEvents: e.id === selectedElement ? undefined : "none",
+                  transition: "0.6s",
+                }}
+              >
+                <TextEditorToolbar id={e.id} />
+              </Stack>
+            ))}
+        </Stack>
+        {/* <Stack
+          sx={{
+            opacity:
+              elements.find((e) => e.id === selectedElement)?.type === "text"
+                ? 1
+                : 0,
+            pointerEvents:
+              elements.find((e) => e.id === selectedElement)?.type === "text"
+                ? undefined
+                : "none",
+            transition: "1s",
+          }}
+        >
+          <TextEditorToolbar id={selectedElement ?? ""} />
+        </Stack> */}
+      </Stack>
+      <ActualCanvas
+        elements={elements}
+        selectedElement={selectedElement}
+        setSelectedElement={setSelectedElement}
       />
     </Stack>
   );

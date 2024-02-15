@@ -23,8 +23,6 @@ import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import { ISafeTubeUser, useUserContext } from "../UserContext";
-import Canvas from "./Canvas";
-import TextEditorToolbar from "./TextEditorToolBar";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -428,20 +426,6 @@ function DashboardPageContents() {
           hidePopupDashboardButton
         />
         <Stack
-          sx={{
-            opacity: showTextEditorToolbar ? 1 : 0,
-            pointerEvents: showTextEditorToolbar ? undefined : "none",
-            transition: "1s",
-          }}
-        >
-          <TextEditorToolbar />
-        </Stack>
-
-        <Canvas
-          textEditorSelectionCallback={() => setShowTextEditorToolbar(true)}
-          textEditorDeselectionCallback={() => setShowTextEditorToolbar(false)}
-        />
-        <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"
           justifyContent="center"
@@ -644,10 +628,10 @@ function DashboardPageContents() {
           closeCallback={() => setUpgradeDialogOpen(false)}
         />
       </Stack>
-      {/* <DashboardSignupPromptDialog
+      <DashboardSignupPromptDialog
         mobile={isMobile}
         open={!user && !isLoading}
-      /> */}
+      />
     </>
   );
 }

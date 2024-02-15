@@ -1,0 +1,70 @@
+import { Stack } from "@mui/system";
+import AstroElementFrame from "./AstroElementFrame";
+import { useEffect, useState } from "react";
+import { IAstroCanvasElement } from "./Canvas";
+import { getModules, formats } from "./TextEditorToolBar";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(
+  () => import("react-quill"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
+export const getNewTextDetails: (
+  id: string,
+  x: number,
+  y: number
+) => IAstroCanvasElement = (id, x, y) => ({
+  id,
+  width: 270,
+  x,
+  y,
+  type: "text",
+  value: "",
+});
+
+const AstroText = (props: {
+  selected: boolean;
+  selectionCallback: () => void;
+  details: IAstroCanvasElement;
+}) => {
+  const [value, setValue] = useState<string>("");
+  useEffect(() => setValue(props.details.value), [props.details.value]);
+  console.log(getModules(props.details.id));
+  return (
+    <AstroElementFrame
+      width={props.details.width}
+      x={props.details.x}
+      y={props.details.y}
+      dynamicHeight
+      noVerticalResizing
+      selectionCallback={props.selectionCallback}
+      selected={props.selected}
+    >
+      <Stack
+        sx={{
+          ".ql-container": {
+            fontFamily: "unset",
+            borderRadius: "12px",
+            height: "unset",
+            border: "none",
+          },
+          ".ql-editor": {
+            padding: "3px",
+          },
+        }}
+        // ref={setTextAreaRef}
+      >
+        <ReactQuill
+          theme="snow"
+          value={value}
+          onChange={setValue}
+          modules={getModules(props.details.id)}
+          formats={formats}
+        />
+      </Stack>
+    </AstroElementFrame>
+  );
+};
+
+export default AstroText;

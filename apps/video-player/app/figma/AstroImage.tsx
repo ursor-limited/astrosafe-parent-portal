@@ -5,6 +5,7 @@ import { getImageSize } from "react-image-size";
 import useMousePosition from "./useMousePosition";
 import { PALETTE } from "ui";
 import AstroElementFrame from "./AstroElementFrame";
+import { IAstroCanvasElement } from "./Canvas";
 
 const DEFAULT_WIDTH = 300;
 
@@ -12,6 +13,7 @@ const AstroImage = (props: {
   url: string;
   selected: boolean;
   selectionCallback: () => void;
+  details: IAstroCanvasElement;
 }) => {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
