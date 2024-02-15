@@ -18,6 +18,8 @@ const AstroElementFrame = (props: {
   dynamicHeight?: boolean;
   aspectRatio?: number;
   noVerticalResizing?: boolean;
+  selectionCallback: () => void;
+  selected: boolean;
   children?: React.ReactNode;
 }) => {
   const [width, setWidth] = useState<number>(DEFAULT_WIDTH);
@@ -178,143 +180,124 @@ const AstroElementFrame = (props: {
             setPositionDragDistanceX(0);
             setPositionDragDistanceY(0);
           }}
+          onClick={props.selectionCallback}
         >
           {props.children}
         </Stack>
-        {/* <Stack
-          top={0}
-          left={0}
-          height="100%"
-          width="100%"
-          position="absolute"
-          sx={{
-            pointerEvents: scalePressCoordinates ? "none" : undefined,
-            cursor: "move",
-          }}
-          onMouseDown={(event) => {
-            setPositionPressCoordinates({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }}
-          onMouseUp={() => {
-            setPositionPressCoordinates(undefined);
-            setX(x + positionDragDistanceX);
-            setY(y + positionDragDistanceY);
-            setPositionDragDistanceX(0);
-            setPositionDragDistanceY(0);
-          }}
-        /> */}
-        <Stack
-          width="5px"
-          pr="3px"
-          height="calc(100% + 10px)"
-          position="absolute"
-          left="-5px"
-          top="-5px"
-          sx={{
-            cursor: "ew-resize",
-            pointerEvents: positionPressCoordinates ? "none" : undefined,
-          }}
-          onMouseDown={(event) => {
-            setScalePressCoordinatesLeft({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }}
-          onMouseUp={() => {
-            setScalePressCoordinatesLeft(undefined);
-            setWidth(width + scaleDragDistanceXLeft * 2);
-            setHeight(getHeight());
-            setScaleDragDistanceXLeft(0);
-          }}
-        >
-          <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
-        </Stack>
-        <Stack
-          width="5px"
-          pl="3px"
-          height="calc(100% + 10px)"
-          position="absolute"
-          right="-5px"
-          top="-5px"
-          sx={{
-            cursor: "ew-resize",
-            pointerEvents: positionPressCoordinates ? "none" : undefined,
-          }}
-          onMouseDown={(event) => {
-            setScalePressCoordinatesRight({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }}
-          onMouseUp={() => {
-            setScalePressCoordinatesRight(undefined);
-            setWidth(width + scaleDragDistanceXRight * 2);
-            setHeight(getHeight());
-            setScaleDragDistanceXRight(0);
-          }}
-        >
-          <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
-        </Stack>
-        <Stack
-          height="5px"
-          pt="3px"
-          width="calc(100% + 10px)"
-          position="absolute"
-          bottom="-5px"
-          left="-5px"
-          sx={{
-            cursor: props.noVerticalResizing ? undefined : "ns-resize",
-            pointerEvents:
-              props.noVerticalResizing || positionPressCoordinates
-                ? "none"
-                : undefined,
-          }}
-          onMouseDown={(event) => {
-            setScalePressCoordinatesBottom({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }}
-          onMouseUp={() => {
-            setScalePressCoordinatesBottom(undefined);
-            setHeight(height + scaleDragDistanceBottom * 2);
-            setWidth(getWidth());
-            setScaleDragDistanceBottom(0);
-          }}
-        >
-          <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
-        </Stack>
-        <Stack
-          height="5px"
-          pb="3px"
-          width="calc(100% + 10px)"
-          position="absolute"
-          top="-5px"
-          left="-5px"
-          sx={{
-            cursor: props.noVerticalResizing ? undefined : "ns-resize",
-            pointerEvents:
-              props.noVerticalResizing || positionPressCoordinates
-                ? "none"
-                : undefined,
-          }}
-          onMouseDown={(event) => {
-            setScalePressCoordinatesTop({
-              x: event.clientX,
-              y: event.clientY,
-            });
-          }}
-          onMouseUp={() => {
-            setScalePressCoordinatesTop(undefined);
-            setHeight(height + scaleDragDistanceTop * 2);
-            setWidth(getWidth());
-            setScaleDragDistanceTop(0);
-          }}
-        >
-          <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
-        </Stack>
+        {props.selected ? (
+          <>
+            <Stack
+              width="5px"
+              pr="3px"
+              height="calc(100% + 10px)"
+              position="absolute"
+              left="-5px"
+              top="-5px"
+              sx={{
+                cursor: "ew-resize",
+                pointerEvents: positionPressCoordinates ? "none" : undefined,
+              }}
+              onMouseDown={(event) => {
+                setScalePressCoordinatesLeft({
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onMouseUp={() => {
+                setScalePressCoordinatesLeft(undefined);
+                setWidth(width + scaleDragDistanceXLeft * 2);
+                setHeight(getHeight());
+                setScaleDragDistanceXLeft(0);
+              }}
+            >
+              <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
+            </Stack>
+            <Stack
+              width="5px"
+              pl="3px"
+              height="calc(100% + 10px)"
+              position="absolute"
+              right="-5px"
+              top="-5px"
+              sx={{
+                cursor: "ew-resize",
+                pointerEvents: positionPressCoordinates ? "none" : undefined,
+              }}
+              onMouseDown={(event) => {
+                setScalePressCoordinatesRight({
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onMouseUp={() => {
+                setScalePressCoordinatesRight(undefined);
+                setWidth(width + scaleDragDistanceXRight * 2);
+                setHeight(getHeight());
+                setScaleDragDistanceXRight(0);
+              }}
+            >
+              <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
+            </Stack>
+            <Stack
+              height="5px"
+              pt="3px"
+              width="calc(100% + 10px)"
+              position="absolute"
+              bottom="-5px"
+              left="-5px"
+              sx={{
+                cursor: props.noVerticalResizing ? undefined : "ns-resize",
+                pointerEvents:
+                  props.noVerticalResizing || positionPressCoordinates
+                    ? "none"
+                    : undefined,
+              }}
+              onMouseDown={(event) => {
+                setScalePressCoordinatesBottom({
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onMouseUp={() => {
+                setScalePressCoordinatesBottom(undefined);
+                setHeight(height + scaleDragDistanceBottom * 2);
+                setWidth(getWidth());
+                setScaleDragDistanceBottom(0);
+              }}
+            >
+              <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
+            </Stack>
+            <Stack
+              height="5px"
+              pb="3px"
+              width="calc(100% + 10px)"
+              position="absolute"
+              top="-5px"
+              left="-5px"
+              sx={{
+                cursor: props.noVerticalResizing ? undefined : "ns-resize",
+                pointerEvents:
+                  props.noVerticalResizing || positionPressCoordinates
+                    ? "none"
+                    : undefined,
+              }}
+              onMouseDown={(event) => {
+                setScalePressCoordinatesTop({
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onMouseUp={() => {
+                setScalePressCoordinatesTop(undefined);
+                setHeight(height + scaleDragDistanceTop * 2);
+                setWidth(getWidth());
+                setScaleDragDistanceTop(0);
+              }}
+            >
+              <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
+            </Stack>
+          </>
+        ) : null}
       </Stack>
     </Stack>
   );

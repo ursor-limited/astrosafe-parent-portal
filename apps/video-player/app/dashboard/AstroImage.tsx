@@ -8,7 +8,11 @@ import AstroElementFrame from "./AstroElementFrame";
 
 const DEFAULT_WIDTH = 300;
 
-const AstroImage = (props: { url: string }) => {
+const AstroImage = (props: {
+  url: string;
+  selected: boolean;
+  selectionCallback: () => void;
+}) => {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
     undefined
@@ -27,7 +31,11 @@ const AstroImage = (props: { url: string }) => {
       );
   }, []);
   return (
-    <AstroElementFrame aspectRatio={aspectRatio}>
+    <AstroElementFrame
+      aspectRatio={aspectRatio}
+      selectionCallback={props.selectionCallback}
+      selected={props.selected}
+    >
       <ImageUploader
         previewUrlCallback={setPreviewImageUrl}
         downloadUrlCallback={(url, upload) => {

@@ -90,41 +90,33 @@ function Draggable(props: {
 }
 
 const Canvas = () => {
-  const [x, setX] = useState<number>(0);
-  const [y, setY] = useState<number>(0);
-  const [finalX, setFinalX] = useState<number>(0);
-  const [finalY, setFinalY] = useState<number>(0);
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    setFinalX(finalX + x);
-    setFinalY(finalY + y);
-  };
-
-  const [draggingDisabled, setDraggingDisabled] = useState<boolean>(false);
-
   const [value, setValue] = useState<string>("");
 
   const [textAreaRef, setTextAreaRef] = useState<HTMLElement | null>(null);
 
+  const [selectedElement, setSelectedElement] = useState<string | undefined>(
+    undefined
+  );
+
   return (
-    // <DndContext onDragEnd={handleDragEnd}>
     <Stack
       width="600px"
       height="600px"
       position="relative"
       bgcolor="rgba(255,255,255,0.8)"
     >
-      {/* <Draggable
-          id="draggable"
-          x={finalX}
-          y={finalY}
-          translationCallback={(x, y) => {
-            setX(x);
-            setY(y);
-          }}
-          draggingDisabled={draggingDisabled}
-        > */}
-      <AstroElementFrame defaultWidth={270} dynamicHeight noVerticalResizing>
+      <Stack
+        flex={1}
+        onClick={() => setSelectedElement(undefined)}
+        zIndex={0}
+      />
+      <AstroElementFrame
+        defaultWidth={270}
+        dynamicHeight
+        noVerticalResizing
+        selectionCallback={() => setSelectedElement("text")}
+        selected={selectedElement === "text"}
+      >
         <Stack
           sx={{
             ".ql-toolbar": {
@@ -144,10 +136,12 @@ const Canvas = () => {
           <ReactQuill theme="snow" value={value} onChange={setValue} />
         </Stack>
       </AstroElementFrame>
-      <AstroImage url={DUMMY_IMAGE_URL} />
-      {/* </Draggable> */}
+      <AstroImage
+        url={DUMMY_IMAGE_URL}
+        selectionCallback={() => setSelectedElement("image")}
+        selected={selectedElement === "image"}
+      />
     </Stack>
-    // </DndContext>
   );
 };
 
