@@ -123,6 +123,7 @@ export interface IAstroCanvasElement {
 const Canvas = (props: {
   elements: IAstroCanvasElement[];
   noButtons?: boolean;
+  changeCallback?: (elements: IAstroCanvasElement[]) => void;
   // textEditorSelectionCallback: (id: string) => void;
   // textEditorDeselectionCallback: () => void;
 }) => {
@@ -130,6 +131,7 @@ const Canvas = (props: {
     undefined
   );
   const [elements, setElements] = useState<IAstroCanvasElement[]>([]);
+  useEffect(() => props.changeCallback?.(elements), [elements]);
 
   // useEffect(
   //   () =>
@@ -142,7 +144,6 @@ const Canvas = (props: {
 
   return (
     <Stack spacing="12px">
-      {" "}
       {!props.noButtons ? (
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" spacing="10px">

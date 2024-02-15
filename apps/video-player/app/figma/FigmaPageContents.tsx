@@ -143,6 +143,13 @@ function FigmaPageContents() {
               elements={
                 canvases.find((c) => c.id === selectedCanvas)?.elements || []
               }
+              changeCallback={(elements) =>
+                setCanvases(
+                  canvases.map((c) =>
+                    c.id === selectedCanvas ? { id: c.id, elements } : c
+                  )
+                )
+              }
             />
           </UrsorFadeIn>
         </Stack>
