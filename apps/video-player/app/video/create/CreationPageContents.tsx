@@ -110,7 +110,6 @@ function CreationPageContents(props: { details: IVideo }) {
   const [url, setUrl] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   useEffect(() => {
-    originalUrl = originalUrl.replace(/\/short\//g, "/embed/");;
     fetch(
       `https://noembed.com/embed?url=${encodeURIComponent(
         deNoCookiefy(originalUrl)
