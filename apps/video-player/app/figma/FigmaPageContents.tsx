@@ -72,7 +72,7 @@ function FigmaPageContents() {
             <Stack
               width="210px"
               height="44px"
-              border={`3.5px solid rgba(255,255,255,0.35)`}
+              border={`3px solid rgba(255,255,255,0.35)`}
               borderRadius="12px"
               onClick={() => {
                 setSelectedCanvas(canvases.length.toString());
@@ -115,8 +115,24 @@ function FigmaPageContents() {
                         ? PALETTE.secondary.purple[2]
                         : "transparent"
                     }`}
+                    onClick={() => setSelectedCanvas(c.id)}
+                    sx={
+                      c.id === selectedCanvas
+                        ? undefined
+                        : {
+                            cursor: "pointer",
+                            "&:hover": { opacity: 0.7 },
+                            transition: "0.2s",
+                          }
+                    }
                   >
-                    <Canvas elements={c.elements} noButtons />
+                    <Stack
+                      sx={{
+                        pointerEvents: "none",
+                      }}
+                    >
+                      <Canvas elements={c.elements} noButtons />
+                    </Stack>
                   </Stack>
                 ))}
               </Stack>
