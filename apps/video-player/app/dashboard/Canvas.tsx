@@ -22,6 +22,7 @@ import AstroImage from "./AstroImage";
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import AstroElementFrame from "./AstroElementFrame";
+import TextEditorToolbar, { modules, formats } from "./TextEditorToolBar";
 
 const DUMMY_IMAGE_URL =
   "https://images.aeonmedia.co/images/8eac4719-7f56-4d0a-9a32-aae431c8ca07/built-ecologies-emilio-ambasz-landscape-2-v2.jpg?width=828&quality=75&format=auto";
@@ -110,6 +111,7 @@ const Canvas = () => {
         onClick={() => setSelectedElement(undefined)}
         zIndex={0}
       />
+
       <AstroElementFrame
         defaultWidth={270}
         dynamicHeight
@@ -133,7 +135,13 @@ const Canvas = () => {
           }}
           ref={setTextAreaRef}
         >
-          <ReactQuill theme="snow" value={value} onChange={setValue} />
+          <ReactQuill
+            theme="snow"
+            value={value}
+            onChange={setValue}
+            modules={modules}
+            formats={formats}
+          />
         </Stack>
       </AstroElementFrame>
       <AstroImage
