@@ -205,17 +205,16 @@ function DashboardPageContents() {
 
   const { user, isLoading } = useAuth0();
 
+  console.log(user, isLoading);
+
   const [inputValue, setInputValue] = useState<string>("");
 
   const [videos, setVideos] = useState<IVideo[]>([]);
   useEffect(() => {
     user?.email &&
-      ApiController.getUserVideos(user.email).then((videos) => {
-        videos &&
-          setVideos(
-            _.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl)
-          );
-      });
+      ApiController.getUserVideos(user.email).then((videos) =>
+        setVideos(_.reverse(videos).filter((v: any) => v.thumbnailUrl))
+      );
   }, [user?.email]);
 
   const router = useRouter();
