@@ -96,7 +96,8 @@ export const TextEditorToolbar = () => (
       background: "white",
       fontFamily: "unset",
       boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-      borderRadius: "16px 16px 0 0",
+      borderRadius: "12px",
+      width: "fit-content",
     }}
   >
     <span className="ql-formats">

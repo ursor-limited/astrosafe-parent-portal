@@ -404,6 +404,9 @@ function DashboardPageContents() {
     safeTubeUser && setSubscribed(safeTubeUser.subscribed);
   }, [safeTubeUser?.subscribed, subscribed]);
 
+  const [showTextEditorToolbar, setShowTextEditorToolbar] =
+    useState<boolean>(false);
+
   return (
     <>
       <Stack flex={1} position="relative">
@@ -424,8 +427,20 @@ function DashboardPageContents() {
           mobile={isMobile}
           hidePopupDashboardButton
         />
-        <TextEditorToolbar />
-        <Canvas />
+        <Stack
+          sx={{
+            opacity: showTextEditorToolbar ? 1 : 0,
+            pointerEvents: showTextEditorToolbar ? undefined : "none",
+            transition: "1s",
+          }}
+        >
+          <TextEditorToolbar />
+        </Stack>
+
+        <Canvas
+          textEditorSelectionCallback={() => setShowTextEditorToolbar(true)}
+          textEditorDeselectionCallback={() => setShowTextEditorToolbar(false)}
+        />
         <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"

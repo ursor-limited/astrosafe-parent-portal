@@ -90,13 +90,24 @@ function Draggable(props: {
   );
 }
 
-const Canvas = () => {
+const Canvas = (props: {
+  textEditorSelectionCallback: () => void;
+  textEditorDeselectionCallback: () => void;
+}) => {
   const [value, setValue] = useState<string>("");
 
   const [textAreaRef, setTextAreaRef] = useState<HTMLElement | null>(null);
 
   const [selectedElement, setSelectedElement] = useState<string | undefined>(
     undefined
+  );
+
+  useEffect(
+    () =>
+      selectedElement === "text"
+        ? props.textEditorSelectionCallback()
+        : props.textEditorDeselectionCallback(),
+    [selectedElement]
   );
 
   return (
@@ -121,16 +132,14 @@ const Canvas = () => {
       >
         <Stack
           sx={{
-            ".ql-toolbar": {
-              background: "white",
-              fontFamily: "unset",
-              boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-              borderRadius: "16px 16px 0 0",
-            },
             ".ql-container": {
               fontFamily: "unset",
-              borderRadius: "0 0 16px 16px",
+              borderRadius: "12px",
               height: "unset",
+              border: "none",
+            },
+            ".ql-editor": {
+              padding: "3px",
             },
           }}
           ref={setTextAreaRef}
