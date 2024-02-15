@@ -121,6 +121,8 @@ export interface IAstroCanvasElement {
 }
 
 const Canvas = (props: {
+  elements: IAstroCanvasElement[];
+  noButtons?: boolean;
   // textEditorSelectionCallback: (id: string) => void;
   // textEditorDeselectionCallback: () => void;
 }) => {
@@ -138,64 +140,51 @@ const Canvas = (props: {
   //   [selectedElement, elements]
   // );
 
-  console.log("aa", elements, selectedElement);
-
   return (
     <Stack spacing="12px">
-      <Stack direction="row" justifyContent="space-between">
-        <Stack direction="row" spacing="10px">
-          <ElementButton
-            icon={TypographyIcon}
-            callback={() => {
-              setElements([
-                ...elements,
-                getNewTextDetails(
-                  `text${elements.length}`,
-                  CANVAS_WIDTH / 2,
-                  CANVAS_HEIGHT / 2
-                ),
-              ]);
-              setSelectedElement(`text${elements.length}`);
-              //setSelectedTextId(`text${elements.length}`);
-            }}
-          />
-          <ElementButton icon={ImageIcon} callback={() => null} />
+      {" "}
+      {!props.noButtons ? (
+        <Stack direction="row" justifyContent="space-between">
+          <Stack direction="row" spacing="10px">
+            <ElementButton
+              icon={TypographyIcon}
+              callback={() => {
+                setElements([
+                  ...elements,
+                  getNewTextDetails(
+                    `text${elements.length}`,
+                    CANVAS_WIDTH / 2,
+                    CANVAS_HEIGHT / 2
+                  ),
+                ]);
+                setSelectedElement(`text${elements.length}`);
+                //setSelectedTextId(`text${elements.length}`);
+              }}
+            />
+            <ElementButton icon={ImageIcon} callback={() => null} />
+          </Stack>
+          <Stack position="relative" flex={1}>
+            {elements
+              .filter((e) => e.type === "text")
+              .map((e) => (
+                <Stack
+                  position="absolute"
+                  top={0}
+                  right={0}
+                  key={e.id}
+                  sx={{
+                    opacity: e.id === selectedElement ? 1 : 0,
+                    pointerEvents:
+                      e.id === selectedElement ? undefined : "none",
+                    transition: "0.6s",
+                  }}
+                >
+                  <TextEditorToolbar id={e.id} />
+                </Stack>
+              ))}
+          </Stack>
         </Stack>
-        <Stack position="relative" flex={1}>
-          {elements
-            .filter((e) => e.type === "text")
-            .map((e) => (
-              <Stack
-                position="absolute"
-                top={0}
-                right={0}
-                key={e.id}
-                sx={{
-                  opacity: e.id === selectedElement ? 1 : 0,
-                  pointerEvents: e.id === selectedElement ? undefined : "none",
-                  transition: "0.6s",
-                }}
-              >
-                <TextEditorToolbar id={e.id} />
-              </Stack>
-            ))}
-        </Stack>
-        {/* <Stack
-          sx={{
-            opacity:
-              elements.find((e) => e.id === selectedElement)?.type === "text"
-                ? 1
-                : 0,
-            pointerEvents:
-              elements.find((e) => e.id === selectedElement)?.type === "text"
-                ? undefined
-                : "none",
-            transition: "1s",
-          }}
-        >
-          <TextEditorToolbar id={selectedElement ?? ""} />
-        </Stack> */}
-      </Stack>
+      ) : null}
       <ActualCanvas
         elements={elements}
         selectedElement={selectedElement}

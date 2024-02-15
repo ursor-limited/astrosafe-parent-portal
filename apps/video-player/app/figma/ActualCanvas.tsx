@@ -3,7 +3,7 @@ import AstroText from "./AstroText";
 import AstroImage from "./AstroImage";
 import { IAstroCanvasElement } from "./Canvas";
 
-export const CANVAS_WIDTH = 900;
+export const CANVAS_WIDTH = 1000;
 export const CANVAS_HEIGHT = 600;
 
 const DUMMY_IMAGE_URL =
@@ -19,7 +19,7 @@ const ActualCanvas = (props: {
       width={CANVAS_WIDTH}
       height={CANVAS_HEIGHT}
       position="relative"
-      bgcolor="rgba(255,255,255,0.8)"
+      bgcolor="rgb(255,255,255)"
       overflow="hidden"
     >
       <Stack
