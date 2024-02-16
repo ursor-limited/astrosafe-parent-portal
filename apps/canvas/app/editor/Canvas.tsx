@@ -10,10 +10,12 @@ import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 import ImageSelectionDialog from "./ImageSelectionDialog";
 import { getNewTextDetails } from "./AstroText";
+import PaletteButton from "../components/PaletteButton";
 
-const ElementButton = (props: {
+export const ElementButton = (props: {
   callback: () => void;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  image?: JSX.Element;
 }) => (
   <Stack
     width="43px"
@@ -29,7 +31,8 @@ const ElementButton = (props: {
     }}
     onClick={props.callback}
   >
-    <props.icon height="16px" width="16px" />
+    {props.image ||
+      (props.icon ? <props.icon height="16px" width="16px" /> : null)}
   </Stack>
 );
 
@@ -47,8 +50,10 @@ export interface IAstroCanvasElement {
 
 const Canvas = (props: {
   elements: IAstroCanvasElement[];
+  color?: string;
   noButtons?: boolean;
   changeCallback?: (elements: IAstroCanvasElement[]) => void;
+  colorChangeCallback?: (color: string) => void;
   // textEditorSelectionCallback: (id: string) => void;
   // textEditorDeselectionCallback: () => void;
 }) => {
@@ -101,6 +106,10 @@ const Canvas = (props: {
         {!props.noButtons ? (
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row" spacing="10px">
+              <PaletteButton
+                selected={props.color || "#ffffff"}
+                callback={(color) => props.colorChangeCallback?.(color)}
+              />
               <ElementButton icon={TypographyIcon} callback={addText} />
               <ElementButton
                 icon={ImageIcon}
@@ -132,6 +141,7 @@ const Canvas = (props: {
           </Stack>
         ) : null}
         <ActualCanvas
+          color={props.color}
           elements={elements || []}
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}
