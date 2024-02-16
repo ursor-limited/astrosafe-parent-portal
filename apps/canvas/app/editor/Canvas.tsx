@@ -54,8 +54,6 @@ const Canvas = (props: {
   noButtons?: boolean;
   changeCallback?: (elements: IAstroCanvasElement[]) => void;
   colorChangeCallback?: (color: string) => void;
-  // textEditorSelectionCallback: (id: string) => void;
-  // textEditorDeselectionCallback: () => void;
 }) => {
   const [selectedElement, setSelectedElement] = useState<string | undefined>(
     undefined
