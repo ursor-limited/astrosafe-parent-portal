@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
 import ImageUploader from "./ImageUploader";
 import { useEffect, useState } from "react";
 import { PALETTE } from "ui";
@@ -11,7 +10,8 @@ const IMAGE_HEIGHT = 300;
 
 const ImageSelectionDialog = (props: {
   open: boolean;
-  closeCallback?: () => void;
+  closeCallback: () => void;
+  additionCallback: (url: string) => void;
 }) => {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
@@ -30,6 +30,7 @@ const ImageSelectionDialog = (props: {
         (dims) => dims && setAspectRatio(dims.width / dims.height)
       );
   }, [previewImageUrl]);
+  console.log(previewImageUrl, "899898989");
   return (
     <UrsorDialog
       supertitle="Add image"
@@ -38,8 +39,12 @@ const ImageSelectionDialog = (props: {
       open={props.open}
       button={{
         text: "Add",
-        callback: () => {},
+        callback: () => {
+          props.additionCallback(previewImageUrl!);
+          props.closeCallback();
+        },
         icon: ChevronRight,
+        disabled: !previewImageUrl,
       }}
       width="90%"
       maxWidth="880px"

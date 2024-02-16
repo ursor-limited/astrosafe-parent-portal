@@ -147,43 +147,44 @@ const Canvas = (props: {
   const [imageSelectionDialogOpen, setImageSelectionDialogOpen] =
     useState<boolean>(false);
 
+  const addText = () => {
+    elements &&
+      setElements([
+        ...elements,
+        getNewTextDetails(
+          `text${elements.length}`,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2
+        ),
+      ]);
+    elements && setSelectedElement(`text${elements.length}`);
+  };
+
+  const addImage = async (url: string) => {
+    elements &&
+      setElements([
+        ...elements,
+        await getNewImageDetails(
+          url,
+          `image${elements.length}`,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2
+        ),
+      ]);
+    elements && setSelectedElement(`image${elements.length}`);
+  };
+
   return (
     <>
       <Stack spacing="12px">
         {!props.noButtons ? (
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row" spacing="10px">
-              <ElementButton
-                icon={TypographyIcon}
-                callback={() => {
-                  elements &&
-                    setElements([
-                      ...elements,
-                      getNewTextDetails(
-                        `text${elements.length}`,
-                        CANVAS_WIDTH / 2,
-                        CANVAS_HEIGHT / 2
-                      ),
-                    ]);
-                  elements && setSelectedElement(`text${elements.length}`);
-                  //setSelectedTextId(`text${elements.length}`);
-                }}
-              />
+              <ElementButton icon={TypographyIcon} callback={addText} />
               <ElementButton
                 icon={ImageIcon}
                 callback={async () => {
                   setImageSelectionDialogOpen(true);
-                  // elements &&
-                  //   setElements([
-                  //     ...elements,
-                  //     await getNewImageDetails(
-                  //       DUMMY_IMAGE_URL,
-                  //       `image${elements.length}`,
-                  //       CANVAS_WIDTH / 2,
-                  //       CANVAS_HEIGHT / 2
-                  //     ),
-                  //   ]);
-                  // elements && setSelectedElement(`image${elements.length}`);
                 }}
               />
             </Stack>
@@ -222,6 +223,7 @@ const Canvas = (props: {
       <ImageSelectionDialog
         open={imageSelectionDialogOpen}
         closeCallback={() => setImageSelectionDialogOpen(false)}
+        additionCallback={(url) => addImage(url)}
       />
     </>
   );
