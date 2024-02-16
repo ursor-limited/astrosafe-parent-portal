@@ -2,6 +2,7 @@ import { Box, Stack } from "@mui/system";
 import React, { forwardRef, useEffect, useState } from "react";
 import Resizer from "react-image-file-resizer";
 import Dropzone from "./Dropzone";
+import ApiController from "../api";
 
 const MAX_FILE_SIZE = 3200000; // 3mb
 const COMPRESSION_FILE_SIZE_THRESHOLD = 50000;
@@ -27,7 +28,7 @@ export interface ILessonImageUploaderProps {
   children?: React.ReactNode;
 }
 
-const getDownloadUrl = (signedUrl: string) => signedUrl.split("?")[0];
+const getDownloadUrl = (signedUrl: string) => signedUrl?.split("?")[0];
 
 const dataURItoFile = (dataURI: string) => {
   // convert base64 to raw binary data held in a string
@@ -77,48 +78,43 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
     }
   };
 
-  // const upload = (signedUrl: string) =>
-  //   ApiController.uploadToS3(signedUrl, file).catch((error) =>
-  //     notificationCtx.error(error.message)
-  //   );
+  const upload = (signedUrl: string) =>
+    ApiController.uploadToS3(signedUrl, file);
 
-  // useEffect(() => {
-  //   if (!file) {
-  //     return;
-  //   }
-  //   props.previewUrlCallback(URL.createObjectURL(file));
-  //   ApiController.getS3ImageUploadParams(
-  //     file!.name.split(".")[file!.name.split(".").length - 1],
-  //     file!.type
-  //   )
-  //     .then(({ signedUrl }) =>
-  //       props.downloadUrlCallback(getDownloadUrl(signedUrl), () =>
-  //         upload(signedUrl)
-  //       )
-  //     )
-  //     .catch((error) => notificationCtx.error(error.message));
-  // }, [file]);
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    props.previewUrlCallback(URL.createObjectURL(file));
+    ApiController.getS3ImageUploadParams(
+      file!.name.split(".")[file!.name.split(".").length - 1],
+      file!.type
+    ).then(({ signedUrl }) =>
+      props.downloadUrlCallback(getDownloadUrl(signedUrl), () =>
+        upload(signedUrl)
+      )
+    );
+  }, [file]);
 
   return (
-    <Box
+    <Stack
       flex={1}
-      sx={
-        {
-          //pointerEvents: "none",
-          // opacity: isDragActive ? 0.5 : 1,
-          // transition: "0.2s",
-          // willChange: "opacity",
-        }
-      }
+      sx={{
+        cursor: "pointer",
+        opacity: isDragActive ? 0.5 : 1,
+        transition: "0.2s",
+        willChange: "opacity",
+      }}
     >
-      {/* <Dropzone
+      <Dropzone
         onDragStateChange={setIsDragActive}
         onFileDrop={setResizedFile}
         //clickDisabled={props.clickDisabled}
         ref={ref}
-      /> */}
-      {props.children}
-    </Box>
+      >
+        {props.children}
+      </Dropzone>
+    </Stack>
   );
 });
 

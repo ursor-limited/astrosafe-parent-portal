@@ -122,6 +122,23 @@ class ApiController {
       response.json()
     );
   }
+  static async getS3ImageUploadParams(
+    fileExtension: string,
+    contentType: string
+  ) {
+    return post(`/img/sign`, {
+      fileExtension,
+      contentType,
+    }).then((response: any) => response.json());
+  }
+
+  static async uploadToS3(signedUrl: string, uploadFile: any) {
+    return fetch(signedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": uploadFile.type },
+      body: uploadFile,
+    }).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

@@ -27,6 +27,7 @@ import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
+import ImageSelectionDialog from "./ImageSelectionDialog";
 
 const DUMMY_IMAGE_URL =
   "https://c.files.bbci.co.uk/8FEE/production/_127864863_eltonjohn-index-getty.jpg";
@@ -143,76 +144,86 @@ const Canvas = (props: {
       setElements(props.elements);
   }, [props.elements]);
 
+  const [imageSelectionDialogOpen, setImageSelectionDialogOpen] =
+    useState<boolean>(false);
+
   return (
-    <Stack spacing="12px">
-      {!props.noButtons ? (
-        <Stack direction="row" justifyContent="space-between">
-          <Stack direction="row" spacing="10px">
-            <ElementButton
-              icon={TypographyIcon}
-              callback={() => {
-                elements &&
-                  setElements([
-                    ...elements,
-                    getNewTextDetails(
-                      `text${elements.length}`,
-                      CANVAS_WIDTH / 2,
-                      CANVAS_HEIGHT / 2
-                    ),
-                  ]);
-                elements && setSelectedElement(`text${elements.length}`);
-                //setSelectedTextId(`text${elements.length}`);
-              }}
-            />
-            <ElementButton
-              icon={ImageIcon}
-              callback={async () => {
-                elements &&
-                  setElements([
-                    ...elements,
-                    await getNewImageDetails(
-                      DUMMY_IMAGE_URL,
-                      `image${elements.length}`,
-                      CANVAS_WIDTH / 2,
-                      CANVAS_HEIGHT / 2
-                    ),
-                  ]);
-                elements && setSelectedElement(`image${elements.length}`);
-              }}
-            />
+    <>
+      <Stack spacing="12px">
+        {!props.noButtons ? (
+          <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row" spacing="10px">
+              <ElementButton
+                icon={TypographyIcon}
+                callback={() => {
+                  elements &&
+                    setElements([
+                      ...elements,
+                      getNewTextDetails(
+                        `text${elements.length}`,
+                        CANVAS_WIDTH / 2,
+                        CANVAS_HEIGHT / 2
+                      ),
+                    ]);
+                  elements && setSelectedElement(`text${elements.length}`);
+                  //setSelectedTextId(`text${elements.length}`);
+                }}
+              />
+              <ElementButton
+                icon={ImageIcon}
+                callback={async () => {
+                  setImageSelectionDialogOpen(true);
+                  // elements &&
+                  //   setElements([
+                  //     ...elements,
+                  //     await getNewImageDetails(
+                  //       DUMMY_IMAGE_URL,
+                  //       `image${elements.length}`,
+                  //       CANVAS_WIDTH / 2,
+                  //       CANVAS_HEIGHT / 2
+                  //     ),
+                  //   ]);
+                  // elements && setSelectedElement(`image${elements.length}`);
+                }}
+              />
+            </Stack>
+            <Stack position="relative" flex={1}>
+              {elements
+                ?.filter((e) => e.type === "text")
+                .map((e) => (
+                  <Stack
+                    position="absolute"
+                    top={0}
+                    right={0}
+                    key={e.id}
+                    sx={{
+                      opacity: e.id === selectedElement ? 1 : 0,
+                      pointerEvents:
+                        e.id === selectedElement ? undefined : "none",
+                      transition: "0.6s",
+                    }}
+                  >
+                    <TextEditorToolbar
+                      id={e.id + props.noButtons ? "preview" : ""}
+                    />
+                  </Stack>
+                ))}
+            </Stack>
           </Stack>
-          <Stack position="relative" flex={1}>
-            {elements
-              ?.filter((e) => e.type === "text")
-              .map((e) => (
-                <Stack
-                  position="absolute"
-                  top={0}
-                  right={0}
-                  key={e.id}
-                  sx={{
-                    opacity: e.id === selectedElement ? 1 : 0,
-                    pointerEvents:
-                      e.id === selectedElement ? undefined : "none",
-                    transition: "0.6s",
-                  }}
-                >
-                  <TextEditorToolbar
-                    id={e.id + props.noButtons ? "preview" : ""}
-                  />
-                </Stack>
-              ))}
-          </Stack>
-        </Stack>
-      ) : null}
-      <ActualCanvas
-        elements={elements || []}
-        selectedElement={selectedElement}
-        setSelectedElement={setSelectedElement}
-        changeCallback={(e) => setElements(e)}
-        preview={props.noButtons}
+        ) : null}
+        <ActualCanvas
+          elements={elements || []}
+          selectedElement={selectedElement}
+          setSelectedElement={setSelectedElement}
+          changeCallback={(e) => setElements(e)}
+          preview={props.noButtons}
+        />
+      </Stack>
+      <ImageSelectionDialog
+        open={imageSelectionDialogOpen}
+        closeCallback={() => setImageSelectionDialogOpen(false)}
       />
-    </Stack>
+    </>
   );
 };
 

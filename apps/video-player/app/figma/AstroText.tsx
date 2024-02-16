@@ -66,7 +66,7 @@ const AstroText = (props: {
           <div
             className="view ql-editor"
             dangerouslySetInnerHTML={{ __html: value }}
-          ></div>
+          />
         ) : (
           <ReactQuill
             theme="snow"

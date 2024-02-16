@@ -36,16 +36,6 @@ const AstroImage = (props: {
   ) => void;
   details: IAstroCanvasElement;
 }) => {
-  const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
-  const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
-    undefined
-  );
-  const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(
-    undefined
-  );
-  const [imageUploadCallback, setImageUploadCallback] = useState<
-    undefined | (() => Promise<void>)
-  >(undefined);
   const [aspectRatio, setAspectRatio] = useState<number>(1);
   useEffect(() => {
     props.details.value &&
@@ -66,24 +56,15 @@ const AstroImage = (props: {
         props.frameChangeCallback(width, height, x, y);
       }}
     >
-      <ImageUploader
-        previewUrlCallback={setPreviewImageUrl}
-        downloadUrlCallback={(url, upload) => {
-          setDownloadImageUrl(url);
-          setImageUploadCallback(() => upload);
+      <Stack
+        width="100%"
+        height="100%"
+        sx={{
+          backgroundImage: `url(${props.details.value})`,
+          backgroundSize: "contain",
         }}
-        ref={setDropzoneRef}
-      >
-        <Stack
-          width="100%"
-          height="100%"
-          sx={{
-            backgroundImage: `url(${props.details.value})`,
-            backgroundSize: "contain",
-          }}
-          position="relative"
-        />
-      </ImageUploader>
+        position="relative"
+      />
     </AstroElementFrame>
   );
 };

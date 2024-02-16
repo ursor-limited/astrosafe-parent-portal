@@ -1,6 +1,6 @@
 /* from https://blog.alexdevero.com/react-file-dropzone/ */
 
-import { Box } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import React, { forwardRef } from "react";
 
 // Define interface for component props/api:
@@ -120,7 +120,7 @@ export const DropZone = forwardRef(
 
     // Render <div> with ref and children:
     return (
-      <Box
+      <Stack
         ref={dropZoneRef}
         width="100%"
         height="100%"
@@ -129,6 +129,7 @@ export const DropZone = forwardRef(
           "&:hover": { opacity: 0.5 },
           transition: "0.2s",
         }}
+        alignItems="center"
       >
         <input // @ts-ignore
           ref={ref}
@@ -146,7 +147,7 @@ export const DropZone = forwardRef(
           onChange={handleDrop}
         />
         {props.children}
-      </Box>
+      </Stack>
     );
   }
 );
