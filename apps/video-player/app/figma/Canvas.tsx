@@ -138,19 +138,10 @@ const Canvas = (props: {
   );
   useEffect(() => elements && props.changeCallback?.(elements), [elements]);
   useEffect(() => {
-    props.noButtons && console.log(!elements, props.elements);
-    props.elements && setElements(props.elements);
+    (!elements || props.noButtons) &&
+      props.elements &&
+      setElements(props.elements);
   }, [props.elements]);
-
-  props.noButtons && console.log("aaaaaa", elements);
-  // useEffect(
-  //   () =>
-  //     selectedElement &&
-  //     elements.find((e) => e.id === selectedElement)?.type === "text"
-  //       ? props.textEditorSelectionCallback(selectedElement)
-  //       : props.textEditorDeselectionCallback(),
-  //   [selectedElement, elements]
-  // );
 
   return (
     <Stack spacing="12px">
