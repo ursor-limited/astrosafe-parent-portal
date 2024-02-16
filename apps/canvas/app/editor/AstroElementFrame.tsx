@@ -240,6 +240,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -272,6 +273,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -307,6 +309,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -342,6 +345,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>

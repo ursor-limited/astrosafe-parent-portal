@@ -34,7 +34,6 @@ const AstroText = (props: {
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => setValue(props.details.value), [props.details.value]);
-  console.log(value);
   return (
     <AstroElementFrame
       width={props.details.width}
