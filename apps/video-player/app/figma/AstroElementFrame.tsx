@@ -21,6 +21,7 @@ const AstroElementFrame = (props: {
   aspectRatio?: number;
   noVerticalResizing?: boolean;
   selectionCallback: () => void;
+  changeCallback: (width: number, height: number, x: number, y: number) => void;
   selected: boolean;
   children?: React.ReactNode;
 }) => {
@@ -28,6 +29,10 @@ const AstroElementFrame = (props: {
   const [height, setHeight] = useState<number>(DEFAULT_HEIGHT);
   const [x, setX] = useState<number>(0);
   const [y, setY] = useState<number>(0);
+
+  // useEffect(() => {
+  //   props.changeCallback(width, height, x, y);
+  // }, [width, height, x, y]);
 
   useEffect(() => {
     props.width && setWidth(props.width);
@@ -189,6 +194,12 @@ const AstroElementFrame = (props: {
             setY(y + positionDragDistanceY);
             setPositionDragDistanceX(0);
             setPositionDragDistanceY(0);
+            props.changeCallback(
+              width,
+              height,
+              x + positionDragDistanceX,
+              y + positionDragDistanceY
+            );
           }}
           onClick={props.selectionCallback}
         >
@@ -218,6 +229,12 @@ const AstroElementFrame = (props: {
                 setWidth(width + scaleDragDistanceXLeft * 2);
                 setHeight(getHeight());
                 setScaleDragDistanceXLeft(0);
+                props.changeCallback(
+                  width + scaleDragDistanceXLeft * 2,
+                  height,
+                  x,
+                  y
+                );
               }}
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
@@ -244,6 +261,12 @@ const AstroElementFrame = (props: {
                 setWidth(width + scaleDragDistanceXRight * 2);
                 setHeight(getHeight());
                 setScaleDragDistanceXRight(0);
+                props.changeCallback(
+                  width + scaleDragDistanceXRight * 2,
+                  height,
+                  x,
+                  y
+                );
               }}
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
@@ -273,6 +296,12 @@ const AstroElementFrame = (props: {
                 setHeight(height + scaleDragDistanceBottom * 2);
                 setWidth(getWidth());
                 setScaleDragDistanceBottom(0);
+                props.changeCallback(
+                  width + scaleDragDistanceBottom * 2,
+                  height,
+                  x,
+                  y
+                );
               }}
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
@@ -302,6 +331,12 @@ const AstroElementFrame = (props: {
                 setHeight(height + scaleDragDistanceTop * 2);
                 setWidth(getWidth());
                 setScaleDragDistanceTop(0);
+                props.changeCallback(
+                  width + scaleDragDistanceTop * 2,
+                  height,
+                  x,
+                  y
+                );
               }}
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />

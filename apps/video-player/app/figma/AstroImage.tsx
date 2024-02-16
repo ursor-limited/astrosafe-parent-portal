@@ -37,6 +37,7 @@ const AstroImage = (props: {
       aspectRatio={aspectRatio}
       selectionCallback={props.selectionCallback}
       selected={props.selected}
+      changeCallback={() => null}
     >
       <ImageUploader
         previewUrlCallback={setPreviewImageUrl}

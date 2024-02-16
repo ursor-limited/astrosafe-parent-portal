@@ -27,10 +27,11 @@ const AstroText = (props: {
   selected: boolean;
   selectionCallback: () => void;
   details: IAstroCanvasElement;
+  valueChangeCallback: (value: string) => void;
+  frameChangeCallback: (width: number, x: number, y: number) => void;
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => setValue(props.details.value), [props.details.value]);
-  console.log(getModules(props.details.id));
   return (
     <AstroElementFrame
       width={props.details.width}
@@ -40,6 +41,9 @@ const AstroText = (props: {
       noVerticalResizing
       selectionCallback={props.selectionCallback}
       selected={props.selected}
+      changeCallback={(width, height, x, y) => {
+        props.frameChangeCallback(width, x, y);
+      }}
     >
       <Stack
         sx={{
@@ -58,7 +62,10 @@ const AstroText = (props: {
         <ReactQuill
           theme="snow"
           value={value}
-          onChange={setValue}
+          onChange={(v) => {
+            setValue(v);
+            props.valueChangeCallback(v);
+          }}
           modules={getModules(props.details.id)}
           formats={formats}
         />

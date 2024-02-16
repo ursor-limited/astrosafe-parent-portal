@@ -146,7 +146,7 @@ function FigmaPageContents() {
               changeCallback={(elements) =>
                 setCanvases(
                   canvases.map((c) =>
-                    c.id === selectedCanvas ? { id: c.id, elements } : c
+                    c.id === selectedCanvas ? { ...c, elements } : c
                   )
                 )
               }

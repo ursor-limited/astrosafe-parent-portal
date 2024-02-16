@@ -13,6 +13,7 @@ const ActualCanvas = (props: {
   elements: IAstroCanvasElement[];
   setSelectedElement: (id?: string) => void;
   selectedElement?: string;
+  changeCallback?: (elements: IAstroCanvasElement[]) => void;
 }) => {
   return (
     <Stack
@@ -48,6 +49,20 @@ const ActualCanvas = (props: {
             details={e}
             selectionCallback={() => props.setSelectedElement(e.id)}
             selected={e.id === props.selectedElement}
+            frameChangeCallback={(width, x, y) => {
+              props.changeCallback?.(
+                props.elements.map((el) =>
+                  el.id === e.id ? { ...el, width, x, y } : el
+                )
+              );
+            }}
+            valueChangeCallback={(value) =>
+              props.changeCallback?.(
+                props.elements.map((el) =>
+                  el.id === e.id ? { ...el, value } : el
+                )
+              )
+            }
           />
         )
       )}

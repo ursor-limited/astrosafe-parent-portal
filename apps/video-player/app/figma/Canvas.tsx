@@ -130,8 +130,15 @@ const Canvas = (props: {
   const [selectedElement, setSelectedElement] = useState<string | undefined>(
     undefined
   );
-  const [elements, setElements] = useState<IAstroCanvasElement[]>([]);
-  useEffect(() => props.changeCallback?.(elements), [elements]);
+  const [elements, setElements] = useState<IAstroCanvasElement[] | undefined>(
+    undefined
+  );
+  useEffect(() => elements && props.changeCallback?.(elements), [elements]);
+  useEffect(() => {
+    !elements && props.elements && setElements(props.elements);
+  }, [props.elements]);
+
+  console.log("3333", props.elements);
 
   // useEffect(
   //   () =>
@@ -150,15 +157,16 @@ const Canvas = (props: {
             <ElementButton
               icon={TypographyIcon}
               callback={() => {
-                setElements([
-                  ...elements,
-                  getNewTextDetails(
-                    `text${elements.length}`,
-                    CANVAS_WIDTH / 2,
-                    CANVAS_HEIGHT / 2
-                  ),
-                ]);
-                setSelectedElement(`text${elements.length}`);
+                elements &&
+                  setElements([
+                    ...elements,
+                    getNewTextDetails(
+                      `text${elements.length}`,
+                      CANVAS_WIDTH / 2,
+                      CANVAS_HEIGHT / 2
+                    ),
+                  ]);
+                elements && setSelectedElement(`text${elements.length}`);
                 //setSelectedTextId(`text${elements.length}`);
               }}
             />
@@ -166,7 +174,7 @@ const Canvas = (props: {
           </Stack>
           <Stack position="relative" flex={1}>
             {elements
-              .filter((e) => e.type === "text")
+              ?.filter((e) => e.type === "text")
               .map((e) => (
                 <Stack
                   position="absolute"
@@ -187,9 +195,10 @@ const Canvas = (props: {
         </Stack>
       ) : null}
       <ActualCanvas
-        elements={elements}
+        elements={elements || []}
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
+        changeCallback={(e) => setElements(e)}
       />
     </Stack>
   );
