@@ -7,6 +7,7 @@ export const CANVAS_WIDTH = 1000;
 export const CANVAS_HEIGHT = 600;
 
 const ActualCanvas = (props: {
+  color?: string;
   elements: IAstroCanvasElement[];
   setSelectedElement: (id?: string) => void;
   selectedElement?: string;
@@ -18,7 +19,7 @@ const ActualCanvas = (props: {
       width={CANVAS_WIDTH}
       height={CANVAS_HEIGHT}
       position="relative"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={props.color || "#ffffff"}
       overflow="hidden"
     >
       <Stack

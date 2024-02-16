@@ -30,6 +30,7 @@ export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 export interface IAstroCanvas {
   id: string;
   elements: IAstroCanvasElement[];
+  color?: string;
 }
 
 function EditorPageContents() {
@@ -121,7 +122,7 @@ function EditorPageContents() {
                         pointerEvents: "none",
                       }}
                     >
-                      <Canvas elements={c.elements} noButtons />
+                      <Canvas elements={c.elements} color={c.color} noButtons />
                     </Stack>
                   </Stack>
                 ))}
@@ -137,6 +138,14 @@ function EditorPageContents() {
                 setCanvases(
                   canvases.map((c) =>
                     c.id === selectedCanvas ? { ...c, elements } : c
+                  )
+                )
+              }
+              color={canvases.find((c) => c.id === selectedCanvas)?.color}
+              colorChangeCallback={(color) =>
+                setCanvases(
+                  canvases.map((c) =>
+                    c.id === selectedCanvas ? { ...c, color } : c
                   )
                 )
               }
