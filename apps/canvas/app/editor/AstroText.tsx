@@ -74,9 +74,7 @@ const AstroText = (props: {
               setValue(v);
               props.valueChangeCallback(v);
             }}
-            modules={getModules(
-              props.details.id + props.preview ? "preview" : ""
-            )}
+            modules={getModules(props.details.id)}
             formats={formats}
           />
         )}

@@ -186,9 +186,7 @@ const Canvas = (props: {
                       transition: "0.6s",
                     }}
                   >
-                    <TextEditorToolbar
-                      id={e.id + props.noButtons ? "preview" : ""}
-                    />
+                    <TextEditorToolbar id={e.id} />
                   </Stack>
                 ))}
             </Stack>

@@ -60,8 +60,8 @@ function EditorPageContents() {
         <Stack spacing="12px" direction="row">
           <Stack spacing="10px">
             <Stack
-              width="210px"
-              height="44px"
+              width="204px"
+              height="39px"
               border={`3px solid rgba(255,255,255,0.35)`}
               borderRadius="12px"
               onClick={() => {
