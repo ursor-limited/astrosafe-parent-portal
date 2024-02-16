@@ -11,67 +11,6 @@ import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 import ImageSelectionDialog from "./ImageSelectionDialog";
 import { getNewTextDetails } from "./AstroText";
 
-const DUMMY_IMAGE_URL =
-  "https://c.files.bbci.co.uk/8FEE/production/_127864863_eltonjohn-index-getty.jpg";
-
-export function Droppable(props: { id: string; children: React.ReactNode }) {
-  const { isOver, setNodeRef } = useDroppable({
-    id: props.id,
-  });
-  const style = {
-    opacity: isOver ? 1 : 0.5,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style}>
-      {props.children}
-    </div>
-  );
-}
-
-function Draggable(props: {
-  id: string;
-  translationCallback: (x: number, y: number) => void;
-  x: number;
-  y: number;
-  draggingDisabled: boolean;
-  children: React.ReactNode;
-}) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: props.id,
-    disabled: props.draggingDisabled,
-  });
-
-  //   const [x, setX] = useState<number>(0);
-  //   const [y, setY] = useState<number>(0);
-
-  //   useEffect(() => {
-  //     console.log(transform?.x, "00");
-  //     transform?.x && setX(transform?.x);
-  //     transform?.y && setY(transform?.y);
-  //   }, [transform?.x, transform?.y]);
-
-  useEffect(() => {
-    props.translationCallback(transform?.x ?? 0, transform?.y ?? 0);
-  }, [transform?.x, transform?.y]);
-
-  return (
-    <Stack
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      position="absolute"
-      top={props.y}
-      left={props.x}
-      sx={{
-        transform: `translate3d(${transform?.x}px, ${transform?.y}px, 0)`,
-      }}
-    >
-      {props.children}
-    </Stack>
-  );
-}
-
 const ElementButton = (props: {
   callback: () => void;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
