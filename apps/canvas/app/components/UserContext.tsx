@@ -3,7 +3,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
-import ApiController from "./api";
+import ApiController from "../api";
 import mixpanel from "mixpanel-browser";
 
 export interface ISafeTubeUser {

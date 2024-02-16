@@ -221,9 +221,15 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       }
       sx={{
         cursor: "pointer",
+        pointerEvents: props.disabled ? "none" : undefined,
         transition: "0.2s",
         background: props.backgroundColor,
-        opacity: state === "hover" ? props.hoverOpacity : undefined,
+        // eslint-disable-next-line no-nested-ternary -- annoying
+        opacity: props.disabled
+          ? 0.35
+          : state === "hover"
+          ? props.hoverOpacity
+          : undefined,
         svg: {
           animation: props.iconSpin ? `${spin} 6s linear infinite` : undefined,
           path: {
