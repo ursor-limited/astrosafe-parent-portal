@@ -11,6 +11,7 @@ const ActualCanvas = (props: {
   setSelectedElement: (id?: string) => void;
   selectedElement?: string;
   changeCallback?: (elements: IAstroCanvasElement[]) => void;
+  preview?: boolean;
 }) => {
   return (
     <Stack
@@ -50,6 +51,7 @@ const ActualCanvas = (props: {
           <AstroText
             key={e.id}
             details={e}
+            preview={props.preview}
             selectionCallback={() => props.setSelectedElement(e.id)}
             selected={e.id === props.selectedElement}
             frameChangeCallback={(width, x, y) => {

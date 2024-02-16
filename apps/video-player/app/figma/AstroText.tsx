@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { IAstroCanvasElement } from "./Canvas";
 import { getModules, formats } from "./TextEditorToolBar";
 import dynamic from "next/dynamic";
+import "react-quill/dist/quill.core.css";
 
 const ReactQuill = dynamic(
   () => import("react-quill"),
@@ -29,9 +30,11 @@ const AstroText = (props: {
   details: IAstroCanvasElement;
   valueChangeCallback: (value: string) => void;
   frameChangeCallback: (width: number, x: number, y: number) => void;
+  preview?: boolean;
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => setValue(props.details.value), [props.details.value]);
+  console.log(value);
   return (
     <AstroElementFrame
       width={props.details.width}
@@ -59,16 +62,25 @@ const AstroText = (props: {
         }}
         // ref={setTextAreaRef}
       >
-        <ReactQuill
-          theme="snow"
-          value={value}
-          onChange={(v) => {
-            setValue(v);
-            props.valueChangeCallback(v);
-          }}
-          modules={getModules(props.details.id)}
-          formats={formats}
-        />
+        {props.preview ? (
+          <div
+            className="view ql-editor"
+            dangerouslySetInnerHTML={{ __html: value }}
+          ></div>
+        ) : (
+          <ReactQuill
+            theme="snow"
+            value={value}
+            onChange={(v) => {
+              setValue(v);
+              props.valueChangeCallback(v);
+            }}
+            modules={getModules(
+              props.details.id + props.preview ? "preview" : ""
+            )}
+            formats={formats}
+          />
+        )}
       </Stack>
     </AstroElementFrame>
   );

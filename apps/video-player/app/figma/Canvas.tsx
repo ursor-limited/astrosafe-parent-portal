@@ -197,7 +197,9 @@ const Canvas = (props: {
                     transition: "0.6s",
                   }}
                 >
-                  <TextEditorToolbar id={e.id} />
+                  <TextEditorToolbar
+                    id={e.id + props.noButtons ? "preview" : ""}
+                  />
                 </Stack>
               ))}
           </Stack>
@@ -208,6 +210,7 @@ const Canvas = (props: {
         selectedElement={selectedElement}
         setSelectedElement={setSelectedElement}
         changeCallback={(e) => setElements(e)}
+        preview={props.noButtons}
       />
     </Stack>
   );
