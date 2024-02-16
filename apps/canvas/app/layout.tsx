@@ -42,15 +42,12 @@ export default function RootLayout({
           spacing="10px"
           position="relative"
         >
-          {/* <Header /> */}
-
           <NotificationProvider>
             <Stack width="100%" justifyContent="center" zIndex={999999999}>
               <UrsorNotificationBar />
             </Stack>
             {children}
           </NotificationProvider>
-          {/* <Footer /> */}
         </Stack>
       </body>
     </html>
