@@ -6,9 +6,6 @@ import { IAstroCanvasElement } from "./Canvas";
 export const CANVAS_WIDTH = 1000;
 export const CANVAS_HEIGHT = 600;
 
-const DUMMY_IMAGE_URL =
-  "https://images.aeonmedia.co/images/8eac4719-7f56-4d0a-9a32-aae431c8ca07/built-ecologies-emilio-ambasz-landscape-2-v2.jpg?width=828&quality=75&format=auto";
-
 const ActualCanvas = (props: {
   elements: IAstroCanvasElement[];
   setSelectedElement: (id?: string) => void;
@@ -36,12 +33,18 @@ const ActualCanvas = (props: {
           <AstroImage
             key={e.id}
             details={e}
-            url={DUMMY_IMAGE_URL}
             selectionCallback={() => {
               props.setSelectedElement(e.id);
               //setSelectedTextId(undefined);
             }}
             selected={e.id === props.selectedElement}
+            frameChangeCallback={(width, height, x, y) => {
+              props.changeCallback?.(
+                props.elements.map((el) =>
+                  el.id === e.id ? { ...el, width, height, x, y } : el
+                )
+              );
+            }}
           />
         ) : (
           <AstroText

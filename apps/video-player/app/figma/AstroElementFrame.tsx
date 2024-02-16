@@ -39,6 +39,10 @@ const AstroElementFrame = (props: {
   }, [props.width]);
 
   useEffect(() => {
+    props.height && setHeight(props.height);
+  }, [props.height]);
+
+  useEffect(() => {
     props.x && setX(props.x);
   }, [props.x]);
 
@@ -46,13 +50,13 @@ const AstroElementFrame = (props: {
     props.y && setY(props.y);
   }, [props.y]);
 
-  useEffect(() => {
-    if (props.aspectRatio) {
-      setHeight(DEFAULT_WIDTH / props.aspectRatio);
-    } else {
-      props.height && setHeight(props.height);
-    }
-  }, [props.height, props.aspectRatio]);
+  // useEffect(() => {
+  //   if (props.aspectRatio) {
+  //     setHeight(DEFAULT_WIDTH / props.aspectRatio);
+  //   } else {
+  //     props.height && setHeight(props.height);
+  //   }
+  // }, [props.height, props.aspectRatio]);
 
   const mousePosition = useMousePosition();
 
@@ -231,7 +235,7 @@ const AstroElementFrame = (props: {
                 setScaleDragDistanceXLeft(0);
                 props.changeCallback(
                   width + scaleDragDistanceXLeft * 2,
-                  height,
+                  getHeight(),
                   x,
                   y
                 );
@@ -263,7 +267,7 @@ const AstroElementFrame = (props: {
                 setScaleDragDistanceXRight(0);
                 props.changeCallback(
                   width + scaleDragDistanceXRight * 2,
-                  height,
+                  getHeight(),
                   x,
                   y
                 );
@@ -297,8 +301,8 @@ const AstroElementFrame = (props: {
                 setWidth(getWidth());
                 setScaleDragDistanceBottom(0);
                 props.changeCallback(
-                  width + scaleDragDistanceBottom * 2,
-                  height,
+                  getWidth(),
+                  height + scaleDragDistanceBottom * 2,
                   x,
                   y
                 );
@@ -332,8 +336,8 @@ const AstroElementFrame = (props: {
                 setWidth(getWidth());
                 setScaleDragDistanceTop(0);
                 props.changeCallback(
-                  width + scaleDragDistanceTop * 2,
-                  height,
+                  getWidth(),
+                  height + scaleDragDistanceTop * 2,
                   x,
                   y
                 );

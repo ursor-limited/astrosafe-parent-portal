@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/core";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import AstroImage from "./AstroImage";
+import AstroImage, { getNewImageDetails } from "./AstroImage";
 import AstroText, { getNewTextDetails } from "./AstroText";
 // import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -27,6 +27,9 @@ import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
+
+const DUMMY_IMAGE_URL =
+  "https://c.files.bbci.co.uk/8FEE/production/_127864863_eltonjohn-index-getty.jpg";
 
 export function Droppable(props: { id: string; children: React.ReactNode }) {
   const { isOver, setNodeRef } = useDroppable({
@@ -135,11 +138,11 @@ const Canvas = (props: {
   );
   useEffect(() => elements && props.changeCallback?.(elements), [elements]);
   useEffect(() => {
-    !elements && props.elements && setElements(props.elements);
+    props.noButtons && console.log(!elements, props.elements);
+    props.elements && setElements(props.elements);
   }, [props.elements]);
 
-  console.log("3333", props.elements);
-
+  props.noButtons && console.log("aaaaaa", elements);
   // useEffect(
   //   () =>
   //     selectedElement &&
@@ -170,7 +173,22 @@ const Canvas = (props: {
                 //setSelectedTextId(`text${elements.length}`);
               }}
             />
-            <ElementButton icon={ImageIcon} callback={() => null} />
+            <ElementButton
+              icon={ImageIcon}
+              callback={async () => {
+                elements &&
+                  setElements([
+                    ...elements,
+                    await getNewImageDetails(
+                      DUMMY_IMAGE_URL,
+                      `image${elements.length}`,
+                      CANVAS_WIDTH / 2,
+                      CANVAS_HEIGHT / 2
+                    ),
+                  ]);
+                elements && setSelectedElement(`image${elements.length}`);
+              }}
+            />
           </Stack>
           <Stack position="relative" flex={1}>
             {elements
