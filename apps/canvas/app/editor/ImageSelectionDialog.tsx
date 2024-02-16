@@ -1,9 +1,10 @@
 import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ImageUploader from "./ImageUploader";
 import { useEffect, useState } from "react";
-import { PALETTE } from "ui";
+import { PALETTE, Typography } from "ui";
 import { getImageSize } from "react-image-size";
 
 const IMAGE_HEIGHT = 300;
@@ -30,7 +31,6 @@ const ImageSelectionDialog = (props: {
         (dims) => dims && setAspectRatio(dims.width / dims.height)
       );
   }, [previewImageUrl]);
-  console.log(previewImageUrl, "899898989");
   return (
     <UrsorDialog
       supertitle="Add image"
@@ -48,7 +48,7 @@ const ImageSelectionDialog = (props: {
       }}
       width="90%"
       maxWidth="880px"
-      noCloseButton
+      onCloseCallback={props.closeCallback}
     >
       <ImageUploader
         previewUrlCallback={setPreviewImageUrl}
@@ -74,10 +74,31 @@ const ImageSelectionDialog = (props: {
             backgroundSize: "contain",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[2],
+              },
+            },
           }}
+          justifyContent="center"
+          alignItems="center"
           position="relative"
           onClick={() => dropzoneRef?.click()}
-        />
+          spacing="20px"
+        >
+          {!previewImageUrl ? (
+            <>
+              <Typography
+                variant="h4"
+                color={PALETTE.secondary.grey[2]}
+                sx={{ textAlign: "center" }}
+              >
+                Click, or drop image
+              </Typography>
+              <PlusIcon height="60px" width="60px" />
+            </>
+          ) : null}
+        </Stack>
       </ImageUploader>
     </UrsorDialog>
   );

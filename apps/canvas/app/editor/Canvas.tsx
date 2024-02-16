@@ -1,33 +1,15 @@
 "use client";
 
-import {
-  DndContext,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  closestCenter,
-  DropAnimation,
-  defaultDropAnimationSideEffects,
-  DragOverlay,
-  DragOverEvent,
-  DragStartEvent,
-  DragEndEvent,
-  useDraggable,
-  useDroppable,
-} from "@dnd-kit/core";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import AstroImage, { getNewImageDetails } from "./AstroImage";
-import AstroText, { getNewTextDetails } from "./AstroText";
-// import ReactQuill from "react-quill";
+import { getNewImageDetails } from "./AstroImage";
 import "react-quill/dist/quill.snow.css";
-import dynamic from "next/dynamic";
-import AstroElementFrame from "./AstroElementFrame";
 import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 import ImageSelectionDialog from "./ImageSelectionDialog";
+import { getNewTextDetails } from "./AstroText";
 
 const DUMMY_IMAGE_URL =
   "https://c.files.bbci.co.uk/8FEE/production/_127864863_eltonjohn-index-getty.jpg";
@@ -204,9 +186,7 @@ const Canvas = (props: {
                       transition: "0.6s",
                     }}
                   >
-                    <TextEditorToolbar
-                      id={e.id + props.noButtons ? "preview" : ""}
-                    />
+                    <TextEditorToolbar id={e.id} />
                   </Stack>
                 ))}
             </Stack>
