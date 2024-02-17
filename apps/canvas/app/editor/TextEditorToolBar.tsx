@@ -52,22 +52,24 @@ export const formats = [
 
 const initQuill = async () => {
   const Quill = (await import("react-quill")).Quill;
-  // Add sizes to whitelist and register them
-  const Size = Quill.import("formats/size");
-  Size.whitelist = ["extra-small", "small", "medium", "large", "huge"];
-  Quill.register(Size, true);
+  if (Quill) {
+    // Add sizes to whitelist and register them
+    const Size = Quill.import("formats/size");
+    Size.whitelist = ["extra-small", "small", "medium", "large", "huge"];
+    Quill.register(Size, true);
 
-  // Add fonts to whitelist and register them
-  const Font = Quill.import("formats/font");
-  Font.whitelist = [
-    "arial",
-    "comic-sans",
-    "courier-new",
-    "georgia",
-    "helvetica",
-    "lucida",
-  ];
-  Quill.register(Font, true);
+    // Add fonts to whitelist and register them
+    const Font = Quill.import("formats/font");
+    Font.whitelist = [
+      "arial",
+      "comic-sans",
+      "courier-new",
+      "georgia",
+      "helvetica",
+      "lucida",
+    ];
+    Quill.register(Font, true);
+  }
 };
 
 // Quill Toolbar component
