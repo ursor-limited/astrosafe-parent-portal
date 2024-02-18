@@ -18,8 +18,8 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://www.astrosafe.co"
-      : process.env.VERCEL_ENV === "production"
+      ? "https://dev.astrosafe.co"
+      : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,
 });
