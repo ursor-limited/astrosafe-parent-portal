@@ -1,9 +1,16 @@
+"use client";
+
 import { Stack } from "@mui/system";
-import UrsorPopover from "./UrsorPopover";
 import { useState } from "react";
 import { PALETTE } from "ui";
 import { SecondaryColor } from "ui/palette";
 import { ElementButton } from "../editor/Canvas";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
   "purple",

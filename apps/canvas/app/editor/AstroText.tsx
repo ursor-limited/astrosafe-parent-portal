@@ -53,7 +53,7 @@ const AstroText = (props: {
             fontFamily: "unset",
             borderRadius: "12px",
             height: "unset",
-            border: "none",
+            border: "none !important",
           },
           ".ql-editor": {
             padding: "3px",
