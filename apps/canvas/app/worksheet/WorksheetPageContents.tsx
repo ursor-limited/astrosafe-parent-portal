@@ -7,6 +7,9 @@ import { Question } from "../landing/LandingPageContents";
 import _ from "lodash";
 import Printable from "../components/Printable";
 import { useReactToPrint } from "react-to-print";
+import { Rubik } from "next/font/google";
+
+const rubik = Rubik({ subsets: ["latin"] });
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 3;
@@ -55,6 +58,7 @@ const VerticalMultiplicationQuestion = (props: {
     spacing="4px"
     pb="10px"
     height="160px"
+    sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">
       <Typography variant="h3">{props.multiplier}</Typography>
@@ -130,6 +134,7 @@ export default function WorksheetPageContents(props: {}) {
           py="50px"
           spacing="50px"
           ref={setPrintableRef}
+          className={rubik.className}
         >
           <Typography variant="h2">{title}</Typography>
           <Stack
