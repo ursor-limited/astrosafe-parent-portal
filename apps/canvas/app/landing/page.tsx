@@ -1,10 +1,11 @@
 import React from "react";
-import WorksheetPageContents from "./WorksheetPageContents";
+import AuthWrapper from "../components/AuthWrapper";
+import LandingPageContents from "./LandingPageContents";
 
 async function PediaLandingPage() {
   return (
     // <AuthWrapper>
-    <WorksheetPageContents />
+    <LandingPageContents />
     // </AuthWrapper>
   );
 }

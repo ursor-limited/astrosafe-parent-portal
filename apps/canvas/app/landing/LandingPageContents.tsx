@@ -5,7 +5,7 @@ import { PALETTE, Typography, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useState } from "react";
 
-export type Question = "qa" | "table" | "numberline";
+export type Question = "horizontal" | "vertical";
 
 const TITLE_CHARACTER_LIMIT = 40;
 
