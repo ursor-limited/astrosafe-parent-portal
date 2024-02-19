@@ -1,10 +1,12 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useEffect, useState } from "react";
 import { Question } from "../landing/LandingPageContents";
 import _ from "lodash";
+import Printable from "../components/Printable";
+import { useReactToPrint } from "react-to-print";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 3;
@@ -92,6 +94,22 @@ export default function WorksheetPageContents(props: {}) {
       ),
     [nDigits, nProblems]
   );
+
+  const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
+
+  const openPrintCardGridDialog = useReactToPrint({
+    content: () => printableRef,
+    documentTitle: "ASTRO Numbers",
+    onAfterPrint: () => setPrintDialogOpen(false),
+  });
+
+  const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (printDialogOpen && printableRef) {
+      openPrintCardGridDialog();
+    }
+  }, [printDialogOpen, printableRef]);
+
   return multipliers ? (
     <Stack
       width="100%"
@@ -100,6 +118,7 @@ export default function WorksheetPageContents(props: {}) {
       justifyContent="center"
       overflow="hidden"
     >
+      <UrsorButton onClick={() => setPrintDialogOpen(true)}>Print</UrsorButton>
       <Stack overflow="scroll">
         <Stack minHeight="100px" />
         <Stack
@@ -110,6 +129,7 @@ export default function WorksheetPageContents(props: {}) {
           px="32px"
           py="50px"
           spacing="50px"
+          ref={setPrintableRef}
         >
           <Typography variant="h2">{title}</Typography>
           <Stack
