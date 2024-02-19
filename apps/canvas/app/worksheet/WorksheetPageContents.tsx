@@ -5,7 +5,6 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useEffect, useState } from "react";
 import { Question } from "../landing/LandingPageContents";
 import _ from "lodash";
-import Printable from "../components/Printable";
 import { useReactToPrint } from "react-to-print";
 import { Rubik } from "next/font/google";
 
@@ -23,7 +22,10 @@ const HorizontalMultiplicationQuestion = (props: {
     key={props.multiplier}
     direction="row"
     width={`${230 + 20 * props.nDigits}px`}
+    height="110px"
     justifyContent="space-between"
+    alignItems="flex-end"
+    sx={{ breakInside: "avoid" }}
   >
     <Stack direction="row" spacing="14px">
       <Typography variant="h3">{props.multiplier}</Typography>
@@ -55,9 +57,9 @@ const VerticalMultiplicationQuestion = (props: {
   <Stack
     key={props.multiplier}
     alignItems="flex-end"
+    justifyContent="flex-end"
     spacing="4px"
-    pb="10px"
-    height="160px"
+    height="190px"
     sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">
@@ -85,7 +87,7 @@ export default function WorksheetPageContents(props: {}) {
     setTitle("NUMBERS!");
     setNumber(7);
     setNDigits(2);
-    setNProblems(20);
+    setNProblems(36);
   }, []);
   const [multipliers, setMultipliers] = useState<number[]>();
   useEffect(
@@ -121,6 +123,7 @@ export default function WorksheetPageContents(props: {}) {
       alignItems="center"
       justifyContent="center"
       overflow="hidden"
+      spacing="100px"
     >
       <UrsorButton onClick={() => setPrintDialogOpen(true)}>Print</UrsorButton>
       <Stack overflow="scroll">
@@ -132,7 +135,6 @@ export default function WorksheetPageContents(props: {}) {
           borderRadius="12px"
           px="32px"
           py="50px"
-          spacing="50px"
           ref={setPrintableRef}
           className={rubik.className}
         >
@@ -153,7 +155,7 @@ export default function WorksheetPageContents(props: {}) {
                       : VERTICAL_N_COLUMNS)
                 )
               ).map((col, i) => (
-                <Stack key={i} flex={1} alignItems="center" spacing="40px">
+                <Stack key={i} flex={1} alignItems="center">
                   {col?.map((m) =>
                     questionType === "horizontal" ? (
                       <HorizontalMultiplicationQuestion

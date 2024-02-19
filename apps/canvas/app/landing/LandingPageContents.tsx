@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export type Question = "horizontal" | "vertical";
 
-const TITLE_CHARACTER_LIMIT = 40;
+const TITLE_CHARACTER_LIMIT = 30;
 
 const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
