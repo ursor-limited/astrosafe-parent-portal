@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Question } from "../landing/LandingPageContents";
 import _ from "lodash";
 
+const N_COLUMNS = 2;
+
 export default function WorksheetPageContents(props: {}) {
   const [title, setTitle] = useState<string>("");
   const [number, setNumber] = useState<number>(1);
@@ -29,7 +31,8 @@ export default function WorksheetPageContents(props: {}) {
       ),
     [nDigits, nProblems]
   );
-  return (
+  console.log(multipliers);
+  return multipliers ? (
     <Stack
       width="100%"
       height="100%"
@@ -54,33 +57,47 @@ export default function WorksheetPageContents(props: {}) {
             justifyContent="center"
             alignItems="center"
           >
-            {multipliers?.map((m) => (
-              <Stack key={m} direction="row" spacing="18px">
-                <Stack direction="row" spacing="10px">
-                  <Typography variant="h5">{m}</Typography>
-                  <Stack pb="0px">
-                    <Typography variant="large" sx={{ lineHeight: "123%" }}>
-                      x
-                    </Typography>
-                  </Stack>
-                  <Typography variant="h5" sx={{ fontWeight: 350 }}>
-                    {number}
-                  </Typography>
+            <Stack width="100%" direction="row">
+              {_.chunk(
+                multipliers,
+                Math.ceil(multipliers.length / N_COLUMNS)
+              ).map((col, i) => (
+                <Stack key={i} flex={1} alignItems="center" spacing="40px">
+                  {col?.map((m) => (
+                    <Stack key={m} direction="row" spacing="36px">
+                      <Stack direction="row" spacing="14px">
+                        <Typography variant="h3">{m}</Typography>
+                        <Stack pb="0px">
+                          <Typography
+                            variant="h5"
+                            sx={{ fontWeight: 350, lineHeight: "170%" }}
+                          >
+                            x
+                          </Typography>
+                        </Stack>
+                        <Typography variant="h3" sx={{ fontWeight: 250 }}>
+                          {number}
+                        </Typography>
+                      </Stack>
+                      <Typography variant="h3" sx={{ fontWeight: 200 }}>
+                        =
+                      </Typography>
+                      <Stack
+                        borderBottom="1.5px solid rgba(0,0,0,0.3)"
+                        width="70px"
+                        height="102%"
+                      />
+                    </Stack>
+                  ))}
                 </Stack>
-                <Typography variant="h5" sx={{ fontWeight: 350 }}>
-                  =
-                </Typography>
-                <Stack
-                  borderBottom="1.5px solid rgba(0,0,0,0.3)"
-                  width="70px"
-                  height="105%"
-                />
-              </Stack>
-            ))}
+              ))}
+            </Stack>
           </Stack>
         </Stack>
         <Stack minHeight="100px" />
       </Stack>
     </Stack>
+  ) : (
+    <></>
   );
 }
