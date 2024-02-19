@@ -5,36 +5,80 @@ import { PALETTE, Typography, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useState } from "react";
 
+export type Question = "qa" | "table" | "numberline";
+
 const TITLE_CHARACTER_LIMIT = 40;
 
-const CaptionedInputField = (props: {
-  children: React.ReactNode;
-  value: string;
-  backgroundColor: string;
-  callback: (newValue: string) => void;
-}) => (
+const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
     <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-      {props.children}
+      {props.text}
     </Typography>
-    <UrsorInputField
-      value={props.value}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-        event.target.value.length < TITLE_CHARACTER_LIMIT &&
-        props.callback(event.target.value)
-      }
-      placeholder="Multiplication Sheet"
-      width="100%"
-      leftAlign
-      boldValue
-      backgroundColor={props.backgroundColor}
-    />
+    {props.children}
   </Stack>
 );
 
+const CategorySelectionButton = (props: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      flex={1}
+      height="44px"
+      borderRadius="8px"
+      justifyContent="center"
+      alignItems="center"
+      bgcolor="rgb(255,255,255)"
+      border={`2px solid ${
+        props.selected
+          ? PALETTE.secondary.purple[2]
+          : hovering
+          ? PALETTE.secondary.purple[1]
+          : "transparent"
+      }`}
+      sx={{
+        cursor: "pointer",
+        transition: "0.2s",
+        pointerEvents: props.selected ? "none" : undefined,
+      }}
+      onClick={props.onClick}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+    >
+      <Typography
+        bold
+        variant="small"
+        color={
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : undefined
+        }
+        sx={{
+          transition: "0.2s",
+        }}
+      >
+        {props.children}
+      </Typography>
+    </Stack>
+  );
+};
+
 export default function PediaWorksheetLandingPageContents(props: {}) {
   const [title, setTitle] = useState<string>("");
-  const [timesTablesN, setTimesTablesN] = useState<number>(0);
+  const [multiplier, setMultiplier] = useState<number>(1);
+  const [nDigits, setNDigits] = useState<number>(1);
+  const [nProblems, setNProblems] = useState<number>(1);
+  const [selectedQuestionType, setSelectedQuestionType] =
+    useState<Question>("qa");
   return (
     <AstroLandingPage
       title={["8x8 Tables", "Worksheets for Kids"]}
@@ -44,7 +88,6 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
       <Stack
         borderRadius="20px"
         width="858px"
-        height="353px"
         bgcolor={PALETTE.secondary.grey[1]}
         p="42px"
         direction="row"
@@ -52,26 +95,93 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
         spacing="40px"
       >
         <Stack spacing="16px" flex={1}>
-          <CaptionedInputField
-            value={title}
-            callback={(newValue) => setTitle(newValue)}
-            backgroundColor="rgb(255,255,255)"
-          >
-            Worksheet title
-          </CaptionedInputField>
-          <CaptionedInputField
-            value={timesTablesN.toString()}
-            callback={(newValue) => {
-              const onlyNumbersString = newValue.match(/\d+/)?.[0];
-              const leadingZeroRemovedString = onlyNumbersString?.slice(
-                onlyNumbersString[0] === "0" ? 1 : 0
-              );
-              setTimesTablesN(parseInt(leadingZeroRemovedString ?? "1"));
-            }}
-            backgroundColor="rgb(255,255,255)"
-          >
-            # Times-tables
-          </CaptionedInputField>
+          <Captioned text="Worksheet title">
+            <UrsorInputField
+              value={title}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                event.target.value.length < TITLE_CHARACTER_LIMIT &&
+                setTitle(event.target.value)
+              }
+              placeholder="Multiplication Sheet"
+              width="100%"
+              leftAlign
+              boldValue
+              backgroundColor="rgb(255,255,255)"
+            />
+          </Captioned>
+          <Captioned text="Multiplier">
+            <UrsorInputField
+              value={multiplier.toString()}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                setMultiplier(parseInt(leadingZeroRemovedString ?? "1"));
+              }}
+              placeholder="Multiplier"
+              width="100%"
+              leftAlign
+              boldValue
+              backgroundColor="rgb(255,255,255)"
+            />
+          </Captioned>
+          <Captioned text="Question type">
+            <Stack direction="row" spacing="10px">
+              <CategorySelectionButton
+                selected={selectedQuestionType === "qa"}
+                onClick={() => setSelectedQuestionType("qa")}
+              >
+                Q&A
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={selectedQuestionType === "table"}
+                onClick={() => setSelectedQuestionType("table")}
+              >
+                Table
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={selectedQuestionType === "numberline"}
+                onClick={() => setSelectedQuestionType("numberline")}
+              >
+                Numberline
+              </CategorySelectionButton>
+            </Stack>
+          </Captioned>
+          <Captioned text="Number of digits">
+            <UrsorInputField
+              value={nDigits.toString()}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                setNDigits(parseInt(leadingZeroRemovedString ?? "1"));
+              }}
+              placeholder="Number of digits"
+              width="100%"
+              leftAlign
+              boldValue
+              backgroundColor="rgb(255,255,255)"
+            />
+          </Captioned>
+          <Captioned text="Amount of problems">
+            <UrsorInputField
+              value={nProblems.toString()}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                setNProblems(parseInt(leadingZeroRemovedString ?? "1"));
+              }}
+              placeholder="Number of digits"
+              width="100%"
+              leftAlign
+              boldValue
+              backgroundColor="rgb(255,255,255)"
+            />
+          </Captioned>
         </Stack>
         <Stack width="259px"></Stack>
       </Stack>
