@@ -5,16 +5,19 @@ import { useEffect, useState } from "react";
 import { getNewImageDetails } from "./AstroImage";
 import "react-quill/dist/quill.snow.css";
 import TypographyIcon from "@/images/icons/TypographyIcon.svg";
+import SafeTubePlayIcon from "@/images/play.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 import ImageSelectionDialog from "./ImageSelectionDialog";
 import { getNewTextDetails } from "./AstroText";
 import PaletteButton from "../components/PaletteButton";
+import { getNewVideoPlayerDetails } from "./AstroVideoPlayer";
 
 export const ElementButton = (props: {
   callback: () => void;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  iconColor?: string;
   image?: JSX.Element;
 }) => (
   <Stack
@@ -28,6 +31,11 @@ export const ElementButton = (props: {
       cursor: "pointer",
       "&:hover": { opacity: 0.7 },
       transition: "0.2s",
+      svg: {
+        path: {
+          fill: props.iconColor,
+        },
+      },
     }}
     onClick={props.callback}
   >
@@ -36,7 +44,7 @@ export const ElementButton = (props: {
   </Stack>
 );
 
-export type AstroCanvasElement = "image" | "text";
+export type AstroCanvasElement = "image" | "text" | "player";
 
 export interface IAstroCanvasElement {
   id: string;
@@ -98,6 +106,24 @@ const Canvas = (props: {
     elements && setSelectedElement(`image${elements.length}`);
   };
 
+  const addVideoPlayer = async (url: string) => {
+    elements &&
+      setElements([
+        ...elements,
+        await getNewVideoPlayerDetails(
+          url,
+          `player${elements.length}`,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2
+        ),
+      ]);
+    elements && setSelectedElement(`image${elements.length}`);
+  };
+
+  const [url, setUrl] = useState<string>(
+    "https://www.youtube.com/watch?v=LeW53nKDLw8&t=3188s"
+  );
+
   return (
     <>
       <Stack spacing="12px">
@@ -114,6 +140,11 @@ const Canvas = (props: {
                 callback={async () => {
                   setImageSelectionDialogOpen(true);
                 }}
+              />
+              <ElementButton
+                icon={SafeTubePlayIcon}
+                iconColor="#0D2839"
+                callback={() => addVideoPlayer(url)}
               />
             </Stack>
             <Stack position="relative" flex={1}>
