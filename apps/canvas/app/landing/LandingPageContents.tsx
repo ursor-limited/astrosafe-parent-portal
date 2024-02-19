@@ -78,7 +78,7 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(1);
   const [selectedQuestionType, setSelectedQuestionType] =
-    useState<Question>("qa");
+    useState<Question>("horizontal");
   return (
     <AstroLandingPage
       title={["8x8 Tables", "Worksheets for Kids"]}
@@ -129,22 +129,16 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
           <Captioned text="Question type">
             <Stack direction="row" spacing="10px">
               <CategorySelectionButton
-                selected={selectedQuestionType === "qa"}
-                onClick={() => setSelectedQuestionType("qa")}
+                selected={selectedQuestionType === "horizontal"}
+                onClick={() => setSelectedQuestionType("horizontal")}
               >
                 Q&A
               </CategorySelectionButton>
               <CategorySelectionButton
-                selected={selectedQuestionType === "table"}
-                onClick={() => setSelectedQuestionType("table")}
+                selected={selectedQuestionType === "vertical"}
+                onClick={() => setSelectedQuestionType("vertical")}
               >
                 Table
-              </CategorySelectionButton>
-              <CategorySelectionButton
-                selected={selectedQuestionType === "numberline"}
-                onClick={() => setSelectedQuestionType("numberline")}
-              >
-                Numberline
               </CategorySelectionButton>
             </Stack>
           </Captioned>
