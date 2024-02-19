@@ -47,10 +47,11 @@ export default function WorksheetPageContents(props: {}) {
           maxWidth="90%"
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
-          p="30px"
+          px="32px"
+          py="50px"
           spacing="50px"
         >
-          <Typography variant="h4">{title}</Typography>
+          <Typography variant="h2">{title}</Typography>
           <Stack
             spacing="30px"
             flex={1}
@@ -64,7 +65,12 @@ export default function WorksheetPageContents(props: {}) {
               ).map((col, i) => (
                 <Stack key={i} flex={1} alignItems="center" spacing="40px">
                   {col?.map((m) => (
-                    <Stack key={m} direction="row" spacing="36px">
+                    <Stack
+                      key={m}
+                      direction="row"
+                      width={`${230 + 20 * nDigits}px`}
+                      justifyContent="space-between"
+                    >
                       <Stack direction="row" spacing="14px">
                         <Typography variant="h3">{m}</Typography>
                         <Stack pb="0px">
@@ -79,7 +85,7 @@ export default function WorksheetPageContents(props: {}) {
                           {number}
                         </Typography>
                       </Stack>
-                      <Typography variant="h3" sx={{ fontWeight: 200 }}>
+                      <Typography variant="h3" sx={{ fontWeight: 100 }}>
                         =
                       </Typography>
                       <Stack
