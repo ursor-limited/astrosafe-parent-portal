@@ -56,7 +56,7 @@ const VerticalMultiplicationQuestion = (props: {
     alignItems="flex-end"
     justifyContent="flex-end"
     spacing="4px"
-    height="190px"
+    height="197px"
     sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">
@@ -186,12 +186,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
               Try to solve these questions!
             </Typography>
           </Stack>
-          <Stack
-            spacing="30px"
-            flex={1}
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Stack spacing="30px" justifyContent="center" alignItems="center">
             <Stack width="100%" direction="row">
               {columns.map((col, i) => (
                 <Stack key={i} flex={1} alignItems="center">

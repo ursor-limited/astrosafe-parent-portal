@@ -79,7 +79,7 @@ export default function LandingPageContents() {
   const [title, setTitle] = useState<string>("");
   const [number, setNumber] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
-  const [nProblems, setNProblems] = useState<number>(1);
+  const [nProblems, setNProblems] = useState<number>(10);
   const [selectedQuestionType, setSelectedQuestionType] =
     useState<Question>("horizontal");
 
@@ -98,6 +98,11 @@ export default function LandingPageContents() {
     }
   }, [printDialogOpen, printableRef]);
 
+  useEffect(
+    () => setNProblems(Math.min(Math.pow(10, nDigits), nProblems)),
+    [nProblems, nDigits]
+  );
+
   return (
     <AstroLandingPage
       title={["8x8 Tables", "Worksheets for Kids"]}
@@ -109,10 +114,9 @@ export default function LandingPageContents() {
         bgcolor={PALETTE.secondary.grey[1]}
         p="42px"
         direction="row"
-        justifyContent="space-between"
         spacing="40px"
       >
-        <Stack width="400px" spacing="16px" flex={1}>
+        <Stack width="480px" spacing="16px">
           <Captioned text="Worksheet title">
             <UrsorInputField
               value={title}
@@ -161,7 +165,7 @@ export default function LandingPageContents() {
             </Stack>
           </Captioned>
           <Captioned text="Number of digits">
-            <UrsorInputField
+            {/* <UrsorInputField
               value={nDigits.toString()}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
@@ -179,32 +183,124 @@ export default function LandingPageContents() {
               leftAlign
               boldValue
               backgroundColor="rgb(255,255,255)"
-            />
+            /> */}
+            <Stack direction="row" spacing="10px">
+              <CategorySelectionButton
+                selected={nDigits === 1}
+                onClick={() => setNDigits(1)}
+              >
+                1
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 2}
+                onClick={() => setNDigits(2)}
+              >
+                2
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 3}
+                onClick={() => setNDigits(3)}
+              >
+                3
+              </CategorySelectionButton>
+            </Stack>
           </Captioned>
           <Captioned text="Amount of problems">
-            <UrsorInputField
-              value={nProblems.toString()}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setNProblems(
-                  leadingZeroRemovedString
-                    ? parseInt(leadingZeroRemovedString)
-                    : 0
-                );
-              }}
-              placeholder="Number of digits"
-              width="100%"
-              leftAlign
-              boldValue
-              backgroundColor="rgb(255,255,255)"
-            />
+            {nDigits === 1 ? (
+              <Stack direction="row" spacing="10px">
+                <CategorySelectionButton
+                  selected={nProblems === 1}
+                  onClick={() => setNProblems(1)}
+                >
+                  1
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 2}
+                  onClick={() => setNProblems(2)}
+                >
+                  2
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 3}
+                  onClick={() => setNProblems(3)}
+                >
+                  3
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 4}
+                  onClick={() => setNProblems(4)}
+                >
+                  4
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 5}
+                  onClick={() => setNProblems(5)}
+                >
+                  5
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 6}
+                  onClick={() => setNProblems(6)}
+                >
+                  6
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 7}
+                  onClick={() => setNProblems(7)}
+                >
+                  7
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 7}
+                  onClick={() => setNProblems(7)}
+                >
+                  7
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 8}
+                  onClick={() => setNProblems(8)}
+                >
+                  8
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 9}
+                  onClick={() => setNProblems(9)}
+                >
+                  9
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nProblems === 10}
+                  onClick={() => setNProblems(10)}
+                >
+                  10
+                </CategorySelectionButton>
+              </Stack>
+            ) : (
+              <UrsorInputField
+                value={nProblems.toString()}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const onlyNumbersString =
+                    event.target.value.match(/\d+/)?.[0];
+                  const leadingZeroRemovedString = onlyNumbersString?.slice(
+                    onlyNumbersString[0] === "0" ? 1 : 0
+                  );
+                  setNProblems(
+                    leadingZeroRemovedString
+                      ? parseInt(leadingZeroRemovedString)
+                      : 0
+                  );
+                }}
+                placeholder="Number of digits"
+                width="100%"
+                leftAlign
+                boldValue
+                backgroundColor="rgb(255,255,255)"
+              />
+            )}
           </Captioned>
         </Stack>
         <Stack
-          width="300px"
+          minWidth="300px"
           position="relative"
           flex={1}
           justifyContent="space-between"
@@ -232,7 +328,7 @@ export default function LandingPageContents() {
               bgcolor="rgb(255,255,255)"
               bottom={0}
               left={0}
-              height="50px"
+              height={selectedQuestionType === "horizontal" ? "50px" : "100px"}
               width="100%"
             />
           </Stack>
