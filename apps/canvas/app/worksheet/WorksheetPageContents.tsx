@@ -32,7 +32,7 @@ export default function WorksheetPageContents(props: {}) {
       overflow="hidden"
       spacing="100px"
     >
-      <Stack overflow="scroll">
+      <Stack overflow="scroll" width="100%" alignItems="center">
         <Stack minHeight="100px" />
         <Worksheet
           title={title}
