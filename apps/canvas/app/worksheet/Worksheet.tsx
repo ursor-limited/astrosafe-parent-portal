@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { Question } from "../landing/LandingPageContents";
+import { EquationOrientation } from "../landing/LandingPageContents";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
@@ -83,7 +83,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       number: number;
       nProblems: number;
       nDigits: number;
-      questionType: Question;
+      orientation: EquationOrientation;
       printButton?: boolean;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
@@ -114,13 +114,13 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
             multipliers,
             Math.ceil(
               multipliers.length /
-                (props.questionType === "horizontal"
+                (props.orientation === "horizontal"
                   ? HORIZONTAL_N_COLUMNS
                   : VERTICAL_N_COLUMNS)
             )
           )
         ),
-      [multipliers, props.questionType]
+      [multipliers, props.orientation]
     );
 
     const openPrintCardGridDialog = useReactToPrint({
@@ -191,7 +191,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
               {columns.map((col, i) => (
                 <Stack key={i} flex={1} alignItems="center">
                   {col?.map((m) =>
-                    props.questionType === "horizontal" ? (
+                    props.orientation === "horizontal" ? (
                       <HorizontalMultiplicationQuestion
                         key={m}
                         number={props.number}

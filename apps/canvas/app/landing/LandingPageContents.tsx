@@ -8,7 +8,7 @@ import Worksheet from "../worksheet/Worksheet";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import { useReactToPrint } from "react-to-print";
 
-export type Question = "horizontal" | "vertical";
+export type EquationOrientation = "horizontal" | "vertical";
 
 const TITLE_CHARACTER_LIMIT = 30;
 
@@ -80,8 +80,8 @@ export default function LandingPageContents() {
   const [number, setNumber] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(10);
-  const [selectedQuestionType, setSelectedQuestionType] =
-    useState<Question>("horizontal");
+  const [orientation, setOrientation] =
+    useState<EquationOrientation>("horizontal");
 
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
@@ -148,17 +148,17 @@ export default function LandingPageContents() {
               backgroundColor="rgb(255,255,255)"
             />
           </Captioned>
-          <Captioned text="Question type">
+          <Captioned text="Orientation">
             <Stack direction="row" spacing="10px">
               <CategorySelectionButton
-                selected={selectedQuestionType === "horizontal"}
-                onClick={() => setSelectedQuestionType("horizontal")}
+                selected={orientation === "horizontal"}
+                onClick={() => setOrientation("horizontal")}
               >
                 Horizontal
               </CategorySelectionButton>
               <CategorySelectionButton
-                selected={selectedQuestionType === "vertical"}
-                onClick={() => setSelectedQuestionType("vertical")}
+                selected={orientation === "vertical"}
+                onClick={() => setOrientation("vertical")}
               >
                 Vertical
               </CategorySelectionButton>
@@ -316,7 +316,7 @@ export default function LandingPageContents() {
             <Worksheet
               ref={setPrintableRef}
               title={title}
-              questionType={selectedQuestionType}
+              orientation={orientation}
               nDigits={nDigits}
               number={number}
               nProblems={nProblems}
@@ -328,7 +328,7 @@ export default function LandingPageContents() {
               bgcolor="rgb(255,255,255)"
               bottom={0}
               left={0}
-              height={selectedQuestionType === "horizontal" ? "50px" : "100px"}
+              height={orientation === "horizontal" ? "50px" : "100px"}
               width="100%"
             />
           </Stack>
