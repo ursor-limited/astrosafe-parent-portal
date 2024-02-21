@@ -1,10 +1,12 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Worksheet from "../worksheet/Worksheet";
+import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import { useReactToPrint } from "react-to-print";
 
 export type Question = "horizontal" | "vertical";
 
@@ -73,13 +75,29 @@ const CategorySelectionButton = (props: {
   );
 };
 
-export default function PediaWorksheetLandingPageContents(props: {}) {
+export default function LandingPageContents() {
   const [title, setTitle] = useState<string>("");
   const [number, setNumber] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(1);
   const [selectedQuestionType, setSelectedQuestionType] =
     useState<Question>("horizontal");
+
+  const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
+
+  const openPrintCardGridDialog = useReactToPrint({
+    content: () => printableRef,
+    documentTitle: "ASTRO Numbers",
+    onAfterPrint: () => setPrintDialogOpen(false),
+  });
+
+  const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (printDialogOpen && printableRef) {
+      openPrintCardGridDialog();
+    }
+  }, [printDialogOpen, printableRef]);
+
   return (
     <AstroLandingPage
       title={["8x8 Tables", "Worksheets for Kids"]}
@@ -88,14 +106,13 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
     >
       <Stack
         borderRadius="20px"
-        width="858px"
         bgcolor={PALETTE.secondary.grey[1]}
         p="42px"
         direction="row"
         justifyContent="space-between"
         spacing="40px"
       >
-        <Stack spacing="16px" flex={1}>
+        <Stack width="400px" spacing="16px" flex={1}>
           <Captioned text="Worksheet title">
             <UrsorInputField
               value={title}
@@ -118,7 +135,7 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
                 const leadingZeroRemovedString = onlyNumbersString?.slice(
                   onlyNumbersString[0] === "0" ? 1 : 0
                 );
-                setNumber(parseInt(leadingZeroRemovedString ?? "1"));
+                setNumber(parseInt(leadingZeroRemovedString ?? "0"));
               }}
               placeholder="Multiplier"
               width="100%"
@@ -151,7 +168,11 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
                 const leadingZeroRemovedString = onlyNumbersString?.slice(
                   onlyNumbersString[0] === "0" ? 1 : 0
                 );
-                setNDigits(parseInt(leadingZeroRemovedString ?? "1"));
+                setNDigits(
+                  leadingZeroRemovedString
+                    ? parseInt(leadingZeroRemovedString)
+                    : 0
+                );
               }}
               placeholder="Number of digits"
               width="100%"
@@ -168,7 +189,11 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
                 const leadingZeroRemovedString = onlyNumbersString?.slice(
                   onlyNumbersString[0] === "0" ? 1 : 0
                 );
-                setNProblems(parseInt(leadingZeroRemovedString ?? "1"));
+                setNProblems(
+                  leadingZeroRemovedString
+                    ? parseInt(leadingZeroRemovedString)
+                    : 0
+                );
               }}
               placeholder="Number of digits"
               width="100%"
@@ -178,22 +203,40 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
             />
           </Captioned>
         </Stack>
-        <Stack width="259px" position="relative">
+        <Stack
+          width="300px"
+          position="relative"
+          flex={1}
+          justifyContent="space-between"
+        >
           <Stack
-            sx={{ transform: "scale(0.3)", transformOrigin: "top left" }}
+            sx={{ transform: "scale(0.28)", transformOrigin: "top left" }}
             position="absolute"
             top={0}
             left={0}
+            //height="297mm"
+            //overflow="hidden"
           >
             <Worksheet
+              ref={setPrintableRef}
               title={title}
               questionType={selectedQuestionType}
               nDigits={nDigits}
               number={number}
-              nProblems={10}
-              onlyFirstPage
+              nProblems={nProblems}
+              printDialogOpen={printDialogOpen}
+              printDialogCloseCallback={() => setPrintDialogOpen(false)}
             />
           </Stack>
+          <Stack />
+          <UrsorButton
+            onClick={() => setPrintDialogOpen(true)}
+            dark
+            variant="tertiary"
+            endIcon={DownloadIcon}
+          >
+            Download
+          </UrsorButton>
         </Stack>
       </Stack>
     </AstroLandingPage>

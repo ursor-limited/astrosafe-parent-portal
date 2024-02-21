@@ -39,6 +39,7 @@ export default function WorksheetPageContents(props: {}) {
           nDigits={nDigits}
           number={number}
           nProblems={nProblems}
+          printButton
         />
         <Stack minHeight="100px" />
       </Stack>
