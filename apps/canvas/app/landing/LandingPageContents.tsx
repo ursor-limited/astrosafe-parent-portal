@@ -132,13 +132,13 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
                 selected={selectedQuestionType === "horizontal"}
                 onClick={() => setSelectedQuestionType("horizontal")}
               >
-                Q&A
+                Horizontal
               </CategorySelectionButton>
               <CategorySelectionButton
                 selected={selectedQuestionType === "vertical"}
                 onClick={() => setSelectedQuestionType("vertical")}
               >
-                Table
+                Vertical
               </CategorySelectionButton>
             </Stack>
           </Captioned>
