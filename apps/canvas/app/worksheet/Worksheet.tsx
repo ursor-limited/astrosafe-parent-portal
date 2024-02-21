@@ -93,8 +93,6 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
   ) => {
     const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
-    console.log(props.nProblems, "0-0-0-0-0-");
-
     const [multipliers, setMultipliers] = useState<number[]>();
     useEffect(
       () =>

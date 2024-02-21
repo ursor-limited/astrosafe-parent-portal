@@ -214,8 +214,8 @@ export default function LandingPageContents() {
             position="absolute"
             top={0}
             left={0}
-            //height="297mm"
-            //overflow="hidden"
+            height="297mm"
+            overflow="hidden"
           >
             <Worksheet
               ref={setPrintableRef}
@@ -226,6 +226,14 @@ export default function LandingPageContents() {
               nProblems={nProblems}
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}
+            />
+            <Stack
+              position="absolute"
+              bgcolor="rgb(255,255,255)"
+              bottom={0}
+              left={0}
+              height="50px"
+              width="100%"
             />
           </Stack>
           <Stack />
