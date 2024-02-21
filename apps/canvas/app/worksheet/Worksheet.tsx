@@ -5,6 +5,10 @@ import { Question } from "../landing/LandingPageContents";
 import { useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
+import _ from "lodash";
+
+const HORIZONTAL_N_COLUMNS = 2;
+const VERTICAL_N_COLUMNS = 3;
 
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
@@ -75,11 +79,43 @@ const rubik = Rubik({ subsets: ["latin"] });
 const Worksheet = (props: {
   title: string;
   number: number;
-  columns: number[][];
+  nProblems: number;
   nDigits: number;
   questionType: Question;
+  printButton?: boolean;
+  onlyFirstPage?: boolean;
 }) => {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
+
+  const [multipliers, setMultipliers] = useState<number[]>();
+  useEffect(
+    () =>
+      setMultipliers(
+        _.sampleSize(
+          [...Array(parseInt("1".padEnd(props.nDigits + 1, "0"))).keys()],
+          props.nProblems
+        )
+      ),
+    [props.nDigits, props.nProblems]
+  );
+
+  const [columns, setColumns] = useState<number[][]>([]);
+  useEffect(
+    () =>
+      multipliers &&
+      setColumns(
+        _.chunk(
+          multipliers,
+          Math.ceil(
+            multipliers.length /
+              (props.questionType === "horizontal"
+                ? HORIZONTAL_N_COLUMNS
+                : VERTICAL_N_COLUMNS)
+          )
+        )
+      ),
+    [multipliers, props.questionType]
+  );
 
   const openPrintCardGridDialog = useReactToPrint({
     content: () => printableRef,
@@ -93,30 +129,37 @@ const Worksheet = (props: {
       openPrintCardGridDialog();
     }
   }, [printDialogOpen, printableRef]);
+
   return (
     <Stack position="relative">
-      <Stack
-        position="absolute"
-        right="55px"
-        top="45px"
-        height="50px"
-        width="50px"
-        bgcolor={PALETTE.secondary.purple[2]}
-        justifyContent="center"
-        alignItems="center"
-        borderRadius="100%"
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
-        }}
-        onClick={() => setPrintDialogOpen(true)}
-      >
-        <PrinterIcon height="25px" width="25px" />
-      </Stack>
+      {props.printButton ? (
+        <Stack
+          position="absolute"
+          right="55px"
+          top="45px"
+          height="50px"
+          width="50px"
+          bgcolor={PALETTE.secondary.purple[2]}
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="100%"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
+          onClick={() => setPrintDialogOpen(true)}
+        >
+          <PrinterIcon height="25px" width="25px" />
+        </Stack>
+      ) : null}
       <Stack
         ref={setPrintableRef}
         width="210mm"
+        minWidth="210mm"
+        height={props.onlyFirstPage ? "297mm" : undefined}
+        minHeight={props.onlyFirstPage ? "297mm" : undefined}
+        overflow={props.onlyFirstPage ? "hidden" : undefined}
         maxWidth="90%"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
@@ -124,8 +167,23 @@ const Worksheet = (props: {
         py="50px"
         className={rubik.className}
       >
-        <Stack direction="row" width="100%" justifyContent="space-between">
-          <Typography variant="h2">{props.title}</Typography>
+        <Stack
+          spacing="4px"
+          width="100%"
+          height="24mm"
+          borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+        >
+          <Typography
+            variant="h2"
+            color={
+              props.title ? PALETTE.primary.navy : PALETTE.secondary.grey[2]
+            }
+          >
+            {props.title || "Worksheet title"}
+          </Typography>
+          <Typography bold color={PALETTE.secondary.purple[2]}>
+            Try to solve these questions!
+          </Typography>
         </Stack>
         <Stack
           spacing="30px"
@@ -134,7 +192,7 @@ const Worksheet = (props: {
           alignItems="center"
         >
           <Stack width="100%" direction="row">
-            {props.columns.map((col, i) => (
+            {columns.map((col, i) => (
               <Stack key={i} flex={1} alignItems="center">
                 {col?.map((m) =>
                   props.questionType === "horizontal" ? (

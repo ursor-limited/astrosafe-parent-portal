@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useState } from "react";
+import Worksheet from "../worksheet/Worksheet";
 
 export type Question = "horizontal" | "vertical";
 
@@ -74,7 +75,7 @@ const CategorySelectionButton = (props: {
 
 export default function PediaWorksheetLandingPageContents(props: {}) {
   const [title, setTitle] = useState<string>("");
-  const [multiplier, setMultiplier] = useState<number>(1);
+  const [number, setNumber] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(1);
   const [selectedQuestionType, setSelectedQuestionType] =
@@ -111,13 +112,13 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
           </Captioned>
           <Captioned text="Multiplier">
             <UrsorInputField
-              value={multiplier.toString()}
+              value={number.toString()}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
                 const leadingZeroRemovedString = onlyNumbersString?.slice(
                   onlyNumbersString[0] === "0" ? 1 : 0
                 );
-                setMultiplier(parseInt(leadingZeroRemovedString ?? "1"));
+                setNumber(parseInt(leadingZeroRemovedString ?? "1"));
               }}
               placeholder="Multiplier"
               width="100%"
@@ -177,7 +178,23 @@ export default function PediaWorksheetLandingPageContents(props: {}) {
             />
           </Captioned>
         </Stack>
-        <Stack width="259px"></Stack>
+        <Stack width="259px" position="relative">
+          <Stack
+            sx={{ transform: "scale(0.3)", transformOrigin: "top left" }}
+            position="absolute"
+            top={0}
+            left={0}
+          >
+            <Worksheet
+              title={title}
+              questionType={selectedQuestionType}
+              nDigits={nDigits}
+              number={number}
+              nProblems={10}
+              onlyFirstPage
+            />
+          </Stack>
+        </Stack>
       </Stack>
     </AstroLandingPage>
   );

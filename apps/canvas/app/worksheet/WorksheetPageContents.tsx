@@ -9,9 +9,6 @@ import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
 import Worksheet from "./Worksheet";
 
-const HORIZONTAL_N_COLUMNS = 2;
-const VERTICAL_N_COLUMNS = 3;
-
 export default function WorksheetPageContents(props: {}) {
   const [title, setTitle] = useState<string>("");
   const [number, setNumber] = useState<number>(1);
@@ -24,19 +21,8 @@ export default function WorksheetPageContents(props: {}) {
     setNDigits(2);
     setNProblems(36);
   }, []);
-  const [multipliers, setMultipliers] = useState<number[]>();
-  useEffect(
-    () =>
-      setMultipliers(
-        _.sampleSize(
-          [...Array(parseInt("1".padEnd(nDigits + 1, "0"))).keys()],
-          nProblems
-        )
-      ),
-    [nDigits, nProblems]
-  );
 
-  return multipliers ? (
+  return (
     <Stack
       width="100%"
       height="100%"
@@ -52,20 +38,10 @@ export default function WorksheetPageContents(props: {}) {
           questionType={questionType}
           nDigits={nDigits}
           number={number}
-          columns={_.chunk(
-            multipliers,
-            Math.ceil(
-              multipliers.length /
-                (questionType === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS)
-            )
-          )}
+          nProblems={nProblems}
         />
         <Stack minHeight="100px" />
       </Stack>
     </Stack>
-  ) : (
-    <></>
   );
 }
