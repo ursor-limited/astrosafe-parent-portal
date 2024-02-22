@@ -6,6 +6,8 @@ import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
 import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
 import _ from "lodash";
@@ -251,7 +253,7 @@ export default function LandingPageContents() {
           </Captioned>
         </Stack>
         <Stack
-          minWidth="300px"
+          minWidth="242px"
           position="relative"
           flex={1}
           justifyContent="space-between"
@@ -287,25 +289,43 @@ export default function LandingPageContents() {
           <Stack spacing="27px">
             {(orientation === "horizontal" && nProblems > 16) ||
             (orientation === "vertical" && nProblems > 15) ? (
-              <Typography
-                variant="small"
-                color={PALETTE.secondary.grey[3]}
-              >{`Page 1 of ${
-                1 +
-                Math.ceil(
-                  (nProblems - (orientation === "horizontal" ? 16 : 15)) /
-                    (orientation === "horizontal" ? 20 : 18)
-                )
-              }`}</Typography>
+              <Stack
+                direction="row"
+                spacing="7px"
+                sx={{
+                  svg: {
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <ChevronLeft height="16px" width="16px" />
+                <Typography
+                  variant="small"
+                  color={PALETTE.secondary.grey[3]}
+                >{`Page 1 of ${
+                  1 +
+                  Math.ceil(
+                    (nProblems - (orientation === "horizontal" ? 16 : 15)) /
+                      (orientation === "horizontal" ? 20 : 18)
+                  )
+                }`}</Typography>
+                <ChevronRight height="16px" width="16px" />
+              </Stack>
             ) : null}
-
             <UrsorButton
-              // onClick={() => setPrintDialogOpen(true)}
               onClick={submitCreation}
               dark
               variant="tertiary"
               endIcon={PencilIcon}
               size="large"
+              width="100%"
             >
               Create
             </UrsorButton>

@@ -207,7 +207,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
               {props.title || "Multiplication sheet"}
             </Typography>
             <Typography bold color={PALETTE.secondary.purple[2]}>
-              Try to solve these questions!
+              {props.answers ? "Answers" : "Try to solve these questions!"}
             </Typography>
           </Stack>
           <Stack spacing="30px" justifyContent="center" alignItems="center">
