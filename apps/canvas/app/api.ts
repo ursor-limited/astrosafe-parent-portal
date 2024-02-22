@@ -1,3 +1,8 @@
+import {
+  EquationOrientation,
+  IWorksheetQuestion,
+} from "./worksheet/[id]/Worksheet";
+
 export interface IVideo {
   id: string;
   creatorId: string;
@@ -138,6 +143,24 @@ class ApiController {
       headers: { "Content-Type": uploadFile.type },
       body: uploadFile,
     }).then((response: any) => response.json());
+  }
+  static async createWorksheet(
+    title: string,
+    orientation: EquationOrientation,
+    number: number,
+    multipliers: number[]
+  ) {
+    return post("canvas/worksheet", {
+      title,
+      orientation,
+      number,
+      multipliers,
+    }).then((response: any) => response.json());
+  }
+  static async getWorksheet(id: string) {
+    return get(`canvas/worksheet/${id}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 

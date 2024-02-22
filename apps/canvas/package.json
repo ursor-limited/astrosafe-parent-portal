@@ -31,6 +31,7 @@
     "react-image-size": "^2.3.2",
     "react-popper": "^2.3.0",
     "react-quill": "^2.0.0",
+    "react-to-print": "^2.15.1",
     "sharp": "^0.32.6",
     "ui": "workspace:*",
     "usehooks-ts": "^2.9.1",

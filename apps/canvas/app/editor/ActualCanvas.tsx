@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import AstroText from "./AstroText";
 import AstroImage from "./AstroImage";
 import { IAstroCanvasElement } from "./Canvas";
+import AstroVideoPlayer from "./AstroVideoPlayer";
 
 export const CANVAS_WIDTH = 1000;
 export const CANVAS_HEIGHT = 600;
@@ -33,6 +34,23 @@ const ActualCanvas = (props: {
       {props.elements.map((e) =>
         e.type === "image" ? (
           <AstroImage
+            key={e.id}
+            details={e}
+            selectionCallback={() => {
+              props.setSelectedElement(e.id);
+              //setSelectedTextId(undefined);
+            }}
+            selected={e.id === props.selectedElement}
+            frameChangeCallback={(width, height, x, y) => {
+              props.changeCallback?.(
+                props.elements.map((el) =>
+                  el.id === e.id ? { ...el, width, height, x, y } : el
+                )
+              );
+            }}
+          />
+        ) : e.type === "player" ? (
+          <AstroVideoPlayer
             key={e.id}
             details={e}
             selectionCallback={() => {
