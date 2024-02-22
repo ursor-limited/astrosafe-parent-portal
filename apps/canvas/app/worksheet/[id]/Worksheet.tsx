@@ -26,6 +26,7 @@ export interface IWorksheet {
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
+  answer: boolean;
 }) => (
   <Stack
     key={props.multiplier}
@@ -51,17 +52,28 @@ const HorizontalMultiplicationQuestion = (props: {
     <Typography variant="h3" sx={{ fontWeight: 100 }}>
       =
     </Typography>
-    <Stack
-      borderBottom="1.5px solid rgba(0,0,0,0.3)"
-      width="70px"
-      height="102%"
-    />
+    {props.answer ? (
+      <Typography
+        variant="h3"
+        color={PALETTE.secondary.grey[4]}
+        sx={{ fontWeight: 350 }}
+      >
+        {props.number}
+      </Typography>
+    ) : (
+      <Stack
+        borderBottom="1.5px solid rgba(0,0,0,0.3)"
+        width="70px"
+        height="102%"
+      />
+    )}
   </Stack>
 );
 
 const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
+  answer: boolean;
 }) => (
   <Stack
     key={props.multiplier}
@@ -83,6 +95,17 @@ const VerticalMultiplicationQuestion = (props: {
       </Stack>
     </Stack>
     <Stack borderBottom="1.5px solid rgba(0,0,0,0.3)" width="100%" />
+    {props.answer ? (
+      <Stack width="100%" alignItems="flex-end">
+        <Typography
+          variant="h3"
+          color={PALETTE.secondary.grey[4]}
+          sx={{ fontWeight: 350 }}
+        >
+          {props.number}
+        </Typography>
+      </Stack>
+    ) : null}
   </Stack>
 );
 
@@ -99,6 +122,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       printButton?: boolean;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
+      answers?: boolean;
       printDialogCloseCallback?: () => void;
     },
     ref
@@ -196,12 +220,14 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                         key={x}
                         number={props.number}
                         multiplier={x}
+                        answer={!!props.answers}
                       />
                     ) : (
                       <VerticalMultiplicationQuestion
                         key={x}
                         number={props.number}
                         multiplier={x}
+                        answer={!!props.answers}
                       />
                     )
                   )}
