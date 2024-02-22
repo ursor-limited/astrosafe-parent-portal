@@ -9,10 +9,10 @@ import _ from "lodash";
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
 
-const HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN = 8;
-const HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN = 10;
-const VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN = 5;
-const VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN = 6;
+const HORIZONTAL_FIRST_PAGE_ROWS = 8;
+const HORIZONTAL_OTHER_PAGES_ROWS = 10;
+const VERTICAL_FIRST_PAGE_ROWS = 5;
+const VERTICAL_OTHER_PAGES_ROWS = 6;
 
 export interface IWorksheetQuestion {
   number: number;
@@ -60,7 +60,7 @@ const HorizontalMultiplicationQuestion = (props: {
     {props.answer ? (
       <Typography
         variant="h3"
-        color={PALETTE.secondary.grey[4]}
+        color={PALETTE.secondary.purple[2]}
         sx={{ fontWeight: 350 }}
       >
         {props.multiplier * props.number}
@@ -103,7 +103,7 @@ const VerticalMultiplicationQuestion = (props: {
       <Stack width="100%" alignItems="flex-end">
         <Typography
           variant="h3"
-          color={PALETTE.secondary.grey[4]}
+          color={PALETTE.secondary.purple[2]}
           sx={{ fontWeight: 350 }}
         >
           {props.multiplier * props.number}
@@ -147,53 +147,40 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
-    const [columns, setColumns] = useState<number[][]>([]);
+    const [rows, setRows] = useState<number[][]>([]);
     useEffect(() => {
       if (props.multipliers) {
-        const cols = _.chunk(
+        const rowz = _.chunk(
           props.multipliers,
           Math.ceil(
-            props.multipliers.length /
-              (props.orientation === "horizontal"
-                ? HORIZONTAL_N_COLUMNS
-                : VERTICAL_N_COLUMNS)
+            props.orientation === "horizontal"
+              ? HORIZONTAL_N_COLUMNS
+              : VERTICAL_N_COLUMNS
           )
         );
-        setColumns(
+        setRows(
           _.isNumber(props.pageIndex)
-            ? cols.map((c) =>
-                props.orientation === "horizontal"
-                  ? props.pageIndex === 0
-                    ? c.slice(0, HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN)
-                    : c.slice(
-                        HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
-                          (props.pageIndex! - 1) *
-                            HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
-                        Math.min(
-                          HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
-                            props.pageIndex! *
-                              HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
-                          c.length
-                        )
-                      )
-                  : props.pageIndex === 0
-                  ? c.slice(0, VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN)
-                  : c.slice(
-                      VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
-                        (props.pageIndex! - 1) *
-                          VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
-                      Math.min(
-                        VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
-                          props.pageIndex! *
-                            VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
-                        c.length
-                      )
-                    )
-              )
-            : cols
+            ? props.orientation === "horizontal"
+              ? props.pageIndex === 0
+                ? rowz.slice(0, HORIZONTAL_FIRST_PAGE_ROWS)
+                : rowz.slice(
+                    HORIZONTAL_FIRST_PAGE_ROWS +
+                      (props.pageIndex! - 1) * HORIZONTAL_OTHER_PAGES_ROWS,
+                    HORIZONTAL_FIRST_PAGE_ROWS +
+                      props.pageIndex! * HORIZONTAL_OTHER_PAGES_ROWS
+                  )
+              : props.pageIndex === 0
+              ? rowz.slice(0, VERTICAL_FIRST_PAGE_ROWS)
+              : rowz.slice(
+                  VERTICAL_FIRST_PAGE_ROWS +
+                    (props.pageIndex! - 1) * VERTICAL_OTHER_PAGES_ROWS,
+                  VERTICAL_FIRST_PAGE_ROWS +
+                    props.pageIndex! * VERTICAL_OTHER_PAGES_ROWS
+                )
+            : rowz
         );
       }
-    }, [props.multipliers, props.orientation, props.pageIndex]);
+    }, [props.multipliers, props.orientation, props.pageIndex, rows.length]);
 
     return (
       <Stack position="relative">
@@ -248,30 +235,47 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
               </Typography>
             </Stack>
           ) : null}
-          <Stack spacing="30px" justifyContent="center" alignItems="center">
-            <Stack width="100%" direction="row">
-              {columns.map((col, i) => (
-                <Stack key={i} flex={1} alignItems="center">
-                  {col?.map((x) =>
-                    props.orientation === "horizontal" ? (
-                      <HorizontalMultiplicationQuestion
-                        key={x}
-                        number={props.number}
-                        multiplier={x}
-                        answer={!!props.answers}
-                      />
-                    ) : (
-                      <VerticalMultiplicationQuestion
-                        key={x}
-                        number={props.number}
-                        multiplier={x}
-                        answer={!!props.answers}
-                      />
-                    )
-                  )}
-                </Stack>
-              ))}
-            </Stack>
+          <Stack width="100%">
+            {rows.map((row, i) => (
+              <Stack
+                key={i}
+                flex={1}
+                direction="row"
+                justifyContent={"space-evenly"}
+              >
+                {[
+                  ...row?.map((x, k) => (
+                    <Stack key={k} flex={1} alignItems="center">
+                      {props.orientation === "horizontal" ? (
+                        <HorizontalMultiplicationQuestion
+                          key={x}
+                          number={props.number}
+                          multiplier={x}
+                          answer={!!props.answers}
+                        />
+                      ) : (
+                        <VerticalMultiplicationQuestion
+                          key={x}
+                          number={props.number}
+                          multiplier={x}
+                          answer={!!props.answers}
+                        />
+                      )}
+                    </Stack>
+                  )),
+                  ...[
+                    ...Array(
+                      Math.max(
+                        0,
+                        (props.orientation === "horizontal"
+                          ? HORIZONTAL_N_COLUMNS
+                          : VERTICAL_N_COLUMNS) - row.length
+                      )
+                    ).keys(),
+                  ].map((j) => <Stack flex={1} key={j} />),
+                ]}
+              </Stack>
+            ))}
           </Stack>
         </Stack>
       </Stack>
