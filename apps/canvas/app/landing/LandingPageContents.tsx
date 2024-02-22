@@ -279,7 +279,6 @@ export default function LandingPageContents() {
             position="absolute"
             top={0}
             left={0}
-            height="297mm"
             overflow="hidden"
           >
             <Worksheet
@@ -292,14 +291,6 @@ export default function LandingPageContents() {
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}
               pageIndex={selectedPageIndex}
-            />
-            <Stack
-              position="absolute"
-              bgcolor="rgb(255,255,255)"
-              bottom={0}
-              left={0}
-              height={orientation === "horizontal" ? "50px" : "100px"}
-              width="100%"
             />
           </Stack>
           <Stack />
@@ -337,8 +328,9 @@ export default function LandingPageContents() {
                 >{`Page ${selectedPageIndex + 1} of ${nPages}`}</Typography>
                 <Stack
                   sx={{
-                    opacity: selectedPageIndex === 0 ? 0 : 1,
-                    pointerEvents: selectedPageIndex === 0 ? "none" : undefined,
+                    opacity: selectedPageIndex === nPages - 1 ? 0 : 1,
+                    pointerEvents:
+                      selectedPageIndex === nPages - 1 ? "none" : undefined,
                   }}
                   onClick={() => setSelectedPageIndex(selectedPageIndex + 1)}
                 >
