@@ -20,7 +20,7 @@ const BACKEND_URLS = {
   preview:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
   production:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
