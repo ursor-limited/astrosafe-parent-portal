@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
 import Worksheet, { IWorksheet } from "./Worksheet";
-import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import { UrsorButton } from "ui";
 
 export default function WorksheetPageContents(props: { details: IWorksheet }) {

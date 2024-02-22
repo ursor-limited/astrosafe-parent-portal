@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
 const MAX_N_PROBLEMS = 100;
+const A4_HEIGHT = 297;
 
 const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
@@ -124,6 +125,21 @@ export default function LandingPageContents() {
       number,
       multipliers
     ).then((ws) => router.push(`/worksheet/${ws.id}`));
+
+  const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
+
+  const [nPages, setNPages] = useState<number>(0);
+  useEffect(
+    () =>
+      setNPages(
+        1 +
+          Math.ceil(
+            (nProblems - (orientation === "horizontal" ? 16 : 15)) /
+              (orientation === "horizontal" ? 20 : 18)
+          )
+      ),
+    [nProblems, orientation]
+  );
 
   return (
     <AstroLandingPage
@@ -275,6 +291,7 @@ export default function LandingPageContents() {
               multipliers={multipliers}
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}
+              pageIndex={selectedPageIndex}
             />
             <Stack
               position="absolute"
@@ -305,18 +322,28 @@ export default function LandingPageContents() {
                 justifyContent="center"
                 alignItems="center"
               >
-                <ChevronLeft height="16px" width="16px" />
+                <Stack
+                  sx={{
+                    opacity: selectedPageIndex === 0 ? 0 : 1,
+                    pointerEvents: selectedPageIndex === 0 ? "none" : undefined,
+                  }}
+                  onClick={() => setSelectedPageIndex(selectedPageIndex - 1)}
+                >
+                  <ChevronLeft height="16px" width="16px" />
+                </Stack>
                 <Typography
                   variant="small"
                   color={PALETTE.secondary.grey[3]}
-                >{`Page 1 of ${
-                  1 +
-                  Math.ceil(
-                    (nProblems - (orientation === "horizontal" ? 16 : 15)) /
-                      (orientation === "horizontal" ? 20 : 18)
-                  )
-                }`}</Typography>
-                <ChevronRight height="16px" width="16px" />
+                >{`Page ${selectedPageIndex + 1} of ${nPages}`}</Typography>
+                <Stack
+                  sx={{
+                    opacity: selectedPageIndex === 0 ? 0 : 1,
+                    pointerEvents: selectedPageIndex === 0 ? "none" : undefined,
+                  }}
+                  onClick={() => setSelectedPageIndex(selectedPageIndex + 1)}
+                >
+                  <ChevronRight height="16px" width="16px" />
+                </Stack>
               </Stack>
             ) : null}
             <UrsorButton

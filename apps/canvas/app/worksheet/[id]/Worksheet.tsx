@@ -123,6 +123,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
       answers?: boolean;
+      pageIndex?: number;
       printDialogCloseCallback?: () => void;
     },
     ref
@@ -194,10 +195,11 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
           px="32px"
-          py="50px"
+          //py="50px"
           className={rubik.className}
         >
           <Stack
+            mt="50px"
             spacing="4px"
             width="100%"
             height="24mm"
