@@ -134,8 +134,8 @@ export default function LandingPageContents() {
       setNPages(
         1 +
           Math.ceil(
-            (nProblems - (orientation === "horizontal" ? 16 : 15)) /
-              (orientation === "horizontal" ? 20 : 18)
+            (nProblems - (orientation === "horizontal" ? 16 : 20)) /
+              (orientation === "horizontal" ? 20 : 24)
           )
       ),
     [nProblems, orientation]
@@ -296,7 +296,7 @@ export default function LandingPageContents() {
           <Stack />
           <Stack spacing="27px">
             {(orientation === "horizontal" && nProblems > 16) ||
-            (orientation === "vertical" && nProblems > 15) ? (
+            (orientation === "vertical" && nProblems > 20) ? (
               <Stack
                 direction="row"
                 spacing="7px"

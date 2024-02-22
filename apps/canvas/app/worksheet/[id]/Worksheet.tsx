@@ -7,7 +7,7 @@ import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 
 const HORIZONTAL_N_COLUMNS = 2;
-const VERTICAL_N_COLUMNS = 3;
+const VERTICAL_N_COLUMNS = 4;
 
 const HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN = 8;
 const HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN = 10;
@@ -83,9 +83,8 @@ const VerticalMultiplicationQuestion = (props: {
   <Stack
     key={props.multiplier}
     justifyContent="center"
-    //justifyContent="flex-end"
     spacing="4px"
-    height="177px"
+    height="172px"
     sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">
