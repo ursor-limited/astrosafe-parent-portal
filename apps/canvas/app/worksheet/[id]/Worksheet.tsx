@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { EquationOrientation } from "../landing/LandingPageContents";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
@@ -10,15 +9,29 @@ import _ from "lodash";
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 3;
 
+export interface IWorksheetQuestion {
+  number: number;
+  multiplier: number;
+}
+
+export type EquationOrientation = "horizontal" | "vertical";
+
+export interface IWorksheet {
+  title: string;
+  orientation: EquationOrientation;
+  number: number;
+  multipliers: number[];
+}
+
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
-  nDigits: number;
 }) => (
   <Stack
     key={props.multiplier}
     direction="row"
-    width={`${230 + 20 * props.nDigits}px`}
+    // width={`${230 + 20 * props.nDigits}px`}
+    width="270px"
     height="110px"
     justifyContent="space-between"
     alignItems="flex-end"
@@ -49,7 +62,6 @@ const HorizontalMultiplicationQuestion = (props: {
 const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
-  nDigits: number;
 }) => (
   <Stack
     key={props.multiplier}
@@ -81,8 +93,8 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
     props: {
       title: string;
       number: number;
-      nProblems: number;
-      nDigits: number;
+      multipliers: number[];
+      //nDigits: number;
       orientation: EquationOrientation;
       printButton?: boolean;
       onlyFirstPage?: boolean;
@@ -92,36 +104,6 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
     ref
   ) => {
     const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
-
-    const [multipliers, setMultipliers] = useState<number[]>();
-    useEffect(
-      () =>
-        setMultipliers(
-          _.sampleSize(
-            [...Array(parseInt("1".padEnd(props.nDigits + 1, "0"))).keys()],
-            props.nProblems
-          )
-        ),
-      [props.nDigits, props.nProblems]
-    );
-
-    const [columns, setColumns] = useState<number[][]>([]);
-    useEffect(
-      () =>
-        multipliers &&
-        setColumns(
-          _.chunk(
-            multipliers,
-            Math.ceil(
-              multipliers.length /
-                (props.orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS)
-            )
-          )
-        ),
-      [multipliers, props.orientation]
-    );
 
     const openPrintCardGridDialog = useReactToPrint({
       content: () => printableRef,
@@ -135,6 +117,24 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
         openPrintCardGridDialog();
       }
     }, [printDialogOpen, printableRef]);
+
+    const [columns, setColumns] = useState<number[][]>([]);
+    useEffect(
+      () =>
+        props.multipliers &&
+        setColumns(
+          _.chunk(
+            props.multipliers,
+            Math.ceil(
+              props.multipliers.length /
+                (props.orientation === "horizontal"
+                  ? HORIZONTAL_N_COLUMNS
+                  : VERTICAL_N_COLUMNS)
+            )
+          )
+        ),
+      [props.multipliers, props.orientation]
+    );
 
     return (
       <Stack position="relative">
@@ -190,20 +190,18 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
             <Stack width="100%" direction="row">
               {columns.map((col, i) => (
                 <Stack key={i} flex={1} alignItems="center">
-                  {col?.map((m) =>
+                  {col?.map((x) =>
                     props.orientation === "horizontal" ? (
                       <HorizontalMultiplicationQuestion
-                        key={m}
+                        key={x}
                         number={props.number}
-                        multiplier={m}
-                        nDigits={props.nDigits}
+                        multiplier={x}
                       />
                     ) : (
                       <VerticalMultiplicationQuestion
-                        key={m}
+                        key={x}
                         number={props.number}
-                        multiplier={m}
-                        nDigits={props.nDigits}
+                        multiplier={x}
                       />
                     )
                   )}

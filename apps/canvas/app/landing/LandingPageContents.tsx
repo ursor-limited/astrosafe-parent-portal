@@ -4,13 +4,16 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
-import Worksheet from "../worksheet/Worksheet";
+import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { useReactToPrint } from "react-to-print";
-
-export type EquationOrientation = "horizontal" | "vertical";
+import ApiController from "../api";
+import _ from "lodash";
+import { useRouter } from "next/navigation";
 
 const TITLE_CHARACTER_LIMIT = 30;
+const DEFAULT_TITLE = "Multiplication Sheet";
 
 const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
@@ -103,6 +106,28 @@ export default function LandingPageContents() {
     [nProblems, nDigits]
   );
 
+  const [multipliers, setMultipliers] = useState<number[]>([]);
+  useEffect(
+    () =>
+      setMultipliers(
+        _.sampleSize(
+          [...Array(parseInt("1".padEnd(nDigits + 1, "0"))).keys()],
+          nProblems
+        )
+      ),
+    [nDigits, nProblems]
+  );
+
+  const router = useRouter();
+
+  const submitCreation = () =>
+    ApiController.createWorksheet(
+      title || DEFAULT_TITLE,
+      orientation,
+      number,
+      multipliers
+    ).then((ws) => router.push(`/worksheet/${ws.id}`));
+
   return (
     <AstroLandingPage
       title={["8x8 Tables", "Worksheets for Kids"]}
@@ -124,7 +149,7 @@ export default function LandingPageContents() {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder="Multiplication Sheet"
+              placeholder={DEFAULT_TITLE}
               width="100%"
               leftAlign
               boldValue
@@ -319,7 +344,7 @@ export default function LandingPageContents() {
               orientation={orientation}
               nDigits={nDigits}
               number={number}
-              nProblems={nProblems}
+              multipliers={multipliers}
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}
             />
@@ -333,13 +358,16 @@ export default function LandingPageContents() {
             />
           </Stack>
           <Stack />
+
           <UrsorButton
-            onClick={() => setPrintDialogOpen(true)}
+            // onClick={() => setPrintDialogOpen(true)}
+            onClick={submitCreation}
             dark
             variant="tertiary"
-            endIcon={DownloadIcon}
+            endIcon={PencilIcon}
+            size="large"
           >
-            Download
+            Create
           </UrsorButton>
         </Stack>
       </Stack>
