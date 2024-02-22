@@ -9,6 +9,11 @@ import _ from "lodash";
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 3;
 
+const HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN = 8;
+const HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN = 10;
+const VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN = 5;
+const VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN = 6;
+
 export interface IWorksheetQuestion {
   number: number;
   multiplier: number;
@@ -26,6 +31,7 @@ export interface IWorksheet {
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
+  answer: boolean;
 }) => (
   <Stack
     key={props.multiplier}
@@ -51,17 +57,28 @@ const HorizontalMultiplicationQuestion = (props: {
     <Typography variant="h3" sx={{ fontWeight: 100 }}>
       =
     </Typography>
-    <Stack
-      borderBottom="1.5px solid rgba(0,0,0,0.3)"
-      width="70px"
-      height="102%"
-    />
+    {props.answer ? (
+      <Typography
+        variant="h3"
+        color={PALETTE.secondary.grey[4]}
+        sx={{ fontWeight: 350 }}
+      >
+        {props.multiplier * props.number}
+      </Typography>
+    ) : (
+      <Stack
+        borderBottom="1.5px solid rgba(0,0,0,0.3)"
+        width="70px"
+        height="102%"
+      />
+    )}
   </Stack>
 );
 
 const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
+  answer: boolean;
 }) => (
   <Stack
     key={props.multiplier}
@@ -83,6 +100,17 @@ const VerticalMultiplicationQuestion = (props: {
       </Stack>
     </Stack>
     <Stack borderBottom="1.5px solid rgba(0,0,0,0.3)" width="100%" />
+    {props.answer ? (
+      <Stack width="100%" alignItems="flex-end">
+        <Typography
+          variant="h3"
+          color={PALETTE.secondary.grey[4]}
+          sx={{ fontWeight: 350 }}
+        >
+          {props.multiplier * props.number}
+        </Typography>
+      </Stack>
+    ) : null}
   </Stack>
 );
 
@@ -99,6 +127,8 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       printButton?: boolean;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
+      answers?: boolean;
+      pageIndex?: number;
       printDialogCloseCallback?: () => void;
     },
     ref
@@ -119,22 +149,52 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
     }, [printDialogOpen, printableRef]);
 
     const [columns, setColumns] = useState<number[][]>([]);
-    useEffect(
-      () =>
-        props.multipliers &&
-        setColumns(
-          _.chunk(
-            props.multipliers,
-            Math.ceil(
-              props.multipliers.length /
-                (props.orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS)
-            )
+    useEffect(() => {
+      if (props.multipliers) {
+        const cols = _.chunk(
+          props.multipliers,
+          Math.ceil(
+            props.multipliers.length /
+              (props.orientation === "horizontal"
+                ? HORIZONTAL_N_COLUMNS
+                : VERTICAL_N_COLUMNS)
           )
-        ),
-      [props.multipliers, props.orientation]
-    );
+        );
+        setColumns(
+          _.isNumber(props.pageIndex)
+            ? cols.map((c) =>
+                props.orientation === "horizontal"
+                  ? props.pageIndex === 0
+                    ? c.slice(0, HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN)
+                    : c.slice(
+                        HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
+                          (props.pageIndex! - 1) *
+                            HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
+                        Math.min(
+                          HORIZONTAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
+                            props.pageIndex! *
+                              HORIZONTAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
+                          c.length
+                        )
+                      )
+                  : props.pageIndex === 0
+                  ? c.slice(0, VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN)
+                  : c.slice(
+                      VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
+                        (props.pageIndex! - 1) *
+                          VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
+                      Math.min(
+                        VERTICAL_FIRST_PAGE_QUESTIONS_PER_COLUMN +
+                          props.pageIndex! *
+                            VERTICAL_OTHER_PAGES_QUESTIONS_PER_COLUMN,
+                        c.length
+                      )
+                    )
+              )
+            : cols
+        );
+      }
+    }, [props.multipliers, props.orientation, props.pageIndex]);
 
     return (
       <Stack position="relative">
@@ -170,22 +230,25 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
           px="32px"
-          py="50px"
+          //py="50px"
           className={rubik.className}
         >
-          <Stack
-            spacing="4px"
-            width="100%"
-            height="24mm"
-            borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
-          >
-            <Typography variant="h2">
-              {props.title || "Multiplication sheet"}
-            </Typography>
-            <Typography bold color={PALETTE.secondary.purple[2]}>
-              Try to solve these questions!
-            </Typography>
-          </Stack>
+          {!props.pageIndex ? (
+            <Stack
+              mt="50px"
+              spacing="4px"
+              width="100%"
+              height="24mm"
+              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+            >
+              <Typography variant="h2">
+                {props.title || "Multiplication sheet"}
+              </Typography>
+              <Typography bold color={PALETTE.secondary.purple[2]}>
+                {props.answers ? "Answers" : "Try to solve these questions!"}
+              </Typography>
+            </Stack>
+          ) : null}
           <Stack spacing="30px" justifyContent="center" alignItems="center">
             <Stack width="100%" direction="row">
               {columns.map((col, i) => (
@@ -196,12 +259,14 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                         key={x}
                         number={props.number}
                         multiplier={x}
+                        answer={!!props.answers}
                       />
                     ) : (
                       <VerticalMultiplicationQuestion
                         key={x}
                         number={props.number}
                         multiplier={x}
+                        answer={!!props.answers}
                       />
                     )
                   )}

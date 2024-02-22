@@ -1,28 +1,44 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
-import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import Worksheet, { EquationOrientation, IWorksheet } from "./Worksheet";
+import Worksheet, { IWorksheet } from "./Worksheet";
+import { UrsorButton } from "ui";
 
 export default function WorksheetPageContents(props: { details: IWorksheet }) {
-  // const [title, setTitle] = useState<string>("");
-  // const [number, setNumber] = useState<number>(1);
-  // const [nDigits, setNDigits] = useState<number>(1);
-  // const [nProblems, setNProblems] = useState<number>(1);
-  // const [questionType, setQuestionType] =
-  //   useState<EquationOrientation>("horizontal");
-  // useEffect(() => {
-  //   setTitle("NUMBERS!");
-  //   setNumber(7);
-  //   setNDigits(2);
-  //   setNProblems(36);
-  // }, []);
+  const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
-  console.log(props.details);
+  const openPrintDialog = useReactToPrint({
+    content: () => printableRef,
+    documentTitle: "ASTRO Numbers",
+    onAfterPrint: () => setPrintDialogOpen(false),
+  });
+
+  const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (printDialogOpen && printableRef) {
+      openPrintDialog();
+    }
+  }, [printDialogOpen, printableRef]);
+
+  const [printAnswerSheetDialogOpen, setPrintAnswerSheetDialogOpen] =
+    useState<boolean>(false);
+
+  const openPrintAnswerSheetDialog = useReactToPrint({
+    content: () => printableAnswerSheetRef,
+    documentTitle: "ASTRO Numbers",
+    onAfterPrint: () => setPrintAnswerSheetDialogOpen(false),
+  });
+
+  const [printableAnswerSheetRef, setPrintableAnswerSheetRef] =
+    useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (printAnswerSheetDialogOpen && printableAnswerSheetRef) {
+      openPrintAnswerSheetDialog();
+    }
+  }, [printAnswerSheetDialogOpen, printableAnswerSheetRef]);
 
   return (
     <Stack
@@ -35,15 +51,45 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
     >
       <Stack overflow="scroll" width="100%" alignItems="center">
         <Stack minHeight="100px" />
-        <Worksheet
-          title={props.details.title}
-          orientation={props.details.orientation}
-          //nDigits={props.details.}
-          number={props.details.number}
-          multipliers={props.details.multipliers}
-          //nProblems={nProblems}
-          printButton
-        />
+        <Stack spacing="10px" alignItems="flex-end">
+          <Stack direction="row" spacing="10px">
+            <UrsorButton
+              dark
+              variant="tertiary"
+              onClick={() => setPrintDialogOpen(true)}
+            >
+              Print
+            </UrsorButton>
+            <UrsorButton
+              dark
+              variant="secondary"
+              onClick={() => setPrintAnswerSheetDialogOpen(true)}
+            >
+              Print answers
+            </UrsorButton>
+          </Stack>
+          <Worksheet
+            ref={setPrintableRef}
+            title={props.details.title}
+            orientation={props.details.orientation}
+            number={props.details.number}
+            multipliers={props.details.multipliers}
+          />
+        </Stack>
+        <Stack sx={{ visibility: "hidden", pointerEvents: "none" }}>
+          <Worksheet
+            ref={setPrintableAnswerSheetRef}
+            title={props.details.title}
+            orientation={props.details.orientation}
+            number={props.details.number}
+            multipliers={props.details.multipliers}
+            printDialogOpen={printAnswerSheetDialogOpen}
+            printDialogCloseCallback={() =>
+              setPrintAnswerSheetDialogOpen(false)
+            }
+            answers
+          />
+        </Stack>
         <Stack minHeight="100px" />
       </Stack>
     </Stack>

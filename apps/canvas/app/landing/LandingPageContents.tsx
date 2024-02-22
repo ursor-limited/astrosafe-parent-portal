@@ -6,6 +6,8 @@ import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
 import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
 import _ from "lodash";
@@ -14,6 +16,7 @@ import { useRouter } from "next/navigation";
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
 const MAX_N_PROBLEMS = 100;
+const A4_HEIGHT = 297;
 
 const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
@@ -122,6 +125,21 @@ export default function LandingPageContents() {
       number,
       multipliers
     ).then((ws) => router.push(`/worksheet/${ws.id}`));
+
+  const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
+
+  const [nPages, setNPages] = useState<number>(0);
+  useEffect(
+    () =>
+      setNPages(
+        1 +
+          Math.ceil(
+            (nProblems - (orientation === "horizontal" ? 16 : 15)) /
+              (orientation === "horizontal" ? 20 : 18)
+          )
+      ),
+    [nProblems, orientation]
+  );
 
   return (
     <AstroLandingPage
@@ -251,7 +269,7 @@ export default function LandingPageContents() {
           </Captioned>
         </Stack>
         <Stack
-          minWidth="300px"
+          minWidth="242px"
           position="relative"
           flex={1}
           justifyContent="space-between"
@@ -261,7 +279,6 @@ export default function LandingPageContents() {
             position="absolute"
             top={0}
             left={0}
-            height="297mm"
             overflow="hidden"
           >
             <Worksheet
@@ -273,39 +290,61 @@ export default function LandingPageContents() {
               multipliers={multipliers}
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}
-            />
-            <Stack
-              position="absolute"
-              bgcolor="rgb(255,255,255)"
-              bottom={0}
-              left={0}
-              height={orientation === "horizontal" ? "50px" : "100px"}
-              width="100%"
+              pageIndex={selectedPageIndex}
             />
           </Stack>
           <Stack />
           <Stack spacing="27px">
             {(orientation === "horizontal" && nProblems > 16) ||
             (orientation === "vertical" && nProblems > 15) ? (
-              <Typography
-                variant="small"
-                color={PALETTE.secondary.grey[3]}
-              >{`Page 1 of ${
-                1 +
-                Math.ceil(
-                  (nProblems - (orientation === "horizontal" ? 16 : 15)) /
-                    (orientation === "horizontal" ? 20 : 18)
-                )
-              }`}</Typography>
+              <Stack
+                direction="row"
+                spacing="7px"
+                sx={{
+                  svg: {
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Stack
+                  sx={{
+                    opacity: selectedPageIndex === 0 ? 0 : 1,
+                    pointerEvents: selectedPageIndex === 0 ? "none" : undefined,
+                  }}
+                  onClick={() => setSelectedPageIndex(selectedPageIndex - 1)}
+                >
+                  <ChevronLeft height="16px" width="16px" />
+                </Stack>
+                <Typography
+                  variant="small"
+                  color={PALETTE.secondary.grey[3]}
+                >{`Page ${selectedPageIndex + 1} of ${nPages}`}</Typography>
+                <Stack
+                  sx={{
+                    opacity: selectedPageIndex === nPages - 1 ? 0 : 1,
+                    pointerEvents:
+                      selectedPageIndex === nPages - 1 ? "none" : undefined,
+                  }}
+                  onClick={() => setSelectedPageIndex(selectedPageIndex + 1)}
+                >
+                  <ChevronRight height="16px" width="16px" />
+                </Stack>
+              </Stack>
             ) : null}
-
             <UrsorButton
-              // onClick={() => setPrintDialogOpen(true)}
               onClick={submitCreation}
               dark
               variant="tertiary"
               endIcon={PencilIcon}
               size="large"
+              width="100%"
             >
               Create
             </UrsorButton>
