@@ -65,10 +65,10 @@ const VerticalMultiplicationQuestion = (props: {
 }) => (
   <Stack
     key={props.multiplier}
-    alignItems="flex-end"
-    justifyContent="flex-end"
+    justifyContent="center"
+    //justifyContent="flex-end"
     spacing="4px"
-    height="197px"
+    height="177px"
     sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">

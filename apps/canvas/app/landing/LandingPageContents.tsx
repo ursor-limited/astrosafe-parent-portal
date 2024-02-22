@@ -5,7 +5,6 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
 import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
-import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
+const MAX_N_PROBLEMS = 100;
 
 const Captioned = (props: { text: string; children: React.ReactNode }) => (
   <Stack spacing="8px">
@@ -100,11 +100,6 @@ export default function LandingPageContents() {
       openPrintCardGridDialog();
     }
   }, [printDialogOpen, printableRef]);
-
-  useEffect(
-    () => setNProblems(Math.min(Math.pow(10, nDigits), nProblems)),
-    [nProblems, nDigits]
-  );
 
   const [multipliers, setMultipliers] = useState<number[]>([]);
   useEffect(
@@ -231,97 +226,28 @@ export default function LandingPageContents() {
             </Stack>
           </Captioned>
           <Captioned text="Amount of problems">
-            {nDigits === 1 ? (
-              <Stack direction="row" spacing="10px">
-                <CategorySelectionButton
-                  selected={nProblems === 1}
-                  onClick={() => setNProblems(1)}
-                >
-                  1
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 2}
-                  onClick={() => setNProblems(2)}
-                >
-                  2
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 3}
-                  onClick={() => setNProblems(3)}
-                >
-                  3
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 4}
-                  onClick={() => setNProblems(4)}
-                >
-                  4
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 5}
-                  onClick={() => setNProblems(5)}
-                >
-                  5
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 6}
-                  onClick={() => setNProblems(6)}
-                >
-                  6
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 7}
-                  onClick={() => setNProblems(7)}
-                >
-                  7
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 7}
-                  onClick={() => setNProblems(7)}
-                >
-                  7
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 8}
-                  onClick={() => setNProblems(8)}
-                >
-                  8
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 9}
-                  onClick={() => setNProblems(9)}
-                >
-                  9
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nProblems === 10}
-                  onClick={() => setNProblems(10)}
-                >
-                  10
-                </CategorySelectionButton>
-              </Stack>
-            ) : (
-              <UrsorInputField
-                value={nProblems.toString()}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  const onlyNumbersString =
-                    event.target.value.match(/\d+/)?.[0];
-                  const leadingZeroRemovedString = onlyNumbersString?.slice(
-                    onlyNumbersString[0] === "0" ? 1 : 0
-                  );
-                  setNProblems(
+            <UrsorInputField
+              value={nProblems.toString()}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                setNProblems(
+                  Math.min(
                     leadingZeroRemovedString
                       ? parseInt(leadingZeroRemovedString)
-                      : 0
-                  );
-                }}
-                placeholder="Number of digits"
-                width="100%"
-                leftAlign
-                boldValue
-                backgroundColor="rgb(255,255,255)"
-              />
-            )}
+                      : 0,
+                    MAX_N_PROBLEMS
+                  )
+                );
+              }}
+              placeholder="Number of digits"
+              width="100%"
+              leftAlign
+              boldValue
+              backgroundColor="rgb(255,255,255)"
+            />
           </Captioned>
         </Stack>
         <Stack
@@ -358,17 +284,32 @@ export default function LandingPageContents() {
             />
           </Stack>
           <Stack />
+          <Stack spacing="27px">
+            {(orientation === "horizontal" && nProblems > 16) ||
+            (orientation === "vertical" && nProblems > 15) ? (
+              <Typography
+                variant="small"
+                color={PALETTE.secondary.grey[3]}
+              >{`Page 1 of ${
+                1 +
+                Math.ceil(
+                  (nProblems - (orientation === "horizontal" ? 16 : 15)) /
+                    (orientation === "horizontal" ? 20 : 18)
+                )
+              }`}</Typography>
+            ) : null}
 
-          <UrsorButton
-            // onClick={() => setPrintDialogOpen(true)}
-            onClick={submitCreation}
-            dark
-            variant="tertiary"
-            endIcon={PencilIcon}
-            size="large"
-          >
-            Create
-          </UrsorButton>
+            <UrsorButton
+              // onClick={() => setPrintDialogOpen(true)}
+              onClick={submitCreation}
+              dark
+              variant="tertiary"
+              endIcon={PencilIcon}
+              size="large"
+            >
+              Create
+            </UrsorButton>
+          </Stack>
         </Stack>
       </Stack>
     </AstroLandingPage>
