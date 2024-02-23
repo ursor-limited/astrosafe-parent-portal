@@ -145,7 +145,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       multipliers: number[];
       //nDigits: number;
       orientation: EquationOrientation;
-      printButton?: boolean;
+      printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
       answers?: boolean;
@@ -206,7 +206,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
 
     return (
       <Stack position="relative">
-        {props.printButton ? (
+        {props.printButtonCallback ? (
           <Stack
             position="absolute"
             right="30px"
@@ -222,7 +222,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
             }}
-            onClick={() => setPrintDialogOpen(true)}
+            onClick={props.printButtonCallback}
           >
             <PrinterIcon height="25px" width="25px" />
           </Stack>

@@ -219,7 +219,7 @@ export default function LandingPageContents() {
               />
             </Captioned>
           </Stack>
-          <Stack height="34px" justifyContent="center">
+          <Stack height="63px" justifyContent="center">
             <Stack
               height="2px"
               width="100%"
@@ -338,7 +338,7 @@ export default function LandingPageContents() {
             />
           </Stack>
           <Stack />
-          <Stack spacing="27px">
+          <Stack spacing="19px">
             {(orientation === "horizontal" && nProblems > 16) ||
             (orientation === "vertical" && nProblems > 20) ? (
               <PageSelector

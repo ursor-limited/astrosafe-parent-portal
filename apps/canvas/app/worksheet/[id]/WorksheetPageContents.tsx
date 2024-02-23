@@ -136,7 +136,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
     >
       <Stack overflow="scroll" width="100%" alignItems="center">
         <Stack minHeight="100px" />
-        <Stack spacing="10px" alignItems="flex-end">
+        <Stack spacing="10px" alignItems="center">
           {/* <Stack direction="row" spacing="10px">
             <UrsorButton
               dark
@@ -160,7 +160,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
             orientation={props.details.orientation}
             number={props.details.number}
             multipliers={props.details.multipliers}
-            printButton
+            printButtonCallback={() => setPrintDialogOpen(true)}
             answers={mode === "markscheme"}
           />
         </Stack>
