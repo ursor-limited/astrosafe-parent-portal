@@ -58,14 +58,14 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
               variant="tertiary"
               onClick={() => setPrintDialogOpen(true)}
             >
-              Print
+              Print worksheet
             </UrsorButton>
             <UrsorButton
               dark
               variant="secondary"
               onClick={() => setPrintAnswerSheetDialogOpen(true)}
             >
-              Print answers
+              Print mark scheme
             </UrsorButton>
           </Stack>
           <Worksheet

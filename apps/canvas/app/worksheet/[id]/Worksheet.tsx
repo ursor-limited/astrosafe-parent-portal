@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorInputField } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
@@ -35,15 +35,18 @@ const HorizontalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
+  inputValue?: number;
+  changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
     key={props.multiplier}
     direction="row"
-    // width={`${230 + 20 * props.nDigits}px`}
-    width="270px"
+    width={props.inputValue && props.changeCallback ? "296px" : "270px"}
     height="110px"
     justifyContent="space-between"
-    alignItems="flex-end"
+    alignItems={
+      props.inputValue && props.changeCallback ? "center" : "flex-end"
+    }
     sx={{ breakInside: "avoid" }}
   >
     <Stack direction="row" spacing="14px">
@@ -68,6 +71,22 @@ const HorizontalMultiplicationQuestion = (props: {
       >
         {props.multiplier * props.number}
       </Typography>
+    ) : props.inputValue && props.changeCallback ? (
+      <UrsorInputField
+        value={props.inputValue.toString()}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+          const leadingZeroRemovedString = onlyNumbersString?.slice(
+            onlyNumbersString[0] === "0" ? 1 : 0
+          );
+          props.changeCallback?.(parseInt(leadingZeroRemovedString ?? "0"));
+        }}
+        width="110px"
+        fontSize="40px"
+        height="60px"
+        boldValue
+        paddingLeft="0"
+      />
     ) : (
       <Stack
         borderBottom="1.5px solid rgba(0,0,0,0.3)"
@@ -252,6 +271,8 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                           number={props.number}
                           multiplier={x}
                           answer={!!props.answers}
+                          inputValue={4}
+                          changeCallback={() => null}
                         />
                       ) : (
                         <VerticalMultiplicationQuestion
