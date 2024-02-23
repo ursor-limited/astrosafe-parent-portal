@@ -6,14 +6,13 @@ import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
 import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
+import PageSelector from "./PageSelector";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -311,46 +310,12 @@ export default function LandingPageContents() {
           <Stack spacing="27px">
             {(orientation === "horizontal" && nProblems > 16) ||
             (orientation === "vertical" && nProblems > 20) ? (
-              <Stack
-                direction="row"
-                spacing="7px"
-                sx={{
-                  svg: {
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                    path: {
-                      fill: PALETTE.secondary.grey[4],
-                    },
-                  },
-                }}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Stack
-                  sx={{
-                    opacity: selectedPageIndex === 0 ? 0 : 1,
-                    pointerEvents: selectedPageIndex === 0 ? "none" : undefined,
-                  }}
-                  onClick={() => setSelectedPageIndex(selectedPageIndex - 1)}
-                >
-                  <ChevronLeft height="16px" width="16px" />
-                </Stack>
-                <Typography
-                  variant="small"
-                  color={PALETTE.secondary.grey[3]}
-                >{`Page ${selectedPageIndex + 1} of ${nPages}`}</Typography>
-                <Stack
-                  sx={{
-                    opacity: selectedPageIndex === nPages - 1 ? 0 : 1,
-                    pointerEvents:
-                      selectedPageIndex === nPages - 1 ? "none" : undefined,
-                  }}
-                  onClick={() => setSelectedPageIndex(selectedPageIndex + 1)}
-                >
-                  <ChevronRight height="16px" width="16px" />
-                </Stack>
-              </Stack>
+              <PageSelector
+                pageIndex={selectedPageIndex}
+                back={() => setSelectedPageIndex(selectedPageIndex - 1)}
+                forward={() => setSelectedPageIndex(selectedPageIndex + 1)}
+                nPages={nPages}
+              />
             ) : null}
             <UrsorButton
               onClick={submitCreation}
