@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
 import PageSelector from "./PageSelector";
+import UrsorSelect from "../components/UrsorSelect";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -182,6 +183,24 @@ export default function LandingPageContents() {
               backgroundColor="rgb(255,255,255)"
             />
           </Captioned>
+          <Stack direction="row">
+            <Captioned text="Question type">
+              <UrsorSelect
+                white
+                items={[
+                  {
+                    id: "multiplication",
+                    value: "Multiplication",
+                  },
+                ]}
+                selected={["multiplication"]}
+                callback={(id: string) => {
+                  null;
+                }}
+                width="100%"
+              />
+            </Captioned>
+          </Stack>
           <Captioned text="Multiplier">
             <UrsorInputField
               value={number.toString()}

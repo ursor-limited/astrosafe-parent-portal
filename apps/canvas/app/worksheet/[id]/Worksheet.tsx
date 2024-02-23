@@ -271,8 +271,8 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                           number={props.number}
                           multiplier={x}
                           answer={!!props.answers}
-                          inputValue={4}
-                          changeCallback={() => null}
+                          // inputValue={4}
+                          // changeCallback={() => null}
                         />
                       ) : (
                         <VerticalMultiplicationQuestion
