@@ -34,6 +34,7 @@ export interface IUrsorPopoverProps {
   noPadding?: boolean;
   noCard?: boolean;
   noBackdrop?: boolean;
+  disabled?: boolean;
   children: React.ReactNode; // the button
 }
 
@@ -89,7 +90,10 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         //     : "inherit"
         // }
         sx={{
-          pointerEvents: props.open && !props.noFloatButton ? "none" : "auto",
+          pointerEvents:
+            props.disabled || (props.open && !props.noFloatButton)
+              ? "none"
+              : "auto",
           opacity: props.open && !props.noFloatButton ? 0 : 1,
           zIndex: 2,
         }}

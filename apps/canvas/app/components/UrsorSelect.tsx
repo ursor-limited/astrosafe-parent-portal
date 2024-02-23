@@ -28,6 +28,7 @@ export interface IUrsorSelectProps {
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     color?: string;
   }[];
+  disabled?: boolean;
 }
 
 export default function UrsorSelect(props: IUrsorSelectProps) {
@@ -124,10 +125,17 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
     <Stack
       justifyContent="center"
       alignItems="center"
-      sx={{
-        transition: "0.2s",
-        "&:hover": { opacity: 0.7 },
-      }}
+      sx={
+        props.disabled
+          ? {
+              pointerEvents: "none",
+            }
+          : {
+              //pointerEvents: props.disabled ? "none" : undefined,
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+            }
+      }
       width={props.width}
     >
       <UrsorPopover
@@ -139,6 +147,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         noPadding
         width={props.width}
         noFloatButton
+        disabled={props.disabled}
       >
         <Stack
           sx={{ cursor: "pointer" }}

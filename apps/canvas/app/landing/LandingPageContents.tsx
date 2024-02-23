@@ -86,7 +86,7 @@ const CategorySelectionButton = (props: {
 };
 
 export default function LandingPageContents() {
-  const [title, setTitle] = useState<string>("");
+  const [title, setTitle] = useState<string>("Multiplication sheet");
   const [number, setNumber] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(10);
@@ -178,14 +178,14 @@ export default function LandingPageContents() {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder={DEFAULT_TITLE}
+              placeholder="Worksheet title"
               width="100%"
               leftAlign
               boldValue
               backgroundColor="rgb(255,255,255)"
             />
           </Captioned>
-          <Stack direction="row" spacing="20px">
+          <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}>
             <Captioned text="Question topic">
               <UrsorSelect
                 white
@@ -200,6 +200,7 @@ export default function LandingPageContents() {
                   null;
                 }}
                 width="100%"
+                disabled
               />
             </Captioned>
             <Captioned text="Question type">
@@ -216,6 +217,7 @@ export default function LandingPageContents() {
                   null;
                 }}
                 width="100%"
+                disabled
               />
             </Captioned>
           </Stack>
