@@ -109,16 +109,18 @@ export default function LandingPageContents() {
   }, [printDialogOpen, printableRef]);
 
   const [multipliers, setMultipliers] = useState<number[]>([]);
-  useEffect(
-    () =>
-      setMultipliers(
-        _.sampleSize(
-          [...Array(parseInt("1".padEnd(nDigits + 1, "0"))).keys()],
-          nProblems
-        )
-      ),
-    [nDigits, nProblems]
-  );
+  useEffect(() => {
+    const fullsetSize = Math.pow(10, nDigits);
+    const fullSets = _(Math.floor(nProblems / fullsetSize))
+      .range()
+      .flatMap(() => _.shuffle(_.range(fullsetSize + 1)))
+      .value();
+    const partialSet = _.sampleSize(
+      _.range(fullsetSize + 1),
+      nProblems % fullsetSize
+    );
+    setMultipliers([...fullSets, ...partialSet]);
+  }, [nDigits, nProblems]);
 
   const router = useRouter();
 
