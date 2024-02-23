@@ -23,7 +23,7 @@ export const Captioned = (props: {
   text: string;
   children: React.ReactNode;
 }) => (
-  <Stack spacing="8px">
+  <Stack spacing="8px" flex={1}>
     <Typography variant="small" color={PALETTE.secondary.grey[4]}>
       {props.text}
     </Typography>
@@ -40,7 +40,7 @@ const CategorySelectionButton = (props: {
   return (
     <Stack
       flex={1}
-      height="44px"
+      height="36px"
       borderRadius="8px"
       justifyContent="center"
       alignItems="center"
@@ -183,8 +183,8 @@ export default function LandingPageContents() {
               backgroundColor="rgb(255,255,255)"
             />
           </Captioned>
-          <Stack direction="row">
-            <Captioned text="Question type">
+          <Stack direction="row" spacing="20px">
+            <Captioned text="Question topic">
               <UrsorSelect
                 white
                 items={[
@@ -200,105 +200,115 @@ export default function LandingPageContents() {
                 width="100%"
               />
             </Captioned>
+            <Captioned text="Question type">
+              <UrsorSelect
+                white
+                items={[
+                  {
+                    id: "equations",
+                    value: "Equations",
+                  },
+                ]}
+                selected={["equations"]}
+                callback={(id: string) => {
+                  null;
+                }}
+                width="100%"
+              />
+            </Captioned>
           </Stack>
-          <Captioned text="Multiplier">
-            <UrsorInputField
-              value={number.toString()}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setNumber(parseInt(leadingZeroRemovedString ?? "0"));
-              }}
-              placeholder="Multiplier"
+          <Stack height="34px" justifyContent="center">
+            <Stack
+              height="2px"
               width="100%"
-              leftAlign
-              boldValue
-              backgroundColor="rgb(255,255,255)"
+              bgcolor={PALETTE.secondary.grey[2]}
             />
-          </Captioned>
-          <Captioned text="Orientation">
-            <Stack direction="row" spacing="10px">
-              <CategorySelectionButton
-                selected={orientation === "horizontal"}
-                onClick={() => setOrientation("horizontal")}
-              >
-                Horizontal
-              </CategorySelectionButton>
-              <CategorySelectionButton
-                selected={orientation === "vertical"}
-                onClick={() => setOrientation("vertical")}
-              >
-                Vertical
-              </CategorySelectionButton>
-            </Stack>
-          </Captioned>
-          <Captioned text="Number of digits">
-            {/* <UrsorInputField
-              value={nDigits.toString()}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setNDigits(
-                  leadingZeroRemovedString
-                    ? parseInt(leadingZeroRemovedString)
-                    : 0
-                );
-              }}
-              placeholder="Number of digits"
-              width="100%"
-              leftAlign
-              boldValue
-              backgroundColor="rgb(255,255,255)"
-            /> */}
-            <Stack direction="row" spacing="10px">
-              <CategorySelectionButton
-                selected={nDigits === 1}
-                onClick={() => setNDigits(1)}
-              >
-                1
-              </CategorySelectionButton>
-              <CategorySelectionButton
-                selected={nDigits === 2}
-                onClick={() => setNDigits(2)}
-              >
-                2
-              </CategorySelectionButton>
-              <CategorySelectionButton
-                selected={nDigits === 3}
-                onClick={() => setNDigits(3)}
-              >
-                3
-              </CategorySelectionButton>
-            </Stack>
-          </Captioned>
-          <Captioned text="Amount of problems">
-            <UrsorInputField
-              value={nProblems.toString()}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setNProblems(
-                  Math.min(
-                    leadingZeroRemovedString
-                      ? parseInt(leadingZeroRemovedString)
-                      : 0,
-                    MAX_N_PROBLEMS
-                  )
-                );
-              }}
-              placeholder="Number of digits"
-              width="100%"
-              leftAlign
-              boldValue
-              backgroundColor="rgb(255,255,255)"
-            />
-          </Captioned>
+          </Stack>
+          <Stack direction="row" spacing="20px">
+            <Captioned text="Orientation">
+              <Stack direction="row" spacing="10px">
+                <CategorySelectionButton
+                  selected={orientation === "horizontal"}
+                  onClick={() => setOrientation("horizontal")}
+                >
+                  Horizontal
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={orientation === "vertical"}
+                  onClick={() => setOrientation("vertical")}
+                >
+                  Vertical
+                </CategorySelectionButton>
+              </Stack>
+            </Captioned>
+            <Captioned text="Multiplier">
+              <UrsorInputField
+                value={number.toString()}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const onlyNumbersString =
+                    event.target.value.match(/\d+/)?.[0];
+                  const leadingZeroRemovedString = onlyNumbersString?.slice(
+                    onlyNumbersString[0] === "0" ? 1 : 0
+                  );
+                  setNumber(parseInt(leadingZeroRemovedString ?? "0"));
+                }}
+                placeholder="Multiplier"
+                //width="100%"
+                leftAlign
+                boldValue
+                backgroundColor="rgb(255,255,255)"
+              />
+            </Captioned>
+          </Stack>
+          <Stack direction="row" spacing="20px">
+            <Captioned text="Number of digits">
+              <Stack direction="row" spacing="10px">
+                <CategorySelectionButton
+                  selected={nDigits === 1}
+                  onClick={() => setNDigits(1)}
+                >
+                  1
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nDigits === 2}
+                  onClick={() => setNDigits(2)}
+                >
+                  2
+                </CategorySelectionButton>
+                <CategorySelectionButton
+                  selected={nDigits === 3}
+                  onClick={() => setNDigits(3)}
+                >
+                  3
+                </CategorySelectionButton>
+              </Stack>
+            </Captioned>
+            <Captioned text="Amount of problems">
+              <UrsorInputField
+                value={nProblems.toString()}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const onlyNumbersString =
+                    event.target.value.match(/\d+/)?.[0];
+                  const leadingZeroRemovedString = onlyNumbersString?.slice(
+                    onlyNumbersString[0] === "0" ? 1 : 0
+                  );
+                  setNProblems(
+                    Math.min(
+                      leadingZeroRemovedString
+                        ? parseInt(leadingZeroRemovedString)
+                        : 0,
+                      MAX_N_PROBLEMS
+                    )
+                  );
+                }}
+                placeholder="Number of digits"
+                width="100%"
+                leftAlign
+                boldValue
+                backgroundColor="rgb(255,255,255)"
+              />
+            </Captioned>
+          </Stack>
         </Stack>
         <Stack
           minWidth="242px"
@@ -341,7 +351,6 @@ export default function LandingPageContents() {
               dark
               variant="tertiary"
               endIcon={PencilIcon}
-              size="large"
               width="100%"
             >
               Create
