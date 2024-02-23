@@ -24,9 +24,17 @@ const MAX_N_PROBLEMS = 100;
 
 export const Captioned = (props: {
   text: string;
+  disabled?: boolean;
   children: React.ReactNode;
 }) => (
-  <Stack spacing="8px" flex={1}>
+  <Stack
+    spacing="8px"
+    flex={1}
+    sx={{
+      opacity: props.disabled ? 0.45 : 1,
+      pointerEvents: props.disabled ? "none" : undefined,
+    }}
+  >
     <Typography variant="small" color={PALETTE.secondary.grey[4]}>
       {props.text}
     </Typography>
@@ -138,20 +146,29 @@ export default function LandingPageContents() {
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
 
+  const [topic, setTopic] = useState<EquationTopic>("multiplication");
+
   const [nPages, setNPages] = useState<number>(0);
   useEffect(
     () =>
       setNPages(
         1 +
           Math.ceil(
-            (nProblems - (orientation === "horizontal" ? 16 : 20)) /
-              (orientation === "horizontal" ? 20 : 24)
+            (nProblems -
+              (topic === "division"
+                ? 12
+                : orientation === "horizontal"
+                ? 16
+                : 20)) /
+              (topic === "division"
+                ? 12
+                : orientation === "horizontal"
+                ? 20
+                : 24)
           )
       ),
-    [nProblems, orientation]
+    [nProblems, orientation, topic]
   );
-
-  const [topic, setTopic] = useState<EquationTopic>("multiplication");
 
   return (
     <AstroLandingPage
@@ -233,7 +250,6 @@ export default function LandingPageContents() {
                   null;
                 }}
                 width="100%"
-                disabled
               />
             </Captioned>
           </Stack>
@@ -261,7 +277,7 @@ export default function LandingPageContents() {
                 </CategorySelectionButton>
               </Stack>
             </Captioned>
-            <Captioned text="Multiplier">
+            <Captioned text={topic === "division" ? "Divisor" : "Multiplier"}>
               <UrsorInputField
                 value={number.toString()}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -358,7 +374,8 @@ export default function LandingPageContents() {
           </Stack>
           <Stack />
           <Stack spacing="19px">
-            {(orientation === "horizontal" && nProblems > 16) ||
+            {(topic === "division" && nProblems > 12) ||
+            (orientation === "horizontal" && nProblems > 16) ||
             (orientation === "vertical" && nProblems > 20) ? (
               <PageSelector
                 pageIndex={selectedPageIndex}

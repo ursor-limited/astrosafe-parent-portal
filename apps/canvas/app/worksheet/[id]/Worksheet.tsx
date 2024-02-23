@@ -13,6 +13,8 @@ const HORIZONTAL_FIRST_PAGE_ROWS = 8;
 const HORIZONTAL_OTHER_PAGES_ROWS = 10;
 const VERTICAL_FIRST_PAGE_ROWS = 5;
 const VERTICAL_OTHER_PAGES_ROWS = 6;
+const DIVISION_FIRST_PAGE_ROWS = 3;
+const DIVISION_OTHER_PAGES_ROWS = 3;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -38,7 +40,7 @@ export type EquationTopic =
   | "multiplication"
   | "division";
 
-const HorizontalMultiplicationQuestion = (props: {
+const HorizontalEquationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
@@ -160,42 +162,101 @@ const VerticalMultiplicationQuestion = (props: {
   </Stack>
 );
 
-const LongDivisionQuestion = (props: {
-  divisor: number;
+const LongDivisionVerticalQuestion = (props: {
+  answer: number;
+  showAnswer: boolean;
   dividend: number;
-  answer: boolean;
 }) => (
   <Stack
-    direction="row"
-    //width={props.inputValue && props.changeCallback ? "296px" : "270px"}
-    width="270px"
-    height="110px"
-    justifyContent="space-between"
-    // alignItems={
-    //   props.inputValue && props.changeCallback ? "center" : "flex-end"
-    // }
-    alignItems={"flex-end"}
+    height="300px"
+    pt="20px"
+    alignItems="center"
     sx={{ breakInside: "avoid" }}
   >
-    <Stack direction="row" spacing="12px">
+    <Stack spacing="5px">
       <Stack
         borderLeft={`2px solid transparent`}
         borderTop={`2px solid transparent`}
         pt="3px"
-      >
-        <Typography variant="h3">{props.divisor}</Typography>
-      </Stack>
-      <Stack
-        borderLeft={`2px solid ${PALETTE.primary.navy}`}
-        borderTop={`2px solid ${PALETTE.primary.navy}`}
         px="12px"
-        pt="3px"
+        height="40px"
+        alignItems="flex-end"
+        sx={{
+          opacity: props.showAnswer ? 1 : 0,
+        }}
       >
-        <Typography variant="h3" sx={{ fontWeight: 250 }}>
-          {props.dividend}
+        <Typography color={PALETTE.secondary.purple[2]} variant="h3">
+          {props.answer}
         </Typography>
       </Stack>
+
+      <Stack direction="row" spacing="12px">
+        <Stack
+          borderLeft={`2px solid transparent`}
+          borderTop={`2px solid transparent`}
+          pt="3px"
+        >
+          <Typography variant="h3" sx={{ fontWeight: 250 }}>
+            {props.dividend}
+          </Typography>
+        </Stack>
+        <Stack
+          borderLeft={`2px solid ${PALETTE.primary.navy}`}
+          borderTop={`2px solid ${PALETTE.primary.navy}`}
+          px="12px"
+          pt="3px"
+        >
+          <Typography variant="h3" sx={{ fontWeight: 250 }}>
+            {props.dividend * props.answer}
+          </Typography>
+        </Stack>
+      </Stack>
     </Stack>
+  </Stack>
+);
+
+const LongDivisionHorizontalQuestion = (props: {
+  answer: number;
+  showAnswer: boolean;
+  dividend: number;
+}) => (
+  <Stack
+    direction="row"
+    width="270px"
+    height="110px"
+    justifyContent="space-between"
+    alignItems={"flex-end"}
+    sx={{ breakInside: "avoid" }}
+  >
+    <Stack direction="row" spacing="14px">
+      <Typography variant="h3">{props.answer * props.dividend}</Typography>
+      <Stack pb="0px">
+        <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
+          /
+        </Typography>
+      </Stack>
+      <Typography variant="h3" sx={{ fontWeight: 250 }}>
+        {props.dividend}
+      </Typography>
+    </Stack>
+    <Typography variant="h3" sx={{ fontWeight: 100 }}>
+      =
+    </Typography>
+    {props.showAnswer ? (
+      <Typography
+        variant="h3"
+        color={PALETTE.secondary.purple[2]}
+        sx={{ fontWeight: 350 }}
+      >
+        {props.answer}
+      </Typography>
+    ) : (
+      <Stack
+        borderBottom="1.5px solid rgba(0,0,0,0.3)"
+        width="70px"
+        height="102%"
+      />
+    )}
   </Stack>
 );
 
@@ -208,7 +269,6 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       number: number;
       multipliers: number[];
       topic: EquationTopic;
-      //nDigits: number;
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
@@ -247,7 +307,16 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
         );
         setRows(
           _.isNumber(props.pageIndex)
-            ? props.orientation === "horizontal"
+            ? props.topic === "division" && props.orientation === "vertical"
+              ? props.pageIndex === 0
+                ? rowz.slice(0, DIVISION_FIRST_PAGE_ROWS)
+                : rowz.slice(
+                    DIVISION_FIRST_PAGE_ROWS +
+                      (props.pageIndex! - 1) * DIVISION_OTHER_PAGES_ROWS,
+                    DIVISION_FIRST_PAGE_ROWS +
+                      props.pageIndex! * DIVISION_OTHER_PAGES_ROWS
+                  )
+              : props.orientation === "horizontal"
               ? props.pageIndex === 0
                 ? rowz.slice(0, HORIZONTAL_FIRST_PAGE_ROWS)
                 : rowz.slice(
@@ -267,7 +336,13 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
             : rowz
         );
       }
-    }, [props.multipliers, props.orientation, props.pageIndex, rows.length]);
+    }, [
+      props.multipliers,
+      props.orientation,
+      props.pageIndex,
+      rows.length,
+      props.topic,
+    ]);
 
     return (
       <Stack position="relative">
@@ -331,14 +406,23 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                   ...row?.map((x, k) => (
                     <Stack key={k} flex={1} alignItems="center">
                       {props.topic === "division" ? (
-                        <LongDivisionQuestion
-                          key={x}
-                          dividend={props.number}
-                          divisor={x}
-                          answer={!!props.answers}
-                        />
+                        props.orientation === "vertical" ? (
+                          <LongDivisionVerticalQuestion
+                            key={x}
+                            dividend={props.number}
+                            answer={x}
+                            showAnswer={!!props.answers}
+                          />
+                        ) : (
+                          <LongDivisionHorizontalQuestion
+                            key={x}
+                            dividend={props.number}
+                            answer={x}
+                            showAnswer={!!props.answers}
+                          />
+                        )
                       ) : props.orientation === "horizontal" ? (
-                        <HorizontalMultiplicationQuestion
+                        <HorizontalEquationQuestion
                           key={x}
                           number={props.number}
                           multiplier={x}
