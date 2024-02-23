@@ -12,13 +12,17 @@ import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
+import MultiplicationTable from "./MultiplicationTable";
+import LandingPageViewport from "./LandingPageViewport";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
 const MAX_N_PROBLEMS = 100;
-const A4_HEIGHT = 297;
 
-const Captioned = (props: { text: string; children: React.ReactNode }) => (
+export const Captioned = (props: {
+  text: string;
+  children: React.ReactNode;
+}) => (
   <Stack spacing="8px">
     <Typography variant="small" color={PALETTE.secondary.grey[4]}>
       {props.text}
@@ -146,6 +150,16 @@ export default function LandingPageContents() {
       title={["8x8 Tables", "Worksheets for Kids"]}
       subtitle="Boo!"
       mobile={false}
+      viewports={[
+        <LandingPageViewport
+          key="multiplication"
+          supertitle="Time-table chart"
+          subtitle="Add some engaging copy here, man."
+          title="Times-table chart"
+        >
+          <MultiplicationTable />
+        </LandingPageViewport>,
+      ]}
     >
       <Stack
         borderRadius="20px"

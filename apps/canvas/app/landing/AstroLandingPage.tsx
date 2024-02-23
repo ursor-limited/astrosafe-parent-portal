@@ -15,6 +15,7 @@ export default function AstroLandingPage(props: {
   mobile: boolean;
   title: string[];
   subtitle: string;
+  viewports: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -91,6 +92,7 @@ export default function AstroLandingPage(props: {
           zIndex={1}
         >
           {/* viewports here */}
+          {props.viewports}
           <Stack width="100%">
             <LandingPageFAQSection mobile={props.mobile} />
             <LandingPageFooter mobile={props.mobile} />

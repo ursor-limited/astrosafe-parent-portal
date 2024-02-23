@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
@@ -13,6 +13,9 @@ const HORIZONTAL_FIRST_PAGE_ROWS = 8;
 const HORIZONTAL_OTHER_PAGES_ROWS = 10;
 const VERTICAL_FIRST_PAGE_ROWS = 5;
 const VERTICAL_OTHER_PAGES_ROWS = 6;
+
+export const A4_WIDTH = "210mm";
+export const A4_HEIGHT = "297mm";
 
 export interface IWorksheetQuestion {
   number: number;
@@ -207,16 +210,13 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
         ) : null}
         <Stack
           ref={ref || setPrintableRef}
-          width="210mm"
-          minWidth="210mm"
-          // height={props.onlyFirstPage ? "297mm" : undefined}
-          minHeight="297mm"
-          //overflow={props.onlyFirstPage ? "hidden" : undefined}
+          width={A4_WIDTH}
+          minWidth={A4_WIDTH}
+          minHeight={A4_HEIGHT}
           maxWidth="90%"
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
           px="32px"
-          //py="50px"
           className={rubik.className}
         >
           {!props.pageIndex ? (
