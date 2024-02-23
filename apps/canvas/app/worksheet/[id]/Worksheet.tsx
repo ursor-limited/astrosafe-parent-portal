@@ -32,7 +32,11 @@ export interface IWorksheet {
   multipliers: number[];
 }
 
-export type EquationTopic = "addition" | "subtraction" | "multiplication";
+export type EquationTopic =
+  | "addition"
+  | "subtraction"
+  | "multiplication"
+  | "division";
 
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
@@ -153,6 +157,45 @@ const VerticalMultiplicationQuestion = (props: {
         </Typography>
       </Stack>
     ) : null}
+  </Stack>
+);
+
+const LongDivisionQuestion = (props: {
+  divisor: number;
+  dividend: number;
+  answer: boolean;
+}) => (
+  <Stack
+    direction="row"
+    //width={props.inputValue && props.changeCallback ? "296px" : "270px"}
+    width="270px"
+    height="110px"
+    justifyContent="space-between"
+    // alignItems={
+    //   props.inputValue && props.changeCallback ? "center" : "flex-end"
+    // }
+    alignItems={"flex-end"}
+    sx={{ breakInside: "avoid" }}
+  >
+    <Stack direction="row" spacing="12px">
+      <Stack
+        borderLeft={`2px solid transparent`}
+        borderTop={`2px solid transparent`}
+        pt="3px"
+      >
+        <Typography variant="h3">{props.divisor}</Typography>
+      </Stack>
+      <Stack
+        borderLeft={`2px solid ${PALETTE.primary.navy}`}
+        borderTop={`2px solid ${PALETTE.primary.navy}`}
+        px="12px"
+        pt="3px"
+      >
+        <Typography variant="h3" sx={{ fontWeight: 250 }}>
+          {props.dividend}
+        </Typography>
+      </Stack>
+    </Stack>
   </Stack>
 );
 
@@ -287,7 +330,14 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                 {[
                   ...row?.map((x, k) => (
                     <Stack key={k} flex={1} alignItems="center">
-                      {props.orientation === "horizontal" ? (
+                      {props.topic === "division" ? (
+                        <LongDivisionQuestion
+                          key={x}
+                          dividend={props.number}
+                          divisor={x}
+                          answer={!!props.answers}
+                        />
+                      ) : props.orientation === "horizontal" ? (
                         <HorizontalMultiplicationQuestion
                           key={x}
                           number={props.number}

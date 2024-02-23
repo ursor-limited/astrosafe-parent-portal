@@ -202,6 +202,10 @@ export default function LandingPageContents() {
                     value: "Multiplication",
                   },
                   {
+                    id: "division",
+                    value: "Division",
+                  },
+                  {
                     id: "addition",
                     value: "Addition",
                   },
