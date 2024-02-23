@@ -4,7 +4,10 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
-import Worksheet, { EquationOrientation } from "../worksheet/[id]/Worksheet";
+import Worksheet, {
+  EquationOrientation,
+  EquationTopic,
+} from "../worksheet/[id]/Worksheet";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../api";
@@ -128,6 +131,7 @@ export default function LandingPageContents() {
     ApiController.createWorksheet(
       title || DEFAULT_TITLE,
       orientation,
+      topic,
       number,
       multipliers
     ).then((ws) => router.push(`/worksheet/${ws.id}`));
@@ -146,6 +150,8 @@ export default function LandingPageContents() {
       ),
     [nProblems, orientation]
   );
+
+  const [topic, setTopic] = useState<EquationTopic>("multiplication");
 
   return (
     <AstroLandingPage
@@ -185,7 +191,8 @@ export default function LandingPageContents() {
               backgroundColor="rgb(255,255,255)"
             />
           </Captioned>
-          <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}>
+          {/* <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}> */}
+          <Stack direction="row" spacing="20px">
             <Captioned text="Question topic">
               <UrsorSelect
                 white
@@ -194,13 +201,18 @@ export default function LandingPageContents() {
                     id: "multiplication",
                     value: "Multiplication",
                   },
+                  {
+                    id: "addition",
+                    value: "Addition",
+                  },
+                  {
+                    id: "subtraction",
+                    value: "Subtraction",
+                  },
                 ]}
-                selected={["multiplication"]}
-                callback={(id: string) => {
-                  null;
-                }}
+                selected={[topic]}
+                callback={(t: string) => setTopic(t as EquationTopic)}
                 width="100%"
-                disabled
               />
             </Captioned>
             <Captioned text="Question type">
@@ -331,6 +343,7 @@ export default function LandingPageContents() {
               ref={setPrintableRef}
               title={title}
               orientation={orientation}
+              topic={topic}
               nDigits={nDigits}
               number={number}
               multipliers={multipliers}

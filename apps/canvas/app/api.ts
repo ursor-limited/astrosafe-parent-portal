@@ -1,5 +1,6 @@
 import {
   EquationOrientation,
+  EquationTopic,
   IWorksheetQuestion,
 } from "./worksheet/[id]/Worksheet";
 
@@ -147,12 +148,14 @@ class ApiController {
   static async createWorksheet(
     title: string,
     orientation: EquationOrientation,
+    topic: EquationTopic,
     number: number,
     multipliers: number[]
   ) {
     return post("canvas/worksheet", {
       title,
       orientation,
+      topic,
       number,
       multipliers,
     }).then((response: any) => response.json());

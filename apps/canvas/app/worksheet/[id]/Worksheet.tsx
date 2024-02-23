@@ -27,15 +27,19 @@ export type EquationOrientation = "horizontal" | "vertical";
 export interface IWorksheet {
   title: string;
   orientation: EquationOrientation;
+  topic: EquationTopic;
   number: number;
   multipliers: number[];
 }
+
+export type EquationTopic = "addition" | "subtraction" | "multiplication";
 
 const HorizontalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
   inputValue?: number;
+  topic?: EquationTopic;
   changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
@@ -52,8 +56,12 @@ const HorizontalMultiplicationQuestion = (props: {
     <Stack direction="row" spacing="14px">
       <Typography variant="h3">{props.multiplier}</Typography>
       <Stack pb="0px">
-        <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "170%" }}>
-          x
+        <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
+          {props.topic === "multiplication"
+            ? "x"
+            : props.topic === "addition"
+            ? "+"
+            : "-"}
         </Typography>
       </Stack>
       <Typography variant="h3" sx={{ fontWeight: 250 }}>
@@ -69,7 +77,11 @@ const HorizontalMultiplicationQuestion = (props: {
         color={PALETTE.secondary.purple[2]}
         sx={{ fontWeight: 350 }}
       >
-        {props.multiplier * props.number}
+        {props.topic === "multiplication"
+          ? props.multiplier * props.number
+          : props.topic === "addition"
+          ? props.multiplier + props.number
+          : props.multiplier - props.number}
       </Typography>
     ) : props.inputValue && props.changeCallback ? (
       <UrsorInputField
@@ -101,6 +113,7 @@ const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
+  topic?: EquationTopic;
 }) => (
   <Stack
     key={props.multiplier}
@@ -112,8 +125,12 @@ const VerticalMultiplicationQuestion = (props: {
     <Stack alignItems="flex-end">
       <Typography variant="h3">{props.multiplier}</Typography>
       <Stack direction="row" justifyContent="space-between" spacing="36px">
-        <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "170%" }}>
-          x
+        <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "180%" }}>
+          {props.topic === "multiplication"
+            ? "x"
+            : props.topic === "addition"
+            ? "+"
+            : "-"}
         </Typography>
         <Typography variant="h3" sx={{ fontWeight: 250 }}>
           {props.number}
@@ -128,7 +145,11 @@ const VerticalMultiplicationQuestion = (props: {
           color={PALETTE.secondary.purple[2]}
           sx={{ fontWeight: 350 }}
         >
-          {props.multiplier * props.number}
+          {props.topic === "multiplication"
+            ? props.multiplier * props.number
+            : props.topic === "addition"
+            ? props.multiplier + props.number
+            : props.multiplier - props.number}
         </Typography>
       </Stack>
     ) : null}
@@ -143,6 +164,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
       title: string;
       number: number;
       multipliers: number[];
+      topic: EquationTopic;
       //nDigits: number;
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
@@ -271,6 +293,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                           number={props.number}
                           multiplier={x}
                           answer={!!props.answers}
+                          topic={props.topic}
                           // inputValue={4}
                           // changeCallback={() => null}
                         />
@@ -280,6 +303,7 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
                           number={props.number}
                           multiplier={x}
                           answer={!!props.answers}
+                          topic={props.topic}
                         />
                       )}
                     </Stack>

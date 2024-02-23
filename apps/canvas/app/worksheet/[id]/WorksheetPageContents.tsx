@@ -157,6 +157,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
           <Worksheet
             ref={setPrintableRef}
             title={props.details.title}
+            topic={props.details.topic}
             orientation={props.details.orientation}
             number={props.details.number}
             multipliers={props.details.multipliers}
@@ -164,7 +165,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
             answers={mode === "markscheme"}
           />
         </Stack>
-        <Stack sx={{ visibility: "hidden", pointerEvents: "none" }}>
+        {/* <Stack sx={{ visibility: "hidden", pointerEvents: "none" }}>
           <Worksheet
             ref={setPrintableAnswerSheetRef}
             title={props.details.title}
@@ -177,7 +178,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
             }
             answers
           />
-        </Stack>
+        </Stack> */}
         <Stack minHeight="100px" />
       </Stack>
     </Stack>
