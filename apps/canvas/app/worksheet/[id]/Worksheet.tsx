@@ -24,6 +24,8 @@ export interface IWorksheetQuestion {
   multiplier: number;
 }
 
+export type QuestionType = "equation";
+
 export type EquationOrientation = "horizontal" | "vertical";
 
 export interface IWorksheet {

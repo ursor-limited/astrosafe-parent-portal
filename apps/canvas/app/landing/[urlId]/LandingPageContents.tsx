@@ -7,16 +7,17 @@ import { useEffect, useState } from "react";
 import Worksheet, {
   EquationOrientation,
   EquationTopic,
-} from "../worksheet/[id]/Worksheet";
+  QuestionType,
+} from "../../worksheet/[id]/Worksheet";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useReactToPrint } from "react-to-print";
-import ApiController from "../api";
+import ApiController from "../../api";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
 import PageSelector from "./PageSelector";
-import UrsorSelect from "../components/UrsorSelect";
+import UrsorSelect from "../../components/UrsorSelect";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -96,13 +97,106 @@ const CategorySelectionButton = (props: {
   );
 };
 
-export default function LandingPageContents() {
+export default function LandingPageContents(props: {
+  urlId: string;
+  pageTitle: string;
+  metaDescription: string;
+  heading: string;
+  subheading: string;
+  worksheetGenerator: {
+    title: string;
+    questionTopic: EquationTopic;
+    questionType: QuestionType;
+    worksheetParameters: {
+      factor: number;
+      nDigits: number;
+      nProblems: number;
+      orientation: EquationOrientation;
+    };
+  };
+  howItWorks: {
+    supertitle: string;
+    title: string;
+    step1: string;
+    step2: string;
+    step3: string;
+  };
+  worksheetPreview: {
+    supertitle: string;
+    title: string;
+    body: string;
+    worksheetPreviewParameters: {
+      questionTopic: EquationTopic;
+      questionType: QuestionType;
+      title: string;
+      worksheetParameters: {
+        factor: number;
+        nProblems: number;
+      };
+    };
+  };
+  linkTable: {
+    supertitle: string;
+    title: string;
+    links: {
+      text: string;
+      url: string;
+    }[];
+  };
+  explainerCards: {
+    supertitle: string;
+    title: string;
+    cards: {
+      title: string;
+      text: string;
+      imageUrl: string;
+    }[];
+  };
+  otherPages: {
+    supertitle: string;
+    title: string;
+    linkList: {
+      url: string;
+      title: string;
+      text: string;
+      imageUrl: string;
+    }[];
+  };
+  productCard: {
+    title: string;
+    body: string;
+    buttonText: string;
+    buttonUrl: string;
+  };
+}) {
   const [title, setTitle] = useState<string>("Multiplication sheet");
-  const [number, setNumber] = useState<number>(1);
+  const [factor, setFactor] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
   const [nProblems, setNProblems] = useState<number>(10);
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
+
+  useEffect(
+    () => setTitle(props.worksheetGenerator.title),
+    [props.worksheetGenerator.title]
+  );
+  useEffect(
+    () => setFactor(props.worksheetGenerator.worksheetParameters.factor),
+    [props.worksheetGenerator.worksheetParameters.factor]
+  );
+  useEffect(
+    () => setNDigits(props.worksheetGenerator.worksheetParameters.nDigits),
+    [props.worksheetGenerator.worksheetParameters.nDigits]
+  );
+  useEffect(
+    () => setNProblems(props.worksheetGenerator.worksheetParameters.nProblems),
+    [props.worksheetGenerator.worksheetParameters.nProblems]
+  );
+  useEffect(
+    () =>
+      setOrientation(props.worksheetGenerator.worksheetParameters.orientation),
+    [props.worksheetGenerator.worksheetParameters.orientation]
+  );
 
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
@@ -140,7 +234,7 @@ export default function LandingPageContents() {
       title || DEFAULT_TITLE,
       orientation,
       topic,
-      number,
+      factor,
       multipliers
     ).then((ws) => router.push(`/worksheet/${ws.id}`));
 
@@ -172,8 +266,8 @@ export default function LandingPageContents() {
 
   return (
     <AstroLandingPage
-      title={["8x8 Tables", "Worksheets for Kids"]}
-      subtitle="Boo!"
+      title={[props.heading]}
+      subtitle={props.subheading}
       mobile={false}
       viewports={[
         <LandingPageViewport
@@ -279,14 +373,14 @@ export default function LandingPageContents() {
             </Captioned>
             <Captioned text={topic === "division" ? "Divisor" : "Multiplier"}>
               <UrsorInputField
-                value={number.toString()}
+                value={factor.toString()}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const onlyNumbersString =
                     event.target.value.match(/\d+/)?.[0];
                   const leadingZeroRemovedString = onlyNumbersString?.slice(
                     onlyNumbersString[0] === "0" ? 1 : 0
                   );
-                  setNumber(parseInt(leadingZeroRemovedString ?? "0"));
+                  setFactor(parseInt(leadingZeroRemovedString ?? "0"));
                 }}
                 placeholder="Multiplier"
                 //width="100%"
@@ -365,7 +459,7 @@ export default function LandingPageContents() {
               orientation={orientation}
               topic={topic}
               nDigits={nDigits}
-              number={number}
+              number={factor}
               multipliers={multipliers}
               printDialogOpen={printDialogOpen}
               printDialogCloseCallback={() => setPrintDialogOpen(false)}

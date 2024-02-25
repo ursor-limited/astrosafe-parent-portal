@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
-import { A4_HEIGHT, A4_WIDTH } from "../worksheet/[id]/Worksheet";
+import { A4_HEIGHT, A4_WIDTH } from "../../worksheet/[id]/Worksheet";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
 

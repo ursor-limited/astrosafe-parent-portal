@@ -1,9 +1,9 @@
-{
-  "pageUrl": "https://www.astrosafe.co/learn/8-times-table-worksheet",
+[{
+  "urlId": "8-times-table-worksheet",
   "pageTitle": "this is the text in the url tab 15-70 chars",
   "metaDescription": "a meta description specific for the page 60-320 chars.",
-  "title": "8 Times Table Worksheet",
-  "subtitle": "Save hours when creating worksheets  for your students. Create equations for the 8 times table up to 100 and beyond!",
+  "heading": "8 Times Table Worksheet",
+  "subheading": "Save hours when creating worksheets for your students. Create equations for the 8 times table up to 100 and beyond!",
   "worksheetGenerator": {
     "questionTopic": "multiplication",
     "questionType": "equation",
@@ -23,9 +23,9 @@
     "step3": "C"
   },
   "worksheetPreview": {
-    "sectionSuperTitle": "A",
-    "sectionTitle": "B",
-    "text": "C",
+    "supertitle": "A",
+    "title": "B",
+    "body": "C",
     "worksheetPreviewParameters": {
       "questionTopic": "multiplication",
       "questionType": "chart",
@@ -37,9 +37,9 @@
     }
   },
   "linkTable": {
-    "superTitle": "A",
+    "supertitle": "A",
     "title": "B",
-    "linkList": [
+    "links": [
       {
         "text": "link1",
         "url": "https://www.google.com"
@@ -51,9 +51,9 @@
     ]
   },
   "explainerCards": {
-    "sectionSuperTitle": "A",
-    "sectionTitle": "B",
-    "cardList": [
+    "supertitle": "A",
+    "title": "B",
+    "cards": [
       {
         "title": "title 1",
         "text": "text 1",
@@ -72,33 +72,33 @@
     ]
   },
   "otherPages": {
-    "superTitle": "A",
+    "supertitle": "A",
     "title": "B",
     "linkList": [
       {
         "title": "title 1",
         "text": "text 1",
         "imageUrl": "https://www.google.com",
-        "linkUrl": "https://www.google.com"
+        "url": "https://www.google.com"
       },
       {
         "title": "title 1",
         "text": "text 1",
         "imageUrl": "https://www.google.com",
-        "linkUrl": "https://www.google.com"
+        "url": "https://www.google.com"
       },
       {
         "title": "title 1",
         "text": "text 1",
         "imageUrl": "https://www.google.com",
-        "linkUrl": "https://www.google.com"
+        "url": "https://www.google.com"
       }
     ]
   },
   "productCard": {
     "title": "A",
-    "subText": "B",
+    "body": "B",
     "buttonText": "",
     "buttonUrl": ""
   }
-}
+}]

@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 import Logo from "@/images/logoDark.svg";
-import { FooterList } from "../components/FooterList";
+import { FooterList } from "../../components/FooterList";
 import Image from "next/image";
 
 const PAGES_URLS = [
