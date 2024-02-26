@@ -149,14 +149,14 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: QuestionTopic,
-    number: number,
+    factor: number,
     multipliers: number[]
   ) {
     return post("canvas/worksheet", {
       title,
       orientation,
       topic,
-      number,
+      factor,
       multipliers,
     }).then((response: any) => response.json());
   }

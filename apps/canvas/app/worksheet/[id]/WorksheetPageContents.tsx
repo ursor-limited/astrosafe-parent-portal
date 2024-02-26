@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import EquationWorksheet, { IWorksheet } from "./EquationWorksheet";
+import EquationWorksheet, { IEquationWorksheet } from "./EquationWorksheet";
 import { Typography, UrsorButton } from "ui";
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
@@ -90,7 +90,9 @@ export function TabSwitch(props: {
   );
 }
 
-export default function WorksheetPageContents(props: { details: IWorksheet }) {
+export default function WorksheetPageContents(props: {
+  details: IEquationWorksheet;
+}) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
   const openPrintDialog = useReactToPrint({
@@ -159,7 +161,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
             title={props.details.title}
             topic={props.details.topic}
             orientation={props.details.orientation}
-            number={props.details.number}
+            factor={props.details.factor}
             multipliers={props.details.multipliers}
             printButtonCallback={() => setPrintDialogOpen(true)}
             answers={mode === "markscheme"}

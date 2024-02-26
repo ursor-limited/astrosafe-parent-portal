@@ -40,11 +40,11 @@ export interface NumberBondParameters {
 
 export type EquationOrientation = "horizontal" | "vertical";
 
-export interface IWorksheet {
+export interface IEquationWorksheet {
   title: string;
   orientation: EquationOrientation;
   topic: QuestionTopic;
-  number: number;
+  factor: number;
   multipliers: number[];
 }
 

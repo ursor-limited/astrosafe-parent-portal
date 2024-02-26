@@ -80,6 +80,7 @@ export function WorksheetGeneratorEquationModule(
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
+    setCreationCallback: (cc: () => void) => void;
     title: string;
     topic: QuestionTopic;
     pageIndex: number;
@@ -133,29 +134,38 @@ export function WorksheetGeneratorEquationModule(
     React.ReactNode | undefined
   >(undefined);
 
-  useEffect(
-    () =>
-      setPreviewWorksheet(
-        <EquationWorksheet
-          title={props.title}
-          orientation={orientation}
-          topic={props.topic}
-          nDigits={nDigits}
-          factor={factor}
-          multipliers={multipliers}
-          pageIndex={props.pageIndex}
-        />
-      ),
-    [
-      props.title,
-      props.topic,
-      nDigits,
-      factor,
-      multipliers,
-      props.pageIndex,
-      orientation,
-    ]
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    setPreviewWorksheet(
+      <EquationWorksheet
+        title={props.title}
+        orientation={orientation}
+        topic={props.topic}
+        nDigits={nDigits}
+        factor={factor}
+        multipliers={multipliers}
+        pageIndex={props.pageIndex}
+      />
+    );
+    props.setCreationCallback(() =>
+      ApiController.createWorksheet(
+        props.title || DEFAULT_TITLE,
+        orientation,
+        props.topic,
+        factor,
+        multipliers
+      ).then((ws) => router.push(`/worksheet/${ws.id}`))
+    );
+  }, [
+    props.title,
+    props.topic,
+    nDigits,
+    factor,
+    multipliers,
+    props.pageIndex,
+    orientation,
+  ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);
@@ -274,6 +284,10 @@ export default function WorksheetGenerator(props: {
     React.ReactNode | undefined
   >(undefined);
 
+  const [creationCallback, setCreationCallback] = useState<() => void>(
+    () => null
+  );
+
   return (
     <Stack
       borderRadius="20px"
@@ -357,6 +371,7 @@ export default function WorksheetGenerator(props: {
             callback={(newPreviewWorksheet) =>
               setPreviewWorksheet(newPreviewWorksheet)
             }
+            setCreationCallback={(cc) => setCreationCallback(() => cc)}
             nProblems={nProblems}
             setNProblems={setNProblems}
             setNPages={setNPages}
@@ -395,7 +410,7 @@ export default function WorksheetGenerator(props: {
             />
           ) : null}
           <UrsorButton
-            onClick={() => null}
+            onClick={() => creationCallback()}
             dark
             variant="tertiary"
             endIcon={PencilIcon}
