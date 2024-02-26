@@ -54,6 +54,7 @@ export default function LandingPageContents(props: {
     title: string;
     questionTopic: QuestionTopic;
     questionType: QuestionType;
+    nProblems: number;
     questionTypeParameters: QuestionTypeParameters;
   };
   howItWorks: {
@@ -299,7 +300,7 @@ export default function LandingPageContents(props: {
                     title={pair[1].title}
                     text={pair[1].text}
                     imageUrl={pair[1].imageUrl}
-                    url={pair[0].url}
+                    url={pair[1].url}
                   />
                 ) : null}
               </Stack>
@@ -308,7 +309,11 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <WorksheetGenerator />
+      <WorksheetGenerator
+        questionParameterValues={
+          props.worksheetGenerator.questionTypeParameters
+        }
+      />
     </AstroLandingPage>
   );
 }

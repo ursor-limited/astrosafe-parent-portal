@@ -18,7 +18,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
         questionTopic: details.worksheetGenerator
           .questionTopic as QuestionTopic,
         questionType: details.worksheetGenerator.questionType as QuestionType,
-        worksheetParameters: {
+        questionTypeParameters: {
           ...details.worksheetGenerator.worksheetParameters,
           orientation: details.worksheetGenerator.worksheetParameters
             .orientation as EquationOrientation,

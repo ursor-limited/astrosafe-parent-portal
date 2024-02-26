@@ -31,13 +31,11 @@ export type QuestionTypeParameters = EquationParameters | NumberBondParameters;
 export interface EquationParameters {
   factor: number;
   nDigits: number;
-  nProblems: number;
   orientation: EquationOrientation;
 }
 
 export interface NumberBondParameters {
   result: number;
-  nProblems: number;
 }
 
 export type EquationOrientation = "horizontal" | "vertical";

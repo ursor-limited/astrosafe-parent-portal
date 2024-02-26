@@ -74,28 +74,65 @@ const CategorySelectionButton = (props: {
   );
 };
 
-export function EquationWorksheetGeneratorSettings(
+export function WorksheetGeneratorEquationModule(
   props: EquationParameters & {
-    callback: (newValues: EquationParameters) => void;
+    callback: (newValue: Partial<EquationParameters>) => void;
     nProblems: number;
     setNProblems: (n: number) => void;
+    setNPages: (n: number) => void;
     topic: QuestionTopic;
   }
 ) {
+  const [multipliers, setMultipliers] = useState<number[]>([]);
+  useEffect(() => {
+    const fullsetSize = Math.pow(10, props.nDigits);
+    const fullSets = _(Math.floor(props.nProblems / fullsetSize))
+      .range()
+      .flatMap(() => _.shuffle(_.range(fullsetSize + 1)))
+      .value();
+    const partialSet = _.sampleSize(
+      _.range(fullsetSize + 1),
+      props.nProblems % fullsetSize
+    );
+    setMultipliers([...fullSets, ...partialSet]);
+  }, [props.nDigits, props.nProblems]);
+
+  //const [nPages, setNPages] = useState<number>(0);
+  useEffect(
+    () =>
+      props.setNPages(
+        1 +
+          Math.ceil(
+            (props.nProblems -
+              (props.topic === "division"
+                ? 12
+                : props.orientation === "horizontal"
+                ? 16
+                : 20)) /
+              (props.topic === "division"
+                ? 12
+                : props.orientation === "horizontal"
+                ? 20
+                : 24)
+          )
+      ),
+    [props.nProblems, props.orientation, props.topic]
+  );
+
   return (
-    <Stack flex={1}>
+    <Stack flex={1} spacing="16px">
       <Stack direction="row" spacing="20px">
         <Captioned text="Orientation">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={orientation === "horizontal"}
-              onClick={() => setOrientation("horizontal")}
+              selected={props.orientation === "horizontal"}
+              onClick={() => props.callback({ orientation: "horizontal" })}
             >
               Horizontal
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={orientation === "vertical"}
-              onClick={() => setOrientation("vertical")}
+              selected={props.orientation === "vertical"}
+              onClick={() => props.callback({ orientation: "vertical" })}
             >
               Vertical
             </CategorySelectionButton>
@@ -103,16 +140,17 @@ export function EquationWorksheetGeneratorSettings(
         </Captioned>
         <Captioned text={props.topic === "division" ? "Divisor" : "Multiplier"}>
           <UrsorInputField
-            value={factor.toString()}
+            value={props.factor.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
               const leadingZeroRemovedString = onlyNumbersString?.slice(
                 onlyNumbersString[0] === "0" ? 1 : 0
               );
-              setFactor(parseInt(leadingZeroRemovedString ?? "0"));
+              props.callback({
+                factor: parseInt(leadingZeroRemovedString ?? "0"),
+              });
             }}
             placeholder="Multiplier"
-            //width="100%"
             leftAlign
             boldValue
             backgroundColor="rgb(255,255,255)"
@@ -123,20 +161,32 @@ export function EquationWorksheetGeneratorSettings(
         <Captioned text="Number of digits">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={nDigits === 1}
-              onClick={() => setNDigits(1)}
+              selected={props.nDigits === 1}
+              onClick={() =>
+                props.callback({
+                  nDigits: 1,
+                })
+              }
             >
               1
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={nDigits === 2}
-              onClick={() => setNDigits(2)}
+              selected={props.nDigits === 2}
+              onClick={() =>
+                props.callback({
+                  nDigits: 2,
+                })
+              }
             >
               2
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={nDigits === 3}
-              onClick={() => setNDigits(3)}
+              selected={props.nDigits === 3}
+              onClick={() =>
+                props.callback({
+                  nDigits: 3,
+                })
+              }
             >
               3
             </CategorySelectionButton>
@@ -171,60 +221,27 @@ export function EquationWorksheetGeneratorSettings(
   );
 }
 
-export default function EquationWorksheetGenerator() {
-  const [topic, setTopic] = useState<QuestionTopic>("multiplication");
+export default function WorksheetGenerator(props: {
+  questionParameterValues: QuestionTypeParameters;
+}) {
+  const [topic, setTopic] = useState<QuestionTopic>("addition");
   const [questionType, setQuestionType] = useState<QuestionType>("equation");
   const [title, setTitle] = useState<string>("Multiplication sheet");
   const [nProblems, setNProblems] = useState<number>(10);
 
   const router = useRouter();
 
-  //   const [equationPa, setQuestionParameterValues] = useState<
-  //     QuestionTypeParameters | undefined
-  //   >(undefined);
+  const [questionParameterValues, setQuestionParameterValues] = useState<
+    QuestionTypeParameters | undefined
+  >(undefined);
+  useEffect(
+    () => setQuestionParameterValues(props.questionParameterValues),
+    [props.questionParameterValues]
+  );
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
 
-  const [factor, setFactor] = useState<number>(1);
-  const [nDigits, setNDigits] = useState<number>(1);
-  const [orientation, setOrientation] =
-    useState<EquationOrientation>("horizontal");
-
-  const [multipliers, setMultipliers] = useState<number[]>([]);
-  useEffect(() => {
-    const fullsetSize = Math.pow(10, nDigits);
-    const fullSets = _(Math.floor(nProblems / fullsetSize))
-      .range()
-      .flatMap(() => _.shuffle(_.range(fullsetSize + 1)))
-      .value();
-    const partialSet = _.sampleSize(
-      _.range(fullsetSize + 1),
-      nProblems % fullsetSize
-    );
-    setMultipliers([...fullSets, ...partialSet]);
-  }, [nDigits, nProblems]);
-
   const [nPages, setNPages] = useState<number>(0);
-  useEffect(
-    () =>
-      setNPages(
-        1 +
-          Math.ceil(
-            (nProblems -
-              (topic === "division"
-                ? 12
-                : orientation === "horizontal"
-                ? 16
-                : 20)) /
-              (topic === "division"
-                ? 12
-                : orientation === "horizontal"
-                ? 20
-                : 24)
-          )
-      ),
-    [nProblems, orientation, topic]
-  );
 
   return (
     <Stack
@@ -301,93 +318,23 @@ export default function EquationWorksheetGenerator() {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack flex={1}>
-          <Stack direction="row" spacing="20px">
-            <Captioned text="Orientation">
-              <Stack direction="row" spacing="10px">
-                <CategorySelectionButton
-                  selected={orientation === "horizontal"}
-                  onClick={() => setOrientation("horizontal")}
-                >
-                  Horizontal
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={orientation === "vertical"}
-                  onClick={() => setOrientation("vertical")}
-                >
-                  Vertical
-                </CategorySelectionButton>
-              </Stack>
-            </Captioned>
-            <Captioned text={topic === "division" ? "Divisor" : "Multiplier"}>
-              <UrsorInputField
-                value={factor.toString()}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  const onlyNumbersString =
-                    event.target.value.match(/\d+/)?.[0];
-                  const leadingZeroRemovedString = onlyNumbersString?.slice(
-                    onlyNumbersString[0] === "0" ? 1 : 0
-                  );
-                  setFactor(parseInt(leadingZeroRemovedString ?? "0"));
-                }}
-                placeholder="Multiplier"
-                //width="100%"
-                leftAlign
-                boldValue
-                backgroundColor="rgb(255,255,255)"
-              />
-            </Captioned>
-          </Stack>
-          <Stack direction="row" spacing="20px">
-            <Captioned text="Number of digits">
-              <Stack direction="row" spacing="10px">
-                <CategorySelectionButton
-                  selected={nDigits === 1}
-                  onClick={() => setNDigits(1)}
-                >
-                  1
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nDigits === 2}
-                  onClick={() => setNDigits(2)}
-                >
-                  2
-                </CategorySelectionButton>
-                <CategorySelectionButton
-                  selected={nDigits === 3}
-                  onClick={() => setNDigits(3)}
-                >
-                  3
-                </CategorySelectionButton>
-              </Stack>
-            </Captioned>
-            <Captioned text="Amount of problems">
-              <UrsorInputField
-                value={nProblems.toString()}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  const onlyNumbersString =
-                    event.target.value.match(/\d+/)?.[0];
-                  const leadingZeroRemovedString = onlyNumbersString?.slice(
-                    onlyNumbersString[0] === "0" ? 1 : 0
-                  );
-                  setNProblems(
-                    Math.min(
-                      leadingZeroRemovedString
-                        ? parseInt(leadingZeroRemovedString)
-                        : 0,
-                      MAX_N_PROBLEMS
-                    )
-                  );
-                }}
-                placeholder="Number of digits"
-                width="100%"
-                leftAlign
-                boldValue
-                backgroundColor="rgb(255,255,255)"
-              />
-            </Captioned>
-          </Stack>
-        </Stack>
+        {questionParameterValues &&
+        topic === "addition" &&
+        questionType === "equation" ? (
+          <WorksheetGeneratorEquationModule
+            {...(questionParameterValues as EquationParameters)}
+            callback={(newValues) =>
+              setQuestionParameterValues({
+                ...questionParameterValues,
+                ...newValues,
+              })
+            }
+            nProblems={nProblems}
+            setNProblems={setNProblems}
+            setNPages={setNPages}
+            topic={topic}
+          />
+        ) : null}
       </Stack>
       <Stack
         minWidth="242px"
@@ -418,9 +365,10 @@ export default function EquationWorksheetGenerator() {
         </Stack>
         <Stack />
         <Stack spacing="19px">
-          {(topic === "division" && nProblems > 12) ||
+          {/* {(topic === "division" && nProblems > 12) ||
           (orientation === "horizontal" && nProblems > 16) ||
-          (orientation === "vertical" && nProblems > 20) ? (
+          (orientation === "vertical" && nProblems > 20) ? ( */}
+          {nPages > 1 ? (
             <PageSelector
               pageIndex={selectedPageIndex}
               back={() => setSelectedPageIndex(selectedPageIndex - 1)}
@@ -429,7 +377,7 @@ export default function EquationWorksheetGenerator() {
             />
           ) : null}
           <UrsorButton
-            onClick={submitCreation}
+            onClick={() => null}
             dark
             variant="tertiary"
             endIcon={PencilIcon}

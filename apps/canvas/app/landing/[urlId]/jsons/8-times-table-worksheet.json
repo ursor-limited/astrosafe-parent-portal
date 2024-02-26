@@ -8,10 +8,10 @@
     "questionTopic": "multiplication",
     "questionType": "equation",
     "title": "8 Times Table",
+    "nProblems": 20,
     "worksheetParameters": {
       "factor": 8,
       "nDigits": 2,
-      "nProblems": 20,
       "orientation": "horizontal"
     }
   },
