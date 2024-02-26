@@ -271,12 +271,21 @@ export default function LandingPageContents(props: {
       mobile={false}
       viewports={[
         <LandingPageViewport
-          key="multiplication"
-          supertitle="Time-table chart"
-          subtitle="Add some engaging copy here, man."
-          title="Times-table chart"
+          key="worksheetPreview"
+          supertitle={props.worksheetPreview.supertitle}
+          title={props.worksheetPreview.title}
         >
-          <MultiplicationTable />
+          <Stack direction="row" spacing="45px">
+            <MultiplicationTable />
+            <Stack spacing="10px" pt="74px" maxWidth="503px">
+              {props.worksheetPreview.body.split("\n").map((paragraph) => (
+                <Typography key={paragraph} color={PALETTE.secondary.grey[4]}>
+                  {paragraph}
+                </Typography>
+              ))}
+              <UrsorButton size="large">Download chart</UrsorButton>
+            </Stack>
+          </Stack>
         </LandingPageViewport>,
       ]}
     >
