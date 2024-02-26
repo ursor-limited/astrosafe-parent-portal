@@ -6,8 +6,6 @@ import _ from "lodash";
 //import { Header } from "@/app/components/Header";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
-import LandingPageViewport from "./LandingPageViewport";
-import { IntroSquare2 } from "./IntroSquare2";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 

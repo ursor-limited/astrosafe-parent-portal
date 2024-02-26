@@ -53,21 +53,22 @@
   "explainerCards": {
     "supertitle": "A",
     "title": "B",
+    "body": "Buu!",
     "cards": [
       {
-        "title": "title 1",
-        "text": "text 1",
-        "imageUrl": "https://www.google.com"
+        "title": "Buu!",
+        "text": "I’ve always felt that my best recipes come from real life, from discoveries I make in the kitchen when I’m strapped for time and ingredients. One mezzanotte, I tossed thin spaghetti with chopped capers and umeboshi.",
+        "imageUrl": "https://static01.nyt.com/images/2024/02/25/multimedia/25nytmag-mars-hp-poster-jklb/25nytmag-mars-hp-poster-jklb-superJumbo.jpg?quality=75&auto=webp"
       },
       {
-        "title": "title 1",
-        "text": "text 1",
-        "imageUrl": "https://www.google.com"
+        "title": "Boooo!",
+        "text": "This complicates the work of the United States and moderate Arab states, which are trying to engineer a plan for “after Gaza” — a crucial step in making sure that Gaza has a chance at stability once the fighting stops.",
+        "imageUrl": "https://hs.mediadelivery.fi/img/658/bc409c0b90984fbe29bd5e6d2420bd43.jpg.webp"
       },
       {
-        "title": "title 1",
-        "text": "text 1",
-        "imageUrl": "https://www.google.com"
+        "title": "Hey man!",
+        "text": "I believe it’s because, in a world in which tribalism is pulling us apart, the completely imaginary tribalism of the sports fan is a necessary balm. ",
+        "imageUrl": "https://images.cdn.yle.fi/image/upload/ar_1.5,c_fill,g_faces,h_424,w_636/dpr_2.0/q_auto:eco/f_auto/fl_lossy/v1708592532/39-124779165d70d31aafe6"
       }
     ]
   },

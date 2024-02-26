@@ -18,6 +18,7 @@ import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
 import PageSelector from "./PageSelector";
 import UrsorSelect from "../../components/UrsorSelect";
+import ExplainerCard from "./ExplainerCard";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -146,6 +147,7 @@ export default function LandingPageContents(props: {
   explainerCards: {
     supertitle: string;
     title: string;
+    body: string;
     cards: {
       title: string;
       text: string;
@@ -264,6 +266,8 @@ export default function LandingPageContents(props: {
     [nProblems, orientation, topic]
   );
 
+  const [mobile, setMobile] = useState<boolean>(false);
+
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -285,6 +289,38 @@ export default function LandingPageContents(props: {
               ))}
               <UrsorButton size="large">Download chart</UrsorButton>
             </Stack>
+          </Stack>
+        </LandingPageViewport>,
+        <LandingPageViewport
+          key="explainerCards"
+          supertitle={props.explainerCards.supertitle}
+          subtitle={props.explainerCards.body}
+          title="Why use AstroPedia?"
+          mobile={mobile}
+        >
+          <Stack
+            direction={mobile ? "column" : "row"}
+            spacing={mobile ? "16px" : "22px"}
+          >
+            <ExplainerCard
+              imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
+              title={props.explainerCards?.cards?.[0]?.title}
+              text={props.explainerCards?.cards?.[0]?.text}
+            />
+            {props.explainerCards?.cards?.[1] ? (
+              <ExplainerCard
+                imageUrl={props.explainerCards.cards[1]?.imageUrl}
+                title={props.explainerCards.cards[1]?.title}
+                text={props.explainerCards.cards[1]?.text}
+              />
+            ) : null}
+            {props.explainerCards?.cards?.[2] ? (
+              <ExplainerCard
+                imageUrl={props.explainerCards.cards[2]?.imageUrl}
+                title={props.explainerCards.cards[2]?.title}
+                text={props.explainerCards.cards[2]?.text}
+              />
+            ) : null}
           </Stack>
         </LandingPageViewport>,
       ]}
