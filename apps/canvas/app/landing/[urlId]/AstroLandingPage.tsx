@@ -17,13 +17,7 @@ export default function AstroLandingPage(props: {
   children: React.ReactNode;
 }) {
   return (
-    <Stack
-      width="100vw"
-      height="100vh"
-      pt="100px"
-      alignItems="center"
-      overflow="scroll"
-    >
+    <Stack width="100vw" height="100vh" pt="100px" alignItems="center">
       {/* <Header mobile={props.mobile} /> */}
       <Stack
         spacing="36px"
