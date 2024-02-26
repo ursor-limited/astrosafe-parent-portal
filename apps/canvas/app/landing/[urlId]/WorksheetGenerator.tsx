@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import UrsorSelect from "@/app/components/UrsorSelect";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EquationWorksheet, {
   EquationOrientation,
   EquationParameters,
@@ -76,16 +76,27 @@ const CategorySelectionButton = (props: {
 
 export function WorksheetGeneratorEquationModule(
   props: EquationParameters & {
-    callback: (newValue: Partial<EquationParameters>) => void;
+    callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
+    title: string;
     topic: QuestionTopic;
+    pageIndex: number;
   }
 ) {
+  const [orientation, setOrientation] =
+    useState<EquationOrientation>("horizontal");
+  const [factor, setFactor] = useState<number>(1);
+  const [nDigits, setNDigits] = useState<number>(1);
+
+  useEffect(() => setOrientation(props.orientation), [props.orientation]);
+  useEffect(() => setNDigits(props.nDigits), [props.nDigits]);
+  useEffect(() => setFactor(props.factor), [props.factor]);
+
   const [multipliers, setMultipliers] = useState<number[]>([]);
   useEffect(() => {
-    const fullsetSize = Math.pow(10, props.nDigits);
+    const fullsetSize = Math.pow(10, nDigits);
     const fullSets = _(Math.floor(props.nProblems / fullsetSize))
       .range()
       .flatMap(() => _.shuffle(_.range(fullsetSize + 1)))
@@ -95,9 +106,8 @@ export function WorksheetGeneratorEquationModule(
       props.nProblems % fullsetSize
     );
     setMultipliers([...fullSets, ...partialSet]);
-  }, [props.nDigits, props.nProblems]);
+  }, [nDigits, props.nProblems]);
 
-  //const [nPages, setNPages] = useState<number>(0);
   useEffect(
     () =>
       props.setNPages(
@@ -106,18 +116,53 @@ export function WorksheetGeneratorEquationModule(
             (props.nProblems -
               (props.topic === "division"
                 ? 12
-                : props.orientation === "horizontal"
+                : orientation === "horizontal"
                 ? 16
                 : 20)) /
               (props.topic === "division"
                 ? 12
-                : props.orientation === "horizontal"
+                : orientation === "horizontal"
                 ? 20
                 : 24)
           )
       ),
-    [props.nProblems, props.orientation, props.topic]
+    [props.nProblems, orientation, props.topic]
   );
+
+  const [previewWorksheet, setPreviewWorksheet] = useState<
+    React.ReactNode | undefined
+  >(undefined);
+
+  useEffect(
+    () =>
+      setPreviewWorksheet(
+        <EquationWorksheet
+          // ref={setPrintableRef}
+          title={props.title}
+          orientation={orientation}
+          topic={props.topic}
+          nDigits={nDigits}
+          factor={factor}
+          // number={factor}
+          multipliers={multipliers}
+          // printDialogOpen={printDialogOpen}
+          // printDialogCloseCallback={() => setPrintDialogOpen(false)}
+          pageIndex={props.pageIndex}
+        />
+      ),
+    [
+      props.title,
+      props.topic,
+      nDigits,
+      factor,
+      multipliers,
+      props.pageIndex,
+      orientation,
+    ]
+  );
+  useEffect(() => {
+    previewWorksheet && props.callback(previewWorksheet);
+  }, [previewWorksheet]);
 
   return (
     <Stack flex={1} spacing="16px">
@@ -125,14 +170,14 @@ export function WorksheetGeneratorEquationModule(
         <Captioned text="Orientation">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={props.orientation === "horizontal"}
-              onClick={() => props.callback({ orientation: "horizontal" })}
+              selected={orientation === "horizontal"}
+              onClick={() => setOrientation("horizontal")}
             >
               Horizontal
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={props.orientation === "vertical"}
-              onClick={() => props.callback({ orientation: "vertical" })}
+              selected={orientation === "vertical"}
+              onClick={() => setOrientation("vertical")}
             >
               Vertical
             </CategorySelectionButton>
@@ -140,15 +185,13 @@ export function WorksheetGeneratorEquationModule(
         </Captioned>
         <Captioned text={props.topic === "division" ? "Divisor" : "Multiplier"}>
           <UrsorInputField
-            value={props.factor.toString()}
+            value={factor.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
               const leadingZeroRemovedString = onlyNumbersString?.slice(
                 onlyNumbersString[0] === "0" ? 1 : 0
               );
-              props.callback({
-                factor: parseInt(leadingZeroRemovedString ?? "0"),
-              });
+              setFactor(parseInt(leadingZeroRemovedString ?? "0"));
             }}
             placeholder="Multiplier"
             leftAlign
@@ -161,32 +204,20 @@ export function WorksheetGeneratorEquationModule(
         <Captioned text="Number of digits">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={props.nDigits === 1}
-              onClick={() =>
-                props.callback({
-                  nDigits: 1,
-                })
-              }
+              selected={nDigits === 1}
+              onClick={() => setNDigits(1)}
             >
               1
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={props.nDigits === 2}
-              onClick={() =>
-                props.callback({
-                  nDigits: 2,
-                })
-              }
+              selected={nDigits === 2}
+              onClick={() => setNDigits(2)}
             >
               2
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={props.nDigits === 3}
-              onClick={() =>
-                props.callback({
-                  nDigits: 3,
-                })
-              }
+              selected={nDigits === 3}
+              onClick={() => setNDigits(3)}
             >
               3
             </CategorySelectionButton>
@@ -242,6 +273,10 @@ export default function WorksheetGenerator(props: {
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
 
   const [nPages, setNPages] = useState<number>(0);
+
+  const [previewWorksheet, setPreviewWorksheet] = useState<
+    React.ReactNode | undefined
+  >(undefined);
 
   return (
     <Stack
@@ -323,16 +358,15 @@ export default function WorksheetGenerator(props: {
         questionType === "equation" ? (
           <WorksheetGeneratorEquationModule
             {...(questionParameterValues as EquationParameters)}
-            callback={(newValues) =>
-              setQuestionParameterValues({
-                ...questionParameterValues,
-                ...newValues,
-              })
+            callback={(newPreviewWorksheet) =>
+              setPreviewWorksheet(newPreviewWorksheet)
             }
             nProblems={nProblems}
             setNProblems={setNProblems}
             setNPages={setNPages}
+            title={title}
             topic={topic}
+            pageIndex={selectedPageIndex}
           />
         ) : null}
       </Stack>
@@ -349,19 +383,7 @@ export default function WorksheetGenerator(props: {
           left={0}
           overflow="hidden"
         >
-          <EquationWorksheet
-            // ref={setPrintableRef}
-            title={title}
-            // orientation={orientation}
-            topic={topic}
-            {...questionParameterValues}
-            // nDigits={nDigits}
-            // number={factor}
-            // multipliers={multipliers}
-            // printDialogOpen={printDialogOpen}
-            // printDialogCloseCallback={() => setPrintDialogOpen(false)}
-            pageIndex={selectedPageIndex}
-          />
+          {previewWorksheet}
         </Stack>
         <Stack />
         <Stack spacing="19px">

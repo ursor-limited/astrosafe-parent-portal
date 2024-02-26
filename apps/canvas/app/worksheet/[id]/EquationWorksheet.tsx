@@ -280,7 +280,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title: string;
-      number: number;
+      factor: number;
       multipliers: number[];
       topic: QuestionTopic;
       orientation: EquationOrientation;
@@ -423,14 +423,14 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                         props.orientation === "vertical" ? (
                           <LongDivisionVerticalQuestion
                             key={x}
-                            dividend={props.number}
+                            dividend={props.factor}
                             answer={x}
                             showAnswer={!!props.answers}
                           />
                         ) : (
                           <LongDivisionHorizontalQuestion
                             key={x}
-                            dividend={props.number}
+                            dividend={props.factor}
                             answer={x}
                             showAnswer={!!props.answers}
                           />
@@ -438,7 +438,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                       ) : props.orientation === "horizontal" ? (
                         <HorizontalEquationQuestion
                           key={x}
-                          number={props.number}
+                          number={props.factor}
                           multiplier={x}
                           answer={!!props.answers}
                           topic={props.topic}
@@ -448,7 +448,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                       ) : (
                         <VerticalMultiplicationQuestion
                           key={x}
-                          number={props.number}
+                          number={props.factor}
                           multiplier={x}
                           answer={!!props.answers}
                           topic={props.topic}
