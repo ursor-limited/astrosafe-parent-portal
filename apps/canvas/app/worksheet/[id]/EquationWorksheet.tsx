@@ -24,19 +24,33 @@ export interface IWorksheetQuestion {
   multiplier: number;
 }
 
-export type QuestionType = "equation";
+export type QuestionType = "equation" | "numberBond";
+
+export type QuestionTypeParameters = EquationParameters | NumberBondParameters;
+
+export interface EquationParameters {
+  factor: number;
+  nDigits: number;
+  nProblems: number;
+  orientation: EquationOrientation;
+}
+
+export interface NumberBondParameters {
+  result: number;
+  nProblems: number;
+}
 
 export type EquationOrientation = "horizontal" | "vertical";
 
 export interface IWorksheet {
   title: string;
   orientation: EquationOrientation;
-  topic: EquationTopic;
+  topic: QuestionTopic;
   number: number;
   multipliers: number[];
 }
 
-export type EquationTopic =
+export type QuestionTopic =
   | "addition"
   | "subtraction"
   | "multiplication"
@@ -47,7 +61,7 @@ const HorizontalEquationQuestion = (props: {
   multiplier: number;
   answer: boolean;
   inputValue?: number;
-  topic?: EquationTopic;
+  topic?: QuestionTopic;
   changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
@@ -121,7 +135,7 @@ const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
-  topic?: EquationTopic;
+  topic?: QuestionTopic;
 }) => (
   <Stack
     key={props.multiplier}
@@ -264,13 +278,13 @@ const LongDivisionHorizontalQuestion = (props: {
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-const Worksheet = forwardRef<HTMLDivElement, any>(
+const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title: string;
       number: number;
       multipliers: number[];
-      topic: EquationTopic;
+      topic: QuestionTopic;
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
@@ -464,6 +478,6 @@ const Worksheet = forwardRef<HTMLDivElement, any>(
   }
 );
 
-Worksheet.displayName = "Worksheet";
+EquationWorksheet.displayName = "Worksheet";
 
-export default Worksheet;
+export default EquationWorksheet;

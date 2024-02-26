@@ -4,9 +4,9 @@ import LandingPageContents from "./LandingPageContents";
 import landingPageDetails from "./jsons";
 import {
   EquationOrientation,
-  EquationTopic,
+  QuestionTopic,
   QuestionType,
-} from "@/app/worksheet/[id]/Worksheet";
+} from "@/app/worksheet/[id]/EquationWorksheet";
 
 async function LandingPage({ params }: { params: { urlId: string } }) {
   const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
@@ -16,7 +16,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
       worksheetGenerator={{
         ...details.worksheetGenerator,
         questionTopic: details.worksheetGenerator
-          .questionTopic as EquationTopic,
+          .questionTopic as QuestionTopic,
         questionType: details.worksheetGenerator.questionType as QuestionType,
         worksheetParameters: {
           ...details.worksheetGenerator.worksheetParameters,
@@ -29,7 +29,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
         worksheetPreviewParameters: {
           ...details.worksheetPreview.worksheetPreviewParameters,
           questionTopic: details.worksheetPreview.worksheetPreviewParameters
-            .questionTopic as EquationTopic,
+            .questionTopic as QuestionTopic,
           questionType: details.worksheetPreview.worksheetPreviewParameters
             .questionType as QuestionType,
         },

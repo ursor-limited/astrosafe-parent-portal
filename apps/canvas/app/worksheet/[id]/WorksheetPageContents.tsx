@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import Worksheet, { IWorksheet } from "./Worksheet";
+import EquationWorksheet, { IWorksheet } from "./EquationWorksheet";
 import { Typography, UrsorButton } from "ui";
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
@@ -154,7 +154,7 @@ export default function WorksheetPageContents(props: { details: IWorksheet }) {
             </UrsorButton>
           </Stack> */}
           <TabSwitch selected={mode} callback={(m) => setMode(m)} />
-          <Worksheet
+          <EquationWorksheet
             ref={setPrintableRef}
             title={props.details.title}
             topic={props.details.topic}
