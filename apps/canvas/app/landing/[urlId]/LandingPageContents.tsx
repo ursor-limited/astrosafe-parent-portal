@@ -140,6 +140,8 @@ export default function LandingPageContents(props: {
   linkTable: {
     supertitle: string;
     title: string;
+    body: string;
+    tableHeading: string;
     links: {
       text: string;
       url: string;
@@ -293,6 +295,87 @@ export default function LandingPageContents(props: {
           </Stack>
         </LandingPageViewport>,
         <LandingPageViewport
+          key="linkTable"
+          supertitle={props.linkTable.supertitle}
+          title={props.linkTable.title}
+          subtitle={props.linkTable.body}
+          mobile={mobile}
+        >
+          <Stack
+            width="990px"
+            borderRadius="12px"
+            overflow="hidden"
+            border={`1px solid ${PALETTE.secondary.grey[2]}`}
+          >
+            <Stack
+              bgcolor={PALETTE.secondary.purple[2]}
+              justifyContent="center"
+              alignItems="center"
+              height="56px"
+            >
+              <Typography bold color="rgb(255,255,255)">
+                {props.linkTable.tableHeading}
+              </Typography>
+            </Stack>
+            <Stack spacing={mobile ? "16px" : "22px"}>
+              {_.chunk(props.linkTable.links, 2).map((pair, i) => (
+                <Stack
+                  key={i}
+                  direction="row"
+                  height="57px"
+                  alignItems="center"
+                >
+                  <Stack
+                    flex={1}
+                    height="100%"
+                    justifyContent="center"
+                    px="10px"
+                    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                  >
+                    <a
+                      target="_blank"
+                      href={pair[0].url}
+                      style={{
+                        textDecoration: "none",
+                        color: PALETTE.secondary.purple[2],
+                      }}
+                      rel="noreferrer"
+                    >
+                      <Stack flex={1}>
+                        <Typography bold>{pair[0].text}</Typography>
+                      </Stack>
+                    </a>
+                  </Stack>
+                  {pair[1] ? (
+                    <Stack
+                      flex={1}
+                      height="100%"
+                      justifyContent="center"
+                      px="10px"
+                      border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                      borderLeft="none"
+                    >
+                      <a
+                        target="_blank"
+                        href={pair[1].url}
+                        style={{
+                          textDecoration: "none",
+                          color: PALETTE.secondary.purple[2],
+                        }}
+                        rel="noreferrer"
+                      >
+                        <Stack flex={1}>
+                          <Typography bold>{pair[1].text}</Typography>
+                        </Stack>
+                      </a>
+                    </Stack>
+                  ) : null}
+                </Stack>
+              ))}
+            </Stack>
+          </Stack>
+        </LandingPageViewport>,
+        <LandingPageViewport
           key="explainerCards"
           supertitle={props.explainerCards.supertitle}
           subtitle={props.explainerCards.body}
@@ -337,12 +420,14 @@ export default function LandingPageContents(props: {
                   title={pair[0].title}
                   text={pair[0].text}
                   imageUrl={pair[0].imageUrl}
+                  url={pair[0].url}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
                     title={pair[1].title}
                     text={pair[1].text}
                     imageUrl={pair[1].imageUrl}
+                    url={pair[0].url}
                   />
                 ) : null}
               </Stack>

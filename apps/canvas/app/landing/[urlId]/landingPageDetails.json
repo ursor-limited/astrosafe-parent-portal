@@ -39,6 +39,8 @@
   "linkTable": {
     "supertitle": "A",
     "title": "B",
+    "body": "Buu!",
+    "tableHeading": "BOOOOO",
     "links": [
       {
         "text": "link1",
