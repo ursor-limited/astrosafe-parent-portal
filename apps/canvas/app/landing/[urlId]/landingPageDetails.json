@@ -18,9 +18,9 @@
   "howItWorks": {
     "supertitle": "A",
     "title": "B",
-    "step1": "A",
-    "step2": "B",
-    "step3": "C"
+    "step1": { "title": "Hooo", "body": "Goooo" },
+    "step2": { "title": "Hooo", "body": "Goooo" },
+    "step3": { "title": "Hooo", "body": "Goooo" }
   },
   "worksheetPreview": {
     "supertitle": "A",

@@ -84,7 +84,7 @@ export default function AstroLandingPage(props: {
           <SpaceGlow width="auto" height="auto" />
         </Stack>
         <Stack
-          spacing="150px"
+          spacing="180px"
           bgcolor="rgb(255,255,255)"
           pt={props.mobile ? "25px" : 0}
           zIndex={1}

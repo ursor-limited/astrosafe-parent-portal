@@ -20,6 +20,7 @@ import PageSelector from "./PageSelector";
 import UrsorSelect from "../../components/UrsorSelect";
 import ExplainerCard from "./ExplainerCard";
 import OtherPageCard from "./OtherPageCard";
+import { IntroSteps } from "./IntroSteps";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -119,9 +120,9 @@ export default function LandingPageContents(props: {
   howItWorks: {
     supertitle: string;
     title: string;
-    step1: string;
-    step2: string;
-    step3: string;
+    step1: { body: string; title: string };
+    step2: { body: string; title: string };
+    step3: { body: string; title: string };
   };
   worksheetPreview: {
     supertitle: string;
@@ -277,6 +278,18 @@ export default function LandingPageContents(props: {
       subtitle={props.subheading}
       mobile={false}
       viewports={[
+        <LandingPageViewport
+          key="howItWorks"
+          supertitle={props.howItWorks.supertitle}
+          title={props.howItWorks.title}
+        >
+          <IntroSteps
+            step1={props.howItWorks.step1}
+            step2={props.howItWorks.step2}
+            step3={props.howItWorks.step3}
+            mobile={mobile}
+          />
+        </LandingPageViewport>,
         <LandingPageViewport
           key="worksheetPreview"
           supertitle={props.worksheetPreview.supertitle}
