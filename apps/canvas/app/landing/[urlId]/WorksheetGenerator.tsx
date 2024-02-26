@@ -137,16 +137,12 @@ export function WorksheetGeneratorEquationModule(
     () =>
       setPreviewWorksheet(
         <EquationWorksheet
-          // ref={setPrintableRef}
           title={props.title}
           orientation={orientation}
           topic={props.topic}
           nDigits={nDigits}
           factor={factor}
-          // number={factor}
           multipliers={multipliers}
-          // printDialogOpen={printDialogOpen}
-          // printDialogCloseCallback={() => setPrintDialogOpen(false)}
           pageIndex={props.pageIndex}
         />
       ),
