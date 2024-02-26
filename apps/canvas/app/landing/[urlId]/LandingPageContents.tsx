@@ -19,6 +19,7 @@ import LandingPageViewport from "./LandingPageViewport";
 import PageSelector from "./PageSelector";
 import UrsorSelect from "../../components/UrsorSelect";
 import ExplainerCard from "./ExplainerCard";
+import OtherPageCard from "./OtherPageCard";
 
 const TITLE_CHARACTER_LIMIT = 30;
 const DEFAULT_TITLE = "Multiplication Sheet";
@@ -157,7 +158,7 @@ export default function LandingPageContents(props: {
   otherPages: {
     supertitle: string;
     title: string;
-    linkList: {
+    links: {
       url: string;
       title: string;
       text: string;
@@ -321,6 +322,31 @@ export default function LandingPageContents(props: {
                 text={props.explainerCards.cards[2]?.text}
               />
             ) : null}
+          </Stack>
+        </LandingPageViewport>,
+        <LandingPageViewport
+          key="otherPages"
+          supertitle={props.otherPages.supertitle}
+          title={props.otherPages.title}
+          mobile={mobile}
+        >
+          <Stack spacing={mobile ? "16px" : "22px"}>
+            {_.chunk(props.otherPages.links, 2).map((pair, i) => (
+              <Stack key={i} direction="row" spacing={mobile ? "16px" : "22px"}>
+                <OtherPageCard
+                  title={pair[0].title}
+                  text={pair[0].text}
+                  imageUrl={pair[0].imageUrl}
+                />
+                {pair?.[1] ? (
+                  <OtherPageCard
+                    title={pair[1].title}
+                    text={pair[1].text}
+                    imageUrl={pair[1].imageUrl}
+                  />
+                ) : null}
+              </Stack>
+            ))}
           </Stack>
         </LandingPageViewport>,
       ]}
