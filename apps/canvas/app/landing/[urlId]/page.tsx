@@ -1,7 +1,7 @@
 import React from "react";
 import AuthWrapper from "../../components/AuthWrapper";
 import LandingPageContents from "./LandingPageContents";
-import landingPageDetails from "./landingPageDetails.json";
+import landingPageDetails from "./jsons";
 import {
   EquationOrientation,
   EquationTopic,
