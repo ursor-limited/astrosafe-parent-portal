@@ -127,6 +127,8 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
+    console.log(props.both);
+
     const [rows, setRows] = useState<number[][][]>([]);
     useEffect(() => {
       if (props.pairs) {

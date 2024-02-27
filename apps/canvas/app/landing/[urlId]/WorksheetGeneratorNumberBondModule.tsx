@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { Captioned } from "./LandingPageContents";
 import { CategorySelectionButton } from "./WorksheetGenerator";
 import { PALETTE, Typography, UrsorInputField } from "ui";
-import _ from "lodash";
+import _, { fill } from "lodash";
 import NumberBondWorksheet, {
   FIRST_PAGE_ROWS_N,
   NumberBondParameters,
@@ -74,7 +74,7 @@ export function WorksheetGeneratorNumberBondModule(
 
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
-  const [fillIn, setFillIn] = useState<1 | 2>(1);
+  const [both, setBoth] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -85,6 +85,7 @@ export function WorksheetGeneratorNumberBondModule(
         orientation={orientation}
         result={result}
         pairs={pairs}
+        both={both}
         pageIndex={props.pageIndex}
       />
     );
@@ -96,7 +97,7 @@ export function WorksheetGeneratorNumberBondModule(
         pairs
       ).then((ws) => router.push(`/worksheet/${ws.id}`))
     );
-  }, [props.title, result, props.pageIndex, orientation, pairs]);
+  }, [props.title, result, props.pageIndex, orientation, pairs, both]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);
@@ -190,8 +191,8 @@ export function WorksheetGeneratorNumberBondModule(
         <Captioned text="Fill in">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={fillIn === 1}
-              onClick={() => setFillIn(1)}
+              selected={!both}
+              onClick={() => setBoth(false)}
             >
               {/* <Stack direction="row" spacing="5px">
                 <Typography bold sx={{ opacity: 0.4 }}>
@@ -211,8 +212,8 @@ export function WorksheetGeneratorNumberBondModule(
               One
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={fillIn === 2}
-              onClick={() => setFillIn(2)}
+              selected={both}
+              onClick={() => setBoth(true)}
             >
               {/* <Stack direction="row" spacing="5px">
                 <Typography bold>_</Typography>
