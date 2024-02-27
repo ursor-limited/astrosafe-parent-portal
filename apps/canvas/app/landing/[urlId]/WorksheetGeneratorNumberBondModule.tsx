@@ -63,7 +63,9 @@ export function WorksheetGeneratorNumberBondModule(
     () =>
       props.setNPages(
         1 +
-          Math.ceil((props.nProblems - FIRST_PAGE_ROWS_N) / OTHER_PAGES_ROWS_N)
+          Math.ceil(
+            (props.nProblems - FIRST_PAGE_ROWS_N * 2) / (OTHER_PAGES_ROWS_N * 2)
+          )
       ),
     [props.nProblems]
   );

@@ -51,7 +51,7 @@ const HorizontalEquationQuestion = (props: {
 }) => (
   <Stack
     direction="row"
-    width={"260px"}
+    width={props.both ? "292px" : "260px"}
     height="110px"
     justifyContent="space-between"
     alignItems={"flex-end"}
@@ -126,8 +126,6 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         openPrintCardGridDialog();
       }
     }, [printDialogOpen, printableRef]);
-
-    console.log(props.both);
 
     const [rows, setRows] = useState<number[][][]>([]);
     useEffect(() => {
