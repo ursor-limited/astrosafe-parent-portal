@@ -8,14 +8,14 @@ import PageSelector from "./PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
-import landingPageDetails from "./jsons";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
 export type IWorksheet = {
   worksheetId: WorksheetId;
   title: string;
-} & IWorksheetParameters;
+  parameters: IWorksheetParameters;
+};
 
 export type IWorksheetParameters =
   | IEquationWorksheetParameters
@@ -49,6 +49,7 @@ export type WorksheetTopic =
   | "division";
 
 export interface IEquationWorksheetParameters {
+  topic: WorksheetTopic;
   orientation: EquationOrientation;
   factor: number;
   multipliers: number[];

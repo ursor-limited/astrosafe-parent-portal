@@ -10,6 +10,7 @@
     "title": "8 Times Table",
     "nProblems": 20,
     "specificSettings": {
+      "topic": "multiplication",
       "factor": 8,
       "nDigits": 2,
       "orientation": "horizontal"

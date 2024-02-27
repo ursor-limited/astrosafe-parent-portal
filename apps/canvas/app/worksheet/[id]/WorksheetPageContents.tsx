@@ -8,8 +8,12 @@ import EquationWorksheet from "./EquationWorksheet";
 import { Typography, UrsorButton } from "ui";
 import {
   IEquationWorksheetParameters,
+  INumberBondWorksheetParameters,
+  IWorksheet,
+  IWorksheetParameters,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
+import NumberBondWorksheet from "./NumberBondWorksheet";
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
 const SMALL_SWITCH_BUTTON_HEIGHT = 34;
@@ -94,11 +98,7 @@ export function TabSwitch(props: {
   );
 }
 
-export default function WorksheetPageContents(props: {
-  title: string;
-  topic: WorksheetTopic;
-  details: IEquationWorksheetParameters;
-}) {
+export default function WorksheetPageContents(props: IWorksheet) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
   const openPrintDialog = useReactToPrint({
@@ -162,16 +162,31 @@ export default function WorksheetPageContents(props: {
             </UrsorButton>
           </Stack> */}
           <TabSwitch selected={mode} callback={(m) => setMode(m)} />
-          <EquationWorksheet
-            ref={setPrintableRef}
-            title={props.title}
-            topic={props.topic}
-            orientation={props.details.orientation}
-            factor={props.details.factor}
-            multipliers={props.details.multipliers}
-            printButtonCallback={() => setPrintDialogOpen(true)}
-            answers={mode === "markscheme"}
-          />
+          {props.worksheetId === "equation" ? (
+            <EquationWorksheet
+              ref={setPrintableRef}
+              title={props.title}
+              topic={(props.parameters as IEquationWorksheetParameters).topic}
+              orientation={props.parameters.orientation}
+              factor={(props.parameters as IEquationWorksheetParameters).factor}
+              multipliers={
+                (props.parameters as IEquationWorksheetParameters).multipliers
+              }
+              printButtonCallback={() => setPrintDialogOpen(true)}
+              answers={mode === "markscheme"}
+            />
+          ) : props.worksheetId === "numberBond" ? (
+            <NumberBondWorksheet
+              title={props.title}
+              orientation={props.parameters.orientation}
+              result={
+                (props.parameters as INumberBondWorksheetParameters).result
+              }
+              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
+              both={(props.parameters as INumberBondWorksheetParameters).both}
+              answers={mode === "markscheme"}
+            />
+          ) : null}
         </Stack>
         {/* <Stack sx={{ visibility: "hidden", pointerEvents: "none" }}>
           <Worksheet

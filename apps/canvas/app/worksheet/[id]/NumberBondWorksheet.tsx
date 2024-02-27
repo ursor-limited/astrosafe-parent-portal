@@ -303,7 +303,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                           left={x?.[0]}
                           right={x?.[1]}
                           both={props.both}
-                          showAnswer={false}
+                          showAnswer={!!props.answers}
                         />
                       ) : (
                         <VerticalEquationQuestion
@@ -311,7 +311,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                           left={x?.[0]}
                           right={x?.[1]}
                           both={props.both}
-                          showAnswer={false}
+                          showAnswer={!!props.answers}
                         />
                       )}
                     </Stack>

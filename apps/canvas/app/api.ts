@@ -1,4 +1,7 @@
-import { EquationOrientation, WorksheetTopic } from "./landing/[urlId]/WorksheetGenerator";
+import {
+  EquationOrientation,
+  WorksheetTopic,
+} from "./landing/[urlId]/WorksheetGenerator";
 
 export interface IVideo {
   id: string;
@@ -150,10 +153,12 @@ class ApiController {
   ) {
     return post("canvas/worksheet/equation", {
       title,
-      orientation,
-      topic,
-      factor,
-      multipliers,
+      parameters: {
+        orientation,
+        topic,
+        factor,
+        multipliers,
+      },
     }).then((response: any) => response.json());
   }
   static async createNumberBondWorksheet(
@@ -164,9 +169,7 @@ class ApiController {
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
-      orientation,
-      result,
-      pairs,
+      parameters: { orientation, result, pairs },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {

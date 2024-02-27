@@ -22,6 +22,8 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
           ...details.worksheetGenerator.specificSettings,
           orientation: details.worksheetGenerator.specificSettings
             .orientation as EquationOrientation,
+          topic: details.worksheetGenerator.specificSettings
+            .topic as WorksheetTopic,
         },
       }}
       worksheetPreview={{
