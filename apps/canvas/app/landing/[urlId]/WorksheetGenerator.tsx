@@ -8,6 +8,7 @@ import PageSelector from "./PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
+import landingPageDetails from "./jsons";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -25,6 +26,21 @@ export type ISpecificWorksheetGeneratorSettings =
   | INumberBondWorksheetGeneratorSettings;
 
 export type WorksheetId = "equation" | "numberBond";
+
+export const WORKSHEET_TOPIC_WORKSHEET_IDS: Record<
+  WorksheetTopic,
+  WorksheetId[]
+> = {
+  addition: ["equation", "numberBond"],
+  subtraction: ["equation"],
+  multiplication: ["equation"],
+  division: ["equation"],
+};
+
+export const WORKSHEET_ID_DISPLAY_NAMES: Record<WorksheetId, string> = {
+  equation: "Equation",
+  numberBond: "Number bond",
+};
 
 export type WorksheetTopic =
   | "addition"
@@ -129,6 +145,11 @@ export default function WorksheetGenerator(props: {
   useEffect(() => setTitle(props.title), [props.title]);
   useEffect(() => setNProblems(props.nProblems), [props.nProblems]);
 
+  useEffect(() => {
+    !WORKSHEET_TOPIC_WORKSHEET_IDS[topic].includes(worksheetId) &&
+      setWorksheetId(WORKSHEET_TOPIC_WORKSHEET_IDS[topic]?.[0]);
+  }, [topic]);
+
   const [specificSettings, setSpecificSettings] = useState<
     ISpecificWorksheetGeneratorSettings | undefined
   >(undefined);
@@ -205,19 +226,13 @@ export default function WorksheetGenerator(props: {
           <Captioned text="Question type">
             <UrsorSelect
               white
-              items={[
-                {
-                  id: "equation",
-                  value: "Equations",
-                },
-                {
-                  id: "numberBond",
-                  value: "Number bond",
-                },
-              ]}
+              items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
+                id: t,
+                value: WORKSHEET_ID_DISPLAY_NAMES[t],
+              }))}
               selected={[worksheetId]}
-              callback={(qt: string) => {
-                setWorksheetId(qt as WorksheetId);
+              callback={(wid: string) => {
+                setWorksheetId(wid as WorksheetId);
               }}
               width="100%"
             />

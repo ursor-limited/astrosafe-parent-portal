@@ -18,6 +18,8 @@ import NumberBondWorksheet, {
   HORIZONTAL_OTHER_PAGES_ROWS_N,
   VERTICAL_OTHER_PAGES_ROWS_N,
   VERTICAL_FIRST_PAGE_ROWS_N,
+  HORIZONTAL_N_COLUMNS,
+  VERTICAL_N_COLUMNS,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 
@@ -69,15 +71,19 @@ export function WorksheetGeneratorNumberBondModule(
       props.setNPages(
         1 +
           Math.ceil(
-            ((props.nProblems -
+            (props.nProblems -
               (orientation === "horizontal"
                 ? HORIZONTAL_FIRST_PAGE_ROWS_N
                 : VERTICAL_FIRST_PAGE_ROWS_N) *
-                2) /
-              (orientation === "horizontal"
+                (orientation === "horizontal"
+                  ? HORIZONTAL_N_COLUMNS
+                  : VERTICAL_N_COLUMNS)) /
+              ((orientation === "horizontal"
                 ? HORIZONTAL_OTHER_PAGES_ROWS_N
-                : VERTICAL_OTHER_PAGES_ROWS_N)) *
-              2
+                : VERTICAL_OTHER_PAGES_ROWS_N) *
+                (orientation === "horizontal"
+                  ? HORIZONTAL_N_COLUMNS
+                  : VERTICAL_N_COLUMNS))
           )
       ),
     [props.nProblems, orientation]

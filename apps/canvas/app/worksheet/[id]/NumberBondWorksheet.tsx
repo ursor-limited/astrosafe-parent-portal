@@ -12,13 +12,13 @@ import {
   EquationOrientation,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
 
-const HORIZONTAL_N_COLUMNS = 2;
-const VERTICAL_N_COLUMNS = 3;
+export const HORIZONTAL_N_COLUMNS = 2;
+export const VERTICAL_N_COLUMNS = 3;
 
 export const HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
 export const HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
 export const VERTICAL_FIRST_PAGE_ROWS_N = 3;
-export const VERTICAL_OTHER_PAGES_ROWS_N = 3;
+export const VERTICAL_OTHER_PAGES_ROWS_N = 4;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -119,8 +119,8 @@ const VerticalEquationQuestion = (props: {
   showAnswer: boolean;
 }) => (
   <Stack
-    width={"260px"}
-    height="300px"
+    width="260px"
+    height="280px"
     alignItems={"center"}
     justifyContent="center"
     sx={{ breakInside: "avoid" }}
