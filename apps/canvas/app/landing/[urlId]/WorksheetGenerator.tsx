@@ -162,7 +162,7 @@ export default function WorksheetGenerator(props: {
               white
               items={[
                 {
-                  id: "equations",
+                  id: "equation",
                   value: "Equations",
                 },
                 {
@@ -170,7 +170,7 @@ export default function WorksheetGenerator(props: {
                   value: "Number bond",
                 },
               ]}
-              selected={["equations"]}
+              selected={[questionType]}
               callback={(qt: string) => {
                 setQuestionType(qt as QuestionType);
               }}

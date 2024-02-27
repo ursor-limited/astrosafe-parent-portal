@@ -5,14 +5,13 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
-import { QuestionTopic } from "./EquationWorksheet";
 import { DEFAULT_TITLE } from "@/app/landing/[urlId]/WorksheetGenerator";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
 
-export const FIRST_PAGE_ROWS_N = 6;
-export const OTHER_PAGES_ROWS_N = 8;
+export const FIRST_PAGE_ROWS_N = 8;
+export const OTHER_PAGES_ROWS_N = 10;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -37,7 +36,6 @@ export type EquationOrientation = "horizontal" | "vertical";
 
 export interface INumberBondWorksheet {
   title: string;
-  // orientation: EquationOrientation;
   result: number;
   pairs: number[][];
 }
@@ -220,6 +218,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                             left={x?.[0]}
                             right={x?.[1]}
                             both={props.both}
+                            showAnswer={false}
                           />
                         ) : null
                         // <VerticalMultiplicationQuestion
@@ -241,7 +240,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                           : VERTICAL_N_COLUMNS) - row.length
                       )
                     ).keys(),
-                  ].map((j) => <Stack flex={1} key={j} />),
+                  ].map((j) => <Stack flex={1} key={`filler${j}`} />),
                 ]}
               </Stack>
             ))}
