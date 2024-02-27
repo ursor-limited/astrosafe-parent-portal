@@ -177,6 +177,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
+              ref={setPrintableRef}
               title={props.title}
               orientation={props.parameters.orientation}
               result={
@@ -184,6 +185,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               }
               pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
               both={(props.parameters as INumberBondWorksheetParameters).both}
+              printButtonCallback={() => setPrintDialogOpen(true)}
               answers={mode === "markscheme"}
             />
           ) : null}
