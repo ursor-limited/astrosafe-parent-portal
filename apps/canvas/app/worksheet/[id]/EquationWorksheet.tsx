@@ -5,6 +5,8 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
+import { NumberBondParameters } from "./NumberBondWorksheet";
+import { DEFAULT_TITLE } from "@/app/landing/[urlId]/WorksheetGenerator";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
@@ -32,10 +34,6 @@ export interface EquationParameters {
   factor: number;
   nDigits: number;
   orientation: EquationOrientation;
-}
-
-export interface NumberBondParameters {
-  result: number;
 }
 
 export type EquationOrientation = "horizontal" | "vertical";
@@ -401,7 +399,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
             >
               <Typography variant="h2">
-                {props.title || "Multiplication sheet"}
+                {props.title || DEFAULT_TITLE}
               </Typography>
               <Typography bold color={PALETTE.secondary.purple[2]}>
                 {props.answers ? "Answers" : "Try to solve these questions!"}

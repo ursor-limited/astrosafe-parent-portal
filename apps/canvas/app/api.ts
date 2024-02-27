@@ -145,19 +145,32 @@ class ApiController {
       body: uploadFile,
     }).then((response: any) => response.json());
   }
-  static async createWorksheet(
+  static async createEquationWorksheet(
     title: string,
     orientation: EquationOrientation,
     topic: QuestionTopic,
     factor: number,
     multipliers: number[]
   ) {
-    return post("canvas/worksheet", {
+    return post("canvas/worksheet/equation", {
       title,
       orientation,
       topic,
       factor,
       multipliers,
+    }).then((response: any) => response.json());
+  }
+  static async createNumberBondWorksheet(
+    title: string,
+    orientation: EquationOrientation,
+    result: number,
+    pairs: number[][]
+  ) {
+    return post("canvas/worksheet/numberBond", {
+      title,
+      orientation,
+      result,
+      pairs,
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {
