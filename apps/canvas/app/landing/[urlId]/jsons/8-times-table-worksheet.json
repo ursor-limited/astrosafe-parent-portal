@@ -5,11 +5,11 @@
   "heading": "8 Times Table Worksheet",
   "subheading": "Save hours when creating worksheets for your students. Create equations for the 8 times table up to 100 and beyond!",
   "worksheetGenerator": {
-    "questionTopic": "multiplication",
-    "questionType": "equation",
+    "topic": "multiplication",
+    "worksheetId": "equation",
     "title": "8 Times Table",
     "nProblems": 20,
-    "worksheetParameters": {
+    "specificSettings": {
       "factor": 8,
       "nDigits": 2,
       "orientation": "horizontal"

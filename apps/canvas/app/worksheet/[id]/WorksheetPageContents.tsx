@@ -4,8 +4,12 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import EquationWorksheet, { IEquationWorksheet } from "./EquationWorksheet";
+import EquationWorksheet from "./EquationWorksheet";
 import { Typography, UrsorButton } from "ui";
+import {
+  IEquationWorksheetParameters,
+  WorksheetTopic,
+} from "@/app/landing/[urlId]/WorksheetGenerator";
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
 const SMALL_SWITCH_BUTTON_HEIGHT = 34;
@@ -91,7 +95,9 @@ export function TabSwitch(props: {
 }
 
 export default function WorksheetPageContents(props: {
-  details: IEquationWorksheet;
+  title: string;
+  topic: WorksheetTopic;
+  details: IEquationWorksheetParameters;
 }) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
@@ -158,8 +164,8 @@ export default function WorksheetPageContents(props: {
           <TabSwitch selected={mode} callback={(m) => setMode(m)} />
           <EquationWorksheet
             ref={setPrintableRef}
-            title={props.details.title}
-            topic={props.details.topic}
+            title={props.title}
+            topic={props.topic}
             orientation={props.details.orientation}
             factor={props.details.factor}
             multipliers={props.details.multipliers}

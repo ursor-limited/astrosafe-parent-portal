@@ -4,25 +4,21 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
-import EquationWorksheet, {
-  EquationOrientation,
-  QuestionTopic,
-  QuestionType,
-  QuestionTypeParameters,
-} from "../../worksheet/[id]/EquationWorksheet";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import { useReactToPrint } from "react-to-print";
 import ApiController from "../../api";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
 import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
-import PageSelector from "./PageSelector";
-import UrsorSelect from "../../components/UrsorSelect";
 import ExplainerCard from "./ExplainerCard";
 import OtherPageCard from "./OtherPageCard";
 import { IntroSteps } from "./IntroSteps";
-import WorksheetGenerator from "./WorksheetGenerator";
+import WorksheetGenerator, {
+  WorksheetTopic,
+  ISpecificWorksheetGeneratorSettings,
+  IWorksheetParameters,
+  WorksheetId,
+} from "./WorksheetGenerator";
 
 export const Captioned = (props: {
   text: string;
@@ -51,11 +47,11 @@ export default function LandingPageContents(props: {
   heading: string;
   subheading: string;
   worksheetGenerator: {
+    topic: WorksheetTopic;
+    worksheetId: WorksheetId;
     title: string;
-    questionTopic: QuestionTopic;
-    questionType: QuestionType;
     nProblems: number;
-    questionTypeParameters: QuestionTypeParameters;
+    specificSettings: ISpecificWorksheetGeneratorSettings;
   };
   howItWorks: {
     supertitle: string;
@@ -69,8 +65,8 @@ export default function LandingPageContents(props: {
     title: string;
     body: string;
     worksheetPreviewParameters: {
-      questionTopic: QuestionTopic;
-      questionType: QuestionType;
+      questionTopic: WorksheetTopic;
+      questionType: WorksheetId;
       title: string;
       worksheetParameters: {
         factor: number;
@@ -309,11 +305,7 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <WorksheetGenerator
-        questionParameterValues={
-          props.worksheetGenerator.questionTypeParameters
-        }
-      />
+      <WorksheetGenerator {...props.worksheetGenerator} />
     </AstroLandingPage>
   );
 }

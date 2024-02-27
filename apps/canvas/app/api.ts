@@ -1,8 +1,4 @@
-import {
-  EquationOrientation,
-  QuestionTopic,
-  IWorksheetQuestion,
-} from "./worksheet/[id]/EquationWorksheet";
+import { EquationOrientation, WorksheetTopic } from "./landing/[urlId]/WorksheetGenerator";
 
 export interface IVideo {
   id: string;
@@ -148,7 +144,7 @@ class ApiController {
   static async createEquationWorksheet(
     title: string,
     orientation: EquationOrientation,
-    topic: QuestionTopic,
+    topic: WorksheetTopic,
     factor: number,
     multipliers: number[]
   ) {

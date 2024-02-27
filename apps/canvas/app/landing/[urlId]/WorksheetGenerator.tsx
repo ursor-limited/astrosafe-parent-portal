@@ -3,21 +3,57 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import UrsorSelect from "@/app/components/UrsorSelect";
 import React, { useEffect, useState } from "react";
-import EquationWorksheet, {
-  EquationOrientation,
-  EquationParameters,
-  QuestionTopic,
-  QuestionType,
-  QuestionTypeParameters,
-} from "@/app/worksheet/[id]/EquationWorksheet";
-import ApiController from "@/app/api";
-import { useRouter } from "next/navigation";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
-import { NumberBondParameters } from "@/app/worksheet/[id]/NumberBondWorksheet";
+
+export type EquationOrientation = "horizontal" | "vertical";
+
+export type IWorksheet = {
+  worksheetId: WorksheetId;
+  title: string;
+} & IWorksheetParameters;
+
+export type IWorksheetParameters =
+  | IEquationWorksheetParameters
+  | INumberBondWorksheetParameters;
+
+export type ISpecificWorksheetGeneratorSettings =
+  | IEquationWorksheetGeneratorSettings
+  | INumberBondWorksheetGeneratorSettings;
+
+export type WorksheetId = "equation" | "numberBond";
+
+export type WorksheetTopic =
+  | "addition"
+  | "subtraction"
+  | "multiplication"
+  | "division";
+
+export interface IEquationWorksheetParameters {
+  orientation: EquationOrientation;
+  factor: number;
+  multipliers: number[];
+}
+
+export type IEquationWorksheetGeneratorSettings = Omit<
+  IEquationWorksheetParameters,
+  "multipliers"
+> & { nDigits: number };
+
+export interface INumberBondWorksheetParameters {
+  orientation: EquationOrientation;
+  result: number;
+  both: boolean;
+  pairs: number[][];
+}
+
+export type INumberBondWorksheetGeneratorSettings = Omit<
+  INumberBondWorksheetParameters,
+  "pairs"
+>;
 
 const TITLE_CHARACTER_LIMIT = 30;
 export const DEFAULT_TITLE = "Multiplication Sheet";
@@ -77,26 +113,35 @@ export const CategorySelectionButton = (props: {
 };
 
 export default function WorksheetGenerator(props: {
-  questionParameterValues: QuestionTypeParameters;
+  worksheetId: IWorksheet["worksheetId"];
+  title: IWorksheet["title"];
+  nProblems: number;
+  topic: WorksheetTopic;
+  specificSettings: ISpecificWorksheetGeneratorSettings;
 }) {
-  const [topic, setTopic] = useState<QuestionTopic>("addition");
-  const [questionType, setQuestionType] = useState<QuestionType>("equation");
+  const [topic, setTopic] = useState<WorksheetTopic>("addition");
+  const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>(DEFAULT_TITLE);
   const [nProblems, setNProblems] = useState<number>(10);
 
-  const router = useRouter();
+  useEffect(() => setTopic(props.topic), [props.topic]);
+  useEffect(() => setWorksheetId(props.worksheetId), [props.worksheetId]);
+  useEffect(() => setTitle(props.title), [props.title]);
+  useEffect(() => setNProblems(props.nProblems), [props.nProblems]);
 
-  const [questionParameterValues, setQuestionParameterValues] = useState<
-    QuestionTypeParameters | undefined
+  const [specificSettings, setSpecificSettings] = useState<
+    ISpecificWorksheetGeneratorSettings | undefined
   >(undefined);
   useEffect(
-    () => setQuestionParameterValues(props.questionParameterValues),
-    [props.questionParameterValues]
+    () => setSpecificSettings(props.specificSettings),
+    [props.specificSettings]
   );
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
-
   const [nPages, setNPages] = useState<number>(0);
+  useEffect(() => {
+    nPages > 0 && selectedPageIndex > nPages - 1 && setSelectedPageIndex(0);
+  }, [selectedPageIndex, nPages]);
 
   const [previewWorksheet, setPreviewWorksheet] = useState<
     React.ReactNode | undefined
@@ -153,7 +198,7 @@ export default function WorksheetGenerator(props: {
                 },
               ]}
               selected={[topic]}
-              callback={(t: string) => setTopic(t as QuestionTopic)}
+              callback={(t: string) => setTopic(t as WorksheetTopic)}
               width="100%"
             />
           </Captioned>
@@ -170,9 +215,9 @@ export default function WorksheetGenerator(props: {
                   value: "Number bond",
                 },
               ]}
-              selected={[questionType]}
+              selected={[worksheetId]}
               callback={(qt: string) => {
-                setQuestionType(qt as QuestionType);
+                setWorksheetId(qt as WorksheetId);
               }}
               width="100%"
             />
@@ -185,11 +230,9 @@ export default function WorksheetGenerator(props: {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        {questionParameterValues &&
-        topic === "addition" &&
-        questionType === "equation" ? (
+        {specificSettings && worksheetId === "equation" ? (
           <WorksheetGeneratorEquationModule
-            {...(questionParameterValues as EquationParameters)}
+            {...(specificSettings as IEquationWorksheetGeneratorSettings)}
             callback={(newPreviewWorksheet) =>
               setPreviewWorksheet(newPreviewWorksheet)
             }
@@ -201,9 +244,9 @@ export default function WorksheetGenerator(props: {
             topic={topic}
             pageIndex={selectedPageIndex}
           />
-        ) : questionType === "numberBond" ? (
+        ) : worksheetId === "numberBond" ? (
           <WorksheetGeneratorNumberBondModule
-            {...(questionParameterValues as NumberBondParameters)}
+            {...(specificSettings as INumberBondWorksheetGeneratorSettings)}
             callback={(newPreviewWorksheet) =>
               setPreviewWorksheet(newPreviewWorksheet)
             }

@@ -1,16 +1,19 @@
 {
   "urlId": "number-bond",
+  "worksheetId": "numberBond",
   "pageTitle": "this is the text in the url tab 15-70 chars",
   "metaDescription": "a meta description specific for the page 60-320 chars.",
   "heading": "Nambah bond",
   "subheading": "Save hours when creating worksheets for your students. Create number bonds!",
   "worksheetGenerator": {
-    "questionTopic": "multiplication",
-    "questionType": "equation",
-    "title": "8 Times Table",
+    "topic": "addition",
+    "worksheetId": "numberBond",
+    "title": "Nambah bond",
     "nProblems": 20,
-    "worksheetParameters": {
-      "result": 8
+    "specificSettings": {
+      "result": 8,
+      "orientation": "vertical",
+      "both": false
     }
   },
   "howItWorks": {

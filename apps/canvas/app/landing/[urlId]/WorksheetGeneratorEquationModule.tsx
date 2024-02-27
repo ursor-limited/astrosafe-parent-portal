@@ -1,28 +1,32 @@
 import ApiController from "@/app/api";
-import EquationWorksheet, {
-  EquationOrientation,
-  EquationParameters,
-  QuestionTopic,
-} from "@/app/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Captioned } from "./LandingPageContents";
-import { CategorySelectionButton, DEFAULT_TITLE } from "./WorksheetGenerator";
+import {
+  CategorySelectionButton,
+  DEFAULT_TITLE,
+  EquationOrientation,
+  WorksheetTopic,
+  IEquationWorksheetGeneratorSettings,
+  IEquationWorksheetParameters,
+} from "./WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
 
 const MAX_N_PROBLEMS = 100;
 
 export function WorksheetGeneratorEquationModule(
-  props: EquationParameters & {
+  props: IEquationWorksheetGeneratorSettings & {
+    nDigits: number;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => void) => void;
     title: string;
-    topic: QuestionTopic;
+    topic: WorksheetTopic;
     pageIndex: number;
   }
 ) {

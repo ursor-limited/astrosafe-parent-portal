@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorInputField } from "ui";
@@ -5,13 +7,18 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
-import { DEFAULT_TITLE } from "@/app/landing/[urlId]/WorksheetGenerator";
+import {
+  DEFAULT_TITLE,
+  EquationOrientation,
+} from "@/app/landing/[urlId]/WorksheetGenerator";
 
 const HORIZONTAL_N_COLUMNS = 2;
-const VERTICAL_N_COLUMNS = 4;
+const VERTICAL_N_COLUMNS = 3;
 
-export const FIRST_PAGE_ROWS_N = 8;
-export const OTHER_PAGES_ROWS_N = 10;
+export const HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
+export const HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
+export const VERTICAL_FIRST_PAGE_ROWS_N = 3;
+export const VERTICAL_OTHER_PAGES_ROWS_N = 3;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -23,22 +30,35 @@ export const WritingField = (props: { width?: string }) => (
   />
 );
 
-export interface IWorksheetQuestion {
-  number: number;
-  multiplier: number;
-}
+export const ValueCircle = (props: { children: React.ReactNode }) => (
+  <Stack
+    borderRadius="100%"
+    border={`2px solid ${PALETTE.secondary.grey[2]}`}
+    height="66px"
+    width="66px"
+    justifyContent="center"
+    alignItems="center"
+  >
+    {props.children}
+  </Stack>
+);
 
-export interface NumberBondParameters {
-  result: number;
-}
+// export interface IWorksheetQuestion {
+//   number: number;
+//   multiplier: number;
+// }
 
-export type EquationOrientation = "horizontal" | "vertical";
+// export interface NumberBondParameters {
+//   result: number;
+// }
 
-export interface INumberBondWorksheet {
-  title: string;
-  result: number;
-  pairs: number[][];
-}
+//export type EquationOrientation = "horizontal" | "vertical";
+
+// export interface INumberBondWorksheet {
+//   title: string;
+//   result: number;
+//   pairs: number[][];
+// }
 
 const HorizontalEquationQuestion = (props: {
   result: number;
@@ -46,8 +66,6 @@ const HorizontalEquationQuestion = (props: {
   right: number;
   both: boolean;
   showAnswer: boolean;
-  // inputValue?: number;
-  // changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
     direction="row"
@@ -93,6 +111,53 @@ const HorizontalEquationQuestion = (props: {
   </Stack>
 );
 
+const VerticalEquationQuestion = (props: {
+  result: number;
+  left: number;
+  right: number;
+  both: boolean;
+  showAnswer: boolean;
+}) => (
+  <Stack
+    width={"260px"}
+    height="300px"
+    alignItems={"center"}
+    justifyContent="center"
+    sx={{ breakInside: "avoid" }}
+    spacing="20px"
+  >
+    <ValueCircle>
+      <Typography variant="h4" sx={{ fontWeight: 350 }}>
+        {props.result}
+      </Typography>
+    </ValueCircle>
+    <Stack direction="row" spacing="40px">
+      <ValueCircle>
+        <Typography
+          variant="h4"
+          color={props.both ? PALETTE.secondary.purple[2] : undefined}
+          sx={{
+            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
+          }}
+        >
+          {!props.both || props.showAnswer ? props.left : null}
+        </Typography>
+      </ValueCircle>
+      <ValueCircle>
+        <Typography
+          variant="h4"
+          color={PALETTE.secondary.purple[2]}
+          sx={{
+            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
+          }}
+        >
+          {props.showAnswer ? props.right : null}
+        </Typography>
+      </ValueCircle>
+    </Stack>
+  </Stack>
+);
+
 const rubik = Rubik({ subsets: ["latin"] });
 
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
@@ -127,27 +192,48 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
+    const [firstPageRowsN, setFirstPageRowsN] = useState<number>(1);
+    const [otherPagesRowsN, setOtherPagesRowsN] = useState<number>(1);
+    useEffect(() => {
+      setFirstPageRowsN(
+        props.orientation === "horizontal"
+          ? HORIZONTAL_FIRST_PAGE_ROWS_N
+          : VERTICAL_FIRST_PAGE_ROWS_N
+      );
+      setOtherPagesRowsN(
+        props.orientation === "horizontal"
+          ? HORIZONTAL_OTHER_PAGES_ROWS_N
+          : VERTICAL_OTHER_PAGES_ROWS_N
+      );
+    }, [props.orientation]);
+
     const [rows, setRows] = useState<number[][][]>([]);
     useEffect(() => {
       if (props.pairs) {
-        const rowz = _.chunk(props.pairs, 2);
+        const rowz = _.chunk(
+          props.pairs,
+          props.orientation === "horizontal"
+            ? HORIZONTAL_N_COLUMNS
+            : VERTICAL_N_COLUMNS
+        );
         setRows(
           _.isNumber(props.pageIndex)
             ? props.pageIndex === 0
-              ? rowz.slice(0, FIRST_PAGE_ROWS_N)
+              ? rowz.slice(0, firstPageRowsN)
               : rowz.slice(
-                  FIRST_PAGE_ROWS_N +
-                    (props.pageIndex! - 1) * OTHER_PAGES_ROWS_N,
-                  FIRST_PAGE_ROWS_N + props.pageIndex! * OTHER_PAGES_ROWS_N
+                  firstPageRowsN + (props.pageIndex! - 1) * otherPagesRowsN,
+                  firstPageRowsN + props.pageIndex! * otherPagesRowsN
                 )
             : rowz
         );
       }
     }, [
       props.pairs,
-      // props.orientation,
       props.pageIndex,
       rows.length,
+      props.orientation,
+      firstPageRowsN,
+      otherPagesRowsN,
     ]);
 
     return (
@@ -211,24 +297,23 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                 {[
                   ...row?.map((x, k) => (
                     <Stack key={k} flex={1} alignItems="center">
-                      {
-                        props.orientation === "horizontal" ? (
-                          <HorizontalEquationQuestion
-                            result={props.result}
-                            left={x?.[0]}
-                            right={x?.[1]}
-                            both={props.both}
-                            showAnswer={false}
-                          />
-                        ) : null
-                        // <VerticalMultiplicationQuestion
-                        //   key={x}
-                        //   number={props.factor}
-                        //   multiplier={x}
-                        //   answer={!!props.answers}
-                        //   topic={props.topic}
-                        // />
-                      }
+                      {props.orientation === "horizontal" ? (
+                        <HorizontalEquationQuestion
+                          result={props.result}
+                          left={x?.[0]}
+                          right={x?.[1]}
+                          both={props.both}
+                          showAnswer={false}
+                        />
+                      ) : (
+                        <VerticalEquationQuestion
+                          result={props.result}
+                          left={x?.[0]}
+                          right={x?.[1]}
+                          both={props.both}
+                          showAnswer={false}
+                        />
+                      )}
                     </Stack>
                   )),
                   ...[

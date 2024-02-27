@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorInputField } from "ui";
@@ -5,8 +7,11 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
-import { NumberBondParameters } from "./NumberBondWorksheet";
-import { DEFAULT_TITLE } from "@/app/landing/[urlId]/WorksheetGenerator";
+import {
+  DEFAULT_TITLE,
+  EquationOrientation,
+  WorksheetTopic,
+} from "@/app/landing/[urlId]/WorksheetGenerator";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
@@ -26,38 +31,12 @@ export interface IWorksheetQuestion {
   multiplier: number;
 }
 
-export type QuestionType = "equation" | "numberBond";
-
-export type QuestionTypeParameters = EquationParameters | NumberBondParameters;
-
-export interface EquationParameters {
-  factor: number;
-  nDigits: number;
-  orientation: EquationOrientation;
-}
-
-export type EquationOrientation = "horizontal" | "vertical";
-
-export interface IEquationWorksheet {
-  title: string;
-  orientation: EquationOrientation;
-  topic: QuestionTopic;
-  factor: number;
-  multipliers: number[];
-}
-
-export type QuestionTopic =
-  | "addition"
-  | "subtraction"
-  | "multiplication"
-  | "division";
-
 const HorizontalEquationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
   inputValue?: number;
-  topic?: QuestionTopic;
+  topic?: WorksheetTopic;
   changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
@@ -131,7 +110,7 @@ const VerticalMultiplicationQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
-  topic?: QuestionTopic;
+  topic?: WorksheetTopic;
 }) => (
   <Stack
     key={props.multiplier}
@@ -280,7 +259,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
       title: string;
       factor: number;
       multipliers: number[];
-      topic: QuestionTopic;
+      topic: WorksheetTopic;
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;

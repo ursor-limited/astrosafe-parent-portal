@@ -1,40 +1,45 @@
 import ApiController from "@/app/api";
-import EquationWorksheet, {
-  EquationOrientation,
-  EquationParameters,
-  QuestionTopic,
-} from "@/app/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Captioned } from "./LandingPageContents";
-import { CategorySelectionButton } from "./WorksheetGenerator";
+import {
+  CategorySelectionButton,
+  EquationOrientation,
+  WorksheetTopic,
+  INumberBondWorksheetGeneratorSettings,
+  INumberBondWorksheetParameters,
+} from "./WorksheetGenerator";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {
-  FIRST_PAGE_ROWS_N,
-  NumberBondParameters,
-  OTHER_PAGES_ROWS_N,
+  HORIZONTAL_FIRST_PAGE_ROWS_N,
+  HORIZONTAL_OTHER_PAGES_ROWS_N,
+  VERTICAL_OTHER_PAGES_ROWS_N,
+  VERTICAL_FIRST_PAGE_ROWS_N,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
-import ThreeDotsIcon from "@/images/icons/KebabHorizontal.svg";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 
 const DEFAULT_TITLE = "Problem sheet";
 const MAX_N_PROBLEMS = 100;
 
 export function WorksheetGeneratorNumberBondModule(
-  props: NumberBondParameters & {
+  props: INumberBondWorksheetGeneratorSettings & {
     callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => void) => void;
     title: string;
-    topic: QuestionTopic;
+    topic: WorksheetTopic;
     pageIndex: number;
   }
 ) {
   const [result, setResult] = useState<number>(3);
+  const [orientation, setOrientation] =
+    useState<EquationOrientation>("horizontal");
+  const [both, setBoth] = useState<boolean>(false);
 
   useEffect(() => {
     props.result && setResult(props.result);
@@ -64,19 +69,23 @@ export function WorksheetGeneratorNumberBondModule(
       props.setNPages(
         1 +
           Math.ceil(
-            (props.nProblems - FIRST_PAGE_ROWS_N * 2) / (OTHER_PAGES_ROWS_N * 2)
+            ((props.nProblems -
+              (orientation === "horizontal"
+                ? HORIZONTAL_FIRST_PAGE_ROWS_N
+                : VERTICAL_FIRST_PAGE_ROWS_N) *
+                2) /
+              (orientation === "horizontal"
+                ? HORIZONTAL_OTHER_PAGES_ROWS_N
+                : VERTICAL_OTHER_PAGES_ROWS_N)) *
+              2
           )
       ),
-    [props.nProblems]
+    [props.nProblems, orientation]
   );
 
   const [previewWorksheet, setPreviewWorksheet] = useState<
     React.ReactNode | undefined
   >(undefined);
-
-  const [orientation, setOrientation] =
-    useState<EquationOrientation>("horizontal");
-  const [both, setBoth] = useState<boolean>(false);
 
   const router = useRouter();
 
