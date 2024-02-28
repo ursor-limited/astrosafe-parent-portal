@@ -51,7 +51,9 @@ export default function LandingPageContents(props: {
     worksheetId: WorksheetId;
     title: string;
     nProblems: number;
-    specificSettings: ISpecificWorksheetGeneratorSettings;
+    specificSettings: ISpecificWorksheetGeneratorSettings & {
+      topic: WorksheetTopic;
+    };
   };
   howItWorks: {
     supertitle: string;
