@@ -10,7 +10,6 @@ import {
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
-  IEquationWorksheetParameters,
 } from "./WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
@@ -28,6 +27,7 @@ export function WorksheetGeneratorEquationModule(
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
+    regenerationCount: number;
   }
 ) {
   const [orientation, setOrientation] =
@@ -51,7 +51,7 @@ export function WorksheetGeneratorEquationModule(
       props.nProblems % fullsetSize
     );
     setMultipliers([...fullSets, ...partialSet]);
-  }, [nDigits, props.nProblems]);
+  }, [nDigits, props.nProblems, props.regenerationCount]);
 
   useEffect(
     () =>

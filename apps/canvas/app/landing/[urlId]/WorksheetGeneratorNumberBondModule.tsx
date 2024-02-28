@@ -36,6 +36,7 @@ export function WorksheetGeneratorNumberBondModule(
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
+    regenerationCount: number;
   }
 ) {
   const [result, setResult] = useState<number>(3);
@@ -70,7 +71,7 @@ export function WorksheetGeneratorNumberBondModule(
       );
       setPairs([...fullSets, ...partialSet]);
     }
-  }, [props.nProblems, result]);
+  }, [props.nProblems, result, props.regenerationCount]);
 
   useEffect(
     () =>

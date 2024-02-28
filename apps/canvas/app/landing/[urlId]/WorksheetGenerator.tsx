@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import SyncIcon from "@/images/icons/Sync.svg";
 import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
 
@@ -71,6 +72,44 @@ export type INumberBondWorksheetGeneratorSettings = Omit<
   INumberBondWorksheetParameters,
   "pairs"
 >;
+
+const RefreshButton = (props: { onClick: () => void }) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      height="37.5px"
+      width="37.5px"
+      minHeight="37.5px"
+      minWidth="37.5px"
+      borderRadius="100%"
+      border={`2px solid ${
+        hovering ? PALETTE.secondary.purple[3] : PALETTE.secondary.purple[2]
+      }`}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        cursor: "pointer",
+        transition: "0.2s",
+        svg: {
+          path: {
+            fill: hovering
+              ? PALETTE.secondary.purple[3]
+              : PALETTE.secondary.purple[2],
+          },
+        },
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      onClick={props.onClick}
+    >
+      <SyncIcon height="20px" width="20px" />
+    </Stack>
+  );
+};
 
 const TITLE_CHARACTER_LIMIT = 30;
 export const DEFAULT_TITLE = "Multiplication Sheet";
@@ -173,6 +212,8 @@ export default function WorksheetGenerator(props: {
     () => null
   );
 
+  const [regenerationCount, setRegenerationCount] = useState<number>(0);
+
   return (
     <Stack
       borderRadius="20px"
@@ -204,19 +245,19 @@ export default function WorksheetGenerator(props: {
               items={[
                 {
                   id: "multiplication",
-                  value: "Multiplication",
+                  value: "x Multiplication",
                 },
                 {
                   id: "division",
-                  value: "Division",
+                  value: "/ Division",
                 },
                 {
                   id: "addition",
-                  value: "Addition",
+                  value: "+ Addition",
                 },
                 {
                   id: "subtraction",
-                  value: "Subtraction",
+                  value: "- Subtraction",
                 },
               ]}
               selected={[topic]}
@@ -259,6 +300,7 @@ export default function WorksheetGenerator(props: {
             title={title}
             topic={topic}
             pageIndex={selectedPageIndex}
+            regenerationCount={regenerationCount}
           />
         ) : worksheetId === "numberBond" ? (
           <WorksheetGeneratorNumberBondModule
@@ -273,6 +315,7 @@ export default function WorksheetGenerator(props: {
             title={title}
             topic={topic}
             pageIndex={selectedPageIndex}
+            regenerationCount={regenerationCount}
           />
         ) : null}
       </Stack>
@@ -304,15 +347,20 @@ export default function WorksheetGenerator(props: {
               nPages={nPages}
             />
           ) : null}
-          <UrsorButton
-            onClick={() => creationCallback()}
-            dark
-            variant="tertiary"
-            endIcon={PencilIcon}
-            width="100%"
-          >
-            Create
-          </UrsorButton>
+          <Stack direction="row" spacing="12px">
+            <RefreshButton
+              onClick={() => setRegenerationCount(regenerationCount + 1)}
+            />
+            <UrsorButton
+              onClick={() => creationCallback()}
+              dark
+              variant="tertiary"
+              endIcon={PencilIcon}
+              width="100%"
+            >
+              Create
+            </UrsorButton>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
