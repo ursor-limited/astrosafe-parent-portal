@@ -11,6 +11,7 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
+import WorksheetCard from "../components/WorksheetCard";
 
 export const GRID_SPACING = "20px";
 
@@ -21,6 +22,13 @@ export default function LandingPageContents(props: {}) {
   useEffect(() => {
     ApiController.getUserVideos("mkl.koskela@gmail.com").then((videos) =>
       setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
+    );
+  }, []);
+
+  const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  useEffect(() => {
+    ApiController.getUserWorksheets().then((ws) =>
+      setWorksheets(_.reverse(ws.slice()))
     );
   }, []);
 
@@ -38,14 +46,18 @@ export default function LandingPageContents(props: {}) {
       type: "video" as AstroContent,
       details: l,
     }));
-    // const worksheet = (
-    //   dataCtx.stacks?.filter((s) => s.channelId === selectedChannelId) || []
-    // ).map((s) => ({
-    //   type: "stack" as AstroContent,
-    //   details: s,
-    // }));
+    const worksheetDetails = worksheets
+      .slice(0, 1)
+      .filter((ws) => ws.worksheetId === "equation")
+      .map((ws) => ({
+        type: "worksheet" as AstroContent,
+        details: ws,
+      }));
     const allContentDetails = _.reverse(
-      _.sortBy([...videoDetails], (c) => new Date(c.details.createdAt)).slice()
+      _.sortBy(
+        [...videoDetails, ...worksheetDetails],
+        (c) => new Date(c.details.createdAt)
+      ).slice()
     );
     const chunked = _.chunk(allContentDetails, nColumns);
     setCardColumns(
@@ -53,7 +65,7 @@ export default function LandingPageContents(props: {}) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [videos, nColumns]);
+  }, [videos, worksheets, nColumns]);
 
   return (
     <PageLayout
@@ -88,7 +100,9 @@ export default function LandingPageContents(props: {}) {
                       {
                         item.type === "video" ? (
                           <VideoCard {...(item.details as IVideo)} />
-                        ) : null // other card
+                        ) : (
+                          <WorksheetCard {...(item.details as IWorksheet)} />
+                        ) // other card
                       }
                     </UrsorFadeIn>
                   </Stack>

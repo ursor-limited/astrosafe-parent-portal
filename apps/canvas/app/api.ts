@@ -177,6 +177,10 @@ class ApiController {
       response.json()
     );
   }
+  static async getUserWorksheets() {
+    //@ts-ignore
+    return get(`canvas/worksheets`).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;
