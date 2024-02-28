@@ -4,7 +4,7 @@ import { PALETTE, Typography } from "ui";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
 import { useState } from "react";
-import DynamicContainer from "../components/DynamicContainer";
+import DynamicContainer from "../../components/DynamicContainer";
 
 export const spin = keyframes`
 from {

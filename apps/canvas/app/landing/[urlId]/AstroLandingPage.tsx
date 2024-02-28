@@ -6,8 +6,6 @@ import _ from "lodash";
 //import { Header } from "@/app/components/Header";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
-import LandingPageViewport from "./LandingPageViewport";
-import { IntroSquare2 } from "./IntroSquare2";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 
@@ -15,16 +13,11 @@ export default function AstroLandingPage(props: {
   mobile: boolean;
   title: string[];
   subtitle: string;
+  viewports: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
-    <Stack
-      width="100vw"
-      height="100vh"
-      pt="100px"
-      alignItems="center"
-      overflow="scroll"
-    >
+    <Stack width="100vw" height="100vh" pt="100px" alignItems="center">
       {/* <Header mobile={props.mobile} /> */}
       <Stack
         spacing="36px"
@@ -85,12 +78,13 @@ export default function AstroLandingPage(props: {
           <SpaceGlow width="auto" height="auto" />
         </Stack>
         <Stack
-          spacing="150px"
+          spacing="180px"
           bgcolor="rgb(255,255,255)"
           pt={props.mobile ? "25px" : 0}
           zIndex={1}
         >
           {/* viewports here */}
+          {props.viewports}
           <Stack width="100%">
             <LandingPageFAQSection mobile={props.mobile} />
             <LandingPageFooter mobile={props.mobile} />

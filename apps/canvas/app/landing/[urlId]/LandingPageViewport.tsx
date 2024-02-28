@@ -3,7 +3,7 @@ import { PALETTE, Typography } from "ui";
 
 export default function LandingPageViewport(props: {
   supertitle: string;
-  subtitle: string;
+  subtitle?: string;
   title: string;
   mobile?: boolean;
   children: React.ReactNode;
@@ -15,6 +15,7 @@ export default function LandingPageViewport(props: {
       alignItems="center"
       zIndex={1} // covers the SpaceGlow's bottom border
       spacing={props.mobile ? "10px" : "32px"}
+      position="relative"
     >
       <Stack spacing="8px" maxWidth="616px" alignItems="center">
         <Stack spacing="6px" alignItems="center">
@@ -41,20 +42,22 @@ export default function LandingPageViewport(props: {
             {props.title}
           </Typography>
         </Stack>
-        <Stack maxWidth="455px">
-          <Typography
-            bold
-            color={PALETTE.secondary.grey[4]}
-            variant={props.mobile ? "small" : "normal"}
-            sx={{
-              fontWeight: 400,
-              textAlign: "center",
-              width: props.mobile ? "280px" : undefined,
-            }}
-          >
-            {props.subtitle}
-          </Typography>
-        </Stack>
+        {props.subtitle ? (
+          <Stack maxWidth="455px">
+            <Typography
+              bold
+              color={PALETTE.secondary.grey[4]}
+              variant={props.mobile ? "small" : "normal"}
+              sx={{
+                fontWeight: 400,
+                textAlign: "center",
+                width: props.mobile ? "280px" : undefined,
+              }}
+            >
+              {props.subtitle}
+            </Typography>
+          </Stack>
+        ) : null}
       </Stack>
       {props.children}
     </Stack>

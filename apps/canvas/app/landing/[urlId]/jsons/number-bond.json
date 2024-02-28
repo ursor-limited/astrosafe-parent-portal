@@ -1,0 +1,120 @@
+{
+  "urlId": "number-bond",
+  "worksheetId": "numberBond",
+  "pageTitle": "this is the text in the url tab 15-70 chars",
+  "metaDescription": "a meta description specific for the page 60-320 chars.",
+  "heading": "Nambah bond",
+  "subheading": "Save hours when creating worksheets for your students. Create number bonds!",
+  "worksheetGenerator": {
+    "topic": "addition",
+    "worksheetId": "numberBond",
+    "title": "Nambah bond",
+    "nProblems": 20,
+    "specificSettings": {
+      "result": 8,
+      "orientation": "vertical",
+      "both": false
+    }
+  },
+  "howItWorks": {
+    "supertitle": "A",
+    "title": "B",
+    "step1": { "title": "Hooo", "body": "Goooo" },
+    "step2": { "title": "Hooo", "body": "Goooo" },
+    "step3": { "title": "Hooo", "body": "Goooo" }
+  },
+  "worksheetPreview": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "There are many ways to let chicken and noodles have at it: You can boil the bird and cook noodles in the resulting stock. You can braise the chicken to make a more concentrated sauce, which is delicious over buttered noodles.\n This recipe splits the difference. It begins by roasting a whole, butter-rubbed, Parmesan-rind-stuffed chicken and a head of garlic under high heat. The skin and butter brown, the garlic sweetens, the bird infuses with the nutty flavors of the cheese. The pot is deglazed with water, less than you would use in a soup, but more than for a braise. Then, the noodles cook in the same pot so they can take in all that flavored broth. In a final act of generosity, the noodles share their starches with the broth, thickening it into a sauce.",
+    "worksheetPreviewParameters": {
+      "questionTopic": "multiplication",
+      "questionType": "chart",
+      "title": "8 Times Table Chart",
+      "worksheetParameters": {
+        "factor": 8,
+        "nProblems": 10
+      }
+    }
+  },
+  "linkTable": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "Buu!",
+    "tableHeading": "BOOOOO",
+    "links": [
+      {
+        "text": "link1",
+        "url": "https://www.google.com"
+      },
+      {
+        "text": "link2",
+        "url": "https://www.google.com"
+      }
+    ]
+  },
+  "explainerCards": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "Buu!",
+    "cards": [
+      {
+        "title": "Buu!",
+        "text": "I’ve always felt that my best recipes come from real life, from discoveries I make in the kitchen when I’m strapped for time and ingredients. One mezzanotte, I tossed thin spaghetti with chopped capers and umeboshi.",
+        "imageUrl": "https://static01.nyt.com/images/2024/02/25/multimedia/25nytmag-mars-hp-poster-jklb/25nytmag-mars-hp-poster-jklb-superJumbo.jpg?quality=75&auto=webp"
+      },
+      {
+        "title": "Boooo!",
+        "text": "This complicates the work of the United States and moderate Arab states, which are trying to engineer a plan for “after Gaza” — a crucial step in making sure that Gaza has a chance at stability once the fighting stops.",
+        "imageUrl": "https://hs.mediadelivery.fi/img/658/bc409c0b90984fbe29bd5e6d2420bd43.jpg.webp"
+      },
+      {
+        "title": "Hey man!",
+        "text": "I believe it’s because, in a world in which tribalism is pulling us apart, the completely imaginary tribalism of the sports fan is a necessary balm. ",
+        "imageUrl": "https://images.cdn.yle.fi/image/upload/ar_1.5,c_fill,g_faces,h_424,w_636/dpr_2.0/q_auto:eco/f_auto/fl_lossy/v1708592532/39-124779165d70d31aafe6"
+      }
+    ]
+  },
+  "otherPages": {
+    "supertitle": "A",
+    "title": "B",
+    "links": [
+      {
+        "title": "Googoo",
+        "text": "California faces serious pitfalls.",
+        "imageUrl": "https://ca-times.brightspotcdn.com/dims4/default/5cc62e3/2147483647/strip/true/crop/3600x2022+0+0/resize/1200x674!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F71%2Fad%2F684505b541ba81be26e997b13940%2F1378262-me-delta-tunnel-project-12-brv.jpg",
+        "url": "https://www.google.com"
+      },
+      {
+        "title": "Bobby Boy Lexington",
+        "text": "The report was released last month by the UC Berkeley School",
+        "imageUrl": "https://ca-times.brightspotcdn.com/dims4/default/1c3a88e/2147483647/strip/true/crop/4200x3150+0+0/resize/1200x900!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Faa%2F4c%2F80da1aad4940abf0208aeaacabaf%2F890757-me-salmon-along-sacramento-river-63-ajs.jpg",
+        "url": "https://www.google.com"
+      },
+      {
+        "title": "Who do ya think ya are",
+        "text": "text 1",
+        "imageUrl": "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2FHWZ4LE66LBIYL4JRZ5RVZGQAYQ%252Ejpg&w=992&h=662",
+        "url": "https://www.google.com"
+      },
+      {
+        "title": "Moxy Moo",
+        "text": "text 1",
+        "imageUrl": "https://www.google.com",
+        "url": "https://www.google.com"
+      },
+      {
+        "title": "Goggoo goo",
+        "text": "text 1",
+        "imageUrl": "https://www.google.com",
+        "url": "https://www.google.com"
+      }
+    ]
+  },
+  "productCard": {
+    "title": "A",
+    "body": "B",
+    "buttonText": "",
+    "buttonUrl": ""
+  }
+}

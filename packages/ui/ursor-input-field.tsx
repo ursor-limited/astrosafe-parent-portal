@@ -33,7 +33,7 @@ export interface UrsorInputFieldProps {
 
 export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
   const customSx = {
-    width: props.width ?? DEFAULT_WIDTH,
+    width: props.width ?? "100%",
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
     borderRadius: props.borderRadius ?? BORDER_RADIUS,
