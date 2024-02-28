@@ -184,7 +184,7 @@ export default function LandingPageContents(props: {
               alignItems="center"
               height="56px"
             >
-              <Typography bold color="rgb(255,255,255)">
+              <Typography htmlTag="h5" bold color="rgb(255,255,255)">
                 {props.linkTable.tableHeading}
               </Typography>
             </Stack>

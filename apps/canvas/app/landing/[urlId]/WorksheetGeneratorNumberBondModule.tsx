@@ -9,9 +9,8 @@ import {
   EquationOrientation,
   WorksheetTopic,
   INumberBondWorksheetGeneratorSettings,
-  INumberBondWorksheetParameters,
 } from "./WorksheetGenerator";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {
   HORIZONTAL_FIRST_PAGE_ROWS_N,

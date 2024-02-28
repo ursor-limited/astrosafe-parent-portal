@@ -49,6 +49,7 @@ export default function AstroLandingPage(props: {
                   textAlign: "center",
                   fontWeight: 480,
                 }}
+                htmlTag="h1"
               >
                 {x}
               </Typography>
@@ -63,6 +64,7 @@ export default function AstroLandingPage(props: {
               lineHeight: props.mobile ? "22px" : "28px",
               width: props.mobile ? "350px" : "660px",
             }}
+            htmlTag="h2"
           >
             {props.subtitle}
           </Typography>
