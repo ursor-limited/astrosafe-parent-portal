@@ -13,9 +13,11 @@ import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBo
 export type EquationOrientation = "horizontal" | "vertical";
 
 export type IWorksheet = {
+  id: string;
   worksheetId: WorksheetId;
   title: string;
   parameters: IWorksheetParameters;
+  createdAt: string;
 };
 
 export type IWorksheetParameters =
