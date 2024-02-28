@@ -46,6 +46,12 @@ export function WorksheetGeneratorNumberBondModule(
   useEffect(() => {
     props.result && setResult(props.result);
   }, [props.result]);
+  useEffect(() => {
+    props.both && setBoth(props.both);
+  }, [props.both]);
+  useEffect(() => {
+    props.orientation && setOrientation(props.orientation);
+  }, [props.orientation]);
 
   const [pairs, setPairs] = useState<number[][]>([]);
   useEffect(() => {
