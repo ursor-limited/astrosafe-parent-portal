@@ -135,13 +135,17 @@ export function WorksheetGeneratorEquationModule(
         </Captioned>
         <Captioned text={props.topic === "division" ? "Divisor" : "Multiplier"}>
           <UrsorInputField
-            value={factor.toString()}
+            value={factor === 0 ? "" : factor.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-              const leadingZeroRemovedString = onlyNumbersString?.slice(
-                onlyNumbersString[0] === "0" ? 1 : 0
-              );
-              setFactor(parseInt(leadingZeroRemovedString ?? "0"));
+              if (!event.target.value || event.target.value === "0") {
+                setFactor(0);
+              } else {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                setFactor(parseInt(leadingZeroRemovedString ?? "0"));
+              }
             }}
             placeholder="Multiplier"
             leftAlign
@@ -175,20 +179,24 @@ export function WorksheetGeneratorEquationModule(
         </Captioned>
         <Captioned text="Amount of problems">
           <UrsorInputField
-            value={props.nProblems.toString()}
+            value={props.nProblems === 0 ? "" : props.nProblems.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-              const leadingZeroRemovedString = onlyNumbersString?.slice(
-                onlyNumbersString[0] === "0" ? 1 : 0
-              );
-              props.setNProblems(
-                Math.min(
-                  leadingZeroRemovedString
-                    ? parseInt(leadingZeroRemovedString)
-                    : 0,
-                  MAX_N_PROBLEMS
-                )
-              );
+              if (!event.target.value) {
+                props.setNProblems(0);
+              } else {
+                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+                const leadingZeroRemovedString = onlyNumbersString?.slice(
+                  onlyNumbersString[0] === "0" ? 1 : 0
+                );
+                props.setNProblems(
+                  Math.min(
+                    leadingZeroRemovedString
+                      ? parseInt(leadingZeroRemovedString)
+                      : 0,
+                    MAX_N_PROBLEMS
+                  )
+                );
+              }
             }}
             placeholder="Number of digits"
             width="100%"
