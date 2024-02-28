@@ -38,6 +38,8 @@ export const ValueCircle = (props: { children: React.ReactNode }) => (
     width="66px"
     justifyContent="center"
     alignItems="center"
+    bgcolor="rgb(255,255,255)"
+    zIndex={2}
   >
     {props.children}
   </Stack>
@@ -125,7 +127,22 @@ const VerticalEquationQuestion = (props: {
     justifyContent="center"
     sx={{ breakInside: "avoid" }}
     spacing="20px"
+    position="relative"
   >
+    <Stack
+      position="absolute"
+      width="100px"
+      sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
+      height="2px"
+      bgcolor={PALETTE.secondary.grey[2]}
+    />
+    <Stack
+      position="absolute"
+      width="100px"
+      sx={{ transform: "translate(-33px, 10px) rotate(-57deg)" }}
+      height="2px"
+      bgcolor={PALETTE.secondary.grey[2]}
+    />
     <ValueCircle>
       <Typography variant="h4" sx={{ fontWeight: 350 }}>
         {props.result}
