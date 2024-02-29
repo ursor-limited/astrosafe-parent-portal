@@ -51,6 +51,7 @@ const Carousel = (props: {
   mobile?: boolean;
 }) => {
   const [index, setIndex] = useState<number>(0);
+  const [hoverRowIndex, setHoverRowIndex] = useState<number | null>(null);
   return (
     <Stack
       width="100%"
@@ -91,7 +92,18 @@ const Carousel = (props: {
               transition: "0.7s",
               transform: index === i ? "scale(1.5)" : undefined,
               transformOrigin: "center",
+              pointerEvents: index === i ? "none" : undefined,
             }}
+            onClick={() => setIndex(i)}
+            // onMouseEnter={() => {
+            //   setHoverRowIndex(i);
+            // }}
+            // onMouseLeave={() => {
+            //   setHoverRowIndex(null);
+            // }}
+            // border={`4px solid ${
+            //   hoverRowIndex === i ? PALETTE.secondary.purple[1] : "transparent"
+            // }`}
           >
             {item}
           </Stack>
@@ -219,6 +231,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   const [mode, setMode] = useState<"worksheet" | "markscheme">("worksheet");
 
+  const [hoveringRowIndex, setHoveringRowIndex] = useState<number | null>(null);
+
   return (
     <Stack
       width="100%"
@@ -262,7 +276,20 @@ export default function WorksheetPageContents(props: IWorksheet) {
                 width={`${210 * SLIDE_SIZE_SCALE}mm`}
                 bgcolor="cyan"
                 sx={{
+                  cursor: "pointer",
+                  transition: "0.3s",
                   transformOrigin: "top center",
+                  outline: `4px solid ${
+                    hoveringRowIndex === i
+                      ? PALETTE.secondary.purple[1]
+                      : "transparent"
+                  }`,
+                }}
+                onMouseEnter={() => {
+                  setHoveringRowIndex(i);
+                }}
+                onMouseLeave={() => {
+                  setHoveringRowIndex(null);
                 }}
               >
                 <Stack
