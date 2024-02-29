@@ -71,43 +71,89 @@ const Carousel = (props: {
           <CarouselButton onClick={() => setIndex(Math.max(index - 1, 0))} />
         </Stack>
       </Stack> */}
-      <Stack
-        direction="row"
-        sx={{
-          transition: "0.7s",
-          transform: `translateX(${
-            (Math.floor(props.items.length / 2) - index) *
-            (SLIDE_SPACING + SLIDE_WIDTH)
-          }mm)`,
-        }}
-        py="120px"
-      >
-        {props.items.map((item, i) => (
-          <Stack
-            key={i}
-            width={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
-            minWidth={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
-            alignItems="center"
-            sx={{
-              transition: "0.7s",
-              transform: index === i ? "scale(1.5)" : undefined,
-              transformOrigin: "center",
-              pointerEvents: index === i ? "none" : undefined,
-            }}
-            onClick={() => setIndex(i)}
-            // onMouseEnter={() => {
-            //   setHoverRowIndex(i);
-            // }}
-            // onMouseLeave={() => {
-            //   setHoverRowIndex(null);
-            // }}
-            // border={`4px solid ${
-            //   hoverRowIndex === i ? PALETTE.secondary.purple[1] : "transparent"
-            // }`}
-          >
-            {item}
-          </Stack>
-        ))}
+      <Stack>
+        <Stack
+          height="20px"
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ transform: "translateY(7px)" }}
+          zIndex={9999}
+        >
+          {props.items.map((x, i) => (
+            <Stack
+              key={i}
+              width="30px"
+              height="30px"
+              alignItems="center"
+              justifyContent="center"
+              onMouseEnter={() => {
+                setHoverRowIndex(i);
+              }}
+              onMouseLeave={() => {
+                setHoverRowIndex(null);
+              }}
+              onClick={() => setIndex(i)}
+              sx={{
+                cursor: index !== i ? "pointer" : undefined,
+              }}
+            >
+              <Stack
+                borderRadius="100%"
+                height="9px"
+                width="9px"
+                bgcolor={
+                  hoverRowIndex === i && index !== i
+                    ? PALETTE.secondary.purple[1]
+                    : `rgba(0,0,0,${index === i ? 0.45 : 0.13})`
+                }
+                sx={{
+                  transition: "0.3s",
+
+                  // "&:hover": { background: PALETTE.secondary.purple[1] },
+                }}
+              />
+            </Stack>
+          ))}
+        </Stack>
+        <Stack
+          direction="row"
+          sx={{
+            transition: "0.7s",
+            transform: `translateX(${
+              (Math.floor(props.items.length / 2) - index) *
+              (SLIDE_SPACING + SLIDE_WIDTH)
+            }mm)`,
+          }}
+          py="120px"
+        >
+          {props.items.map((item, i) => (
+            <Stack
+              key={i}
+              width={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+              minWidth={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+              alignItems="center"
+              sx={{
+                transition: "0.7s",
+                transform: index === i ? "scale(1.5)" : undefined,
+                transformOrigin: "center",
+                pointerEvents: index === i ? "none" : undefined,
+              }}
+              onClick={() => setIndex(i)}
+              // onMouseEnter={() => {
+              //   setHoverRowIndex(i);
+              // }}
+              // onMouseLeave={() => {
+              //   setHoverRowIndex(null);
+              // }}
+              // border={`4px solid ${
+              //   hoverRowIndex === i ? PALETTE.secondary.purple[1] : "transparent"
+              // }`}
+            >
+              {item}
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
     </Stack>
   );
