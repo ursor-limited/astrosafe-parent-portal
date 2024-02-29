@@ -22,8 +22,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const SLIDE_WIDTH = 210 * 0.33; // mm
-const SLIDE_SPACING = 40;
-const SLIDE_SIZE_SCALE = 0.34;
+const SLIDE_SPACING = 38;
+const SLIDE_SIZE_SCALE = 0.315;
 
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
@@ -80,7 +80,7 @@ const Carousel = (props: {
             (SLIDE_SPACING + SLIDE_WIDTH)
           }mm)`,
         }}
-        py="100px"
+        py="120px"
       >
         {props.items.map((item, i) => (
           <Stack
@@ -241,7 +241,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       justifyContent="center"
       overflow="hidden"
       spacing="100px"
-      pt="50px"
+      pt="40px"
     >
       <Stack
         position="relative"
@@ -264,7 +264,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
           </Typography>
         </Stack>
 
-        <Stack width="100%" alignItems="center" overflow="hidden">
+        <Stack width="100%" alignItems="center" overflow="hidden" pt="30px">
           <Carousel
             yPadding={30}
             items={[...Array(3).keys()].map((x, i) => (
@@ -274,7 +274,6 @@ export default function WorksheetPageContents(props: IWorksheet) {
                 alignItems="center"
                 height={`${297 * SLIDE_SIZE_SCALE}mm`}
                 width={`${210 * SLIDE_SIZE_SCALE}mm`}
-                bgcolor="cyan"
                 sx={{
                   cursor: "pointer",
                   transition: "0.3s",
@@ -298,24 +297,33 @@ export default function WorksheetPageContents(props: IWorksheet) {
                   left={0}
                   //height="200px"
 
-                  boxShadow="0 0 60px rgba(0,0,0,0.07)"
+                  //boxShadow="0 0 60px rgba(0,0,0,0.07)"
                 >
-                  {/* <EquationWorksheet
-                    ref={setPrintableRef}
-                    title={props.title}
-                    topic={
-                      (props.parameters as IEquationWorksheetParameters).topic
-                    }
-                    orientation={props.parameters.orientation}
-                    factor={
-                      (props.parameters as IEquationWorksheetParameters).factor
-                    }
-                    multipliers={
-                      (props.parameters as IEquationWorksheetParameters)
-                        .multipliers
-                    }
-                    answers={mode === "markscheme"}
-                  /> */}
+                  <Stack
+                    sx={{
+                      transform: "scale(0.315)",
+                      transformOrigin: "top left",
+                    }}
+                    boxShadow="0 0 60px rgba(0,0,0,0.07)"
+                  >
+                    <EquationWorksheet
+                      ref={setPrintableRef}
+                      title={props.title}
+                      topic={
+                        (props.parameters as IEquationWorksheetParameters).topic
+                      }
+                      orientation={props.parameters.orientation}
+                      factor={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .factor
+                      }
+                      multipliers={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .multipliers
+                      }
+                      answers={mode === "markscheme"}
+                    />
+                  </Stack>
                 </Stack>
               </Stack>
             ))}
