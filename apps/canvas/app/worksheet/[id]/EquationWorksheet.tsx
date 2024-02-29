@@ -12,6 +12,7 @@ import {
   EquationOrientation,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
+import FixedBottomDialog from "@/app/components/FixedBottomDialog";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
@@ -336,119 +337,132 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
     ]);
 
     return (
-      <Stack position="relative">
-        {props.printButtonCallback ? (
-          <Stack
-            position="absolute"
-            right="30px"
-            top="47px"
-            height="50px"
-            width="50px"
-            bgcolor={PALETTE.secondary.purple[2]}
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="100%"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-            onClick={props.printButtonCallback}
-          >
-            <PrinterIcon height="25px" width="25px" />
-          </Stack>
-        ) : null}
+      <FixedBottomDialog
+        open={true}
+        width="90%"
+        backgroundColor={PALETTE.secondary.grey[1]}
+      >
         <Stack
-          ref={ref || setPrintableRef}
-          width={A4_WIDTH}
-          minWidth={A4_WIDTH}
-          minHeight={A4_HEIGHT}
-          maxWidth="90%"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          px="32px"
-          className={rubik.className}
+          position="relative"
+          width="90%"
+          borderRadius="16px"
+          bgcolor={PALETTE.secondary.grey[1]}
         >
-          {!props.pageIndex ? (
+          {props.printButtonCallback ? (
             <Stack
-              mt="50px"
-              spacing="4px"
-              width="100%"
-              height="24mm"
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              position="absolute"
+              right="30px"
+              top="47px"
+              height="50px"
+              width="50px"
+              bgcolor={PALETTE.secondary.purple[2]}
+              justifyContent="center"
+              alignItems="center"
+              borderRadius="100%"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+              }}
+              onClick={props.printButtonCallback}
             >
-              <Typography variant="h2">
-                {props.title || DEFAULT_TITLE}
-              </Typography>
-              <Typography bold color={PALETTE.secondary.purple[2]}>
-                {props.answers ? "Answers" : "Try to solve these questions!"}
-              </Typography>
+              <PrinterIcon height="25px" width="25px" />
             </Stack>
           ) : null}
-          <Stack width="100%">
-            {rows.map((row, i) => (
+          <Stack
+            ref={ref || setPrintableRef}
+            width={A4_WIDTH}
+            minWidth={A4_WIDTH}
+            height={A4_HEIGHT}
+            minHeight={A4_HEIGHT}
+            overflow="hidden"
+            maxWidth="90%"
+            bgcolor="rgb(255,255,255)"
+            borderRadius="12px"
+            px="32px"
+            className={rubik.className}
+          >
+            {!props.pageIndex ? (
               <Stack
-                key={i}
-                flex={1}
-                direction="row"
-                justifyContent={"space-evenly"}
+                mt="50px"
+                spacing="4px"
+                width="100%"
+                height="24mm"
+                borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
               >
-                {[
-                  ...row?.map((x, k) => (
-                    <Stack key={k} flex={1} alignItems="center">
-                      {props.topic === "division" ? (
-                        props.orientation === "vertical" ? (
-                          <LongDivisionVerticalQuestion
+                <Typography variant="h2">
+                  {props.title || DEFAULT_TITLE}
+                </Typography>
+                <Typography bold color={PALETTE.secondary.purple[2]}>
+                  {props.answers ? "Answers" : "Try to solve these questions!"}
+                </Typography>
+              </Stack>
+            ) : null}
+            <Stack width="100%">
+              {rows.map((row, i) => (
+                <Stack
+                  key={i}
+                  flex={1}
+                  direction="row"
+                  justifyContent={"space-evenly"}
+                >
+                  {[
+                    ...row?.map((x, k) => (
+                      <Stack key={k} flex={1} alignItems="center">
+                        {props.topic === "division" ? (
+                          props.orientation === "vertical" ? (
+                            <LongDivisionVerticalQuestion
+                              key={x}
+                              dividend={props.factor}
+                              answer={x}
+                              showAnswer={!!props.answers}
+                            />
+                          ) : (
+                            <LongDivisionHorizontalQuestion
+                              key={x}
+                              dividend={props.factor}
+                              answer={x}
+                              showAnswer={!!props.answers}
+                            />
+                          )
+                        ) : props.orientation === "horizontal" ? (
+                          <HorizontalEquationQuestion
                             key={x}
-                            dividend={props.factor}
-                            answer={x}
-                            showAnswer={!!props.answers}
+                            number={props.factor}
+                            multiplier={x}
+                            answer={!!props.answers}
+                            topic={props.topic}
+                            // inputValue={4}
+                            // changeCallback={() => null}
                           />
                         ) : (
-                          <LongDivisionHorizontalQuestion
+                          <VerticalMultiplicationQuestion
                             key={x}
-                            dividend={props.factor}
-                            answer={x}
-                            showAnswer={!!props.answers}
+                            number={props.factor}
+                            multiplier={x}
+                            answer={!!props.answers}
+                            topic={props.topic}
                           />
+                        )}
+                      </Stack>
+                    )),
+                    ...[
+                      ...Array(
+                        Math.max(
+                          0,
+                          (props.orientation === "horizontal"
+                            ? HORIZONTAL_N_COLUMNS
+                            : VERTICAL_N_COLUMNS) - row.length
                         )
-                      ) : props.orientation === "horizontal" ? (
-                        <HorizontalEquationQuestion
-                          key={x}
-                          number={props.factor}
-                          multiplier={x}
-                          answer={!!props.answers}
-                          topic={props.topic}
-                          // inputValue={4}
-                          // changeCallback={() => null}
-                        />
-                      ) : (
-                        <VerticalMultiplicationQuestion
-                          key={x}
-                          number={props.factor}
-                          multiplier={x}
-                          answer={!!props.answers}
-                          topic={props.topic}
-                        />
-                      )}
-                    </Stack>
-                  )),
-                  ...[
-                    ...Array(
-                      Math.max(
-                        0,
-                        (props.orientation === "horizontal"
-                          ? HORIZONTAL_N_COLUMNS
-                          : VERTICAL_N_COLUMNS) - row.length
-                      )
-                    ).keys(),
-                  ].map((j) => <Stack flex={1} key={j} />),
-                ]}
-              </Stack>
-            ))}
+                      ).keys(),
+                    ].map((j) => <Stack flex={1} key={j} />),
+                  ]}
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
+      </FixedBottomDialog>
     );
   }
 );
