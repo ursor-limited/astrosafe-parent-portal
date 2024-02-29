@@ -112,7 +112,7 @@ const VideoCreationDialog = (props: {
       creatorId: "mkl.koskela@gmail.com",
     }).then(async (v) => {
       setLoading(false);
-      router.push(`/v/${v.id}`);
+      router.push(`/video/${v.id}`);
     });
   };
 
