@@ -98,6 +98,24 @@ const VideoCreationDialog = (props: {
     [playerWidthRef, width]
   );
 
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const submit = () => {
+    setLoading(true);
+    ApiController.createVideo({
+      title,
+      description,
+      url,
+      thumbnailUrl,
+      startTime: range?.[0],
+      endTime: range?.[1],
+      creatorId: "mkl.koskela@gmail.com",
+    }).then(async (v) => {
+      setLoading(false);
+      router.push(`/v/${v.id}`);
+    });
+  };
+
   return (
     <UrsorDialog
       supertitle="Create video"
@@ -105,7 +123,7 @@ const VideoCreationDialog = (props: {
       open={props.open}
       button={{
         text: "Create",
-        callback: () => null,
+        callback: submit,
         icon: RocketIcon,
       }}
       onCloseCallback={props.closeCallback}
@@ -159,64 +177,72 @@ const VideoCreationDialog = (props: {
             />
           </Captioned>
           <Captioned text="Start and end time">
-            {duration && range ? (
-              <Stack
-                direction="row"
-                // spacing={mobile ? "20px" : "44px"}
-                spacing={"20px"}
-                justifyContent="center"
-                width="100%"
-                sx={{
-                  ".MuiSlider-root": {
-                    color: "transparent !important",
-                  },
-                  ".MuiSlider-rail": {
-                    opacity: 0.4,
-                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                  },
-                  ".MuiSlider-track": {
-                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                  },
-                  ".MuiSlider-thumb": {
-                    "&:nth-of-type(3)": {
-                      background: "#F279C5",
+            <Stack
+              bgcolor={PALETTE.secondary.grey[1]}
+              borderRadius="8px"
+              height="40px"
+              justifyContent="center"
+              px="10px"
+            >
+              {duration && range ? (
+                <Stack
+                  direction="row"
+                  // spacing={mobile ? "20px" : "44px"}
+                  spacing={"20px"}
+                  justifyContent="center"
+                  width="100%"
+                  sx={{
+                    ".MuiSlider-root": {
+                      color: "transparent !important",
                     },
-                    "&:nth-of-type(4)": {
-                      background: "#FD9B41",
+                    ".MuiSlider-rail": {
+                      opacity: 0.4,
+                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
                     },
-                  },
-                }}
-              >
-                <DurationLabel
-                  value={range[0]}
-                  incrementCallback={() =>
-                    setRange([Math.min(duration, range[0] + 1), range[1]])
-                  }
-                  decrementCallback={() =>
-                    setRange([Math.max(0, range[0] - 1), range[1]])
-                  }
-                />
-                <Slider
-                  min={0}
-                  max={duration}
-                  valueLabelDisplay="off"
-                  getAriaLabel={() => "Temperature range"}
-                  value={range}
-                  onChange={(event: Event, newValue: number | number[]) => {
-                    setRange(newValue as number[]);
+                    ".MuiSlider-track": {
+                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                    },
+                    ".MuiSlider-thumb": {
+                      "&:nth-of-type(3)": {
+                        background: "#F279C5",
+                      },
+                      "&:nth-of-type(4)": {
+                        background: "#FD9B41",
+                      },
+                    },
                   }}
-                />
-                <DurationLabel
-                  value={range[1]}
-                  incrementCallback={() =>
-                    setRange([range[0], Math.min(duration, range[1] + 1)])
-                  }
-                  decrementCallback={() =>
-                    setRange([range[0], Math.max(0, range[1] - 1)])
-                  }
-                />
-              </Stack>
-            ) : null}
+                >
+                  <DurationLabel
+                    value={range[0]}
+                    incrementCallback={() =>
+                      setRange([Math.min(duration, range[0] + 1), range[1]])
+                    }
+                    decrementCallback={() =>
+                      setRange([Math.max(0, range[0] - 1), range[1]])
+                    }
+                  />
+                  <Slider
+                    min={0}
+                    max={duration}
+                    valueLabelDisplay="off"
+                    getAriaLabel={() => "Temperature range"}
+                    value={range}
+                    onChange={(event: Event, newValue: number | number[]) => {
+                      setRange(newValue as number[]);
+                    }}
+                  />
+                  <DurationLabel
+                    value={range[1]}
+                    incrementCallback={() =>
+                      setRange([range[0], Math.min(duration, range[1] + 1)])
+                    }
+                    decrementCallback={() =>
+                      setRange([range[0], Math.max(0, range[1] - 1)])
+                    }
+                  />
+                </Stack>
+              ) : null}
+            </Stack>
           </Captioned>
         </Stack>
         <Stack
