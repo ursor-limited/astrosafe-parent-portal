@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import EquationWorksheet from "./EquationWorksheet";
+import EquationWorksheet, { A4_WIDTH } from "./EquationWorksheet";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
   IEquationWorksheetParameters,
@@ -15,6 +15,80 @@ import {
 } from "@/app/landing/[urlId]/WorksheetGenerator";
 import NumberBondWorksheet from "./NumberBondWorksheet";
 import moment from "moment";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import Slider from "react-slick";
+import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const SLIDE_WIDTH = 210 * 0.3; // mm
+const SLIDE_SPACING = 20;
+
+const CarouselButton = (props: { onClick: () => void }) => (
+  <Stack
+    bgcolor="rgb(255,255,255)"
+    borderRadius="100%"
+    width="60px"
+    height="60px"
+    boxShadow="0 0 20px rgba(0,0,0,0.06)"
+    onClick={props.onClick}
+    sx={{
+      "&:hover": { opacity: 0.6 },
+      transition: "0.2s",
+      cursor: "pointer",
+    }}
+    justifyContent="center"
+    alignItems="center"
+  >
+    <ChevronLeft height="38px" width="38px" />
+  </Stack>
+);
+
+const Carousel = (props: {
+  items: JSX.Element[];
+  yPadding: number;
+  mobile?: boolean;
+}) => {
+  const [index, setIndex] = useState<number>(0);
+  return (
+    <Stack
+      width="100%"
+      justifyContent="center"
+      alignItems="center"
+      position="relative"
+      spacing="20px"
+    >
+      <Stack direction="row" width="100%" justifyContent="space-between">
+        <CarouselButton
+          onClick={() => setIndex(Math.min(index + 1, props.items.length - 1))}
+        />
+        <Stack
+          sx={{
+            transform: "rotate(180deg)",
+          }}
+        >
+          <CarouselButton onClick={() => setIndex(Math.max(index - 1, 0))} />
+        </Stack>
+      </Stack>
+      <Stack width="100%" alignItems="center">
+        <Stack height="400px" width={0} overflow="visible" position="relative">
+          <Stack direction="row" position="absolute">
+            {props.items.map((item, i) => (
+              <Stack
+                key={i}
+                width={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+                minWidth={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+                alignItems="center"
+              >
+                {item}
+              </Stack>
+            ))}
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
 const SMALL_SWITCH_BUTTON_HEIGHT = 34;
@@ -142,10 +216,11 @@ export default function WorksheetPageContents(props: IWorksheet) {
       justifyContent="center"
       overflow="hidden"
       spacing="100px"
+      pt="50px"
     >
       <Stack
         position="relative"
-        width="100%"
+        width="90%"
         borderRadius="16px"
         bgcolor={PALETTE.secondary.grey[1]}
       >
@@ -161,8 +236,55 @@ export default function WorksheetPageContents(props: IWorksheet) {
             and Google Experiments!
           </Typography>
         </Stack>
-        <TabSwitch selected={mode} callback={(m) => setMode(m)} />
-        {props.worksheetId === "equation" ? (
+
+        <Stack width="100%" alignItems="center" overflow="hidden">
+          <Carousel
+            yPadding={30}
+            items={[...Array(3).keys()].map((x, i) => (
+              <Stack
+                key={i}
+                position="relative"
+                alignItems="center"
+                height={`${297 * 0.3}mm`}
+                width={`${210 * 0.3}mm`}
+                bgcolor="cyan"
+                sx={{
+                  //transform: "scale(0.4) translateY(300px)",
+                  transformOrigin: "top center",
+                }}
+              >
+                <Stack
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  //height="200px"
+
+                  boxShadow="0 0 60px rgba(0,0,0,0.07)"
+                >
+                  {/* <EquationWorksheet
+                    ref={setPrintableRef}
+                    title={props.title}
+                    topic={
+                      (props.parameters as IEquationWorksheetParameters).topic
+                    }
+                    orientation={props.parameters.orientation}
+                    factor={
+                      (props.parameters as IEquationWorksheetParameters).factor
+                    }
+                    multipliers={
+                      (props.parameters as IEquationWorksheetParameters)
+                        .multipliers
+                    }
+                    answers={mode === "markscheme"}
+                  /> */}
+                </Stack>
+              </Stack>
+            ))}
+          />
+        </Stack>
+
+        {/* <TabSwitch selected={mode} callback={(m) => setMode(m)} /> */}
+        {/* {props.worksheetId === "equation" ? (
           <EquationWorksheet
             ref={setPrintableRef}
             title={props.title}
@@ -186,7 +308,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
             printButtonCallback={() => setPrintDialogOpen(true)}
             answers={mode === "markscheme"}
           />
-        ) : null}
+        ) : null} */}
       </Stack>
     </Stack>
   );

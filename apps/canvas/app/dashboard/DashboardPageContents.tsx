@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useEffect, useState } from "react";
 import ApiController from "../api";
