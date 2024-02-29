@@ -21,8 +21,9 @@ import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const SLIDE_WIDTH = 210 * 0.3; // mm
-const SLIDE_SPACING = 20;
+const SLIDE_WIDTH = 210 * 0.33; // mm
+const SLIDE_SPACING = 40;
+const SLIDE_SIZE_SCALE = 0.34;
 
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
@@ -55,10 +56,9 @@ const Carousel = (props: {
       width="100%"
       justifyContent="center"
       alignItems="center"
-      position="relative"
       spacing="20px"
     >
-      <Stack direction="row" width="100%" justifyContent="space-between">
+      {/* <Stack direction="row" width="100%" justifyContent="space-between">
         <CarouselButton
           onClick={() => setIndex(Math.min(index + 1, props.items.length - 1))}
         />
@@ -69,22 +69,33 @@ const Carousel = (props: {
         >
           <CarouselButton onClick={() => setIndex(Math.max(index - 1, 0))} />
         </Stack>
-      </Stack>
-      <Stack width="100%" alignItems="center">
-        <Stack height="400px" width={0} overflow="visible" position="relative">
-          <Stack direction="row" position="absolute">
-            {props.items.map((item, i) => (
-              <Stack
-                key={i}
-                width={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
-                minWidth={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
-                alignItems="center"
-              >
-                {item}
-              </Stack>
-            ))}
+      </Stack> */}
+      <Stack
+        direction="row"
+        sx={{
+          transition: "0.7s",
+          transform: `translateX(${
+            (Math.floor(props.items.length / 2) - index) *
+            (SLIDE_SPACING + SLIDE_WIDTH)
+          }mm)`,
+        }}
+        py="100px"
+      >
+        {props.items.map((item, i) => (
+          <Stack
+            key={i}
+            width={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+            minWidth={`${SLIDE_SPACING + SLIDE_WIDTH}mm`}
+            alignItems="center"
+            sx={{
+              transition: "0.7s",
+              transform: index === i ? "scale(1.5)" : undefined,
+              transformOrigin: "center",
+            }}
+          >
+            {item}
           </Stack>
-        </Stack>
+        ))}
       </Stack>
     </Stack>
   );
@@ -220,11 +231,13 @@ export default function WorksheetPageContents(props: IWorksheet) {
     >
       <Stack
         position="relative"
-        width="90%"
+        width="83%"
+        height="100%"
         borderRadius="16px"
         bgcolor={PALETTE.secondary.grey[1]}
+        pt="100px"
       >
-        <Stack spacing="4px">
+        <Stack spacing="4px" px="24px">
           <Typography>
             {moment(props.createdAt).format("Do MMMM YYYY")}
           </Typography>
@@ -245,11 +258,10 @@ export default function WorksheetPageContents(props: IWorksheet) {
                 key={i}
                 position="relative"
                 alignItems="center"
-                height={`${297 * 0.3}mm`}
-                width={`${210 * 0.3}mm`}
+                height={`${297 * SLIDE_SIZE_SCALE}mm`}
+                width={`${210 * SLIDE_SIZE_SCALE}mm`}
                 bgcolor="cyan"
                 sx={{
-                  //transform: "scale(0.4) translateY(300px)",
                   transformOrigin: "top center",
                 }}
               >
