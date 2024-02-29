@@ -5,6 +5,7 @@ import { IVideo } from "../api";
 import moment from "moment";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import Image from "next/image";
 
 const PLACEHOLDER_THUMBNAIL =
@@ -21,9 +22,9 @@ const VideoCard = (props: IVideo) => {
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
   return (
     <Stack
-      height="267px"
+      height="248px"
       borderRadius="12px"
-      bgcolor="rgba(0,0,0,0.3)"
+      bgcolor="rgb(255,255,255)"
       p="4px"
       overflow="hidden"
       sx={{
@@ -94,15 +95,10 @@ const VideoCard = (props: IVideo) => {
           </Stack>
         </Stack>
         <Stack flex={1} justifyContent="space-between">
-          <Typography
-            color="rgba(255,255,255,0.7)"
-            variant="medium"
-            bold
-            maxLines={2}
-          >
+          <Typography variant="medium" bold maxLines={2}>
             {props.title}
           </Typography>
-          <Typography color="rgba(255,255,255,0.7)" variant="small">
+          <Typography variant="small">
             {getFormattedDate(props.createdAt)}
           </Typography>
         </Stack>

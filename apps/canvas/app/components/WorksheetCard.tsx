@@ -13,6 +13,7 @@ const WorksheetCard = (props: IWorksheet) => {
       boxSizing="border-box"
       border={`4px solid rgb(255,255,255)`}
       overflow="hidden"
+      spacing="8px"
     >
       <Stack
         height="201px"
@@ -42,7 +43,7 @@ const WorksheetCard = (props: IWorksheet) => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack zIndex={2} flex={1} bgcolor="rgb(255,255,255)" p="6px">
+      <Stack zIndex={2} flex={1} bgcolor="rgb(255,255,255)">
         <Stack flex={1} justifyContent="space-between">
           <Typography
             color={PALETTE.secondary.grey[5]}
