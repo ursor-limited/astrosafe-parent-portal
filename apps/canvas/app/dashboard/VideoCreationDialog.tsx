@@ -4,11 +4,19 @@ import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useEffect, useState } from "react";
 import { Captioned } from "../landing/[urlId]/LandingPageContents";
-import { PALETTE, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorInputField } from "ui";
 import { Slider } from "@mui/material";
 import DurationLabel from "../editor/duration-label";
+import Player from "../components/player";
+import { deNoCookiefy } from "../components/utils";
+import ApiController from "../api";
+import { useWindowSize } from "usehooks-ts";
 
 export const TITLE_CHARACTER_LIMIT = 40;
+const VIDEO_WIDTH = 290;
+const VIDEO_HEIGHT = 159;
+
+const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 const VideoCreationDialog = (props: {
   open: boolean;
@@ -19,11 +27,76 @@ const VideoCreationDialog = (props: {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+
+  const [showForbiddenVideoView, setShowForbiddenVideoView] =
+    useState<boolean>(false);
+
+  const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
+
+  const [originalUrl, setOriginalUrl] = useState<string>("");
+  const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
+    undefined
+  );
+
+  useEffect(
+    () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
+    [originalUrl]
+  );
+  useEffect(() => {
+    fetch(
+      `https://noembed.com/embed?url=${encodeURIComponent(
+        deNoCookiefy(originalUrl.replace("/shorts/", "/embed/"))
+      )}`
+    )
+      .then((response) => response.json())
+      .then((details) => {
+        if (!details.html) {
+          setShowInvalidUrlView(true);
+        } else if (details.error?.includes("403")) {
+          setShowForbiddenVideoView(true);
+        } else {
+          setUrl(deNoCookiefy(extractUrl(details.html)));
+          setTitle(details.title);
+          setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          setThumbnailUrl(details.thumbnail_url);
+        }
+      })
+      .catch(() => setShowInvalidUrlView(true));
+  }, [originalUrl]);
+
+  const [playing, setPlaying] = useState<boolean>(false);
+  useEffect(() => {
+    setPlaying(false);
+    provider === "youtube" &&
+      ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
+        (result) => {
+          //setDescription(result.description);
+          setThumbnailUrl(result.thumbnailUrl);
+        }
+      );
+  }, [url]);
+
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
     duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
+
+  const { width } = useWindowSize();
+
+  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
+    null
+  );
+
+  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
+  useEffect(
+    () =>
+      setPlayerWidth(
+        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+      ),
+    [playerWidthRef, width]
+  );
 
   return (
     <UrsorDialog
@@ -36,17 +109,15 @@ const VideoCreationDialog = (props: {
         icon: RocketIcon,
       }}
       onCloseCallback={props.closeCallback}
-      backButtonCallback={props.closeCallback}
-      width="90%"
       maxWidth="880px"
     >
-      <Stack flex={1} direction="row" spacing="40px">
+      <Stack flex={1} direction="row" spacing="40px" width="86%">
         <Stack spacing="20px" flex={1}>
           <Captioned text="URL">
             <UrsorInputField
-              value={url}
+              value={originalUrl}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setUrl(event.target.value)
+                setOriginalUrl(event.target.value)
               }
               placeholder="URL"
               width="100%"
@@ -92,7 +163,7 @@ const VideoCreationDialog = (props: {
               <Stack
                 direction="row"
                 // spacing={mobile ? "20px" : "44px"}
-                spacing={"44px"}
+                spacing={"20px"}
                 justifyContent="center"
                 width="100%"
                 sx={{
@@ -147,6 +218,30 @@ const VideoCreationDialog = (props: {
               </Stack>
             ) : null}
           </Captioned>
+        </Stack>
+        <Stack
+          width={VIDEO_WIDTH}
+          height={VIDEO_HEIGHT}
+          bgcolor="rgb(0,0,0)"
+          spacing="10px"
+        >
+          {provider ? (
+            <Player
+              url={url}
+              provider={provider}
+              width={Math.min(playerWidth, VIDEO_WIDTH)}
+              height={
+                Math.min(playerWidth, VIDEO_WIDTH) *
+                (VIDEO_HEIGHT / VIDEO_WIDTH)
+              }
+              setDuration={(d) => d && setDuration(d)}
+              noKitemark={playerWidth < VIDEO_WIDTH}
+              top="120px"
+              playingCallback={(p) => setPlaying(p)}
+            />
+          ) : null}
+          <Typography bold>{title}</Typography>
+          <Typography variant="small">{description}</Typography>
         </Stack>
       </Stack>
     </UrsorDialog>
