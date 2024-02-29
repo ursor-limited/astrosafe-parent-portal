@@ -14,6 +14,7 @@ import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
+import VideoCreationDialog from "./VideoCreationDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -24,6 +25,7 @@ const ToolButton = (props: {
   title: string;
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  onClick: () => void;
 }) => (
   <Stack
     direction="row"
@@ -33,6 +35,7 @@ const ToolButton = (props: {
     spacing="12px"
     bgcolor="rgb(255,255,255)"
     overflow="hidden"
+    onClick={props.onClick}
   >
     <Stack
       width="66px"
@@ -105,59 +108,74 @@ export default function LandingPageContents(props: {}) {
     );
   }, [videos, worksheets, nColumns]);
 
+  const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
+    useState<boolean>(true);
+
   return (
-    <PageLayout
-      title="Home"
-      bodyWidth="100%"
-      selectedSidebarItemId="home"
-      description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-      button={{
-        text: "Create",
-        icon: PlusIcon,
-        callback: () => null,
-      }}
-      secondaryButton={{
-        text: "30 days left",
-        icon: PlusIcon,
-        callback: () => null,
-      }}
-    >
-      <Stack>
-        <ToolButton
-          title="Create safe video link"
-          description="Free of ads. Safe to share."
-          color={PALETTE.secondary.blue[3]}
-          icon={CirclePlayIcon}
-        />
-      </Stack>
-      <Stack flex={1} ref={setColumnsContainerRef} overflow="hidden" pb="64px">
-        <Stack flex={1} overflow="scroll">
-          <Stack
-            flex={1}
-            pb={SIDEBAR_Y_MARGIN}
-            direction="row"
-            spacing={GRID_SPACING}
-          >
-            {cardColumns.map((column, i) => (
-              <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                {column.map((item, j) => (
-                  <Stack key={item.details.id} spacing={GRID_SPACING}>
-                    <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
-                      {
-                        item.type === "video" ? (
-                          <VideoCard {...(item.details as IVideo)} />
-                        ) : (
-                          <WorksheetCard {...(item.details as IWorksheet)} />
-                        ) // other card
-                      }
-                    </UrsorFadeIn>
-                  </Stack>
-                ))}
-              </Stack>
-            ))}
+    <>
+      <PageLayout
+        title="Home"
+        bodyWidth="100%"
+        selectedSidebarItemId="home"
+        description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
+        button={{
+          text: "Create",
+          icon: PlusIcon,
+          callback: () => null,
+        }}
+        secondaryButton={{
+          text: "30 days left",
+          icon: PlusIcon,
+          callback: () => null,
+        }}
+      >
+        <Stack>
+          <ToolButton
+            title="Create safe video link"
+            description="Free of ads. Safe to share."
+            color={PALETTE.secondary.blue[3]}
+            icon={CirclePlayIcon}
+            onClick={() => setVideoCreationDialogOpen(true)}
+          />
+        </Stack>
+        <Stack
+          flex={1}
+          ref={setColumnsContainerRef}
+          overflow="hidden"
+          pb="64px"
+        >
+          <Stack flex={1} overflow="scroll">
+            <Stack
+              flex={1}
+              pb={SIDEBAR_Y_MARGIN}
+              direction="row"
+              spacing={GRID_SPACING}
+            >
+              {cardColumns.map((column, i) => (
+                <Stack key={i} flex={1} spacing={GRID_SPACING}>
+                  {column.map((item, j) => (
+                    <Stack key={item.details.id} spacing={GRID_SPACING}>
+                      <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                        {
+                          item.type === "video" ? (
+                            <VideoCard {...(item.details as IVideo)} />
+                          ) : (
+                            <WorksheetCard {...(item.details as IWorksheet)} />
+                          ) // other card
+                        }
+                      </UrsorFadeIn>
+                    </Stack>
+                  ))}
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
-    </PageLayout>
+      </PageLayout>
+      <VideoCreationDialog
+        open={videoCreationDialogOpen}
+        closeCallback={() => setVideoCreationDialogOpen(false)}
+      />
+    </>
   );
 }
