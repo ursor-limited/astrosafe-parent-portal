@@ -3,6 +3,7 @@
 import { Stack } from "@mui/system";
 import PageLayout, { SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
+import WorksheetCreationDialog from "./WorksheetCreationDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -36,6 +38,11 @@ const ToolButton = (props: {
     bgcolor="rgb(255,255,255)"
     overflow="hidden"
     onClick={props.onClick}
+    sx={{
+      cursor: "pointer",
+      "&:hover": { opacity: 0.6 },
+      transition: "0.2s",
+    }}
   >
     <Stack
       width="66px"
@@ -109,7 +116,10 @@ export default function LandingPageContents(props: {}) {
   }, [videos, worksheets, nColumns]);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
+
+  const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -129,13 +139,20 @@ export default function LandingPageContents(props: {}) {
           callback: () => null,
         }}
       >
-        <Stack>
+        <Stack direction="row" spacing="24px">
           <ToolButton
             title="Create safe video link"
             description="Free of ads. Safe to share."
             color={PALETTE.secondary.blue[3]}
             icon={CirclePlayIcon}
             onClick={() => setVideoCreationDialogOpen(true)}
+          />
+          <ToolButton
+            title="Create maths worksheet"
+            description="Printable & finished in seconds."
+            color={PALETTE.secondary.pink[3]}
+            icon={ChecklistIcon}
+            onClick={() => setWorksheetCreationDialogOpen(true)}
           />
         </Stack>
         <Stack
@@ -175,6 +192,10 @@ export default function LandingPageContents(props: {}) {
       <VideoCreationDialog
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
+      />
+      <WorksheetCreationDialog
+        open={worksheetCreationDialogOpen}
+        closeCallback={() => setWorksheetCreationDialogOpen(false)}
       />
     </>
   );

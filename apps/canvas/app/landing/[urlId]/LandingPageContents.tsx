@@ -307,7 +307,7 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <WorksheetGenerator {...props.worksheetGenerator} />
+      <WorksheetGenerator {...props.worksheetGenerator} whiteFields />
     </AstroLandingPage>
   );
 }

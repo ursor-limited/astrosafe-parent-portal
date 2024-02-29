@@ -171,21 +171,30 @@ export const CategorySelectionButton = (props: {
 };
 
 export default function WorksheetGenerator(props: {
-  worksheetId: IWorksheet["worksheetId"];
-  title: IWorksheet["title"];
-  nProblems: number;
-  topic: WorksheetTopic;
-  specificSettings: ISpecificWorksheetGeneratorSettings;
+  worksheetId?: IWorksheet["worksheetId"];
+  title?: IWorksheet["title"];
+  nProblems?: number;
+  topic?: WorksheetTopic;
+  specificSettings?: ISpecificWorksheetGeneratorSettings;
+  noBackground?: boolean;
+  whiteFields?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>(DEFAULT_TITLE);
   const [nProblems, setNProblems] = useState<number>(10);
 
-  useEffect(() => setTopic(props.topic), [props.topic]);
-  useEffect(() => setWorksheetId(props.worksheetId), [props.worksheetId]);
-  useEffect(() => setTitle(props.title), [props.title]);
-  useEffect(() => setNProblems(props.nProblems), [props.nProblems]);
+  useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
+  useEffect(
+    () => props.worksheetId && setWorksheetId(props.worksheetId),
+    [props.worksheetId]
+  );
+  useEffect(() => {
+    props.title && setTitle(props.title);
+  }, [props.title]);
+  useEffect(() => {
+    props.nProblems && setNProblems(props.nProblems);
+  }, [props.nProblems]);
 
   useEffect(() => {
     !WORKSHEET_TOPIC_WORKSHEET_IDS[topic].includes(worksheetId) &&
@@ -219,8 +228,8 @@ export default function WorksheetGenerator(props: {
   return (
     <Stack
       borderRadius="20px"
-      bgcolor={PALETTE.secondary.grey[1]}
-      p="42px"
+      bgcolor={props.noBackground ? undefined : PALETTE.secondary.grey[1]}
+      p={props.noBackground ? undefined : "42px"}
       direction="row"
       spacing="40px"
     >
@@ -236,7 +245,7 @@ export default function WorksheetGenerator(props: {
             width="100%"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
         {/* <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}> */}
@@ -269,7 +278,7 @@ export default function WorksheetGenerator(props: {
           </Captioned>
           <Captioned text="Question type">
             <UrsorSelect
-              white
+              white={props.whiteFields}
               items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
                 id: t,
                 value: WORKSHEET_ID_DISPLAY_NAMES[t],
@@ -279,6 +288,7 @@ export default function WorksheetGenerator(props: {
                 setWorksheetId(wid as WorksheetId);
               }}
               width="100%"
+              zIndex={999999999}
             />
           </Captioned>
         </Stack>
@@ -289,7 +299,7 @@ export default function WorksheetGenerator(props: {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        {specificSettings && worksheetId === "equation" ? (
+        {worksheetId === "equation" ? (
           <WorksheetGeneratorEquationModule
             {...(specificSettings as IEquationWorksheetGeneratorSettings)}
             callback={(newPreviewWorksheet) =>
@@ -303,6 +313,7 @@ export default function WorksheetGenerator(props: {
             topic={topic}
             pageIndex={selectedPageIndex}
             regenerationCount={regenerationCount}
+            whiteFields={props.whiteFields}
           />
         ) : worksheetId === "numberBond" ? (
           <WorksheetGeneratorNumberBondModule
@@ -318,6 +329,7 @@ export default function WorksheetGenerator(props: {
             topic={topic}
             pageIndex={selectedPageIndex}
             regenerationCount={regenerationCount}
+            whiteFields={props.whiteFields}
           />
         ) : null}
       </Stack>
@@ -332,7 +344,7 @@ export default function WorksheetGenerator(props: {
           position="absolute"
           top={0}
           left={0}
-          overflow="hidden"
+          boxShadow="0 0 60px rgba(0,0,0,0.07)"
         >
           {previewWorksheet}
         </Stack>

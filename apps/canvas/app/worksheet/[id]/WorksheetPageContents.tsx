@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
 import EquationWorksheet from "./EquationWorksheet";
-import { Typography, UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
@@ -14,6 +14,7 @@ import {
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
 import NumberBondWorksheet from "./NumberBondWorksheet";
+import moment from "moment";
 
 const TAB_SWITCH_BUTTON_HEIGHT = 43;
 const SMALL_SWITCH_BUTTON_HEIGHT = 34;
@@ -142,69 +143,50 @@ export default function WorksheetPageContents(props: IWorksheet) {
       overflow="hidden"
       spacing="100px"
     >
-      <Stack overflow="scroll" width="100%" alignItems="center">
-        <Stack minHeight="100px" />
-        <Stack spacing="10px" alignItems="center">
-          {/* <Stack direction="row" spacing="10px">
-            <UrsorButton
-              dark
-              variant="tertiary"
-              onClick={() => setPrintDialogOpen(true)}
-            >
-              Print worksheet
-            </UrsorButton>
-            <UrsorButton
-              dark
-              variant="secondary"
-              onClick={() => setPrintAnswerSheetDialogOpen(true)}
-            >
-              Print mark scheme
-            </UrsorButton>
-          </Stack> */}
-          <TabSwitch selected={mode} callback={(m) => setMode(m)} />
-          {props.worksheetId === "equation" ? (
-            <EquationWorksheet
-              ref={setPrintableRef}
-              title={props.title}
-              topic={(props.parameters as IEquationWorksheetParameters).topic}
-              orientation={props.parameters.orientation}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
-              printButtonCallback={() => setPrintDialogOpen(true)}
-              answers={mode === "markscheme"}
-            />
-          ) : props.worksheetId === "numberBond" ? (
-            <NumberBondWorksheet
-              ref={setPrintableRef}
-              title={props.title}
-              orientation={props.parameters.orientation}
-              result={
-                (props.parameters as INumberBondWorksheetParameters).result
-              }
-              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
-              both={(props.parameters as INumberBondWorksheetParameters).both}
-              printButtonCallback={() => setPrintDialogOpen(true)}
-              answers={mode === "markscheme"}
-            />
-          ) : null}
+      <Stack
+        position="relative"
+        width="100%"
+        borderRadius="16px"
+        bgcolor={PALETTE.secondary.grey[1]}
+      >
+        <Stack spacing="4px">
+          <Typography>
+            {moment(props.createdAt).format("Do MMMM YYYY")}
+          </Typography>
+          <Typography variant="h2">{props.title}</Typography>
+          <Typography>
+            In this session we will be practising our division skills! Watch the
+            videos on long division and decimal places to understand how
+            division works. Then get stuck in with the activities on Fun Brain
+            and Google Experiments!
+          </Typography>
         </Stack>
-        {/* <Stack sx={{ visibility: "hidden", pointerEvents: "none" }}>
-          <Worksheet
-            ref={setPrintableAnswerSheetRef}
-            title={props.details.title}
-            orientation={props.details.orientation}
-            number={props.details.number}
-            multipliers={props.details.multipliers}
-            printDialogOpen={printAnswerSheetDialogOpen}
-            printDialogCloseCallback={() =>
-              setPrintAnswerSheetDialogOpen(false)
+        <TabSwitch selected={mode} callback={(m) => setMode(m)} />
+        {props.worksheetId === "equation" ? (
+          <EquationWorksheet
+            ref={setPrintableRef}
+            title={props.title}
+            topic={(props.parameters as IEquationWorksheetParameters).topic}
+            orientation={props.parameters.orientation}
+            factor={(props.parameters as IEquationWorksheetParameters).factor}
+            multipliers={
+              (props.parameters as IEquationWorksheetParameters).multipliers
             }
-            answers
+            printButtonCallback={() => setPrintDialogOpen(true)}
+            answers={mode === "markscheme"}
           />
-        </Stack> */}
-        <Stack minHeight="100px" />
+        ) : props.worksheetId === "numberBond" ? (
+          <NumberBondWorksheet
+            ref={setPrintableRef}
+            title={props.title}
+            orientation={props.parameters.orientation}
+            result={(props.parameters as INumberBondWorksheetParameters).result}
+            pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
+            both={(props.parameters as INumberBondWorksheetParameters).both}
+            printButtonCallback={() => setPrintDialogOpen(true)}
+            answers={mode === "markscheme"}
+          />
+        ) : null}
       </Stack>
     </Stack>
   );

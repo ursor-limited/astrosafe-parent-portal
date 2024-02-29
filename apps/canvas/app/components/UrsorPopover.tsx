@@ -35,6 +35,7 @@ export interface IUrsorPopoverProps {
   noCard?: boolean;
   noBackdrop?: boolean;
   disabled?: boolean;
+  zIndex?: number;
   children: React.ReactNode; // the button
 }
 
@@ -110,7 +111,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   sx={{
                     //background: "rgba(0, 0, 0, 0.2)",
                     //backdropFilter: "blur(3px)",
-                    zIndex: 2,
+                    zIndex: props.zIndex || 2,
                   }}
                   open={props.open}
                   onClick={props.closeCallback}
@@ -120,7 +121,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 ref={setPopperElement}
                 style={styles.popper}
                 {...attributes.popper}
-                zIndex={3}
+                zIndex={props.zIndex || 3}
                 //height={0}
               >
                 <Stack

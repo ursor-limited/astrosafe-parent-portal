@@ -36,6 +36,7 @@ export function WorksheetGeneratorNumberBondModule(
     topic: WorksheetTopic;
     pageIndex: number;
     regenerationCount: number;
+    whiteFields?: boolean;
   }
 ) {
   const [result, setResult] = useState<number>(3);
@@ -210,7 +211,7 @@ export function WorksheetGeneratorNumberBondModule(
             placeholder="Multiplier"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>
@@ -284,7 +285,7 @@ export function WorksheetGeneratorNumberBondModule(
             width="100%"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>
