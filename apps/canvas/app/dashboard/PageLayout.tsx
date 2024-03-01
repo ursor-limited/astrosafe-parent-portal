@@ -42,7 +42,7 @@ export interface IPageLayoutProps {
     tourId?: string;
   };
   selectedSidebarItemId: SideBarItemId;
-  titleRowRighthandElement?: JSX.Element;
+  buttonRowExtraElement?: JSX.Element;
   titleRowLefthandElement?: JSX.Element;
   disableSearchBarCollapsing?: boolean;
   classroomId?: string;
@@ -181,10 +181,15 @@ export default function PageLayout(props: IPageLayoutProps) {
                 </Stack>
                 {props.button ||
                 props.secondaryButton ||
-                props.titleRowRighthandElement ? (
+                props.buttonRowExtraElement ? (
                   <UrsorFadeIn delay={500} duration={800}>
-                    <Stack direction="row" spacing="16px" position="relative">
-                      {props.titleRowRighthandElement}
+                    <Stack
+                      direction="row"
+                      spacing="16px"
+                      position="relative"
+                      alignItems="center"
+                    >
+                      {props.buttonRowExtraElement}
                       {props.secondaryButton ? (
                         <Box id={props.button?.tourId}>
                           <UrsorButton

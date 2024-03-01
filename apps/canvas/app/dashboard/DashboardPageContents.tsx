@@ -144,6 +144,21 @@ export default function LandingPageContents(props: {}) {
           icon: VerifiedIcon,
           callback: () => null,
         }}
+        buttonRowExtraElement={
+          <Stack
+            height="100%"
+            alignItems="center"
+            direction="row"
+            spacing="5px"
+          >
+            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
+              30
+            </Typography>
+            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+              days left
+            </Typography>
+          </Stack>
+        }
       >
         <Stack direction="row" spacing="24px">
           <ToolButton
