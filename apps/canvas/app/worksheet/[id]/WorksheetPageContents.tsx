@@ -13,7 +13,14 @@ import {
   IWorksheetParameters,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
-import NumberBondWorksheet from "./NumberBondWorksheet";
+import NumberBondWorksheet, {
+  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
+  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_VERTICAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
+} from "./NumberBondWorksheet";
 import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
@@ -323,23 +330,45 @@ export default function WorksheetPageContents(props: IWorksheet) {
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
     const params = props.parameters as IEquationWorksheetParameters;
-    setNPages(
-      1 +
-        Math.ceil(
-          (params.multipliers.length -
-            (params.topic === "division"
-              ? 12
-              : props.parameters.orientation === "horizontal"
-              ? 16
-              : 20)) /
-            (params.topic === "division"
-              ? 12
-              : params.orientation === "horizontal"
-              ? 20
-              : 24)
-        )
-    );
-  }, [props.parameters]);
+    if (props.worksheetId === "equation") {
+      setNPages(
+        1 +
+          Math.ceil(
+            (params.multipliers.length -
+              (params.topic === "division"
+                ? 12
+                : props.parameters.orientation === "horizontal"
+                ? 16
+                : 20)) /
+              (params.topic === "division"
+                ? 12
+                : params.orientation === "horizontal"
+                ? 20
+                : 24)
+          )
+      );
+    } else if (props.worksheetId === "numberBond") {
+      const params = props.parameters as INumberBondWorksheetParameters;
+      setNPages(
+        1 +
+          Math.ceil(
+            (params.pairs.length -
+              (params.orientation === "horizontal"
+                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
+                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
+                (params.orientation === "horizontal"
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
+              ((params.orientation === "horizontal"
+                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
+                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
+                (params.orientation === "horizontal"
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS))
+          )
+      );
+    }
+  }, [props.parameters, props.worksheetId]);
 
   return (
     <Stack
@@ -395,23 +424,46 @@ export default function WorksheetPageContents(props: IWorksheet) {
               yPadding={30}
               items={[...Array(nPages).keys()].map((i) => (
                 <CarouselItem key={i} n={i + 1}>
-                  <EquationWorksheet
-                    key={i}
-                    title={props.title}
-                    topic={
-                      (props.parameters as IEquationWorksheetParameters).topic
-                    }
-                    orientation={props.parameters.orientation}
-                    pageIndex={i}
-                    factor={
-                      (props.parameters as IEquationWorksheetParameters).factor
-                    }
-                    multipliers={
-                      (props.parameters as IEquationWorksheetParameters)
-                        .multipliers
-                    }
-                    answers={mode === "markscheme"}
-                  />
+                  {props.worksheetId === "equation" ? (
+                    <EquationWorksheet
+                      key={i}
+                      title={props.title}
+                      topic={
+                        (props.parameters as IEquationWorksheetParameters).topic
+                      }
+                      orientation={props.parameters.orientation}
+                      pageIndex={i}
+                      factor={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .factor
+                      }
+                      multipliers={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .multipliers
+                      }
+                      answers={mode === "markscheme"}
+                    />
+                  ) : props.worksheetId === "numberBond" ? (
+                    <NumberBondWorksheet
+                      key={i}
+                      title={props.title}
+                      result={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .result
+                      }
+                      orientation={props.parameters.orientation}
+                      pageIndex={i}
+                      pairs={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .pairs
+                      }
+                      both={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .both
+                      }
+                      answers={mode === "markscheme"}
+                    />
+                  ) : null}
                 </CarouselItem>
               ))}
             />

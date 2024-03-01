@@ -12,13 +12,13 @@ import {
   EquationOrientation,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
 
-export const HORIZONTAL_N_COLUMNS = 2;
-export const VERTICAL_N_COLUMNS = 3;
+export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
+export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
 
-export const HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
-export const HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
-export const VERTICAL_FIRST_PAGE_ROWS_N = 3;
-export const VERTICAL_OTHER_PAGES_ROWS_N = 4;
+export const NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
+export const NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
+export const NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N = 3;
+export const NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N = 4;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -214,13 +214,13 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
     useEffect(() => {
       setFirstPageRowsN(
         props.orientation === "horizontal"
-          ? HORIZONTAL_FIRST_PAGE_ROWS_N
-          : VERTICAL_FIRST_PAGE_ROWS_N
+          ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
+          : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N
       );
       setOtherPagesRowsN(
         props.orientation === "horizontal"
-          ? HORIZONTAL_OTHER_PAGES_ROWS_N
-          : VERTICAL_OTHER_PAGES_ROWS_N
+          ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
+          : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N
       );
     }, [props.orientation]);
 
@@ -230,8 +230,8 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         const rowz = _.chunk(
           props.pairs,
           props.orientation === "horizontal"
-            ? HORIZONTAL_N_COLUMNS
-            : VERTICAL_N_COLUMNS
+            ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+            : NUMBER_BOND_VERTICAL_N_COLUMNS
         );
         setRows(
           _.isNumber(props.pageIndex)
@@ -338,8 +338,8 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                       Math.max(
                         0,
                         (props.orientation === "horizontal"
-                          ? HORIZONTAL_N_COLUMNS
-                          : VERTICAL_N_COLUMNS) - row.length
+                          ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                          : NUMBER_BOND_VERTICAL_N_COLUMNS) - row.length
                       )
                     ).keys(),
                   ].map((j) => <Stack flex={1} key={`filler${j}`} />),

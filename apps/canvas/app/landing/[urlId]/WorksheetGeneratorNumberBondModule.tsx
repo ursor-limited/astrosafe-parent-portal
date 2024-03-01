@@ -13,12 +13,12 @@ import {
 import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {
-  HORIZONTAL_FIRST_PAGE_ROWS_N,
-  HORIZONTAL_OTHER_PAGES_ROWS_N,
-  VERTICAL_OTHER_PAGES_ROWS_N,
-  VERTICAL_FIRST_PAGE_ROWS_N,
-  HORIZONTAL_N_COLUMNS,
-  VERTICAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
+  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
+  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_N_COLUMNS,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 
@@ -80,17 +80,17 @@ export function WorksheetGeneratorNumberBondModule(
           Math.ceil(
             (props.nProblems -
               (orientation === "horizontal"
-                ? HORIZONTAL_FIRST_PAGE_ROWS_N
-                : VERTICAL_FIRST_PAGE_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
+                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
                 (orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS)) /
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
               ((orientation === "horizontal"
-                ? HORIZONTAL_OTHER_PAGES_ROWS_N
-                : VERTICAL_OTHER_PAGES_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
+                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
                 (orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS))
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS))
           )
       ),
     [props.nProblems, orientation]
