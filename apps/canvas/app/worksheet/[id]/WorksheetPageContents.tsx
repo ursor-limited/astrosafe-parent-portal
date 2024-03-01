@@ -25,6 +25,44 @@ const SLIDE_WIDTH = 210 * 0.33; // mm
 const SLIDE_SPACING = 38;
 const SLIDE_SIZE_SCALE = 0.315;
 
+const CarouselItem = (props: { children: React.ReactNode }) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      position="relative"
+      alignItems="center"
+      height={`${297 * SLIDE_SIZE_SCALE}mm`}
+      width={`${210 * SLIDE_SIZE_SCALE}mm`}
+      sx={{
+        cursor: "pointer",
+        transition: "0.3s",
+        transformOrigin: "top center",
+        outline: `4px solid ${
+          hovering ? PALETTE.secondary.purple[1] : "transparent"
+        }`,
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+    >
+      <Stack position="absolute" top={0} left={0}>
+        <Stack
+          sx={{
+            transform: "scale(0.315)",
+            transformOrigin: "top left",
+          }}
+          boxShadow="0 0 60px rgba(0,0,0,0.07)"
+        >
+          {props.children}
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
+
 const CarouselButton = (props: { onClick: () => void }) => (
   <Stack
     bgcolor="rgb(255,255,255)"
@@ -277,7 +315,28 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   const [mode, setMode] = useState<"worksheet" | "markscheme">("worksheet");
 
-  const [hoveringRowIndex, setHoveringRowIndex] = useState<number | null>(null);
+  const [nPages, setNPages] = useState<number>(1);
+  useEffect(() => {
+    const params = props.parameters as IEquationWorksheetParameters;
+    setNPages(
+      1 +
+        Math.ceil(
+          (params.multipliers.length -
+            (params.topic === "division"
+              ? 12
+              : props.parameters.orientation === "horizontal"
+              ? 16
+              : 20)) /
+            (params.topic === "division"
+              ? 12
+              : params.orientation === "horizontal"
+              ? 20
+              : 24)
+        )
+    );
+  }, [props.parameters]);
+
+  const [pages, setPages] = useState<React.ReactNode[]>([]);
 
   return (
     <Stack
@@ -313,66 +372,48 @@ export default function WorksheetPageContents(props: IWorksheet) {
         <Stack width="100%" alignItems="center" overflow="hidden" pt="30px">
           <Carousel
             yPadding={30}
-            items={[...Array(3).keys()].map((x, i) => (
-              <Stack
-                key={i}
-                position="relative"
-                alignItems="center"
-                height={`${297 * SLIDE_SIZE_SCALE}mm`}
-                width={`${210 * SLIDE_SIZE_SCALE}mm`}
-                sx={{
-                  cursor: "pointer",
-                  transition: "0.3s",
-                  transformOrigin: "top center",
-                  outline: `4px solid ${
-                    hoveringRowIndex === i
-                      ? PALETTE.secondary.purple[1]
-                      : "transparent"
-                  }`,
-                }}
-                onMouseEnter={() => {
-                  setHoveringRowIndex(i);
-                }}
-                onMouseLeave={() => {
-                  setHoveringRowIndex(null);
-                }}
-              >
-                <Stack
-                  position="absolute"
-                  top={0}
-                  left={0}
-                  //height="200px"
-
-                  //boxShadow="0 0 60px rgba(0,0,0,0.07)"
-                >
-                  <Stack
-                    sx={{
-                      transform: "scale(0.315)",
-                      transformOrigin: "top left",
-                    }}
-                    boxShadow="0 0 60px rgba(0,0,0,0.07)"
-                  >
-                    <EquationWorksheet
-                      ref={setPrintableRef}
-                      title={props.title}
-                      topic={
-                        (props.parameters as IEquationWorksheetParameters).topic
-                      }
-                      orientation={props.parameters.orientation}
-                      factor={
-                        (props.parameters as IEquationWorksheetParameters)
-                          .factor
-                      }
-                      multipliers={
-                        (props.parameters as IEquationWorksheetParameters)
-                          .multipliers
-                      }
-                      answers={mode === "markscheme"}
-                    />
-                  </Stack>
-                </Stack>
-              </Stack>
-            ))}
+            items={[
+              <CarouselItem key={0}>
+                <EquationWorksheet
+                  key={0}
+                  title={props.title}
+                  topic={
+                    (props.parameters as IEquationWorksheetParameters).topic
+                  }
+                  orientation={props.parameters.orientation}
+                  pageIndex={0}
+                  factor={
+                    (props.parameters as IEquationWorksheetParameters).factor
+                  }
+                  multipliers={
+                    (props.parameters as IEquationWorksheetParameters)
+                      .multipliers
+                  }
+                  answers={mode === "markscheme"}
+                />
+              </CarouselItem>,
+              ...[...Array(nPages - 1).keys()].map((i) => (
+                <CarouselItem key={i + 1}>
+                  <EquationWorksheet
+                    key={i + 1}
+                    title={props.title}
+                    topic={
+                      (props.parameters as IEquationWorksheetParameters).topic
+                    }
+                    orientation={props.parameters.orientation}
+                    pageIndex={i + 1}
+                    factor={
+                      (props.parameters as IEquationWorksheetParameters).factor
+                    }
+                    multipliers={
+                      (props.parameters as IEquationWorksheetParameters)
+                        .multipliers
+                    }
+                    answers={mode === "markscheme"}
+                  />
+                </CarouselItem>
+              )),
+            ]}
           />
         </Stack>
 
