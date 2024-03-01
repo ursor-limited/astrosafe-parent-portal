@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import PageLayout, { SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
@@ -37,20 +37,26 @@ const ToolButton = (props: {
     borderRadius="4px"
     spacing="12px"
     bgcolor="rgb(255,255,255)"
-    overflow="hidden"
+    border={`3px solid ${alpha(props.color, 0.5)}`}
     onClick={props.onClick}
     sx={{
       cursor: "pointer",
       "&:hover": { opacity: 0.6 },
       transition: "0.2s",
+      svg: {
+        path: {
+          fill: props.color,
+        },
+      },
     }}
   >
     <Stack
       width="66px"
       height="100%"
-      bgcolor={props.color}
+      //bgcolor={props.color}
       alignItems="center"
       justifyContent="center"
+      borderRadius="4px 0 0 4px"
     >
       <props.icon height="35px" width="35px" />
     </Stack>
@@ -96,8 +102,7 @@ export default function LandingPageContents(props: {}) {
       details: l,
     }));
     const worksheetDetails = worksheets
-      .slice(0, 1)
-      .filter((ws) => ws.worksheetId === "equation")
+      .filter((x) => x.worksheetId)
       .map((ws) => ({
         type: "worksheet" as AstroContent,
         details: ws,
@@ -129,13 +134,13 @@ export default function LandingPageContents(props: {}) {
         bodyWidth="100%"
         selectedSidebarItemId="home"
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
+        // button={{
+        //   text: "Create",
+        //   icon: PlusIcon,
+        //   callback: () => null,
+        // }}
         button={{
-          text: "Create",
-          icon: PlusIcon,
-          callback: () => null,
-        }}
-        secondaryButton={{
-          text: "30 days left",
+          text: "Upgrade",
           icon: VerifiedIcon,
           callback: () => null,
         }}
@@ -149,7 +154,7 @@ export default function LandingPageContents(props: {}) {
             onClick={() => setVideoCreationDialogOpen(true)}
           />
           <ToolButton
-            title="Create maths worksheet"
+            title="Create math worksheet"
             description="Printable & finished in seconds."
             color={PALETTE.secondary.pink[3]}
             icon={ChecklistIcon}

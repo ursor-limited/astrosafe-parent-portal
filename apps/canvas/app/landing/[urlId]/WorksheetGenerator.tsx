@@ -18,6 +18,7 @@ export type IWorksheet = {
   title: string;
   parameters: IWorksheetParameters;
   createdAt: string;
+  creatorId: string;
 };
 
 export type IWorksheetParameters =

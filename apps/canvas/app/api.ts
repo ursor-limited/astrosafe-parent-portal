@@ -149,7 +149,8 @@ class ApiController {
     orientation: EquationOrientation,
     topic: WorksheetTopic,
     factor: number,
-    multipliers: number[]
+    multipliers: number[],
+    creatorId: string
   ) {
     return post("canvas/worksheet/equation", {
       title,
@@ -157,7 +158,7 @@ class ApiController {
         orientation,
         topic,
         factor,
-        multipliers,
+        multipliers, creatorId
       },
     }).then((response: any) => response.json());
   }
@@ -165,11 +166,12 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     result: number,
-    pairs: number[][]
+    pairs: number[][],
+    creatorId: string
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
-      parameters: { orientation, result, pairs },
+      parameters: { orientation, result, pairs, creatorId },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {

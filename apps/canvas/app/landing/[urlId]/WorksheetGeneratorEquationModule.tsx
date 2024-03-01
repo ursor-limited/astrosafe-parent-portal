@@ -106,7 +106,8 @@ export function WorksheetGeneratorEquationModule(
         orientation,
         props.topic,
         factor,
-        multipliers
+        multipliers,
+        "mkl.koskela@gmail.com"
       ).then((ws) => router.push(`/worksheet/${ws.id}`))
     );
   }, [

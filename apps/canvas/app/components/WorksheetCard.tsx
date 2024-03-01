@@ -3,8 +3,11 @@ import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
 import EquationWorksheet from "../worksheet/[id]/EquationWorksheet";
 import { PALETTE, Typography } from "ui";
 import { getFormattedDate } from "./VideoCard";
+import NumberBondWorksheet from "../worksheet/[id]/NumberBondWorksheet";
+import { useRouter } from "next/navigation";
 
 const WorksheetCard = (props: IWorksheet) => {
+  const router = useRouter();
   return (
     <Stack
       height="310px"
@@ -14,6 +17,13 @@ const WorksheetCard = (props: IWorksheet) => {
       border={`4px solid rgb(255,255,255)`}
       overflow="hidden"
       spacing="8px"
+      boxShadow="0 0 11px rgba(0,0,0,0.09)"
+      sx={{
+        "&:hover": { opacity: 0.6 },
+        transition: "0.2s",
+        cursor: "pointer",
+      }}
+      onClick={() => router.push(`/worksheet/${props.id}`)}
     >
       <Stack
         height="201px"
@@ -35,11 +45,19 @@ const WorksheetCard = (props: IWorksheet) => {
             margin="auto"
             overflow="hidden"
           >
-            <EquationWorksheet
-              title={props.title}
-              {...props.parameters}
-              pageIndex={0}
-            />
+            {props.worksheetId === "equation" ? (
+              <EquationWorksheet
+                title={props.title}
+                {...props.parameters}
+                pageIndex={0}
+              />
+            ) : props.worksheetId === "numberBond" ? (
+              <NumberBondWorksheet
+                title={props.title}
+                {...props.parameters}
+                pageIndex={0}
+              />
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

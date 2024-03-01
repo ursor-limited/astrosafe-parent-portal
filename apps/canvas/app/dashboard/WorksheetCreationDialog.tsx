@@ -12,8 +12,8 @@ const WorksheetCreationDialog = (props: {
 }) => {
   return (
     <UrsorDialog
-      supertitle="Create video"
-      title="Create a Safetube video"
+      supertitle="Create worksheet"
+      title="Create a math worksheet"
       open={props.open}
       onCloseCallback={props.closeCallback}
       maxWidth="880px"

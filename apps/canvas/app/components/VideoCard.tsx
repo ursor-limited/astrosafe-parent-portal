@@ -31,6 +31,7 @@ const VideoCard = (props: IVideo) => {
         backdropFilter: "blur(4px)",
       }}
       position="relative"
+      boxShadow="0 0 11px rgba(0,0,0,0.09)"
     >
       <Stack position="absolute" bottom="8px" right="4px" zIndex={2}>
         {/* <UrsorButton
@@ -57,7 +58,7 @@ const VideoCard = (props: IVideo) => {
           transition: "0.2s",
           cursor: "pointer",
         }}
-        onClick={() => router.push(`/v/${props.id}`)}
+        onClick={() => router.push(`/video/${props.id}`)}
       >
         <Stack
           height="163px"

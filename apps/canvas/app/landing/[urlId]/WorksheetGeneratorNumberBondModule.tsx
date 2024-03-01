@@ -118,7 +118,8 @@ export function WorksheetGeneratorNumberBondModule(
         props.title || DEFAULT_TITLE,
         orientation,
         result,
-        pairs
+        pairs,
+        "mkl.koskela@gmail.com"
       ).then((ws) => router.push(`/worksheet/${ws.id}`))
     );
   }, [props.title, result, props.pageIndex, orientation, pairs, both]);
