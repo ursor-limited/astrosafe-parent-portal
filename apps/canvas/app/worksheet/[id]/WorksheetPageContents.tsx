@@ -16,6 +16,7 @@ import {
 import NumberBondWorksheet from "./NumberBondWorksheet";
 import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ShareIcon from "@/images/icons/ShareIcon.svg";
 import Slider from "react-slick";
 import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import "slick-carousel/slick/slick.css";
@@ -340,8 +341,6 @@ export default function WorksheetPageContents(props: IWorksheet) {
     );
   }, [props.parameters]);
 
-  const [pages, setPages] = useState<React.ReactNode[]>([]);
-
   return (
     <Stack
       width="100%"
@@ -358,8 +357,25 @@ export default function WorksheetPageContents(props: IWorksheet) {
         height="100%"
         borderRadius="16px"
         bgcolor={PALETTE.secondary.grey[1]}
-        pt="100px"
+        spacing="50px"
       >
+        <Stack px="24px" pt="24px" width="100%" justifyContent="space-between">
+          <Stack />
+          <Stack direction="row">
+            <Stack
+              borderRadius="100%"
+              border={`2px solid ${PALETTE.primary.navy}`}
+              height="40px"
+              width="40px"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <ShareIcon width="22px" height="22px" />
+            </Stack>
+            <UrsorButton>Download answers</UrsorButton>
+            <UrsorButton>Download worksheet</UrsorButton>
+          </Stack>
+        </Stack>
         <Stack spacing="4px" px="24px">
           <Typography>
             {moment(props.createdAt).format("Do MMMM YYYY")}

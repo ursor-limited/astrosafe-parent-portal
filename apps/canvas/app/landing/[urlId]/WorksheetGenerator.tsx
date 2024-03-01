@@ -292,7 +292,7 @@ export default function WorksheetGenerator(props: {
             />
           </Captioned>
         </Stack>
-        <Stack height="63px" justifyContent="center">
+        <Stack height="85px" justifyContent="center">
           <Stack
             height="2px"
             width="100%"
@@ -340,7 +340,7 @@ export default function WorksheetGenerator(props: {
         justifyContent="space-between"
       >
         <Stack
-          sx={{ transform: "scale(0.28)", transformOrigin: "top left" }}
+          sx={{ transform: "scale(0.3)", transformOrigin: "top left" }}
           position="absolute"
           top={0}
           left={0}
