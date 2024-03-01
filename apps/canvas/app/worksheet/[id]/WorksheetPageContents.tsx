@@ -23,7 +23,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ShareIcon from "@/images/icons/ShareIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import Slider from "react-slick";
 import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import "slick-carousel/slick/slick.css";
@@ -390,27 +390,39 @@ export default function WorksheetPageContents(props: IWorksheet) {
         borderRadius="16px"
         bgcolor={PALETTE.secondary.grey[1]}
       >
-        <Stack spacing="50px">
+        <Stack spacing="50px" width="100%">
           <Stack
+            direction="row"
             px="24px"
             pt="24px"
-            width="100%"
             justifyContent="space-between"
           >
             <Stack />
-            <Stack direction="row">
+            <Stack direction="row" spacing="12px">
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
-                height="40px"
-                width="40px"
+                height="39px"
+                width="39px"
                 justifyContent="center"
                 alignItems="center"
+                onClick={() =>
+                  navigator.clipboard.writeText(window.location.href)
+                }
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                }}
               >
                 <ShareIcon width="22px" height="22px" />
               </Stack>
-              <UrsorButton>Download answers</UrsorButton>
-              <UrsorButton>Download worksheet</UrsorButton>
+              <UrsorButton dark variant="tertiary">
+                Download answers
+              </UrsorButton>
+              <UrsorButton dark variant="tertiary">
+                Download worksheet
+              </UrsorButton>
             </Stack>
           </Stack>
           <Stack spacing="4px" px="24px">
