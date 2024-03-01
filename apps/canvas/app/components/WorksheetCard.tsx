@@ -17,7 +17,7 @@ const WorksheetCard = (props: IWorksheet) => {
       border={`4px solid rgb(255,255,255)`}
       overflow="hidden"
       spacing="8px"
-      boxShadow="0 0 11px rgba(0,0,0,0.09)"
+      boxShadow="0 0 12px rgba(0,0,0,0.06)"
       sx={{
         "&:hover": { opacity: 0.6 },
         transition: "0.2s",

@@ -31,7 +31,7 @@ const VideoCard = (props: IVideo) => {
         backdropFilter: "blur(4px)",
       }}
       position="relative"
-      boxShadow="0 0 11px rgba(0,0,0,0.09)"
+      boxShadow="0 0 12px rgba(0,0,0,0.06)"
     >
       <Stack position="absolute" bottom="8px" right="4px" zIndex={2}>
         {/* <UrsorButton

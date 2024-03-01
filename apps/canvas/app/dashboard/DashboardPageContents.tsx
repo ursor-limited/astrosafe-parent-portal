@@ -38,7 +38,7 @@ const FilterButton = (props: {
       spacing="8px"
       borderRadius="6px"
       bgcolor="rgb(255,255,255)"
-      boxShadow="0 0 14px rgba(0,0,0,0.05)"
+      boxShadow="0 0 16px rgba(0,0,0,0.03)"
       sx={{
         cursor: "pointer",
         // outline: `2px solid ${
@@ -100,7 +100,8 @@ const ToolButton = (props: {
     borderRadius="8px"
     spacing="12px"
     bgcolor="rgb(255,255,255)"
-    border={`3px solid ${alpha(props.color, 0.5)}`}
+    boxShadow="0 0 16px rgba(0,0,0,0.02)"
+    //border={`3px solid ${alpha(props.color, 0.5)}`}
     onClick={props.onClick}
     sx={{
       cursor: "pointer",
@@ -124,10 +125,16 @@ const ToolButton = (props: {
       <props.icon height="35px" width="35px" />
     </Stack>
     <Stack flex={1} py="11px" justifyContent="space-between">
-      <Typography variant="medium" bold>
+      <Typography variant="medium" bold color={props.color}>
         {props.title}
       </Typography>
-      <Typography variant="small">{props.description}</Typography>
+      <Typography
+        variant="small"
+        sx={{ fontWeight: 380 }}
+        color={alpha(props.color, 0.7)}
+      >
+        {props.description}
+      </Typography>
     </Stack>
     <Stack height="100%" justifyContent="center" pr="15px">
       <PlusIcon height="24px" width="24px" />
@@ -234,7 +241,7 @@ export default function LandingPageContents(props: {}) {
           <ToolButton
             title="Create math worksheet"
             description="Printable & finished in seconds."
-            color={PALETTE.secondary.pink[3]}
+            color={PALETTE.secondary.pink[5]}
             icon={ChecklistIcon}
             onClick={() => setWorksheetCreationDialogOpen(true)}
           />
