@@ -41,12 +41,6 @@ const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
           hovering ? PALETTE.secondary.purple[1] : "transparent"
         }`,
       }}
-      onMouseEnter={() => {
-        setHovering(true);
-      }}
-      onMouseLeave={() => {
-        setHovering(false);
-      }}
     >
       <Stack position="absolute" top={0} left={0}>
         <Stack
@@ -55,6 +49,12 @@ const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
             transformOrigin: "top left",
           }}
           boxShadow="0 0 60px rgba(0,0,0,0.07)"
+          onMouseEnter={() => {
+            setHovering(true);
+          }}
+          onMouseLeave={() => {
+            setHovering(false);
+          }}
         >
           {props.children}
         </Stack>
