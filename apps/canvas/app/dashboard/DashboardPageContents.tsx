@@ -27,6 +27,8 @@ export type AstroContent = "video" | "worksheet";
 const FilterButton = (props: {
   text: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  selected: boolean;
+  onClick: () => void;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
@@ -40,14 +42,17 @@ const FilterButton = (props: {
       bgcolor="rgb(255,255,255)"
       boxShadow="0 0 16px rgba(0,0,0,0.03)"
       sx={{
+        pointerEvents: props.selected ? "none" : undefined,
         cursor: "pointer",
-        // outline: `2px solid ${
-        //   hovering ? PALETTE.secondary.purple[1] : "transparent"
-        // }`,
+        outline: `2px solid ${
+          props.selected ? PALETTE.secondary.purple[2] : "transparent"
+        }`,
         svg: {
           path: {
             transition: "0.2s",
-            fill: hovering
+            fill: props.selected
+              ? PALETTE.secondary.purple[2]
+              : hovering
               ? PALETTE.secondary.purple[1]
               : PALETTE.secondary.grey[5],
           },
@@ -60,13 +65,18 @@ const FilterButton = (props: {
       onMouseLeave={() => {
         setHovering(false);
       }}
+      onClick={props.onClick}
     >
       <props.icon height="20px" width="20px" />
       <Typography
         variant="small"
         bold
         color={
-          hovering ? PALETTE.secondary.purple[1] : PALETTE.secondary.grey[5]
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : PALETTE.secondary.grey[5]
         }
         sx={{
           transition: "0.2s",
@@ -78,11 +88,29 @@ const FilterButton = (props: {
   );
 };
 
-const FilterRow = () => (
+const FilterRow = (props: {
+  selected: AstroContent | null;
+  callback: (newSelected: AstroContent | null) => void;
+}) => (
   <Stack direction="row" spacing="12px">
-    <FilterButton text="All" icon={VersionsIcon} />
-    <FilterButton text="Safetube" icon={CirclePlayIcon} />
-    <FilterButton text="Worksheets" icon={ChecklistIcon} />
+    <FilterButton
+      text="All"
+      icon={VersionsIcon}
+      selected={!props.selected}
+      onClick={() => props.callback(null)}
+    />
+    <FilterButton
+      text="Videos"
+      icon={CirclePlayIcon}
+      selected={props.selected === "video"}
+      onClick={() => props.callback("video")}
+    />
+    <FilterButton
+      text="Worksheets"
+      icon={ChecklistIcon}
+      selected={props.selected === "worksheet"}
+      onClick={() => props.callback("worksheet")}
+    />
   </Stack>
 );
 
@@ -163,6 +191,24 @@ export default function LandingPageContents(props: {}) {
       details: IVideo | IWorksheet;
     }[][]
   >([]);
+  // const [filteredCardColumns, setFilteredCardsColumns] = useState<
+  //   {
+  //     type: AstroContent;
+  //     details: IVideo | IWorksheet;
+  //   }[][]
+  // >([]);
+  // useEffect(() => {
+  //   setFilteredCardsColumns(
+  //     selectedContentType
+  //       ? cardColumns.filter((col) =>
+  //           c.map((item) => item.type === selectedContentType)
+  //         )
+  //       : cardColumns
+  //   );
+  // }, [cardColumns, selectedContentType]);
+
+  const [selectedContentType, setSelectedContentType] =
+    useState<AstroContent | null>(null);
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
@@ -179,7 +225,14 @@ export default function LandingPageContents(props: {}) {
       }));
     const allContentDetails = _.reverse(
       _.sortBy(
-        [...videoDetails, ...worksheetDetails],
+        [
+          ...(selectedContentType && selectedContentType !== "video"
+            ? []
+            : videoDetails),
+          ...(selectedContentType && selectedContentType !== "worksheet"
+            ? []
+            : worksheetDetails),
+        ],
         (c) => new Date(c.details.createdAt)
       ).slice()
     );
@@ -189,7 +242,7 @@ export default function LandingPageContents(props: {}) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [videos, worksheets, nColumns]);
+  }, [videos, worksheets, nColumns, selectedContentType]);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
@@ -260,7 +313,10 @@ export default function LandingPageContents(props: {}) {
           />
         </Stack>
         <Stack pl={`${SIDEBAR_X_MARGIN}px`}>
-          <FilterRow />
+          <FilterRow
+            selected={selectedContentType}
+            callback={(newSelected) => setSelectedContentType(newSelected)}
+          />
         </Stack>
         <Stack
           pt="24px"
