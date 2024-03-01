@@ -33,6 +33,7 @@ const Player = (props: {
   noGlow?: boolean;
   noKitemark?: boolean;
   mobile?: boolean;
+  smallPlayIcon?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -363,9 +364,15 @@ const Player = (props: {
             }}
           >
             {ended ? (
-              <Sync width={114} height={114} />
+              <Sync
+                width={props.smallPlayIcon ? 60 : 114}
+                height={props.smallPlayIcon ? 60 : 114}
+              />
             ) : (
-              <Play width={114} height={114} />
+              <Play
+                width={props.smallPlayIcon ? 60 : 114}
+                height={props.smallPlayIcon ? 60 : 114}
+              />
             )}
           </Stack>
         </Stack>
