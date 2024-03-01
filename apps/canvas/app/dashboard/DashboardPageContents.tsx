@@ -1,11 +1,12 @@
 "use client";
 
 import { Stack, alpha } from "@mui/system";
-import PageLayout, { SIDEBAR_Y_MARGIN } from "./PageLayout";
+import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useEffect, useState } from "react";
 import ApiController from "../api";
@@ -23,6 +24,68 @@ export const GRID_SPACING = "20px";
 
 export type AstroContent = "video" | "worksheet";
 
+const FilterButton = (props: {
+  text: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      height="32px"
+      justifyContent="center"
+      alignItems="center"
+      direction="row"
+      spacing="8px"
+      borderRadius="6px"
+      bgcolor="rgb(255,255,255)"
+      boxShadow="0 0 14px rgba(0,0,0,0.05)"
+      sx={{
+        cursor: "pointer",
+        // outline: `2px solid ${
+        //   hovering ? PALETTE.secondary.purple[1] : "transparent"
+        // }`,
+        svg: {
+          path: {
+            transition: "0.2s",
+            fill: hovering
+              ? PALETTE.secondary.purple[1]
+              : PALETTE.secondary.grey[5],
+          },
+        },
+      }}
+      px="12px"
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+    >
+      <props.icon height="20px" width="20px" />
+      <Typography
+        variant="small"
+        bold
+        color={
+          hovering ? PALETTE.secondary.purple[1] : PALETTE.secondary.grey[5]
+        }
+        sx={{
+          transition: "0.2s",
+        }}
+      >
+        {props.text}
+      </Typography>
+    </Stack>
+  );
+};
+
+const FilterRow = () => (
+  <Stack direction="row" spacing="12px">
+    <FilterButton text="All" icon={VersionsIcon} />
+    <FilterButton text="Safetube" icon={CirclePlayIcon} />
+    <FilterButton text="Worksheets" icon={ChecklistIcon} />
+  </Stack>
+);
+
 const ToolButton = (props: {
   color: string;
   title: string;
@@ -34,7 +97,7 @@ const ToolButton = (props: {
     direction="row"
     width="360px"
     height="66px"
-    borderRadius="4px"
+    borderRadius="8px"
     spacing="12px"
     bgcolor="rgb(255,255,255)"
     border={`3px solid ${alpha(props.color, 0.5)}`}
@@ -160,7 +223,7 @@ export default function LandingPageContents(props: {}) {
           </Stack>
         }
       >
-        <Stack direction="row" spacing="24px">
+        <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
           <ToolButton
             title="Create safe video link"
             description="Free of ads. Safe to share."
@@ -176,14 +239,24 @@ export default function LandingPageContents(props: {}) {
             onClick={() => setWorksheetCreationDialogOpen(true)}
           />
         </Stack>
-        <Stack width="100%" height="50px" justifyContent="center">
+
+        <Stack
+          width="100%"
+          minHeight="50px"
+          justifyContent="center"
+          pl={`${SIDEBAR_X_MARGIN}px`}
+        >
           <Stack
             width="100%"
             height="2px"
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
+        <Stack pl={`${SIDEBAR_X_MARGIN}px`}>
+          <FilterRow />
+        </Stack>
         <Stack
+          pt="24px"
           flex={1}
           ref={setColumnsContainerRef}
           overflow="hidden"
@@ -192,9 +265,11 @@ export default function LandingPageContents(props: {}) {
           <Stack flex={1} overflow="scroll">
             <Stack
               flex={1}
-              pb={SIDEBAR_Y_MARGIN}
+              pb="110px"
               direction="row"
               spacing={GRID_SPACING}
+              pl={`${SIDEBAR_X_MARGIN}px`}
+              pt="8px"
             >
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>

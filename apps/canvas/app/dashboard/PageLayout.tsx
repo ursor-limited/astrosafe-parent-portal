@@ -63,19 +63,16 @@ export default function PageLayout(props: IPageLayoutProps) {
     >
       {!props.noSidebar ? (
         <Stack
-          minWidth={`calc(${WIDTH} + 2*${SIDEBAR_X_MARGIN}px)`}
-          height="100%"
-          alignItems="center"
+          minWidth={`calc(${WIDTH} + ${SIDEBAR_X_MARGIN}px)`}
+          alignItems="flex-end"
           py={SIDEBAR_Y_MARGIN}
           mr={"5px"}
           justifyContent="center"
         >
-          <Box flex={1}>
-            <Sidebar
-              selectedItemId={props.selectedSidebarItemId}
-              classroomId={props.classroomId}
-            />
-          </Box>
+          <Sidebar
+            selectedItemId={props.selectedSidebarItemId}
+            classroomId={props.classroomId}
+          />
         </Stack>
       ) : null}
       <Stack
@@ -88,7 +85,11 @@ export default function PageLayout(props: IPageLayoutProps) {
         pr={`${SIDEBAR_X_MARGIN}px`}
         pt={PADDING_TOP}
       >
-        <Stack spacing="30px" justifyContent="space-between">
+        <Stack
+          spacing="30px"
+          justifyContent="space-between"
+          pl={`${SIDEBAR_X_MARGIN}px`}
+        >
           <Stack
             direction="row"
             width="100%"
