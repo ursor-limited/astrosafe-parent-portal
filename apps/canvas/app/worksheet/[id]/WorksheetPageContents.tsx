@@ -29,9 +29,9 @@ import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const SLIDE_WIDTH = 210 * 0.33; // mm
-const SLIDE_SPACING = 38;
-const SLIDE_SIZE_SCALE = 0.315;
+const SLIDE_SIZE_SCALE = 0.3;
+const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
+const SLIDE_SPACING = 30;
 
 const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -45,6 +45,7 @@ const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
         cursor: "pointer",
         transition: "0.3s",
         transformOrigin: "top center",
+
         outline: `4px solid ${
           hovering ? PALETTE.secondary.purple[1] : "transparent"
         }`,
@@ -53,7 +54,7 @@ const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
       <Stack position="absolute" top={0} left={0}>
         <Stack
           sx={{
-            transform: "scale(0.315)",
+            transform: `scale(${SLIDE_SIZE_SCALE})`,
             transformOrigin: "top left",
           }}
           boxShadow="0 0 60px rgba(0,0,0,0.07)"
@@ -113,6 +114,8 @@ const Carousel = (props: {
   return (
     <Stack
       width="100%"
+      height="600px"
+      overflow="hidden"
       justifyContent="center"
       alignItems="center"
       spacing="20px"
@@ -183,7 +186,7 @@ const Carousel = (props: {
               (SLIDE_SPACING + SLIDE_WIDTH)
             }mm)`,
           }}
-          pt="120px"
+          pt="110px"
           pb="130px"
         >
           {props.items.map((item, i) => (
@@ -376,7 +379,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       height="100%"
       alignItems="center"
       justifyContent="center"
-      overflow="hidden"
+      overflow="scroll"
       spacing="100px"
       pt="40px"
     >
@@ -386,40 +389,46 @@ export default function WorksheetPageContents(props: IWorksheet) {
         height="100%"
         borderRadius="16px"
         bgcolor={PALETTE.secondary.grey[1]}
-        spacing="50px"
       >
-        <Stack px="24px" pt="24px" width="100%" justifyContent="space-between">
-          <Stack />
-          <Stack direction="row">
-            <Stack
-              borderRadius="100%"
-              border={`2px solid ${PALETTE.primary.navy}`}
-              height="40px"
-              width="40px"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <ShareIcon width="22px" height="22px" />
+        <Stack spacing="50px">
+          <Stack
+            px="24px"
+            pt="24px"
+            width="100%"
+            justifyContent="space-between"
+          >
+            <Stack />
+            <Stack direction="row">
+              <Stack
+                borderRadius="100%"
+                border={`2px solid ${PALETTE.primary.navy}`}
+                height="40px"
+                width="40px"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <ShareIcon width="22px" height="22px" />
+              </Stack>
+              <UrsorButton>Download answers</UrsorButton>
+              <UrsorButton>Download worksheet</UrsorButton>
             </Stack>
-            <UrsorButton>Download answers</UrsorButton>
-            <UrsorButton>Download worksheet</UrsorButton>
           </Stack>
-        </Stack>
-        <Stack spacing="4px" px="24px">
-          <Typography>
-            {moment(props.createdAt).format("Do MMMM YYYY")}
-          </Typography>
-          <Typography variant="h2">{props.title}</Typography>
-          <Typography>
-            In this session we will be practising our division skills! Watch the
-            videos on long division and decimal places to understand how
-            division works. Then get stuck in with the activities on Fun Brain
-            and Google Experiments!
-          </Typography>
+          <Stack spacing="4px" px="24px">
+            <Typography>
+              {moment(props.createdAt).format("Do MMMM YYYY")}
+            </Typography>
+            <Typography variant="h2">{props.title}</Typography>
+            <Typography>
+              In this session we will be practising our division skills! Watch
+              the videos on long division and decimal places to understand how
+              division works. Then get stuck in with the activities on Fun Brain
+              and Google Experiments!
+            </Typography>
+          </Stack>
         </Stack>
 
         {nPages ? (
-          <Stack width="100%" alignItems="center" overflow="hidden" pt="30px">
+          <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
             <Carousel
               yPadding={30}
               items={[...Array(nPages).keys()].map((i) => (
