@@ -5,7 +5,7 @@ import PageLayout, { SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useEffect, useState } from "react";
 import ApiController from "../api";
@@ -136,7 +136,7 @@ export default function LandingPageContents(props: {}) {
         }}
         secondaryButton={{
           text: "30 days left",
-          icon: PlusIcon,
+          icon: VerifiedIcon,
           callback: () => null,
         }}
       >
@@ -154,6 +154,13 @@ export default function LandingPageContents(props: {}) {
             color={PALETTE.secondary.pink[3]}
             icon={ChecklistIcon}
             onClick={() => setWorksheetCreationDialogOpen(true)}
+          />
+        </Stack>
+        <Stack width="100%" height="50px" justifyContent="center">
+          <Stack
+            width="100%"
+            height="2px"
+            bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
         <Stack

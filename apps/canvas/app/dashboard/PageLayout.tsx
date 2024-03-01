@@ -202,6 +202,7 @@ export default function PageLayout(props: IPageLayoutProps) {
                           <UrsorButton
                             onClick={props.button.callback}
                             endIcon={props.button.icon}
+                            dark
                             variant="tertiary"
                             disabled={props.button?.disabled}
                           >

@@ -135,8 +135,9 @@ export const CategorySelectionButton = (props: {
           ? PALETTE.secondary.purple[2]
           : hovering
           ? PALETTE.secondary.purple[1]
-          : "transparent"
+          : PALETTE.secondary.grey[2]
       }`}
+      //boxShadow={"0 0 24px rgba(0,0,0,0.06)"}
       sx={{
         cursor: "pointer",
         transition: "0.2s",
@@ -158,7 +159,7 @@ export const CategorySelectionButton = (props: {
             ? PALETTE.secondary.purple[2]
             : hovering
             ? PALETTE.secondary.purple[1]
-            : undefined
+            : PALETTE.secondary.grey[5]
         }
         sx={{
           transition: "0.2s",
@@ -252,7 +253,7 @@ export default function WorksheetGenerator(props: {
         <Stack direction="row" spacing="20px">
           <Captioned text="Question topic">
             <UrsorSelect
-              white
+              white={props.whiteFields}
               items={[
                 {
                   id: "multiplication",
@@ -274,6 +275,7 @@ export default function WorksheetGenerator(props: {
               selected={[topic]}
               callback={(t: string) => setTopic(t as WorksheetTopic)}
               width="100%"
+              zIndex={999999999}
             />
           </Captioned>
           <Captioned text="Question type">
