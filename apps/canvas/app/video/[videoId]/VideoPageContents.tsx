@@ -13,6 +13,7 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import moment from "moment";
 import mixpanel from "mixpanel-browser";
+import BigCard from "@/app/components/BigCard";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -106,170 +107,44 @@ function VideoPageContents(props: { details: IVideo }) {
     user?.email && mixpanel.track("video viewing page");
   }, [user?.email]);
 
+  const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
+  const [videoWidth, setVideoWidth] = useState<number>(0);
+  useEffect(() => {
+    sizeRef?.getBoundingClientRect().width &&
+      setVideoWidth(sizeRef?.getBoundingClientRect().width);
+  }, [sizeRef?.getBoundingClientRect().width, width]);
+
   return props.details && provider ? (
-    <Stack flex={1} spacing="50px" justifyContent="center">
-      {/* {!user ? (
-        <UrsorFadeIn duration={1000} delay={3000}>
-          <SigninPromptBar signInCallback={loginWithPopup} />
-        </UrsorFadeIn>
-      ) : null} */}
-      {!fullscreen ? (
-        <Header
-          createNewButton={!user}
-          mobile={mobile}
-          createMoreVideosButton={!mobile}
-        />
-      ) : null}
-      <Stack
-        px="60px"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-        // height={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        // minHeight={`calc(100vh - ${HEADER_HEIGHT}px)`}
-        width="100vw"
-        pb={!fullscreen ? "100px" : undefined}
-        //overflow="scroll"
-        spacing="14px"
-      >
-        <Stack
-          spacing="18px"
-          alignItems="center"
-          // py={fullscreen ? 0 : "24px"}
-          //px="28px"
-          //borderRadius="12px"
-          //bgcolor="rgba(0,0,0,0.15)"
-          // sx={{
-          //   backdropFilter: "blur(7px)",
-          // }}
-        >
-          {!fullscreen ? (
-            <Stack
-              // sx={{
-              //   background: `linear-gradient(45deg, #FFFFFF, ${PALETTE.secondary.purple[2]})`,
-              //   "-webkit-text-fill-color": "transparent",
-              //   backgroundClip: "text",
-              //   "-webkit-background-clip": "text",
-              // }}
-              width={
-                Math.min(playerWidth, VIDEO_WIDTH) -
-                2 * MAGICAL_BORDER_THICKNESS
-              }
-              sx={{
-                opacity: 0.78,
-              }}
-              alignItems="center"
-            >
-              <Typography
-                bold
-                variant={
-                  props.details.title.length < 10
-                    ? "h0"
-                    : props.details.title.length < 18
-                    ? "h2"
-                    : props.details.title.length < 25
-                    ? "h3"
-                    : props.details.title.length < 35
-                    ? "h4"
-                    : "h5"
-                }
-                color={PALETTE.font.light}
-                sx={{
-                  textAlign: "center",
-                }}
-              >
-                {props.details.title}
-              </Typography>
-            </Stack>
-          ) : null}
-          <Stack
-            width={fullscreen ? "100vw" : "90vw"}
-            boxSizing="border-box"
-            ref={setPlayerWidthRef}
+    <BigCard
+      title={props.details.title}
+      createdAt={props.details.createdAt}
+      rightStuff={
+        <Stack direction="row" spacing="12px">
+          <UrsorButton
+            dark
+            variant="tertiary"
+            onClick={() => navigator.clipboard.writeText(window.location.href)}
           >
-            <Stack
-              p={`${MAGICAL_BORDER_THICKNESS}px`}
-              borderRadius="15px"
-              sx={{ backdropFilter: "none" }}
-              position="relative"
-            >
-              <Stack
-                top="50%"
-                left="50%"
-                borderRadius="15px"
-                width={Math.min(playerWidth, VIDEO_WIDTH)}
-                height="100%"
-                position="absolute"
-                sx={{
-                  transform: "translate(-50%, -50%)",
-                  opacity: playing ? 0 : 1,
-                  transition: "0.3s",
-                  background: fullscreen
-                    ? "none"
-                    : "linear-gradient(90deg, #F279C5, #FD9B41)",
-                }}
-              />
-              {/* <Stack width="100vw" px="30px"> */}
-              <Player
-                key={props.details.id}
-                url={props.details.url}
-                provider={provider}
-                startTime={props.details.startTime}
-                endTime={props.details.endTime}
-                noKitemark={mobile}
-                width={
-                  Math.min(playerWidth, VIDEO_WIDTH) -
-                  2 * MAGICAL_BORDER_THICKNESS
-                }
-                height={
-                  Math.min(playerWidth, VIDEO_WIDTH) *
-                  (VIDEO_HEIGHT / VIDEO_WIDTH)
-                }
-                top="0px"
-                setDuration={(d) => setDuration(d)}
-                showUrlBar
-                setFullscreen={setFullscreen}
-                playingCallback={(p) => setPlaying(p)}
-                mobile={mobile}
-              />
-            </Stack>
-          </Stack>
-          {!fullscreen ? (
-            <Stack width={Math.min(playerWidth, VIDEO_WIDTH)}>
-              <UrlBar mobile={mobile} />
-            </Stack>
-          ) : null}
-          {!fullscreen && props.details.description ? (
-            <Stack
-              width={`${Math.min(playerWidth, VIDEO_WIDTH)}px`}
-              justifyContent="space-between"
-              overflow="scroll"
-              sx={{ backdropFilter: "blur(7px)" }}
-            >
-              <Stack
-                py="20px"
-                px="30px"
-                bgcolor={"rgba(0,0,0,0.2)"}
-                borderRadius="12px"
-              >
-                <Stack spacing="5px">
-                  {(props.details.description?.split("\n") ?? []).map(
-                    (line, i) => (
-                      <Typography key={i} color="rgba(255,255,255,0.8)">
-                        {line}
-                      </Typography>
-                    )
-                  )}
-                </Stack>
-              </Stack>
-            </Stack>
-          ) : null}
+            Share link
+          </UrsorButton>
+        </Stack>
+      }
+    >
+      <Stack px="24px" flex={1}>
+        <Stack flex={1} pt="30px" ref={setSizeRef}>
+          <Player
+            url={props.details.url}
+            provider={provider}
+            width={videoWidth}
+            height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+            setDuration={(d) => d && setDuration(d)}
+            noKitemark={videoWidth < VIDEO_WIDTH}
+            top="120px"
+            playingCallback={(p) => setPlaying(p)}
+          />
         </Stack>
       </Stack>
-      {!fullscreen ? (
-        <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
-      ) : null}
-    </Stack>
+    </BigCard>
   ) : (
     <></>
   );
