@@ -25,7 +25,7 @@ const SLIDE_WIDTH = 210 * 0.33; // mm
 const SLIDE_SPACING = 38;
 const SLIDE_SIZE_SCALE = 0.315;
 
-const CarouselItem = (props: { children: React.ReactNode }) => {
+const CarouselItem = (props: { n: number; children: React.ReactNode }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
@@ -59,6 +59,17 @@ const CarouselItem = (props: { children: React.ReactNode }) => {
           {props.children}
         </Stack>
       </Stack>
+      <Stack
+        position="absolute"
+        bottom="-34px"
+        zIndex={99999}
+        width="100%"
+        alignItems="center"
+      >
+        <Typography variant="medium" color={PALETTE.secondary.grey[3]}>
+          {props.n}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };
@@ -90,6 +101,7 @@ const Carousel = (props: {
 }) => {
   const [index, setIndex] = useState<number>(0);
   const [hoverRowIndex, setHoverRowIndex] = useState<number | null>(null);
+
   return (
     <Stack
       width="100%"
@@ -163,7 +175,8 @@ const Carousel = (props: {
               (SLIDE_SPACING + SLIDE_WIDTH)
             }mm)`,
           }}
-          py="120px"
+          pt="120px"
+          pb="130px"
         >
           {props.items.map((item, i) => (
             <Stack
@@ -178,15 +191,6 @@ const Carousel = (props: {
                 pointerEvents: index === i ? "none" : undefined,
               }}
               onClick={() => setIndex(i)}
-              // onMouseEnter={() => {
-              //   setHoverRowIndex(i);
-              // }}
-              // onMouseLeave={() => {
-              //   setHoverRowIndex(null);
-              // }}
-              // border={`4px solid ${
-              //   hoverRowIndex === i ? PALETTE.secondary.purple[1] : "transparent"
-              // }`}
             >
               {item}
             </Stack>
@@ -369,39 +373,20 @@ export default function WorksheetPageContents(props: IWorksheet) {
           </Typography>
         </Stack>
 
-        <Stack width="100%" alignItems="center" overflow="hidden" pt="30px">
-          <Carousel
-            yPadding={30}
-            items={[
-              <CarouselItem key={0}>
-                <EquationWorksheet
-                  key={0}
-                  title={props.title}
-                  topic={
-                    (props.parameters as IEquationWorksheetParameters).topic
-                  }
-                  orientation={props.parameters.orientation}
-                  pageIndex={0}
-                  factor={
-                    (props.parameters as IEquationWorksheetParameters).factor
-                  }
-                  multipliers={
-                    (props.parameters as IEquationWorksheetParameters)
-                      .multipliers
-                  }
-                  answers={mode === "markscheme"}
-                />
-              </CarouselItem>,
-              ...[...Array(nPages - 1).keys()].map((i) => (
-                <CarouselItem key={i + 1}>
+        {nPages ? (
+          <Stack width="100%" alignItems="center" overflow="hidden" pt="30px">
+            <Carousel
+              yPadding={30}
+              items={[...Array(nPages).keys()].map((i) => (
+                <CarouselItem key={i} n={i + 1}>
                   <EquationWorksheet
-                    key={i + 1}
+                    key={i}
                     title={props.title}
                     topic={
                       (props.parameters as IEquationWorksheetParameters).topic
                     }
                     orientation={props.parameters.orientation}
-                    pageIndex={i + 1}
+                    pageIndex={i}
                     factor={
                       (props.parameters as IEquationWorksheetParameters).factor
                     }
@@ -412,10 +397,10 @@ export default function WorksheetPageContents(props: IWorksheet) {
                     answers={mode === "markscheme"}
                   />
                 </CarouselItem>
-              )),
-            ]}
-          />
-        </Stack>
+              ))}
+            />
+          </Stack>
+        ) : null}
 
         {/* <TabSwitch selected={mode} callback={(m) => setMode(m)} /> */}
         {/* {props.worksheetId === "equation" ? (
