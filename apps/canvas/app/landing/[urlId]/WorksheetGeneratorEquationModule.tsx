@@ -10,7 +10,6 @@ import {
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
-  IEquationWorksheetParameters,
 } from "./WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
@@ -28,6 +27,8 @@ export function WorksheetGeneratorEquationModule(
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
+    regenerationCount: number;
+    whiteFields?: boolean;
   }
 ) {
   const [orientation, setOrientation] =
@@ -35,9 +36,16 @@ export function WorksheetGeneratorEquationModule(
   const [factor, setFactor] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
 
-  useEffect(() => setOrientation(props.orientation), [props.orientation]);
-  useEffect(() => setNDigits(props.nDigits), [props.nDigits]);
-  useEffect(() => setFactor(props.factor), [props.factor]);
+  useEffect(
+    () => props.orientation && setOrientation(props.orientation),
+    [props.orientation]
+  );
+  useEffect(() => {
+    props.nDigits && setNDigits(props.nDigits);
+  }, [props.nDigits]);
+  useEffect(() => {
+    props.factor && setFactor(props.factor);
+  }, [props.factor]);
 
   const [multipliers, setMultipliers] = useState<number[]>([]);
   useEffect(() => {
@@ -51,7 +59,7 @@ export function WorksheetGeneratorEquationModule(
       props.nProblems % fullsetSize
     );
     setMultipliers([...fullSets, ...partialSet]);
-  }, [nDigits, props.nProblems]);
+  }, [nDigits, props.nProblems, props.regenerationCount]);
 
   useEffect(
     () =>
@@ -98,7 +106,8 @@ export function WorksheetGeneratorEquationModule(
         orientation,
         props.topic,
         factor,
-        multipliers
+        multipliers,
+        "mkl.koskela@gmail.com"
       ).then((ws) => router.push(`/worksheet/${ws.id}`))
     );
   }, [
@@ -150,7 +159,7 @@ export function WorksheetGeneratorEquationModule(
             placeholder="Multiplier"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>
@@ -202,7 +211,7 @@ export function WorksheetGeneratorEquationModule(
             width="100%"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>

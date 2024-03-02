@@ -30,7 +30,7 @@ export default function DurationLabel(props: {
       >
         <ChevronLeft width={18} height={18} />
       </Stack>
-      <Typography color={PALETTE.secondary.grey[4]} bold>
+      <Typography color={PALETTE.font.light} bold>
         {`${value > 3600 ? Math.floor(value / 3600) : ""}${
           value > 3600 ? ":" : ""
         }${Math.floor((value % 3600) / 60)

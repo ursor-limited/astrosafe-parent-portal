@@ -29,6 +29,7 @@ export interface IUrsorSelectProps {
     color?: string;
   }[];
   disabled?: boolean;
+  zIndex?: number;
 }
 
 export default function UrsorSelect(props: IUrsorSelectProps) {
@@ -148,6 +149,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         width={props.width}
         noFloatButton
         disabled={props.disabled}
+        zIndex={props.zIndex}
       >
         <Stack
           sx={{ cursor: "pointer" }}

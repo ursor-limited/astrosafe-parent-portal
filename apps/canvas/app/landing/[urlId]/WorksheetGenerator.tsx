@@ -6,15 +6,19 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import SyncIcon from "@/images/icons/Sync.svg";
 import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
 export type IWorksheet = {
+  id: string;
   worksheetId: WorksheetId;
   title: string;
   parameters: IWorksheetParameters;
+  createdAt: string;
+  creatorId: string;
 };
 
 export type IWorksheetParameters =
@@ -72,6 +76,44 @@ export type INumberBondWorksheetGeneratorSettings = Omit<
   "pairs"
 >;
 
+const RefreshButton = (props: { onClick: () => void }) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      height="37.5px"
+      width="37.5px"
+      minHeight="37.5px"
+      minWidth="37.5px"
+      borderRadius="100%"
+      border={`2px solid ${
+        hovering ? PALETTE.secondary.purple[3] : PALETTE.secondary.purple[2]
+      }`}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        cursor: "pointer",
+        transition: "0.2s",
+        svg: {
+          path: {
+            fill: hovering
+              ? PALETTE.secondary.purple[3]
+              : PALETTE.secondary.purple[2],
+          },
+        },
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      onClick={props.onClick}
+    >
+      <SyncIcon height="20px" width="20px" />
+    </Stack>
+  );
+};
+
 const TITLE_CHARACTER_LIMIT = 30;
 export const DEFAULT_TITLE = "Multiplication Sheet";
 
@@ -94,8 +136,9 @@ export const CategorySelectionButton = (props: {
           ? PALETTE.secondary.purple[2]
           : hovering
           ? PALETTE.secondary.purple[1]
-          : "transparent"
+          : PALETTE.secondary.grey[2]
       }`}
+      //boxShadow={"0 0 24px rgba(0,0,0,0.06)"}
       sx={{
         cursor: "pointer",
         transition: "0.2s",
@@ -117,7 +160,7 @@ export const CategorySelectionButton = (props: {
             ? PALETTE.secondary.purple[2]
             : hovering
             ? PALETTE.secondary.purple[1]
-            : undefined
+            : PALETTE.secondary.grey[5]
         }
         sx={{
           transition: "0.2s",
@@ -130,21 +173,30 @@ export const CategorySelectionButton = (props: {
 };
 
 export default function WorksheetGenerator(props: {
-  worksheetId: IWorksheet["worksheetId"];
-  title: IWorksheet["title"];
-  nProblems: number;
-  topic: WorksheetTopic;
-  specificSettings: ISpecificWorksheetGeneratorSettings;
+  worksheetId?: IWorksheet["worksheetId"];
+  title?: IWorksheet["title"];
+  nProblems?: number;
+  topic?: WorksheetTopic;
+  specificSettings?: ISpecificWorksheetGeneratorSettings;
+  noBackground?: boolean;
+  whiteFields?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>(DEFAULT_TITLE);
   const [nProblems, setNProblems] = useState<number>(10);
 
-  useEffect(() => setTopic(props.topic), [props.topic]);
-  useEffect(() => setWorksheetId(props.worksheetId), [props.worksheetId]);
-  useEffect(() => setTitle(props.title), [props.title]);
-  useEffect(() => setNProblems(props.nProblems), [props.nProblems]);
+  useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
+  useEffect(
+    () => props.worksheetId && setWorksheetId(props.worksheetId),
+    [props.worksheetId]
+  );
+  useEffect(() => {
+    props.title && setTitle(props.title);
+  }, [props.title]);
+  useEffect(() => {
+    props.nProblems && setNProblems(props.nProblems);
+  }, [props.nProblems]);
 
   useEffect(() => {
     !WORKSHEET_TOPIC_WORKSHEET_IDS[topic].includes(worksheetId) &&
@@ -173,11 +225,13 @@ export default function WorksheetGenerator(props: {
     () => null
   );
 
+  const [regenerationCount, setRegenerationCount] = useState<number>(0);
+
   return (
     <Stack
       borderRadius="20px"
-      bgcolor={PALETTE.secondary.grey[1]}
-      p="42px"
+      bgcolor={props.noBackground ? undefined : PALETTE.secondary.grey[1]}
+      p={props.noBackground ? undefined : "42px"}
       direction="row"
       spacing="40px"
     >
@@ -193,40 +247,41 @@ export default function WorksheetGenerator(props: {
             width="100%"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
         {/* <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}> */}
         <Stack direction="row" spacing="20px">
           <Captioned text="Question topic">
             <UrsorSelect
-              white
+              white={props.whiteFields}
               items={[
                 {
                   id: "multiplication",
-                  value: "Multiplication",
+                  value: "x Multiplication",
                 },
                 {
                   id: "division",
-                  value: "Division",
+                  value: "/ Division",
                 },
                 {
                   id: "addition",
-                  value: "Addition",
+                  value: "+ Addition",
                 },
                 {
                   id: "subtraction",
-                  value: "Subtraction",
+                  value: "- Subtraction",
                 },
               ]}
               selected={[topic]}
               callback={(t: string) => setTopic(t as WorksheetTopic)}
               width="100%"
+              zIndex={999999999}
             />
           </Captioned>
           <Captioned text="Question type">
             <UrsorSelect
-              white
+              white={props.whiteFields}
               items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
                 id: t,
                 value: WORKSHEET_ID_DISPLAY_NAMES[t],
@@ -236,17 +291,18 @@ export default function WorksheetGenerator(props: {
                 setWorksheetId(wid as WorksheetId);
               }}
               width="100%"
+              zIndex={999999999}
             />
           </Captioned>
         </Stack>
-        <Stack height="63px" justifyContent="center">
+        <Stack height="85px" justifyContent="center">
           <Stack
             height="2px"
             width="100%"
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        {specificSettings && worksheetId === "equation" ? (
+        {worksheetId === "equation" ? (
           <WorksheetGeneratorEquationModule
             {...(specificSettings as IEquationWorksheetGeneratorSettings)}
             callback={(newPreviewWorksheet) =>
@@ -259,6 +315,8 @@ export default function WorksheetGenerator(props: {
             title={title}
             topic={topic}
             pageIndex={selectedPageIndex}
+            regenerationCount={regenerationCount}
+            whiteFields={props.whiteFields}
           />
         ) : worksheetId === "numberBond" ? (
           <WorksheetGeneratorNumberBondModule
@@ -273,6 +331,8 @@ export default function WorksheetGenerator(props: {
             title={title}
             topic={topic}
             pageIndex={selectedPageIndex}
+            regenerationCount={regenerationCount}
+            whiteFields={props.whiteFields}
           />
         ) : null}
       </Stack>
@@ -283,11 +343,11 @@ export default function WorksheetGenerator(props: {
         justifyContent="space-between"
       >
         <Stack
-          sx={{ transform: "scale(0.28)", transformOrigin: "top left" }}
+          sx={{ transform: "scale(0.3)", transformOrigin: "top left" }}
           position="absolute"
           top={0}
           left={0}
-          overflow="hidden"
+          boxShadow="0 0 60px rgba(0,0,0,0.07)"
         >
           {previewWorksheet}
         </Stack>
@@ -304,15 +364,20 @@ export default function WorksheetGenerator(props: {
               nPages={nPages}
             />
           ) : null}
-          <UrsorButton
-            onClick={() => creationCallback()}
-            dark
-            variant="tertiary"
-            endIcon={PencilIcon}
-            width="100%"
-          >
-            Create
-          </UrsorButton>
+          <Stack direction="row" spacing="12px">
+            <RefreshButton
+              onClick={() => setRegenerationCount(regenerationCount + 1)}
+            />
+            <UrsorButton
+              onClick={() => creationCallback()}
+              dark
+              variant="tertiary"
+              endIcon={PencilIcon}
+              width="100%"
+            >
+              Create
+            </UrsorButton>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>

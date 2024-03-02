@@ -33,7 +33,7 @@ export default function ExplainerCard(props: {
         boxSizing="border-box"
         minHeight="182px"
       >
-        <Typography bold variant="h5">
+        <Typography htmlTag="h4" bold variant="h5">
           {props.title}
         </Typography>
         <Typography>{props.text}</Typography>

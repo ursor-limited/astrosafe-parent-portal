@@ -11,7 +11,6 @@ export default function LandingPageViewport(props: {
   return (
     <Stack
       flex={1}
-      bgcolor="rgb(255,255,255)"
       alignItems="center"
       zIndex={1} // covers the SpaceGlow's bottom border
       spacing={props.mobile ? "10px" : "32px"}
@@ -26,6 +25,7 @@ export default function LandingPageViewport(props: {
             sx={{
               fontWeight: 500,
             }}
+            htmlTag="h3"
           >
             {props.supertitle}
           </Typography>
@@ -38,6 +38,7 @@ export default function LandingPageViewport(props: {
               fontWeight: 500,
               width: props.mobile ? "300px" : undefined,
             }}
+            htmlTag="h2"
           >
             {props.title}
           </Typography>
@@ -53,6 +54,7 @@ export default function LandingPageViewport(props: {
                 textAlign: "center",
                 width: props.mobile ? "280px" : undefined,
               }}
+              htmlTag="h4"
             >
               {props.subtitle}
             </Typography>

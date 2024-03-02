@@ -367,6 +367,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
           px="32px"
+          boxSizing="border-box"
           className={rubik.className}
         >
           {!props.pageIndex ? (

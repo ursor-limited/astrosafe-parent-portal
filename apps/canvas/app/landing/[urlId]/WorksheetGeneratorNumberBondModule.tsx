@@ -9,17 +9,16 @@ import {
   EquationOrientation,
   WorksheetTopic,
   INumberBondWorksheetGeneratorSettings,
-  INumberBondWorksheetParameters,
 } from "./WorksheetGenerator";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {
-  HORIZONTAL_FIRST_PAGE_ROWS_N,
-  HORIZONTAL_OTHER_PAGES_ROWS_N,
-  VERTICAL_OTHER_PAGES_ROWS_N,
-  VERTICAL_FIRST_PAGE_ROWS_N,
-  HORIZONTAL_N_COLUMNS,
-  VERTICAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
+  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
+  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
+  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_N_COLUMNS,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 
@@ -36,6 +35,8 @@ export function WorksheetGeneratorNumberBondModule(
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
+    regenerationCount: number;
+    whiteFields?: boolean;
   }
 ) {
   const [result, setResult] = useState<number>(3);
@@ -70,7 +71,7 @@ export function WorksheetGeneratorNumberBondModule(
       );
       setPairs([...fullSets, ...partialSet]);
     }
-  }, [props.nProblems, result]);
+  }, [props.nProblems, result, props.regenerationCount]);
 
   useEffect(
     () =>
@@ -79,17 +80,17 @@ export function WorksheetGeneratorNumberBondModule(
           Math.ceil(
             (props.nProblems -
               (orientation === "horizontal"
-                ? HORIZONTAL_FIRST_PAGE_ROWS_N
-                : VERTICAL_FIRST_PAGE_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
+                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
                 (orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS)) /
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
               ((orientation === "horizontal"
-                ? HORIZONTAL_OTHER_PAGES_ROWS_N
-                : VERTICAL_OTHER_PAGES_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
+                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
                 (orientation === "horizontal"
-                  ? HORIZONTAL_N_COLUMNS
-                  : VERTICAL_N_COLUMNS))
+                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                  : NUMBER_BOND_VERTICAL_N_COLUMNS))
           )
       ),
     [props.nProblems, orientation]
@@ -117,7 +118,8 @@ export function WorksheetGeneratorNumberBondModule(
         props.title || DEFAULT_TITLE,
         orientation,
         result,
-        pairs
+        pairs,
+        "mkl.koskela@gmail.com"
       ).then((ws) => router.push(`/worksheet/${ws.id}`))
     );
   }, [props.title, result, props.pageIndex, orientation, pairs, both]);
@@ -210,7 +212,7 @@ export function WorksheetGeneratorNumberBondModule(
             placeholder="Multiplier"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>
@@ -284,7 +286,7 @@ export function WorksheetGeneratorNumberBondModule(
             width="100%"
             leftAlign
             boldValue
-            backgroundColor="rgb(255,255,255)"
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
       </Stack>
