@@ -79,7 +79,7 @@ const VideoCreationDialog = (props: {
       );
   }, [url]);
 
-  const [duration, setDuration] = useState<number | undefined>(undefined);
+  const [duration, setDuration] = useState<number | undefined>(10);
   const [range, setRange] = useState<number[] | undefined>(undefined);
   useEffect(() => {
     duration && setRange([0, duration]);
@@ -193,8 +193,8 @@ const VideoCreationDialog = (props: {
                 justifyContent="center"
                 width="100%"
                 sx={{
-                  pointerEvents: !duration ? "none" : undefined,
-                  opacity: duration ? 1 : 0.5,
+                  pointerEvents: !originalUrl ? "none" : undefined,
+                  opacity: originalUrl ? 1 : 0.5,
                   ".MuiSlider-root": {
                     color: "transparent !important",
                   },
