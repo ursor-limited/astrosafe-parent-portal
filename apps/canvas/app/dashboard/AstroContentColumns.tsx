@@ -141,7 +141,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                 )),
                 ...[
                   ...Array(Math.max(0, nColumns - cardColumns.length)).keys(),
-                ].map(() => <Stack flex={1} />),
+                ].map((i) => <Stack flex={1} key={`filler${i}`} />),
               ]}
             </Stack>
           ) : props.emptyStateText ? (
