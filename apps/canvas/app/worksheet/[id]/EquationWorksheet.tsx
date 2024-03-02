@@ -443,7 +443,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                           : VERTICAL_N_COLUMNS) - row.length
                       )
                     ).keys(),
-                  ].map((j) => <Stack flex={1} key={j} />),
+                  ].map((j) => <Stack flex={1} key={`filler${j}`} />),
                 ]}
               </Stack>
             ))}
