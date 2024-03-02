@@ -6,6 +6,7 @@ import { getFormattedDate } from "./VideoCard";
 import NumberBondWorksheet from "../worksheet/[id]/NumberBondWorksheet";
 import { useRouter } from "next/navigation";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 
 const WorksheetCard = (props: IWorksheet) => {
   const router = useRouter();
@@ -33,7 +34,22 @@ const WorksheetCard = (props: IWorksheet) => {
         pt="20px"
         justifyContent="center"
         alignItems="center"
+        position="relative"
       >
+        <Stack
+          position="absolute"
+          borderRadius="100%"
+          width="32px"
+          height="32px"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor={PALETTE.secondary.grey[1]}
+          top="12px"
+          right="12px"
+          zIndex={2}
+        >
+          <ArrowUpRight width="20px" height="20px" />
+        </Stack>
         <Stack width={0} height={0} position="relative" overflow="visible">
           <Stack
             sx={{

@@ -6,7 +6,7 @@ import moment from "moment";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Image from "next/image";
 
 const PLACEHOLDER_THUMBNAIL =
@@ -34,23 +34,6 @@ const VideoCard = (props: IVideo) => {
       position="relative"
       boxShadow="0 0 12px rgba(0,0,0,0.06)"
     >
-      <Stack position="absolute" bottom="8px" right="4px" zIndex={2}>
-        {/* <UrsorButton
-          dark
-          variant="tertiary"
-          size="small"
-          endIcon={ClippyIcon}
-          iconSize={15}
-          iconColor={PALETTE.font.light}
-          onClick={() => {
-            null;
-          }}
-          backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-          hoverOpacity={0.7}
-        >
-          Share
-        </UrsorButton> */}
-      </Stack>
       <Stack
         flex={1}
         spacing="8px"
@@ -74,6 +57,20 @@ const VideoCard = (props: IVideo) => {
           bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
           position="relative"
         >
+          <Stack
+            position="absolute"
+            borderRadius="100%"
+            width="32px"
+            height="32px"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor={PALETTE.secondary.grey[1]}
+            top="12px"
+            right="12px"
+            zIndex={2}
+          >
+            <ArrowUpRight width="20px" height="20px" />
+          </Stack>
           {!props.thumbnailUrl ? (
             <Stack flex={1} justifyContent="center" alignItems="center">
               <Image
@@ -89,7 +86,6 @@ const VideoCard = (props: IVideo) => {
             justifyContent="center"
             alignItems="center"
             sx={{
-              opacity: 0.9,
               background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
             }}
           >
