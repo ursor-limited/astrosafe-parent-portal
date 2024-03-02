@@ -5,6 +5,7 @@ import { IVideo } from "../api";
 import moment from "moment";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
+import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import Image from "next/image";
 
@@ -99,9 +100,16 @@ const VideoCard = (props: IVideo) => {
           <Typography variant="medium" bold maxLines={2}>
             {props.title}
           </Typography>
-          <Typography variant="small">
-            {getFormattedDate(props.createdAt)}
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
+          >
+            <Typography variant="small">
+              {getFormattedDate(props.createdAt)}
+            </Typography>
+            <CirclePlayIcon height="20px" width="20px" />
+          </Stack>
         </Stack>
       </Stack>
     </Stack>

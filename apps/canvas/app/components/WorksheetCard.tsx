@@ -5,6 +5,7 @@ import { PALETTE, Typography } from "ui";
 import { getFormattedDate } from "./VideoCard";
 import NumberBondWorksheet from "../worksheet/[id]/NumberBondWorksheet";
 import { useRouter } from "next/navigation";
+import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 
 const WorksheetCard = (props: IWorksheet) => {
   const router = useRouter();
@@ -71,9 +72,16 @@ const WorksheetCard = (props: IWorksheet) => {
           >
             {props.title}
           </Typography>
-          <Typography color={PALETTE.secondary.grey[5]} variant="small">
-            {getFormattedDate(props.createdAt)}
-          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ svg: { path: { fill: PALETTE.secondary.pink[4] } } }}
+          >
+            <Typography variant="small">
+              {getFormattedDate(props.createdAt)}
+            </Typography>
+            <ChecklistIcon height="20px" width="20px" />
+          </Stack>
         </Stack>
       </Stack>
     </Stack>

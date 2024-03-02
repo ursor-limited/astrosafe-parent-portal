@@ -5,7 +5,9 @@ import { Stack, keyframes } from "@mui/system";
 import { useElementSize } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import HomeIcon from "@/images/icons/HomeIcon.svg";
+import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
+import { useRouter } from "next/navigation";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -171,21 +173,22 @@ const SidebarItem = (props: {
 );
 
 export default function Sidebar(props: ISidebarProps) {
+  const router = useRouter();
   const topItems: ISidebarItem[] = [
     {
       id: "home",
       tourId: "home-button",
       icon: HomeIcon,
-      title: "Lessons",
+      title: "Home",
       callback: () => null, //navigate("/library"),
     },
-    // {
-    //   id: "devices",
-    //   tourId: "devices-button",
-    //   icon: DesktopIcon,
-    //   title: "Monitor",
-    //   callback: () => null, //navigate("/devices"),
-    // },
+    {
+      id: "browser",
+      //tourId: "devices-button",
+      icon: GlobeIcon,
+      title: "Browser",
+      callback: () => router.push("https://app.astrosafe.co"), //navigate("/devices"),
+    },
   ];
 
   const bottomItems: ISidebarItem[] = [
