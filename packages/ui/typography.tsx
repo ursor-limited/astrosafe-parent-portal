@@ -111,7 +111,7 @@ export function Typography(props: TypographyProps): JSX.Element {
             }
           : null),
         ...(props.maxLines ? getMaxLinesStyle(props.maxLines) : null),
-        transition: "0.2",
+        transition: "0.2s",
       }}
     >
       {props.htmlTag ? (
