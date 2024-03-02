@@ -39,7 +39,6 @@ export default function RootLayout({
             backgroundSize: "cover",
             boxSizing: "border-box",
           }}
-          spacing="10px"
           position="relative"
         >
           <NotificationProvider>
