@@ -24,6 +24,8 @@ import WorksheetCreationDialog from "./WorksheetCreationDialog";
 import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
 import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
+import { createPortal } from "react-dom";
+import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
 
 export const GRID_SPACING = "20px";
 
@@ -479,6 +481,12 @@ export default function LandingPageContents(props: {}) {
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
       />
+      {worksheets.length + videos.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
     </>
   );
 }

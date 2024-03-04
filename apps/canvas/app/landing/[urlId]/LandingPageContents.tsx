@@ -5,6 +5,7 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import { useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
 import ApiController from "../../api";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,45 @@ import WorksheetGenerator, {
   IWorksheetParameters,
   WorksheetId,
 } from "./WorksheetGenerator";
+import Image from "next/image";
+
+export const EmptyStateIllustration = (props: {
+  children: React.ReactNode;
+}) => (
+  <Stack
+    position="absolute"
+    top={0}
+    width="100vw"
+    height="100vh"
+    justifyContent="center"
+    alignItems="center"
+    sx={{
+      pointerEvents: "none",
+      filter: "grayscale(1)",
+    }}
+    zIndex={999}
+  >
+    <Stack position="relative" spacing="18px">
+      <Stack sx={{ opacity: 0.3 }}>
+        <Image
+          height={207}
+          width={217}
+          src={WonderingIllustration}
+          alt="Empty state illustration"
+        />
+      </Stack>
+      <Stack width="100%" alignItems="center" position="absolute" top="170px">
+        <Typography
+          bold
+          color={PALETTE.secondary.grey[3]}
+          sx={{ textAlign: "center" }}
+        >
+          {props.children}
+        </Typography>
+      </Stack>
+    </Stack>
+  </Stack>
+);
 
 export const Captioned = (props: {
   text: string;
