@@ -19,9 +19,8 @@ export default function ExplainerCard(props: {
       <div style={{ width: "100%", height: "100%", position: "relative" }}>
         <Image
           src={props.imageUrl}
-          width={313}
-          height={235}
-          //objectFit="contain"
+          fill
+          objectFit="contain"
           alt="explainer card image"
         />
       </div>
