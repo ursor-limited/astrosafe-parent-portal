@@ -3,7 +3,7 @@
   "pageTitle": "this is the text in the url tab 15-70 chars",
   "metaDescription": "a meta description specific for the page 60-320 chars.",
   "heading": "Nambah bond",
-  "subheading": "Save hours when creating worksheets for your students. Create number bonds!",
+  "subHeading": "Save hours when creating worksheets for your students. Create number bonds!",
   "worksheetGenerator": {
     "topic": "addition",
     "worksheetId": "numberBond",

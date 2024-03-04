@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "12-times-table-worksheet",
+    "pageTitle": "12 times table worksheet | Learn your 12x tables up to 100 and beyond!",
+    "metaDescription": "12 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twelve up to 100 and beyond with our 12 times table charts.",
+    "heading": "12 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 12 times table worksheet in seconds for\nyour students. Create equations for the 12 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "12 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 12,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 12 times table",
+        "title": "12 Times table chart",
+        "body": "The 12 times table is a basic math concept, showing the product of multiplying 12 by whole numbers. Knowing the 12 x table improves memory and benefits students both in school and beyond. Mastery of the 12x table increases confidence in mathematical abilities. An interesting fact about the number 12 is its versatility; it has six divisors, making it useful for fractions, time units, and even representing the number of months in a year. See the twelve times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "12 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 12,
                 "nProblems": 10
             }
         }

@@ -45,7 +45,7 @@ export default function LandingPageContents(props: {
   pageTitle: string;
   metaDescription: string;
   heading: string;
-  subheading: string;
+  subHeading: string;
   worksheetGenerator: {
     topic: WorksheetTopic;
     worksheetId: WorksheetId;
@@ -133,7 +133,7 @@ export default function LandingPageContents(props: {
   return (
     <AstroLandingPage
       title={[props.heading]}
-      subtitle={props.subheading}
+      subtitle={props.subHeading}
       mobile={false}
       viewports={[
         <LandingPageViewport
@@ -165,87 +165,91 @@ export default function LandingPageContents(props: {
             </Stack>
           </Stack>
         </LandingPageViewport>,
-        <LandingPageViewport
-          key="linkTable"
-          supertitle={props.linkTable.supertitle}
-          title={props.linkTable.title}
-          subtitle={props.linkTable.body}
-          mobile={mobile}
-        >
-          <Stack
-            width="990px"
-            borderRadius="12px"
-            overflow="hidden"
-            border={`1px solid ${PALETTE.secondary.grey[2]}`}
-          >
-            <Stack
-              bgcolor={PALETTE.secondary.purple[2]}
-              justifyContent="center"
-              alignItems="center"
-              height="56px"
-            >
-              <Typography htmlTag="h5" bold color="rgb(255,255,255)">
-                {props.linkTable.tableHeading}
-              </Typography>
-            </Stack>
-            <Stack spacing={mobile ? "16px" : "22px"}>
-              {_.chunk(props.linkTable.links, 2).map((pair, i) => (
+        ...(props.linkTable
+          ? [
+              <LandingPageViewport
+                key="linkTable"
+                supertitle={props.linkTable.supertitle}
+                title={props.linkTable.title}
+                subtitle={props.linkTable.body}
+                mobile={mobile}
+              >
                 <Stack
-                  key={i}
-                  direction="row"
-                  height="57px"
-                  alignItems="center"
+                  width="990px"
+                  borderRadius="12px"
+                  overflow="hidden"
+                  border={`1px solid ${PALETTE.secondary.grey[2]}`}
                 >
                   <Stack
-                    flex={1}
-                    height="100%"
+                    bgcolor={PALETTE.secondary.purple[2]}
                     justifyContent="center"
-                    px="10px"
-                    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                    alignItems="center"
+                    height="56px"
                   >
-                    <a
-                      target="_blank"
-                      href={pair[0].url}
-                      style={{
-                        textDecoration: "none",
-                        color: PALETTE.secondary.purple[2],
-                      }}
-                      rel="noreferrer"
-                    >
-                      <Stack flex={1}>
-                        <Typography bold>{pair[0].text}</Typography>
-                      </Stack>
-                    </a>
+                    <Typography htmlTag="h5" bold color="rgb(255,255,255)">
+                      {props.linkTable.tableHeading}
+                    </Typography>
                   </Stack>
-                  {pair[1] ? (
-                    <Stack
-                      flex={1}
-                      height="100%"
-                      justifyContent="center"
-                      px="10px"
-                      border={`1px solid ${PALETTE.secondary.grey[2]}`}
-                      borderLeft="none"
-                    >
-                      <a
-                        target="_blank"
-                        href={pair[1].url}
-                        style={{
-                          textDecoration: "none",
-                          color: PALETTE.secondary.purple[2],
-                        }}
-                        rel="noreferrer"
+                  <Stack spacing={mobile ? "16px" : "22px"}>
+                    {_.chunk(props.linkTable.links, 2).map((pair, i) => (
+                      <Stack
+                        key={i}
+                        direction="row"
+                        height="57px"
+                        alignItems="center"
                       >
-                        <Stack flex={1}>
-                          <Typography bold>{pair[1].text}</Typography>
+                        <Stack
+                          flex={1}
+                          height="100%"
+                          justifyContent="center"
+                          px="10px"
+                          border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                        >
+                          <a
+                            target="_blank"
+                            href={pair[0].url}
+                            style={{
+                              textDecoration: "none",
+                              color: PALETTE.secondary.purple[2],
+                            }}
+                            rel="noreferrer"
+                          >
+                            <Stack flex={1}>
+                              <Typography bold>{pair[0].text}</Typography>
+                            </Stack>
+                          </a>
                         </Stack>
-                      </a>
-                    </Stack>
-                  ) : null}
+                        {pair[1] ? (
+                          <Stack
+                            flex={1}
+                            height="100%"
+                            justifyContent="center"
+                            px="10px"
+                            border={`1px solid ${PALETTE.secondary.grey[2]}`}
+                            borderLeft="none"
+                          >
+                            <a
+                              target="_blank"
+                              href={pair[1].url}
+                              style={{
+                                textDecoration: "none",
+                                color: PALETTE.secondary.purple[2],
+                              }}
+                              rel="noreferrer"
+                            >
+                              <Stack flex={1}>
+                                <Typography bold>{pair[1].text}</Typography>
+                              </Stack>
+                            </a>
+                          </Stack>
+                        ) : null}
+                      </Stack>
+                    ))}
+                  </Stack>
                 </Stack>
-              ))}
-            </Stack>
-          </Stack>
-        </LandingPageViewport>,
+              </LandingPageViewport>,
+            ]
+          : []),
         <LandingPageViewport
           key="explainerCards"
           supertitle={props.explainerCards.supertitle}
