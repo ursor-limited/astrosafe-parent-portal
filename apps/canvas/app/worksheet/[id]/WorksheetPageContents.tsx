@@ -34,6 +34,8 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
+import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
+import { useLocalStorage } from "usehooks-ts";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -389,6 +391,12 @@ export default function WorksheetPageContents(props: IWorksheet) {
       router.push("/dashboard")
     );
 
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(true);
+
+  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
+    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
+
   return (
     <>
       <BigCard
@@ -486,6 +494,11 @@ export default function WorksheetPageContents(props: IWorksheet) {
         deletionCallback={submitDeletion}
         category="worksheet"
         title={props.title}
+      />
+      <WorksheetSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+        mobile={false}
       />
     </>
   );

@@ -7,13 +7,16 @@ import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
 import Image from "next/image";
 import { Stack } from "@mui/system";
+import { PALETTE, UrsorButton } from "ui";
 
 const FREE_VIDEO_LIMIT = 3;
+const SCREENSHOT_URL =
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/dashboardSkreenshot.png";
 
 const WorksheetSignupPromptDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  createCallback: () => void;
+  //createCallback: () => void;
   mobile?: boolean;
 }) => {
   const { loginWithPopup, loginWithRedirect } = useAuth0();
@@ -23,56 +26,74 @@ const WorksheetSignupPromptDialog = (props: {
     <UrsorDialog
       supertitle="Sign in"
       title={
-        freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
-          ? "Create an Account"
-          : "Store all your worksheets in one place"
+        "You math worksheet is ready"
+        // freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
+        //   ? "Create an Account"
+        //   : "Store all your worksheets in one place"
       }
-      subtitle={
-        freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
-          ? [
-              "You have reached your worksheet limit, but don’t worry,",
-              "you can continue to create worksheets with a free account.",
-            ]
-          : [
-              "Your worksheet is ready. Create an account to store your",
-              "worksheets in a dashboard and create unlimited worksheets.",
-            ]
-      }
+      subtitle={[
+        "Log in to download and continue creating new worksheets for free.",
+        "You also get a dazzling dashboard.",
+      ]}
       open={props.open}
-      button={{
-        text: "Sign in",
-        callback: () => {
-          props.closeCallback();
-          props.mobile ? loginWithPopup() : loginWithPopup();
-          //props.signinCallback();
-          // mixpanel.track("clicked signup button", {
-          //   freeWorksheetCreationCount,
-          // });
-        },
-        icon: PersonIcon,
-      }}
-      secondaryButton={
-        freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
-          ? undefined
-          : {
-              text: "Skip to worksheet",
-              callback: () => {
-                // mixpanel.track("clicked skip", {
-                //   freeWorksheetCreationCount,
-                // });
-                props.createCallback();
-                props.closeCallback();
-              },
-              icon: ChevronRight,
-            }
-      }
+      // button={{
+      //   text: "Sign in",
+      //   callback: () => {
+      //     props.closeCallback();
+      //     props.mobile ? loginWithPopup() : loginWithPopup();
+      //     //props.signinCallback();
+      //     // mixpanel.track("clicked signup button", {
+      //     //   freeWorksheetCreationCount,
+      //     // });
+      //   },
+      //   icon: PersonIcon,
+      // }}
       onCloseCallback={props.closeCallback}
-      width="90%"
-      maxWidth="630px"
-      titleMaxWidth="500px"
       titleSize={props.mobile ? "h4" : "h3"}
+      noOverflowHidden
     >
-      <GraphIllustration width={250} height={250} />
+      <Stack flex={1} alignItems="center">
+        <Stack
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.7 },
+            transition: "0.2s",
+          }}
+        >
+          <UrsorButton
+            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+            onClick={() => {
+              props.closeCallback();
+              props.mobile ? loginWithPopup() : loginWithPopup();
+              //props.signinCallback();
+              // mixpanel.track("clicked signup button", {
+              //   freeWorksheetCreationCount,
+              // });
+            }}
+            endIcon={PersonIcon}
+          >
+            Sign in
+          </UrsorButton>
+        </Stack>
+        <Stack
+          width="727px"
+          height="392px"
+          borderRadius="20px"
+          border={`6px solid ${PALETTE.secondary.grey[5]}`}
+          sx={{
+            transform: "translateY(30px)",
+          }}
+          overflow="hidden"
+        >
+          <Image
+            src={SCREENSHOT_URL}
+            width={727}
+            height={454}
+            //objectFit="contain"
+            alt="explainer card image"
+          />
+        </Stack>
+      </Stack>
     </UrsorDialog>
   );
 };

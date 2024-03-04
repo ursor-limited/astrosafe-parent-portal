@@ -147,7 +147,8 @@ const VideoCreationDialog = (props: {
         button={{
           text: "Create",
           callback: () => {
-            !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+            // !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+            submit();
           },
           icon: RocketIcon,
           disabled: !url,
