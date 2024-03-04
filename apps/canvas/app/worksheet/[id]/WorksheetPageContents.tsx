@@ -26,9 +26,14 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import Slider from "react-slick";
 import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
+import DeletionDialog from "@/app/components/DeletionDialog";
+import ApiController from "@/app/api";
+import { useRouter } from "next/navigation";
+import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -375,85 +380,113 @@ export default function WorksheetPageContents(props: IWorksheet) {
     }
   }, [props.parameters, props.worksheetId]);
 
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const submitDeletion = () =>
+    ApiController.deleteWorksheet(props.id).then(() =>
+      router.push("/dashboard")
+    );
+
   return (
-    <BigCard
-      title={props.title}
-      createdAt={props.createdAt}
-      rightStuff={
-        <Stack direction="row" spacing="12px">
-          <Stack
-            borderRadius="100%"
-            border={`2px solid ${PALETTE.primary.navy}`}
-            height="39px"
-            width="39px"
-            justifyContent="center"
-            alignItems="center"
-            onClick={() => navigator.clipboard.writeText(window.location.href)}
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-          >
-            <ShareIcon width="22px" height="22px" />
+    <>
+      <BigCard
+        title={props.title}
+        createdAt={props.createdAt}
+        rightStuff={
+          <Stack direction="row" spacing="12px">
+            <CircularButton
+              icon={TrashcanIcon}
+              color={PALETTE.system.red}
+              onClick={() => setDeletionDialogOpen(true)}
+            />
+            <Stack
+              borderRadius="100%"
+              border={`2px solid ${PALETTE.primary.navy}`}
+              height="39px"
+              width="39px"
+              justifyContent="center"
+              alignItems="center"
+              onClick={() =>
+                navigator.clipboard.writeText(window.location.href)
+              }
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+              }}
+            >
+              <ShareIcon width="22px" height="22px" />
+            </Stack>
+            <UrsorButton dark variant="tertiary">
+              Download answers
+            </UrsorButton>
+            <UrsorButton dark variant="tertiary">
+              Download worksheet
+            </UrsorButton>
           </Stack>
-          <UrsorButton dark variant="tertiary">
-            Download answers
-          </UrsorButton>
-          <UrsorButton dark variant="tertiary">
-            Download worksheet
-          </UrsorButton>
-        </Stack>
-      }
-    >
-      {nPages ? (
-        <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-          <Carousel
-            yPadding={30}
-            items={[...Array(nPages).keys()].map((i) => (
-              <CarouselItem key={i} n={i + 1}>
-                {props.worksheetId === "equation" ? (
-                  <EquationWorksheet
-                    key={i}
-                    title={props.title}
-                    topic={
-                      (props.parameters as IEquationWorksheetParameters).topic
-                    }
-                    orientation={props.parameters.orientation}
-                    pageIndex={i}
-                    factor={
-                      (props.parameters as IEquationWorksheetParameters).factor
-                    }
-                    multipliers={
-                      (props.parameters as IEquationWorksheetParameters)
-                        .multipliers
-                    }
-                    answers={mode === "markscheme"}
-                  />
-                ) : props.worksheetId === "numberBond" ? (
-                  <NumberBondWorksheet
-                    key={i}
-                    title={props.title}
-                    result={
-                      (props.parameters as INumberBondWorksheetParameters)
-                        .result
-                    }
-                    orientation={props.parameters.orientation}
-                    pageIndex={i}
-                    pairs={
-                      (props.parameters as INumberBondWorksheetParameters).pairs
-                    }
-                    both={
-                      (props.parameters as INumberBondWorksheetParameters).both
-                    }
-                    answers={mode === "markscheme"}
-                  />
-                ) : null}
-              </CarouselItem>
-            ))}
-          />
-        </Stack>
-      ) : null}
-    </BigCard>
+        }
+      >
+        {nPages ? (
+          <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
+            <Carousel
+              yPadding={30}
+              items={[...Array(nPages).keys()].map((i) => (
+                <CarouselItem key={i} n={i + 1}>
+                  {props.worksheetId === "equation" ? (
+                    <EquationWorksheet
+                      key={i}
+                      title={props.title}
+                      topic={
+                        (props.parameters as IEquationWorksheetParameters).topic
+                      }
+                      orientation={props.parameters.orientation}
+                      pageIndex={i}
+                      factor={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .factor
+                      }
+                      multipliers={
+                        (props.parameters as IEquationWorksheetParameters)
+                          .multipliers
+                      }
+                      answers={mode === "markscheme"}
+                    />
+                  ) : props.worksheetId === "numberBond" ? (
+                    <NumberBondWorksheet
+                      key={i}
+                      title={props.title}
+                      result={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .result
+                      }
+                      orientation={props.parameters.orientation}
+                      pageIndex={i}
+                      pairs={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .pairs
+                      }
+                      both={
+                        (props.parameters as INumberBondWorksheetParameters)
+                          .both
+                      }
+                      answers={mode === "markscheme"}
+                    />
+                  ) : null}
+                </CarouselItem>
+              ))}
+            />
+          </Stack>
+        ) : null}
+      </BigCard>
+      <DeletionDialog
+        open={deletionDialogOpen}
+        closeCallback={() => setDeletionDialogOpen(false)}
+        deletionCallback={submitDeletion}
+        category="worksheet"
+        title={props.title}
+      />
+    </>
   );
 }

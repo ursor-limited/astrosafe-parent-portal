@@ -24,7 +24,7 @@ const Player = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-const CircularButton = (props: {
+export const CircularButton = (props: {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   color?: string;
   onClick: () => void;
@@ -32,8 +32,8 @@ const CircularButton = (props: {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
-      height="38px"
-      width="38px"
+      height="39px"
+      width="39px"
       minHeight="38px"
       minWidth="38px"
       borderRadius="100%"
