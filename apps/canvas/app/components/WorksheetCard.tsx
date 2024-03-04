@@ -12,7 +12,7 @@ const WorksheetCard = (props: IWorksheet) => {
   const router = useRouter();
   return (
     <Stack
-      height="310px"
+      height="317px"
       bgcolor="rgb(255,255,255)"
       borderRadius="12px"
       boxSizing="border-box"
@@ -26,6 +26,7 @@ const WorksheetCard = (props: IWorksheet) => {
         cursor: "pointer",
       }}
       onClick={() => router.push(`/worksheet/${props.id}`)}
+      pb="7px"
     >
       <Stack
         height="201px"
@@ -35,6 +36,7 @@ const WorksheetCard = (props: IWorksheet) => {
         justifyContent="center"
         alignItems="center"
         position="relative"
+        overflow="hidden"
       >
         <Stack
           position="absolute"

@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "21-times-table-worksheet",
+    "pageTitle": "21 times table worksheet | Learn your 21x tables up to 100 and beyond!",
+    "metaDescription": "21 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twenty-one up to 100 and beyond with our 21 times table charts.",
+    "heading": "21 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 21 times table worksheet in seconds for\nyour students. Create equations for the 21 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "21 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 21,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 21 times table",
+        "title": "21 Times table chart",
+        "body": "The 21 times table shows the result of multiplying 21 by other integers. Mastering it benefits mathematical proficiency and enhances cognitive capabilities. Understanding the 21 x table boosts students' academic self-esteem in math. In the 21x table, the last digit in the product is always the number that 21 is multiplied by. For example, 21 x 3 = 63. See the twenty-one times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "21 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 21,
                 "nProblems": 10
             }
         }

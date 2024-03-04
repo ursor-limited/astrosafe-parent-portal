@@ -31,7 +31,7 @@ export function WorksheetGeneratorNumberBondModule(
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
-    setCreationCallback: (cc: () => void) => void;
+    setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
@@ -120,7 +120,12 @@ export function WorksheetGeneratorNumberBondModule(
         result,
         pairs,
         "mkl.koskela@gmail.com"
-      ).then((ws) => router.push(`/worksheet/${ws.id}`))
+      )
+        .then((ws) => {
+          router.push(`/worksheet/${ws.id}`);
+          return ws;
+        })
+        .then((ws) => ws.id)
     );
   }, [props.title, result, props.pageIndex, orientation, pairs, both]);
   useEffect(() => {

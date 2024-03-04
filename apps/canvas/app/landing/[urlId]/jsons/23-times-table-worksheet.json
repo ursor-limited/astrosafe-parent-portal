@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "23-times-table-worksheet",
+    "pageTitle": "23 times table worksheet | Learn your 23x tables up to 100 and beyond!",
+    "metaDescription": "23 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twenty-three up to 100 and beyond with our 23 times table charts.",
+    "heading": "23 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 23 times table worksheet in seconds for\nyour students. Create equations for the 23 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "23 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 23,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 23 times table",
+        "title": "23 Times table chart",
+        "body": "The 23 times table may be challenging due to its lack of straightforward patterns, but it provides an opportunity to develop number sense and arithmetic skills. Understanding the 23 x table demonstrates advanced multiplying abilities, boosting confidence in math. In the 23x table, multiples of 23 up to 23 x 10 follow a distinctive pattern in the ones place, starting from 3 and increasing in jumps of 3. This pattern can be a helpful memory tool. See the twenty-three times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "23 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 23,
                 "nProblems": 10
             }
         }

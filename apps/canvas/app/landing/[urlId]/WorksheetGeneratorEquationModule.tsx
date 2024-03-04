@@ -23,7 +23,7 @@ export function WorksheetGeneratorEquationModule(
     nProblems: number;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
-    setCreationCallback: (cc: () => void) => void;
+    setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
     topic: WorksheetTopic;
     pageIndex: number;
@@ -108,7 +108,12 @@ export function WorksheetGeneratorEquationModule(
         factor,
         multipliers,
         "mkl.koskela@gmail.com"
-      ).then((ws) => router.push(`/worksheet/${ws.id}`))
+      )
+        .then((ws) => {
+          router.push(`/worksheet/${ws.id}`);
+          return ws;
+        })
+        .then((ws) => ws.id)
     );
   }, [
     props.title,

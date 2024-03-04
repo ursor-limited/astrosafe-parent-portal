@@ -10,13 +10,16 @@ import DurationLabel from "../editor/duration-label";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
 import ApiController from "../api";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
+import SignupPromptDialog from "./SignupPromptDialog";
+import { useUserContext } from "../components/UserContext";
+import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 
 const PLACEHOLDER_DURATION = 4000;
 
 export const TITLE_CHARACTER_LIMIT = 40;
-const VIDEO_WIDTH = 290;
-const VIDEO_HEIGHT = 159;
+const VIDEO_WIDTH = 390;
+const VIDEO_HEIGHT = 213;
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
@@ -60,7 +63,7 @@ const VideoCreationDialog = (props: {
         } else {
           setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
-          setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
       })
@@ -102,6 +105,13 @@ const VideoCreationDialog = (props: {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [freeVideoCreationCount, setFreeVideoCreationCount] =
+    useLocalStorage<number>("freeVideoCreationCount", 0);
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+
   const submit = () => {
     setLoading(true);
     ApiController.createVideo({
@@ -114,182 +124,213 @@ const VideoCreationDialog = (props: {
       creatorId: "mkl.koskela@gmail.com",
     }).then(async (v) => {
       setLoading(false);
+      setFreeVideoCreationCount(freeVideoCreationCount + 1);
+      setFreeVideoIds([...freeVideoIds, v.id]);
       router.push(`/video/${v.id}`);
     });
   };
 
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(false);
+
+  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
+    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
+
+  const userDetails = useUserContext();
+
   return (
-    <UrsorDialog
-      supertitle="Create video"
-      title="Create a Safetube video"
-      open={props.open}
-      button={{
-        text: "Create",
-        callback: submit,
-        icon: RocketIcon,
-      }}
-      onCloseCallback={props.closeCallback}
-      maxWidth="880px"
-    >
-      <Stack flex={1} direction="row" spacing="40px" width="86%">
-        <Stack spacing="20px" flex={1}>
-          <Captioned text="URL">
-            <UrsorInputField
-              value={originalUrl}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setOriginalUrl(event.target.value)
-              }
-              placeholder="URL"
-              width="100%"
-              leftAlign
-              boldValue
-            />
-          </Captioned>
-
-          <Stack
-            height="2px"
-            width="100%"
-            bgcolor={PALETTE.secondary.grey[2]}
-          />
-
-          <Captioned text="Title">
-            <UrsorInputField
-              value={title}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                event.target.value.length < TITLE_CHARACTER_LIMIT &&
-                setTitle(event.target.value)
-              }
-              placeholder="Title"
-              width="100%"
-              leftAlign
-              boldValue
-            />
-          </Captioned>
-          <Captioned text="Description">
-            <UrsorInputField
-              value={description}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                event.target.value.length < TITLE_CHARACTER_LIMIT &&
-                setDescription(event.target.value)
-              }
-              placeholder="Description"
-              width="100%"
-              leftAlign
-              boldValue
-            />
-          </Captioned>
-          <Captioned text="Start and end time">
-            <Stack
-              bgcolor={PALETTE.secondary.grey[1]}
-              borderRadius="8px"
-              height="40px"
-              justifyContent="center"
-              px="10px"
-            >
-              <Stack
-                direction="row"
-                // spacing={mobile ? "20px" : "44px"}
-                spacing={"20px"}
-                justifyContent="center"
-                width="100%"
-                sx={{
-                  pointerEvents: !originalUrl ? "none" : undefined,
-                  opacity: originalUrl ? 1 : 0.5,
-                  ".MuiSlider-root": {
-                    color: "transparent !important",
-                  },
-                  ".MuiSlider-rail": {
-                    opacity: 0.4,
-                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                  },
-                  ".MuiSlider-track": {
-                    background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                  },
-                  ".MuiSlider-thumb": {
-                    "&:nth-of-type(3)": {
-                      background: "#F279C5",
-                    },
-                    "&:nth-of-type(4)": {
-                      background: "#FD9B41",
-                    },
-                  },
-                }}
-              >
-                <DurationLabel
-                  value={range?.[0] ?? 0}
-                  incrementCallback={() =>
-                    setRange(
-                      duration && range?.[0] && range?.[1]
-                        ? [Math.min(duration, range[0] + 1), range[1]]
-                        : undefined
-                    )
-                  }
-                  decrementCallback={() =>
-                    setRange(
-                      duration && range?.[0] && range?.[1]
-                        ? [Math.max(0, range[0] - 1), range[1]]
-                        : undefined
-                    )
-                  }
-                />
-                <Slider
-                  min={0}
-                  max={duration}
-                  valueLabelDisplay="off"
-                  getAriaLabel={() => "Temperature range"}
-                  value={range}
-                  onChange={(event: Event, newValue: number | number[]) => {
-                    setRange(newValue as number[]);
-                  }}
-                />
-                <DurationLabel
-                  value={range?.[1] ?? 0}
-                  incrementCallback={() =>
-                    setRange(
-                      duration && range?.[0] && range?.[1]
-                        ? [range[0], Math.min(duration, range[1] + 1)]
-                        : undefined
-                    )
-                  }
-                  decrementCallback={() =>
-                    setRange(
-                      duration && range?.[0] && range?.[1]
-                        ? [range[0], Math.max(0, range[1] - 1)]
-                        : undefined
-                    )
-                  }
-                />
-              </Stack>
-            </Stack>
-          </Captioned>
-        </Stack>
+    <>
+      <UrsorDialog
+        supertitle="Create video"
+        title="Create a Safetube video"
+        open={props.open}
+        button={{
+          text: "Create",
+          callback: () => {
+            !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+          },
+          icon: RocketIcon,
+          disabled: !url,
+        }}
+        onCloseCallback={props.closeCallback}
+        maxWidth="1260px"
+      >
         <Stack
-          width={VIDEO_WIDTH}
-          height={VIDEO_HEIGHT}
-          bgcolor="rgb(0,0,0)"
-          spacing="10px"
+          flex={1}
+          direction="row"
+          spacing="40px"
+          width="95%"
+          overflow="hidden"
         >
-          {provider ? (
-            <Player
-              url={url}
-              provider={provider}
-              width={Math.min(playerWidth, VIDEO_WIDTH)}
-              height={
-                Math.min(playerWidth, VIDEO_WIDTH) *
-                (VIDEO_HEIGHT / VIDEO_WIDTH)
-              }
-              setDuration={(d) => d && setDuration(d)}
-              noKitemark
-              top="120px"
-              playingCallback={(p) => setPlaying(p)}
-              smallPlayIcon
+          <Stack spacing="20px" flex={1}>
+            <Captioned text="URL">
+              <UrsorInputField
+                value={originalUrl}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setOriginalUrl(event.target.value)
+                }
+                placeholder="URL"
+                width="100%"
+                leftAlign
+                boldValue
+              />
+            </Captioned>
+
+            <Stack
+              height="2px"
+              width="100%"
+              bgcolor={PALETTE.secondary.grey[2]}
             />
-          ) : null}
-          <Typography bold>{title}</Typography>
-          <Typography variant="small">{description}</Typography>
+
+            <Captioned text="Title">
+              <UrsorInputField
+                value={title}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  event.target.value.length < TITLE_CHARACTER_LIMIT &&
+                  setTitle(event.target.value)
+                }
+                placeholder="Title"
+                width="100%"
+                leftAlign
+                boldValue
+              />
+            </Captioned>
+            <Captioned text="Description">
+              <UrsorInputField
+                value={description}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setDescription(event.target.value)
+                }
+                placeholder="Description"
+                width="100%"
+                leftAlign
+                boldValue
+              />
+            </Captioned>
+            <Captioned text="Start and end time">
+              <Stack
+                bgcolor={PALETTE.secondary.grey[1]}
+                borderRadius="8px"
+                height="40px"
+                justifyContent="center"
+                px="10px"
+              >
+                <Stack
+                  direction="row"
+                  // spacing={mobile ? "20px" : "44px"}
+                  spacing={"20px"}
+                  justifyContent="center"
+                  width="100%"
+                  sx={{
+                    pointerEvents: !originalUrl ? "none" : undefined,
+                    opacity: originalUrl ? 1 : 0.5,
+                    ".MuiSlider-root": {
+                      color: "transparent !important",
+                    },
+                    ".MuiSlider-rail": {
+                      opacity: 0.4,
+                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                    },
+                    ".MuiSlider-track": {
+                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+                    },
+                    ".MuiSlider-thumb": {
+                      "&:nth-of-type(3)": {
+                        background: "#F279C5",
+                      },
+                      "&:nth-of-type(4)": {
+                        background: "#FD9B41",
+                      },
+                    },
+                  }}
+                >
+                  <DurationLabel
+                    value={range?.[0] ?? 0}
+                    incrementCallback={() =>
+                      setRange(
+                        duration && range?.[0] && range?.[1]
+                          ? [Math.min(duration, range[0] + 1), range[1]]
+                          : undefined
+                      )
+                    }
+                    decrementCallback={() =>
+                      setRange(
+                        duration && range?.[0] && range?.[1]
+                          ? [Math.max(0, range[0] - 1), range[1]]
+                          : undefined
+                      )
+                    }
+                  />
+                  <Slider
+                    min={0}
+                    max={duration}
+                    valueLabelDisplay="off"
+                    getAriaLabel={() => "Temperature range"}
+                    value={range}
+                    onChange={(event: Event, newValue: number | number[]) => {
+                      setRange(newValue as number[]);
+                    }}
+                  />
+                  <DurationLabel
+                    value={range?.[1] ?? 0}
+                    incrementCallback={() =>
+                      setRange(
+                        duration && range?.[0] && range?.[1]
+                          ? [range[0], Math.min(duration, range[1] + 1)]
+                          : undefined
+                      )
+                    }
+                    decrementCallback={() =>
+                      setRange(
+                        duration && range?.[0] && range?.[1]
+                          ? [range[0], Math.max(0, range[1] - 1)]
+                          : undefined
+                      )
+                    }
+                  />
+                </Stack>
+              </Stack>
+            </Captioned>
+          </Stack>
+          <Stack
+            width={VIDEO_WIDTH}
+            //height={VIDEO_HEIGHT}
+            spacing="10px"
+          >
+            {provider ? (
+              <Player
+                url={url}
+                provider={provider}
+                width={Math.min(playerWidth, VIDEO_WIDTH)}
+                height={
+                  Math.min(playerWidth, VIDEO_WIDTH) *
+                  (VIDEO_HEIGHT / VIDEO_WIDTH)
+                }
+                setDuration={(d) => d && setDuration(d)}
+                noKitemark
+                top="120px"
+                playingCallback={(p) => setPlaying(p)}
+                smallPlayIcon
+                noBackdrop
+              />
+            ) : null}
+            <Typography bold>{title}</Typography>
+            <Stack flex={1} overflow="hidden">
+              <Typography variant="small" maxLines={3}>
+                {description}
+              </Typography>
+            </Stack>
+          </Stack>
         </Stack>
-      </Stack>
-    </UrsorDialog>
+      </UrsorDialog>
+      <VideoSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+        createCallback={submit}
+        //signinCallback={() => setLandInDashboardAfterCreation(true)}
+        mobile={false}
+      />
+    </>
   );
 };
 

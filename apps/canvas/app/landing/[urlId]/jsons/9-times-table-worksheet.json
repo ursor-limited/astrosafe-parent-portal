@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "9-times-table-worksheet",
+    "pageTitle": "9 times table worksheet | Learn your 9x tables up to 100 and beyond!",
+    "metaDescription": "9 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of nine up to 100 and beyond with our 9 times table charts.",
+    "heading": "9 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 9 times table worksheet in seconds for\nyour students. Create equations for the 9 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "9 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 9,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 9 times table",
+        "title": "9 Times table chart",
+        "body": "The 9 times table involves multiplying 9 with other integers. Proficiency in the 9 x table boosts students' confidence in math. There is an interesting trick to the 9x table. Students can try the 'finger trick': Hold up all 10 fingers. Starting with the left pinkie as number “1”, fold down the finger you wish to multiply by 9, and the remaining fingers will represent the product. For example, for 9 x 5, count to 5 fingers, starting at the left pinkie. Finger number five is the left thumb. Put down the left thumb, and you are left with 4 fingers on the left hand and 5 on the right. 9 x 5 = 45. Another interesting fact about the 9 x table is that if you add the digits of each product, they will add up to nine. For example: 9 x 6 = 54.  5 + 4 = 9. See the nine times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "9 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 9,
                 "nProblems": 10
             }
         }

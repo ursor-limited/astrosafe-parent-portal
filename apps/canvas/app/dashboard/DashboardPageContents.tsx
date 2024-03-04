@@ -19,6 +19,9 @@ import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
+import SignupPromptDialog from "./SignupPromptDialog";
+import { useUserContext } from "../components/UserContext";
+import { useLocalStorage } from "usehooks-ts";
 
 export const GRID_SPACING = "20px";
 
@@ -124,7 +127,7 @@ const ToolButton = (props: {
   <Stack
     direction="row"
     width="360px"
-    height="66px"
+    minHeight="66px"
     borderRadius="8px"
     spacing="12px"
     bgcolor="rgb(255,255,255)"
@@ -257,11 +260,6 @@ export default function LandingPageContents(props: {}) {
         bodyWidth="100%"
         selectedSidebarItemId="home"
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        // button={{
-        //   text: "Create",
-        //   icon: PlusIcon,
-        //   callback: () => null,
-        // }}
         button={{
           text: "Upgrade",
           icon: VerifiedIcon,
@@ -289,7 +287,9 @@ export default function LandingPageContents(props: {}) {
             description="Free of ads. Safe to share."
             color={PALETTE.secondary.blue[3]}
             icon={CirclePlayIcon}
-            onClick={() => setVideoCreationDialogOpen(true)}
+            onClick={() => {
+              setVideoCreationDialogOpen(true);
+            }}
           />
           <ToolButton
             title="Create math worksheet"

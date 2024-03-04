@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "25-times-table-worksheet",
+    "pageTitle": "25 times table worksheet | Learn your 25x tables up to 100 and beyond!",
+    "metaDescription": "25 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twenty-five up to 100 and beyond with our 25 times table charts.",
+    "heading": "25 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 25 times table worksheet in seconds for\nyour students. Create equations for the 25 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "25 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 25,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 25 times table",
+        "title": "25 Times table chart",
+        "body": "The 25 times table shows the result of multiplying 25 by whole numbers. All products in the 25 x table are divisible by 5, and will end in either a 5 or 0 in the ones digit place. Understanding it enhances numerical acuity and instills seamless problem-solving skills in students. Learning the 25x table is crucial for decoding various mathematical scenarios, fostering self-assurance in learners. An interesting fact: 25 is the smallest square that is also a sum of two squares (25=3^2 + 4^2), adding a fun layer to the world of mathematics. See the twenty-five times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "25 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 25,
                 "nProblems": 10
             }
         }

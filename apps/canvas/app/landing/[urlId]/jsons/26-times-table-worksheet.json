@@ -1,17 +1,17 @@
 {
-    "urlId": "8-times-table-worksheet",
-    "pageTitle": "8 times table worksheet | Learn your 8x tables up to 100 and beyond!",
-    "metaDescription": "8 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of eight up to 100 and beyond with our 8 times table charts.",
-    "heading": "8 Times table worksheet generator",
-    "subHeading": "Generate a personalised and printable 8 times table worksheet in seconds for\nyour students. Create equations for the 8 times table up to 100 and beyond!",
+    "urlId": "26-times-table-worksheet",
+    "pageTitle": "26 times table worksheet | Learn your 26x tables up to 100 and beyond!",
+    "metaDescription": "26 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twenty-six up to 100 and beyond with our 26 times table charts.",
+    "heading": "26 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 26 times table worksheet in seconds for\nyour students. Create equations for the 26 times table up to 100 and beyond!",
     "worksheetGenerator": {
         "topic": "multiplication",
         "worksheetId": "equation",
-        "title": "8 Times Table",
+        "title": "26 Times Table",
         "nProblems": 20,
         "specificSettings": {
             "topic": "multiplication",
-            "factor": 8,
+            "factor": 26,
             "nDigits": 1,
             "orientation": "horizontal"
         }
@@ -33,15 +33,15 @@
         }
     },
     "worksheetPreview": {
-        "supertitle": "Learn the 8 times table",
-        "title": "8 Times table chart",
-        "body": "The 8 times table is a basic part of math, involving multiplying numbers by 8. Mastering the 8 x table increases students’ speed and efficiency in math problems. All products in the 8x table are even numbers. Knowing this table boosts math confidence in students, leading to improved performance and a greater interest in the subject. An interesting fact about the number 8 is that, in its horizontal form, it resembles the infinite symbol, symbolizing endless possibilities in mathematics. See the eight times table below.",
+        "supertitle": "Learn the 26 times table",
+        "title": "26 Times table chart",
+        "body": "The 26 times table shows the result of multiplying 26 by other integers. It's essential for upper-grade math concepts like algebra and geometry. Mastering the 26 x table sharpens memory skills, benefiting learners in academics and life. Students who understand the 26x table typically display confidence in their math abilities. An interesting fact: 26 is the atomic number of iron, a vital element for life on earth. See the twenty-six times table below.",
         "worksheetPreviewParameters": {
             "questionTopic": "multiplication",
             "questionType": "chart",
-            "title": "8 Times Table Chart",
+            "title": "26 Times Table Chart",
             "worksheetParameters": {
-                "factor": 8,
+                "factor": 26,
                 "nProblems": 10
             }
         }

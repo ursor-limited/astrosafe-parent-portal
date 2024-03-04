@@ -1,4 +1,3 @@
-import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import GraphIllustration from "@/images/GraphIllustration.svg";
@@ -7,13 +6,14 @@ import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
 import Image from "next/image";
 import { Stack } from "@mui/system";
+import UrsorDialog from "../components/UrsorDialog";
 
 const FREE_VIDEO_LIMIT = 3;
 
 const SignupPromptDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  createCallback: () => void;
+  callback: () => void;
   signinCallback: () => void;
   mobile?: boolean;
 }) => {
@@ -46,9 +46,9 @@ const SignupPromptDialog = (props: {
           props.closeCallback();
           props.mobile ? loginWithPopup() : loginWithPopup();
           props.signinCallback();
-          mixpanel.track("clicked signup button", {
-            freeVideoCreationCount,
-          });
+          // mixpanel.track("clicked signup button", {
+          //   freeVideoCreationCount,
+          // });
         },
         icon: PersonIcon,
       }}
@@ -58,10 +58,10 @@ const SignupPromptDialog = (props: {
           : {
               text: "Skip to video",
               callback: () => {
-                mixpanel.track("clicked skip", {
-                  freeVideoCreationCount,
-                });
-                props.createCallback();
+                // mixpanel.track("clicked skip", {
+                //   freeVideoCreationCount,
+                // });
+                props.callback();
                 props.closeCallback();
               },
               icon: ChevronRight,
@@ -73,23 +73,7 @@ const SignupPromptDialog = (props: {
       titleMaxWidth="400px"
       titleSize={props.mobile ? "h4" : "h3"}
     >
-      {!props.mobile ? (
-        <Stack borderRadius="12px" overflow="hidden">
-          <Image
-            src={
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
-            }
-            loader={({ src }) => {
-              return src;
-            }}
-            width={415}
-            height={300}
-            alt="Screenshot"
-          />
-        </Stack>
-      ) : (
-        <GraphIllustration width={150} height={150} />
-      )}
+      <GraphIllustration width={300} height={300} />
     </UrsorDialog>
   );
 };

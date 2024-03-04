@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 const BigCard = (props: {
   rightStuff: React.ReactNode;
   title: string;
+  description?: string;
   createdAt?: string;
   children: React.ReactNode;
 }) => {
@@ -67,12 +68,7 @@ const BigCard = (props: {
               ) : null}
               <Typography variant="h2">{props.title}</Typography>
             </Stack>
-            <Typography>
-              In this session we will be practising our division skills! Watch
-              the videos on long division and decimal places to understand how
-              division works. Then get stuck in with the activities on Fun Brain
-              and Google Experiments!
-            </Typography>
+            <Typography>{props.description}</Typography>
           </Stack>
         </Stack>
         {props.children}

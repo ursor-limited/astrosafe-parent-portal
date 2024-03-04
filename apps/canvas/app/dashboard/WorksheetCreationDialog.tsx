@@ -3,6 +3,7 @@ import UrsorDialog from "../components/UrsorDialog";
 import WorksheetGenerator from "../landing/[urlId]/WorksheetGenerator";
 import { useState } from "react";
 import { Slider } from "@mui/material";
+import SignupPromptDialog from "./SignupPromptDialog";
 
 export const TITLE_CHARACTER_LIMIT = 40;
 
