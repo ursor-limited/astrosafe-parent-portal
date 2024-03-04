@@ -122,7 +122,7 @@ export function WorksheetGeneratorNumberBondModule(
         orientation,
         result,
         pairs,
-        userDetails.user?.auth0Id ?? ""
+        userDetails.user?.id
       )
         .then((ws) => {
           router.push(`/worksheet/${ws.id}`);

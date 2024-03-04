@@ -5,6 +5,8 @@ import {
   IWorksheet,
   IWorksheetParameters,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
+import AuthWrapper from "@/app/components/AuthWrapper";
+import { UserProvider } from "@/app/components/UserContext";
 
 async function WorksheetPage({
   params,
@@ -14,7 +16,15 @@ async function WorksheetPage({
   searchParams: { share: string };
 }) {
   const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
-  return details ? <WorksheetPageContents {...details} /> : <></>;
+  return details ? (
+    <AuthWrapper>
+      <UserProvider>
+        <WorksheetPageContents {...details} />
+      </UserProvider>
+    </AuthWrapper>
+  ) : (
+    <></>
+  );
 }
 
 export default WorksheetPage;

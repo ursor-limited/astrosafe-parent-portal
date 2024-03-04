@@ -370,9 +370,6 @@ export default function WorksheetGenerator(props: {
         </Stack>
         <Stack />
         <Stack spacing="19px">
-          {/* {(topic === "division" && nProblems > 12) ||
-          (orientation === "horizontal" && nProblems > 16) ||
-          (orientation === "vertical" && nProblems > 20) ? ( */}
           {nPages > 1 ? (
             <PageSelector
               pageIndex={selectedPageIndex}

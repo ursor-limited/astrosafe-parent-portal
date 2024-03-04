@@ -262,19 +262,25 @@ export default function LandingPageContents() {
   const userDetails = useUserContext();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
-  useEffect(() => {
+  const loadVideos = () => {
     userDetails?.user?.id &&
       ApiController.getUserVideos(userDetails.user.id).then((videos) =>
         setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
       );
+  };
+  useEffect(() => {
+    loadVideos();
   }, [userDetails?.user?.id]);
 
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
-  useEffect(() => {
+  const loadWorksheets = () => {
     userDetails?.user?.id &&
       ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
         setWorksheets(_.reverse(ws.slice()))
       );
+  };
+  useEffect(() => {
+    loadWorksheets();
   }, [userDetails?.user?.id]);
 
   const [cardColumns, setCardColumns] = useState<
@@ -361,6 +367,19 @@ export default function LandingPageContents() {
       setSignedIn(true);
     }
   }, [userDetails.user]);
+
+  const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
+    "freeWorksheetIds",
+    []
+  );
+  useEffect(() => {
+    if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
+        () => loadWorksheets()
+      );
+      setFreeWorksheetIds([]);
+    }
+  }, [userDetails.user?.id, freeWorksheetIds.length]);
 
   return (
     <>

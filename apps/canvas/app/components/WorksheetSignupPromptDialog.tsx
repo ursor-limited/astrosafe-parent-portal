@@ -26,7 +26,7 @@ const WorksheetSignupPromptDialog = (props: {
     <UrsorDialog
       supertitle="Sign in"
       title={
-        "You math worksheet is ready"
+        "Your math worksheet is ready"
         // freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
         //   ? "Create an Account"
         //   : "Store all your worksheets in one place"
@@ -48,9 +48,9 @@ const WorksheetSignupPromptDialog = (props: {
       //   },
       //   icon: PersonIcon,
       // }}
-      onCloseCallback={props.closeCallback}
       titleSize={props.mobile ? "h4" : "h3"}
       noOverflowHidden
+      noCloseButton
     >
       <Stack flex={1} alignItems="center">
         <Stack
@@ -63,7 +63,6 @@ const WorksheetSignupPromptDialog = (props: {
           <UrsorButton
             backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
             onClick={() => {
-              props.closeCallback();
               props.mobile ? loginWithPopup() : loginWithPopup();
               //props.signinCallback();
               // mixpanel.track("clicked signup button", {
@@ -90,7 +89,7 @@ const WorksheetSignupPromptDialog = (props: {
             width={727}
             height={454}
             //objectFit="contain"
-            alt="explainer card image"
+            alt="worksheet signup dialog screenshot"
           />
         </Stack>
       </Stack>
