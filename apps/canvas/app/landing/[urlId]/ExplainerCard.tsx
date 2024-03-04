@@ -1,4 +1,5 @@
 import { Stack } from "@mui/system";
+import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 
 export default function ExplainerCard(props: {
@@ -15,7 +16,18 @@ export default function ExplainerCard(props: {
       justifyContent="space-between"
       overflow="hidden"
     >
-      <Stack
+      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        <Image
+          src={props.imageUrl}
+          fill
+          objectFit="contain"
+          loader={({ src }) => {
+            return src;
+          }}
+          alt="explainer card image"
+        />
+      </div>
+      {/* <Stack
         height="242px"
         width="100%"
         sx={{
@@ -24,7 +36,7 @@ export default function ExplainerCard(props: {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
         }}
-      />
+      /> */}
       <Stack
         flex={1}
         spacing="16px"

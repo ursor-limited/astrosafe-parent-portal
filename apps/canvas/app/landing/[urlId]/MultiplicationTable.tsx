@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import { A4_HEIGHT, A4_WIDTH } from "../../worksheet/[id]/EquationWorksheet";
@@ -8,9 +8,15 @@ import PageSelector from "./PageSelector";
 
 const PAGE_MAX = 12;
 
-export default function MultiplicationTable() {
+export default function MultiplicationTable(props: {
+  factor: number;
+  upTo: number;
+}) {
   const [factor, setFactor] = useState<number>(3);
+  useEffect(() => setFactor(props.factor), [props.factor]);
   const [upTo, setUpTo] = useState<number>(10);
+  useEffect(() => setUpTo(props.upTo), [props.upTo]);
+
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
   return (
     <Stack
