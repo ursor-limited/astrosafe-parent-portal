@@ -104,6 +104,13 @@ const VideoCreationDialog = (props: {
 
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [freeVideoCreationCount, setFreeVideoCreationCount] =
+    useLocalStorage<number>("freeVideoCreationCount", 0);
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+
   const submit = () => {
     setLoading(true);
     ApiController.createVideo({
@@ -116,6 +123,8 @@ const VideoCreationDialog = (props: {
       creatorId: "mkl.koskela@gmail.com",
     }).then(async (v) => {
       setLoading(false);
+      setFreeVideoCreationCount(freeVideoCreationCount + 1);
+      setFreeVideoIds([...freeVideoIds, v.id]);
       router.push(`/video/${v.id}`);
     });
   };
