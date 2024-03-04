@@ -62,10 +62,7 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox
-                title="Select"
-                content="Enter the titles of the Articles you want to create and click the +"
-              />
+              <IntroBox title={props.step1.title} content={props.step1.body} />
             </Stack>
             <Stack
               sx={{
@@ -76,10 +73,7 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox
-                title="Create"
-                content="Once you’ve got a collection of articles, click Create."
-              />
+              <IntroBox title={props.step2.title} content={props.step2.body} />
             </Stack>
             <Stack
               sx={{
@@ -89,10 +83,7 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox
-                title="Generate"
-                content="Your Articles will take a few minutes to generate and voila!"
-              />
+              <IntroBox title={props.step3.title} content={props.step3.body} />
             </Stack>
           </Stack>
         </>
