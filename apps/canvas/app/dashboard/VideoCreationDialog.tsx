@@ -13,6 +13,7 @@ import ApiController from "../api";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import SignupPromptDialog from "./SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
+import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -313,11 +314,11 @@ const VideoCreationDialog = (props: {
           </Stack>
         </Stack>
       </UrsorDialog>
-      <SignupPromptDialog
+      <VideoSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
-        callback={submit}
-        signinCallback={() => setLandInDashboardAfterCreation(true)}
+        createCallback={submit}
+        //signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={false}
       />
     </>

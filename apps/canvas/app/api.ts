@@ -125,7 +125,7 @@ class ApiController {
     return dellete(`video/${id}`).then((response: any) => response);
   }
   static async deleteWorksheet(id: string) {
-    return dellete(`worksheet/${id}`).then((response: any) => response);
+    return dellete(`canvas/worksheet/${id}`).then((response: any) => response);
   }
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(

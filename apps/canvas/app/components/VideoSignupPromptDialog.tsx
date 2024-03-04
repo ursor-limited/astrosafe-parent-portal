@@ -10,11 +10,11 @@ import { Stack } from "@mui/system";
 
 const FREE_VIDEO_LIMIT = 3;
 
-const SignupPromptDialog = (props: {
+const VideoSignupPromptDialog = (props: {
   open: boolean;
   closeCallback: () => void;
   createCallback: () => void;
-  signinCallback: () => void;
+  //signinCallback: () => void;
   mobile?: boolean;
 }) => {
   const { loginWithPopup, loginWithRedirect } = useAuth0();
@@ -45,7 +45,7 @@ const SignupPromptDialog = (props: {
         callback: () => {
           props.closeCallback();
           props.mobile ? loginWithPopup() : loginWithPopup();
-          props.signinCallback();
+          //props.signinCallback();
           mixpanel.track("clicked signup button", {
             freeVideoCreationCount,
           });
@@ -94,4 +94,4 @@ const SignupPromptDialog = (props: {
   );
 };
 
-export default SignupPromptDialog;
+export default VideoSignupPromptDialog;

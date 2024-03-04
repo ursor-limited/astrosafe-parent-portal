@@ -35,6 +35,7 @@ const WorksheetCard = (props: IWorksheet) => {
         justifyContent="center"
         alignItems="center"
         position="relative"
+        overflow="hidden"
       >
         <Stack
           position="absolute"
