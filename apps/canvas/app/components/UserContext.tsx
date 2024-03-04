@@ -16,6 +16,7 @@ export interface ISafeTubeUser {
 
 export interface IUserContext {
   user?: ISafeTubeUser;
+  loading?: boolean;
   paymentLink?: string;
 }
 
@@ -38,16 +39,20 @@ const UserProvider = (props: IUserProviderProps) => {
     undefined
   );
   const { user } = useAuth0();
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
+    setLoading(true);
     //user?.email && mixpanel.track("signed in");
     user?.email &&
-      ApiController.getUser(user.email).then((u) =>
-        u
-          ? setSafeTubeUser(u)
-          : ApiController.createUser(user.email!).then((u) =>
-              setSafeTubeUser(u)
-            )
-      );
+      ApiController.getUser(user.email)
+        .then((u) =>
+          u
+            ? setSafeTubeUser(u)
+            : ApiController.createUser(user.email!).then((u) =>
+                setSafeTubeUser(u)
+              )
+        )
+        .then(() => setLoading(false));
   }, [user?.email]);
 
   const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
@@ -64,6 +69,7 @@ const UserProvider = (props: IUserProviderProps) => {
     <UserContext.Provider
       value={{
         user: safeTubeUser,
+        loading,
         paymentLink,
       }}
     >

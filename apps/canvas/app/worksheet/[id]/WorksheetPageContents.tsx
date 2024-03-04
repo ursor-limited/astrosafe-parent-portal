@@ -37,6 +37,7 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -395,8 +396,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setSignupPromptDialogOpen(!userDetails.user?.id);
-  }, [userDetails.user?.id]);
+    setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
+  }, [userDetails.user?.id, userDetails.loading]);
 
   return (
     <>
@@ -439,53 +440,56 @@ export default function WorksheetPageContents(props: IWorksheet) {
       >
         {nPages ? (
           <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-            <Carousel
-              yPadding={30}
-              items={[...Array(nPages).keys()].map((i) => (
-                <CarouselItem key={i} n={i + 1}>
-                  {props.worksheetId === "equation" ? (
-                    <EquationWorksheet
-                      key={i}
-                      title={props.title}
-                      topic={
-                        (props.parameters as IEquationWorksheetParameters).topic
-                      }
-                      orientation={props.parameters.orientation}
-                      pageIndex={i}
-                      factor={
-                        (props.parameters as IEquationWorksheetParameters)
-                          .factor
-                      }
-                      multipliers={
-                        (props.parameters as IEquationWorksheetParameters)
-                          .multipliers
-                      }
-                      answers={mode === "markscheme"}
-                    />
-                  ) : props.worksheetId === "numberBond" ? (
-                    <NumberBondWorksheet
-                      key={i}
-                      title={props.title}
-                      result={
-                        (props.parameters as INumberBondWorksheetParameters)
-                          .result
-                      }
-                      orientation={props.parameters.orientation}
-                      pageIndex={i}
-                      pairs={
-                        (props.parameters as INumberBondWorksheetParameters)
-                          .pairs
-                      }
-                      both={
-                        (props.parameters as INumberBondWorksheetParameters)
-                          .both
-                      }
-                      answers={mode === "markscheme"}
-                    />
-                  ) : null}
-                </CarouselItem>
-              ))}
-            />
+            <UrsorFadeIn delay={500} duration={1000}>
+              <Carousel
+                yPadding={30}
+                items={[...Array(nPages).keys()].map((i) => (
+                  <CarouselItem key={i} n={i + 1}>
+                    {props.worksheetId === "equation" ? (
+                      <EquationWorksheet
+                        key={i}
+                        title={props.title}
+                        topic={
+                          (props.parameters as IEquationWorksheetParameters)
+                            .topic
+                        }
+                        orientation={props.parameters.orientation}
+                        pageIndex={i}
+                        factor={
+                          (props.parameters as IEquationWorksheetParameters)
+                            .factor
+                        }
+                        multipliers={
+                          (props.parameters as IEquationWorksheetParameters)
+                            .multipliers
+                        }
+                        answers={mode === "markscheme"}
+                      />
+                    ) : props.worksheetId === "numberBond" ? (
+                      <NumberBondWorksheet
+                        key={i}
+                        title={props.title}
+                        result={
+                          (props.parameters as INumberBondWorksheetParameters)
+                            .result
+                        }
+                        orientation={props.parameters.orientation}
+                        pageIndex={i}
+                        pairs={
+                          (props.parameters as INumberBondWorksheetParameters)
+                            .pairs
+                        }
+                        both={
+                          (props.parameters as INumberBondWorksheetParameters)
+                            .both
+                        }
+                        answers={mode === "markscheme"}
+                      />
+                    ) : null}
+                  </CarouselItem>
+                ))}
+              />
+            </UrsorFadeIn>
           </Stack>
         ) : null}
       </BigCard>
