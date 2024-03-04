@@ -18,8 +18,8 @@ import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 const PLACEHOLDER_DURATION = 4000;
 
 export const TITLE_CHARACTER_LIMIT = 40;
-const VIDEO_WIDTH = 290;
-const VIDEO_HEIGHT = 159;
+const VIDEO_WIDTH = 390;
+const VIDEO_HEIGHT = 213;
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
@@ -63,7 +63,7 @@ const VideoCreationDialog = (props: {
         } else {
           setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
-          setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
       })
@@ -153,9 +153,15 @@ const VideoCreationDialog = (props: {
           disabled: !url,
         }}
         onCloseCallback={props.closeCallback}
-        maxWidth="880px"
+        maxWidth="1260px"
       >
-        <Stack flex={1} direction="row" spacing="40px" width="86%">
+        <Stack
+          flex={1}
+          direction="row"
+          spacing="40px"
+          width="95%"
+          overflow="hidden"
+        >
           <Stack spacing="20px" flex={1}>
             <Captioned text="URL">
               <UrsorInputField
@@ -193,7 +199,6 @@ const VideoCreationDialog = (props: {
               <UrsorInputField
                 value={description}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  event.target.value.length < TITLE_CHARACTER_LIMIT &&
                   setDescription(event.target.value)
                 }
                 placeholder="Description"
@@ -289,8 +294,7 @@ const VideoCreationDialog = (props: {
           </Stack>
           <Stack
             width={VIDEO_WIDTH}
-            height={VIDEO_HEIGHT}
-            bgcolor="rgb(0,0,0)"
+            //height={VIDEO_HEIGHT}
             spacing="10px"
           >
             {provider ? (
@@ -307,10 +311,15 @@ const VideoCreationDialog = (props: {
                 top="120px"
                 playingCallback={(p) => setPlaying(p)}
                 smallPlayIcon
+                noBackdrop
               />
             ) : null}
             <Typography bold>{title}</Typography>
-            <Typography variant="small">{description}</Typography>
+            <Stack flex={1} overflow="hidden">
+              <Typography variant="small" maxLines={3}>
+                {description}
+              </Typography>
+            </Stack>
           </Stack>
         </Stack>
       </UrsorDialog>

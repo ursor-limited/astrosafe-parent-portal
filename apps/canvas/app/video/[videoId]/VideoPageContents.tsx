@@ -162,6 +162,7 @@ function VideoPageContents(props: { details: IVideo }) {
     <>
       <BigCard
         title={props.details.title}
+        description={props.details.description}
         createdAt={props.details.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">

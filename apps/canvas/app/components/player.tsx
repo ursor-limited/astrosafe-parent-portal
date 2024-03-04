@@ -34,6 +34,7 @@ const Player = (props: {
   noKitemark?: boolean;
   mobile?: boolean;
   smallPlayIcon?: boolean;
+  noBackdrop?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -349,7 +350,8 @@ const Player = (props: {
             transition: "0.2s",
             opacity: ended || !playing ? 1 : 0,
             pointerEvents: playing && !ended ? "none" : undefined,
-            backdropFilter: hasBegunPlaying ? "blur(13px)" : undefined,
+            backdropFilter:
+              !props.noBackdrop && hasBegunPlaying ? "blur(13px)" : undefined,
             //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
           }}
           justifyContent="center"
