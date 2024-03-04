@@ -23,15 +23,19 @@ import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
 import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
 import { Input } from "@mui/material";
+import SortButton from "../components/SortButton";
 
 export const GRID_SPACING = "20px";
 
 export type AstroContent = "video" | "worksheet";
 
+export type AstroContentSort = "abc" | "createdAt";
+
 export const SearchInput = (props: {
   value: string;
   callback: (value: string) => void;
   clearCallback: () => void;
+  shadow?: boolean;
 }) => {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -58,6 +62,7 @@ export const SearchInput = (props: {
       }`}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
+      boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.03)" : undefined}
     >
       <SearchIcon width="20px" height="20px" />
       <Input
@@ -273,6 +278,8 @@ export default function LandingPageContents(props: {}) {
     useState<AstroContent | null>(null);
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [selectedSort, setSelectedSort] =
+    useState<AstroContentSort>("createdAt");
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
@@ -281,10 +288,7 @@ export default function LandingPageContents(props: {}) {
       .filter(
         (x) =>
           !searchValue ||
-          [x.title, x.description]
-            .join()
-            .toLowerCase()
-            .includes(searchValue.toLowerCase())
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
       )
       .map((l) => ({
         type: "video" as AstroContent,
@@ -311,7 +315,10 @@ export default function LandingPageContents(props: {}) {
             ? []
             : worksheetDetails),
         ],
-        (c) => new Date(c.details.createdAt)
+        (c) =>
+          selectedSort === "createdAt"
+            ? new Date(c.details.createdAt)
+            : c.details.title
       ).slice()
     );
     const chunked = _.chunk(allContentDetails, nColumns);
@@ -320,7 +327,14 @@ export default function LandingPageContents(props: {}) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [videos, worksheets, nColumns, selectedContentType, searchValue]);
+  }, [
+    videos,
+    worksheets,
+    nColumns,
+    selectedContentType,
+    searchValue,
+    selectedSort,
+  ]);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
@@ -407,6 +421,16 @@ export default function LandingPageContents(props: {}) {
                 setSearchValue(value);
               }}
               clearCallback={() => setSearchValue(undefined)}
+              shadow
+            />
+            <SortButton
+              selected={selectedSort}
+              callback={(id) => setSelectedSort(id)}
+              types={["abc", "createdAt"]}
+              displayNames={{
+                abc: "Alphabetical",
+                createdAt: "Most recent",
+              }}
             />
           </Stack>
         </Stack>
