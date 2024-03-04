@@ -1,4 +1,5 @@
 import { Stack } from "@mui/system";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 
@@ -6,12 +7,12 @@ export default function OtherPageCard(props: {
   title: string;
   text: string;
   imageUrl: string;
-  url: string;
+  urlId: string;
 }) {
   return (
-    <a
+    <Link
       target="_blank"
-      href={props.url}
+      href={props.urlId}
       style={{
         textDecoration: "none",
       }}
@@ -49,6 +50,6 @@ export default function OtherPageCard(props: {
           </Typography>
         </Stack>
       </Stack>
-    </a>
+    </Link>
   );
 }
