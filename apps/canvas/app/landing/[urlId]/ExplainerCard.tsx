@@ -21,9 +21,6 @@ export default function ExplainerCard(props: {
           src={props.imageUrl}
           fill
           objectFit="contain"
-          loader={({ src }) => {
-            return src;
-          }}
           alt="explainer card image"
         />
       </div>
