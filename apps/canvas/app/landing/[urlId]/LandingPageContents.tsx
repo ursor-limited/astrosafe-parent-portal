@@ -76,7 +76,7 @@ export default function LandingPageContents(props: {
       };
     };
   };
-  linkTable: {
+  linkTable?: {
     supertitle: string;
     title: string;
     body: string;
@@ -106,7 +106,7 @@ export default function LandingPageContents(props: {
       imageUrl: string;
     }[];
   };
-  productCard: {
+  productCard?: {
     title: string;
     body: string;
     buttonText: string;
