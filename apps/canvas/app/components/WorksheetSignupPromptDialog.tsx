@@ -72,7 +72,7 @@ const WorksheetSignupPromptDialog = (props: {
       titleMaxWidth="500px"
       titleSize={props.mobile ? "h4" : "h3"}
     >
-      <GraphIllustration width={150} height={150} />
+      <GraphIllustration width={250} height={250} />
     </UrsorDialog>
   );
 };

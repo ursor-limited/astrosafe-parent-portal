@@ -2,12 +2,13 @@
 
 import * as React from "react";
 import { Stack, keyframes } from "@mui/system";
-import { useElementSize } from "usehooks-ts";
+import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import HomeIcon from "@/images/icons/HomeIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
 import { useRouter } from "next/navigation";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -174,6 +175,8 @@ const SidebarItem = (props: {
 
 export default function Sidebar(props: ISidebarProps) {
   const router = useRouter();
+  const { logout } = useAuth0();
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const topItems: ISidebarItem[] = [
     {
       id: "home",
@@ -196,7 +199,10 @@ export default function Sidebar(props: ISidebarProps) {
       id: "account",
       icon: GearIcon,
       title: "Account",
-      callback: () => null, //navigate("/account"),
+      callback: () => {
+        setSignedIn(false);
+        logout();
+      },
     },
   ];
 

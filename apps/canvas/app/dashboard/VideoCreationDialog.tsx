@@ -121,7 +121,7 @@ const VideoCreationDialog = (props: {
       thumbnailUrl,
       startTime: range?.[0],
       endTime: range?.[1],
-      creatorId: "mkl.koskela@gmail.com",
+      creatorId: userDetails.user?.auth0Id,
     }).then(async (v) => {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);

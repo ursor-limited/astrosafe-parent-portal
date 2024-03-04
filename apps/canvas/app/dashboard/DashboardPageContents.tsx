@@ -10,7 +10,7 @@ import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
 import _ from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -26,6 +26,10 @@ import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useUserContext } from "../components/UserContext";
+import NotificationContext from "../components/NotificationContext";
+import { useLocalStorage } from "usehooks-ts";
 
 export const GRID_SPACING = "20px";
 
@@ -338,11 +342,22 @@ export default function LandingPageContents(props: {}) {
     selectedSort,
   ]);
 
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
+
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
 
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
+
+  const userDetails = useUserContext();
+  const notificationCtx = useContext(NotificationContext);
+  useEffect(() => {
+    if (userDetails.user && !signedIn) {
+      notificationCtx.success("Signed in.");
+      setSignedIn(true);
+    }
+  }, [userDetails.user]);
 
   return (
     <>
@@ -483,7 +498,9 @@ export default function LandingPageContents(props: {}) {
       />
       {worksheets.length + videos.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
+            <UrsorFadeIn delay={500}>
+              <EmptyStateIllustration>No content yet.</EmptyStateIllustration>
+            </UrsorFadeIn>,
             document.body
           )
         : null}
