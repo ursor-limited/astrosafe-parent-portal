@@ -1,3 +1,7 @@
+import times0 from "./0-times-table-worksheet.json";
+import times1 from "./1-times-table-worksheet.json";
+import times2 from "./2-times-table-worksheet.json";
+import times3 from "./3-times-table-worksheet.json";
 import times4 from "./4-times-table-worksheet.json";
 import times5 from "./5-times-table-worksheet.json";
 import times6 from "./6-times-table-worksheet.json";
@@ -28,6 +32,10 @@ import times30 from "./30-times-table-worksheet.json";
 import numberBond from "./number-bond.json";
 
 const details = [
+  times0,
+  times1,
+  times2,
+  times3,
   times4,
   times5,
   times6,

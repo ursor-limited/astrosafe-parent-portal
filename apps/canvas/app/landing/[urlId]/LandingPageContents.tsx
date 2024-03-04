@@ -100,10 +100,10 @@ export default function LandingPageContents(props: {
     supertitle: string;
     title: string;
     links: {
-      url: string;
+      urlId: string;
+      imageUrl: string;
       title: string;
       text: string;
-      imageUrl: string;
     }[];
   };
   productCard?: {
@@ -295,14 +295,14 @@ export default function LandingPageContents(props: {
                   title={pair[0].title}
                   text={pair[0].text}
                   imageUrl={pair[0].imageUrl}
-                  url={pair[0].url}
+                  urlId={pair[0].urlId}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
                     title={pair[1].title}
                     text={pair[1].text}
                     imageUrl={pair[1].imageUrl}
-                    url={pair[1].url}
+                    urlId={pair[1].urlId}
                   />
                 ) : null}
               </Stack>

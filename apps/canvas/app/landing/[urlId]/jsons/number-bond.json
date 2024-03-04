@@ -82,32 +82,15 @@
         "title": "Googoo",
         "text": "California faces serious pitfalls.",
         "imageUrl": "https://ca-times.brightspotcdn.com/dims4/default/5cc62e3/2147483647/strip/true/crop/3600x2022+0+0/resize/1200x674!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F71%2Fad%2F684505b541ba81be26e997b13940%2F1378262-me-delta-tunnel-project-12-brv.jpg",
-        "url": "https://www.google.com"
+        "urlId": "12-times-table-worksheet"
       },
       {
         "title": "Bobby Boy Lexington",
         "text": "The report was released last month by the UC Berkeley School",
         "imageUrl": "https://ca-times.brightspotcdn.com/dims4/default/1c3a88e/2147483647/strip/true/crop/4200x3150+0+0/resize/1200x900!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Faa%2F4c%2F80da1aad4940abf0208aeaacabaf%2F890757-me-salmon-along-sacramento-river-63-ajs.jpg",
-        "url": "https://www.google.com"
-      },
-      {
-        "title": "Who do ya think ya are",
-        "text": "text 1",
-        "imageUrl": "https://www.washingtonpost.com/wp-apps/imrs.php?src=https%3A%2F%2Farc-anglerfish-washpost-prod-washpost%252Es3%252Eamazonaws%252Ecom%2Fpublic%2FHWZ4LE66LBIYL4JRZ5RVZGQAYQ%252Ejpg&w=992&h=662",
-        "url": "https://www.google.com"
-      },
-      {
-        "title": "Moxy Moo",
-        "text": "text 1",
-        "imageUrl": "https://www.google.com",
-        "url": "https://www.google.com"
-      },
-      {
-        "title": "Goggoo goo",
-        "text": "text 1",
-        "imageUrl": "https://www.google.com",
-        "url": "https://www.google.com"
+        "urlId": "8-times-table-worksheet"
       }
+      
     ]
   },
   "productCard": {
