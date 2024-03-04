@@ -4,7 +4,7 @@ import React from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { IVideo } from "@/app/api";
 import VideoPageContents from "./VideoPageContents";
-import { UserProvider } from "@/app/UserContext";
+import { UserProvider } from "@/app/components/UserContext";
 
 export default function AuthWrapper(props: { videoDetails: IVideo }) {
   /* needed for the platform row's proper scrollability */
