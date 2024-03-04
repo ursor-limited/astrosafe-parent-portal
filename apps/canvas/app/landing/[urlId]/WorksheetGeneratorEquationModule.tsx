@@ -110,7 +110,7 @@ export function WorksheetGeneratorEquationModule(
         props.topic,
         factor,
         multipliers,
-        userDetails.user?.auth0Id ?? ""
+        userDetails.user?.id ?? ""
       )
         .then((ws) => {
           router.push(`/worksheet/${ws.id}`);

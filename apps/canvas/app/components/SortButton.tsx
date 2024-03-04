@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Stack } from "@mui/system";
 import UrsorPopover from "./UrsorPopover";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
-import { UrsorButton } from "ui";
+import { PALETTE, UrsorButton } from "ui";
 import UrsorSelectList from "./UrsorSelectList";
 
 export interface IClassSortButtonProps<T extends string> {
@@ -55,6 +55,10 @@ const SortButton = <T extends string>(
           endIcon={FilterIcon}
           onClick={() => setOpen(true)}
           shadow
+          backgroundColor="rgb(255,255,255)"
+          fontColor={PALETTE.secondary.grey[5]}
+          iconColor={PALETTE.secondary.grey[5]}
+          hoverOpacity={0.6}
         >
           {/* @ts-ignore */}
           {`Sort by: ${props.displayNames[props.selected]}`}

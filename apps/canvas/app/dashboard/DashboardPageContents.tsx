@@ -258,20 +258,24 @@ const ToolButton = (props: {
   </Stack>
 );
 
-export default function LandingPageContents(props: {}) {
+export default function LandingPageContents() {
+  const userDetails = useUserContext();
+
   const [videos, setVideos] = useState<IVideo[]>([]);
   useEffect(() => {
-    ApiController.getUserVideos("mkl.koskela@gmail.com").then((videos) =>
-      setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-    );
-  }, []);
+    userDetails?.user?.id &&
+      ApiController.getUserVideos(userDetails.user.id).then((videos) =>
+        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
+      );
+  }, [userDetails?.user?.id]);
 
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
   useEffect(() => {
-    ApiController.getUserWorksheets().then((ws) =>
-      setWorksheets(_.reverse(ws.slice()))
-    );
-  }, []);
+    userDetails?.user?.id &&
+      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
+        setWorksheets(_.reverse(ws.slice()))
+      );
+  }, [userDetails?.user?.id]);
 
   const [cardColumns, setCardColumns] = useState<
     {
@@ -350,7 +354,6 @@ export default function LandingPageContents(props: {}) {
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
 
-  const userDetails = useUserContext();
   const notificationCtx = useContext(NotificationContext);
   useEffect(() => {
     if (userDetails.user && !signedIn) {
@@ -496,11 +499,21 @@ export default function LandingPageContents(props: {}) {
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
       />
-      {worksheets.length + videos.length === 0
+      {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(
-            <UrsorFadeIn delay={500}>
-              <EmptyStateIllustration>No content yet.</EmptyStateIllustration>
-            </UrsorFadeIn>,
+            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {selectedContentType === "video" && videos.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {selectedContentType === "worksheet" && worksheets.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
             document.body
           )
         : null}

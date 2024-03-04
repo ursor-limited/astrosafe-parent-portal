@@ -21,6 +21,7 @@ import WorksheetGenerator, {
   WorksheetId,
 } from "./WorksheetGenerator";
 import Image from "next/image";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -38,25 +39,27 @@ export const EmptyStateIllustration = (props: {
     }}
     zIndex={999}
   >
-    <Stack position="relative" spacing="18px">
-      <Stack sx={{ opacity: 0.3 }}>
-        <Image
-          height={207}
-          width={217}
-          src={WonderingIllustration}
-          alt="Empty state illustration"
-        />
+    <UrsorFadeIn delay={500} duration={800}>
+      <Stack position="relative" spacing="18px">
+        <Stack sx={{ opacity: 0.3 }}>
+          <Image
+            height={207}
+            width={217}
+            src={WonderingIllustration}
+            alt="Empty state illustration"
+          />
+        </Stack>
+        <Stack width="100%" alignItems="center" position="absolute" top="170px">
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[3]}
+            sx={{ textAlign: "center" }}
+          >
+            {props.children}
+          </Typography>
+        </Stack>
       </Stack>
-      <Stack width="100%" alignItems="center" position="absolute" top="170px">
-        <Typography
-          bold
-          color={PALETTE.secondary.grey[3]}
-          sx={{ textAlign: "center" }}
-        >
-          {props.children}
-        </Typography>
-      </Stack>
-    </Stack>
+    </UrsorFadeIn>
   </Stack>
 );
 

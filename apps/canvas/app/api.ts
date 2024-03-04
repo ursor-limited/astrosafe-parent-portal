@@ -169,12 +169,12 @@ class ApiController {
   ) {
     return post("canvas/worksheet/equation", {
       title,
+      creatorId,
       parameters: {
         orientation,
         topic,
         factor,
         multipliers,
-        creatorId,
       },
     }).then((response: any) => response.json());
   }
@@ -187,7 +187,8 @@ class ApiController {
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
-      parameters: { orientation, result, pairs, creatorId },
+      creatorId,
+      parameters: { orientation, result, pairs },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {
@@ -195,9 +196,11 @@ class ApiController {
       response.json()
     );
   }
-  static async getUserWorksheets() {
+  static async getUserWorksheets(id: string) {
     //@ts-ignore
-    return get(`canvas/worksheets`).then((response: any) => response.json());
+    return get(`canvas/userWorksheets/${id}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 

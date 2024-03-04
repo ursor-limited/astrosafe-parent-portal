@@ -7,6 +7,7 @@ import ApiController from "../api";
 import mixpanel from "mixpanel-browser";
 
 export interface ISafeTubeUser {
+  id: string;
   auth0Id: string;
   subscribed: boolean;
   subscriptionDeletionDate?: number;
