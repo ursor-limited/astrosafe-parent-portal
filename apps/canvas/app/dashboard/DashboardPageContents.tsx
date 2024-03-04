@@ -127,7 +127,7 @@ const ToolButton = (props: {
   <Stack
     direction="row"
     width="360px"
-    height="66px"
+    minHeight="66px"
     borderRadius="8px"
     spacing="12px"
     bgcolor="rgb(255,255,255)"

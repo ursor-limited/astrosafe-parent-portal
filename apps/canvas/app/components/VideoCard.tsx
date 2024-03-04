@@ -23,7 +23,7 @@ const VideoCard = (props: IVideo) => {
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
   return (
     <Stack
-      height="248px"
+      height="260px"
       borderRadius="12px"
       bgcolor="rgb(255,255,255)"
       p="4px"
@@ -33,6 +33,7 @@ const VideoCard = (props: IVideo) => {
       }}
       position="relative"
       boxShadow="0 0 12px rgba(0,0,0,0.06)"
+      pb="12px"
     >
       <Stack
         flex={1}
