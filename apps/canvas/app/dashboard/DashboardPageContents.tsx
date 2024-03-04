@@ -7,6 +7,8 @@ import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import X from "@/images/icons/X.svg";
+import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useEffect, useState } from "react";
 import ApiController from "../api";
@@ -19,13 +21,85 @@ import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
-import SignupPromptDialog from "./SignupPromptDialog";
-import { useUserContext } from "../components/UserContext";
-import { useLocalStorage } from "usehooks-ts";
+import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
+import { Input } from "@mui/material";
 
 export const GRID_SPACING = "20px";
 
 export type AstroContent = "video" | "worksheet";
+
+export const SearchInput = (props: {
+  value: string;
+  callback: (value: string) => void;
+  clearCallback: () => void;
+}) => {
+  const [active, setActive] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  return (
+    <Stack
+      height="28px"
+      width="180px"
+      direction="row"
+      borderRadius="8px"
+      alignItems="center"
+      bgcolor="rgb(255,255,255)"
+      px="10px"
+      spacing="8px"
+      sx={{
+        svg: {
+          path: {
+            fill: PALETTE.secondary.grey[4],
+          },
+        },
+        transition: "0.2s",
+      }}
+      border={`${active || hovering ? 2 : 0}px solid ${
+        PALETTE.secondary.purple[active ? 2 : 1]
+      }`}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+    >
+      <SearchIcon width="20px" height="20px" />
+      <Input
+        style={{
+          textAlign: "left",
+          textOverflow: "ellipsis",
+          fontSize: FONT_SIZES["small"],
+          color: PALETTE.font.dark,
+          fontWeight: BOLD_FONT_WEIGHT,
+          lineHeight: "100%",
+          transition: "0.2s",
+        }}
+        value={props.value}
+        disableUnderline
+        sx={{
+          background: "rgb(255,255,255)",
+          input: {
+            padding: "0 !important",
+          },
+        }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.callback(event.target.value);
+        }}
+        placeholder="Search"
+        onBlur={() => setActive(false)}
+        onFocus={() => setActive(true)}
+      />
+
+      <Stack
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
+          opacity: props.value ? 1 : 0,
+        }}
+        onClick={props.clearCallback}
+      >
+        <X width="16px" height="16px" />
+      </Stack>
+    </Stack>
+  );
+};
 
 const FilterButton = (props: {
   text: string;
@@ -194,34 +268,35 @@ export default function LandingPageContents(props: {}) {
       details: IVideo | IWorksheet;
     }[][]
   >([]);
-  // const [filteredCardColumns, setFilteredCardsColumns] = useState<
-  //   {
-  //     type: AstroContent;
-  //     details: IVideo | IWorksheet;
-  //   }[][]
-  // >([]);
-  // useEffect(() => {
-  //   setFilteredCardsColumns(
-  //     selectedContentType
-  //       ? cardColumns.filter((col) =>
-  //           c.map((item) => item.type === selectedContentType)
-  //         )
-  //       : cardColumns
-  //   );
-  // }, [cardColumns, selectedContentType]);
 
   const [selectedContentType, setSelectedContentType] =
     useState<AstroContent | null>(null);
 
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   useEffect(() => {
-    const videoDetails = videos.map((l) => ({
-      type: "video" as AstroContent,
-      details: l,
-    }));
+    const videoDetails = videos
+      .filter(
+        (x) =>
+          !searchValue ||
+          [x.title, x.description]
+            .join()
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "video" as AstroContent,
+        details: l,
+      }));
     const worksheetDetails = worksheets
       .filter((x) => x.worksheetId)
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
       .map((ws) => ({
         type: "worksheet" as AstroContent,
         details: ws,
@@ -245,7 +320,7 @@ export default function LandingPageContents(props: {}) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [videos, worksheets, nColumns, selectedContentType]);
+  }, [videos, worksheets, nColumns, selectedContentType, searchValue]);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
@@ -301,7 +376,6 @@ export default function LandingPageContents(props: {}) {
         </Stack>
 
         <Stack
-          width="100%"
           minHeight="50px"
           justifyContent="center"
           pl={`${SIDEBAR_X_MARGIN}px`}
@@ -312,11 +386,29 @@ export default function LandingPageContents(props: {}) {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack pl={`${SIDEBAR_X_MARGIN}px`}>
+        <Stack
+          pl={`${SIDEBAR_X_MARGIN}px`}
+          direction="row"
+          justifyContent="space-between"
+        >
           <FilterRow
             selected={selectedContentType}
             callback={(newSelected) => setSelectedContentType(newSelected)}
           />
+          <Stack
+            direction="row"
+            spacing="30px"
+            alignItems="center"
+            width="fit-content"
+          >
+            <SearchInput
+              value={searchValue ?? ""}
+              callback={(value: string) => {
+                setSearchValue(value);
+              }}
+              clearCallback={() => setSearchValue(undefined)}
+            />
+          </Stack>
         </Stack>
         <Stack
           pt="24px"
