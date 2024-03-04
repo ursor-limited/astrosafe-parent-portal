@@ -1,4 +1,5 @@
 import { Stack } from "@mui/system";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
@@ -32,19 +33,21 @@ export default function OtherPageCard(props: {
           transition: "0.2s",
         }}
       >
-        <Stack
-          height="242px"
-          width="150px"
-          minWidth="150px"
-          sx={{
-            backgroundImage: `url(${props.imageUrl})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        />
+        <div style={{ height: "100%", width: "200px", position: "relative" }}>
+          <Image
+            src={props.imageUrl}
+            fill
+            objectFit="scale-down"
+            loader={({ src }) => {
+              return src;
+            }}
+            alt="explainer card image"
+          />
+        </div>
         <Stack spacing="12px" p="20px" boxSizing="border-box">
-          <Typography variant="h5">{props.title}</Typography>
+          <Typography variant="h5" color={PALETTE.secondary.grey[5]}>
+            {props.title}
+          </Typography>
           <Typography variant="large" bold color={PALETTE.secondary.grey[4]}>
             {props.text}
           </Typography>

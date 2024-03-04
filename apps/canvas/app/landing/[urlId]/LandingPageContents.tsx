@@ -148,23 +148,44 @@ export default function LandingPageContents(props: {
             mobile={mobile}
           />
         </LandingPageViewport>,
-        <LandingPageViewport
-          key="worksheetPreview"
-          supertitle={props.worksheetPreview.supertitle}
-          title={props.worksheetPreview.title}
-        >
-          <Stack direction="row" spacing="45px">
-            <MultiplicationTable />
-            <Stack spacing="10px" pt="74px" maxWidth="503px">
-              {props.worksheetPreview.body.split("\n").map((paragraph) => (
-                <Typography key={paragraph} color={PALETTE.secondary.grey[4]}>
-                  {paragraph}
-                </Typography>
-              ))}
-              <UrsorButton size="large">Download chart</UrsorButton>
-            </Stack>
-          </Stack>
-        </LandingPageViewport>,
+        ...(props.worksheetPreview
+          ? [
+              <LandingPageViewport
+                key="worksheetPreview"
+                supertitle={props.worksheetPreview.supertitle}
+                title={props.worksheetPreview.title}
+              >
+                <Stack direction="row" spacing="45px">
+                  {props.worksheetPreview.worksheetPreviewParameters
+                    ?.worksheetParameters ? (
+                    <MultiplicationTable
+                      factor={
+                        props.worksheetPreview.worksheetPreviewParameters
+                          .worksheetParameters.factor
+                      }
+                      upTo={
+                        props.worksheetPreview.worksheetPreviewParameters
+                          .worksheetParameters.nProblems
+                      }
+                    />
+                  ) : null}
+                  <Stack spacing="10px" pt="74px" maxWidth="503px">
+                    {props.worksheetPreview.body
+                      .split("\n")
+                      .map((paragraph) => (
+                        <Typography
+                          key={paragraph}
+                          color={PALETTE.secondary.grey[4]}
+                        >
+                          {paragraph}
+                        </Typography>
+                      ))}
+                    <UrsorButton size="large">Download chart</UrsorButton>
+                  </Stack>
+                </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
         ...(props.linkTable
           ? [
               <LandingPageViewport
@@ -254,7 +275,7 @@ export default function LandingPageContents(props: {
           key="explainerCards"
           supertitle={props.explainerCards.supertitle}
           subtitle={props.explainerCards.body}
-          title="Why use AstroPedia?"
+          title={props.explainerCards.title}
           mobile={mobile}
         >
           <Stack
