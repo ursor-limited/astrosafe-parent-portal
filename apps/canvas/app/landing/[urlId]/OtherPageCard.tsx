@@ -38,9 +38,6 @@ export default function OtherPageCard(props: {
             src={props.imageUrl}
             fill
             objectFit="scale-down"
-            loader={({ src }) => {
-              return src;
-            }}
             alt="explainer card image"
           />
         </div>
