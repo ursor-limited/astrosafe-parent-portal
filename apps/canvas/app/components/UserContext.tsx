@@ -38,7 +38,7 @@ const UserProvider = (props: IUserProviderProps) => {
   );
   const { user } = useAuth0();
   useEffect(() => {
-    user?.email && mixpanel.track("signed in");
+    //user?.email && mixpanel.track("signed in");
     user?.email &&
       ApiController.getUser(user.email).then((u) =>
         u

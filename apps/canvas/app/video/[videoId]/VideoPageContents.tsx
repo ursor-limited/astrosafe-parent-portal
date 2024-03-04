@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import { IVideo } from "@/app/api";
+import ApiController, { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { Header } from "@/app/components/header";
-import { Footer } from "@/app/components/footer";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import moment from "moment";
 import mixpanel from "mixpanel-browser";
 import BigCard from "@/app/components/BigCard";
+import DeletionDialog from "@/app/components/DeletionDialog";
+import { useRouter } from "next/navigation";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -23,10 +24,44 @@ const Player = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-const UrlBar = dynamic(
-  () => import("@/app/components/url-bar"),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
-);
+const CircularButton = (props: {
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  color?: string;
+  onClick: () => void;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      height="38px"
+      width="38px"
+      minHeight="38px"
+      minWidth="38px"
+      borderRadius="100%"
+      border={`2px solid ${props.color || PALETTE.primary.navy}`}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        svg: {
+          path: {
+            fill: props.color || PALETTE.primary.navy,
+          },
+        },
+        cursor: "pointer",
+        "&:hover": { opacity: 0.6 },
+        transition: "0.2s",
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      onClick={props.onClick}
+    >
+      <props.icon height="20px" width="20px" />
+    </Stack>
+  );
+};
 
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
@@ -114,37 +149,62 @@ function VideoPageContents(props: { details: IVideo }) {
       setVideoWidth(sizeRef?.getBoundingClientRect().width);
   }, [sizeRef?.getBoundingClientRect().width, width]);
 
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  const submitDeletion = () =>
+    ApiController.deleteVideo(props.details.id).then(() =>
+      router.push("/dashboard")
+    );
+
   return props.details && provider ? (
-    <BigCard
-      title={props.details.title}
-      createdAt={props.details.createdAt}
-      rightStuff={
-        <Stack direction="row" spacing="12px">
-          <UrsorButton
-            dark
-            variant="tertiary"
-            onClick={() => navigator.clipboard.writeText(window.location.href)}
-          >
-            Share link
-          </UrsorButton>
+    <>
+      <BigCard
+        title={props.details.title}
+        createdAt={props.details.createdAt}
+        rightStuff={
+          <Stack direction="row" spacing="12px">
+            <CircularButton
+              icon={TrashcanIcon}
+              color={PALETTE.system.red}
+              onClick={() => setDeletionDialogOpen(true)}
+            />
+            <UrsorButton
+              dark
+              variant="tertiary"
+              onClick={() =>
+                navigator.clipboard.writeText(window.location.href)
+              }
+            >
+              Share link
+            </UrsorButton>
+          </Stack>
+        }
+      >
+        <Stack px="24px" flex={1}>
+          <Stack flex={1} pt="30px" ref={setSizeRef}>
+            <Player
+              url={props.details.url}
+              provider={provider}
+              width={videoWidth}
+              height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+              setDuration={(d) => d && setDuration(d)}
+              noKitemark={videoWidth < VIDEO_WIDTH}
+              top="120px"
+              playingCallback={(p) => setPlaying(p)}
+            />
+          </Stack>
         </Stack>
-      }
-    >
-      <Stack px="24px" flex={1}>
-        <Stack flex={1} pt="30px" ref={setSizeRef}>
-          <Player
-            url={props.details.url}
-            provider={provider}
-            width={videoWidth}
-            height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
-            setDuration={(d) => d && setDuration(d)}
-            noKitemark={videoWidth < VIDEO_WIDTH}
-            top="120px"
-            playingCallback={(p) => setPlaying(p)}
-          />
-        </Stack>
-      </Stack>
-    </BigCard>
+      </BigCard>
+      <DeletionDialog
+        open={deletionDialogOpen}
+        closeCallback={() => setDeletionDialogOpen(false)}
+        deletionCallback={submitDeletion}
+        category="video"
+        title={props.details.title}
+      />
+    </>
   ) : (
     <></>
   );

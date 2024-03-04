@@ -53,6 +53,15 @@ const patch = (route: string, body: any) =>
     }
   );
 
+const dellete = (route: string) =>
+  fetch(
+    //@ts-ignore
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    {
+      method: "DELETE",
+    }
+  );
+
 // const api = axios.create({
 //   //@ts-ignore
 //   baseURL: BACKEND_URLS[process.env.REACT_APP_BUILD_ENV],
@@ -112,6 +121,9 @@ class ApiController {
       response.json()
     );
   }
+  static async deleteVideo(id: string) {
+    return dellete(`video/${id}`).then((response: any) => response);
+  }
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(
       (response: any) => response.json()
@@ -158,7 +170,8 @@ class ApiController {
         orientation,
         topic,
         factor,
-        multipliers, creatorId
+        multipliers,
+        creatorId,
       },
     }).then((response: any) => response.json());
   }

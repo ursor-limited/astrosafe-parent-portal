@@ -4,6 +4,7 @@ import DashboardPageContents from "./DashboardPageContents";
 import landingPageDetails from "../landing/[urlId]/jsons";
 import {} from "@/app/worksheet/[id]/EquationWorksheet";
 import Head from "next/head";
+import { UserProvider } from "../components/UserContext";
 
 async function DashboardPage({ params }: { params: { urlId: string } }) {
   //const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
@@ -13,7 +14,11 @@ async function DashboardPage({ params }: { params: { urlId: string } }) {
         <title>Astro Dashboard</title>
         <meta name="description">Add some engaging SEO text here.</meta>
       </Head> */}
-      <DashboardPageContents />
+      <AuthWrapper>
+        <UserProvider>
+          <DashboardPageContents />
+        </UserProvider>
+      </AuthWrapper>
     </>
   );
 }
