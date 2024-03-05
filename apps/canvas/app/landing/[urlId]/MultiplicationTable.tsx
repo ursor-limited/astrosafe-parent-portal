@@ -26,7 +26,7 @@ export default function MultiplicationTable(props: {
       position="relative"
       width="279px"
     >
-      <Stack
+      {/* <Stack
         width="100%"
         direction="row"
         justifyContent="space-between"
@@ -74,7 +74,7 @@ export default function MultiplicationTable(props: {
             />
           </Captioned>
         </Stack>
-      </Stack>
+      </Stack> */}
       <Stack
         position="absolute"
         sx={{
