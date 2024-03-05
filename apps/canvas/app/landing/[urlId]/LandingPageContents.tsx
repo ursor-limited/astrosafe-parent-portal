@@ -185,7 +185,6 @@ export default function LandingPageContents(props: {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF(); //@ts-ignore
         pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-        pdf.output("dataurlnewwindow");
         pdf.save("download.pdf");
       });
   };
