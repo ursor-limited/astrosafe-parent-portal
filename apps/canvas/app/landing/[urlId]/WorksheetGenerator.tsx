@@ -279,7 +279,7 @@ export default function WorksheetGenerator(props: {
                 },
                 {
                   id: "division",
-                  value: "/ Division",
+                  value: "÷ Division",
                 },
                 {
                   id: "addition",

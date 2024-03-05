@@ -31,7 +31,7 @@ export interface IWorksheetQuestion {
   multiplier: number;
 }
 
-const HorizontalEquationQuestion = (props: {
+const HorizontalQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
@@ -106,7 +106,7 @@ const HorizontalEquationQuestion = (props: {
   </Stack>
 );
 
-const VerticalMultiplicationQuestion = (props: {
+const VerticalQuestion = (props: {
   number: number;
   multiplier: number;
   answer: boolean;
@@ -153,7 +153,7 @@ const VerticalMultiplicationQuestion = (props: {
   </Stack>
 );
 
-const LongDivisionVerticalQuestion = (props: {
+const DivisionVerticalQuestion = (props: {
   answer: number;
   showAnswer: boolean;
   dividend: number;
@@ -206,7 +206,7 @@ const LongDivisionVerticalQuestion = (props: {
   </Stack>
 );
 
-const LongDivisionHorizontalQuestion = (props: {
+const DivisionHorizontalQuestion = (props: {
   answer: number;
   showAnswer: boolean;
   dividend: number;
@@ -222,8 +222,8 @@ const LongDivisionHorizontalQuestion = (props: {
     <Stack direction="row" spacing="14px">
       <Typography variant="h3">{props.answer * props.dividend}</Typography>
       <Stack pb="0px">
-        <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
-          /
+        <Typography variant="h3" sx={{ fontWeight: 390 }}>
+          ÷
         </Typography>
       </Stack>
       <Typography variant="h3" sx={{ fontWeight: 250 }}>
@@ -399,14 +399,14 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                     <Stack key={k} flex={1} alignItems="center">
                       {props.topic === "division" ? (
                         props.orientation === "vertical" ? (
-                          <LongDivisionVerticalQuestion
+                          <DivisionVerticalQuestion
                             key={x}
                             dividend={props.factor}
                             answer={x}
                             showAnswer={!!props.answers}
                           />
                         ) : (
-                          <LongDivisionHorizontalQuestion
+                          <DivisionHorizontalQuestion
                             key={x}
                             dividend={props.factor}
                             answer={x}
@@ -414,7 +414,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                           />
                         )
                       ) : props.orientation === "horizontal" ? (
-                        <HorizontalEquationQuestion
+                        <HorizontalQuestion
                           key={x}
                           number={props.factor}
                           multiplier={x}
@@ -424,7 +424,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                           // changeCallback={() => null}
                         />
                       ) : (
-                        <VerticalMultiplicationQuestion
+                        <VerticalQuestion
                           key={x}
                           number={props.factor}
                           multiplier={x}

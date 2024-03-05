@@ -335,7 +335,6 @@ export default function LandingPageContents() {
           : c.details.title.toLowerCase(),
       selectedSort === "createdAt" ? "desc" : "asc"
     );
-    console.log(allContentDetails.map((x) => x.details.title));
     const chunked = _.chunk(allContentDetails, nColumns);
     setCardColumns(
       [...Array(nColumns).keys()].map((i) =>
