@@ -399,12 +399,13 @@ export default function WorksheetPageContents(props: IWorksheet) {
     setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
   }, [userDetails.user?.id, userDetails.loading]);
 
-  console.log(
-    "aa",
-    userDetails.user?.id,
-    userDetails.loading,
-    !userDetails.loading && !userDetails.user?.id
-  );
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
+  useEffect(() => {
+    if (userDetails.user && !signedIn) {
+      router.push("/dashboard");
+      setSignedIn(true);
+    }
+  }, [userDetails.user]);
 
   return (
     <>
