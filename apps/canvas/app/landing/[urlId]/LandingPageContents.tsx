@@ -22,6 +22,9 @@ import WorksheetGenerator, {
 } from "./WorksheetGenerator";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/EquationWorksheet";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -144,7 +147,7 @@ export default function LandingPageContents(props: {
     title: string;
     links: {
       urlId: string;
-      imageUrl: string;
+      imageString: string;
       title: string;
       text: string;
     }[];
@@ -172,6 +175,19 @@ export default function LandingPageContents(props: {
   }, [printDialogOpen, printableRef]);
 
   const [mobile, setMobile] = useState<boolean>(false);
+
+  const [worksheetPreviewRef, setWorksheetPreviewRef] =
+    useState<HTMLElement | null>(null);
+  const save = () => {
+    const input = document.getElementById("printableMultiplicationTable");
+    input &&
+      html2canvas(input, { scale: 3 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF(); //@ts-ignore
+        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        pdf.save("download.pdf");
+      });
+  };
 
   return (
     <AstroLandingPage
@@ -201,18 +217,47 @@ export default function LandingPageContents(props: {
                 <Stack direction="row" spacing="45px">
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
-                    <MultiplicationTable
-                      factor={
-                        props.worksheetPreview.worksheetPreviewParameters
-                          .worksheetParameters.factor
-                      }
-                      upTo={
-                        props.worksheetPreview.worksheetPreviewParameters
-                          .worksheetParameters.nProblems
-                      }
-                    />
+                    <Stack position="relative" width="300px" height="400px">
+                      <Stack
+                        position="absolute"
+                        sx={{ opacity: 0, pointerEvents: "none" }}
+                      >
+                        <MultiplicationTable
+                          printable
+                          factor={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.factor
+                          }
+                          upTo={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.nProblems
+                          }
+                        />
+                      </Stack>
+                      <Stack
+                        position="absolute"
+                        sx={{
+                          transform: "scale(0.35)",
+                          transformOrigin: "top right",
+                        }}
+                        top={0}
+                        right={0}
+                        boxShadow="0 0 40px rgba(0,0,0,0.06)"
+                      >
+                        <MultiplicationTable
+                          factor={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.factor
+                          }
+                          upTo={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.nProblems
+                          }
+                        />
+                      </Stack>
+                    </Stack>
                   ) : null}
-                  <Stack spacing="10px" pt="74px" maxWidth="503px">
+                  <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
                       .split("\n")
                       .map((paragraph) => (
@@ -223,7 +268,9 @@ export default function LandingPageContents(props: {
                           {paragraph}
                         </Typography>
                       ))}
-                    <UrsorButton size="large">Download chart</UrsorButton>
+                    <UrsorButton size="large" onClick={save}>
+                      Download chart
+                    </UrsorButton>
                   </Stack>
                 </Stack>
               </LandingPageViewport>,
@@ -358,14 +405,14 @@ export default function LandingPageContents(props: {
                 <OtherPageCard
                   title={pair[0].title}
                   text={pair[0].text}
-                  imageUrl={pair[0].imageUrl}
+                  imageString={pair[0].imageString}
                   urlId={pair[0].urlId}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
                     title={pair[1].title}
                     text={pair[1].text}
-                    imageUrl={pair[1].imageUrl}
+                    imageString={pair[1].imageString}
                     urlId={pair[1].urlId}
                   />
                 ) : null}

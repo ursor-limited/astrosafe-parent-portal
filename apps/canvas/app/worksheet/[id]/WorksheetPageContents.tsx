@@ -38,6 +38,8 @@ import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptD
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -191,9 +193,10 @@ const Carousel = (props: {
           sx={{
             transition: "0.7s",
             transform: `translateX(${
-              (Math.floor(props.items.length / 2 - index) *
-                (SLIDE_SPACING + SLIDE_WIDTH)) /
-              2
+              (props.items.length / 2 - index - 0.5) *
+              (SLIDE_SPACING + SLIDE_WIDTH) //+
+              // Math.floor(props.items.length / 2 + index) *
+              //   (SLIDE_SPACING + SLIDE_WIDTH)
             }mm)`,
           }}
           pt="110px"
@@ -407,18 +410,117 @@ export default function WorksheetPageContents(props: IWorksheet) {
     }
   }, [userDetails.user]);
 
+  const save = async (answers?: boolean) => {
+    const pdf = new jsPDF();
+    await Promise.all(
+      [...Array(nPages).keys()].map((i) => {
+        const input = document.getElementById(
+          `${answers ? "answers" : ""}page${i}`
+        );
+        if (input) {
+          return html2canvas(input, { scale: 3 }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+            i < nPages - 1 && pdf.addPage();
+          });
+        } else {
+          return;
+        }
+      })
+    );
+    pdf.save(`${props.title}${answers ? " Answers" : ""}.pdf`);
+  };
+
   return (
     <>
+      <Stack
+        sx={{
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+        position="absolute"
+      >
+        {[...Array(nPages).keys()].map((i) =>
+          props.worksheetId === "equation" ? (
+            <EquationWorksheet
+              key={i}
+              printableId={`page${i}`}
+              title={props.title}
+              topic={(props.parameters as IEquationWorksheetParameters).topic}
+              orientation={props.parameters.orientation}
+              pageIndex={i}
+              factor={(props.parameters as IEquationWorksheetParameters).factor}
+              multipliers={
+                (props.parameters as IEquationWorksheetParameters).multipliers
+              }
+            />
+          ) : props.worksheetId === "numberBond" ? (
+            <NumberBondWorksheet
+              key={i}
+              printableId={`page${i}`}
+              title={props.title}
+              result={
+                (props.parameters as INumberBondWorksheetParameters).result
+              }
+              orientation={props.parameters.orientation}
+              pageIndex={i}
+              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
+              both={(props.parameters as INumberBondWorksheetParameters).both}
+            />
+          ) : null
+        )}
+      </Stack>
+      <Stack
+        sx={{
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+        position="absolute"
+      >
+        {[...Array(nPages).keys()].map((i) =>
+          props.worksheetId === "equation" ? (
+            <EquationWorksheet
+              key={i}
+              printableId={`answerspage${i}`}
+              title={props.title}
+              topic={(props.parameters as IEquationWorksheetParameters).topic}
+              orientation={props.parameters.orientation}
+              pageIndex={i}
+              factor={(props.parameters as IEquationWorksheetParameters).factor}
+              multipliers={
+                (props.parameters as IEquationWorksheetParameters).multipliers
+              }
+              answers
+            />
+          ) : props.worksheetId === "numberBond" ? (
+            <NumberBondWorksheet
+              key={i}
+              printableId={`answerspage${i}`}
+              title={props.title}
+              result={
+                (props.parameters as INumberBondWorksheetParameters).result
+              }
+              orientation={props.parameters.orientation}
+              pageIndex={i}
+              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
+              both={(props.parameters as INumberBondWorksheetParameters).both}
+              answers
+            />
+          ) : null
+        )}
+      </Stack>
       <BigCard
         title={props.title}
         createdAt={props.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            <CircularButton
-              icon={TrashcanIcon}
-              color={PALETTE.system.red}
-              onClick={() => setDeletionDialogOpen(true)}
-            />
+            {userDetails?.user?.id === props.creatorId ? (
+              <CircularButton
+                icon={TrashcanIcon}
+                color={PALETTE.system.red}
+                onClick={() => setDeletionDialogOpen(true)}
+              />
+            ) : null}
             <Stack
               borderRadius="100%"
               border={`2px solid ${PALETTE.primary.navy}`}
@@ -437,10 +539,10 @@ export default function WorksheetPageContents(props: IWorksheet) {
             >
               <ShareIcon width="22px" height="22px" />
             </Stack>
-            <UrsorButton dark variant="tertiary">
+            <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
               Download answers
             </UrsorButton>
-            <UrsorButton dark variant="tertiary">
+            <UrsorButton dark variant="tertiary" onClick={() => save()}>
               Download worksheet
             </UrsorButton>
           </Stack>

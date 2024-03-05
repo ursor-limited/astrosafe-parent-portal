@@ -320,21 +320,20 @@ export default function LandingPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
-    const allContentDetails = _.reverse(
-      _.sortBy(
-        [
-          ...(selectedContentType && selectedContentType !== "video"
-            ? []
-            : videoDetails),
-          ...(selectedContentType && selectedContentType !== "worksheet"
-            ? []
-            : worksheetDetails),
-        ],
-        (c) =>
-          selectedSort === "createdAt"
-            ? new Date(c.details.createdAt)
-            : c.details.title
-      ).slice()
+    const allContentDetails = _.orderBy(
+      [
+        ...(selectedContentType && selectedContentType !== "video"
+          ? []
+          : videoDetails),
+        ...(selectedContentType && selectedContentType !== "worksheet"
+          ? []
+          : worksheetDetails),
+      ],
+      (c) =>
+        selectedSort === "createdAt"
+          ? new Date(c.details.createdAt)
+          : c.details.title.toLowerCase(),
+      selectedSort === "createdAt" ? "desc" : "asc"
     );
     const chunked = _.chunk(allContentDetails, nColumns);
     setCardColumns(

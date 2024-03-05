@@ -11,6 +11,7 @@ const PAGE_MAX = 12;
 export default function MultiplicationTable(props: {
   factor: number;
   upTo: number;
+  printable?: boolean;
 }) {
   const [factor, setFactor] = useState<number>(3);
   useEffect(() => setFactor(props.factor), [props.factor]);
@@ -19,14 +20,15 @@ export default function MultiplicationTable(props: {
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
   return (
-    <Stack
-      spacing="10px"
-      height="500px"
-      alignItems="center"
-      position="relative"
-      width="279px"
-    >
+    <div id={props.printable ? "printableMultiplicationTable" : undefined}>
       <Stack
+        spacing="10px"
+        alignItems="center"
+        position="relative"
+        width={A4_WIDTH}
+        height={A4_HEIGHT}
+      >
+        {/* <Stack
         width="100%"
         direction="row"
         justifyContent="space-between"
@@ -74,75 +76,78 @@ export default function MultiplicationTable(props: {
             />
           </Captioned>
         </Stack>
-      </Stack>
-      <Stack
-        position="absolute"
-        sx={{
-          transform: "scale(0.35) translateY(198px)",
-          transformOrigin: "top right",
-        }}
-        top={0}
-        right={0}
-      >
-        {_.chunk([...Array(upTo).keys()], PAGE_MAX)
-          .slice(
-            selectedPageIndex ?? 0,
-            _.isNumber(selectedPageIndex) ? selectedPageIndex + 1 : undefined
-          )
-          .map((chunk, i) => (
-            <Stack
-              key={i}
-              width={A4_WIDTH}
-              height={A4_HEIGHT}
-              bgcolor="rgb(255,255,255)"
-              justifyContent="center"
-              alignItems="center"
-              boxShadow="0 0 40px rgba(0,0,0,0.06)"
-              sx={{ breakInside: "avoid" }}
-            >
-              <Stack spacing="35px">
-                {chunk.map((x) => (
-                  <Stack
-                    key={x}
-                    direction="row"
-                    width="270px"
-                    justifyContent="space-between"
-                  >
-                    <Stack direction="row" spacing="14px">
-                      <Typography variant="h3" sx={{ fontWeight: 280 }}>
-                        {factor}
-                      </Typography>
-                      <Stack pb="0px">
+      </Stack> */}
+
+        <Stack
+          position="absolute"
+          // sx={{
+          //   transform: "scale(0.35) translateY(198px)",
+          //   transformOrigin: "top right",
+          // }}
+          top={0}
+          right={0}
+        >
+          {_.chunk([...Array(upTo).keys()], PAGE_MAX)
+            .slice(
+              selectedPageIndex ?? 0,
+              _.isNumber(selectedPageIndex) ? selectedPageIndex + 1 : undefined
+            )
+            .map((chunk, i) => (
+              <Stack
+                key={i}
+                width={A4_WIDTH}
+                height={A4_HEIGHT}
+                // bgcolor="rgb(255,255,255)"
+                //bgcolor="cyan"
+                justifyContent="center"
+                alignItems="center"
+                //boxShadow="0 0 40px rgba(0,0,0,0.06)"
+                sx={{ breakInside: "avoid" }}
+              >
+                <Stack spacing="35px">
+                  {chunk.map((x) => (
+                    <Stack
+                      key={x}
+                      direction="row"
+                      width="270px"
+                      justifyContent="space-between"
+                    >
+                      <Stack direction="row" spacing="14px">
+                        <Typography variant="h3" sx={{ fontWeight: 280 }}>
+                          {factor}
+                        </Typography>
+                        <Stack pb="0px">
+                          <Typography
+                            variant="h5"
+                            sx={{ fontWeight: 380, lineHeight: "170%" }}
+                          >
+                            x
+                          </Typography>
+                        </Stack>
                         <Typography
-                          variant="h5"
-                          sx={{ fontWeight: 380, lineHeight: "170%" }}
+                          variant="h3"
+                          bold
+                          color={PALETTE.secondary.orange[3]}
                         >
-                          x
+                          {x + 1}
                         </Typography>
                       </Stack>
+                      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+                        =
+                      </Typography>
                       <Typography
                         variant="h3"
-                        bold
-                        color={PALETTE.secondary.orange[3]}
+                        color={PALETTE.secondary.purple[2]}
                       >
-                        {x + 1}
+                        {factor * (x + 1)}
                       </Typography>
                     </Stack>
-                    <Typography variant="h3" sx={{ fontWeight: 100 }}>
-                      =
-                    </Typography>
-                    <Typography
-                      variant="h3"
-                      color={PALETTE.secondary.purple[2]}
-                    >
-                      {factor * (x + 1)}
-                    </Typography>
-                  </Stack>
-                ))}
+                  ))}
+                </Stack>
               </Stack>
-            </Stack>
-          ))}
+            ))}
+        </Stack>
       </Stack>
-    </Stack>
+    </div>
   );
 }

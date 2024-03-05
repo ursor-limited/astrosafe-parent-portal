@@ -13,6 +13,8 @@ import VideoSignupPromptDialog from "@/app/components/VideoSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useUserContext } from "@/app/components/UserContext";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -279,7 +281,7 @@ export default function WorksheetGenerator(props: {
                 },
                 {
                   id: "division",
-                  value: "/ Division",
+                  value: "÷ Division",
                 },
                 {
                   id: "addition",
