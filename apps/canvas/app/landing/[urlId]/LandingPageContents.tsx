@@ -147,7 +147,7 @@ export default function LandingPageContents(props: {
     title: string;
     links: {
       urlId: string;
-      imageUrl: string;
+      imageString: string;
       title: string;
       text: string;
     }[];
@@ -405,14 +405,14 @@ export default function LandingPageContents(props: {
                 <OtherPageCard
                   title={pair[0].title}
                   text={pair[0].text}
-                  imageUrl={pair[0].imageUrl}
+                  imageString={pair[0].imageString}
                   urlId={pair[0].urlId}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
                     title={pair[1].title}
                     text={pair[1].text}
-                    imageUrl={pair[1].imageUrl}
+                    imageString={pair[1].imageString}
                     urlId={pair[1].urlId}
                   />
                 ) : null}

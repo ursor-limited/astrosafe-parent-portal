@@ -51,71 +51,71 @@
         "title": "All the times table you need!",
         "links": [
             {
-                "title": "10 Times Table",
-                "text": "Create and download worksheets for the 10x multiplication table.",
-                "urlId": "10-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "20 Times Table",
+                "text": "Create and download worksheets for the 20x multiplication table.",
+                "urlId": "20-times-table-worksheet",
+                "imageString": "20x"
             },
             {
-                "title": "11 Times Table",
-                "text": "Create and download worksheets for the 11x multiplication table.",
-                "urlId": "11-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "21 Times Table",
+                "text": "Create and download worksheets for the 21x multiplication table.",
+                "urlId": "21-times-table-worksheet",
+                "imageString": "21x"
             },
             {
-                "title": "12 Times Table",
-                "text": "Create and download worksheets for the 12x multiplication table.",
-                "urlId": "12-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "22 Times Table",
+                "text": "Create and download worksheets for the 22x multiplication table.",
+                "urlId": "22-times-table-worksheet",
+                "imageString": "22x"
             },
             {
-                "title": "13 Times Table",
-                "text": "Create and download worksheets for the 13x multiplication table.",
-                "urlId": "13-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "23 Times Table",
+                "text": "Create and download worksheets for the 23x multiplication table.",
+                "urlId": "23-times-table-worksheet",
+                "imageString": "23x"
             },
             {
-                "title": "14 Times Table",
-                "text": "Create and download worksheets for the 14x multiplication table.",
-                "urlId": "14-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "24 Times Table",
+                "text": "Create and download worksheets for the 24x multiplication table.",
+                "urlId": "24-times-table-worksheet",
+                "imageString": "24x"
             },
             {
-                "title": "15 Times Table",
-                "text": "Create and download worksheets for the 15x multiplication table.",
-                "urlId": "15-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "25 Times Table",
+                "text": "Create and download worksheets for the 25x multiplication table.",
+                "urlId": "25-times-table-worksheet",
+                "imageString": "25x"
             },
             {
-                "title": "16 Times Table",
-                "text": "Create and download worksheets for the 16x multiplication table.",
-                "urlId": "16-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "26 Times Table",
+                "text": "Create and download worksheets for the 26x multiplication table.",
+                "urlId": "26-times-table-worksheet",
+                "imageString": "26x"
             },
             {
-                "title": "17 Times Table",
-                "text": "Create and download worksheets for the 17x multiplication table.",
-                "urlId": "17-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "27 Times Table",
+                "text": "Create and download worksheets for the 27x multiplication table.",
+                "urlId": "27-times-table-worksheet",
+                "imageString": "27x"
             },
             {
-                "title": "18 Times Table",
-                "text": "Create and download worksheets for the 18x multiplication table.",
-                "urlId": "18-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "28 Times Table",
+                "text": "Create and download worksheets for the 28x multiplication table.",
+                "urlId": "28-times-table-worksheet",
+                "imageString": "28x"
             },
             {
-                "title": "19 Times Table",
-                "text": "Create and download worksheets for the 19x multiplication table.",
-                "urlId": "19-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/timestables/1x.png"
+                "title": "30 Times Table",
+                "text": "Create and download worksheets for the 30x multiplication table.",
+                "urlId": "30-times-table-worksheet",
+                "imageString": "30x"
             }
         ]
     },
     "explainerCards": {
         "supertitle": "Who uses AstroSafe",
         "title": "Making teaching simple",
-        "body": "AstroSafe makes the job of organising and creating lessons quick and simple. So teachers can spend more time teaching and less time preping.",
+        "body": "AstroSafe makes the job of organising and creating lessons quick and simple. So teachers can spend more time teaching and less time on prep.",
         "cards": [
             {
                 "title": "Teachers",

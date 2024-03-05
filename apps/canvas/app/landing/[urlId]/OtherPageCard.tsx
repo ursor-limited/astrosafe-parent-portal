@@ -7,7 +7,7 @@ import { PALETTE, Typography } from "ui";
 export default function OtherPageCard(props: {
   title: string;
   text: string;
-  imageUrl: string;
+  imageString: string;
   urlId: string;
 }) {
   return (
@@ -33,15 +33,31 @@ export default function OtherPageCard(props: {
           transition: "0.2s",
         }}
       >
-        <div style={{ height: "100%", width: "200px", position: "relative" }}>
+        <Stack
+          height="100%"
+          width="230px"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            background: "linear-gradient(12deg, #F279C5, #1D62F6)",
+            "-webkit-text-fill-color": "transparent",
+            backgroundClip: "text",
+            "-webkit-background-clip": "text",
+          }}
+        >
+          <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+            {props.imageString}
+          </Typography>
+        </Stack>
+        {/* <div style={{ height: "100%", width: "200px", position: "relative" }}>
           <Image
             src={props.imageUrl}
             fill
             objectFit="scale-down"
             alt="explainer card image"
           />
-        </div>
-        <Stack spacing="12px" p="20px" boxSizing="border-box">
+        </div> */}
+        <Stack spacing="12px" py="20px" pr="24px" boxSizing="border-box">
           <Typography variant="h5" color={PALETTE.secondary.grey[5]}>
             {props.title}
           </Typography>
