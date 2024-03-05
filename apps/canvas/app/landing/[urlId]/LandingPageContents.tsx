@@ -22,6 +22,9 @@ import WorksheetGenerator, {
 } from "./WorksheetGenerator";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/EquationWorksheet";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -173,6 +176,20 @@ export default function LandingPageContents(props: {
 
   const [mobile, setMobile] = useState<boolean>(false);
 
+  const [worksheetPreviewRef, setWorksheetPreviewRef] =
+    useState<HTMLElement | null>(null);
+  const save = () => {
+    const input = document.getElementById("boo");
+    input &&
+      html2canvas(input, { scale: 3 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF(); //@ts-ignore
+        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        pdf.output("dataurlnewwindow");
+        pdf.save("download.pdf");
+      });
+  };
+
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -223,7 +240,9 @@ export default function LandingPageContents(props: {
                           {paragraph}
                         </Typography>
                       ))}
-                    <UrsorButton size="large">Download chart</UrsorButton>
+                    <UrsorButton size="large" onClick={save}>
+                      Download chart
+                    </UrsorButton>
                   </Stack>
                 </Stack>
               </LandingPageViewport>,
