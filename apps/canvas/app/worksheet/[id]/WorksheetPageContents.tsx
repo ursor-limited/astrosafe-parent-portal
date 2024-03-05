@@ -191,9 +191,10 @@ const Carousel = (props: {
           sx={{
             transition: "0.7s",
             transform: `translateX(${
-              (Math.floor(props.items.length / 2 - index) *
-                (SLIDE_SPACING + SLIDE_WIDTH)) /
-              2
+              (props.items.length / 2 - index - 0.5) *
+              (SLIDE_SPACING + SLIDE_WIDTH) //+
+              // Math.floor(props.items.length / 2 + index) *
+              //   (SLIDE_SPACING + SLIDE_WIDTH)
             }mm)`,
           }}
           pt="110px"
