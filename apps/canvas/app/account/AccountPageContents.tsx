@@ -5,7 +5,10 @@ import React, { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { ButtonVariant, UrsorButton } from "ui/ursor-button";
 import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
-import PageLayout, { SIDEBAR_Y_MARGIN } from "../dashboard/PageLayout";
+import PageLayout, {
+  SIDEBAR_X_MARGIN,
+  SIDEBAR_Y_MARGIN,
+} from "../dashboard/PageLayout";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -153,7 +156,7 @@ export default function AccountPageContents(props: IAccountPageProps) {
     useState<boolean>(false);
 
   const userCtx = useUserContext();
-  console.log(userCtx.user);
+  userCtx;
   const logOut = () => {
     //mixpanel.reset();
     localStorage.clear();
@@ -180,6 +183,7 @@ export default function AccountPageContents(props: IAccountPageProps) {
           spacing={SECTION_SPACING}
           flex={1}
           pb={`calc(${SIDEBAR_Y_MARGIN} + 2px)`}
+          pl={`${SIDEBAR_X_MARGIN}px`}
         >
           <Stack spacing={SECTION_SPACING} flex={1} minWidth="625px">
             <AccountPageSection

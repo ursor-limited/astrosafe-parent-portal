@@ -43,7 +43,7 @@ export default function DeleteAccountDialog(props: IDeleteDialogProps) {
     >
       <Stack alignItems="center" spacing="8px">
         <Typography variant="medium">
-          To confirm, type 'delete' below.
+          {'To confirm, type "delete" below.'}
         </Typography>
         <UrsorInputField
           value={inputedValue}

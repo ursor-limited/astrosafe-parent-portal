@@ -296,6 +296,8 @@ export default function LandingPageContents() {
   const [selectedSort, setSelectedSort] =
     useState<AstroContentSort>("createdAt");
 
+  console.log(userDetails.user);
+
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   useEffect(() => {
