@@ -217,18 +217,31 @@ export default function LandingPageContents(props: {
                 <Stack direction="row" spacing="45px">
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
-                    <MultiplicationTable
-                      factor={
-                        props.worksheetPreview.worksheetPreviewParameters
-                          .worksheetParameters.factor
-                      }
-                      upTo={
-                        props.worksheetPreview.worksheetPreviewParameters
-                          .worksheetParameters.nProblems
-                      }
-                    />
+                    <Stack position="relative" width="300px" height="400px">
+                      <Stack
+                        position="absolute"
+                        sx={{
+                          transform: "scale(0.35)",
+                          transformOrigin: "top right",
+                        }}
+                        top={0}
+                        right={0}
+                        boxShadow="0 0 40px rgba(0,0,0,0.06)"
+                      >
+                        <MultiplicationTable
+                          factor={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.factor
+                          }
+                          upTo={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.nProblems
+                          }
+                        />
+                      </Stack>
+                    </Stack>
                   ) : null}
-                  <Stack spacing="10px" pt="74px" maxWidth="503px">
+                  <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
                       .split("\n")
                       .map((paragraph) => (
