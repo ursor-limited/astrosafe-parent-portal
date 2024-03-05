@@ -181,7 +181,7 @@ function VideoPageContents(props: { details: IVideo }) {
               variant="tertiary"
               onClick={() => {
                 navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("URL copied to clipboard.");
+                notificationCtx.success("Copied URL to clipboard.");
               }}
             >
               Share link

@@ -1,7 +1,7 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
 import EquationWorksheet, { A4_WIDTH } from "./EquationWorksheet";
@@ -41,6 +41,7 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useAuth0 } from "@auth0/auth0-react";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -400,7 +401,6 @@ export default function WorksheetPageContents(props: IWorksheet) {
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    console.log(props.creatorId);
     setSignupPromptDialogOpen(
       !props.creatorId && !userDetails.loading && !userDetails.user?.id
     );
@@ -435,8 +435,9 @@ export default function WorksheetPageContents(props: IWorksheet) {
     pdf.save(`${props.title}${answers ? " Answers" : ""}.pdf`);
   };
 
-  const { logout } = useAuth0();
-  const userCtx = useUserContext();
+  const { loginWithPopup, loginWithRedirect } = useAuth0();
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <>
@@ -535,9 +536,10 @@ export default function WorksheetPageContents(props: IWorksheet) {
               width="39px"
               justifyContent="center"
               alignItems="center"
-              onClick={() =>
-                navigator.clipboard.writeText(window.location.href)
-              }
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notificationCtx.success("Copied URL to clipboard.");
+              }}
               sx={{
                 cursor: "pointer",
                 "&:hover": { opacity: 0.6 },
@@ -620,6 +622,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       <WorksheetSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
+        callback={() => loginWithPopup()}
         mobile={false}
       />
     </>

@@ -29,6 +29,7 @@ import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
+import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -257,7 +258,7 @@ const ToolButton = (props: {
   </Stack>
 );
 
-export default function LandingPageContents() {
+export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -372,14 +373,22 @@ export default function LandingPageContents() {
     "freeWorksheetIds",
     []
   );
+  console.log("2222", userDetails.user?.id);
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      console.log("aaaa", userDetails.user?.id);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
         () => loadWorksheets()
       );
       setFreeWorksheetIds([]);
     }
   }, [userDetails.user?.id, freeWorksheetIds.length]);
+
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
+  }, [userDetails.user?.id, userDetails.loading]);
 
   return (
     <>
@@ -535,6 +544,10 @@ export default function LandingPageContents() {
             document.body
           )
         : null}
+      <DashboardSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+      />
     </>
   );
 }

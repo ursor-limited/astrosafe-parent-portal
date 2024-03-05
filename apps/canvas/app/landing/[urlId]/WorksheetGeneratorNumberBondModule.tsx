@@ -130,7 +130,15 @@ export function WorksheetGeneratorNumberBondModule(
         })
         .then((ws) => ws.id)
     );
-  }, [props.title, result, props.pageIndex, orientation, pairs, both]);
+  }, [
+    props.title,
+    result,
+    props.pageIndex,
+    orientation,
+    pairs,
+    both,
+    userDetails.user?.id,
+  ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);

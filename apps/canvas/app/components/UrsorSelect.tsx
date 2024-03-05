@@ -4,7 +4,12 @@ import ChevronDown from "@/images/icons/ChevronDown.svg";
 import X from "@/images/icons/X.svg";
 import { PALETTE, UrsorInputField } from "ui";
 import { Typography } from "ui";
-import UrsorPopover from "./UrsorPopover";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export interface IUrsorSelectItem {
   id: string;
