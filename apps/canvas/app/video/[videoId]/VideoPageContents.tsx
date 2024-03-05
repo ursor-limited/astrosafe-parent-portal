@@ -15,6 +15,7 @@ import mixpanel from "mixpanel-browser";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "@/app/components/UserContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -158,6 +159,8 @@ function VideoPageContents(props: { details: IVideo }) {
       router.push("/dashboard")
     );
 
+  const userDetails = useUserContext();
+
   return props.details && provider ? (
     <>
       <BigCard
@@ -166,17 +169,20 @@ function VideoPageContents(props: { details: IVideo }) {
         createdAt={props.details.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            <CircularButton
-              icon={TrashcanIcon}
-              color={PALETTE.system.red}
-              onClick={() => setDeletionDialogOpen(true)}
-            />
+            {userDetails?.user?.id === props.details.creatorId ? (
+              <CircularButton
+                icon={TrashcanIcon}
+                color={PALETTE.system.red}
+                onClick={() => setDeletionDialogOpen(true)}
+              />
+            ) : null}
             <UrsorButton
               dark
               variant="tertiary"
-              onClick={() =>
-                navigator.clipboard.writeText(window.location.href)
-              }
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notificationCtx.success("URL copied to clipboard.");
+              }}
             >
               Share link
             </UrsorButton>

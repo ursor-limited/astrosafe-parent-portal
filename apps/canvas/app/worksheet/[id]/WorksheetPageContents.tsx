@@ -414,11 +414,13 @@ export default function WorksheetPageContents(props: IWorksheet) {
         createdAt={props.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            <CircularButton
-              icon={TrashcanIcon}
-              color={PALETTE.system.red}
-              onClick={() => setDeletionDialogOpen(true)}
-            />
+            {userDetails?.user?.id === props.creatorId ? (
+              <CircularButton
+                icon={TrashcanIcon}
+                color={PALETTE.system.red}
+                onClick={() => setDeletionDialogOpen(true)}
+              />
+            ) : null}
             <Stack
               borderRadius="100%"
               border={`2px solid ${PALETTE.primary.navy}`}
