@@ -88,6 +88,7 @@ const WorksheetSignupPromptDialog = (props: {
             src={SCREENSHOT_URL}
             width={727}
             height={454}
+            priority={true}
             //objectFit="contain"
             alt="worksheet signup dialog screenshot"
           />
