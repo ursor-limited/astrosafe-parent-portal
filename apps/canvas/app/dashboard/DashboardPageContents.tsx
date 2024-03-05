@@ -26,7 +26,6 @@ import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";

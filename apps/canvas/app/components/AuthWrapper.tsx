@@ -1,7 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
-import { Auth0Provider } from "@auth0/auth0-react";
+//import { Auth0Provider } from "@auth0/auth0-react";
+
+const Auth0Provider = dynamic(
+  () => import("react-quill"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export default function AuthWrapper(props: { children: React.ReactNode }) {
   return (
@@ -17,6 +23,7 @@ export default function AuthWrapper(props: { children: React.ReactNode }) {
       useRefreshTokensFallback={true}
       cacheLocation="localstorage"
     >
+      {/* @ts-ignore */}
       {props.children}
     </Auth0Provider>
   );
