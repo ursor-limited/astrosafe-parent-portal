@@ -38,6 +38,8 @@ import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptD
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -408,6 +410,17 @@ export default function WorksheetPageContents(props: IWorksheet) {
     }
   }, [userDetails.user]);
 
+  const save = () => {
+    const input = document.getElementById("printableElement");
+    input &&
+      html2canvas(input, { scale: 3 }).then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF(); //@ts-ignore
+        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        pdf.save("download.pdf");
+      });
+  };
+
   return (
     <>
       <BigCard
@@ -443,7 +456,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
             <UrsorButton dark variant="tertiary">
               Download answers
             </UrsorButton>
-            <UrsorButton dark variant="tertiary">
+            <UrsorButton dark variant="tertiary" onClick={save}>
               Download worksheet
             </UrsorButton>
           </Stack>

@@ -179,7 +179,7 @@ export default function LandingPageContents(props: {
   const [worksheetPreviewRef, setWorksheetPreviewRef] =
     useState<HTMLElement | null>(null);
   const save = () => {
-    const input = document.getElementById("boo");
+    const input = document.getElementById("printableMultiplicationTable");
     input &&
       html2canvas(input, { scale: 3 }).then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
@@ -218,6 +218,22 @@ export default function LandingPageContents(props: {
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
                     <Stack position="relative" width="300px" height="400px">
+                      <Stack
+                        position="absolute"
+                        sx={{ opacity: 0, pointerEvents: "none" }}
+                      >
+                        <MultiplicationTable
+                          printable
+                          factor={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.factor
+                          }
+                          upTo={
+                            props.worksheetPreview.worksheetPreviewParameters
+                              .worksheetParameters.nProblems
+                          }
+                        />
+                      </Stack>
                       <Stack
                         position="absolute"
                         sx={{

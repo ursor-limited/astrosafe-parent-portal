@@ -11,6 +11,7 @@ const PAGE_MAX = 12;
 export default function MultiplicationTable(props: {
   factor: number;
   upTo: number;
+  printable?: boolean;
 }) {
   const [factor, setFactor] = useState<number>(3);
   useEffect(() => setFactor(props.factor), [props.factor]);
@@ -19,7 +20,7 @@ export default function MultiplicationTable(props: {
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
   return (
-    <div id="boo">
+    <div id={props.printable ? "printableMultiplicationTable" : undefined}>
       <Stack
         spacing="10px"
         alignItems="center"

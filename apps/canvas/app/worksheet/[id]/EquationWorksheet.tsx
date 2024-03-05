@@ -336,7 +336,13 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
     ]);
 
     return (
-      <Stack position="relative">
+      <div
+      // style={{
+      //   position: "relative",
+      //   width: A4_WIDTH,
+      //   height: A4_HEIGHT,
+      // }}
+      >
         {props.printButtonCallback ? (
           <Stack
             position="absolute"
@@ -449,7 +455,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
             ))}
           </Stack>
         </Stack>
-      </Stack>
+      </div>
     );
   }
 );
