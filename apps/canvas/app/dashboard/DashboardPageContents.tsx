@@ -478,7 +478,6 @@ export default function LandingPageContents() {
           flex={1}
           ref={setColumnsContainerRef}
           overflow="hidden"
-          pb="64px"
         >
           <Stack flex={1} overflow="scroll">
             <Stack
