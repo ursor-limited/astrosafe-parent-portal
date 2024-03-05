@@ -7,8 +7,10 @@ import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import X from "@/images/icons/X.svg";
+import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
 import _ from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -19,13 +21,96 @@ import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
-import SignupPromptDialog from "./SignupPromptDialog";
+import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
+import { Input } from "@mui/material";
+import SortButton from "../components/SortButton";
+import { createPortal } from "react-dom";
+import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
+import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 
 export const GRID_SPACING = "20px";
 
 export type AstroContent = "video" | "worksheet";
+
+export type AstroContentSort = "abc" | "createdAt";
+
+export const SearchInput = (props: {
+  value: string;
+  callback: (value: string) => void;
+  clearCallback: () => void;
+  shadow?: boolean;
+}) => {
+  const [active, setActive] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  return (
+    <Stack
+      height="28px"
+      width="180px"
+      direction="row"
+      borderRadius="8px"
+      alignItems="center"
+      bgcolor="rgb(255,255,255)"
+      px="10px"
+      spacing="8px"
+      sx={{
+        svg: {
+          path: {
+            fill: PALETTE.secondary.grey[4],
+          },
+        },
+        transition: "0.2s",
+      }}
+      border={`${active || hovering ? 2 : 0}px solid ${
+        PALETTE.secondary.purple[active ? 2 : 1]
+      }`}
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
+      boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.03)" : undefined}
+    >
+      <SearchIcon width="20px" height="20px" />
+      <Input
+        style={{
+          textAlign: "left",
+          textOverflow: "ellipsis",
+          fontSize: FONT_SIZES["small"],
+          color: PALETTE.font.dark,
+          fontWeight: BOLD_FONT_WEIGHT,
+          lineHeight: "100%",
+          transition: "0.2s",
+        }}
+        value={props.value}
+        disableUnderline
+        sx={{
+          background: "rgb(255,255,255)",
+          input: {
+            padding: "0 !important",
+          },
+        }}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          props.callback(event.target.value);
+        }}
+        placeholder="Search"
+        onBlur={() => setActive(false)}
+        onFocus={() => setActive(true)}
+      />
+
+      <Stack
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
+          opacity: props.value ? 1 : 0,
+        }}
+        onClick={props.clearCallback}
+      >
+        <X width="16px" height="16px" />
+      </Stack>
+    </Stack>
+  );
+};
 
 const FilterButton = (props: {
   text: string;
@@ -173,20 +258,30 @@ const ToolButton = (props: {
   </Stack>
 );
 
-export default function LandingPageContents(props: {}) {
+export default function LandingPageContents() {
+  const userDetails = useUserContext();
+
   const [videos, setVideos] = useState<IVideo[]>([]);
+  const loadVideos = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserVideos(userDetails.user.id).then((videos) =>
+        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
+      );
+  };
   useEffect(() => {
-    ApiController.getUserVideos("mkl.koskela@gmail.com").then((videos) =>
-      setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-    );
-  }, []);
+    loadVideos();
+  }, [userDetails?.user?.id]);
 
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  const loadWorksheets = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
+        setWorksheets(_.reverse(ws.slice()))
+      );
+  };
   useEffect(() => {
-    ApiController.getUserWorksheets().then((ws) =>
-      setWorksheets(_.reverse(ws.slice()))
-    );
-  }, []);
+    loadWorksheets();
+  }, [userDetails?.user?.id]);
 
   const [cardColumns, setCardColumns] = useState<
     {
@@ -194,34 +289,34 @@ export default function LandingPageContents(props: {}) {
       details: IVideo | IWorksheet;
     }[][]
   >([]);
-  // const [filteredCardColumns, setFilteredCardsColumns] = useState<
-  //   {
-  //     type: AstroContent;
-  //     details: IVideo | IWorksheet;
-  //   }[][]
-  // >([]);
-  // useEffect(() => {
-  //   setFilteredCardsColumns(
-  //     selectedContentType
-  //       ? cardColumns.filter((col) =>
-  //           c.map((item) => item.type === selectedContentType)
-  //         )
-  //       : cardColumns
-  //   );
-  // }, [cardColumns, selectedContentType]);
 
   const [selectedContentType, setSelectedContentType] =
     useState<AstroContent | null>(null);
 
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [selectedSort, setSelectedSort] =
+    useState<AstroContentSort>("createdAt");
+
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   useEffect(() => {
-    const videoDetails = videos.map((l) => ({
-      type: "video" as AstroContent,
-      details: l,
-    }));
+    const videoDetails = videos
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "video" as AstroContent,
+        details: l,
+      }));
     const worksheetDetails = worksheets
       .filter((x) => x.worksheetId)
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
       .map((ws) => ({
         type: "worksheet" as AstroContent,
         details: ws,
@@ -236,7 +331,10 @@ export default function LandingPageContents(props: {}) {
             ? []
             : worksheetDetails),
         ],
-        (c) => new Date(c.details.createdAt)
+        (c) =>
+          selectedSort === "createdAt"
+            ? new Date(c.details.createdAt)
+            : c.details.title
       ).slice()
     );
     const chunked = _.chunk(allContentDetails, nColumns);
@@ -245,13 +343,43 @@ export default function LandingPageContents(props: {}) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [videos, worksheets, nColumns, selectedContentType]);
+  }, [
+    videos,
+    worksheets,
+    nColumns,
+    selectedContentType,
+    searchValue,
+    selectedSort,
+  ]);
+
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
 
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
+
+  const notificationCtx = useContext(NotificationContext);
+  useEffect(() => {
+    if (userDetails.user && !signedIn) {
+      notificationCtx.success("Signed in.");
+      setSignedIn(true);
+    }
+  }, [userDetails.user]);
+
+  const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
+    "freeWorksheetIds",
+    []
+  );
+  useEffect(() => {
+    if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
+        () => loadWorksheets()
+      );
+      setFreeWorksheetIds([]);
+    }
+  }, [userDetails.user?.id, freeWorksheetIds.length]);
 
   return (
     <>
@@ -301,7 +429,6 @@ export default function LandingPageContents(props: {}) {
         </Stack>
 
         <Stack
-          width="100%"
           minHeight="50px"
           justifyContent="center"
           pl={`${SIDEBAR_X_MARGIN}px`}
@@ -312,11 +439,39 @@ export default function LandingPageContents(props: {}) {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack pl={`${SIDEBAR_X_MARGIN}px`}>
+        <Stack
+          pl={`${SIDEBAR_X_MARGIN}px`}
+          direction="row"
+          justifyContent="space-between"
+        >
           <FilterRow
             selected={selectedContentType}
             callback={(newSelected) => setSelectedContentType(newSelected)}
           />
+          <Stack
+            direction="row"
+            spacing="30px"
+            alignItems="center"
+            width="fit-content"
+          >
+            <SearchInput
+              value={searchValue ?? ""}
+              callback={(value: string) => {
+                setSearchValue(value);
+              }}
+              clearCallback={() => setSearchValue(undefined)}
+              shadow
+            />
+            <SortButton
+              selected={selectedSort}
+              callback={(id) => setSelectedSort(id)}
+              types={["abc", "createdAt"]}
+              displayNames={{
+                abc: "Alphabetical",
+                createdAt: "Most recent",
+              }}
+            />
+          </Stack>
         </Stack>
         <Stack
           pt="24px"
@@ -363,6 +518,24 @@ export default function LandingPageContents(props: {}) {
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
       />
+      {!selectedContentType && worksheets.length === 0 && videos.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {selectedContentType === "video" && videos.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {selectedContentType === "worksheet" && worksheets.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
     </>
   );
 }

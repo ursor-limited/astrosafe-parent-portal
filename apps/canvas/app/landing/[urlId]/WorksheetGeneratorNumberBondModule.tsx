@@ -21,6 +21,7 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
+import { useUserContext } from "@/app/components/UserContext";
 
 const DEFAULT_TITLE = "Problem sheet";
 const MAX_N_PROBLEMS = 100;
@@ -102,6 +103,8 @@ export function WorksheetGeneratorNumberBondModule(
 
   const router = useRouter();
 
+  const userDetails = useUserContext();
+
   useEffect(() => {
     setPreviewWorksheet(
       <NumberBondWorksheet
@@ -119,7 +122,7 @@ export function WorksheetGeneratorNumberBondModule(
         orientation,
         result,
         pairs,
-        "mkl.koskela@gmail.com"
+        userDetails.user?.id
       )
         .then((ws) => {
           router.push(`/worksheet/${ws.id}`);

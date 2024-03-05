@@ -13,6 +13,7 @@ import {
 } from "./WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
+import { useUserContext } from "@/app/components/UserContext";
 
 const MAX_N_PROBLEMS = 100;
 
@@ -88,6 +89,8 @@ export function WorksheetGeneratorEquationModule(
 
   const router = useRouter();
 
+  const userDetails = useUserContext();
+
   useEffect(() => {
     setPreviewWorksheet(
       <EquationWorksheet
@@ -107,7 +110,7 @@ export function WorksheetGeneratorEquationModule(
         props.topic,
         factor,
         multipliers,
-        "mkl.koskela@gmail.com"
+        userDetails.user?.id
       )
         .then((ws) => {
           router.push(`/worksheet/${ws.id}`);

@@ -121,7 +121,7 @@ const VideoCreationDialog = (props: {
       thumbnailUrl,
       startTime: range?.[0],
       endTime: range?.[1],
-      creatorId: "mkl.koskela@gmail.com",
+      creatorId: userDetails.user?.id,
     }).then(async (v) => {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
@@ -147,7 +147,8 @@ const VideoCreationDialog = (props: {
         button={{
           text: "Create",
           callback: () => {
-            !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+            // !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+            submit();
           },
           icon: RocketIcon,
           disabled: !url,

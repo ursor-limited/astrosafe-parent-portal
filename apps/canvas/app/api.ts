@@ -49,7 +49,7 @@ const patch = (route: string, body: any) =>
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body,
+      body: JSON.stringify(body),
     }
   );
 
@@ -137,6 +137,11 @@ class ApiController {
       response.json()
     );
   }
+  static async claimWorksheets(userId: string, ids: string[]) {
+    return patch(`canvas/userWorksheets/${userId}/claim`, {
+      ids,
+    }).then((response: any) => response.json());
+  }
   static async getPaymentLink(auth0Id: string) {
     return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
       response.json()
@@ -165,16 +170,16 @@ class ApiController {
     topic: WorksheetTopic,
     factor: number,
     multipliers: number[],
-    creatorId: string
+    creatorId?: string
   ) {
     return post("canvas/worksheet/equation", {
       title,
+      creatorId,
       parameters: {
         orientation,
         topic,
         factor,
         multipliers,
-        creatorId,
       },
     }).then((response: any) => response.json());
   }
@@ -183,11 +188,12 @@ class ApiController {
     orientation: EquationOrientation,
     result: number,
     pairs: number[][],
-    creatorId: string
+    creatorId?: string
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
-      parameters: { orientation, result, pairs, creatorId },
+      creatorId,
+      parameters: { orientation, result, pairs },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {
@@ -195,9 +201,11 @@ class ApiController {
       response.json()
     );
   }
-  static async getUserWorksheets() {
+  static async getUserWorksheets(id: string) {
     //@ts-ignore
-    return get(`canvas/worksheets`).then((response: any) => response.json());
+    return get(`canvas/userWorksheets/${id}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 
