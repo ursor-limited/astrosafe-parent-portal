@@ -121,7 +121,7 @@ const RefreshButton = (props: { onClick: () => void }) => {
 };
 
 const TITLE_CHARACTER_LIMIT = 30;
-export const DEFAULT_TITLE = "Multiplication Sheet";
+export const DEFAULT_TITLE = "Math worksheet";
 
 export const CategorySelectionButton = (props: {
   selected: boolean;

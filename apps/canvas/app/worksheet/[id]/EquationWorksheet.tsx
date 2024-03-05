@@ -256,7 +256,7 @@ const rubik = Rubik({ subsets: ["latin"] });
 const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
-      title: string;
+      title?: string;
       factor: number;
       multipliers: number[];
       topic: WorksheetTopic;
@@ -385,10 +385,13 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
               width="100%"
               height="24mm"
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              justifyContent="space-between"
             >
-              <Typography variant="h2">
-                {props.title || DEFAULT_TITLE}
-              </Typography>
+              {props.title ? (
+                <Typography variant="h2">{props.title}</Typography>
+              ) : (
+                <Stack />
+              )}
               <Typography bold color={PALETTE.secondary.purple[2]}>
                 {props.answers ? "Answers" : "Try to solve these questions!"}
               </Typography>

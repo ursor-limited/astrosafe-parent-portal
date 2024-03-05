@@ -16,24 +16,16 @@ const SCREENSHOT_URL =
 const WorksheetSignupPromptDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  //createCallback: () => void;
   mobile?: boolean;
 }) => {
   const { loginWithPopup, loginWithRedirect } = useAuth0();
-  const [freeWorksheetCreationCount, setFreeWorksheetCreationCount] =
-    useLocalStorage<number>("freeWorksheetCreationCount", 0);
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title={
-        "Your math worksheet is ready"
-        // freeWorksheetCreationCount >= FREE_VIDEO_LIMIT
-        //   ? "Create an Account"
-        //   : "Store all your worksheets in one place"
-      }
+      title={"Your math worksheet is ready"}
       subtitle={[
-        "Log in to download and continue creating new worksheets for free.",
-        "You also get a dazzling dashboard.",
+        "Create a free account to download and print your worksheet",
+        "and save time preparing your lessons!",
       ]}
       open={props.open}
       // button={{

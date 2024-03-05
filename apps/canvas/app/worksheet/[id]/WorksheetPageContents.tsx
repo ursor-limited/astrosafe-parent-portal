@@ -40,6 +40,7 @@ import { useUserContext } from "@/app/components/UserContext";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -399,8 +400,11 @@ export default function WorksheetPageContents(props: IWorksheet) {
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
-  }, [userDetails.user?.id, userDetails.loading]);
+    console.log(props.creatorId);
+    setSignupPromptDialogOpen(
+      !props.creatorId && !userDetails.loading && !userDetails.user?.id
+    );
+  }, [userDetails.user?.id, userDetails.loading, props.creatorId]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   useEffect(() => {
@@ -430,6 +434,9 @@ export default function WorksheetPageContents(props: IWorksheet) {
     );
     pdf.save(`${props.title}${answers ? " Answers" : ""}.pdf`);
   };
+
+  const { logout } = useAuth0();
+  const userCtx = useUserContext();
 
   return (
     <>

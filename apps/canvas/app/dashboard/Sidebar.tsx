@@ -9,6 +9,7 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
 import { useRouter } from "next/navigation";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useUserContext } from "../components/UserContext";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -175,6 +176,7 @@ const SidebarItem = (props: {
 
 export default function Sidebar(props: ISidebarProps) {
   const router = useRouter();
+  const userCtx = useUserContext();
   const { logout } = useAuth0();
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const topItems: ISidebarItem[] = [
@@ -199,10 +201,7 @@ export default function Sidebar(props: ISidebarProps) {
       id: "account",
       icon: GearIcon,
       title: "Account",
-      callback: () => {
-        setSignedIn(false);
-        logout();
-      },
+      callback: () => router.push("/account"),
     },
   ];
 

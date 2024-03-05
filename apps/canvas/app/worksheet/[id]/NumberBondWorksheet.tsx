@@ -179,7 +179,7 @@ const rubik = Rubik({ subsets: ["latin"] });
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
-      title: string;
+      title?: string;
       result: number;
       both: boolean;
       pairs: number[][];
@@ -303,9 +303,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
               height="24mm"
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
             >
-              <Typography variant="h2">
-                {props.title || DEFAULT_TITLE}
-              </Typography>
+              <Typography variant="h2">{props.title}</Typography>
               <Typography bold color={PALETTE.secondary.purple[2]}>
                 {props.answers ? "Answers" : "Try to solve these questions!"}
               </Typography>
