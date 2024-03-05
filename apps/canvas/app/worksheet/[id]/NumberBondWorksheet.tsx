@@ -38,8 +38,7 @@ export const ValueCircle = (props: { children: React.ReactNode }) => (
     width="66px"
     justifyContent="center"
     alignItems="center"
-    bgcolor="rgb(255,255,255)"
-    zIndex={2}
+    //bgcolor="rgb(255,255,255)"
   >
     {props.children}
   </Stack>
@@ -131,15 +130,15 @@ const VerticalEquationQuestion = (props: {
   >
     <Stack
       position="absolute"
-      width="100px"
+      width="38px"
       sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
       height="2px"
       bgcolor={PALETTE.secondary.grey[2]}
     />
     <Stack
       position="absolute"
-      width="100px"
-      sx={{ transform: "translate(-33px, 10px) rotate(-57deg)" }}
+      width="38px"
+      sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
       height="2px"
       bgcolor={PALETTE.secondary.grey[2]}
     />
@@ -148,7 +147,7 @@ const VerticalEquationQuestion = (props: {
         {props.result}
       </Typography>
     </ValueCircle>
-    <Stack direction="row" spacing="40px">
+    <Stack direction="row" spacing="40px" zIndex={999}>
       <ValueCircle>
         <Typography
           variant="h4"
@@ -190,6 +189,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       printDialogOpen?: boolean;
       answers?: boolean;
       pageIndex?: number;
+      printableId?: string;
       printDialogCloseCallback?: () => void;
     },
     ref
@@ -254,7 +254,14 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
     ]);
 
     return (
-      <Stack position="relative">
+      <div
+        style={{
+          position: "relative",
+          width: A4_WIDTH,
+          height: A4_HEIGHT,
+        }}
+        id={props.printableId}
+      >
         {props.printButtonCallback ? (
           <Stack
             position="absolute"
@@ -349,7 +356,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
             ))}
           </Stack>
         </Stack>
-      </Stack>
+      </div>
     );
   }
 );

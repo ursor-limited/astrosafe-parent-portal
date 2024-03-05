@@ -266,6 +266,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
       printDialogOpen?: boolean;
       answers?: boolean;
       pageIndex?: number;
+      printableId?: string;
       printDialogCloseCallback?: () => void;
     },
     ref
@@ -337,11 +338,12 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
 
     return (
       <div
-      // style={{
-      //   position: "relative",
-      //   width: A4_WIDTH,
-      //   height: A4_HEIGHT,
-      // }}
+        style={{
+          position: "relative",
+          width: A4_WIDTH,
+          height: A4_HEIGHT,
+        }}
+        id={props.printableId}
       >
         {props.printButtonCallback ? (
           <Stack
