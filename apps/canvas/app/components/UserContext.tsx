@@ -41,9 +41,9 @@ const UserProvider = (props: IUserProviderProps) => {
   const { user } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    setLoading(true);
     //user?.email && mixpanel.track("signed in");
-    user?.email &&
+    if (user?.email) {
+      setLoading(true);
       ApiController.getUser(user.email)
         .then((u) =>
           u
@@ -53,6 +53,7 @@ const UserProvider = (props: IUserProviderProps) => {
               )
         )
         .then(() => setLoading(false));
+    }
   }, [user?.email]);
 
   const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);

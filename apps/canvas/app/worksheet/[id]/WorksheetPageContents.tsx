@@ -399,6 +399,13 @@ export default function WorksheetPageContents(props: IWorksheet) {
     setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
   }, [userDetails.user?.id, userDetails.loading]);
 
+  console.log(
+    "aa",
+    userDetails.user?.id,
+    userDetails.loading,
+    !userDetails.loading && !userDetails.user?.id
+  );
+
   return (
     <>
       <BigCard
@@ -440,7 +447,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       >
         {nPages ? (
           <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-            <UrsorFadeIn delay={500} duration={1000}>
+            <UrsorFadeIn delay={500} duration={1000} fullWidth>
               <Carousel
                 yPadding={30}
                 items={[...Array(nPages).keys()].map((i) => (
