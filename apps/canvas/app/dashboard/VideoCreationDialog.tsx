@@ -340,6 +340,7 @@ const VideoCreationDialog = (props: {
               onClick={() => {
                 submit();
               }}
+              disabled={!url}
               dark
               variant="tertiary"
               endIcon={RocketIcon}

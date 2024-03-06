@@ -71,6 +71,7 @@ export const Captioned = (props: {
   children: React.ReactNode;
 }) => (
   <Stack
+    flex={1}
     spacing="8px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
