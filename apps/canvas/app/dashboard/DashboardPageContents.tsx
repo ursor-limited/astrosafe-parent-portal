@@ -31,6 +31,7 @@ import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
+import UpgradeDialog from "../components/UpgradeDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -443,6 +444,8 @@ export default function DashboardPageContents() {
     );
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -454,7 +457,7 @@ export default function DashboardPageContents() {
         // button={{
         //   text: "Upgrade",
         //   icon: VerifiedIcon,
-        //   callback: () => null,
+        //   callback: () => setUpgradeDialogOpen(true),
         // }}
         // buttonRowExtraElement={
         //   <Stack
@@ -615,6 +618,10 @@ export default function DashboardPageContents() {
       <DashboardSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
       />
     </>
   );
