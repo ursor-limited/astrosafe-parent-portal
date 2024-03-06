@@ -39,7 +39,7 @@ const UserProvider = (props: IUserProviderProps) => {
   const [safeTubeUser, setSafeTubeUser] = useState<ISafeTubeUser | undefined>(
     undefined
   );
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
@@ -56,6 +56,10 @@ const UserProvider = (props: IUserProviderProps) => {
         .then(() => setLoading(false));
     }
   }, [user?.email]);
+
+  // useEffect(() => {
+  //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
+  // }, [isLoading, user?.email, safeTubeUser]);
 
   const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
   useEffect(() => {

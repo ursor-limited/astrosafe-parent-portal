@@ -373,7 +373,6 @@ export default function DashboardPageContents() {
     "freeWorksheetIds",
     []
   );
-  console.log("2222", userDetails.user?.id);
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
       console.log("aaaa", userDetails.user?.id);
@@ -384,11 +383,18 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user?.id, freeWorksheetIds.length]);
 
+  const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
+  }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setSignupPromptDialogOpen(!userDetails.loading && !userDetails.user?.id);
-  }, [userDetails.user?.id, userDetails.loading]);
+    setSignupPromptDialogOpen(
+      signupPromptDialogCanOpen && !userDetails.loading && !userDetails.user?.id
+    );
+  }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
   return (
     <>
@@ -418,24 +424,26 @@ export default function DashboardPageContents() {
           </Stack>
         }
       >
-        <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-          <ToolButton
-            title="Create safe video link"
-            description="Free of ads. Safe to share."
-            color={PALETTE.secondary.blue[3]}
-            icon={CirclePlayIcon}
-            onClick={() => {
-              setVideoCreationDialogOpen(true);
-            }}
-          />
-          <ToolButton
-            title="Create math worksheet"
-            description="Printable & finished in seconds."
-            color={PALETTE.secondary.pink[5]}
-            icon={ChecklistIcon}
-            onClick={() => setWorksheetCreationDialogOpen(true)}
-          />
-        </Stack>
+        <UrsorFadeIn duration={700}>
+          <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
+            <ToolButton
+              title="Create safe video link"
+              description="Free of ads. Safe to share."
+              color={PALETTE.secondary.blue[3]}
+              icon={CirclePlayIcon}
+              onClick={() => {
+                setVideoCreationDialogOpen(true);
+              }}
+            />
+            <ToolButton
+              title="Create math worksheet"
+              description="Printable & finished in seconds."
+              color={PALETTE.secondary.pink[5]}
+              icon={ChecklistIcon}
+              onClick={() => setWorksheetCreationDialogOpen(true)}
+            />
+          </Stack>
+        </UrsorFadeIn>
 
         <Stack
           minHeight="50px"
@@ -448,40 +456,42 @@ export default function DashboardPageContents() {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack
-          pl={`${SIDEBAR_X_MARGIN}px`}
-          direction="row"
-          justifyContent="space-between"
-        >
-          <FilterRow
-            selected={selectedContentType}
-            callback={(newSelected) => setSelectedContentType(newSelected)}
-          />
+        <UrsorFadeIn duration={700} delay={200}>
           <Stack
+            pl={`${SIDEBAR_X_MARGIN}px`}
             direction="row"
-            spacing="30px"
-            alignItems="center"
-            width="fit-content"
+            justifyContent="space-between"
           >
-            <SearchInput
-              value={searchValue ?? ""}
-              callback={(value: string) => {
-                setSearchValue(value);
-              }}
-              clearCallback={() => setSearchValue(undefined)}
-              shadow
+            <FilterRow
+              selected={selectedContentType}
+              callback={(newSelected) => setSelectedContentType(newSelected)}
             />
-            <SortButton
-              selected={selectedSort}
-              callback={(id) => setSelectedSort(id)}
-              types={["abc", "createdAt"]}
-              displayNames={{
-                abc: "Alphabetical",
-                createdAt: "Most recent",
-              }}
-            />
+            <Stack
+              direction="row"
+              spacing="30px"
+              alignItems="center"
+              width="fit-content"
+            >
+              <SearchInput
+                value={searchValue ?? ""}
+                callback={(value: string) => {
+                  setSearchValue(value);
+                }}
+                clearCallback={() => setSearchValue(undefined)}
+                shadow
+              />
+              <SortButton
+                selected={selectedSort}
+                callback={(id) => setSelectedSort(id)}
+                types={["abc", "createdAt"]}
+                displayNames={{
+                  abc: "Alphabetical",
+                  createdAt: "Most recent",
+                }}
+              />
+            </Stack>
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
         <Stack
           pt="24px"
           flex={1}
