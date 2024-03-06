@@ -5,7 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -241,9 +241,25 @@ const ToolButton = (props: {
       <props.icon height="35px" width="35px" />
     </Stack>
     <Stack flex={1} py="11px" justifyContent="space-between">
-      <Typography variant="medium" bold color={props.color}>
-        {props.title}
-      </Typography>
+      <Stack
+        direction="row"
+        spacing="10px"
+        alignItems="center"
+        sx={{
+          svg: {
+            path: {
+              fill: `${PALETTE.secondary.grey[4]} !important`,
+            },
+          },
+        }}
+      >
+        <Typography variant="medium" bold color={props.color}>
+          {props.title}
+        </Typography>
+        <Stack>
+          <InfoIcon width="14px" height="14px" />
+        </Stack>
+      </Stack>
       <Typography
         variant="small"
         sx={{ fontWeight: 380 }}
