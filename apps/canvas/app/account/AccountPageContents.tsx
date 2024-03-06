@@ -14,6 +14,7 @@ import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
+import moment from "moment";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";
@@ -63,6 +64,31 @@ const AccountPageSection = (props: {
       {props.children}
     </Stack>
   </Stack>
+);
+
+const AccountPagePlanSection = () => (
+  <AccountPageSection
+    title="Plan"
+    button={{
+      variant: "primary",
+      text: "Upgrade",
+      callback: () => null,
+    }}
+    fadeInDelay={200}
+  >
+    <Stack spacing="8px" width="100%">
+      <Typography>Your worksheets</Typography>
+      <Typography variant="h3">{"1 of 3"}</Typography>
+    </Stack>
+    <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
+      <Typography>Your videos</Typography>
+      <Typography variant="h3">{"1 of 3"}</Typography>
+    </Stack>
+    <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
+      <Typography>Free trial remaining</Typography>
+      <Typography variant="h3">25 days left</Typography>
+    </Stack>
+  </AccountPageSection>
 );
 
 const AccountPageDetailsSection = (props: {}) => {
@@ -146,11 +172,20 @@ export default function AccountPageContents(props: IAccountPageProps) {
   const notificationCtx = React.useContext(NotificationContext);
   const { logout } = useAuth0();
 
-  const [showFailure, setShowFailure] = useState<boolean>(false);
+  // const userDetails = useUserContext().user;
+  const { user } = useAuth0();
 
   const [name, setName] = useState<string>("");
-  const [teachingName, setTeachingName] = useState<string>("");
+  //const [teachingName, setTeachingName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    user?.name && setName(user.name);
+  }, [user?.name]);
+
+  useEffect(() => {
+    user?.email && setEmail(user.email);
+  }, [user?.email]);
 
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] =
     useState<boolean>(false);
@@ -218,17 +253,24 @@ export default function AccountPageContents(props: IAccountPageProps) {
                 <Stack width="100%" spacing="12px" alignItems="center">
                   <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
                     <Typography>My name</Typography>
-                    <UrsorInputField
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setName(event.target.value)
-                      }
-                      value={name}
-                      placeholder={"Name"}
-                      width="100%"
-                      leftAlign
-                    />
+                    <Stack
+                      sx={{
+                        pointerEvents: "none",
+                      }}
+                    >
+                      <UrsorInputField
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => setName(event.target.value)}
+                        value={name}
+                        placeholder={"Name"}
+                        color={PALETTE.secondary.grey[4]}
+                        width="100%"
+                        leftAlign
+                      />
+                    </Stack>
                   </Stack>
-                  <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
+                  {/* <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
                     <Typography>My teaching name</Typography>
                     <UrsorInputField
                       onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -239,7 +281,7 @@ export default function AccountPageContents(props: IAccountPageProps) {
                       width="100%"
                       leftAlign
                     />
-                  </Stack>
+                  </Stack> */}
                   <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
                     <Typography>My email</Typography>
                     <Stack
@@ -262,9 +304,6 @@ export default function AccountPageContents(props: IAccountPageProps) {
                 </Stack>
               </Stack>
             </AccountPageSection>
-            <AccountPageDetailsSection />
-          </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1}>
             <AccountPageSection
               title="Feedback"
               button={{
@@ -280,6 +319,9 @@ export default function AccountPageContents(props: IAccountPageProps) {
                 the app, or let us know if you encounter any bugs or hiccups!
               </Typography>
             </AccountPageSection>
+          </Stack>
+          <Stack spacing={SECTION_SPACING} flex={1}>
+            <AccountPagePlanSection />
             <AccountPageSection title="Boring bits" flex fadeInDelay={1100}>
               <Stack spacing="6px">
                 <a
