@@ -89,7 +89,6 @@ export function WorksheetGeneratorEquationModule(
   const router = useRouter();
 
   const userDetails = useUserContext();
-  console.log(")_)_)_)_)_)rrrrrrrrrrr", userDetails);
 
   useEffect(() => {
     setPreviewWorksheet(

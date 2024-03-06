@@ -147,7 +147,7 @@ export default function LandingPageContents(props: {
     title: string;
     links: {
       urlId: string;
-      imageString: string;
+      imageString?: string;
       title: string;
       text: string;
     }[];

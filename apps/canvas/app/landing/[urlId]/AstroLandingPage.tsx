@@ -8,6 +8,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
+import Head from "next/head";
 
 export default function AstroLandingPage(props: {
   mobile: boolean;
@@ -18,6 +19,10 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack width="100vw" height="100vh" pt="100px" alignItems="center">
+      <Head>
+        <title>LOOOL</title>
+        <meta name="description">ABBBB</meta>
+      </Head>
       {/* <Header mobile={props.mobile} /> */}
       <Stack
         spacing="36px"

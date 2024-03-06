@@ -185,7 +185,7 @@ export default function Sidebar(props: ISidebarProps) {
       tourId: "home-button",
       icon: HomeIcon,
       title: "Home",
-      callback: () => null, //navigate("/library"),
+      callback: () => router.push("/dashboard"),
     },
     {
       id: "browser",
