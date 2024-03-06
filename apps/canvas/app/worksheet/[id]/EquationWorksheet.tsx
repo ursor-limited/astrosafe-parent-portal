@@ -11,19 +11,14 @@ import {
   EquationOrientation,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
+import AstroWorksheetPage from "./AstroWorksheetPage";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
 
-const HORIZONTAL_FIRST_PAGE_ROWS = 8;
-const HORIZONTAL_OTHER_PAGES_ROWS = 10;
-const VERTICAL_FIRST_PAGE_ROWS = 5;
-const VERTICAL_OTHER_PAGES_ROWS = 6;
-const DIVISION_FIRST_PAGE_ROWS = 3;
-const DIVISION_OTHER_PAGES_ROWS = 3;
-
-export const A4_WIDTH = "210mm";
-export const A4_HEIGHT = "297mm";
+const HORIZONTAL_ROWS = 8;
+const VERTICAL_ROWS = 5;
+const DIVISION_ROWS = 3;
 
 export interface IWorksheetQuestion {
   number: number;
@@ -263,7 +258,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
-      answers?: boolean;
+      showAnswers?: boolean;
       pageIndex?: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
@@ -300,29 +295,23 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
           _.isNumber(props.pageIndex)
             ? props.topic === "division" && props.orientation === "vertical"
               ? props.pageIndex === 0
-                ? rowz.slice(0, DIVISION_FIRST_PAGE_ROWS)
+                ? rowz.slice(0, DIVISION_ROWS)
                 : rowz.slice(
-                    DIVISION_FIRST_PAGE_ROWS +
-                      (props.pageIndex! - 1) * DIVISION_OTHER_PAGES_ROWS,
-                    DIVISION_FIRST_PAGE_ROWS +
-                      props.pageIndex! * DIVISION_OTHER_PAGES_ROWS
+                    DIVISION_ROWS + (props.pageIndex! - 1) * DIVISION_ROWS,
+                    DIVISION_ROWS + props.pageIndex! * DIVISION_ROWS
                   )
               : props.orientation === "horizontal"
               ? props.pageIndex === 0
-                ? rowz.slice(0, HORIZONTAL_FIRST_PAGE_ROWS)
+                ? rowz.slice(0, HORIZONTAL_ROWS)
                 : rowz.slice(
-                    HORIZONTAL_FIRST_PAGE_ROWS +
-                      (props.pageIndex! - 1) * HORIZONTAL_OTHER_PAGES_ROWS,
-                    HORIZONTAL_FIRST_PAGE_ROWS +
-                      props.pageIndex! * HORIZONTAL_OTHER_PAGES_ROWS
+                    HORIZONTAL_ROWS + (props.pageIndex! - 1) * HORIZONTAL_ROWS,
+                    HORIZONTAL_ROWS + props.pageIndex! * HORIZONTAL_ROWS
                   )
               : props.pageIndex === 0
-              ? rowz.slice(0, VERTICAL_FIRST_PAGE_ROWS)
+              ? rowz.slice(0, VERTICAL_ROWS)
               : rowz.slice(
-                  VERTICAL_FIRST_PAGE_ROWS +
-                    (props.pageIndex! - 1) * VERTICAL_OTHER_PAGES_ROWS,
-                  VERTICAL_FIRST_PAGE_ROWS +
-                    props.pageIndex! * VERTICAL_OTHER_PAGES_ROWS
+                  VERTICAL_ROWS + (props.pageIndex! - 1) * VERTICAL_ROWS,
+                  VERTICAL_ROWS + props.pageIndex! * VERTICAL_ROWS
                 )
             : rowz
         );
@@ -336,130 +325,74 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
     ]);
 
     return (
-      <div
-        style={{
-          position: "relative",
-          width: A4_WIDTH,
-          height: A4_HEIGHT,
-        }}
-        id={props.printableId}
+      <AstroWorksheetPage
+        title={props.title}
+        showAnswers={props.showAnswers}
+        printableId={props.printableId}
       >
-        {props.printButtonCallback ? (
-          <Stack
-            position="absolute"
-            right="30px"
-            top="47px"
-            height="50px"
-            width="50px"
-            bgcolor={PALETTE.secondary.purple[2]}
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="100%"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-            onClick={props.printButtonCallback}
-          >
-            <PrinterIcon height="25px" width="25px" />
-          </Stack>
-        ) : null}
-        <Stack
-          ref={ref || setPrintableRef}
-          width={A4_WIDTH}
-          minWidth={A4_WIDTH}
-          minHeight={A4_HEIGHT}
-          maxWidth="90%"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          px="32px"
-          boxSizing="border-box"
-          className={rubik.className}
-        >
-          {!props.pageIndex ? (
+        <Stack width="100%">
+          {rows.map((row, i) => (
             <Stack
-              mt="50px"
-              spacing="4px"
-              width="100%"
-              height="24mm"
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
-              justifyContent="space-between"
+              key={i}
+              flex={1}
+              direction="row"
+              justifyContent={"space-evenly"}
             >
-              {props.title ? (
-                <Typography variant="h2">{props.title}</Typography>
-              ) : (
-                <Stack />
-              )}
-              <Typography bold color={PALETTE.secondary.purple[2]}>
-                {props.answers ? "Answers" : "Try to solve these questions!"}
-              </Typography>
-            </Stack>
-          ) : null}
-          <Stack width="100%">
-            {rows.map((row, i) => (
-              <Stack
-                key={i}
-                flex={1}
-                direction="row"
-                justifyContent={"space-evenly"}
-              >
-                {[
-                  ...row?.map((x, k) => (
-                    <Stack key={k} flex={1} alignItems="center">
-                      {props.topic === "division" ? (
-                        props.orientation === "vertical" ? (
-                          <DivisionVerticalQuestion
-                            key={x}
-                            dividend={props.factor}
-                            answer={x}
-                            showAnswer={!!props.answers}
-                          />
-                        ) : (
-                          <DivisionHorizontalQuestion
-                            key={x}
-                            dividend={props.factor}
-                            answer={x}
-                            showAnswer={!!props.answers}
-                          />
-                        )
-                      ) : props.orientation === "horizontal" ? (
-                        <HorizontalQuestion
+              {[
+                ...row?.map((x, k) => (
+                  <Stack key={k} flex={1} alignItems="center">
+                    {props.topic === "division" ? (
+                      props.orientation === "vertical" ? (
+                        <DivisionVerticalQuestion
                           key={x}
-                          number={props.factor}
-                          multiplier={x}
-                          answer={!!props.answers}
-                          topic={props.topic}
-                          // inputValue={4}
-                          // changeCallback={() => null}
+                          dividend={props.factor}
+                          answer={x}
+                          showAnswer={!!props.showAnswers}
                         />
                       ) : (
-                        <VerticalQuestion
+                        <DivisionHorizontalQuestion
                           key={x}
-                          number={props.factor}
-                          multiplier={x}
-                          answer={!!props.answers}
-                          topic={props.topic}
+                          dividend={props.factor}
+                          answer={x}
+                          showAnswer={!!props.showAnswers}
                         />
-                      )}
-                    </Stack>
-                  )),
-                  ...[
-                    ...Array(
-                      Math.max(
-                        0,
-                        (props.orientation === "horizontal"
-                          ? HORIZONTAL_N_COLUMNS
-                          : VERTICAL_N_COLUMNS) - row.length
                       )
-                    ).keys(),
-                  ].map((j) => <Stack flex={1} key={`filler${j}`} />),
-                ]}
-              </Stack>
-            ))}
-          </Stack>
+                    ) : props.orientation === "horizontal" ? (
+                      <HorizontalQuestion
+                        key={x}
+                        number={props.factor}
+                        multiplier={x}
+                        answer={!!props.showAnswers}
+                        topic={props.topic}
+                        // inputValue={4}
+                        // changeCallback={() => null}
+                      />
+                    ) : (
+                      <VerticalQuestion
+                        key={x}
+                        number={props.factor}
+                        multiplier={x}
+                        answer={!!props.showAnswers}
+                        topic={props.topic}
+                      />
+                    )}
+                  </Stack>
+                )),
+                ...[
+                  ...Array(
+                    Math.max(
+                      0,
+                      (props.orientation === "horizontal"
+                        ? HORIZONTAL_N_COLUMNS
+                        : VERTICAL_N_COLUMNS) - row.length
+                    )
+                  ).keys(),
+                ].map((j) => <Stack flex={1} key={`filler${j}`} />),
+              ]}
+            </Stack>
+          ))}
         </Stack>
-      </div>
+      </AstroWorksheetPage>
     );
   }
 );

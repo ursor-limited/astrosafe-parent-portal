@@ -10,19 +10,12 @@ import {
 import Head from "next/head";
 import { Metadata, ResolvingMetadata } from "next";
 
-type Props = {
+export async function generateMetadata({
+  params,
+}: {
   params: { urlId: string };
-};
-
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+}): Promise<Metadata> {
   const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
   return {
     title: details?.pageTitle,
     description: details?.metaDescription,

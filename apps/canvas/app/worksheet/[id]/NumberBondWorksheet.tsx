@@ -8,6 +8,7 @@ import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
+import AstroWorksheetPage from "./AstroWorksheetPage";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
@@ -171,8 +172,6 @@ const VerticalEquationQuestion = (props: {
   </Stack>
 );
 
-const rubik = Rubik({ subsets: ["latin"] });
-
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
@@ -184,7 +183,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
-      answers?: boolean;
+      showAnswers?: boolean;
       pageIndex?: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
@@ -251,107 +250,56 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
     ]);
 
     return (
-      <div
-        style={{
-          position: "relative",
-          width: A4_WIDTH,
-          height: A4_HEIGHT,
-        }}
-        id={props.printableId}
+      <AstroWorksheetPage
+        title={props.title}
+        showAnswers={props.showAnswers}
+        printableId={props.printableId}
       >
-        {props.printButtonCallback ? (
-          <Stack
-            position="absolute"
-            right="30px"
-            top="47px"
-            height="50px"
-            width="50px"
-            bgcolor={PALETTE.secondary.purple[2]}
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="100%"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-            onClick={props.printButtonCallback}
-          >
-            <PrinterIcon height="25px" width="25px" />
-          </Stack>
-        ) : null}
-        <Stack
-          ref={ref || setPrintableRef}
-          width={A4_WIDTH}
-          minWidth={A4_WIDTH}
-          minHeight={A4_HEIGHT}
-          maxWidth="90%"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          px="32px"
-          boxSizing="border-box"
-          className={rubik.className}
-        >
-          {!props.pageIndex ? (
+        <Stack width="100%">
+          {rows.map((row, i) => (
             <Stack
-              mt="50px"
-              spacing="4px"
-              width="100%"
-              height="24mm"
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              key={i}
+              flex={1}
+              direction="row"
+              justifyContent={"space-evenly"}
             >
-              <Typography variant="h2">{props.title}</Typography>
-              <Typography bold color={PALETTE.secondary.purple[2]}>
-                {props.answers ? "Answers" : "Try to solve these questions!"}
-              </Typography>
+              {[
+                ...row?.map((x, k) => (
+                  <Stack key={k} flex={1} alignItems="center">
+                    {props.orientation === "horizontal" ? (
+                      <HorizontalEquationQuestion
+                        result={props.result}
+                        left={x?.[0]}
+                        right={x?.[1]}
+                        both={props.both}
+                        showAnswer={!!props.answers}
+                      />
+                    ) : (
+                      <VerticalEquationQuestion
+                        result={props.result}
+                        left={x?.[0]}
+                        right={x?.[1]}
+                        both={props.both}
+                        showAnswer={!!props.answers}
+                      />
+                    )}
+                  </Stack>
+                )),
+                ...[
+                  ...Array(
+                    Math.max(
+                      0,
+                      (props.orientation === "horizontal"
+                        ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                        : NUMBER_BOND_VERTICAL_N_COLUMNS) - row.length
+                    )
+                  ).keys(),
+                ].map((j) => <Stack flex={1} key={`filler${j}`} />),
+              ]}
             </Stack>
-          ) : null}
-          <Stack width="100%">
-            {rows.map((row, i) => (
-              <Stack
-                key={i}
-                flex={1}
-                direction="row"
-                justifyContent={"space-evenly"}
-              >
-                {[
-                  ...row?.map((x, k) => (
-                    <Stack key={k} flex={1} alignItems="center">
-                      {props.orientation === "horizontal" ? (
-                        <HorizontalEquationQuestion
-                          result={props.result}
-                          left={x?.[0]}
-                          right={x?.[1]}
-                          both={props.both}
-                          showAnswer={!!props.answers}
-                        />
-                      ) : (
-                        <VerticalEquationQuestion
-                          result={props.result}
-                          left={x?.[0]}
-                          right={x?.[1]}
-                          both={props.both}
-                          showAnswer={!!props.answers}
-                        />
-                      )}
-                    </Stack>
-                  )),
-                  ...[
-                    ...Array(
-                      Math.max(
-                        0,
-                        (props.orientation === "horizontal"
-                          ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
-                          : NUMBER_BOND_VERTICAL_N_COLUMNS) - row.length
-                      )
-                    ).keys(),
-                  ].map((j) => <Stack flex={1} key={`filler${j}`} />),
-                ]}
-              </Stack>
-            ))}
-          </Stack>
+          ))}
         </Stack>
-      </div>
+      </AstroWorksheetPage>
     );
   }
 );
