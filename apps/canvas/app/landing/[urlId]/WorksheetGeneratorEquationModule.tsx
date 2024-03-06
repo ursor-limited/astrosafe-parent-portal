@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Captioned } from "./LandingPageContents";
 import {
   CategorySelectionButton,
-  DEFAULT_TITLE,
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
@@ -106,7 +105,7 @@ export function WorksheetGeneratorEquationModule(
     );
     props.setCreationCallback(() =>
       ApiController.createEquationWorksheet(
-        props.title || DEFAULT_TITLE,
+        props.title,
         orientation,
         props.topic,
         factor,

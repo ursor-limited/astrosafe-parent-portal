@@ -7,10 +7,7 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
-import {
-  DEFAULT_TITLE,
-  EquationOrientation,
-} from "@/app/landing/[urlId]/WorksheetGenerator";
+import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;

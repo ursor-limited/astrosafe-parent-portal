@@ -8,7 +8,6 @@ import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import {
-  DEFAULT_TITLE,
   EquationOrientation,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
