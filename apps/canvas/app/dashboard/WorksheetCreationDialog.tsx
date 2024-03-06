@@ -14,14 +14,13 @@ const WorksheetCreationDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Create worksheet"
-      title="Create a math worksheet"
       open={props.open}
       onCloseCallback={props.closeCallback}
       maxWidth="880px"
       dynamicHeight
       noOverflowHidden
     >
-      <WorksheetGenerator noBackground />
+      <WorksheetGenerator />
     </UrsorDialog>
   );
 };

@@ -12,7 +12,7 @@ import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
-import _ from "lodash";
+import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
@@ -30,6 +30,7 @@ import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
+import StepperOverlay from "./StepperOverlay";
 
 export const GRID_SPACING = "20px";
 
@@ -208,71 +209,84 @@ const ToolButton = (props: {
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   onClick: () => void;
-}) => (
-  <Stack
-    direction="row"
-    width="360px"
-    minHeight="66px"
-    borderRadius="8px"
-    spacing="12px"
-    bgcolor="rgb(255,255,255)"
-    boxShadow="0 0 16px rgba(0,0,0,0.02)"
-    //border={`3px solid ${alpha(props.color, 0.5)}`}
-    onClick={props.onClick}
-    sx={{
-      cursor: "pointer",
-      "&:hover": { opacity: 0.6 },
-      transition: "0.2s",
-      svg: {
-        path: {
-          fill: props.color,
-        },
-      },
-    }}
-  >
-    <Stack
-      width="66px"
-      height="100%"
-      //bgcolor={props.color}
-      alignItems="center"
-      justifyContent="center"
-      borderRadius="4px 0 0 4px"
-    >
-      <props.icon height="35px" width="35px" />
-    </Stack>
-    <Stack flex={1} py="11px" justifyContent="space-between">
+}) => {
+  const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
+  return (
+    <>
       <Stack
         direction="row"
-        spacing="10px"
-        alignItems="center"
+        width="360px"
+        minHeight="66px"
+        borderRadius="8px"
+        spacing="12px"
+        bgcolor="rgb(255,255,255)"
+        boxShadow="0 0 16px rgba(0,0,0,0.02)"
+        //border={`3px solid ${alpha(props.color, 0.5)}`}
+        onClick={props.onClick}
         sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
           svg: {
             path: {
-              fill: `${PALETTE.secondary.grey[4]} !important`,
+              fill: props.color,
             },
           },
         }}
       >
-        <Typography variant="medium" bold color={props.color}>
-          {props.title}
-        </Typography>
-        <Stack>
-          <InfoIcon width="14px" height="14px" />
+        <Stack
+          width="66px"
+          height="100%"
+          alignItems="center"
+          justifyContent="center"
+          borderRadius="4px 0 0 4px"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
+        >
+          <props.icon height="35px" width="35px" />
+        </Stack>
+        <Stack flex={1} py="11px" justifyContent="space-between">
+          <Stack
+            direction="row"
+            spacing="10px"
+            alignItems="center"
+            sx={{
+              svg: {
+                path: {
+                  fill: `${PALETTE.secondary.grey[4]} !important`,
+                },
+              },
+            }}
+          >
+            <Typography variant="medium" bold color={props.color}>
+              {props.title}
+            </Typography>
+            <Stack onClick={() => setOverlayOpen(true)}>
+              <InfoIcon width="14px" height="14px" />
+            </Stack>
+          </Stack>
+          <Typography
+            variant="small"
+            sx={{ fontWeight: 380 }}
+            color={alpha(props.color, 0.7)}
+          >
+            {props.description}
+          </Typography>
+        </Stack>
+        <Stack height="100%" justifyContent="center" pr="15px">
+          <PlusIcon height="24px" width="24px" />
         </Stack>
       </Stack>
-      <Typography
-        variant="small"
-        sx={{ fontWeight: 380 }}
-        color={alpha(props.color, 0.7)}
-      >
-        {props.description}
-      </Typography>
-    </Stack>
-    <Stack height="100%" justifyContent="center" pr="15px">
-      <PlusIcon height="24px" width="24px" />
-    </Stack>
-  </Stack>
-);
+      <StepperOverlay
+        open={overlayOpen}
+        closeCallback={() => setOverlayOpen(false)}
+      />
+    </>
+  );
+};
 
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
