@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import EquationWorksheet, { A4_WIDTH } from "./EquationWorksheet";
+import EquationWorksheet from "./EquationWorksheet";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
   IEquationWorksheetParameters,
@@ -13,14 +13,6 @@ import {
   IWorksheetParameters,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
-import NumberBondWorksheet, {
-  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
-  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
-  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
-  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
-  NUMBER_BOND_VERTICAL_N_COLUMNS,
-  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
-} from "./NumberBondWorksheet";
 import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
@@ -42,6 +34,12 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useAuth0 } from "@auth0/auth0-react";
 import NotificationContext from "@/app/components/NotificationContext";
+import NumberBondWorksheet, {
+  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_ROWS_N,
+  NUMBER_BOND_VERTICAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_ROWS_N,
+} from "./NumberBondWorksheet";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -372,14 +370,14 @@ export default function WorksheetPageContents(props: IWorksheet) {
           Math.ceil(
             (params.pairs.length -
               (params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
-                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (params.orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
               ((params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
-                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (params.orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS))

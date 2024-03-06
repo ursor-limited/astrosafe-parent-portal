@@ -1,11 +1,9 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
@@ -13,10 +11,8 @@ import AstroWorksheetPage from "./AstroWorksheetPage";
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
 
-export const NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
-export const NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
-export const NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N = 3;
-export const NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N = 4;
+export const NUMBER_BOND_HORIZONTAL_ROWS_N = 8;
+export const NUMBER_BOND_VERTICAL_ROWS_N = 3;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -205,18 +201,12 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
-    const [firstPageRowsN, setFirstPageRowsN] = useState<number>(1);
-    const [otherPagesRowsN, setOtherPagesRowsN] = useState<number>(1);
+    const [pageRowsN, setPageRowsN] = useState<number>(1);
     useEffect(() => {
-      setFirstPageRowsN(
+      setPageRowsN(
         props.orientation === "horizontal"
-          ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
-          : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N
-      );
-      setOtherPagesRowsN(
-        props.orientation === "horizontal"
-          ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
-          : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N
+          ? NUMBER_BOND_HORIZONTAL_ROWS_N
+          : NUMBER_BOND_VERTICAL_ROWS_N
       );
     }, [props.orientation]);
 
@@ -232,10 +222,10 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         setRows(
           _.isNumber(props.pageIndex)
             ? props.pageIndex === 0
-              ? rowz.slice(0, firstPageRowsN)
+              ? rowz.slice(0, pageRowsN)
               : rowz.slice(
-                  firstPageRowsN + (props.pageIndex! - 1) * otherPagesRowsN,
-                  firstPageRowsN + props.pageIndex! * otherPagesRowsN
+                  pageRowsN + (props.pageIndex! - 1) * pageRowsN,
+                  pageRowsN + props.pageIndex! * pageRowsN
                 )
             : rowz
         );
@@ -245,8 +235,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       props.pageIndex,
       rows.length,
       props.orientation,
-      firstPageRowsN,
-      otherPagesRowsN,
+      pageRowsN,
     ]);
 
     return (
@@ -272,7 +261,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                         left={x?.[0]}
                         right={x?.[1]}
                         both={props.both}
-                        showAnswer={!!props.answers}
+                        showAnswer={!!props.showAnswers}
                       />
                     ) : (
                       <VerticalEquationQuestion
@@ -280,7 +269,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                         left={x?.[0]}
                         right={x?.[1]}
                         both={props.both}
-                        showAnswer={!!props.answers}
+                        showAnswer={!!props.showAnswers}
                       />
                     )}
                   </Stack>

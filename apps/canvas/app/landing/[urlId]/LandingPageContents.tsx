@@ -24,7 +24,6 @@ import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/EquationWorksheet";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
