@@ -72,7 +72,6 @@ export const Captioned = (props: {
 }) => (
   <Stack
     spacing="8px"
-    flex={1}
     sx={{
       opacity: props.disabled ? 0.45 : 1,
       pointerEvents: props.disabled ? "none" : undefined,
