@@ -219,20 +219,11 @@ const ToolButton = (props: {
     <>
       <Stack
         direction="row"
-        width="360px"
+        width="370px"
         minHeight="66px"
         borderRadius="8px"
-        bgcolor="rgb(255,255,255)"
         boxShadow="0 0 16px rgba(0,0,0,0.02)"
-        //border={`3px solid ${alpha(props.color, 0.5)}`}
-
-        sx={{
-          svg: {
-            path: {
-              fill: props.color,
-            },
-          },
-        }}
+        bgcolor="rgb(255,255,255)"
         position="relative"
       >
         <Stack
@@ -266,9 +257,9 @@ const ToolButton = (props: {
         >
           <InfoIcon width="14px" height="14px" />
         </Stack>
-        <Stack direction="row" spacing="12px" flex={1}>
+        <Stack direction="row" spacing="14px" flex={1}>
           <Stack
-            width="66px"
+            width="70px"
             height="100%"
             alignItems="center"
             justifyContent="center"
@@ -278,6 +269,7 @@ const ToolButton = (props: {
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
             }}
+            bgcolor={props.color}
           >
             <props.icon height="35px" width="35px" />
           </Stack>
@@ -293,7 +285,18 @@ const ToolButton = (props: {
               {props.description}
             </Typography>
           </Stack>
-          <Stack height="100%" justifyContent="center" pr="15px">
+          <Stack
+            height="100%"
+            justifyContent="center"
+            pr="15px"
+            sx={{
+              svg: {
+                path: {
+                  fill: props.color,
+                },
+              },
+            }}
+          >
             <PlusIcon height="24px" width="24px" />
           </Stack>
         </Stack>
@@ -485,7 +488,7 @@ export default function DashboardPageContents() {
               onClick={() => {
                 setVideoCreationDialogOpen(true);
               }}
-              infoButtonPosition={75}
+              infoButtonPosition={76}
               infoTitle="Safe video link"
               infoBody={
                 "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
