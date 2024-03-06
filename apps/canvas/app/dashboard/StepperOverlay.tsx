@@ -2,11 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { Stack } from "@mui/system";
 import { Dialog } from "@mui/material";
-import Fire from "../../images/Fire.png";
+import X from "@/images/icons/X.svg";
+
 import { BACKDROP_STYLE } from "../components/UrsorDialog";
 import { PALETTE, Typography } from "ui";
-import { IntroSteps } from "../landing/[urlId]/IntroSteps";
-import { createPortal } from "react-dom";
 
 const ILLUST_SIZE = "14px";
 
@@ -15,55 +14,54 @@ export interface IStepperOverlayProps {
   closeCallback: () => void;
 }
 
-export default function StepperOverlay(props: IStepperOverlayProps) {
-  return props.open ? (
-    createPortal(
+export default function ContentAgeInfoDialog(props: IStepperOverlayProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <Dialog
+      transitionDuration={800}
+      open={props.open}
+      onClose={props.closeCallback}
+      PaperProps={{
+        style: {
+          width: "381px",
+          borderRadius: "8px",
+        },
+      }}
+      sx={{
+        p: "10px",
+        ".MuiBackdrop-root": BACKDROP_STYLE,
+      }}
+    >
       <Stack
         position="absolute"
-        top={0}
-        left={0}
-        height="100vh"
-        width="100vw"
-        zIndex={99999999}
+        right="16px"
+        top="22px"
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
+        }}
         onClick={props.closeCallback}
+        zIndex={2}
       >
-        <Stack
-          height="100%"
-          width="100%"
-          position="relative"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Stack
-            position="absolute"
-            top={0}
-            left={0}
-            height="100%"
-            width="100%"
-            bgcolor="rgba(0,0,0,0.5)"
-            sx={{ backdropFilter: "blur(3px)" }}
-          />
-          <IntroSteps
-            step1={{
-              title: "BRO",
-              body: "Dwayne Johnson is the best.",
-            }}
-            step2={{
-              title: "BAAAA",
-              body: "Not gonna lie, this is some awesome trash.",
-            }}
-            step3={{
-              title: "FOOOOOO",
-              body: "Bro, who do ya think ya are.",
-            }}
-            mobile={false}
-            backgroundOpacity={0.72}
-          />
+        <X height="22px" width="22px" />
+      </Stack>
+      <Stack
+        bgcolor="rgb(255,255,255)"
+        flex={1}
+        p="20px"
+        boxSizing="border-box"
+        spacing="16px"
+      >
+        <Stack spacing="3px">
+          <Typography bold variant="medium">
+            Bro!!!
+          </Typography>
+          <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+            Wha are we gonna do fo dinnah tonyte? Mac or kfc?
+          </Typography>
         </Stack>
-      </Stack>,
-      document.body
-    )
-  ) : (
-    <></>
+      </Stack>
+    </Dialog>
   );
 }

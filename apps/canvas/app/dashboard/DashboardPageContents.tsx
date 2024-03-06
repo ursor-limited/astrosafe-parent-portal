@@ -208,6 +208,7 @@ const ToolButton = (props: {
   title: string;
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  infoButtonPosition: number;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -218,66 +219,80 @@ const ToolButton = (props: {
         width="360px"
         minHeight="66px"
         borderRadius="8px"
-        spacing="12px"
         bgcolor="rgb(255,255,255)"
         boxShadow="0 0 16px rgba(0,0,0,0.02)"
         //border={`3px solid ${alpha(props.color, 0.5)}`}
-        onClick={props.onClick}
+
         sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
           svg: {
             path: {
               fill: props.color,
             },
           },
         }}
+        position="relative"
       >
         <Stack
-          width="66px"
+          width="100%"
           height="100%"
-          alignItems="center"
-          justifyContent="center"
-          borderRadius="4px 0 0 4px"
+          position="absolute"
+          top={0}
+          left={0}
+          onClick={props.onClick}
+          sx={{
+            cursor: "pointer",
+            "&:hover": { background: "rgba(255,255,255,0.5)" },
+            transition: "0.2s",
+          }}
+        />
+        <Stack
+          position="absolute"
           sx={{
             cursor: "pointer",
             "&:hover": { opacity: 0.6 },
             transition: "0.2s",
-          }}
-        >
-          <props.icon height="35px" width="35px" />
-        </Stack>
-        <Stack flex={1} py="11px" justifyContent="space-between">
-          <Stack
-            direction="row"
-            spacing="10px"
-            alignItems="center"
-            sx={{
-              svg: {
-                path: {
-                  fill: `${PALETTE.secondary.grey[4]} !important`,
-                },
+            svg: {
+              path: {
+                fill: `${PALETTE.secondary.grey[4]} !important`,
               },
+            },
+          }}
+          onClick={() => setOverlayOpen(true)}
+          top="16px"
+          right={`${props.infoButtonPosition}px`}
+        >
+          <InfoIcon width="14px" height="14px" />
+        </Stack>
+        <Stack direction="row" spacing="12px" flex={1}>
+          <Stack
+            width="66px"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="4px 0 0 4px"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
             }}
           >
+            <props.icon height="35px" width="35px" />
+          </Stack>
+          <Stack flex={1} py="11px" justifyContent="space-between">
             <Typography variant="medium" bold color={props.color}>
               {props.title}
             </Typography>
-            <Stack onClick={() => setOverlayOpen(true)}>
-              <InfoIcon width="14px" height="14px" />
-            </Stack>
+            <Typography
+              variant="small"
+              sx={{ fontWeight: 380 }}
+              color={alpha(props.color, 0.7)}
+            >
+              {props.description}
+            </Typography>
           </Stack>
-          <Typography
-            variant="small"
-            sx={{ fontWeight: 380 }}
-            color={alpha(props.color, 0.7)}
-          >
-            {props.description}
-          </Typography>
-        </Stack>
-        <Stack height="100%" justifyContent="center" pr="15px">
-          <PlusIcon height="24px" width="24px" />
+          <Stack height="100%" justifyContent="center" pr="15px">
+            <PlusIcon height="24px" width="24px" />
+          </Stack>
         </Stack>
       </Stack>
       <StepperOverlay
@@ -464,6 +479,7 @@ export default function DashboardPageContents() {
               onClick={() => {
                 setVideoCreationDialogOpen(true);
               }}
+              infoButtonPosition={75}
             />
             <ToolButton
               title="Create math worksheet"
@@ -471,6 +487,7 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
+              infoButtonPosition={57}
             />
           </Stack>
         </UrsorFadeIn>
