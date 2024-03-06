@@ -447,6 +447,7 @@ export default function DashboardPageContents() {
         title="Home"
         bodyWidth="100%"
         selectedSidebarItemId="home"
+        scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         // button={{
         //   text: "Upgrade",
@@ -515,7 +516,7 @@ export default function DashboardPageContents() {
             />
             <Stack
               direction="row"
-              spacing="30px"
+              spacing="12px"
               alignItems="center"
               width="fit-content"
             >
@@ -545,7 +546,7 @@ export default function DashboardPageContents() {
           ref={setColumnsContainerRef}
           overflow="hidden"
         >
-          <Stack flex={1} overflow="scroll">
+          <Stack flex={1}>
             <Stack
               flex={1}
               pb="110px"

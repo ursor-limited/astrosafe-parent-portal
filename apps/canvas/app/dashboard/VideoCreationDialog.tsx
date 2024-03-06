@@ -14,6 +14,7 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import SignupPromptDialog from "./SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
+import _ from "lodash";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -249,14 +250,18 @@ const VideoCreationDialog = (props: {
                     value={range?.[0] ?? 0}
                     incrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [Math.min(duration, range[0] + 1), range[1]]
                           : undefined
                       )
                     }
                     decrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [Math.max(0, range[0] - 1), range[1]]
                           : undefined
                       )
@@ -276,14 +281,18 @@ const VideoCreationDialog = (props: {
                     value={range?.[1] ?? 0}
                     incrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [range[0], Math.min(duration, range[1] + 1)]
                           : undefined
                       )
                     }
                     decrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [range[0], Math.max(0, range[1] - 1)]
                           : undefined
                       )
