@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { Captioned } from "./LandingPageContents";
 import {
   CategorySelectionButton,
-  DEFAULT_TITLE,
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
@@ -90,6 +89,7 @@ export function WorksheetGeneratorEquationModule(
   const router = useRouter();
 
   const userDetails = useUserContext();
+  console.log(")_)_)_)_)_)rrrrrrrrrrr", userDetails);
 
   useEffect(() => {
     setPreviewWorksheet(
@@ -105,12 +105,12 @@ export function WorksheetGeneratorEquationModule(
     );
     props.setCreationCallback(() =>
       ApiController.createEquationWorksheet(
-        props.title || DEFAULT_TITLE,
+        props.title,
         orientation,
         props.topic,
         factor,
         multipliers,
-        userDetails.user?.id
+        userDetails?.user?.id
       )
         .then((ws) => {
           router.push(`/worksheet/${ws.id}`);
@@ -126,6 +126,7 @@ export function WorksheetGeneratorEquationModule(
     multipliers,
     props.pageIndex,
     orientation,
+    userDetails.user?.id,
   ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);

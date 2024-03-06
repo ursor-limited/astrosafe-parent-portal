@@ -23,7 +23,6 @@ import NumberBondWorksheet, {
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 import { useUserContext } from "@/app/components/UserContext";
 
-const DEFAULT_TITLE = "Problem sheet";
 const MAX_N_PROBLEMS = 100;
 
 export function WorksheetGeneratorNumberBondModule(
@@ -118,7 +117,7 @@ export function WorksheetGeneratorNumberBondModule(
     );
     props.setCreationCallback(() =>
       ApiController.createNumberBondWorksheet(
-        props.title || DEFAULT_TITLE,
+        props.title,
         orientation,
         result,
         pairs,
@@ -130,7 +129,15 @@ export function WorksheetGeneratorNumberBondModule(
         })
         .then((ws) => ws.id)
     );
-  }, [props.title, result, props.pageIndex, orientation, pairs, both]);
+  }, [
+    props.title,
+    result,
+    props.pageIndex,
+    orientation,
+    pairs,
+    both,
+    userDetails.user?.id,
+  ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Stack } from "@mui/system";
-import UrsorPopover from "./UrsorPopover";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { PALETTE, UrsorButton } from "ui";
 import UrsorSelectList from "./UrsorSelectList";
+import dynamic from "next/dynamic";
+
+const UrsorPopover = dynamic(
+  () => import("@/app/components/UrsorPopover"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export interface IClassSortButtonProps<T extends string> {
   selected: T;

@@ -121,7 +121,6 @@ const RefreshButton = (props: { onClick: () => void }) => {
 };
 
 const TITLE_CHARACTER_LIMIT = 30;
-export const DEFAULT_TITLE = "Multiplication Sheet";
 
 export const CategorySelectionButton = (props: {
   selected: boolean;
@@ -189,7 +188,7 @@ export default function WorksheetGenerator(props: {
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
-  const [title, setTitle] = useState<string>(DEFAULT_TITLE);
+  const [title, setTitle] = useState<string>("");
   const [nProblems, setNProblems] = useState<number>(10);
 
   useEffect(() => props.topic && setTopic(props.topic), [props.topic]);

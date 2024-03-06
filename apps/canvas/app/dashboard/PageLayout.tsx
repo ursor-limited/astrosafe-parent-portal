@@ -225,15 +225,13 @@ export default function PageLayout(props: IPageLayoutProps) {
         </Stack>
         <Stack
           sx={{
-            height: "100%",
-            width: "100%",
             display: "flex",
             justifyContent: "center",
           }}
+          width={props.bodyWidth ?? "100%"}
+          overflow="hidden"
         >
-          <Stack width={props.bodyWidth ?? "100%"} height="100%">
-            {props.children}
-          </Stack>
+          {props.children}
         </Stack>
       </Stack>
     </Stack>

@@ -18,6 +18,7 @@ export interface IUserContext {
   user?: ISafeTubeUser;
   loading?: boolean;
   paymentLink?: string;
+  clear?: () => void;
 }
 
 const UserContext = createContext<IUserContext>({});
@@ -38,7 +39,7 @@ const UserProvider = (props: IUserProviderProps) => {
   const [safeTubeUser, setSafeTubeUser] = useState<ISafeTubeUser | undefined>(
     undefined
   );
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
@@ -56,6 +57,10 @@ const UserProvider = (props: IUserProviderProps) => {
     }
   }, [user?.email]);
 
+  // useEffect(() => {
+  //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
+  // }, [isLoading, user?.email, safeTubeUser]);
+
   const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
   useEffect(() => {
     user?.email &&
@@ -72,6 +77,7 @@ const UserProvider = (props: IUserProviderProps) => {
         user: safeTubeUser,
         loading,
         paymentLink,
+        clear: () => setSafeTubeUser(undefined),
       }}
     >
       {props.children}

@@ -29,6 +29,7 @@ import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
+import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -257,7 +258,7 @@ const ToolButton = (props: {
   </Stack>
 );
 
-export default function LandingPageContents() {
+export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -295,6 +296,8 @@ export default function LandingPageContents() {
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
     useState<AstroContentSort>("createdAt");
+
+  console.log(userDetails.user);
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
@@ -372,12 +375,26 @@ export default function LandingPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      console.log("aaaa", userDetails.user?.id);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
         () => loadWorksheets()
       );
       setFreeWorksheetIds([]);
     }
   }, [userDetails.user?.id, freeWorksheetIds.length]);
+
+  const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
+  }, []);
+  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setSignupPromptDialogOpen(
+      signupPromptDialogCanOpen && !userDetails.loading && !userDetails.user?.id
+    );
+  }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
   return (
     <>
@@ -407,24 +424,26 @@ export default function LandingPageContents() {
           </Stack>
         }
       >
-        <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-          <ToolButton
-            title="Create safe video link"
-            description="Free of ads. Safe to share."
-            color={PALETTE.secondary.blue[3]}
-            icon={CirclePlayIcon}
-            onClick={() => {
-              setVideoCreationDialogOpen(true);
-            }}
-          />
-          <ToolButton
-            title="Create math worksheet"
-            description="Printable & finished in seconds."
-            color={PALETTE.secondary.pink[5]}
-            icon={ChecklistIcon}
-            onClick={() => setWorksheetCreationDialogOpen(true)}
-          />
-        </Stack>
+        <UrsorFadeIn duration={700}>
+          <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
+            <ToolButton
+              title="Create safe video link"
+              description="Free of ads. Safe to share."
+              color={PALETTE.secondary.blue[3]}
+              icon={CirclePlayIcon}
+              onClick={() => {
+                setVideoCreationDialogOpen(true);
+              }}
+            />
+            <ToolButton
+              title="Create math worksheet"
+              description="Printable & finished in seconds."
+              color={PALETTE.secondary.pink[5]}
+              icon={ChecklistIcon}
+              onClick={() => setWorksheetCreationDialogOpen(true)}
+            />
+          </Stack>
+        </UrsorFadeIn>
 
         <Stack
           minHeight="50px"
@@ -437,46 +456,47 @@ export default function LandingPageContents() {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack
-          pl={`${SIDEBAR_X_MARGIN}px`}
-          direction="row"
-          justifyContent="space-between"
-        >
-          <FilterRow
-            selected={selectedContentType}
-            callback={(newSelected) => setSelectedContentType(newSelected)}
-          />
+        <UrsorFadeIn duration={700} delay={200}>
           <Stack
+            pl={`${SIDEBAR_X_MARGIN}px`}
             direction="row"
-            spacing="30px"
-            alignItems="center"
-            width="fit-content"
+            justifyContent="space-between"
           >
-            <SearchInput
-              value={searchValue ?? ""}
-              callback={(value: string) => {
-                setSearchValue(value);
-              }}
-              clearCallback={() => setSearchValue(undefined)}
-              shadow
+            <FilterRow
+              selected={selectedContentType}
+              callback={(newSelected) => setSelectedContentType(newSelected)}
             />
-            <SortButton
-              selected={selectedSort}
-              callback={(id) => setSelectedSort(id)}
-              types={["abc", "createdAt"]}
-              displayNames={{
-                abc: "Alphabetical",
-                createdAt: "Most recent",
-              }}
-            />
+            <Stack
+              direction="row"
+              spacing="30px"
+              alignItems="center"
+              width="fit-content"
+            >
+              <SearchInput
+                value={searchValue ?? ""}
+                callback={(value: string) => {
+                  setSearchValue(value);
+                }}
+                clearCallback={() => setSearchValue(undefined)}
+                shadow
+              />
+              <SortButton
+                selected={selectedSort}
+                callback={(id) => setSelectedSort(id)}
+                types={["abc", "createdAt"]}
+                displayNames={{
+                  abc: "Alphabetical",
+                  createdAt: "Most recent",
+                }}
+              />
+            </Stack>
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
         <Stack
           pt="24px"
           flex={1}
           ref={setColumnsContainerRef}
           overflow="hidden"
-          pb="64px"
         >
           <Stack flex={1} overflow="scroll">
             <Stack
@@ -534,6 +554,10 @@ export default function LandingPageContents() {
             document.body
           )
         : null}
+      <DashboardSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+      />
     </>
   );
 }

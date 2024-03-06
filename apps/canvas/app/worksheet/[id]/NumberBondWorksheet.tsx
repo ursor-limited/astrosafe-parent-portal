@@ -7,10 +7,7 @@ import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
-import {
-  DEFAULT_TITLE,
-  EquationOrientation,
-} from "@/app/landing/[urlId]/WorksheetGenerator";
+import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
@@ -179,7 +176,7 @@ const rubik = Rubik({ subsets: ["latin"] });
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
-      title: string;
+      title?: string;
       result: number;
       both: boolean;
       pairs: number[][];
@@ -303,9 +300,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
               height="24mm"
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
             >
-              <Typography variant="h2">
-                {props.title || DEFAULT_TITLE}
-              </Typography>
+              <Typography variant="h2">{props.title}</Typography>
               <Typography bold color={PALETTE.secondary.purple[2]}>
                 {props.answers ? "Answers" : "Try to solve these questions!"}
               </Typography>

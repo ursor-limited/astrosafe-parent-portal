@@ -1,6 +1,3 @@
-"use client";
-
-import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import GraphIllustration from "@/images/GraphIllustration.svg";
@@ -10,24 +7,25 @@ import { useLocalStorage } from "usehooks-ts";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";
+import UrsorDialog from "../components/UrsorDialog";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/dashboardSkreenshot.png";
 
-const WorksheetSignupPromptDialog = (props: {
+const DashboardSignupPromptDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  callback: () => void;
   mobile?: boolean;
 }) => {
+  const { loginWithPopup, loginWithRedirect } = useAuth0();
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title={"Your math worksheet is ready"}
+      title={"Your dashboard awaits"}
       subtitle={[
-        "Create a free account to download and print your worksheet",
-        "and save time preparing your lessons!",
+        "Create a free account to create and store",
+        "videos and worksheets.",
       ]}
       open={props.open}
       // button={{
@@ -56,7 +54,13 @@ const WorksheetSignupPromptDialog = (props: {
         >
           <UrsorButton
             backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-            onClick={props.callback}
+            onClick={() => {
+              props.mobile ? loginWithPopup() : loginWithPopup();
+              //props.signinCallback();
+              // mixpanel.track("clicked signup button", {
+              //   freeWorksheetCreationCount,
+              // });
+            }}
             endIcon={PersonIcon}
           >
             Sign in
@@ -86,4 +90,4 @@ const WorksheetSignupPromptDialog = (props: {
   );
 };
 
-export default WorksheetSignupPromptDialog;
+export default DashboardSignupPromptDialog;
