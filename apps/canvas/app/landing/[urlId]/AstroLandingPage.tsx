@@ -15,6 +15,12 @@ export default function AstroLandingPage(props: {
   title: string[];
   subtitle: string;
   viewports: React.ReactNode;
+  faqs?: {
+    cards: {
+      question: string;
+      answer: string;
+    }[];
+  };
   children: React.ReactNode;
 }) {
   return (
@@ -92,10 +98,16 @@ export default function AstroLandingPage(props: {
         >
           {/* viewports here */}
           {props.viewports}
-          <Stack width="100%">
-            <LandingPageFAQSection mobile={props.mobile} />
-            <LandingPageFooter mobile={props.mobile} />
-          </Stack>
+          {props.faqs ? (
+            <Stack width="100%">
+              <LandingPageFAQSection
+                title="Learn more about Astro Worksheet Generator"
+                faqs={props.faqs.cards}
+                mobile={props.mobile}
+              />
+              <LandingPageFooter mobile={props.mobile} />
+            </Stack>
+          ) : null}
         </Stack>
       </Stack>
     </Stack>

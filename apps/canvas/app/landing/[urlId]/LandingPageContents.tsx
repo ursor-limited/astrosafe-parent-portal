@@ -156,6 +156,12 @@ export default function LandingPageContents(props: {
     buttonText: string;
     buttonUrl: string;
   };
+  faqs?: {
+    cards: {
+      question: string;
+      answer: string;
+    }[];
+  };
 }) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
@@ -192,6 +198,7 @@ export default function LandingPageContents(props: {
       title={[props.heading]}
       subtitle={props.subHeading}
       mobile={false}
+      faqs={props.faqs}
       viewports={[
         <LandingPageViewport
           key="howItWorks"
