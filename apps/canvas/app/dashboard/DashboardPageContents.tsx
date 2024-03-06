@@ -403,26 +403,26 @@ export default function DashboardPageContents() {
         bodyWidth="100%"
         selectedSidebarItemId="home"
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        button={{
-          text: "Upgrade",
-          icon: VerifiedIcon,
-          callback: () => null,
-        }}
-        buttonRowExtraElement={
-          <Stack
-            height="100%"
-            alignItems="center"
-            direction="row"
-            spacing="5px"
-          >
-            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              30
-            </Typography>
-            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-              days left
-            </Typography>
-          </Stack>
-        }
+        // button={{
+        //   text: "Upgrade",
+        //   icon: VerifiedIcon,
+        //   callback: () => null,
+        // }}
+        // buttonRowExtraElement={
+        //   <Stack
+        //     height="100%"
+        //     alignItems="center"
+        //     direction="row"
+        //     spacing="5px"
+        //   >
+        //     <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
+        //       30
+        //     </Typography>
+        //     <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+        //       days left
+        //     </Typography>
+        //   </Stack>
+        // }
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>

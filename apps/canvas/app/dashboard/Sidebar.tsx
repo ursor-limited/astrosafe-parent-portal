@@ -10,6 +10,7 @@ import GearIcon from "@/images/icons/GearIcon.svg";
 import { useRouter } from "next/navigation";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
+import BrowserDialog from "./BrowserDialog";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -192,7 +193,7 @@ export default function Sidebar(props: ISidebarProps) {
       //tourId: "devices-button",
       icon: GlobeIcon,
       title: "Browser",
-      callback: () => router.push("https://app.astrosafe.co"), //navigate("/devices"),
+      callback: () => setBrowserDialogOpen(true),
     },
   ];
 
@@ -231,21 +232,30 @@ export default function Sidebar(props: ISidebarProps) {
   const small = height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
   const noText = height < NO_TEXT_HEIGHT_THRESHOLD;
 
+  const [browserDialogOpen, setBrowserDialogOpen] =
+    React.useState<boolean>(false);
+
   return (
-    <Stack
-      ref={ref}
-      height="100%"
-      width={WIDTH}
-      sx={{ background: "white", fontSize: "10px" }}
-      borderRadius="20px"
-      py={Y_PADDING}
-      justifyContent="space-between"
-      id="my-first-step"
-    >
-      <Stack spacing={small ? "16px" : "24px"} alignItems="center">
-        {getList(topItems, small, noText)}
+    <>
+      <Stack
+        ref={ref}
+        height="100%"
+        width={WIDTH}
+        sx={{ background: "white", fontSize: "10px" }}
+        borderRadius="20px"
+        py={Y_PADDING}
+        justifyContent="space-between"
+        id="my-first-step"
+      >
+        <Stack spacing={small ? "16px" : "24px"} alignItems="center">
+          {getList(topItems, small, noText)}
+        </Stack>
+        {getList(bottomItems, small, noText)}
       </Stack>
-      {getList(bottomItems, small, noText)}
-    </Stack>
+      <BrowserDialog
+        open={browserDialogOpen}
+        closeCallback={() => setBrowserDialogOpen(false)}
+      />
+    </>
   );
 }
