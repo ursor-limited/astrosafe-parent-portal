@@ -7,7 +7,7 @@ import { PALETTE } from "ui";
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
-export const BOLD_FONT_WEIGHT = 600;
+export const BOLD_FONT_WEIGHT = 500;
 
 export default function UrsorInputField(props) {
   const {
