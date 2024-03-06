@@ -2,6 +2,7 @@ import { IWorksheet } from "@/app/landing/[urlId]/WorksheetGenerator";
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography } from "ui";
+import Logo from "@/images/logoDark.svg";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -36,9 +37,9 @@ const AstroWorksheetPage = (props: {
       >
         <Stack
           mt="50px"
-          spacing="4px"
+          pb="3mm"
           width="100%"
-          height="24mm"
+          height="22mm"
           borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
           justifyContent="space-between"
         >
@@ -51,7 +52,20 @@ const AstroWorksheetPage = (props: {
             {props.showAnswers ? "Answers" : "Try to solve these questions!"}
           </Typography>
         </Stack>
-        {props.children}
+        <Stack flex={1}>{props.children}</Stack>
+        <Stack
+          width="100%"
+          height="13mm"
+          borderTop={`2px solid ${PALETTE.secondary.grey[2]}`}
+          direction="row"
+          justifyContent="space-between"
+          pt="3mm"
+        >
+          <Logo height="16px" />
+          <Typography variant="small" color={PALETTE.secondary.grey[5]}>
+            www.astrosafe.co
+          </Typography>
+        </Stack>
       </Stack>
     </div>
   );

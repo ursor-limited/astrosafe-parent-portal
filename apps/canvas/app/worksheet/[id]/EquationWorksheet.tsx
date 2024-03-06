@@ -153,7 +153,7 @@ const DivisionVerticalQuestion = (props: {
   dividend: number;
 }) => (
   <Stack
-    height="300px"
+    height="280px"
     pt="20px"
     alignItems="center"
     sx={{ breakInside: "avoid" }}
