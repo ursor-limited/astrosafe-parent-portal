@@ -209,6 +209,8 @@ const ToolButton = (props: {
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   infoButtonPosition: number;
+  infoTitle: string;
+  infoBody: string;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -298,6 +300,8 @@ const ToolButton = (props: {
       <StepperOverlay
         open={overlayOpen}
         closeCallback={() => setOverlayOpen(false)}
+        title={props.infoTitle}
+        body={props.infoBody}
       />
     </>
   );
@@ -481,6 +485,10 @@ export default function DashboardPageContents() {
                 setVideoCreationDialogOpen(true);
               }}
               infoButtonPosition={75}
+              infoTitle="Safe video link"
+              infoBody={
+                "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
+              }
             />
             <ToolButton
               title="Create math worksheet"
@@ -489,6 +497,10 @@ export default function DashboardPageContents() {
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
               infoButtonPosition={57}
+              infoTitle="Math worksheet"
+              infoBody={
+                "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
+              }
             />
           </Stack>
         </UrsorFadeIn>

@@ -12,6 +12,8 @@ const ILLUST_SIZE = "14px";
 export interface IStepperOverlayProps {
   open: boolean;
   closeCallback: () => void;
+  title: string;
+  body: string;
 }
 
 export default function ContentAgeInfoDialog(props: IStepperOverlayProps) {
@@ -55,10 +57,10 @@ export default function ContentAgeInfoDialog(props: IStepperOverlayProps) {
       >
         <Stack spacing="3px">
           <Typography bold variant="medium">
-            Bro!!!
+            {props.title}
           </Typography>
           <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-            Wha are we gonna do fo dinnah tonyte? Mac or kfc?
+            {props.body}
           </Typography>
         </Stack>
       </Stack>
