@@ -143,8 +143,8 @@ export const Header = (props: {
       px="67px"
       boxSizing="border-box"
     >
-      <Stack direction="row" spacing="52px">
-        <Stack width="fit-content">
+      <Stack direction="row">
+        <Stack width="fit-content" pr="54px">
           <Link href="https://astrosafe.co/">
             <Stack
               sx={{
@@ -188,6 +188,7 @@ export const Header = (props: {
             direction="row"
             spacing="8px"
             alignItems="center"
+            px="23px"
             sx={{
               cursor: "pointer",
               "&:hover": { opacity: 0.7 },
