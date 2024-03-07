@@ -97,7 +97,7 @@ export default function AstroLandingPage(props: {
           {/* viewports here */}
           {props.viewports}
           {props.faqs ? (
-            <Stack width="100%">
+            <Stack>
               <LandingPageFAQSection
                 title="Learn more about Astro Worksheet Generator"
                 faqs={props.faqs.cards}

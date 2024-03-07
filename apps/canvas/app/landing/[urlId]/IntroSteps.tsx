@@ -28,7 +28,8 @@ export const IntroSteps = (props: {
       {!props.mobile ? (
         <>
           <Stack
-            width="fit-content"
+            width="100%"
+            height="110px"
             position="absolute"
             left={0}
             right={0}
@@ -36,15 +37,7 @@ export const IntroSteps = (props: {
             marginLeft="auto"
             marginRight="auto"
           >
-            <Image
-              src={Wave.src}
-              width={1321}
-              height={110}
-              loader={({ src }) => {
-                return src;
-              }}
-              alt="Wave"
-            />
+            <Image src={Wave.src} fill objectFit="contain" alt="Wave" />
           </Stack>
 
           <Stack

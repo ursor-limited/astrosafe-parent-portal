@@ -20,7 +20,7 @@ export default function OtherPageCard(props: {
       rel="noreferrer"
     >
       <Stack
-        width="480px"
+        maxWidth="480px"
         height="163px"
         maxHeight="163px"
         direction="row"

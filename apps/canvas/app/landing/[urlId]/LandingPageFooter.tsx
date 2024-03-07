@@ -160,6 +160,7 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
         py="35px"
         justifyContent="space-between"
         spacing={props.mobile ? "50px" : undefined}
+        boxSizing="border-box"
       >
         <Stack
           width={props.mobile ? "100%" : "280px"}
