@@ -40,6 +40,7 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
+import { Header } from "@/app/components/header2";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -439,6 +440,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   return (
     <>
+      <Header />
       <Stack
         sx={{
           opacity: 0,

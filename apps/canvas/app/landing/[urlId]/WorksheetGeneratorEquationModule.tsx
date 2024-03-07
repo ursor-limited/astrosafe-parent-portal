@@ -112,7 +112,7 @@ export function WorksheetGeneratorEquationModule(
         userDetails?.user?.id
       )
         .then((ws) => {
-          router.push(`/worksheet/${ws.id}`);
+          router.push(userDetails.user ? "/dashboard" : `/worksheet/${ws.id}`);
           return ws;
         })
         .then((ws) => ws.id)

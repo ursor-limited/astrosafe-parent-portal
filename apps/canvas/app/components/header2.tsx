@@ -9,12 +9,11 @@ import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import CreditCardIcon from "@/images/icons/CreditCard.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
@@ -561,7 +560,7 @@ export const Header = (props: {
             </Stack>
           </Stack>
         </UrsorFadeIn>
-      ) : props.createNewButton ? (
+      ) : (
         <Stack spacing="8px" direction="row">
           <UrsorButton
             backgroundColor="transparent"
@@ -570,11 +569,16 @@ export const Header = (props: {
           >
             Contact sales
           </UrsorButton>
-          <UrsorButton dark variant="tertiary" onClick={loginWithPopup}>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            onClick={loginWithPopup}
+            endIcon={PersonIcon}
+          >
             Login
           </UrsorButton>
         </Stack>
-      ) : null}
+      )}
       {/* <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
