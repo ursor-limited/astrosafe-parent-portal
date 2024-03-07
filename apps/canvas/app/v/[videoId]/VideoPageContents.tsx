@@ -169,7 +169,8 @@ function VideoPageContents(props: { details: IVideo }) {
         createdAt={props.details.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id === props.details.creatorId ? (
+            {userDetails?.user?.id &&
+            userDetails?.user?.id === props.details.creatorId ? (
               <CircularButton
                 icon={TrashcanIcon}
                 color={PALETTE.system.red}

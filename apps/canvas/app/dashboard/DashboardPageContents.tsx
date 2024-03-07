@@ -426,13 +426,25 @@ export default function DashboardPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
-      console.log("aaaa", userDetails.user?.id);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
         () => loadWorksheets()
       );
       setFreeWorksheetIds([]);
     }
   }, [userDetails.user?.id, freeWorksheetIds.length]);
+
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+  useEffect(() => {
+    if (userDetails.user?.id && freeVideoIds.length > 0) {
+      ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
+        loadVideos()
+      );
+      setFreeVideoIds([]);
+    }
+  }, [userDetails.user?.id, freeVideoIds.length]);
 
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
