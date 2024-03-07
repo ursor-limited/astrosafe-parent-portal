@@ -226,8 +226,9 @@ const ProductsPopoverColumn = (props: {
       </Typography>
       <ChevronRightIcon width="16px" height="16px" />
     </Stack>
-    {props.links.map((link) => (
+    {props.links.map((link, i) => (
       <Link
+        key={i}
         href={link.url}
         target="_blank"
         style={{

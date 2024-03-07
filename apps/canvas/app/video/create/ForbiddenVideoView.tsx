@@ -2,12 +2,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import {
-  INPUT_FIELD_BACKGROUND_COLOR,
-  INPUT_FIELD_TEXT_COLOR,
-} from "./CreationPageContents";
 import { useRouter } from "next/navigation";
-import UrsorInputField from "@/app/components/ursor-input-field";
 
 export default function ForbiddenVideoView() {
   const [url, setUrl] = useState<string>("");

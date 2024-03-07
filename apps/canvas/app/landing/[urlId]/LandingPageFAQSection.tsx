@@ -158,8 +158,9 @@ export const LandingPageFAQSection = (props: {
             Answers to a few common questions we receive.
           </Typography>
         </Stack>
-        {props.faqs.map((faq) => (
+        {props.faqs.map((faq, i) => (
           <LandingPageFAQSectionItem
+            key={i}
             small={props.mobile}
             question={faq.question}
             answer={faq.answer}

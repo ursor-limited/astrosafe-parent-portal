@@ -255,6 +255,7 @@ const VideoCreationDialog = (props: {
                     incrementCallback={() =>
                       setRange(
                         duration &&
+                          range &&
                           _.isNumber(range?.[0]) &&
                           _.isNumber(range?.[1])
                           ? [Math.min(duration, range[0] + 1), range[1]]
@@ -264,6 +265,7 @@ const VideoCreationDialog = (props: {
                     decrementCallback={() =>
                       setRange(
                         duration &&
+                          range &&
                           _.isNumber(range?.[0]) &&
                           _.isNumber(range?.[1])
                           ? [Math.max(0, range[0] - 1), range[1]]
@@ -286,6 +288,7 @@ const VideoCreationDialog = (props: {
                     incrementCallback={() =>
                       setRange(
                         duration &&
+                          range &&
                           _.isNumber(range?.[0]) &&
                           _.isNumber(range?.[1])
                           ? [range[0], Math.min(duration, range[1] + 1)]
@@ -295,6 +298,7 @@ const VideoCreationDialog = (props: {
                     decrementCallback={() =>
                       setRange(
                         duration &&
+                          range &&
                           _.isNumber(range?.[0]) &&
                           _.isNumber(range?.[1])
                           ? [range[0], Math.max(0, range[1] - 1)]
