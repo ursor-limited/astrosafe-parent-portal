@@ -165,7 +165,6 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
-      <Header />
       <BigCard
         title={props.details.title}
         description={props.details.description}

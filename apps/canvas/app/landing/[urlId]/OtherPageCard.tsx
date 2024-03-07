@@ -1,7 +1,5 @@
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 
 export default function OtherPageCard(props: {
@@ -20,7 +18,7 @@ export default function OtherPageCard(props: {
       rel="noreferrer"
     >
       <Stack
-        width="480px"
+        maxWidth="480px"
         height="163px"
         maxHeight="163px"
         direction="row"

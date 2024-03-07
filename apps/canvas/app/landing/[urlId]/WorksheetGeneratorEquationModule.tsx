@@ -49,13 +49,13 @@ export function WorksheetGeneratorEquationModule(
 
   const [multipliers, setMultipliers] = useState<number[]>([]);
   useEffect(() => {
-    const fullsetSize = Math.pow(10, nDigits);
+    const fullsetSize = Math.pow(10, nDigits) + 1;
     const fullSets = _(Math.floor(props.nProblems / fullsetSize))
       .range()
-      .flatMap(() => _.shuffle(_.range(fullsetSize + 1)))
+      .flatMap(() => _.shuffle(_.range(fullsetSize)))
       .value();
     const partialSet = _.sampleSize(
-      _.range(fullsetSize + 1),
+      _.range(fullsetSize),
       props.nProblems % fullsetSize
     );
     setMultipliers([...fullSets, ...partialSet]);

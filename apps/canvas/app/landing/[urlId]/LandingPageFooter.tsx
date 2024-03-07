@@ -160,6 +160,7 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
         py="35px"
         justifyContent="space-between"
         spacing={props.mobile ? "50px" : undefined}
+        boxSizing="border-box"
       >
         <Stack
           width={props.mobile ? "100%" : "280px"}
@@ -192,9 +193,6 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f34eb206d77199d60e_LinkedIN_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                loader={({ src }) => {
-                  return src;
-                }}
                 alt="Linkedin link"
                 style={{
                   cursor: "pointer",
@@ -212,9 +210,6 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3e6d738f557cae3b2_Facebook_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                loader={({ src }) => {
-                  return src;
-                }}
                 alt="Facebook link"
                 style={{
                   cursor: "pointer",
@@ -232,9 +227,6 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f26e765647afa2a993_Instagram_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                loader={({ src }) => {
-                  return src;
-                }}
                 alt="Instagram link"
                 style={{
                   cursor: "pointer",
@@ -250,9 +242,6 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3ffe78e45ab0d4527_Twitter_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                loader={({ src }) => {
-                  return src;
-                }}
                 alt="Instagram link"
                 style={{
                   cursor: "pointer",
@@ -270,9 +259,6 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
                 src="https://assets-global.website-files.com/60f56c56947f0f11b1881929/619bd4f3fda9947f5b91d938_Telegram_white.png"
                 width={props.mobile ? 28 : 30}
                 height={props.mobile ? 28 : 30}
-                loader={({ src }) => {
-                  return src;
-                }}
                 alt="Instagram link"
                 style={{
                   cursor: "pointer",

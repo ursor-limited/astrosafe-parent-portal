@@ -24,7 +24,6 @@ const LandingPageFAQSectionItem = (props: {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Stack
-      width="100%"
       minHeight={props.small ? "66px" : "82px"}
       borderRadius="12px"
       bgcolor="rgba(255,255,255)"
@@ -119,7 +118,6 @@ export const LandingPageFAQSection = (props: {
     <Stack width="100%" bgcolor={PALETTE.secondary.grey[1]} alignItems="center">
       <Stack
         maxWidth="calc(1320px + 2 * 24px)"
-        width="100%"
         minHeight="570px"
         py="100px"
         spacing={props.mobile ? "12px" : "20px"}
