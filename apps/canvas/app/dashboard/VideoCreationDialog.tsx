@@ -132,7 +132,7 @@ const VideoCreationDialog = (props: {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
       setFreeVideoIds([...freeVideoIds, v.id]);
-      router.push(`/video/${v.id}`);
+      router.push(`/v/${v.id}`);
     });
   };
 

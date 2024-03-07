@@ -7,7 +7,10 @@ import { PALETTE } from "ui";
 import NotificationProvider from "./components/NotificationProvider";
 import UrsorNotificationBar from "./components/UrsorNotificationBar";
 
-const rubik = Rubik({ subsets: ["latin"] });
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+});
 
 // export const metadata: Metadata = {
 //   title: "SafeTube - A Safe video player for teachers and schools",
