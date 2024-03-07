@@ -121,10 +121,10 @@ export function WorksheetGeneratorNumberBondModule(
         pairs,
         userDetails.user?.id
       )
-        .then((ws) => {
-          router.push(`/worksheet/${ws.id}`);
-          return ws;
-        })
+        // .then((ws) => {
+        //   router.push(`/worksheet/${ws.id}`);
+        //   return ws;
+        // })
         .then((ws) => ws.id)
     );
   }, [

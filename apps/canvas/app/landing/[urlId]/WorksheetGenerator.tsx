@@ -15,6 +15,7 @@ import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptD
 import { useUserContext } from "@/app/components/UserContext";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { useRouter } from "next/navigation";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -184,6 +185,7 @@ export default function WorksheetGenerator(props: {
   topic?: WorksheetTopic;
   specificSettings?: ISpecificWorksheetGeneratorSettings;
   noPadding?: boolean;
+  landOnWorksheetPage?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -244,6 +246,8 @@ export default function WorksheetGenerator(props: {
 
   const userDetails = useUserContext();
 
+  const router = useRouter();
+
   return (
     <Stack
       borderRadius="20px"
@@ -266,11 +270,9 @@ export default function WorksheetGenerator(props: {
             boldValue
           />
         </Captioned>
-        {/* <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}> */}
         <Stack direction="row" spacing="20px">
           <Captioned text="Question topic">
             <UrsorSelect
-              //white={props.whiteFields}
               items={[
                 {
                   id: "multiplication",
@@ -381,8 +383,17 @@ export default function WorksheetGenerator(props: {
             <UrsorButton
               onClick={() => {
                 creationCallback?.().then((id) => {
-                  setFreeWorksheetCreationCount(freeWorksheetCreationCount + 1);
-                  setFreeWorksheetIds([...freeWorksheetIds, id]);
+                  if (!userDetails.user) {
+                    setFreeWorksheetCreationCount(
+                      freeWorksheetCreationCount + 1
+                    );
+                    setFreeWorksheetIds([...freeWorksheetIds, id]);
+                  }
+                  router.push(
+                    !props.landOnWorksheetPage && userDetails.user
+                      ? "/dashboard"
+                      : `/worksheet/${id}`
+                  );
                 });
               }}
               dark

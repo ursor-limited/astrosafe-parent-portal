@@ -522,13 +522,28 @@ export default function WorksheetPageContents(props: IWorksheet) {
         createdAt={props.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id === props.creatorId ? (
+            {/* {userDetails?.user?.id
+            userDetails?.user?.id === props.creatorId ? ( */}
+            <Stack
+              sx={{
+                pointerEvents:
+                  userDetails?.user?.id === props.creatorId
+                    ? undefined
+                    : "none",
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id !== props.creatorId
+                    ? 0
+                    : 1,
+              }}
+            >
               <CircularButton
                 icon={TrashcanIcon}
                 color={PALETTE.system.red}
                 onClick={() => setDeletionDialogOpen(true)}
               />
-            ) : null}
+            </Stack>
+            {/* ) : null} */}
             <Stack
               borderRadius="100%"
               border={`2px solid ${PALETTE.primary.navy}`}

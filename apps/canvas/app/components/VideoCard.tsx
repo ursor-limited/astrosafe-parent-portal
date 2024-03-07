@@ -8,6 +8,7 @@ import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Image from "next/image";
+import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
@@ -21,6 +22,16 @@ const VideoCard = (props: IVideo) => {
     undefined
   );
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
+  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
+  useEffect(() => {
+    if (
+      -moment(props.createdAt).diff(moment(), "seconds") <
+      ORANGE_BORDER_DURATION
+    ) {
+      setOrangeBorderOn(true);
+      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
+    }
+  }, []);
   return (
     <Stack
       height="260px"
@@ -30,6 +41,9 @@ const VideoCard = (props: IVideo) => {
       overflow="hidden"
       sx={{
         backdropFilter: "blur(4px)",
+        outline: orangeBorderOn
+          ? `3px solid ${PALETTE.system.orange}`
+          : undefined,
       }}
       position="relative"
       boxShadow="0 0 12px rgba(0,0,0,0.06)"
