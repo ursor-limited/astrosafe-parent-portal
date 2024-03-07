@@ -16,6 +16,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
+import { Header } from "@/app/components/header2";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -163,6 +164,7 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
+      <Header />
       <BigCard
         title={props.details.title}
         description={props.details.description}
