@@ -1,7 +1,5 @@
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 
 export default function OtherPageCard(props: {

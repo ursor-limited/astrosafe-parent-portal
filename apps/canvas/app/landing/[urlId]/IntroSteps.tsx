@@ -37,7 +37,7 @@ export const IntroSteps = (props: {
             marginLeft="auto"
             marginRight="auto"
           >
-            <Image src={Wave.src} fill objectFit="contain" alt="Wave" />
+            <Image src={Wave.src} fill alt="Wave" />
           </Stack>
 
           <Stack
