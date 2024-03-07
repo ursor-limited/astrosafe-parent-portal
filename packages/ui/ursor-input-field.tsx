@@ -52,7 +52,6 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       textAlign: props.leftAlign ? "left" : "center",
       textOverflow: "ellipsis",
       fontSize: props.fontSize ?? FONT_SIZES.normal,
-      fontFamily: "__Rubik_5c20f6, __Rubik_Fallback_5c20f6",
       color: props.color ?? PALETTE.font.dark,
       fontWeight:
         props.boldValue || (props.value && !props.noBold)
