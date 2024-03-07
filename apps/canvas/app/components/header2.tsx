@@ -164,32 +164,57 @@ const ProductsPopoverProductButton = (props: {
   body: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   color: string;
-}) => (
-  <Stack direction="row" height="46px" spacing="10px">
+  url: string;
+}) => {
+  const router = useRouter();
+  //const [hovering, setHovering] = useState<boolean>(false);
+  return (
     <Stack
-      width="46px"
-      bgcolor={props.color}
-      borderRadius="8px"
-      sx={{
-        svg: {
-          path: {
-            fill: "rgb(255,255,255)",
-          },
-        },
-      }}
-      justifyContent="center"
+      direction="row"
+      height="62px"
       alignItems="center"
+      spacing="10px"
+      onClick={() => router.push(props.url)}
+      sx={{
+        cursor: "pointer",
+        "&:hover": { opacity: 0.5 },
+        transition: "0.2s",
+      }}
+      // onMouseEnter={() => {
+      //   setHovering(true);
+      // }}
+      // onMouseLeave={() => {
+      //   setHovering(false);
+      // }}
+      //bgcolor={hovering ? PALETTE.secondary.grey[2] : undefined}
     >
-      <props.icon width="24px" height="24px" />
+      <Stack
+        width="46px"
+        height="46px"
+        bgcolor={props.color}
+        borderRadius="8px"
+        sx={{
+          svg: {
+            path: {
+              fill: "rgb(255,255,255)",
+            },
+          },
+        }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <props.icon width="24px" height="24px" />
+      </Stack>
+      <Stack flex={1} justifyContent="space-between">
+        <Typography variant="small" bold>
+          {props.title}
+        </Typography>
+        <Typography variant="tiny">{props.body}</Typography>
+      </Stack>
     </Stack>
-    <Stack flex={1} justifyContent="space-between">
-      <Typography variant="small" bold>
-        {props.title}
-      </Typography>
-      <Typography variant="tiny">{props.body}</Typography>
-    </Stack>
-  </Stack>
-);
+  );
+};
+
 const ProductsPopoverColumn = (props: {
   title: string;
   links: { text: string; url: string }[];
@@ -256,19 +281,16 @@ export const Header = (props: {
       justifyContent="space-between"
       px="67px"
       boxSizing="border-box"
+      sx={{
+        cursor: "pointer",
+        "&:hover": { opacity: 0.8 },
+        transition: "0.2s",
+      }}
     >
       <Stack direction="row">
         <Stack width="fit-content" pr="54px">
           <Link href="https://astrosafe.co/">
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.8 },
-                transition: "0.2s",
-              }}
-            >
-              <Logo width={65} />
-            </Stack>
+            <Logo width={65} />
           </Link>
         </Stack>
         <HeaderButton text="Products">
@@ -298,18 +320,21 @@ export const Header = (props: {
         noise and more"
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
+                  url="/landing/8-times-table-worksheet"
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"
-                  body="Create videos with a single click. Add subtitles, remove background noise and more"
+                  body="Unlike other tubes, this one is totally safe."
                   icon={CirclePlayIcon}
                   color="#FC5C5C"
+                  url="https://astrosafe.co/video"
                 />
                 <ProductsPopoverProductButton
                   title="Browser"
                   body="Bro, it's a browser."
                   icon={GlobeIcon}
                   color={PALETTE.secondary.purple[2]}
+                  url="https://app.astrosafe.co"
                 />
               </Stack>
             </Stack>
