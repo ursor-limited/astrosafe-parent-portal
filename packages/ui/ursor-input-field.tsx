@@ -6,7 +6,7 @@ import { FONT_SIZES } from "./typography";
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
-export const BOLD_FONT_WEIGHT = 500;
+export const BOLD_FONT_WEIGHT = 450;
 
 export interface UrsorInputFieldProps {
   width?: string;

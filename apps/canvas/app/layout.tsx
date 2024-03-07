@@ -9,7 +9,7 @@ import UrsorNotificationBar from "./components/UrsorNotificationBar";
 
 const rubik = Rubik({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: "variable",
 });
 
 // export const metadata: Metadata = {
