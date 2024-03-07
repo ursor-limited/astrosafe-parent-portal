@@ -167,7 +167,7 @@ const ProductsPopoverProductButton = (props: {
   url: string;
 }) => {
   const router = useRouter();
-  //const [hovering, setHovering] = useState<boolean>(false);
+  const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
       direction="row"
@@ -177,16 +177,17 @@ const ProductsPopoverProductButton = (props: {
       onClick={() => router.push(props.url)}
       sx={{
         cursor: "pointer",
-        "&:hover": { opacity: 0.5 },
         transition: "0.2s",
       }}
-      // onMouseEnter={() => {
-      //   setHovering(true);
-      // }}
-      // onMouseLeave={() => {
-      //   setHovering(false);
-      // }}
-      //bgcolor={hovering ? PALETTE.secondary.grey[2] : undefined}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      bgcolor={hovering ? "rgb(255,255,255)" : undefined}
+      borderRadius="10px"
+      boxShadow={hovering ? "0 0 18px rgba(0,0,0,0.03)" : undefined}
     >
       <Stack
         width="46px"
@@ -206,10 +207,16 @@ const ProductsPopoverProductButton = (props: {
         <props.icon width="24px" height="24px" />
       </Stack>
       <Stack flex={1} justifyContent="space-between">
-        <Typography variant="small" bold>
+        <Typography
+          variant="small"
+          bold
+          color={hovering ? props.color : undefined}
+        >
           {props.title}
         </Typography>
-        <Typography variant="tiny">{props.body}</Typography>
+        <Typography variant="tiny" color={hovering ? props.color : undefined}>
+          {props.body}
+        </Typography>
       </Stack>
     </Stack>
   );
@@ -240,7 +247,7 @@ const ProductsPopoverColumn = (props: {
         <Stack
           sx={{
             cursor: "pointer",
-            "&:hover": { opacity: 0.8 },
+            "&:hover": { opacity: 0.6 },
             transition: "0.2s",
           }}
         >
@@ -309,7 +316,7 @@ export const Header = (props: {
           >
             <Stack
               bgcolor={PALETTE.secondary.grey[1]}
-              width="306px"
+              width="300px"
               p="12px"
               borderRadius="10px"
               spacing="20px"
@@ -317,10 +324,10 @@ export const Header = (props: {
               <Typography variant="medium" bold>
                 Products
               </Typography>
-              <Stack flex={1} justifyContent="space-between" width="95%">
+              <Stack flex={1} justifyContent="space-between">
                 <ProductsPopoverProductButton
                   title="Worksheet generator"
-                  body="Create videos with a single click. Add subtitles, remove background
+                  body="Create videos with a single click. Add captions, remove background
         noise and more"
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
