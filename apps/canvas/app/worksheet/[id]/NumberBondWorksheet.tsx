@@ -243,6 +243,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         title={props.title}
         showAnswers={props.showAnswers}
         printableId={props.printableId}
+        pageN={(props.pageIndex ?? 0) + 1}
       >
         <Stack width="100%">
           {rows.map((row, i) => (

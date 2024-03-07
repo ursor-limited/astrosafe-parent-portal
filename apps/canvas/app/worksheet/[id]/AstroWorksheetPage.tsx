@@ -13,6 +13,7 @@ const AstroWorksheetPage = (props: {
   title?: IWorksheet["title"];
   showAnswers?: boolean;
   printableId?: string;
+  pageN?: number;
   children: React.ReactNode;
 }) => {
   return (
@@ -62,6 +63,11 @@ const AstroWorksheetPage = (props: {
           pt="3mm"
         >
           <Logo height="16px" />
+          <Stack pl="40px" alignItems="flex-end">
+            <Typography bold color={PALETTE.secondary.grey[5]}>
+              {props.pageN}
+            </Typography>
+          </Stack>
           <Typography variant="small" color={PALETTE.secondary.grey[5]}>
             www.astrosafe.co
           </Typography>

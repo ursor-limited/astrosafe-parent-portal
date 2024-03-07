@@ -58,7 +58,6 @@ export function WorksheetGeneratorEquationModule(
       _.range(fullsetSize),
       props.nProblems % fullsetSize
     );
-    console.log(fullSets, partialSet);
     setMultipliers([...fullSets, ...partialSet]);
   }, [nDigits, props.nProblems, props.regenerationCount]);
 
