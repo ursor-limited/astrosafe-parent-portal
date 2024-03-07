@@ -9,6 +9,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import moment from "moment";
 import mixpanel from "mixpanel-browser";
@@ -186,6 +187,7 @@ function VideoPageContents(props: { details: IVideo }) {
                 navigator.clipboard.writeText(window.location.href);
                 notificationCtx.success("Copied URL to clipboard.");
               }}
+              endIcon={LinkIcon}
             >
               Share link
             </UrsorButton>

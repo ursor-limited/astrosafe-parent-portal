@@ -194,7 +194,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             //maxWidth="476px"
           >
             {props.supertitle ? (
-              <Typography variant="large" bold color={PALETTE.font.dark}>
+              <Typography
+                variant={props.title ? "medium" : "large"}
+                bold
+                color={PALETTE.font.dark}
+              >
                 {props.supertitle}
               </Typography>
             ) : null}

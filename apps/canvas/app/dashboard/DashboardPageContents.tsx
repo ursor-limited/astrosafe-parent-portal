@@ -7,6 +7,7 @@ import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
@@ -32,6 +33,7 @@ import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
+import UpgradePromptDialog from "../components/SignupPromptDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -469,26 +471,26 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        // button={{
-        //   text: "Upgrade",
-        //   icon: VerifiedIcon,
-        //   callback: () => setUpgradeDialogOpen(true),
-        // }}
-        // buttonRowExtraElement={
-        //   <Stack
-        //     height="100%"
-        //     alignItems="center"
-        //     direction="row"
-        //     spacing="5px"
-        //   >
-        //     <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-        //       30
-        //     </Typography>
-        //     <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-        //       days left
-        //     </Typography>
-        //   </Stack>
-        // }
+        button={{
+          text: "Upgrade",
+          icon: VerifiedIcon,
+          callback: () => setUpgradeDialogOpen(true),
+        }}
+        buttonRowExtraElement={
+          <Stack
+            height="100%"
+            alignItems="center"
+            direction="row"
+            spacing="5px"
+          >
+            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
+              30
+            </Typography>
+            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+              days left
+            </Typography>
+          </Stack>
+        }
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
@@ -634,7 +636,7 @@ export default function DashboardPageContents() {
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
       />
-      <UpgradeDialog
+      <UpgradePromptDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />

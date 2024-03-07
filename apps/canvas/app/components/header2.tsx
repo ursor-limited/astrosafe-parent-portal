@@ -24,6 +24,7 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
+import UpgradePromptDialog from "./SignupPromptDialog";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -281,14 +282,17 @@ export const Header = (props: {
       justifyContent="space-between"
       px="67px"
       boxSizing="border-box"
-      sx={{
-        cursor: "pointer",
-        "&:hover": { opacity: 0.8 },
-        transition: "0.2s",
-      }}
     >
       <Stack direction="row">
-        <Stack width="fit-content" pr="54px">
+        <Stack
+          width="fit-content"
+          pr="54px"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.8 },
+            transition: "0.2s",
+          }}
+        >
           <Link href="https://astrosafe.co/">
             <Logo width={65} />
           </Link>
@@ -558,16 +562,24 @@ export const Header = (props: {
           </Stack>
         </UrsorFadeIn>
       ) : props.createNewButton ? (
-        <UrsorButton
-          dark
-          variant="tertiary"
-          startIcon={ChevronLeftIcon}
-          onClick={() => router.push("/video")}
-        >
-          Create new
-        </UrsorButton>
+        <Stack spacing="8px" direction="row">
+          <UrsorButton
+            backgroundColor="transparent"
+            hoverOpacity={0.7}
+            onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+          >
+            Contact sales
+          </UrsorButton>
+          <UrsorButton dark variant="tertiary" onClick={loginWithPopup}>
+            Login
+          </UrsorButton>
+        </Stack>
       ) : null}
-      <UpgradeDialog
+      {/* <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
+      /> */}
+      <UpgradePromptDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
