@@ -41,6 +41,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
     border: props.border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
+    fontFamily: "inherit",
   };
 
   const inputProps = {
