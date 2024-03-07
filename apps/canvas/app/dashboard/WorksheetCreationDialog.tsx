@@ -20,7 +20,7 @@ const WorksheetCreationDialog = (props: {
       dynamicHeight
       noOverflowHidden
     >
-      <WorksheetGenerator />
+      <WorksheetGenerator noPadding />
     </UrsorDialog>
   );
 };

@@ -183,6 +183,7 @@ export default function WorksheetGenerator(props: {
   nProblems?: number;
   topic?: WorksheetTopic;
   specificSettings?: ISpecificWorksheetGeneratorSettings;
+  noPadding?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -247,7 +248,7 @@ export default function WorksheetGenerator(props: {
     <Stack
       borderRadius="20px"
       bgcolor="rgb(255,255,255)"
-      p={"42px"}
+      p={props.noPadding ? undefined : "42px"}
       direction="row"
       spacing="40px"
     >
