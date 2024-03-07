@@ -10,6 +10,7 @@ import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import CreditCardIcon from "@/images/icons/CreditCard.svg";
@@ -189,6 +190,40 @@ const ProductsPopoverProductButton = (props: {
     </Stack>
   </Stack>
 );
+const ProductsPopoverColumn = (props: {
+  title: string;
+  links: { text: string; url: string }[];
+}) => (
+  <Stack spacing="12px">
+    <Stack direction="row" alignItems="center" spacing="8px">
+      <Typography variant="small" bold>
+        {props.title}
+      </Typography>
+      <ChevronRightIcon width="16px" height="16px" />
+    </Stack>
+    {props.links.map((link) => (
+      <Link
+        href={link.url}
+        target="_blank"
+        style={{
+          textDecoration: "none",
+          color: "unset",
+        }}
+        rel="noreferrer"
+      >
+        <Stack
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.8 },
+            transition: "0.2s",
+          }}
+        >
+          <Typography variant="small">{link.text}</Typography>
+        </Stack>
+      </Link>
+    ))}
+  </Stack>
+);
 
 export const Header = (props: {
   showUpgradeButtons?: boolean;
@@ -244,6 +279,7 @@ export const Header = (props: {
             borderRadius="12px"
             direction="row"
             p="12px"
+            spacing="24px"
           >
             <Stack
               bgcolor={PALETTE.secondary.grey[1]}
@@ -274,6 +310,80 @@ export const Header = (props: {
                   body="Bro, it's a browser."
                   icon={GlobeIcon}
                   color={PALETTE.secondary.purple[2]}
+                />
+              </Stack>
+            </Stack>
+            <Stack flex={1} p="12px" spacing="20px">
+              <Typography variant="medium" bold>
+                Tools
+              </Typography>
+              <Stack direction="row" spacing="56px">
+                <ProductsPopoverColumn
+                  title="Times tables"
+                  links={[
+                    {
+                      text: "5 times tables",
+                      url: "/landing/5-times-table-worksheet",
+                    },
+                    {
+                      text: "6 times tables",
+                      url: "/landing/6-times-table-worksheet",
+                    },
+                    {
+                      text: "7 times tables",
+                      url: "/landing/7-times-table-worksheet",
+                    },
+                    {
+                      text: "8 times tables",
+                      url: "/landing/8-times-table-worksheet",
+                    },
+                    {
+                      text: "9 times tables",
+                      url: "/landing/9-times-table-worksheet",
+                    },
+                    {
+                      text: "10 times tables",
+                      url: "/landing/10-times-table-worksheet",
+                    },
+                  ]}
+                />
+                <ProductsPopoverColumn
+                  title="All tools"
+                  links={[
+                    {
+                      text: "Chore charts",
+                      url: "https://www.nintendo.com",
+                    },
+                    {
+                      text: "Websites for kids",
+                      url: "https://www.zelda.com",
+                    },
+                    {
+                      text: "Meditation for kids",
+                      url: "https://proxy.astrosafe.co/15-minutes-meditation-for-family-time-and-kids",
+                    },
+                    {
+                      text: "Safe search engine",
+                      url: "https://www.metroid.com",
+                    },
+                  ]}
+                />
+                <ProductsPopoverColumn
+                  title="More"
+                  links={[
+                    {
+                      text: "About",
+                      url: "https://www.astrosafe.co/about",
+                    },
+                    {
+                      text: "FAQs",
+                      url: "https://www.astrosafe.co/faqs",
+                    },
+                    {
+                      text: "Blogs",
+                      url: "https://www.astrosafe.co/blog",
+                    },
+                  ]}
                 />
               </Stack>
             </Stack>
