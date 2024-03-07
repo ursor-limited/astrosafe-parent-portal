@@ -4,7 +4,13 @@ import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useEffect, useState } from "react";
 import { Captioned } from "../landing/[urlId]/LandingPageContents";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import {
+  PALETTE,
+  Typography,
+  UrsorButton,
+  UrsorInputField,
+  UrsorTextField,
+} from "ui";
 import { Slider } from "@mui/material";
 import DurationLabel from "../editor/duration-label";
 import Player from "../components/player";
@@ -14,12 +20,12 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import SignupPromptDialog from "./SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
+import _ from "lodash";
 
 const PLACEHOLDER_DURATION = 4000;
 
-export const TITLE_CHARACTER_LIMIT = 40;
-const VIDEO_WIDTH = 390;
-const VIDEO_HEIGHT = 213;
+const VIDEO_WIDTH = 450; //390;
+const VIDEO_HEIGHT = 246;
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
@@ -126,7 +132,7 @@ const VideoCreationDialog = (props: {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
       setFreeVideoIds([...freeVideoIds, v.id]);
-      router.push(`/video/${v.id}`);
+      router.push(`/v/${v.id}`);
     });
   };
 
@@ -142,19 +148,20 @@ const VideoCreationDialog = (props: {
     <>
       <UrsorDialog
         supertitle="Create video"
-        title="Create a Safetube video"
         open={props.open}
-        button={{
-          text: "Create",
-          callback: () => {
-            // !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
-            submit();
-          },
-          icon: RocketIcon,
-          disabled: !url,
-        }}
+        // button={{
+        //   text: "Create",
+        //   callback: () => {
+        //     // !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
+        //     submit();
+        //   },
+        //   icon: RocketIcon,
+        //   disabled: !url,
+        // }}
         onCloseCallback={props.closeCallback}
-        maxWidth="1260px"
+        width="1000px"
+        maxWidth="1000px"
+        dynamicHeight
       >
         <Stack
           flex={1}
@@ -187,7 +194,6 @@ const VideoCreationDialog = (props: {
               <UrsorInputField
                 value={title}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  event.target.value.length < TITLE_CHARACTER_LIMIT &&
                   setTitle(event.target.value)
                 }
                 placeholder="Title"
@@ -197,14 +203,13 @@ const VideoCreationDialog = (props: {
               />
             </Captioned>
             <Captioned text="Description">
-              <UrsorInputField
+              <UrsorTextField
                 value={description}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setDescription(event.target.value)
                 }
                 placeholder="Description"
                 width="100%"
-                leftAlign
                 boldValue
               />
             </Captioned>
@@ -249,14 +254,20 @@ const VideoCreationDialog = (props: {
                     value={range?.[0] ?? 0}
                     incrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          range &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [Math.min(duration, range[0] + 1), range[1]]
                           : undefined
                       )
                     }
                     decrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          range &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [Math.max(0, range[0] - 1), range[1]]
                           : undefined
                       )
@@ -276,14 +287,20 @@ const VideoCreationDialog = (props: {
                     value={range?.[1] ?? 0}
                     incrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          range &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [range[0], Math.min(duration, range[1] + 1)]
                           : undefined
                       )
                     }
                     decrementCallback={() =>
                       setRange(
-                        duration && range?.[0] && range?.[1]
+                        duration &&
+                          range &&
+                          _.isNumber(range?.[0]) &&
+                          _.isNumber(range?.[1])
                           ? [range[0], Math.max(0, range[1] - 1)]
                           : undefined
                       )
@@ -296,7 +313,7 @@ const VideoCreationDialog = (props: {
           <Stack
             width={VIDEO_WIDTH}
             //height={VIDEO_HEIGHT}
-            spacing="10px"
+            spacing="6px"
           >
             {provider ? (
               <Player
@@ -315,12 +332,26 @@ const VideoCreationDialog = (props: {
                 noBackdrop
               />
             ) : null}
-            <Typography bold>{title}</Typography>
+            <Typography maxLines={2} bold>
+              {title}
+            </Typography>
             <Stack flex={1} overflow="hidden">
-              <Typography variant="small" maxLines={3}>
+              <Typography variant="small" maxLines={2}>
                 {description}
               </Typography>
             </Stack>
+            <UrsorButton
+              onClick={() => {
+                submit();
+              }}
+              disabled={!url}
+              dark
+              variant="tertiary"
+              endIcon={RocketIcon}
+              width="100%"
+            >
+              Create
+            </UrsorButton>
           </Stack>
         </Stack>
       </UrsorDialog>

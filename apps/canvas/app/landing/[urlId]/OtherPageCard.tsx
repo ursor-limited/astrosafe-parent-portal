@@ -7,7 +7,7 @@ import { PALETTE, Typography } from "ui";
 export default function OtherPageCard(props: {
   title: string;
   text: string;
-  imageString: string;
+  imageString?: string;
   urlId: string;
 }) {
   return (

@@ -24,7 +24,6 @@ import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/EquationWorksheet";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -72,8 +71,8 @@ export const Captioned = (props: {
   children: React.ReactNode;
 }) => (
   <Stack
-    spacing="8px"
     flex={1}
+    spacing="8px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
       pointerEvents: props.disabled ? "none" : undefined,
@@ -147,7 +146,7 @@ export default function LandingPageContents(props: {
     title: string;
     links: {
       urlId: string;
-      imageString: string;
+      imageString?: string;
       title: string;
       text: string;
     }[];
@@ -157,6 +156,12 @@ export default function LandingPageContents(props: {
     body: string;
     buttonText: string;
     buttonUrl: string;
+  };
+  faqs?: {
+    cards: {
+      question: string;
+      answer: string;
+    }[];
   };
 }) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
@@ -194,6 +199,7 @@ export default function LandingPageContents(props: {
       title={[props.heading]}
       subtitle={props.subHeading}
       mobile={false}
+      faqs={props.faqs}
       viewports={[
         <LandingPageViewport
           key="howItWorks"
@@ -422,7 +428,7 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <WorksheetGenerator {...props.worksheetGenerator} whiteFields />
+      <WorksheetGenerator {...props.worksheetGenerator} />
     </AstroLandingPage>
   );
 }

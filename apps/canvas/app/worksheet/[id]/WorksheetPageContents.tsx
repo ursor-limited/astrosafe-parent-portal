@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
-import EquationWorksheet, { A4_WIDTH } from "./EquationWorksheet";
+import EquationWorksheet from "./EquationWorksheet";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
   IEquationWorksheetParameters,
@@ -13,14 +13,6 @@ import {
   IWorksheetParameters,
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
-import NumberBondWorksheet, {
-  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
-  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
-  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
-  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
-  NUMBER_BOND_VERTICAL_N_COLUMNS,
-  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
-} from "./NumberBondWorksheet";
 import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
@@ -33,7 +25,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
+import { CircularButton } from "@/app/v/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
@@ -42,6 +34,13 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useAuth0 } from "@auth0/auth0-react";
 import NotificationContext from "@/app/components/NotificationContext";
+import NumberBondWorksheet, {
+  NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_ROWS_N,
+  NUMBER_BOND_VERTICAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_ROWS_N,
+} from "./NumberBondWorksheet";
+import { Header } from "@/app/components/header2";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -372,14 +371,14 @@ export default function WorksheetPageContents(props: IWorksheet) {
           Math.ceil(
             (params.pairs.length -
               (params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
-                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (params.orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
               ((params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
-                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (params.orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS))
@@ -441,6 +440,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   return (
     <>
+      <Header />
       <Stack
         sx={{
           opacity: 0,
@@ -522,13 +522,28 @@ export default function WorksheetPageContents(props: IWorksheet) {
         createdAt={props.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id === props.creatorId ? (
+            {/* {userDetails?.user?.id
+            userDetails?.user?.id === props.creatorId ? ( */}
+            <Stack
+              sx={{
+                pointerEvents:
+                  userDetails?.user?.id === props.creatorId
+                    ? undefined
+                    : "none",
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id !== props.creatorId
+                    ? 0
+                    : 1,
+              }}
+            >
               <CircularButton
                 icon={TrashcanIcon}
                 color={PALETTE.system.red}
                 onClick={() => setDeletionDialogOpen(true)}
               />
-            ) : null}
+            </Stack>
+            {/* ) : null} */}
             <Stack
               borderRadius="100%"
               border={`2px solid ${PALETTE.primary.navy}`}

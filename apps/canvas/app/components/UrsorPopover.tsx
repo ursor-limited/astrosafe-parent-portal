@@ -5,6 +5,7 @@ import { Box, Stack } from "@mui/system";
 import { Backdrop } from "@mui/material";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
+import UrsorFadeIn from "./UrsorFadeIn";
 
 export const DEFAULT_CORNER_RADIUS = "12px";
 export const PADDING = "16px";
@@ -117,6 +118,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   onClick={props.closeCallback}
                 />
               ) : null}
+
               <Box
                 ref={setPopperElement}
                 style={styles.popper}
@@ -167,36 +169,42 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       {props.externalElement}
                     </Box>
                   ) : null}
-                  {props.content ? (
-                    <Box
-                      width={props.buttonWidth ? width : props.width}
-                      borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
-                      p={props.noCard || props.noPadding ? undefined : PADDING}
-                      sx={{
-                        background: props.noCard ? undefined : "white",
-                        pointerEvents: props.open ? "auto" : "none",
-                        opacity: props.open && !props.fadedOut ? 1 : 0,
-                        transition: "0.3s",
-                        animation: props.animation,
-                      }}
-                      height="100%"
-                      overflow="scroll"
-                    >
-                      {props.content}
-                    </Box>
-                  ) : null}
-                  {isFlipped ? (
-                    <Box
-                      sx={{
-                        opacity: props.noFloatButton ? 0 : 1,
-                        pointerEvents: props.clickableFloatedButton
-                          ? undefined
-                          : "none",
-                      }}
-                    >
-                      {props.children}
-                    </Box>
-                  ) : null}
+                  <UrsorFadeIn duration={700}>
+                    {props.content ? (
+                      <Box
+                        width={props.buttonWidth ? width : props.width}
+                        borderRadius={
+                          props.cornerRadius ?? DEFAULT_CORNER_RADIUS
+                        }
+                        p={
+                          props.noCard || props.noPadding ? undefined : PADDING
+                        }
+                        sx={{
+                          background: props.noCard ? undefined : "white",
+                          pointerEvents: props.open ? "auto" : "none",
+                          opacity: props.open && !props.fadedOut ? 1 : 0,
+                          transition: "0.3s",
+                          animation: props.animation,
+                        }}
+                        height="100%"
+                        overflow="scroll"
+                      >
+                        {props.content}
+                      </Box>
+                    ) : null}
+                    {isFlipped ? (
+                      <Box
+                        sx={{
+                          opacity: props.noFloatButton ? 0 : 1,
+                          pointerEvents: props.clickableFloatedButton
+                            ? undefined
+                            : "none",
+                        }}
+                      >
+                        {props.children}
+                      </Box>
+                    ) : null}
+                  </UrsorFadeIn>
                 </Stack>
               </Box>
             </>,

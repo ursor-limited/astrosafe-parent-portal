@@ -15,6 +15,7 @@ import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptD
 import { useUserContext } from "@/app/components/UserContext";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { useRouter } from "next/navigation";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -183,8 +184,8 @@ export default function WorksheetGenerator(props: {
   nProblems?: number;
   topic?: WorksheetTopic;
   specificSettings?: ISpecificWorksheetGeneratorSettings;
-  noBackground?: boolean;
-  whiteFields?: boolean;
+  noPadding?: boolean;
+  landOnWorksheetPage?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -245,11 +246,13 @@ export default function WorksheetGenerator(props: {
 
   const userDetails = useUserContext();
 
+  const router = useRouter();
+
   return (
     <Stack
       borderRadius="20px"
-      bgcolor={props.noBackground ? undefined : PALETTE.secondary.grey[1]}
-      p={props.noBackground ? undefined : "42px"}
+      bgcolor="rgb(255,255,255)"
+      p={props.noPadding ? undefined : "42px"}
       direction="row"
       spacing="40px"
     >
@@ -265,14 +268,11 @@ export default function WorksheetGenerator(props: {
             width="100%"
             leftAlign
             boldValue
-            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
-        {/* <Stack direction="row" spacing="20px" sx={{ opacity: 0.35 }}> */}
         <Stack direction="row" spacing="20px">
           <Captioned text="Question topic">
             <UrsorSelect
-              white={props.whiteFields}
               items={[
                 {
                   id: "multiplication",
@@ -297,23 +297,22 @@ export default function WorksheetGenerator(props: {
               zIndex={999999999}
             />
           </Captioned>
-          <Captioned text="Question type">
-            <UrsorSelect
-              white={props.whiteFields}
-              items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
-                id: t,
-                value: WORKSHEET_ID_DISPLAY_NAMES[t],
-              }))}
-              selected={[worksheetId]}
-              callback={(wid: string) => {
-                setWorksheetId(wid as WorksheetId);
-              }}
-              width="100%"
-              zIndex={999999999}
-            />
-          </Captioned>
         </Stack>
-        <Stack height="85px" justifyContent="center">
+        <Captioned text="Question type">
+          <UrsorSelect
+            items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
+              id: t,
+              value: WORKSHEET_ID_DISPLAY_NAMES[t],
+            }))}
+            selected={[worksheetId]}
+            callback={(wid: string) => {
+              setWorksheetId(wid as WorksheetId);
+            }}
+            width="100%"
+            zIndex={999999999}
+          />
+        </Captioned>
+        <Stack height="40px" justifyContent="center">
           <Stack
             height="2px"
             width="100%"
@@ -334,7 +333,6 @@ export default function WorksheetGenerator(props: {
             topic={topic}
             pageIndex={selectedPageIndex}
             regenerationCount={regenerationCount}
-            whiteFields={props.whiteFields}
           />
         ) : worksheetId === "numberBond" ? (
           <WorksheetGeneratorNumberBondModule
@@ -350,18 +348,17 @@ export default function WorksheetGenerator(props: {
             topic={topic}
             pageIndex={selectedPageIndex}
             regenerationCount={regenerationCount}
-            whiteFields={props.whiteFields}
           />
         ) : null}
       </Stack>
       <Stack
-        minWidth="242px"
+        minWidth="268px"
         position="relative"
         flex={1}
         justifyContent="space-between"
       >
         <Stack
-          sx={{ transform: "scale(0.3)", transformOrigin: "top left" }}
+          sx={{ transform: "scale(0.333)", transformOrigin: "top left" }}
           position="absolute"
           top={0}
           left={0}
@@ -386,8 +383,17 @@ export default function WorksheetGenerator(props: {
             <UrsorButton
               onClick={() => {
                 creationCallback?.().then((id) => {
-                  setFreeWorksheetCreationCount(freeWorksheetCreationCount + 1);
-                  setFreeWorksheetIds([...freeWorksheetIds, id]);
+                  if (!userDetails.user) {
+                    setFreeWorksheetCreationCount(
+                      freeWorksheetCreationCount + 1
+                    );
+                    setFreeWorksheetIds([...freeWorksheetIds, id]);
+                  }
+                  router.push(
+                    !props.landOnWorksheetPage && userDetails.user
+                      ? "/dashboard"
+                      : `/worksheet/${id}`
+                  );
                 });
               }}
               dark

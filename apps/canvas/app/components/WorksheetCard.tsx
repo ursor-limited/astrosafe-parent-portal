@@ -7,9 +7,23 @@ import NumberBondWorksheet from "../worksheet/[id]/NumberBondWorksheet";
 import { useRouter } from "next/navigation";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import { useEffect, useState } from "react";
+import moment from "moment";
+
+export const ORANGE_BORDER_DURATION = 8;
 
 const WorksheetCard = (props: IWorksheet) => {
   const router = useRouter();
+  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
+  useEffect(() => {
+    if (
+      -moment(props.createdAt).diff(moment(), "seconds") <
+      ORANGE_BORDER_DURATION
+    ) {
+      setOrangeBorderOn(true);
+      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
+    }
+  }, []);
   return (
     <Stack
       height="317px"
@@ -24,6 +38,9 @@ const WorksheetCard = (props: IWorksheet) => {
         "&:hover": { opacity: 0.6 },
         transition: "0.2s",
         cursor: "pointer",
+        outline: orangeBorderOn
+          ? `3px solid ${PALETTE.system.orange}`
+          : undefined,
       }}
       onClick={() => router.push(`/worksheet/${props.id}`)}
       pb="7px"

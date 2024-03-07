@@ -9,6 +9,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import moment from "moment";
 import mixpanel from "mixpanel-browser";
@@ -16,6 +17,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
+import { Header } from "@/app/components/header2";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -163,13 +165,15 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
+      <Header />
       <BigCard
         title={props.details.title}
         description={props.details.description}
         createdAt={props.details.createdAt}
         rightStuff={
           <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id === props.details.creatorId ? (
+            {userDetails?.user?.id &&
+            userDetails?.user?.id === props.details.creatorId ? (
               <CircularButton
                 icon={TrashcanIcon}
                 color={PALETTE.system.red}
@@ -183,6 +187,7 @@ function VideoPageContents(props: { details: IVideo }) {
                 navigator.clipboard.writeText(window.location.href);
                 notificationCtx.success("Copied URL to clipboard.");
               }}
+              endIcon={LinkIcon}
             >
               Share link
             </UrsorButton>

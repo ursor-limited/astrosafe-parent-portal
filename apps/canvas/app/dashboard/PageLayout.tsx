@@ -229,7 +229,6 @@ export default function PageLayout(props: IPageLayoutProps) {
             justifyContent: "center",
           }}
           width={props.bodyWidth ?? "100%"}
-          overflow="hidden"
         >
           {props.children}
         </Stack>

@@ -6,7 +6,7 @@ import { FONT_SIZES } from "./typography";
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
-export const BOLD_FONT_WEIGHT = 600;
+export const BOLD_FONT_WEIGHT = 450;
 
 export interface UrsorInputFieldProps {
   width?: string;
@@ -51,6 +51,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       textAlign: props.leftAlign ? "left" : "center",
       textOverflow: "ellipsis",
       fontSize: props.fontSize ?? FONT_SIZES.normal,
+      fontFamily: "__Rubik_5c20f6, __Rubik_Fallback_5c20f6",
       color: props.color ?? PALETTE.font.dark,
       fontWeight:
         props.boldValue || (props.value && !props.noBold)

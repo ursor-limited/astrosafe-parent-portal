@@ -223,11 +223,11 @@ export default function AccountPageContents(props: IAccountPageProps) {
           <Stack spacing={SECTION_SPACING} flex={1} minWidth="625px">
             <AccountPageSection
               title="Profile"
-              button={{
-                variant: "secondary",
-                text: "Delete account",
-                callback: () => setDeleteAccountDialogOpen(true),
-              }}
+              // button={{
+              //   variant: "secondary",
+              //   text: "Delete account",
+              //   callback: () => setDeleteAccountDialogOpen(true),
+              // }}
               fadeInDelay={200}
             >
               <Stack direction="row" spacing="26px">

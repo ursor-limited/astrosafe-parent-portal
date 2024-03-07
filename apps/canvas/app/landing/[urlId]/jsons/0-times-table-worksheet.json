@@ -48,7 +48,7 @@
     },
     "otherPages": {
         "supertitle": "Discover more times tables",
-        "title": "All the times table you need!",
+        "title": "Learn your times tables from -10 to 0",
         "links": [
             {
                 "title": "-10 Times Table",
@@ -131,6 +131,22 @@
                 "title": "Parents",
                 "text": "AstroSafe makes it simple to support your child at home by allowing parents to make classroom-grade worksheets at a click of a button.",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/ParentsImage.png"
+            }
+        ]
+    },
+    "faqs": {
+        "cards": [
+            {
+                "question": "Is the AstroSafe Worksheet Generator free to use?",
+                "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+            },
+            {
+                "question": "Can I create different worksheets?",
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
+            },
+            {
+                "question": "Do you offer school discounts?",
+                "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
             }
         ]
     }

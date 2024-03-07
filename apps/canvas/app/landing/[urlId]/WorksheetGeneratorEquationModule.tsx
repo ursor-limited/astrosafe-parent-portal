@@ -89,7 +89,6 @@ export function WorksheetGeneratorEquationModule(
   const router = useRouter();
 
   const userDetails = useUserContext();
-  console.log(")_)_)_)_)_)rrrrrrrrrrr", userDetails);
 
   useEffect(() => {
     setPreviewWorksheet(
@@ -111,12 +110,7 @@ export function WorksheetGeneratorEquationModule(
         factor,
         multipliers,
         userDetails?.user?.id
-      )
-        .then((ws) => {
-          router.push(`/worksheet/${ws.id}`);
-          return ws;
-        })
-        .then((ws) => ws.id)
+      ).then((ws) => ws.id)
     );
   }, [
     props.title,

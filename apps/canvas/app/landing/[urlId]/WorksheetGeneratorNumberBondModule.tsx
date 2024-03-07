@@ -13,12 +13,10 @@ import {
 import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {
-  NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N,
-  NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N,
-  NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N,
-  NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N,
   NUMBER_BOND_HORIZONTAL_N_COLUMNS,
+  NUMBER_BOND_HORIZONTAL_ROWS_N,
   NUMBER_BOND_VERTICAL_N_COLUMNS,
+  NUMBER_BOND_VERTICAL_ROWS_N,
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 import { useUserContext } from "@/app/components/UserContext";
@@ -80,14 +78,14 @@ export function WorksheetGeneratorNumberBondModule(
           Math.ceil(
             (props.nProblems -
               (orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
-                : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
               ((orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
-                : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N) *
+                ? NUMBER_BOND_HORIZONTAL_ROWS_N
+                : NUMBER_BOND_VERTICAL_ROWS_N) *
                 (orientation === "horizontal"
                   ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
                   : NUMBER_BOND_VERTICAL_N_COLUMNS))
@@ -123,10 +121,10 @@ export function WorksheetGeneratorNumberBondModule(
         pairs,
         userDetails.user?.id
       )
-        .then((ws) => {
-          router.push(`/worksheet/${ws.id}`);
-          return ws;
-        })
+        // .then((ws) => {
+        //   router.push(`/worksheet/${ws.id}`);
+        //   return ws;
+        // })
         .then((ws) => ws.id)
     );
   }, [

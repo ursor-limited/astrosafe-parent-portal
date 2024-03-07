@@ -5,14 +5,15 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
-import _ from "lodash";
+import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
@@ -30,6 +31,9 @@ import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
+import StepperOverlay from "./StepperOverlay";
+import UpgradeDialog from "../components/UpgradeDialog";
+import UpgradePromptDialog from "../components/SignupPromptDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -207,56 +211,107 @@ const ToolButton = (props: {
   title: string;
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  infoButtonPosition: number;
+  infoTitle: string;
+  infoBody: string;
   onClick: () => void;
-}) => (
-  <Stack
-    direction="row"
-    width="360px"
-    minHeight="66px"
-    borderRadius="8px"
-    spacing="12px"
-    bgcolor="rgb(255,255,255)"
-    boxShadow="0 0 16px rgba(0,0,0,0.02)"
-    //border={`3px solid ${alpha(props.color, 0.5)}`}
-    onClick={props.onClick}
-    sx={{
-      cursor: "pointer",
-      "&:hover": { opacity: 0.6 },
-      transition: "0.2s",
-      svg: {
-        path: {
-          fill: props.color,
-        },
-      },
-    }}
-  >
-    <Stack
-      width="66px"
-      height="100%"
-      //bgcolor={props.color}
-      alignItems="center"
-      justifyContent="center"
-      borderRadius="4px 0 0 4px"
-    >
-      <props.icon height="35px" width="35px" />
-    </Stack>
-    <Stack flex={1} py="11px" justifyContent="space-between">
-      <Typography variant="medium" bold color={props.color}>
-        {props.title}
-      </Typography>
-      <Typography
-        variant="small"
-        sx={{ fontWeight: 380 }}
-        color={alpha(props.color, 0.7)}
+}) => {
+  const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
+  return (
+    <>
+      <Stack
+        direction="row"
+        width="370px"
+        minHeight="66px"
+        borderRadius="8px"
+        boxShadow="0 0 16px rgba(0,0,0,0.02)"
+        bgcolor="rgb(255,255,255)"
+        position="relative"
       >
-        {props.description}
-      </Typography>
-    </Stack>
-    <Stack height="100%" justifyContent="center" pr="15px">
-      <PlusIcon height="24px" width="24px" />
-    </Stack>
-  </Stack>
-);
+        <Stack
+          width="100%"
+          height="100%"
+          position="absolute"
+          top={0}
+          left={0}
+          onClick={props.onClick}
+          sx={{
+            cursor: "pointer",
+            "&:hover": { background: "rgba(255,255,255,0.5)" },
+            transition: "0.2s",
+          }}
+        />
+        <Stack
+          position="absolute"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+            svg: {
+              path: {
+                fill: `${PALETTE.secondary.grey[4]} !important`,
+              },
+            },
+          }}
+          onClick={() => setOverlayOpen(true)}
+          top="16px"
+          right={`${props.infoButtonPosition}px`}
+        >
+          <InfoIcon width="14px" height="14px" />
+        </Stack>
+        <Stack direction="row" spacing="14px" flex={1}>
+          <Stack
+            width="70px"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+            borderRadius="4px 0 0 4px"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+            }}
+            bgcolor={props.color}
+          >
+            <props.icon height="35px" width="35px" />
+          </Stack>
+          <Stack flex={1} py="11px" justifyContent="space-between">
+            <Typography variant="medium" bold color={props.color}>
+              {props.title}
+            </Typography>
+            <Typography
+              variant="small"
+              sx={{ fontWeight: 380 }}
+              color={alpha(props.color, 0.7)}
+            >
+              {props.description}
+            </Typography>
+          </Stack>
+          <Stack
+            height="100%"
+            justifyContent="center"
+            pr="15px"
+            sx={{
+              svg: {
+                path: {
+                  fill: props.color,
+                },
+              },
+            }}
+          >
+            <PlusIcon height="24px" width="24px" />
+          </Stack>
+        </Stack>
+      </Stack>
+      <StepperOverlay
+        open={overlayOpen}
+        closeCallback={() => setOverlayOpen(false)}
+        title={props.infoTitle}
+        body={props.infoBody}
+      />
+    </>
+  );
+};
 
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
@@ -296,8 +351,6 @@ export default function DashboardPageContents() {
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
     useState<AstroContentSort>("createdAt");
-
-  console.log(userDetails.user);
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
@@ -375,13 +428,25 @@ export default function DashboardPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
-      console.log("aaaa", userDetails.user?.id);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
         () => loadWorksheets()
       );
       setFreeWorksheetIds([]);
     }
   }, [userDetails.user?.id, freeWorksheetIds.length]);
+
+  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
+    "freeVideoIds",
+    []
+  );
+  useEffect(() => {
+    if (userDetails.user?.id && freeVideoIds.length > 0) {
+      ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
+        loadVideos()
+      );
+      setFreeVideoIds([]);
+    }
+  }, [userDetails.user?.id, freeVideoIds.length]);
 
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
@@ -396,17 +461,20 @@ export default function DashboardPageContents() {
     );
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
         title="Home"
         bodyWidth="100%"
         selectedSidebarItemId="home"
+        scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         button={{
           text: "Upgrade",
           icon: VerifiedIcon,
-          callback: () => null,
+          callback: () => setUpgradeDialogOpen(true),
         }}
         buttonRowExtraElement={
           <Stack
@@ -434,6 +502,11 @@ export default function DashboardPageContents() {
               onClick={() => {
                 setVideoCreationDialogOpen(true);
               }}
+              infoButtonPosition={76}
+              infoTitle="Safe video link"
+              infoBody={
+                "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
+              }
             />
             <ToolButton
               title="Create math worksheet"
@@ -441,6 +514,11 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
+              infoButtonPosition={57}
+              infoTitle="Math worksheet"
+              infoBody={
+                "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
+              }
             />
           </Stack>
         </UrsorFadeIn>
@@ -468,7 +546,7 @@ export default function DashboardPageContents() {
             />
             <Stack
               direction="row"
-              spacing="30px"
+              spacing="12px"
               alignItems="center"
               width="fit-content"
             >
@@ -498,7 +576,7 @@ export default function DashboardPageContents() {
           ref={setColumnsContainerRef}
           overflow="hidden"
         >
-          <Stack flex={1} overflow="scroll">
+          <Stack flex={1}>
             <Stack
               flex={1}
               pb="110px"
@@ -557,6 +635,10 @@ export default function DashboardPageContents() {
       <DashboardSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
+      />
+      <UpgradePromptDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
       />
     </>
   );

@@ -1,21 +1,18 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
+import AstroWorksheetPage from "./AstroWorksheetPage";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
 
-export const NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N = 8;
-export const NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N = 10;
-export const NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N = 3;
-export const NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N = 4;
+export const NUMBER_BOND_HORIZONTAL_ROWS_N = 8;
+export const NUMBER_BOND_VERTICAL_ROWS_N = 3;
 
 export const A4_WIDTH = "210mm";
 export const A4_HEIGHT = "297mm";
@@ -171,8 +168,6 @@ const VerticalEquationQuestion = (props: {
   </Stack>
 );
 
-const rubik = Rubik({ subsets: ["latin"] });
-
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
@@ -184,7 +179,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
-      answers?: boolean;
+      showAnswers?: boolean;
       pageIndex?: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
@@ -206,18 +201,12 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
-    const [firstPageRowsN, setFirstPageRowsN] = useState<number>(1);
-    const [otherPagesRowsN, setOtherPagesRowsN] = useState<number>(1);
+    const [pageRowsN, setPageRowsN] = useState<number>(1);
     useEffect(() => {
-      setFirstPageRowsN(
+      setPageRowsN(
         props.orientation === "horizontal"
-          ? NUMBER_BOND_HORIZONTAL_FIRST_PAGE_ROWS_N
-          : NUMBER_BOND_VERTICAL_FIRST_PAGE_ROWS_N
-      );
-      setOtherPagesRowsN(
-        props.orientation === "horizontal"
-          ? NUMBER_BOND_HORIZONTAL_OTHER_PAGES_ROWS_N
-          : NUMBER_BOND_VERTICAL_OTHER_PAGES_ROWS_N
+          ? NUMBER_BOND_HORIZONTAL_ROWS_N
+          : NUMBER_BOND_VERTICAL_ROWS_N
       );
     }, [props.orientation]);
 
@@ -233,10 +222,10 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         setRows(
           _.isNumber(props.pageIndex)
             ? props.pageIndex === 0
-              ? rowz.slice(0, firstPageRowsN)
+              ? rowz.slice(0, pageRowsN)
               : rowz.slice(
-                  firstPageRowsN + (props.pageIndex! - 1) * otherPagesRowsN,
-                  firstPageRowsN + props.pageIndex! * otherPagesRowsN
+                  pageRowsN + (props.pageIndex! - 1) * pageRowsN,
+                  pageRowsN + props.pageIndex! * pageRowsN
                 )
             : rowz
         );
@@ -246,112 +235,60 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       props.pageIndex,
       rows.length,
       props.orientation,
-      firstPageRowsN,
-      otherPagesRowsN,
+      pageRowsN,
     ]);
 
     return (
-      <div
-        style={{
-          position: "relative",
-          width: A4_WIDTH,
-          height: A4_HEIGHT,
-        }}
-        id={props.printableId}
+      <AstroWorksheetPage
+        title={props.title}
+        showAnswers={props.showAnswers}
+        printableId={props.printableId}
       >
-        {props.printButtonCallback ? (
-          <Stack
-            position="absolute"
-            right="30px"
-            top="47px"
-            height="50px"
-            width="50px"
-            bgcolor={PALETTE.secondary.purple[2]}
-            justifyContent="center"
-            alignItems="center"
-            borderRadius="100%"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }}
-            onClick={props.printButtonCallback}
-          >
-            <PrinterIcon height="25px" width="25px" />
-          </Stack>
-        ) : null}
-        <Stack
-          ref={ref || setPrintableRef}
-          width={A4_WIDTH}
-          minWidth={A4_WIDTH}
-          minHeight={A4_HEIGHT}
-          maxWidth="90%"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          px="32px"
-          boxSizing="border-box"
-          className={rubik.className}
-        >
-          {!props.pageIndex ? (
+        <Stack width="100%">
+          {rows.map((row, i) => (
             <Stack
-              mt="50px"
-              spacing="4px"
-              width="100%"
-              height="24mm"
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              key={i}
+              flex={1}
+              direction="row"
+              justifyContent={"space-evenly"}
             >
-              <Typography variant="h2">{props.title}</Typography>
-              <Typography bold color={PALETTE.secondary.purple[2]}>
-                {props.answers ? "Answers" : "Try to solve these questions!"}
-              </Typography>
+              {[
+                ...row?.map((x, k) => (
+                  <Stack key={k} flex={1} alignItems="center">
+                    {props.orientation === "horizontal" ? (
+                      <HorizontalEquationQuestion
+                        result={props.result}
+                        left={x?.[0]}
+                        right={x?.[1]}
+                        both={props.both}
+                        showAnswer={!!props.showAnswers}
+                      />
+                    ) : (
+                      <VerticalEquationQuestion
+                        result={props.result}
+                        left={x?.[0]}
+                        right={x?.[1]}
+                        both={props.both}
+                        showAnswer={!!props.showAnswers}
+                      />
+                    )}
+                  </Stack>
+                )),
+                ...[
+                  ...Array(
+                    Math.max(
+                      0,
+                      (props.orientation === "horizontal"
+                        ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+                        : NUMBER_BOND_VERTICAL_N_COLUMNS) - row.length
+                    )
+                  ).keys(),
+                ].map((j) => <Stack flex={1} key={`filler${j}`} />),
+              ]}
             </Stack>
-          ) : null}
-          <Stack width="100%">
-            {rows.map((row, i) => (
-              <Stack
-                key={i}
-                flex={1}
-                direction="row"
-                justifyContent={"space-evenly"}
-              >
-                {[
-                  ...row?.map((x, k) => (
-                    <Stack key={k} flex={1} alignItems="center">
-                      {props.orientation === "horizontal" ? (
-                        <HorizontalEquationQuestion
-                          result={props.result}
-                          left={x?.[0]}
-                          right={x?.[1]}
-                          both={props.both}
-                          showAnswer={!!props.answers}
-                        />
-                      ) : (
-                        <VerticalEquationQuestion
-                          result={props.result}
-                          left={x?.[0]}
-                          right={x?.[1]}
-                          both={props.both}
-                          showAnswer={!!props.answers}
-                        />
-                      )}
-                    </Stack>
-                  )),
-                  ...[
-                    ...Array(
-                      Math.max(
-                        0,
-                        (props.orientation === "horizontal"
-                          ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
-                          : NUMBER_BOND_VERTICAL_N_COLUMNS) - row.length
-                      )
-                    ).keys(),
-                  ].map((j) => <Stack flex={1} key={`filler${j}`} />),
-                ]}
-              </Stack>
-            ))}
-          </Stack>
+          ))}
         </Stack>
-      </div>
+      </AstroWorksheetPage>
     );
   }
 );

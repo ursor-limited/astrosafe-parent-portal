@@ -8,16 +8,27 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
+import Head from "next/head";
 
 export default function AstroLandingPage(props: {
   mobile: boolean;
   title: string[];
   subtitle: string;
   viewports: React.ReactNode;
+  faqs?: {
+    cards: {
+      question: string;
+      answer: string;
+    }[];
+  };
   children: React.ReactNode;
 }) {
   return (
     <Stack width="100vw" height="100vh" pt="100px" alignItems="center">
+      <Head>
+        <title>LOOOL</title>
+        <meta name="description">ABBBB</meta>
+      </Head>
       {/* <Header mobile={props.mobile} /> */}
       <Stack
         spacing="36px"
@@ -47,8 +58,8 @@ export default function AstroLandingPage(props: {
                 variant={props.mobile ? "h5" : "h1"}
                 sx={{
                   textAlign: "center",
-                  fontWeight: 480,
                 }}
+                bold
                 htmlTag="h1"
               >
                 {x}
@@ -56,7 +67,7 @@ export default function AstroLandingPage(props: {
             ))}
           </Stack>
           <Typography
-            variant={props.mobile ? "normal" : "h5"}
+            variant={props.mobile ? "normal" : "large"}
             bold
             color="rgba(255,255,255,0.8)"
             sx={{
@@ -87,10 +98,16 @@ export default function AstroLandingPage(props: {
         >
           {/* viewports here */}
           {props.viewports}
-          <Stack width="100%">
-            <LandingPageFAQSection mobile={props.mobile} />
-            <LandingPageFooter mobile={props.mobile} />
-          </Stack>
+          {props.faqs ? (
+            <Stack width="100%">
+              <LandingPageFAQSection
+                title="Learn more about Astro Worksheet Generator"
+                faqs={props.faqs.cards}
+                mobile={props.mobile}
+              />
+              <LandingPageFooter mobile={props.mobile} />
+            </Stack>
+          ) : null}
         </Stack>
       </Stack>
     </Stack>

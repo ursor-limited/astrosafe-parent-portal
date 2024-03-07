@@ -1,5 +1,4 @@
 import React from "react";
-import AuthWrapper from "../../components/AuthWrapper";
 import LandingPageContents from "./LandingPageContents";
 import landingPageDetails from "./jsons";
 import {} from "@/app/worksheet/[id]/EquationWorksheet";
@@ -9,15 +8,27 @@ import {
   WorksheetId,
 } from "./WorksheetGenerator";
 import Head from "next/head";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { urlId: string };
+}): Promise<Metadata> {
+  const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
+  return {
+    title: details?.pageTitle,
+    description: details?.metaDescription,
+    // openGraph: {
+    //   images: ["/some-specific-page-image.jpg", ...previousImages],
+    // },
+  };
+}
 
 async function LandingPage({ params }: { params: { urlId: string } }) {
   const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
   return details ? (
     <>
-      <Head>
-        <title>{details.pageTitle}</title>
-        <meta name="description">{details.metaDescription}</meta>
-      </Head>
       <LandingPageContents
         {...details}
         worksheetGenerator={{

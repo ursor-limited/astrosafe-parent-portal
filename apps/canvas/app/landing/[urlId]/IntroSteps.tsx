@@ -21,6 +21,7 @@ export const IntroSteps = (props: {
   step2: { body: string; title: string };
   step3: { body: string; title: string };
   mobile: boolean;
+  backgroundOpacity?: number;
 }) => {
   return (
     <Stack width="100%" position="relative" alignItems="center">
@@ -29,7 +30,6 @@ export const IntroSteps = (props: {
           <Stack
             width="fit-content"
             position="absolute"
-            zIndex={-1}
             left={0}
             right={0}
             top="15px"
@@ -62,7 +62,11 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox title={props.step1.title} content={props.step1.body} />
+              <IntroBox
+                title={props.step1.title}
+                content={props.step1.body}
+                backgroundOpacity={props.backgroundOpacity}
+              />
             </Stack>
             <Stack
               sx={{
@@ -73,7 +77,11 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox title={props.step2.title} content={props.step2.body} />
+              <IntroBox
+                title={props.step2.title}
+                content={props.step2.body}
+                backgroundOpacity={props.backgroundOpacity}
+              />
             </Stack>
             <Stack
               sx={{
@@ -83,7 +91,11 @@ export const IntroSteps = (props: {
                 animationIterationCount: "infinite",
               }}
             >
-              <IntroBox title={props.step3.title} content={props.step3.body} />
+              <IntroBox
+                title={props.step3.title}
+                content={props.step3.body}
+                backgroundOpacity={props.backgroundOpacity}
+              />
             </Stack>
           </Stack>
         </>
