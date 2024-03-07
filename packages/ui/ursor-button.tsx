@@ -16,12 +16,6 @@ to {
 
 // tertiary is implemented here only for dark mode; the light mode implementation is in UrsorMagicalButton
 export type ButtonVariant = "primary" | "secondary" | "tertiary";
-// | "tertiary"
-// | "ghost"
-// | "google"
-// | "nippon"
-// | "transparentRed"
-// | "green";
 export type ButtonSize = "large" | "medium" | "small" | "tiny";
 
 type ButtonState = "enabled" | "hover" | "pressed";
