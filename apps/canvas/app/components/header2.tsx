@@ -121,6 +121,7 @@ export const Header = (props: {
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
   const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
+  const [productsPopupOpen, setProductsPopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [nVideos, setNVideos] = useState<number | undefined>(undefined);
@@ -139,7 +140,7 @@ export const Header = (props: {
       minHeight={`${86}px`}
       alignItems="center"
       justifyContent="space-between"
-      px="65px"
+      px="67px"
       boxSizing="border-box"
     >
       <Stack direction="row" spacing="52px">
@@ -156,23 +157,70 @@ export const Header = (props: {
             </Stack>
           </Link>
         </Stack>
-        <Stack
-          direction="row"
-          spacing="8px"
-          alignItems="center"
-          sx={{
-            svg: {
-              path: {
-                fill: "rgb(255,255,255)",
-              },
-            },
-          }}
+        <UrsorPopover
+          open={productsPopupOpen}
+          content={
+            <Stack
+              height="292px"
+              width="842px"
+              bgcolor="rgb(255,255,255)"
+              borderRadius="12px"
+              direction="row"
+              p="12px"
+            >
+              <Stack
+                bgcolor={PALETTE.secondary.grey[1]}
+                width="306px"
+                p="12px"
+                borderRadius="10px"
+              >
+                <Typography variant="medium" bold>
+                  Products
+                </Typography>
+              </Stack>
+            </Stack>
+          }
+          closeCallback={() => setProductsPopupOpen(false)}
+          placement="left"
+          noPadding
         >
-          <Typography bold variant="medium" color="rgb(255,255,255)">
-            Products
-          </Typography>
-          <ChevronDownIcon width="20px" height="20px" />
-        </Stack>
+          <Stack
+            direction="row"
+            spacing="8px"
+            alignItems="center"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              svg: {
+                transform: `rotate(${productsPopupOpen ? 180 : 0}deg)`,
+                transition: "0.2s",
+                path: {
+                  fill: productsPopupOpen
+                    ? PALETTE.secondary.purple[2]
+                    : "rgb(255,255,255)",
+                },
+              },
+            }}
+            onClick={() => setProductsPopupOpen(true)}
+          >
+            <Typography
+              bold
+              variant="medium"
+              color={
+                productsPopupOpen
+                  ? PALETTE.secondary.purple[2]
+                  : "rgb(255,255,255)"
+              }
+              sx={{
+                transition: "0.2s",
+              }}
+            >
+              Products
+            </Typography>
+            <ChevronDownIcon width="20px" height="20px" />
+          </Stack>
+        </UrsorPopover>
       </Stack>
       {props.showSigninButton ? (
         <UrsorButton
