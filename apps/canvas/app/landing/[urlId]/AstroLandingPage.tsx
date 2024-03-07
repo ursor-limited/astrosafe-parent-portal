@@ -9,6 +9,7 @@ import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import Head from "next/head";
+import { Header } from "@/app/components/header2";
 
 export default function AstroLandingPage(props: {
   mobile: boolean;
@@ -24,17 +25,18 @@ export default function AstroLandingPage(props: {
   children: React.ReactNode;
 }) {
   return (
-    <Stack width="100vw" height="100vh" pt="100px" alignItems="center">
+    <Stack width="100vw" height="100vh" alignItems="center">
       <Head>
         <title>LOOOL</title>
         <meta name="description">ABBBB</meta>
       </Head>
-      {/* <Header mobile={props.mobile} /> */}
+      <Header />
       <Stack
         spacing="36px"
         alignItems="center"
         width="100%"
         pb={props.mobile ? "20px" : "50px"}
+        pt="30px"
       >
         <Stack
           maxWidth={props.mobile ? undefined : "780px"}
