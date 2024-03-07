@@ -26,10 +26,6 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
-      <Head>
-        <title>LOOOL</title>
-        <meta name="description">ABBBB</meta>
-      </Head>
       <Header />
       <Stack
         spacing="36px"

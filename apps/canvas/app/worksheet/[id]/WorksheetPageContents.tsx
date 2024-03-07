@@ -440,7 +440,6 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   return (
     <>
-      <Header />
       <Stack
         sx={{
           opacity: 0,
