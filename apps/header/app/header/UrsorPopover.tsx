@@ -124,7 +124,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 style={styles.popper}
                 {...attributes.popper}
                 zIndex={props.zIndex || 3}
-                //height={0}
               >
                 <Stack
                   spacing="24px"
