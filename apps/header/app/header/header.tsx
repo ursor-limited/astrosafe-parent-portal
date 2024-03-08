@@ -263,17 +263,7 @@ export const Header = (props: {
   createNewButton?: boolean;
   hidePopupDashboardButton?: boolean;
 }) => {
-  const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
-  const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
-  const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
-  const [nVideos, setNVideos] = useState<number | undefined>(undefined);
-  useEffect(() => {
-    user?.email &&
-      ApiController.getNumberOfUserVideos(user.email).then((n) =>
-        setNVideos(n)
-      );
-  }, [user?.email]);
   return (
     <Stack
       direction="row"
@@ -422,19 +412,6 @@ export const Header = (props: {
           </Stack>
         </HeaderButton>
       </Stack>
-      {props.showSigninButton ? (
-        <UrsorButton
-          dark
-          variant="tertiary"
-          onClick={() => {
-            props.mobile ? loginWithRedirect() : loginWithPopup();
-            mixpanel.track("clicked header sign up");
-          }}
-          endIcon={PersonIcon}
-        >
-          Sign in
-        </UrsorButton>
-      ) : null}
 
       <Stack spacing="8px" direction="row">
         <UrsorButton
