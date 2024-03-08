@@ -26,6 +26,7 @@ export default function RootLayout({
         style={{
           margin: 0,
         }}
+        id="headerComponent"
       >
         {children}
       </body>
