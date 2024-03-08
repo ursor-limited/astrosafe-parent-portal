@@ -39,6 +39,26 @@ export const IntroSteps = (props: {
           >
             <Image src={Wave.src} fill alt="Wave" />
           </Stack>
+          <Stack
+            position="absolute"
+            left={0}
+            width="500px"
+            height="100px"
+            sx={{
+              background:
+                "linear-gradient(90deg, rgb(255,255,255), rgba(255,255,255,0))",
+            }}
+          />
+          <Stack
+            position="absolute"
+            right={0}
+            width="500px"
+            height="100px"
+            sx={{
+              background:
+                "linear-gradient(-90deg, rgb(255,255,255), rgba(255,255,255,0))",
+            }}
+          />
 
           <Stack
             direction="row"
