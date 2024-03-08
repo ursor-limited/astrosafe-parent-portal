@@ -20,11 +20,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import UpgradePromptDialog from "./SignupPromptDialog";
-
-const UrsorPopover = dynamic(
-  () => import("@/app/header/UrsorPopover"),
-  { ssr: false } // not including this component on server-side due to its dependence on 'document'
-);
+import UrsorPopover from "./UrsorPopover";
 
 export const HEADER_HEIGHT = 86;
 
