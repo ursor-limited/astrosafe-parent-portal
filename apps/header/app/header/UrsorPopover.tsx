@@ -206,111 +206,104 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
             document.body
           )
         : null} */}
-      {props.open
-        ? createPortal(
-            <>
-              {!props.noBackdrop ? (
-                <Backdrop
-                  sx={{
-                    //background: "rgba(0, 0, 0, 0.2)",
-                    //backdropFilter: "blur(3px)",
-                    zIndex: props.zIndex || 2,
-                  }}
-                  open={props.open}
-                  onClick={props.closeCallback}
-                />
-              ) : null}
+      {props.open ? (
+        <>
+          {!props.noBackdrop ? (
+            <Backdrop
+              sx={{
+                //background: "rgba(0, 0, 0, 0.2)",
+                //backdropFilter: "blur(3px)",
+                zIndex: props.zIndex || 2,
+              }}
+              open={props.open}
+              onClick={props.closeCallback}
+            />
+          ) : null}
 
-              <Box
-                ref={setPopperElement}
-                style={styles.popper}
-                {...attributes.popper}
-                zIndex={props.zIndex || 3}
-              >
-                <Stack
-                  spacing="24px"
+          <Box
+            ref={setPopperElement}
+            style={styles.popper}
+            {...attributes.popper}
+            zIndex={props.zIndex || 3}
+          >
+            <Stack
+              spacing="24px"
+              sx={{
+                transform: `translateY(${
+                  (isFlipped ? -1 : 1) * (yOffset ?? 0)
+                }px)`,
+              }}
+              justifyContent="center"
+              alignItems={
+                props.placement === "right"
+                  ? "flex-end"
+                  : props.placement === "left"
+                  ? "flex-start"
+                  : "center"
+              }
+              ref={setButtonRef}
+            >
+              {!isFlipped ? (
+                <Box
                   sx={{
-                    transform: `translateY(${
-                      (isFlipped ? -1 : 1) * (yOffset ?? 0)
-                    }px)`,
+                    opacity: props.noFloatButton ? 0 : 1,
+                    pointerEvents: props.clickableFloatedButton
+                      ? undefined
+                      : "none",
                   }}
-                  justifyContent="center"
-                  alignItems={
-                    props.placement === "right"
-                      ? "flex-end"
-                      : props.placement === "left"
-                      ? "flex-start"
-                      : "center"
-                  }
-                  ref={setButtonRef}
                 >
-                  {!isFlipped ? (
-                    <Box
-                      sx={{
-                        opacity: props.noFloatButton ? 0 : 1,
-                        pointerEvents: props.clickableFloatedButton
-                          ? undefined
-                          : "none",
-                      }}
-                    >
-                      {props.children}
-                    </Box>
-                  ) : null}
-                  {props.externalElement ? (
-                    <Box
-                      width={width}
-                      sx={{
-                        pointerEvents: props.open ? "auto" : "none",
-                        opacity: props.open ? 1 : 0,
-                        transition: "0.3s",
-                        //animation: props.animation,
-                      }}
-                    >
-                      {props.externalElement}
-                    </Box>
-                  ) : null}
-                  <UrsorFadeIn duration={700}>
-                    {props.content ? (
-                      <Box
-                        width={props.buttonWidth ? width : props.width}
-                        borderRadius={
-                          props.cornerRadius ?? DEFAULT_CORNER_RADIUS
-                        }
-                        p={
-                          props.noCard || props.noPadding ? undefined : PADDING
-                        }
-                        sx={{
-                          background: props.noCard ? undefined : "white",
-                          pointerEvents: props.open ? "auto" : "none",
-                          opacity: props.open && !props.fadedOut ? 1 : 0,
-                          transition: "0.3s",
-                          animation: props.animation,
-                        }}
-                        height="100%"
-                        overflow="scroll"
-                      >
-                        {props.content}
-                      </Box>
-                    ) : null}
-                    {isFlipped ? (
-                      <Box
-                        sx={{
-                          opacity: props.noFloatButton ? 0 : 1,
-                          pointerEvents: props.clickableFloatedButton
-                            ? undefined
-                            : "none",
-                        }}
-                      >
-                        {props.children}
-                      </Box>
-                    ) : null}
-                  </UrsorFadeIn>
-                </Stack>
-              </Box>
-            </>,
-            document?.body
-          )
-        : null}
+                  {props.children}
+                </Box>
+              ) : null}
+              {props.externalElement ? (
+                <Box
+                  width={width}
+                  sx={{
+                    pointerEvents: props.open ? "auto" : "none",
+                    opacity: props.open ? 1 : 0,
+                    transition: "0.3s",
+                    //animation: props.animation,
+                  }}
+                >
+                  {props.externalElement}
+                </Box>
+              ) : null}
+              <UrsorFadeIn duration={700}>
+                {props.content ? (
+                  <Box
+                    width={props.buttonWidth ? width : props.width}
+                    borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
+                    p={props.noCard || props.noPadding ? undefined : PADDING}
+                    sx={{
+                      background: props.noCard ? undefined : "white",
+                      pointerEvents: props.open ? "auto" : "none",
+                      opacity: props.open && !props.fadedOut ? 1 : 0,
+                      transition: "0.3s",
+                      animation: props.animation,
+                    }}
+                    height="100%"
+                    overflow="scroll"
+                  >
+                    {props.content}
+                  </Box>
+                ) : null}
+                {isFlipped ? (
+                  <Box
+                    sx={{
+                      opacity: props.noFloatButton ? 0 : 1,
+                      pointerEvents: props.clickableFloatedButton
+                        ? undefined
+                        : "none",
+                    }}
+                  >
+                    {props.children}
+                  </Box>
+                ) : null}
+              </UrsorFadeIn>
+            </Stack>
+          </Box>
+        </>
+      ) : null}
     </>
   );
 }
