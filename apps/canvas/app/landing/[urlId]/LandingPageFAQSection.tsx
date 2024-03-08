@@ -117,7 +117,8 @@ export const LandingPageFAQSection = (props: {
   return (
     <Stack width="100%" bgcolor={PALETTE.secondary.grey[1]} alignItems="center">
       <Stack
-        maxWidth="calc(1320px + 2 * 24px)"
+        width="calc(1320px + 2 * 24px)"
+        maxWidth="90%"
         minHeight="570px"
         py="100px"
         spacing={props.mobile ? "12px" : "20px"}
