@@ -124,10 +124,9 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 style={styles.popper}
                 {...attributes.popper}
                 zIndex={props.zIndex || 3}
-                //height={0}
               >
                 <Stack
-                  spacing="10px"
+                  spacing="24px"
                   maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
                   sx={{
                     transform: `translateY(${

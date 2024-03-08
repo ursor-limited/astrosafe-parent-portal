@@ -37,6 +37,7 @@ export interface IUrsorPopoverProps {
   noBackdrop?: boolean;
   disabled?: boolean;
   zIndex?: number;
+  margin?: string;
   children: React.ReactNode; // the button
 }
 
@@ -127,7 +128,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 //height={0}
               >
                 <Stack
-                  spacing="10px"
+                  spacing={props.margin ?? "10px"}
                   maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
                   sx={{
                     transform: `translateY(${

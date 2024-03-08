@@ -123,6 +123,7 @@ const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
       closeCallback={() => setOpen(false)}
       placement="left"
       noPadding
+      margin="24px"
     >
       <Stack
         direction="row"

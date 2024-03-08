@@ -1,6 +1,5 @@
 import React from "react";
 import FadeIn from "react-fade-in";
-import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 
 export const FULL_SIZE_CLASSNAME = "fullSize";

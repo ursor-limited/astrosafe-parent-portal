@@ -21,6 +21,7 @@ export default function OtherPageCard(props: {
         maxWidth="480px"
         height="163px"
         maxHeight="163px"
+        alignItems="center"
         direction="row"
         bgcolor={PALETTE.secondary.grey[1]}
         borderRadius="12px"
