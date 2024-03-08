@@ -5,6 +5,16 @@ import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 
+export async function generateStaticParams() {
+  return [
+    {
+      videoId: "653f98dbdffef24a0729b421",
+    },
+  ];
+}
+
+export const dynamicParams = true;
+
 export async function generateMetadata({
   params,
 }: {
