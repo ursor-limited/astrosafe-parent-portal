@@ -1,11 +1,6 @@
 import { Rubik } from "next/font/google";
 import "./globals.css";
-import { Stack } from "@mui/system";
-import Background from "@/images/background.png";
-import { Metadata } from "next";
 import { PALETTE } from "ui";
-import NotificationProvider from "./components/NotificationProvider";
-import UrsorNotificationBar from "./components/UrsorNotificationBar";
 
 const rubik = Rubik({
   subsets: ["latin"],
