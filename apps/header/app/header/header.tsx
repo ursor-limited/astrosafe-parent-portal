@@ -17,7 +17,6 @@ import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
-import ApiController from "../api";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import UpgradePromptDialog from "./SignupPromptDialog";
