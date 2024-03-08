@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
@@ -30,6 +29,7 @@ export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 export interface IAstroCanvas {
   id: string;
   elements: IAstroCanvasElement[];
+  color?: string;
 }
 
 function EditorPageContents() {
@@ -60,8 +60,8 @@ function EditorPageContents() {
         <Stack spacing="12px" direction="row">
           <Stack spacing="10px">
             <Stack
-              width="210px"
-              height="44px"
+              width="204px"
+              height="39px"
               border={`3px solid rgba(255,255,255,0.35)`}
               borderRadius="12px"
               onClick={() => {
@@ -121,7 +121,7 @@ function EditorPageContents() {
                         pointerEvents: "none",
                       }}
                     >
-                      <Canvas elements={c.elements} noButtons />
+                      <Canvas elements={c.elements} color={c.color} noButtons />
                     </Stack>
                   </Stack>
                 ))}
@@ -137,6 +137,14 @@ function EditorPageContents() {
                 setCanvases(
                   canvases.map((c) =>
                     c.id === selectedCanvas ? { ...c, elements } : c
+                  )
+                )
+              }
+              color={canvases.find((c) => c.id === selectedCanvas)?.color}
+              colorChangeCallback={(color) =>
+                setCanvases(
+                  canvases.map((c) =>
+                    c.id === selectedCanvas ? { ...c, color } : c
                   )
                 )
               }

@@ -1,98 +1,24 @@
 "use client";
 
-import {
-  DndContext,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  closestCenter,
-  DropAnimation,
-  defaultDropAnimationSideEffects,
-  DragOverlay,
-  DragOverEvent,
-  DragStartEvent,
-  DragEndEvent,
-  useDraggable,
-  useDroppable,
-} from "@dnd-kit/core";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import AstroImage, { getNewImageDetails } from "./AstroImage";
-import AstroText, { getNewTextDetails } from "./AstroText";
-// import ReactQuill from "react-quill";
+import { getNewImageDetails } from "./AstroImage";
 import "react-quill/dist/quill.snow.css";
-import dynamic from "next/dynamic";
-import AstroElementFrame from "./AstroElementFrame";
 import TypographyIcon from "@/images/icons/TypographyIcon.svg";
+import SafeTubePlayIcon from "@/images/play.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
 import ActualCanvas, { CANVAS_HEIGHT, CANVAS_WIDTH } from "./ActualCanvas";
 import ImageSelectionDialog from "./ImageSelectionDialog";
+import { getNewTextDetails } from "./AstroText";
+import PaletteButton from "../components/PaletteButton";
+import { getNewVideoPlayerDetails } from "./AstroVideoPlayer";
 
-const DUMMY_IMAGE_URL =
-  "https://c.files.bbci.co.uk/8FEE/production/_127864863_eltonjohn-index-getty.jpg";
-
-export function Droppable(props: { id: string; children: React.ReactNode }) {
-  const { isOver, setNodeRef } = useDroppable({
-    id: props.id,
-  });
-  const style = {
-    opacity: isOver ? 1 : 0.5,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style}>
-      {props.children}
-    </div>
-  );
-}
-
-function Draggable(props: {
-  id: string;
-  translationCallback: (x: number, y: number) => void;
-  x: number;
-  y: number;
-  draggingDisabled: boolean;
-  children: React.ReactNode;
-}) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: props.id,
-    disabled: props.draggingDisabled,
-  });
-
-  //   const [x, setX] = useState<number>(0);
-  //   const [y, setY] = useState<number>(0);
-
-  //   useEffect(() => {
-  //     console.log(transform?.x, "00");
-  //     transform?.x && setX(transform?.x);
-  //     transform?.y && setY(transform?.y);
-  //   }, [transform?.x, transform?.y]);
-
-  useEffect(() => {
-    props.translationCallback(transform?.x ?? 0, transform?.y ?? 0);
-  }, [transform?.x, transform?.y]);
-
-  return (
-    <Stack
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      position="absolute"
-      top={props.y}
-      left={props.x}
-      sx={{
-        transform: `translate3d(${transform?.x}px, ${transform?.y}px, 0)`,
-      }}
-    >
-      {props.children}
-    </Stack>
-  );
-}
-
-const ElementButton = (props: {
+export const ElementButton = (props: {
   callback: () => void;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  iconColor?: string;
+  image?: JSX.Element;
 }) => (
   <Stack
     width="43px"
@@ -105,14 +31,20 @@ const ElementButton = (props: {
       cursor: "pointer",
       "&:hover": { opacity: 0.7 },
       transition: "0.2s",
+      svg: {
+        path: {
+          fill: props.iconColor,
+        },
+      },
     }}
     onClick={props.callback}
   >
-    <props.icon height="16px" width="16px" />
+    {props.image ||
+      (props.icon ? <props.icon height="16px" width="16px" /> : null)}
   </Stack>
 );
 
-export type AstroCanvasElement = "image" | "text";
+export type AstroCanvasElement = "image" | "text" | "player";
 
 export interface IAstroCanvasElement {
   id: string;
@@ -126,10 +58,10 @@ export interface IAstroCanvasElement {
 
 const Canvas = (props: {
   elements: IAstroCanvasElement[];
+  color?: string;
   noButtons?: boolean;
   changeCallback?: (elements: IAstroCanvasElement[]) => void;
-  // textEditorSelectionCallback: (id: string) => void;
-  // textEditorDeselectionCallback: () => void;
+  colorChangeCallback?: (color: string) => void;
 }) => {
   const [selectedElement, setSelectedElement] = useState<string | undefined>(
     undefined
@@ -174,18 +106,45 @@ const Canvas = (props: {
     elements && setSelectedElement(`image${elements.length}`);
   };
 
+  const addVideoPlayer = async (url: string) => {
+    elements &&
+      setElements([
+        ...elements,
+        await getNewVideoPlayerDetails(
+          url,
+          `player${elements.length}`,
+          CANVAS_WIDTH / 2,
+          CANVAS_HEIGHT / 2
+        ),
+      ]);
+    elements && setSelectedElement(`image${elements.length}`);
+  };
+
+  const [url, setUrl] = useState<string>(
+    "https://www.youtube.com/watch?v=LeW53nKDLw8&t=3188s"
+  );
+
   return (
     <>
       <Stack spacing="12px">
         {!props.noButtons ? (
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row" spacing="10px">
+              <PaletteButton
+                selected={props.color || "#ffffff"}
+                callback={(color) => props.colorChangeCallback?.(color)}
+              />
               <ElementButton icon={TypographyIcon} callback={addText} />
               <ElementButton
                 icon={ImageIcon}
                 callback={async () => {
                   setImageSelectionDialogOpen(true);
                 }}
+              />
+              <ElementButton
+                icon={SafeTubePlayIcon}
+                iconColor="#0D2839"
+                callback={() => addVideoPlayer(url)}
               />
             </Stack>
             <Stack position="relative" flex={1}>
@@ -204,15 +163,14 @@ const Canvas = (props: {
                       transition: "0.6s",
                     }}
                   >
-                    <TextEditorToolbar
-                      id={e.id + props.noButtons ? "preview" : ""}
-                    />
+                    <TextEditorToolbar id={e.id} />
                   </Stack>
                 ))}
             </Stack>
           </Stack>
         ) : null}
         <ActualCanvas
+          color={props.color}
           elements={elements || []}
           selectedElement={selectedElement}
           setSelectedElement={setSelectedElement}

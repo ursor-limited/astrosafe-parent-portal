@@ -4,7 +4,7 @@ import { PALETTE } from "./palette";
 import { FONT_SIZES, LINE_HEIGHTS } from "./typography";
 
 const N_ROWS = 3;
-const BOLD_FONT_WEIGHT = 600;
+const BOLD_FONT_WEIGHT = 450;
 
 export interface UrsorTextFieldProps {
   width?: string;

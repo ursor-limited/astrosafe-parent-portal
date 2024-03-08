@@ -7,6 +7,7 @@ import ApiController from "../api";
 import mixpanel from "mixpanel-browser";
 
 export interface ISafeTubeUser {
+  id: string;
   auth0Id: string;
   subscribed: boolean;
   subscriptionDeletionDate?: number;
@@ -15,7 +16,9 @@ export interface ISafeTubeUser {
 
 export interface IUserContext {
   user?: ISafeTubeUser;
+  loading?: boolean;
   paymentLink?: string;
+  clear?: () => void;
 }
 
 const UserContext = createContext<IUserContext>({});
@@ -36,18 +39,27 @@ const UserProvider = (props: IUserProviderProps) => {
   const [safeTubeUser, setSafeTubeUser] = useState<ISafeTubeUser | undefined>(
     undefined
   );
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
-    user?.email && mixpanel.track("signed in");
-    user?.email &&
-      ApiController.getUser(user.email).then((u) =>
-        u
-          ? setSafeTubeUser(u)
-          : ApiController.createUser(user.email!).then((u) =>
-              setSafeTubeUser(u)
-            )
-      );
+    //user?.email && mixpanel.track("signed in");
+    if (user?.email) {
+      setLoading(true);
+      ApiController.getUser(user.email)
+        .then((u) =>
+          u
+            ? setSafeTubeUser(u)
+            : ApiController.createUser(user.email!).then((u) =>
+                setSafeTubeUser(u)
+              )
+        )
+        .then(() => setLoading(false));
+    }
   }, [user?.email]);
+
+  // useEffect(() => {
+  //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
+  // }, [isLoading, user?.email, safeTubeUser]);
 
   const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
   useEffect(() => {
@@ -63,7 +75,9 @@ const UserProvider = (props: IUserProviderProps) => {
     <UserContext.Provider
       value={{
         user: safeTubeUser,
+        loading,
         paymentLink,
+        clear: () => setSafeTubeUser(undefined),
       }}
     >
       {props.children}

@@ -33,6 +33,8 @@ const Player = (props: {
   noGlow?: boolean;
   noKitemark?: boolean;
   mobile?: boolean;
+  smallPlayIcon?: boolean;
+  noBackdrop?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -116,7 +118,7 @@ const Player = (props: {
   /////////////////////////
   /////////////////////////
   /////////////////////////
-  
+
   const [url, setUrl] = useState<string | undefined>(undefined);
   useEffect(
     () =>
@@ -348,7 +350,8 @@ const Player = (props: {
             transition: "0.2s",
             opacity: ended || !playing ? 1 : 0,
             pointerEvents: playing && !ended ? "none" : undefined,
-            backdropFilter: hasBegunPlaying ? "blur(13px)" : undefined,
+            backdropFilter:
+              !props.noBackdrop && hasBegunPlaying ? "blur(13px)" : undefined,
             //player?.playerInfo?.playerState !== 5 ? "blur(13px)" : undefined, // don't use blur when the playing has not yet been started
           }}
           justifyContent="center"
@@ -363,9 +366,15 @@ const Player = (props: {
             }}
           >
             {ended ? (
-              <Sync width={114} height={114} />
+              <Sync
+                width={props.smallPlayIcon ? 60 : 114}
+                height={props.smallPlayIcon ? 60 : 114}
+              />
             ) : (
-              <Play width={114} height={114} />
+              <Play
+                width={props.smallPlayIcon ? 60 : 114}
+                height={props.smallPlayIcon ? 60 : 114}
+              />
             )}
           </Stack>
         </Stack>

@@ -15,7 +15,7 @@ const BACKEND_URLS = {
   preview:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
   production:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend", //"https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
@@ -23,13 +23,13 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["production"]}/${route}`
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`
   );
 
 const post = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["production"]}/${route}`,
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +40,7 @@ const post = (route: string, body: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS["production"]}/${route}`,
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -78,9 +78,23 @@ class ApiController {
     //@ts-ignore
     return get(`video/${id}`).then((response: any) => response.json());
   }
+  static async createUser(auth0Id: string) {
+    //@ts-ignore
+    return post("video/user", { auth0Id }).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getUser(auth0Id: string) {
+    //@ts-ignore
+    return get(`video/user/${auth0Id}`).then((response: any) =>
+      response.json()
+    );
+  }
   static async getUserVideos(id: string) {
     //@ts-ignore
-    return get(`video/user/${id}`).then((response: any) => response.json());
+    return get(`video/user/${id}/videos`).then((response: any) =>
+      response.json()
+    );
   }
   static async getNumberOfUserVideos(id: string) {
     //@ts-ignore
@@ -103,11 +117,28 @@ class ApiController {
       response.json()
     );
   }
-  // static async updateVideo(id: string, details: Partial<IVideo>) {
-  //   return api
-  //     .patch(`/video/${id}`, details)
-  //     .then((response: any) => response.data);
-  // }
+  static async getPaymentLink(auth0Id: string) {
+    return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getS3ImageUploadParams(
+    fileExtension: string,
+    contentType: string
+  ) {
+    return post(`/img/sign`, {
+      fileExtension,
+      contentType,
+    }).then((response: any) => response.json());
+  }
+
+  static async uploadToS3(signedUrl: string, uploadFile: any) {
+    return fetch(signedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": uploadFile.type },
+      body: uploadFile,
+    }).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

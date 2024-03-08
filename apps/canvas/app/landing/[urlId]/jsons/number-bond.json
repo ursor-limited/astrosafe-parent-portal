@@ -1,0 +1,118 @@
+{
+  "urlId": "number-bond",
+  "pageTitle": "this is the text in the url tab 15-70 chars",
+  "metaDescription": "a meta description specific for the page 60-320 chars.",
+  "heading": "Nambah bond",
+  "subHeading": "Save hours when creating worksheets for your students. Create number bonds!",
+  "worksheetGenerator": {
+    "topic": "addition",
+    "worksheetId": "numberBond",
+    "title": "Nambah bond",
+    "nProblems": 20,
+    "specificSettings": {
+      "result": 12,
+      "orientation": "vertical",
+      "both": false
+    }
+  },
+  "howItWorks": {
+    "supertitle": "A",
+    "title": "B",
+    "step1": { "title": "Hooo", "body": "Goooo" },
+    "step2": { "title": "Hooo", "body": "Goooo" },
+    "step3": { "title": "Hooo", "body": "Goooo" }
+  },
+  "worksheetPreview": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "There are many ways to let chicken and noodles have at it: You can boil the bird and cook noodles in the resulting stock. You can braise the chicken to make a more concentrated sauce, which is delicious over buttered noodles.\n This recipe splits the difference. It begins by roasting a whole, butter-rubbed, Parmesan-rind-stuffed chicken and a head of garlic under high heat. The skin and butter brown, the garlic sweetens, the bird infuses with the nutty flavors of the cheese. The pot is deglazed with water, less than you would use in a soup, but more than for a braise. Then, the noodles cook in the same pot so they can take in all that flavored broth. In a final act of generosity, the noodles share their starches with the broth, thickening it into a sauce.",
+    "worksheetPreviewParameters": {
+      "questionTopic": "multiplication",
+      "questionType": "chart",
+      "title": "8 Times Table Chart",
+      "worksheetParameters": {
+        "factor": 8,
+        "nProblems": 10
+      }
+    }
+  },
+  "linkTable": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "Buu!",
+    "tableHeading": "BOOOOO",
+    "links": [
+      {
+        "text": "link1",
+        "url": "https://www.google.com"
+      },
+      {
+        "text": "link2",
+        "url": "https://www.google.com"
+      }
+    ]
+  },
+  "explainerCards": {
+    "supertitle": "A",
+    "title": "B",
+    "body": "Buu!",
+    "cards": [
+      {
+        "title": "Buu!",
+        "text": "I’ve always felt that my best recipes come from real life, from discoveries I make in the kitchen when I’m strapped for time and ingredients. One mezzanotte, I tossed thin spaghetti with chopped capers and umeboshi.",
+        "imageUrl": "https://static01.nyt.com/images/2024/02/25/multimedia/25nytmag-mars-hp-poster-jklb/25nytmag-mars-hp-poster-jklb-superJumbo.jpg?quality=75&auto=webp"
+      },
+      {
+        "title": "Boooo!",
+        "text": "This complicates the work of the United States and moderate Arab states, which are trying to engineer a plan for “after Gaza” — a crucial step in making sure that Gaza has a chance at stability once the fighting stops.",
+        "imageUrl": "https://hs.mediadelivery.fi/img/658/bc409c0b90984fbe29bd5e6d2420bd43.jpg.webp"
+      },
+      {
+        "title": "Hey man!",
+        "text": "I believe it’s because, in a world in which tribalism is pulling us apart, the completely imaginary tribalism of the sports fan is a necessary balm. ",
+        "imageUrl": "https://images.cdn.yle.fi/image/upload/ar_1.5,c_fill,g_faces,h_424,w_636/dpr_2.0/q_auto:eco/f_auto/fl_lossy/v1708592532/39-124779165d70d31aafe6"
+      }
+    ]
+  },
+  "otherPages": {
+    "supertitle": "A",
+    "title": "B",
+    "links": [
+      {
+        "title": "Googoo",
+        "text": "California faces serious pitfalls.",
+        "imageString": "LOL",
+        "urlId": "12-times-table-worksheet"
+      },
+      {
+        "title": "Bobby Boy Lexington",
+        "text": "The report was released last month by the UC Berkeley School",
+        "imageString": "lol",
+        "urlId": "8-times-table-worksheet"
+      }
+      
+    ]
+  },
+  "productCard": {
+    "title": "A",
+    "body": "B",
+    "buttonText": "",
+    "buttonUrl": ""
+  },
+  "faqs": {
+    "cards": [
+        {
+            "question": "Is the AstroSafe Worksheet Generator free to use?",
+            "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+        },
+        {
+            "question": "Can I create different worksheets?",
+            "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
+        },
+        {
+            "question": "Do you offer school discounts?",
+            "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+        }
+    ]
+}
+}

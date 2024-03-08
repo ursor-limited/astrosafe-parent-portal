@@ -16,12 +16,6 @@ to {
 
 // tertiary is implemented here only for dark mode; the light mode implementation is in UrsorMagicalButton
 export type ButtonVariant = "primary" | "secondary" | "tertiary";
-// | "tertiary"
-// | "ghost"
-// | "google"
-// | "nippon"
-// | "transparentRed"
-// | "green";
 export type ButtonSize = "large" | "medium" | "small" | "tiny";
 
 type ButtonState = "enabled" | "hover" | "pressed";
@@ -214,16 +208,22 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       boxShadow={
         // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis
         props.strongShadow
-          ? "0 0 20px rgba(0,0,0,0.08)"
+          ? "0 0 16px rgba(0,0,0,0.03)"
           : props.shadow
           ? "0 0 20px rgba(0,0,0,0.05)"
           : undefined
       }
       sx={{
         cursor: "pointer",
+        pointerEvents: props.disabled ? "none" : undefined,
         transition: "0.2s",
         background: props.backgroundColor,
-        opacity: state === "hover" ? props.hoverOpacity : undefined,
+        // eslint-disable-next-line no-nested-ternary -- annoying
+        opacity: props.disabled
+          ? 0.35
+          : state === "hover"
+          ? props.hoverOpacity
+          : undefined,
         svg: {
           animation: props.iconSpin ? `${spin} 6s linear infinite` : undefined,
           path: {

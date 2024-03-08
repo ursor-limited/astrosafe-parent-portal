@@ -240,6 +240,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -272,6 +273,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -307,6 +309,7 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
@@ -342,9 +345,58 @@ const AstroElementFrame = (props: {
                   y
                 );
               }}
+              boxSizing="border-box"
             >
               <Stack flex={1} bgcolor={PALETTE.secondary.purple[2]} />
             </Stack>
+            <Stack
+              position="absolute"
+              height="8px"
+              width="8px"
+              bgcolor="rgb(255,255,255)"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              left="-10px"
+              bottom="-10px"
+              sx={{
+                pointerEvents: "none",
+              }}
+            />
+            <Stack
+              position="absolute"
+              height="8px"
+              width="8px"
+              bgcolor="rgb(255,255,255)"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              right="-10px"
+              bottom="-10px"
+              sx={{
+                pointerEvents: "none",
+              }}
+            />
+            <Stack
+              position="absolute"
+              height="8px"
+              width="8px"
+              bgcolor="rgb(255,255,255)"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              left="-10px"
+              top="-10px"
+              sx={{
+                pointerEvents: "none",
+              }}
+            />
+            <Stack
+              position="absolute"
+              height="8px"
+              width="8px"
+              bgcolor="rgb(255,255,255)"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              right="-10px"
+              top="-10px"
+              sx={{
+                pointerEvents: "none",
+              }}
+            />
           </>
         ) : null}
       </Stack>

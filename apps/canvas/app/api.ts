@@ -1,3 +1,8 @@
+import {
+  EquationOrientation,
+  WorksheetTopic,
+} from "./landing/[urlId]/WorksheetGenerator";
+
 export interface IVideo {
   id: string;
   creatorId: string;
@@ -15,7 +20,7 @@ const BACKEND_URLS = {
   preview:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
   production:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
@@ -44,7 +49,16 @@ const patch = (route: string, body: any) =>
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body,
+      body: JSON.stringify(body),
+    }
+  );
+
+const dellete = (route: string) =>
+  fetch(
+    //@ts-ignore
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    {
+      method: "DELETE",
     }
   );
 
@@ -107,6 +121,12 @@ class ApiController {
       response.json()
     );
   }
+  static async deleteVideo(id: string) {
+    return dellete(`video/${id}`).then((response: any) => response);
+  }
+  static async deleteWorksheet(id: string) {
+    return dellete(`canvas/worksheet/${id}`).then((response: any) => response);
+  }
   static async getYoutubeVideoDetails(id: string) {
     return get(`video/youtubeVideoDetails/${id}/description`).then(
       (response: any) => response.json()
@@ -116,6 +136,11 @@ class ApiController {
     return post("video/claim", { creatorId, videoIds }).then((response: any) =>
       response.json()
     );
+  }
+  static async claimWorksheets(userId: string, ids: string[]) {
+    return patch(`canvas/userWorksheets/${userId}/claim`, {
+      ids,
+    }).then((response: any) => response.json());
   }
   static async getPaymentLink(auth0Id: string) {
     return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
@@ -138,6 +163,49 @@ class ApiController {
       headers: { "Content-Type": uploadFile.type },
       body: uploadFile,
     }).then((response: any) => response.json());
+  }
+  static async createEquationWorksheet(
+    title: string,
+    orientation: EquationOrientation,
+    topic: WorksheetTopic,
+    factor: number,
+    multipliers: number[],
+    creatorId?: string
+  ) {
+    return post("canvas/worksheet/equation", {
+      title,
+      creatorId,
+      parameters: {
+        orientation,
+        topic,
+        factor,
+        multipliers,
+      },
+    }).then((response: any) => response.json());
+  }
+  static async createNumberBondWorksheet(
+    title: string,
+    orientation: EquationOrientation,
+    result: number,
+    pairs: number[][],
+    creatorId?: string
+  ) {
+    return post("canvas/worksheet/numberBond", {
+      title,
+      creatorId,
+      parameters: { orientation, result, pairs },
+    }).then((response: any) => response.json());
+  }
+  static async getWorksheet(id: string) {
+    return get(`canvas/worksheet/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getUserWorksheets(id: string) {
+    //@ts-ignore
+    return get(`canvas/userWorksheets/${id}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 

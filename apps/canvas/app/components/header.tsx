@@ -18,7 +18,7 @@ import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "./UserContext";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),

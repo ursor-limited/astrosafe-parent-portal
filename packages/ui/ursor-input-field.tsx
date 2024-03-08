@@ -6,7 +6,7 @@ import { FONT_SIZES } from "./typography";
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
 export const BORDER_RADIUS = "8px";
-export const BOLD_FONT_WEIGHT = 600;
+export const BOLD_FONT_WEIGHT = 450;
 
 export interface UrsorInputFieldProps {
   width?: string;
@@ -33,7 +33,7 @@ export interface UrsorInputFieldProps {
 
 export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
   const customSx = {
-    width: props.width ?? DEFAULT_WIDTH,
+    width: props.width ?? "100%",
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
     borderRadius: props.borderRadius ?? BORDER_RADIUS,
@@ -41,6 +41,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
     border: props.border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
+    fontFamily: "inherit",
   };
 
   const inputProps = {

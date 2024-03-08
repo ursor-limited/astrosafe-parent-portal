@@ -111,10 +111,21 @@ export function Typography(props: TypographyProps): JSX.Element {
             }
           : null),
         ...(props.maxLines ? getMaxLinesStyle(props.maxLines) : null),
+        transition: "0.2s",
       }}
     >
       {props.htmlTag ? (
-        <props.htmlTag>{props.children}</props.htmlTag>
+        <props.htmlTag
+          style={{
+            fontFamily: "inherit",
+            fontSize: "inherit",
+            fontWeight: "inherit",
+            lineHeight: "inherit",
+            display: "contents",
+          }}
+        >
+          {props.children}
+        </props.htmlTag>
       ) : (
         props.children
       )}

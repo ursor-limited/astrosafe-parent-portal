@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
-import { Header } from "@/app/components/header";
-import { useWindowSize } from "usehooks-ts";
+import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import Star from "@/images/Star.svg";
 import Play from "@/images/play.svg";
 import moment from "moment";
 import { useRouter } from "next/navigation";
@@ -21,6 +22,7 @@ import DynamicCardGrid from "../components/DynamicCardGrid";
 import mixpanel from "mixpanel-browser";
 import { deNoCookiefy } from "../components/utils";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
+import { ISafeTubeUser, useUserContext } from "../UserContext";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -69,6 +71,136 @@ const UpgradePromptBar = () => (
     </Stack>
   </Stack>
 );
+
+const RenewalPromptBar = (props: {
+  subscriptionDeletionDate: ISafeTubeUser["subscriptionDeletionDate"];
+}) => {
+  const [hiddenAfterClick, setHiddenAfterClick] = useState<boolean>(false); // hide after clicking Renew, assuming that the user does indeed renew the subscription.
+  return hiddenAfterClick ? (
+    <></>
+  ) : (
+    <Stack width="100%" justifyContent="center">
+      <Stack
+        position="absolute"
+        left={0}
+        right={0}
+        margin="auto auto"
+        py="10px"
+        maxWidth="40%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex={2}
+        borderRadius="12px"
+        top="21px"
+        sx={{
+          transition: "0.5s",
+          willChange: "transform",
+          background: PROMPT_BAR_GRADIENT,
+        }}
+        direction="row"
+        spacing="20px"
+      >
+        <Stack direction="row" spacing="6px">
+          <Typography
+            variant="medium"
+            bold
+            color="rgba(255,255,255,0.8)"
+            sx={{ textAlign: "center" }}
+          >
+            Your subscription will end on
+          </Typography>
+          <Typography
+            variant="medium"
+            bold
+            color={PALETTE.font.light}
+            sx={{ textAlign: "center" }}
+          >
+            {moment.unix(props.subscriptionDeletionDate!).format("Do MMMM")}
+          </Typography>
+        </Stack>
+        <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
+          <a
+            target="_blank"
+            href={STRIPE_CUSTOMER_PORTAL_URL}
+            style={{
+              textDecoration: "none",
+            }}
+            rel="noreferrer"
+          >
+            <UrsorButton
+              backgroundColor="rgba(255,255,255)"
+              fontColor="#7183F7"
+              onClick={() => setHiddenAfterClick(true)}
+              endIcon={Star}
+              iconSize={13}
+              iconSpin
+              iconColor="rgba(113, 131, 247,0.5)"
+            >
+              Renew
+            </UrsorButton>
+          </a>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
+
+const PaymentFailedPromptBar = () => {
+  const [hiddenAfterClick, setHiddenAfterClick] = useState<boolean>(false); // hide after clicking Renew, assuming that the user does indeed renew the subscription.
+  return hiddenAfterClick ? (
+    <></>
+  ) : (
+    <Stack width="100%" justifyContent="center">
+      <Stack
+        position="absolute"
+        left={0}
+        right={0}
+        margin="auto auto"
+        py="10px"
+        maxWidth="40%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex={2}
+        borderRadius="12px"
+        top="21px"
+        sx={{
+          transition: "0.5s",
+          willChange: "transform",
+          background: PALETTE.system.red,
+        }}
+        direction="row"
+        spacing="20px"
+      >
+        <Typography
+          variant="medium"
+          bold
+          color="rgba(255,255,255,0.8)"
+          sx={{ textAlign: "center" }}
+        >
+          For some reason, your latest payment failed
+        </Typography>
+        <Stack sx={{ "&:hover": { opacity: 0.5 }, transition: "0.2s" }}>
+          <a
+            target="_blank"
+            href={STRIPE_CUSTOMER_PORTAL_URL}
+            style={{
+              textDecoration: "none",
+            }}
+            rel="noreferrer"
+          >
+            <UrsorButton
+              backgroundColor="rgba(255,255,255)"
+              fontColor={PALETTE.system.red}
+              onClick={() => setHiddenAfterClick(true)}
+            >
+              Try again
+            </UrsorButton>
+          </a>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
 
 export const getFormattedDate = (date: string) =>
   moment(date).format("Do MMMM YYYY");
@@ -191,6 +323,8 @@ function DashboardPageContents() {
     null
   );
 
+  const notificationCtx = useContext(NotificationContext);
+
   const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
   useEffect(
     () =>
@@ -204,8 +338,7 @@ function DashboardPageContents() {
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
   const { user, isLoading } = useAuth0();
-
-  console.log(user, isLoading);
+  const safeTubeUser = useUserContext().user;
 
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -213,17 +346,19 @@ function DashboardPageContents() {
   useEffect(() => {
     user?.email &&
       ApiController.getUserVideos(user.email).then((videos) =>
-        setVideos(_.reverse(videos).filter((v: any) => v.thumbnailUrl))
+        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
       );
   }, [user?.email]);
 
   const router = useRouter();
 
   const [creationDisabled, setCreationDisabled] = useState<boolean>(false);
-  useEffect(
-    () => videos && setCreationDisabled(videos.length >= FREE_VIDEO_LIMIT),
-    [videos]
-  );
+  useEffect(() => {
+    videos &&
+      setCreationDisabled(
+        !safeTubeUser?.subscribed && videos.length >= FREE_VIDEO_LIMIT
+      );
+  }, [videos, safeTubeUser]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [upgradePromptBarHidden, setUpgradePromptBarHidden] =
@@ -256,11 +391,40 @@ function DashboardPageContents() {
     mixpanel.track_pageview();
   }, []);
 
+  const [subscribed, setSubscribed] = useLocalStorage<boolean>(
+    "subscribed",
+    false
+  );
+  useEffect(() => {
+    !subscribed &&
+      safeTubeUser?.subscribed &&
+      notificationCtx.success("Upgraded!");
+    safeTubeUser && setSubscribed(safeTubeUser.subscribed);
+  }, [safeTubeUser?.subscribed, subscribed]);
+
+  const [showTextEditorToolbar, setShowTextEditorToolbar] =
+    useState<boolean>(false);
+
   return (
     <>
       <Stack flex={1} position="relative">
-        {/* {!upgradePromptBarHidden ? <UpgradePromptBar /> : null} */}
-        <Header showUpgradeButton mobile={isMobile} />
+        <UrsorFadeIn delay={2000} duration={1100}>
+          {!upgradePromptBarHidden && !safeTubeUser?.subscribed ? (
+            <UpgradePromptBar />
+          ) : safeTubeUser?.subscriptionDeletionDate ? (
+            <RenewalPromptBar
+              subscriptionDeletionDate={safeTubeUser.subscriptionDeletionDate}
+            />
+          ) : null}
+          {safeTubeUser?.paymentFailed ? <PaymentFailedPromptBar /> : null}
+        </UrsorFadeIn>
+        <Header
+          showUpgradeButtons={
+            !safeTubeUser?.subscribed && !safeTubeUser?.paymentFailed
+          }
+          mobile={isMobile}
+          hidePopupDashboardButton
+        />
         <Stack
           spacing={isMobile ? "26px" : "40px"}
           alignItems="center"
@@ -288,34 +452,53 @@ function DashboardPageContents() {
                 Your SafeTube Dashboard
               </Typography>
             </Stack>
-            {/* {videos ? (
-            <UrsorFadeIn duration={800}>
-              <Stack direction="row" alignItems="center" spacing="19px">
-                <Stack direction="row" alignItems="center" spacing="6px">
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color={PALETTE.font.light}
-                  >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
-                  <Typography
-                    variant={isMobile ? "medium" : "large"}
-                    bold
-                    color="rgba(255,255,255,0.7)"
-                  >
-                    Videos created
-                  </Typography>
-                </Stack>
-                <UrsorButton
-                  size="small"
-                  variant="tertiary"
-                  dark
-                  onClick={() => setUpgradeDialogOpen(true)}
-                >
-                  Upgrade
-                </UrsorButton>
-              </Stack>
-            </UrsorFadeIn>
-          ) : null} */}
+            {videos ? (
+              <UrsorFadeIn duration={1100} delay={1500}>
+                {safeTubeUser?.subscribed || safeTubeUser?.paymentFailed ? (
+                  <Stack direction="row" alignItems="center" spacing="6px">
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color={PALETTE.font.light}
+                    >
+                      {videos.length}
+                    </Typography>
+                    <Typography
+                      variant={isMobile ? "medium" : "large"}
+                      bold
+                      color="rgba(255,255,255,0.7)"
+                    >
+                      videos created
+                    </Typography>
+                  </Stack>
+                ) : (
+                  <Stack direction="row" alignItems="center" spacing="19px">
+                    <Stack direction="row" alignItems="center" spacing="6px">
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color={PALETTE.font.light}
+                      >{`${videos.length}/${FREE_VIDEO_LIMIT}`}</Typography>
+                      <Typography
+                        variant={isMobile ? "medium" : "large"}
+                        bold
+                        color="rgba(255,255,255,0.7)"
+                      >
+                        videos created
+                      </Typography>
+                    </Stack>
+                    <UrsorButton
+                      size="small"
+                      variant="tertiary"
+                      dark
+                      onClick={() => setUpgradeDialogOpen(true)}
+                    >
+                      Upgrade
+                    </UrsorButton>
+                  </Stack>
+                )}
+              </UrsorFadeIn>
+            ) : null}
           </Stack>
           {/* <UrsorFadeIn duration={800} delay={200}> */}
           {/* <Stack position="relative" width="100%" alignItems="center"> */}
@@ -335,12 +518,10 @@ function DashboardPageContents() {
           <Stack
             width="100%"
             maxWidth="800px"
-            sx={
-              {
-                // opacity: creationDisabled ? 0.4 : 1,
-                // pointerEvents: creationDisabled ? "none" : undefined,
-              }
-            }
+            sx={{
+              opacity: creationDisabled ? 0.4 : 1,
+              pointerEvents: creationDisabled ? "none" : undefined,
+            }}
             alignItems="center"
             position="relative"
           >

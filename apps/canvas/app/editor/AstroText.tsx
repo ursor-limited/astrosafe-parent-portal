@@ -34,7 +34,6 @@ const AstroText = (props: {
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => setValue(props.details.value), [props.details.value]);
-  console.log(value);
   return (
     <AstroElementFrame
       width={props.details.width}
@@ -54,7 +53,7 @@ const AstroText = (props: {
             fontFamily: "unset",
             borderRadius: "12px",
             height: "unset",
-            border: "none",
+            border: "none !important",
           },
           ".ql-editor": {
             padding: "3px",
@@ -75,9 +74,7 @@ const AstroText = (props: {
               setValue(v);
               props.valueChangeCallback(v);
             }}
-            modules={getModules(
-              props.details.id + props.preview ? "preview" : ""
-            )}
+            modules={getModules(props.details.id)}
             formats={formats}
           />
         )}

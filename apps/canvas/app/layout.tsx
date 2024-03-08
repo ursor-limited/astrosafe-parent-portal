@@ -7,13 +7,16 @@ import { PALETTE } from "ui";
 import NotificationProvider from "./components/NotificationProvider";
 import UrsorNotificationBar from "./components/UrsorNotificationBar";
 
-const rubik = Rubik({ subsets: ["latin"] });
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: "variable",
+});
 
-export const metadata: Metadata = {
-  title: "SafeTube - A Safe video player for teachers and schools",
-  description:
-    "The safe video player for classrooms to access youtube and vimeo videos safely. Students get access to distraction free video links.",
-};
+// export const metadata: Metadata = {
+//   title: "SafeTube - A Safe video player for teachers and schools",
+//   description:
+//     "The safe video player for classrooms to access youtube and vimeo videos safely. Students get access to distraction free video links.",
+// };
 
 export default function RootLayout({
   children,
@@ -39,18 +42,14 @@ export default function RootLayout({
             backgroundSize: "cover",
             boxSizing: "border-box",
           }}
-          spacing="10px"
           position="relative"
         >
-          {/* <Header /> */}
-
           <NotificationProvider>
             <Stack width="100%" justifyContent="center" zIndex={999999999}>
               <UrsorNotificationBar />
             </Stack>
             {children}
           </NotificationProvider>
-          {/* <Footer /> */}
         </Stack>
       </body>
     </html>

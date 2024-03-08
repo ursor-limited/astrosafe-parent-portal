@@ -14,11 +14,12 @@ module.exports = withSvgr({
       "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
       "ursorassets.s3.eu-west-1.amazonaws.com",
       "i.ytimg.com",
+      "assets-global.website-files.com",
     ],
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://www.astrosafe.co"
+      ? "https://dev.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,
