@@ -20,7 +20,6 @@ import { useRouter } from "next/navigation";
 import ApiController from "../api";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
-import { useUserContext } from "../components/UserContext";
 import UpgradePromptDialog from "./SignupPromptDialog";
 
 const UrsorPopover = dynamic(
