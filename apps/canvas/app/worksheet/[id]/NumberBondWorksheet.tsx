@@ -1,7 +1,7 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, Typography } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import _ from "lodash";
@@ -32,28 +32,10 @@ export const ValueCircle = (props: { children: React.ReactNode }) => (
     width="66px"
     justifyContent="center"
     alignItems="center"
-    //bgcolor="rgb(255,255,255)"
   >
     {props.children}
   </Stack>
 );
-
-// export interface IWorksheetQuestion {
-//   number: number;
-//   multiplier: number;
-// }
-
-// export interface NumberBondParameters {
-//   result: number;
-// }
-
-//export type EquationOrientation = "horizontal" | "vertical";
-
-// export interface INumberBondWorksheet {
-//   title: string;
-//   result: number;
-//   pairs: number[][];
-// }
 
 const HorizontalEquationQuestion = (props: {
   result: number;
