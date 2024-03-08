@@ -367,7 +367,7 @@ export default function WorksheetGenerator(props: {
           {previewWorksheet}
         </Stack>
         <Stack />
-        <Stack spacing="19px">
+        <Stack spacing="17px">
           {nPages > 1 ? (
             <PageSelector
               pageIndex={selectedPageIndex}
