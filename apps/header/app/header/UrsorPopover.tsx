@@ -77,10 +77,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
     setWidth(referenceElement?.offsetWidth);
-    setMaxHeight(
-      window.innerHeight - (referenceElement?.getBoundingClientRect().top ?? 0)
-    );
-  }, [referenceElement, referenceElement?.offsetTop, window.innerHeight]);
+  }, [referenceElement, referenceElement?.offsetTop]);
 
   return (
     <>
@@ -127,7 +124,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               >
                 <Stack
                   spacing="24px"
-                  maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
                   sx={{
                     transform: `translateY(${
                       (isFlipped ? -1 : 1) * (yOffset ?? 0)
