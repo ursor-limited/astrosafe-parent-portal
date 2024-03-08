@@ -274,6 +274,7 @@ export const Header = (props: {
       justifyContent="space-between"
       px="67px"
       boxSizing="border-box"
+      bgcolor={PALETTE.primary.navy}
     >
       <Stack direction="row">
         <Stack

@@ -4,8 +4,6 @@ import { Stack } from "@mui/system";
 import Background from "@/images/background.png";
 import { Metadata } from "next";
 import { PALETTE } from "ui";
-import NotificationProvider from "./components/NotificationProvider";
-import UrsorNotificationBar from "./components/UrsorNotificationBar";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -32,25 +30,7 @@ export default function RootLayout({
           margin: 0,
         }}
       >
-        <Stack
-          height="100vh"
-          minHeight="100vh"
-          overflow="scroll"
-          width="100vw"
-          sx={{
-            backgroundImage: `url(${Background.src})`,
-            backgroundSize: "cover",
-            boxSizing: "border-box",
-          }}
-          position="relative"
-        >
-          <NotificationProvider>
-            <Stack width="100%" justifyContent="center" zIndex={999999999}>
-              <UrsorNotificationBar />
-            </Stack>
-            {children}
-          </NotificationProvider>
-        </Stack>
+        {children}
       </body>
     </html>
   );
