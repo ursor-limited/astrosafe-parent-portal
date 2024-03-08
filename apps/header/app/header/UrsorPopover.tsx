@@ -6,6 +6,7 @@ import { Backdrop } from "@mui/material";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 import UrsorFadeIn from "./UrsorFadeIn";
+import { useWindowSize } from "usehooks-ts";
 
 export const DEFAULT_CORNER_RADIUS = "12px";
 export const PADDING = "16px";
@@ -41,10 +42,12 @@ export interface IUrsorPopoverProps {
 }
 
 export default function UrsorPopover(props: IUrsorPopoverProps) {
-  const [width, setWidth] = useState<number | undefined>(undefined);
+  const [widthh, setWidth] = useState<number | undefined>(undefined);
 
   const [yOffset, setYOffset] = useState<number | undefined>(undefined);
-  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+  const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
+
+  console.log(maxWidth);
 
   const [referenceElement, setReferenceElement] =
     React.useState<HTMLElement | null>(null);
@@ -74,10 +77,16 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     buttonRef?.focus();
   }, [buttonRef]);
 
+  const { width } = useWindowSize();
+
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
     setWidth(referenceElement?.offsetWidth);
-  }, [referenceElement, referenceElement?.offsetTop]);
+    setMaxWidth(
+      (width ?? window.innerWidth) -
+        (referenceElement?.getBoundingClientRect().left ?? 0)
+    );
+  }, [width, referenceElement, referenceElement?.offsetTop]);
 
   return (
     <>
@@ -257,7 +266,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               ) : null}
               {props.externalElement ? (
                 <Box
-                  width={width}
+                  width={widthh}
                   sx={{
                     pointerEvents: props.open ? "auto" : "none",
                     opacity: props.open ? 1 : 0,
@@ -271,7 +280,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               <UrsorFadeIn duration={700}>
                 {props.content ? (
                   <Box
-                    width={props.buttonWidth ? width : props.width}
+                    width={props.buttonWidth ? widthh : props.width}
                     borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                     p={props.noCard || props.noPadding ? undefined : PADDING}
                     sx={{
@@ -282,6 +291,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       animation: props.animation,
                     }}
                     height="100%"
+                    maxWidth={maxWidth}
                     overflow="scroll"
                   >
                     {props.content}
