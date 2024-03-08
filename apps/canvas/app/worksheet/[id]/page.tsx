@@ -6,6 +6,16 @@ import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  return [
+    {
+      id: "65e08005506c67ad16e55688",
+    },
+  ];
+}
+
 export async function generateMetadata({
   params,
 }: {

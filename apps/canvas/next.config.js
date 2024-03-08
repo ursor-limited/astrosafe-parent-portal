@@ -2,7 +2,6 @@
 const withSvgr = require("next-svgr");
 
 module.exports = withSvgr({
-  output: "standalone",
   reactStrictMode: true,
   transpilePackages: ["ui"],
   images: {
