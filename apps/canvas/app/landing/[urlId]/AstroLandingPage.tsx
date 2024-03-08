@@ -10,6 +10,8 @@ import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import Head from "next/head";
 import { Header } from "@/app/components/header2";
+import { Auth0Provider } from "@auth0/auth0-react";
+import AuthWrapper from "@/app/components/AuthWrapper";
 
 export default function AstroLandingPage(props: {
   mobile: boolean;
@@ -26,7 +28,9 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
-      <Header />
+      <AuthWrapper>
+        <Header />
+      </AuthWrapper>
       <Stack
         spacing="36px"
         alignItems="center"
