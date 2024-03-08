@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { PALETTE } from "ui";
 import NotificationProvider from "./components/NotificationProvider";
 import UrsorNotificationBar from "./components/UrsorNotificationBar";
+import Image from "next/image";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -44,6 +45,15 @@ export default function RootLayout({
           }}
           position="relative"
         >
+          <Image
+            src={Background.src}
+            alt="Astro background"
+            layout="fill"
+            objectPosition="center"
+            style={{
+              zIndex: -1,
+            }}
+          />
           <NotificationProvider>
             <Stack width="100%" justifyContent="center" zIndex={999999999}>
               <UrsorNotificationBar />
