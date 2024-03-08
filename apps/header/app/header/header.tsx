@@ -262,7 +262,6 @@ export const Header = (props: {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   return (
     <Stack
-      id="headerComponent"
       direction="row"
       width="100%"
       height={`${86}px`}
