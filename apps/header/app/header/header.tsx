@@ -110,7 +110,7 @@ const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <UrsorPopover
-      open={true}
+      open={open}
       content={props.children}
       closeCallback={() => setOpen(false)}
       placement="left"
