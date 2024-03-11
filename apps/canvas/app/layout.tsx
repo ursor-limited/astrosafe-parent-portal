@@ -2,7 +2,6 @@ import { Rubik } from "next/font/google";
 import "./globals.css";
 import { Stack } from "@mui/system";
 import Background from "@/images/background.png";
-import { Metadata } from "next";
 import { PALETTE } from "ui";
 import NotificationProvider from "./components/NotificationProvider";
 import UrsorNotificationBar from "./components/UrsorNotificationBar";
@@ -38,22 +37,25 @@ export default function RootLayout({
           minHeight="100vh"
           overflow="scroll"
           width="100vw"
-          sx={{
-            backgroundImage: `url(${Background.src})`,
-            backgroundSize: "cover",
-            boxSizing: "border-box",
-          }}
           position="relative"
         >
-          <Image
-            src={Background.src}
-            alt="Astro background"
-            layout="fill"
-            objectPosition="center"
-            style={{
-              zIndex: -1,
-            }}
-          />
+          <Stack
+            position="absolute"
+            top={0}
+            left={0}
+            width="100%"
+            height="114%"
+          >
+            <Image
+              src={Background.src}
+              alt="Astro background"
+              layout="fill"
+              objectPosition="center"
+              style={{
+                zIndex: -1,
+              }}
+            />
+          </Stack>
           <NotificationProvider>
             <Stack width="100%" justifyContent="center" zIndex={999999999}>
               <UrsorNotificationBar />

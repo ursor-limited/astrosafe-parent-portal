@@ -10,6 +10,8 @@ import {
 import Head from "next/head";
 import { Metadata, ResolvingMetadata } from "next";
 
+export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
+
 // // export const dynamicParams = true;
 
 // export async function generateStaticParams() {
