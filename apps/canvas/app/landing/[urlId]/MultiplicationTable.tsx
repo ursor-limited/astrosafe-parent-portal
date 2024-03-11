@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorInputField } from "ui";
@@ -5,6 +7,8 @@ import { Captioned } from "./LandingPageContents";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
 import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/AstroWorksheetPage";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const PAGE_MAX = 12;
 
@@ -19,6 +23,7 @@ export default function MultiplicationTable(props: {
   useEffect(() => setUpTo(props.upTo), [props.upTo]);
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
+
   return (
     <div id={props.printable ? "printableMultiplicationTable" : undefined}>
       <Stack

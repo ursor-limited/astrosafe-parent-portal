@@ -10,15 +10,15 @@ import {
 import Head from "next/head";
 import { Metadata, ResolvingMetadata } from "next";
 
-// export const dynamicParams = true;
+// // export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  return [
-    {
-      urlId: "boo",
-    },
-  ];
-}
+// export async function generateStaticParams() {
+//   return [
+//     {
+//       urlId: "boo",
+//     },
+//   ];
+// }
 
 export async function generateMetadata({
   params,

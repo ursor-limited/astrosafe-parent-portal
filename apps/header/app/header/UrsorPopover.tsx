@@ -6,6 +6,7 @@ import { Backdrop } from "@mui/material";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
 import UrsorFadeIn from "./UrsorFadeIn";
+import { useWindowSize } from "usehooks-ts";
 
 export const DEFAULT_CORNER_RADIUS = "12px";
 export const PADDING = "16px";
@@ -41,10 +42,12 @@ export interface IUrsorPopoverProps {
 }
 
 export default function UrsorPopover(props: IUrsorPopoverProps) {
-  const [width, setWidth] = useState<number | undefined>(undefined);
+  const [widthh, setWidth] = useState<number | undefined>(undefined);
 
   const [yOffset, setYOffset] = useState<number | undefined>(undefined);
-  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+  const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
+
+  console.log(maxWidth);
 
   const [referenceElement, setReferenceElement] =
     React.useState<HTMLElement | null>(null);
@@ -74,10 +77,16 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     buttonRef?.focus();
   }, [buttonRef]);
 
+  const { width } = useWindowSize();
+
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
     setWidth(referenceElement?.offsetWidth);
-  }, [referenceElement, referenceElement?.offsetTop]);
+    setMaxWidth(
+      (width ?? window.innerWidth) -
+        (referenceElement?.getBoundingClientRect().left ?? 0)
+    );
+  }, [width, referenceElement, referenceElement?.offsetTop]);
 
   return (
     <>
@@ -101,7 +110,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         {props.children}
       </Stack>
 
-      {props.open
+      {/* {props.open
         ? createPortal(
             <>
               {!props.noBackdrop ? (
@@ -205,7 +214,106 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
             </>,
             document.body
           )
-        : null}
+        : null} */}
+      {props.open ? (
+        <>
+          {!props.noBackdrop ? (
+            <Backdrop
+              sx={{
+                //background: "rgba(0, 0, 0, 0.2)",
+                //backdropFilter: "blur(3px)",
+                zIndex: props.zIndex || 2,
+              }}
+              open={props.open}
+              onClick={props.closeCallback}
+            />
+          ) : null}
+
+          <Box
+            ref={setPopperElement}
+            style={styles.popper}
+            {...attributes.popper}
+            zIndex={props.zIndex || 3}
+          >
+            <Stack
+              spacing="24px"
+              sx={{
+                transform: `translateY(${
+                  (isFlipped ? -1 : 1) * (yOffset ?? 0)
+                }px)`,
+              }}
+              justifyContent="center"
+              alignItems={
+                props.placement === "right"
+                  ? "flex-end"
+                  : props.placement === "left"
+                  ? "flex-start"
+                  : "center"
+              }
+              ref={setButtonRef}
+            >
+              {!isFlipped ? (
+                <Box
+                  sx={{
+                    opacity: props.noFloatButton ? 0 : 1,
+                    pointerEvents: props.clickableFloatedButton
+                      ? undefined
+                      : "none",
+                  }}
+                >
+                  {props.children}
+                </Box>
+              ) : null}
+              {props.externalElement ? (
+                <Box
+                  width={widthh}
+                  sx={{
+                    pointerEvents: props.open ? "auto" : "none",
+                    opacity: props.open ? 1 : 0,
+                    transition: "0.3s",
+                    //animation: props.animation,
+                  }}
+                >
+                  {props.externalElement}
+                </Box>
+              ) : null}
+              <UrsorFadeIn duration={700}>
+                {props.content ? (
+                  <Box
+                    width={props.buttonWidth ? widthh : props.width}
+                    borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
+                    p={props.noCard || props.noPadding ? undefined : PADDING}
+                    sx={{
+                      background: props.noCard ? undefined : "white",
+                      pointerEvents: props.open ? "auto" : "none",
+                      opacity: props.open && !props.fadedOut ? 1 : 0,
+                      transition: "0.3s",
+                      animation: props.animation,
+                    }}
+                    height="100%"
+                    maxWidth={maxWidth}
+                    overflow="scroll"
+                  >
+                    {props.content}
+                  </Box>
+                ) : null}
+                {isFlipped ? (
+                  <Box
+                    sx={{
+                      opacity: props.noFloatButton ? 0 : 1,
+                      pointerEvents: props.clickableFloatedButton
+                        ? undefined
+                        : "none",
+                    }}
+                  >
+                    {props.children}
+                  </Box>
+                ) : null}
+              </UrsorFadeIn>
+            </Stack>
+          </Box>
+        </>
+      ) : null}
     </>
   );
 }
