@@ -7,6 +7,7 @@ import { useReactToPrint } from "react-to-print";
 import _ from "lodash";
 import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
+import WorksheetQuestion from "./WorksheetQuestion";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
@@ -42,50 +43,53 @@ const HorizontalEquationQuestion = (props: {
   left: number;
   right: number;
   both: boolean;
+  n: number;
   showAnswer: boolean;
 }) => (
-  <Stack
-    direction="row"
-    width={props.both ? "292px" : "260px"}
-    height="110px"
-    justifyContent="space-between"
-    alignItems={"flex-end"}
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack direction="row" spacing="14px">
-      {!props.both || props.showAnswer ? (
-        <Typography
-          variant="h3"
-          color={props.both ? PALETTE.secondary.purple[2] : undefined}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
-        >
-          {props.left}
-        </Typography>
-      ) : (
-        <WritingField />
-      )}
-      <Stack pb="0px">
-        <Typography variant="h3" sx={{ fontWeight: 250 }}>
-          +
-        </Typography>
+  <WorksheetQuestion n={props.n} endAligned>
+    <Stack
+      direction="row"
+      width={props.both ? "292px" : "260px"}
+      height="110px"
+      justifyContent="space-between"
+      alignItems={"flex-end"}
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack direction="row" spacing="14px">
+        {!props.both || props.showAnswer ? (
+          <Typography
+            variant="h3"
+            color={props.both ? PALETTE.secondary.purple[2] : undefined}
+            sx={{
+              fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
+            }}
+          >
+            {props.left}
+          </Typography>
+        ) : (
+          <WritingField />
+        )}
+        <Stack pb="0px">
+          <Typography variant="h3" sx={{ fontWeight: 250 }}>
+            +
+          </Typography>
+        </Stack>
+        {props.showAnswer ? (
+          <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+            {props.right}
+          </Typography>
+        ) : (
+          <WritingField />
+        )}
       </Stack>
-      {props.showAnswer ? (
-        <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
-          {props.right}
-        </Typography>
-      ) : (
-        <WritingField />
-      )}
+      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+        =
+      </Typography>
+      <Typography variant="h3" sx={{ fontWeight: 350 }}>
+        {props.result}
+      </Typography>
     </Stack>
-    <Typography variant="h3" sx={{ fontWeight: 100 }}>
-      =
-    </Typography>
-    <Typography variant="h3" sx={{ fontWeight: 350 }}>
-      {props.result}
-    </Typography>
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const VerticalEquationQuestion = (props: {
@@ -93,61 +97,64 @@ const VerticalEquationQuestion = (props: {
   left: number;
   right: number;
   both: boolean;
+  n: number;
   showAnswer: boolean;
 }) => (
-  <Stack
-    width="260px"
-    height="280px"
-    alignItems={"center"}
-    justifyContent="center"
-    sx={{ breakInside: "avoid" }}
-    spacing="20px"
-    position="relative"
-  >
+  <WorksheetQuestion n={props.n} top="-53px" left="54px">
     <Stack
-      position="absolute"
-      width="38px"
-      sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
-      height="2px"
-      bgcolor={PALETTE.secondary.grey[2]}
-    />
-    <Stack
-      position="absolute"
-      width="38px"
-      sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
-      height="2px"
-      bgcolor={PALETTE.secondary.grey[2]}
-    />
-    <ValueCircle>
-      <Typography variant="h4" sx={{ fontWeight: 350 }}>
-        {props.result}
-      </Typography>
-    </ValueCircle>
-    <Stack direction="row" spacing="40px" zIndex={999}>
+      width="260px"
+      height="280px"
+      alignItems={"center"}
+      justifyContent="center"
+      sx={{ breakInside: "avoid" }}
+      spacing="20px"
+      position="relative"
+    >
+      <Stack
+        position="absolute"
+        width="38px"
+        sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
+        height="2px"
+        bgcolor={PALETTE.secondary.grey[2]}
+      />
+      <Stack
+        position="absolute"
+        width="38px"
+        sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
+        height="2px"
+        bgcolor={PALETTE.secondary.grey[2]}
+      />
       <ValueCircle>
-        <Typography
-          variant="h4"
-          color={props.both ? PALETTE.secondary.purple[2] : undefined}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
-        >
-          {!props.both || props.showAnswer ? props.left : null}
+        <Typography variant="h4" sx={{ fontWeight: 350 }}>
+          {props.result}
         </Typography>
       </ValueCircle>
-      <ValueCircle>
-        <Typography
-          variant="h4"
-          color={PALETTE.secondary.purple[2]}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
-        >
-          {props.showAnswer ? props.right : null}
-        </Typography>
-      </ValueCircle>
+      <Stack direction="row" spacing="40px" zIndex={999}>
+        <ValueCircle>
+          <Typography
+            variant="h4"
+            color={props.both ? PALETTE.secondary.purple[2] : undefined}
+            sx={{
+              fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
+            }}
+          >
+            {!props.both || props.showAnswer ? props.left : null}
+          </Typography>
+        </ValueCircle>
+        <ValueCircle>
+          <Typography
+            variant="h4"
+            color={PALETTE.secondary.purple[2]}
+            sx={{
+              fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
+            }}
+          >
+            {props.showAnswer ? props.right : null}
+          </Typography>
+        </ValueCircle>
+      </Stack>
     </Stack>
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
@@ -162,7 +169,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
       showAnswers?: boolean;
-      pageIndex?: number;
+      pageIndex: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
     },
@@ -244,6 +251,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                         left={x?.[0]}
                         right={x?.[1]}
                         both={props.both}
+                        n={props.pageIndex * 16 + i * 2 + k + 1}
                         showAnswer={!!props.showAnswers}
                       />
                     ) : (
@@ -252,6 +260,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                         left={x?.[0]}
                         right={x?.[1]}
                         both={props.both}
+                        n={props.pageIndex * 9 + i * 3 + k + 1}
                         showAnswer={!!props.showAnswers}
                       />
                     )}

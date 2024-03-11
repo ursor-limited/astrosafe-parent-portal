@@ -4,22 +4,35 @@ import { PALETTE, Typography } from "ui";
 const WorksheetQuestion = (props: {
   n: number;
   endAligned?: boolean;
+  top?: string;
+  left?: string;
   children: React.ReactNode;
 }) => (
-  <Stack direction="row" spacing="4mm">
+  <Stack direction="row" spacing="4mm" position="relative">
     <Stack
       height="100%"
       justifyContent={props.endAligned ? "flex-end" : "center"}
+      position={props.top || props.left ? "absolute" : "relative"}
+      top={props.top ?? 0}
+      left={props.left ?? 0}
     >
       <Stack
-        borderRadius="100%"
+        borderRadius="18px"
         border={`2px solid ${PALETTE.secondary.grey[2]}`}
-        width="18px"
+        width="22px"
         height="18px"
         justifyContent="center"
         alignItems="center"
         mb="2.6mm"
+        direction="row"
       >
+        <Typography
+          sx={{ fontSize: "9px", marginBottom: "0.7mm" }}
+          bold
+          color={PALETTE.secondary.grey[3]}
+        >
+          Q
+        </Typography>
         <Typography
           sx={{ fontSize: "9px", marginBottom: "0.7mm" }}
           bold

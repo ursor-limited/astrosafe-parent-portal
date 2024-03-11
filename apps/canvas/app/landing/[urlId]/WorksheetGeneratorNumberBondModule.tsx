@@ -218,6 +218,7 @@ export function WorksheetGeneratorNumberBondModule(
             placeholder="Multiplier"
             leftAlign
             boldValue
+            height="44px"
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
@@ -278,6 +279,7 @@ export function WorksheetGeneratorNumberBondModule(
             width="100%"
             leftAlign
             boldValue
+            height="44px"
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
