@@ -1,12 +1,7 @@
 "use client";
 
 import UrsorDialog from "./UrsorDialog";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
-import { useAuth0 } from "@auth0/auth0-react";
-import mixpanel from "mixpanel-browser";
-import { useLocalStorage } from "usehooks-ts";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";

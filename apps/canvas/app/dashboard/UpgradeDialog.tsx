@@ -1,11 +1,8 @@
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import RocketIcon from "@/images/icons/RocketIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
-import { useAuth0 } from "@auth0/auth0-react";
-import mixpanel from "mixpanel-browser";
-import { useLocalStorage } from "usehooks-ts";
 import UrsorDialog from "../components/UrsorDialog";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Stack } from "@mui/system";
 
 const FREE_VIDEO_LIMIT = 3;
 
@@ -31,7 +28,14 @@ const BrowserDialog = (props: { open: boolean; closeCallback: () => void }) => {
       }}
       onCloseCallback={props.closeCallback}
     >
-      <GraphIllustration width={300} height={300} />
+      <Stack width="300px" height="300px">
+        <Image
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/GraphIllustration.svg"
+          width={500}
+          height={500}
+          alt="Upgrade dialog illustration"
+        />
+      </Stack>
     </UrsorDialog>
   );
 };

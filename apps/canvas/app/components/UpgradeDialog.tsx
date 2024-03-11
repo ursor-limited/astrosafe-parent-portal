@@ -1,9 +1,8 @@
-import { Stack } from "@mui/system";
 import UrsorDialog from "./UrsorDialog";
 import RocketIcon from "@/images/icons/RocketIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "./UserContext";
+import Image from "next/image";
 
 const UpgradeDialog = (props: { open: boolean; closeCallback: () => void }) => {
   const paymentLink = useUserContext().paymentLink;
@@ -24,7 +23,12 @@ const UpgradeDialog = (props: { open: boolean; closeCallback: () => void }) => {
       width="90%"
       maxWidth="880px"
     >
-      <GraphIllustration width={150} height={150} />
+      <Image
+        src="https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png"
+        width={300}
+        height={300}
+        alt="Upgrade dialog illustration"
+      />
     </UrsorDialog>
   );
 };

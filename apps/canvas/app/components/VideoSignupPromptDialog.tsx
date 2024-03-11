@@ -1,7 +1,6 @@
 import UrsorDialog from "./UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
@@ -88,7 +87,12 @@ const VideoSignupPromptDialog = (props: {
           />
         </Stack>
       ) : (
-        <GraphIllustration width={150} height={150} />
+        <Image
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png"
+          width={300}
+          height={300}
+          alt="Upgrade dialog illustration"
+        />
       )}
     </UrsorDialog>
   );
