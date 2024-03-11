@@ -27,7 +27,7 @@ export default function AstroLandingPage(props: {
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
       {/* <AuthWrapper> */}
-      {/* <Header /> */}
+      <Header />
       {/* </AuthWrapper> */}
       <Stack
         spacing="36px"
