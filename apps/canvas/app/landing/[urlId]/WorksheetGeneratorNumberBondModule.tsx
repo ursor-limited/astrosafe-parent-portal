@@ -20,13 +20,14 @@ import NumberBondWorksheet, {
 } from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 import { useUserContext } from "@/app/components/UserContext";
+import { getZeroHandledNumber } from "./WorksheetGeneratorEquationModule";
 
 const MAX_N_PROBLEMS = 100;
 
 export function WorksheetGeneratorNumberBondModule(
   props: INumberBondWorksheetGeneratorSettings & {
     callback: (newPreviewWorksheet: React.ReactNode) => void;
-    nProblems: number;
+    nProblems: number | undefined;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
@@ -37,7 +38,7 @@ export function WorksheetGeneratorNumberBondModule(
     whiteFields?: boolean;
   }
 ) {
-  const [result, setResult] = useState<number>(3);
+  const [result, setResult] = useState<number | undefined>(3);
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
   const [both, setBoth] = useState<boolean>(false);
@@ -54,18 +55,18 @@ export function WorksheetGeneratorNumberBondModule(
 
   const [pairs, setPairs] = useState<number[][]>([]);
   useEffect(() => {
-    const fullsetSize = result - 1;
-    const fullSet = _.range(1, result).map((x) => [x, result - x]);
+    const fullsetSize = (result ?? 0) - 1;
+    const fullSet = _.range(1, result).map((x) => [x, (result ?? 0) - x]);
     if (fullSet.length === 0) {
       setPairs([]);
     } else {
-      const fullSets = _(Math.floor(props.nProblems / fullsetSize))
+      const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
         .range()
         .flatMap(() => _.shuffle(fullSet.slice()))
         .value();
       const partialSet = _.sampleSize(
-        _.range(1, result - 1).map((x) => [x, result - x]),
-        props.nProblems % fullsetSize
+        _.range(1, (result ?? 0) - 1).map((x) => [x, (result ?? 0) - x]),
+        (props.nProblems ?? 0) % fullsetSize
       );
       setPairs([...fullSets, ...partialSet]);
     }
@@ -76,7 +77,7 @@ export function WorksheetGeneratorNumberBondModule(
       props.setNPages(
         1 +
           Math.ceil(
-            (props.nProblems -
+            ((props.nProblems ?? 0) -
               (orientation === "horizontal"
                 ? NUMBER_BOND_HORIZONTAL_ROWS_N
                 : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -117,7 +118,7 @@ export function WorksheetGeneratorNumberBondModule(
       ApiController.createNumberBondWorksheet(
         props.title,
         orientation,
-        result,
+        result ?? 0,
         pairs,
         userDetails.user?.id
       )
@@ -210,17 +211,9 @@ export function WorksheetGeneratorNumberBondModule(
         </Captioned>
         <Captioned text="Sum">
           <UrsorInputField
-            value={result === 0 ? "" : result.toString()}
+            value={result?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value || event.target.value === "0") {
-                setResult(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setResult(parseInt(leadingZeroRemovedString ?? "0"));
-              }
+              setResult(getZeroHandledNumber(event.target.value));
             }}
             placeholder="Multiplier"
             leftAlign
@@ -276,24 +269,10 @@ export function WorksheetGeneratorNumberBondModule(
         </Captioned>
         <Captioned text="Amount of problems">
           <UrsorInputField
-            value={props.nProblems === 0 ? "" : props.nProblems.toString()}
+            value={props.nProblems?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value) {
-                props.setNProblems(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                props.setNProblems(
-                  Math.min(
-                    leadingZeroRemovedString
-                      ? parseInt(leadingZeroRemovedString)
-                      : 0,
-                    MAX_N_PROBLEMS
-                  )
-                );
-              }
+              const x = getZeroHandledNumber(event.target.value);
+              props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
             }}
             placeholder="Number of digits"
             width="100%"

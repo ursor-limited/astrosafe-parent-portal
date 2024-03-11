@@ -12,6 +12,7 @@ import {
   WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
+import WorksheetQuestion from "./WorksheetQuestion";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
@@ -30,103 +31,39 @@ const HorizontalQuestion = (props: {
   answer: boolean;
   inputValue?: number;
   topic?: WorksheetTopic;
+  n: number;
   changeCallback?: (newValue: number) => void;
 }) => (
-  <Stack
-    direction="row"
-    width={props.inputValue && props.changeCallback ? "296px" : "270px"}
-    height="110px"
-    justifyContent="space-between"
-    alignItems={
-      props.inputValue && props.changeCallback ? "center" : "flex-end"
-    }
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack direction="row" spacing="14px">
-      <Typography variant="h3">{props.pair[0]}</Typography>
-      <Stack pb="0px">
-        <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
-          {props.topic === "multiplication"
-            ? "x"
-            : props.topic === "addition"
-            ? "+"
-            : "-"}
-        </Typography>
-      </Stack>
-      <Typography variant="h3" sx={{ fontWeight: 250 }}>
-        {props.pair[1]}
-      </Typography>
-    </Stack>
-    <Typography variant="h3" sx={{ fontWeight: 100 }}>
-      =
-    </Typography>
-    {props.answer ? (
-      <Typography
-        variant="h3"
-        color={PALETTE.secondary.purple[2]}
-        sx={{ fontWeight: 350 }}
-      >
-        {props.topic === "multiplication"
-          ? props.pair[0] * props.pair[1]
-          : props.topic === "addition"
-          ? props.pair[0] + props.pair[1]
-          : props.pair[0] - props.pair[1]}
-      </Typography>
-    ) : props.inputValue && props.changeCallback ? (
-      <UrsorInputField
-        value={props.inputValue.toString()}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-          const leadingZeroRemovedString = onlyNumbersString?.slice(
-            onlyNumbersString[0] === "0" ? 1 : 0
-          );
-          props.changeCallback?.(parseInt(leadingZeroRemovedString ?? "0"));
-        }}
-        width="110px"
-        fontSize="40px"
-        height="60px"
-        boldValue
-        paddingLeft="0"
-      />
-    ) : (
-      <Stack
-        borderBottom="1.5px solid rgba(0,0,0,0.3)"
-        width="70px"
-        height="102%"
-      />
-    )}
-  </Stack>
-);
-
-const VerticalQuestion = (props: {
-  pair: [number, number];
-  answer: boolean;
-  topic?: WorksheetTopic;
-}) => (
-  <Stack
-    justifyContent="center"
-    spacing="4px"
-    height="172px"
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack alignItems="flex-end">
-      <Typography variant="h3">{props.pair[0]}</Typography>
-      <Stack direction="row" justifyContent="space-between" spacing="36px">
-        <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "180%" }}>
-          {props.topic === "multiplication"
-            ? "x"
-            : props.topic === "addition"
-            ? "+"
-            : "-"}
-        </Typography>
+  <WorksheetQuestion n={props.n} endAligned>
+    <Stack
+      direction="row"
+      width={props.inputValue && props.changeCallback ? "296px" : "270px"}
+      height="110px"
+      justifyContent="space-between"
+      alignItems={
+        props.inputValue && props.changeCallback ? "center" : "flex-end"
+      }
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack direction="row" spacing="14px">
+        <Typography variant="h3">{props.pair[0]}</Typography>
+        <Stack pb="0px">
+          <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
+            {props.topic === "multiplication"
+              ? "x"
+              : props.topic === "addition"
+              ? "+"
+              : "-"}
+          </Typography>
+        </Stack>
         <Typography variant="h3" sx={{ fontWeight: 250 }}>
           {props.pair[1]}
         </Typography>
       </Stack>
-    </Stack>
-    <Stack borderBottom="1.5px solid rgba(0,0,0,0.3)" width="100%" />
-    {props.answer ? (
-      <Stack width="100%" alignItems="flex-end">
+      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+        =
+      </Typography>
+      {props.answer ? (
         <Typography
           variant="h3"
           color={PALETTE.secondary.purple[2]}
@@ -138,9 +75,79 @@ const VerticalQuestion = (props: {
             ? props.pair[0] + props.pair[1]
             : props.pair[0] - props.pair[1]}
         </Typography>
+      ) : props.inputValue && props.changeCallback ? (
+        <UrsorInputField
+          value={props.inputValue.toString()}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
+            const leadingZeroRemovedString = onlyNumbersString?.slice(
+              onlyNumbersString[0] === "0" ? 1 : 0
+            );
+            props.changeCallback?.(parseInt(leadingZeroRemovedString ?? "0"));
+          }}
+          width="110px"
+          fontSize="40px"
+          height="60px"
+          boldValue
+          paddingLeft="0"
+        />
+      ) : (
+        <Stack
+          borderBottom="1.5px solid rgba(0,0,0,0.3)"
+          width="70px"
+          height="102%"
+        />
+      )}
+    </Stack>
+  </WorksheetQuestion>
+);
+
+const VerticalQuestion = (props: {
+  pair: [number, number];
+  answer: boolean;
+  n: number;
+  topic?: WorksheetTopic;
+}) => (
+  <WorksheetQuestion n={props.n}>
+    <Stack
+      justifyContent="center"
+      spacing="4px"
+      height="172px"
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack alignItems="flex-end">
+        <Typography variant="h3">{props.pair[0]}</Typography>
+        <Stack direction="row" justifyContent="space-between" spacing="36px">
+          <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "180%" }}>
+            {props.topic === "multiplication"
+              ? "x"
+              : props.topic === "addition"
+              ? "+"
+              : "-"}
+          </Typography>
+          <Typography variant="h3" sx={{ fontWeight: 250 }}>
+            {props.pair[1]}
+          </Typography>
+        </Stack>
       </Stack>
-    ) : null}
-  </Stack>
+      <Stack borderBottom="1.5px solid rgba(0,0,0,0.3)" width="100%" />
+      {props.answer ? (
+        <Stack width="100%" alignItems="flex-end">
+          <Typography
+            variant="h3"
+            color={PALETTE.secondary.purple[2]}
+            sx={{ fontWeight: 350 }}
+          >
+            {props.topic === "multiplication"
+              ? props.pair[0] * props.pair[1]
+              : props.topic === "addition"
+              ? props.pair[0] + props.pair[1]
+              : props.pair[0] - props.pair[1]}
+          </Typography>
+        </Stack>
+      ) : null}
+    </Stack>
+  </WorksheetQuestion>
 );
 
 const DivisionVerticalQuestion = (props: {
@@ -252,7 +259,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
       showAnswers?: boolean;
-      pageIndex?: number;
+      pageIndex: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
     },
@@ -309,14 +316,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
             : rowz
         );
       }
-    }, [
-      props.pairs,
-      props.orientation,
-      props.pageIndex,
-      rows.length,
-      props.topic,
-    ]);
-
+    }, [props.pairs, props.orientation, props.pageIndex, props.topic]);
     return (
       <AstroWorksheetPage
         title={props.title}
@@ -354,14 +354,14 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                         pair={pair}
                         answer={!!props.showAnswers}
                         topic={props.topic}
-                        // inputValue={4}
-                        // changeCallback={() => null}
+                        n={props.pageIndex * 16 + i * 2 + k + 1}
                       />
                     ) : (
                       <VerticalQuestion
                         pair={pair}
                         answer={!!props.showAnswers}
                         topic={props.topic}
+                        n={props.pageIndex * 20 + i * 4 + k + 1}
                       />
                     )}
                   </Stack>

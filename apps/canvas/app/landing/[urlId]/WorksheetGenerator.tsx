@@ -191,7 +191,7 @@ export default function WorksheetGenerator(props: {
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [nProblems, setNProblems] = useState<number>(10);
+  const [nProblems, setNProblems] = useState<number | undefined>(10);
 
   useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
   useEffect(

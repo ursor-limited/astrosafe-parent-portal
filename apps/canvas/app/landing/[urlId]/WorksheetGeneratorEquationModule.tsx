@@ -16,12 +16,42 @@ import { useUserContext } from "@/app/components/UserContext";
 
 const MAX_N_PROBLEMS = 100;
 
+export const getZeroHandledNumber = (n: string) =>
+  // {
+  //   if (!n) {
+  //     return 0;
+  //   } else {
+  //     const onlyNumbersString = n.match(/\d+/)?.[0];
+  //     const leadingZeroRemovedString = onlyNumbersString?.slice(
+  //       onlyNumbersString[0] === "0" ? 1 : 0
+  //     );
+  //     return Math.min(
+  //       leadingZeroRemovedString ? parseInt(leadingZeroRemovedString) : 0,
+  //       MAX_N_PROBLEMS
+  //     );
+  //   }
+  // };
+  {
+    if (!n) {
+      return undefined;
+    } else {
+      const onlyNumbersString = n.match(/\d+/)?.[0];
+      const leadingZeroRemovedString =
+        onlyNumbersString === "0"
+          ? "0"
+          : onlyNumbersString?.slice(onlyNumbersString[0] === "0" ? 1 : 0);
+      return !leadingZeroRemovedString
+        ? undefined
+        : parseInt(leadingZeroRemovedString);
+    }
+  };
+
 export function WorksheetGeneratorEquationModule(
   props: IEquationWorksheetGeneratorSettings & {
     nDigits: number;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
-    nProblems: number;
-    setNProblems: (n: number) => void;
+    nProblems: number | undefined;
+    setNProblems: (n: number | undefined) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
@@ -52,13 +82,13 @@ export function WorksheetGeneratorEquationModule(
   const [pairs, setPairs] = useState<[number, number][]>([]);
   useEffect(() => {
     const fullsetSize = Math.pow(10, nDigits) + 1;
-    const fullSets = _(Math.floor(props.nProblems / fullsetSize))
+    const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
       .range()
       .flatMap(() => _.shuffle(_.range(fullsetSize)))
       .value();
     const partialSet = _.sampleSize(
       _.range(fullsetSize),
-      props.nProblems % fullsetSize
+      (props.nProblems ?? 0) % fullsetSize
     );
     setPairs(
       [...fullSets, ...partialSet].map((x) => [
@@ -85,7 +115,7 @@ export function WorksheetGeneratorEquationModule(
       props.setNPages(
         1 +
           Math.ceil(
-            (props.nProblems -
+            ((props.nProblems ?? 0) -
               (props.topic === "division"
                 ? 12
                 : orientation === "horizontal"
@@ -162,25 +192,9 @@ export function WorksheetGeneratorEquationModule(
           >
             <UrsorInputField
               value={factor?.toString() ?? ""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                if (!event.target.value) {
-                  setFactor(undefined);
-                } else {
-                  const onlyNumbersString =
-                    event.target.value.match(/\d+/)?.[0];
-                  const leadingZeroRemovedString =
-                    onlyNumbersString === "0"
-                      ? "0"
-                      : onlyNumbersString?.slice(
-                          onlyNumbersString[0] === "0" ? 1 : 0
-                        );
-                  setFactor(
-                    !leadingZeroRemovedString
-                      ? undefined
-                      : parseInt(leadingZeroRemovedString)
-                  );
-                }
-              }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setFactor(getZeroHandledNumber(event.target.value))
+              }
               placeholder="Multiplier"
               leftAlign
               boldValue
@@ -217,24 +231,10 @@ export function WorksheetGeneratorEquationModule(
       <Stack direction="row" spacing="20px">
         <Captioned text="Number of questions">
           <UrsorInputField
-            value={props.nProblems === 0 ? "" : props.nProblems.toString()}
+            value={props.nProblems?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value) {
-                props.setNProblems(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                props.setNProblems(
-                  Math.min(
-                    leadingZeroRemovedString
-                      ? parseInt(leadingZeroRemovedString)
-                      : 0,
-                    MAX_N_PROBLEMS
-                  )
-                );
-              }
+              const x = getZeroHandledNumber(event.target.value);
+              props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
             }}
             placeholder="Number of digits"
             width="100%"

@@ -484,9 +484,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).pairs
-              }
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
               answers
             />
           ) : props.worksheetId === "numberBond" ? (
@@ -578,8 +576,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
                         }
                         orientation={props.parameters.orientation}
                         pageIndex={i}
-                        multipliers={
-                          (props.parameters as IEquationWorksheetParameters)
+                        pairs={
+                          (props.parameters as INumberBondWorksheetParameters)
                             .pairs
                         }
                         answers={mode === "markscheme"}
