@@ -86,7 +86,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
       (width ?? window.innerWidth) -
         (referenceElement?.getBoundingClientRect().left ?? 0)
     );
-  }, [width, referenceElement, referenceElement?.offsetTop]);
+  }, [width, referenceElement, referenceElement?.offsetTop, props.yOffset]);
 
   return (
     <>

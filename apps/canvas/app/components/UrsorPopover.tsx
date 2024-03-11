@@ -108,7 +108,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
       {props.open
         ? createPortal(
             <>
-              {!props.noBackdrop ? (
+              {/* {!props.noBackdrop ? (
                 <Backdrop
                   sx={{
                     //background: "rgba(0, 0, 0, 0.2)",
@@ -118,7 +118,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   open={props.open}
                   onClick={props.closeCallback}
                 />
-              ) : null}
+              ) : null} */}
 
               <Box
                 ref={setPopperElement}

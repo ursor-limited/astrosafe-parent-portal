@@ -36,6 +36,8 @@ export function WorksheetGeneratorEquationModule(
   const [factor, setFactor] = useState<number>(1);
   const [nDigits, setNDigits] = useState<number>(1);
 
+  const [randomize, setRandomize] = useState<boolean>(false);
+
   useEffect(
     () => props.orientation && setOrientation(props.orientation),
     [props.orientation]
@@ -47,7 +49,7 @@ export function WorksheetGeneratorEquationModule(
     props.factor && setFactor(props.factor);
   }, [props.factor]);
 
-  const [multipliers, setMultipliers] = useState<number[]>([]);
+  const [pairs, setPairs] = useState<[number, number][]>([]);
   useEffect(() => {
     const fullsetSize = Math.pow(10, nDigits) + 1;
     const fullSets = _(Math.floor(props.nProblems / fullsetSize))
@@ -58,8 +60,25 @@ export function WorksheetGeneratorEquationModule(
       _.range(fullsetSize),
       props.nProblems % fullsetSize
     );
-    setMultipliers([...fullSets, ...partialSet]);
-  }, [nDigits, props.nProblems, props.regenerationCount]);
+    setPairs(
+      [...fullSets, ...partialSet].map((x) => [
+        x,
+        randomize ? _.random(fullsetSize) : factor,
+      ])
+    );
+  }, [nDigits, props.nProblems, props.regenerationCount, randomize]);
+
+  // const [pairs, setPairs] = useState<[number, number][]>([]);
+  // useEffect(() => {
+  //   setPairs(
+  //     _.zip(
+  //       getOneOfPairForAllQuestions(),
+  //       randomize
+  //         ? getOneOfPairForAllQuestions()
+  //         : [...Array(props.nProblems).keys()].map(() => factor)
+  //     )
+  //   );
+  // }, [nDigits, props.nProblems, props.regenerationCount, randomize]);
 
   useEffect(
     () =>
@@ -98,7 +117,7 @@ export function WorksheetGeneratorEquationModule(
         topic={props.topic}
         nDigits={nDigits}
         factor={factor}
-        multipliers={multipliers}
+        pairs={pairs}
         pageIndex={props.pageIndex}
       />
     );
@@ -108,7 +127,7 @@ export function WorksheetGeneratorEquationModule(
         orientation,
         props.topic,
         factor,
-        multipliers,
+        pairs,
         userDetails?.user?.id
       ).then((ws) => ws.id)
     );
@@ -117,7 +136,7 @@ export function WorksheetGeneratorEquationModule(
     props.topic,
     nDigits,
     factor,
-    multipliers,
+    pairs,
     props.pageIndex,
     orientation,
     userDetails.user?.id,
@@ -125,8 +144,6 @@ export function WorksheetGeneratorEquationModule(
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);
-
-  const [randomize, setRandomize] = useState<boolean>(false);
 
   return (
     <Stack flex={1} spacing="18px">

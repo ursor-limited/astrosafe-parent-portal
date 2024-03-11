@@ -345,7 +345,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       setNPages(
         1 +
           Math.ceil(
-            (params.multipliers.length -
+            (params.pairs.length -
               (params.topic === "division"
                 ? 12
                 : props.parameters.orientation === "horizontal"
@@ -450,10 +450,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
@@ -487,9 +484,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
               multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
+                (props.parameters as IEquationWorksheetParameters).pairs
               }
               answers
             />
@@ -582,13 +578,9 @@ export default function WorksheetPageContents(props: IWorksheet) {
                         }
                         orientation={props.parameters.orientation}
                         pageIndex={i}
-                        factor={
-                          (props.parameters as IEquationWorksheetParameters)
-                            .factor
-                        }
                         multipliers={
                           (props.parameters as IEquationWorksheetParameters)
-                            .multipliers
+                            .pairs
                         }
                         answers={mode === "markscheme"}
                       />

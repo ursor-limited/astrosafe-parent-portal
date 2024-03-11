@@ -169,7 +169,7 @@ class ApiController {
     orientation: EquationOrientation,
     topic: WorksheetTopic,
     factor: number,
-    multipliers: number[],
+    pairs: [number, number][],
     creatorId?: string
   ) {
     return post("canvas/worksheet/equation", {
@@ -179,7 +179,7 @@ class ApiController {
         orientation,
         topic,
         factor,
-        multipliers,
+        pairs,
       },
     }).then((response: any) => response.json());
   }

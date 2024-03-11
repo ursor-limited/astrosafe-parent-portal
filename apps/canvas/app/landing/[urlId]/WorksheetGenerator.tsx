@@ -61,20 +61,19 @@ export type WorksheetTopic =
 export interface IEquationWorksheetParameters {
   topic: WorksheetTopic;
   orientation: EquationOrientation;
-  factor: number;
-  multipliers: number[];
+  pairs: [number, number][];
 }
 
 export type IEquationWorksheetGeneratorSettings = Omit<
   IEquationWorksheetParameters,
-  "multipliers"
-> & { nDigits: number };
+  "pairs"
+> & { nDigits: number; factor: number };
 
 export interface INumberBondWorksheetParameters {
   orientation: EquationOrientation;
   result: number;
   both: boolean;
-  pairs: number[][];
+  pairs: [number, number][];
 }
 
 export type INumberBondWorksheetGeneratorSettings = Omit<
@@ -319,6 +318,7 @@ export default function WorksheetGenerator(props: {
                 callback={(t: string) => setTopic(t as WorksheetTopic)}
                 width="100%"
                 zIndex={999999999}
+                leftAlignPopover
               />
             </Captioned>
             <Captioned text="Question type">
@@ -333,6 +333,7 @@ export default function WorksheetGenerator(props: {
                 }}
                 width="100%"
                 zIndex={999999999}
+                leftAlignPopover
               />
             </Captioned>
           </Stack>

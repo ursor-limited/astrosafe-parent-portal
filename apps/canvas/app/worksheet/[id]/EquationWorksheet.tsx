@@ -26,15 +26,13 @@ export interface IWorksheetQuestion {
 }
 
 const HorizontalQuestion = (props: {
-  number: number;
-  multiplier: number;
+  pair: [number, number];
   answer: boolean;
   inputValue?: number;
   topic?: WorksheetTopic;
   changeCallback?: (newValue: number) => void;
 }) => (
   <Stack
-    key={props.multiplier}
     direction="row"
     width={props.inputValue && props.changeCallback ? "296px" : "270px"}
     height="110px"
@@ -45,7 +43,7 @@ const HorizontalQuestion = (props: {
     sx={{ breakInside: "avoid" }}
   >
     <Stack direction="row" spacing="14px">
-      <Typography variant="h3">{props.multiplier}</Typography>
+      <Typography variant="h3">{props.pair[0]}</Typography>
       <Stack pb="0px">
         <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
           {props.topic === "multiplication"
@@ -56,7 +54,7 @@ const HorizontalQuestion = (props: {
         </Typography>
       </Stack>
       <Typography variant="h3" sx={{ fontWeight: 250 }}>
-        {props.number}
+        {props.pair[1]}
       </Typography>
     </Stack>
     <Typography variant="h3" sx={{ fontWeight: 100 }}>
@@ -69,10 +67,10 @@ const HorizontalQuestion = (props: {
         sx={{ fontWeight: 350 }}
       >
         {props.topic === "multiplication"
-          ? props.multiplier * props.number
+          ? props.pair[0] * props.pair[1]
           : props.topic === "addition"
-          ? props.multiplier + props.number
-          : props.multiplier - props.number}
+          ? props.pair[0] + props.pair[1]
+          : props.pair[0] - props.pair[1]}
       </Typography>
     ) : props.inputValue && props.changeCallback ? (
       <UrsorInputField
@@ -101,20 +99,18 @@ const HorizontalQuestion = (props: {
 );
 
 const VerticalQuestion = (props: {
-  number: number;
-  multiplier: number;
+  pair: [number, number];
   answer: boolean;
   topic?: WorksheetTopic;
 }) => (
   <Stack
-    key={props.multiplier}
     justifyContent="center"
     spacing="4px"
     height="172px"
     sx={{ breakInside: "avoid" }}
   >
     <Stack alignItems="flex-end">
-      <Typography variant="h3">{props.multiplier}</Typography>
+      <Typography variant="h3">{props.pair[0]}</Typography>
       <Stack direction="row" justifyContent="space-between" spacing="36px">
         <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "180%" }}>
           {props.topic === "multiplication"
@@ -124,7 +120,7 @@ const VerticalQuestion = (props: {
             : "-"}
         </Typography>
         <Typography variant="h3" sx={{ fontWeight: 250 }}>
-          {props.number}
+          {props.pair[1]}
         </Typography>
       </Stack>
     </Stack>
@@ -137,10 +133,10 @@ const VerticalQuestion = (props: {
           sx={{ fontWeight: 350 }}
         >
           {props.topic === "multiplication"
-            ? props.multiplier * props.number
+            ? props.pair[0] * props.pair[1]
             : props.topic === "addition"
-            ? props.multiplier + props.number
-            : props.multiplier - props.number}
+            ? props.pair[0] + props.pair[1]
+            : props.pair[0] - props.pair[1]}
         </Typography>
       </Stack>
     ) : null}
@@ -245,14 +241,12 @@ const DivisionHorizontalQuestion = (props: {
   </Stack>
 );
 
-const rubik = Rubik({ subsets: ["latin"] });
-
 const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title?: string;
       factor: number;
-      multipliers: number[];
+      pairs: [number, number][];
       topic: WorksheetTopic;
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
@@ -280,11 +274,11 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
       }
     }, [printDialogOpen, printableRef]);
 
-    const [rows, setRows] = useState<number[][]>([]);
+    const [rows, setRows] = useState<[number, number][][]>([]);
     useEffect(() => {
-      if (props.multipliers) {
+      if (props.pairs) {
         const rowz = _.chunk(
-          props.multipliers,
+          props.pairs,
           Math.ceil(
             props.orientation === "horizontal"
               ? HORIZONTAL_N_COLUMNS
@@ -317,7 +311,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
         );
       }
     }, [
-      props.multipliers,
+      props.pairs,
       props.orientation,
       props.pageIndex,
       rows.length,
@@ -340,29 +334,25 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
               justifyContent={"space-evenly"}
             >
               {[
-                ...row?.map((x, k) => (
+                ...row?.map((pair, k) => (
                   <Stack key={k} flex={1} alignItems="center">
                     {props.topic === "division" ? (
                       props.orientation === "vertical" ? (
                         <DivisionVerticalQuestion
-                          key={x}
                           dividend={props.factor}
-                          answer={x}
+                          answer={pair[0]}
                           showAnswer={!!props.showAnswers}
                         />
                       ) : (
                         <DivisionHorizontalQuestion
-                          key={x}
                           dividend={props.factor}
-                          answer={x}
+                          answer={pair[0]}
                           showAnswer={!!props.showAnswers}
                         />
                       )
                     ) : props.orientation === "horizontal" ? (
                       <HorizontalQuestion
-                        key={x}
-                        number={props.factor}
-                        multiplier={x}
+                        pair={pair}
                         answer={!!props.showAnswers}
                         topic={props.topic}
                         // inputValue={4}
@@ -370,9 +360,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                       />
                     ) : (
                       <VerticalQuestion
-                        key={x}
-                        number={props.factor}
-                        multiplier={x}
+                        pair={pair}
                         answer={!!props.showAnswers}
                         topic={props.topic}
                       />
