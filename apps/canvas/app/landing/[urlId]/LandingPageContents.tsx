@@ -80,7 +80,7 @@ export const Captioned = (props: {
 }) => (
   <Stack
     flex={1}
-    spacing="8px"
+    spacing="6px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
       pointerEvents: props.disabled ? "none" : undefined,
@@ -98,13 +98,17 @@ export const Captioned = (props: {
             {props.checkbox.text}
           </Typography>
           <Stack
-            width="14px"
-            height="14px"
+            width="13px"
+            height="13px"
             border={`2px solid ${PALETTE.secondary.grey[5]}`}
             borderRadius="6px"
             justifyContent="center"
             alignItems="center"
+            onClick={props.checkbox.callback}
             sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
               svg: {
                 path: {
                   fill: PALETTE.secondary.grey[5],
@@ -112,7 +116,9 @@ export const Captioned = (props: {
               },
             }}
           >
-            <CheckIcon height="11px" width="11px" />
+            {props.checkbox.on ? (
+              <CheckIcon height="11px" width="11px" />
+            ) : null}
           </Stack>
         </Stack>
       ) : null}

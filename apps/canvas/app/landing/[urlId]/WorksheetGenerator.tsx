@@ -131,7 +131,8 @@ export const CategorySelectionButton = (props: {
   return (
     <Stack
       flex={1}
-      height="36px"
+      height="44px"
+      boxSizing="border-box"
       borderRadius="8px"
       justifyContent="center"
       alignItems="center"
@@ -258,7 +259,7 @@ export default function WorksheetGenerator(props: {
         direction="row"
         spacing="40px"
       >
-        <Stack width="480px" spacing="16px">
+        <Stack width="480px" spacing="18px">
           <Captioned text="Worksheet title">
             <UrsorInputField
               value={title}
@@ -270,6 +271,7 @@ export default function WorksheetGenerator(props: {
               width="100%"
               leftAlign
               boldValue
+              height="44px"
             />
           </Captioned>
           <Captioned text="Description">
@@ -282,8 +284,16 @@ export default function WorksheetGenerator(props: {
               width="100%"
               leftAlign
               boldValue
+              height="44px"
             />
           </Captioned>
+          <Stack height="28px" justifyContent="center">
+            <Stack
+              height="2px"
+              width="100%"
+              bgcolor={PALETTE.secondary.grey[2]}
+            />
+          </Stack>
           <Stack direction="row" spacing="20px">
             <Captioned text="Worksheet topic">
               <UrsorSelect
@@ -374,7 +384,7 @@ export default function WorksheetGenerator(props: {
             {previewWorksheet}
           </Stack>
           <Stack />
-          <Stack spacing="17px">
+          <Stack spacing="19px">
             {nPages > 1 ? (
               <PageSelector
                 pageIndex={selectedPageIndex}

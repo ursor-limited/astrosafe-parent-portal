@@ -126,35 +126,48 @@ export function WorksheetGeneratorEquationModule(
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);
 
+  const [randomize, setRandomize] = useState<boolean>(false);
+
   return (
-    <Stack flex={1} spacing="16px">
+    <Stack flex={1} spacing="18px">
       <Stack direction="row" spacing="20px">
         <Captioned
           text={props.topic === "division" ? "Divisor" : "Multiplier"}
           checkbox={{
             text: "Randomize",
-            on: true,
-            callback: () => null,
+            on: randomize,
+            callback: () => setRandomize(!randomize),
           }}
         >
-          <UrsorInputField
-            value={factor === 0 ? "" : factor.toString()}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value || event.target.value === "0") {
-                setFactor(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setFactor(parseInt(leadingZeroRemovedString ?? "0"));
-              }
+          <Stack
+            sx={{
+              opacity: randomize ? 0.45 : 1,
+              pointerEvents: randomize ? "none" : undefined,
             }}
-            placeholder="Multiplier"
-            leftAlign
-            boldValue
-            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
-          />
+          >
+            <UrsorInputField
+              value={factor === 0 ? "" : factor.toString()}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                if (!event.target.value || event.target.value === "0") {
+                  setFactor(0);
+                } else {
+                  const onlyNumbersString =
+                    event.target.value.match(/\d+/)?.[0];
+                  const leadingZeroRemovedString = onlyNumbersString?.slice(
+                    onlyNumbersString[0] === "0" ? 1 : 0
+                  );
+                  setFactor(parseInt(leadingZeroRemovedString ?? "0"));
+                }
+              }}
+              placeholder="Multiplier"
+              leftAlign
+              boldValue
+              backgroundColor={
+                props.whiteFields ? "rgb(255,255,255)" : undefined
+              }
+              height="44px"
+            />
+          </Stack>
         </Captioned>
         <Captioned text="Number of digits">
           <Stack direction="row" spacing="10px">
@@ -203,6 +216,7 @@ export function WorksheetGeneratorEquationModule(
             }}
             placeholder="Number of digits"
             width="100%"
+            height="44px"
             leftAlign
             boldValue
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
