@@ -1,27 +1,31 @@
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
+import { PALETTE, Typography } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
-import { useReactToPrint } from "react-to-print";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
-import ApiController from "../../api";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
-import MultiplicationTable from "./MultiplicationTable";
 import LandingPageViewport from "./LandingPageViewport";
 import ExplainerCard from "./ExplainerCard";
 import OtherPageCard from "./OtherPageCard";
 import { IntroSteps } from "./IntroSteps";
-import WorksheetGenerator, {
+import {
   WorksheetTopic,
   ISpecificWorksheetGeneratorSettings,
-  IWorksheetParameters,
   WorksheetId,
 } from "./WorksheetGenerator";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
-import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
+//import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
+import dynamic from "next/dynamic";
+
+const PrintableMultiplicationTable = dynamic(
+  () => import("./PrintableMultiplicationTable"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
+const WorksheetGenerator = dynamic(
+  () => import("./WorksheetGenerator"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -375,7 +379,9 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <WorksheetGenerator {...props.worksheetGenerator} />
+      <Stack minHeight="540px">
+        <WorksheetGenerator {...props.worksheetGenerator} fadeIn />
+      </Stack>
     </AstroLandingPage>
   );
 }
