@@ -18,13 +18,14 @@ const WorksheetQuestion = (props: {
     >
       <Stack
         borderRadius="18px"
-        border={`2px solid ${PALETTE.secondary.grey[2]}`}
+        //border={`2px solid ${PALETTE.secondary.grey[2]}`}
         width="22px"
         height="18px"
         justifyContent="center"
         alignItems="center"
         mb="2.6mm"
         direction="row"
+        spacing="1px"
       >
         <Typography
           sx={{ fontSize: "9px", marginBottom: "0.7mm" }}

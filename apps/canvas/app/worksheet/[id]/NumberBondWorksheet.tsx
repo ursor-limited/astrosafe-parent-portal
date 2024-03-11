@@ -100,7 +100,7 @@ const VerticalEquationQuestion = (props: {
   n: number;
   showAnswer: boolean;
 }) => (
-  <WorksheetQuestion n={props.n} top="-53px" left="54px">
+  <WorksheetQuestion n={props.n} top="-60px" left="50px">
     <Stack
       width="260px"
       height="280px"
