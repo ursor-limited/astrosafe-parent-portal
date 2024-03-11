@@ -46,7 +46,7 @@ const HorizontalEquationQuestion = (props: {
   n: number;
   showAnswer: boolean;
 }) => (
-  <WorksheetQuestion n={props.n} endAligned>
+  <WorksheetQuestion n={props.n} top="79px" left="-24px">
     <Stack
       direction="row"
       width={props.both ? "292px" : "260px"}
@@ -100,7 +100,7 @@ const VerticalEquationQuestion = (props: {
   n: number;
   showAnswer: boolean;
 }) => (
-  <WorksheetQuestion n={props.n} top="-60px" left="50px">
+  <WorksheetQuestion n={props.n} top="-60px" left="52px">
     <Stack
       width="260px"
       height="280px"

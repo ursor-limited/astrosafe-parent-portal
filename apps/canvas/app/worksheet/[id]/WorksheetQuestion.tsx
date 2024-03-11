@@ -11,8 +11,7 @@ const WorksheetQuestion = (props: {
   <Stack direction="row" spacing="4mm" position="relative">
     <Stack
       height="100%"
-      justifyContent={props.endAligned ? "flex-end" : "center"}
-      position={props.top || props.left ? "absolute" : "relative"}
+      position="absolute"
       top={props.top ?? 0}
       left={props.left ?? 0}
     >
@@ -28,14 +27,19 @@ const WorksheetQuestion = (props: {
         spacing="1px"
       >
         <Typography
-          sx={{ fontSize: "9px", marginBottom: "0.7mm" }}
-          bold
-          color={PALETTE.secondary.grey[3]}
+          sx={{
+            fontSize: "9px",
+            marginBottom: "0.7mm",
+          }}
+          color={PALETTE.secondary.grey[4]}
         >
           Q
         </Typography>
         <Typography
-          sx={{ fontSize: "9px", marginBottom: "0.7mm" }}
+          sx={{
+            fontSize: "9px",
+            marginBottom: "0.7mm",
+          }}
           bold
           color={PALETTE.secondary.grey[4]}
         >

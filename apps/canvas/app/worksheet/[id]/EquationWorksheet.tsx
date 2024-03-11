@@ -1,11 +1,9 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { Rubik } from "next/font/google";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import PrinterIcon from "@/images/icons/PrinterWhite_NOT_SVG.svg";
 import _ from "lodash";
 import {
   EquationOrientation,
@@ -34,7 +32,7 @@ const HorizontalQuestion = (props: {
   n: number;
   changeCallback?: (newValue: number) => void;
 }) => (
-  <WorksheetQuestion n={props.n} endAligned>
+  <WorksheetQuestion n={props.n} top="79px" left="-18px">
     <Stack
       direction="row"
       width={props.inputValue && props.changeCallback ? "296px" : "270px"}
@@ -108,7 +106,7 @@ const VerticalQuestion = (props: {
   n: number;
   topic?: WorksheetTopic;
 }) => (
-  <WorksheetQuestion n={props.n}>
+  <WorksheetQuestion n={props.n} top="42px" left="9px">
     <Stack
       justifyContent="center"
       spacing="4px"
