@@ -48,7 +48,12 @@ module.exports = withSvgr({
         source: "/kids-safe-search-engine",
         destination: "/tools/kids-safe-search-engine",
         permanent: true,
-      }
+      },
+      {
+        source: "/video/create",
+        destination: "/tools/video/create",
+        permanent: true,
+      },
     ];
   },
 });
