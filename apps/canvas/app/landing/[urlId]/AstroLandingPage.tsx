@@ -4,14 +4,12 @@ import React from "react";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 //import { Header } from "@/app/components/Header";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { Typography } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
-import Head from "next/head";
 import { Header } from "@/app/components/header2";
-import { Auth0Provider } from "@auth0/auth0-react";
-import AuthWrapper from "@/app/components/AuthWrapper";
+//import AuthWrapper from "@/app/components/AuthWrapper";
 
 export default function AstroLandingPage(props: {
   mobile: boolean;
@@ -28,9 +26,9 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack width="100vw" height="100vh" alignItems="center">
-      <AuthWrapper>
-        <Header />
-      </AuthWrapper>
+      {/* <AuthWrapper> */}
+      <Header />
+      {/* </AuthWrapper> */}
       <Stack
         spacing="36px"
         alignItems="center"
@@ -54,19 +52,19 @@ export default function AstroLandingPage(props: {
             alignItems="center"
             width={props.mobile ? "86%" : "700px"}
           >
-            {props.title.map((x) => (
-              <Typography
-                key={x}
-                variant={props.mobile ? "h5" : "h1"}
-                sx={{
-                  textAlign: "center",
-                }}
-                bold
-                htmlTag="h1"
-              >
-                {x}
-              </Typography>
-            ))}
+            {/* {props.title.map((x) => ( */}
+            <Typography
+              //key={x}
+              variant={props.mobile ? "h5" : "h1"}
+              sx={{
+                textAlign: "center",
+              }}
+              bold
+              htmlTag="h1"
+            >
+              {props.title[0]}
+            </Typography>
+            {/* ))} */}
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
