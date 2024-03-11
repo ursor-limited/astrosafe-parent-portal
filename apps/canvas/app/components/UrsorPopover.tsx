@@ -81,7 +81,13 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     setMaxHeight(
       window.innerHeight - (referenceElement?.getBoundingClientRect().top ?? 0)
     );
-  }, [referenceElement, referenceElement?.offsetTop, window.innerHeight]);
+  }, [
+    referenceElement,
+    referenceElement?.offsetHeight,
+    referenceElement?.offsetTop,
+    window.innerHeight,
+    props.yOffset,
+  ]);
 
   return (
     <>
@@ -108,17 +114,17 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
       {props.open
         ? createPortal(
             <>
-              {/* {!props.noBackdrop ? (
+              {!props.noBackdrop ? (
                 <Backdrop
                   sx={{
-                    //background: "rgba(0, 0, 0, 0.2)",
+                    background: "transparent",
                     //backdropFilter: "blur(3px)",
                     zIndex: props.zIndex || 2,
                   }}
                   open={props.open}
                   onClick={props.closeCallback}
                 />
-              ) : null} */}
+              ) : null}
 
               <Box
                 ref={setPopperElement}
@@ -129,12 +135,13 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
               >
                 <Stack
                   spacing={props.margin ?? "10px"}
+                  pt="8px"
                   maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
-                  sx={{
-                    transform: `translateY(${
-                      (isFlipped ? -1 : 1) * (yOffset ?? 0)
-                    }px)`,
-                  }}
+                  // sx={{
+                  //   transform: `translateY(${
+                  //     (isFlipped ? -1 : 1) * (yOffset ?? 0)
+                  //   }px)`,
+                  // }}
                   justifyContent="center"
                   alignItems={
                     props.placement === "right"
@@ -145,7 +152,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   }
                   ref={setButtonRef}
                 >
-                  {!isFlipped ? (
+                  {/* {!isFlipped ? (
                     <Box
                       sx={{
                         opacity: props.noFloatButton ? 0 : 1,
@@ -156,7 +163,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                     >
                       {props.children}
                     </Box>
-                  ) : null}
+                  ) : null} */}
                   {props.externalElement ? (
                     <Box
                       width={width}
@@ -186,6 +193,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                           opacity: props.open && !props.fadedOut ? 1 : 0,
                           transition: "0.3s",
                           animation: props.animation,
+                          boxShadow: "0 0 30px rgba(0,0,0,0.09)",
                         }}
                         height="100%"
                         overflow="scroll"
