@@ -245,7 +245,6 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title?: string;
-      factor: number;
       pairs: [number, number][];
       topic: WorksheetTopic;
       orientation: EquationOrientation;
@@ -339,13 +338,13 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                     {props.topic === "division" ? (
                       props.orientation === "vertical" ? (
                         <DivisionVerticalQuestion
-                          dividend={props.factor}
+                          dividend={4}
                           answer={pair[0]}
                           showAnswer={!!props.showAnswers}
                         />
                       ) : (
                         <DivisionHorizontalQuestion
-                          dividend={props.factor}
+                          dividend={4}
                           answer={pair[0]}
                           showAnswer={!!props.showAnswers}
                         />

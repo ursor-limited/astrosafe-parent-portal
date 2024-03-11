@@ -33,7 +33,7 @@ export function WorksheetGeneratorEquationModule(
 ) {
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
-  const [factor, setFactor] = useState<number>(1);
+  const [factor, setFactor] = useState<number | undefined>(1);
   const [nDigits, setNDigits] = useState<number>(1);
 
   const [randomize, setRandomize] = useState<boolean>(false);
@@ -63,10 +63,10 @@ export function WorksheetGeneratorEquationModule(
     setPairs(
       [...fullSets, ...partialSet].map((x) => [
         x,
-        randomize ? _.random(fullsetSize) : factor,
+        randomize ? _.random(fullsetSize) : factor ?? 0,
       ])
     );
-  }, [nDigits, props.nProblems, props.regenerationCount, randomize]);
+  }, [nDigits, factor, props.nProblems, props.regenerationCount, randomize]);
 
   // const [pairs, setPairs] = useState<[number, number][]>([]);
   // useEffect(() => {
@@ -116,7 +116,6 @@ export function WorksheetGeneratorEquationModule(
         orientation={orientation}
         topic={props.topic}
         nDigits={nDigits}
-        factor={factor}
         pairs={pairs}
         pageIndex={props.pageIndex}
       />
@@ -126,7 +125,6 @@ export function WorksheetGeneratorEquationModule(
         props.title,
         orientation,
         props.topic,
-        factor,
         pairs,
         userDetails?.user?.id
       ).then((ws) => ws.id)
@@ -163,17 +161,24 @@ export function WorksheetGeneratorEquationModule(
             }}
           >
             <UrsorInputField
-              value={factor === 0 ? "" : factor.toString()}
+              value={factor?.toString() ?? ""}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                if (!event.target.value || event.target.value === "0") {
-                  setFactor(0);
+                if (!event.target.value) {
+                  setFactor(undefined);
                 } else {
                   const onlyNumbersString =
                     event.target.value.match(/\d+/)?.[0];
-                  const leadingZeroRemovedString = onlyNumbersString?.slice(
-                    onlyNumbersString[0] === "0" ? 1 : 0
+                  const leadingZeroRemovedString =
+                    onlyNumbersString === "0"
+                      ? "0"
+                      : onlyNumbersString?.slice(
+                          onlyNumbersString[0] === "0" ? 1 : 0
+                        );
+                  setFactor(
+                    !leadingZeroRemovedString
+                      ? undefined
+                      : parseInt(leadingZeroRemovedString)
                   );
-                  setFactor(parseInt(leadingZeroRemovedString ?? "0"));
                 }
               }}
               placeholder="Multiplier"

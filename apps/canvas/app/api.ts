@@ -168,7 +168,7 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    factor: number,
+
     pairs: [number, number][],
     creatorId?: string
   ) {
@@ -178,7 +178,6 @@ class ApiController {
       parameters: {
         orientation,
         topic,
-        factor,
         pairs,
       },
     }).then((response: any) => response.json());
