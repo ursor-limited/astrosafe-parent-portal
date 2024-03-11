@@ -379,9 +379,9 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <Stack minHeight="540px">
-        <WorksheetGenerator {...props.worksheetGenerator} fadeIn />
-      </Stack>
+      {/* <Stack minHeight="540px"> */}
+      <WorksheetGenerator {...props.worksheetGenerator} />
+      {/* </Stack> */}
     </AstroLandingPage>
   );
 }
