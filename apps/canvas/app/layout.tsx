@@ -50,7 +50,6 @@ export default function RootLayout({
               src={Background.src}
               alt="Astro background"
               layout="fill"
-              objectPosition="center"
               style={{
                 zIndex: -1,
               }}

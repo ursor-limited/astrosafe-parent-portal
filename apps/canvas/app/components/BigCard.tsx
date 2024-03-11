@@ -1,8 +1,8 @@
 import { Stack } from "@mui/system";
-import moment from "moment";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 
 const BigCard = (props: {
   rightStuff: React.ReactNode;
@@ -57,7 +57,7 @@ const BigCard = (props: {
             <Stack spacing="4px">
               {props.createdAt ? (
                 <Typography>
-                  {moment(props.createdAt).format("Do MMMM YYYY")}
+                  {dayjs(props.createdAt).format("Do MMMM YYYY")}
                 </Typography>
               ) : null}
               <Typography variant="h2">{props.title}</Typography>
