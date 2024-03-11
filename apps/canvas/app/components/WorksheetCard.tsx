@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import { useEffect, useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const ORANGE_BORDER_DURATION = 8;
 
@@ -17,8 +17,7 @@ const WorksheetCard = (props: IWorksheet) => {
   const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
   useEffect(() => {
     if (
-      -moment(props.createdAt).diff(moment(), "seconds") <
-      ORANGE_BORDER_DURATION
+      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
     ) {
       setOrangeBorderOn(true);
       setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);

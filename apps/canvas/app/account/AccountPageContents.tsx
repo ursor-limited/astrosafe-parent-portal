@@ -14,7 +14,6 @@ import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
-import moment from "moment";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";

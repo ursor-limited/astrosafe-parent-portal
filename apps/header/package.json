@@ -19,6 +19,7 @@
     "@svgr/webpack": "^8.1.0",
     "axios": "^1.6.0",
     "axios-retry": "^3.8.1",
+    "dayjs": "^1.11.10",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",

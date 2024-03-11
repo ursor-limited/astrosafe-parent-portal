@@ -10,14 +10,9 @@ import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
   IWorksheet,
-  IWorksheetParameters,
-  WorksheetTopic,
 } from "@/app/landing/[urlId]/WorksheetGenerator";
-import moment from "moment";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import Slider from "react-slick";
-import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -40,7 +35,6 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
-import { Header } from "@/app/components/header2";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm

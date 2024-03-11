@@ -11,13 +11,13 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import NotificationContext from "@/app/components/NotificationContext";
-import moment from "moment";
 import mixpanel from "mixpanel-browser";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import { Header } from "@/app/components/header2";
+import dayjs from "dayjs";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -126,7 +126,7 @@ function VideoPageContents(props: { details: IVideo }) {
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
   useEffect(() => {
-    moment().diff(props.details.createdAt, "seconds") < 10 &&
+    dayjs().diff(props.details.createdAt, "seconds") < 10 &&
       notificationCtx.success("Video created.");
   }, [props.details.createdAt]);
 
