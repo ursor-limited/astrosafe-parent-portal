@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
@@ -11,10 +13,7 @@ import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationMo
 import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
 import VideoSignupPromptDialog from "@/app/components/VideoSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
-import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useUserContext } from "@/app/components/UserContext";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import { useRouter } from "next/navigation";
 
 export type EquationOrientation = "horizontal" | "vertical";

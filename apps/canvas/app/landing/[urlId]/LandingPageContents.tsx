@@ -1,9 +1,6 @@
-"use client";
-
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
-import { useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
 import ApiController from "../../api";
@@ -24,6 +21,7 @@ import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
 
 export const EmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -164,35 +162,23 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
+  // const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
-  const openPrintCardGridDialog = useReactToPrint({
-    content: () => printableRef,
-    documentTitle: "ASTRO Numbers",
-    onAfterPrint: () => setPrintDialogOpen(false),
-  });
+  // const openPrintCardGridDialog = useReactToPrint({
+  //   content: () => printableRef,
+  //   documentTitle: "ASTRO Numbers",
+  //   onAfterPrint: () => setPrintDialogOpen(false),
+  // });
 
-  const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
-  useEffect(() => {
-    if (printDialogOpen && printableRef) {
-      openPrintCardGridDialog();
-    }
-  }, [printDialogOpen, printableRef]);
+  // const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
+  // useEffect(() => {
+  //   if (printDialogOpen && printableRef) {
+  //     openPrintCardGridDialog();
+  //   }
+  // }, [printDialogOpen, printableRef]);
 
-  const [mobile, setMobile] = useState<boolean>(false);
-
-  const [worksheetPreviewRef, setWorksheetPreviewRef] =
-    useState<HTMLElement | null>(null);
-  const save = () => {
-    const input = document.getElementById("printableMultiplicationTable");
-    input &&
-      html2canvas(input, { scale: 3 }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF(); //@ts-ignore
-        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-        pdf.save("download.pdf");
-      });
-  };
+  //const [mobile, setMobile] = useState<boolean>(false);
+  const mobile = false;
 
   return (
     <AstroLandingPage
@@ -223,45 +209,9 @@ export default function LandingPageContents(props: {
                 <Stack direction="row" spacing="45px">
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
-                    <Stack position="relative" width="300px" height="400px">
-                      <Stack
-                        position="absolute"
-                        sx={{ opacity: 0, pointerEvents: "none" }}
-                      >
-                        <MultiplicationTable
-                          printable
-                          factor={
-                            props.worksheetPreview.worksheetPreviewParameters
-                              .worksheetParameters.factor
-                          }
-                          upTo={
-                            props.worksheetPreview.worksheetPreviewParameters
-                              .worksheetParameters.nProblems
-                          }
-                        />
-                      </Stack>
-                      <Stack
-                        position="absolute"
-                        sx={{
-                          transform: "scale(0.35)",
-                          transformOrigin: "top right",
-                        }}
-                        top={0}
-                        right={0}
-                        boxShadow="0 0 40px rgba(0,0,0,0.06)"
-                      >
-                        <MultiplicationTable
-                          factor={
-                            props.worksheetPreview.worksheetPreviewParameters
-                              .worksheetParameters.factor
-                          }
-                          upTo={
-                            props.worksheetPreview.worksheetPreviewParameters
-                              .worksheetParameters.nProblems
-                          }
-                        />
-                      </Stack>
-                    </Stack>
+                    <PrintableMultiplicationTable
+                      {...props.worksheetPreview.worksheetPreviewParameters}
+                    />
                   ) : null}
                   <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
@@ -274,9 +224,6 @@ export default function LandingPageContents(props: {
                           {paragraph}
                         </Typography>
                       ))}
-                    <UrsorButton size="large" onClick={save}>
-                      Download chart
-                    </UrsorButton>
                   </Stack>
                 </Stack>
               </LandingPageViewport>,

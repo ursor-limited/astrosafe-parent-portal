@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import { IntroBox } from "./IntroBox";
