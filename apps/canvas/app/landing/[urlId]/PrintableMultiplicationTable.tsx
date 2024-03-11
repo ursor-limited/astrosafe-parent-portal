@@ -2,10 +2,8 @@
 import { Stack } from "@mui/system";
 import MultiplicationTable from "./MultiplicationTable";
 import { WorksheetId, WorksheetTopic } from "./WorksheetGenerator";
-import { UrsorButton } from "ui";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import { UrsorButton } from "ui";
 
 export default function PrintableMultiplicationTable(props: {
   questionTopic: WorksheetTopic;
@@ -16,7 +14,9 @@ export default function PrintableMultiplicationTable(props: {
     nProblems: number;
   };
 }) {
-  const save = () => {
+  const save = async () => {
+    const jsPDF = (await import("jspdf")).default;
+    const html2canvas = (await import("html2canvas")).default;
     const input = document.getElementById("printableMultiplicationTable");
     input &&
       html2canvas(input, { scale: 3 }).then((canvas) => {

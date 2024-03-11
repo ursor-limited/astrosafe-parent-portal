@@ -1,7 +1,8 @@
 import RocketIcon from "@/images/icons/RocketIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
 import UrsorDialog from "../components/UrsorDialog";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Stack } from "@mui/system";
 
 const FREE_VIDEO_LIMIT = 3;
 
@@ -25,7 +26,12 @@ const BrowserDialog = (props: { open: boolean; closeCallback: () => void }) => {
       }}
       onCloseCallback={props.closeCallback}
     >
-      <GraphIllustration width={300} height={300} />
+      <Image
+        src="https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png"
+        width={300}
+        height={300}
+        alt="Upgrade dialog illustration"
+      />
     </UrsorDialog>
   );
 };
