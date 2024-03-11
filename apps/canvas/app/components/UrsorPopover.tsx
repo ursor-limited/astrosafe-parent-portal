@@ -170,7 +170,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       {props.externalElement}
                     </Box>
                   ) : null}
-                  <UrsorFadeIn duration={700}>
+                  <UrsorFadeIn duration={300}>
                     {props.content ? (
                       <Box
                         width={props.buttonWidth ? width : props.width}

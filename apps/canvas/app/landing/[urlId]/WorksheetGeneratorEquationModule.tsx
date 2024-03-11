@@ -129,23 +129,14 @@ export function WorksheetGeneratorEquationModule(
   return (
     <Stack flex={1} spacing="16px">
       <Stack direction="row" spacing="20px">
-        <Captioned text="Orientation">
-          <Stack direction="row" spacing="10px">
-            <CategorySelectionButton
-              selected={orientation === "horizontal"}
-              onClick={() => setOrientation("horizontal")}
-            >
-              Horizontal
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={orientation === "vertical"}
-              onClick={() => setOrientation("vertical")}
-            >
-              Vertical
-            </CategorySelectionButton>
-          </Stack>
-        </Captioned>
-        <Captioned text={props.topic === "division" ? "Divisor" : "Multiplier"}>
+        <Captioned
+          text={props.topic === "division" ? "Divisor" : "Multiplier"}
+          checkbox={{
+            text: "Randomize",
+            on: true,
+            callback: () => null,
+          }}
+        >
           <UrsorInputField
             value={factor === 0 ? "" : factor.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -165,8 +156,6 @@ export function WorksheetGeneratorEquationModule(
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
-      </Stack>
-      <Stack direction="row" spacing="20px">
         <Captioned text="Number of digits">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
@@ -189,7 +178,9 @@ export function WorksheetGeneratorEquationModule(
             </CategorySelectionButton>
           </Stack>
         </Captioned>
-        <Captioned text="Amount of problems">
+      </Stack>
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Number of questions">
           <UrsorInputField
             value={props.nProblems === 0 ? "" : props.nProblems.toString()}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,6 +207,22 @@ export function WorksheetGeneratorEquationModule(
             boldValue
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
+        </Captioned>
+        <Captioned text="Question format">
+          <Stack direction="row" spacing="10px">
+            <CategorySelectionButton
+              selected={orientation === "horizontal"}
+              onClick={() => setOrientation("horizontal")}
+            >
+              Short
+            </CategorySelectionButton>
+            <CategorySelectionButton
+              selected={orientation === "vertical"}
+              onClick={() => setOrientation("vertical")}
+            >
+              Long
+            </CategorySelectionButton>
+          </Stack>
         </Captioned>
       </Stack>
     </Stack>

@@ -190,6 +190,7 @@ export default function WorksheetGenerator(props: {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [nProblems, setNProblems] = useState<number>(10);
 
   useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
@@ -271,25 +272,37 @@ export default function WorksheetGenerator(props: {
               boldValue
             />
           </Captioned>
+          <Captioned text="Description">
+            <UrsorInputField
+              value={description}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDescription(event.target.value)
+              }
+              placeholder="Description"
+              width="100%"
+              leftAlign
+              boldValue
+            />
+          </Captioned>
           <Stack direction="row" spacing="20px">
-            <Captioned text="Question topic">
+            <Captioned text="Worksheet topic">
               <UrsorSelect
                 items={[
                   {
                     id: "multiplication",
-                    value: "x Multiplication",
+                    value: "Multiplication (x)",
                   },
                   {
                     id: "division",
-                    value: "÷ Division",
+                    value: "Division (÷)",
                   },
                   {
                     id: "addition",
-                    value: "+ Addition",
+                    value: "Addition (+)",
                   },
                   {
                     id: "subtraction",
-                    value: "- Subtraction",
+                    value: "Subtraction (-)",
                   },
                 ]}
                 selected={[topic]}
@@ -298,27 +311,20 @@ export default function WorksheetGenerator(props: {
                 zIndex={999999999}
               />
             </Captioned>
-          </Stack>
-          <Captioned text="Question type">
-            <UrsorSelect
-              items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
-                id: t,
-                value: WORKSHEET_ID_DISPLAY_NAMES[t],
-              }))}
-              selected={[worksheetId]}
-              callback={(wid: string) => {
-                setWorksheetId(wid as WorksheetId);
-              }}
-              width="100%"
-              zIndex={999999999}
-            />
-          </Captioned>
-          <Stack height="40px" justifyContent="center">
-            <Stack
-              height="2px"
-              width="100%"
-              bgcolor={PALETTE.secondary.grey[2]}
-            />
+            <Captioned text="Question type">
+              <UrsorSelect
+                items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
+                  id: t,
+                  value: WORKSHEET_ID_DISPLAY_NAMES[t],
+                }))}
+                selected={[worksheetId]}
+                callback={(wid: string) => {
+                  setWorksheetId(wid as WorksheetId);
+                }}
+                width="100%"
+                zIndex={999999999}
+              />
+            </Captioned>
           </Stack>
           {worksheetId === "equation" ? (
             <WorksheetGeneratorEquationModule

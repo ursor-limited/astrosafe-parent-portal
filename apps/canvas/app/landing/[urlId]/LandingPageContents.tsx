@@ -16,6 +16,7 @@ import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 //import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
 import dynamic from "next/dynamic";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 
 const PrintableMultiplicationTable = dynamic(
   () => import("./PrintableMultiplicationTable"),
@@ -68,8 +69,13 @@ export const EmptyStateIllustration = (props: {
 );
 
 export const Captioned = (props: {
-  text: string;
+  text?: string;
   disabled?: boolean;
+  checkbox?: {
+    text: string;
+    on: boolean;
+    callback: () => void;
+  };
   children: React.ReactNode;
 }) => (
   <Stack
@@ -80,9 +86,37 @@ export const Captioned = (props: {
       pointerEvents: props.disabled ? "none" : undefined,
     }}
   >
-    <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-      {props.text}
-    </Typography>
+    <Stack direction="row" justifyContent="space-between">
+      {props.text ? (
+        <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+          {props.text}
+        </Typography>
+      ) : null}
+      {props.checkbox ? (
+        <Stack direction="row" spacing="6px" alignItems="center">
+          <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+            {props.checkbox.text}
+          </Typography>
+          <Stack
+            width="14px"
+            height="14px"
+            border={`2px solid ${PALETTE.secondary.grey[5]}`}
+            borderRadius="6px"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.grey[5],
+                },
+              },
+            }}
+          >
+            <CheckIcon height="11px" width="11px" />
+          </Stack>
+        </Stack>
+      ) : null}
+    </Stack>
     {props.children}
   </Stack>
 );
