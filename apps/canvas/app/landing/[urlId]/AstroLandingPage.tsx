@@ -55,7 +55,7 @@ export default function AstroLandingPage(props: {
             {/* {props.title.map((x) => ( */}
             <Typography
               //key={x}
-              variant={props.mobile ? "h5" : "h1"}
+              variant={props.mobile ? "h4" : "h1"}
               sx={{
                 textAlign: "center",
               }}

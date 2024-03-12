@@ -206,35 +206,19 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  // const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
-
-  // const openPrintCardGridDialog = useReactToPrint({
-  //   content: () => printableRef,
-  //   documentTitle: "ASTRO Numbers",
-  //   onAfterPrint: () => setPrintDialogOpen(false),
-  // });
-
-  // const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
-  // useEffect(() => {
-  //   if (printDialogOpen && printableRef) {
-  //     openPrintCardGridDialog();
-  //   }
-  // }, [printDialogOpen, printableRef]);
-
-  //const [mobile, setMobile] = useState<boolean>(false);
-  const mobile = false;
-
+  const mobile = true;
   return (
     <AstroLandingPage
       title={[props.heading]}
       subtitle={props.subHeading}
-      mobile={false}
+      mobile={mobile}
       faqs={props.faqs}
       viewports={[
         <LandingPageViewport
           key="howItWorks"
           supertitle={props.howItWorks.supertitle}
           title={props.howItWorks.title}
+          mobile={mobile}
         >
           <IntroSteps
             step1={props.howItWorks.step1}
@@ -249,6 +233,7 @@ export default function LandingPageContents(props: {
                 key="worksheetPreview"
                 supertitle={props.worksheetPreview.supertitle}
                 title={props.worksheetPreview.title}
+                mobile={mobile}
               >
                 <Stack direction="row" spacing="45px">
                   {props.worksheetPreview.worksheetPreviewParameters
@@ -419,8 +404,12 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <Stack minHeight="540px">
-        <WorksheetGenerator {...props.worksheetGenerator} fadeIn />
+      <Stack minHeight="540px" px="20px">
+        <WorksheetGenerator
+          {...props.worksheetGenerator}
+          fadeIn
+          mobile={mobile}
+        />
       </Stack>
     </AstroLandingPage>
   );

@@ -186,6 +186,7 @@ export default function WorksheetGenerator(props: {
   specificSettings?: ISpecificWorksheetGeneratorSettings;
   noPadding?: boolean;
   landOnWorksheetPage?: boolean;
+  mobile?: boolean;
   fadeIn?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
@@ -250,16 +251,30 @@ export default function WorksheetGenerator(props: {
 
   const router = useRouter();
 
+  const submitCreation = () => {
+    creationCallback?.().then((id) => {
+      if (!userDetails.user) {
+        setFreeWorksheetCreationCount(freeWorksheetCreationCount + 1);
+        setFreeWorksheetIds([...freeWorksheetIds, id]);
+      }
+      router.push(
+        !props.landOnWorksheetPage && userDetails.user
+          ? "/dashboard"
+          : `/worksheet/${id}`
+      );
+    });
+  };
+
   return (
     <UrsorFadeIn duration={props.fadeIn ? 1000 : 0}>
       <Stack
         borderRadius="20px"
         bgcolor="rgb(255,255,255)"
-        p={props.noPadding ? undefined : "42px"}
+        p={props.noPadding ? undefined : props.mobile ? "26px" : "42px"}
         direction="row"
         spacing="40px"
       >
-        <Stack width="480px" spacing="18px">
+        <Stack width={props.mobile ? undefined : "480px"} spacing="18px">
           <Captioned text="Worksheet title">
             <UrsorInputField
               value={title}
@@ -371,62 +386,61 @@ export default function WorksheetGenerator(props: {
               regenerationCount={regenerationCount}
             />
           ) : null}
+          {props.mobile ? (
+            <UrsorButton
+              onClick={submitCreation}
+              dark
+              variant="tertiary"
+              endIcon={PencilIcon}
+              width="100%"
+            >
+              Create
+            </UrsorButton>
+          ) : null}
         </Stack>
-        <Stack
-          minWidth="268px"
-          position="relative"
-          flex={1}
-          justifyContent="space-between"
-        >
+        {!props.mobile ? (
           <Stack
-            sx={{ transform: "scale(0.333)", transformOrigin: "top left" }}
-            position="absolute"
-            top={0}
-            left={0}
-            boxShadow="0 0 60px rgba(0,0,0,0.07)"
+            minWidth="268px"
+            position="relative"
+            flex={1}
+            justifyContent="space-between"
           >
-            {previewWorksheet}
-          </Stack>
-          <Stack />
-          <Stack spacing="19px">
-            {nPages > 1 ? (
-              <PageSelector
-                pageIndex={selectedPageIndex}
-                back={() => setSelectedPageIndex(selectedPageIndex - 1)}
-                forward={() => setSelectedPageIndex(selectedPageIndex + 1)}
-                nPages={nPages}
-              />
-            ) : null}
-            <Stack direction="row" spacing="12px">
-              <RefreshButton
-                onClick={() => setRegenerationCount(regenerationCount + 1)}
-              />
-              <UrsorButton
-                onClick={() => {
-                  creationCallback?.().then((id) => {
-                    if (!userDetails.user) {
-                      setFreeWorksheetCreationCount(
-                        freeWorksheetCreationCount + 1
-                      );
-                      setFreeWorksheetIds([...freeWorksheetIds, id]);
-                    }
-                    router.push(
-                      !props.landOnWorksheetPage && userDetails.user
-                        ? "/dashboard"
-                        : `/worksheet/${id}`
-                    );
-                  });
-                }}
-                dark
-                variant="tertiary"
-                endIcon={PencilIcon}
-                width="100%"
-              >
-                Create
-              </UrsorButton>
+            <Stack
+              sx={{ transform: "scale(0.333)", transformOrigin: "top left" }}
+              position="absolute"
+              top={0}
+              left={0}
+              boxShadow="0 0 60px rgba(0,0,0,0.07)"
+            >
+              {previewWorksheet}
+            </Stack>
+            <Stack />
+            <Stack spacing="19px">
+              {nPages > 1 ? (
+                <PageSelector
+                  pageIndex={selectedPageIndex}
+                  back={() => setSelectedPageIndex(selectedPageIndex - 1)}
+                  forward={() => setSelectedPageIndex(selectedPageIndex + 1)}
+                  nPages={nPages}
+                />
+              ) : null}
+              <Stack direction="row" spacing="12px">
+                <RefreshButton
+                  onClick={() => setRegenerationCount(regenerationCount + 1)}
+                />
+                <UrsorButton
+                  onClick={submitCreation}
+                  dark
+                  variant="tertiary"
+                  endIcon={PencilIcon}
+                  width="100%"
+                >
+                  Create
+                </UrsorButton>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        ) : null}
       </Stack>
     </UrsorFadeIn>
   );
