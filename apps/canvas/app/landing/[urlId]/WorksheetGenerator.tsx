@@ -266,7 +266,7 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder="Worksheet title"
+              placeholder="Type in your worksheet title"
               width="100%"
               leftAlign
               boldValue
@@ -279,7 +279,7 @@ export default function WorksheetGenerator(props: {
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setDescription(event.target.value)
               }
-              placeholder="Description"
+              placeholder="Type in your worksheet description"
               width="100%"
               leftAlign
               boldValue

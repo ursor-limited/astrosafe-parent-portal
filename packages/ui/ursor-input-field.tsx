@@ -1,7 +1,10 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
 import { Input, InputAdornment } from "@mui/material";
 import { PALETTE } from "./palette";
 import { FONT_SIZES } from "./typography";
+import { useState } from "react";
 
 export const DEFAULT_WIDTH = "536px";
 export const HEIGHT = "40px";
@@ -32,13 +35,28 @@ export interface UrsorInputFieldProps {
 }
 
 export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [active, setActive] = useState(false);
+
   const customSx = {
     width: props.width ?? "100%",
     height: props.height ?? HEIGHT,
     minHeight: props.height ?? HEIGHT,
     borderRadius: props.borderRadius ?? BORDER_RADIUS,
     background: props.backgroundColor ?? PALETTE.secondary.grey[1],
-    border: props.border ? `1.4px solid ${PALETTE.secondary.grey[2]}` : null,
+    border: `2px solid ${
+      // eslint-disable-next-line no-nested-ternary -- idiotic rule
+      active
+        ? PALETTE.secondary.purple[2]
+        : hovering
+        ? PALETTE.secondary.purple[1]
+        : "transparent"
+    }`,
+    transition: "0.2s",
+    // : props.border
+    // ? `1.4px solid ${PALETTE.secondary.grey[2]}`
+    // : null,
+    boxSizing: "border-box",
     outline: props.outline,
     backdropFilter: props.backgroundBlur,
     fontFamily: "inherit",
@@ -47,8 +65,8 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
   const inputProps = {
     type: props.password ? "password" : undefined,
     style: {
-      paddingLeft: props.paddingLeft ?? "12px",
-      paddingRight: props.leftAlign ? "34px" : 0,
+      paddingLeft: props.paddingLeft ?? "10px",
+      paddingRight: props.leftAlign ? "32px" : 0,
       textAlign: props.leftAlign ? "left" : "center",
       textOverflow: "ellipsis",
       fontSize: props.fontSize ?? FONT_SIZES.normal,
@@ -76,12 +94,24 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
         ) : null
       } //@ts-expect-error -- idiotic issue, fix later
       inputProps={inputProps}
-      onBlur={props.onBlur}
       onChange={props.onChange}
       onKeyPress={(event) => {
         if (event.key === "Enter") {
           props.onEnterKey?.();
         }
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      onBlur={() => {
+        setActive(false);
+        props.onBlur?.();
+      }}
+      onFocus={() => {
+        setActive(true);
       }}
       placeholder={props.placeholder}
       sx={customSx}
