@@ -5,7 +5,7 @@ export const IntroBox = (props: {
   title: string;
   content: string;
   mobile?: boolean;
-  backgroundOpacity?: number;
+  backgroundOpacity: number;
 }) => {
   return (
     <Stack
@@ -18,7 +18,7 @@ export const IntroBox = (props: {
       alignItems="center"
       justifyContent={props.mobile ? "center" : "space-between"}
       sx={{
-        backdropFilter: "blur(1.8px)",
+        backdropFilter: "blur(2.5px)",
       }}
       spacing={props.mobile ? "5px" : undefined}
     >

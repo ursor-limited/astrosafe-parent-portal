@@ -53,17 +53,16 @@ export default function PrintableMultiplicationTable(props: {
           />
         </Stack>
       </Stack>
-      <Stack pl={props.mobile ? undefined : "20px"}>
-        <UrsorButton
-          dark
-          variant="tertiary"
-          onClick={save}
-          endIcon={DownloadIcon}
-          width="280px"
-        >
-          Download
-        </UrsorButton>
-      </Stack>
+
+      <UrsorButton
+        dark
+        variant="tertiary"
+        onClick={save}
+        endIcon={DownloadIcon}
+        width="280px"
+      >
+        Download
+      </UrsorButton>
     </Stack>
   );
 }

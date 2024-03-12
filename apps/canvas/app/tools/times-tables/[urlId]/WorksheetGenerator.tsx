@@ -188,6 +188,7 @@ export default function WorksheetGenerator(props: {
   landOnWorksheetPage?: boolean;
   mobile?: boolean;
   fadeIn?: boolean;
+  glow?: boolean;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -273,7 +274,11 @@ export default function WorksheetGenerator(props: {
         p={props.noPadding ? undefined : props.mobile ? "26px" : "42px"}
         direction="row"
         spacing="40px"
-        boxShadow={`0 35px 60px ${alpha(PALETTE.secondary.purple[1], 0.3)}`}
+        boxShadow={
+          props.glow
+            ? `0 70px 86px ${alpha("rgb(186, 91, 222)", 0.3)}`
+            : undefined
+        }
       >
         <Stack width={props.mobile ? undefined : "480px"} spacing="18px">
           <Captioned text="Worksheet title">

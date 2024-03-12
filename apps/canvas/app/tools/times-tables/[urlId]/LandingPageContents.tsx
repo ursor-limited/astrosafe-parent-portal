@@ -206,7 +206,7 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  const mobile = true;
+  const mobile = false;
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -225,6 +225,7 @@ export default function LandingPageContents(props: {
             step2={props.howItWorks.step2}
             step3={props.howItWorks.step3}
             mobile={mobile}
+            backgroundOpacity={0.13}
           />
         </LandingPageViewport>,
         ...(props.worksheetPreview
@@ -420,6 +421,7 @@ export default function LandingPageContents(props: {
           {...props.worksheetGenerator}
           fadeIn
           mobile={mobile}
+          glow
         />
       </Stack>
     </AstroLandingPage>

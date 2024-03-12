@@ -24,7 +24,7 @@ export const IntroSteps = (props: {
   step2: { body: string; title: string };
   step3: { body: string; title: string };
   mobile: boolean;
-  backgroundOpacity?: number;
+  backgroundOpacity: number;
 }) => {
   return (
     <Stack width="100%" position="relative" alignItems="center">
