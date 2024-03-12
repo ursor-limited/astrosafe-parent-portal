@@ -98,11 +98,10 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         //     : "inherit"
         // }
         sx={{
-          pointerEvents:
-            props.disabled || (props.open && !props.noFloatButton)
-              ? "none"
-              : "auto",
-          opacity: props.open && !props.noFloatButton ? 0 : 1,
+          pointerEvents: props.disabled //|| (props.open && !props.noFloatButton)
+            ? "none"
+            : "auto",
+          //opacity: props.open && !props.noFloatButton ? 0 : 1,
           zIndex: 2,
         }}
         width={props.width || "fit-content"}
@@ -133,13 +132,14 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 //height={0}
               >
                 <Stack
-                  spacing={props.margin ?? "10px"}
-                  pt="8px"
+                  //spacing={props.margin ?? "10px"}
+                  pt={props.margin ?? "8px"}
                   maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
                   // sx={{
-                  //   transform: `translateY(${
-                  //     (isFlipped ? -1 : 1) * (yOffset ?? 0)
-                  //   }px)`,
+                  //   // transform: `translateY(${
+                  //   //   (isFlipped ? -1 : 1) * (props.margin ?? 0)
+                  //   // }px)`,
+                  //   transform: `translateY(${props.margin}px)`,
                   // }}
                   justifyContent="center"
                   alignItems={
@@ -163,7 +163,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       {props.children}
                     </Box>
                   ) : null} */}
-                  {props.externalElement ? (
+                  {/* {props.externalElement ? (
                     <Box
                       width={width}
                       sx={{
@@ -175,7 +175,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                     >
                       {props.externalElement}
                     </Box>
-                  ) : null}
+                  ) : null} */}
                   <UrsorFadeIn duration={300}>
                     {props.content ? (
                       <Box
