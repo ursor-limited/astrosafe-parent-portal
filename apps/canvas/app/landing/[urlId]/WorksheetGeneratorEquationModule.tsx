@@ -66,6 +66,8 @@ export function WorksheetGeneratorEquationModule(
   const [factor, setFactor] = useState<number | undefined>(1);
   const [nDigits, setNDigits] = useState<number>(1);
 
+  const [max, setMax] = useState<number | undefined>(1);
+
   const [randomize, setRandomize] = useState<boolean>(false);
 
   useEffect(
@@ -81,22 +83,64 @@ export function WorksheetGeneratorEquationModule(
 
   const [pairs, setPairs] = useState<[number, number][]>([]);
   useEffect(() => {
-    const fullsetSize = Math.pow(10, nDigits) + 1;
-    const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
-      .range()
-      .flatMap(() => _.shuffle(_.range(fullsetSize)))
-      .value();
-    const partialSet = _.sampleSize(
-      _.range(fullsetSize),
-      (props.nProblems ?? 0) % fullsetSize
-    );
-    setPairs(
-      [...fullSets, ...partialSet].map((x) => [
-        x,
-        (randomize ? _.random(fullsetSize) : factor) || 1,
-      ])
-    );
-  }, [nDigits, factor, props.nProblems, props.regenerationCount, randomize]);
+    if (props.topic === "addition") {
+      const maxx = max || 1;
+      const fullAnswerSets = _(Math.floor((props.nProblems ?? 0) / maxx))
+        .range()
+        .flatMap(() => _.shuffle(_.range(maxx)))
+        .value();
+      const partialAnswerSet = _.sampleSize(
+        _.range(maxx),
+        (props.nProblems ?? 0) % maxx
+      );
+      setPairs(
+        [...fullAnswerSets, ...partialAnswerSet].map((x) => [
+          x - (factor ?? 0),
+          (randomize ? _.random(maxx) : factor) ?? 0,
+        ])
+      );
+    } else if (props.topic === "subtraction") {
+      const maxx = (max ?? 0) + 1;
+      const fullSets = _(Math.floor((props.nProblems ?? 0) / maxx))
+        .range()
+        .flatMap(() => _.shuffle(_.range(maxx)))
+        .value();
+      const partialSet = _.sampleSize(
+        _.range(maxx),
+        (props.nProblems ?? 0) % maxx
+      );
+      setPairs(
+        [...fullSets, ...partialSet].map((x) => [
+          x,
+          (randomize ? _.random(maxx) : factor) ?? 0,
+        ])
+      );
+    } else {
+      const fullsetSize = Math.pow(10, nDigits) + 1;
+      const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
+        .range()
+        .flatMap(() => _.shuffle(_.range(fullsetSize)))
+        .value();
+      const partialSet = _.sampleSize(
+        _.range(fullsetSize),
+        (props.nProblems ?? 0) % fullsetSize
+      );
+      setPairs(
+        [...fullSets, ...partialSet].map((x) => [
+          x,
+          (randomize ? _.random(fullsetSize) : factor) || 1,
+        ])
+      );
+    }
+  }, [
+    nDigits,
+    factor,
+    props.nProblems,
+    props.regenerationCount,
+    props.topic,
+    randomize,
+    max,
+  ]);
 
   // const [pairs, setPairs] = useState<[number, number][]>([]);
   // useEffect(() => {
@@ -179,9 +223,14 @@ export function WorksheetGeneratorEquationModule(
         <Captioned
           //text={props.topic === "division" ? "Divisor" : "Multiplier"}
           checkbox={{
-            text: `Set first ${
-              props.topic === "division" ? "divisor" : "multiplier"
-            }?`,
+            text:
+              props.topic === "addition"
+                ? "Add a specific number?"
+                : props.topic === "subtraction"
+                ? "Subtract a specific number?"
+                : `Set first ${
+                    props.topic === "division" ? "divisor" : "multiplier"
+                  }?`,
             on: !randomize,
             callback: () => setRandomize(!randomize),
           }}
@@ -207,28 +256,52 @@ export function WorksheetGeneratorEquationModule(
             />
           </Stack>
         </Captioned>
-        <Captioned text="Number of digits">
-          <Stack direction="row" spacing="10px">
-            <CategorySelectionButton
-              selected={nDigits === 1}
-              onClick={() => setNDigits(1)}
-            >
-              1
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={nDigits === 2}
-              onClick={() => setNDigits(2)}
-            >
-              2
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={nDigits === 3}
-              onClick={() => setNDigits(3)}
-            >
-              3
-            </CategorySelectionButton>
-          </Stack>
-        </Captioned>
+        {props.topic === "addition" || props.topic === "subtraction" ? (
+          <Captioned
+            text={
+              props.topic === "addition"
+                ? "Add up to a maximum of..."
+                : "Subtract from a maximum of"
+            }
+          >
+            <UrsorInputField
+              value={max?.toString() ?? ""}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setMax(getZeroHandledNumber(event.target.value))
+              }
+              placeholder="Max"
+              leftAlign
+              boldValue
+              backgroundColor={
+                props.whiteFields ? "rgb(255,255,255)" : undefined
+              }
+              height="44px"
+            />
+          </Captioned>
+        ) : (
+          <Captioned text="Number of digits">
+            <Stack direction="row" spacing="10px">
+              <CategorySelectionButton
+                selected={nDigits === 1}
+                onClick={() => setNDigits(1)}
+              >
+                1
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 2}
+                onClick={() => setNDigits(2)}
+              >
+                2
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 3}
+                onClick={() => setNDigits(3)}
+              >
+                3
+              </CategorySelectionButton>
+            </Stack>
+          </Captioned>
+        )}
       </Stack>
       <Stack direction="row" spacing="20px">
         <Captioned text="Number of questions">

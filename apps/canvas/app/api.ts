@@ -169,7 +169,7 @@ class ApiController {
     orientation: EquationOrientation,
     topic: WorksheetTopic,
     pairs: [number, number][],
-    creatorId?: string
+    creatorId?: string,
   ) {
     console.log(pairs, topic)
     return post("canvas/worksheet/equation", {
