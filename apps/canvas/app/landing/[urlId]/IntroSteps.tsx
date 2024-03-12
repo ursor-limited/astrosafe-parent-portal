@@ -116,7 +116,7 @@ export const IntroSteps = (props: {
           </Stack>
         </>
       ) : (
-        <Stack width="92%" position="relative">
+        <Stack position="relative">
           <Stack
             width="fit-content"
             position="absolute"

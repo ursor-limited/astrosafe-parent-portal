@@ -15,6 +15,7 @@ export default function LandingPageViewport(props: {
       zIndex={1} // covers the SpaceGlow's bottom border
       spacing={props.mobile ? "10px" : "32px"}
       position="relative"
+      px="20px"
     >
       <Stack spacing="8px" maxWidth="616px" alignItems="center">
         <Stack spacing="6px" alignItems="center">

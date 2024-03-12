@@ -235,11 +235,16 @@ export default function LandingPageContents(props: {
                 title={props.worksheetPreview.title}
                 mobile={mobile}
               >
-                <Stack direction="row" spacing="45px">
+                <Stack
+                  direction={mobile ? "column" : "row"}
+                  spacing={mobile ? "30px" : "45px"}
+                  alignItems={mobile ? "center" : undefined}
+                >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
                     <PrintableMultiplicationTable
                       {...props.worksheetPreview.worksheetPreviewParameters}
+                      mobile={mobile}
                     />
                   ) : null}
                   <Stack spacing="10px" maxWidth="503px">
@@ -381,14 +386,19 @@ export default function LandingPageContents(props: {
           title={props.otherPages.title}
           mobile={mobile}
         >
-          <Stack spacing={mobile ? "16px" : "22px"}>
+          <Stack spacing={mobile ? "14px" : "22px"}>
             {_.chunk(props.otherPages.links, 2).map((pair, i) => (
-              <Stack key={i} direction="row" spacing={mobile ? "16px" : "22px"}>
+              <Stack
+                key={i}
+                direction={mobile ? "column" : "row"}
+                spacing={mobile ? "14px" : "22px"}
+              >
                 <OtherPageCard
                   title={pair[0].title}
                   text={pair[0].text}
                   imageString={pair[0].imageString}
                   urlId={pair[0].urlId}
+                  mobile={mobile}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
@@ -396,6 +406,7 @@ export default function LandingPageContents(props: {
                     text={pair[1].text}
                     imageString={pair[1].imageString}
                     urlId={pair[1].urlId}
+                    mobile={mobile}
                   />
                 ) : null}
               </Stack>
