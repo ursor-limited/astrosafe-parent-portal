@@ -152,98 +152,104 @@ const DivisionVerticalQuestion = (props: {
   answer: number;
   showAnswer: boolean;
   dividend: number;
+  n: number;
 }) => (
-  <Stack
-    height="280px"
-    pt="20px"
-    alignItems="center"
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack spacing="5px">
-      <Stack
-        borderLeft={`2px solid transparent`}
-        borderTop={`2px solid transparent`}
-        pt="3px"
-        px="12px"
-        height="40px"
-        alignItems="flex-end"
-        sx={{
-          opacity: props.showAnswer ? 1 : 0,
-        }}
-      >
-        <Typography color={PALETTE.secondary.purple[2]} variant="h3">
-          {props.answer}
-        </Typography>
-      </Stack>
-
-      <Stack direction="row" spacing="12px">
+  <WorksheetQuestion n={props.n} top="63px" left="14px">
+    <Stack
+      height="280px"
+      pt="20px"
+      alignItems="center"
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack spacing="5px">
         <Stack
           borderLeft={`2px solid transparent`}
           borderTop={`2px solid transparent`}
           pt="3px"
+          px="12px"
+          height="40px"
+          alignItems="flex-end"
+          sx={{
+            opacity: props.showAnswer ? 1 : 0,
+          }}
         >
-          <Typography variant="h3" sx={{ fontWeight: 250 }}>
-            {props.dividend}
+          <Typography color={PALETTE.secondary.purple[2]} variant="h3">
+            {props.answer}
           </Typography>
         </Stack>
-        <Stack
-          borderLeft={`2px solid ${PALETTE.primary.navy}`}
-          borderTop={`2px solid ${PALETTE.primary.navy}`}
-          px="12px"
-          pt="3px"
-        >
-          <Typography variant="h3" sx={{ fontWeight: 250 }}>
-            {props.dividend * props.answer}
-          </Typography>
+
+        <Stack direction="row" spacing="12px">
+          <Stack
+            borderLeft={`2px solid transparent`}
+            borderTop={`2px solid transparent`}
+            pt="3px"
+          >
+            <Typography variant="h3" sx={{ fontWeight: 250 }}>
+              {props.dividend}
+            </Typography>
+          </Stack>
+          <Stack
+            borderLeft={`2px solid ${PALETTE.primary.navy}`}
+            borderTop={`2px solid ${PALETTE.primary.navy}`}
+            px="12px"
+            pt="3px"
+          >
+            <Typography variant="h3" sx={{ fontWeight: 250 }}>
+              {props.dividend * props.answer}
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const DivisionHorizontalQuestion = (props: {
   answer: number;
   showAnswer: boolean;
   dividend: number;
+  n: number;
 }) => (
-  <Stack
-    direction="row"
-    width="270px"
-    height="110px"
-    justifyContent="space-between"
-    alignItems={"flex-end"}
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack direction="row" spacing="14px">
-      <Typography variant="h3">{props.answer * props.dividend}</Typography>
-      <Stack pb="0px">
-        <Typography variant="h3" sx={{ fontWeight: 390 }}>
-          ÷
+  <WorksheetQuestion n={props.n} top="79px" left="-18px">
+    <Stack
+      direction="row"
+      width="270px"
+      height="110px"
+      justifyContent="space-between"
+      alignItems={"flex-end"}
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack direction="row" spacing="14px">
+        <Typography variant="h3">{props.answer * props.dividend}</Typography>
+        <Stack pb="0px">
+          <Typography variant="h3" sx={{ fontWeight: 390 }}>
+            ÷
+          </Typography>
+        </Stack>
+        <Typography variant="h3" sx={{ fontWeight: 250 }}>
+          {props.dividend}
         </Typography>
       </Stack>
-      <Typography variant="h3" sx={{ fontWeight: 250 }}>
-        {props.dividend}
+      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+        =
       </Typography>
+      {props.showAnswer ? (
+        <Typography
+          variant="h3"
+          color={PALETTE.secondary.purple[2]}
+          sx={{ fontWeight: 350 }}
+        >
+          {props.answer}
+        </Typography>
+      ) : (
+        <Stack
+          borderBottom="1.5px solid rgba(0,0,0,0.3)"
+          width="70px"
+          height="102%"
+        />
+      )}
     </Stack>
-    <Typography variant="h3" sx={{ fontWeight: 100 }}>
-      =
-    </Typography>
-    {props.showAnswer ? (
-      <Typography
-        variant="h3"
-        color={PALETTE.secondary.purple[2]}
-        sx={{ fontWeight: 350 }}
-      >
-        {props.answer}
-      </Typography>
-    ) : (
-      <Stack
-        borderBottom="1.5px solid rgba(0,0,0,0.3)"
-        width="70px"
-        height="102%"
-      />
-    )}
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const EquationWorksheet = forwardRef<HTMLDivElement, any>(
@@ -336,15 +342,17 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                     {props.topic === "division" ? (
                       props.orientation === "vertical" ? (
                         <DivisionVerticalQuestion
-                          dividend={4}
+                          dividend={pair[1]}
                           answer={pair[0]}
                           showAnswer={!!props.showAnswers}
+                          n={props.pageIndex * 12 + i * 4 + k + 1}
                         />
                       ) : (
                         <DivisionHorizontalQuestion
-                          dividend={4}
+                          dividend={pair[1]}
                           answer={pair[0]}
                           showAnswer={!!props.showAnswers}
+                          n={props.pageIndex * 16 + i * 2 + k + 1}
                         />
                       )
                     ) : props.orientation === "horizontal" ? (

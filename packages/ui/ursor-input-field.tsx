@@ -94,7 +94,14 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
         ) : null
       } //@ts-expect-error -- idiotic issue, fix later
       inputProps={inputProps}
+      onBlur={() => {
+        setActive(false);
+        props.onBlur?.();
+      }}
       onChange={props.onChange}
+      onFocus={() => {
+        setActive(true);
+      }}
       onKeyPress={(event) => {
         if (event.key === "Enter") {
           props.onEnterKey?.();
@@ -106,14 +113,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       onMouseLeave={() => {
         setHovering(false);
       }}
-      onBlur={() => {
-        setActive(false);
-        props.onBlur?.();
-      }}
-      onFocus={() => {
-        setActive(true);
-      }}
-      placeholder={props.placeholder}
+      placeholder={props.placeholder} //@ts-expect-error -- boo
       sx={customSx}
       value={props.value}
     />

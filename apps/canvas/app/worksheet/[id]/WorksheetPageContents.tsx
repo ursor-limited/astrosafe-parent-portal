@@ -485,7 +485,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               orientation={props.parameters.orientation}
               pageIndex={i}
               pairs={(props.parameters as IEquationWorksheetParameters).pairs}
-              answers
+              showAnswers
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
@@ -499,7 +499,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               pageIndex={i}
               pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
               both={(props.parameters as INumberBondWorksheetParameters).both}
-              answers
+              showAnswers
             />
           ) : null
         )}

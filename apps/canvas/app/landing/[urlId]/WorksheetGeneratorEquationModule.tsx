@@ -177,10 +177,12 @@ export function WorksheetGeneratorEquationModule(
     <Stack flex={1} spacing="18px">
       <Stack direction="row" spacing="20px">
         <Captioned
-          text={props.topic === "division" ? "Divisor" : "Multiplier"}
+          //text={props.topic === "division" ? "Divisor" : "Multiplier"}
           checkbox={{
-            text: "Randomize",
-            on: randomize,
+            text: `Set first ${
+              props.topic === "division" ? "divisor" : "multiplier"
+            }?`,
+            on: !randomize,
             callback: () => setRandomize(!randomize),
           }}
         >
