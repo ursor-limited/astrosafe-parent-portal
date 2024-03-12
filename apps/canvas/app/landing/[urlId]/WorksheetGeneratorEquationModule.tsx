@@ -93,7 +93,7 @@ export function WorksheetGeneratorEquationModule(
     setPairs(
       [...fullSets, ...partialSet].map((x) => [
         x,
-        randomize ? _.random(fullsetSize) : factor ?? 0,
+        (randomize ? _.random(fullsetSize) : factor) || 1,
       ])
     );
   }, [nDigits, factor, props.nProblems, props.regenerationCount, randomize]);
