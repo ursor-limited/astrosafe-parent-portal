@@ -1,11 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Box, Stack } from "@mui/system";
+import { Box, Stack, keyframes } from "@mui/system";
 import { Backdrop } from "@mui/material";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
-import UrsorFadeIn from "./UrsorFadeIn";
+
+export const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
+
+export const fadeOut = keyframes`
+from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+}
+`;
 
 export const DEFAULT_CORNER_RADIUS = "12px";
 export const PADDING = "16px";
@@ -150,6 +167,11 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       : "center"
                   }
                   ref={setButtonRef}
+                  sx={{
+                    opacity: 0,
+                    animation: `${fadeIn} 0.2s ease-out`,
+                    animationFillMode: "forwards",
+                  }}
                 >
                   {/* {!isFlipped ? (
                     <Box
@@ -176,43 +198,38 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       {props.externalElement}
                     </Box>
                   ) : null} */}
-                  <UrsorFadeIn duration={300}>
-                    {props.content ? (
-                      <Box
-                        width={props.buttonWidth ? width : props.width}
-                        borderRadius={
-                          props.cornerRadius ?? DEFAULT_CORNER_RADIUS
-                        }
-                        p={
-                          props.noCard || props.noPadding ? undefined : PADDING
-                        }
-                        sx={{
-                          background: props.noCard ? undefined : "white",
-                          pointerEvents: props.open ? "auto" : "none",
-                          opacity: props.open && !props.fadedOut ? 1 : 0,
-                          transition: "0.3s",
-                          animation: props.animation,
-                          boxShadow: "0 0 30px rgba(0,0,0,0.09)",
-                        }}
-                        height="100%"
-                        overflow="scroll"
-                      >
-                        {props.content}
-                      </Box>
-                    ) : null}
-                    {isFlipped ? (
-                      <Box
-                        sx={{
-                          opacity: props.noFloatButton ? 0 : 1,
-                          pointerEvents: props.clickableFloatedButton
-                            ? undefined
-                            : "none",
-                        }}
-                      >
-                        {props.children}
-                      </Box>
-                    ) : null}
-                  </UrsorFadeIn>
+
+                  {props.content ? (
+                    <Box
+                      width={props.buttonWidth ? width : props.width}
+                      borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
+                      p={props.noCard || props.noPadding ? undefined : PADDING}
+                      sx={{
+                        background: props.noCard ? undefined : "white",
+                        pointerEvents: props.open ? "auto" : "none",
+                        opacity: props.open && !props.fadedOut ? 1 : 0,
+                        transition: "0.3s",
+                        animation: props.animation,
+                        boxShadow: "0 0 30px rgba(0,0,0,0.09)",
+                      }}
+                      height="100%"
+                      overflow="scroll"
+                    >
+                      {props.content}
+                    </Box>
+                  ) : null}
+                  {isFlipped ? (
+                    <Box
+                      sx={{
+                        opacity: props.noFloatButton ? 0 : 1,
+                        pointerEvents: props.clickableFloatedButton
+                          ? undefined
+                          : "none",
+                      }}
+                    >
+                      {props.children}
+                    </Box>
+                  ) : null}
                 </Stack>
               </Box>
             </>,
