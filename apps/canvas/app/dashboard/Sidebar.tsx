@@ -229,8 +229,8 @@ export default function Sidebar(props: ISidebarProps) {
   );
 
   const [ref, { width, height }] = useElementSize();
-  const small = height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
-  const noText = height < NO_TEXT_HEIGHT_THRESHOLD;
+  const small = !!height && height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
+  const noText = !!height && height < NO_TEXT_HEIGHT_THRESHOLD;
 
   const [browserDialogOpen, setBrowserDialogOpen] =
     React.useState<boolean>(false);

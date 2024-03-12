@@ -30,7 +30,12 @@ async function fetchAndRenameSitemap(sitemapUrl: string):  Promise<ISitemap[]> {
         urlArray.push({'url': url.replace(/proxy\./g, 'www.')});
       }
     }
-    urlArray.push({'url': 'https://www.astrosafe.co/video/create'})
+
+    urlArray.push({'url': 'https://www.astrosafe.co/tools/times-table'})
+    urlArray.push({'url': 'https://www.astrosafe.co/tools/worksheet-generator'})
+    for (let i = 0; i <= 30; i++) {
+      urlArray.push({'url': 'https://www.astrosafe.co/tools/times-table/'+i+'-times-table-worksheet'})
+  }
     // Create a new URL element for the new URL
   console.log(urlArray)
     return urlArray

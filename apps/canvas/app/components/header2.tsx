@@ -4,9 +4,6 @@ import { Stack } from "@mui/system";
 import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import Logo from "@/images/logo.svg";
-import Kitemark from "@/images/coloredKitemark.svg";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
-import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
@@ -14,12 +11,8 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import CreditCardIcon from "@/images/icons/CreditCard.svg";
-import React, { useEffect, useState } from "react";
-//import { useAuth0 } from "@auth0/auth0-react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import UpgradeDialog from "./UpgradeDialog";
-import ApiController from "../api";
-import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
@@ -322,22 +315,21 @@ export const Header = (props: {
               <Stack flex={1} justifyContent="space-between">
                 <ProductsPopoverProductButton
                   title="Worksheet generator"
-                  body="Create videos with a single click. Add captions, remove background
-        noise and more"
+                  body="Personalised and printable worksheets made in seconds."
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
-                  url="/tools/times-tables/8-times-table-worksheet"
+                  url="/tools/worksheet-generator"
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"
-                  body="Unlike other tubes, this one is totally safe."
+                  body="Reduce ads, remove distracting content, and increase focus."
                   icon={CirclePlayIcon}
                   color="#FC5C5C"
                   url="https://astrosafe.co/tools/video"
                 />
                 <ProductsPopoverProductButton
                   title="Browser"
-                  body="Bro, it's a browser."
+                  body="Keep students safe with a browser built for the classroom."
                   icon={GlobeIcon}
                   color={PALETTE.secondary.purple[2]}
                   url="https://app.astrosafe.co"
@@ -354,27 +346,27 @@ export const Header = (props: {
                   links={[
                     {
                       text: "5 times tables",
-                      url: "/landing/5-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/5-times-table-worksheet",
                     },
                     {
                       text: "6 times tables",
-                      url: "/landing/6-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/6-times-table-worksheet",
                     },
                     {
                       text: "7 times tables",
-                      url: "/landing/7-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/7-times-table-worksheet",
                     },
                     {
                       text: "8 times tables",
-                      url: "/landing/8-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/8-times-table-worksheet",
                     },
                     {
                       text: "9 times tables",
-                      url: "/landing/9-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/9-times-table-worksheet",
                     },
                     {
                       text: "10 times tables",
-                      url: "/landing/10-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/times-tables/10-times-table-worksheet",
                     },
                   ]}
                 />
@@ -383,19 +375,19 @@ export const Header = (props: {
                   links={[
                     {
                       text: "Chore charts",
-                      url: "https://www.nintendo.com",
+                      url: "https://www.astrosafe.co/tools/chore-charts-for-kids",
                     },
                     {
                       text: "Websites for kids",
-                      url: "https://www.zelda.com",
+                      url: "https://www.astrosafe.co/tools/websites-for-kids",
                     },
                     {
                       text: "Meditation for kids",
-                      url: "https://proxy.astrosafe.co/15-minutes-meditation-for-family-time-and-kids",
+                      url: "https://www.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids",
                     },
                     {
                       text: "Safe search engine",
-                      url: "https://www.metroid.com",
+                      url: "https://www.astrosafe.co/tools/kids-safe-search-engine",
                     },
                   ]}
                 />
