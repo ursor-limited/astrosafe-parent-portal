@@ -301,7 +301,9 @@ export function WorksheetGeneratorEquationModule(
             value={props.nProblems?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const x = getZeroHandledNumber(event.target.value);
-              props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
+              props.setNProblems(
+                _.isNumber(x) ? Math.min(x ?? 0, MAX_N_PROBLEMS) : undefined
+              );
             }}
             placeholder="Number of digits"
             width="100%"

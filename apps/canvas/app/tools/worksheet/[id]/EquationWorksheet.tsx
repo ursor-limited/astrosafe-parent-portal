@@ -106,7 +106,7 @@ const VerticalQuestion = (props: {
   n: number;
   topic?: WorksheetTopic;
 }) => (
-  <WorksheetQuestion n={props.n} top="42px" left="9px">
+  <WorksheetQuestion n={props.n} top="42px" left="-16px">
     <Stack
       justifyContent="center"
       spacing="4px"
@@ -154,7 +154,7 @@ const DivisionVerticalQuestion = (props: {
   dividend: number;
   n: number;
 }) => (
-  <WorksheetQuestion n={props.n} top="63px" left="14px">
+  <WorksheetQuestion n={props.n} top="63px" left="-16px">
     <Stack
       height="280px"
       pt="20px"
