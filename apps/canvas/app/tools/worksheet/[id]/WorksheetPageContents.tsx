@@ -10,7 +10,7 @@ import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
   IWorksheet,
-} from "@/app/landing/[urlId]/WorksheetGenerator";
+} from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -20,7 +20,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/v/[videoId]/VideoPageContents";
+import { CircularButton } from "@/app/tools/v/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";

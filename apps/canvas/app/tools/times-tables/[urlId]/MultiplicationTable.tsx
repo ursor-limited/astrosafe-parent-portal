@@ -6,7 +6,10 @@ import { PALETTE, Typography, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
-import { A4_HEIGHT, A4_WIDTH } from "@/app/worksheet/[id]/AstroWorksheetPage";
+import {
+  A4_HEIGHT,
+  A4_WIDTH,
+} from "@/app/tools/worksheet/[id]/AstroWorksheetPage";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 

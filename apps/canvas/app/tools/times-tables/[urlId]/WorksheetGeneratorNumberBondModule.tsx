@@ -1,5 +1,5 @@
 import ApiController from "@/app/api";
-import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/tools/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import NumberBondWorksheet, {
   NUMBER_BOND_HORIZONTAL_ROWS_N,
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
-} from "@/app/worksheet/[id]/NumberBondWorksheet";
+} from "@/app/tools/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 import { useUserContext } from "@/app/components/UserContext";
 import { getZeroHandledNumber } from "./WorksheetGeneratorEquationModule";

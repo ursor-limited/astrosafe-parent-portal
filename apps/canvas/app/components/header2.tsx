@@ -326,14 +326,14 @@ export const Header = (props: {
         noise and more"
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
-                  url="/landing/8-times-table-worksheet"
+                  url="/tools/times-tables/8-times-table-worksheet"
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"
                   body="Unlike other tubes, this one is totally safe."
                   icon={CirclePlayIcon}
                   color="#FC5C5C"
-                  url="https://astrosafe.co/video"
+                  url="https://astrosafe.co/tools/video"
                 />
                 <ProductsPopoverProductButton
                   title="Browser"
