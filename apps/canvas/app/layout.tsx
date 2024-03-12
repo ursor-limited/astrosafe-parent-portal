@@ -35,7 +35,7 @@ export default function RootLayout({
         <Stack
           height="100vh"
           minHeight="100vh"
-          overflow="scroll"
+          overflow="hidden"
           width="100vw"
           position="relative"
           bgcolor={PALETTE.primary.navy}

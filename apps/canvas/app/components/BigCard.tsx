@@ -13,7 +13,7 @@ const BigCard = (props: {
 }) => {
   const router = useRouter();
   return (
-    <Stack alignItems="center" justifyContent="center" spacing="100px" p="40px">
+    <Stack alignItems="center" justifyContent="center" spacing="100px">
       <Stack
         position="relative"
         width="83%"

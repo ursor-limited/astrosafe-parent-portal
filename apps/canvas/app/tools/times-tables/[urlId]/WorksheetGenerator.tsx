@@ -261,7 +261,7 @@ export default function WorksheetGenerator(props: {
       router.push(
         !props.landOnWorksheetPage && userDetails.user
           ? "/dashboard"
-          : `/worksheet/${id}`
+          : `/tools/worksheet/${id}`
       );
     });
   };

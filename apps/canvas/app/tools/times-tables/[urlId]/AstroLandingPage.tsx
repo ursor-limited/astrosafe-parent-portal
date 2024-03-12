@@ -25,7 +25,7 @@ export default function AstroLandingPage(props: {
   children: React.ReactNode;
 }) {
   return (
-    <Stack width="100vw" height="100vh" alignItems="center">
+    <Stack width="100vw" height="100vh" overflow="scroll" alignItems="center">
       {/* <AuthWrapper> */}
       <Header />
       {/* </AuthWrapper> */}
