@@ -22,6 +22,7 @@ export type IWorksheet = {
   id: string;
   worksheetId: WorksheetId;
   title: string;
+  description: string;
   parameters: IWorksheetParameters;
   createdAt: string;
   creatorId: string;
@@ -348,6 +349,7 @@ export default function WorksheetGenerator(props: {
               setNProblems={setNProblems}
               setNPages={setNPages}
               title={title}
+              description={description}
               topic={topic}
               pageIndex={selectedPageIndex}
               regenerationCount={regenerationCount}
@@ -363,6 +365,7 @@ export default function WorksheetGenerator(props: {
               setNProblems={setNProblems}
               setNPages={setNPages}
               title={title}
+              description={description}
               topic={topic}
               pageIndex={selectedPageIndex}
               regenerationCount={regenerationCount}

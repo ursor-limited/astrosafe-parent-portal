@@ -55,6 +55,7 @@ export function WorksheetGeneratorEquationModule(
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
+    description: string;
     topic: WorksheetTopic;
     pageIndex: number;
     regenerationCount: number;
@@ -142,18 +143,6 @@ export function WorksheetGeneratorEquationModule(
     max,
   ]);
 
-  // const [pairs, setPairs] = useState<[number, number][]>([]);
-  // useEffect(() => {
-  //   setPairs(
-  //     _.zip(
-  //       getOneOfPairForAllQuestions(),
-  //       randomize
-  //         ? getOneOfPairForAllQuestions()
-  //         : [...Array(props.nProblems).keys()].map(() => factor)
-  //     )
-  //   );
-  // }, [nDigits, props.nProblems, props.regenerationCount, randomize]);
-
   useEffect(
     () =>
       props.setNPages(
@@ -187,6 +176,7 @@ export function WorksheetGeneratorEquationModule(
     setPreviewWorksheet(
       <EquationWorksheet
         title={props.title}
+        description={props.description}
         orientation={orientation}
         topic={props.topic}
         nDigits={nDigits}
@@ -200,11 +190,13 @@ export function WorksheetGeneratorEquationModule(
         orientation,
         props.topic,
         pairs,
+        props.description,
         userDetails?.user?.id
       ).then((ws) => ws.id)
     );
   }, [
     props.title,
+    props.description,
     props.topic,
     nDigits,
     factor,

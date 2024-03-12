@@ -170,11 +170,13 @@ class ApiController {
     orientation: EquationOrientation,
     topic: WorksheetTopic,
     pairs: [number, number][],
-    creatorId?: string,
+    description?: string,
+    creatorId?: string
   ) {
-    console.log(pairs, topic)
+    console.log(pairs, topic);
     return post("canvas/worksheet/equation", {
       title,
+      description,
       creatorId,
       parameters: {
         orientation,
@@ -187,12 +189,14 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     sum: number,
-    empty: INumberBondWorksheetParameters['empty'],
+    empty: INumberBondWorksheetParameters["empty"],
     leftNumbers: number[],
+    description?: string,
     creatorId?: string
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
+      description,
       creatorId,
       parameters: { orientation, sum, empty, leftNumbers },
     }).then((response: any) => response.json());

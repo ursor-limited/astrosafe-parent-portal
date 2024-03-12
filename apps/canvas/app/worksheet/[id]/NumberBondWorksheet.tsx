@@ -188,6 +188,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title?: string;
+      description?: string;
       sum: number;
       empty: INumberBondWorksheetParameters["empty"];
       leftNumbers: number[];
@@ -257,6 +258,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
     return (
       <AstroWorksheetPage
         title={props.title}
+        description={props.description}
         showAnswers={props.showAnswers}
         printableId={props.printableId}
         pageN={(props.pageIndex ?? 0) + 1}

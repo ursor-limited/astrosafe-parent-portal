@@ -447,6 +447,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`page${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
@@ -457,6 +458,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`page${i}`}
               title={props.title}
+              description={props.description}
               sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
@@ -481,6 +483,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
@@ -492,6 +495,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
+              description={props.description}
               sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
@@ -570,6 +574,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
                       <EquationWorksheet
                         key={i}
                         title={props.title}
+                        description={props.description}
                         topic={
                           (props.parameters as IEquationWorksheetParameters)
                             .topic
@@ -586,6 +591,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
                       <NumberBondWorksheet
                         key={i}
                         title={props.title}
+                        description={props.description}
                         sum={
                           (props.parameters as INumberBondWorksheetParameters)
                             .sum

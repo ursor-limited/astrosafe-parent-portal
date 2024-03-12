@@ -85,6 +85,7 @@ export function WorksheetGeneratorNumberBondModule(
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
+    description?: string;
     topic: WorksheetTopic;
     pageIndex: number;
     regenerationCount: number;
@@ -160,6 +161,7 @@ export function WorksheetGeneratorNumberBondModule(
     setPreviewWorksheet(
       <NumberBondWorksheet
         title={props.title}
+        description={props.description}
         orientation={orientation}
         sum={sum}
         empty={empty}
@@ -170,10 +172,12 @@ export function WorksheetGeneratorNumberBondModule(
     props.setCreationCallback(() =>
       ApiController.createNumberBondWorksheet(
         props.title,
+
         orientation,
         sum ?? 0,
         empty,
         leftNumbers,
+        props.description,
         userDetails.user?.id
       )
         // .then((ws) => {
@@ -184,6 +188,7 @@ export function WorksheetGeneratorNumberBondModule(
     );
   }, [
     props.title,
+    props.description,
     sum,
     props.pageIndex,
     orientation,

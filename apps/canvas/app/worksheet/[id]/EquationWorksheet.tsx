@@ -256,6 +256,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title?: string;
+      description?: string;
       pairs: [number, number][];
       topic: WorksheetTopic;
       orientation: EquationOrientation;
@@ -324,6 +325,7 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
     return (
       <AstroWorksheetPage
         title={props.title}
+        description={props.description}
         showAnswers={props.showAnswers}
         printableId={props.printableId}
         pageN={(props.pageIndex ?? 0) + 1}
