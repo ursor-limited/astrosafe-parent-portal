@@ -4,7 +4,7 @@ import React from "react";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 //import { Header } from "@/app/components/Header";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
@@ -43,12 +43,12 @@ export default function AstroLandingPage(props: {
           pt={props.mobile ? "13px" : undefined}
         >
           <Stack
-            sx={{
-              background: "linear-gradient(150deg, #F279C5, #FD9B41)",
-              "-webkit-text-fill-color": "transparent",
-              backgroundClip: "text",
-              "-webkit-background-clip": "text",
-            }}
+            // sx={{
+            //   background: "linear-gradient(150deg, #F279C5, #FD9B41)",
+            //   "-webkit-text-fill-color": "transparent",
+            //   backgroundClip: "text",
+            //   "-webkit-background-clip": "text",
+            // }}
             alignItems="center"
             width={props.mobile ? "86%" : "700px"}
           >
@@ -61,6 +61,7 @@ export default function AstroLandingPage(props: {
               }}
               bold
               htmlTag="h1"
+              color={PALETTE.secondary.purple[2]}
             >
               {props.title[0]}
             </Typography>
@@ -69,7 +70,7 @@ export default function AstroLandingPage(props: {
           <Typography
             variant={props.mobile ? "normal" : "large"}
             bold
-            color="rgba(255,255,255,0.8)"
+            color="rgb(255,255,255)"
             sx={{
               textAlign: "center",
               lineHeight: props.mobile ? "22px" : "28px",

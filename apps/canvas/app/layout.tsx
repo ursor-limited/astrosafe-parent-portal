@@ -38,8 +38,9 @@ export default function RootLayout({
           overflow="scroll"
           width="100vw"
           position="relative"
+          bgcolor={PALETTE.primary.navy}
         >
-          <Stack
+          {/* <Stack
             position="absolute"
             top={0}
             left={0}
@@ -55,7 +56,7 @@ export default function RootLayout({
                 zIndex: -1,
               }}
             />
-          </Stack>
+          </Stack> */}
           <NotificationProvider>
             <Stack width="100%" justifyContent="center" zIndex={999999999}>
               <UrsorNotificationBar />

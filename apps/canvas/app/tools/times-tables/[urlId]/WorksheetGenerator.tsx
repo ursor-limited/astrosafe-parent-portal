@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import UrsorSelect from "@/app/components/UrsorSelect";
@@ -273,6 +273,7 @@ export default function WorksheetGenerator(props: {
         p={props.noPadding ? undefined : props.mobile ? "26px" : "42px"}
         direction="row"
         spacing="40px"
+        boxShadow={`0 35px 60px ${alpha(PALETTE.secondary.purple[1], 0.3)}`}
       >
         <Stack width={props.mobile ? undefined : "480px"} spacing="18px">
           <Captioned text="Worksheet title">
