@@ -71,14 +71,14 @@ export type IEquationWorksheetGeneratorSettings = Omit<
 
 export interface INumberBondWorksheetParameters {
   orientation: EquationOrientation;
-  result: number;
-  both: boolean;
-  pairs: [number, number][];
+  sum: number;
+  leftNumbers: number[];
+  empty: "sum" | "one" | "both";
 }
 
 export type INumberBondWorksheetGeneratorSettings = Omit<
   INumberBondWorksheetParameters,
-  "pairs"
+  "leftNumbers"
 >;
 
 const RefreshButton = (props: { onClick: () => void }) => {

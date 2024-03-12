@@ -24,6 +24,59 @@ import { getZeroHandledNumber } from "./WorksheetGeneratorEquationModule";
 
 const MAX_N_PROBLEMS = 100;
 
+const NumberBondConfigurationIcon = (props: {
+  filled: number[];
+  selected: boolean;
+}) => (
+  <Stack direction="row" spacing="4.5px">
+    <Stack
+      border={`1.6px solid ${
+        props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
+      }`}
+      height="4px"
+      width="4px"
+      borderRadius="100%"
+      bgcolor={
+        props.selected && props.filled.includes(0)
+          ? PALETTE.secondary.purple[2]
+          : props.filled.includes(0)
+          ? PALETTE.secondary.grey[4]
+          : undefined
+      }
+    />
+    <Stack
+      border={`1.6px solid ${
+        props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
+      }`}
+      height="4px"
+      width="4px"
+      borderRadius="100%"
+      bgcolor={
+        props.selected && props.filled.includes(1)
+          ? PALETTE.secondary.purple[2]
+          : props.filled.includes(1)
+          ? PALETTE.secondary.grey[4]
+          : undefined
+      }
+    />
+    <Stack
+      border={`1.6px solid ${
+        props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
+      }`}
+      height="4px"
+      width="4px"
+      borderRadius="100%"
+      bgcolor={
+        props.selected && props.filled.includes(2)
+          ? PALETTE.secondary.purple[2]
+          : props.filled.includes(2)
+          ? PALETTE.secondary.grey[4]
+          : undefined
+      }
+    />
+  </Stack>
+);
+
 export function WorksheetGeneratorNumberBondModule(
   props: INumberBondWorksheetGeneratorSettings & {
     callback: (newPreviewWorksheet: React.ReactNode) => void;
@@ -38,39 +91,39 @@ export function WorksheetGeneratorNumberBondModule(
     whiteFields?: boolean;
   }
 ) {
-  const [result, setResult] = useState<number | undefined>(3);
+  const [sum, setSum] = useState<number | undefined>(3);
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
-  const [both, setBoth] = useState<boolean>(false);
+  const [empty, setEmpty] = useState<"sum" | "one" | "both">("sum");
 
   useEffect(() => {
-    props.result && setResult(props.result);
-  }, [props.result]);
+    props.sum && setSum(props.sum);
+  }, [props.sum]);
   useEffect(() => {
-    props.both && setBoth(props.both);
-  }, [props.both]);
+    props.empty && setEmpty(props.empty);
+  }, [props.empty]);
   useEffect(() => {
     props.orientation && setOrientation(props.orientation);
   }, [props.orientation]);
 
-  const [pairs, setPairs] = useState<number[][]>([]);
+  const [leftNumbers, setLeftNumbers] = useState<number[]>([]);
   useEffect(() => {
-    const fullsetSize = (result ?? 0) - 1;
-    const fullSet = _.range(1, result).map((x) => [x, (result ?? 0) - x]);
+    const fullsetSize = (sum ?? 0) - 1;
+    const fullSet = _.range(1, sum);
     if (fullSet.length === 0) {
-      setPairs([]);
+      setLeftNumbers([]);
     } else {
       const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
         .range()
         .flatMap(() => _.shuffle(fullSet.slice()))
         .value();
       const partialSet = _.sampleSize(
-        _.range(1, (result ?? 0) - 1).map((x) => [x, (result ?? 0) - x]),
+        _.range(1, (sum ?? 0) - 1),
         (props.nProblems ?? 0) % fullsetSize
       );
-      setPairs([...fullSets, ...partialSet]);
+      setLeftNumbers([...fullSets, ...partialSet]);
     }
-  }, [props.nProblems, result, props.regenerationCount]);
+  }, [props.nProblems, sum, empty, props.regenerationCount]);
 
   useEffect(
     () =>
@@ -108,9 +161,9 @@ export function WorksheetGeneratorNumberBondModule(
       <NumberBondWorksheet
         title={props.title}
         orientation={orientation}
-        result={result}
-        pairs={pairs}
-        both={both}
+        sum={sum}
+        empty={empty}
+        leftNumbers={leftNumbers}
         pageIndex={props.pageIndex}
       />
     );
@@ -118,8 +171,9 @@ export function WorksheetGeneratorNumberBondModule(
       ApiController.createNumberBondWorksheet(
         props.title,
         orientation,
-        result ?? 0,
-        pairs,
+        sum ?? 0,
+        empty,
+        leftNumbers,
         userDetails.user?.id
       )
         // .then((ws) => {
@@ -130,11 +184,11 @@ export function WorksheetGeneratorNumberBondModule(
     );
   }, [
     props.title,
-    result,
+    sum,
     props.pageIndex,
     orientation,
-    pairs,
-    both,
+    empty,
+    leftNumbers,
     userDetails.user?.id,
   ]);
   useEffect(() => {
@@ -147,128 +201,60 @@ export function WorksheetGeneratorNumberBondModule(
         <Captioned text="Orientation">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
-              selected={orientation === "horizontal"}
-              onClick={() => setOrientation("horizontal")}
+              selected={orientation === "horizontal" && empty === "sum"}
+              onClick={() => {
+                setOrientation("horizontal");
+                setEmpty("sum");
+              }}
             >
-              {/* <Stack
-                sx={{
-                  transform: "translateY(4px)",
-                  svg: {
-                    path: {
-                      fill:
-                        orientation === "horizontal"
-                          ? PALETTE.secondary.purple[2]
-                          : undefined,
-                    },
-                  },
-                }}
-              >
-                <ThreeDotsIcon height="16px" />
-              </Stack> */}
-              <Stack direction="row" spacing="3px">
-                <Stack
-                  border="1.6px solid"
-                  height="3.4px"
-                  width="3.4px"
-                  borderRadius="100%"
-                />
-                <Stack
-                  border="1.6px solid"
-                  height="3.4px"
-                  width="3.4px"
-                  borderRadius="100%"
-                />
-                <Stack
-                  border="1.6px solid"
-                  height="3.4px"
-                  width="3.4px"
-                  borderRadius="100%"
-                />
-              </Stack>
+              <NumberBondConfigurationIcon
+                filled={[0, 1]}
+                selected={empty === "sum"}
+              />
             </CategorySelectionButton>
             <CategorySelectionButton
-              selected={orientation === "vertical"}
-              onClick={() => setOrientation("vertical")}
+              selected={orientation === "horizontal" && empty === "one"}
+              onClick={() => {
+                setOrientation("horizontal");
+                setEmpty("one");
+              }}
             >
-              <Stack
-                sx={{
-                  //transform: "translateY(4px)",
-                  svg: {
-                    transform: "rotate(90deg)",
-                    path: {
-                      fill:
-                        orientation === "vertical"
-                          ? PALETTE.secondary.purple[2]
-                          : undefined,
-                    },
-                  },
-                }}
-              >
-                <ShareIcon height="16px" width="16px" />
-              </Stack>
+              <NumberBondConfigurationIcon
+                filled={[0, 2]}
+                selected={empty === "one"}
+              />
+            </CategorySelectionButton>
+            <CategorySelectionButton
+              selected={orientation === "horizontal" && empty === "both"}
+              onClick={() => {
+                setOrientation("horizontal");
+                setEmpty("both");
+              }}
+            >
+              <NumberBondConfigurationIcon
+                filled={[2]}
+                selected={empty === "both"}
+              />
             </CategorySelectionButton>
           </Stack>
         </Captioned>
-        <Captioned text="Sum">
+      </Stack>
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Bonded number">
           <UrsorInputField
-            value={result?.toString() ?? ""}
+            value={sum?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setResult(getZeroHandledNumber(event.target.value));
+              setSum(getZeroHandledNumber(event.target.value));
             }}
-            placeholder="Multiplier"
+            placeholder="Number of digits"
+            width="100%"
             leftAlign
             boldValue
             height="44px"
             backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
           />
         </Captioned>
-      </Stack>
-      <Stack direction="row" spacing="20px">
-        <Captioned text="Fill in">
-          <Stack direction="row" spacing="10px">
-            <CategorySelectionButton
-              selected={!both}
-              onClick={() => setBoth(false)}
-            >
-              {/* <Stack direction="row" spacing="5px">
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  6
-                </Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  +
-                </Typography>
-                <Typography bold>_</Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  =
-                </Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  9
-                </Typography>
-              </Stack> */}
-              One
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={both}
-              onClick={() => setBoth(true)}
-            >
-              {/* <Stack direction="row" spacing="5px">
-                <Typography bold>_</Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  +
-                </Typography>
-                <Typography bold>_</Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  =
-                </Typography>
-                <Typography bold sx={{ opacity: 0.4 }}>
-                  9
-                </Typography>
-              </Stack> */}
-              Both
-            </CategorySelectionButton>
-          </Stack>
-        </Captioned>
-        <Captioned text="Amount of problems">
+        <Captioned text="Number of questions">
           <UrsorInputField
             value={props.nProblems?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
