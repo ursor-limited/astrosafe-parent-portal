@@ -5,8 +5,12 @@ import { PALETTE, Typography } from "ui";
 import { forwardRef, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import _ from "lodash";
-import { EquationOrientation } from "@/app/landing/[urlId]/WorksheetGenerator";
+import {
+  EquationOrientation,
+  INumberBondWorksheetParameters,
+} from "@/app/landing/[urlId]/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
+import WorksheetQuestion from "./WorksheetQuestion";
 
 export const NUMBER_BOND_HORIZONTAL_N_COLUMNS = 2;
 export const NUMBER_BOND_VERTICAL_N_COLUMNS = 3;
@@ -38,131 +42,162 @@ export const ValueCircle = (props: { children: React.ReactNode }) => (
 );
 
 const HorizontalEquationQuestion = (props: {
-  result: number;
-  left: number;
-  right: number;
-  both: boolean;
+  sum: number;
+  leftNumber: number;
+  empty: INumberBondWorksheetParameters["empty"];
+  n: number;
   showAnswer: boolean;
 }) => (
-  <Stack
-    direction="row"
-    width={props.both ? "292px" : "260px"}
-    height="110px"
-    justifyContent="space-between"
-    alignItems={"flex-end"}
-    sx={{ breakInside: "avoid" }}
-  >
-    <Stack direction="row" spacing="14px">
-      {!props.both || props.showAnswer ? (
+  <WorksheetQuestion n={props.n} top="79px" left="-24px">
+    <Stack
+      direction="row"
+      width={props.empty === "both" ? "292px" : "260px"}
+      height="110px"
+      justifyContent="space-between"
+      alignItems={"flex-end"}
+      sx={{ breakInside: "avoid" }}
+    >
+      <Stack direction="row" spacing="14px">
+        {props.empty !== "both" || props.showAnswer ? (
+          <Typography
+            variant="h3"
+            color={
+              props.empty === "both" ? PALETTE.secondary.purple[2] : undefined
+            }
+            sx={{
+              fontWeight: !(props.showAnswer && props.empty !== "both")
+                ? 350
+                : undefined,
+            }}
+          >
+            {props.leftNumber}
+          </Typography>
+        ) : (
+          <WritingField />
+        )}
+        <Stack pb="0px">
+          <Typography variant="h3" sx={{ fontWeight: 250 }}>
+            +
+          </Typography>
+        </Stack>
+        {props.empty === "sum" || props.showAnswer ? (
+          <Typography
+            variant="h3"
+            color={
+              props.empty !== "sum" ? PALETTE.secondary.purple[2] : undefined
+            }
+          >
+            {props.sum - props.leftNumber}
+          </Typography>
+        ) : (
+          <WritingField />
+        )}
+      </Stack>
+      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+        =
+      </Typography>
+      {props.empty !== "sum" || props.showAnswer ? (
         <Typography
           variant="h3"
-          color={props.both ? PALETTE.secondary.purple[2] : undefined}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
+          color={
+            props.empty === "sum" ? PALETTE.secondary.purple[2] : undefined
+          }
         >
-          {props.left}
-        </Typography>
-      ) : (
-        <WritingField />
-      )}
-      <Stack pb="0px">
-        <Typography variant="h3" sx={{ fontWeight: 250 }}>
-          +
-        </Typography>
-      </Stack>
-      {props.showAnswer ? (
-        <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
-          {props.right}
+          {props.sum}
         </Typography>
       ) : (
         <WritingField />
       )}
     </Stack>
-    <Typography variant="h3" sx={{ fontWeight: 100 }}>
-      =
-    </Typography>
-    <Typography variant="h3" sx={{ fontWeight: 350 }}>
-      {props.result}
-    </Typography>
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const VerticalEquationQuestion = (props: {
-  result: number;
-  left: number;
-  right: number;
-  both: boolean;
+  sum: number;
+  leftNumber: number;
+  empty: INumberBondWorksheetParameters["empty"];
+  n: number;
   showAnswer: boolean;
 }) => (
-  <Stack
-    width="260px"
-    height="280px"
-    alignItems={"center"}
-    justifyContent="center"
-    sx={{ breakInside: "avoid" }}
-    spacing="20px"
-    position="relative"
-  >
+  <WorksheetQuestion n={props.n} top="-60px" left="52px">
     <Stack
-      position="absolute"
-      width="38px"
-      sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
-      height="2px"
-      bgcolor={PALETTE.secondary.grey[2]}
-    />
-    <Stack
-      position="absolute"
-      width="38px"
-      sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
-      height="2px"
-      bgcolor={PALETTE.secondary.grey[2]}
-    />
-    <ValueCircle>
-      <Typography variant="h4" sx={{ fontWeight: 350 }}>
-        {props.result}
-      </Typography>
-    </ValueCircle>
-    <Stack direction="row" spacing="40px" zIndex={999}>
+      width="260px"
+      height="280px"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ breakInside: "avoid" }}
+      spacing="20px"
+      position="relative"
+    >
+      <Stack
+        position="absolute"
+        width="38px"
+        sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
+        height="2px"
+        bgcolor={PALETTE.secondary.grey[2]}
+      />
+      <Stack
+        position="absolute"
+        width="38px"
+        sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
+        height="2px"
+        bgcolor={PALETTE.secondary.grey[2]}
+      />
       <ValueCircle>
-        <Typography
-          variant="h4"
-          color={props.both ? PALETTE.secondary.purple[2] : undefined}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
-        >
-          {!props.both || props.showAnswer ? props.left : null}
+        <Typography variant="h4" sx={{ fontWeight: 350 }}>
+          {props.empty === "sum" ? undefined : props.sum}
         </Typography>
       </ValueCircle>
-      <ValueCircle>
-        <Typography
-          variant="h4"
-          color={PALETTE.secondary.purple[2]}
-          sx={{
-            fontWeight: !(props.showAnswer && props.both) ? 350 : undefined,
-          }}
-        >
-          {props.showAnswer ? props.right : null}
-        </Typography>
-      </ValueCircle>
+      <Stack direction="row" spacing="40px" zIndex={999}>
+        <ValueCircle>
+          <Typography
+            variant="h4"
+            color={
+              props.empty === "both" ? PALETTE.secondary.purple[2] : undefined
+            }
+            sx={{
+              fontWeight: !(props.showAnswer && props.empty === "both")
+                ? 350
+                : undefined,
+            }}
+          >
+            {props.empty !== "both" || props.showAnswer
+              ? props.leftNumber
+              : null}
+          </Typography>
+        </ValueCircle>
+        <ValueCircle>
+          <Typography
+            variant="h4"
+            color={PALETTE.secondary.purple[2]}
+            sx={{
+              fontWeight: !(props.showAnswer && props.empty === "both")
+                ? 350
+                : undefined,
+            }}
+          >
+            {props.showAnswer ? props.sum - props.leftNumber : null}
+          </Typography>
+        </ValueCircle>
+      </Stack>
     </Stack>
-  </Stack>
+  </WorksheetQuestion>
 );
 
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
     props: {
       title?: string;
-      result: number;
-      both: boolean;
-      pairs: number[][];
+      description?: string;
+      sum: number;
+      empty: INumberBondWorksheetParameters["empty"];
+      leftNumbers: number[];
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
       onlyFirstPage?: boolean;
       printDialogOpen?: boolean;
       showAnswers?: boolean;
-      pageIndex?: number;
+      pageIndex: number;
       printableId?: string;
       printDialogCloseCallback?: () => void;
     },
@@ -192,11 +227,11 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       );
     }, [props.orientation]);
 
-    const [rows, setRows] = useState<number[][][]>([]);
+    const [rows, setRows] = useState<number[][]>([]);
     useEffect(() => {
-      if (props.pairs) {
+      if (props.leftNumbers) {
         const rowz = _.chunk(
-          props.pairs,
+          props.leftNumbers,
           props.orientation === "horizontal"
             ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
             : NUMBER_BOND_VERTICAL_N_COLUMNS
@@ -213,7 +248,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
         );
       }
     }, [
-      props.pairs,
+      props.leftNumbers,
       props.pageIndex,
       rows.length,
       props.orientation,
@@ -223,6 +258,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
     return (
       <AstroWorksheetPage
         title={props.title}
+        description={props.description}
         showAnswers={props.showAnswers}
         printableId={props.printableId}
         pageN={(props.pageIndex ?? 0) + 1}
@@ -240,18 +276,18 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
                   <Stack key={k} flex={1} alignItems="center">
                     {props.orientation === "horizontal" ? (
                       <HorizontalEquationQuestion
-                        result={props.result}
-                        left={x?.[0]}
-                        right={x?.[1]}
-                        both={props.both}
+                        sum={props.sum}
+                        leftNumber={x}
+                        empty={props.empty}
+                        n={props.pageIndex * 16 + i * 2 + k + 1}
                         showAnswer={!!props.showAnswers}
                       />
                     ) : (
                       <VerticalEquationQuestion
-                        result={props.result}
-                        left={x?.[0]}
-                        right={x?.[1]}
-                        both={props.both}
+                        sum={props.sum}
+                        leftNumber={x}
+                        empty={props.empty}
+                        n={props.pageIndex * 9 + i * 3 + k + 1}
                         showAnswer={!!props.showAnswers}
                       />
                     )}

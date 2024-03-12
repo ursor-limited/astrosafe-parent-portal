@@ -10,9 +10,9 @@
     "title": "Nambah bond",
     "nProblems": 20,
     "specificSettings": {
-      "result": 12,
-      "orientation": "vertical",
-      "both": false
+      "sum": 12,
+      "empty": "one",
+      "orientation": "vertical"
     }
   },
   "howItWorks": {

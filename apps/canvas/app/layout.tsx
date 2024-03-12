@@ -45,6 +45,7 @@ export default function RootLayout({
             left={0}
             width="100%"
             height="114%"
+            zIndex={-1}
           >
             <Image
               src={Background.src}

@@ -345,7 +345,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       setNPages(
         1 +
           Math.ceil(
-            (params.multipliers.length -
+            (params.pairs.length -
               (params.topic === "division"
                 ? 12
                 : props.parameters.orientation === "horizontal"
@@ -363,7 +363,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       setNPages(
         1 +
           Math.ceil(
-            (params.pairs.length -
+            (params.leftNumbers.length -
               (params.orientation === "horizontal"
                 ? NUMBER_BOND_HORIZONTAL_ROWS_N
                 : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -447,26 +447,25 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`page${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
               printableId={`page${i}`}
               title={props.title}
-              result={
-                (props.parameters as INumberBondWorksheetParameters).result
-              }
+              description={props.description}
+              sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
-              both={(props.parameters as INumberBondWorksheetParameters).both}
+              leftNumbers={
+                (props.parameters as INumberBondWorksheetParameters).leftNumbers
+              }
+              empty={(props.parameters as INumberBondWorksheetParameters).empty}
             />
           ) : null
         )}
@@ -484,28 +483,27 @@ export default function WorksheetPageContents(props: IWorksheet) {
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
-              answers
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              showAnswers
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
-              result={
-                (props.parameters as INumberBondWorksheetParameters).result
-              }
+              description={props.description}
+              sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
-              both={(props.parameters as INumberBondWorksheetParameters).both}
-              answers
+              leftNumbers={
+                (props.parameters as INumberBondWorksheetParameters).leftNumbers
+              }
+              empty={(props.parameters as INumberBondWorksheetParameters).empty}
+              showAnswers
             />
           ) : null
         )}
@@ -576,19 +574,16 @@ export default function WorksheetPageContents(props: IWorksheet) {
                       <EquationWorksheet
                         key={i}
                         title={props.title}
+                        description={props.description}
                         topic={
                           (props.parameters as IEquationWorksheetParameters)
                             .topic
                         }
                         orientation={props.parameters.orientation}
                         pageIndex={i}
-                        factor={
+                        pairs={
                           (props.parameters as IEquationWorksheetParameters)
-                            .factor
-                        }
-                        multipliers={
-                          (props.parameters as IEquationWorksheetParameters)
-                            .multipliers
+                            .pairs
                         }
                         answers={mode === "markscheme"}
                       />
@@ -596,19 +591,20 @@ export default function WorksheetPageContents(props: IWorksheet) {
                       <NumberBondWorksheet
                         key={i}
                         title={props.title}
-                        result={
+                        description={props.description}
+                        sum={
                           (props.parameters as INumberBondWorksheetParameters)
-                            .result
+                            .sum
                         }
                         orientation={props.parameters.orientation}
                         pageIndex={i}
-                        pairs={
+                        leftNumbers={
                           (props.parameters as INumberBondWorksheetParameters)
-                            .pairs
+                            .leftNumbers
                         }
-                        both={
+                        empty={
                           (props.parameters as INumberBondWorksheetParameters)
-                            .both
+                            .empty
                         }
                         answers={mode === "markscheme"}
                       />

@@ -11,6 +11,7 @@ export const A4_HEIGHT = "297mm";
 
 const AstroWorksheetPage = (props: {
   title?: IWorksheet["title"];
+  description?: IWorksheet["description"];
   showAnswers?: boolean;
   printableId?: string;
   pageN?: number;
@@ -50,7 +51,8 @@ const AstroWorksheetPage = (props: {
             <Stack />
           )}
           <Typography bold color={PALETTE.secondary.purple[2]}>
-            {props.showAnswers ? "Answers" : "Try to solve these questions!"}
+            {props.description ||
+              (props.showAnswers ? "Answers" : "Try to solve these questions!")}
           </Typography>
         </Stack>
         <Stack flex={1}>{props.children}</Stack>

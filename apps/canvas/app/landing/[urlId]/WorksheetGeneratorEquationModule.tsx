@@ -16,15 +16,46 @@ import { useUserContext } from "@/app/components/UserContext";
 
 const MAX_N_PROBLEMS = 100;
 
+export const getZeroHandledNumber = (n: string) =>
+  // {
+  //   if (!n) {
+  //     return 0;
+  //   } else {
+  //     const onlyNumbersString = n.match(/\d+/)?.[0];
+  //     const leadingZeroRemovedString = onlyNumbersString?.slice(
+  //       onlyNumbersString[0] === "0" ? 1 : 0
+  //     );
+  //     return Math.min(
+  //       leadingZeroRemovedString ? parseInt(leadingZeroRemovedString) : 0,
+  //       MAX_N_PROBLEMS
+  //     );
+  //   }
+  // };
+  {
+    if (!n) {
+      return undefined;
+    } else {
+      const onlyNumbersString = n.match(/\d+/)?.[0];
+      const leadingZeroRemovedString =
+        onlyNumbersString === "0"
+          ? "0"
+          : onlyNumbersString?.slice(onlyNumbersString[0] === "0" ? 1 : 0);
+      return !leadingZeroRemovedString
+        ? undefined
+        : parseInt(leadingZeroRemovedString);
+    }
+  };
+
 export function WorksheetGeneratorEquationModule(
   props: IEquationWorksheetGeneratorSettings & {
     nDigits: number;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
-    nProblems: number;
-    setNProblems: (n: number) => void;
+    nProblems: number | undefined;
+    setNProblems: (n: number | undefined) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
     title: string;
+    description: string;
     topic: WorksheetTopic;
     pageIndex: number;
     regenerationCount: number;
@@ -33,8 +64,12 @@ export function WorksheetGeneratorEquationModule(
 ) {
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
-  const [factor, setFactor] = useState<number>(1);
+  const [factor, setFactor] = useState<number | undefined>(1);
   const [nDigits, setNDigits] = useState<number>(1);
+
+  const [max, setMax] = useState<number | undefined>(1);
+
+  const [randomize, setRandomize] = useState<boolean>(false);
 
   useEffect(
     () => props.orientation && setOrientation(props.orientation),
@@ -47,26 +82,73 @@ export function WorksheetGeneratorEquationModule(
     props.factor && setFactor(props.factor);
   }, [props.factor]);
 
-  const [multipliers, setMultipliers] = useState<number[]>([]);
+  const [pairs, setPairs] = useState<[number, number][]>([]);
   useEffect(() => {
-    const fullsetSize = Math.pow(10, nDigits) + 1;
-    const fullSets = _(Math.floor(props.nProblems / fullsetSize))
-      .range()
-      .flatMap(() => _.shuffle(_.range(fullsetSize)))
-      .value();
-    const partialSet = _.sampleSize(
-      _.range(fullsetSize),
-      props.nProblems % fullsetSize
-    );
-    setMultipliers([...fullSets, ...partialSet]);
-  }, [nDigits, props.nProblems, props.regenerationCount]);
+    if (props.topic === "addition") {
+      const maxx = max || 1;
+      const fullAnswerSets = _(Math.floor((props.nProblems ?? 0) / maxx))
+        .range()
+        .flatMap(() => _.shuffle(_.range(maxx)))
+        .value();
+      const partialAnswerSet = _.sampleSize(
+        _.range(maxx),
+        (props.nProblems ?? 0) % maxx
+      );
+      setPairs(
+        [...fullAnswerSets, ...partialAnswerSet].map((x) => [
+          x - (factor ?? 0),
+          (randomize ? _.random(maxx) : factor) ?? 0,
+        ])
+      );
+    } else if (props.topic === "subtraction") {
+      const maxx = (max ?? 0) + 1;
+      const fullSets = _(Math.floor((props.nProblems ?? 0) / maxx))
+        .range()
+        .flatMap(() => _.shuffle(_.range(maxx)))
+        .value();
+      const partialSet = _.sampleSize(
+        _.range(maxx),
+        (props.nProblems ?? 0) % maxx
+      );
+      setPairs(
+        [...fullSets, ...partialSet].map((x) => [
+          x,
+          (randomize ? _.random(maxx) : factor) ?? 0,
+        ])
+      );
+    } else {
+      const fullsetSize = Math.pow(10, nDigits) + 1;
+      const fullSets = _(Math.floor((props.nProblems ?? 0) / fullsetSize))
+        .range()
+        .flatMap(() => _.shuffle(_.range(fullsetSize)))
+        .value();
+      const partialSet = _.sampleSize(
+        _.range(fullsetSize),
+        (props.nProblems ?? 0) % fullsetSize
+      );
+      setPairs(
+        [...fullSets, ...partialSet].map((x) => [
+          x,
+          (randomize ? _.random(fullsetSize) : factor) || 1,
+        ])
+      );
+    }
+  }, [
+    nDigits,
+    factor,
+    props.nProblems,
+    props.regenerationCount,
+    props.topic,
+    randomize,
+    max,
+  ]);
 
   useEffect(
     () =>
       props.setNPages(
         1 +
           Math.ceil(
-            (props.nProblems -
+            ((props.nProblems ?? 0) -
               (props.topic === "division"
                 ? 12
                 : orientation === "horizontal"
@@ -94,11 +176,11 @@ export function WorksheetGeneratorEquationModule(
     setPreviewWorksheet(
       <EquationWorksheet
         title={props.title}
+        description={props.description}
         orientation={orientation}
         topic={props.topic}
         nDigits={nDigits}
-        factor={factor}
-        multipliers={multipliers}
+        pairs={pairs}
         pageIndex={props.pageIndex}
       />
     );
@@ -107,17 +189,18 @@ export function WorksheetGeneratorEquationModule(
         props.title,
         orientation,
         props.topic,
-        factor,
-        multipliers,
+        pairs,
+        props.description,
         userDetails?.user?.id
       ).then((ws) => ws.id)
     );
   }, [
     props.title,
+    props.description,
     props.topic,
     nDigits,
     factor,
-    multipliers,
+    pairs,
     props.pageIndex,
     orientation,
     userDetails.user?.id,
@@ -127,95 +210,122 @@ export function WorksheetGeneratorEquationModule(
   }, [previewWorksheet]);
 
   return (
-    <Stack flex={1} spacing="16px">
+    <Stack flex={1} spacing="18px">
       <Stack direction="row" spacing="20px">
-        <Captioned text="Orientation">
+        <Captioned
+          //text={props.topic === "division" ? "Divisor" : "Multiplier"}
+          checkbox={{
+            text:
+              props.topic === "addition"
+                ? "Add a specific number?"
+                : props.topic === "subtraction"
+                ? "Subtract a specific number?"
+                : `Set first ${
+                    props.topic === "division" ? "divisor" : "multiplier"
+                  }?`,
+            on: !randomize,
+            callback: () => setRandomize(!randomize),
+          }}
+        >
+          <Stack
+            sx={{
+              opacity: randomize ? 0.45 : 1,
+              pointerEvents: randomize ? "none" : undefined,
+            }}
+          >
+            <UrsorInputField
+              value={factor?.toString() ?? ""}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setFactor(getZeroHandledNumber(event.target.value))
+              }
+              placeholder="Multiplier"
+              leftAlign
+              boldValue
+              backgroundColor={
+                props.whiteFields ? "rgb(255,255,255)" : undefined
+              }
+              height="44px"
+            />
+          </Stack>
+        </Captioned>
+        {props.topic === "addition" || props.topic === "subtraction" ? (
+          <Captioned
+            text={
+              props.topic === "addition"
+                ? "Add up to a maximum of..."
+                : "Subtract from a maximum of"
+            }
+          >
+            <UrsorInputField
+              value={max?.toString() ?? ""}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setMax(getZeroHandledNumber(event.target.value))
+              }
+              placeholder="Max"
+              leftAlign
+              boldValue
+              backgroundColor={
+                props.whiteFields ? "rgb(255,255,255)" : undefined
+              }
+              height="44px"
+            />
+          </Captioned>
+        ) : (
+          <Captioned text="Number of digits">
+            <Stack direction="row" spacing="10px">
+              <CategorySelectionButton
+                selected={nDigits === 1}
+                onClick={() => setNDigits(1)}
+              >
+                1
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 2}
+                onClick={() => setNDigits(2)}
+              >
+                2
+              </CategorySelectionButton>
+              <CategorySelectionButton
+                selected={nDigits === 3}
+                onClick={() => setNDigits(3)}
+              >
+                3
+              </CategorySelectionButton>
+            </Stack>
+          </Captioned>
+        )}
+      </Stack>
+      <Stack direction="row" spacing="20px">
+        <Captioned text="Number of questions">
+          <UrsorInputField
+            value={props.nProblems?.toString() ?? ""}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const x = getZeroHandledNumber(event.target.value);
+              props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
+            }}
+            placeholder="Number of digits"
+            width="100%"
+            height="44px"
+            leftAlign
+            boldValue
+            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
+          />
+        </Captioned>
+        <Captioned text="Question format">
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
               selected={orientation === "horizontal"}
               onClick={() => setOrientation("horizontal")}
             >
-              Horizontal
+              Short
             </CategorySelectionButton>
             <CategorySelectionButton
               selected={orientation === "vertical"}
               onClick={() => setOrientation("vertical")}
             >
-              Vertical
+              Long
             </CategorySelectionButton>
           </Stack>
-        </Captioned>
-        <Captioned text={props.topic === "division" ? "Divisor" : "Multiplier"}>
-          <UrsorInputField
-            value={factor === 0 ? "" : factor.toString()}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value || event.target.value === "0") {
-                setFactor(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                setFactor(parseInt(leadingZeroRemovedString ?? "0"));
-              }
-            }}
-            placeholder="Multiplier"
-            leftAlign
-            boldValue
-            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
-          />
-        </Captioned>
-      </Stack>
-      <Stack direction="row" spacing="20px">
-        <Captioned text="Number of digits">
-          <Stack direction="row" spacing="10px">
-            <CategorySelectionButton
-              selected={nDigits === 1}
-              onClick={() => setNDigits(1)}
-            >
-              1
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={nDigits === 2}
-              onClick={() => setNDigits(2)}
-            >
-              2
-            </CategorySelectionButton>
-            <CategorySelectionButton
-              selected={nDigits === 3}
-              onClick={() => setNDigits(3)}
-            >
-              3
-            </CategorySelectionButton>
-          </Stack>
-        </Captioned>
-        <Captioned text="Amount of problems">
-          <UrsorInputField
-            value={props.nProblems === 0 ? "" : props.nProblems.toString()}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (!event.target.value) {
-                props.setNProblems(0);
-              } else {
-                const onlyNumbersString = event.target.value.match(/\d+/)?.[0];
-                const leadingZeroRemovedString = onlyNumbersString?.slice(
-                  onlyNumbersString[0] === "0" ? 1 : 0
-                );
-                props.setNProblems(
-                  Math.min(
-                    leadingZeroRemovedString
-                      ? parseInt(leadingZeroRemovedString)
-                      : 0,
-                    MAX_N_PROBLEMS
-                  )
-                );
-              }
-            }}
-            placeholder="Number of digits"
-            width="100%"
-            leftAlign
-            boldValue
-            backgroundColor={props.whiteFields ? "rgb(255,255,255)" : undefined}
-          />
         </Captioned>
       </Stack>
     </Stack>

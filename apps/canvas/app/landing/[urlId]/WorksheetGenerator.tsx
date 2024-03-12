@@ -22,6 +22,7 @@ export type IWorksheet = {
   id: string;
   worksheetId: WorksheetId;
   title: string;
+  description: string;
   parameters: IWorksheetParameters;
   createdAt: string;
   creatorId: string;
@@ -61,25 +62,24 @@ export type WorksheetTopic =
 export interface IEquationWorksheetParameters {
   topic: WorksheetTopic;
   orientation: EquationOrientation;
-  factor: number;
-  multipliers: number[];
+  pairs: [number, number][];
 }
 
 export type IEquationWorksheetGeneratorSettings = Omit<
   IEquationWorksheetParameters,
-  "multipliers"
-> & { nDigits: number };
+  "pairs"
+> & { nDigits: number; factor: number };
 
 export interface INumberBondWorksheetParameters {
   orientation: EquationOrientation;
-  result: number;
-  both: boolean;
-  pairs: number[][];
+  sum: number;
+  leftNumbers: number[];
+  empty: "sum" | "one" | "both";
 }
 
 export type INumberBondWorksheetGeneratorSettings = Omit<
   INumberBondWorksheetParameters,
-  "pairs"
+  "leftNumbers"
 >;
 
 const RefreshButton = (props: { onClick: () => void }) => {
@@ -131,7 +131,8 @@ export const CategorySelectionButton = (props: {
   return (
     <Stack
       flex={1}
-      height="36px"
+      height="44px"
+      boxSizing="border-box"
       borderRadius="8px"
       justifyContent="center"
       alignItems="center"
@@ -190,7 +191,8 @@ export default function WorksheetGenerator(props: {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>("");
-  const [nProblems, setNProblems] = useState<number>(10);
+  const [description, setDescription] = useState<string>("");
+  const [nProblems, setNProblems] = useState<number | undefined>(10);
 
   useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
   useEffect(
@@ -257,7 +259,7 @@ export default function WorksheetGenerator(props: {
         direction="row"
         spacing="40px"
       >
-        <Stack width="480px" spacing="16px">
+        <Stack width="480px" spacing="18px">
           <Captioned text="Worksheet title">
             <UrsorInputField
               value={title}
@@ -265,60 +267,76 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder="Worksheet title"
+              placeholder="Type in your worksheet title"
               width="100%"
               leftAlign
               boldValue
+              height="44px"
             />
           </Captioned>
+          <Captioned text="Description">
+            <UrsorInputField
+              value={description}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDescription(event.target.value)
+              }
+              placeholder="Type in your worksheet description"
+              width="100%"
+              leftAlign
+              boldValue
+              height="44px"
+            />
+          </Captioned>
+          <Stack height="28px" justifyContent="center">
+            <Stack
+              height="2px"
+              width="100%"
+              bgcolor={PALETTE.secondary.grey[2]}
+            />
+          </Stack>
           <Stack direction="row" spacing="20px">
-            <Captioned text="Question topic">
+            <Captioned text="Worksheet topic">
               <UrsorSelect
                 items={[
                   {
                     id: "multiplication",
-                    value: "x Multiplication",
+                    value: "Multiplication (x)",
                   },
                   {
                     id: "division",
-                    value: "÷ Division",
+                    value: "Division (÷)",
                   },
                   {
                     id: "addition",
-                    value: "+ Addition",
+                    value: "Addition (+)",
                   },
                   {
                     id: "subtraction",
-                    value: "- Subtraction",
+                    value: "Subtraction (-)",
                   },
                 ]}
                 selected={[topic]}
                 callback={(t: string) => setTopic(t as WorksheetTopic)}
                 width="100%"
                 zIndex={999999999}
+                leftAlignPopover
               />
             </Captioned>
-          </Stack>
-          <Captioned text="Question type">
-            <UrsorSelect
-              items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
-                id: t,
-                value: WORKSHEET_ID_DISPLAY_NAMES[t],
-              }))}
-              selected={[worksheetId]}
-              callback={(wid: string) => {
-                setWorksheetId(wid as WorksheetId);
-              }}
-              width="100%"
-              zIndex={999999999}
-            />
-          </Captioned>
-          <Stack height="40px" justifyContent="center">
-            <Stack
-              height="2px"
-              width="100%"
-              bgcolor={PALETTE.secondary.grey[2]}
-            />
+            <Captioned text="Question type">
+              <UrsorSelect
+                items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
+                  id: t,
+                  value: WORKSHEET_ID_DISPLAY_NAMES[t],
+                }))}
+                selected={[worksheetId]}
+                callback={(wid: string) => {
+                  setWorksheetId(wid as WorksheetId);
+                }}
+                width="100%"
+                zIndex={999999999}
+                leftAlignPopover
+              />
+            </Captioned>
           </Stack>
           {worksheetId === "equation" ? (
             <WorksheetGeneratorEquationModule
@@ -331,6 +349,7 @@ export default function WorksheetGenerator(props: {
               setNProblems={setNProblems}
               setNPages={setNPages}
               title={title}
+              description={description}
               topic={topic}
               pageIndex={selectedPageIndex}
               regenerationCount={regenerationCount}
@@ -346,6 +365,7 @@ export default function WorksheetGenerator(props: {
               setNProblems={setNProblems}
               setNPages={setNPages}
               title={title}
+              description={description}
               topic={topic}
               pageIndex={selectedPageIndex}
               regenerationCount={regenerationCount}
@@ -368,7 +388,7 @@ export default function WorksheetGenerator(props: {
             {previewWorksheet}
           </Stack>
           <Stack />
-          <Stack spacing="17px">
+          <Stack spacing="19px">
             {nPages > 1 ? (
               <PageSelector
                 pageIndex={selectedPageIndex}
