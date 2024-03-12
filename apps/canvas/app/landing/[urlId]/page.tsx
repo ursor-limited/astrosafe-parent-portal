@@ -6,6 +6,8 @@ import {
   EquationOrientation,
   WorksheetTopic,
   WorksheetId,
+  INumberBondWorksheetParameters,
+  INumberBondWorksheetGeneratorSettings,
 } from "./WorksheetGenerator";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -51,6 +53,10 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
             orientation: details.worksheetGenerator.specificSettings
               .orientation as EquationOrientation,
             topic: details.worksheetGenerator.topic as WorksheetTopic,
+            empty: (
+              details.worksheetGenerator
+                .specificSettings as INumberBondWorksheetGeneratorSettings
+            )?.empty,
           },
         }}
         worksheetPreview={{
