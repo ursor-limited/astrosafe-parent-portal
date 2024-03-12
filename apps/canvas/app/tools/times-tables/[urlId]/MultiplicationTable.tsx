@@ -6,7 +6,7 @@ import { PALETTE, Typography, UrsorInputField } from "ui";
 import { Captioned } from "./LandingPageContents";
 import _ from "lodash";
 import PageSelector from "./PageSelector";
-import {
+import AstroWorksheetPage, {
   A4_HEIGHT,
   A4_WIDTH,
 } from "@/app/tools/worksheet/[id]/AstroWorksheetPage";
@@ -28,14 +28,12 @@ export default function MultiplicationTable(props: {
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
 
   return (
-    <div id={props.printable ? "printableMultiplicationTable" : undefined}>
-      <Stack
-        spacing="10px"
-        alignItems="center"
-        position="relative"
-        width={A4_WIDTH}
-        height={A4_HEIGHT}
-      >
+    <AstroWorksheetPage
+      title={`${props.factor} times table`}
+      description="Check out these awesome multiples."
+      printableId="printableMultiplicationTable"
+    >
+      <Stack flex={1} spacing="10px" alignItems="center" position="relative">
         {/* <Stack
         width="100%"
         direction="row"
@@ -87,13 +85,13 @@ export default function MultiplicationTable(props: {
       </Stack> */}
 
         <Stack
-          position="absolute"
+          flex={1}
+          justifyContent="center"
+          //position="absolute"
           // sx={{
           //   transform: "scale(0.35) translateY(198px)",
           //   transformOrigin: "top right",
           // }}
-          top={0}
-          right={0}
         >
           {_.chunk([...Array(upTo).keys()], PAGE_MAX)
             .slice(
@@ -103,8 +101,6 @@ export default function MultiplicationTable(props: {
             .map((chunk, i) => (
               <Stack
                 key={i}
-                width={A4_WIDTH}
-                height={A4_HEIGHT}
                 // bgcolor="rgb(255,255,255)"
                 //bgcolor="cyan"
                 justifyContent="center"
@@ -156,6 +152,6 @@ export default function MultiplicationTable(props: {
             ))}
         </Stack>
       </Stack>
-    </div>
+    </AstroWorksheetPage>
   );
 }
