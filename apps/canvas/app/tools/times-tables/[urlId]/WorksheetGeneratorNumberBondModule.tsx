@@ -9,7 +9,7 @@ import {
   EquationOrientation,
   WorksheetTopic,
   INumberBondWorksheetGeneratorSettings,
-} from "./WorksheetGenerator";
+} from "../../../components/WorksheetGenerator";
 import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
 import NumberBondWorksheet, {

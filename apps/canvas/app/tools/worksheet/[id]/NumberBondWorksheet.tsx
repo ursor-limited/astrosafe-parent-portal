@@ -8,7 +8,7 @@ import _ from "lodash";
 import {
   EquationOrientation,
   INumberBondWorksheetParameters,
-} from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
+} from "@/app/components/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
 import WorksheetQuestion from "./WorksheetQuestion";
 

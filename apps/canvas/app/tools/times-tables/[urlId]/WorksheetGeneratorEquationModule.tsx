@@ -9,7 +9,7 @@ import {
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
-} from "./WorksheetGenerator";
+} from "../../../components/WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
 import { useUserContext } from "@/app/components/UserContext";

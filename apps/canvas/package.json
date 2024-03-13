@@ -28,6 +28,7 @@
     "next": "14.0.4",
     "next-svgr": "^0.0.2",
     "react": "^18",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "react-fade-in": "^2.0.1",
     "react-image-file-resizer": "^0.4.8",

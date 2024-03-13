@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { IWorksheet } from "../tools/times-tables/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "./WorksheetGenerator";
 import EquationWorksheet from "../tools/worksheet/[id]/EquationWorksheet";
 import { PALETTE, Typography } from "ui";
 import { getFormattedDate } from "./VideoCard";

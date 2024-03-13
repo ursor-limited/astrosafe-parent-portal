@@ -16,7 +16,7 @@ import ApiController from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
-import { IWorksheet } from "../tools/times-tables/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "../components/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";

@@ -1,4 +1,4 @@
-import { IWorksheet } from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography } from "ui";
