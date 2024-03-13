@@ -84,7 +84,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
                 setInvalidUrl(true);
               } else {
                 router.push(
-                  `/tools/video/create?url=${encodeURIComponent(inputValue)}`
+                  `/tools/safetube/create?url=${encodeURIComponent(inputValue)}`
                 );
               }
             }}
@@ -96,7 +96,7 @@ export default function InvalidUrlView(props: { mobile: boolean }) {
       <UrsorButton
         dark
         variant="tertiary"
-        onClick={() => router.push("/tools/video")}
+        onClick={() => router.push("/tools/safetube")}
         startIcon={ChevronLeft}
       >
         Back
