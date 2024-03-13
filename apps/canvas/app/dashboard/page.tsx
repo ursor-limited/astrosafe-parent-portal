@@ -5,6 +5,9 @@ import {} from "@/app/worksheet/[id]/EquationWorksheet";
 import { UserProvider } from "../components/UserContext";
 import dynamic from "next/dynamic";
 import { Metadata } from "next";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { headers } from "next/headers";
+import MobileDashboardPageContents from "./MobileDashboardPageContents";
 
 const AuthWrapper = dynamic(
   () => import("../components/AuthWrapper"),
@@ -17,16 +20,17 @@ export const metadata: Metadata = {
 };
 
 async function DashboardPage({ params }: { params: { urlId: string } }) {
-  //const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   return (
     <>
-      {/* <Head>
-        <title>Astro Dashboard</title>
-        <meta name="description">Add some engaging SEO text here.</meta>
-      </Head> */}
       <AuthWrapper>
         <UserProvider>
-          <DashboardPageContents />
+          {isMobile ? (
+            <MobileDashboardPageContents />
+          ) : (
+            <DashboardPageContents />
+          )}
         </UserProvider>
       </AuthWrapper>
     </>

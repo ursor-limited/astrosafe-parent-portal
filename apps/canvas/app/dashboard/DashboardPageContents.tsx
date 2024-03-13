@@ -48,19 +48,21 @@ export const SearchInput = (props: {
   callback: (value: string) => void;
   clearCallback: () => void;
   shadow?: boolean;
+  fullWidth?: boolean;
 }) => {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   return (
     <Stack
       height="28px"
-      width="180px"
+      width={props.fullWidth ? undefined : "180px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"
       bgcolor="rgb(255,255,255)"
       px="10px"
       spacing="8px"
+      boxSizing="border-box"
       sx={{
         svg: {
           path: {
@@ -118,7 +120,7 @@ export const SearchInput = (props: {
   );
 };
 
-const FilterButton = (props: {
+export const FilterButton = (props: {
   text: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   selected: boolean;
@@ -182,7 +184,7 @@ const FilterButton = (props: {
   );
 };
 
-const FilterRow = (props: {
+export const FilterRow = (props: {
   selected: AstroContent | null;
   callback: (newSelected: AstroContent | null) => void;
 }) => (
@@ -208,7 +210,7 @@ const FilterRow = (props: {
   </Stack>
 );
 
-const ToolButton = (props: {
+export const ToolButton = (props: {
   color: string;
   title: string;
   description: string;
@@ -216,6 +218,7 @@ const ToolButton = (props: {
   infoButtonPosition: number;
   infoTitle: string;
   infoBody: string;
+  mobile?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -223,7 +226,7 @@ const ToolButton = (props: {
     <>
       <Stack
         direction="row"
-        width="370px"
+        width={props.mobile ? undefined : "370px"}
         minHeight="66px"
         borderRadius="8px"
         boxShadow="0 0 16px rgba(0,0,0,0.02)"
@@ -257,7 +260,7 @@ const ToolButton = (props: {
           }}
           onClick={() => setOverlayOpen(true)}
           top="16px"
-          right={`${props.infoButtonPosition}px`}
+          left={`${props.infoButtonPosition}px`}
         >
           <InfoIcon width="14px" height="14px" />
         </Stack>
@@ -504,7 +507,7 @@ export default function DashboardPageContents() {
               onClick={() => {
                 setVideoCreationDialogOpen(true);
               }}
-              infoButtonPosition={76}
+              infoButtonPosition={280}
               infoTitle="Safe video link"
               infoBody={
                 "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
@@ -516,7 +519,7 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
-              infoButtonPosition={57}
+              infoButtonPosition={300}
               infoTitle="Math worksheet"
               infoBody={
                 "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
