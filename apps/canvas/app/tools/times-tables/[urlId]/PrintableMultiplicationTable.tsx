@@ -13,6 +13,7 @@ export default function PrintableMultiplicationTable(props: {
     factor: number;
     nProblems: number;
   };
+  mobile?: boolean;
 }) {
   const save = async () => {
     const jsPDF = (await import("jspdf")).default;
@@ -28,7 +29,7 @@ export default function PrintableMultiplicationTable(props: {
   };
   return (
     <Stack spacing="8px">
-      <Stack position="relative" width="300px" height="400px">
+      <Stack position="relative" width="280px" height="400px">
         <Stack position="absolute" sx={{ opacity: 0, pointerEvents: "none" }}>
           <MultiplicationTable
             printable
@@ -52,17 +53,16 @@ export default function PrintableMultiplicationTable(props: {
           />
         </Stack>
       </Stack>
-      <Stack pl="20px">
-        <UrsorButton
-          dark
-          variant="tertiary"
-          onClick={save}
-          endIcon={DownloadIcon}
-          width="282px"
-        >
-          Download
-        </UrsorButton>
-      </Stack>
+
+      <UrsorButton
+        dark
+        variant="tertiary"
+        onClick={save}
+        endIcon={DownloadIcon}
+        width="280px"
+      >
+        Download
+      </UrsorButton>
     </Stack>
   );
 }

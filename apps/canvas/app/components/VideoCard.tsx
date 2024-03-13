@@ -9,6 +9,8 @@ import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Image from "next/image";
 import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";

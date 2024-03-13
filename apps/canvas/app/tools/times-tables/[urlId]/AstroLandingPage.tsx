@@ -4,7 +4,7 @@ import React from "react";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 //import { Header } from "@/app/components/Header";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
 import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
@@ -25,9 +25,9 @@ export default function AstroLandingPage(props: {
   children: React.ReactNode;
 }) {
   return (
-    <Stack width="100vw" height="100vh" alignItems="center">
+    <Stack width="100vw" height="100vh" overflow="scroll" alignItems="center">
       {/* <AuthWrapper> */}
-      <Header />
+      <Header mobile={props.mobile} />
       {/* </AuthWrapper> */}
       <Stack
         spacing="36px"
@@ -41,26 +41,28 @@ export default function AstroLandingPage(props: {
           spacing={props.mobile ? "10px" : "22px"}
           alignItems="center"
           pt={props.mobile ? "13px" : undefined}
+          px="20px"
         >
           <Stack
-            sx={{
-              background: "linear-gradient(150deg, #F279C5, #FD9B41)",
-              "-webkit-text-fill-color": "transparent",
-              backgroundClip: "text",
-              "-webkit-background-clip": "text",
-            }}
+            // sx={{
+            //   background: "linear-gradient(150deg, #F279C5, #FD9B41)",
+            //   "-webkit-text-fill-color": "transparent",
+            //   backgroundClip: "text",
+            //   "-webkit-background-clip": "text",
+            // }}
             alignItems="center"
             width={props.mobile ? "86%" : "700px"}
           >
             {/* {props.title.map((x) => ( */}
             <Typography
               //key={x}
-              variant={props.mobile ? "h5" : "h1"}
+              variant={props.mobile ? "h4" : "h1"}
               sx={{
                 textAlign: "center",
               }}
               bold
               htmlTag="h1"
+              color={PALETTE.secondary.purple[2]}
             >
               {props.title[0]}
             </Typography>
@@ -69,11 +71,11 @@ export default function AstroLandingPage(props: {
           <Typography
             variant={props.mobile ? "normal" : "large"}
             bold
-            color="rgba(255,255,255,0.8)"
+            color="rgb(255,255,255)"
             sx={{
               textAlign: "center",
               lineHeight: props.mobile ? "22px" : "28px",
-              width: props.mobile ? "350px" : "660px",
+              width: props.mobile ? undefined : "660px",
             }}
             htmlTag="h2"
           >

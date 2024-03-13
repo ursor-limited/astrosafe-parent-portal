@@ -3,6 +3,7 @@ import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import { getFormattedDate } from "./VideoCard";
 
 const BigCard = (props: {
   rightStuff: React.ReactNode;
@@ -13,7 +14,7 @@ const BigCard = (props: {
 }) => {
   const router = useRouter();
   return (
-    <Stack alignItems="center" justifyContent="center" spacing="100px" p="40px">
+    <Stack alignItems="center" justifyContent="center" spacing="100px">
       <Stack
         position="relative"
         width="83%"
@@ -56,9 +57,7 @@ const BigCard = (props: {
           <Stack spacing="32px" px="24px">
             <Stack spacing="4px">
               {props.createdAt ? (
-                <Typography>
-                  {dayjs(props.createdAt).format("Do MMMM YYYY")}
-                </Typography>
+                <Typography>{getFormattedDate(props.createdAt)}</Typography>
               ) : null}
               <Typography variant="h2">{props.title}</Typography>
             </Stack>

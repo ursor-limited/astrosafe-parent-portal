@@ -206,41 +206,26 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  // const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
-
-  // const openPrintCardGridDialog = useReactToPrint({
-  //   content: () => printableRef,
-  //   documentTitle: "ASTRO Numbers",
-  //   onAfterPrint: () => setPrintDialogOpen(false),
-  // });
-
-  // const [printableRef, setPrintableRef] = useState<HTMLElement | null>(null);
-  // useEffect(() => {
-  //   if (printDialogOpen && printableRef) {
-  //     openPrintCardGridDialog();
-  //   }
-  // }, [printDialogOpen, printableRef]);
-
-  //const [mobile, setMobile] = useState<boolean>(false);
-  const mobile = false;
-
+  const mobile = true;
   return (
     <AstroLandingPage
       title={[props.heading]}
       subtitle={props.subHeading}
-      mobile={false}
+      mobile={mobile}
       faqs={props.faqs}
       viewports={[
         <LandingPageViewport
           key="howItWorks"
           supertitle={props.howItWorks.supertitle}
           title={props.howItWorks.title}
+          mobile={mobile}
         >
           <IntroSteps
             step1={props.howItWorks.step1}
             step2={props.howItWorks.step2}
             step3={props.howItWorks.step3}
             mobile={mobile}
+            backgroundOpacity={0.13}
           />
         </LandingPageViewport>,
         ...(props.worksheetPreview
@@ -249,12 +234,19 @@ export default function LandingPageContents(props: {
                 key="worksheetPreview"
                 supertitle={props.worksheetPreview.supertitle}
                 title={props.worksheetPreview.title}
+                mobile={mobile}
               >
-                <Stack direction="row" spacing="45px">
+                <Stack
+                  direction={mobile ? "column" : "row"}
+                  spacing={mobile ? "30px" : "45px"}
+                  alignItems={mobile ? "center" : undefined}
+                  overflow="hidden"
+                >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
                     <PrintableMultiplicationTable
                       {...props.worksheetPreview.worksheetPreviewParameters}
+                      mobile={mobile}
                     />
                   ) : null}
                   <Stack spacing="10px" maxWidth="503px">
@@ -396,14 +388,19 @@ export default function LandingPageContents(props: {
           title={props.otherPages.title}
           mobile={mobile}
         >
-          <Stack spacing={mobile ? "16px" : "22px"}>
+          <Stack spacing={mobile ? "14px" : "22px"}>
             {_.chunk(props.otherPages.links, 2).map((pair, i) => (
-              <Stack key={i} direction="row" spacing={mobile ? "16px" : "22px"}>
+              <Stack
+                key={i}
+                direction={mobile ? "column" : "row"}
+                spacing={mobile ? "14px" : "22px"}
+              >
                 <OtherPageCard
                   title={pair[0].title}
                   text={pair[0].text}
                   imageString={pair[0].imageString}
                   urlId={pair[0].urlId}
+                  mobile={mobile}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
@@ -411,6 +408,7 @@ export default function LandingPageContents(props: {
                     text={pair[1].text}
                     imageString={pair[1].imageString}
                     urlId={pair[1].urlId}
+                    mobile={mobile}
                   />
                 ) : null}
               </Stack>
@@ -419,8 +417,13 @@ export default function LandingPageContents(props: {
         </LandingPageViewport>,
       ]}
     >
-      <Stack minHeight="540px">
-        <WorksheetGenerator {...props.worksheetGenerator} fadeIn />
+      <Stack minHeight="540px" px="20px">
+        <WorksheetGenerator
+          {...props.worksheetGenerator}
+          fadeIn
+          mobile={mobile}
+          glow
+        />
       </Stack>
     </AstroLandingPage>
   );

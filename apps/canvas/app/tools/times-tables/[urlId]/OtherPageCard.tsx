@@ -7,6 +7,7 @@ export default function OtherPageCard(props: {
   text: string;
   imageString?: string;
   urlId: string;
+  mobile?: boolean;
 }) {
   return (
     <Link
@@ -19,8 +20,8 @@ export default function OtherPageCard(props: {
     >
       <Stack
         maxWidth="480px"
-        height="163px"
-        maxHeight="163px"
+        height={props.mobile ? "100px" : "163px"}
+        maxHeight={props.mobile ? "100px" : "163px"}
         alignItems="center"
         direction="row"
         bgcolor={PALETTE.secondary.grey[1]}
@@ -44,7 +45,10 @@ export default function OtherPageCard(props: {
             "-webkit-background-clip": "text",
           }}
         >
-          <Typography variant="h3" color={PALETTE.secondary.purple[2]}>
+          <Typography
+            variant={props.mobile ? "h4" : "h3"}
+            color={PALETTE.secondary.purple[2]}
+          >
             {props.imageString}
           </Typography>
         </Stack>
@@ -56,11 +60,24 @@ export default function OtherPageCard(props: {
             alt="explainer card image"
           />
         </div> */}
-        <Stack spacing="12px" py="20px" pr="24px" boxSizing="border-box">
-          <Typography variant="h5" color={PALETTE.secondary.grey[5]}>
+        <Stack
+          spacing={props.mobile ? "3px" : "12px"}
+          py="20px"
+          pr="24px"
+          boxSizing="border-box"
+        >
+          <Typography
+            variant={props.mobile ? "medium" : "h5"}
+            bold
+            color={PALETTE.secondary.grey[5]}
+          >
             {props.title}
           </Typography>
-          <Typography variant="large" bold color={PALETTE.secondary.grey[4]}>
+          <Typography
+            variant={props.mobile ? "small" : "large"}
+            bold
+            color={PALETTE.secondary.grey[4]}
+          >
             {props.text}
           </Typography>
         </Stack>

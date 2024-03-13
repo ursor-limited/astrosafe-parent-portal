@@ -8,7 +8,7 @@ import _ from "lodash";
 import {
   EquationOrientation,
   INumberBondWorksheetParameters,
-} from "@/app/landing/[urlId]/WorksheetGenerator";
+} from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
 import WorksheetQuestion from "./WorksheetQuestion";
 
@@ -119,7 +119,7 @@ const VerticalEquationQuestion = (props: {
   n: number;
   showAnswer: boolean;
 }) => (
-  <WorksheetQuestion n={props.n} top="-60px" left="52px">
+  <WorksheetQuestion n={props.n} top="65px" left="50px">
     <Stack
       width="260px"
       height="280px"
@@ -144,8 +144,14 @@ const VerticalEquationQuestion = (props: {
         bgcolor={PALETTE.secondary.grey[2]}
       />
       <ValueCircle>
-        <Typography variant="h4" sx={{ fontWeight: 350 }}>
-          {props.empty === "sum" ? undefined : props.sum}
+        <Typography
+          color={
+            props.empty === "sum" ? PALETTE.secondary.purple[2] : undefined
+          }
+          variant="h4"
+          sx={{ fontWeight: 350 }}
+        >
+          {!props.showAnswer && props.empty === "sum" ? undefined : props.sum}
         </Typography>
       </ValueCircle>
       <Stack direction="row" spacing="40px" zIndex={999}>
@@ -169,14 +175,18 @@ const VerticalEquationQuestion = (props: {
         <ValueCircle>
           <Typography
             variant="h4"
-            color={PALETTE.secondary.purple[2]}
+            color={
+              props.empty !== "sum" ? PALETTE.secondary.purple[2] : undefined
+            }
             sx={{
-              fontWeight: !(props.showAnswer && props.empty === "both")
+              fontWeight: !(props.showAnswer || props.empty === "sum")
                 ? 350
                 : undefined,
             }}
           >
-            {props.showAnswer ? props.sum - props.leftNumber : null}
+            {props.showAnswer || props.empty === "sum"
+              ? props.sum - props.leftNumber
+              : null}
           </Typography>
         </ValueCircle>
       </Stack>

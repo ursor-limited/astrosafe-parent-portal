@@ -13,11 +13,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
 import { PALETTE } from "ui/palette";
 import { Typography, UrsorButton, UrsorInputField, UrsorTextField } from "ui";
-import { Footer } from "../../components/footer";
-import { Header } from "../../components/header";
+import { Footer } from "../../../components/footer";
+import { Header } from "../../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
+import { MAGICAL_BORDER_THICKNESS } from "@/app/tools/v/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
 import InvalidUrlView from "./InvalidUrlView";
@@ -99,7 +99,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const searchParams = useSearchParams();
   useEffect(() => {
     if (![...searchParams.entries()].length) {
-      router.push(userDetails.user?.id ? "/dashboard" : "/video");
+      router.push(userDetails.user?.id ? "/dashboard" : "/tools/video");
     }
     setShowInvalidUrlView(!searchParams.get("url"));
   }, [searchParams]);

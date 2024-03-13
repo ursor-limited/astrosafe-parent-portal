@@ -1,5 +1,5 @@
 import ApiController from "@/app/api";
-import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/tools/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -96,8 +96,8 @@ export function WorksheetGeneratorEquationModule(
       );
       setPairs(
         [...fullAnswerSets, ...partialAnswerSet].map((x) => [
-          x - (factor ?? 0),
-          (randomize ? _.random(maxx) : factor) ?? 0,
+          randomize ? x : factor || 1,
+          maxx - (randomize ? x : factor || 1),
         ])
       );
     } else if (props.topic === "subtraction") {
@@ -301,7 +301,9 @@ export function WorksheetGeneratorEquationModule(
             value={props.nProblems?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const x = getZeroHandledNumber(event.target.value);
-              props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
+              props.setNProblems(
+                _.isNumber(x) ? Math.min(x ?? 0, MAX_N_PROBLEMS) : undefined
+              );
             }}
             placeholder="Number of digits"
             width="100%"

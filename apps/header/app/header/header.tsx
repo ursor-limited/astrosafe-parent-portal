@@ -307,7 +307,7 @@ export const Header = (props: {
                 Products
               </Typography>
               <Stack flex={1} justifyContent="space-between">
-              <ProductsPopoverProductButton
+                <ProductsPopoverProductButton
                   title="Worksheet generator"
                   body="Personalised and printable worksheets made in seconds."
                   icon={ChecklistIcon}
@@ -431,5 +431,4 @@ export const Header = (props: {
       />
     </Stack>
   );
-};
 };

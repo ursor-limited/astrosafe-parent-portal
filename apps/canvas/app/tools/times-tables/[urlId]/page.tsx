@@ -1,7 +1,7 @@
 import React from "react";
 import LandingPageContents from "./LandingPageContents";
 import landingPageDetails from "./jsons";
-import {} from "@/app/worksheet/[id]/EquationWorksheet";
+import {} from "@/app/tools/worksheet/[id]/EquationWorksheet";
 import {
   EquationOrientation,
   WorksheetTopic,

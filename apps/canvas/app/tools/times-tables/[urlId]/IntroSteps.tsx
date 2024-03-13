@@ -4,6 +4,7 @@ import { Stack, keyframes } from "@mui/system";
 import Image from "next/image";
 import { IntroBox } from "./IntroBox";
 import Wave from "@/images/Wave.png";
+import ShootingStarMobile from "@/images/ShootingStarMobile.png";
 
 export const getPulse = (
   center: number,
@@ -23,7 +24,7 @@ export const IntroSteps = (props: {
   step2: { body: string; title: string };
   step3: { body: string; title: string };
   mobile: boolean;
-  backgroundOpacity?: number;
+  backgroundOpacity: number;
 }) => {
   return (
     <Stack width="100%" position="relative" alignItems="center">
@@ -115,30 +116,28 @@ export const IntroSteps = (props: {
           </Stack>
         </>
       ) : (
-        <Stack width="92%" position="relative">
+        <Stack position="relative">
           <Stack
             width="fit-content"
             position="absolute"
             zIndex={-1}
-            top="-40px"
+            top="60px"
             left={0}
             right={0}
             marginLeft="auto"
             marginRight="auto"
           >
             <Image
-              src={Wave.src}
+              src={ShootingStarMobile.src}
               width={266}
               height={253}
-              loader={({ src }) => {
-                return src;
-              }}
               alt="Intro square"
+              style={{ transform: "scaleY(-1) rotate(-60deg)" }}
             />
           </Stack>
           <Stack
             width="100%"
-            pt="5px"
+            pt="15px"
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -150,12 +149,13 @@ export const IntroSteps = (props: {
                 animationDirection: "alternate",
                 animationIterationCount: "infinite",
               }}
-              spacing="20px"
+              spacing="60px"
             >
               <IntroBox
-                title="Select"
-                content="Enter the titles of the Articles you want to create and click the +"
+                title={props.step1.title}
+                content={props.step1.body}
                 mobile
+                backgroundOpacity={0.13}
               />
               <Stack
                 sx={{
@@ -167,9 +167,10 @@ export const IntroSteps = (props: {
                 }}
               >
                 <IntroBox
-                  title="Create"
-                  content="Once you’ve got a collection of articles, click Create."
+                  title={props.step3.title}
+                  content={props.step3.body}
                   mobile
+                  backgroundOpacity={0.13}
                 />
               </Stack>
             </Stack>
@@ -181,9 +182,10 @@ export const IntroSteps = (props: {
               }}
             >
               <IntroBox
-                title="Generate"
-                content="Your Articles will take a few minutes to generate and voila!"
+                title={props.step2.title}
+                content={props.step2.body}
                 mobile
+                backgroundOpacity={0.13}
               />
             </Stack>
           </Stack>
