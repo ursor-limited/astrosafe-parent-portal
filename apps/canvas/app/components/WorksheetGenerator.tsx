@@ -260,9 +260,10 @@ export default function WorksheetGenerator(props: {
         setFreeWorksheetIds([...freeWorksheetIds, id]);
       }
       router.push(
-        !props.landOnWorksheetPage && userDetails.user
-          ? "/dashboard"
-          : `/tools/worksheet/${id}`
+        // !props.landOnWorksheetPage && userDetails.user
+        //   ? "/dashboard"
+        //   : `/tools/worksheet/${id}`
+        "/dashboard"
       );
     });
   };
