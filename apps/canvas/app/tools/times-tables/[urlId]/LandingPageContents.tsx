@@ -209,9 +209,7 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  // const { isMobile } = getSelectorsByUserAgent(
-  //   headers().get("user-agent") ?? ""
-  // );
+  //const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
   const isMobile = false;
   return (
     <AstroLandingPage
