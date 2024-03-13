@@ -121,7 +121,7 @@ export const IntroSteps = (props: {
             width="fit-content"
             position="absolute"
             zIndex={-1}
-            top="-60px"
+            top="60px"
             left={0}
             right={0}
             marginLeft="auto"
@@ -132,6 +132,7 @@ export const IntroSteps = (props: {
               width={266}
               height={253}
               alt="Intro square"
+              style={{ transform: "scaleY(-1) rotate(-60deg)" }}
             />
           </Stack>
           <Stack
@@ -148,11 +149,11 @@ export const IntroSteps = (props: {
                 animationDirection: "alternate",
                 animationIterationCount: "infinite",
               }}
-              spacing="20px"
+              spacing="60px"
             >
               <IntroBox
-                title="Select"
-                content="Enter the titles of the Articles you want to create and click the +"
+                title={props.step1.title}
+                content={props.step1.body}
                 mobile
                 backgroundOpacity={0.13}
               />
@@ -166,8 +167,8 @@ export const IntroSteps = (props: {
                 }}
               >
                 <IntroBox
-                  title="Create"
-                  content="Once you’ve got a collection of articles, click Create."
+                  title={props.step3.title}
+                  content={props.step3.body}
                   mobile
                   backgroundOpacity={0.13}
                 />
@@ -181,8 +182,8 @@ export const IntroSteps = (props: {
               }}
             >
               <IntroBox
-                title="Generate"
-                content="Your Articles will take a few minutes to generate and voila!"
+                title={props.step2.title}
+                content={props.step2.body}
                 mobile
                 backgroundOpacity={0.13}
               />

@@ -10,7 +10,8 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import CreditCardIcon from "@/images/icons/CreditCard.svg";
+import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
+import X from "@/images/icons/X.svg";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -18,6 +19,7 @@ import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
 import UpgradePromptDialog from "./SignupPromptDialog";
 import { useWindowSize } from "usehooks-ts";
+import DynamicContainer from "./DynamicContainer";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -220,38 +222,60 @@ const ProductsPopoverProductButton = (props: {
 const ProductsPopoverColumn = (props: {
   title: string;
   links: { text: string; url: string }[];
-}) => (
-  <Stack spacing="12px">
-    <Stack direction="row" alignItems="center" spacing="8px">
-      <Typography variant="small" bold>
-        {props.title}
-      </Typography>
-      <ChevronRightIcon width="16px" height="16px" />
-    </Stack>
-    {props.links.map((link, i) => (
-      <Link
-        key={i}
-        href={link.url}
-        target="_blank"
-        style={{
-          textDecoration: "none",
-          color: "unset",
-        }}
-        rel="noreferrer"
-      >
+  spaceBetween: boolean;
+}) => {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <DynamicContainer duration={800} fullWidth>
+      <Stack spacing="12px">
         <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent={props.spaceBetween ? "space-between" : undefined}
+          spacing="8px"
+          onClick={() => setOpen(!open)}
           sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+            svg: {
+              transform: `rotate(${open ? 270 : 90}deg)`,
+              transition: "0.2s",
+            },
           }}
         >
-          <Typography variant="small">{link.text}</Typography>
+          <Typography variant="small" bold>
+            {props.title}
+          </Typography>
+          <ChevronRightIcon width="16px" height="16px" />
         </Stack>
-      </Link>
-    ))}
-  </Stack>
-);
+        {open ? (
+          <Stack spacing="12px">
+            {props.links.map((link, i) => (
+              <Link
+                key={i}
+                href={link.url}
+                target="_blank"
+                style={{
+                  textDecoration: "none",
+                  color: "unset",
+                }}
+                rel="noreferrer"
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <Typography variant="small">{link.text}</Typography>
+                </Stack>
+              </Link>
+            ))}
+          </Stack>
+        ) : null}
+      </Stack>
+    </DynamicContainer>
+  );
+};
 
 const ProductsPopoverContents = (props: { mobile?: boolean }) => (
   <Stack
@@ -304,7 +328,10 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
       <Typography variant="medium" bold>
         Tools
       </Typography>
-      <Stack direction="row" spacing="56px">
+      <Stack
+        direction={props.mobile ? "column" : "row"}
+        spacing={props.mobile ? "12px" : "56px"}
+      >
         <ProductsPopoverColumn
           title="Times tables"
           links={[
@@ -333,6 +360,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
               url: "https://astrosafe.co/tools/times-tables/10-times-table-worksheet",
             },
           ]}
+          spaceBetween={!!props.mobile}
         />
         <ProductsPopoverColumn
           title="All tools"
@@ -354,6 +382,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
               url: "https://www.astrosafe.co/tools/kids-safe-search-engine",
             },
           ]}
+          spaceBetween={!!props.mobile}
         />
         <ProductsPopoverColumn
           title="More"
@@ -371,9 +400,19 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
               url: "https://www.astrosafe.co/blog",
             },
           ]}
+          spaceBetween={!!props.mobile}
         />
       </Stack>
     </Stack>
+    <UrsorButton
+      width="100%"
+      variant="secondary"
+      backgroundColor="transparent"
+      hoverOpacity={0.7}
+      onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+    >
+      Contact sales
+    </UrsorButton>
   </Stack>
 );
 
@@ -395,7 +434,15 @@ const MobileMenuButton = () => {
         borderRadius="100%"
         bgcolor="rgb(255,255,255)"
         onClick={() => setOpen(true)}
-      ></Stack>
+        alignItems="center"
+        justifyContent="center"
+      >
+        {open ? (
+          <X width="20px" height="20px" />
+        ) : (
+          <ThreeBarsIcon width="20px" height="20px" />
+        )}
+      </Stack>
     </UrsorPopover>
   );
 };
