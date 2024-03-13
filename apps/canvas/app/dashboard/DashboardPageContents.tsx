@@ -34,6 +34,8 @@ import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/SignupPromptDialog";
+import dayjs from "dayjs";
+import { TRIAL_DAYS } from "../account/AccountPageContents";
 
 export const GRID_SPACING = "20px";
 
@@ -484,7 +486,7 @@ export default function DashboardPageContents() {
             spacing="5px"
           >
             <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              30
+              {TRIAL_DAYS - dayjs().diff(userDetails.user?.createdAt, "days")}
             </Typography>
             <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
               days left
