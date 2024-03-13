@@ -121,6 +121,7 @@ const RefreshButton = (props: { onClick: () => void }) => {
 };
 
 const TITLE_CHARACTER_LIMIT = 30;
+const DESCRIPTION_CHARACTER_LIMIT = 180;
 
 export const CategorySelectionButton = (props: {
   selected: boolean;
@@ -299,6 +300,7 @@ export default function WorksheetGenerator(props: {
             <UrsorInputField
               value={description}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
                 setDescription(event.target.value)
               }
               placeholder="Type in your worksheet description"

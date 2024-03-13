@@ -10,8 +10,6 @@ import {
   INumberBondWorksheetGeneratorSettings,
 } from "../../../components/WorksheetGenerator";
 import { Metadata, ResolvingMetadata } from "next";
-// import { getSelectorsByUserAgent } from "react-device-detect";
-// import { headers } from "next/headers";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 

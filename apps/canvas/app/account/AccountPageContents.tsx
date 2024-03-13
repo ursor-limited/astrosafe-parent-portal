@@ -14,6 +14,7 @@ import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
+import dayjs from "dayjs";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";
@@ -65,7 +66,7 @@ const AccountPageSection = (props: {
   </Stack>
 );
 
-const AccountPagePlanSection = () => (
+const AccountPagePlanSection = (props: { remainingDays: number }) => (
   <AccountPageSection
     title="Plan"
     button={{
@@ -75,17 +76,17 @@ const AccountPagePlanSection = () => (
     }}
     fadeInDelay={200}
   >
-    <Stack spacing="8px" width="100%">
+    {/* <Stack spacing="8px" width="100%">
       <Typography>Your worksheets</Typography>
       <Typography variant="h3">{"1 of 3"}</Typography>
     </Stack>
     <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
       <Typography>Your videos</Typography>
       <Typography variant="h3">{"1 of 3"}</Typography>
-    </Stack>
+    </Stack> */}
     <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
       <Typography>Free trial remaining</Typography>
-      <Typography variant="h3">25 days left</Typography>
+      <Typography variant="h3">{`${props.remainingDays} days left`}</Typography>
     </Stack>
   </AccountPageSection>
 );
@@ -320,7 +321,9 @@ export default function AccountPageContents(props: IAccountPageProps) {
             </AccountPageSection>
           </Stack>
           <Stack spacing={SECTION_SPACING} flex={1}>
-            <AccountPagePlanSection />
+            <AccountPagePlanSection
+              remainingDays={30 - dayjs().diff(userCtx.user?.createdAt, "days")}
+            />
             <AccountPageSection title="Boring bits" flex fadeInDelay={1100}>
               <Stack spacing="6px">
                 <a

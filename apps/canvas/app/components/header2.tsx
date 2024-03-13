@@ -620,7 +620,7 @@ export const Header = (props: {
           <MobileMenuButton />
         ) : (
           <Stack spacing="8px" direction="row">
-            {/* <UrsorButton
+            <UrsorButton
               backgroundColor="transparent"
               hoverOpacity={0.7}
               onClick={() =>
@@ -628,7 +628,7 @@ export const Header = (props: {
               }
             >
               Contact sales
-            </UrsorButton> */}
+            </UrsorButton>
             {/* <UrsorButton
           dark
           variant="tertiary"
