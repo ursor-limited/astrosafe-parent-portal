@@ -12,7 +12,7 @@ import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
 import X from "@/images/icons/X.svg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
@@ -220,11 +220,13 @@ const ProductsPopoverProductButton = (props: {
 };
 
 const ProductsPopoverColumn = (props: {
+  alwaysOpen: boolean;
   title: string;
   links: { text: string; url: string }[];
   spaceBetween: boolean;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
+  useEffect(() => setOpen(!!props.alwaysOpen), []);
   return (
     <DynamicContainer duration={800} fullWidth>
       <Stack spacing="12px">
@@ -233,10 +235,12 @@ const ProductsPopoverColumn = (props: {
           alignItems="center"
           justifyContent={props.spaceBetween ? "space-between" : undefined}
           spacing="8px"
-          onClick={() => setOpen(!open)}
+          onClick={() => !props.alwaysOpen && setOpen(!open)}
           sx={{
             svg: {
-              transform: `rotate(${open ? 270 : 90}deg)`,
+              transform: !props.alwaysOpen
+                ? `rotate(${open ? 270 : 90}deg)`
+                : undefined,
               transition: "0.2s",
             },
           }}
@@ -333,6 +337,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
         spacing={props.mobile ? "12px" : "56px"}
       >
         <ProductsPopoverColumn
+          alwaysOpen={!props.mobile}
           title="Times tables"
           links={[
             {
@@ -363,6 +368,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
           spaceBetween={!!props.mobile}
         />
         <ProductsPopoverColumn
+          alwaysOpen={!props.mobile}
           title="All tools"
           links={[
             {
@@ -385,6 +391,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
           spaceBetween={!!props.mobile}
         />
         <ProductsPopoverColumn
+          alwaysOpen={!props.mobile}
           title="More"
           links={[
             {
@@ -404,15 +411,17 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
         />
       </Stack>
     </Stack>
-    <UrsorButton
-      width="100%"
-      variant="secondary"
-      backgroundColor="transparent"
-      hoverOpacity={0.7}
-      onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
-    >
-      Contact sales
-    </UrsorButton>
+    {props.mobile ? (
+      <UrsorButton
+        width="100%"
+        variant="secondary"
+        backgroundColor="transparent"
+        hoverOpacity={0.7}
+        onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+      >
+        Contact sales
+      </UrsorButton>
+    ) : null}
   </Stack>
 );
 
@@ -611,7 +620,7 @@ export const Header = (props: {
           <MobileMenuButton />
         ) : (
           <Stack spacing="8px" direction="row">
-            <UrsorButton
+            {/* <UrsorButton
               backgroundColor="transparent"
               hoverOpacity={0.7}
               onClick={() =>
@@ -619,7 +628,7 @@ export const Header = (props: {
               }
             >
               Contact sales
-            </UrsorButton>
+            </UrsorButton> */}
             {/* <UrsorButton
           dark
           variant="tertiary"
