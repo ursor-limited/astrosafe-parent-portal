@@ -38,7 +38,7 @@ export default function ForbiddenVideoView() {
         size="large"
         dark
         variant="tertiary"
-        onClick={() => router.push("/tools/video")}
+        onClick={() => router.push("/tools/safetube")}
         startIcon={ChevronLeft}
       >
         Back to Creation

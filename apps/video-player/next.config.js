@@ -26,12 +26,17 @@ module.exports = withSvgr({
     return [
       {
         source: "/v",
-        destination: "/tools/video",
+        destination: "/tools/safetube",
         permanent: true,
       },
       {
         source: "/video",
-        destination: "/tools/video",
+        destination: "/tools/safetube",
+        permanent: true,
+      },
+      {
+        source: "/video/create",
+        destination: "/tools/safetube/create",
         permanent: true,
       },
       {
@@ -50,8 +55,8 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
-        source: "/video/create",
-        destination: "/tools/video/create",
+        source: "/safetube/create",
+        destination: "/tools/safetube/create",
         permanent: true,
       },
     ];

@@ -317,7 +317,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => (
           body="Reduce ads, remove distracting content, and increase focus."
           icon={CirclePlayIcon}
           color="#FC5C5C"
-          url="https://astrosafe.co/tools/video"
+          url="https://astrosafe.co/tools/safetube"
         />
         <ProductsPopoverProductButton
           title="Browser"
