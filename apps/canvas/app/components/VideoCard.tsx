@@ -58,7 +58,7 @@ const VideoCard = (props: IVideo) => {
           transition: "0.2s",
           cursor: "pointer",
         }}
-        onClick={() => router.push(`/v/${props.id}`)}
+        onClick={() => router.push(`/video/${props.id}`)}
       >
         <Stack
           height="163px"

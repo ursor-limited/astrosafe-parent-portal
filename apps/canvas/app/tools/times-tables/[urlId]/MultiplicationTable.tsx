@@ -9,7 +9,7 @@ import PageSelector from "./PageSelector";
 import AstroWorksheetPage, {
   A4_HEIGHT,
   A4_WIDTH,
-} from "@/app/tools/worksheet/[id]/AstroWorksheetPage";
+} from "@/app/worksheet/[id]/AstroWorksheetPage";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 

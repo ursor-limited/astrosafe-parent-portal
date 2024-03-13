@@ -1,5 +1,5 @@
 import ApiController from "@/app/api";
-import EquationWorksheet from "@/app/tools/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
