@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
@@ -19,6 +21,10 @@ import dynamic from "next/dynamic";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
+import { useEffect, useState } from "react";
+import { useWindowSize } from "usehooks-ts";
+
+export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
 const PrintableMultiplicationTable = dynamic(
   () => import("./PrintableMultiplicationTable"),
@@ -209,8 +215,13 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  //const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
-  const isMobile = false;
+  // const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
+  // const isMobile = !!fuck.isMobile;
+  // const isMobile = false;
+  const { width } = useWindowSize();
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
+
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -245,6 +256,7 @@ export default function LandingPageContents(props: {
                   spacing={isMobile ? "30px" : "45px"}
                   alignItems={isMobile ? "center" : undefined}
                   overflow="hidden"
+                  pt="8px"
                 >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
