@@ -24,8 +24,8 @@ const DashboardSignupPromptDialog = (props: {
       supertitle="Sign in"
       title={"Your dashboard awaits"}
       subtitle={[
-        "Create a free account to create and store",
-        "videos and worksheets.",
+        "Login or create a free account to create",
+        "and store videos and worksheets."
       ]}
       open={props.open}
       // button={{
