@@ -346,7 +346,7 @@ export function WorksheetGeneratorNumberBondModule(
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setSum(getZeroHandledNumber(event.target.value));
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             leftAlign
             boldValue
@@ -361,7 +361,7 @@ export function WorksheetGeneratorNumberBondModule(
               const x = getZeroHandledNumber(event.target.value);
               props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             leftAlign
             boldValue

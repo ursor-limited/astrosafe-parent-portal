@@ -290,7 +290,7 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder="Type in your worksheet title"
+              placeholder="Enter number"
               width="100%"
               leftAlign
               boldValue
@@ -304,7 +304,7 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
                 setDescription(event.target.value)
               }
-              placeholder="Type in your worksheet description"
+              placeholder="Enter number"
               width="100%"
               leftAlign
               boldValue

@@ -238,7 +238,7 @@ export function WorksheetGeneratorEquationModule(
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setFactor(getZeroHandledNumber(event.target.value))
               }
-              placeholder="Multiplier"
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
@@ -261,7 +261,7 @@ export function WorksheetGeneratorEquationModule(
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setMax(getZeroHandledNumber(event.target.value))
               }
-              placeholder="Max"
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
@@ -305,7 +305,7 @@ export function WorksheetGeneratorEquationModule(
                 _.isNumber(x) ? Math.min(x ?? 0, MAX_N_PROBLEMS) : undefined
               );
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             height="44px"
             leftAlign

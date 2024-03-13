@@ -14,10 +14,11 @@ import WorksheetQuestion from "./WorksheetQuestion";
 
 const HORIZONTAL_N_COLUMNS = 2;
 const VERTICAL_N_COLUMNS = 4;
+const LONG_DIVISION_N_COLUMNS = 3;
 
 const HORIZONTAL_ROWS = 8;
 const VERTICAL_ROWS = 5;
-const DIVISION_ROWS = 3;
+const DIVISION_ROWS = 4;
 
 export interface IWorksheetQuestion {
   number: number;
@@ -156,7 +157,7 @@ const DivisionVerticalQuestion = (props: {
 }) => (
   <WorksheetQuestion n={props.n} top="63px" left="-16px">
     <Stack
-      height="280px"
+      height="200px"
       pt="20px"
       alignItems="center"
       sx={{ breakInside: "avoid" }}
@@ -291,7 +292,9 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
         const rowz = _.chunk(
           props.pairs,
           Math.ceil(
-            props.orientation === "horizontal"
+            props.topic === "division" && props.orientation === "vertical"
+              ? LONG_DIVISION_N_COLUMNS
+              : props.orientation === "horizontal"
               ? HORIZONTAL_N_COLUMNS
               : VERTICAL_N_COLUMNS
           )
@@ -380,6 +383,8 @@ const EquationWorksheet = forwardRef<HTMLDivElement, any>(
                       0,
                       (props.orientation === "horizontal"
                         ? HORIZONTAL_N_COLUMNS
+                        : props.topic === "division"
+                        ? LONG_DIVISION_N_COLUMNS
                         : VERTICAL_N_COLUMNS) - row.length
                     )
                   ).keys(),
