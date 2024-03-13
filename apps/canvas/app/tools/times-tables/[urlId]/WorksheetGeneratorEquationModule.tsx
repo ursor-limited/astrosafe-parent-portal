@@ -96,8 +96,8 @@ export function WorksheetGeneratorEquationModule(
       );
       setPairs(
         [...fullAnswerSets, ...partialAnswerSet].map((x) => [
-          x - (factor ?? 0),
-          (randomize ? _.random(maxx) : factor) ?? 0,
+          randomize ? x : factor || 1,
+          maxx - (randomize ? x : factor || 1),
         ])
       );
     } else if (props.topic === "subtraction") {

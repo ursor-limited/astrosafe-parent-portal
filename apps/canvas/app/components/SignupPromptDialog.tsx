@@ -6,7 +6,7 @@ import UrsorDialog from "./UrsorDialog";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/dashboardSkreenshot.png";
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png";
 
 const UpgradePromptDialog = (props: {
   open: boolean;

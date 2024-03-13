@@ -1,9 +1,7 @@
 import React from "react";
 //import AuthWrapper from "../components/AuthWrapper";
 import DashboardPageContents from "./DashboardPageContents";
-import landingPageDetails from "../tools/times-tables/[urlId]/jsons";
 import {} from "@/app/tools/worksheet/[id]/EquationWorksheet";
-import Head from "next/head";
 import { UserProvider } from "../components/UserContext";
 import dynamic from "next/dynamic";
 import { Metadata } from "next";

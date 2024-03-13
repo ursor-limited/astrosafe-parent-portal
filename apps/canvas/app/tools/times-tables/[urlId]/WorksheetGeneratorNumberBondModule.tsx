@@ -24,7 +24,7 @@ import { getZeroHandledNumber } from "./WorksheetGeneratorEquationModule";
 
 const MAX_N_PROBLEMS = 100;
 
-const NumberBondConfigurationIcon = (props: {
+const LinearNumberBondConfigurationIcon = (props: {
   filled: number[];
   selected: boolean;
 }) => (
@@ -74,6 +74,65 @@ const NumberBondConfigurationIcon = (props: {
           : undefined
       }
     />
+  </Stack>
+);
+
+const TriangularNumberBondConfigurationIcon = (props: {
+  filled: number[];
+  selected: boolean;
+}) => (
+  <Stack spacing="4.5px" alignItems="center">
+    <Stack
+      border={`1.6px solid ${
+        props.selected ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[4]
+      }`}
+      height="4px"
+      width="4px"
+      borderRadius="100%"
+      bgcolor={
+        props.selected && props.filled.includes(2)
+          ? PALETTE.secondary.purple[2]
+          : props.filled.includes(2)
+          ? PALETTE.secondary.grey[4]
+          : undefined
+      }
+    />
+    <Stack direction="row" spacing="8px">
+      <Stack
+        border={`1.6px solid ${
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : PALETTE.secondary.grey[4]
+        }`}
+        height="4px"
+        width="4px"
+        borderRadius="100%"
+        bgcolor={
+          props.selected && props.filled.includes(0)
+            ? PALETTE.secondary.purple[2]
+            : props.filled.includes(0)
+            ? PALETTE.secondary.grey[4]
+            : undefined
+        }
+      />
+      <Stack
+        border={`1.6px solid ${
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : PALETTE.secondary.grey[4]
+        }`}
+        height="4px"
+        width="4px"
+        borderRadius="100%"
+        bgcolor={
+          props.selected && props.filled.includes(1)
+            ? PALETTE.secondary.purple[2]
+            : props.filled.includes(1)
+            ? PALETTE.secondary.grey[4]
+            : undefined
+        }
+      />
+    </Stack>
   </Stack>
 );
 
@@ -212,9 +271,9 @@ export function WorksheetGeneratorNumberBondModule(
                 setEmpty("sum");
               }}
             >
-              <NumberBondConfigurationIcon
+              <LinearNumberBondConfigurationIcon
                 filled={[0, 1]}
-                selected={empty === "sum"}
+                selected={orientation === "horizontal" && empty === "sum"}
               />
             </CategorySelectionButton>
             <CategorySelectionButton
@@ -224,9 +283,9 @@ export function WorksheetGeneratorNumberBondModule(
                 setEmpty("one");
               }}
             >
-              <NumberBondConfigurationIcon
+              <LinearNumberBondConfigurationIcon
                 filled={[0, 2]}
-                selected={empty === "one"}
+                selected={orientation === "horizontal" && empty === "one"}
               />
             </CategorySelectionButton>
             <CategorySelectionButton
@@ -236,9 +295,45 @@ export function WorksheetGeneratorNumberBondModule(
                 setEmpty("both");
               }}
             >
-              <NumberBondConfigurationIcon
+              <LinearNumberBondConfigurationIcon
                 filled={[2]}
-                selected={empty === "both"}
+                selected={orientation === "horizontal" && empty === "both"}
+              />
+            </CategorySelectionButton>
+            <CategorySelectionButton
+              selected={orientation === "vertical" && empty === "sum"}
+              onClick={() => {
+                setOrientation("vertical");
+                setEmpty("sum");
+              }}
+            >
+              <TriangularNumberBondConfigurationIcon
+                filled={[0, 1]}
+                selected={orientation === "vertical" && empty === "sum"}
+              />
+            </CategorySelectionButton>
+            <CategorySelectionButton
+              selected={orientation === "vertical" && empty === "one"}
+              onClick={() => {
+                setOrientation("vertical");
+                setEmpty("one");
+              }}
+            >
+              <TriangularNumberBondConfigurationIcon
+                filled={[0, 2]}
+                selected={orientation === "vertical" && empty === "one"}
+              />
+            </CategorySelectionButton>
+            <CategorySelectionButton
+              selected={orientation === "vertical" && empty === "both"}
+              onClick={() => {
+                setOrientation("vertical");
+                setEmpty("both");
+              }}
+            >
+              <TriangularNumberBondConfigurationIcon
+                filled={[2]}
+                selected={orientation === "vertical" && empty === "both"}
               />
             </CategorySelectionButton>
           </Stack>
