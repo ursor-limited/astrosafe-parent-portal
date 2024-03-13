@@ -307,16 +307,12 @@ export const Header = (props: {
                 Products
               </Typography>
               <Stack flex={1} justifyContent="space-between">
-              <ProductsPopoverProductButton
+                <ProductsPopoverProductButton
                   title="Worksheet generator"
                   body="Personalised and printable worksheets made in seconds."
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
-<<<<<<< HEAD
-                  url="/tools/times-tables/8-times-table-worksheet"
-=======
                   url="https://astrosafe.co/tools/worksheet-generator"
->>>>>>> f9e8cce7eaa9145eb3418b57dca0f6fa6c2a1822
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"
@@ -435,5 +431,4 @@ export const Header = (props: {
       />
     </Stack>
   );
-};
 };

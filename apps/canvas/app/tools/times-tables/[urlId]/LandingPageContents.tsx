@@ -206,7 +206,7 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  const mobile = false;
+  const mobile = true;
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -240,6 +240,7 @@ export default function LandingPageContents(props: {
                   direction={mobile ? "column" : "row"}
                   spacing={mobile ? "30px" : "45px"}
                   alignItems={mobile ? "center" : undefined}
+                  overflow="hidden"
                 >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (

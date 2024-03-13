@@ -62,7 +62,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   const [width, setWidth] = useState<number | undefined>(undefined);
 
   const [yOffset, setYOffset] = useState<number | undefined>(undefined);
-  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
+  const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
 
   const [referenceElement, setReferenceElement] =
     React.useState<HTMLElement | null>(null);
@@ -95,15 +95,13 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
     setWidth(referenceElement?.offsetWidth);
-    setMaxHeight(
-      window.innerHeight - (referenceElement?.getBoundingClientRect().top ?? 0)
+    setMaxWidth(
+      (width ?? window.innerWidth) -
+        (referenceElement?.getBoundingClientRect().left ?? 0)
     );
-  }, [
-    referenceElement,
-    referenceElement?.offsetHeight,
-    referenceElement?.offsetTop,
-    props.yOffset,
-  ]);
+  }, [width, referenceElement, referenceElement?.offsetTop, props.yOffset]);
+
+  console.log(props.width, "0-0-0-");
 
   return (
     <>
@@ -121,7 +119,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
           //opacity: props.open && !props.noFloatButton ? 0 : 1,
           zIndex: 2,
         }}
-        width={props.width || "fit-content"}
+        // width={props.width || "fit-content"}
       >
         {props.children}
       </Stack>
@@ -146,12 +144,10 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                 style={styles.popper}
                 {...attributes.popper}
                 zIndex={props.zIndex || 3}
-                //height={0}
               >
                 <Stack
                   //spacing={props.margin ?? "10px"}
                   pt={props.margin ?? "8px"}
-                  maxHeight={props.maxHeight && maxHeight ? maxHeight : "auto"}
                   // sx={{
                   //   // transform: `translateY(${
                   //   //   (isFlipped ? -1 : 1) * (props.margin ?? 0)
@@ -201,7 +197,9 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
 
                   {props.content ? (
                     <Box
-                      width={props.buttonWidth ? width : props.width}
+                      width={
+                        props.width //?? props.buttonWidth ? width : undefined
+                      }
                       borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                       p={props.noCard || props.noPadding ? undefined : PADDING}
                       sx={{
@@ -213,7 +211,8 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         boxShadow: "0 0 30px rgba(0,0,0,0.09)",
                       }}
                       height="100%"
-                      overflow="scroll"
+                      //maxWidth={maxWidth}
+                      overflow="hidden"
                     >
                       {props.content}
                     </Box>

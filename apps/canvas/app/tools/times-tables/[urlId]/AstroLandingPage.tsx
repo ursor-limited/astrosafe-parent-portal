@@ -27,7 +27,7 @@ export default function AstroLandingPage(props: {
   return (
     <Stack width="100vw" height="100vh" overflow="scroll" alignItems="center">
       {/* <AuthWrapper> */}
-      <Header />
+      <Header mobile={props.mobile} />
       {/* </AuthWrapper> */}
       <Stack
         spacing="36px"
@@ -41,6 +41,7 @@ export default function AstroLandingPage(props: {
           spacing={props.mobile ? "10px" : "22px"}
           alignItems="center"
           pt={props.mobile ? "13px" : undefined}
+          px="20px"
         >
           <Stack
             // sx={{
@@ -74,7 +75,7 @@ export default function AstroLandingPage(props: {
             sx={{
               textAlign: "center",
               lineHeight: props.mobile ? "22px" : "28px",
-              width: props.mobile ? "350px" : "660px",
+              width: props.mobile ? undefined : "660px",
             }}
             htmlTag="h2"
           >
