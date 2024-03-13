@@ -5,11 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import InfoIcon from "@/images/icons/InfoIcon.svg";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import X from "@/images/icons/X.svg";
-import SearchIcon from "@/images/icons/SearchIcon.svg";
+import GearIcon from "@/images/icons/GearIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
@@ -19,7 +15,7 @@ import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../components/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
 import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
@@ -188,6 +184,11 @@ export default function MobileDashboardPageContents() {
       flex={1}
       overflow="scroll"
     >
+      <Stack alignItems="flex-end">
+        <UrsorButton size="small" iconSize={14} shadow dark endIcon={GearIcon}>
+          Account
+        </UrsorButton>
+      </Stack>
       <Stack spacing="20px">
         <Stack justifyContent="space-between" direction="row">
           <Typography variant="h4">Home</Typography>
