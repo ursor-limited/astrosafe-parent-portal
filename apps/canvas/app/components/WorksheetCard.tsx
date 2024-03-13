@@ -1,9 +1,9 @@
 import { Stack } from "@mui/system";
 import { IWorksheet } from "./WorksheetGenerator";
-import EquationWorksheet from "../tools/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "../worksheet/[id]/EquationWorksheet";
 import { PALETTE, Typography } from "ui";
 import { getFormattedDate } from "./VideoCard";
-import NumberBondWorksheet from "../tools/worksheet/[id]/NumberBondWorksheet";
+import NumberBondWorksheet from "../worksheet/[id]/NumberBondWorksheet";
 import { useRouter } from "next/navigation";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";

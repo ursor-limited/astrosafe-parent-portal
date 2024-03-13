@@ -1,5 +1,5 @@
 import ApiController from "@/app/api";
-import EquationWorksheet from "@/app/tools/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -95,10 +95,10 @@ export function WorksheetGeneratorEquationModule(
         (props.nProblems ?? 0) % maxx
       );
       setPairs(
-        [...fullAnswerSets, ...partialAnswerSet].map((x) => [
-          randomize ? x : factor || 1,
-          maxx - (randomize ? x : factor || 1),
-        ])
+        [...fullAnswerSets, ...partialAnswerSet].map((x) => {
+          const value = randomize ? x : factor || 1;
+          return [value, _.sample(_.range(maxx - value + 1)) || 1];
+        })
       );
     } else if (props.topic === "subtraction") {
       const maxx = (max ?? 0) + 1;
@@ -238,7 +238,7 @@ export function WorksheetGeneratorEquationModule(
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setFactor(getZeroHandledNumber(event.target.value))
               }
-              placeholder="Multiplier"
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
@@ -261,7 +261,7 @@ export function WorksheetGeneratorEquationModule(
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setMax(getZeroHandledNumber(event.target.value))
               }
-              placeholder="Max"
+              placeholder="Enter number"
               leftAlign
               boldValue
               backgroundColor={
@@ -305,7 +305,7 @@ export function WorksheetGeneratorEquationModule(
                 _.isNumber(x) ? Math.min(x ?? 0, MAX_N_PROBLEMS) : undefined
               );
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             height="44px"
             leftAlign

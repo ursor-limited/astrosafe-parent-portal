@@ -165,49 +165,51 @@ function VideoPageContents(props: { details: IVideo }) {
 
   return props.details && provider ? (
     <>
-      <BigCard
-        title={props.details.title}
-        description={props.details.description}
-        createdAt={props.details.createdAt}
-        rightStuff={
-          <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id &&
-            userDetails?.user?.id === props.details.creatorId ? (
-              <CircularButton
-                icon={TrashcanIcon}
-                color={PALETTE.system.red}
-                onClick={() => setDeletionDialogOpen(true)}
+      <Stack p="40px" overflow="scroll">
+        <BigCard
+          title={props.details.title}
+          description={props.details.description}
+          createdAt={props.details.createdAt}
+          rightStuff={
+            <Stack direction="row" spacing="12px">
+              {userDetails?.user?.id &&
+              userDetails?.user?.id === props.details.creatorId ? (
+                <CircularButton
+                  icon={TrashcanIcon}
+                  color={PALETTE.system.red}
+                  onClick={() => setDeletionDialogOpen(true)}
+                />
+              ) : null}
+              <UrsorButton
+                dark
+                variant="tertiary"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+                endIcon={LinkIcon}
+              >
+                Share link
+              </UrsorButton>
+            </Stack>
+          }
+        >
+          <Stack px="24px" flex={1}>
+            <Stack flex={1} pt="30px" ref={setSizeRef}>
+              <Player
+                url={props.details.url}
+                provider={provider}
+                width={videoWidth}
+                height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+                setDuration={(d) => d && setDuration(d)}
+                noKitemark={videoWidth < VIDEO_WIDTH}
+                top="120px"
+                playingCallback={(p) => setPlaying(p)}
               />
-            ) : null}
-            <UrsorButton
-              dark
-              variant="tertiary"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
-              endIcon={LinkIcon}
-            >
-              Share link
-            </UrsorButton>
+            </Stack>
           </Stack>
-        }
-      >
-        <Stack px="24px" flex={1}>
-          <Stack flex={1} pt="30px" ref={setSizeRef}>
-            <Player
-              url={props.details.url}
-              provider={provider}
-              width={videoWidth}
-              height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
-              setDuration={(d) => d && setDuration(d)}
-              noKitemark={videoWidth < VIDEO_WIDTH}
-              top="120px"
-              playingCallback={(p) => setPlaying(p)}
-            />
-          </Stack>
-        </Stack>
-      </BigCard>
+        </BigCard>
+      </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}

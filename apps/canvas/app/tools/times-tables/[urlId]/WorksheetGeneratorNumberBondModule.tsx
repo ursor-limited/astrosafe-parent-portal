@@ -1,5 +1,5 @@
 import ApiController from "@/app/api";
-import EquationWorksheet from "@/app/tools/worksheet/[id]/EquationWorksheet";
+import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,7 +17,7 @@ import NumberBondWorksheet, {
   NUMBER_BOND_HORIZONTAL_ROWS_N,
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
-} from "@/app/tools/worksheet/[id]/NumberBondWorksheet";
+} from "@/app/worksheet/[id]/NumberBondWorksheet";
 import ShareIcon from "@/images/icons/ShareIcon.svg";
 import { useUserContext } from "@/app/components/UserContext";
 import { getZeroHandledNumber } from "./WorksheetGeneratorEquationModule";
@@ -346,7 +346,7 @@ export function WorksheetGeneratorNumberBondModule(
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setSum(getZeroHandledNumber(event.target.value));
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             leftAlign
             boldValue
@@ -361,7 +361,7 @@ export function WorksheetGeneratorNumberBondModule(
               const x = getZeroHandledNumber(event.target.value);
               props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
             }}
-            placeholder="Number of digits"
+            placeholder="Enter number"
             width="100%"
             leftAlign
             boldValue

@@ -1,7 +1,7 @@
 import React from "react";
 //import AuthWrapper from "../components/AuthWrapper";
 import DashboardPageContents from "./DashboardPageContents";
-import {} from "@/app/tools/worksheet/[id]/EquationWorksheet";
+import {} from "@/app/worksheet/[id]/EquationWorksheet";
 import { UserProvider } from "../components/UserContext";
 import dynamic from "next/dynamic";
 import { Metadata } from "next";

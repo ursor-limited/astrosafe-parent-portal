@@ -473,11 +473,11 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        button={{
-          text: "Upgrade",
-          icon: VerifiedIcon,
-          callback: () => setUpgradeDialogOpen(true),
-        }}
+        // button={{
+        //   text: "Upgrade",
+        //   icon: VerifiedIcon,
+        //   callback: () => setUpgradeDialogOpen(true),
+        // }}
         buttonRowExtraElement={
           <Stack
             height="100%"

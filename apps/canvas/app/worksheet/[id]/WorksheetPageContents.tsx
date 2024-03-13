@@ -20,7 +20,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/tools/v/[videoId]/VideoPageContents";
+import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
