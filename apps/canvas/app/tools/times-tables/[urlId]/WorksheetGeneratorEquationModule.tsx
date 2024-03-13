@@ -95,10 +95,10 @@ export function WorksheetGeneratorEquationModule(
         (props.nProblems ?? 0) % maxx
       );
       setPairs(
-        [...fullAnswerSets, ...partialAnswerSet].map((x) => [
-          randomize ? x : factor || 1,
-          maxx - (randomize ? x : factor || 1),
-        ])
+        [...fullAnswerSets, ...partialAnswerSet].map((x) => {
+          const value = randomize ? x : factor || 1;
+          return [value, _.sample(_.range(maxx - value + 1)) || 1];
+        })
       );
     } else if (props.topic === "subtraction") {
       const maxx = (max ?? 0) + 1;
