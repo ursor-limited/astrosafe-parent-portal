@@ -35,8 +35,8 @@ async function WorksheetPage({
   const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
   //const { width } = useWindowSize();
   // const [isMobile, setIsMobile] = useState<boolean>(false);
-  const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
-  const isMobile = true; //!!fuck.isMobile;
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   return details ? (
     <AuthWrapper>
