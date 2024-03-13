@@ -2,15 +2,15 @@
 
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
-import { Captioned } from "./LandingPageContents";
+import { Captioned } from "../tools/times-tables/[urlId]/LandingPageContents";
 import UrsorSelect from "@/app/components/UrsorSelect";
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import PageSelector from "./PageSelector";
+import PageSelector from "../tools/times-tables/[urlId]/PageSelector";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import SyncIcon from "@/images/icons/Sync.svg";
-import { WorksheetGeneratorEquationModule } from "./WorksheetGeneratorEquationModule";
-import { WorksheetGeneratorNumberBondModule } from "./WorksheetGeneratorNumberBondModule";
+import { WorksheetGeneratorEquationModule } from "../tools/times-tables/[urlId]/WorksheetGeneratorEquationModule";
+import { WorksheetGeneratorNumberBondModule } from "../tools/times-tables/[urlId]/WorksheetGeneratorNumberBondModule";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import { useRouter } from "next/navigation";

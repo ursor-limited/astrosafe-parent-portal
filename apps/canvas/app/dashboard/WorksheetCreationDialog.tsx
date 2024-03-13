@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
-import WorksheetGenerator from "../tools/times-tables/[urlId]/WorksheetGenerator";
+import WorksheetGenerator from "../components/WorksheetGenerator";
 import { useState } from "react";
 import { Slider } from "@mui/material";
 import SignupPromptDialog from "./SignupPromptDialog";

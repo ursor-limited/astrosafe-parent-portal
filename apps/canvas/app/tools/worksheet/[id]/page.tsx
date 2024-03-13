@@ -1,7 +1,7 @@
 import React from "react";
 import WorksheetPageContents from "./WorksheetPageContents";
 import ApiController from "@/app/api";
-import { IWorksheet } from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";

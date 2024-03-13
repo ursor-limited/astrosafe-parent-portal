@@ -11,12 +11,14 @@ import {
   WorksheetTopic,
   ISpecificWorksheetGeneratorSettings,
   WorksheetId,
-} from "./WorksheetGenerator";
+} from "../../../components/WorksheetGenerator";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 //import PrintableMultiplicationTable from "./PrintableMultiplicationTable";
 import dynamic from "next/dynamic";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
 
 const PrintableMultiplicationTable = dynamic(
   () => import("./PrintableMultiplicationTable"),
@@ -24,7 +26,7 @@ const PrintableMultiplicationTable = dynamic(
 );
 
 const WorksheetGenerator = dynamic(
-  () => import("./WorksheetGenerator"),
+  () => import("../../../components/WorksheetGenerator"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
@@ -128,6 +130,7 @@ export const Captioned = (props: {
 );
 
 export default function LandingPageContents(props: {
+  //isMobile: boolean;
   urlId: string;
   pageTitle: string;
   metaDescription: string;
@@ -206,25 +209,28 @@ export default function LandingPageContents(props: {
     }[];
   };
 }) {
-  const mobile = true;
+  // const { isMobile } = getSelectorsByUserAgent(
+  //   headers().get("user-agent") ?? ""
+  // );
+  const isMobile = false;
   return (
     <AstroLandingPage
       title={[props.heading]}
       subtitle={props.subHeading}
-      mobile={mobile}
+      mobile={isMobile}
       faqs={props.faqs}
       viewports={[
         <LandingPageViewport
           key="howItWorks"
           supertitle={props.howItWorks.supertitle}
           title={props.howItWorks.title}
-          mobile={mobile}
+          mobile={isMobile}
         >
           <IntroSteps
             step1={props.howItWorks.step1}
             step2={props.howItWorks.step2}
             step3={props.howItWorks.step3}
-            mobile={mobile}
+            mobile={isMobile}
             backgroundOpacity={0.13}
           />
         </LandingPageViewport>,
@@ -234,19 +240,19 @@ export default function LandingPageContents(props: {
                 key="worksheetPreview"
                 supertitle={props.worksheetPreview.supertitle}
                 title={props.worksheetPreview.title}
-                mobile={mobile}
+                mobile={isMobile}
               >
                 <Stack
-                  direction={mobile ? "column" : "row"}
-                  spacing={mobile ? "30px" : "45px"}
-                  alignItems={mobile ? "center" : undefined}
+                  direction={isMobile ? "column" : "row"}
+                  spacing={isMobile ? "30px" : "45px"}
+                  alignItems={isMobile ? "center" : undefined}
                   overflow="hidden"
                 >
                   {props.worksheetPreview.worksheetPreviewParameters
                     ?.worksheetParameters ? (
                     <PrintableMultiplicationTable
                       {...props.worksheetPreview.worksheetPreviewParameters}
-                      mobile={mobile}
+                      mobile={isMobile}
                     />
                   ) : null}
                   <Stack spacing="10px" maxWidth="503px">
@@ -272,7 +278,7 @@ export default function LandingPageContents(props: {
                 supertitle={props.linkTable.supertitle}
                 title={props.linkTable.title}
                 subtitle={props.linkTable.body}
-                mobile={mobile}
+                mobile={isMobile}
               >
                 <Stack
                   width="990px"
@@ -290,7 +296,7 @@ export default function LandingPageContents(props: {
                       {props.linkTable.tableHeading}
                     </Typography>
                   </Stack>
-                  <Stack spacing={mobile ? "16px" : "22px"}>
+                  <Stack spacing={isMobile ? "16px" : "22px"}>
                     {_.chunk(props.linkTable.links, 2).map((pair, i) => (
                       <Stack
                         key={i}
@@ -355,11 +361,11 @@ export default function LandingPageContents(props: {
           supertitle={props.explainerCards.supertitle}
           subtitle={props.explainerCards.body}
           title={props.explainerCards.title}
-          mobile={mobile}
+          mobile={isMobile}
         >
           <Stack
-            direction={mobile ? "column" : "row"}
-            spacing={mobile ? "16px" : "22px"}
+            direction={isMobile ? "column" : "row"}
+            spacing={isMobile ? "16px" : "22px"}
           >
             <ExplainerCard
               imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
@@ -386,21 +392,21 @@ export default function LandingPageContents(props: {
           key="otherPages"
           supertitle={props.otherPages.supertitle}
           title={props.otherPages.title}
-          mobile={mobile}
+          mobile={isMobile}
         >
-          <Stack spacing={mobile ? "14px" : "22px"}>
+          <Stack spacing={isMobile ? "14px" : "22px"}>
             {_.chunk(props.otherPages.links, 2).map((pair, i) => (
               <Stack
                 key={i}
-                direction={mobile ? "column" : "row"}
-                spacing={mobile ? "14px" : "22px"}
+                direction={isMobile ? "column" : "row"}
+                spacing={isMobile ? "14px" : "22px"}
               >
                 <OtherPageCard
                   title={pair[0].title}
                   text={pair[0].text}
                   imageString={pair[0].imageString}
                   urlId={pair[0].urlId}
-                  mobile={mobile}
+                  mobile={isMobile}
                 />
                 {pair?.[1] ? (
                   <OtherPageCard
@@ -408,7 +414,7 @@ export default function LandingPageContents(props: {
                     text={pair[1].text}
                     imageString={pair[1].imageString}
                     urlId={pair[1].urlId}
-                    mobile={mobile}
+                    mobile={isMobile}
                   />
                 ) : null}
               </Stack>
@@ -421,7 +427,7 @@ export default function LandingPageContents(props: {
         <WorksheetGenerator
           {...props.worksheetGenerator}
           fadeIn
-          mobile={mobile}
+          mobile={isMobile}
           glow
         />
       </Stack>

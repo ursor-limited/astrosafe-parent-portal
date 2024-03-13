@@ -8,8 +8,10 @@ import {
   WorksheetId,
   INumberBondWorksheetParameters,
   INumberBondWorksheetGeneratorSettings,
-} from "./WorksheetGenerator";
+} from "../../../components/WorksheetGenerator";
 import { Metadata, ResolvingMetadata } from "next";
+// import { getSelectorsByUserAgent } from "react-device-detect";
+// import { headers } from "next/headers";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 
@@ -40,9 +42,13 @@ export async function generateMetadata({
 
 async function LandingPage({ params }: { params: { urlId: string } }) {
   const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
+  // const { isMobile } = getSelectorsByUserAgent(
+  //   headers().get("user-agent") ?? ""
+  // );
   return details ? (
     <>
       <LandingPageContents
+        // isMobile={isMobile}
         {...details}
         worksheetGenerator={{
           ...details.worksheetGenerator,

@@ -2,7 +2,7 @@ import {
   EquationOrientation,
   INumberBondWorksheetParameters,
   WorksheetTopic,
-} from "./tools/times-tables/[urlId]/WorksheetGenerator";
+} from "./components/WorksheetGenerator";
 
 export interface IVideo {
   id: string;

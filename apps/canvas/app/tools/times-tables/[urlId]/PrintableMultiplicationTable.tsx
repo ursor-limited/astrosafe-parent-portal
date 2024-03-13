@@ -1,7 +1,10 @@
 "use client";
 import { Stack } from "@mui/system";
 import MultiplicationTable from "./MultiplicationTable";
-import { WorksheetId, WorksheetTopic } from "./WorksheetGenerator";
+import {
+  WorksheetId,
+  WorksheetTopic,
+} from "../../../components/WorksheetGenerator";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import { UrsorButton } from "ui";
 

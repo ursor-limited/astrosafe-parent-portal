@@ -10,7 +10,7 @@ import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
   IWorksheet,
-} from "@/app/tools/times-tables/[urlId]/WorksheetGenerator";
+} from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
