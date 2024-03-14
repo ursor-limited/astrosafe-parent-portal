@@ -9,6 +9,7 @@ import SpaceGlow from "@/images/spaceGlow.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import { Header } from "@/app/components/header2";
+import AuthWrapper from "@/app/components/AuthWrapper";
 //import AuthWrapper from "@/app/components/AuthWrapper";
 
 export default function AstroLandingPage(props: {
@@ -26,9 +27,9 @@ export default function AstroLandingPage(props: {
 }) {
   return (
     <Stack width="100vw" height="100vh" overflow="scroll" alignItems="center">
-      {/* <AuthWrapper> */}
-      <Header mobile={props.mobile} />
-      {/* </AuthWrapper> */}
+      <AuthWrapper>
+        <Header mobile={props.mobile} />
+      </AuthWrapper>
       <Stack
         spacing="36px"
         alignItems="center"
