@@ -5,9 +5,9 @@ import Image from "next/image";
 import { PALETTE, Typography, UrsorButton } from "ui";
 
 export interface IValuePropositionItem {
-  title: "Number bonds";
-  text: "From times tables to division to number bonds. Create them quick in all languages.";
-  imageUrl: "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg";
+  title: string;
+  text: string;
+  imageUrl: string;
   color: string;
 }
 
