@@ -45,9 +45,15 @@ const HorizontalQuestion = (props: {
       sx={{ breakInside: "avoid" }}
     >
       <Stack direction="row" spacing="14px">
-        <Typography variant="h3">{props.pair[0]}</Typography>
+        <Typography variant="h3" color={PALETTE.font.dark}>
+          {props.pair[0]}
+        </Typography>
         <Stack pb="0px">
-          <Typography variant="h5" sx={{ fontWeight: 390, lineHeight: "170%" }}>
+          <Typography
+            variant="h5"
+            sx={{ fontWeight: 390, lineHeight: "170%" }}
+            color={PALETTE.font.dark}
+          >
             {props.topic === "multiplication"
               ? "x"
               : props.topic === "addition"
@@ -55,11 +61,19 @@ const HorizontalQuestion = (props: {
               : "-"}
           </Typography>
         </Stack>
-        <Typography variant="h3" sx={{ fontWeight: 250 }}>
+        <Typography
+          variant="h3"
+          sx={{ fontWeight: 250 }}
+          color={PALETTE.font.dark}
+        >
           {props.pair[1]}
         </Typography>
       </Stack>
-      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+      <Typography
+        variant="h3"
+        sx={{ fontWeight: 100 }}
+        color={PALETTE.font.dark}
+      >
         =
       </Typography>
       {props.answer ? (
@@ -115,7 +129,9 @@ const VerticalQuestion = (props: {
       sx={{ breakInside: "avoid" }}
     >
       <Stack alignItems="flex-end">
-        <Typography variant="h3">{props.pair[0]}</Typography>
+        <Typography variant="h3" color={PALETTE.font.dark}>
+          {props.pair[0]}
+        </Typography>
         <Stack direction="row" justifyContent="space-between" spacing="36px">
           <Typography variant="h5" sx={{ fontWeight: 350, lineHeight: "180%" }}>
             {props.topic === "multiplication"

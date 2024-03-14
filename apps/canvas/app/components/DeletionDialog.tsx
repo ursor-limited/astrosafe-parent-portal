@@ -49,7 +49,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
             sx={{ textAlign: "center" }}
           >{`Remove ${props.category}`}</Typography>
           <Stack alignItems="center" spacing="5px">
-            <Typography variant="medium">
+            <Typography variant="medium" sx={{ textAlign: "center" }}>
               {`Are you sure you want to delete`}
             </Typography>
             <Typography
