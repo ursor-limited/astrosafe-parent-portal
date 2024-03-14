@@ -117,13 +117,18 @@ export default function MultiplicationTable(props: {
                       justifyContent="space-between"
                     >
                       <Stack direction="row" spacing="14px">
-                        <Typography variant="h3" sx={{ fontWeight: 280 }}>
+                        <Typography
+                          variant="h3"
+                          sx={{ fontWeight: 280 }}
+                          color={PALETTE.font.dark}
+                        >
                           {factor}
                         </Typography>
                         <Stack pb="0px">
                           <Typography
                             variant="h5"
                             sx={{ fontWeight: 380, lineHeight: "170%" }}
+                            color={PALETTE.font.dark}
                           >
                             x
                           </Typography>
@@ -136,7 +141,11 @@ export default function MultiplicationTable(props: {
                           {x + 1}
                         </Typography>
                       </Stack>
-                      <Typography variant="h3" sx={{ fontWeight: 100 }}>
+                      <Typography
+                        variant="h3"
+                        sx={{ fontWeight: 100 }}
+                        color={PALETTE.font.dark}
+                      >
                         =
                       </Typography>
                       <Typography

@@ -22,10 +22,15 @@ export const IntroBox = (props: {
       }}
       spacing={props.mobile ? "5px" : undefined}
     >
-      <Typography variant={props.mobile ? "normal" : "medium"} bold>
+      <Typography
+        color={PALETTE.font.dark}
+        variant={props.mobile ? "normal" : "medium"}
+        bold
+      >
         {props.title}
       </Typography>
       <Typography
+        color={PALETTE.font.dark}
         variant="small"
         sx={{
           textAlign: "center",
