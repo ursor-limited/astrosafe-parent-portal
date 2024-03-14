@@ -245,6 +245,7 @@ export default function MobileWorksheetPageContents(props: IWorksheet) {
       <Stack spacing="12px" px="20px" pb="20px">
         {[...Array(nPages).keys()].map((i) => (
           <Stack
+            key={i}
             width="100%"
             height={((width - 40) * 297) / 210}
             position="relative"
