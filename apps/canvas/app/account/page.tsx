@@ -3,6 +3,9 @@ import ApiController from "@/app/api";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import AccountPageContents from "./AccountPageContents";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { headers } from "next/headers";
+import MobileAccountPageContents from "./MobileAccountPageContents";
 
 async function AccountPage({
   params,
@@ -11,10 +14,12 @@ async function AccountPage({
   params: { videoId: string };
   searchParams: { share: string };
 }) {
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   return (
     <AuthWrapper>
       <UserProvider>
-        <AccountPageContents />
+        {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
       </UserProvider>
     </AuthWrapper>
   );
