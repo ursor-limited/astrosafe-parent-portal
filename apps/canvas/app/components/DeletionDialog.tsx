@@ -46,6 +46,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           <Typography
             variant="h4"
             color={PALETTE.secondary.purple[2]}
+            sx={{ textAlign: "center" }}
           >{`Remove ${props.category}`}</Typography>
           <Stack alignItems="center" spacing="5px">
             <Typography variant="medium">
@@ -61,7 +62,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
             >
               {props.title}
             </Typography>
-            <Typography variant="medium">
+            <Typography variant="medium" sx={{ textAlign: "center" }}>
               {'To confirm your intention, please type "delete" below.'}
             </Typography>
           </Stack>
