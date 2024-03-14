@@ -147,7 +147,7 @@ const VideoCreationDialog = (props: {
   return (
     <>
       <UrsorDialog
-        supertitle="Create video"
+        supertitle="Create safe video link"
         open={props.open}
         // button={{
         //   text: "Create",
