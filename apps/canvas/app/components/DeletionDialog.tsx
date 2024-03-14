@@ -17,6 +17,7 @@ export interface IDeletionDialogProps {
   deletionCallback: () => void;
   category: string;
   title: string;
+  mobile?: boolean;
 }
 
 export default function DeletionDialog(props: IDeletionDialogProps) {
@@ -45,6 +46,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           <Typography
             variant="h4"
             color={PALETTE.secondary.purple[2]}
+            sx={{ textAlign: "center" }}
           >{`Remove ${props.category}`}</Typography>
           <Stack alignItems="center" spacing="5px">
             <Typography variant="medium">
@@ -60,7 +62,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
             >
               {props.title}
             </Typography>
-            <Typography variant="medium">
+            <Typography variant="medium" sx={{ textAlign: "center" }}>
               {'To confirm your intention, please type "delete" below.'}
             </Typography>
           </Stack>
@@ -110,7 +112,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
                 }}
                 backgroundColor={PALETTE.system.red}
                 disabled={deletionPhrase !== "delete"}
-                width="300px"
+                width={props.mobile ? "200px" : "300px"}
               >
                 Do it
               </UrsorButton>
@@ -119,7 +121,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           <UrsorButton
             onClick={props.closeCallback}
             variant="secondary"
-            width="300px"
+            width={props.mobile ? "200px" : "300px"}
           >
             Go back
           </UrsorButton>

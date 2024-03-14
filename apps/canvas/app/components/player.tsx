@@ -320,7 +320,8 @@ const Player = (props: {
           width={fullScreen ? "100%" : props.width}
           height={fullScreen ? "100%" : props.height}
           src={url}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
+          frameBorder={0}
         />
         <Stack
           position="absolute"
