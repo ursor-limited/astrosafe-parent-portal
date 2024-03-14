@@ -19,10 +19,10 @@ const WorksheetSignupPromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title={"Your math worksheet is ready"}
+      title="Your worksheet is ready for download"
       subtitle={[
-        "Create a free account to download and print your worksheet",
-        "and save time preparing your lessons!",
+        "Login or create a free account to get your worksheet",
+        "and use all of our teaching resources.",
       ]}
       open={props.open}
       // button={{

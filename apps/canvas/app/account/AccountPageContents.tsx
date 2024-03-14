@@ -25,7 +25,7 @@ export const TRIAL_DAYS = 14;
 
 export interface IAccountPageProps {}
 
-const AccountPageSection = (props: {
+export const AccountPageSection = (props: {
   title: string;
   button?: { variant: ButtonVariant; text: string; callback: () => void };
   children: React.ReactNode;
@@ -67,7 +67,7 @@ const AccountPageSection = (props: {
   </Stack>
 );
 
-const AccountPagePlanSection = (props: { remainingDays: number }) => (
+export const AccountPagePlanSection = (props: { remainingDays: number }) => (
   <AccountPageSection
     title="Plan"
     button={{

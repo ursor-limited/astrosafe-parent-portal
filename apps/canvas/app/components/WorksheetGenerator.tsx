@@ -190,6 +190,7 @@ export default function WorksheetGenerator(props: {
   mobile?: boolean;
   fadeIn?: boolean;
   glow?: boolean;
+  buttonText?: string;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -260,10 +261,7 @@ export default function WorksheetGenerator(props: {
         setFreeWorksheetIds([...freeWorksheetIds, id]);
       }
       router.push(
-        // !props.landOnWorksheetPage && userDetails.user
-        //   ? "/dashboard"
-        //   : `/tools/worksheet/${id}`
-        "/dashboard"
+        !props.landOnWorksheetPage ? "/dashboard" : `/worksheet/${id}`
       );
     });
   };
@@ -290,7 +288,7 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < TITLE_CHARACTER_LIMIT &&
                 setTitle(event.target.value)
               }
-              placeholder="Enter number"
+              placeholder="Type in your worksheet title"
               width="100%"
               leftAlign
               boldValue
@@ -304,7 +302,7 @@ export default function WorksheetGenerator(props: {
                 event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
                 setDescription(event.target.value)
               }
-              placeholder="Enter number"
+              placeholder="Type in your worksheet description"
               width="100%"
               leftAlign
               boldValue
@@ -403,7 +401,7 @@ export default function WorksheetGenerator(props: {
               endIcon={PencilIcon}
               width="100%"
             >
-              Create
+              {props.buttonText || "Create"}
             </UrsorButton>
           ) : null}
         </Stack>
@@ -444,7 +442,7 @@ export default function WorksheetGenerator(props: {
                   endIcon={PencilIcon}
                   width="100%"
                 >
-                  Create
+                  {props.buttonText || "Create"}
                 </UrsorButton>
               </Stack>
             </Stack>

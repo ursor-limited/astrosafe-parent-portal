@@ -439,6 +439,7 @@ export default function LandingPageContents(props: {
           fadeIn
           mobile={isMobile}
           glow
+          buttonText="Download"
         />
       </Stack>
     </AstroLandingPage>

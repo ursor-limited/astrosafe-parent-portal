@@ -22,7 +22,10 @@ const WorksheetCreationDialog = (props: {
       noOverflowHidden
       noPadding={props.mobile}
     >
-      <Stack p={props.mobile ? "20px" : undefined} overflow="scroll">
+      <Stack
+        p={props.mobile ? "20px" : undefined}
+        overflow={props.mobile ? "scroll" : undefined}
+      >
         <WorksheetGenerator
           mobile={props.mobile}
           noPadding

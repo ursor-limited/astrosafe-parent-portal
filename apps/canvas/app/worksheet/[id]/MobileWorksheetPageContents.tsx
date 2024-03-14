@@ -173,132 +173,206 @@ export default function MobileWorksheetPageContents(props: IWorksheet) {
   }, [width]);
 
   return (
-    <Stack spacing="22px" overflow="scroll">
-      <Stack direction="row" justifyContent="space-between" p="20px">
-        {/* {userDetails?.user?.id
-            userDetails?.user?.id === props.creatorId ? ( */}
-        <Stack direction="row" spacing="10px">
-          <Stack
-            sx={{
-              pointerEvents:
-                userDetails?.user?.id === props.creatorId ? undefined : "none",
-              opacity:
-                userDetails?.user?.id &&
-                userDetails?.user?.id !== props.creatorId
-                  ? 0
-                  : 1,
-            }}
-          >
-            <CircularButton
-              icon={TrashcanIcon}
-              color={PALETTE.system.red}
-              onClick={() => setDeletionDialogOpen(true)}
-            />
-          </Stack>
-          {/* ) : null} */}
-          <Stack
-            borderRadius="100%"
-            border="2px solid rgb(255,255,255)"
-            height="39px"
-            width="39px"
-            justifyContent="center"
-            alignItems="center"
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              notificationCtx.success("Copied URL to clipboard.");
-            }}
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-              svg: {
-                path: {
-                  fill: "rgb(255,255,255)",
-                },
-              },
-            }}
-          >
-            <ShareIcon width="22px" height="22px" />
-          </Stack>
-        </Stack>
-        <Stack spacing="5px">
-          <UrsorButton
-            size="small"
-            dark
-            variant="tertiary"
-            onClick={() => save(true)}
-            width="200px"
-          >
-            Download answers
-          </UrsorButton>
-          <UrsorButton
-            size="small"
-            dark
-            variant="tertiary"
-            onClick={() => save()}
-            width="200px"
-          >
-            Download worksheet
-          </UrsorButton>
-        </Stack>
+    <>
+      <Stack
+        sx={{
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+        position="absolute"
+      >
+        {[...Array(nPages).keys()].map((i) =>
+          props.worksheetId === "equation" ? (
+            <>
+              <EquationWorksheet
+                key={i}
+                printableId={`answerspage${i}`}
+                title={props.title}
+                description={props.description}
+                topic={(props.parameters as IEquationWorksheetParameters).topic}
+                orientation={props.parameters.orientation}
+                pageIndex={i}
+                pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+                showAnswers
+              />
+              <EquationWorksheet
+                key={i}
+                printableId={`page${i}`}
+                title={props.title}
+                description={props.description}
+                topic={(props.parameters as IEquationWorksheetParameters).topic}
+                orientation={props.parameters.orientation}
+                pageIndex={i}
+                pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              />
+            </>
+          ) : props.worksheetId === "numberBond" ? (
+            <>
+              <NumberBondWorksheet
+                key={i}
+                printableId={`answerspage${i}`}
+                title={props.title}
+                description={props.description}
+                sum={(props.parameters as INumberBondWorksheetParameters).sum}
+                orientation={props.parameters.orientation}
+                pageIndex={i}
+                leftNumbers={
+                  (props.parameters as INumberBondWorksheetParameters)
+                    .leftNumbers
+                }
+                empty={
+                  (props.parameters as INumberBondWorksheetParameters).empty
+                }
+                showAnswers
+              />
+              <NumberBondWorksheet
+                key={i}
+                printableId={`page${i}`}
+                title={props.title}
+                description={props.description}
+                sum={(props.parameters as INumberBondWorksheetParameters).sum}
+                orientation={props.parameters.orientation}
+                pageIndex={i}
+                leftNumbers={
+                  (props.parameters as INumberBondWorksheetParameters)
+                    .leftNumbers
+                }
+                empty={
+                  (props.parameters as INumberBondWorksheetParameters).empty
+                }
+              />
+            </>
+          ) : null
+        )}
       </Stack>
-      <Stack spacing="12px" px="20px" pb="20px">
-        {[...Array(nPages).keys()].map((i) => (
-          <Stack
-            key={i}
-            width="100%"
-            height={((width - 40) * 297) / 210}
-            position="relative"
-          >
+      <Stack spacing="22px" overflow="scroll">
+        <Stack direction="row" justifyContent="space-between" p="20px">
+          {/* {userDetails?.user?.id
+            userDetails?.user?.id === props.creatorId ? ( */}
+          <Stack direction="row" spacing="10px">
             <Stack
-              position="absolute"
-              left={0}
-              top={0}
               sx={{
-                transform: `scale(${pageScale})`,
-                transformOrigin: "top left",
+                pointerEvents:
+                  userDetails?.user?.id === props.creatorId
+                    ? undefined
+                    : "none",
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id !== props.creatorId
+                    ? 0
+                    : 1,
               }}
             >
-              {props.worksheetId === "equation" ? (
-                <EquationWorksheet
-                  key={i}
-                  printableId={`answerspage${i}`}
-                  title={props.title}
-                  description={props.description}
-                  topic={
-                    (props.parameters as IEquationWorksheetParameters).topic
-                  }
-                  orientation={props.parameters.orientation}
-                  pageIndex={i}
-                  pairs={
-                    (props.parameters as IEquationWorksheetParameters).pairs
-                  }
-                  showAnswers
-                />
-              ) : props.worksheetId === "numberBond" ? (
-                <NumberBondWorksheet
-                  key={i}
-                  printableId={`answerspage${i}`}
-                  title={props.title}
-                  description={props.description}
-                  sum={(props.parameters as INumberBondWorksheetParameters).sum}
-                  orientation={props.parameters.orientation}
-                  pageIndex={i}
-                  leftNumbers={
-                    (props.parameters as INumberBondWorksheetParameters)
-                      .leftNumbers
-                  }
-                  empty={
-                    (props.parameters as INumberBondWorksheetParameters).empty
-                  }
-                  showAnswers
-                />
-              ) : null}
+              <CircularButton
+                icon={TrashcanIcon}
+                color={PALETTE.system.red}
+                onClick={() => setDeletionDialogOpen(true)}
+              />
+            </Stack>
+            {/* ) : null} */}
+            <Stack
+              borderRadius="100%"
+              border="2px solid rgb(255,255,255)"
+              height="39px"
+              width="39px"
+              justifyContent="center"
+              alignItems="center"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notificationCtx.success("Copied URL to clipboard.");
+              }}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: "rgb(255,255,255)",
+                  },
+                },
+              }}
+            >
+              <ShareIcon width="22px" height="22px" />
             </Stack>
           </Stack>
-        ))}
+          <Stack spacing="5px">
+            <UrsorButton
+              size="small"
+              dark
+              variant="tertiary"
+              onClick={() => save(true)}
+              width="200px"
+            >
+              Download answers
+            </UrsorButton>
+            <UrsorButton
+              size="small"
+              dark
+              variant="tertiary"
+              onClick={() => save()}
+              width="200px"
+            >
+              Download worksheet
+            </UrsorButton>
+          </Stack>
+        </Stack>
+        <Stack spacing="12px" px="20px" pb="20px">
+          {[...Array(nPages).keys()].map((i) => (
+            <Stack
+              key={i}
+              width="100%"
+              height={((width - 40) * 297) / 210}
+              position="relative"
+            >
+              <Stack
+                position="absolute"
+                left={0}
+                top={0}
+                sx={{
+                  transform: `scale(${pageScale})`,
+                  transformOrigin: "top left",
+                }}
+              >
+                {props.worksheetId === "equation" ? (
+                  <EquationWorksheet
+                    key={i}
+                    title={props.title}
+                    description={props.description}
+                    topic={
+                      (props.parameters as IEquationWorksheetParameters).topic
+                    }
+                    orientation={props.parameters.orientation}
+                    pageIndex={i}
+                    pairs={
+                      (props.parameters as IEquationWorksheetParameters).pairs
+                    }
+                    showAnswers
+                  />
+                ) : props.worksheetId === "numberBond" ? (
+                  <NumberBondWorksheet
+                    key={i}
+                    title={props.title}
+                    description={props.description}
+                    sum={
+                      (props.parameters as INumberBondWorksheetParameters).sum
+                    }
+                    orientation={props.parameters.orientation}
+                    pageIndex={i}
+                    leftNumbers={
+                      (props.parameters as INumberBondWorksheetParameters)
+                        .leftNumbers
+                    }
+                    empty={
+                      (props.parameters as INumberBondWorksheetParameters).empty
+                    }
+                    showAnswers
+                  />
+                ) : null}
+              </Stack>
+            </Stack>
+          ))}
+        </Stack>
       </Stack>
-
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}
@@ -312,6 +386,6 @@ export default function MobileWorksheetPageContents(props: IWorksheet) {
         callback={() => loginWithPopup()}
         mobile={false}
       />
-    </Stack>
+    </>
   );
 }

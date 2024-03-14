@@ -50,7 +50,9 @@ const BigCard = (props: {
               }
             >
               <ChevronLeft width="20px" height="20px" />
-              <Typography color={PALETTE.secondary.grey[4]}>Back</Typography>
+              <Typography color={PALETTE.secondary.grey[4]}>
+                Back to Home
+              </Typography>
             </Stack>
             {props.rightStuff}
           </Stack>

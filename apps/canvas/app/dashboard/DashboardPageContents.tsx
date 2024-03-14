@@ -571,6 +571,7 @@ export default function DashboardPageContents() {
                   abc: "Alphabetical",
                   createdAt: "Most recent",
                 }}
+                width="204px"
               />
             </Stack>
           </Stack>
@@ -593,8 +594,11 @@ export default function DashboardPageContents() {
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
                   {column.map((item, j) => (
-                    <Stack key={item.details.id} spacing={GRID_SPACING}>
-                      <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                    <Stack
+                      key={`${item.details.id}${selectedSort}`}
+                      spacing={GRID_SPACING}
+                    >
+                      <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
                         {
                           item.type === "video" ? (
                             <VideoCard {...(item.details as IVideo)} />
