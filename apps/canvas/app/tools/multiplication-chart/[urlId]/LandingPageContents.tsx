@@ -293,11 +293,8 @@ export default function LandingPageContents(props: {
                   <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
                       .split("\n")
-                      .map((paragraph) => (
-                        <Typography
-                          key={paragraph}
-                          color={PALETTE.secondary.grey[4]}
-                        >
+                      .map((paragraph, i) => (
+                        <Typography key={i} color={PALETTE.secondary.grey[4]}>
                           {paragraph}
                         </Typography>
                       ))}
@@ -405,7 +402,7 @@ export default function LandingPageContents(props: {
           : []),
         ...(props.valueProposition
           ? [
-              <Stack py="60px" alignItems="center">
+              <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition items={props.valueProposition} />
               </Stack>,
             ]
