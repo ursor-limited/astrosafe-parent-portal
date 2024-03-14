@@ -7,10 +7,10 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 const SPACING = "24px";
 
 export interface IVisualLinkCard {
-  title: "Number bonds";
-  text: "From times tables to division to number bonds. Create them quick in all languages.";
-  urlId: "20-times-table-worksheet";
-  imageUrl: "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg";
+  title: string;
+  text: string;
+  url: string;
+  imageUrl: string;
 }
 
 const VisualLinkCard = (props: IVisualLinkCard) => (
@@ -48,9 +48,11 @@ const VisualLinkCard = (props: IVisualLinkCard) => (
         {props.text}
       </Typography>
       <Stack direction="row" spacing="12px">
-        <UrsorButton variant="tertiary" dark>
-          Try it now
-        </UrsorButton>
+        <Link href={props.url} style={{ textDecoration: "none" }}>
+          <UrsorButton variant="tertiary" dark>
+            Try it now
+          </UrsorButton>
+        </Link>
         <UrsorButton variant="secondary">Learn more</UrsorButton>
       </Stack>
     </Stack>
@@ -62,14 +64,8 @@ export const VisualLinkCards = (props: { cards: IVisualLinkCard[] }) => {
     <Stack spacing={SPACING}>
       {_.chunk(props.cards, 2).map((pair, i) => (
         <Stack spacing={SPACING} key={i} direction="row">
-          <Link href={pair[0].url}>
-            <VisualLinkCard {...pair[0]} />
-          </Link>
-          {pair[1] ? (
-            <Link href={pair[0].url}>
-              <VisualLinkCard {...pair[1]} />
-            </Link>
-          ) : null}
+          <VisualLinkCard {...pair[0]} />
+          {pair[1] ? <VisualLinkCard {...pair[1]} /> : null}
         </Stack>
       ))}
     </Stack>

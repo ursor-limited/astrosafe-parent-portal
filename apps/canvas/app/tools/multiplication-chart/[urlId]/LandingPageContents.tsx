@@ -186,14 +186,14 @@ export default function LandingPageContents(props: {
     }[];
   };
   visualLinkCards?: {
-    supertitle: "Math focused worksheets";
-    title: "Create a worksheet for any K12 math topic";
+    supertitle: string;
+    title: string;
     cards: [
       {
-        title: "Number bonds";
-        text: "From times tables to division to number bonds. Create them quick in all languages.";
-        urlId: "20-times-table-worksheet";
-        imageUrl: "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg";
+        title: string;
+        text: string;
+        url: string;
+        imageUrl: string;
       },
     ];
   };

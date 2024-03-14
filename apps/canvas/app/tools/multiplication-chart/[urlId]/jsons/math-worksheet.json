@@ -39,7 +39,7 @@
             {
                 "title": "Number bonds",
                 "text": "Learn how to spot patterns when adding two numbers together.",
-                "url": "/tools/multiplication-chart/20-times-table-worksheet",
+                "url": "/tools/multiplication-chart/number-bond",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             },
             {
@@ -62,26 +62,26 @@
         "title": "See more",
         "links": 
             [
-                {"title": "1 Times Tables", "url": "/tools/multiplication-chart/1-times-tables-worksheet"},
-            {"title": "2 Times Tables", "url": "/tools/multiplication-chart/2-times-tables-worksheet"},
-            {"title": "3 Times Tables", "url": "/tools/multiplication-chart/3-times-tables-worksheet"},
-            {"title": "4 Times Tables", "url": "/tools/multiplication-chart/4-times-tables-worksheet"},
-            {"title": "5 Times Tables", "url": "/tools/multiplication-chart/5-times-tables-worksheet"},
-            {"title": "6 Times Tables", "url": "/tools/multiplication-chart/6-times-tables-worksheet"},
-            {"title": "7 Times Tables", "url": "/tools/multiplication-chart/7-times-tables-worksheet"},
-            {"title": "8 Times Tables", "url": "/tools/multiplication-chart/8-times-tables-worksheet"},
-            {"title": "9 Times Tables", "url": "/tools/multiplication-chart/9-times-tables-worksheet"},
-            {"title": "10 Times Tables", "url": "/tools/multiplication-chart/10-times-tables-worksheet"},
-            {"title": "11 Times Tables", "url": "/tools/multiplication-chart/11-times-tables-worksheet"},
-            {"title": "12 Times Tables", "url": "/tools/multiplication-chart/12-times-tables-worksheet"},
-            {"title": "13 Times Tables", "url": "/tools/multiplication-chart/13-times-tables-worksheet"},
-            {"title": "14 Times Tables", "url": "/tools/multiplication-chart/14-times-tables-worksheet"},
-            {"title": "15 Times Tables", "url": "/tools/multiplication-chart/15-times-tables-worksheet"},
-            {"title": "16 Times Tables", "url": "/tools/multiplication-chart/16-times-tables-worksheet"},
-            {"title": "17 Times Tables", "url": "/tools/multiplication-chart/17-times-tables-worksheet"},
-            {"title": "18 Times Tables", "url": "/tools/multiplication-chart/18-times-tables-worksheet"},
-            {"title": "19 Times Tables", "url": "/tools/multiplication-chart/19-times-tables-worksheet"},
-            {"title": "20 Times Tables", "url": "/tools/multiplication-chart/20-times-tables-worksheet"}
+                {"title": "1 Times Tables", "url": "/tools/multiplication-chart/1-times-table-worksheet"},
+            {"title": "2 Times Tables", "url": "/tools/multiplication-chart/2-times-table-worksheet"},
+            {"title": "3 Times Tables", "url": "/tools/multiplication-chart/3-times-table-worksheet"},
+            {"title": "4 Times Tables", "url": "/tools/multiplication-chart/4-times-table-worksheet"},
+            {"title": "5 Times Tables", "url": "/tools/multiplication-chart/5-times-table-worksheet"},
+            {"title": "6 Times Tables", "url": "/tools/multiplication-chart/6-times-table-worksheet"},
+            {"title": "7 Times Tables", "url": "/tools/multiplication-chart/7-times-table-worksheet"},
+            {"title": "8 Times Tables", "url": "/tools/multiplication-chart/8-times-table-worksheet"},
+            {"title": "9 Times Tables", "url": "/tools/multiplication-chart/9-times-table-worksheet"},
+            {"title": "10 Times Tables", "url": "/tools/multiplication-chart/10-times-table-worksheet"},
+            {"title": "11 Times Tables", "url": "/tools/multiplication-chart/11-times-table-worksheet"},
+            {"title": "12 Times Tables", "url": "/tools/multiplication-chart/12-times-table-worksheet"},
+            {"title": "13 Times Tables", "url": "/tools/multiplication-chart/13-times-table-worksheet"},
+            {"title": "14 Times Tables", "url": "/tools/multiplication-chart/14-times-table-worksheet"},
+            {"title": "15 Times Tables", "url": "/tools/multiplication-chart/15-times-table-worksheet"},
+            {"title": "16 Times Tables", "url": "/tools/multiplication-chart/16-times-table-worksheet"},
+            {"title": "17 Times Tables", "url": "/tools/multiplication-chart/17-times-table-worksheet"},
+            {"title": "18 Times Tables", "url": "/tools/multiplication-chart/18-times-table-worksheet"},
+            {"title": "19 Times Tables", "url": "/tools/multiplication-chart/19-times-table-worksheet"},
+            {"title": "20 Times Tables", "url": "/tools/multiplication-chart/20-times-table-worksheet"}
         ]
         
     },

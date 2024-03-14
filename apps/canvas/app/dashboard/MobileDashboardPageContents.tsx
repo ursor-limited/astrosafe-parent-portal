@@ -22,7 +22,7 @@ import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
 import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
-import { EmptyStateIllustration } from "../tools/times-tables/[urlId]/LandingPageContents";
+import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";

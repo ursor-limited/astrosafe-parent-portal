@@ -43,6 +43,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
   // const { isMobile } = getSelectorsByUserAgent(
   //   headers().get("user-agent") ?? ""
   // );
+  console.log(landingPageDetails);
   return details ? (
     <>
       <LandingPageContents
