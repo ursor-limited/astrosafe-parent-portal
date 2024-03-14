@@ -72,7 +72,12 @@ const ValueProposition = (props: { items: IValuePropositionItem[] }) => (
           </Stack>,
         ])
         .map((pair, i) => (
-          <Stack direction="row" justifyContent="space-between" height="296px">
+          <Stack
+            key={i}
+            direction="row"
+            justifyContent="space-between"
+            height="296px"
+          >
             {(i + 1) % 2 ? _.reverse(pair.slice()) : pair}
           </Stack>
         ))}
