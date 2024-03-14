@@ -442,7 +442,7 @@ export default function WorksheetGenerator(props: {
                   endIcon={PencilIcon}
                   width="100%"
                 >
-                  Create
+                  {props.buttonText || "Create"}
                 </UrsorButton>
               </Stack>
             </Stack>
