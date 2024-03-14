@@ -12,16 +12,10 @@ import LandingPageContents, {
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { urlId: string };
-}): Promise<Metadata> {
-  return {
-    title: landingPageDetails?.pageTitle,
-    description: landingPageDetails?.metaDescription,
-  };
-}
+export const metadata: Metadata = {
+  title: landingPageDetails?.pageTitle,
+  description: landingPageDetails?.metaDescription,
+};
 
 async function MainWorksheetsLandingPage() {
   const details: IAstroLandingPage = {
@@ -33,7 +27,7 @@ async function MainWorksheetsLandingPage() {
         .worksheetId as WorksheetId,
     },
   };
-  return details ? <LandingPageContents {...details} /> : <></>;
+  return <LandingPageContents {...details} />;
 }
 
 export default MainWorksheetsLandingPage;
