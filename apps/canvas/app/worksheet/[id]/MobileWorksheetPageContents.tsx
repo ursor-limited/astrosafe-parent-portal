@@ -174,68 +174,79 @@ export default function MobileWorksheetPageContents(props: IWorksheet) {
 
   return (
     <Stack spacing="22px" overflow="scroll">
-      <Stack direction="row" spacing="12px">
+      <Stack direction="row" justifyContent="space-between" p="20px">
         {/* {userDetails?.user?.id
             userDetails?.user?.id === props.creatorId ? ( */}
-        <Stack
-          sx={{
-            pointerEvents:
-              userDetails?.user?.id === props.creatorId ? undefined : "none",
-            opacity:
-              userDetails?.user?.id && userDetails?.user?.id !== props.creatorId
-                ? 0
-                : 1,
-          }}
-        >
-          <CircularButton
-            icon={TrashcanIcon}
-            color={PALETTE.system.red}
-            onClick={() => setDeletionDialogOpen(true)}
-          />
+        <Stack direction="row" spacing="10px">
+          <Stack
+            sx={{
+              pointerEvents:
+                userDetails?.user?.id === props.creatorId ? undefined : "none",
+              opacity:
+                userDetails?.user?.id &&
+                userDetails?.user?.id !== props.creatorId
+                  ? 0
+                  : 1,
+            }}
+          >
+            <CircularButton
+              icon={TrashcanIcon}
+              color={PALETTE.system.red}
+              onClick={() => setDeletionDialogOpen(true)}
+            />
+          </Stack>
+          {/* ) : null} */}
+          <Stack
+            borderRadius="100%"
+            border="2px solid rgb(255,255,255)"
+            height="39px"
+            width="39px"
+            justifyContent="center"
+            alignItems="center"
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              notificationCtx.success("Copied URL to clipboard.");
+            }}
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+              svg: {
+                path: {
+                  fill: "rgb(255,255,255)",
+                },
+              },
+            }}
+          >
+            <ShareIcon width="22px" height="22px" />
+          </Stack>
         </Stack>
-        {/* ) : null} */}
-        <Stack
-          borderRadius="100%"
-          border={`2px solid ${PALETTE.primary.navy}`}
-          height="39px"
-          width="39px"
-          justifyContent="center"
-          alignItems="center"
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-            notificationCtx.success("Copied URL to clipboard.");
-          }}
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-          }}
-        >
-          <ShareIcon width="22px" height="22px" />
+        <Stack spacing="5px">
+          <UrsorButton
+            size="small"
+            dark
+            variant="tertiary"
+            onClick={() => save(true)}
+            width="200px"
+          >
+            Download answers
+          </UrsorButton>
+          <UrsorButton
+            size="small"
+            dark
+            variant="tertiary"
+            onClick={() => save()}
+            width="200px"
+          >
+            Download worksheet
+          </UrsorButton>
         </Stack>
-        <UrsorButton
-          size="small"
-          dark
-          variant="tertiary"
-          onClick={() => save(true)}
-        >
-          Download answers
-        </UrsorButton>
-        <UrsorButton
-          size="small"
-          dark
-          variant="tertiary"
-          onClick={() => save()}
-        >
-          Download worksheet
-        </UrsorButton>
       </Stack>
       <Stack spacing="12px" px="20px" pb="20px">
         {[...Array(nPages).keys()].map((i) => (
           <Stack
             width="100%"
             height={((width - 40) * 297) / 210}
-            bgcolor="cyan"
             position="relative"
           >
             <Stack
