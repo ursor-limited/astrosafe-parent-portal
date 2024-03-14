@@ -18,7 +18,7 @@ export async function generateMetadata({
 }: {
   params: { urlId: string };
 }): Promise<Metadata> {
-  const details = landingPageDetails?.find((l) => l.urlId === params.urlId);
+  const details = landingPageDetails?.find((l) => l.urlId === "math-worksheet");
   return {
     title: details?.pageTitle,
     description: details?.metaDescription,

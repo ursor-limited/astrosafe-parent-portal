@@ -27,6 +27,102 @@ import { VisualLinkCards } from "./VisualLinkCards";
 import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
 import { Keywords } from "./Keywords";
 
+export interface IAstroLandingPage {
+  urlId: string;
+  pageTitle: string;
+  metaDescription: string;
+  heading: string;
+  subHeading: string;
+  worksheetGenerator?: {
+    topic: WorksheetTopic;
+    worksheetId: WorksheetId;
+    title: string;
+    nProblems: number;
+    specificSettings?: ISpecificWorksheetGeneratorSettings & {
+      topic: WorksheetTopic;
+    };
+  };
+  howItWorks?: {
+    supertitle: string;
+    title: string;
+    step1: { body: string; title: string };
+    step2: { body: string; title: string };
+    step3: { body: string; title: string };
+  };
+  worksheetPreview?: {
+    supertitle: string;
+    title: string;
+    body: string;
+    worksheetPreviewParameters: {
+      questionTopic: WorksheetTopic;
+      questionType: WorksheetId;
+      title: string;
+      worksheetParameters: {
+        factor: number;
+        nProblems: number;
+      };
+    };
+  };
+  linkTable?: {
+    supertitle: string;
+    title: string;
+    body: string;
+    tableHeading: string;
+    links: {
+      text: string;
+      url: string;
+    }[];
+  };
+  visualLinkCards?: {
+    supertitle: string;
+    title: string;
+    cards: {
+      title: string;
+      text: string;
+      url: string;
+      imageUrl: string;
+    }[];
+  };
+  valueProposition?: IValuePropositionItem[];
+  keywords?: {
+    title: string;
+    supertitle: string;
+    links: { title: string; url: string }[];
+  };
+  explainerCards?: {
+    supertitle: string;
+    title: string;
+    body: string;
+    cards: {
+      title: string;
+      text: string;
+      imageUrl: string;
+    }[];
+  };
+  otherPages?: {
+    supertitle: string;
+    title: string;
+    links: {
+      urlId: string;
+      imageString?: string;
+      title: string;
+      text: string;
+    }[];
+  };
+  productCard?: {
+    title: string;
+    body: string;
+    buttonText: string;
+    buttonUrl: string;
+  };
+  faqs?: {
+    cards: {
+      question: string;
+      answer: string;
+    }[];
+  };
+}
+
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
 const PrintableMultiplicationTable = dynamic(
@@ -138,104 +234,7 @@ export const Captioned = (props: {
   </Stack>
 );
 
-export default function LandingPageContents(props: {
-  //isMobile: boolean;
-  urlId: string;
-  pageTitle: string;
-  metaDescription: string;
-  heading: string;
-  subHeading: string;
-  worksheetGenerator?: {
-    topic: WorksheetTopic;
-    worksheetId: WorksheetId;
-    title: string;
-    nProblems: number;
-    specificSettings?: ISpecificWorksheetGeneratorSettings & {
-      topic: WorksheetTopic;
-    };
-  };
-  howItWorks?: {
-    supertitle: string;
-    title: string;
-    step1: { body: string; title: string };
-    step2: { body: string; title: string };
-    step3: { body: string; title: string };
-  };
-  worksheetPreview?: {
-    supertitle: string;
-    title: string;
-    body: string;
-    worksheetPreviewParameters: {
-      questionTopic: WorksheetTopic;
-      questionType: WorksheetId;
-      title: string;
-      worksheetParameters: {
-        factor: number;
-        nProblems: number;
-      };
-    };
-  };
-  linkTable?: {
-    supertitle: string;
-    title: string;
-    body: string;
-    tableHeading: string;
-    links: {
-      text: string;
-      url: string;
-    }[];
-  };
-  visualLinkCards?: {
-    supertitle: string;
-    title: string;
-    cards: [
-      {
-        title: string;
-        text: string;
-        url: string;
-        imageUrl: string;
-      },
-    ];
-  };
-  valueProposition?: IValuePropositionItem[];
-  keywords?: {
-    title: string;
-    supertitle: string;
-    links: { title: string; url: string }[];
-  };
-  explainerCards?: {
-    supertitle: string;
-    title: string;
-    body: string;
-    cards: {
-      title: string;
-      text: string;
-      imageUrl: string;
-    }[];
-  };
-  otherPages?: {
-    supertitle: string;
-    title: string;
-    links: {
-      urlId: string;
-      imageString?: string;
-      title: string;
-      text: string;
-    }[];
-  };
-  productCard?: {
-    title: string;
-    body: string;
-    buttonText: string;
-    buttonUrl: string;
-  };
-  faqs?: {
-    cards: {
-      question: string;
-      answer: string;
-    }[];
-  };
-}) {
+export default function LandingPageContents(props: IAstroLandingPage) {
   // const fuck = getSelectorsByUserAgent(headers().get("user-agent") ?? "");
   // const isMobile = !!fuck.isMobile;
   // const isMobile = false;
