@@ -1,0 +1,76 @@
+{
+    "urlId": "math-worksheet",
+    "pageTitle": "Math Worksheet Generator",
+    "metaDescription": "Math worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of thirty up to 100 and beyond with our times table charts.",
+    "heading": "Math Worksheet Generator",
+    "subHeading": "Personalised and printable math worksheets made  in seconds for your students.",
+    "worksheetGenerator": {
+        "topic": "multiplication",
+        "worksheetId": "equation",
+        "title": "Math Worksheet",
+        "nProblems": 20
+    },
+    "howItWorks": {
+        "supertitle": "How it works",
+        "title": "How to generate 8 times table worksheets",
+        "step1": {
+            "title": "1. Pick your topic",
+            "body": "Pick topic and type of worksheets. Add your own details."
+        },
+        "step2": {
+            "title": "2. Create & curate",
+            "body": "Create the sheet in seconds with pre-made layouts."
+        },
+        "step3": {
+            "title": "3. Print & Share",
+            "body": "Now it’s all yours to download, print, and share with your students."
+        }
+    },
+    "visualLinkCards": {
+        "supertitle": "Math focused worksheets",
+        "title": "Create a worksheet for any K12 math topic",
+        "cards": [
+            {
+                "title": "Number bonds",
+                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "urlId": "20-times-table-worksheet",
+                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+            },
+            {
+                "title": "Times tables",
+                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "urlId": "20-times-table-worksheet",
+                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+            },
+            {
+                "title": "Booo",
+                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "urlId": "20-times-table-worksheet",
+                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+            },
+            {
+                "title": "Michael Jackson, Prince of Pop",
+                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "urlId": "20-times-table-worksheet",
+                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+            }
+            
+        ]
+    },
+    "faqs": {
+        "cards": [
+            {
+                "question": "Is the AstroSafe Worksheet Generator free to use?",
+                "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+            },
+            {
+                "question": "Can I create different worksheets?",
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
+            },
+            {
+                "question": "Do you offer school discounts?",
+                "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+            }
+        ]
+    }
+}

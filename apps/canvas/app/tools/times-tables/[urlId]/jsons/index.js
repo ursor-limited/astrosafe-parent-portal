@@ -1,3 +1,4 @@
+import main from "./math-worksheet";
 import times0 from "./0-times-table-worksheet.json";
 import times1 from "./1-times-table-worksheet.json";
 import times2 from "./2-times-table-worksheet.json";
@@ -32,6 +33,7 @@ import times30 from "./30-times-table-worksheet.json";
 import numberBond from "./number-bond.json";
 
 const details = [
+  main,
   times0,
   times1,
   times2,
