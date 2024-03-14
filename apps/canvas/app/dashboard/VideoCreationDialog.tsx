@@ -3,7 +3,7 @@ import RocketIcon from "@/images/icons/RocketIcon.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useEffect, useState } from "react";
-import { Captioned } from "../tools/times-tables/[urlId]/LandingPageContents";
+import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import {
   PALETTE,
   Typography,

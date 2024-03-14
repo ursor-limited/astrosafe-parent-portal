@@ -6,7 +6,7 @@ import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 import { useWindowSize } from "usehooks-ts";
-import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/tools/times-tables/[urlId]/LandingPageContents";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/tools/multiplication-chart/[urlId]/LandingPageContents";
 import MobileWorksheetPageContents from "./MobileWorksheetPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";

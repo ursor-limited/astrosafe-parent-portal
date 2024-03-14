@@ -274,27 +274,27 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => {
             links={[
               {
                 text: "5 times tables",
-                url: "https://astrosafe.co/tools/times-tables/5-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/5-times-table-worksheet",
               },
               {
                 text: "6 times tables",
-                url: "https://astrosafe.co/tools/times-tables/6-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/6-times-table-worksheet",
               },
               {
                 text: "7 times tables",
-                url: "https://astrosafe.co/tools/times-tables/7-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/7-times-table-worksheet",
               },
               {
                 text: "8 times tables",
-                url: "https://astrosafe.co/tools/times-tables/8-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/8-times-table-worksheet",
               },
               {
                 text: "9 times tables",
-                url: "https://astrosafe.co/tools/times-tables/9-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/9-times-table-worksheet",
               },
               {
                 text: "10 times tables",
-                url: "https://astrosafe.co/tools/times-tables/10-times-table-worksheet",
+                url: "https://astrosafe.co/tools/multiplication-chart/10-times-table-worksheet",
               },
             ]}
             spaceBetween={!!props.mobile}

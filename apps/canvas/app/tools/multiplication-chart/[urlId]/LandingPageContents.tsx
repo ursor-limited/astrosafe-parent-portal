@@ -23,6 +23,9 @@ import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
+import { VisualLinkCards } from "./VisualLinkCards";
+import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
+import { Keywords } from "./Keywords";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -142,23 +145,23 @@ export default function LandingPageContents(props: {
   metaDescription: string;
   heading: string;
   subHeading: string;
-  worksheetGenerator: {
+  worksheetGenerator?: {
     topic: WorksheetTopic;
     worksheetId: WorksheetId;
     title: string;
     nProblems: number;
-    specificSettings: ISpecificWorksheetGeneratorSettings & {
+    specificSettings?: ISpecificWorksheetGeneratorSettings & {
       topic: WorksheetTopic;
     };
   };
-  howItWorks: {
+  howItWorks?: {
     supertitle: string;
     title: string;
     step1: { body: string; title: string };
     step2: { body: string; title: string };
     step3: { body: string; title: string };
   };
-  worksheetPreview: {
+  worksheetPreview?: {
     supertitle: string;
     title: string;
     body: string;
@@ -182,7 +185,25 @@ export default function LandingPageContents(props: {
       url: string;
     }[];
   };
-  explainerCards: {
+  visualLinkCards?: {
+    supertitle: string;
+    title: string;
+    cards: [
+      {
+        title: string;
+        text: string;
+        url: string;
+        imageUrl: string;
+      },
+    ];
+  };
+  valueProposition?: IValuePropositionItem[];
+  keywords?: {
+    title: string;
+    supertitle: string;
+    links: { title: string; url: string }[];
+  };
+  explainerCards?: {
     supertitle: string;
     title: string;
     body: string;
@@ -192,7 +213,7 @@ export default function LandingPageContents(props: {
       imageUrl: string;
     }[];
   };
-  otherPages: {
+  otherPages?: {
     supertitle: string;
     title: string;
     links: {
@@ -229,20 +250,24 @@ export default function LandingPageContents(props: {
       mobile={isMobile}
       faqs={props.faqs}
       viewports={[
-        <LandingPageViewport
-          key="howItWorks"
-          supertitle={props.howItWorks.supertitle}
-          title={props.howItWorks.title}
-          mobile={isMobile}
-        >
-          <IntroSteps
-            step1={props.howItWorks.step1}
-            step2={props.howItWorks.step2}
-            step3={props.howItWorks.step3}
-            mobile={isMobile}
-            backgroundOpacity={0.13}
-          />
-        </LandingPageViewport>,
+        ...(props.howItWorks
+          ? [
+              <LandingPageViewport
+                key="howItWorks"
+                supertitle={props.howItWorks.supertitle}
+                title={props.howItWorks.title}
+                mobile={isMobile}
+              >
+                <IntroSteps
+                  step1={props.howItWorks.step1}
+                  step2={props.howItWorks.step2}
+                  step3={props.howItWorks.step3}
+                  mobile={isMobile}
+                  backgroundOpacity={0.13}
+                />
+              </LandingPageViewport>,
+            ]
+          : []),
         ...(props.worksheetPreview
           ? [
               <LandingPageViewport
@@ -366,71 +391,110 @@ export default function LandingPageContents(props: {
               </LandingPageViewport>,
             ]
           : []),
-        <LandingPageViewport
-          key="explainerCards"
-          supertitle={props.explainerCards.supertitle}
-          subtitle={props.explainerCards.body}
-          title={props.explainerCards.title}
-          mobile={isMobile}
-        >
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            spacing={isMobile ? "16px" : "22px"}
-          >
-            <ExplainerCard
-              imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
-              title={props.explainerCards?.cards?.[0]?.title}
-              text={props.explainerCards?.cards?.[0]?.text}
-            />
-            {props.explainerCards?.cards?.[1] ? (
-              <ExplainerCard
-                imageUrl={props.explainerCards.cards[1]?.imageUrl}
-                title={props.explainerCards.cards[1]?.title}
-                text={props.explainerCards.cards[1]?.text}
-              />
-            ) : null}
-            {props.explainerCards?.cards?.[2] ? (
-              <ExplainerCard
-                imageUrl={props.explainerCards.cards[2]?.imageUrl}
-                title={props.explainerCards.cards[2]?.title}
-                text={props.explainerCards.cards[2]?.text}
-              />
-            ) : null}
-          </Stack>
-        </LandingPageViewport>,
-        <LandingPageViewport
-          key="otherPages"
-          supertitle={props.otherPages.supertitle}
-          title={props.otherPages.title}
-          mobile={isMobile}
-        >
-          <Stack spacing={isMobile ? "14px" : "22px"}>
-            {_.chunk(props.otherPages.links, 2).map((pair, i) => (
-              <Stack
-                key={i}
-                direction={isMobile ? "column" : "row"}
-                spacing={isMobile ? "14px" : "22px"}
+        ...(props.visualLinkCards
+          ? [
+              <LandingPageViewport
+                key="visualLinkCards"
+                supertitle={props.visualLinkCards.supertitle}
+                title={props.visualLinkCards.title}
+                mobile={isMobile}
               >
-                <OtherPageCard
-                  title={pair[0].title}
-                  text={pair[0].text}
-                  imageString={pair[0].imageString}
-                  urlId={pair[0].urlId}
-                  mobile={isMobile}
-                />
-                {pair?.[1] ? (
-                  <OtherPageCard
-                    title={pair[1].title}
-                    text={pair[1].text}
-                    imageString={pair[1].imageString}
-                    urlId={pair[1].urlId}
-                    mobile={isMobile}
+                <VisualLinkCards {...props.visualLinkCards} />
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.valueProposition
+          ? [
+              <Stack py="60px" alignItems="center">
+                <ValueProposition items={props.valueProposition} />
+              </Stack>,
+            ]
+          : []),
+        ...(props.keywords
+          ? [
+              <LandingPageViewport
+                key="keywords"
+                supertitle={props.keywords.supertitle}
+                title={props.keywords.title}
+                mobile={isMobile}
+              >
+                <Keywords links={props.keywords.links} />
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.explainerCards
+          ? [
+              <LandingPageViewport
+                key="explainerCards"
+                supertitle={props.explainerCards.supertitle}
+                subtitle={props.explainerCards.body}
+                title={props.explainerCards.title}
+                mobile={isMobile}
+              >
+                <Stack
+                  direction={isMobile ? "column" : "row"}
+                  spacing={isMobile ? "16px" : "22px"}
+                >
+                  <ExplainerCard
+                    imageUrl={props.explainerCards?.cards?.[0]?.imageUrl}
+                    title={props.explainerCards?.cards?.[0]?.title}
+                    text={props.explainerCards?.cards?.[0]?.text}
                   />
-                ) : null}
-              </Stack>
-            ))}
-          </Stack>
-        </LandingPageViewport>,
+                  {props.explainerCards?.cards?.[1] ? (
+                    <ExplainerCard
+                      imageUrl={props.explainerCards.cards[1]?.imageUrl}
+                      title={props.explainerCards.cards[1]?.title}
+                      text={props.explainerCards.cards[1]?.text}
+                    />
+                  ) : null}
+                  {props.explainerCards?.cards?.[2] ? (
+                    <ExplainerCard
+                      imageUrl={props.explainerCards.cards[2]?.imageUrl}
+                      title={props.explainerCards.cards[2]?.title}
+                      text={props.explainerCards.cards[2]?.text}
+                    />
+                  ) : null}
+                </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.otherPages
+          ? [
+              <LandingPageViewport
+                key="otherPages"
+                supertitle={props.otherPages.supertitle}
+                title={props.otherPages.title}
+                mobile={isMobile}
+              >
+                <Stack spacing={isMobile ? "14px" : "22px"}>
+                  {_.chunk(props.otherPages.links, 2).map((pair, i) => (
+                    <Stack
+                      key={i}
+                      direction={isMobile ? "column" : "row"}
+                      spacing={isMobile ? "14px" : "22px"}
+                    >
+                      <OtherPageCard
+                        title={pair[0].title}
+                        text={pair[0].text}
+                        imageString={pair[0].imageString}
+                        urlId={pair[0].urlId}
+                        mobile={isMobile}
+                      />
+                      {pair?.[1] ? (
+                        <OtherPageCard
+                          title={pair[1].title}
+                          text={pair[1].text}
+                          imageString={pair[1].imageString}
+                          urlId={pair[1].urlId}
+                          mobile={isMobile}
+                        />
+                      ) : null}
+                    </Stack>
+                  ))}
+                </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
       ]}
     >
       <Stack minHeight="540px" px="20px">

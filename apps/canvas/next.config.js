@@ -18,7 +18,7 @@ module.exports = withBundleAnalyzer(
         "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
         "ursorassets.s3.eu-west-1.amazonaws.com",
         "i.ytimg.com",
-        "assets-global.website-files.com",
+        "assets-global.website-files.com", "images.unsplash.com"
       ],
     },
     assetPrefix:
