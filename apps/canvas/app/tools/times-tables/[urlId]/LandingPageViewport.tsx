@@ -4,7 +4,7 @@ import { PALETTE, Typography } from "ui";
 export default function LandingPageViewport(props: {
   supertitle: string;
   subtitle?: string;
-  title: string;
+  title?: string;
   mobile?: boolean;
   children: React.ReactNode;
 }) {

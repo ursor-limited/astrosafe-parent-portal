@@ -24,6 +24,8 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { VisualLinkCards } from "./VisualLinkCards";
+import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
+import { Keywords } from "./Keywords";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -194,6 +196,12 @@ export default function LandingPageContents(props: {
         imageUrl: "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg";
       },
     ];
+  };
+  valueProposition?: IValuePropositionItem[];
+  keywords?: {
+    title: string;
+    supertitle: string;
+    links: { title: string; url: string }[];
   };
   explainerCards?: {
     supertitle: string;
@@ -386,12 +394,31 @@ export default function LandingPageContents(props: {
         ...(props.visualLinkCards
           ? [
               <LandingPageViewport
-                key="explainerCards"
+                key="visualLinkCards"
                 supertitle={props.visualLinkCards.supertitle}
                 title={props.visualLinkCards.title}
                 mobile={isMobile}
               >
                 <VisualLinkCards {...props.visualLinkCards} />
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.valueProposition
+          ? [
+              <Stack py="60px" alignItems="center">
+                <ValueProposition items={props.valueProposition} />
+              </Stack>,
+            ]
+          : []),
+        ...(props.keywords
+          ? [
+              <LandingPageViewport
+                key="keywords"
+                supertitle={props.keywords.supertitle}
+                title={props.keywords.title}
+                mobile={isMobile}
+              >
+                <Keywords links={props.keywords.links} />
               </LandingPageViewport>,
             ]
           : []),
