@@ -293,11 +293,8 @@ export default function LandingPageContents(props: {
                   <Stack spacing="10px" maxWidth="503px">
                     {props.worksheetPreview.body
                       .split("\n")
-                      .map((paragraph) => (
-                        <Typography
-                          key={paragraph}
-                          color={PALETTE.secondary.grey[4]}
-                        >
+                      .map((paragraph, i) => (
+                        <Typography key={i} color={PALETTE.secondary.grey[4]}>
                           {paragraph}
                         </Typography>
                       ))}
