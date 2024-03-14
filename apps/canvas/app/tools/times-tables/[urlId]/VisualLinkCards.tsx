@@ -1,6 +1,7 @@
 import { Stack, alpha } from "@mui/system";
 import _ from "lodash";
 import Image from "next/image";
+import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 
 const SPACING = "24px";
@@ -61,8 +62,14 @@ export const VisualLinkCards = (props: { cards: IVisualLinkCard[] }) => {
     <Stack spacing={SPACING}>
       {_.chunk(props.cards, 2).map((pair, i) => (
         <Stack spacing={SPACING} key={i} direction="row">
-          <VisualLinkCard {...pair[0]} />
-          {pair[1] ? <VisualLinkCard {...pair[1]} /> : null}
+          <Link href={pair[0].url}>
+            <VisualLinkCard {...pair[0]} />
+          </Link>
+          {pair[1] ? (
+            <Link href={pair[0].url}>
+              <VisualLinkCard {...pair[1]} />
+            </Link>
+          ) : null}
         </Stack>
       ))}
     </Stack>
