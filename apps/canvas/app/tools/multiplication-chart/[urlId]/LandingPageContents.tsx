@@ -402,7 +402,7 @@ export default function LandingPageContents(props: {
           : []),
         ...(props.valueProposition
           ? [
-              <Stack py="60px" alignItems="center">
+              <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition items={props.valueProposition} />
               </Stack>,
             ]
