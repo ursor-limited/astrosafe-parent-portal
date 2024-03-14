@@ -25,7 +25,7 @@ const DashboardSignupPromptDialog = (props: {
       title={"Your dashboard awaits"}
       subtitle={[
         "Login or create a free account to create",
-        "and store videos and worksheets."
+        "and store videos and worksheets.",
       ]}
       open={props.open}
       // button={{
@@ -67,7 +67,7 @@ const DashboardSignupPromptDialog = (props: {
           </UrsorButton>
         </Stack>
         <Stack
-          width="727px"
+          width={props.mobile ? "300px" : "727px"}
           height="392px"
           borderRadius="20px"
           border={`6px solid ${PALETTE.secondary.grey[5]}`}

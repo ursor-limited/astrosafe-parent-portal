@@ -319,6 +319,7 @@ export default function MobileDashboardPageContents() {
       <DashboardSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
+        mobile
       />
       <UpgradePromptDialog
         open={upgradeDialogOpen}
