@@ -32,7 +32,7 @@ const VideoCard = (props: IVideo) => {
       setOrangeBorderOn(true);
       setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
     }
-  }, []);
+  }, [props.createdAt]);
   return (
     <Stack
       height="260px"
