@@ -18,6 +18,7 @@ export interface IClassSortButtonProps<T extends string> {
   callback: (sortType: T) => void;
   darkMode?: boolean;
   iconOnly?: boolean;
+  width?: string;
 }
 
 const SortButton = <T extends string>(
@@ -64,6 +65,7 @@ const SortButton = <T extends string>(
           fontColor={PALETTE.secondary.grey[5]}
           iconColor={PALETTE.secondary.grey[5]}
           hoverOpacity={0.6}
+          width={props.width}
         >
           {/* @ts-ignore */}
           {`Sort by: ${props.displayNames[props.selected]}`}

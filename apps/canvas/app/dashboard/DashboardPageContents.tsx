@@ -571,6 +571,7 @@ export default function DashboardPageContents() {
                   abc: "Alphabetical",
                   createdAt: "Most recent",
                 }}
+                width="204px"
               />
             </Stack>
           </Stack>
