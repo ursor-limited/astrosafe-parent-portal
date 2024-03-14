@@ -33,6 +33,7 @@ import UpgradePromptDialog from "../components/SignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { FilterRow, SearchInput, ToolButton } from "./DashboardPageContents";
+import { useRouter } from "next/navigation";
 
 export const GRID_SPACING = "20px";
 
@@ -176,6 +177,8 @@ export default function MobileDashboardPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
+  const router = useRouter();
+
   return (
     <Stack
       p="20px"
@@ -185,7 +188,14 @@ export default function MobileDashboardPageContents() {
       overflow="scroll"
     >
       <Stack alignItems="flex-end">
-        <UrsorButton size="small" iconSize={14} shadow dark endIcon={GearIcon}>
+        <UrsorButton
+          onClick={() => router.push("/account")}
+          size="small"
+          iconSize={14}
+          shadow
+          dark
+          endIcon={GearIcon}
+        >
           Account
         </UrsorButton>
       </Stack>
@@ -286,6 +296,7 @@ export default function MobileDashboardPageContents() {
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
+        mobile
       />
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(

@@ -10,17 +10,25 @@ export const TITLE_CHARACTER_LIMIT = 40;
 const WorksheetCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  mobile?: boolean;
 }) => {
   return (
     <UrsorDialog
-      supertitle="Create worksheet"
+      supertitle={props.mobile ? undefined : "Create worksheet"}
       open={props.open}
       onCloseCallback={props.closeCallback}
       maxWidth="880px"
       dynamicHeight
       noOverflowHidden
+      noPadding={props.mobile}
     >
-      <WorksheetGenerator noPadding landOnWorksheetPage />
+      <Stack p={props.mobile ? "20px" : undefined} overflow="scroll">
+        <WorksheetGenerator
+          mobile={props.mobile}
+          noPadding
+          landOnWorksheetPage
+        />
+      </Stack>
     </UrsorDialog>
   );
 };

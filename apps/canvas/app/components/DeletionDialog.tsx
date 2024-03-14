@@ -17,6 +17,7 @@ export interface IDeletionDialogProps {
   deletionCallback: () => void;
   category: string;
   title: string;
+  mobile?: boolean;
 }
 
 export default function DeletionDialog(props: IDeletionDialogProps) {
@@ -110,7 +111,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
                 }}
                 backgroundColor={PALETTE.system.red}
                 disabled={deletionPhrase !== "delete"}
-                width="300px"
+                width={props.mobile ? "200px" : "300px"}
               >
                 Do it
               </UrsorButton>
@@ -119,7 +120,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           <UrsorButton
             onClick={props.closeCallback}
             variant="secondary"
-            width="300px"
+            width={props.mobile ? "200px" : "300px"}
           >
             Go back
           </UrsorButton>
