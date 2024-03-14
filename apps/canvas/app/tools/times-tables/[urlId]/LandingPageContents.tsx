@@ -23,6 +23,7 @@ import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { useEffect, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
+import { VisualLinkCards } from "./VisualLinkCards";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -181,6 +182,18 @@ export default function LandingPageContents(props: {
       text: string;
       url: string;
     }[];
+  };
+  visualLinkCards?: {
+    supertitle: "Math focused worksheets";
+    title: "Create a worksheet for any K12 math topic";
+    cards: [
+      {
+        title: "Number bonds";
+        text: "From times tables to division to number bonds. Create them quick in all languages.";
+        urlId: "20-times-table-worksheet";
+        imageUrl: "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg";
+      },
+    ];
   };
   explainerCards?: {
     supertitle: string;
@@ -367,6 +380,18 @@ export default function LandingPageContents(props: {
                     ))}
                   </Stack>
                 </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.visualLinkCards
+          ? [
+              <LandingPageViewport
+                key="explainerCards"
+                supertitle={props.visualLinkCards.supertitle}
+                title={props.visualLinkCards.title}
+                mobile={isMobile}
+              >
+                <VisualLinkCards {...props.visualLinkCards} />
               </LandingPageViewport>,
             ]
           : []),

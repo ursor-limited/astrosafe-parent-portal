@@ -31,28 +31,28 @@
         "title": "Create a worksheet for any K12 math topic",
         "cards": [
             {
-                "title": "Number bonds",
-                "text": "From times tables to division to number bonds. Create them quick in all languages.",
-                "urlId": "20-times-table-worksheet",
-                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
-            },
-            {
                 "title": "Times tables",
-                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "text": "Create worksheets on your target times tables to hone your classes’ multiplication skills.",
                 "urlId": "20-times-table-worksheet",
-                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             },
             {
-                "title": "Booo",
-                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "title": "Number bonds",
+                "text": "Learn how to spot patterns when adding two numbers together.",
                 "urlId": "20-times-table-worksheet",
-                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             },
             {
-                "title": "Michael Jackson, Prince of Pop",
-                "text": "From times tables to division to number bonds. Create them quick in all languages.",
+                "title": "Numberlines",
+                "text": "Use our numberline worksheets to learn all about counting and spotting sequences.",
                 "urlId": "20-times-table-worksheet",
-                "imageUrl": "https://static01.nyt.com/images/2020/11/29/magazine/29mag-Talk-1/29mag-Talk-1-superJumbo.jpg"
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
+            },
+            {
+                "title": "Factors",
+                "text": "What numbers can be multiplied to make another number? Learn all about Factors!",
+                "urlId": "20-times-table-worksheet",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             }
             
         ]
