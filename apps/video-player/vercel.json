@@ -21,6 +21,10 @@
         "destination": "https://canvas.astrosafe.co/dashboard"
     },
     {
+        "source": "/account",
+        "destination": "https://canvas.astrosafe.co/account"
+    },
+    {
         "source": "/video/:videoId([a-zA-Z0-9-]+)",
         "destination": "https://canvas.astrosafe.co/video/:videoId"
     },
