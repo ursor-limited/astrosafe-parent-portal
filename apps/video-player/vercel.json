@@ -17,6 +17,10 @@
         "destination": "https://canvas.astrosafe.co/worksheet/:worksheetId"
     },
     {
+        "source": "/dashboard",
+        "destination": "https://canvas.astrosafe.co/dashboard"
+    },
+    {
         "source": "/video/:videoId([a-zA-Z0-9-]+)",
         "destination": "https://canvas.astrosafe.co/worksheet/:videoId"
     },
