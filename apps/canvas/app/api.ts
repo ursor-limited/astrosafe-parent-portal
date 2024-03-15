@@ -212,6 +212,11 @@ class ApiController {
       response.json()
     );
   }
+  static async submitFreeTrialStartDate(id: string) {
+    return get(`canvas/startFreeTrial/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;
