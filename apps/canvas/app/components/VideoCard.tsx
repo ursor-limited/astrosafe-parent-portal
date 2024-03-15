@@ -2,19 +2,21 @@ import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IVideo } from "../api";
-import moment from "moment";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Image from "next/image";
 import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
 
 export const getFormattedDate = (date: string) =>
-  moment(date).format("Do MMMM YYYY");
+  dayjs(date).format("Do MMMM YYYY");
 
 const VideoCard = (props: IVideo) => {
   const router = useRouter();
@@ -25,13 +27,12 @@ const VideoCard = (props: IVideo) => {
   const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
   useEffect(() => {
     if (
-      -moment(props.createdAt).diff(moment(), "seconds") <
-      ORANGE_BORDER_DURATION
+      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
     ) {
       setOrangeBorderOn(true);
       setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
     }
-  }, []);
+  }, [props.createdAt]);
   return (
     <Stack
       height="260px"
@@ -57,7 +58,7 @@ const VideoCard = (props: IVideo) => {
           transition: "0.2s",
           cursor: "pointer",
         }}
-        onClick={() => router.push(`/v/${props.id}`)}
+        onClick={() => router.push(`/video/${props.id}`)}
       >
         <Stack
           height="163px"

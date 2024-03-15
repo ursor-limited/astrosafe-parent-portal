@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import GraphIllustration from "../images/GraphIllustration.svg";
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "../components/WorksheetGenerator";
 import { PALETTE, Typography } from "ui";
 import useColumnWidth from "./useColumnWidth";
 import UrsorFadeIn from "../components/UrsorFadeIn";

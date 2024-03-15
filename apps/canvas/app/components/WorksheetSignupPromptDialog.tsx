@@ -1,19 +1,14 @@
 "use client";
 
 import UrsorDialog from "./UrsorDialog";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
-import GraphIllustration from "@/images/GraphIllustration.svg";
-import { useAuth0 } from "@auth0/auth0-react";
-import mixpanel from "mixpanel-browser";
-import { useLocalStorage } from "usehooks-ts";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/dashboardSkreenshot.png";
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png";
 
 const WorksheetSignupPromptDialog = (props: {
   open: boolean;
@@ -24,10 +19,10 @@ const WorksheetSignupPromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title={"Your math worksheet is ready"}
+      title="Your worksheet is ready for download"
       subtitle={[
-        "Create a free account to download and print your worksheet",
-        "and save time preparing your lessons!",
+        "Login or create a free account to get your worksheet",
+        "and use all of our teaching resources.",
       ]}
       open={props.open}
       // button={{

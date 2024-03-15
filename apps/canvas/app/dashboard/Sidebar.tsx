@@ -188,13 +188,13 @@ export default function Sidebar(props: ISidebarProps) {
       title: "Home",
       callback: () => router.push("/dashboard"),
     },
-    {
-      id: "browser",
-      //tourId: "devices-button",
-      icon: GlobeIcon,
-      title: "Browser",
-      callback: () => setBrowserDialogOpen(true),
-    },
+    // {
+    //   id: "browser",
+    //   //tourId: "devices-button",
+    //   icon: GlobeIcon,
+    //   title: "Browser",
+    //   callback: () => setBrowserDialogOpen(true),
+    // },
   ];
 
   const bottomItems: ISidebarItem[] = [

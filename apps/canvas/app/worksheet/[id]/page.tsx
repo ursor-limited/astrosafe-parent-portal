@@ -1,20 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WorksheetPageContents from "./WorksheetPageContents";
 import ApiController from "@/app/api";
-import { IWorksheet } from "@/app/landing/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
+import { useWindowSize } from "usehooks-ts";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "@/app/tools/multiplication-chart/[urlId]/LandingPageContents";
+import MobileWorksheetPageContents from "./MobileWorksheetPageContents";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { headers } from "next/headers";
 
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  return [
-    {
-      id: "65e08005506c67ad16e55688",
-    },
-  ];
-}
 
 export async function generateMetadata({
   params,
@@ -36,10 +33,19 @@ async function WorksheetPage({
   searchParams: { share: string };
 }) {
   const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
+  //const { width } = useWindowSize();
+  // const [isMobile, setIsMobile] = useState<boolean>(false);
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
+  //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   return details ? (
     <AuthWrapper>
       <UserProvider>
-        <WorksheetPageContents {...details} />
+        {isMobile ? (
+          <MobileWorksheetPageContents {...details} />
+        ) : (
+          <WorksheetPageContents {...details} />
+        )}
       </UserProvider>
     </AuthWrapper>
   ) : (

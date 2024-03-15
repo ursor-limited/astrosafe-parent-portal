@@ -10,14 +10,9 @@ import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
   IWorksheet,
-  IWorksheetParameters,
-  WorksheetTopic,
-} from "@/app/landing/[urlId]/WorksheetGenerator";
-import moment from "moment";
+} from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import Slider from "react-slick";
-import LandingPageViewport from "@/app/landing/[urlId]/LandingPageViewport";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -25,7 +20,7 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/v/[videoId]/VideoPageContents";
+import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
@@ -40,7 +35,6 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
-import { Header } from "@/app/components/header2";
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -351,7 +345,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       setNPages(
         1 +
           Math.ceil(
-            (params.multipliers.length -
+            (params.pairs.length -
               (params.topic === "division"
                 ? 12
                 : props.parameters.orientation === "horizontal"
@@ -369,7 +363,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
       setNPages(
         1 +
           Math.ceil(
-            (params.pairs.length -
+            (params.leftNumbers.length -
               (params.orientation === "horizontal"
                 ? NUMBER_BOND_HORIZONTAL_ROWS_N
                 : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -451,28 +445,29 @@ export default function WorksheetPageContents(props: IWorksheet) {
           props.worksheetId === "equation" ? (
             <EquationWorksheet
               key={i}
-              printableId={`page${i}`}
+              printableId={`answerspage${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              showAnswers
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
-              printableId={`page${i}`}
+              printableId={`answerspage${i}`}
               title={props.title}
-              result={
-                (props.parameters as INumberBondWorksheetParameters).result
-              }
+              description={props.description}
+              sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
-              both={(props.parameters as INumberBondWorksheetParameters).both}
+              leftNumbers={
+                (props.parameters as INumberBondWorksheetParameters).leftNumbers
+              }
+              empty={(props.parameters as INumberBondWorksheetParameters).empty}
+              showAnswers
             />
           ) : null
         )}
@@ -488,144 +483,142 @@ export default function WorksheetPageContents(props: IWorksheet) {
           props.worksheetId === "equation" ? (
             <EquationWorksheet
               key={i}
-              printableId={`answerspage${i}`}
+              printableId={`page${i}`}
               title={props.title}
+              description={props.description}
               topic={(props.parameters as IEquationWorksheetParameters).topic}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              factor={(props.parameters as IEquationWorksheetParameters).factor}
-              multipliers={
-                (props.parameters as IEquationWorksheetParameters).multipliers
-              }
-              answers
+              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
             />
           ) : props.worksheetId === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
-              printableId={`answerspage${i}`}
+              printableId={`page${i}`}
               title={props.title}
-              result={
-                (props.parameters as INumberBondWorksheetParameters).result
-              }
+              description={props.description}
+              sum={(props.parameters as INumberBondWorksheetParameters).sum}
               orientation={props.parameters.orientation}
               pageIndex={i}
-              pairs={(props.parameters as INumberBondWorksheetParameters).pairs}
-              both={(props.parameters as INumberBondWorksheetParameters).both}
-              answers
+              leftNumbers={
+                (props.parameters as INumberBondWorksheetParameters).leftNumbers
+              }
+              empty={(props.parameters as INumberBondWorksheetParameters).empty}
             />
           ) : null
         )}
       </Stack>
-      <BigCard
-        title={props.title}
-        createdAt={props.createdAt}
-        rightStuff={
-          <Stack direction="row" spacing="12px">
-            {/* {userDetails?.user?.id
+
+      <Stack p="40px" overflow="scroll">
+        <BigCard
+          title={props.title}
+          createdAt={props.createdAt}
+          rightStuff={
+            <Stack direction="row" spacing="12px">
+              {/* {userDetails?.user?.id
             userDetails?.user?.id === props.creatorId ? ( */}
-            <Stack
-              sx={{
-                pointerEvents:
-                  userDetails?.user?.id === props.creatorId
-                    ? undefined
-                    : "none",
-                opacity:
-                  userDetails?.user?.id &&
-                  userDetails?.user?.id !== props.creatorId
-                    ? 0
-                    : 1,
-              }}
-            >
-              <CircularButton
-                icon={TrashcanIcon}
-                color={PALETTE.system.red}
-                onClick={() => setDeletionDialogOpen(true)}
-              />
+              <Stack
+                sx={{
+                  pointerEvents:
+                    userDetails?.user?.id === props.creatorId
+                      ? undefined
+                      : "none",
+                  opacity:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id !== props.creatorId
+                      ? 0
+                      : 1,
+                }}
+              >
+                <CircularButton
+                  icon={TrashcanIcon}
+                  color={PALETTE.system.red}
+                  onClick={() => setDeletionDialogOpen(true)}
+                />
+              </Stack>
+              {/* ) : null} */}
+              <Stack
+                borderRadius="100%"
+                border={`2px solid ${PALETTE.primary.navy}`}
+                height="39px"
+                width="39px"
+                justifyContent="center"
+                alignItems="center"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                }}
+              >
+                <ShareIcon width="22px" height="22px" />
+              </Stack>
+              <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
+                Download answers
+              </UrsorButton>
+              <UrsorButton dark variant="tertiary" onClick={() => save()}>
+                Download worksheet
+              </UrsorButton>
             </Stack>
-            {/* ) : null} */}
-            <Stack
-              borderRadius="100%"
-              border={`2px solid ${PALETTE.primary.navy}`}
-              height="39px"
-              width="39px"
-              justifyContent="center"
-              alignItems="center"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
-              }}
-            >
-              <ShareIcon width="22px" height="22px" />
+          }
+        >
+          {nPages ? (
+            <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
+              <UrsorFadeIn delay={500} duration={1000} fullWidth>
+                <Carousel
+                  yPadding={30}
+                  items={[...Array(nPages).keys()].map((i) => (
+                    <CarouselItem key={i} n={i + 1}>
+                      {props.worksheetId === "equation" ? (
+                        <EquationWorksheet
+                          key={i}
+                          title={props.title}
+                          description={props.description}
+                          topic={
+                            (props.parameters as IEquationWorksheetParameters)
+                              .topic
+                          }
+                          orientation={props.parameters.orientation}
+                          pageIndex={i}
+                          pairs={
+                            (props.parameters as IEquationWorksheetParameters)
+                              .pairs
+                          }
+                          answers={mode === "markscheme"}
+                        />
+                      ) : props.worksheetId === "numberBond" ? (
+                        <NumberBondWorksheet
+                          key={i}
+                          title={props.title}
+                          description={props.description}
+                          sum={
+                            (props.parameters as INumberBondWorksheetParameters)
+                              .sum
+                          }
+                          orientation={props.parameters.orientation}
+                          pageIndex={i}
+                          leftNumbers={
+                            (props.parameters as INumberBondWorksheetParameters)
+                              .leftNumbers
+                          }
+                          empty={
+                            (props.parameters as INumberBondWorksheetParameters)
+                              .empty
+                          }
+                          answers={mode === "markscheme"}
+                        />
+                      ) : null}
+                    </CarouselItem>
+                  ))}
+                />
+              </UrsorFadeIn>
             </Stack>
-            <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
-              Download answers
-            </UrsorButton>
-            <UrsorButton dark variant="tertiary" onClick={() => save()}>
-              Download worksheet
-            </UrsorButton>
-          </Stack>
-        }
-      >
-        {nPages ? (
-          <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-            <UrsorFadeIn delay={500} duration={1000} fullWidth>
-              <Carousel
-                yPadding={30}
-                items={[...Array(nPages).keys()].map((i) => (
-                  <CarouselItem key={i} n={i + 1}>
-                    {props.worksheetId === "equation" ? (
-                      <EquationWorksheet
-                        key={i}
-                        title={props.title}
-                        topic={
-                          (props.parameters as IEquationWorksheetParameters)
-                            .topic
-                        }
-                        orientation={props.parameters.orientation}
-                        pageIndex={i}
-                        factor={
-                          (props.parameters as IEquationWorksheetParameters)
-                            .factor
-                        }
-                        multipliers={
-                          (props.parameters as IEquationWorksheetParameters)
-                            .multipliers
-                        }
-                        answers={mode === "markscheme"}
-                      />
-                    ) : props.worksheetId === "numberBond" ? (
-                      <NumberBondWorksheet
-                        key={i}
-                        title={props.title}
-                        result={
-                          (props.parameters as INumberBondWorksheetParameters)
-                            .result
-                        }
-                        orientation={props.parameters.orientation}
-                        pageIndex={i}
-                        pairs={
-                          (props.parameters as INumberBondWorksheetParameters)
-                            .pairs
-                        }
-                        both={
-                          (props.parameters as INumberBondWorksheetParameters)
-                            .both
-                        }
-                        answers={mode === "markscheme"}
-                      />
-                    ) : null}
-                  </CarouselItem>
-                ))}
-              />
-            </UrsorFadeIn>
-          </Stack>
-        ) : null}
-      </BigCard>
+          ) : null}
+        </BigCard>
+      </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}

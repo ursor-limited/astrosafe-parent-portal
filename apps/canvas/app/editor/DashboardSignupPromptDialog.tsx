@@ -1,9 +1,8 @@
-import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import mixpanel from "mixpanel-browser";
-import GraphIllustration from "@/images/GraphIllustration.svg";
+import Image from "next/image";
 
 const DashboardSignupPromptDialog = (props: {
   open: boolean;
@@ -31,7 +30,12 @@ const DashboardSignupPromptDialog = (props: {
       maxWidth="880px"
       noCloseButton
     >
-      <GraphIllustration width="300px" height="300px" />
+      <Image
+        src="https://ursorassets.s3.eu-west-1.amazonaws.com/GraphIllustration.svg"
+        width={150}
+        height={150}
+        alt="Upgrade dialog illustration"
+      />
     </UrsorDialog>
   );
 };

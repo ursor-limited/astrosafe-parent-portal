@@ -11,7 +11,7 @@ import UrsorDialog from "../components/UrsorDialog";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/dashboardSkreenshot.png";
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png";
 
 const DashboardSignupPromptDialog = (props: {
   open: boolean;
@@ -24,8 +24,8 @@ const DashboardSignupPromptDialog = (props: {
       supertitle="Sign in"
       title={"Your dashboard awaits"}
       subtitle={[
-        "Create a free account to create and store",
-        "videos and worksheets.",
+        "Login or create a free account to create",
+        "and store videos and worksheets.",
       ]}
       open={props.open}
       // button={{
@@ -67,7 +67,7 @@ const DashboardSignupPromptDialog = (props: {
           </UrsorButton>
         </Stack>
         <Stack
-          width="727px"
+          width={props.mobile ? "300px" : "727px"}
           height="392px"
           borderRadius="20px"
           border={`6px solid ${PALETTE.secondary.grey[5]}`}
