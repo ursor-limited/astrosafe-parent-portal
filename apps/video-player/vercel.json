@@ -14,6 +14,18 @@
         "destination": "https://canvas.astrosafe.co/tools/multiplication-chart/:timestablepage"
     },
     {
+        "source": "/dashboard",
+        "destination": "https://canvas.astrosafe.co/dashboard"
+    },
+    {
+        "source": "/worksheet/:worksheetId([a-zA-Z0-9-]+)",
+        "destination": "https://canvas.astrosafe.co/worksheet/:worksheetId"
+    },
+    {
+        "source": "/video/:videoId([a-zA-Z0-9-]+)",
+        "destination": "https://canvas.astrosafe.co/worksheet/:videoId"
+    },
+    {
         "source": "/p/:pediaId([a-zA-Z0-9-]+)",
         "destination": "https://astro-monorepo-pedia.vercel.app/p/:pediaId"
     },
