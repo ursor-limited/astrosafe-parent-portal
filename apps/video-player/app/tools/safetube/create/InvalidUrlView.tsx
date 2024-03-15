@@ -4,7 +4,7 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useRouter } from "next/navigation";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
-import { GRADIENT, urlIsInvalid } from "@/app/dashboard_old/DashboardPageContents";
+import { GRADIENT, urlIsInvalid } from "@/app/dashboard/DashboardPageContents";
 
 export default function InvalidUrlView(props: { mobile: boolean }) {
   const [url, setUrl] = useState<string>("");
