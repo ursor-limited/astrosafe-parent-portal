@@ -31,10 +31,10 @@ async function fetchAndRenameSitemap(sitemapUrl: string): Promise<ISitemap[]> {
     }
 
     urlArray.push({
-      url: "https://www.astrosafe.co/tools/multiplication-chart",
+      url: "https://www.astrosafe.co/tools/math-worksheet-generator",
     });
     urlArray.push({
-      url: "https://www.astrosafe.co/tools/multiplication-chart/",
+      url: "https://www.astrosafe.co/tools/multiplication-chart",
     });
     for (let i = 0; i <= 30; i++) {
       urlArray.push({
