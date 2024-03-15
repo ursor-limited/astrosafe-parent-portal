@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-        "source": "/video",
+        "source": "/tools/safetube",
         "destination": "https://proxy.astrosafe.co/tools/safetube"
     },
     {
