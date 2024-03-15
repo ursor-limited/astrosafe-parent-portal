@@ -84,7 +84,7 @@ export interface IAstroLandingPage {
     cards: {
       title: string;
       text: string;
-      url: string;
+      url?: string;
       imageUrl: string;
     }[];
   };
