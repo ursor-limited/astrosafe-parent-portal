@@ -65,6 +65,12 @@
         "subtitle": "All of the AstroSafe worksheets can be printed out to use in your classroom - including the multiplication charts and times table exercises.  Why not give your students a multiplication chart each so they can stick it on their fridge at home? The more your students engage with their times tables the quicker they will remember them! Click below to create and customise your own multiplication charts and worksheets!",
         "supertitle": "How to share your multiplication chart"
     },
+    "createWorksheets": {
+        "title": "Importance of a multiplication chart",
+        "subtitle": "Multiplication is one of the four core math operations (alongside addition, subtraction, and division). Having a good understanding of the core components of math provides the foundation to learn more complex parts of the curriculum quickly!\nTo learn the times tables it’s important to recite the times tables, complete targetted worksheets, and use multiplication in real world scenarios. The tools provided by AstroSafe make it simple for you to create the resources you need to learn the times tables very quickly!",
+        "supertitle": "Why learning the times tables is important",
+        "leftImageUrl": "https://images.unsplash.com/photo-1630983358494-96012d838b84?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
     "faqs": {
         "cards": [
             {

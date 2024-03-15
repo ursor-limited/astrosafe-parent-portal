@@ -1,10 +1,12 @@
 import { Stack } from "@mui/system";
+import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 
 export default function LandingPageViewport(props: {
   supertitle: string;
   subtitle?: string;
   title?: string;
+  leftImageUrl?: string;
   mobile?: boolean;
   children: React.ReactNode;
 }) {
@@ -17,7 +19,7 @@ export default function LandingPageViewport(props: {
       position="relative"
       px="20px"
     >
-      <Stack spacing="8px" maxWidth="816px" alignItems="center">
+      <Stack spacing="10px" maxWidth="816px" alignItems="center">
         <Stack spacing="6px" alignItems="center">
           <Typography
             variant={props.mobile ? "normal" : "large"}
@@ -41,12 +43,30 @@ export default function LandingPageViewport(props: {
           </Typography>
         </Stack>
         {props.subtitle ? (
-          <Stack pt="5px">
+          <Stack pt="5px" direction="row" spacing="20px">
+            {props.leftImageUrl ? (
+              <div
+                style={{
+                  position: "relative",
+                  width: "279px",
+                  minWidth: "279px",
+                  height: "279px",
+                  transform: "translateY(5px)",
+                }}
+              >
+                <Image
+                  src={props.leftImageUrl}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  alt="left image"
+                />
+              </div>
+            ) : null}
             <Typography
               color={PALETTE.secondary.grey[4]}
               variant={props.mobile ? "small" : "normal"}
               sx={{
-                textAlign: "center",
+                textAlign: props.leftImageUrl ? "left" : "center",
                 width: props.mobile ? "280px" : undefined,
               }}
               htmlTag="h4"

@@ -98,6 +98,12 @@ export interface IAstroLandingPage {
     supertitle: string;
     subtitle: string;
   };
+  createWorksheets?: {
+    title: string;
+    supertitle: string;
+    subtitle: string;
+    leftImageUrl: string;
+  };
   keywords?: {
     title: string;
     supertitle: string;
@@ -458,6 +464,37 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
                   >
                     Create a printable multiplication chart
+                  </UrsorButton>
+                </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.createWorksheets
+          ? [
+              <LandingPageViewport
+                key="createWorksheets"
+                supertitle={props.createWorksheets.supertitle}
+                subtitle={props.createWorksheets.subtitle}
+                title={props.createWorksheets.title}
+                leftImageUrl={props.createWorksheets.leftImageUrl}
+                mobile={isMobile}
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <UrsorButton
+                    size="large"
+                    dark
+                    variant="tertiary"
+                    endIcon={PencilIcon}
+                    iconSize={22}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                  >
+                    Create your own worksheets
                   </UrsorButton>
                 </Stack>
               </LandingPageViewport>,
