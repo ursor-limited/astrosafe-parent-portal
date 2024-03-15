@@ -41,13 +41,7 @@ const BigCard = (props: {
                   path: { fill: PALETTE.secondary.grey[4] },
                 },
               }}
-              onClick={() =>
-                router.push(
-                  process.env.NODE_ENV === "development"
-                    ? "http://localhost:3000/dashboard"
-                    : "https://dev.astrosafe.co/dashboard"
-                )
-              }
+              onClick={() => router.push("/dashboard")}
             >
               <ChevronLeft width="20px" height="20px" />
               <Typography color={PALETTE.secondary.grey[4]}>
