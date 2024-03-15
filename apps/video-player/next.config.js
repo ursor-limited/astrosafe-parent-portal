@@ -50,7 +50,7 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
-        source: "/features/kids-safe-search-engine",
+        source: "/kids-safe-search-engine",
         destination: "/tools/kids-safe-search-engine",
         permanent: true,
       },
