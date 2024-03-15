@@ -1,9 +1,10 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import _ from "lodash";
 import LandingPageViewport from "./LandingPageViewport";
 import ExplainerCard from "./ExplainerCard";
@@ -26,6 +27,10 @@ import { useWindowSize } from "usehooks-ts";
 import { VisualLinkCards } from "./VisualLinkCards";
 import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
 import { Keywords } from "./Keywords";
+import MultiplicationTableColumns, {
+  IMultiplicationTableColumns,
+} from "@/app/components/MultiplicationTableColumns";
+import { useRouter } from "next/navigation";
 
 export interface IAstroLandingPage {
   urlId: string;
@@ -83,7 +88,23 @@ export interface IAstroLandingPage {
       imageUrl: string;
     }[];
   };
+  multiplicationTables?: ({
+    title: string;
+    supertitle: string;
+    subtitle: string;
+  } & IMultiplicationTableColumns)[];
   valueProposition?: IValuePropositionItem[];
+  printableChart?: {
+    title: string;
+    supertitle: string;
+    subtitle: string;
+  };
+  createWorksheets?: {
+    title: string;
+    supertitle: string;
+    subtitle: string;
+    leftImageUrl: string;
+  };
   keywords?: {
     title: string;
     supertitle: string;
@@ -241,7 +262,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
+  const router = useRouter();
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -404,6 +425,82 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition items={props.valueProposition} />
               </Stack>,
+            ]
+          : []),
+        ...(props.multiplicationTables
+          ? props.multiplicationTables.map((table, i) => (
+              <LandingPageViewport
+                key={`multiplicationtable${i}`}
+                supertitle={table.supertitle}
+                subtitle={table.subtitle}
+                title={table.title}
+                mobile={isMobile}
+              >
+                <MultiplicationTableColumns {...table} />
+              </LandingPageViewport>
+            ))
+          : []),
+        ...(props.printableChart
+          ? [
+              <LandingPageViewport
+                key="printableChart"
+                supertitle={props.printableChart.supertitle}
+                subtitle={props.printableChart.subtitle}
+                title={props.printableChart.title}
+                mobile={isMobile}
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <UrsorButton
+                    size="large"
+                    dark
+                    variant="tertiary"
+                    endIcon={PencilIcon}
+                    iconSize={22}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    Create a printable multiplication chart
+                  </UrsorButton>
+                </Stack>
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.createWorksheets
+          ? [
+              <LandingPageViewport
+                key="createWorksheets"
+                supertitle={props.createWorksheets.supertitle}
+                subtitle={props.createWorksheets.subtitle}
+                title={props.createWorksheets.title}
+                leftImageUrl={props.createWorksheets.leftImageUrl}
+                mobile={isMobile}
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <UrsorButton
+                    size="large"
+                    dark
+                    variant="tertiary"
+                    endIcon={PencilIcon}
+                    iconSize={22}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
+                  >
+                    Create your own worksheets
+                  </UrsorButton>
+                </Stack>
+              </LandingPageViewport>,
             ]
           : []),
         ...(props.keywords
