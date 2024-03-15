@@ -17,7 +17,7 @@ export default function LandingPageViewport(props: {
       position="relative"
       px="20px"
     >
-      <Stack spacing="8px" maxWidth="616px" alignItems="center">
+      <Stack spacing="8px" maxWidth="816px" alignItems="center">
         <Stack spacing="6px" alignItems="center">
           <Typography
             variant={props.mobile ? "normal" : "large"}
@@ -41,13 +41,11 @@ export default function LandingPageViewport(props: {
           </Typography>
         </Stack>
         {props.subtitle ? (
-          <Stack maxWidth="455px">
+          <Stack pt="5px">
             <Typography
-              bold
               color={PALETTE.secondary.grey[4]}
               variant={props.mobile ? "small" : "normal"}
               sx={{
-                fontWeight: 400,
                 textAlign: "center",
                 width: props.mobile ? "280px" : undefined,
               }}

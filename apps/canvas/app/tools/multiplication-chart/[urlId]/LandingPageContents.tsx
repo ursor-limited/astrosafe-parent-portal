@@ -1,9 +1,10 @@
 "use client";
 
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import AstroLandingPage from "./AstroLandingPage";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import _ from "lodash";
 import LandingPageViewport from "./LandingPageViewport";
 import ExplainerCard from "./ExplainerCard";
@@ -92,6 +93,11 @@ export interface IAstroLandingPage {
     subtitle: string;
   } & IMultiplicationTableColumns)[];
   valueProposition?: IValuePropositionItem[];
+  printableChart?: {
+    title: string;
+    supertitle: string;
+    subtitle: string;
+  };
   keywords?: {
     title: string;
     supertitle: string;
@@ -419,12 +425,43 @@ export default function LandingPageContents(props: IAstroLandingPage) {
               <LandingPageViewport
                 key={`multiplicationtable${i}`}
                 supertitle={table.supertitle}
+                subtitle={table.subtitle}
                 title={table.title}
                 mobile={isMobile}
               >
                 <MultiplicationTableColumns {...table} />
               </LandingPageViewport>
             ))
+          : []),
+        ...(props.printableChart
+          ? [
+              <LandingPageViewport
+                key="printableChart"
+                supertitle={props.printableChart.supertitle}
+                subtitle={props.printableChart.subtitle}
+                title={props.printableChart.title}
+                mobile={isMobile}
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <UrsorButton
+                    size="large"
+                    dark
+                    variant="tertiary"
+                    endIcon={PencilIcon}
+                    iconSize={22}
+                    backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                  >
+                    Create a printable multiplication chart
+                  </UrsorButton>
+                </Stack>
+              </LandingPageViewport>,
+            ]
           : []),
         ...(props.keywords
           ? [
