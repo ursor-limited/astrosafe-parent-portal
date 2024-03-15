@@ -217,6 +217,11 @@ class ApiController {
       response.json()
     );
   }
+  static async doIt() {
+    return get(`canvas/doIt`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;
