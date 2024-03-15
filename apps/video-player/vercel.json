@@ -1,6 +1,7 @@
 {
   "rewrites": [
     {
+
         "source": "/tools/multiplication-chart",
         "destination": "https://canvas.astrosafe.co/tools/multiplication-chart"
     },
