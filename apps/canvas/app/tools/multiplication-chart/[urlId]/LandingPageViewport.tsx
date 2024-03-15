@@ -23,9 +23,6 @@ export default function LandingPageViewport(props: {
             variant={props.mobile ? "normal" : "large"}
             bold
             color={PALETTE.secondary.grey[4]}
-            sx={{
-              fontWeight: 500,
-            }}
             htmlTag="h3"
           >
             {props.supertitle}
@@ -36,7 +33,6 @@ export default function LandingPageViewport(props: {
             color={PALETTE.secondary.grey[5]}
             sx={{
               textAlign: "center",
-              fontWeight: 500,
               width: props.mobile ? "300px" : undefined,
             }}
             htmlTag="h2"

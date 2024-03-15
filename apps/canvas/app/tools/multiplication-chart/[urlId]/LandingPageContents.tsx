@@ -26,6 +26,9 @@ import { useWindowSize } from "usehooks-ts";
 import { VisualLinkCards } from "./VisualLinkCards";
 import ValueProposition, { IValuePropositionItem } from "./ValueProposition";
 import { Keywords } from "./Keywords";
+import MultiplicationTableColumns, {
+  IMultiplicationTableColumns,
+} from "@/app/components/MultiplicationTableColumns";
 
 export interface IAstroLandingPage {
   urlId: string;
@@ -83,6 +86,11 @@ export interface IAstroLandingPage {
       imageUrl: string;
     }[];
   };
+  multiplicationTables?: ({
+    title: string;
+    supertitle: string;
+    subtitle: string;
+  } & IMultiplicationTableColumns)[];
   valueProposition?: IValuePropositionItem[];
   keywords?: {
     title: string;
@@ -405,6 +413,18 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 <ValueProposition items={props.valueProposition} />
               </Stack>,
             ]
+          : []),
+        ...(props.multiplicationTables
+          ? props.multiplicationTables.map((table, i) => (
+              <LandingPageViewport
+                key={`multiplicationtable${i}`}
+                supertitle={table.supertitle}
+                title={table.title}
+                mobile={isMobile}
+              >
+                <MultiplicationTableColumns {...table} />
+              </LandingPageViewport>
+            ))
           : []),
         ...(props.keywords
           ? [
