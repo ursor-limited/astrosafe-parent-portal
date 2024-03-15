@@ -3,7 +3,7 @@ import RocketIcon from "@/images/icons/RocketIcon.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useEffect, useState } from "react";
-import { Captioned } from "../landing/[urlId]/LandingPageContents";
+import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import {
   PALETTE,
   Typography,
@@ -132,7 +132,7 @@ const VideoCreationDialog = (props: {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
       setFreeVideoIds([...freeVideoIds, v.id]);
-      router.push(`/v/${v.id}`);
+      router.push(`/video/${v.id}`);
     });
   };
 
@@ -147,7 +147,7 @@ const VideoCreationDialog = (props: {
   return (
     <>
       <UrsorDialog
-        supertitle="Create video"
+        supertitle="Create safe video link"
         open={props.open}
         // button={{
         //   text: "Create",

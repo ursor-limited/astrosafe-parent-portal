@@ -1,7 +1,8 @@
 import {
   EquationOrientation,
+  INumberBondWorksheetParameters,
   WorksheetTopic,
-} from "./landing/[urlId]/WorksheetGenerator";
+} from "./components/WorksheetGenerator";
 
 export interface IVideo {
   id: string;
@@ -168,32 +169,36 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    factor: number,
-    multipliers: number[],
+    pairs: [number, number][],
+    description?: string,
     creatorId?: string
   ) {
+    console.log(pairs, topic);
     return post("canvas/worksheet/equation", {
       title,
+      description,
       creatorId,
       parameters: {
         orientation,
         topic,
-        factor,
-        multipliers,
+        pairs,
       },
     }).then((response: any) => response.json());
   }
   static async createNumberBondWorksheet(
     title: string,
     orientation: EquationOrientation,
-    result: number,
-    pairs: number[][],
+    sum: number,
+    empty: INumberBondWorksheetParameters["empty"],
+    leftNumbers: number[],
+    description?: string,
     creatorId?: string
   ) {
     return post("canvas/worksheet/numberBond", {
       title,
+      description,
       creatorId,
-      parameters: { orientation, result, pairs },
+      parameters: { orientation, sum, empty, leftNumbers },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {

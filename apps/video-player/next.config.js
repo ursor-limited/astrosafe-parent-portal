@@ -26,7 +26,37 @@ module.exports = withSvgr({
     return [
       {
         source: "/v",
-        destination: "/video",
+        destination: "/tools/safetube",
+        permanent: true,
+      },
+      {
+        source: "/video",
+        destination: "/tools/safetube",
+        permanent: true,
+      },
+      {
+        source: "/video/create",
+        destination: "/tools/safetube/create",
+        permanent: true,
+      },
+      {
+        source: "/websites-for-kids",
+        destination: "/tools/websites-for-kids",
+        permanent: true,
+      },
+      {
+        source: "/15-minutes-meditation-for-family-time-and-kids",
+        destination: "/tools/15-minutes-meditation-for-family-time-and-kids",
+        permanent: true,
+      },
+      {
+        source: "/kids-safe-search-engine",
+        destination: "/tools/kids-safe-search-engine",
+        permanent: true,
+      },
+      {
+        source: "/safetube/create",
+        destination: "/tools/safetube/create",
         permanent: true,
       },
     ];

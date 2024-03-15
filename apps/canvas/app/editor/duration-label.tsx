@@ -30,13 +30,15 @@ export default function DurationLabel(props: {
       >
         <ChevronLeft width={18} height={18} />
       </Stack>
-      <Typography color={PALETTE.secondary.grey[4]} bold>
-        {`${value > 3600 ? Math.floor(value / 3600) : ""}${
-          value > 3600 ? ":" : ""
-        }${Math.floor((value % 3600) / 60)
-          .toString()
-          .padStart(2, "0")}:${(value % 60).toString().padStart(2, "0")}`}
-      </Typography>
+      <Stack minWidth="52px" alignItems="center">
+        <Typography color={PALETTE.secondary.grey[4]} bold>
+          {`${value > 3600 ? Math.floor(value / 3600) : ""}${
+            value > 3600 ? ":" : ""
+          }${Math.floor((value % 3600) / 60)
+            .toString()
+            .padStart(2, "0")}:${(value % 60).toString().padStart(2, "0")}`}
+        </Typography>
+      </Stack>
       <Stack
         minWidth="fit-content"
         sx={{

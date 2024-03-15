@@ -2,7 +2,7 @@
   "rewrites": [
     {
         "source": "/video",
-        "destination": "https://proxy.astrosafe.co/video"
+        "destination": "https://proxy.astrosafe.co/tools/safetube"
     },
     {
         "source": "/pedia",
@@ -80,6 +80,11 @@
         "source": "/child-privacy-policy",
         "destination": "https://proxy.astrosafe.co/child-privacy-policy"
     },
+
+    {
+        "source": "/tools/kids-safe-search-engine",
+        "destination": "https://proxy.astrosafe.co/tools/kids-safe-search-engine"
+    },
     {
         "source": "/book-demo",
         "destination": "https://proxy.astrosafe.co/book-demo"
@@ -89,16 +94,16 @@
         "destination": "https://proxy.astrosafe.co/sign-up"
     },
     {
-        "source": "/websites-for-kids",
-        "destination": "https://proxy.astrosafe.co/websites-for-kids"
+        "source": "/tools/websites-for-kids",
+        "destination": "https://proxy.astrosafe.co/tools/websites-for-kids"
     },
     {
-        "source": "/chore-charts-for-kids",
-        "destination": "https://proxy.astrosafe.co/chore-charts-for-kids"
+        "source": "/tools/chore-charts-for-kids",
+        "destination": "https://proxy.astrosafe.co/tools/chore-charts-for-kids"
     },
     {
-        "source": "/15-minutes-meditation-for-family-time-and-kids",
-        "destination": "https://proxy.astrosafe.co/15-minutes-meditation-for-family-time-and-kids"
+        "source": "/tools/15-minutes-meditation-for-family-time-and-kids",
+        "destination": "https://proxy.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids"
     },
     { 
         "source": "/",

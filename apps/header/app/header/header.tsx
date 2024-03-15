@@ -309,22 +309,21 @@ export const Header = (props: {
               <Stack flex={1} justifyContent="space-between">
                 <ProductsPopoverProductButton
                   title="Worksheet generator"
-                  body="Create videos with a single click. Add captions, remove background
-        noise and more"
+                  body="Personalised and printable worksheets made in seconds."
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
-                  url="/landing/8-times-table-worksheet"
+                  url="https://astrosafe.co/tools/worksheet-generator"
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"
-                  body="Unlike other tubes, this one is totally safe."
+                  body="Reduce ads, remove distracting content, and increase focus."
                   icon={CirclePlayIcon}
                   color="#FC5C5C"
-                  url="https://astrosafe.co/video"
+                  url="https://astrosafe.co/tools/safetube"
                 />
                 <ProductsPopoverProductButton
                   title="Browser"
-                  body="Bro, it's a browser."
+                  body="Keep students safe with a browser built for the classroom."
                   icon={GlobeIcon}
                   color={PALETTE.secondary.purple[2]}
                   url="https://app.astrosafe.co"
@@ -341,27 +340,27 @@ export const Header = (props: {
                   links={[
                     {
                       text: "5 times tables",
-                      url: "/landing/5-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/5-times-table-worksheet",
                     },
                     {
                       text: "6 times tables",
-                      url: "/landing/6-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/6-times-table-worksheet",
                     },
                     {
                       text: "7 times tables",
-                      url: "/landing/7-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/7-times-table-worksheet",
                     },
                     {
                       text: "8 times tables",
-                      url: "/landing/8-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/8-times-table-worksheet",
                     },
                     {
                       text: "9 times tables",
-                      url: "/landing/9-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/9-times-table-worksheet",
                     },
                     {
                       text: "10 times tables",
-                      url: "/landing/10-times-table-worksheet",
+                      url: "https://astrosafe.co/tools/multiplication-chart/10-times-table-worksheet",
                     },
                   ]}
                 />
@@ -370,19 +369,19 @@ export const Header = (props: {
                   links={[
                     {
                       text: "Chore charts",
-                      url: "https://www.nintendo.com",
+                      url: "https://www.astrosafe.co/tools/chore-charts-for-kids",
                     },
                     {
                       text: "Websites for kids",
-                      url: "https://www.zelda.com",
+                      url: "https://www.astrosafe.co/tools/websites-for-kids",
                     },
                     {
                       text: "Meditation for kids",
-                      url: "https://proxy.astrosafe.co/15-minutes-meditation-for-family-time-and-kids",
+                      url: "https://www.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids",
                     },
                     {
                       text: "Safe search engine",
-                      url: "https://www.metroid.com",
+                      url: "https://www.astrosafe.co/tools/kids-safe-search-engine",
                     },
                   ]}
                 />

@@ -100,7 +100,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const searchParams = useSearchParams();
   useEffect(() => {
     if (![...searchParams.entries()].length) {
-      router.push(user ? "/dashboard" : "/video");
+      router.push(user ? "/dashboard" : "/tools/safetube");
     }
     setShowInvalidUrlView(!searchParams.get("url"));
   }, [searchParams]);

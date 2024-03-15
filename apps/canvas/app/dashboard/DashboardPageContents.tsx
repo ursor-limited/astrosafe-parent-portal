@@ -16,7 +16,7 @@ import ApiController from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
-import { IWorksheet } from "../landing/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "../components/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography } from "ui";
@@ -26,7 +26,7 @@ import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
 import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
-import { EmptyStateIllustration } from "../landing/[urlId]/LandingPageContents";
+import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
@@ -34,6 +34,8 @@ import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/SignupPromptDialog";
+import dayjs from "dayjs";
+import { TRIAL_DAYS } from "../account/AccountPageContents";
 
 export const GRID_SPACING = "20px";
 
@@ -46,19 +48,21 @@ export const SearchInput = (props: {
   callback: (value: string) => void;
   clearCallback: () => void;
   shadow?: boolean;
+  fullWidth?: boolean;
 }) => {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   return (
     <Stack
       height="28px"
-      width="180px"
+      width={props.fullWidth ? undefined : "180px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"
       bgcolor="rgb(255,255,255)"
       px="10px"
       spacing="8px"
+      boxSizing="border-box"
       sx={{
         svg: {
           path: {
@@ -116,7 +120,7 @@ export const SearchInput = (props: {
   );
 };
 
-const FilterButton = (props: {
+export const FilterButton = (props: {
   text: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   selected: boolean;
@@ -180,7 +184,7 @@ const FilterButton = (props: {
   );
 };
 
-const FilterRow = (props: {
+export const FilterRow = (props: {
   selected: AstroContent | null;
   callback: (newSelected: AstroContent | null) => void;
 }) => (
@@ -206,7 +210,7 @@ const FilterRow = (props: {
   </Stack>
 );
 
-const ToolButton = (props: {
+export const ToolButton = (props: {
   color: string;
   title: string;
   description: string;
@@ -214,6 +218,7 @@ const ToolButton = (props: {
   infoButtonPosition: number;
   infoTitle: string;
   infoBody: string;
+  mobile?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -221,7 +226,7 @@ const ToolButton = (props: {
     <>
       <Stack
         direction="row"
-        width="370px"
+        width={props.mobile ? undefined : "370px"}
         minHeight="66px"
         borderRadius="8px"
         boxShadow="0 0 16px rgba(0,0,0,0.02)"
@@ -255,7 +260,7 @@ const ToolButton = (props: {
           }}
           onClick={() => setOverlayOpen(true)}
           top="16px"
-          right={`${props.infoButtonPosition}px`}
+          left={`${props.infoButtonPosition}px`}
         >
           <InfoIcon width="14px" height="14px" />
         </Stack>
@@ -471,11 +476,11 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        button={{
-          text: "Upgrade",
-          icon: VerifiedIcon,
-          callback: () => setUpgradeDialogOpen(true),
-        }}
+        // button={{
+        //   text: "Upgrade",
+        //   icon: VerifiedIcon,
+        //   callback: () => setUpgradeDialogOpen(true),
+        // }}
         buttonRowExtraElement={
           <Stack
             height="100%"
@@ -484,7 +489,7 @@ export default function DashboardPageContents() {
             spacing="5px"
           >
             <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              30
+              {TRIAL_DAYS - dayjs().diff(userDetails.user?.createdAt, "days")}
             </Typography>
             <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
               days left
@@ -502,7 +507,7 @@ export default function DashboardPageContents() {
               onClick={() => {
                 setVideoCreationDialogOpen(true);
               }}
-              infoButtonPosition={76}
+              infoButtonPosition={280}
               infoTitle="Safe video link"
               infoBody={
                 "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
@@ -514,7 +519,7 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
-              infoButtonPosition={57}
+              infoButtonPosition={300}
               infoTitle="Math worksheet"
               infoBody={
                 "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
@@ -566,6 +571,7 @@ export default function DashboardPageContents() {
                   abc: "Alphabetical",
                   createdAt: "Most recent",
                 }}
+                width="204px"
               />
             </Stack>
           </Stack>
@@ -588,8 +594,11 @@ export default function DashboardPageContents() {
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
                   {column.map((item, j) => (
-                    <Stack key={item.details.id} spacing={GRID_SPACING}>
-                      <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                    <Stack
+                      key={`${item.details.id}${selectedSort}`}
+                      spacing={GRID_SPACING}
+                    >
+                      <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
                         {
                           item.type === "video" ? (
                             <VideoCard {...(item.details as IVideo)} />

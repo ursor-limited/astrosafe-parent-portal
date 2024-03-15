@@ -22,6 +22,7 @@ export interface IUrsorSelectProps {
   placeholder?: string;
   retainPlaceholder?: boolean; // keep it on even when the list is open
   leftAlign?: boolean;
+  leftAlignPopover?: boolean;
   keepOpenOnSelect?: boolean;
   width: string;
   white?: boolean;
@@ -151,6 +152,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         maxHeight
         clickableFloatedButton
         noPadding
+        placement={props.leftAlignPopover ? "left" : undefined}
         width={props.width}
         noFloatButton
         disabled={props.disabled}

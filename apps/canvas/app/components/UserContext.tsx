@@ -12,6 +12,7 @@ export interface ISafeTubeUser {
   subscribed: boolean;
   subscriptionDeletionDate?: number;
   paymentFailed?: boolean;
+  createdAt: string;
 }
 
 export interface IUserContext {

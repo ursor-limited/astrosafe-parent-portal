@@ -1,4 +1,4 @@
-import { IWorksheet } from "@/app/landing/[urlId]/WorksheetGenerator";
+import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import { Stack } from "@mui/system";
 import { Rubik } from "next/font/google";
 import { PALETTE, Typography } from "ui";
@@ -11,6 +11,7 @@ export const A4_HEIGHT = "297mm";
 
 const AstroWorksheetPage = (props: {
   title?: IWorksheet["title"];
+  description?: IWorksheet["description"];
   showAnswers?: boolean;
   printableId?: string;
   pageN?: number;
@@ -40,17 +41,20 @@ const AstroWorksheetPage = (props: {
           mt="50px"
           pb="3mm"
           width="100%"
-          height="22mm"
+          minHeight="22mm"
           borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
           justifyContent="space-between"
         >
           {props.title ? (
-            <Typography variant="h2">{props.title}</Typography>
+            <Typography color={PALETTE.font.dark} variant="h2" maxLines={1}>
+              {props.title}
+            </Typography>
           ) : (
             <Stack />
           )}
-          <Typography bold color={PALETTE.secondary.purple[2]}>
-            {props.showAnswers ? "Answers" : "Try to solve these questions!"}
+          <Typography bold color={PALETTE.secondary.purple[2]} maxLines={2}>
+            {props.description ||
+              (props.showAnswers ? "Answers" : "Try to solve these questions!")}
           </Typography>
         </Stack>
         <Stack flex={1}>{props.children}</Stack>

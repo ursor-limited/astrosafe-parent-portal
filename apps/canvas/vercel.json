@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+        "source": "/video",
+        "destination": "https://proxy.astrosafe.co/tools/safetube"
+    }
+  ]
+}

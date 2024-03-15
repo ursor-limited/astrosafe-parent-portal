@@ -3,6 +3,7 @@
 import React from "react";
 import type { SxProps } from "@mui/system";
 import { Box } from "@mui/system";
+import { PALETTE } from "./palette";
 
 export const DEFAULT_FONT_WEIGHT = 327;
 export const BOLD_FONT_WEIGHT = 450;
@@ -82,7 +83,7 @@ export function Typography(props: TypographyProps): JSX.Element {
   return (
     <Box
       //fontFamily={"Rubik"}
-      color={props.color}
+      color={props.color || PALETTE.font.dark}
       fontSize={`${
         (props.scale || 1) * FONT_SIZES[props.variant ?? "normal"]
       }px`}

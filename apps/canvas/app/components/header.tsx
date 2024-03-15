@@ -301,7 +301,7 @@ export const Header = (props: {
           dark
           variant="tertiary"
           startIcon={ChevronLeftIcon}
-          onClick={() => router.push("/video")}
+          onClick={() => router.push("/tools/safetube")}
         >
           Create new
         </UrsorButton>
