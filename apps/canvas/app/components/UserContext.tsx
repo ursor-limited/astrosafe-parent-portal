@@ -13,12 +13,14 @@ export interface ISafeTubeUser {
   subscriptionDeletionDate?: number;
   paymentFailed?: boolean;
   createdAt: string;
+  freeTrialStart?: string;
 }
 
 export interface IUserContext {
   user?: ISafeTubeUser;
   loading?: boolean;
   paymentLink?: string;
+  refresh?: () => void;
   clear?: () => void;
 }
 
@@ -44,6 +46,10 @@ const UserProvider = (props: IUserProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
+    loadUser();
+  }, [user?.email]);
+
+  const loadUser = () => {
     if (user?.email) {
       setLoading(true);
       ApiController.getUser(user.email)
@@ -56,8 +62,7 @@ const UserProvider = (props: IUserProviderProps) => {
         )
         .then(() => setLoading(false));
     }
-  }, [user?.email]);
-
+  };
   // useEffect(() => {
   //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
   // }, [isLoading, user?.email, safeTubeUser]);
@@ -79,6 +84,7 @@ const UserProvider = (props: IUserProviderProps) => {
         loading,
         paymentLink,
         clear: () => setSafeTubeUser(undefined),
+        refresh: loadUser,
       }}
     >
       {props.children}
