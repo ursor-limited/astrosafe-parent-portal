@@ -43,7 +43,11 @@ export default function LandingPageViewport(props: {
           </Typography>
         </Stack>
         {props.subtitle ? (
-          <Stack pt="5px" direction="row" spacing="20px">
+          <Stack
+            pt="5px"
+            direction={props.mobile ? "column" : "row"}
+            spacing="20px"
+          >
             {props.leftImageUrl ? (
               <div
                 style={{
@@ -66,7 +70,8 @@ export default function LandingPageViewport(props: {
               color={PALETTE.secondary.grey[4]}
               variant={props.mobile ? "small" : "normal"}
               sx={{
-                textAlign: props.leftImageUrl ? "left" : "center",
+                textAlign:
+                  props.leftImageUrl && !props.mobile ? "left" : "center",
                 width: props.mobile ? "280px" : undefined,
               }}
               htmlTag="h4"

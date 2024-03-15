@@ -9,6 +9,8 @@ import {
   WorksheetId,
 } from "../../components/WorksheetGenerator";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 
@@ -18,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 async function MainWorksheetsLandingPage() {
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   const details: IAstroLandingPage = {
     ...landingPageDetails,
     worksheetGenerator: {

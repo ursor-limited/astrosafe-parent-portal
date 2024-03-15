@@ -9,6 +9,7 @@ import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
@@ -462,15 +463,31 @@ export const Header = (props: {
           </Stack>
         ) : (
           <Stack spacing="8px" direction="row">
-            <UrsorButton
-              backgroundColor="transparent"
-              hoverOpacity={0.7}
-              onClick={() =>
-                (window.location.href = "mailto:hello@astrosafe.co")
-              }
-            >
-              Contact sales
-            </UrsorButton>
+            <UrsorFadeIn duration={800}>
+              {!user ? (
+                <UrsorButton
+                  backgroundColor="transparent"
+                  hoverOpacity={0.7}
+                  onClick={() =>
+                    (window.location.href = "mailto:hello@astrosafe.co")
+                  }
+                >
+                  Contact sales
+                </UrsorButton>
+              ) : (
+                <UrsorButton
+                  dark
+                  hoverOpacity={0.7}
+                  backgroundColor="transparent"
+                  borderColor="rgb(255,255,255)"
+                  fontColor="rgb(255,255,255)"
+                  onClick={() => router.push("/dashboard")}
+                  startIcon={ChevronLeftIcon}
+                >
+                  Go to Dashboard
+                </UrsorButton>
+              )}
+            </UrsorFadeIn>
             {user ? (
               <UrsorFadeIn duration={800}>
                 <Stack direction="row" spacing="12px">

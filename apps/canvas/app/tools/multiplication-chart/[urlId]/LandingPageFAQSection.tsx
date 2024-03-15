@@ -54,7 +54,7 @@ const LandingPageFAQSectionItem = (props: {
         setOpen(!open);
       }}
     >
-      <DynamicContainer duration={800} fullWidth>
+      <DynamicContainer duration={600} fullWidth>
         <Stack
           direction="row"
           width="100%"
