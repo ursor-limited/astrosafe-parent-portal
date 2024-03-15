@@ -30,6 +30,7 @@ import { Keywords } from "./Keywords";
 import MultiplicationTableColumns, {
   IMultiplicationTableColumns,
 } from "@/app/components/MultiplicationTableColumns";
+import { useRouter } from "next/navigation";
 
 export interface IAstroLandingPage {
   urlId: string;
@@ -261,7 +262,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-
+  const router = useRouter();
   return (
     <AstroLandingPage
       title={[props.heading]}
@@ -462,6 +463,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                     endIcon={PencilIcon}
                     iconSize={22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
                   >
                     Create a printable multiplication chart
                   </UrsorButton>
@@ -493,6 +495,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                     endIcon={PencilIcon}
                     iconSize={22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
+                    onClick={() => router.push("/dashboard")}
                   >
                     Create your own worksheets
                   </UrsorButton>
