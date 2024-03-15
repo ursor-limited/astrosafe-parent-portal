@@ -12,7 +12,7 @@
     },
     "howItWorks": {
         "supertitle": "How it works",
-        "title": "How to generate 8 times table worksheets",
+        "title": "How to create Math worksheets",
         "step1": {
             "title": "1. Pick your topic",
             "body": "Pick topic and type of worksheets. Add your own details."
@@ -33,28 +33,14 @@
             {
                 "title": "Times tables",
                 "text": "Create worksheets on your target times tables to hone your classes’ multiplication skills.",
-                "url": "/tools/multiplication-chart/20-times-table-worksheet",
+                "url": "/tools/multiplication-chart",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             },
             {
                 "title": "Number bonds",
                 "text": "Learn how to spot patterns when adding two numbers together.",
-                "url": "/tools/multiplication-chart/number-bond",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
-            },
-            {
-                "title": "Numberlines",
-                "text": "Use our numberline worksheets to learn all about counting and spotting sequences.",
-                "url": "/tools/multiplication-chart/20-times-table-worksheet",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
-            },
-            {
-                "title": "Factors",
-                "text": "What numbers can be multiplied to make another number? Learn all about Factors!",
-                "url": "/tools/multiplication-chart/20-times-table-worksheet",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
             }
-            
         ]
     },
     "keywords": {

@@ -9,14 +9,14 @@ const SPACING = "24px";
 export interface IVisualLinkCard {
   title: string;
   text: string;
-  url: string;
+  url?: string;
   imageUrl: string;
 }
 
 const VisualLinkCard = (props: IVisualLinkCard) => (
   <Stack
     height="567px"
-    width="497px"
+    maxWidth="497px"
     p="24px"
     pb="32px"
     boxSizing="border-box"
@@ -34,7 +34,12 @@ const VisualLinkCard = (props: IVisualLinkCard) => (
         overflow: "hidden",
       }}
     >
-      <Image src={props.imageUrl} fill alt="visual link card image" />
+      <Image
+        src={props.imageUrl}
+        style={{ objectFit: "cover" }}
+        fill
+        alt="visual link card image"
+      />
     </div>
     <Stack height="186px" justifyContent="space-between" alignItems="center">
       <Typography variant="h3" htmlTag="h4">
@@ -48,21 +53,28 @@ const VisualLinkCard = (props: IVisualLinkCard) => (
         {props.text}
       </Typography>
       <Stack direction="row" spacing="12px">
-        <Link href={props.url} style={{ textDecoration: "none" }}>
+        <Link href="/dashboard" style={{ textDecoration: "none" }}>
           <UrsorButton variant="tertiary" dark>
             Try it now
           </UrsorButton>
         </Link>
-        <UrsorButton variant="secondary">Learn more</UrsorButton>
+        {props.url ? (
+          <Link href={props.url} style={{ textDecoration: "none" }}>
+            <UrsorButton variant="secondary">Learn more</UrsorButton>
+          </Link>
+        ) : null}
       </Stack>
     </Stack>
   </Stack>
 );
 
-export const VisualLinkCards = (props: { cards: IVisualLinkCard[] }) => {
+export const VisualLinkCards = (props: {
+  cards: IVisualLinkCard[];
+  mobile: boolean;
+}) => {
   return (
     <Stack spacing={SPACING}>
-      {_.chunk(props.cards, 2).map((pair, i) => (
+      {_.chunk(props.cards, props.mobile ? 1 : 2).map((pair, i) => (
         <Stack spacing={SPACING} key={i} direction="row">
           <VisualLinkCard {...pair[0]} />
           {pair[1] ? <VisualLinkCard {...pair[1]} /> : null}

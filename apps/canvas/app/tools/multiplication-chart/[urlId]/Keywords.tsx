@@ -8,11 +8,17 @@ import Link from "next/link";
 
 export const Keywords = (props: {
   links: { title: string; url: string }[];
+  mobile: boolean;
 }) => {
   const router = useRouter();
   return (
     <Stack width="100%" position="relative" alignItems="center">
-      <Grid container gap="8px" width="60%" justifyContent="center">
+      <Grid
+        container
+        gap="10px"
+        width={props.mobile ? "90%" : "60%"}
+        justifyContent="center"
+      >
         {props.links.map((link, i) => (
           <Grid item key={i}>
             <Link href={link.url} style={{ textDecoration: "none" }}>
@@ -28,7 +34,7 @@ export const Keywords = (props: {
                   transition: "0.2s",
                 }}
               >
-                <Typography variant="medium" bold>
+                <Typography variant={props.mobile ? "normal" : "medium"} bold>
                   {link.title}
                 </Typography>
               </Stack>

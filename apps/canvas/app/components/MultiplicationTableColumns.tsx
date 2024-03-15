@@ -9,9 +9,11 @@ export interface IMultiplicationTableColumns {
   range: number[];
 }
 
-const MultiplicationTableColumns = (props: IMultiplicationTableColumns) => {
+const MultiplicationTableColumns = (
+  props: IMultiplicationTableColumns & { mobile: boolean }
+) => {
   return (
-    <Stack direction="row" spacing="12px">
+    <Stack direction={props.mobile ? "column" : "row"} spacing="12px">
       {props.multipliers.map((x) => (
         <Link
           key={x}

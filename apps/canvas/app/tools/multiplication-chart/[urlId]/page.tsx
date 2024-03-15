@@ -46,7 +46,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
   return details ? (
     <>
       <LandingPageContents
-        // isMobile={isMobile}
+        //isMobile={isMobile}
         {...details}
         worksheetGenerator={{
           ...details.worksheetGenerator,

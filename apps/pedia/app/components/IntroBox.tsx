@@ -25,6 +25,7 @@ export const IntroBox = (props: {
         variant={props.mobile ? "normal" : "medium"}
         bold
         color={PALETTE.font.light}
+        sx={{ textAlign: "center" }}
       >
         {props.title}
       </Typography>

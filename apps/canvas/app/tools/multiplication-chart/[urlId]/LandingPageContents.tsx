@@ -416,14 +416,17 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 title={props.visualLinkCards.title}
                 mobile={isMobile}
               >
-                <VisualLinkCards {...props.visualLinkCards} />
+                <VisualLinkCards {...props.visualLinkCards} mobile={isMobile} />
               </LandingPageViewport>,
             ]
           : []),
         ...(props.valueProposition
           ? [
               <Stack key="valueProposition" py="60px" alignItems="center">
-                <ValueProposition items={props.valueProposition} />
+                <ValueProposition
+                  items={props.valueProposition}
+                  mobile={isMobile}
+                />
               </Stack>,
             ]
           : []),
@@ -436,7 +439,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 title={table.title}
                 mobile={isMobile}
               >
-                <MultiplicationTableColumns {...table} />
+                <MultiplicationTableColumns mobile={isMobile} {...table} />
               </LandingPageViewport>
             ))
           : []),
@@ -455,13 +458,14 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                     "&:hover": { opacity: 0.7 },
                     transition: "0.2s",
                   }}
+                  pt={isMobile ? "12px" : undefined}
                 >
                   <UrsorButton
-                    size="large"
+                    size={isMobile ? "small" : "large"}
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
-                    iconSize={22}
+                    iconSize={isMobile ? 16 : 22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
                     onClick={() => router.push("/dashboard")}
                   >
@@ -487,13 +491,14 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                     "&:hover": { opacity: 0.7 },
                     transition: "0.2s",
                   }}
+                  pt={isMobile ? "12px" : undefined}
                 >
                   <UrsorButton
-                    size="large"
+                    size={isMobile ? "small" : "large"}
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
-                    iconSize={22}
+                    iconSize={isMobile ? 16 : 22}
                     backgroundColor="linear-gradient(172deg, #F279C5, #1D62F6)"
                     onClick={() => router.push("/dashboard")}
                   >
@@ -511,7 +516,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
                 title={props.keywords.title}
                 mobile={isMobile}
               >
-                <Keywords links={props.keywords.links} />
+                <Keywords links={props.keywords.links} mobile={isMobile} />
               </LandingPageViewport>,
             ]
           : []),
