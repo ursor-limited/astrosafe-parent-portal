@@ -312,7 +312,7 @@ export const Header = (props: {
                   body="Personalised and printable worksheets made in seconds."
                   icon={ChecklistIcon}
                   color={PALETTE.secondary.blue[3]}
-                  url="https://astrosafe.co/tools/worksheet-generator"
+                  url="https://astrosafe.co/tools/math-worksheet-generator"
                 />
                 <ProductsPopoverProductButton
                   title="SafeTube - Safe Videos"

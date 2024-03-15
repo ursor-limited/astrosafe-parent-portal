@@ -5,7 +5,7 @@ import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import Logo from "@/images/logo.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
-import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import HomeIcon from "@/images/icons/HomeIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
@@ -27,6 +27,7 @@ import DynamicContainer from "./DynamicContainer";
 import UrsorFadeIn from "./UrsorFadeIn";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileButton from "./ProfileButton";
+import ApiController from "../api";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -243,14 +244,14 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => {
             body="Personalised and printable worksheets made in seconds."
             icon={ChecklistIcon}
             color={PALETTE.secondary.blue[3]}
-            url="/tools/worksheet-generator"
+            url="/tools/math-worksheet-generator"
           />
           <ProductsPopoverProductButton
             title="SafeTube - Safe Videos"
             body="Reduce ads, remove distracting content, and increase focus."
             icon={CirclePlayIcon}
             color="#FC5C5C"
-            url="https://astrosafe.co/tools/safetube"
+            url="/tools/safetube"
           />
           <ProductsPopoverProductButton
             title="Browser"
@@ -275,27 +276,27 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => {
             links={[
               {
                 text: "5 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/5-times-table-worksheet",
+                url: "/tools/multiplication-chart/5-times-table-worksheet",
               },
               {
                 text: "6 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/6-times-table-worksheet",
+                url: "/tools/multiplication-chart/6-times-table-worksheet",
               },
               {
                 text: "7 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/7-times-table-worksheet",
+                url: "/tools/multiplication-chart/7-times-table-worksheet",
               },
               {
                 text: "8 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/8-times-table-worksheet",
+                url: "/tools/multiplication-chart/8-times-table-worksheet",
               },
               {
                 text: "9 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/9-times-table-worksheet",
+                url: "/tools/multiplication-chart/9-times-table-worksheet",
               },
               {
                 text: "10 times tables",
-                url: "https://astrosafe.co/tools/multiplication-chart/10-times-table-worksheet",
+                url: "/tools/multiplication-chart/10-times-table-worksheet",
               },
             ]}
             spaceBetween={!!props.mobile}
@@ -482,7 +483,8 @@ export const Header = (props: {
                   borderColor="rgb(255,255,255)"
                   fontColor="rgb(255,255,255)"
                   onClick={() => router.push("/dashboard")}
-                  startIcon={ChevronLeftIcon}
+                  //onClick={() => ApiController.doIt()}
+                  endIcon={HomeIcon}
                 >
                   Go to Dashboard
                 </UrsorButton>

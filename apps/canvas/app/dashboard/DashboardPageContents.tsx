@@ -468,6 +468,16 @@ export default function DashboardPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    userDetails.user?.id &&
+      !userDetails.user?.freeTrialStart &&
+      ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
+        userDetails.refresh
+      );
+  }, [userDetails.user?.id]);
+
+  console.log(userDetails.user?.freeTrialStart);
+
   return (
     <>
       <PageLayout
@@ -489,7 +499,8 @@ export default function DashboardPageContents() {
             spacing="5px"
           >
             <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              {TRIAL_DAYS - dayjs().diff(userDetails.user?.createdAt, "days")}
+              {TRIAL_DAYS -
+                dayjs().diff(userDetails.user?.freeTrialStart, "days")}
             </Typography>
             <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
               days left
