@@ -12,7 +12,8 @@ module.exports = withBundleAnalyzer(
       domains: [
         "https://www.astrosafe.co",
         "https://www.astrosafe.co/_next/image",
-        "https://astrosafe.co",
+        "https://astrosafe.co","https://canvas.astrosafe.co",
+
         "https://dev.astrosafe.co",
         "https://astro-monorepo-canvas.vercel.app",
         "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
@@ -23,7 +24,7 @@ module.exports = withBundleAnalyzer(
     },
     assetPrefix:
       process.env.VERCEL_ENV === "production"
-        ? "https://www.astrosafe.co"
+        ? "https://canvas.astrosafe.co"
         : process.env.VERCEL_ENV === "preview"
         ? "https://dev.astrosafe.co"
         : undefined,
