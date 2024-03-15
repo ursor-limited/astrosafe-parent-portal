@@ -17,7 +17,7 @@ export const IntroBox = (props: {
       alignItems="center"
       justifyContent={props.mobile ? "center" : "space-between"}
       sx={{
-        backdropFilter: props.mobile ? "blur(2px)" : "blur(3px)",
+        backdropFilter: props.mobile ? "blur(2px)" : "blur(5px)",
       }}
       spacing={props.mobile ? "5px" : undefined}
     >
