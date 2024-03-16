@@ -7,6 +7,7 @@ module.exports = withSvgr({
   images: {
     domains: [
       "https://www.astrosafe.co",
+      "https://canvas.astrosafe.co",
       "https://www.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://dev.astrosafe.co",
