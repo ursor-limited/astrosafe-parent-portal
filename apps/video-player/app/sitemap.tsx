@@ -29,21 +29,7 @@ async function fetchAndRenameSitemap(sitemapUrl: string): Promise<ISitemap[]> {
         urlArray.push({ url: url.replace(/proxy\./g, "www.") });
       }
     }
-
-    urlArray.push({
-      url: "https://www.astrosafe.co/tools/math-worksheet-generator",
-    });
-    urlArray.push({
-      url: "https://www.astrosafe.co/tools/multiplication-chart",
-    });
-    for (let i = 0; i <= 30; i++) {
-      urlArray.push({
-        url:
-          "https://www.astrosafe.co/tools/multiplication-chart/" +
-          i +
-          "-times-table-worksheet",
-      });
-    }
+    urlArray.push({ url: "https://www.astrosafe.co/editor" });
     // Create a new URL element for the new URL
     console.log(urlArray);
     return urlArray;

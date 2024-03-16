@@ -7,14 +7,16 @@ module.exports = withSvgr({
   images: {
     domains: [
       "https://www.astrosafe.co",
-      "https://canvas.astrosafe.co",
       "https://www.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://dev.astrosafe.co",
-      "https://astro-monorepo-video-player.vercel.app",
-      "https://astro-monorepo-video-player-git-dev-astros-afe.vercel.app",
+      "https://astro-monorepo-canvas.vercel.app",
+      "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
       "ursorassets.s3.eu-west-1.amazonaws.com",
       "i.ytimg.com",
+      "assets-global.website-files.com",
+      "images.unsplash.com",
+      "static01.nyt.com",
     ],
   },
   assetPrefix:
@@ -25,16 +27,6 @@ module.exports = withSvgr({
       : undefined,
   async redirects() {
     return [
-      {
-        source: "/v",
-        destination: "/tools/safetube",
-        permanent: true,
-      },
-      {
-        source: "/video",
-        destination: "/tools/safetube",
-        permanent: true,
-      },
       {
         source: "/video/create",
         destination: "/tools/safetube/create",
@@ -58,6 +50,11 @@ module.exports = withSvgr({
       {
         source: "/safetube/create",
         destination: "/tools/safetube/create",
+        permanent: true,
+      },
+      {
+        source: "/v",
+        destination: "/tools/safetube",
         permanent: true,
       },
     ];

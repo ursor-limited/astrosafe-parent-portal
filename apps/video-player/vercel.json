@@ -1,32 +1,8 @@
 {
   "rewrites": [
     {
-        "source": "/tools/multiplication-chart",
-        "destination": "https://canvas.astrosafe.co/tools/multiplication-chart"
-    },
-    {
-        "source": "/tools/math-worksheet-generator",
-        "destination": "https://canvas.astrosafe.co/tools/math-worksheet-generator"
-    },
-    {
-        "source": "/tools/multiplication-chart/:timestablepage([a-zA-Z0-9-]+)",
-        "destination": "https://canvas.astrosafe.co/tools/multiplication-chart/:timestablepage"
-    },
-    {
-        "source": "/worksheet/:worksheetId([a-zA-Z0-9-]+)",
-        "destination": "https://canvas.astrosafe.co/worksheet/:worksheetId"
-    },
-    {
-        "source": "/dashboard",
-        "destination": "https://canvas.astrosafe.co/dashboard"
-    },
-    {
-        "source": "/account",
-        "destination": "https://canvas.astrosafe.co/account"
-    },
-    {
-        "source": "/video/:videoId([a-zA-Z0-9-]+)",
-        "destination": "https://canvas.astrosafe.co/video/:videoId"
+        "source": "/v/:videoId([a-zA-Z0-9-]+)",
+        "destination": "/video/:videoId"
     },
     {
         "source": "/p/:pediaId([a-zA-Z0-9-]+)",
