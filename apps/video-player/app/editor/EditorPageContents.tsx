@@ -3,7 +3,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
-import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header";
+import { Header, STRIPE_CUSTOMER_PORTAL_URL } from "@/app/components/header2";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import UrsorFadeIn from "../components/UrsorFadeIn";
