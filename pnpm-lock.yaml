@@ -470,6 +470,9 @@ importers:
       axios-retry:
         specifier: ^3.8.1
         version: 3.8.1
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -488,6 +491,9 @@ importers:
       react:
         specifier: ^18
         version: 18.2.0
+      react-device-detect:
+        specifier: ^2.2.3
+        version: 2.2.3(react-dom@18.2.0)(react@18.2.0)
       react-dom:
         specifier: ^18
         version: 18.2.0(react@18.2.0)

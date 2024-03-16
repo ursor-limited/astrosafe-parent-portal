@@ -4,7 +4,16 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useRouter } from "next/navigation";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
-import { GRADIENT, urlIsInvalid } from "@/app/dashboard_old/DashboardPageContents";
+import { GRADIENT } from "@/app/editor/EditorPageContents";
+import { deNoCookiefy } from "@/app/components/utils";
+
+export const urlIsInvalid = async (value: string) =>
+  !["youtube.com", "youtu.be", "vimeo.com"].some((x) => value.includes(x)) &&
+  !!(
+    await fetch(
+      `https://noembed.com/embed?url=${encodeURIComponent(deNoCookiefy(value))}`
+    ).then(async (result) => result.json())
+  ).error;
 
 export default function InvalidUrlView(props: { mobile: boolean }) {
   const [url, setUrl] = useState<string>("");

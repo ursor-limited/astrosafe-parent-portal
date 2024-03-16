@@ -1,0 +1,153 @@
+{
+    "urlId": "22-times-table-worksheet",
+    "pageTitle": "22 times table worksheet | Learn your 22x tables up to 100 and beyond!",
+    "metaDescription": "22 times table worksheet generator creating a free printable pdf to download and share with students. Pracitse the multiplication table of twenty-two up to 100 and beyond with our 22 times table charts.",
+    "heading": "22 Times table worksheet generator",
+    "subHeading": "Generate a personalised and printable 22 times table worksheet in seconds for\nyour students. Create equations for the 22 times table up to 100 and beyond!",
+    "worksheetGenerator": {
+        "topic": "multiplication",
+        "worksheetId": "equation",
+        "title": "22 Times Table",
+        "nProblems": 20,
+        "specificSettings": {
+            "topic": "multiplication",
+            "factor": 22,
+            "nDigits": 1,
+            "orientation": "horizontal"
+        }
+    },
+    "howItWorks": {
+        "supertitle": "How it works",
+        "title": "How to generate 8 times table worksheets",
+        "step1": {
+            "title": "1. Design",
+            "body": "Pick your times table. how many questions you want and choose your layout."
+        },
+        "step2": {
+            "title": "2. Create",
+            "body": "Click create and we’ll generate your worksheet in seconds! Sign up for free to download."
+        },
+        "step3": {
+            "title": "3. Print & Share",
+            "body": "Now it’s all yours to download, print, and share with your students."
+        }
+    },
+    "worksheetPreview": {
+        "supertitle": "Learn the 22 times table",
+        "title": "22 Times table chart",
+        "body": "The 22 times table shows the result of multiplying 22 by various whole integers. Knowing this table improves memory capacity, a valuable skill applicable in various areas of learning and life. Every product in the 22 x table is an even number, divisible by 2, and also is divisible by 11. Students mastering the 22x table usually gain confidence in their math competencies. An interesting fact: 22 is considered a master number in numerology, symbolizing intuition, insight, and spiritual knowledge. See the twenty-two times table below.",
+        "worksheetPreviewParameters": {
+            "questionTopic": "multiplication",
+            "questionType": "chart",
+            "title": "22 Times Table Chart",
+            "worksheetParameters": {
+                "factor": 22,
+                "nProblems": 10
+            }
+        }
+    },
+    "otherPages": {
+        "supertitle": "Discover more times tables",
+        "title": "Learn your times tables from 20 to 30",
+        "links": [
+            {
+                "title": "20 Times Table",
+                "text": "Create and download worksheets for the 20x multiplication table.",
+                "urlId": "20-times-table-worksheet",
+                "imageString": "20x"
+            },
+            {
+                "title": "21 Times Table",
+                "text": "Create and download worksheets for the 21x multiplication table.",
+                "urlId": "21-times-table-worksheet",
+                "imageString": "21x"
+            },
+            {
+                "title": "23 Times Table",
+                "text": "Create and download worksheets for the 23x multiplication table.",
+                "urlId": "23-times-table-worksheet",
+                "imageString": "23x"
+            },
+            {
+                "title": "24 Times Table",
+                "text": "Create and download worksheets for the 24x multiplication table.",
+                "urlId": "24-times-table-worksheet",
+                "imageString": "24x"
+            },
+            {
+                "title": "25 Times Table",
+                "text": "Create and download worksheets for the 25x multiplication table.",
+                "urlId": "25-times-table-worksheet",
+                "imageString": "25x"
+            },
+            {
+                "title": "26 Times Table",
+                "text": "Create and download worksheets for the 26x multiplication table.",
+                "urlId": "26-times-table-worksheet",
+                "imageString": "26x"
+            },
+            {
+                "title": "27 Times Table",
+                "text": "Create and download worksheets for the 27x multiplication table.",
+                "urlId": "27-times-table-worksheet",
+                "imageString": "27x"
+            },
+            {
+                "title": "28 Times Table",
+                "text": "Create and download worksheets for the 28x multiplication table.",
+                "urlId": "28-times-table-worksheet",
+                "imageString": "28x"
+            },
+            {
+                "title": "29 Times Table",
+                "text": "Create and download worksheets for the 29x multiplication table.",
+                "urlId": "29-times-table-worksheet",
+                "imageString": "29x"
+            },
+            {
+                "title": "30 Times Table",
+                "text": "Create and download worksheets for the 30x multiplication table.",
+                "urlId": "30-times-table-worksheet",
+                "imageString": "30x"
+            }
+        ]
+    },
+    "explainerCards": {
+        "supertitle": "Who uses AstroSafe",
+        "title": "Making teaching simple",
+        "body": "AstroSafe makes the job of organising and creating lessons quick and simple. So teachers can spend more time teaching and less time on prep.",
+        "cards": [
+            {
+                "title": "Teachers",
+                "text": "For teachers looking for a quick and easy way to prepare curriculum aligned lessons, AstroSafe makes creating a worksheet as simple as clicking a button.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/TeacherImage.png"
+            },
+            {
+                "title": "Tutors",
+                "text": "Tutors can easily curate worksheets to appropriate level for each of their students. Personalised worksheet creation has never been simpler and quicker.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/TutorImage.png"
+            },
+            {
+                "title": "Parents",
+                "text": "AstroSafe makes it simple to support your child at home by allowing parents to make classroom-grade worksheets at a click of a button.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/img/landingpages/ParentsImage.png"
+            }
+        ]
+    },
+    "faqs": {
+        "cards": [
+            {
+                "question": "Is the AstroSafe Worksheet Generator free to use?",
+                "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+            },
+            {
+                "question": "Can I create different worksheets?",
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
+            },
+            {
+                "question": "Do you offer school discounts?",
+                "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+            }
+        ]
+    }
+}

@@ -8,22 +8,21 @@ import Kitemark from "@/images/coloredKitemark.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import dynamic from "next/dynamic";
 import { Slider } from "@mui/material";
-import DurationLabel from "../../../v/[videoId]/duration-label";
+import DurationLabel from "../../../video/[videoId]/duration-label";
 import { useRouter, useSearchParams } from "next/navigation";
 import { deNoCookiefy, noCookiefy } from "@/app/components/utils";
-import UrsorInputField from "@/app/components/ursor-input-field";
-import UrsorTextField from "@/app/components/ursor-text-field";
 import { PALETTE } from "ui/palette";
-import { Typography, UrsorButton } from "ui";
+import { Typography, UrsorButton, UrsorInputField, UrsorTextField } from "ui";
 import { Footer } from "../../../components/footer";
 import { Header } from "../../../components/header";
 import ForbiddenVideoView from "./ForbiddenVideoView";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import { MAGICAL_BORDER_THICKNESS } from "@/app/v/[videoId]/VideoPageContents";
+import { MAGICAL_BORDER_THICKNESS } from "@/app/video/[videoId]/VideoPageContents";
 import { useAuth0 } from "@auth0/auth0-react";
-import SignupPromptDialog from "@/app/components/SignupPromptDialog";
 import mixpanel from "mixpanel-browser";
 import InvalidUrlView from "./InvalidUrlView";
+import SignupPromptDialog from "@/app/dashboard/SignupPromptDialog";
+import { useUserContext } from "@/app/components/UserContext";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -66,31 +65,31 @@ export const CreationPageInputSection = (props: {
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
 function CreationPageContents(props: { details: IVideo }) {
-  useEffect(() => {
-    mixpanel.init(
-      process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
-      {
-        debug: true,
-        track_pageview: false,
-        persistence: "localStorage",
-      }
-    );
-  }, []);
-  useEffect(() => {
-    mixpanel?.track_pageview();
-  }, []);
+  // useEffect(() => {
+  //   mixpanel.init(
+  //     process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,
+  //     {
+  //       debug: true,
+  //       track_pageview: false,
+  //       persistence: "localStorage",
+  //     }
+  //   );
+  // }, []);
+  // useEffect(() => {
+  //   mixpanel?.track_pageview();
+  // }, []);
 
-  const { user } = useAuth0();
-  useEffect(() => {
-    user?.email && mixpanel.identify(user?.email);
-  }, [user?.email]);
+  //const { user } = useAuth0();
+  // useEffect(() => {
+  //   user?.email && mixpanel.identify(user?.email);
+  // }, [user?.email]);
 
   const [playing, setPlaying] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
-  useEffect(() => {
-    props.details?.description && setDescription(props.details.description);
-  }, [props.details?.description]);
+  // useEffect(() => {
+  //   props.details?.description && setDescription(props.details.description);
+  // }, [props.details?.description]);
 
   const [showForbiddenVideoView, setShowForbiddenVideoView] =
     useState<boolean>(false);
@@ -100,7 +99,7 @@ function CreationPageContents(props: { details: IVideo }) {
   const searchParams = useSearchParams();
   useEffect(() => {
     if (![...searchParams.entries()].length) {
-      router.push(user ? "/dashboard" : "/tools/safetube");
+      router.push(userDetails.user?.id ? "/dashboard" : "/tools/safetube");
     }
     setShowInvalidUrlView(!searchParams.get("url"));
   }, [searchParams]);
@@ -139,7 +138,7 @@ function CreationPageContents(props: { details: IVideo }) {
         } else {
           setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
-          setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
+          //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
       })
@@ -176,17 +175,19 @@ function CreationPageContents(props: { details: IVideo }) {
   const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
     useLocalStorage<boolean>("landInDashboardAfterCreation", false);
 
+  const userDetails = useUserContext();
+
   useEffect(() => {
-    if (user?.email && freeVideoIds.length > 0) {
-      ApiController.claimVideos(user.email, freeVideoIds);
+    if (userDetails.user?.id && freeVideoIds.length > 0) {
+      ApiController.claimVideos(userDetails.user.id, freeVideoIds);
       setFreeVideoIds([]);
     }
-  }, [user?.email, freeVideoIds.length]);
+  }, [userDetails.user?.id, freeVideoIds.length]);
 
   const router = useRouter();
   const submit = () => {
     setLoading(true);
-    mixpanel.track("video created");
+    //mixpanel.track("video created");
     ApiController.createVideo({
       title,
       description,
@@ -194,9 +195,9 @@ function CreationPageContents(props: { details: IVideo }) {
       thumbnailUrl,
       startTime: range?.[0],
       endTime: range?.[1],
-      creatorId: user?.email,
+      creatorId: userDetails.user?.id,
     }).then(async (v) => {
-      if (user?.email) {
+      if (userDetails.user?.id) {
         // if (freeVideoIds.length > 0) {
         //   await ApiController.claimVideos(user.email, freeVideoIds);
         //   setFreeVideoIds([]);
@@ -205,15 +206,13 @@ function CreationPageContents(props: { details: IVideo }) {
         setFreeVideoCreationCount(freeVideoCreationCount + 1);
         setFreeVideoIds([...freeVideoIds, v.id]);
       }
-      router.push(
-        user && landInDashboardAfterCreation ? "/dashboard" : `/v/${v.id}`
-      );
+      router.push(userDetails.user?.id ? "/dashboard" : `/v/${v.id}`);
       setLandInDashboardAfterCreation(false);
     });
   };
   useEffect(() => {
-    user?.email && readyForSubmittingUponLoadingUser && submit();
-  }, [user?.email]);
+    userDetails.user?.id && readyForSubmittingUponLoadingUser && submit();
+  }, [userDetails.user?.id]);
 
   const [
     readyForSubmittingUponLoadingUser,
@@ -248,10 +247,10 @@ function CreationPageContents(props: { details: IVideo }) {
     useState<boolean>(false);
 
   return (
-    <>
+    <Stack width="100vw" height="100vh" overflow="scroll">
       {!fullscreen ? (
         <Header
-          showSigninButton={!user}
+          showSigninButton={!userDetails.user?.id}
           signinCallback={() => setLandInDashboardAfterCreation(true)}
         />
       ) : null}
@@ -299,7 +298,7 @@ function CreationPageContents(props: { details: IVideo }) {
             </Stack>
           ) : null}
 
-          <Stack spacing="42px" alignItems="center">
+          <Stack spacing="42px" alignItems="center" pb="20px">
             {!fullscreen ? (
               <Stack>
                 <Stack
@@ -327,10 +326,10 @@ function CreationPageContents(props: { details: IVideo }) {
                         variant="tertiary"
                         onClick={() => {
                           setReadyForSubmittingUponLoadingUser(true);
-                          if (user) {
+                          if (userDetails.user?.id) {
                             submit();
                           } else {
-                            mixpanel.track("opened signup prompt dialog");
+                            //mixpanel.track("opened signup prompt dialog");
                             setSignupPromptDialogOpen(true);
                           }
                         }}
@@ -373,12 +372,12 @@ function CreationPageContents(props: { details: IVideo }) {
                           variant="tertiary"
                           onClick={() => {
                             setReadyForSubmittingUponLoadingUser(true);
-                            if (user) {
+                            if (userDetails.user?.id) {
                               submit();
                             } else {
-                              mixpanel.track(
-                                "creation page - opened signup prompt dialog"
-                              );
+                              // mixpanel.track(
+                              //   "creation page - opened signup prompt dialog"
+                              // );
                               setSignupPromptDialogOpen(true);
                             }
                           }}
@@ -411,7 +410,6 @@ function CreationPageContents(props: { details: IVideo }) {
                   <CreationPageInputSection title="Start and end time">
                     <Stack
                       direction="row"
-                      width="100%"
                       bgcolor={INPUT_FIELD_BACKGROUND_COLOR}
                       borderRadius="8px"
                       px={mobile ? "10px" : "30px"}
@@ -685,9 +683,9 @@ function CreationPageContents(props: { details: IVideo }) {
       ) : showForbiddenVideoView ? (
         <ForbiddenVideoView />
       ) : null}
-      {!fullscreen ? (
+      {/* {!fullscreen ? (
         <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
-      ) : null}
+      ) : null} */}
       <Stack
         position="absolute"
         top={0}
@@ -714,11 +712,11 @@ function CreationPageContents(props: { details: IVideo }) {
       <SignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
-        createCallback={submit}
+        callback={submit}
         signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={mobile}
       />
-    </>
+    </Stack>
   );
 }
 

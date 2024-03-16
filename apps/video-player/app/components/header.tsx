@@ -18,8 +18,7 @@ import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
-import { FREE_VIDEO_LIMIT } from "../dashboard_old/DashboardPageContents";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "./UserContext";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -140,6 +139,7 @@ export const Header = (props: {
       alignItems="center"
       justifyContent="space-between"
       px="28px"
+      boxSizing="border-box"
     >
       <Stack width="fit-content">
         <Link href="https://astrosafe.co/">
@@ -237,26 +237,6 @@ export const Header = (props: {
                         alignItems="center"
                         justifyContent="space-between"
                       >
-                        <Stack direction="row" spacing="4px">
-                          <Typography
-                            sx={{
-                              fontWeight: 500,
-                            }}
-                            bold
-                            variant="small"
-                            color={PALETTE.secondary.grey[5]}
-                          >{`${Math.max(
-                            0,
-                            FREE_VIDEO_LIMIT - nVideos
-                          )}/${FREE_VIDEO_LIMIT}`}</Typography>
-                          <Typography
-                            bold
-                            variant="small"
-                            color={PALETTE.secondary.grey[5]}
-                          >
-                            Videos left
-                          </Typography>
-                        </Stack>
                         <UrsorButton
                           dark
                           variant="tertiary"
@@ -307,8 +287,8 @@ export const Header = (props: {
                 <Stack onClick={() => setProfilePopupOpen(true)}>
                   <ProfileButton
                     initials={(
-                      (user.name?.split(" ")?.[0]?.[0] ?? "") +
-                      (user.name?.split(" ")?.[1]?.[0] ?? "")
+                      user.name?.split(" ")[0][0] +
+                      (user.name?.split(" ")[1][0] || "")
                     ).toUpperCase()}
                   />
                 </Stack>
