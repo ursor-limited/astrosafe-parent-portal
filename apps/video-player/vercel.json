@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+        "source": "/v/:videoId([a-zA-Z0-9-]+)",
+        "destination": "/video/:videoId"
+    },
+    {
         "source": "/p/:pediaId([a-zA-Z0-9-]+)",
         "destination": "https://astro-monorepo-pedia.vercel.app/p/:pediaId"
     },
