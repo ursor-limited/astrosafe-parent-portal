@@ -57,6 +57,11 @@ module.exports = withSvgr({
         destination: "/tools/safetube",
         permanent: true,
       },
+      {
+        source: "/video",
+        destination: "/tools/safetube",
+        permanent: true,
+      },
     ];
   },
 });
