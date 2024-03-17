@@ -53,12 +53,12 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
-        source: "/v",
+        source: "/video",
         destination: "/tools/safetube",
         permanent: true,
       },
       {
-        source: "/video",
+        source: "/v",
         destination: "/tools/safetube",
         permanent: true,
       },
