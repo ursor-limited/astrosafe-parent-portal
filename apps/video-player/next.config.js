@@ -53,11 +53,6 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
-        source: "features/kids-safe-search-engine",
-        destination: "/tools/kids-safe-search-engine",
-        permanent: true,
-      },
-      {
         source: "/safetube/create",
         destination: "/tools/safetube/create",
         permanent: true,
