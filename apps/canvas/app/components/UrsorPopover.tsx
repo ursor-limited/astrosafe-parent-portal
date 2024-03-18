@@ -101,8 +101,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     );
   }, [width, referenceElement, referenceElement?.offsetTop, props.yOffset]);
 
-  console.log(props.width, "0-0-0-");
-
   return (
     <>
       <Stack

@@ -1,12 +1,15 @@
 import { Stack } from "@mui/system";
 import UrsorPopover from "./UrsorPopover";
-import { ASTRO_MAGICAL_GRADIENT } from "./header2";
+import { ASTRO_MAGICAL_GRADIENT, STRIPE_CUSTOMER_PORTAL_URL } from "./header2";
 import { PALETTE, Typography } from "ui";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useUserContext } from "./UserContext";
 
 const ProfileButtonActualButton = (props: { initials: string }) => (
   <Stack
@@ -86,6 +89,7 @@ const ProfilePopupButton = (props: {
 
 const ProfileButton = () => {
   const { user, logout } = useAuth0();
+  const userCtx = useUserContext();
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   return (
@@ -122,9 +126,9 @@ const ProfileButton = () => {
               icon={ListUnorderedIcon}
               text="Dashboard"
             />
-            {/* 
-            {nVideos && safeTubeUser?.subscribed ? (
-              <a
+
+            {userCtx.user?.subscribed ? (
+              <Link
                 target="_blank"
                 href={STRIPE_CUSTOMER_PORTAL_URL}
                 style={{
@@ -133,12 +137,12 @@ const ProfileButton = () => {
                 rel="noreferrer"
               >
                 <ProfilePopupButton
-                  callback={() => setProfilePopupOpen(false)}
+                  callback={() => null}
                   icon={CreditCardIcon}
                   text="Manage plan"
                 />
-              </a>
-            ) : null} */}
+              </Link>
+            ) : null}
             <ProfilePopupButton
               callback={() => {
                 logout();

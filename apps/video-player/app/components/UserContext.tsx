@@ -5,6 +5,8 @@ import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import ApiController from "../api";
 import mixpanel from "mixpanel-browser";
+import { useLocalStorage } from "usehooks-ts";
+import NotificationContext from "./NotificationContext";
 
 export interface ISafeTubeUser {
   id: string;
@@ -76,6 +78,21 @@ const UserProvider = (props: IUserProviderProps) => {
         setPaymentLink(link)
       );
   }, [user?.email, safeTubeUser]);
+
+  const notificationCtx = React.useContext(NotificationContext);
+
+  const [subscribed, setSubscribed] = useLocalStorage<boolean>(
+    "subscribed",
+    false
+  );
+  useEffect(() => {
+    safeTubeUser && setSubscribed(!!safeTubeUser.subscribed);
+  }, [safeTubeUser?.subscribed]);
+  useEffect(() => {
+    !subscribed &&
+      safeTubeUser?.subscribed &&
+      notificationCtx.success("Upgraded");
+  }, [safeTubeUser?.subscribed, subscribed]);
 
   return (
     <UserContext.Provider

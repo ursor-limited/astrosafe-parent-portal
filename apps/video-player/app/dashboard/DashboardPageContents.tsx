@@ -36,6 +36,9 @@ import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/SignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
+import { STRIPE_CUSTOMER_PORTAL_URL } from "../components/header2";
+import { useRouter } from "next/navigation";
+import QuestionnaireDialog from "./QuestionnaireDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -88,6 +91,7 @@ export const SearchInput = (props: {
           fontWeight: BOLD_FONT_WEIGHT,
           lineHeight: "100%",
           transition: "0.2s",
+          fontFamily: "inherit",
         }}
         value={props.value}
         disableUnderline
@@ -467,6 +471,8 @@ export default function DashboardPageContents() {
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     userDetails.user?.id &&
@@ -476,7 +482,7 @@ export default function DashboardPageContents() {
       );
   }, [userDetails.user?.id]);
 
-  console.log(userDetails.user?.freeTrialStart);
+  const router = useRouter();
 
   return (
     <>
@@ -486,26 +492,43 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        // button={{
-        //   text: "Upgrade",
-        //   icon: VerifiedIcon,
-        //   callback: () => setUpgradeDialogOpen(true),
-        // }}
+        button={
+          !userDetails.user?.subscribed
+            ? {
+                text: "Upgrade",
+                icon: VerifiedIcon,
+                callback: () => setUpgradeDialogOpen(true),
+              }
+            : userDetails.user.subscriptionDeletionDate
+            ? {
+                text: "Renew",
+                icon: VerifiedIcon,
+                callback: () => router.push(STRIPE_CUSTOMER_PORTAL_URL),
+              }
+            : undefined
+        }
         buttonRowExtraElement={
-          <Stack
-            height="100%"
-            alignItems="center"
-            direction="row"
-            spacing="5px"
-          >
-            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              {TRIAL_DAYS -
-                dayjs().diff(userDetails.user?.freeTrialStart, "days")}
-            </Typography>
-            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-              days left
-            </Typography>
-          </Stack>
+          !userDetails.user?.subscribed ||
+          userDetails.user.subscriptionDeletionDate ? (
+            <Stack
+              height="100%"
+              alignItems="center"
+              direction="row"
+              spacing="5px"
+            >
+              <Typography
+                variant="medium"
+                bold
+                color={PALETTE.secondary.grey[4]}
+              >
+                {TRIAL_DAYS -
+                  dayjs().diff(userDetails.user?.freeTrialStart, "days")}
+              </Typography>
+              <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+                days left
+              </Typography>
+            </Stack>
+          ) : undefined
         }
       >
         <UrsorFadeIn duration={700}>
@@ -659,6 +682,10 @@ export default function DashboardPageContents() {
       <UpgradePromptDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+      />
+      <QuestionnaireDialog
+        open={questionnaireDialogOpen}
+        closeCallback={() => setQuestionnaireDialogOpen(false)}
       />
     </>
   );

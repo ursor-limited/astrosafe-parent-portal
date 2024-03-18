@@ -81,7 +81,7 @@ const ValueProposition = (props: {
         props.items
           .map((item, i) => [
             <div
-              key={i}
+              key={`image${i}`}
               style={{
                 position: "relative",
                 width: "420px",
@@ -92,7 +92,12 @@ const ValueProposition = (props: {
             >
               <Image src={item.imageUrl} fill alt="visual link card image" />
             </div>,
-            <Stack key={i} width="420px" spacing="32px" justifyContent="center">
+            <Stack
+              key={`content${i}`}
+              width="420px"
+              spacing="32px"
+              justifyContent="center"
+            >
               <Stack
                 sx={{
                   background: item.color,

@@ -41,6 +41,7 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
           padding: "0 !important",
           lineHeight: `${LINE_HEIGHTS.normal}px`,
           fontWeight: props.boldValue ? BOLD_FONT_WEIGHT : undefined,
+          height: props.height,
         },
         form: {
           autoComplete: "off",
@@ -56,12 +57,14 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         ".MuiInputBase-root": {
           paddingTop: "9px",
           paddingBottom: "9px",
+          fontFamily: "inherit",
         },
         width: props.width,
         borderRadius: "8px",
         outline: props.outline,
         background: props.backgroundColor ?? PALETTE.secondary.grey[1],
         backdropFilter: props.backgroundBlur,
+
         "& fieldset": { border: "none" },
       }}
       value={props.value}

@@ -7,6 +7,7 @@ import { useWindowSize } from "usehooks-ts";
 import { ButtonVariant, UrsorButton } from "ui/ursor-button";
 import { PALETTE, Typography } from "ui";
 import { UrsorTypographyVariant } from "ui/typography";
+import ByteStepper from "./ByteStepper";
 
 const WIDTH = "926px";
 const HEIGHT = "630px";
@@ -180,6 +181,19 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             <X height="27px" />
           </Box>
         ) : null}
+        {_.isNumber(props.step) && props.nSteps ? (
+          <Stack
+            width="100%"
+            alignItems="center"
+            position="relative"
+            marginBottom={STEPPER_TITLE_SEPARATION}
+            sx={{
+              transform: "translateY(1px)",
+            }}
+          >
+            <ByteStepper nSteps={props.nSteps} step={props.step} />
+          </Stack>
+        ) : null}
         <Stack
           flex={1}
           spacing={props.bunchedUpContent ? "12px" : "25px"}
@@ -191,6 +205,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           {props.subtitle || props.title || props.supertitle ? (
             <Stack
               spacing="12px"
+              maxWidth={props.titleMaxWidth}
               alignItems="center"
               textAlign="center"
               //maxWidth="476px"

@@ -142,8 +142,8 @@ class ApiController {
       ids,
     }).then((response: any) => response.json());
   }
-  static async getPaymentLink(auth0Id: string) {
-    return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
+  static async getPaymentLink(email: string) {
+    return get(`video/user/${email}/getPaymentLink`).then((response: any) =>
       response.json()
     );
   }
