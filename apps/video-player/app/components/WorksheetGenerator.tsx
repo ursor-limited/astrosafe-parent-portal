@@ -15,6 +15,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import { useRouter } from "next/navigation";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import UrsorLoading from "./UrsorLoading";
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -254,7 +255,10 @@ export default function WorksheetGenerator(props: {
 
   const router = useRouter();
 
+  const [loading, setLoading] = useState<boolean>(false);
+
   const submitCreation = () => {
+    setLoading(true);
     creationCallback?.().then((id) => {
       if (!userDetails.user) {
         setFreeWorksheetCreationCount(freeWorksheetCreationCount + 1);
@@ -267,188 +271,211 @@ export default function WorksheetGenerator(props: {
   };
 
   return (
-    <UrsorFadeIn duration={props.fadeIn ? 1000 : 0}>
+    <Stack position="relative">
       <Stack
-        borderRadius="20px"
+        position="absolute"
+        top={0}
+        left={0}
         bgcolor="rgb(255,255,255)"
-        p={props.noPadding ? undefined : props.mobile ? "26px" : "42px"}
-        direction="row"
-        spacing="40px"
-        boxShadow={
-          props.glow
-            ? `0 70px 86px ${alpha("rgb(186, 91, 222)", 0.3)}`
-            : undefined
-        }
+        height="100%"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
+        zIndex={3}
+        borderRadius="20px"
+        sx={{
+          opacity: loading ? 1 : 0,
+          pointerEvents: loading ? undefined : "none",
+          transition: "0.2s",
+          transitionDelay: "0.5s",
+        }}
       >
-        <Stack width={props.mobile ? undefined : "480px"} spacing="18px">
-          <Captioned text="Worksheet title">
-            <UrsorInputField
-              value={title}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                event.target.value.length < TITLE_CHARACTER_LIMIT &&
-                setTitle(event.target.value)
-              }
-              placeholder="Type in your worksheet title"
-              width="100%"
-              leftAlign
-              boldValue
-              height="44px"
-            />
-          </Captioned>
-          <Captioned text="Description">
-            <UrsorInputField
-              value={description}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
-                setDescription(event.target.value)
-              }
-              placeholder="Type in your worksheet description"
-              width="100%"
-              leftAlign
-              boldValue
-              height="44px"
-            />
-          </Captioned>
-          <Stack height="28px" justifyContent="center">
-            <Stack
-              height="2px"
-              width="100%"
-              bgcolor={PALETTE.secondary.grey[2]}
-            />
-          </Stack>
-          <Stack direction="row" spacing="20px">
-            <Captioned text="Worksheet topic">
-              <UrsorSelect
-                items={[
-                  {
-                    id: "multiplication",
-                    value: "Multiplication (x)",
-                  },
-                  {
-                    id: "division",
-                    value: "Division (÷)",
-                  },
-                  {
-                    id: "addition",
-                    value: "Addition (+)",
-                  },
-                  {
-                    id: "subtraction",
-                    value: "Subtraction (-)",
-                  },
-                ]}
-                selected={[topic]}
-                callback={(t: string) => setTopic(t as WorksheetTopic)}
+        <UrsorLoading />
+      </Stack>
+      <UrsorFadeIn duration={props.fadeIn ? 1000 : 0}>
+        <Stack
+          borderRadius="20px"
+          bgcolor="rgb(255,255,255)"
+          p={props.noPadding ? undefined : props.mobile ? "26px" : "42px"}
+          direction="row"
+          spacing="40px"
+          boxShadow={
+            props.glow
+              ? `0 70px 86px ${alpha("rgb(186, 91, 222)", 0.3)}`
+              : undefined
+          }
+          position="relative"
+        >
+          <Stack width={props.mobile ? undefined : "480px"} spacing="18px">
+            <Captioned text="Worksheet title">
+              <UrsorInputField
+                value={title}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  event.target.value.length < TITLE_CHARACTER_LIMIT &&
+                  setTitle(event.target.value)
+                }
+                placeholder="Type in your worksheet title"
                 width="100%"
-                zIndex={999999999}
-                leftAlignPopover
+                leftAlign
+                boldValue
+                height="44px"
               />
             </Captioned>
-            <Captioned text="Question type">
-              <UrsorSelect
-                items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
-                  id: t,
-                  value: WORKSHEET_ID_DISPLAY_NAMES[t],
-                }))}
-                selected={[worksheetId]}
-                callback={(wid: string) => {
-                  setWorksheetId(wid as WorksheetId);
-                }}
+            <Captioned text="Description">
+              <UrsorInputField
+                value={description}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
+                  setDescription(event.target.value)
+                }
+                placeholder="Type in your worksheet description"
                 width="100%"
-                zIndex={999999999}
-                leftAlignPopover
+                leftAlign
+                boldValue
+                height="44px"
               />
             </Captioned>
-          </Stack>
-          {worksheetId === "equation" ? (
-            <WorksheetGeneratorEquationModule
-              {...(specificSettings as IEquationWorksheetGeneratorSettings)}
-              callback={(newPreviewWorksheet) =>
-                setPreviewWorksheet(newPreviewWorksheet)
-              }
-              setCreationCallback={(cc) => setCreationCallback(() => cc)}
-              nProblems={nProblems}
-              setNProblems={setNProblems}
-              setNPages={setNPages}
-              title={title}
-              description={description}
-              topic={topic}
-              pageIndex={selectedPageIndex}
-              regenerationCount={regenerationCount}
-            />
-          ) : worksheetId === "numberBond" ? (
-            <WorksheetGeneratorNumberBondModule
-              {...(specificSettings as INumberBondWorksheetGeneratorSettings)}
-              callback={(newPreviewWorksheet) =>
-                setPreviewWorksheet(newPreviewWorksheet)
-              }
-              setCreationCallback={(cc) => setCreationCallback(() => cc)}
-              nProblems={nProblems}
-              setNProblems={setNProblems}
-              setNPages={setNPages}
-              title={title}
-              description={description}
-              topic={topic}
-              pageIndex={selectedPageIndex}
-              regenerationCount={regenerationCount}
-            />
-          ) : null}
-          {props.mobile ? (
-            <UrsorButton
-              onClick={submitCreation}
-              dark
-              variant="tertiary"
-              endIcon={PencilIcon}
-              width="100%"
-            >
-              {props.buttonText || "Create"}
-            </UrsorButton>
-          ) : null}
-        </Stack>
-        {!props.mobile ? (
-          <Stack
-            minWidth="268px"
-            position="relative"
-            flex={1}
-            justifyContent="space-between"
-          >
-            <Stack
-              sx={{ transform: "scale(0.333)", transformOrigin: "top left" }}
-              position="absolute"
-              top={0}
-              left={0}
-              boxShadow="0 0 60px rgba(0,0,0,0.07)"
-            >
-              {previewWorksheet}
+            <Stack height="28px" justifyContent="center">
+              <Stack
+                height="2px"
+                width="100%"
+                bgcolor={PALETTE.secondary.grey[2]}
+              />
             </Stack>
-            <Stack />
-            <Stack spacing="19px">
-              {nPages > 1 ? (
-                <PageSelector
-                  pageIndex={selectedPageIndex}
-                  back={() => setSelectedPageIndex(selectedPageIndex - 1)}
-                  forward={() => setSelectedPageIndex(selectedPageIndex + 1)}
-                  nPages={nPages}
-                />
-              ) : null}
-              <Stack direction="row" spacing="12px">
-                <RefreshButton
-                  onClick={() => setRegenerationCount(regenerationCount + 1)}
-                />
-                <UrsorButton
-                  onClick={submitCreation}
-                  dark
-                  variant="tertiary"
-                  endIcon={PencilIcon}
+            <Stack direction="row" spacing="20px">
+              <Captioned text="Worksheet topic">
+                <UrsorSelect
+                  items={[
+                    {
+                      id: "multiplication",
+                      value: "Multiplication (x)",
+                    },
+                    {
+                      id: "division",
+                      value: "Division (÷)",
+                    },
+                    {
+                      id: "addition",
+                      value: "Addition (+)",
+                    },
+                    {
+                      id: "subtraction",
+                      value: "Subtraction (-)",
+                    },
+                  ]}
+                  selected={[topic]}
+                  callback={(t: string) => setTopic(t as WorksheetTopic)}
                   width="100%"
-                >
-                  {props.buttonText || "Create"}
-                </UrsorButton>
+                  zIndex={999999999}
+                  leftAlignPopover
+                />
+              </Captioned>
+              <Captioned text="Question type">
+                <UrsorSelect
+                  items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
+                    id: t,
+                    value: WORKSHEET_ID_DISPLAY_NAMES[t],
+                  }))}
+                  selected={[worksheetId]}
+                  callback={(wid: string) => {
+                    setWorksheetId(wid as WorksheetId);
+                  }}
+                  width="100%"
+                  zIndex={999999999}
+                  leftAlignPopover
+                />
+              </Captioned>
+            </Stack>
+            {worksheetId === "equation" ? (
+              <WorksheetGeneratorEquationModule
+                {...(specificSettings as IEquationWorksheetGeneratorSettings)}
+                callback={(newPreviewWorksheet) =>
+                  setPreviewWorksheet(newPreviewWorksheet)
+                }
+                setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                nProblems={nProblems}
+                setNProblems={setNProblems}
+                setNPages={setNPages}
+                title={title}
+                description={description}
+                topic={topic}
+                pageIndex={selectedPageIndex}
+                regenerationCount={regenerationCount}
+              />
+            ) : worksheetId === "numberBond" ? (
+              <WorksheetGeneratorNumberBondModule
+                {...(specificSettings as INumberBondWorksheetGeneratorSettings)}
+                callback={(newPreviewWorksheet) =>
+                  setPreviewWorksheet(newPreviewWorksheet)
+                }
+                setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                nProblems={nProblems}
+                setNProblems={setNProblems}
+                setNPages={setNPages}
+                title={title}
+                description={description}
+                topic={topic}
+                pageIndex={selectedPageIndex}
+                regenerationCount={regenerationCount}
+              />
+            ) : null}
+            {props.mobile ? (
+              <UrsorButton
+                onClick={submitCreation}
+                dark
+                variant="tertiary"
+                endIcon={PencilIcon}
+                width="100%"
+              >
+                {props.buttonText || "Create"}
+              </UrsorButton>
+            ) : null}
+          </Stack>
+          {!props.mobile ? (
+            <Stack
+              minWidth="268px"
+              position="relative"
+              flex={1}
+              justifyContent="space-between"
+            >
+              <Stack
+                sx={{ transform: "scale(0.333)", transformOrigin: "top left" }}
+                position="absolute"
+                top={0}
+                left={0}
+                boxShadow="0 0 60px rgba(0,0,0,0.07)"
+              >
+                {previewWorksheet}
+              </Stack>
+              <Stack />
+              <Stack spacing="19px">
+                {nPages > 1 ? (
+                  <PageSelector
+                    pageIndex={selectedPageIndex}
+                    back={() => setSelectedPageIndex(selectedPageIndex - 1)}
+                    forward={() => setSelectedPageIndex(selectedPageIndex + 1)}
+                    nPages={nPages}
+                  />
+                ) : null}
+                <Stack direction="row" spacing="12px">
+                  <RefreshButton
+                    onClick={() => setRegenerationCount(regenerationCount + 1)}
+                  />
+                  <UrsorButton
+                    onClick={submitCreation}
+                    dark
+                    variant="tertiary"
+                    endIcon={PencilIcon}
+                    width="100%"
+                  >
+                    {props.buttonText || "Create"}
+                  </UrsorButton>
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-        ) : null}
-      </Stack>
-    </UrsorFadeIn>
+          ) : null}
+        </Stack>
+      </UrsorFadeIn>
+    </Stack>
   );
 }
