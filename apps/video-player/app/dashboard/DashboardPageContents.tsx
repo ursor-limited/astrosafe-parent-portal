@@ -91,6 +91,7 @@ export const SearchInput = (props: {
           fontWeight: BOLD_FONT_WEIGHT,
           lineHeight: "100%",
           transition: "0.2s",
+          fontFamily: "inherit",
         }}
         value={props.value}
         disableUnderline
@@ -471,7 +472,7 @@ export default function DashboardPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   useEffect(() => {
     userDetails.user?.id &&
