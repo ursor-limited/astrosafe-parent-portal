@@ -132,7 +132,7 @@ export default function MobileDashboardPageContents() {
   useEffect(() => {
     if (userDetails.user && !signedIn) {
       notificationCtx.success("Signed in.");
-      setSignedIn(true);
+      //setSignedIn(true);
     }
   }, [userDetails.user]);
 

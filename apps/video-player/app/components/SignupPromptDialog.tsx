@@ -5,6 +5,7 @@ import { PALETTE, UrsorButton } from "ui";
 import UrsorDialog from "./UrsorDialog";
 import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
+import { useLocalStorage } from "usehooks-ts";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
@@ -20,6 +21,8 @@ const UpgradePromptDialog = (props: {
   closeCallback: () => void;
   mobile?: boolean;
 }) => {
+  const [upgradedNotificationPending, setUpgradedNotificationPending] =
+    useLocalStorage<boolean>("upgradedNotificationPending", false);
   const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
   const email = useUserContext().user?.auth0Id;
@@ -42,7 +45,10 @@ const UpgradePromptDialog = (props: {
         >
           <UrsorButton
             backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-            onClick={() => router.push(email ? getPaymentUrl(email) : "")}
+            onClick={() => {
+              router.push(email ? getPaymentUrl(email) : "");
+              setUpgradedNotificationPending(true);
+            }}
             endIcon={PersonIcon}
           >
             Upgrade now

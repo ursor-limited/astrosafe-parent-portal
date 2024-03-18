@@ -129,12 +129,12 @@ export default function MobileDashboardPageContents() {
     useState<boolean>(false);
 
   const notificationCtx = useContext(NotificationContext);
-  useEffect(() => {
-    if (userDetails.user && !signedIn) {
-      notificationCtx.success("Signed in.");
-      setSignedIn(true);
-    }
-  }, [userDetails.user]);
+  // useEffect(() => {
+  //   if (userDetails.user && !signedIn) {
+  //     notificationCtx.success("Signed in.");
+  //     setSignedIn(true);
+  //   }
+  // }, [userDetails.user]);
 
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
