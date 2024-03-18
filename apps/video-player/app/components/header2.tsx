@@ -412,7 +412,6 @@ export const Header = (props: {
   const [nVideos, setNVideos] = useState<number | undefined>(undefined);
   const safeTubeUser = useUserContext().user;
 
-  console.log(user, safeTubeUser, "fuck", "-=-=-=-=-=-=-=-");
   return (
     <>
       <Stack
