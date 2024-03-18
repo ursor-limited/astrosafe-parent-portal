@@ -34,12 +34,12 @@
                 "title": "Times tables",
                 "text": "Create worksheets on your target times tables to hone your classes’ multiplication skills.",
                 "url": "/tools/multiplication-chart",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/timestables_.png"
             },
             {
                 "title": "Number bonds",
                 "text": "Learn how to spot patterns when adding two numbers together.",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/safetubePreviewScreenshot.png"
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/numberbonds__.png"
             }
         ]
     },
@@ -91,33 +91,29 @@
                 "question": "Is the AstroSafe Worksheet Generator free to use?",
                 "answer": "The worksheet generator is free for 14 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
             },
+            { 
+                "question": "What is a multiplication chart?",
+                "answer": "A multiplication chart, also known as a times table or multiplication table, is a visual tool that displays the results of multiplying two sets of numbers. It's arranged in a grid format, showing columns and rows of consecutive numbers, and helps in quickly finding the product of two numbers by locating their intersection on the grid."},
+            { 
+                "question": "How can a multiplication chart be used for learning?",
+                "answer": "It's used as a reference for students to memorize and practice multiplication tables, enhancing speed and accuracy in math. To use a multiplication chart, you first identify the numbers you want to multiply, which are listed along the top row (columns) and the left column (rows) of the chart. Then, you locate the intersection point of the row and column for these two numbers, and the value at this intersection is the product of the two numbers​​​​."},
+            { 
+                "question": "Who can benefit from using a multiplication chart?",
+                "answer": "Primarily students learning basic arithmetic, teachers, and parents assisting with homework or homeschooling."},
+            { 
+                "question": "Can the multiplication chart be customized?",
+                "answer": "Yes, the tool allows customization to suit individual learning needs, including adjusting the range of numbers."},
+            { 
+                "question": "Is the multiplication chart printable?",
+                "answer": "The chart is designed to be easily printable for offline study and classroom use."
+            },
             {
                 "question": "Can I create different worksheets?",
-                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don't currently offer - just email hello@astrosafe.co and let us know!"
-            },
-            {
-                "question": "How do I select topics for the worksheets?",
-                "answer": "Choose from a wide range of math topics suitable for various grades and curriculum standards directly on the tool's interface."
-            },
-            {
-                "question": "Can I customize the worksheets?",
-                "answer": "Yes, the tool allows for customization in terms of difficulty level, number of questions, and specific math topics."
-            },
-            {
-                "question": "How do I download or print the generated worksheets?",
-                "answer": "After generating the worksheet, options for downloading as a PDF or printing directly from the website will be provided."
-            },
-            {
-                "question": "Is there a fee for using this worksheet generator?",
-                "answer": "For detailed information on any potential costs or subscription models, please refer to the Astrosafe website."
-            },
-            {
-                "question": "How does the worksheet generator work?",
-                "answer": "The worksheet generator uses a mixture of AI and our templates to create worksheets fine-tuned for your classroom."
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
             },
             {
                 "question": "Do you offer school discounts?",
-                "answer": "Yes we do! If you're interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+                "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
             }
         ]
     }
