@@ -486,26 +486,36 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        // button={{
-        //   text: "Upgrade",
-        //   icon: VerifiedIcon,
-        //   callback: () => setUpgradeDialogOpen(true),
-        // }}
+        button={
+          !userDetails.user?.subscribed
+            ? {
+                text: "Upgrade",
+                icon: VerifiedIcon,
+                callback: () => setUpgradeDialogOpen(true),
+              }
+            : undefined
+        }
         buttonRowExtraElement={
-          <Stack
-            height="100%"
-            alignItems="center"
-            direction="row"
-            spacing="5px"
-          >
-            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              {TRIAL_DAYS -
-                dayjs().diff(userDetails.user?.freeTrialStart, "days")}
-            </Typography>
-            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-              days left
-            </Typography>
-          </Stack>
+          !userDetails.user?.subscribed ? (
+            <Stack
+              height="100%"
+              alignItems="center"
+              direction="row"
+              spacing="5px"
+            >
+              <Typography
+                variant="medium"
+                bold
+                color={PALETTE.secondary.grey[4]}
+              >
+                {TRIAL_DAYS -
+                  dayjs().diff(userDetails.user?.freeTrialStart, "days")}
+              </Typography>
+              <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+                days left
+              </Typography>
+            </Stack>
+          ) : undefined
         }
       >
         <UrsorFadeIn duration={700}>

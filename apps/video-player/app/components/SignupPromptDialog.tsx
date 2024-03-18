@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, UrsorButton } from "ui";
 import UrsorDialog from "./UrsorDialog";
+import { useUserContext } from "./UserContext";
+import { useRouter } from "next/navigation";
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
@@ -13,6 +15,8 @@ const UpgradePromptDialog = (props: {
   closeCallback: () => void;
   mobile?: boolean;
 }) => {
+  const paymentLink = useUserContext().paymentLink;
+  const router = useRouter();
   return (
     <UrsorDialog
       supertitle="Upgrade"
@@ -32,9 +36,7 @@ const UpgradePromptDialog = (props: {
         >
           <UrsorButton
             backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-            onClick={() => {
-              null;
-            }}
+            onClick={() => router.push(paymentLink ?? "")}
             endIcon={PersonIcon}
           >
             Upgrade now
