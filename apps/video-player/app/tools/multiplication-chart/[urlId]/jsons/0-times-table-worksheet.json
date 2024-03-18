@@ -51,64 +51,58 @@
         "title": "Learn your times tables from -10 to 0",
         "links": [
             {
-                "title": "-10 Times Table",
-                "text": "Create and download worksheets for the -10x multiplication table.",
-                "urlId": "-10-times-table-worksheet",
-                "imageString": "-10x"
+                "title": "1 Times Table",
+                "text": "Create and download worksheets for the 1x multiplication table.",
+                "urlId": "1-times-table-worksheet",
+                "imageString": "1x"
             },
             {
-                "title": "-9 Times Table",
-                "text": "Create and download worksheets for the -9x multiplication table.",
-                "urlId": "-9-times-table-worksheet",
-                "imageString": "-9x"
+                "title": "2 Times Table",
+                "text": "Create and download worksheets for the 2x multiplication table.",
+                "urlId": "2-times-table-worksheet",
+                "imageString": "2x"
             },
             {
-                "title": "-8 Times Table",
-                "text": "Create and download worksheets for the -8x multiplication table.",
-                "urlId": "-8-times-table-worksheet",
-                "imageString": "-8x"
+                "title": "3 Times Table",
+                "text": "Create and download worksheets for the 3x multiplication table.",
+                "urlId": "3-times-table-worksheet",
+                "imageString": "3x"
             },
             {
-                "title": "-7 Times Table",
-                "text": "Create and download worksheets for the -7x multiplication table.",
-                "urlId": "-7-times-table-worksheet",
-                "imageString": "-7x"
+                "title": "4 Times Table",
+                "text": "Create and download worksheets for the 4x multiplication table.",
+                "urlId": "4-times-table-worksheet",
+                "imageString": "4x"
             },
             {
-                "title": "-6 Times Table",
-                "text": "Create and download worksheets for the -6x multiplication table.",
-                "urlId": "-6-times-table-worksheet",
-                "imageString": "-6x"
+                "title": "5 Times Table",
+                "text": "Create and download worksheets for the 5x multiplication table.",
+                "urlId": "5-times-table-worksheet",
+                "imageString": "5x"
             },
             {
-                "title": "-5 Times Table",
-                "text": "Create and download worksheets for the -5x multiplication table.",
-                "urlId": "-5-times-table-worksheet",
-                "imageString": "-5x"
+                "title": "6 Times Table",
+                "text": "Create and download worksheets for the 6x multiplication table.",
+                "urlId": "6-times-table-worksheet",
+                "imageString": "6x"
             },
             {
-                "title": "-4 Times Table",
-                "text": "Create and download worksheets for the -4x multiplication table.",
-                "urlId": "-4-times-table-worksheet",
-                "imageString": "-4x"
+                "title": "7 Times Table",
+                "text": "Create and download worksheets for the 7x multiplication table.",
+                "urlId": "7-times-table-worksheet",
+                "imageString": "7x"
             },
             {
-                "title": "-3 Times Table",
-                "text": "Create and download worksheets for the -3x multiplication table.",
-                "urlId": "-3-times-table-worksheet",
-                "imageString": "-3x"
+                "title": "8 Times Table",
+                "text": "Create and download worksheets for the 8x multiplication table.",
+                "urlId": "8-times-table-worksheet",
+                "imageString": "8x"
             },
             {
-                "title": "-2 Times Table",
-                "text": "Create and download worksheets for the -2x multiplication table.",
-                "urlId": "-2-times-table-worksheet",
-                "imageString": "-2x"
-            },
-            {
-                "title": "-1 Times Table",
-                "text": "Create and download worksheets for the -1x multiplication table.",
-                "urlId": "-1-times-table-worksheet",
-                "imageString": "-1x"
+                "title": "9 Times Table",
+                "text": "Create and download worksheets for the 9x multiplication table.",
+                "urlId": "9-times-table-worksheet",
+                "imageString": "9x"
             }
         ]
     },

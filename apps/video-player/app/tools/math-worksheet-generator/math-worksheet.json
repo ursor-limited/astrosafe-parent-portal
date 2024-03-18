@@ -93,11 +93,31 @@
             },
             {
                 "question": "Can I create different worksheets?",
-                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don’t currently offer - just email hello@astrosafe.co and let us know!"
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don't currently offer - just email hello@astrosafe.co and let us know!"
+            },
+            {
+                "question": "How do I select topics for the worksheets?",
+                "answer": "Choose from a wide range of math topics suitable for various grades and curriculum standards directly on the tool's interface."
+            },
+            {
+                "question": "Can I customize the worksheets?",
+                "answer": "Yes, the tool allows for customization in terms of difficulty level, number of questions, and specific math topics."
+            },
+            {
+                "question": "How do I download or print the generated worksheets?",
+                "answer": "After generating the worksheet, options for downloading as a PDF or printing directly from the website will be provided."
+            },
+            {
+                "question": "Is there a fee for using this worksheet generator?",
+                "answer": "For detailed information on any potential costs or subscription models, please refer to the Astrosafe website."
+            },
+            {
+                "question": "How does the worksheet generator work?",
+                "answer": "The worksheet generator uses a mixture of AI and our templates to create worksheets fine-tuned for your classroom."
             },
             {
                 "question": "Do you offer school discounts?",
-                "answer": "Yes we do! If you’re interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+                "answer": "Yes we do! If you're interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
             }
         ]
     }

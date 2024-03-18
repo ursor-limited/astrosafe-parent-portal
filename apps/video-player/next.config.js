@@ -43,6 +43,16 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
+        source: "/chore-charts-for-kids",
+        destination: "/tools/chore-charts-for-kids",
+        permanent: true,
+      },
+      {
+        source: "/features/kids-safe-search-engine",
+        destination: "/tools/kids-safe-search-engine",
+        permanent: true,
+      },
+      {
         source: "/kids-safe-search-engine",
         destination: "/tools/kids-safe-search-engine",
         permanent: true,
@@ -50,6 +60,11 @@ module.exports = withSvgr({
       {
         source: "/safetube/create",
         destination: "/tools/safetube/create",
+        permanent: true,
+      },
+      {
+        source: "/video",
+        destination: "/tools/safetube",
         permanent: true,
       },
       {
