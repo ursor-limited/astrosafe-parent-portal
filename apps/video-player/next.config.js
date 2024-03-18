@@ -43,7 +43,17 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
+        source: "/chore-charts-for-kids",
+        destination: "/tools/chore-charts-for-kids",
+        permanent: true,
+      },
+      {
         source: "/kids-safe-search-engine",
+        destination: "/tools/kids-safe-search-engine",
+        permanent: true,
+      },
+      {
+        source: "features/kids-safe-search-engine",
         destination: "/tools/kids-safe-search-engine",
         permanent: true,
       },
