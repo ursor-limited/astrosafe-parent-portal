@@ -92,7 +92,10 @@
         "source": "/child-privacy-policy",
         "destination": "https://proxy.astrosafe.co/child-privacy-policy"
     },
-
+    {
+        "source": "/tools/browser",
+        "destination": "https://proxy.astrosafe.co/tools/browser"
+    },
     {
         "source": "/tools/kids-safe-search-engine",
         "destination": "https://proxy.astrosafe.co/tools/kids-safe-search-engine"
