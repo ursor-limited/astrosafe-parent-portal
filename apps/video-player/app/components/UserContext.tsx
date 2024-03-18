@@ -49,6 +49,7 @@ const UserProvider = (props: IUserProviderProps) => {
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
     loadUser();
+    user?.email && !signedIn && notificationCtx.success("Signed in");
   }, [user?.email]);
 
   const loadUser = () => {
@@ -62,7 +63,6 @@ const UserProvider = (props: IUserProviderProps) => {
                 setSafeTubeUser(u)
               )
         )
-        .then(() => notificationCtx.success("Signed in"))
         .then(() => setLoading(false));
     }
   };
