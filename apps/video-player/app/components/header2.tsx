@@ -406,11 +406,9 @@ export const Header = (props: {
   hidePopupDashboardButton?: boolean;
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
-  const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
-  const [nVideos, setNVideos] = useState<number | undefined>(undefined);
-  const safeTubeUser = useUserContext().user;
+  const safeTubeUser = useUserContext();
 
   return (
     <>

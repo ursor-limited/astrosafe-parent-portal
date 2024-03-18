@@ -49,8 +49,6 @@ const UserProvider = (props: IUserProviderProps) => {
     loadUser();
   }, [user?.email]);
 
-  console.log("qqqqqqqq", user);
-
   const loadUser = () => {
     if (user?.email) {
       setLoading(true);
