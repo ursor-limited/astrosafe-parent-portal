@@ -476,8 +476,6 @@ export default function DashboardPageContents() {
       );
   }, [userDetails.user?.id]);
 
-  console.log(userDetails.user?.freeTrialStart);
-
   return (
     <>
       <PageLayout
@@ -487,7 +485,8 @@ export default function DashboardPageContents() {
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         button={
-          !userDetails.user?.subscribed
+          !userDetails.user?.subscribed ||
+          userDetails.user.subscriptionDeletionDate
             ? {
                 text: "Upgrade",
                 icon: VerifiedIcon,
@@ -496,7 +495,8 @@ export default function DashboardPageContents() {
             : undefined
         }
         buttonRowExtraElement={
-          !userDetails.user?.subscribed ? (
+          !userDetails.user?.subscribed ||
+          userDetails.user.subscriptionDeletionDate ? (
             <Stack
               height="100%"
               alignItems="center"
