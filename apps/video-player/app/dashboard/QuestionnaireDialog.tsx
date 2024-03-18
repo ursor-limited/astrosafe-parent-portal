@@ -59,7 +59,9 @@ const QuestionnaireDialog = (props: {
 }) => {
   const router = useRouter();
   const userDetails = useUserContext().user;
-  const [q1SelectedAnswer, setQ1SelectedAnswer] = useState<number>(0);
+  const [q1SelectedAnswer, setQ1SelectedAnswer] = useState<number | undefined>(
+    undefined
+  );
   const [q2Answer, setQ2Answer] = useState<string>("");
   const [q3Answer, setQ3Answer] = useState<string>("");
   const [q4Answer, setQ4Answer] = useState<string>("");
@@ -95,6 +97,7 @@ const QuestionnaireDialog = (props: {
               }
               placeholder="What do you like the most?"
               width="100%"
+              height="100px"
               boldValue
             />
           </Stack>
@@ -114,6 +117,7 @@ const QuestionnaireDialog = (props: {
               }
               placeholder="What did you dislike?"
               width="100%"
+              height="100px"
               boldValue
             />
           </Stack>
@@ -133,6 +137,7 @@ const QuestionnaireDialog = (props: {
               }
               placeholder="What would you add?"
               width="100%"
+              height="100px"
               boldValue
             />
           </Stack>
@@ -140,7 +145,7 @@ const QuestionnaireDialog = (props: {
       ),
     },
     {
-      title: "Disskunt kode",
+      title: "Discount code",
       subtitle: [
         "Thank you so much for your feedback - as a thank you here is a discount code you can use at checkout to get your first month free.",
       ],
