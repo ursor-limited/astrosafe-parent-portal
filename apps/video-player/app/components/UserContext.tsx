@@ -48,8 +48,11 @@ const UserProvider = (props: IUserProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
-    loadUser();
-    user?.email && !signedIn && notificationCtx.success("Signed in");
+    setTimeout(loadUser, upgradedNotificationPending ? 500 : 0);
+    if (user?.email && !signedIn) {
+      notificationCtx.success("Signed in");
+      setSignedIn(true);
+    }
   }, [user?.email]);
 
   const loadUser = () => {
@@ -81,17 +84,12 @@ const UserProvider = (props: IUserProviderProps) => {
   }, [user?.email, safeTubeUser]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
-  const [subscribed, setSubscribed] = useLocalStorage<boolean>(
-    "subscribed",
-    false
-  );
+  const [upgradedNotificationPending, setUpgradedNotificationPending] =
+    useLocalStorage<boolean>("upgradedNotificationPending", false);
   useEffect(() => {
-    if (safeTubeUser) {
-      signedIn &&
-        !subscribed &&
-        safeTubeUser?.subscribed &&
-        notificationCtx.success("Upgraded");
-      setSubscribed(!!safeTubeUser?.subscribed);
+    if (signedIn && upgradedNotificationPending && safeTubeUser?.subscribed) {
+      notificationCtx.success("Upgraded");
+      setUpgradedNotificationPending(false);
     }
   }, [safeTubeUser?.subscribed]);
 

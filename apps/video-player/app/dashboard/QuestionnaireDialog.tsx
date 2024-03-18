@@ -6,6 +6,7 @@ import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageCont
 import { useRouter } from "next/navigation";
 import { getPaymentUrl } from "../components/SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
+import { useLocalStorage } from "usehooks-ts";
 
 const INPUT_WIDTH = "360px";
 
@@ -57,6 +58,8 @@ const QuestionnaireDialog = (props: {
   open: boolean;
   closeCallback: () => void;
 }) => {
+  const [upgradedNotificationPending, setUpgradedNotificationPending] =
+    useLocalStorage<boolean>("upgradedNotificationPending", false);
   const router = useRouter();
   const userDetails = useUserContext().user;
   const [q1SelectedAnswer, setQ1SelectedAnswer] = useState<number | undefined>(
@@ -156,10 +159,12 @@ const QuestionnaireDialog = (props: {
       ),
       button: {
         text: "Upgrade now",
-        callback: () =>
+        callback: () => {
           userDetails?.auth0Id
             ? router.push(getPaymentUrl(userDetails?.auth0Id))
-            : undefined,
+            : undefined;
+          setUpgradedNotificationPending(true);
+        },
       },
     },
   ];

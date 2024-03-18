@@ -427,7 +427,7 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (userDetails.user && !signedIn) {
       notificationCtx.success("Signed in.");
-      setSignedIn(true);
+      //setSignedIn(true);
     }
   }, [userDetails.user]);
 

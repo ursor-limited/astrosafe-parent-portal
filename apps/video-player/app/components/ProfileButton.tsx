@@ -146,6 +146,7 @@ const ProfileButton = () => {
             <ProfilePopupButton
               callback={() => {
                 logout();
+                localStorage.clear();
                 //mixpanel.reset();
               }}
               icon={LogOutIcon}

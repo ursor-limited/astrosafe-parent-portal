@@ -403,7 +403,7 @@ export default function WorksheetPageContents(props: IWorksheet) {
   useEffect(() => {
     if (userDetails.user && !signedIn) {
       router.push("/dashboard");
-      setSignedIn(true);
+      //setSignedIn(true);
     }
   }, [userDetails.user]);
 
