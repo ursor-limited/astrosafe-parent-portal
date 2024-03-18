@@ -62,6 +62,7 @@ const UserProvider = (props: IUserProviderProps) => {
                 setSafeTubeUser(u)
               )
         )
+        .then(() => notificationCtx.success("Signed in"))
         .then(() => setLoading(false));
     }
   };
@@ -79,20 +80,22 @@ const UserProvider = (props: IUserProviderProps) => {
       );
   }, [user?.email, safeTubeUser]);
 
-  const notificationCtx = React.useContext(NotificationContext);
-
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const [subscribed, setSubscribed] = useLocalStorage<boolean>(
     "subscribed",
     false
   );
   useEffect(() => {
-    safeTubeUser && setSubscribed(!!safeTubeUser.subscribed);
+    if (safeTubeUser) {
+      signedIn &&
+        !subscribed &&
+        safeTubeUser?.subscribed &&
+        notificationCtx.success("Upgraded");
+      setSubscribed(!!safeTubeUser?.subscribed);
+    }
   }, [safeTubeUser?.subscribed]);
-  useEffect(() => {
-    !subscribed &&
-      safeTubeUser?.subscribed &&
-      notificationCtx.success("Upgraded");
-  }, [safeTubeUser?.subscribed, subscribed]);
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <UserContext.Provider

@@ -287,7 +287,7 @@ export default function WorksheetGenerator(props: {
           opacity: loading ? 1 : 0,
           pointerEvents: loading ? undefined : "none",
           transition: "0.2s",
-          transitionDelay: "0.5s",
+          transitionDelay: "1s",
         }}
       >
         <UrsorLoading />
