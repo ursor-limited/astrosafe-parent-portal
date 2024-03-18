@@ -24,6 +24,7 @@
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
+    "lottie-react": "^2.4.0",
     "mixpanel-browser": "^2.48.1",
     "next": "14.0.4",
     "next-svgr": "^0.0.2",

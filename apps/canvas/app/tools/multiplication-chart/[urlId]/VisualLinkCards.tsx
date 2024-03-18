@@ -34,15 +34,16 @@ const VisualLinkCard = (props: IVisualLinkCard) => {
           height: "291px",
           position: "relative",
           borderRadius: "12px",
-          overflow: "hidden",
         }}
       >
-        <Image
-          src={props.imageUrl}
-          style={{ objectFit: "cover" }}
-          fill
-          alt="visual link card image"
-        />
+        <Stack boxShadow="0 0 16px rgba(0,0,0,0.03)">
+          <Image
+            src={props.imageUrl}
+            style={{ objectFit: "cover" }}
+            fill
+            alt="visual link card image"
+          />
+        </Stack>
       </div>
       <Stack height="186px" justifyContent="space-between" alignItems="center">
         <Typography variant="h3" htmlTag="h4">
