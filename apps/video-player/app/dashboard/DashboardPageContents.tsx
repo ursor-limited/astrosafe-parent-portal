@@ -36,6 +36,8 @@ import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/SignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
+import { STRIPE_CUSTOMER_PORTAL_URL } from "../components/header2";
+import { useRouter } from "next/navigation";
 
 export const GRID_SPACING = "20px";
 
@@ -476,6 +478,8 @@ export default function DashboardPageContents() {
       );
   }, [userDetails.user?.id]);
 
+  const router = useRouter();
+
   return (
     <>
       <PageLayout
@@ -485,12 +489,17 @@ export default function DashboardPageContents() {
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         button={
-          !userDetails.user?.subscribed ||
-          userDetails.user.subscriptionDeletionDate
+          !userDetails.user?.subscribed
             ? {
                 text: "Upgrade",
                 icon: VerifiedIcon,
                 callback: () => setUpgradeDialogOpen(true),
+              }
+            : userDetails.user.subscriptionDeletionDate
+            ? {
+                text: "Renew",
+                icon: VerifiedIcon,
+                callback: () => router.push(STRIPE_CUSTOMER_PORTAL_URL),
               }
             : undefined
         }
