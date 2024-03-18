@@ -50,6 +50,7 @@ export interface IUrsorDialogProps {
   onCloseCallback?: () => void;
   backButtonCallback?: () => void;
   noCloseButton?: boolean;
+  noPadding?: boolean;
   noBackdrop?: boolean;
   longFadeIn?: boolean;
   bunchedUpContent?: boolean;
@@ -125,7 +126,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           maxWidth: props.maxWidth || WIDTH,
           maxHeight: props.dynamicHeight ? undefined : HEIGHT,
           //minHeight: props.height || HEIGHT,
-          height: "100%",
+          height: props.dynamicHeight ? undefined : "100%",
           borderRadius: BORDER_RADIUS,
         },
       }}
@@ -142,7 +143,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
     >
       <Stack
         position="relative"
-        p={PADDING}
+        p={props.noPadding ? undefined : PADDING}
         borderRadius="25px"
         overflow="hidden"
         flex={1}
@@ -166,8 +167,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         {!props.noCloseButton ? (
           <Box
             position="absolute"
-            top={PADDING}
-            right={PADDING}
+            top={props.noPadding ? "10px" : PADDING}
+            right={props.noPadding ? "10px" : PADDING}
             onClick={props.onCloseCallback}
             sx={{
               cursor: "pointer",
@@ -187,46 +188,52 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           sx={_.isNumber(props.step) ? animation : null}
           overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
-          <Stack
-            spacing="12px"
-            alignItems="center"
-            textAlign="center"
-            //maxWidth="476px"
-          >
-            {props.supertitle ? (
-              <Typography variant="medium" bold color={PALETTE.font.dark}>
-                {props.supertitle}
-              </Typography>
-            ) : null}
-            {props.title ? (
-              <Typography
-                variant={props.titleSize || "h3"}
-                color={PALETTE.secondary.purple[2]}
-                sx={{ maxWidth: props.titleMaxWidth }}
-              >
-                {props.title}
-              </Typography>
-            ) : null}
-            {props.subtitle ? (
-              <Stack alignItems="center">
-                {windowWidth < 750 ? (
-                  <Typography variant="medium" sx={{ textAlign: "center" }}>
-                    {props.subtitle.join(" ")}
-                  </Typography>
-                ) : (
-                  props.subtitle.map((sentence, index) => (
-                    <Typography
-                      key={index}
-                      variant="medium"
-                      sx={{ textAlign: "center" }}
-                    >
-                      {sentence}
+          {props.subtitle || props.title || props.supertitle ? (
+            <Stack
+              spacing="12px"
+              alignItems="center"
+              textAlign="center"
+              //maxWidth="476px"
+            >
+              {props.supertitle ? (
+                <Typography
+                  variant={props.title ? "medium" : "large"}
+                  bold
+                  color={PALETTE.font.dark}
+                >
+                  {props.supertitle}
+                </Typography>
+              ) : null}
+              {props.title ? (
+                <Typography
+                  variant={props.titleSize || "h3"}
+                  color={PALETTE.secondary.purple[2]}
+                  sx={{ maxWidth: props.titleMaxWidth }}
+                >
+                  {props.title}
+                </Typography>
+              ) : null}
+              {props.subtitle ? (
+                <Stack alignItems="center">
+                  {windowWidth < 750 ? (
+                    <Typography variant="medium" sx={{ textAlign: "center" }}>
+                      {props.subtitle.join(" ")}
                     </Typography>
-                  ))
-                )}
-              </Stack>
-            ) : null}
-          </Stack>
+                  ) : (
+                    props.subtitle.map((sentence, index) => (
+                      <Typography
+                        key={index}
+                        variant="medium"
+                        sx={{ textAlign: "center" }}
+                      >
+                        {sentence}
+                      </Typography>
+                    ))
+                  )}
+                </Stack>
+              ) : null}
+            </Stack>
+          ) : null}
           <Stack
             flex={1}
             width="100%"
@@ -239,36 +246,40 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             {props.children}
           </Stack>
 
-          <Stack spacing="8px" width="300px" maxWidth="100%">
-            {!!props.button ? (
-              React.isValidElement(props.button) ? (
-                props.button
-              ) : (
-                <UrsorButton
-                  disabled={
-                    (props.button as IDialogButtonDetails).disabled ||
-                    bodyFadeout
-                  }
-                  onClick={() => {
-                    (props.button as IDialogButtonDetails).callback();
-                  }}
-                  backgroundColor={(props.button as IDialogButtonDetails).color}
-                  variant={
-                    (props.button as IDialogButtonDetails).variant ?? "primary"
-                  }
-                  endIcon={PrimaryButtonEndIcon}
-                  width="100%"
-                >
-                  {(props.button as IDialogButtonDetails).text}
-                </UrsorButton>
-              )
-            ) : null}
-            {props.button ||
-            props.secondaryButton ||
-            props.googleButton ||
-            !props.noCloseButton ? (
-              <Stack spacing="12px" width="100%" alignItems="center">
-                {/* {!!props.googleButton ? (
+          {props.button || props.secondaryButton ? (
+            <Stack spacing="8px" width="300px" maxWidth="100%">
+              {!!props.button ? (
+                React.isValidElement(props.button) ? (
+                  props.button
+                ) : (
+                  <UrsorButton
+                    disabled={
+                      (props.button as IDialogButtonDetails).disabled ||
+                      bodyFadeout
+                    }
+                    onClick={() => {
+                      (props.button as IDialogButtonDetails).callback();
+                    }}
+                    backgroundColor={
+                      (props.button as IDialogButtonDetails).color
+                    }
+                    variant={
+                      (props.button as IDialogButtonDetails).variant ??
+                      "primary"
+                    }
+                    endIcon={PrimaryButtonEndIcon}
+                    width="100%"
+                  >
+                    {(props.button as IDialogButtonDetails).text}
+                  </UrsorButton>
+                )
+              ) : null}
+              {props.button ||
+              props.secondaryButton ||
+              props.googleButton ||
+              !props.noCloseButton ? (
+                <Stack spacing="12px" width="100%" alignItems="center">
+                  {/* {!!props.googleButton ? (
                   React.isValidElement(props.googleButton) ? (
                     props.googleButton
                   ) : (
@@ -289,37 +300,38 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     </UrsorButton>
                   )
                 ) : null} */}
-                {!!props.secondaryButton ? (
-                  React.isValidElement(props.secondaryButton) ? (
-                    props.secondaryButton
-                  ) : (
-                    <UrsorButton
-                      disabled={
-                        (props.secondaryButton as IDialogButtonDetails)
-                          .disabled || bodyFadeout
-                      }
-                      onClick={() => {
-                        (
-                          props.secondaryButton as IDialogButtonDetails
-                        ).callback();
-                      }}
-                      backgroundColor={
-                        (props.secondaryButton as IDialogButtonDetails).color
-                      }
-                      variant={
-                        (props.secondaryButton as IDialogButtonDetails)
-                          .variant ?? "secondary"
-                      }
-                      endIcon={SecondaryButtonEndIcon}
-                      width="100%"
-                    >
-                      {(props.secondaryButton as IDialogButtonDetails).text}
-                    </UrsorButton>
-                  )
-                ) : null}
-              </Stack>
-            ) : null}
-          </Stack>
+                  {!!props.secondaryButton ? (
+                    React.isValidElement(props.secondaryButton) ? (
+                      props.secondaryButton
+                    ) : (
+                      <UrsorButton
+                        disabled={
+                          (props.secondaryButton as IDialogButtonDetails)
+                            .disabled || bodyFadeout
+                        }
+                        onClick={() => {
+                          (
+                            props.secondaryButton as IDialogButtonDetails
+                          ).callback();
+                        }}
+                        backgroundColor={
+                          (props.secondaryButton as IDialogButtonDetails).color
+                        }
+                        variant={
+                          (props.secondaryButton as IDialogButtonDetails)
+                            .variant ?? "secondary"
+                        }
+                        endIcon={SecondaryButtonEndIcon}
+                        width="100%"
+                      >
+                        {(props.secondaryButton as IDialogButtonDetails).text}
+                      </UrsorButton>
+                    )
+                  ) : null}
+                </Stack>
+              ) : null}
+            </Stack>
+          ) : null}
         </Stack>
       </Stack>
     </Dialog>
