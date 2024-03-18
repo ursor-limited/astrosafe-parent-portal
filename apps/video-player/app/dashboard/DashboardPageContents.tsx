@@ -38,6 +38,7 @@ import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { STRIPE_CUSTOMER_PORTAL_URL } from "../components/header2";
 import { useRouter } from "next/navigation";
+import QuestionnaireDialog from "./QuestionnaireDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -469,6 +470,8 @@ export default function DashboardPageContents() {
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
+    useState<boolean>(true);
 
   useEffect(() => {
     userDetails.user?.id &&
@@ -678,6 +681,10 @@ export default function DashboardPageContents() {
       <UpgradePromptDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+      />
+      <QuestionnaireDialog
+        open={questionnaireDialogOpen}
+        closeCallback={() => setQuestionnaireDialogOpen(false)}
       />
     </>
   );

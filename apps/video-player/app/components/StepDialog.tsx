@@ -16,7 +16,7 @@ export interface IStepDialogButtonDetails {
 
 export interface IDialogStepDetails {
   title: string;
-  subtitle: (string | JSX.Element)[];
+  subtitle?: (string | JSX.Element)[];
   supertitle?: string;
   content?: JSX.Element;
   button?: IStepDialogButtonDetails;
@@ -79,6 +79,7 @@ export default function StepDialog(props: IStepDialogProps) {
       title={props.steps[bodyStep].title}
       subtitle={props.steps[bodyStep].subtitle}
       supertitle={props.steps[bodyStep].supertitle}
+      titleMaxWidth="80%"
       open={props.open}
       step={step}
       nSteps={props.steps.length}
