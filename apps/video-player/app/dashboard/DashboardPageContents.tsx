@@ -423,14 +423,6 @@ export default function DashboardPageContents() {
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
 
-  const notificationCtx = useContext(NotificationContext);
-  useEffect(() => {
-    if (userDetails.user && !signedIn) {
-      notificationCtx.success("Signed in.");
-      setSignedIn(true);
-    }
-  }, [userDetails.user]);
-
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
     []
