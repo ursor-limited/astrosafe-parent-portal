@@ -58,6 +58,13 @@ const submitSubscriptionDeletionDate = async (email, deletionDate) =>
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
+const submitCheckoutSessionId = async (checkoutSessionId) =>
+  axios
+    .post(`${BACKEND_URLS[process.env.NODE_ENV]}/video/checkoutSessionId`, {
+      checkoutSessionId,
+    })
+    .catch((error) => console.log(error));
+
 exports.handler = async function (event) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   try {
@@ -108,9 +115,16 @@ exports.handler = async function (event) {
       case "customer.subscription.resumed":
         // this one is currently not needed, because we do not have subscription pausing enabled. i.e. pausing/resuming is different from canceling/renewing
         break;
-      case "invoice.payment_succeeded":
+      case "invoice.payment_succeeded": {
+        await stripe.checkout.sessions
+          .list({
+            payment_intent: stripeEvent.data.object.payment_intent,
+          })
+          .then((x) => x?.data?.[0]?.id)
+          .then((id) => submitCheckoutSessionId(id));
         await submitPaymentSucceeded(customerEmail);
         break;
+      }
       case "invoice.payment_failed":
         await submitPaymentFailed(customerEmail);
         break;
