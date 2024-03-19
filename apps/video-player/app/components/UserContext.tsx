@@ -21,7 +21,7 @@ export interface ISafeTubeUser {
 export interface IUserContext {
   user?: ISafeTubeUser;
   loading?: boolean;
-  paymentLink?: string;
+  //paymentLink?: string;
   refresh?: () => void;
   clear?: () => void;
 }
@@ -73,15 +73,15 @@ const UserProvider = (props: IUserProviderProps) => {
   //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
   // }, [isLoading, user?.email, safeTubeUser]);
 
-  const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
-  useEffect(() => {
-    user?.email &&
-      safeTubeUser &&
-      !safeTubeUser.subscribed &&
-      ApiController.getPaymentLink(user.email).then((link) =>
-        setPaymentLink(link)
-      );
-  }, [user?.email, safeTubeUser]);
+  // const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
+  // useEffect(() => {
+  //   user?.email &&
+  //     safeTubeUser &&
+  //     !safeTubeUser.subscribed &&
+  //     ApiController.getPaymentLink(user.email).then((link) =>
+  //       setPaymentLink(link)
+  //     );
+  // }, [user?.email, safeTubeUser]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
@@ -127,7 +127,7 @@ const UserProvider = (props: IUserProviderProps) => {
       value={{
         user: safeTubeUser,
         loading,
-        paymentLink,
+        //paymentLink,
         clear: () => setSafeTubeUser(undefined),
         refresh: loadUser,
       }}
