@@ -13,6 +13,7 @@ const TrialExpirationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
   openQuestionnaireCallback: () => void;
+  upgradeCallback: () => void;
   mobile?: boolean;
 }) => {
   const router = useRouter();
@@ -31,12 +32,13 @@ const TrialExpirationDialog = (props: {
       <Stack flex={1} alignItems="center">
         <Stack spacing="8px">
           <UrsorButton
-            onClick={() =>
-              userDetails?.auth0Id
-                ? router.push(
-                    getPaymentUrl(userDetails?.auth0Id, "monthly") ?? ""
-                  )
-                : null
+            onClick={
+              props.upgradeCallback
+              // userDetails?.auth0Id
+              //   ? router.push(
+              //       getPaymentUrl(userDetails?.auth0Id, "monthly") ?? ""
+              //     )
+              //   : null
             }
             endIcon={VerifiedIcon}
             width="260px"
