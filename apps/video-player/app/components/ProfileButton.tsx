@@ -10,6 +10,7 @@ import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUserContext } from "./UserContext";
+import { useLocalStorage } from "usehooks-ts";
 
 const ProfileButtonActualButton = (props: { initials: string }) => (
   <Stack
@@ -92,6 +93,15 @@ const ProfileButton = () => {
   const userCtx = useUserContext();
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
+
+  const [
+    subscriptionStatusChangePossible,
+    setSubscriptionStatusChangePossible,
+  ] = useLocalStorage<"cancelled" | "renewed" | null>(
+    "subscriptionStatusChangePossible",
+    null
+  );
+
   return (
     <Stack
       sx={{
@@ -137,7 +147,17 @@ const ProfileButton = () => {
                 rel="noreferrer"
               >
                 <ProfilePopupButton
-                  callback={() => null}
+                  callback={() =>
+                    userCtx.user
+                      ? setSubscriptionStatusChangePossible(
+                          !userCtx.user.subscribed
+                            ? null
+                            : userCtx.user.subscriptionDeletionDate
+                            ? "renewed"
+                            : "cancelled"
+                        )
+                      : null
+                  }
                   icon={CreditCardIcon}
                   text="Manage plan"
                 />

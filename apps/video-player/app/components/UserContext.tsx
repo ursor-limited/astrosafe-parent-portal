@@ -93,6 +93,33 @@ const UserProvider = (props: IUserProviderProps) => {
     }
   }, [safeTubeUser?.subscribed]);
 
+  const [
+    subscriptionStatusChangePossible,
+    setSubscriptionStatusChangePossible,
+  ] = useLocalStorage<"cancelled" | "renewed" | null>(
+    "subscriptionStatusChangePossible",
+    null
+  );
+  useEffect(() => {
+    if (!signedIn) return;
+    if (
+      safeTubeUser?.subscriptionDeletionDate &&
+      subscriptionStatusChangePossible === "cancelled"
+    ) {
+      notificationCtx.success("Canceled subscription.");
+      setSubscriptionStatusChangePossible(null);
+    } else if (
+      !safeTubeUser?.subscriptionDeletionDate &&
+      subscriptionStatusChangePossible === "renewed"
+    ) {
+      notificationCtx.success("Renewed subscription.");
+      setSubscriptionStatusChangePossible(null);
+    }
+  }, [
+    subscriptionStatusChangePossible,
+    safeTubeUser?.subscriptionDeletionDate,
+  ]);
+
   const notificationCtx = useContext(NotificationContext);
 
   return (

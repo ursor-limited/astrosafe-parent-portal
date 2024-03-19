@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useRouter } from "next/navigation";
-import { getPaymentUrl } from "../components/SignupPromptDialog";
+import { getPaymentUrl } from "../components/UpgradeDialog";
 import { useUserContext } from "../components/UserContext";
 import { useLocalStorage } from "usehooks-ts";
 
@@ -57,6 +57,7 @@ const ANSWERS = [
 const QuestionnaireDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  initialBackbuttonCallback: () => void;
 }) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
@@ -161,7 +162,7 @@ const QuestionnaireDialog = (props: {
         text: "Upgrade now",
         callback: () => {
           userDetails?.auth0Id
-            ? router.push(getPaymentUrl(userDetails?.auth0Id))
+            ? router.push(getPaymentUrl(userDetails?.auth0Id, "monthly"))
             : undefined;
           setUpgradedNotificationPending(true);
         },
@@ -175,7 +176,7 @@ const QuestionnaireDialog = (props: {
       step={step}
       callback={(newStep: number) => setStep(newStep)}
       closeCallback={props.closeCallback}
-      initialBackCallback={props.closeCallback}
+      initialBackCallback={props.initialBackbuttonCallback}
     />
   );
 };
