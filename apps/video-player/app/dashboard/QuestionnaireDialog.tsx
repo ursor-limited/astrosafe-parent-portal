@@ -58,6 +58,7 @@ const QuestionnaireDialog = (props: {
   open: boolean;
   closeCallback: () => void;
   initialBackbuttonCallback: () => void;
+  upgradeCallback: () => void;
 }) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
@@ -161,10 +162,8 @@ const QuestionnaireDialog = (props: {
       button: {
         text: "Upgrade now",
         callback: () => {
-          userDetails?.auth0Id
-            ? router.push(getPaymentUrl(userDetails?.auth0Id, "monthly"))
-            : undefined;
           setUpgradedNotificationPending(true);
+          props.upgradeCallback();
         },
       },
     },

@@ -703,6 +703,10 @@ export default function DashboardPageContents() {
           setQuestionnaireDialogOpen(false);
           setTrialExpirationDialogOpen(true);
         }}
+        upgradeCallback={() => {
+          setUpgradeDialogOpen(true);
+          setQuestionnaireDialogOpen(false);
+        }}
       />
       <TrialExpirationDialog
         open={trialExpirationDialogOpen}
@@ -710,6 +714,10 @@ export default function DashboardPageContents() {
         openQuestionnaireCallback={() => {
           setQuestionnaireDialogOpen(true);
           setTrialExpirationDialogOpen(false);
+        }}
+        upgradeCallback={() => {
+          setTrialExpirationDialogOpen(false);
+          setUpgradeDialogOpen(true);
         }}
       />
     </>
