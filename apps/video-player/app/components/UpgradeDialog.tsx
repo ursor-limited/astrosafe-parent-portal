@@ -194,7 +194,7 @@ const UpgradeDialog = (props: {
             "20GB of shared space",
           ]}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, "monthly") : "");
+            router.push(email ? getPaymentUrl(email, "annual") : "");
             setUpgradedNotificationPending(true);
           }}
         />
