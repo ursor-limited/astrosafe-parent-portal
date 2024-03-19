@@ -481,6 +481,12 @@ export default function DashboardPageContents() {
   const getTrialDaysLeft = () =>
     TRIAL_DAYS - dayjs().diff(userDetails.user?.freeTrialStart, "days");
 
+  const getPeriodDaysLeft = () =>
+    -dayjs().diff(
+      dayjs.unix(userDetails.user?.subscriptionDeletionDate ?? 0),
+      "days"
+    );
+
   const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
@@ -530,7 +536,9 @@ export default function DashboardPageContents() {
                     bold
                     color={PALETTE.secondary.grey[4]}
                   >
-                    {getTrialDaysLeft()}
+                    {userDetails.user?.subscriptionDeletionDate
+                      ? getPeriodDaysLeft()
+                      : getTrialDaysLeft()}
                   </Typography>
                   <Typography
                     variant="medium"
