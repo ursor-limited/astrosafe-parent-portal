@@ -37,6 +37,7 @@ const useUserContext = () => {
 };
 
 export interface IUserProviderProps {
+  checkoutSessionId?: string;
   children: React.ReactNode;
 }
 
@@ -69,19 +70,17 @@ const UserProvider = (props: IUserProviderProps) => {
         .then(() => setLoading(false));
     }
   };
-  // useEffect(() => {
-  //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
-  // }, [isLoading, user?.email, safeTubeUser]);
 
-  // const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
-  // useEffect(() => {
-  //   user?.email &&
-  //     safeTubeUser &&
-  //     !safeTubeUser.subscribed &&
-  //     ApiController.getPaymentLink(user.email).then((link) =>
-  //       setPaymentLink(link)
-  //     );
-  // }, [user?.email, safeTubeUser]);
+  console.log(props.checkoutSessionId, "000");
+
+  useEffect(() => {
+    props.checkoutSessionId &&
+      safeTubeUser?.id &&
+      ApiController.claimCheckoutSessionId(
+        props.checkoutSessionId,
+        safeTubeUser?.id
+      ).then(loadUser);
+  }, [safeTubeUser?.id]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
