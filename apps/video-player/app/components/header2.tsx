@@ -39,9 +39,6 @@ export const HEADER_HEIGHT = 86;
 export const ASTRO_MAGICAL_GRADIENT =
   "linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)";
 
-export const STRIPE_CUSTOMER_PORTAL_URL =
-  "https://billing.stripe.com/p/login/test_8wMfZYfAK4M2fJe4gg";
-
 const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
