@@ -36,13 +36,11 @@ import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
-import {
-  ASTRO_MAGICAL_GRADIENT,
-  STRIPE_CUSTOMER_PORTAL_URL,
-} from "../components/header2";
+import { ASTRO_MAGICAL_GRADIENT } from "../components/header2";
 import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
+import ProfileButton from "../components/ProfileButton";
 
 export const GRID_SPACING = "20px";
 
@@ -509,7 +507,10 @@ export default function DashboardPageContents() {
             ? {
                 text: "Renew",
                 icon: VerifiedIcon,
-                callback: () => router.push(STRIPE_CUSTOMER_PORTAL_URL),
+                callback: () =>
+                  router.push(
+                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                  ),
               }
             : undefined
         }
@@ -517,30 +518,36 @@ export default function DashboardPageContents() {
           <Stack direction="row" spacing="12px" alignItems="center">
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
-              <Stack
-                height="100%"
-                alignItems="center"
-                direction="row"
-                spacing="5px"
-              >
-                <Typography
-                  variant="medium"
-                  bold
-                  color={PALETTE.secondary.grey[4]}
+              <>
+                <Stack
+                  height="100%"
+                  alignItems="center"
+                  direction="row"
+                  spacing="5px"
                 >
-                  {getTrialDaysLeft()}
-                </Typography>
-                <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-                  days left
-                </Typography>
-              </Stack>
+                  <Typography
+                    variant="medium"
+                    bold
+                    color={PALETTE.secondary.grey[4]}
+                  >
+                    {getTrialDaysLeft()}
+                  </Typography>
+                  <Typography
+                    variant="medium"
+                    color={PALETTE.secondary.grey[4]}
+                  >
+                    days left
+                  </Typography>
+                </Stack>
+                <UrsorButton
+                  backgroundColor={ASTRO_MAGICAL_GRADIENT}
+                  onClick={() => setTrialExpirationDialogOpen(true)}
+                >
+                  Test trial expiration
+                </UrsorButton>
+              </>
             ) : undefined}
-            <UrsorButton
-              backgroundColor={ASTRO_MAGICAL_GRADIENT}
-              onClick={() => setTrialExpirationDialogOpen(true)}
-            >
-              Test trial expiration
-            </UrsorButton>
+            {userDetails.user ? <ProfileButton light /> : null}
           </Stack>
         }
       >
