@@ -151,7 +151,7 @@ const UpgradeDialog = (props: {
 }) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
-  const paymentLink = useUserContext().paymentLink;
+  //const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
   const email = useUserContext().user?.auth0Id;
   return (

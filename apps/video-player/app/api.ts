@@ -142,11 +142,11 @@ class ApiController {
       ids,
     }).then((response: any) => response.json());
   }
-  static async getPaymentLink(email: string) {
-    return get(`video/user/${email}/getPaymentLink`).then((response: any) =>
-      response.json()
-    );
-  }
+  // static async getPaymentLink(email: string) {
+  //   return get(`video/user/${email}/getPaymentLink`).then((response: any) =>
+  //     response.json()
+  //   );
+  // }
   static async getS3ImageUploadParams(
     fileExtension: string,
     contentType: string
