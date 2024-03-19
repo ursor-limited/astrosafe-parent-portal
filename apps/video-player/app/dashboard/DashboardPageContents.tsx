@@ -33,7 +33,7 @@ import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
-import UpgradePromptDialog from "../components/SignupPromptDialog";
+import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import {
@@ -514,7 +514,7 @@ export default function DashboardPageContents() {
             : undefined
         }
         buttonRowExtraElement={
-          <Stack direction="row" spacing="12px">
+          <Stack direction="row" spacing="12px" alignItems="center">
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
               <Stack
@@ -693,7 +693,7 @@ export default function DashboardPageContents() {
         closeCallback={() => setSignupPromptDialogOpen(false)}
       />
       <UpgradePromptDialog
-        open={upgradeDialogOpen}
+        open={true}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
       <QuestionnaireDialog

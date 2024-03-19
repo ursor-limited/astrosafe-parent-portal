@@ -29,7 +29,7 @@ import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
-import UpgradePromptDialog from "../components/SignupPromptDialog";
+import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { FilterRow, SearchInput, ToolButton } from "./DashboardPageContents";

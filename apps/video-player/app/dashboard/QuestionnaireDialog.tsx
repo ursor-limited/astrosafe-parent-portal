@@ -4,7 +4,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useRouter } from "next/navigation";
-import { getPaymentUrl } from "../components/SignupPromptDialog";
+import { getPaymentUrl } from "../components/UpgradeDialog";
 import { useUserContext } from "../components/UserContext";
 import { useLocalStorage } from "usehooks-ts";
 

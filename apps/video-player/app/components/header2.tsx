@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
-import UpgradePromptDialog from "./SignupPromptDialog";
+import UpgradePromptDialog from "./UpgradeDialog";
 import { useWindowSize } from "usehooks-ts";
 import DynamicContainer from "./DynamicContainer";
 import UrsorFadeIn from "./UrsorFadeIn";

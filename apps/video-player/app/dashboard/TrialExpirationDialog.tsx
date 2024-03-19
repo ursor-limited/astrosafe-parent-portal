@@ -7,7 +7,7 @@ import { PALETTE, UrsorButton } from "ui";
 import { SCREENSHOT_URL } from "./DashboardSignupPromptDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "../components/UserContext";
-import { getPaymentUrl } from "../components/SignupPromptDialog";
+import { getPaymentUrl } from "../components/UpgradeDialog";
 
 const TrialExpirationDialog = (props: {
   open: boolean;
