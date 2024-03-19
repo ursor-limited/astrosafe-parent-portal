@@ -33,7 +33,9 @@ const TrialExpirationDialog = (props: {
           <UrsorButton
             onClick={() =>
               userDetails?.auth0Id
-                ? router.push(getPaymentUrl(userDetails?.auth0Id) ?? "")
+                ? router.push(
+                    getPaymentUrl(userDetails?.auth0Id, "monthly") ?? ""
+                  )
                 : null
             }
             endIcon={VerifiedIcon}

@@ -162,7 +162,7 @@ const QuestionnaireDialog = (props: {
         text: "Upgrade now",
         callback: () => {
           userDetails?.auth0Id
-            ? router.push(getPaymentUrl(userDetails?.auth0Id))
+            ? router.push(getPaymentUrl(userDetails?.auth0Id, "monthly"))
             : undefined;
           setUpgradedNotificationPending(true);
         },

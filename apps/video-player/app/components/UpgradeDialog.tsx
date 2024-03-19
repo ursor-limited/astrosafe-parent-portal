@@ -27,6 +27,8 @@ const PricingCard = (props: {
   items: string[];
   dark?: boolean;
   tinyText?: string;
+  border?: boolean;
+  notif?: string;
   callback: () => void;
 }) => (
   <Stack
@@ -37,7 +39,27 @@ const PricingCard = (props: {
     boxSizing="border-box"
     alignItems="center"
     borderRadius="20px"
+    border={
+      props.border ? `4px solid ${PALETTE.secondary.purple[2]}` : undefined
+    }
+    position="relative"
   >
+    {props.notif ? (
+      <Stack
+        borderRadius="10px"
+        bgcolor={PALETTE.secondary.purple[2]}
+        height="26px"
+        position="absolute"
+        top="-15px"
+        right="-40px"
+        justifyContent="center"
+        px="16px"
+      >
+        <Typography variant="small" bold color={PALETTE.font.light}>
+          {props.notif}
+        </Typography>
+      </Stack>
+    ) : null}
     <Stack spacing="20px" justifyContent="center" alignItems="center">
       <Typography
         variant="h5"
@@ -159,6 +181,8 @@ const UpgradeDialog = (props: {
         />
         <PricingCard
           dark
+          border
+          notif="Recommended 30% off"
           title="Annual"
           price={6.67}
           currency="€"
