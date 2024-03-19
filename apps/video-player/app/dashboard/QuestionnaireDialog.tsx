@@ -57,6 +57,7 @@ const ANSWERS = [
 const QuestionnaireDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  initialBackbuttonCallback: () => void;
 }) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
@@ -175,7 +176,7 @@ const QuestionnaireDialog = (props: {
       step={step}
       callback={(newStep: number) => setStep(newStep)}
       closeCallback={props.closeCallback}
-      initialBackCallback={props.closeCallback}
+      initialBackCallback={props.initialBackbuttonCallback}
     />
   );
 };

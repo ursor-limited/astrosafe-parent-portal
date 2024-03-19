@@ -19,7 +19,7 @@ import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../components/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
 import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
@@ -36,9 +36,13 @@ import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/SignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
-import { STRIPE_CUSTOMER_PORTAL_URL } from "../components/header2";
+import {
+  ASTRO_MAGICAL_GRADIENT,
+  STRIPE_CUSTOMER_PORTAL_URL,
+} from "../components/header2";
 import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
+import TrialExpirationDialog from "./TrialExpirationDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -476,6 +480,16 @@ export default function DashboardPageContents() {
 
   const router = useRouter();
 
+  const getTrialDaysLeft = () =>
+    TRIAL_DAYS - dayjs().diff(userDetails.user?.freeTrialStart, "days");
+
+  const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    !userDetails.user?.subscribed &&
+      setTrialExpirationDialogOpen(getTrialDaysLeft() <= 0);
+  }, []);
+
   return (
     <>
       <PageLayout
@@ -500,27 +514,34 @@ export default function DashboardPageContents() {
             : undefined
         }
         buttonRowExtraElement={
-          !userDetails.user?.subscribed ||
-          userDetails.user.subscriptionDeletionDate ? (
-            <Stack
-              height="100%"
-              alignItems="center"
-              direction="row"
-              spacing="5px"
-            >
-              <Typography
-                variant="medium"
-                bold
-                color={PALETTE.secondary.grey[4]}
+          <Stack direction="row" spacing="12px">
+            {!userDetails.user?.subscribed ||
+            userDetails.user.subscriptionDeletionDate ? (
+              <Stack
+                height="100%"
+                alignItems="center"
+                direction="row"
+                spacing="5px"
               >
-                {TRIAL_DAYS -
-                  dayjs().diff(userDetails.user?.freeTrialStart, "days")}
-              </Typography>
-              <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-                days left
-              </Typography>
-            </Stack>
-          ) : undefined
+                <Typography
+                  variant="medium"
+                  bold
+                  color={PALETTE.secondary.grey[4]}
+                >
+                  {getTrialDaysLeft()}
+                </Typography>
+                <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+                  days left
+                </Typography>
+              </Stack>
+            ) : undefined}
+            <UrsorButton
+              backgroundColor={ASTRO_MAGICAL_GRADIENT}
+              onClick={() => setTrialExpirationDialogOpen(true)}
+            >
+              Test trial expiration
+            </UrsorButton>
+          </Stack>
         }
       >
         <UrsorFadeIn duration={700}>
@@ -678,6 +699,18 @@ export default function DashboardPageContents() {
       <QuestionnaireDialog
         open={questionnaireDialogOpen}
         closeCallback={() => setQuestionnaireDialogOpen(false)}
+        initialBackbuttonCallback={() => {
+          setQuestionnaireDialogOpen(false);
+          setTrialExpirationDialogOpen(true);
+        }}
+      />
+      <TrialExpirationDialog
+        open={trialExpirationDialogOpen}
+        closeCallback={() => setTrialExpirationDialogOpen(false)}
+        openQuestionnaireCallback={() => {
+          setQuestionnaireDialogOpen(true);
+          setTrialExpirationDialogOpen(false);
+        }}
       />
     </>
   );
