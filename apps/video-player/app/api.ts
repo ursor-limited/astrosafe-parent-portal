@@ -147,6 +147,11 @@ class ApiController {
   //     response.json()
   //   );
   // }
+  static async claimCheckoutSessionId(checkoutSessionId: string, userId: string) {
+    return post(`video/claimCheckoutSessionId`, { userId, checkoutSessionId }).then((response: any) =>
+      response.json()
+    );
+  }
   static async getS3ImageUploadParams(
     fileExtension: string,
     contentType: string

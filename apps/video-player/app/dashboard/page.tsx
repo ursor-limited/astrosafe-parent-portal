@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import MobileDashboardPageContents from "./MobileDashboardPageContents";
+import ApiController from "../api";
 
 const AuthWrapper = dynamic(
   () => import("../components/AuthWrapper"),
@@ -19,13 +20,19 @@ export const metadata: Metadata = {
   description: "A dazzling dashboard, with video links and worksheets.",
 };
 
-async function DashboardPage({ params }: { params: { urlId: string } }) {
+async function DashboardPage({
+  params,
+  searchParams,
+}: {
+  params: { urlId: string };
+  searchParams: { checkoutSessionId?: string };
+}) {
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
   return (
     <>
       <AuthWrapper>
-        <UserProvider>
+        <UserProvider checkoutSessionId={searchParams.checkoutSessionId}>
           {isMobile ? (
             <MobileDashboardPageContents />
           ) : (
