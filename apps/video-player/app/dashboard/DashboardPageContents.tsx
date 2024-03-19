@@ -693,7 +693,7 @@ export default function DashboardPageContents() {
         closeCallback={() => setSignupPromptDialogOpen(false)}
       />
       <UpgradePromptDialog
-        open={true}
+        open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
       <QuestionnaireDialog
