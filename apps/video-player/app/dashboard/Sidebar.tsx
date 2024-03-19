@@ -198,12 +198,12 @@ export default function Sidebar(props: ISidebarProps) {
   ];
 
   const bottomItems: ISidebarItem[] = [
-    {
-      id: "account",
-      icon: GearIcon,
-      title: "Account",
-      callback: () => router.push("/account"),
-    },
+    // {
+    //   id: "account",
+    //   icon: GearIcon,
+    //   title: "Account",
+    //   callback: () => router.push("/account"),
+    // },
   ];
 
   const getList = (items: ISidebarItem[], small: boolean, noText: boolean) => (
