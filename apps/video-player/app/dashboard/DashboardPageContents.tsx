@@ -328,8 +328,6 @@ export const ToolButton = (props: {
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
-  console.log("aa", getUserLocale());
-
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
@@ -495,7 +493,7 @@ export default function DashboardPageContents() {
   useEffect(() => {
     !userDetails.user?.subscribed &&
       setTrialExpirationDialogOpen(getTrialDaysLeft() <= 0);
-  }, []);
+  }, [userDetails.user?.subscribed]);
 
   return (
     <>
@@ -514,7 +512,7 @@ export default function DashboardPageContents() {
               }
             : userDetails.user.subscriptionDeletionDate
             ? {
-                text: "Renew",
+                text: "Upgrade",
                 icon: VerifiedIcon,
                 callback: () =>
                   router.push(
@@ -528,38 +526,43 @@ export default function DashboardPageContents() {
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
               <>
-                <Stack
-                  height="100%"
-                  alignItems="center"
-                  direction="row"
-                  spacing="5px"
-                >
-                  <Typography
-                    variant="medium"
-                    bold
-                    color={PALETTE.secondary.grey[4]}
-                  >
-                    {userDetails.user?.subscriptionDeletionDate
-                      ? getPeriodDaysLeft()
-                      : getTrialDaysLeft()}
-                  </Typography>
+                {getTrialDaysLeft() <= 0 ? (
                   <Typography
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
                   >
-                    days left
+                    Lite mode
                   </Typography>
-                </Stack>
-                <UrsorButton
-                  backgroundColor={ASTRO_MAGICAL_GRADIENT}
-                  onClick={() => setTrialExpirationDialogOpen(true)}
-                >
-                  Test trial expiration
-                </UrsorButton>
+                ) : (
+                  <Stack
+                    height="100%"
+                    alignItems="center"
+                    direction="row"
+                    spacing="5px"
+                  >
+                    <Typography
+                      variant="medium"
+                      bold
+                      color={PALETTE.secondary.grey[4]}
+                    >
+                      {userDetails.user?.subscriptionDeletionDate
+                        ? getPeriodDaysLeft()
+                        : getTrialDaysLeft()}
+                    </Typography>
+                    <Typography
+                      variant="medium"
+                      color={PALETTE.secondary.grey[4]}
+                    >
+                      days left
+                    </Typography>
+                  </Stack>
+                )}
               </>
             ) : undefined}
-            {userDetails.user ? <ProfileButton light /> : null}
           </Stack>
+        }
+        buttonRowExtraElementRight={
+          userDetails.user ? <ProfileButton light /> : undefined
         }
       >
         <UrsorFadeIn duration={700}>

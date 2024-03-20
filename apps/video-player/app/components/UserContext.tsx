@@ -49,7 +49,7 @@ const UserProvider = (props: IUserProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
-    setTimeout(loadUser, upgradedNotificationPending ? 700 : 0);
+    setTimeout(loadUser, upgradedNotificationPending ? 1000 : 0);
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
       setSignedIn(true);

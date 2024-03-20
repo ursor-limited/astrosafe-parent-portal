@@ -43,6 +43,7 @@ export interface IPageLayoutProps {
   };
   selectedSidebarItemId: SideBarItemId;
   buttonRowExtraElement?: JSX.Element;
+  buttonRowExtraElementRight?: JSX.Element;
   titleRowLefthandElement?: JSX.Element;
   disableSearchBarCollapsing?: boolean;
   classroomId?: string;
@@ -216,6 +217,7 @@ export default function PageLayout(props: IPageLayoutProps) {
                           </UrsorButton>
                         </Box>
                       ) : null}
+                      {props.buttonRowExtraElementRight}
                     </Stack>
                   </UrsorFadeIn>
                 ) : null}

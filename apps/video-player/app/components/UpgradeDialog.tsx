@@ -7,6 +7,91 @@ import UrsorDialog from "./UrsorDialog";
 import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
+import getUserLocale from "get-user-locale";
+
+const DETAILS = {
+  USD: {
+    currencySymbol: "$",
+    monthly: 12.99,
+    annual: 119.99,
+    percentageSaving: 23,
+  },
+  GBP: {
+    currencySymbol: "£",
+    monthly: 8.99,
+    annual: 79.99,
+    percentageSaving: 26,
+  },
+  CAD: {
+    currencySymbol: "CA$",
+    monthly: 15.99,
+    annual: 149.99,
+    percentageSaving: 22,
+  },
+  EUR: {
+    currencySymbol: "€",
+    monthly: 10.99,
+    annual: 99.99,
+    percentageSaving: 24,
+  },
+};
+
+const LOCALE_CURRENCIES = {
+  US: "USD",
+  GB: "GBP",
+  CA: "CAD",
+  AT: "EUR",
+  BE: "EUR",
+  BG: "EUR",
+  HR: "EUR",
+  CY: "EUR",
+  CZ: "EUR",
+  DK: "EUR",
+  EE: "EUR",
+  FI: "EUR",
+  FR: "EUR",
+  DE: "EUR",
+  GR: "EUR",
+  HU: "EUR",
+  IE: "EUR",
+  IT: "EUR",
+  LV: "EUR",
+  LT: "EUR",
+  LU: "EUR",
+  MT: "EUR",
+  NL: "EUR",
+  PL: "EUR",
+  PT: "EUR",
+  RO: "EUR",
+  SK: "EUR",
+  SI: "EUR",
+  ES: "EUR",
+  SE: "EUR",
+  AL: "EUR",
+  AD: "EUR",
+  AM: "EUR",
+  BY: "EUR",
+  BA: "EUR",
+  FO: "EUR",
+  GE: "EUR",
+  GI: "EUR",
+  IS: "EUR",
+  IM: "EUR",
+  XK: "EUR",
+  LI: "EUR",
+  MK: "EUR",
+  MD: "EUR",
+  MC: "EUR",
+  ME: "EUR",
+  NO: "EUR",
+  RU: "EUR",
+  SM: "EUR",
+  RS: "EUR",
+  CH: "EUR",
+  TR: "EUR",
+  UA: "EUR",
+  VA: "EUR",
+};
 
 const FREE_VIDEO_LIMIT = 3;
 const SCREENSHOT_URL =
@@ -133,8 +218,8 @@ const PricingCard = (props: {
     </Stack>
     <Stack flex={1} justifyContent="flex-end">
       <UrsorButton
-        dark={props.dark}
-        variant={props.dark ? "tertiary" : "primary"}
+        dark
+        variant="tertiary"
         onClick={props.callback}
         endIcon={VerifiedIcon}
       >
@@ -154,6 +239,10 @@ const UpgradeDialog = (props: {
   //const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
   const email = useUserContext().user?.auth0Id;
+  const locale = getUserLocale()?.split("-")?.[1];
+
+  //@ts-ignore
+  const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
   return (
     <UrsorDialog
       supertitle="Upgrade"
@@ -166,9 +255,9 @@ const UpgradeDialog = (props: {
       <Stack direction="row" spacing="32px">
         <PricingCard
           title="Monthly"
-          price={8.99}
-          currency="€"
-          unit="user"
+          price={details.monthly}
+          currency={details.currencySymbol}
+          unit="month"
           items={[
             "Create unlimited SafeTube videos",
             "Create unlimited Worksheets",
@@ -182,13 +271,16 @@ const UpgradeDialog = (props: {
         <PricingCard
           dark
           border
-          notif="Recommended 30% off"
+          notif={`Recommended ${details.percentageSaving}% off`}
           title="Annual"
-          price={6.67}
-          currency="€"
+          price={Math.round((details.annual / 12 + Number.EPSILON) * 100) / 100}
+          currency={details.currencySymbol}
           unit="month"
-          tinyText="Billed as £79.99 / year"
-          items={["All the features of monthly", "Pay annually to save x%"]}
+          tinyText={`Billed as ${details.currencySymbol}${details.annual} / year`}
+          items={[
+            "All the features of monthly",
+            `Pay annually to save ${details.percentageSaving}%`,
+          ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "annual") : "");
             setUpgradedNotificationPending(true);
