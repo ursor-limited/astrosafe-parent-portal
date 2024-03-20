@@ -157,7 +157,7 @@ const UpgradeDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Upgrade"
-      title="Upgrade to keep access to all of your tools which make life simple!"
+      title="Upgrade to keep access to all of your teaching tools!"
       open={props.open}
       titleSize={props.mobile ? "h4" : "h3"}
       noOverflowHidden
@@ -170,9 +170,9 @@ const UpgradeDialog = (props: {
           currency="€"
           unit="user"
           items={[
-            "Create personal dashboard",
-            "Organize your notes and workflows",
-            "5GB of space",
+            "Create unlimited SafeTube videos",
+            "Create unlimited Worksheets",
+            "Share with all of your students",
           ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "monthly") : "");
@@ -188,11 +188,7 @@ const UpgradeDialog = (props: {
           currency="€"
           unit="month"
           tinyText="Billed as £79.99 / year"
-          items={[
-            "All features in Personal",
-            "Unlock teams for group work",
-            "20GB of shared space",
-          ]}
+          items={["All the features of monthly", "Pay annually to save x%"]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "annual") : "");
             setUpgradedNotificationPending(true);
