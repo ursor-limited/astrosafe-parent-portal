@@ -510,15 +510,6 @@ export default function DashboardPageContents() {
                 icon: VerifiedIcon,
                 callback: () => setUpgradeDialogOpen(true),
               }
-            : userDetails.user.subscriptionDeletionDate
-            ? {
-                text: "Upgrade",
-                icon: VerifiedIcon,
-                callback: () =>
-                  router.push(
-                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
-                  ),
-              }
             : undefined
         }
         buttonRowExtraElement={
