@@ -49,7 +49,10 @@ const UserProvider = (props: IUserProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
-    setTimeout(loadUser, upgradedNotificationPending ? 1000 : 0);
+    setTimeout(
+      loadUser,
+      props.checkoutSessionId || upgradedNotificationPending ? 500 : 0 // to make sure that there is enough time to store the subscription change before fetching
+    );
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
       setSignedIn(true);
@@ -74,12 +77,14 @@ const UserProvider = (props: IUserProviderProps) => {
   console.log(safeTubeUser);
 
   useEffect(() => {
-    props.checkoutSessionId &&
+    if (props.checkoutSessionId) {
       safeTubeUser?.id &&
-      ApiController.claimCheckoutSessionId(
-        props.checkoutSessionId,
-        safeTubeUser?.id
-      ).then(loadUser);
+        ApiController.claimCheckoutSessionId(
+          props.checkoutSessionId,
+          safeTubeUser?.id
+        ).then(loadUser);
+      //setTimeout(loadUser, 600); // needed to make sure that there is enough time to store the
+    }
   }, [safeTubeUser?.id]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
