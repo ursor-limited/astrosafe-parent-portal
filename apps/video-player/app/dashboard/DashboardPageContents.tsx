@@ -474,7 +474,7 @@ export default function DashboardPageContents() {
       ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
         userDetails.refresh
       );
-  }, [userDetails.user?.id]);
+  }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
 
   const router = useRouter();
 

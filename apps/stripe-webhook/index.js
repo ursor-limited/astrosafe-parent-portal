@@ -119,7 +119,7 @@ exports.handler = async function (event) {
       case "invoice.payment_succeeded": {
         await stripe.checkout.sessions
           .list({
-            payment_intent: stripeEvent.data.object.payment_intent,
+            subscription: stripeEvent.data.object?.subscription,
           })
           .then((x) => x?.data?.[0]?.id)
           .then((id) => submitCheckoutSessionId(id));
