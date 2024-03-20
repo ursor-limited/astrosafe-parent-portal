@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useLottie } from "lottie-react";
 import byteLoading from "../../lotties/byteLoading.json";
