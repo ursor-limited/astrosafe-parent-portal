@@ -244,10 +244,6 @@ const UpgradeDialog = (props: {
 
   const userDetails = useUserContext();
 
-  useEffect(() => {
-    userDetails.user?.countryCode && setLocale(userDetails.user?.countryCode);
-  }, [userDetails.user?.countryCode]);
-
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
   return (
@@ -259,7 +255,14 @@ const UpgradeDialog = (props: {
       noOverflowHidden
       onCloseCallback={props.closeCallback}
     >
-      <Stack direction="row" spacing="32px">
+      {/* @ts-ignore */}
+      <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+      {/* @ts-ignore */}
+      <stripe-pricing-table
+        pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
+        publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+      />
+      {/* <Stack direction="row" spacing="32px">
         <PricingCard
           title="Monthly"
           price={details.monthly}
@@ -293,7 +296,7 @@ const UpgradeDialog = (props: {
             setUpgradedNotificationPending(true);
           }}
         />
-      </Stack>
+      </Stack> */}
       {/* <Stack flex={1} alignItems="center">
         <Stack
           sx={{
