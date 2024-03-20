@@ -275,12 +275,10 @@ const UpgradeDialog = (props: {
           border
           notif={`Recommended ${details.percentageSaving}% off`}
           title="Annual"
-          price={details.monthly}
+          price={Math.round((details.annual / 12 + Number.EPSILON) * 100) / 100}
           currency={details.currencySymbol}
           unit="month"
-          tinyText={`Billed as ${details.currencySymbol}${
-            details.monthly * 12
-          } / year`}
+          tinyText={`Billed as ${details.currencySymbol}${details.annual} / year`}
           items={[
             "All the features of monthly",
             `Pay annually to save ${details.percentageSaving}%`,
