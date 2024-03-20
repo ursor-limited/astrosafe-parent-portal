@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { alpha, Box, keyframes, Stack } from "@mui/system";
 import StepsByteController, { ByteAnimation } from "./Byte";

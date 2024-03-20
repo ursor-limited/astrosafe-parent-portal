@@ -27,6 +27,7 @@
     "lottie-react": "^2.4.0",
     "mixpanel-browser": "^2.48.1",
     "next": "14.0.4",
+    "next-intl": "^3.9.5",
     "next-svgr": "^0.0.2",
     "react": "^18",
     "react-device-detect": "^2.2.3",

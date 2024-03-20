@@ -496,187 +496,191 @@ export default function DashboardPageContents() {
 
   return (
     <>
-      <PageLayout
-        title="Home"
-        bodyWidth="100%"
-        selectedSidebarItemId="home"
-        scrollable
-        description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        button={
-          !userDetails.user?.subscribed
-            ? {
-                text: "Upgrade",
-                icon: VerifiedIcon,
-                callback: () => setUpgradeDialogOpen(true),
-              }
-            : userDetails.user.subscriptionDeletionDate
-            ? {
-                text: "Renew",
-                icon: VerifiedIcon,
-                callback: () =>
-                  router.push(
-                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
-                  ),
-              }
-            : undefined
-        }
-        buttonRowExtraElement={
-          <Stack direction="row" spacing="12px" alignItems="center">
-            {!userDetails.user?.subscribed ||
-            userDetails.user.subscriptionDeletionDate ? (
-              <>
-                <Stack
-                  height="100%"
-                  alignItems="center"
-                  direction="row"
-                  spacing="5px"
-                >
-                  <Typography
-                    variant="medium"
-                    bold
-                    color={PALETTE.secondary.grey[4]}
+      <IntlProvider>
+        <PageLayout
+          title="Home"
+          bodyWidth="100%"
+          selectedSidebarItemId="home"
+          scrollable
+          description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
+          button={
+            !userDetails.user?.subscribed
+              ? {
+                  text: "Upgrade",
+                  icon: VerifiedIcon,
+                  callback: () => setUpgradeDialogOpen(true),
+                }
+              : userDetails.user.subscriptionDeletionDate
+              ? {
+                  text: "Renew",
+                  icon: VerifiedIcon,
+                  callback: () =>
+                    router.push(
+                      process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                    ),
+                }
+              : undefined
+          }
+          buttonRowExtraElement={
+            <Stack direction="row" spacing="12px" alignItems="center">
+              {!userDetails.user?.subscribed ||
+              userDetails.user.subscriptionDeletionDate ? (
+                <>
+                  <Stack
+                    height="100%"
+                    alignItems="center"
+                    direction="row"
+                    spacing="5px"
                   >
-                    {userDetails.user?.subscriptionDeletionDate
-                      ? getPeriodDaysLeft()
-                      : getTrialDaysLeft()}
-                  </Typography>
-                  <Typography
-                    variant="medium"
-                    color={PALETTE.secondary.grey[4]}
-                  >
-                    days left
-                  </Typography>
-                </Stack>
-                <UrsorButton
-                  backgroundColor={ASTRO_MAGICAL_GRADIENT}
-                  onClick={() => setTrialExpirationDialogOpen(true)}
-                >
-                  Test trial expiration
-                </UrsorButton>
-              </>
-            ) : undefined}
-            {userDetails.user ? <ProfileButton light /> : null}
-          </Stack>
-        }
-      >
-        <UrsorFadeIn duration={700}>
-          <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-            <ToolButton
-              title="Create safe video link"
-              description="Free of ads. Safe to share."
-              color={PALETTE.secondary.blue[3]}
-              icon={CirclePlayIcon}
-              onClick={() => {
-                setVideoCreationDialogOpen(true);
-              }}
-              infoButtonPosition={280}
-              infoTitle="Safe video link"
-              infoBody={
-                "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
-              }
-            />
-            <ToolButton
-              title="Create math worksheet"
-              description="Printable & finished in seconds."
-              color={PALETTE.secondary.pink[5]}
-              icon={ChecklistIcon}
-              onClick={() => setWorksheetCreationDialogOpen(true)}
-              infoButtonPosition={300}
-              infoTitle="Math worksheet"
-              infoBody={
-                "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
-              }
-            />
-          </Stack>
-        </UrsorFadeIn>
-
-        <Stack
-          minHeight="50px"
-          justifyContent="center"
-          pl={`${SIDEBAR_X_MARGIN}px`}
-        >
-          <Stack
-            width="100%"
-            height="2px"
-            bgcolor={PALETTE.secondary.grey[2]}
-          />
-        </Stack>
-        <UrsorFadeIn duration={700} delay={200}>
-          <Stack
-            pl={`${SIDEBAR_X_MARGIN}px`}
-            direction="row"
-            justifyContent="space-between"
-          >
-            <FilterRow
-              selected={selectedContentType}
-              callback={(newSelected) => setSelectedContentType(newSelected)}
-            />
-            <Stack
-              direction="row"
-              spacing="12px"
-              alignItems="center"
-              width="fit-content"
-            >
-              <SearchInput
-                value={searchValue ?? ""}
-                callback={(value: string) => {
-                  setSearchValue(value);
-                }}
-                clearCallback={() => setSearchValue(undefined)}
-                shadow
-              />
-              <SortButton
-                selected={selectedSort}
-                callback={(id) => setSelectedSort(id)}
-                types={["abc", "createdAt"]}
-                displayNames={{
-                  abc: "Alphabetical",
-                  createdAt: "Most recent",
-                }}
-                width="204px"
-              />
-            </Stack>
-          </Stack>
-        </UrsorFadeIn>
-        <Stack
-          pt="24px"
-          flex={1}
-          ref={setColumnsContainerRef}
-          overflow="hidden"
-        >
-          <Stack flex={1}>
-            <Stack
-              flex={1}
-              pb="110px"
-              direction="row"
-              spacing={GRID_SPACING}
-              pl={`${SIDEBAR_X_MARGIN}px`}
-              pt="8px"
-            >
-              {cardColumns.map((column, i) => (
-                <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                  {column.map((item, j) => (
-                    <Stack
-                      key={`${item.details.id}${selectedSort}`}
-                      spacing={GRID_SPACING}
+                    <Typography
+                      variant="medium"
+                      bold
+                      color={PALETTE.secondary.grey[4]}
                     >
-                      <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
-                        {
-                          item.type === "video" ? (
-                            <VideoCard {...(item.details as IVideo)} />
-                          ) : (
-                            <WorksheetCard {...(item.details as IWorksheet)} />
-                          ) // other card
-                        }
-                      </UrsorFadeIn>
-                    </Stack>
-                  ))}
-                </Stack>
-              ))}
+                      {userDetails.user?.subscriptionDeletionDate
+                        ? getPeriodDaysLeft()
+                        : getTrialDaysLeft()}
+                    </Typography>
+                    <Typography
+                      variant="medium"
+                      color={PALETTE.secondary.grey[4]}
+                    >
+                      days left
+                    </Typography>
+                  </Stack>
+                  <UrsorButton
+                    backgroundColor={ASTRO_MAGICAL_GRADIENT}
+                    onClick={() => setTrialExpirationDialogOpen(true)}
+                  >
+                    Test trial expiration
+                  </UrsorButton>
+                </>
+              ) : undefined}
+              {userDetails.user ? <ProfileButton light /> : null}
+            </Stack>
+          }
+        >
+          <UrsorFadeIn duration={700}>
+            <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
+              <ToolButton
+                title="Create safe video link"
+                description="Free of ads. Safe to share."
+                color={PALETTE.secondary.blue[3]}
+                icon={CirclePlayIcon}
+                onClick={() => {
+                  setVideoCreationDialogOpen(true);
+                }}
+                infoButtonPosition={280}
+                infoTitle="Safe video link"
+                infoBody={
+                  "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
+                }
+              />
+              <ToolButton
+                title="Create math worksheet"
+                description="Printable & finished in seconds."
+                color={PALETTE.secondary.pink[5]}
+                icon={ChecklistIcon}
+                onClick={() => setWorksheetCreationDialogOpen(true)}
+                infoButtonPosition={300}
+                infoTitle="Math worksheet"
+                infoBody={
+                  "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
+                }
+              />
+            </Stack>
+          </UrsorFadeIn>
+
+          <Stack
+            minHeight="50px"
+            justifyContent="center"
+            pl={`${SIDEBAR_X_MARGIN}px`}
+          >
+            <Stack
+              width="100%"
+              height="2px"
+              bgcolor={PALETTE.secondary.grey[2]}
+            />
+          </Stack>
+          <UrsorFadeIn duration={700} delay={200}>
+            <Stack
+              pl={`${SIDEBAR_X_MARGIN}px`}
+              direction="row"
+              justifyContent="space-between"
+            >
+              <FilterRow
+                selected={selectedContentType}
+                callback={(newSelected) => setSelectedContentType(newSelected)}
+              />
+              <Stack
+                direction="row"
+                spacing="12px"
+                alignItems="center"
+                width="fit-content"
+              >
+                <SearchInput
+                  value={searchValue ?? ""}
+                  callback={(value: string) => {
+                    setSearchValue(value);
+                  }}
+                  clearCallback={() => setSearchValue(undefined)}
+                  shadow
+                />
+                <SortButton
+                  selected={selectedSort}
+                  callback={(id) => setSelectedSort(id)}
+                  types={["abc", "createdAt"]}
+                  displayNames={{
+                    abc: "Alphabetical",
+                    createdAt: "Most recent",
+                  }}
+                  width="204px"
+                />
+              </Stack>
+            </Stack>
+          </UrsorFadeIn>
+          <Stack
+            pt="24px"
+            flex={1}
+            ref={setColumnsContainerRef}
+            overflow="hidden"
+          >
+            <Stack flex={1}>
+              <Stack
+                flex={1}
+                pb="110px"
+                direction="row"
+                spacing={GRID_SPACING}
+                pl={`${SIDEBAR_X_MARGIN}px`}
+                pt="8px"
+              >
+                {cardColumns.map((column, i) => (
+                  <Stack key={i} flex={1} spacing={GRID_SPACING}>
+                    {column.map((item, j) => (
+                      <Stack
+                        key={`${item.details.id}${selectedSort}`}
+                        spacing={GRID_SPACING}
+                      >
+                        <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
+                          {
+                            item.type === "video" ? (
+                              <VideoCard {...(item.details as IVideo)} />
+                            ) : (
+                              <WorksheetCard
+                                {...(item.details as IWorksheet)}
+                              />
+                            ) // other card
+                          }
+                        </UrsorFadeIn>
+                      </Stack>
+                    ))}
+                  </Stack>
+                ))}
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
-      </PageLayout>
+        </PageLayout>
+      </IntlProvider>
       <VideoCreationDialog
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}

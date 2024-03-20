@@ -71,8 +71,6 @@ const UserProvider = (props: IUserProviderProps) => {
     }
   };
 
-  console.log(props.checkoutSessionId, "000");
-
   useEffect(() => {
     props.checkoutSessionId &&
       safeTubeUser?.id &&
