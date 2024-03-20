@@ -490,8 +490,9 @@ export default function DashboardPageContents() {
   const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    !userDetails.user?.subscribed &&
-      setTrialExpirationDialogOpen(getTrialDaysLeft() <= 0);
+    setTrialExpirationDialogOpen(
+      !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
+    );
   }, [userDetails.user?.subscribed]);
 
   return (
