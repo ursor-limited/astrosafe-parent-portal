@@ -224,7 +224,6 @@ class ApiController {
     );
   }
   static async submitFreeTrialStartDate(id: string) {
-    console.log('boo')
     return get(`canvas/startFreeTrial/${id}`).then((response: any) =>
       response.json()
     );

@@ -487,12 +487,24 @@ export default function DashboardPageContents() {
       "days"
     );
 
+  const [
+    trialExpirationDialogAlreadySeen,
+    setTrialExpirationDialogAlreadySeen,
+  ] = useLocalStorage<boolean>("trialExpirationDialogAlreadySeen", false);
+
   const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setTrialExpirationDialogOpen(
-      !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
-    );
+    if (
+      !trialExpirationDialogAlreadySeen &&
+      !userDetails.user?.subscribed &&
+      getTrialDaysLeft() <= 0
+    ) {
+      setTrialExpirationDialogOpen(
+        !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
+      );
+      setTrialExpirationDialogAlreadySeen(true);
+    }
   }, [userDetails.user?.subscribed]);
 
   return (
