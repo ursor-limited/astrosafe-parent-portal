@@ -100,10 +100,8 @@ const SCREENSHOT_URL =
 export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
   `${
     pricing === "monthly"
-      ? "https://buy.stripe.com/14k01P0JOggOaxWeUY"
-      : "https://buy.stripe.com/5kAaGt504d4C35ubIL"
-    // ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY
-    // : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL
+      ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY
+      : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL
   }?prefilled_email=${encodeURIComponent(email)}`;
 
 const PricingCard = (props: {
