@@ -147,10 +147,17 @@ class ApiController {
   //     response.json()
   //   );
   // }
-  static async claimCheckoutSessionId(checkoutSessionId: string, userId: string) {
-    return post(`video/claimCheckoutSessionId`, { userId, checkoutSessionId }).then((response: any) =>
-      response.json()
-    );
+  static async claimCheckoutSessionId(
+    checkoutSessionId: string,
+    userId: string
+  ) {
+    return post(`video/claimCheckoutSessionId`, {
+      userId,
+      checkoutSessionId,
+    }).then((response: any) => {
+      console.log(response);
+      response.json();
+    });
   }
   static async getS3ImageUploadParams(
     fileExtension: string,
@@ -222,9 +229,7 @@ class ApiController {
     );
   }
   static async doIt() {
-    return get(`canvas/doIt`).then((response: any) =>
-      response.json()
-    );
+    return get(`canvas/doIt`).then((response: any) => response.json());
   }
 }
 
