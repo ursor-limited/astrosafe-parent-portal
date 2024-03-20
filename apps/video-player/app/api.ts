@@ -98,10 +98,10 @@ class ApiController {
       response.json()
     );
   }
-  static async getUser(auth0Id: string) {
+  static async getUser(auth0Id: string, auth0UserId: string) {
     //@ts-ignore
-    return get(`video/user/${auth0Id}`).then((response: any) =>
-      response.json()
+    return post(`video/getUser`, { auth0Id, auth0UserId }).then(
+      (response: any) => response.json()
     );
   }
   static async getUserVideos(id: string) {
@@ -142,10 +142,22 @@ class ApiController {
       ids,
     }).then((response: any) => response.json());
   }
-  static async getPaymentLink(auth0Id: string) {
-    return get(`video/user/${auth0Id}/getPaymentLink`).then((response: any) =>
-      response.json()
-    );
+  // static async getPaymentLink(email: string) {
+  //   return get(`video/user/${email}/getPaymentLink`).then((response: any) =>
+  //     response.json()
+  //   );
+  // }
+  static async claimCheckoutSessionId(
+    checkoutSessionId: string,
+    userId: string
+  ) {
+    return post(`video/claimCheckoutSessionId`, {
+      userId,
+      checkoutSessionId,
+    }).then((response: any) => {
+      console.log(response);
+      response.json();
+    });
   }
   static async getS3ImageUploadParams(
     fileExtension: string,
@@ -217,9 +229,7 @@ class ApiController {
     );
   }
   static async doIt() {
-    return get(`canvas/doIt`).then((response: any) =>
-      response.json()
-    );
+    return get(`canvas/doIt`).then((response: any) => response.json());
   }
 }
 

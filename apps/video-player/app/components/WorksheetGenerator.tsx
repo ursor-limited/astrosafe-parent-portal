@@ -15,7 +15,13 @@ import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import { useRouter } from "next/navigation";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import UrsorLoading from "./UrsorLoading";
+// import UrsorLoading from "./UrsorLoading";
+import dynamic from "next/dynamic";
+
+const UrsorLoading = dynamic(
+  () => import("./UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export type EquationOrientation = "horizontal" | "vertical";
 
@@ -287,7 +293,7 @@ export default function WorksheetGenerator(props: {
           opacity: loading ? 1 : 0,
           pointerEvents: loading ? undefined : "none",
           transition: "0.2s",
-          transitionDelay: "0.5s",
+          transitionDelay: "1s",
         }}
       >
         <UrsorLoading />

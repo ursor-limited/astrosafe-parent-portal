@@ -19,7 +19,7 @@ import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../components/WorksheetGenerator";
 import useColumnWidth from "./useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
 import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
@@ -33,9 +33,14 @@ import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import UpgradeDialog from "../components/UpgradeDialog";
-import UpgradePromptDialog from "../components/SignupPromptDialog";
+import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
+import { ASTRO_MAGICAL_GRADIENT } from "../components/header2";
+import { useRouter } from "next/navigation";
+import QuestionnaireDialog from "./QuestionnaireDialog";
+import TrialExpirationDialog from "./TrialExpirationDialog";
+import ProfileButton from "../components/ProfileButton";
 
 export const GRID_SPACING = "20px";
 
@@ -88,6 +93,7 @@ export const SearchInput = (props: {
           fontWeight: BOLD_FONT_WEIGHT,
           lineHeight: "100%",
           transition: "0.2s",
+          fontFamily: "inherit",
         }}
         value={props.value}
         disableUnderline
@@ -419,14 +425,6 @@ export default function DashboardPageContents() {
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
 
-  const notificationCtx = useContext(NotificationContext);
-  useEffect(() => {
-    if (userDetails.user && !signedIn) {
-      notificationCtx.success("Signed in.");
-      setSignedIn(true);
-    }
-  }, [userDetails.user]);
-
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
     []
@@ -467,6 +465,8 @@ export default function DashboardPageContents() {
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     userDetails.user?.id &&
@@ -476,7 +476,24 @@ export default function DashboardPageContents() {
       );
   }, [userDetails.user?.id]);
 
-  console.log(userDetails.user?.freeTrialStart);
+  const router = useRouter();
+
+  const getTrialDaysLeft = () =>
+    TRIAL_DAYS - dayjs().diff(userDetails.user?.freeTrialStart, "days");
+
+  const getPeriodDaysLeft = () =>
+    -dayjs().diff(
+      dayjs.unix(userDetails.user?.subscriptionDeletionDate ?? 0),
+      "days"
+    );
+
+  const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    setTrialExpirationDialogOpen(
+      !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
+    );
+  }, [userDetails.user?.subscribed]);
 
   return (
     <>
@@ -486,26 +503,57 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
-        // button={{
-        //   text: "Upgrade",
-        //   icon: VerifiedIcon,
-        //   callback: () => setUpgradeDialogOpen(true),
-        // }}
+        button={
+          !userDetails.user?.subscribed
+            ? {
+                text: "Upgrade",
+                icon: VerifiedIcon,
+                callback: () => setUpgradeDialogOpen(true),
+              }
+            : undefined
+        }
         buttonRowExtraElement={
-          <Stack
-            height="100%"
-            alignItems="center"
-            direction="row"
-            spacing="5px"
-          >
-            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              {TRIAL_DAYS -
-                dayjs().diff(userDetails.user?.freeTrialStart, "days")}
-            </Typography>
-            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-              days left
-            </Typography>
+          <Stack direction="row" spacing="12px" alignItems="center">
+            {!userDetails.user?.subscribed ||
+            userDetails.user.subscriptionDeletionDate ? (
+              <>
+                {getTrialDaysLeft() <= 0 ? (
+                  <Typography
+                    variant="medium"
+                    color={PALETTE.secondary.grey[4]}
+                  >
+                    Lite mode
+                  </Typography>
+                ) : (
+                  <Stack
+                    height="100%"
+                    alignItems="center"
+                    direction="row"
+                    spacing="5px"
+                  >
+                    <Typography
+                      variant="medium"
+                      bold
+                      color={PALETTE.secondary.grey[4]}
+                    >
+                      {userDetails.user?.subscriptionDeletionDate
+                        ? getPeriodDaysLeft()
+                        : getTrialDaysLeft()}
+                    </Typography>
+                    <Typography
+                      variant="medium"
+                      color={PALETTE.secondary.grey[4]}
+                    >
+                      days left
+                    </Typography>
+                  </Stack>
+                )}
+              </>
+            ) : undefined}
           </Stack>
+        }
+        buttonRowExtraElementRight={
+          userDetails.user ? <ProfileButton light /> : undefined
         }
       >
         <UrsorFadeIn duration={700}>
@@ -659,6 +707,30 @@ export default function DashboardPageContents() {
       <UpgradePromptDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+      />
+      <QuestionnaireDialog
+        open={questionnaireDialogOpen}
+        closeCallback={() => setQuestionnaireDialogOpen(false)}
+        initialBackbuttonCallback={() => {
+          setQuestionnaireDialogOpen(false);
+          setTrialExpirationDialogOpen(true);
+        }}
+        upgradeCallback={() => {
+          setUpgradeDialogOpen(true);
+          setQuestionnaireDialogOpen(false);
+        }}
+      />
+      <TrialExpirationDialog
+        open={trialExpirationDialogOpen}
+        closeCallback={() => setTrialExpirationDialogOpen(false)}
+        openQuestionnaireCallback={() => {
+          setQuestionnaireDialogOpen(true);
+          setTrialExpirationDialogOpen(false);
+        }}
+        upgradeCallback={() => {
+          setTrialExpirationDialogOpen(false);
+          setUpgradeDialogOpen(true);
+        }}
       />
     </>
   );

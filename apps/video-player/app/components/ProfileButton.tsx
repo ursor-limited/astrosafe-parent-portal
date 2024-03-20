@@ -5,10 +5,17 @@ import { PALETTE, Typography } from "ui";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useUserContext } from "./UserContext";
+import { useLocalStorage } from "usehooks-ts";
 
-const ProfileButtonActualButton = (props: { initials: string }) => (
+const ProfileButtonActualButton = (props: {
+  initials: string;
+  light?: boolean;
+}) => (
   <Stack
     p="2px"
     boxSizing="border-box"
@@ -24,9 +31,12 @@ const ProfileButtonActualButton = (props: { initials: string }) => (
       borderRadius="100%"
       justifyContent="center"
       alignItems="center"
-      bgcolor="#253D4D"
+      bgcolor={props.light ? "rgba(255,255,255,0.97)" : "#253D4D"}
     >
-      <Typography bold color={PALETTE.font.light}>
+      <Typography
+        bold
+        color={props.light ? PALETTE.font.dark : PALETTE.font.light}
+      >
         {props.initials}
       </Typography>
     </Stack>
@@ -84,10 +94,20 @@ const ProfilePopupButton = (props: {
   );
 };
 
-const ProfileButton = () => {
+const ProfileButton = (props: { light?: boolean }) => {
   const { user, logout } = useAuth0();
+  const userCtx = useUserContext();
   const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
+
+  const [
+    subscriptionStatusChangePossible,
+    setSubscriptionStatusChangePossible,
+  ] = useLocalStorage<"cancelled" | "renewed" | null>(
+    "subscriptionStatusChangePossible",
+    null
+  );
+
   return (
     <Stack
       sx={{
@@ -122,26 +142,37 @@ const ProfileButton = () => {
               icon={ListUnorderedIcon}
               text="Dashboard"
             />
-            {/* 
-            {nVideos && safeTubeUser?.subscribed ? (
-              <a
+
+            {userCtx.user?.subscribed ? (
+              <Link
                 target="_blank"
-                href={STRIPE_CUSTOMER_PORTAL_URL}
+                href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""}
                 style={{
                   textDecoration: "none",
                 }}
                 rel="noreferrer"
               >
                 <ProfilePopupButton
-                  callback={() => setProfilePopupOpen(false)}
+                  callback={() =>
+                    userCtx.user
+                      ? setSubscriptionStatusChangePossible(
+                          !userCtx.user.subscribed
+                            ? null
+                            : userCtx.user.subscriptionDeletionDate
+                            ? "renewed"
+                            : "cancelled"
+                        )
+                      : null
+                  }
                   icon={CreditCardIcon}
                   text="Manage plan"
                 />
-              </a>
-            ) : null} */}
+              </Link>
+            ) : null}
             <ProfilePopupButton
               callback={() => {
                 logout();
+                localStorage.clear();
                 //mixpanel.reset();
               }}
               icon={LogOutIcon}
@@ -155,6 +186,7 @@ const ProfileButton = () => {
       >
         <Stack onClick={() => setOpen(true)}>
           <ProfileButtonActualButton
+            light={props.light}
             initials={(
               (user?.name?.split(" ")?.[0]?.[0] ?? "") +
               (user?.name?.split(" ")?.[1]?.[0] ?? "")

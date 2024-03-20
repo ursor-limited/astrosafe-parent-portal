@@ -96,6 +96,10 @@ export const SearchInput = (props: {
           input: {
             padding: "0 !important",
           },
+          fontFamily: "inherit !important",
+          ".MuiInputBase-root": {
+            fontFamily: "inherit !important",
+          },
         }}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           props.callback(event.target.value);
@@ -423,7 +427,7 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (userDetails.user && !signedIn) {
       notificationCtx.success("Signed in.");
-      setSignedIn(true);
+      //setSignedIn(true);
     }
   }, [userDetails.user]);
 

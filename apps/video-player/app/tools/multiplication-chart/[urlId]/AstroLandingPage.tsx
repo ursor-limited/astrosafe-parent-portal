@@ -10,6 +10,7 @@ import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import { Header } from "@/app/components/header2";
 import AuthWrapper from "@/app/components/AuthWrapper";
+import { UserProvider } from "@/app/components/UserContext";
 //import AuthWrapper from "@/app/components/AuthWrapper";
 
 export default function AstroLandingPage(props: {
@@ -28,7 +29,9 @@ export default function AstroLandingPage(props: {
   return (
     <Stack width="100vw" height="100vh" overflow="scroll" alignItems="center">
       <AuthWrapper>
-        <Header mobile={props.mobile} />
+        <UserProvider>
+          <Header mobile={props.mobile} />
+        </UserProvider>
       </AuthWrapper>
       <Stack
         spacing="36px"

@@ -5,6 +5,8 @@ import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import ApiController from "../api";
 import mixpanel from "mixpanel-browser";
+import { useLocalStorage } from "usehooks-ts";
+import NotificationContext from "./NotificationContext";
 
 export interface ISafeTubeUser {
   id: string;
@@ -19,7 +21,7 @@ export interface ISafeTubeUser {
 export interface IUserContext {
   user?: ISafeTubeUser;
   loading?: boolean;
-  paymentLink?: string;
+  //paymentLink?: string;
   refresh?: () => void;
   clear?: () => void;
 }
@@ -35,6 +37,7 @@ const useUserContext = () => {
 };
 
 export interface IUserProviderProps {
+  checkoutSessionId?: string;
   children: React.ReactNode;
 }
 
@@ -46,13 +49,17 @@ const UserProvider = (props: IUserProviderProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
-    loadUser();
+    setTimeout(loadUser, upgradedNotificationPending ? 1000 : 0);
+    if (user?.email && !signedIn) {
+      notificationCtx.success("Signed in");
+      setSignedIn(true);
+    }
   }, [user?.email]);
 
   const loadUser = () => {
-    if (user?.email) {
+    if (user?.email && user?.sub) {
       setLoading(true);
-      ApiController.getUser(user.email)
+      ApiController.getUser(user.email, user.sub)
         .then((u) =>
           u
             ? setSafeTubeUser(u)
@@ -63,26 +70,63 @@ const UserProvider = (props: IUserProviderProps) => {
         .then(() => setLoading(false));
     }
   };
-  // useEffect(() => {
-  //   setLoading(isLoading || (!!user?.email && !safeTubeUser));
-  // }, [isLoading, user?.email, safeTubeUser]);
 
-  const [paymentLink, setPaymentLink] = useState<string | undefined>(undefined);
+  console.log(safeTubeUser);
+
   useEffect(() => {
-    user?.email &&
-      safeTubeUser &&
-      !safeTubeUser.subscribed &&
-      ApiController.getPaymentLink(user.email).then((link) =>
-        setPaymentLink(link)
-      );
-  }, [user?.email, safeTubeUser]);
+    props.checkoutSessionId &&
+      safeTubeUser?.id &&
+      ApiController.claimCheckoutSessionId(
+        props.checkoutSessionId,
+        safeTubeUser?.id
+      ).then(loadUser);
+  }, [safeTubeUser?.id]);
+
+  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
+  const [upgradedNotificationPending, setUpgradedNotificationPending] =
+    useLocalStorage<boolean>("upgradedNotificationPending", false);
+  useEffect(() => {
+    if (signedIn && upgradedNotificationPending && safeTubeUser?.subscribed) {
+      notificationCtx.success("Upgraded");
+      setUpgradedNotificationPending(false);
+    }
+  }, [safeTubeUser?.subscribed]);
+
+  const [
+    subscriptionStatusChangePossible,
+    setSubscriptionStatusChangePossible,
+  ] = useLocalStorage<"cancelled" | "renewed" | null>(
+    "subscriptionStatusChangePossible",
+    null
+  );
+  useEffect(() => {
+    if (!signedIn) return;
+    if (
+      safeTubeUser?.subscriptionDeletionDate &&
+      subscriptionStatusChangePossible === "cancelled"
+    ) {
+      notificationCtx.success("Canceled subscription.");
+      setSubscriptionStatusChangePossible(null);
+    } else if (
+      !safeTubeUser?.subscriptionDeletionDate &&
+      subscriptionStatusChangePossible === "renewed"
+    ) {
+      notificationCtx.success("Renewed subscription.");
+      setSubscriptionStatusChangePossible(null);
+    }
+  }, [
+    subscriptionStatusChangePossible,
+    safeTubeUser?.subscriptionDeletionDate,
+  ]);
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <UserContext.Provider
       value={{
         user: safeTubeUser,
         loading,
-        paymentLink,
+        //paymentLink,
         clear: () => setSafeTubeUser(undefined),
         refresh: loadUser,
       }}

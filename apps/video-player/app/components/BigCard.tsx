@@ -4,6 +4,7 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import { getFormattedDate } from "./VideoCard";
+import { useUserContext } from "./UserContext";
 
 const BigCard = (props: {
   rightStuff: React.ReactNode;
@@ -13,6 +14,7 @@ const BigCard = (props: {
   children: React.ReactNode;
 }) => {
   const router = useRouter();
+  const userDetails = useUserContext().user;
   return (
     <Stack alignItems="center" justifyContent="center" spacing="100px">
       <Stack
@@ -41,7 +43,7 @@ const BigCard = (props: {
                   path: { fill: PALETTE.secondary.grey[4] },
                 },
               }}
-              onClick={() => router.push("/dashboard")}
+              onClick={() => router.push(userDetails ? "/dashboard" : "/")}
             >
               <ChevronLeft width="20px" height="20px" />
               <Typography color={PALETTE.secondary.grey[4]}>

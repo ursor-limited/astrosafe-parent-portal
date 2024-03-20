@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
-import UpgradePromptDialog from "./SignupPromptDialog";
+import UpgradePromptDialog from "./UpgradeDialog";
 import { useWindowSize } from "usehooks-ts";
 import DynamicContainer from "./DynamicContainer";
 import UrsorFadeIn from "./UrsorFadeIn";
@@ -38,9 +38,6 @@ export const HEADER_HEIGHT = 86;
 
 export const ASTRO_MAGICAL_GRADIENT =
   "linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)";
-
-export const STRIPE_CUSTOMER_PORTAL_URL =
-  "https://billing.stripe.com/p/login/test_8wMfZYfAK4M2fJe4gg";
 
 const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -406,11 +403,10 @@ export const Header = (props: {
   hidePopupDashboardButton?: boolean;
 }) => {
   const { user, loginWithPopup, loginWithRedirect, logout } = useAuth0();
-  const [profilePopupOpen, setProfilePopupOpen] = useState<boolean>(false);
   const router = useRouter();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
-  const [nVideos, setNVideos] = useState<number | undefined>(undefined);
-  const safeTubeUser = useUserContext().user;
+  const safeTubeUser = useUserContext();
+
   return (
     <>
       <Stack

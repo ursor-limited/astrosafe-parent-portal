@@ -16,7 +16,7 @@ export interface IUrsorNotificationBarProps {}
 
 export const COLORS: Record<NotificationType, string> = {
   error: PALETTE.system.red,
-  success: PALETTE.secondary.green[4],
+  success: PALETTE.secondary.purple[2],
   negativeSuccess: PALETTE.system.red,
 };
 
