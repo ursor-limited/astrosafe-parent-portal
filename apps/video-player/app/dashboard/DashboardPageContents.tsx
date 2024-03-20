@@ -561,8 +561,10 @@ export default function DashboardPageContents() {
                 )}
               </>
             ) : undefined}
-            {userDetails.user ? <ProfileButton light /> : null}
           </Stack>
+        }
+        buttonRowExtraElementRight={
+          userDetails.user ? <ProfileButton light /> : undefined
         }
       >
         <UrsorFadeIn duration={700}>
