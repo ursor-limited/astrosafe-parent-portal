@@ -16,7 +16,6 @@ export interface ISafeTubeUser {
   paymentFailed?: boolean;
   createdAt: string;
   freeTrialStart?: string;
-  countryCode: string;
 }
 
 export interface IUserContext {
