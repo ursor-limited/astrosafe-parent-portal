@@ -41,7 +41,6 @@ import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
-import { getUserLocale } from "get-user-locale";
 
 export const GRID_SPACING = "20px";
 

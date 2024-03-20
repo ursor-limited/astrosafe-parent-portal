@@ -16,6 +16,7 @@ export interface ISafeTubeUser {
   paymentFailed?: boolean;
   createdAt: string;
   freeTrialStart?: string;
+  countryCode: string;
 }
 
 export interface IUserContext {
@@ -57,9 +58,9 @@ const UserProvider = (props: IUserProviderProps) => {
   }, [user?.email]);
 
   const loadUser = () => {
-    if (user?.email) {
+    if (user?.email && user?.sub) {
       setLoading(true);
-      ApiController.getUser(user.email)
+      ApiController.getUser(user.email, user.sub)
         .then((u) =>
           u
             ? setSafeTubeUser(u)
@@ -70,6 +71,8 @@ const UserProvider = (props: IUserProviderProps) => {
         .then(() => setLoading(false));
     }
   };
+
+  console.log(safeTubeUser);
 
   useEffect(() => {
     props.checkoutSessionId &&
