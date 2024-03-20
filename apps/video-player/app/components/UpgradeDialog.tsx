@@ -7,7 +7,7 @@ import UrsorDialog from "./UrsorDialog";
 import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
-import getUserLocale from "get-user-locale";
+import { useEffect, useState } from "react";
 
 const DETAILS = {
   USD: {
@@ -239,7 +239,14 @@ const UpgradeDialog = (props: {
   //const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
   const email = useUserContext().user?.auth0Id;
-  const locale = getUserLocale()?.split("-")?.[1];
+
+  const [locale, setLocale] = useState<string>("US");
+
+  const userDetails = useUserContext();
+
+  useEffect(() => {
+    userDetails.user?.countryCode && setLocale(userDetails.user?.countryCode);
+  }, [userDetails.user?.countryCode]);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];

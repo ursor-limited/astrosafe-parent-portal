@@ -98,10 +98,10 @@ class ApiController {
       response.json()
     );
   }
-  static async getUser(auth0Id: string) {
+  static async getUser(auth0Id: string, auth0UserId: string) {
     //@ts-ignore
-    return get(`video/user/${auth0Id}`).then((response: any) =>
-      response.json()
+    return post(`video/getUser`, { auth0Id, auth0UserId }).then(
+      (response: any) => response.json()
     );
   }
   static async getUserVideos(id: string) {
