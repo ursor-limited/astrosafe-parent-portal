@@ -66,6 +66,7 @@ const submitCheckoutSessionId = async (checkoutSessionId) =>
     .catch((error) => console.log(error));
 
 exports.handler = async function (event) {
+  console.log(event, process.env.STRIPE_API_KEY);
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   try {
     const requestId = event?.requestContext?.requestId;

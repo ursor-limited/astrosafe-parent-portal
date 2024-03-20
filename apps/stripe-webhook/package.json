@@ -8,7 +8,7 @@
     "prebuild": "rm -rf dist; mkdir dist",
     "build": "esbuild index.js --bundle --minify --outfile=dist/index.js --platform=node",
     "postbuild": "cd dist && zip -r handler.zip index.js",
-    "updateLambda": "aws lambda update-function-code --function-name stripe-webhook --zip-file 'fileb://dist/handler.zip'"
+    "updateLambda": "aws lambda update-function-code --function-name dev-stripe-webhook --zip-file 'fileb://dist/handler.zip'"
   },
   "author": "ASTRO",
   "license": "ISC",
