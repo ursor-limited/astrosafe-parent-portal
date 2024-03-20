@@ -133,8 +133,8 @@ const PricingCard = (props: {
     </Stack>
     <Stack flex={1} justifyContent="flex-end">
       <UrsorButton
-        dark={props.dark}
-        variant={props.dark ? "tertiary" : "primary"}
+        dark
+        variant="tertiary"
         onClick={props.callback}
         endIcon={VerifiedIcon}
       >
@@ -187,7 +187,7 @@ const UpgradeDialog = (props: {
           price={6.67}
           currency="€"
           unit="month"
-          tinyText="Billed as £79.99 / year"
+          tinyText={`Billed as ${"$"}79.99 / year`}
           items={["All the features of monthly", "Pay annually to save x%"]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "annual") : "");
