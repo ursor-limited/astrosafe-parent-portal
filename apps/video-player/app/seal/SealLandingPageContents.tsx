@@ -90,6 +90,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               width={873}
               height={316}
               alt="Astro Seals illustration"
+              priority
             />
           </Stack>
         </Stack>
