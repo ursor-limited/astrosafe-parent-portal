@@ -295,7 +295,6 @@ const ApprovedCompanyCard = (props: IApprovedCompany) => (
           alt="Approved company"
           fill
           style={{ objectFit: "cover" }}
-          unoptimized
         />
       ) : (
         <Stack sx={{ filter: "grayscale(100%)", opacity: 0.65 }}>

@@ -210,7 +210,10 @@ const ProductsPopoverColumn = (props: {
   );
 };
 
-const ProductsPopoverContents = (props: { mobile?: boolean }) => {
+const ProductsPopoverContents = (props: {
+  mobile?: boolean;
+  noSignIn?: boolean;
+}) => {
   const { loginWithRedirect, user } = useAuth0();
   return (
     <Stack
@@ -352,7 +355,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => {
             Contact sales
           </UrsorButton>
         ) : null}
-        {!user ? (
+        {!user && props.mobile && !props.noSignIn ? (
           <UrsorButton width="100%" onClick={loginWithRedirect}>
             Sign in
           </UrsorButton>
@@ -362,7 +365,7 @@ const ProductsPopoverContents = (props: { mobile?: boolean }) => {
   );
 };
 
-const MobileMenuButton = () => {
+const MobileMenuButton = (props: { noSignIn?: boolean }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { width } = useWindowSize();
   return (
@@ -371,7 +374,7 @@ const MobileMenuButton = () => {
       closeCallback={() => setOpen(false)}
       placement="right"
       width={`${width - 40}px`}
-      content={<ProductsPopoverContents mobile />}
+      content={<ProductsPopoverContents mobile noSignIn={props.noSignIn} />}
       noPadding
     >
       <Stack
@@ -395,7 +398,7 @@ const MobileMenuButton = () => {
 
 export const Header = (props: {
   showUpgradeButtons?: boolean;
-  showSigninButton?: boolean;
+  noSignIn?: boolean;
   createMoreVideosButton?: boolean;
   signinCallback?: () => void;
   mobile?: boolean;
@@ -456,7 +459,7 @@ export const Header = (props: {
         {props.mobile ? (
           <Stack direction="row" spacing="8px">
             {user ? <ProfileButton /> : null}
-            <MobileMenuButton />
+            <MobileMenuButton noSignIn={props.noSignIn} />
           </Stack>
         ) : (
           <Stack spacing="8px" direction="row">
@@ -492,7 +495,7 @@ export const Header = (props: {
                   <ProfileButton />
                 </Stack>
               </UrsorFadeIn>
-            ) : (
+            ) : !props.noSignIn ? (
               <UrsorButton
                 dark
                 variant="tertiary"
@@ -504,7 +507,7 @@ export const Header = (props: {
               >
                 Sign in
               </UrsorButton>
-            )}
+            ) : null}
             {/* <UrsorButton
               dark
               variant="tertiary"
