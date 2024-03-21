@@ -9,6 +9,7 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelect from "../components/UrsorSelect";
 import _ from "lodash";
+import { SearchInput } from "../dashboard/DashboardPageContents";
 
 const PAGE_SIZE = 10;
 
@@ -362,6 +363,7 @@ const ApprovedCompaniesList = () => {
   // //@ts-ignore
   // useEffect(() => setCompanies(companyDetails), [companyDetails]);
   // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
+  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
   const [selectedAudience, setSelectedAudience] = useState<string | null>(null);
@@ -388,7 +390,6 @@ const ApprovedCompaniesList = () => {
       ),
     [selectedCategory, selectedType, selectedAudience]
   );
-  console.log(selectedAudience, "---");
   return (
     <Stack width="1000px" maxWidth="990px">
       <Stack direction="row" spacing="12px">
@@ -429,6 +430,17 @@ const ApprovedCompaniesList = () => {
             width="220px"
             zIndex={999999999}
             leftAlignPopover
+          />
+        </Captioned>
+        <Captioned text="Search" noFlex>
+          <SearchInput
+            value={searchValue}
+            callback={(value: string) => {
+              setSearchValue(value);
+            }}
+            clearCallback={() => setSearchValue("")}
+            height="40px"
+            grey
           />
         </Captioned>
       </Stack>
