@@ -11,6 +11,7 @@ import AstroLandingPage from "../tools/multiplication-chart/[urlId]/AstroLanding
 import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPageViewport";
 import { UrsorButton } from "ui";
 import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSubtler";
+import ValueProposition from "../tools/multiplication-chart/[urlId]/ValueProposition";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -37,6 +38,21 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               >
                 <VisualLinkCardsSubtler
                   {...props.visualLinkCardsSubtler}
+                  mobile={isMobile}
+                />
+              </LandingPageViewport>,
+            ]
+          : []),
+        ...(props.valueProposition
+          ? [
+              <LandingPageViewport
+                key="seals"
+                supertitle={props.valueProposition.supertitle}
+                title={props.valueProposition.title}
+                mobile={isMobile}
+              >
+                <ValueProposition
+                  items={props.valueProposition.cards}
                   mobile={isMobile}
                 />
               </LandingPageViewport>,

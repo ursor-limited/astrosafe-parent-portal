@@ -3,7 +3,7 @@
     "pageTitle": "AstroSafe Approval program",
     "metaDescription": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
     "heading": "AstroSafe Approval program",
-    "subHeading":  "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
+    "subHeading": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
     "visualLinkCardsSubtler": {
         "supertitle": "Our seals",
         "title": "What is the AstroSafe seal?",
@@ -20,6 +20,20 @@
                 "text": "Awarded to products we believe to meet the top standards of sexual and aesthetic purity.",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png",
                 "backgroundColor": "#DFDAFA"
+            }
+        ]
+    },
+    "valueProposition": {
+        "title": "The AstroSafe Seal program",
+        "supertitle": "About",
+        "cards": [
+            {
+                "text": "The AstroSAFE Certification Program offers an independent, safety verification service and seal-of-approval program tailored for websites and technologies catering to children. This includes online gaming platforms, educational portals, virtual environments, mobile applications, tablet devices, interactive toys, and similar digital services.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
+            },
+            {
+                "text": "The products and services that meet our stringent safety and privacy criteria benefit from inclusion in a select list of AstroSAFE certified offerings, will be granted one of our esteemed AstroSAFE seals for showcasing on their respective platforms, and will be included as safe and discoverable links inside of our AstroSAFE browser.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
             }
         ]
     },

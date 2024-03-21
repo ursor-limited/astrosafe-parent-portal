@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 
 export default function LandingPageViewport(props: {
-  supertitle: string;
+  supertitle?: string;
   subtitle?: string;
   title?: string;
   leftImageUrl?: string;

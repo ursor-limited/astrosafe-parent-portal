@@ -104,7 +104,11 @@ export interface IAstroLandingPage {
     supertitle: string;
     subtitle: string;
   } & IMultiplicationTableColumns)[];
-  valueProposition?: IValuePropositionItem[];
+  valueProposition?: {
+    title?: string;
+    supertitle?: string;
+    cards: IValuePropositionItem[];
+  };
   printableChart?: {
     title: string;
     supertitle: string;
@@ -435,7 +439,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
           ? [
               <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition
-                  items={props.valueProposition}
+                  items={props.valueProposition.cards}
                   mobile={isMobile}
                 />
               </Stack>,
