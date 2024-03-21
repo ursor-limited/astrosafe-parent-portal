@@ -12,6 +12,8 @@ import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPa
 import { UrsorButton } from "ui";
 import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSubtler";
 import ValueProposition from "../tools/multiplication-chart/[urlId]/ValueProposition";
+import companies from "./companies.json";
+import ApprovedCompaniesList from "./ApprovedCompaniesList";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -46,7 +48,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
         ...(props.valueProposition
           ? [
               <LandingPageViewport
-                key="seals"
+                key="valueProposition"
                 supertitle={props.valueProposition.supertitle}
                 title={props.valueProposition.title}
                 mobile={isMobile}
@@ -58,6 +60,14 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               </LandingPageViewport>,
             ]
           : []),
+        <LandingPageViewport
+          key="list"
+          supertitle="Out list"
+          title="AstroSafe Approved Companies"
+          mobile={isMobile}
+        >
+          <ApprovedCompaniesList />
+        </LandingPageViewport>,
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
