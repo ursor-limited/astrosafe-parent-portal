@@ -1,7 +1,8 @@
 import { Stack } from "@mui/system";
 import companies from "./companies.json";
 import Image from "next/image";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
+import GraphIllustration from "@/images/GraphIllustration.svg";
 
 export interface IApprovedCompany {
   name: string;
@@ -34,6 +35,10 @@ const ApprovedCompanyCard = (props: IApprovedCompany) => (
         position: "relative",
         borderRadius: "8px",
         overflow: "hidden",
+        background: PALETTE.secondary.grey[1],
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
       }}
     >
       {props.imageUrl ? (
@@ -43,7 +48,11 @@ const ApprovedCompanyCard = (props: IApprovedCompany) => (
           layout="fill"
           unoptimized
         />
-      ) : null}
+      ) : (
+        <Stack sx={{ filter: "grayscale(100%)", opacity: 0.65 }}>
+          <GraphIllustration width="120px" height="120px" />
+        </Stack>
+      )}
     </div>
     <Stack flex={1} justifyContent="space-between">
       <Typography variant="large" bold>
