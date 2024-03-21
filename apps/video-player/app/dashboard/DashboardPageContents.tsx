@@ -54,17 +54,19 @@ export const SearchInput = (props: {
   clearCallback: () => void;
   shadow?: boolean;
   fullWidth?: boolean;
+  height?: string;
+  grey?: boolean;
 }) => {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
   return (
     <Stack
-      height="28px"
+      height={props.height || "28px"}
       width={props.fullWidth ? undefined : "180px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={props.grey ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"}
       px="10px"
       spacing="8px"
       boxSizing="border-box"
@@ -98,7 +100,9 @@ export const SearchInput = (props: {
         value={props.value}
         disableUnderline
         sx={{
-          background: "rgb(255,255,255)",
+          background: props.grey
+            ? PALETTE.secondary.grey[1]
+            : "rgb(255,255,255)",
           input: {
             padding: "0 !important",
           },

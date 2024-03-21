@@ -5,6 +5,7 @@ import { Box, Stack, keyframes } from "@mui/system";
 import { Backdrop } from "@mui/material";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
+import { useWindowSize } from "usehooks-ts";
 
 export const fadeIn = keyframes`
 from {
@@ -63,6 +64,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
 
   const [yOffset, setYOffset] = useState<number | undefined>(undefined);
   const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
+  const [maxHeight, setMaxHeight] = useState<number | undefined>(undefined);
 
   const [referenceElement, setReferenceElement] =
     React.useState<HTMLElement | null>(null);
@@ -92,6 +94,8 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     buttonRef?.focus();
   }, [buttonRef]);
 
+  const { height } = useWindowSize();
+
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
     setWidth(referenceElement?.offsetWidth);
@@ -99,7 +103,19 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
       (width ?? window.innerWidth) -
         (referenceElement?.getBoundingClientRect().left ?? 0)
     );
-  }, [width, referenceElement, referenceElement?.offsetTop, props.yOffset]);
+    setMaxHeight(
+      (height ?? window.innerHeight) -
+        (referenceElement?.getBoundingClientRect().top ?? 0) -
+        62
+    );
+  }, [
+    width,
+    referenceElement,
+    referenceElement?.offsetTop,
+    referenceElement?.getBoundingClientRect().top,
+    props.yOffset,
+    height,
+  ]);
 
   return (
     <>
@@ -210,7 +226,8 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       }}
                       height="100%"
                       //maxWidth={maxWidth}
-                      overflow="hidden"
+                      maxHeight={maxHeight}
+                      overflow="scroll"
                     >
                       {props.content}
                     </Box>

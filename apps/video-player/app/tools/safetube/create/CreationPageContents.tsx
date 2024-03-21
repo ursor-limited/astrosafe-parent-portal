@@ -247,10 +247,7 @@ function CreationPageContents(props: { details: IVideo }) {
   return (
     <Stack width="100vw" height="100vh" overflow="scroll">
       {!fullscreen ? (
-        <Header
-          showSigninButton={!userDetails.user?.id}
-          signinCallback={() => setLandInDashboardAfterCreation(true)}
-        />
+        <Header signinCallback={() => setLandInDashboardAfterCreation(true)} />
       ) : null}
       {props.details && provider && url ? (
         <Stack
