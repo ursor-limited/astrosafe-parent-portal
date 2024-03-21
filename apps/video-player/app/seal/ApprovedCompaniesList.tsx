@@ -6,18 +6,127 @@ import GraphIllustration from "@/images/GraphIllustration.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import { useEffect, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
+import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
+import UrsorSelect from "../components/UrsorSelect";
+import _ from "lodash";
 
 const PAGE_SIZE = 20;
+
+const TARGET_AUDIENCES = [
+  "Preschoolers (ages 3-5)",
+  "Kids (ages 5-8)",
+  "Tweens (ages 8-12)",
+  "Parents and Families",
+  "Teachers and Schools",
+  "Publishers and Developers",
+  "Older kids (ages 10 and up)",
+  "Babies and Toddlers (ages 0-3)",
+  "Unspecified",
+];
+
+const PRODUCT_TYPES = [
+  "Smart TV app",
+  "Google",
+  "Website",
+  "Vendor service",
+  "PC software",
+  "Mobile app (Apple)",
+  "Mobile app (Google)",
+  "Web service",
+  "Connected product",
+  "VR app",
+  "Amazon",
+  "Tablet device",
+  "Mac",
+  "Windows",
+];
+
+const PRODUCT_CATEGORIES = [
+  "Educational",
+  "TV and Video",
+  "Games",
+  "Educational",
+  "School and Homework Activities",
+  "Service Provider",
+  "Analytics",
+  "Advertising",
+  "or Marketing",
+  "Virtual World",
+  "Programming and Coding",
+  "Creativity",
+  "Math and Numbers",
+  "Shapes and Colors",
+  "Alphabet and Letters",
+  "Language Learning",
+  "Books and Reading",
+  "Words and Vocabulary",
+  "Programming and Coding",
+  "Parental Controls",
+  "TV and Video",
+  "Child-Lock Features",
+  "Business",
+  "Service Provider",
+  "Safety Tools and Resources",
+  "Brain and Cognitive Development",
+  "News and Current Events",
+  "Music and Song",
+  "Third Party Apps",
+  "Safety Tools and Resources",
+  "Nutrition and Wellness",
+  "Cartoons",
+  "Food and Drink",
+  "Social Network",
+  "Chat and Messaging",
+  "Words and Vocabulary",
+  "Social Skills",
+  "Alphabet and Letters",
+  "Science and Nature",
+  "Travel and Geography",
+  "Toys and Physical Play",
+  "Content Filtering and Moderation",
+  "Books and Reading",
+  "Music and Song",
+  "MMO (Massively Multiplayer Online)",
+  "Games",
+  "Social Network",
+  "Analytics",
+  "Coloring and Art",
+  "History",
+  "Animals",
+  "Environment",
+  "E-Commerce",
+  "Virtual World",
+  "Holidays",
+  "User-Generated Content",
+  "Family Tasks and Chores",
+  "Money and Financial",
+  "Religion",
+  "Business",
+  "Browsing and Search",
+  "Health and Anatomy",
+  "Nutrition and Wellness",
+  "Family Tasks and Chores",
+  "Science and Nature",
+  "Math and Numbers",
+  "Holidays",
+  "User-Generated Content",
+  "Health and Anatomy",
+  "Sports",
+  "Phone Services",
+  "Unspecified",
+  "Content Filtering and Moderation",
+  "Photo Sharing",
+  "Space and Astronomy",
+  "Third Party Apps",
+  "Toys and Physical Play",
+];
 
 export interface IApprovedCompany {
   name: string;
   publisher: string;
   productType: string;
-  productCategory: "Educational" | "Language Learning" | "Books and Reading";
-  targetAudience:
-    | "Preschoolers (ages 3-5)"
-    | "Kids (ages 5-8)"
-    | "Tweens (ages 8-12)";
+  productCategory: string;
+  targetAudience: string;
   productDescription: string;
   url: string;
   imageUrl?: string;
@@ -249,8 +358,25 @@ const ApprovedCompaniesList = () => {
   // const [companies, setCompanies] = useState<IApprovedCompany[]>([]);
   // //@ts-ignore
   // useEffect(() => setCompanies(companyDetails), [companyDetails]);
+  // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   return (
     <Stack width="1000px" maxWidth="990px">
+      <Stack direction="row">
+        <Captioned text="Product type">
+          <UrsorSelect
+            items={PRODUCT_CATEGORIES.map((c) => ({
+              id: c,
+              value: c,
+            }))}
+            selected={selectedCategory ? [selectedCategory] : []}
+            callback={(c) => setSelectedCategory(c)}
+            width="220px"
+            zIndex={999999999}
+            leftAlignPopover
+          />
+        </Captioned>
+      </Stack>
       <Stack spacing="20px">
         <PageSelection
           pageIndex={pageIndex}
