@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 };
 
 async function SealLandingPage() {
-  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
-    ?.isMobile;
+  // const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+  //   ?.isMobile;
   const details: IAstroLandingPage = {
     ...landingPageDetails,
   };
