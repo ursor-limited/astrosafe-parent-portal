@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import _ from "lodash";
 //import { Header } from "@/app/components/Header";
 import { PALETTE, Typography } from "ui";
-import SpaceGlow from "@/images/spaceGlow.svg";
+import SpaceGlow from "@/images/spaceGlowFainter.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import { Header } from "@/app/components/header2";
@@ -74,7 +74,6 @@ export default function AstroLandingPage(props: {
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
-            bold
             color="rgb(255,255,255)"
             sx={{
               textAlign: "center",

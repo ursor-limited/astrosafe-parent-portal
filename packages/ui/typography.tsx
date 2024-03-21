@@ -6,7 +6,7 @@ import { Box } from "@mui/system";
 import { PALETTE } from "./palette";
 
 export const DEFAULT_FONT_WEIGHT = 327;
-export const BOLD_FONT_WEIGHT = 450;
+export const BOLD_FONT_WEIGHT = 470;
 
 export const getMaxLinesStyle = (n: number) => ({
   display: "-webkit-box",
