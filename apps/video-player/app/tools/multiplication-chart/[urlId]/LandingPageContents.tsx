@@ -219,10 +219,11 @@ export const Captioned = (props: {
     on: boolean;
     callback: () => void;
   };
+  noFlex?: boolean;
   children: React.ReactNode;
 }) => (
   <Stack
-    flex={1}
+    flex={props.noFlex ? undefined : 1}
     spacing="6px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,

@@ -10,7 +10,7 @@ import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageCont
 import UrsorSelect from "../components/UrsorSelect";
 import _ from "lodash";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 
 const TARGET_AUDIENCES = [
   "Preschoolers (ages 3-5)",
@@ -364,7 +364,11 @@ const ApprovedCompaniesList = () => {
   // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  useEffect(() => setPageIndex(0), [selectedCategory, selectedType]);
+  const [selectedAudience, setSelectedAudience] = useState<string | null>(null);
+  useEffect(
+    () => setPageIndex(0),
+    [selectedCategory, selectedType, selectedAudience]
+  );
 
   const [filteredCompanies, setFilteredCompanies] = useState<
     IApprovedCompany[]
@@ -374,19 +378,21 @@ const ApprovedCompaniesList = () => {
       setFilteredCompanies(
         companies.filter(
           (c) =>
-            (!selectedCategory && !selectedType) ||
+            (!selectedCategory && !selectedType && !selectedAudience) ||
             ((!selectedCategory ||
               c.productCategory.includes(selectedCategory)) &&
-              (!selectedType || c.productType.includes(selectedType)))
+              (!selectedType || c.productType.includes(selectedType)) &&
+              (!selectedAudience ||
+                c.targetAudience.includes(selectedAudience)))
         )
       ),
-    [selectedCategory, selectedType]
+    [selectedCategory, selectedType, selectedAudience]
   );
-  console.log(companies.length);
+  console.log(selectedAudience, "---");
   return (
     <Stack width="1000px" maxWidth="990px">
-      <Stack direction="row">
-        <Captioned text="Product category">
+      <Stack direction="row" spacing="12px">
+        <Captioned text="Product category" noFlex>
           <UrsorSelect
             items={PRODUCT_CATEGORIES.map((c) => ({
               id: c,
@@ -399,7 +405,7 @@ const ApprovedCompaniesList = () => {
             leftAlignPopover
           />
         </Captioned>
-        <Captioned text="Product type">
+        <Captioned text="Product type" noFlex>
           <UrsorSelect
             items={PRODUCT_TYPES.map((t) => ({
               id: t,
@@ -407,6 +413,19 @@ const ApprovedCompaniesList = () => {
             }))}
             selected={selectedType ? [selectedType] : []}
             callback={(t) => setSelectedType(t)}
+            width="220px"
+            zIndex={999999999}
+            leftAlignPopover
+          />
+        </Captioned>
+        <Captioned text="Target audience" noFlex>
+          <UrsorSelect
+            items={TARGET_AUDIENCES.map((a) => ({
+              id: a,
+              value: a,
+            }))}
+            selected={selectedAudience ? [selectedAudience] : []}
+            callback={(a) => setSelectedAudience(a)}
             width="220px"
             zIndex={999999999}
             leftAlignPopover
