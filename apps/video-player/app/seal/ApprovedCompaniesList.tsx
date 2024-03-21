@@ -4,6 +4,7 @@ import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import GraphIllustration from "@/images/GraphIllustration.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
+import X from "@/images/icons/X.svg";
 import { useEffect, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
@@ -380,58 +381,85 @@ const ApprovedCompaniesList = () => {
       setFilteredCompanies(
         companies.filter(
           (c) =>
-            (!selectedCategory && !selectedType && !selectedAudience) ||
-            ((!selectedCategory ||
-              c.productCategory.includes(selectedCategory)) &&
+            (!searchValue &&
+              !selectedCategory &&
+              !selectedType &&
+              !selectedAudience) ||
+            ((!searchValue ||
+              [c.name, c.productDescription, c.publisher]
+                .join("")
+                .toLowerCase()
+                .includes(searchValue)) &&
+              (!selectedCategory ||
+                c.productCategory.includes(selectedCategory)) &&
               (!selectedType || c.productType.includes(selectedType)) &&
               (!selectedAudience ||
                 c.targetAudience.includes(selectedAudience)))
         )
       ),
-    [selectedCategory, selectedType, selectedAudience]
+    [selectedCategory, selectedType, selectedAudience, searchValue]
   );
   return (
     <Stack width="1000px" maxWidth="990px">
-      <Stack direction="row" spacing="12px">
-        <Captioned text="Product category" noFlex>
-          <UrsorSelect
-            items={PRODUCT_CATEGORIES.map((c) => ({
-              id: c,
-              value: c,
-            }))}
-            selected={selectedCategory ? [selectedCategory] : []}
-            callback={(c) => setSelectedCategory(c)}
-            width="220px"
-            zIndex={999999999}
-            leftAlignPopover
-          />
-        </Captioned>
-        <Captioned text="Product type" noFlex>
-          <UrsorSelect
-            items={PRODUCT_TYPES.map((t) => ({
-              id: t,
-              value: t,
-            }))}
-            selected={selectedType ? [selectedType] : []}
-            callback={(t) => setSelectedType(t)}
-            width="220px"
-            zIndex={999999999}
-            leftAlignPopover
-          />
-        </Captioned>
-        <Captioned text="Target audience" noFlex>
-          <UrsorSelect
-            items={TARGET_AUDIENCES.map((a) => ({
-              id: a,
-              value: a,
-            }))}
-            selected={selectedAudience ? [selectedAudience] : []}
-            callback={(a) => setSelectedAudience(a)}
-            width="220px"
-            zIndex={999999999}
-            leftAlignPopover
-          />
-        </Captioned>
+      <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" spacing="12px">
+          <Captioned text="Product category" noFlex>
+            <UrsorSelect
+              items={PRODUCT_CATEGORIES.map((c) => ({
+                id: c,
+                value: c,
+              }))}
+              selected={selectedCategory ? [selectedCategory] : []}
+              callback={(c) => setSelectedCategory(c)}
+              width="220px"
+              zIndex={999999999}
+              leftAlignPopover
+            />
+          </Captioned>
+          <Captioned text="Product type" noFlex>
+            <UrsorSelect
+              items={PRODUCT_TYPES.map((t) => ({
+                id: t,
+                value: t,
+              }))}
+              selected={selectedType ? [selectedType] : []}
+              callback={(t) => setSelectedType(t)}
+              width="220px"
+              zIndex={999999999}
+              leftAlignPopover
+            />
+          </Captioned>
+          <Captioned text="Target audience" noFlex>
+            <UrsorSelect
+              items={TARGET_AUDIENCES.map((a) => ({
+                id: a,
+                value: a,
+              }))}
+              selected={selectedAudience ? [selectedAudience] : []}
+              callback={(a) => setSelectedAudience(a)}
+              width="220px"
+              zIndex={999999999}
+              leftAlignPopover
+            />
+          </Captioned>
+          <Stack
+            sx={{
+              opacity:
+                selectedAudience || selectedCategory || selectedType ? 1 : 0.3,
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+              transform: "translateY(34.5px)",
+            }}
+            onClick={() => {
+              setSelectedAudience(null);
+              setSelectedCategory(null);
+              setSelectedType(null);
+            }}
+          >
+            <X height="24px" width="24px" />
+          </Stack>
+        </Stack>
         <Captioned text="Search" noFlex>
           <SearchInput
             value={searchValue}
