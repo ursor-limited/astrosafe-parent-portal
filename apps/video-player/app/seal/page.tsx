@@ -4,8 +4,8 @@ import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { WorksheetId, WorksheetTopic } from "../components/WorksheetGenerator";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import landingPageDetails from "./math-worksheet.json";
-import LandingPageContents from "./LandingPageContents";
+import landingPageDetails from "./landingPageDetails.json";
+import SealLandingPageContents from "./SealLandingPageContents";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 
@@ -19,14 +19,8 @@ async function SealLandingPage() {
     ?.isMobile;
   const details: IAstroLandingPage = {
     ...landingPageDetails,
-    worksheetGenerator: {
-      ...landingPageDetails.worksheetGenerator,
-      topic: landingPageDetails.worksheetGenerator.topic as WorksheetTopic,
-      worksheetId: landingPageDetails.worksheetGenerator
-        .worksheetId as WorksheetId,
-    },
   };
-  return <LandingPageContents {...details} />;
+  return <SealLandingPageContents {...details} />;
 }
 
 export default SealLandingPage;

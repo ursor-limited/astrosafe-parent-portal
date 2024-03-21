@@ -10,10 +10,11 @@ import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/Landing
 import AstroLandingPage from "../tools/multiplication-chart/[urlId]/AstroLandingPage";
 import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPageViewport";
 import { UrsorButton } from "ui";
+import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSubtler";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
-export default function LandingPageContents(props: IAstroLandingPage) {
+export default function SealLandingPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
@@ -25,15 +26,19 @@ export default function LandingPageContents(props: IAstroLandingPage) {
       mobile={isMobile}
       faqs={props.faqs}
       viewports={[
-        ...(props.howItWorks
+        ...(props.visualLinkCardsSubtler
           ? [
               <LandingPageViewport
-                key="howItWorks"
-                supertitle={props.howItWorks.supertitle}
-                title={props.howItWorks.title}
+                key="seals"
+                supertitle={props.visualLinkCardsSubtler.supertitle}
+                subtitle={props.visualLinkCardsSubtler.subtitle}
+                title={props.visualLinkCardsSubtler.title}
                 mobile={isMobile}
               >
-                <></>
+                <VisualLinkCardsSubtler
+                  {...props.visualLinkCardsSubtler}
+                  mobile={isMobile}
+                />
               </LandingPageViewport>,
             ]
           : []),

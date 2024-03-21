@@ -88,6 +88,17 @@ export interface IAstroLandingPage {
       imageUrl: string;
     }[];
   };
+  visualLinkCardsSubtler?: {
+    supertitle: string;
+    title: string;
+    subtitle: string;
+    cards: {
+      title: string;
+      text: string;
+      imageUrl: string;
+      backgroundColor?: string;
+    }[];
+  };
   multiplicationTables?: ({
     title: string;
     supertitle: string;
