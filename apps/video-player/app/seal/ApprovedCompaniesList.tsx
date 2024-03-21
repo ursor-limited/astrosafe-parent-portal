@@ -363,7 +363,8 @@ const ApprovedCompaniesList = () => {
   // useEffect(() => setCompanies(companyDetails), [companyDetails]);
   // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  useEffect(() => setPageIndex(0), [selectedCategory]);
+  const [selectedType, setSelectedType] = useState<string | null>(null);
+  useEffect(() => setPageIndex(0), [selectedCategory, selectedType]);
 
   const [filteredCompanies, setFilteredCompanies] = useState<
     IApprovedCompany[]
@@ -373,15 +374,19 @@ const ApprovedCompaniesList = () => {
       setFilteredCompanies(
         companies.filter(
           (c) =>
-            !selectedCategory || c.productCategory.includes(selectedCategory)
+            (!selectedCategory && !selectedType) ||
+            ((!selectedCategory ||
+              c.productCategory.includes(selectedCategory)) &&
+              (!selectedType || c.productType.includes(selectedType)))
         )
       ),
-    [selectedCategory]
+    [selectedCategory, selectedType]
   );
+  console.log(companies.length);
   return (
     <Stack width="1000px" maxWidth="990px">
       <Stack direction="row">
-        <Captioned text="Product type">
+        <Captioned text="Product category">
           <UrsorSelect
             items={PRODUCT_CATEGORIES.map((c) => ({
               id: c,
@@ -389,6 +394,19 @@ const ApprovedCompaniesList = () => {
             }))}
             selected={selectedCategory ? [selectedCategory] : []}
             callback={(c) => setSelectedCategory(c)}
+            width="220px"
+            zIndex={999999999}
+            leftAlignPopover
+          />
+        </Captioned>
+        <Captioned text="Product type">
+          <UrsorSelect
+            items={PRODUCT_TYPES.map((t) => ({
+              id: t,
+              value: t,
+            }))}
+            selected={selectedType ? [selectedType] : []}
+            callback={(t) => setSelectedType(t)}
             width="220px"
             zIndex={999999999}
             leftAlignPopover
