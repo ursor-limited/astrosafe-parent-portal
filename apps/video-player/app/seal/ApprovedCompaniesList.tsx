@@ -49,8 +49,7 @@ const PRODUCT_CATEGORIES = [
   "School and Homework Activities",
   "Service Provider",
   "Analytics",
-  "Advertising",
-  "or Marketing",
+  "Advertising / marketing",
   "Virtual World",
   "Programming and Coding",
   "Creativity",
@@ -192,74 +191,78 @@ const PageSelection = (props: {
   totalN: number;
   pageIndex: number;
   setPageIndex: (index: number) => void;
-}) => (
-  <Stack
-    direction="row"
-    justifyContent="center"
-    alignItems="flex-start"
-    spacing="10px"
-    pt="35px"
-    width="100%"
-  >
+}) => {
+  return (
     <Stack
-      height="fit-content"
       direction="row"
-      alignItems="center"
-      spacing="30px"
+      justifyContent="center"
+      alignItems="flex-start"
+      spacing="10px"
+      pt="35px"
+      width="100%"
     >
       <Stack
-        sx={{
-          opacity: props.pageIndex === 0 ? 0.3 : 1,
-          pointerEvents: props.pageIndex === 0 ? "none" : undefined,
-        }}
+        height="fit-content"
+        direction="row"
+        alignItems="center"
+        spacing="30px"
       >
-        <PageChevrons
-          nextCallback={() => props.setPageIndex(props.pageIndex - 1)}
-          endCallback={() => props.setPageIndex(0)}
-        />
-      </Stack>
-      <Stack direction="row" justifyContent="center" spacing="5px">
-        <Typography variant="medium" color={PALETTE.secondary.grey[5]} bold>{`${
-          props.pageIndex * PAGE_SIZE + 1
-        } - ${Math.min(
-          props.totalN,
-          (props.pageIndex + 1) * PAGE_SIZE
-        )} `}</Typography>
-        <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-          of
-        </Typography>
-        <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
-          {props.totalN}
-        </Typography>
-        <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-          companies
-        </Typography>
-      </Stack>
-      <Stack
-        sx={{
-          transform: "rotate(180deg)",
-          opacity:
-            props.totalN === PAGE_SIZE ||
-            props.pageIndex === Math.floor(props.totalN / PAGE_SIZE)
-              ? 0.3
-              : 1,
-          pointerEvents:
-            props.totalN === PAGE_SIZE ||
-            props.pageIndex === Math.floor(props.totalN / PAGE_SIZE)
-              ? "none"
-              : undefined,
-        }}
-      >
-        <PageChevrons
-          nextCallback={() => props.setPageIndex(props.pageIndex + 1)}
-          endCallback={() =>
-            props.setPageIndex(Math.floor(props.totalN / PAGE_SIZE))
-          }
-        />
+        <Stack
+          sx={{
+            opacity: props.pageIndex === 0 ? 0.3 : 1,
+            pointerEvents: props.pageIndex === 0 ? "none" : undefined,
+          }}
+        >
+          <PageChevrons
+            nextCallback={() => props.setPageIndex(props.pageIndex - 1)}
+            endCallback={() => props.setPageIndex(0)}
+          />
+        </Stack>
+        <Stack direction="row" justifyContent="center" spacing="5px">
+          <Typography
+            variant="medium"
+            color={PALETTE.secondary.grey[5]}
+            bold
+          >{`${props.pageIndex * PAGE_SIZE + 1} - ${Math.min(
+            props.totalN,
+            (props.pageIndex + 1) * PAGE_SIZE
+          )} `}</Typography>
+          <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+            of
+          </Typography>
+          <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
+            {props.totalN}
+          </Typography>
+          <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+            companies
+          </Typography>
+        </Stack>
+        <Stack
+          sx={{
+            transform: "rotate(180deg)",
+            opacity:
+              props.totalN === PAGE_SIZE * (props.pageIndex + 1) ||
+              props.pageIndex === Math.floor(props.totalN / PAGE_SIZE)
+                ? 0.3
+                : 1,
+            pointerEvents:
+              props.totalN === PAGE_SIZE * (props.pageIndex + 1) ||
+              props.pageIndex === Math.floor(props.totalN / PAGE_SIZE)
+                ? "none"
+                : undefined,
+          }}
+        >
+          <PageChevrons
+            nextCallback={() => props.setPageIndex(props.pageIndex + 1)}
+            endCallback={() =>
+              props.setPageIndex(Math.floor((props.totalN - 1) / PAGE_SIZE))
+            }
+          />
+        </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 const ApprovedCompanyCard = (props: IApprovedCompany) => (
   <Stack
@@ -360,6 +363,21 @@ const ApprovedCompaniesList = () => {
   // useEffect(() => setCompanies(companyDetails), [companyDetails]);
   // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  useEffect(() => setPageIndex(0), [selectedCategory]);
+
+  const [filteredCompanies, setFilteredCompanies] = useState<
+    IApprovedCompany[]
+  >([]);
+  useEffect(
+    () =>
+      setFilteredCompanies(
+        companies.filter(
+          (c) =>
+            !selectedCategory || c.productCategory.includes(selectedCategory)
+        )
+      ),
+    [selectedCategory]
+  );
   return (
     <Stack width="1000px" maxWidth="990px">
       <Stack direction="row">
@@ -381,16 +399,16 @@ const ApprovedCompaniesList = () => {
         <PageSelection
           pageIndex={pageIndex}
           setPageIndex={setPageIndex}
-          totalN={companies.length}
+          totalN={filteredCompanies.length}
         />
         <Stack spacing="24px">
-          {(companies as IApprovedCompany[])
+          {(filteredCompanies as IApprovedCompany[])
             .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
             .map((c, i) => (
               <UrsorFadeIn
                 delay={i * 100}
                 duration={600}
-                key={`${i}_${pageIndex}`}
+                key={`${selectedCategory}_${i}_${pageIndex}`}
               >
                 <ApprovedCompanyCard {...c} />
               </UrsorFadeIn>
