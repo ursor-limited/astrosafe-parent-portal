@@ -246,6 +246,7 @@ const UpgradeDialog = (props: {
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
+
   return (
     <UrsorDialog
       supertitle="Upgrade"
@@ -255,6 +256,23 @@ const UpgradeDialog = (props: {
       noOverflowHidden
       onCloseCallback={props.closeCallback}
     >
+      {/* <UrsorButton
+        onClick={() => {
+          const iframe = document.getElementsByTagName(
+            "stripe-pricing-table"
+          )?.[0]?.shadowRoot?.children?.[0];
+          console.log(iframe);
+          if (iframe) {
+            //@ts-ignore
+            const iframeContent = iframe.contentWindow.document; //@ts-ignore
+            const amount =
+              iframeContent.getElementsByClassName("CurrencyAmount");
+            console.log(amount);
+          }
+        }}
+      >
+        BOO
+      </UrsorButton> */}
       {/* @ts-ignore */}
       <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       {/* @ts-ignore */}

@@ -88,12 +88,27 @@ export interface IAstroLandingPage {
       imageUrl: string;
     }[];
   };
+  visualLinkCardsSubtler?: {
+    supertitle: string;
+    title: string;
+    subtitle: string;
+    cards: {
+      title: string;
+      text: string;
+      imageUrl: string;
+      backgroundColor?: string;
+    }[];
+  };
   multiplicationTables?: ({
     title: string;
     supertitle: string;
     subtitle: string;
   } & IMultiplicationTableColumns)[];
-  valueProposition?: IValuePropositionItem[];
+  valueProposition?: {
+    title?: string;
+    supertitle?: string;
+    cards: IValuePropositionItem[];
+  };
   printableChart?: {
     title: string;
     supertitle: string;
@@ -204,10 +219,11 @@ export const Captioned = (props: {
     on: boolean;
     callback: () => void;
   };
+  noFlex?: boolean;
   children: React.ReactNode;
 }) => (
   <Stack
-    flex={1}
+    flex={props.noFlex ? undefined : 1}
     spacing="6px"
     sx={{
       opacity: props.disabled ? 0.45 : 1,
@@ -424,7 +440,7 @@ export default function LandingPageContents(props: IAstroLandingPage) {
           ? [
               <Stack key="valueProposition" py="60px" alignItems="center">
                 <ValueProposition
-                  items={props.valueProposition}
+                  items={props.valueProposition.cards}
                   mobile={isMobile}
                 />
               </Stack>,

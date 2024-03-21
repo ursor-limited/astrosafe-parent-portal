@@ -1,0 +1,76 @@
+{
+    "urlId": "seal",
+    "pageTitle": "AstroSafe Approval program",
+    "metaDescription": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
+    "heading": "AstroSafe Approval program",
+    "subHeading": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
+    "visualLinkCardsSubtler": {
+        "supertitle": "Our seals",
+        "title": "What is the AstroSafe seal?",
+        "subtitle": "The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods.",
+        "cards": [
+            {
+                "title": "AstroSafe Certified",
+                "text": "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png",
+                "backgroundColor": "#E2E9F8"
+            },
+            {
+                "title": "AstroSafe Certified+",
+                "text": "Awarded to products we believe to meet the top standards of sexual and aesthetic purity.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png",
+                "backgroundColor": "#DFDAFA"
+            }
+        ]
+    },
+    "valueProposition": {
+        "title": "The AstroSafe Seal program",
+        "supertitle": "About",
+        "cards": [
+            {
+                "text": "The AstroSAFE Certification Program offers an independent, safety verification service and seal-of-approval program tailored for websites and technologies catering to children. This includes online gaming platforms, educational portals, virtual environments, mobile applications, tablet devices, interactive toys, and similar digital services.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
+            },
+            {
+                "text": "The products and services that meet our stringent safety and privacy criteria benefit from inclusion in a select list of AstroSAFE certified offerings, will be granted one of our esteemed AstroSAFE seals for showcasing on their respective platforms, and will be included as safe and discoverable links inside of our AstroSAFE browser.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
+            }
+        ]
+    },
+    "faqs": {
+        "cards": [
+            {
+                "question": "Is the AstroSafe Worksheet Generator free to use?",
+                "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+            },
+            {
+                "question": "Can I create different worksheets?",
+                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don't currently offer - just email hello@astrosafe.co and let us know!"
+            },
+            {
+                "question": "How do I select topics for the worksheets?",
+                "answer": "Choose from a wide range of math topics suitable for various grades and curriculum standards directly on the tool's interface."
+            },
+            {
+                "question": "Can I customize the worksheets?",
+                "answer": "Yes, the tool allows for customization in terms of difficulty level, number of questions, and specific math topics."
+            },
+            {
+                "question": "How do I download or print the generated worksheets?",
+                "answer": "After generating the worksheet, options for downloading as a PDF or printing directly from the website will be provided."
+            },
+            {
+                "question": "Is there a fee for using this worksheet generator?",
+                "answer": "For detailed information on any potential costs or subscription models, please refer to the Astrosafe website."
+            },
+            {
+                "question": "How does the worksheet generator work?",
+                "answer": "The worksheet generator uses a mixture of AI and our templates to create worksheets fine-tuned for your classroom."
+            },
+            {
+                "question": "Do you offer school discounts?",
+                "answer": "Yes we do! If you're interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+            }
+        ]
+    }
+}
