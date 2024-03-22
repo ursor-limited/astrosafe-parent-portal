@@ -120,8 +120,7 @@ const PricingCard = (props: {
   callback: () => void;
 }) => (
   <Stack
-    height="366px"
-    width="306px"
+    flex={1}
     bgcolor={
       props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
     }
@@ -138,14 +137,14 @@ const PricingCard = (props: {
       <Stack
         borderRadius="10px"
         bgcolor={PALETTE.system.orange}
-        height="26px"
+        height="20px"
         position="absolute"
-        top="-15px"
-        right="-40px"
+        top="-13px"
+        right="-30px"
         justifyContent="center"
         px="16px"
       >
-        <Typography variant="small" bold color={PALETTE.font.light}>
+        <Typography variant="tiny" bold color={PALETTE.font.light}>
           {props.notif}
         </Typography>
       </Stack>
@@ -267,11 +266,15 @@ const UpgradeDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Upgrade"
-      title="Upgrade to keep access to all of your teaching tools!"
+      title="Upgrade to Astrosafe premium and enjoy unlimited access."
       open={props.open}
       titleSize={props.mobile ? "h4" : "h3"}
       noOverflowHidden
       onCloseCallback={props.closeCallback}
+      width="1030px"
+      maxWidth="1030px"
+      titleMaxWidth="600px"
+      //paddingX="40px"
     >
       {/* <UrsorButton
         onClick={() => {
@@ -297,7 +300,20 @@ const UpgradeDialog = (props: {
         pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
         publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       /> */}
-      <Stack direction="row" spacing="32px">
+      <Stack direction="row" spacing="32px" width="100%">
+        <PricingCard
+          title="Premium"
+          subtitle="Monthly"
+          price={details.monthly}
+          currency={details.currencySymbol}
+          unit="month"
+          tinyText={`Billed as ${details.currencySymbol}${details.monthly} / month`}
+          items={["2 Creations per week", "1 Device Monitoring"]}
+          callback={() => {
+            router.push(email ? getPaymentUrl(email, "monthly") : "");
+            setUpgradedNotificationPending(true);
+          }}
+        />
         <PricingCard
           dark
           border
@@ -309,8 +325,9 @@ const UpgradeDialog = (props: {
           unit="month"
           tinyText={`Billed as ${details.currencySymbol}${details.annual} / year`}
           items={[
-            "All the features of monthly",
-            `Pay annually to save ${details.percentageSaving}%`,
+            "Unlimited Worksheets",
+            `Unlimited Videos`,
+            "Share with your students",
           ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "annual") : "");
@@ -325,9 +342,11 @@ const UpgradeDialog = (props: {
           unit="month"
           tinyText={`Billed as ${details.currencySymbol}${details.monthly} / month`}
           items={[
-            "Create unlimited SafeTube videos",
-            "Create unlimited Worksheets",
-            "Share with all of your students",
+            "Unlimited Worksheets",
+            "Unlimited Videos",
+            "Unlimited Device Monitoring",
+            "Unlimited Wikipedia pages",
+            "Remove Watermark",
           ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "monthly") : "");
