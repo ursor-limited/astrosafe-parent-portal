@@ -268,6 +268,9 @@ const UpgradeDialog = (props: {
     data.country_code && setLocale(data.country_code);
   };
 
+  //@ts-ignore
+  console.log(locale, LOCALE_CURRENCIES[locale]);
+
   // Run `getIP` function above just once when the page is rendered
   useEffect(() => {
     getIp();
