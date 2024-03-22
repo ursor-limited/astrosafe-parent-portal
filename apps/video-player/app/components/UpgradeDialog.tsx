@@ -95,10 +95,6 @@ const LOCALE_CURRENCIES = {
   VA: "EUR",
 };
 
-const FREE_VIDEO_LIMIT = 3;
-const SCREENSHOT_URL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png";
-
 export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
   `${
     pricing === "monthly"
@@ -130,23 +126,21 @@ const PricingCard = (props: {
     boxSizing="border-box"
     alignItems="center"
     borderRadius="20px"
-    border={
-      props.border ? `4px solid ${PALETTE.secondary.purple[3]}` : undefined
-    }
+    border={props.border ? `4px solid ${PALETTE.system.orange}` : undefined}
     position="relative"
   >
     {props.notif ? (
       <Stack
         borderRadius="10px"
         bgcolor={PALETTE.system.orange}
-        height="20px"
+        height="24px"
         position="absolute"
-        top="-13px"
-        right="-30px"
+        top="-16px"
+        right="-26px"
         justifyContent="center"
         px="16px"
       >
-        <Typography variant="tiny" bold color={PALETTE.font.light}>
+        <Typography variant="small" bold color={PALETTE.font.light}>
           {props.notif}
         </Typography>
       </Stack>
