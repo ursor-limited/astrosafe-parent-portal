@@ -333,9 +333,7 @@ export const ToolButton = (props: {
   );
 };
 
-export default function DashboardPageContents(props: {
-  fromCheckout: boolean;
-}) {
+export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
