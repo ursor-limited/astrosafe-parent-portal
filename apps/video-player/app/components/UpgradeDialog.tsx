@@ -329,7 +329,7 @@ const UpgradeDialog = (props: {
           unit="month"
           tinyText="No credit card required"
           items={["2 Creations per week"]}
-          buttonText="Go Basic"
+          buttonText="Stay free"
           noButtonIcon
           callback={props.closeCallback}
         />
