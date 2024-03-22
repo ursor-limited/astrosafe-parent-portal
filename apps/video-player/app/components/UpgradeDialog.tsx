@@ -108,6 +108,7 @@ export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
 
 const PricingCard = (props: {
   title: string;
+  subtitle: string;
   price: number;
   currency: string;
   unit: string;
@@ -121,20 +122,22 @@ const PricingCard = (props: {
   <Stack
     height="366px"
     width="306px"
-    bgcolor={props.dark ? PALETTE.primary.navy : PALETTE.secondary.grey[1]}
+    bgcolor={
+      props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
+    }
     p="28px"
     boxSizing="border-box"
     alignItems="center"
     borderRadius="20px"
     border={
-      props.border ? `4px solid ${PALETTE.secondary.purple[2]}` : undefined
+      props.border ? `4px solid ${PALETTE.secondary.purple[3]}` : undefined
     }
     position="relative"
   >
     {props.notif ? (
       <Stack
         borderRadius="10px"
-        bgcolor={PALETTE.secondary.purple[2]}
+        bgcolor={PALETTE.system.orange}
         height="26px"
         position="absolute"
         top="-15px"
@@ -147,56 +150,68 @@ const PricingCard = (props: {
         </Typography>
       </Stack>
     ) : null}
-    <Stack spacing="20px" justifyContent="center" alignItems="center">
-      <Typography
-        variant="h5"
-        color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
-      >
-        {props.title}
-      </Typography>
-      <Stack direction="row" alignItems="center" spacing="3px">
+    <Stack spacing="2px">
+      <Stack spacing="20px" justifyContent="center" alignItems="center">
+        <Stack spacing="4px" alignItems="center">
+          <Typography
+            variant="h4"
+            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
+          >
+            {props.title}
+          </Typography>
+          <Typography
+            variant="tiny"
+            bold
+            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
+          >
+            {props.subtitle}
+          </Typography>
+        </Stack>
+        <Stack direction="row" alignItems="center" spacing="3px">
+          <Typography
+            variant="small"
+            bold
+            color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+          >
+            {props.currency}
+          </Typography>
+          <Typography
+            variant="h3"
+            color={props.dark ? PALETTE.font.light : PALETTE.font.dark}
+          >
+            {props.price}
+          </Typography>
+          <Typography
+            variant="small"
+            bold
+            color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+          >
+            {`/ ${props.unit}`}
+          </Typography>
+        </Stack>
+      </Stack>
+      <Stack alignItems="center" width="100%" pb="20px">
         <Typography
-          variant="small"
+          variant="tiny"
           bold
-          color={PALETTE.secondary.grey[props.dark ? 3 : 4]}
+          color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
         >
-          {props.currency}
-        </Typography>
-        <Typography
-          variant="h3"
-          color={props.dark ? PALETTE.font.light : PALETTE.font.dark}
-        >
-          {props.price}
-        </Typography>
-        <Typography
-          variant="small"
-          bold
-          color={PALETTE.secondary.grey[props.dark ? 3 : 4]}
-        >
-          {`/ ${props.unit}`}
+          {props.tinyText}
         </Typography>
       </Stack>
     </Stack>
-    <Stack
-      height="30px"
-      justifyContent="center"
-      alignItems="center"
-      borderBottom={`1px solid ${alpha(
-        props.dark ? "rgb(255,255,255)" : "rgb(0,0,0)",
-        props.dark ? 0.3 : 0.15
-      )}`}
-      width="100%"
-      pb="9px"
-    >
-      <Typography
-        variant="tiny"
-        bold
-        color={PALETTE.secondary.grey[props.dark ? 3 : 4]}
+
+    <Stack justifyContent="flex-end">
+      <UrsorButton
+        dark
+        variant={props.dark ? "primary" : "tertiary"}
+        onClick={props.callback}
+        endIcon={VerifiedIcon}
       >
-        {props.tinyText}
-      </Typography>
+        Go Premium
+      </UrsorButton>
     </Stack>
-    <Stack spacing="20px" pt="18px">
+    <Stack spacing="8px" pt="18px">
       {props.items.map((item, i) => (
         <Stack key={i} direction="row" spacing="6px">
           <Stack
@@ -205,7 +220,7 @@ const PricingCard = (props: {
             width="18px"
             alignItems="center"
             justifyContent="center"
-            bgcolor={PALETTE.secondary.grey[props.dark ? 3 : 2]}
+            bgcolor="rgb(255,255,255)"
           >
             <CheckIcon width="12px" height="12px" />
           </Stack>
@@ -217,16 +232,6 @@ const PricingCard = (props: {
           </Typography>
         </Stack>
       ))}
-    </Stack>
-    <Stack flex={1} justifyContent="flex-end">
-      <UrsorButton
-        dark
-        variant="tertiary"
-        onClick={props.callback}
-        endIcon={VerifiedIcon}
-      >
-        Upgrade now
-      </UrsorButton>
     </Stack>
   </Stack>
 );
@@ -248,7 +253,7 @@ const UpgradeDialog = (props: {
     const response = await fetch("https://ipapi.co/json/");
     const data = await response.json();
     // Set the IP address to the constant `ip`
-    setLocale(data.country_code);
+    data.country_code && setLocale(data.country_code);
   };
 
   // Run `getIP` function above just once when the page is rendered
@@ -294,25 +299,11 @@ const UpgradeDialog = (props: {
       /> */}
       <Stack direction="row" spacing="32px">
         <PricingCard
-          title="Monthly"
-          price={details.monthly}
-          currency={details.currencySymbol}
-          unit="month"
-          items={[
-            "Create unlimited SafeTube videos",
-            "Create unlimited Worksheets",
-            "Share with all of your students",
-          ]}
-          callback={() => {
-            router.push(email ? getPaymentUrl(email, "monthly") : "");
-            setUpgradedNotificationPending(true);
-          }}
-        />
-        <PricingCard
           dark
           border
-          notif={`Recommended ${details.percentageSaving}% off`}
-          title="Annual"
+          notif={`Best value! ${details.percentageSaving}% off`}
+          title="Premium"
+          subtitle="Annual"
           price={Math.round((details.annual / 12 + Number.EPSILON) * 100) / 100}
           currency={details.currencySymbol}
           unit="month"
@@ -323,6 +314,23 @@ const UpgradeDialog = (props: {
           ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "annual") : "");
+            setUpgradedNotificationPending(true);
+          }}
+        />
+        <PricingCard
+          title="Premium"
+          subtitle="Monthly"
+          price={details.monthly}
+          currency={details.currencySymbol}
+          unit="month"
+          tinyText={`Billed as ${details.currencySymbol}${details.monthly} / month`}
+          items={[
+            "Create unlimited SafeTube videos",
+            "Create unlimited Worksheets",
+            "Share with all of your students",
+          ]}
+          callback={() => {
+            router.push(email ? getPaymentUrl(email, "monthly") : "");
             setUpgradedNotificationPending(true);
           }}
         />
