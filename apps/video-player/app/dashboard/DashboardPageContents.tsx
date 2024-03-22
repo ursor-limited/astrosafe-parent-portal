@@ -463,7 +463,7 @@ export default function DashboardPageContents() {
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 3000);
   }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
