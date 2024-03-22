@@ -249,7 +249,7 @@ const UpgradeDialog = (props: {
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => response.json())
-      .then((x) => setLocale("aaaa", x.country_code));
+      .then((x) => setLocale(x.country_code));
   }, []);
 
   //useEffect(() => console.log(window?.location?.host), []);
