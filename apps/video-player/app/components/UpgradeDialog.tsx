@@ -252,7 +252,7 @@ const UpgradeDialog = (props: {
   //     .then((x) => setLocale(x.country_code));
   // }, []);
 
-  //console.log(window?.location?.host);
+  useEffect(() => console.log(window?.location?.host), []);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
