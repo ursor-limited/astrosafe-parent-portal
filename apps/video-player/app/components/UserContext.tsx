@@ -50,8 +50,15 @@ const UserProvider = (props: IUserProviderProps) => {
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
     setTimeout(
-      loadUser,
-      props.checkoutSessionId || upgradedNotificationPending ? 1500 : 0 // to make sure that there is enough time to store the subscription change before fetching
+      () => {
+        console.log(
+          props.checkoutSessionId,
+          props.checkoutSessionId || upgradedNotificationPending ? 1000 : 0,
+          "()()()()("
+        );
+        loadUser();
+      },
+      props.checkoutSessionId || upgradedNotificationPending ? 1000 : 0 // to make sure that there is enough time to store the subscription change before fetching
     );
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
