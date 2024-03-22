@@ -184,7 +184,7 @@ export default function PageLayout(props: IPageLayoutProps) {
                 {props.button ||
                 props.secondaryButton ||
                 props.buttonRowExtraElement ? (
-                  <UrsorFadeIn delay={1200} duration={800}>
+                  <UrsorFadeIn delay={1200} duration={1100}>
                     <Stack
                       direction="row"
                       spacing="16px"
