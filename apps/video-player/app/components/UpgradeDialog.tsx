@@ -241,8 +241,16 @@ const UpgradeDialog = (props: {
   const email = useUserContext().user?.auth0Id;
 
   const [locale, setLocale] = useState<string>("US");
+  // useEffect(() => {
+  //   fetch(`https://geolocation-db.com/json`, {
+  //     method: "GET",
+  //     headers: { "Content-Type": "application/json" },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((x) => setLocale(x.country_code));
+  // }, []);
 
-  const userDetails = useUserContext();
+  console.log(window.location.host);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
@@ -274,13 +282,13 @@ const UpgradeDialog = (props: {
         BOO
       </UrsorButton> */}
       {/* @ts-ignore */}
-      <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
+      {/* <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
       {/* @ts-ignore */}
-      <stripe-pricing-table
+      {/* <stripe-pricing-table
         pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
         publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-      />
-      {/* <Stack direction="row" spacing="32px">
+      /> */}
+      <Stack direction="row" spacing="32px">
         <PricingCard
           title="Monthly"
           price={details.monthly}
@@ -314,7 +322,7 @@ const UpgradeDialog = (props: {
             setUpgradedNotificationPending(true);
           }}
         />
-      </Stack> */}
+      </Stack>
       {/* <Stack flex={1} alignItems="center">
         <Stack
           sx={{
