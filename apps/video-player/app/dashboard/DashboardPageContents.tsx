@@ -473,8 +473,6 @@ export default function DashboardPageContents() {
     );
   }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
 
-  console.log(userDetails, "000000");
-
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
     useState<boolean>(false);
