@@ -1,3 +1,5 @@
+"use client";
+
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import Image from "next/image";
@@ -250,7 +252,7 @@ const UpgradeDialog = (props: {
   //     .then((x) => setLocale(x.country_code));
   // }, []);
 
-  console.log(window.location.host);
+  console.log(window?.location?.host);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
