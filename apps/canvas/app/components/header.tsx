@@ -13,12 +13,16 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
-import UpgradeDialog from "./UpgradeDialog";
 import ApiController from "../api";
 import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import mixpanel from "mixpanel-browser";
 import { useUserContext } from "./UserContext";
+
+const UpgradeDialog = dynamic(
+  () => import("@/app/components/UpgradeDialog"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),

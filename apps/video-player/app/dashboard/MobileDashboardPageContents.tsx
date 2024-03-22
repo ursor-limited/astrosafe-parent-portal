@@ -27,13 +27,16 @@ import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
-import StepperOverlay from "./StepperOverlay";
-import UpgradeDialog from "../components/UpgradeDialog";
-import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { FilterRow, SearchInput, ToolButton } from "./DashboardPageContents";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const UpgradeDialog = dynamic(
+  () => import("@/app/components/UpgradeDialog"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const GRID_SPACING = "20px";
 
@@ -322,7 +325,7 @@ export default function MobileDashboardPageContents() {
         closeCallback={() => setSignupPromptDialogOpen(false)}
         mobile
       />
-      <UpgradePromptDialog
+      <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
