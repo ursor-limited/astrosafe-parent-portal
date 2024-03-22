@@ -262,11 +262,14 @@ const UpgradeDialog = (props: {
 
   const getIp = async () => {
     // Connect ipapi.co with fetch()
-    const response = await fetch("https://ipapi.co/json/");
-    const data = await response.json();
-    console.log(data);
-    // Set the IP address to the constant `ip`
-    data.country_code && setLocale(data.country_code);
+    const response = await fetch("https://ipapi.co/json/")
+      .then(async (response) => {
+        const data = await response.json();
+        console.log(data);
+        // Set the IP address to the constant `ip`
+        data.country_code && setLocale(data.country_code);
+      })
+      .catch((error) => console.log(error));
   };
 
   // Run `getIP` function above just once when the page is rendered
