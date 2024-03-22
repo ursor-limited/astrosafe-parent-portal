@@ -200,15 +200,28 @@ const PricingCard = (props: {
       </Stack>
     </Stack>
 
-    <Stack justifyContent="flex-end">
-      <UrsorButton
-        dark
-        variant={props.dark ? "primary" : "tertiary"}
-        onClick={props.callback}
-        endIcon={VerifiedIcon}
-      >
-        Go Premium
-      </UrsorButton>
+    <Stack
+      justifyContent="flex-end"
+      sx={
+        props.dark
+          ? {
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+            }
+          : undefined
+      }
+      onClick={props.callback}
+    >
+      <Stack sx={{ pointerEvents: props.dark ? "none" : undefined }}>
+        <UrsorButton
+          dark
+          variant={props.dark ? "primary" : "tertiary"}
+          endIcon={VerifiedIcon}
+        >
+          Go Premium
+        </UrsorButton>
+      </Stack>
     </Stack>
     <Stack spacing="8px" pt="18px">
       {props.items.map((item, i) => (
@@ -271,6 +284,7 @@ const UpgradeDialog = (props: {
       titleSize={props.mobile ? "h4" : "h3"}
       noOverflowHidden
       onCloseCallback={props.closeCallback}
+      dynamicHeight
       width="1030px"
       maxWidth="1030px"
       titleMaxWidth="600px"
@@ -300,7 +314,7 @@ const UpgradeDialog = (props: {
         pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
         publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       /> */}
-      <Stack direction="row" spacing="32px" width="100%">
+      <Stack direction="row" spacing="32px" width="100%" pt="20px">
         <PricingCard
           title="Premium"
           subtitle="Monthly"
