@@ -32,7 +32,6 @@ import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
-import UpgradeDialog from "../components/UpgradeDialog";
 import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
@@ -41,6 +40,12 @@ import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
+import dynamic from "next/dynamic";
+
+const UpgradeDialog = dynamic(
+  () => import("@/app/components/UpgradeDialog"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const GRID_SPACING = "20px";
 
@@ -458,7 +463,7 @@ export default function DashboardPageContents() {
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 3000);
   }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
@@ -538,7 +543,7 @@ export default function DashboardPageContents() {
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
                   >
-                    Lite mode
+                    Basic mode
                   </Typography>
                 ) : (
                   <Stack
@@ -571,6 +576,7 @@ export default function DashboardPageContents() {
         buttonRowExtraElementRight={
           userDetails.user ? <ProfileButton light /> : undefined
         }
+        buttonsDelay={3000}
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
@@ -720,7 +726,7 @@ export default function DashboardPageContents() {
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
       />
-      <UpgradePromptDialog
+      <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       />

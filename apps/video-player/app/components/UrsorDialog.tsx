@@ -58,6 +58,7 @@ export interface IUrsorDialogProps {
   noCloseButton?: boolean;
   noPadding?: boolean;
   noBackdrop?: boolean;
+  paddingX?: string;
   longFadeIn?: boolean;
   bunchedUpContent?: boolean;
   scrollable?: boolean;
@@ -150,6 +151,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
       <Stack
         position="relative"
         p={props.noPadding ? undefined : PADDING}
+        px={props.paddingX}
         borderRadius="25px"
         overflow="hidden"
         flex={1}
