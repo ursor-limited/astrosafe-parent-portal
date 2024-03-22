@@ -95,10 +95,6 @@ const LOCALE_CURRENCIES = {
   VA: "EUR",
 };
 
-const FREE_VIDEO_LIMIT = 3;
-const SCREENSHOT_URL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png";
-
 export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
   `${
     pricing === "monthly"
