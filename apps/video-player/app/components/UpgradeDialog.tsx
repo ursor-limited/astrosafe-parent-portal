@@ -238,21 +238,23 @@ const UpgradeDialog = (props: {
 }) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
-  //const paymentLink = useUserContext().paymentLink;
   const router = useRouter();
   const email = useUserContext().user?.auth0Id;
 
   const [locale, setLocale] = useState<string>("US");
-  useEffect(() => {
-    fetch(`https://geolocation-db.com/json`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((x) => setLocale(x.country_code));
-  }, []);
 
-  //useEffect(() => console.log(window?.location?.host), []);
+  const getIp = async () => {
+    // Connect ipapi.co with fetch()
+    const response = await fetch("https://ipapi.co/json/");
+    const data = await response.json();
+    // Set the IP address to the constant `ip`
+    setLocale(data.country_code);
+  };
+
+  // Run `getIP` function above just once when the page is rendered
+  useEffect(() => {
+    getIp();
+  }, []);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
