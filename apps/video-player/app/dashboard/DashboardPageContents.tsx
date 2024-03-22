@@ -543,7 +543,7 @@ export default function DashboardPageContents() {
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
                   >
-                    Lite mode
+                    Basic mode
                   </Typography>
                 ) : (
                   <Stack
