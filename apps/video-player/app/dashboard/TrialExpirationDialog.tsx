@@ -45,13 +45,13 @@ const TrialExpirationDialog = (props: {
           >
             Upgrade
           </UrsorButton>
-          <UrsorButton
+          {/* <UrsorButton
             variant="secondary"
             onClick={props.openQuestionnaireCallback}
             width="260px"
           >
             Get 1 month free
-          </UrsorButton>
+          </UrsorButton> */}
         </Stack>
         <Stack
           width={props.mobile ? "300px" : "727px"}

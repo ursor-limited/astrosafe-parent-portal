@@ -333,7 +333,9 @@ export const ToolButton = (props: {
   );
 };
 
-export default function DashboardPageContents() {
+export default function DashboardPageContents(props: {
+  fromCheckout: boolean;
+}) {
   const userDetails = useUserContext();
 
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -463,7 +465,7 @@ export default function DashboardPageContents() {
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 3000);
   }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
@@ -576,6 +578,7 @@ export default function DashboardPageContents() {
         buttonRowExtraElementRight={
           userDetails.user ? <ProfileButton light /> : undefined
         }
+        buttonsDelay={3000}
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>

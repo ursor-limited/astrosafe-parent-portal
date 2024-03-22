@@ -48,6 +48,7 @@ export interface IPageLayoutProps {
   disableSearchBarCollapsing?: boolean;
   classroomId?: string;
   disableConnectionBar?: boolean;
+  buttonsDelay?: number;
   children: React.ReactNode;
 }
 
@@ -184,7 +185,10 @@ export default function PageLayout(props: IPageLayoutProps) {
                 {props.button ||
                 props.secondaryButton ||
                 props.buttonRowExtraElement ? (
-                  <UrsorFadeIn delay={500} duration={800}>
+                  <UrsorFadeIn
+                    delay={props.buttonsDelay || 600}
+                    duration={1100}
+                  >
                     <Stack
                       direction="row"
                       spacing="16px"
