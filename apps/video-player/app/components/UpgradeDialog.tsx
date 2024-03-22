@@ -109,6 +109,7 @@ export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
 const PricingCard = (props: {
   title: string;
   subtitle: string;
+  buttonText: string;
   price: number;
   currency: string;
   unit: string;
@@ -117,6 +118,7 @@ const PricingCard = (props: {
   tinyText?: string;
   border?: boolean;
   notif?: string;
+  noButtonIcon?: boolean;
   callback: () => void;
 }) => (
   <Stack
@@ -217,9 +219,9 @@ const PricingCard = (props: {
         <UrsorButton
           dark
           variant={props.dark ? "primary" : "tertiary"}
-          endIcon={VerifiedIcon}
+          endIcon={props.noButtonIcon ? undefined : VerifiedIcon}
         >
-          Go Premium
+          {props.buttonText}
         </UrsorButton>
       </Stack>
     </Stack>
@@ -262,14 +264,14 @@ const UpgradeDialog = (props: {
 
   const getIp = async () => {
     // Connect ipapi.co with fetch()
-    const response = await fetch("https://ipapi.co/json/")
-      .then(async (response) => {
+    const response = await fetch("https://ipapi.co/json/").then(
+      async (response) => {
         const data = await response.json();
         console.log(data);
         // Set the IP address to the constant `ip`
         data.country_code && setLocale(data.country_code);
-      })
-      .catch((error) => console.log(error));
+      }
+    );
   };
 
   // Run `getIP` function above just once when the page is rendered
@@ -320,23 +322,23 @@ const UpgradeDialog = (props: {
       /> */}
       <Stack direction="row" spacing="32px" width="100%" pt="20px">
         <PricingCard
-          title="Premium"
+          title="Basic"
           subtitle="Monthly"
-          price={details.monthly}
+          price={0}
           currency={details.currencySymbol}
           unit="month"
-          tinyText={`Billed as ${details.currencySymbol}${details.monthly} / month`}
-          items={["2 Creations per week", "1 Device Monitoring"]}
-          callback={() => {
-            router.push(email ? getPaymentUrl(email, "monthly") : "");
-            setUpgradedNotificationPending(true);
-          }}
+          tinyText="No credit card required"
+          items={["2 Creations per week"]}
+          buttonText="Go Basic"
+          noButtonIcon
+          callback={props.closeCallback}
         />
         <PricingCard
           dark
           border
           notif={`Best value! ${details.percentageSaving}% off`}
           title="Premium"
+          buttonText="Go Premium"
           subtitle="Annual"
           price={Math.round((details.annual / 12 + Number.EPSILON) * 100) / 100}
           currency={details.currencySymbol}
@@ -355,6 +357,7 @@ const UpgradeDialog = (props: {
         <PricingCard
           title="Premium"
           subtitle="Monthly"
+          buttonText="Go Premium"
           price={details.monthly}
           currency={details.currencySymbol}
           unit="month"
