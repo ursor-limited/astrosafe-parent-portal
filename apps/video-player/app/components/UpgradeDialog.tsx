@@ -243,16 +243,16 @@ const UpgradeDialog = (props: {
   const email = useUserContext().user?.auth0Id;
 
   const [locale, setLocale] = useState<string>("US");
-  // useEffect(() => {
-  //   fetch(`https://geolocation-db.com/json`, {
-  //     method: "GET",
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((x) => setLocale(x.country_code));
-  // }, []);
+  useEffect(() => {
+    fetch(`https://geolocation-db.com/json`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((x) => setLocale(x.country_code));
+  }, []);
 
-  useEffect(() => console.log(window?.location?.host), []);
+  //useEffect(() => console.log(window?.location?.host), []);
 
   //@ts-ignore
   const details = DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"];
