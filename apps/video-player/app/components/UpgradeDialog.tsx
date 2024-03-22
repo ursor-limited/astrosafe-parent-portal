@@ -262,7 +262,9 @@ const UpgradeDialog = (props: {
 
   const getIp = async () => {
     // Connect ipapi.co with fetch()
-    const response = await fetch("https://ipapi.co/json/");
+    const response = await fetch("https://ipapi.co/json/").catch((error) =>
+      console.log(error)
+    );
     const data = await response.json();
     console.log(data);
     // Set the IP address to the constant `ip`
