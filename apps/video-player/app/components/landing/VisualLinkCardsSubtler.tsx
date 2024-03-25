@@ -65,8 +65,9 @@ const VisualLinkCardSubtler = (
         alignItems="center"
         spacing="12px"
         width="89%"
+        py={props.mobile ? "16px" : undefined}
       >
-        <Typography variant="h4" htmlTag="h4">
+        <Typography variant="h4" htmlTag="h4" sx={{ textAlign: "center" }}>
           {props.title}
         </Typography>
         <Typography

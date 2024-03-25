@@ -11,6 +11,7 @@ import UrsorSelect from "../components/UrsorSelect";
 import _ from "lodash";
 import { SearchInput } from "../dashboard/DashboardPageContents";
 import { ApprovedCompanyCard } from "./ApprovedCompanyCard";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
 
 const PAGE_SIZE = 10;
 
@@ -225,7 +226,7 @@ const PageSelection = (props: {
         </Stack>
         <Stack direction="row" justifyContent="center" spacing="5px">
           <Typography
-            variant={props.mobile ? "normal" : "medium"}
+            variant={props.mobile ? "small" : "medium"}
             color={PALETTE.secondary.grey[5]}
             bold
           >{`${props.pageIndex * PAGE_SIZE + 1} - ${Math.min(
@@ -233,19 +234,19 @@ const PageSelection = (props: {
             (props.pageIndex + 1) * PAGE_SIZE
           )} `}</Typography>
           <Typography
-            variant={props.mobile ? "normal" : "medium"}
+            variant={props.mobile ? "small" : "medium"}
             color={PALETTE.secondary.grey[4]}
           >
             of
           </Typography>
           <Typography
-            variant={props.mobile ? "normal" : "medium"}
+            variant={props.mobile ? "small" : "medium"}
             color={PALETTE.secondary.grey[5]}
           >
             {props.totalN}
           </Typography>
           <Typography
-            variant={props.mobile ? "normal" : "medium"}
+            variant={props.mobile ? "small" : "medium"}
             color={PALETTE.secondary.grey[4]}
           >
             companies
@@ -410,23 +411,46 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
           totalN={filteredCompanies.length}
           mobile={props.mobile}
         />
-        <Stack spacing={props.mobile ? "14px" : "24px"}>
-          {(filteredCompanies as IApprovedCompany[])
-            .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
-            .map((c, i) => (
-              <UrsorFadeIn
-                delay={i * 100}
-                duration={600}
-                key={`${selectedCategory}_${i}_${pageIndex}`}
+        <Stack alignItems="center" spacing={props.mobile ? "14px" : "24px"}>
+          {filteredCompanies.length > 0 ? (
+            (filteredCompanies as IApprovedCompany[])
+              .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
+              .map((c, i) => (
+                <UrsorFadeIn
+                  delay={i * 100}
+                  duration={600}
+                  key={`${selectedCategory}_${i}_${pageIndex}`}
+                >
+                  <ApprovedCompanyCard
+                    {...c}
+                    white
+                    shadow
+                    mobile={props.mobile}
+                  />
+                </UrsorFadeIn>
+              ))
+          ) : (
+            <UrsorFadeIn duration={800}>
+              <Stack
+                sx={{
+                  filter: "grayscale(1)",
+                  opacity: 0.4,
+                }}
+                alignItems="center"
               >
-                <ApprovedCompanyCard
-                  {...c}
-                  white
-                  shadow
-                  mobile={props.mobile}
+                <Image
+                  height={190}
+                  width={190}
+                  src={WonderingIllustration}
+                  alt="Empty state illustration"
+                  style={{
+                    transform: "translateY(20px)",
+                  }}
                 />
-              </UrsorFadeIn>
-            ))}
+                <Typography bold>No results found.</Typography>
+              </Stack>
+            </UrsorFadeIn>
+          )}
         </Stack>
       </Stack>
     </Stack>

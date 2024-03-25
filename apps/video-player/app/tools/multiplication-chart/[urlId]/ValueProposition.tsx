@@ -42,7 +42,12 @@ const ValueProposition = (props: {
                   alt="visual link card image"
                 />
               </div>
-              <Stack key={i} height="200px" spacing="14px" alignItems="center">
+              <Stack
+                key={i}
+                height={props.mobile ? undefined : "200px"}
+                spacing="14px"
+                alignItems="center"
+              >
                 {item.title ? (
                   <Stack
                     sx={{

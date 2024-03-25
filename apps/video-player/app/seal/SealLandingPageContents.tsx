@@ -72,12 +72,20 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
-        <Stack direction="row" spacing="12px">
-          <UrsorButton width="179px" dark variant="tertiary">
-            Apply to list
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          spacing={isMobile ? "8px" : "12px"}
+        >
+          <UrsorButton
+            size={isMobile ? "medium" : "large"}
+            width="226px"
+            dark
+            variant="tertiary"
+          >
+            Enrol to program
           </UrsorButton>
-          <UrsorButton width="179px" dark>
-            See list
+          <UrsorButton size={isMobile ? "medium" : "large"} width="226px" dark>
+            View list
           </UrsorButton>
         </Stack>
         <Stack position="relative" height={isMobile ? "80px" : "150px"}>
