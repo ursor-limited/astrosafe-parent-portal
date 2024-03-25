@@ -195,6 +195,7 @@ const PageSelection = (props: {
   totalN: number;
   pageIndex: number;
   setPageIndex: (index: number) => void;
+  mobile?: boolean;
 }) => {
   return (
     <Stack
@@ -224,20 +225,29 @@ const PageSelection = (props: {
         </Stack>
         <Stack direction="row" justifyContent="center" spacing="5px">
           <Typography
-            variant="medium"
+            variant={props.mobile ? "normal" : "medium"}
             color={PALETTE.secondary.grey[5]}
             bold
           >{`${props.pageIndex * PAGE_SIZE + 1} - ${Math.min(
             props.totalN,
             (props.pageIndex + 1) * PAGE_SIZE
           )} `}</Typography>
-          <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+          <Typography
+            variant={props.mobile ? "normal" : "medium"}
+            color={PALETTE.secondary.grey[4]}
+          >
             of
           </Typography>
-          <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
+          <Typography
+            variant={props.mobile ? "normal" : "medium"}
+            color={PALETTE.secondary.grey[5]}
+          >
             {props.totalN}
           </Typography>
-          <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+          <Typography
+            variant={props.mobile ? "normal" : "medium"}
+            color={PALETTE.secondary.grey[4]}
+          >
             companies
           </Typography>
         </Stack>
@@ -268,7 +278,7 @@ const PageSelection = (props: {
   );
 };
 
-const ApprovedCompaniesList = () => {
+const ApprovedCompaniesList = (props: { mobile: boolean }) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   // const [companies, setCompanies] = useState<IApprovedCompany[]>([]);
   // //@ts-ignore
@@ -310,9 +320,15 @@ const ApprovedCompaniesList = () => {
     [selectedCategory, selectedType, selectedAudience, searchValue]
   );
   return (
-    <Stack width="1000px" maxWidth="990px">
-      <Stack direction="row" justifyContent="space-between">
-        <Stack direction="row" spacing="12px">
+    <Stack
+      width={props.mobile ? undefined : "1000px"}
+      maxWidth={props.mobile ? undefined : "990px"}
+    >
+      <Stack
+        direction={props.mobile ? "column" : "row"}
+        justifyContent={props.mobile ? undefined : "space-between"}
+      >
+        <Stack direction={props.mobile ? "column" : "row"} spacing="12px">
           <Captioned text="Product category" noFlex>
             <UrsorSelect
               items={PRODUCT_CATEGORIES.map((c) => ({
@@ -321,7 +337,8 @@ const ApprovedCompaniesList = () => {
               }))}
               selected={selectedCategory ? [selectedCategory] : []}
               callback={(c) => setSelectedCategory(c)}
-              width="220px"
+              width={props.mobile ? "100%" : "220px"}
+              fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
             />
@@ -334,7 +351,8 @@ const ApprovedCompaniesList = () => {
               }))}
               selected={selectedType ? [selectedType] : []}
               callback={(t) => setSelectedType(t)}
-              width="220px"
+              width={props.mobile ? "100%" : "220px"}
+              fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
             />
@@ -347,7 +365,8 @@ const ApprovedCompaniesList = () => {
               }))}
               selected={selectedAudience ? [selectedAudience] : []}
               callback={(a) => setSelectedAudience(a)}
-              width="220px"
+              width={props.mobile ? "100%" : "220px"}
+              fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
             />
@@ -355,17 +374,18 @@ const ApprovedCompaniesList = () => {
           <Stack
             sx={{
               opacity:
-                selectedAudience || selectedCategory || selectedType ? 1 : 0.3,
+                selectedAudience || selectedCategory || selectedType ? 1 : 0,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
-              transform: "translateY(34.5px)",
+              transform: props.mobile ? undefined : "translateY(34.5px)",
             }}
             onClick={() => {
               setSelectedAudience(null);
               setSelectedCategory(null);
               setSelectedType(null);
             }}
+            alignItems={props.mobile ? "center" : undefined}
           >
             <X height="24px" width="24px" />
           </Stack>
@@ -378,6 +398,7 @@ const ApprovedCompaniesList = () => {
             }}
             clearCallback={() => setSearchValue("")}
             height="40px"
+            fullWidth={props.mobile}
             grey
           />
         </Captioned>
@@ -387,8 +408,9 @@ const ApprovedCompaniesList = () => {
           pageIndex={pageIndex}
           setPageIndex={setPageIndex}
           totalN={filteredCompanies.length}
+          mobile={props.mobile}
         />
-        <Stack spacing="24px">
+        <Stack spacing={props.mobile ? "14px" : "24px"}>
           {(filteredCompanies as IApprovedCompany[])
             .slice(pageIndex * PAGE_SIZE, (pageIndex + 1) * PAGE_SIZE)
             .map((c, i) => (
@@ -397,7 +419,12 @@ const ApprovedCompaniesList = () => {
                 duration={600}
                 key={`${selectedCategory}_${i}_${pageIndex}`}
               >
-                <ApprovedCompanyCard {...c} white shadow />
+                <ApprovedCompanyCard
+                  {...c}
+                  white
+                  shadow
+                  mobile={props.mobile}
+                />
               </UrsorFadeIn>
             ))}
         </Stack>

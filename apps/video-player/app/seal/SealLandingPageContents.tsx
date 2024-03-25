@@ -66,7 +66,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           title="AstroSafe Approved Companies"
           mobile={isMobile}
         >
-          <ApprovedCompaniesList />
+          <ApprovedCompaniesList mobile={isMobile} />
         </LandingPageViewport>,
       ]}
     >
@@ -79,7 +79,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
             See list
           </UrsorButton>
         </Stack>
-        <Stack position="relative" height="150px">
+        <Stack position="relative" height={isMobile ? "80px" : "150px"}>
           <Stack
             position="absolute"
             top={0}
@@ -87,8 +87,8 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           >
             <Image
               src="https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png"
-              width={873}
-              height={316}
+              width={isMobile ? 380 : 873}
+              height={isMobile ? 138 : 316}
               alt="Astro Seals illustration"
               priority
             />

@@ -43,18 +43,20 @@ const ValueProposition = (props: {
                 />
               </div>
               <Stack key={i} height="200px" spacing="14px" alignItems="center">
-                <Stack
-                  sx={{
-                    background: item.color,
-                    "-webkit-text-fill-color": "transparent",
-                    backgroundClip: "text",
-                    "-webkit-background-clip": "text",
-                  }}
-                >
-                  <Typography variant="h4" htmlTag="h4">
-                    {item.title}
-                  </Typography>
-                </Stack>
+                {item.title ? (
+                  <Stack
+                    sx={{
+                      background: item.color,
+                      "-webkit-text-fill-color": "transparent",
+                      backgroundClip: "text",
+                      "-webkit-background-clip": "text",
+                    }}
+                  >
+                    <Typography variant="h4" htmlTag="h4">
+                      {item.title}
+                    </Typography>
+                  </Stack>
+                ) : null}
                 <Typography
                   color={PALETTE.secondary.grey[4]}
                   sx={{

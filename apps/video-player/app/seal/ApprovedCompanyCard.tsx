@@ -5,12 +5,16 @@ import { PALETTE, Typography } from "ui";
 import GraphIllustration from "@/images/GraphIllustration.svg";
 
 export const ApprovedCompanyCard = (
-  props: IApprovedCompany & { shadow?: boolean; white?: boolean }
+  props: IApprovedCompany & {
+    shadow?: boolean;
+    white?: boolean;
+    mobile?: boolean;
+  }
 ) => (
   <Stack
     borderRadius="12px"
-    p="20px"
-    height="165px"
+    p={props.mobile ? "14px" : "20px"}
+    height={props.mobile ? "141px" : "165px"}
     boxSizing="border-box"
     direction="row"
     spacing="20px"
@@ -19,7 +23,7 @@ export const ApprovedCompanyCard = (
   >
     <div
       style={{
-        width: "192px",
+        width: props.mobile ? "126px" : "192px",
         height: "100%",
         position: "relative",
         borderRadius: "8px",
@@ -31,12 +35,13 @@ export const ApprovedCompanyCard = (
       }}
     >
       {props.imageUrl ? (
-        <Image
-          src={props.imageUrl}
-          alt="Approved company"
-          fill
-          style={{ objectFit: "cover" }}
-        />
+        // <Image
+        //   src={props.imageUrl}
+        //   alt="Approved company"
+        //   fill
+        //   style={{ objectFit: "cover" }}
+        // />
+        <></>
       ) : (
         <Stack sx={{ filter: "grayscale(100%)", opacity: 0.65 }}>
           <GraphIllustration width="120px" height="120px" />
@@ -44,56 +49,79 @@ export const ApprovedCompanyCard = (
       )}
     </div>
     <Stack flex={1} justifyContent="space-between">
-      <Typography htmlTag="h3" maxLines={1} variant="large" bold>
+      <Typography
+        htmlTag="h3"
+        maxLines={props.mobile ? 2 : 1}
+        variant={props.mobile ? "normal" : "large"}
+        bold
+      >
         {props.name}
       </Typography>
       <Stack spacing="4px">
         <Stack direction="row" spacing="10px">
-          <Typography sx={{ whiteSpace: "nowrap" }} variant="small" bold>
+          <Typography
+            sx={{ whiteSpace: "nowrap" }}
+            variant={props.mobile ? "tiny" : "small"}
+            bold
+          >
             Publisher:
           </Typography>
-          <Typography maxLines={1} variant="small">
+          <Typography maxLines={1} variant={props.mobile ? "tiny" : "small"}>
             {props.publisher}
           </Typography>
         </Stack>
         <Stack direction="row" spacing="10px">
-          <Typography sx={{ whiteSpace: "nowrap" }} variant="small" bold>
+          <Typography
+            sx={{ whiteSpace: "nowrap" }}
+            variant={props.mobile ? "tiny" : "small"}
+            bold
+          >
             Product type:
           </Typography>
-          <Typography maxLines={1} variant="small">
+          <Typography maxLines={1} variant={props.mobile ? "tiny" : "small"}>
             {props.productType}
           </Typography>
         </Stack>
         <Stack direction="row" spacing="10px">
-          <Typography sx={{ whiteSpace: "nowrap" }} variant="small" bold>
+          <Typography
+            sx={{ whiteSpace: "nowrap" }}
+            variant={props.mobile ? "tiny" : "small"}
+            bold
+          >
             Product category:
           </Typography>
-          <Typography maxLines={1} variant="small">
+          <Typography maxLines={1} variant={props.mobile ? "tiny" : "small"}>
             {props.productCategory}
           </Typography>
         </Stack>
         <Stack direction="row" spacing="10px">
-          <Typography sx={{ whiteSpace: "nowrap" }} variant="small" bold>
+          <Typography
+            sx={{ whiteSpace: "nowrap" }}
+            variant={props.mobile ? "tiny" : "small"}
+            bold
+          >
             Target audience:
           </Typography>
-          <Typography maxLines={1} variant="small">
+          <Typography maxLines={1} variant={props.mobile ? "tiny" : "small"}>
             {props.targetAudience}
           </Typography>
         </Stack>
       </Stack>
     </Stack>
-    <Stack
-      pl="16px"
-      sx={{
-        transform: "rotate(10deg)",
-      }}
-    >
-      <Image
-        src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
-        alt="Astro background"
-        height={85}
-        width={155}
-      />
-    </Stack>
+    {!props.mobile ? (
+      <Stack
+        pl="16px"
+        sx={{
+          transform: "rotate(10deg)",
+        }}
+      >
+        <Image
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+          alt="Astro background"
+          height={85}
+          width={155}
+        />
+      </Stack>
+    ) : null}
   </Stack>
 );

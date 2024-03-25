@@ -103,6 +103,7 @@ export const SearchInput = (props: {
           lineHeight: "100%",
           transition: "0.2s",
           fontFamily: "inherit",
+          width: props.fullWidth ? "100%" : undefined,
         }}
         value={props.value}
         disableUnderline
