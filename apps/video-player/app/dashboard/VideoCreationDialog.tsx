@@ -21,6 +21,7 @@ import SignupPromptDialog from "./SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 import _ from "lodash";
+import { isMobile } from "react-device-detect";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -147,7 +148,7 @@ const VideoCreationDialog = (props: {
   return (
     <>
       <UrsorDialog
-        supertitle="Create safe video link"
+        supertitle={isMobile ? undefined : "Create safe video link"}
         open={props.open}
         // button={{
         //   text: "Create",
@@ -161,14 +162,18 @@ const VideoCreationDialog = (props: {
         onCloseCallback={props.closeCallback}
         width="1000px"
         maxWidth="1000px"
+        noPadding={isMobile}
         dynamicHeight
       >
         <Stack
           flex={1}
-          direction="row"
+          direction={isMobile ? "column" : "row"}
           spacing="40px"
-          width="95%"
+          width={isMobile ? "100%" : "95%"}
           overflow="hidden"
+          px="16px"
+          py="20px"
+          boxSizing="border-box"
         >
           <Stack spacing="20px" flex={1}>
             <Captioned text="URL">
@@ -310,36 +315,52 @@ const VideoCreationDialog = (props: {
               </Stack>
             </Captioned>
           </Stack>
-          <Stack
-            width={VIDEO_WIDTH}
-            //height={VIDEO_HEIGHT}
-            spacing="6px"
-          >
-            {provider ? (
-              <Player
-                url={url}
-                provider={provider}
-                width={Math.min(playerWidth, VIDEO_WIDTH)}
-                height={
-                  Math.min(playerWidth, VIDEO_WIDTH) *
-                  (VIDEO_HEIGHT / VIDEO_WIDTH)
-                }
-                setDuration={(d) => d && setDuration(d)}
-                noKitemark
-                top="120px"
-                playingCallback={(p) => setPlaying(p)}
-                smallPlayIcon
-                noBackdrop
-              />
-            ) : null}
-            <Typography maxLines={2} bold>
-              {title}
-            </Typography>
-            <Stack flex={1} overflow="hidden">
-              <Typography variant="small" maxLines={2}>
-                {description}
+          {!isMobile ? (
+            <Stack
+              width={VIDEO_WIDTH}
+              //height={VIDEO_HEIGHT}
+              spacing="6px"
+            >
+              {provider ? (
+                <Player
+                  url={url}
+                  provider={provider}
+                  width={Math.min(playerWidth, VIDEO_WIDTH)}
+                  height={
+                    Math.min(playerWidth, VIDEO_WIDTH) *
+                    (VIDEO_HEIGHT / VIDEO_WIDTH)
+                  }
+                  setDuration={(d) => d && setDuration(d)}
+                  noKitemark
+                  top="120px"
+                  playingCallback={(p) => setPlaying(p)}
+                  smallPlayIcon
+                  noBackdrop
+                />
+              ) : null}
+              <Typography maxLines={2} bold>
+                {title}
               </Typography>
+              <Stack flex={1} overflow="hidden">
+                <Typography variant="small" maxLines={2}>
+                  {description}
+                </Typography>
+              </Stack>
+              <UrsorButton
+                onClick={() => {
+                  submit();
+                }}
+                disabled={!url}
+                dark
+                variant="tertiary"
+                endIcon={RocketIcon}
+                width="100%"
+              >
+                Create
+              </UrsorButton>
             </Stack>
+          ) : null}
+          {isMobile ? (
             <UrsorButton
               onClick={() => {
                 submit();
@@ -352,7 +373,7 @@ const VideoCreationDialog = (props: {
             >
               Create
             </UrsorButton>
-          </Stack>
+          ) : null}
         </Stack>
       </UrsorDialog>
       <VideoSignupPromptDialog
