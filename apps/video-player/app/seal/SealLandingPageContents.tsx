@@ -24,6 +24,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   const router = useRouter();
   return (
     <AstroLandingPage
+      fainterSpaceGlow
       title={[props.heading]}
       subtitle={props.subHeading}
       mobile={isMobile}
