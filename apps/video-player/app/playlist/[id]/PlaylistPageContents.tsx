@@ -27,13 +27,16 @@ import NotificationContext from "@/app/components/NotificationContext";
 import { IAstroCanvasElement } from "@/app/editor/Canvas";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import PlaylistVideoCard from "./PlaylistVideoCard";
+import LinkCard, { ILink } from "@/app/components/LinkCard";
+
+export type AstroPlaylistContent = "video" | "link";
 
 export interface IPlaylist {
   id: string;
   title: string;
   description?: string;
   contents: {
-    type: AstroContent;
+    type: AstroPlaylistContent;
     contentId: string;
   }[];
   createdAt: string;
@@ -78,11 +81,30 @@ export default function PlaylistPageContents(props: IPlaylist) {
     loadVideos();
   }, [userDetails?.user?.id]);
 
+  const [links, setLinks] = useState<ILink[]>([
+    {
+      id: "BOO",
+      title: "BOOOO",
+      url: "hs.fi",
+      imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/astroLogo!.png",
+      color: "#22e08b",
+    },
+  ]);
+  // const loadLinks = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getLinks(userDetails.user.id).then((links) =>
+  //       setLinks(links)
+  //     );
+  // };
+  useEffect(() => {
+    loadVideos();
+  }, [userDetails?.user?.id]);
+
   const notificationCtx = useContext(NotificationContext);
 
   const [contents, setContents] = useState<
     {
-      type: AstroContent;
+      type: AstroPlaylistContent;
       contentId: string;
     }[]
   >([]);
@@ -147,6 +169,9 @@ export default function PlaylistPageContents(props: IPlaylist) {
                 return video ? (
                   <PlaylistVideoCard key={video.id} {...video} />
                 ) : null;
+              } else if (c.type === "link") {
+                const link = links.find((v) => v.id === c.contentId);
+                return link ? <LinkCard key={link.id} {...link} /> : null;
               }
             })}
           </Stack>
