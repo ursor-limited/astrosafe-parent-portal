@@ -44,7 +44,7 @@ export const ApprovedCompanyCard = (
       )}
     </div>
     <Stack flex={1} justifyContent="space-between">
-      <Typography maxLines={1} variant="large" bold>
+      <Typography htmlTag="h3" maxLines={1} variant="large" bold>
         {props.name}
       </Typography>
       <Stack spacing="4px">

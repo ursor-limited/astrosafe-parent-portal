@@ -10,6 +10,8 @@ import AstroLandingPage from "@/app/tools/multiplication-chart/[urlId]/AstroLand
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IApprovedCompany } from "../ApprovedCompaniesList";
 import { ApprovedCompanyCard } from "../ApprovedCompanyCard";
+import LandingPageViewport from "@/app/tools/multiplication-chart/[urlId]/LandingPageViewport";
+import { VisualLinkCardsSubtler } from "@/app/components/landing/VisualLinkCardsSubtler";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -68,6 +70,40 @@ export default function IndividualSealLandingPageContents(
             </Typography>
           </Stack>
         </Stack>,
+        <LandingPageViewport
+          key="explanation"
+          title="About our AstroSafe Seals"
+          supertitle="Certification"
+          subtitle="The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods."
+        >
+          <Stack direction="row" spacing="12px">
+            <UrsorButton width="226px" dark variant="tertiary">
+              Enrol to program
+            </UrsorButton>
+            <UrsorButton strongShadow width="226px" dark>
+              View list
+            </UrsorButton>
+          </Stack>
+          <VisualLinkCardsSubtler
+            mobile={isMobile}
+            cards={[
+              {
+                title: "AstroSafe Certified",
+                text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                imageUrl:
+                  "https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png",
+                backgroundColor: "#E2E9F8",
+              },
+              {
+                title: "AstroSafe Certified+",
+                text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                imageUrl:
+                  "https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png",
+                backgroundColor: "#DFDAFA",
+              },
+            ]}
+          />
+        </LandingPageViewport>,
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
