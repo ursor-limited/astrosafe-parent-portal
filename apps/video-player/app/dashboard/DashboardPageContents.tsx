@@ -55,6 +55,12 @@ export type AstroContent = "video" | "worksheet";
 
 export type AstroContentSort = "abc" | "createdAt";
 
+export const getTrialDaysLeft = (freeTrialStart?: string) =>
+  TRIAL_DAYS - dayjs().diff(freeTrialStart, "days");
+
+export const getPeriodDaysLeft = (subscriptionDeletionDate: number) =>
+  -dayjs().diff(dayjs.unix(subscriptionDeletionDate ?? 0), "days");
+
 export const SearchInput = (props: {
   value: string;
   callback: (value: string) => void;
@@ -103,6 +109,7 @@ export const SearchInput = (props: {
           lineHeight: "100%",
           transition: "0.2s",
           fontFamily: "inherit",
+          width: props.fullWidth ? "100%" : undefined,
         }}
         value={props.value}
         disableUnderline
@@ -512,15 +519,6 @@ export default function DashboardPageContents() {
 
   const router = useRouter();
 
-  const getTrialDaysLeft = () =>
-    TRIAL_DAYS - dayjs().diff(userDetails.user?.freeTrialStart, "days");
-
-  const getPeriodDaysLeft = () =>
-    -dayjs().diff(
-      dayjs.unix(userDetails.user?.subscriptionDeletionDate ?? 0),
-      "days"
-    );
-
   const [
     trialExpirationDialogAlreadySeen,
     setTrialExpirationDialogAlreadySeen,
@@ -532,10 +530,12 @@ export default function DashboardPageContents() {
     if (
       !trialExpirationDialogAlreadySeen &&
       !userDetails.user?.subscribed &&
-      getTrialDaysLeft() <= 0
+      userDetails.user?.freeTrialStart &&
+      getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
     ) {
       setTrialExpirationDialogOpen(
-        !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
+        !userDetails.user?.subscribed &&
+          getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
       );
       setTrialExpirationDialogAlreadySeen(true);
     }
@@ -567,7 +567,7 @@ export default function DashboardPageContents() {
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
               <>
-                {getTrialDaysLeft() <= 0 ? (
+                {getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
                   <Typography
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
@@ -587,8 +587,12 @@ export default function DashboardPageContents() {
                       color={PALETTE.secondary.grey[4]}
                     >
                       {userDetails.user?.subscriptionDeletionDate
-                        ? getPeriodDaysLeft()
-                        : getTrialDaysLeft()}
+                        ? getPeriodDaysLeft(
+                            userDetails.user?.subscriptionDeletionDate
+                          )
+                        : userDetails.user?.freeTrialStart
+                        ? getTrialDaysLeft(userDetails.user?.freeTrialStart)
+                        : ""}
                     </Typography>
                     <Typography
                       variant="medium"

@@ -5,7 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import GearIcon from "@/images/icons/GearIcon.svg";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
@@ -29,9 +29,16 @@ import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
-import { FilterRow, SearchInput, ToolButton } from "./DashboardPageContents";
+import {
+  FilterRow,
+  SearchInput,
+  ToolButton,
+  getPeriodDaysLeft,
+  getTrialDaysLeft,
+} from "./DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import ProfileButton from "../components/ProfileButton";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
@@ -190,29 +197,61 @@ export default function MobileDashboardPageContents() {
       flex={1}
       overflow="scroll"
     >
-      <Stack alignItems="flex-end">
-        <UrsorButton
-          onClick={() => router.push("/account")}
-          size="small"
-          iconSize={14}
-          shadow
-          dark
-          endIcon={GearIcon}
-        >
-          Account
-        </UrsorButton>
+      <Stack direction="row" spacing="12px" justifyContent="flex-end">
+        <Stack direction="row" spacing="12px" alignItems="center">
+          {!userDetails.user?.subscribed ||
+          userDetails.user.subscriptionDeletionDate ? (
+            <>
+              {getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+                <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
+                  Basic mode
+                </Typography>
+              ) : (
+                <Stack
+                  height="100%"
+                  alignItems="center"
+                  direction="row"
+                  spacing="5px"
+                >
+                  <Typography
+                    variant="medium"
+                    bold
+                    color={PALETTE.secondary.grey[4]}
+                  >
+                    {userDetails.user?.subscriptionDeletionDate
+                      ? getPeriodDaysLeft(
+                          userDetails.user?.subscriptionDeletionDate
+                        )
+                      : getTrialDaysLeft(userDetails.user?.freeTrialStart)}
+                  </Typography>
+                  <Typography
+                    variant="medium"
+                    color={PALETTE.secondary.grey[4]}
+                  >
+                    days left
+                  </Typography>
+                </Stack>
+              )}
+            </>
+          ) : undefined}
+        </Stack>
+        {!userDetails.user?.subscribed ? (
+          <UrsorButton
+            dark
+            endIcon={VerifiedIcon}
+            onClick={() => setUpgradeDialogOpen(true)}
+            variant="tertiary"
+          >
+            Upgrade
+          </UrsorButton>
+        ) : null}
+        <Stack alignItems="flex-end">
+          {userDetails.user ? <ProfileButton light /> : undefined}
+        </Stack>
       </Stack>
       <Stack spacing="20px">
         <Stack justifyContent="space-between" direction="row">
           <Typography variant="h4">Home</Typography>
-          <Stack alignItems="center" direction="row" spacing="5px">
-            <Typography variant="medium" bold color={PALETTE.secondary.grey[4]}>
-              {TRIAL_DAYS - dayjs().diff(userDetails.user?.createdAt, "days")}
-            </Typography>
-            <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
-              days left
-            </Typography>
-          </Stack>
         </Stack>
         <Typography color={PALETTE.secondary.grey[4]}>
           Welcome to your Astrosafe dashboard! Here you can manage you safetube,

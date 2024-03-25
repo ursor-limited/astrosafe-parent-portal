@@ -40,21 +40,48 @@ export default function IndividualSealLandingPageContents(
         ],
       }}
       viewports={[
-        <Stack key="grid" spacing="28px" alignItems="center" pt="100px">
+        <Stack
+          key="grid"
+          spacing={isMobile ? "16px" : "28px"}
+          alignItems="center"
+          pt="100px"
+          px={isMobile ? "24px" : undefined}
+        >
           {props.screenshotUrl ? (
-            <Image
-              src={props.screenshotUrl}
-              width={1000}
-              height={580}
-              alt={`${props.name} screenshot`}
-              style={{
-                boxShadow: "0 0 30px rgba(0,0,0,0.05)",
-                borderRadius: "12px",
-              }}
-            />
+            isMobile ? (
+              <div
+                style={{
+                  position: "relative",
+                  height: "320px",
+                  width: "100%",
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                }}
+              >
+                <Image
+                  src={props.screenshotUrl}
+                  style={{ objectFit: "cover" }}
+                  fill
+                  alt={`${props.name} screenshot`}
+                />
+              </div>
+            ) : (
+              <Image
+                src={props.screenshotUrl}
+                width={1000}
+                height={580}
+                alt={`${props.name} screenshot`}
+                style={{
+                  boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                  borderRadius: "12px",
+                }}
+                priority
+              />
+            )
           ) : null}
-          <Stack width="1000px">
-            <ApprovedCompanyCard {...props} />
+          <Stack width={isMobile ? "100%" : "1000px"}>
+            <ApprovedCompanyCard {...props} mobile={isMobile} />
           </Stack>
           <Stack
             borderRadius="12px"
@@ -62,7 +89,7 @@ export default function IndividualSealLandingPageContents(
             spacing="10px"
             p="20px"
             boxSizing="border-box"
-            width="1000px"
+            width={isMobile ? "100%" : "1000px"}
           >
             <Typography bold>Description</Typography>
             <Typography color={PALETTE.secondary.grey[5]}>
@@ -76,7 +103,10 @@ export default function IndividualSealLandingPageContents(
           supertitle="Certification"
           subtitle="The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods."
         >
-          <Stack direction="row" spacing="12px">
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing={isMobile ? "8px" : "12px"}
+          >
             <UrsorButton width="226px" dark variant="tertiary">
               Enrol to program
             </UrsorButton>
@@ -107,11 +137,19 @@ export default function IndividualSealLandingPageContents(
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
-        <Stack direction="row" spacing="12px">
-          <UrsorButton size="large" width="226px" dark variant="tertiary">
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          spacing={isMobile ? "8px" : "12px"}
+        >
+          <UrsorButton
+            size={isMobile ? "medium" : "large"}
+            width="226px"
+            dark
+            variant="tertiary"
+          >
             Enrol to program
           </UrsorButton>
-          <UrsorButton size="large" width="226px" dark>
+          <UrsorButton size={isMobile ? "medium" : "large"} width="226px" dark>
             View list
           </UrsorButton>
         </Stack>
