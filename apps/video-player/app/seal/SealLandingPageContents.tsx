@@ -24,6 +24,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   const router = useRouter();
   return (
     <AstroLandingPage
+      fainterSpaceGlow
       title={[props.heading]}
       subtitle={props.subHeading}
       mobile={isMobile}
@@ -66,20 +67,28 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           title="AstroSafe Approved Companies"
           mobile={isMobile}
         >
-          <ApprovedCompaniesList />
+          <ApprovedCompaniesList mobile={isMobile} />
         </LandingPageViewport>,
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
-        <Stack direction="row" spacing="12px">
-          <UrsorButton width="179px" dark variant="tertiary">
-            Apply to list
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          spacing={isMobile ? "8px" : "12px"}
+        >
+          <UrsorButton
+            size={isMobile ? "medium" : "large"}
+            width="226px"
+            dark
+            variant="tertiary"
+          >
+            Enrol to program
           </UrsorButton>
-          <UrsorButton width="179px" dark>
-            See list
+          <UrsorButton size={isMobile ? "medium" : "large"} width="226px" dark>
+            View list
           </UrsorButton>
         </Stack>
-        <Stack position="relative" height="150px">
+        <Stack position="relative" height={isMobile ? "80px" : "150px"}>
           <Stack
             position="absolute"
             top={0}
@@ -87,8 +96,8 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           >
             <Image
               src="https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png"
-              width={873}
-              height={316}
+              width={isMobile ? 380 : 873}
+              height={isMobile ? 138 : 316}
               alt="Astro Seals illustration"
               priority
             />

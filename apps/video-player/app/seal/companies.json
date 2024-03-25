@@ -1,5 +1,6 @@
 [
     {
+        "urlId": "kidoodle",
         "name": "Kidoodle.TV",
         "publisher": "A Parent Media Co.",
         "productType": "Smart TV app",
@@ -7,7 +8,8 @@
         "targetAudience": "Preschoolers (ages 3-5), Kids (ages 5-8), Tweens (ages 8-12)",
         "productDescription": "Kidoodle.TV is a Safe Streaming platform with over 20,000 hand-picked episodes of the world's best entertaining, educational, and inspiring shows for kids.",
         "url": "https://www.kidoodle.tv",
-        "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/meta-poster.jpg"
+        "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/meta-poster.jpg",
+        "screenshotUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Screenshot+2024-03-25+at+07.21.41.png"
     },
     {
         "name": "Kidoodle.TV Mobile Apps",

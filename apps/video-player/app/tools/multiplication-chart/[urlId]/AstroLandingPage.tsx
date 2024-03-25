@@ -5,7 +5,8 @@ import { Stack } from "@mui/system";
 import _ from "lodash";
 //import { Header } from "@/app/components/Header";
 import { PALETTE, Typography } from "ui";
-import SpaceGlow from "@/images/spaceGlowFainter.svg";
+import SpaceGlow from "@/images/spaceGlow.svg";
+import SpaceGlowFainter from "@/images/spaceGlowFainter.svg";
 import { LandingPageFooter } from "./LandingPageFooter";
 import { LandingPageFAQSection } from "./LandingPageFAQSection";
 import { Header } from "@/app/components/header2";
@@ -24,6 +25,7 @@ export default function AstroLandingPage(props: {
       answer: string;
     }[];
   };
+  fainterSpaceGlow?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -57,20 +59,20 @@ export default function AstroLandingPage(props: {
             alignItems="center"
             width={props.mobile ? "86%" : "700px"}
           >
-            {/* {props.title.map((x) => ( */}
-            <Typography
-              //key={x}
-              variant={props.mobile ? "h4" : "h1"}
-              sx={{
-                textAlign: "center",
-              }}
-              bold
-              htmlTag="h1"
-              color={PALETTE.secondary.purple[2]}
-            >
-              {props.title[0]}
-            </Typography>
-            {/* ))} */}
+            {props.title.map((x, i) => (
+              <Typography
+                key={i}
+                variant={props.mobile ? "h4" : "h1"}
+                sx={{
+                  textAlign: "center",
+                }}
+                bold
+                htmlTag="h1"
+                color={PALETTE.secondary.purple[2]}
+              >
+                {x}
+              </Typography>
+            ))}
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
@@ -93,7 +95,11 @@ export default function AstroLandingPage(props: {
             transform: "translateY(1px)",
           }}
         >
-          <SpaceGlow width="auto" height="auto" />
+          {props.fainterSpaceGlow ? (
+            <SpaceGlowFainter width="auto" height="auto" />
+          ) : (
+            <SpaceGlow width="auto" height="auto" />
+          )}
         </Stack>
         <Stack
           spacing="180px"

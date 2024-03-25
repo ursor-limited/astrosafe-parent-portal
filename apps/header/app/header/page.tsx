@@ -1,8 +1,8 @@
 import React from "react";
-import { Header } from "./header";
+import ProductsPopoverContents from "./header";
 
 async function Page() {
-  return <Header />;
+  return <ProductsPopoverContents />;
 }
 
 export default Page;

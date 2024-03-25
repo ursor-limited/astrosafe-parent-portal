@@ -11,7 +11,7 @@ import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ApiController from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -42,6 +42,8 @@ import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 
+const PAGE_SIZE = 30;
+
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
@@ -52,6 +54,12 @@ export const GRID_SPACING = "20px";
 export type AstroContent = "video" | "worksheet";
 
 export type AstroContentSort = "abc" | "createdAt";
+
+export const getTrialDaysLeft = (freeTrialStart?: string) =>
+  TRIAL_DAYS - dayjs().diff(freeTrialStart, "days");
+
+export const getPeriodDaysLeft = (subscriptionDeletionDate: number) =>
+  -dayjs().diff(dayjs.unix(subscriptionDeletionDate ?? 0), "days");
 
 export const SearchInput = (props: {
   value: string;
@@ -101,6 +109,7 @@ export const SearchInput = (props: {
           lineHeight: "100%",
           transition: "0.2s",
           fontFamily: "inherit",
+          width: props.fullWidth ? "100%" : undefined,
         }}
         value={props.value}
         disableUnderline
@@ -358,12 +367,42 @@ export default function DashboardPageContents() {
     loadWorksheets();
   }, [userDetails?.user?.id]);
 
+  const [latestPageIndex, setLatestPageIndex] = useState<number>(0);
+  const scrollableRef = useRef<HTMLDivElement | null>(null);
+  const onScroll = () => {
+    if (scrollableRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
+      console.log(scrollTop, clientHeight, scrollHeight);
+      if (scrollTop + clientHeight > scrollHeight - 800) {
+        PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
+          setLatestPageIndex(latestPageIndex + 1);
+      }
+    }
+  };
+
+  const { nColumns, setColumnsContainerRef } = useColumnWidth();
+
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
       details: IVideo | IWorksheet;
     }[][]
   >([]);
+  const [cards, setCards] = useState<
+    {
+      type: AstroContent;
+      details: IVideo | IWorksheet;
+    }[]
+  >([]);
+  useEffect(() => {
+    const pageLimitedCards = cards.slice(0, (latestPageIndex + 1) * PAGE_SIZE);
+    const chunked = _.chunk(pageLimitedCards, nColumns);
+    setCardColumns(
+      [...Array(nColumns).keys()].map((i) =>
+        _.compact(chunked.map((chunk) => chunk[i]))
+      )
+    );
+  }, [nColumns, cards, latestPageIndex]);
 
   const [selectedContentType, setSelectedContentType] =
     useState<AstroContent | null>(null);
@@ -371,8 +410,6 @@ export default function DashboardPageContents() {
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
     useState<AstroContentSort>("createdAt");
-
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   useEffect(() => {
     const videoDetails = videos
@@ -411,12 +448,7 @@ export default function DashboardPageContents() {
           : c.details.title.toLowerCase(),
       selectedSort === "createdAt" ? "desc" : "asc"
     );
-    const chunked = _.chunk(allContentDetails, nColumns);
-    setCardColumns(
-      [...Array(nColumns).keys()].map((i) =>
-        _.compact(chunked.map((chunk) => chunk[i]))
-      )
-    );
+    setCards(allContentDetails);
   }, [
     videos,
     worksheets,
@@ -487,15 +519,6 @@ export default function DashboardPageContents() {
 
   const router = useRouter();
 
-  const getTrialDaysLeft = () =>
-    TRIAL_DAYS - dayjs().diff(userDetails.user?.freeTrialStart, "days");
-
-  const getPeriodDaysLeft = () =>
-    -dayjs().diff(
-      dayjs.unix(userDetails.user?.subscriptionDeletionDate ?? 0),
-      "days"
-    );
-
   const [
     trialExpirationDialogAlreadySeen,
     setTrialExpirationDialogAlreadySeen,
@@ -507,18 +530,24 @@ export default function DashboardPageContents() {
     if (
       !trialExpirationDialogAlreadySeen &&
       !userDetails.user?.subscribed &&
-      getTrialDaysLeft() <= 0
+      userDetails.user?.freeTrialStart &&
+      getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
     ) {
       setTrialExpirationDialogOpen(
-        !userDetails.user?.subscribed && getTrialDaysLeft() <= 0
+        !userDetails.user?.subscribed &&
+          getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
       );
       setTrialExpirationDialogAlreadySeen(true);
     }
   }, [userDetails.user?.subscribed]);
 
+  console.log(latestPageIndex);
+
   return (
     <>
       <PageLayout
+        ref={scrollableRef}
+        onScroll={onScroll}
         title="Home"
         bodyWidth="100%"
         selectedSidebarItemId="home"
@@ -538,7 +567,7 @@ export default function DashboardPageContents() {
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
               <>
-                {getTrialDaysLeft() <= 0 ? (
+                {getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
                   <Typography
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
@@ -558,8 +587,12 @@ export default function DashboardPageContents() {
                       color={PALETTE.secondary.grey[4]}
                     >
                       {userDetails.user?.subscriptionDeletionDate
-                        ? getPeriodDaysLeft()
-                        : getTrialDaysLeft()}
+                        ? getPeriodDaysLeft(
+                            userDetails.user?.subscriptionDeletionDate
+                          )
+                        : userDetails.user?.freeTrialStart
+                        ? getTrialDaysLeft(userDetails.user?.freeTrialStart)
+                        : ""}
                     </Typography>
                     <Typography
                       variant="medium"
@@ -679,7 +712,10 @@ export default function DashboardPageContents() {
                       key={`${item.details.id}${selectedSort}`}
                       spacing={GRID_SPACING}
                     >
-                      <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
+                      <UrsorFadeIn
+                        delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
+                        duration={900}
+                      >
                         {
                           item.type === "video" ? (
                             <VideoCard {...(item.details as IVideo)} />

@@ -25,6 +25,7 @@ export interface IUrsorSelectProps {
   leftAlignPopover?: boolean;
   keepOpenOnSelect?: boolean;
   width: string;
+  fieldWidth?: string;
   white?: boolean;
   callback: (id: string) => void;
   clearAllCallback?: () => void;
@@ -154,6 +155,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         noPadding
         placement={props.leftAlignPopover ? "left" : undefined}
         width={props.width}
+        fieldWidth={props.fieldWidth}
         noFloatButton
         disabled={props.disabled}
         zIndex={props.zIndex}

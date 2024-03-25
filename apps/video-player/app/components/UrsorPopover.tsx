@@ -36,6 +36,7 @@ type ButtonFloat = "zIndex" | "duplicate";
 export interface IUrsorPopoverProps {
   open: boolean;
   width?: string;
+  fieldWidth?: string;
   buttonWidth?: boolean;
   closeCallback: () => void;
   maxHeight?: boolean;
@@ -133,6 +134,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
           //opacity: props.open && !props.noFloatButton ? 0 : 1,
           zIndex: 2,
         }}
+        width={props.fieldWidth}
         // width={props.width || "fit-content"}
       >
         {props.children}
