@@ -57,20 +57,20 @@ export default function AstroLandingPage(props: {
             alignItems="center"
             width={props.mobile ? "86%" : "700px"}
           >
-            {/* {props.title.map((x) => ( */}
-            <Typography
-              //key={x}
-              variant={props.mobile ? "h4" : "h1"}
-              sx={{
-                textAlign: "center",
-              }}
-              bold
-              htmlTag="h1"
-              color={PALETTE.secondary.purple[2]}
-            >
-              {props.title[0]}
-            </Typography>
-            {/* ))} */}
+            {props.title.map((x, i) => (
+              <Typography
+                key={i}
+                variant={props.mobile ? "h4" : "h1"}
+                sx={{
+                  textAlign: "center",
+                }}
+                bold
+                htmlTag="h1"
+                color={PALETTE.secondary.purple[2]}
+              >
+                {x}
+              </Typography>
+            ))}
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
