@@ -15,7 +15,6 @@ export const PADDING = "16px";
    Disadvantage of raising the z-index: does not work when it is inside a dialog, which has its own z stack.
    Disadvantage of duplicating: in some cases it can get misaligned from the original. */
 type ButtonFloat = "zIndex" | "duplicate";
-
 export interface IUrsorPopoverProps {
   open: boolean;
   width?: string;
