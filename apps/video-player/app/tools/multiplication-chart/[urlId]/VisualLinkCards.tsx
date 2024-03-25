@@ -3,6 +3,7 @@ import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { isMobile } from "react-device-detect";
 import { PALETTE, Typography, UrsorButton } from "ui";
 
 const SPACING = "24px";
@@ -18,7 +19,7 @@ const VisualLinkCard = (props: IVisualLinkCard) => {
   const router = useRouter();
   return (
     <Stack
-      height="567px"
+      height={isMobile ? undefined : "567px"}
       maxWidth="497px"
       p="24px"
       pb="32px"
@@ -31,7 +32,7 @@ const VisualLinkCard = (props: IVisualLinkCard) => {
       <div
         style={{
           width: "100%",
-          height: "291px",
+          height: isMobile ? "230px" : "291px",
           position: "relative",
           borderRadius: "12px",
           overflow: "hidden",
@@ -45,7 +46,12 @@ const VisualLinkCard = (props: IVisualLinkCard) => {
           alt="visual link card image"
         />
       </div>
-      <Stack height="186px" justifyContent="space-between" alignItems="center">
+      <Stack
+        pt={isMobile ? "28px" : undefined}
+        height="186px"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Typography variant="h3" htmlTag="h4">
           {props.title}
         </Typography>
