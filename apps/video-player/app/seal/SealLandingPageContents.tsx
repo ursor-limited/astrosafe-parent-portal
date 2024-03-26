@@ -22,6 +22,24 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   const router = useRouter();
+
+  // function download(content: any, fileName: string, contentType: string) {
+  //   var a = document.createElement("a");
+  //   var file = new Blob([content], { type: contentType });
+  //   a.href = URL.createObjectURL(file);
+  //   a.download = fileName;
+  //   a.click();
+  // }
+  // download(
+  //   JSON.stringify(
+  //     companies.map((c) => ({
+  //       ...c,
+  //       ogimage: c.ogimage.includes("placeholder") ? undefined : c.ogimage,
+  //     }))
+  //   ),
+  //   "booboo.txt",
+  //   "text/plain"
+  // );
   return (
     <AstroLandingPage
       fainterSpaceGlow

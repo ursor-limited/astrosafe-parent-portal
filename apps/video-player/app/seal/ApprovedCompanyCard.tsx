@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { IApprovedCompany } from "./ApprovedCompaniesList";
+import { IApprovedCompany, S3_BASE_URL } from "./ApprovedCompaniesList";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import GraphIllustration from "@/images/GraphIllustration.svg";
@@ -35,14 +35,13 @@ export const ApprovedCompanyCard = (
           display: "flex",
         }}
       >
-        {props.imageUrl ? (
-          // <Image
-          //   src={props.imageUrl}
-          //   alt="Approved company"
-          //   fill
-          //   style={{ objectFit: "cover" }}
-          // />
-          <></>
+        {props.ogimage ? (
+          <Image
+            src={`${S3_BASE_URL}/thumbnails/${props.ogimage}`}
+            alt="Approved company"
+            fill
+            style={{ objectFit: "cover" }}
+          />
         ) : (
           <Stack sx={{ filter: "grayscale(100%)", opacity: 0.65 }}>
             <GraphIllustration width="120px" height="120px" />
@@ -56,7 +55,7 @@ export const ApprovedCompanyCard = (
           variant={props.mobile ? "normal" : "large"}
           bold
         >
-          {props.name}
+          {props.companyName}
         </Typography>
         <Stack spacing="4px">
           <Stack direction="row" spacing="10px">
@@ -104,7 +103,7 @@ export const ApprovedCompanyCard = (
               Target audience:
             </Typography>
             <Typography maxLines={1} variant={props.mobile ? "tiny" : "small"}>
-              {props.targetAudience}
+              {props.audience}
             </Typography>
           </Stack>
         </Stack>
