@@ -125,7 +125,7 @@ export interface ILink {
 const CREATION_SUCCESS_MESSAGE = "Link added";
 const UPDATE_SUCCESS_MESSAGE = "Link updated";
 export const CARD_WIDTH = "270px";
-const CARD_HEIGHT = "309px";
+const CARD_HEIGHT = "243px";
 const IMAGE_HEIGHT = "204px";
 const CARD_PADDING = "16px";
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
@@ -586,11 +586,6 @@ export default function LinkDialog(props: ILinkDialogProps) {
           props.closeCallback();
           clear();
         }}
-        backButtonCallback={() => {
-          props.closeCallback();
-          props.backCallback?.();
-          clear();
-        }}
         fitContent
       >
         <Stack
@@ -706,7 +701,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
               >
                 {title}
               </Typography>
-              <Typography
+              {/* <Typography
                 variant="small"
                 color={alpha(
                   shouldBeLightText(color)
@@ -716,7 +711,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
                 )}
               >
                 {dayjs().format("Do MMMM YYYY")}
-              </Typography>
+              </Typography> */}
             </Stack>
             <Stack
               position="absolute"

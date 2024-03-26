@@ -88,7 +88,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.orange[5],
     icon: LinkIcon,
     infoButtonPosition: 150,
-    info: "We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+    info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
   },
 };
 

@@ -228,19 +228,22 @@ class ApiController {
     );
   }
   static async isBlocked(url: any) {
-    return post("video/isBlocked", { url }).then((response: any) =>
-      response.json()
-    );
+    return post("link/isBlocked", { url })
+      .then((response: any) => response.json())
+      .catch((error) => {
+        console.log(error.status);
+        if (error.status === 405) {
+          return true;
+        }
+      });
   }
   static async getURLImagePreview(url: any) {
-    return post("video/URLImagePreview", { url }).then((response: any) =>
-      response.json()
-    );
-  }
-  static async createLink(url: any) {
     return post("link/URLImagePreview", { url }).then((response: any) =>
       response.json()
     );
+  }
+  static async createLink(details: any) {
+    return post("link", details).then((response: any) => response.json());
   }
 }
 

@@ -227,6 +227,10 @@ export default function PlaylistPageContents(props: IPlaylist) {
       <LinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
+        creationCallback={(link) => {
+          setLinks([...links, link]);
+          setContents([{ type: "link", contentId: link.id }, ...contents]);
+        }}
       />
     </>
   );
