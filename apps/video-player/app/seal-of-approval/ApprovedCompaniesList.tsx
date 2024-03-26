@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import X from "@/images/icons/X.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelect from "../components/UrsorSelect";
@@ -213,7 +213,10 @@ const PageSelection = (props: {
   );
 };
 
-const ApprovedCompaniesList = (props: { mobile: boolean }) => {
+const ApprovedCompaniesList = (props: {
+  mobile: boolean;
+  pageChangeCallback: () => void;
+}) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   // const [companies, setCompanies] = useState<IApprovedCompany[]>([]);
   // //@ts-ignore
@@ -257,6 +260,7 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
     <Stack
       width={props.mobile ? undefined : "1000px"}
       maxWidth={props.mobile ? undefined : "990px"}
+      spacing="22px"
     >
       <Stack
         direction={props.mobile ? "column" : "row"}
@@ -338,12 +342,6 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
         </Captioned>
       </Stack>
       <Stack spacing="20px">
-        <PageSelection
-          pageIndex={pageIndex}
-          setPageIndex={setPageIndex}
-          totalN={filteredCompanies.length}
-          mobile={props.mobile}
-        />
         <Stack alignItems="center" spacing={props.mobile ? "14px" : "24px"}>
           {filteredCompanies.length > 0 ? (
             (filteredCompanies as IApprovedCompany[])
@@ -356,7 +354,7 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
                   key={`${selectedCategory}_${i}_${pageIndex}`}
                 >
                   <Link
-                    href={`${S3_BASE_URL}/${c.ogimage}`}
+                    href={`seal-of-approval/${c.internalpath}`}
                     style={{ textDecoration: "none" }}
                   >
                     <ApprovedCompanyCard
@@ -391,6 +389,15 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
             </UrsorFadeIn>
           )}
         </Stack>
+        <PageSelection
+          pageIndex={pageIndex}
+          setPageIndex={(i) => {
+            setPageIndex(i);
+            props.pageChangeCallback();
+          }}
+          totalN={filteredCompanies.length}
+          mobile={props.mobile}
+        />
       </Stack>
     </Stack>
   );

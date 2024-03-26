@@ -20,8 +20,7 @@
         "description": "ABCya.com is a leading K-5 educational gaming website, visited by millions of kids, parents, and teachers each month. In just the last year, the site facilitated play of over 1 billion games. In addition to the website, ABCya also offers a iOS app with weekly free games and an optional subscription service providing access to over 200 games.",
         "url": "https://www.abcya.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "abcya-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "abcya-games"
     },
     {
         "companyName": "Quantum Demand",
@@ -32,8 +31,7 @@
         "description": "AdMetricsPro operates as an autonomous advertising network that links websites with an extensive assortment of Ad Exchanges and Agencies. They utilize innovative technology that makes robust connections between high-traffic websites and top brands. Thus, the company helps to enhance the reach of these prominent brands by connecting them with numerous websites.",
         "url": "https://admetricspro.com/",
         "heroImage": "astroseal_2.png",
-        "internalpath": "quantum-demand",
-        "ogimage": "placeholder.png"
+        "internalpath": "quantum-demand"
     },
     {
         "companyName": "ABCmouse (Web and Mobile",
@@ -44,8 +42,7 @@
         "description": "ABCmouse is an acclaimed educational program designed for children aged 2 to 8, offering learning activities in reading, math, art, and music. It is developed by educational professionals and teachers. The platform provides over 10,000 engaging activities to aid in the development of academic skills at all levels.",
         "url": "https://www.abcmouse.com",
         "heroImage": "placeholder.png",
-        "internalpath": "abcmouse-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "abcmouse-web-and-mobile"
     },
     {
         "companyName": "Adventure Academy (downloadable PC game and mobile app",
@@ -56,8 +53,7 @@
         "description": "Adventure Academy offers an immersive learning adventure designed to provide an educational curriculum. This venture is the latest from the same team that created ABCmouse. The company aims to make learning an exciting and enriching experience for users.",
         "url": "https://www.adventureacademy.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "adventure-academy-downloadable-pc-game-and-mobile-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "adventure-academy-downloadable-pc-game-and-mobile-app"
     },
     {
         "companyName": "Tinkercad (web and mobile",
@@ -92,8 +88,7 @@
         "description": "Reading Eggs is an educational company developed by a team of experienced elementary school teachers, authors, and developers. The company's main objective is to enhance children's reading proficiency using specially designed, engaging online games and activities. The self-paced, user-friendly resources have won multiple awards and are considered as effective materials for early learning support.",
         "url": "https://readingeggs.com/apps/",
         "heroImage": "astroseal_7.png",
-        "internalpath": "reading-eggs",
-        "ogimage": "placeholder.png"
+        "internalpath": "reading-eggs"
     },
     {
         "companyName": "Bookelicious.com",
@@ -116,8 +111,7 @@
         "description": "Speak English Fluently is a company that offers English learning lessons. It employs experienced, child-friendly teachers from America, Britain, and Canada to provide lessons via video chat. This allows clients to effectively learn English from the comfort of their homes.",
         "url": "https://www.cambly.com/kids",
         "heroImage": "astroseal_9.png",
-        "internalpath": "camblykidscom-logged",
-        "ogimage": "placeholder.png"
+        "internalpath": "camblykidscom-logged"
     },
     {
         "companyName": "Channel Factory's ViewIQ Solution",
@@ -128,8 +122,7 @@
         "description": "Channel Factory, based in Los Angeles, is a company specializing in social video, media buying, and influencer marketing. The company not only offers solutions for buying, optimizing and amplifying video marketing campaigns but also provides premium content to top brands and agencies through its proprietary \"Content Factory\" division. Employing a unique one-stop shop approach, Channel Factory ensures efficient distribution, advanced analytics tracking, and influencer/branded content creation for client videos.",
         "url": "https://channelfactory.com/",
         "heroImage": "astroseal_10.png",
-        "internalpath": "channel-factorys-viewiq-solution",
-        "ogimage": "placeholder.png"
+        "internalpath": "channel-factorys-viewiq-solution"
     },
     {
         "companyName": "CareBears.com (Kids' Site",
@@ -140,8 +133,7 @@
         "description": "The company provides a kid-friendly website featuring a wide variety of content. It offers educational and interactive games for children. It also presents a host of activities and videos designed specifically for children's entertainment and learning.",
         "url": "https://www.carebears.com/kids/",
         "heroImage": "astroseal_11.png",
-        "internalpath": "carebearscom-kids-site",
-        "ogimage": "placeholder.png"
+        "internalpath": "carebearscom-kids-site"
     },
     {
         "companyName": "codeSpark Academy Kids Coding",
@@ -176,8 +168,7 @@
         "description": "Sensical, a product of Common Sense Networks, is an interest-based streaming service that offers a range of safe, educational, and entertaining videos for children. Drawing on the expertise of Common Sense Media, the platform presents over 15,000 episodes across 50+ topic-based channels, ensuring age-appropriate content for kids aged 2-10. The platform is ad-supported and delivers content featuring beloved characters and creators.\n",
         "url": "https://sensical.tv/",
         "heroImage": "placeholder.png",
-        "internalpath": "sensicaltv-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "sensicaltv-website"
     },
     {
         "companyName": "Data Theorem's Mobile Protect Solution",
@@ -188,8 +179,7 @@
         "description": "Mobile Protect SDK is designed to protect apps from a variety of threats, including active hackers, third party code, and data attacks both in-transit and at-rest. It also safeguards against device attacks such as spyware, malware, and jailbroken/rooted devices. To ensure constant protection, users need to embed the library into their app.",
         "url": "https://www.datatheorem.com/products/mobile-secure/",
         "heroImage": "astroseal_15.png",
-        "internalpath": "data-theorems-mobile-protect-solution",
-        "ogimage": "placeholder.png"
+        "internalpath": "data-theorems-mobile-protect-solution"
     },
     {
         "companyName": "Kidzovo mobile app",
@@ -197,7 +187,7 @@
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
-        "description": "Kidzovo is an engaging learning app designed to offer personalized interactive educational experiences for children aged 2-8. Using content from popular creators such as SciShow Kids and Kiboomers, the app incorporates diverse activities that involve screen tapping, voice responses, and on-screen coloring. The app also features a mascot named Ovo the owl, who interacts with the child, and allows parents to monitor their child\u2019s learning progress. Moreover, it is 100% ad-free.",
+        "description": "Kidzovo is an engaging learning app designed to offer personalized interactive educational experiences for children aged 2-8. Using content from popular creators such as SciShow Kids and Kiboomers, the app incorporates diverse activities that involve screen tapping, voice responses, and on-screen coloring. The app also features a mascot named Ovo the owl, who interacts with the child, and allows parents to monitor their child’s learning progress. Moreover, it is 100% ad-free.",
         "url": "https://kidzovo.com/",
         "ogimage": "thumbnail_16.jpg",
         "heroImage": "astroseal_16.png",
@@ -212,8 +202,7 @@
         "description": "Dr. Panda apps offers an array of educational games and interactive storybooks aimed at fostering learning and skill development in children. The programs, designed for independent use by children, facilitate learning through role-play, exploration, and active imagination while introducing essential life skills and emotional intelligence. Additionally, the company provides a 'Town' series where children can create their own characters and narratives in an open environment, promoting both creativity and autonomous learning.",
         "url": "https://drpanda.com",
         "heroImage": "astroseal_17.png",
-        "internalpath": "dr-panda-apps-classics-learn--play-town",
-        "ogimage": "placeholder.png"
+        "internalpath": "dr-panda-apps-classics-learn--play-town"
     },
     {
         "companyName": "Paco El Chato website",
@@ -272,8 +261,7 @@
         "description": "The company specializes in creating a series of Peppa Pig applications, designed primarily for pre-schoolers. They offer an interactive and fun environment for kids to engage with their favorite characters from the popular TV show, Peppa Pig, while playing games, watching videos, and participating in activities. These apps, available on various platforms, include the World of Peppa Pig, Peppa Pig: Theme Park aka. FunFair, Peppa Pig: Holiday Adventures, Peppa Pig: Happy Mrs Chicken, Peppa Pig: Seasons - autumn + winter, and Learn with Peppa Pig.",
         "url": "https://www.peppapig.com/apps/",
         "heroImage": "astroseal_22.png",
-        "internalpath": "peppa-pig-app-series",
-        "ogimage": "placeholder.png"
+        "internalpath": "peppa-pig-app-series"
     },
     {
         "companyName": "The Week Junior kids' website",
@@ -284,8 +272,7 @@
         "description": "The Week Junior is a news publication specifically tailored for children aged 8-14, released on a weekly basis. It offers a broad range of subjects including national and international news, science and technology, sports, arts and entertainment, and much more. Beyond news, it also engages children with fun and educational content such as crafts, recipes and animal stories.",
         "url": "https://kids.theweekjunior.com/",
         "heroImage": "astroseal_23.png",
-        "internalpath": "the-week-junior-kids-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "the-week-junior-kids-website"
     },
     {
         "companyName": "HappyKids TV Mobile App",
@@ -308,8 +295,7 @@
         "description": "GameAnalytics offers a complimentary analytics service specifically for mobile games, catering to over 35,000 gaming studios worldwide. Their support extends to over 18 development platforms via easily integratable SDKs. They provide ready-to use reports, enabling customers to leverage their service in less than 15 minutes.",
         "url": "https://gameanalytics.com/",
         "heroImage": "astroseal_25.png",
-        "internalpath": "gameanalytics",
-        "ogimage": "placeholder.png"
+        "internalpath": "gameanalytics"
     },
     {
         "companyName": "Pingo by FindMyKids (Under",
@@ -332,8 +318,7 @@
         "description": "The company offers over 300 digital activities designed to make screen time more active for kids. These interactive activities include dance videos and yoga exercises. They also provide mindfulness activities to promote mental wellness in children.",
         "url": "https://family.gonoodle.com/",
         "heroImage": "astroseal_27.png",
-        "internalpath": "gonoodle-kids-videos-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "gonoodle-kids-videos-app"
     },
     {
         "companyName": "GoNoodle on Smart TVs and Streaming Devices",
@@ -344,8 +329,7 @@
         "description": "GoNoodle is a company that specializes in creating movement and mindfulness videos for children. Boasting an impressive reach, these developmental tools are used by 14 million kids on a monthly basis. The videos are accessible for free, whether the child is at home, school, or elsewhere.",
         "url": "https://www.gonoodle.com",
         "heroImage": "astroseal_28.png",
-        "internalpath": "gonoodle-on-smart-tvs-and-streaming-devices",
-        "ogimage": "placeholder.png"
+        "internalpath": "gonoodle-on-smart-tvs-and-streaming-devices"
     },
     {
         "companyName": "Good2Collect.com",
@@ -356,8 +340,7 @@
         "description": "The good2grow Collector's Club is a platform where members can browse through various Character Tops. It also allows members to keep track of their personal collection. Additionally, the club offers the opportunity to win exciting prizes.",
         "url": "https://www.good2collect.com/",
         "heroImage": "astroseal_29.png",
-        "internalpath": "good2collectcom",
-        "ogimage": "placeholder.png"
+        "internalpath": "good2collectcom"
     },
     {
         "companyName": "GROM",
@@ -404,8 +387,7 @@
         "description": "KidloLand is an award-winning educational platform designed for children between the ages of 1 and 8, meant to provide foundational skills in reading, writing, spelling, math, and coding. The program evolves with the child's age and ensures a meaningful and educational screen time that assists in school preparedness. It offers a safe, ad-free environment and can be accessed without Wi-Fi, making it suitable for use during travel and on multiple devices.",
         "url": "https://www.kidloland.com/",
         "heroImage": "astroseal_33.png",
-        "internalpath": "kidloland",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidloland"
     },
     {
         "companyName": "bekids App Series (Coloring, Coding",
@@ -416,8 +398,7 @@
         "description": "Bekids offers Coloring and Coding apps aimed at educating and inspiring young minds. The apps focus on teaching essential coding and artistic skills. They advocate for kids' learning, growth, and playful exploration.",
         "url": "https://bekids.com",
         "heroImage": "astroseal_34.png",
-        "internalpath": "bekids-app-series-coloring-coding",
-        "ogimage": "placeholder.png"
+        "internalpath": "bekids-app-series-coloring-coding"
     },
     {
         "companyName": "Education.com",
@@ -440,8 +421,7 @@
         "description": "IXL is a company that offers personalized learning solutions. They provide a complete curriculum for K-12 students, individualized guidance, and real-time analytic assessments. Their approach allows them to cater to the unique educational needs of every student.",
         "url": "https://www.ixl.com/apps",
         "heroImage": "astroseal_36.png",
-        "internalpath": "ixl-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "ixl-app"
     },
     {
         "companyName": "Multiplication.com",
@@ -452,8 +432,7 @@
         "description": "Multiplication.com offers engaging methods to learn multiplication, including free games, activities, worksheets, and flash cards. In addition to multiplication, they provide numerous resources for learning addition, subtraction, and division. Their aim is to make learning math fun and interactive for students.",
         "url": "https://www.multiplication.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "multiplicationcom",
-        "ogimage": "placeholder.png"
+        "internalpath": "multiplicationcom"
     },
     {
         "companyName": "Quia Web",
@@ -464,8 +443,7 @@
         "description": "Quia is a company that offers a set of tools tailored for creating customized online content. Their services cater to all subjects and levels, ensuring the content remains relevant to the user. The company synergizes technology and education to provide an engaging online learning experience.",
         "url": "https://www.quia.com/web",
         "heroImage": "astroseal_38.png",
-        "internalpath": "quia-web",
-        "ogimage": "placeholder.png"
+        "internalpath": "quia-web"
     },
     {
         "companyName": "Kids Web Services (KWS",
@@ -476,8 +454,7 @@
         "description": "KWS, or Kids Web Services Ltd, is a company offering a variety of tools and services to developers for handling youth audiences. These include Parent Verification and Consent Management products, which are used by many globally recognized gaming platforms. The company is a subsidiary of the Epic Games group.",
         "url": "https://www.kidswebservices.com/",
         "heroImage": "astroseal_39.png",
-        "internalpath": "kids-web-services-kws",
-        "ogimage": "placeholder.png"
+        "internalpath": "kids-web-services-kws"
     },
     {
         "companyName": "Kidz Bop Kids (US website",
@@ -488,8 +465,7 @@
         "description": "KIDZ BOP, the number one music brand for children aged 5-12 years old in the U.S, offers a range of popular songs sung by kids for kids. The brand, presented through its official website KIDZBOP.com, extends beyond music to include videos, live performances, and licensed merchandise. It focuses on celebrating the genuine voices and expressions of kids across all elements of the brand.",
         "url": "https://kids.kidzbop.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "kidz-bop-kids-us-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidz-bop-kids-us-website"
     },
     {
         "companyName": "Kinzoo",
@@ -536,8 +512,7 @@
         "description": "MarcoPolo World School is a company that provides an award-winning app designed to cater to children's curiosity. The app enables children to explore the universe around them in a reimagined format. The platform is globally acclaimed by parents and educators for its rich educational content.",
         "url": "https://www.marcopololearning.com",
         "heroImage": "astroseal_44.png",
-        "internalpath": "marcopolo-world-school-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "marcopolo-world-school-web-and-mobile"
     },
     {
         "companyName": "MC EduHub platform",
@@ -548,8 +523,7 @@
         "description": "MCEduHub is a company that offers a singular access point to a broad range of learning resources for children aged 7 to 16 years. The company prides itself on an enhanced user interface which uses the latest HTML5 technologies. This ensures a smooth, interactive, and engaging learning process for its users.",
         "url": "https://www.mceduhub.com/",
         "heroImage": "astroseal_45.png",
-        "internalpath": "mc-eduhub-platform",
-        "ogimage": "placeholder.png"
+        "internalpath": "mc-eduhub-platform"
     },
     {
         "companyName": "MathPlayground.com",
@@ -572,8 +546,7 @@
         "description": "Kryptografima, a revolutionary program offered by MathBait, invites users to engage in over 100 digital games designed to build problem-solving skills and strengthen understanding of mathematical concepts. The innovative platform uses easy-to-understand analogies and storylines to make learning math fun and intriguing. Users also participate in missions and quests to advance their ranking within a virtual secret society, providing a unique and engaging dimension to the learning experience.",
         "url": "https://mathbait.kryptografima.com/",
         "heroImage": "astroseal_47.png",
-        "internalpath": "the-kryptografima-by-mathbait",
-        "ogimage": "placeholder.png"
+        "internalpath": "the-kryptografima-by-mathbait"
     },
     {
         "companyName": "Matific.com school version (student site",
@@ -680,8 +653,7 @@
         "description": "Piggy Panda Learning Games is a versatile educational app, designed to offer quality screen time for young children on iPads or phones. The app features over 1000 mini-games, videos, and co-active activities that are split into three categories: Educational, Entertainment, and Creativity. Its aim is to enhance family engagement and stimulate children's learning in a fun and interactive way.",
         "url": "https://thepiggypanda.com/",
         "heroImage": "astroseal_56.png",
-        "internalpath": "piggy-panda-learning-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "piggy-panda-learning-games"
     },
     {
         "companyName": "Pinna Children's Audio Stories Mobile App",
@@ -704,8 +676,7 @@
         "description": "Pinna is a company that empowers children with an ad-free, screen-free method to play and listen to audio on demand. The service is designed to be accessible whether the user is at home or traveling. It promotes a minimalist and consumer-friendly platform for kids to engage with, either independently or with friends and family.",
         "url": "https://player.pinna.fm",
         "heroImage": "placeholder.png",
-        "internalpath": "pinnafm-web-player-logged",
-        "ogimage": "placeholder.png"
+        "internalpath": "pinnafm-web-player-logged"
     },
     {
         "companyName": "Playwire Media Ad Platform (Kids Club",
@@ -716,8 +687,7 @@
         "description": "Playwire Media is a company that specializes in kid-friendly marketing, understanding the sensitivity required for this sector. They hold a significant position as the second largest Children's Online Privacy Protection Act (COPPA) compliant children's network. For every campaign, they strive to create a secure and engaging environment.",
         "url": "https://www.playwire.com/kids-club/ ",
         "heroImage": "astroseal_59.png",
-        "internalpath": "playwire-media-ad-platform-kids-club",
-        "ogimage": "placeholder.png"
+        "internalpath": "playwire-media-ad-platform-kids-club"
     },
     {
         "companyName": "Kids.Poki.com",
@@ -728,8 +698,7 @@
         "description": "Poki Kids is a free online gaming platform designed specifically for children. The company collaborates with game developers to offer the newest free games for youngsters. A key focus for Poki Kids is ensuring the platform is a safe space where children can play and have fun.",
         "url": "https://kids.poki.com/",
         "heroImage": "astroseal_60.png",
-        "internalpath": "kidspokicom",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidspokicom"
     },
     {
         "companyName": "Precise.TV Ad Platform",
@@ -740,8 +709,7 @@
         "description": "Precise.TV is a company that specializes in offering brand and kid-safe advertising services on YouTube. Their operations span across the globe, ensuring a widespread reach for their services. The company has offices in major cities like London, New York, and Sydney.",
         "url": "https://www.precise.tv/",
         "heroImage": "placeholder.png",
-        "internalpath": "precisetv-ad-platform",
-        "ogimage": "placeholder.png"
+        "internalpath": "precisetv-ad-platform"
     },
     {
         "companyName": "ReadTheory.org (Under",
@@ -775,7 +743,6 @@
         "audience": "8 - 13+",
         "description": "Roblox is a platform powered by its users, facilitating the creation of user-generated games. Users can design their own game worlds, bringing them to life, and share them for others to enjoy. Aside from offering a platform for personal game creation, it also promotes a social gaming atmosphere where users can play together despite age differences.",
         "url": "https://www.roblox.com",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_64.png",
         "internalpath": "the-roblox-platform-on-mobile-under"
     },
@@ -800,8 +767,7 @@
         "description": "Piknik is a company that consolidates award-winning applications. These applications are from renowned creators such as Sago Mini and Toca Boca. The purpose of the company is to provide a platform for these top-quality apps.",
         "url": "https://playpiknik.com/",
         "heroImage": "astroseal_66.png",
-        "internalpath": "the-piknik-family-of-apps-sago-mini-world-toca-boca-jr-sago-mini-school-toca-boca-jr-hair-salon-4-sago-mini-first-words",
-        "ogimage": "placeholder.png"
+        "internalpath": "the-piknik-family-of-apps-sago-mini-world-toca-boca-jr-sago-mini-school-toca-boca-jr-hair-salon-4-sago-mini-first-words"
     },
     {
         "companyName": "PJ Masks App Series",
@@ -836,8 +802,7 @@
         "description": "Super Biz is a company that supports brands in advertising within Roblox games. They offer dynamic in-game ads and personalized brand integrations for effective marketing. They provide robust analytics to measure the impact of these advertising strategies.",
         "url": "https://www.superbiz.gg/",
         "heroImage": "astroseal_69.png",
-        "internalpath": "super-biz-ad-service",
-        "ogimage": "placeholder.png"
+        "internalpath": "super-biz-ad-service"
     },
     {
         "companyName": "SuperAwesome Ad Platform (AwesomeAds",
@@ -848,8 +813,7 @@
         "description": "SuperAwesome Ads operates the world's largest advertisement platform dedicated exclusively to the under-13 youth market. They have a considerable reach, interacting with over 250 million children across the US, UK, APAC, Europe, and Australia. The company's primary focus is delivering safe, engaging, and effective digital marketing content specifically for kids.",
         "url": "https://www.superawesome.com/awesomeads-for-advertisers/",
         "heroImage": "astroseal_70.png",
-        "internalpath": "superawesome-ad-platform-awesomeads",
-        "ogimage": "placeholder.png"
+        "internalpath": "superawesome-ad-platform-awesomeads"
     },
     {
         "companyName": "Masterpiece for Osmo",
@@ -872,8 +836,7 @@
         "description": "The Alcatel JOY TAB KIDS is a tablet that comes pre-installed with Kidomi which offers a variety of interactive content for children. It provides access to carefully curated content from trusted kids' brands. The tablet features hundreds of premium games, videos, and books for family entertainment.",
         "url": "https://us.alcatelmobile.com/joy-tab-kids/",
         "heroImage": "astroseal_72.png",
-        "internalpath": "alcatel-joy-tab-kids-tablet-series-kidomi-child-mode",
-        "ogimage": "placeholder.png"
+        "internalpath": "alcatel-joy-tab-kids-tablet-series-kidomi-child-mode"
     },
     {
         "companyName": "Ducksters.com",
@@ -884,8 +847,7 @@
         "description": "This company runs an educational website that offers comprehensive coverage of various subjects, including history, science, geography, biography, and math. It provides easy-to-read articles and engaging activities on these subjects, catering to readers of all education levels. The content on the site aids in learning new concepts, reviewing previously covered topics, and preparing for classroom teachings.",
         "url": "https://www.ducksters.com/",
         "heroImage": "astroseal_73.png",
-        "internalpath": "ducksterscom",
-        "ogimage": "placeholder.png"
+        "internalpath": "ducksterscom"
     },
     {
         "companyName": "MySciLife",
@@ -895,7 +857,6 @@
         "audience": "10 - 13+",
         "description": "MySciLife is a free educational social media platform, designed for students to engage in science-based activities through the creation and interaction with science-themed identities. The platform offers a secure digital space for collaborative learning, enabling students to connect and think critically. It is developed by The Source for Learning, Inc., a nonprofit educational services organization.\n",
         "url": "https://myscilife.org/",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_74.png",
         "internalpath": "myscilife"
     },
@@ -908,8 +869,7 @@
         "description": "Theodore Roosevelt Presidential Library offers an AR adventure app designed for exploration of the great outdoors. Within this app, users can earn badges to mark their progress and discoveries. The overall experience combines technological innovation with a deep appreciation for nature, creating an interactive and educational journey through the wilderness.",
         "url": "https://www.trlibrary.com/rangers-wanted",
         "heroImage": "astroseal_75.png",
-        "internalpath": "rangers-wanted",
-        "ogimage": "placeholder.png"
+        "internalpath": "rangers-wanted"
     },
     {
         "companyName": "BYJU'S FutureSchool platform for kids",
@@ -932,8 +892,7 @@
         "description": "BYJU'S Learning App, developed by India's premier EdTech company, BYJU'S (Think and Learn Pvt. Ltd), offers a fun, engaging, and comprehensive educational experience through a unique collaboration with Disney India. The app uses Disney's timeless stories and characters, offering customized, interactive learning journeys that adapt to individual learning patterns. Built upon BYJU'S expertise in educational content, the learning app uses beloved characters and stories from Disney franchises like Frozen, Cars, Toy Story, and Lion King to create an engaging educational environment.",
         "url": "https://www.byjuslearning.com/",
         "heroImage": "astroseal_77.png",
-        "internalpath": "byjus-learning-app-featuring-disney",
-        "ogimage": "placeholder.png"
+        "internalpath": "byjus-learning-app-featuring-disney"
     },
     {
         "companyName": "TotallyKidz Ad Platform",
@@ -956,8 +915,7 @@
         "description": "Panelpolls is a company that has been rewarding its panelists with cash since 1999. They focus on a youthful demographic including families, kids and teens, conducting surveys on fun and interesting topics. They collaborate with high-quality, top-tier client partners.",
         "url": "https://www.panelpolls.com",
         "heroImage": "astroseal_79.png",
-        "internalpath": "panelpollscom",
-        "ogimage": "placeholder.png"
+        "internalpath": "panelpollscom"
     },
     {
         "companyName": "WildCraft: Animal Sim Online",
@@ -968,8 +926,7 @@
         "description": "Wildcraft is an RPG adventure that lets users explore nature as a wild animal and raise a family in a 3D world. Users can choose their own animal avatar including a wolf, fox or lynx and join online multiplayer games to interact and protect their family with friends. As the user's family legacy expands, new animal breeds become unlockable.",
         "url": "https://turborocketgames.com/games/wildcraft/",
         "heroImage": "placeholder.png",
-        "internalpath": "wildcraft-animal-sim-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "wildcraft-animal-sim-online"
     },
     {
         "companyName": "Tynker",
@@ -1016,8 +973,7 @@
         "description": "Wonder Workshop, founded in 2012, is an award-winning company creating educational toys and applications focused on teaching children how to code. Their aim is to facilitate fun and meaningful learning experiences, fostering creativity and problem-solving skills. The company incorporates play-testing with children throughout the development process to ensure their products are fun and frustration-free.",
         "url": "https://www.makewonder.com/en/dash/",
         "heroImage": "astroseal_84.png",
-        "internalpath": "dash-and-dot-companion-apps-wonder-and-blockly",
-        "ogimage": "placeholder.png"
+        "internalpath": "dash-and-dot-companion-apps-wonder-and-blockly"
     },
     {
         "companyName": "Zigazoo Kids",
@@ -1028,8 +984,7 @@
         "description": "Zigazoo is a well-regarded and entertaining social platform designed specifically for children. The platform encourages users, known as Zigazooers, to participate in video challenges created by popular children's brands. After completing the challenges, these videos can then be shared with their friends.",
         "url": "https://zigazoo.com",
         "heroImage": "astroseal_85.png",
-        "internalpath": "zigazoo-kids",
-        "ogimage": "placeholder.png"
+        "internalpath": "zigazoo-kids"
     },
     {
         "companyName": "Dino Planet",
@@ -1039,7 +994,6 @@
         "audience": "3 - 8",
         "description": "Dino Planet is an innovative pre-primary education application in Vietnam that blends modern technology with the theory of multiple intelligences proposed by Howard Gardner and the standard program of the Ministry of Education and Training. The application seeks to create an engaging and creative learning experience for students by promoting the development of the eight \"intelligences\" discussed by Gardner. The ultimate goal is to help students acquire knowledge, develop comprehensive skills, and inspire a passion for learning.",
         "url": "https://dinoplanet.com.au",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_86.png",
         "internalpath": "dino-planet"
     },
@@ -1052,8 +1006,7 @@
         "description": "Kiddoverse is an all-inclusive early learning program offering a range of fun educational games for children. The program allows children to embark on various self-selected adventures such as assembling truck puzzles, interacting with animals, or constructing a farm using stickers. In addition to play, Kiddoverse also facilitates learning in areas such as letter names, shapes, colors, and early vocabulary while ensuring an engaging experience.",
         "url": "https://22learn.com",
         "heroImage": "astroseal_87.png",
-        "internalpath": "toddler-learning-games-kiddoverse",
-        "ogimage": "placeholder.png"
+        "internalpath": "toddler-learning-games-kiddoverse"
     },
     {
         "companyName": "Accessibyte.com",
@@ -1064,8 +1017,7 @@
         "description": "Accessibyte Online provides software for visually impaired and blind users, offering self-voicing and highly visual apps to ease their access to information. These apps encompass a variety of purposes, including typing, studying and gaming. The technology is particularly designed for students and teachers, and can be accessed at both school and home.",
         "url": "https://www.accessibyte.com/",
         "heroImage": "astroseal_88.png",
-        "internalpath": "accessibytecom",
-        "ogimage": "placeholder.png"
+        "internalpath": "accessibytecom"
     },
     {
         "companyName": "AgentPiggy.com",
@@ -1076,8 +1028,7 @@
         "description": "AgentPiggy offers fun and practical banking solutions designed specifically for children aged 5-15 years old. By implementing a gaming element, they make banking engaging and educational for young individuals. The company operates an innovative virtual piggy bank system, enabling kids to learn financial management in an enjoyable manner.",
         "url": "https://www.agentpiggy.com",
         "heroImage": "astroseal_89.png",
-        "internalpath": "agentpiggycom",
-        "ogimage": "placeholder.png"
+        "internalpath": "agentpiggycom"
     },
     {
         "companyName": "Alma Studio",
@@ -1088,8 +1039,7 @@
         "description": "Alma Studio is a company that offers an audio-only application featuring a variety of content specifically catered to children aged 0 to 10 years. The app contains a vast range of original audio stories, podcasts, and music that cater to different times of the day and learning needs. It includes bedtime and daytime stories, educational content, entertainment segments, meditations, and lullabies.",
         "url": "https://www.almastudio.com/",
         "heroImage": "astroseal_90.png",
-        "internalpath": "alma-studio",
-        "ogimage": "placeholder.png"
+        "internalpath": "alma-studio"
     },
     {
         "companyName": "Finding Stuff Out Web Game",
@@ -1100,8 +1050,7 @@
         "description": "The Finding Stuff Out Online Season 5 game lets players enter into the imaginative universe of the character Zoey, merging reality with various subjects she enjoys investigating. This arcade/action game tests players' skills as they navigate through the four games of Zoey's Worlds. It is specifically designed for school-age children, not only playing through concepts from Finding Stuff Out episodes but also enhancing their spatial awareness, problem-solving, and computational thinking skills.",
         "url": "https://findingstuffout.com/fso5/world.html",
         "heroImage": "astroseal_91.png",
-        "internalpath": "finding-stuff-out-web-game",
-        "ogimage": "placeholder.png"
+        "internalpath": "finding-stuff-out-web-game"
     },
     {
         "companyName": "Look Kool Website",
@@ -1112,8 +1061,7 @@
         "description": "The Look Kool digital experience operates an interactive website with six intellectually challenging games, various online activities, and bonus educational videos. These games enhance children's understanding of fun concepts presented in the series such as technological problem solving and math skills. Additionally, they offer exclusive web-only content for entertainment and to facilitate the development of children's spatial reasoning skills.",
         "url": "https://lookkool.ca/",
         "heroImage": "astroseal_92.png",
-        "internalpath": "look-kool-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "look-kool-website"
     },
     {
         "companyName": "Raven's Quest Web Game",
@@ -1121,9 +1069,8 @@
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 8",
-        "description": "The game allows players to explore the diverse regions of Canada, traditionally the territories of the First Nations, M\u00e9tis, and Inuit peoples. It encourages player engagement by involving them in quests to retrieve culturally-significant artifacts from these communities. The main objective of the game lies in assisting animal characters to recover hidden items that bear importance in their First Nations, M\u00e9tis, and Inuit customs.",
+        "description": "The game allows players to explore the diverse regions of Canada, traditionally the territories of the First Nations, Métis, and Inuit peoples. It encourages player engagement by involving them in quests to retrieve culturally-significant artifacts from these communities. The main objective of the game lies in assisting animal characters to recover hidden items that bear importance in their First Nations, Métis, and Inuit customs.",
         "url": "https://www.ravensquest.ca/",
-        "ogimage": "placeholder.png",
         "heroImage": "placeholder.png",
         "internalpath": "ravens-quest-web-game"
     },
@@ -1136,8 +1083,7 @@
         "description": "Mystery Files HQ is an engaging online adventure game where players assume the role of agents, investigating clues and cracking mystery cases alongside characters like E.B., Kyla, and Aunt Tilly. The game challenges players to learn about the evolution of technology and its impact on daily life. This learning journey offers a deep understanding of the significant changes in both Canadian and international societies over time.",
         "url": "https://themysteryfiles.com",
         "heroImage": "placeholder.png",
-        "internalpath": "the-mystery-files-web-game",
-        "ogimage": "placeholder.png"
+        "internalpath": "the-mystery-files-web-game"
     },
     {
         "companyName": "Wacky Story World Web Game",
@@ -1148,8 +1094,7 @@
         "description": "As an AI, I'm unable to provide a summary due to the lack of information given about the company. The text provided does not offer any details regarding the company's operations, services, or industry. Please provide a more detailed description for a summary to be possible.",
         "url": "https://www.tvokids.com/school-age/games/wacky-story-world-wacky-word-show-0 ",
         "heroImage": "placeholder.png",
-        "internalpath": "wacky-story-world-web-game",
-        "ogimage": "placeholder.png"
+        "internalpath": "wacky-story-world-web-game"
     },
     {
         "companyName": "Mondly Kids by Pearson",
@@ -1160,8 +1105,7 @@
         "description": "Mondly Kids is a children-oriented app designed to teach new languages leveraging their native language. The application provides an engaging learning experience which children find fun and entertaining, forgetting they are in a learning process. It makes building a future linguistic foundation for children simpler than ever.",
         "url": "https://www.mondly.com/kids",
         "heroImage": "astroseal_96.png",
-        "internalpath": "mondly-kids-by-pearson",
-        "ogimage": "placeholder.png"
+        "internalpath": "mondly-kids-by-pearson"
     },
     {
         "companyName": "Mammouth 3 mini site",
@@ -1208,8 +1152,7 @@
         "description": "BabyTV is a premier worldwide television channel designed to cater to preschoolers, toddlers, and their parents. The company produces high-quality children's videos that aim to familiarize young viewers with their surroundings. Their programming content, created with expert guidance, features short episodes, lullabies, educational games, and activities for children.",
         "url": "https://www.babytv.com/apps/",
         "heroImage": "astroseal_100.png",
-        "internalpath": "babytv",
-        "ogimage": "placeholder.png"
+        "internalpath": "babytv"
     },
     {
         "companyName": "Masterhobbies.online",
@@ -1244,8 +1187,7 @@
         "description": "Behrman House Online Learning Center is an educational platform that combines proven teaching methods and Hebrew and Judaics materials. The online system is designed to be user-friendly, enabling users to adopt innovative methods in their Jewish studies. This digital initiative seeks to assist in the continuity of lifelong Jewish learning.",
         "url": "https://www.behrmanhouse.com/playlearn",
         "heroImage": "astroseal_103.png",
-        "internalpath": "behrman-house-online-learning-center",
-        "ogimage": "placeholder.png"
+        "internalpath": "behrman-house-online-learning-center"
     },
     {
         "companyName": "I Spy With Lola",
@@ -1280,8 +1222,7 @@
         "description": "16 Hudson is a TV series that lends its characters, designs, and music to interactive storybooks. The books are narrative driven, such as one tale involving Lola disrupting Lili's Norooz party, which results in Lili seeing her younger sister in a new light. These storybooks offer fans of 16 Hudson exciting opportunities to engage further with the world of the show in a fun and engaging way.",
         "url": "https://16hudson.com/storybooks_lili_new_year.php",
         "heroImage": "astroseal_106.png",
-        "internalpath": "16-hudson-lilis-new-year-ebook",
-        "ogimage": "placeholder.png"
+        "internalpath": "16-hudson-lilis-new-year-ebook"
     },
     {
         "companyName": "Reading Eggs Junior Websites",
@@ -1339,7 +1280,6 @@
         "audience": "8 - 12",
         "description": "Bookopolis is a child-friendly social platform and book finding tool geared towards cultivating a lifelong passion for reading in children aged 7-12. It offers a secure and engaging online space for elementary and middle school children to discuss books and reading with their peers. Additionally, it serves as a resource for teachers to fulfill reading and writing curriculum goals through online book reviews, book reports, and reading logs.",
         "url": "https://bookopolis.com/",
-        "ogimage": "placeholder.png",
         "heroImage": "placeholder.png",
         "internalpath": "bookopoliscom"
     },
@@ -1351,7 +1291,6 @@
         "audience": "0 - 5",
         "description": "KidzInMind is a digital platform offering fun and educational apps specifically designed and tested for toddlers. The platform is equipped with parental control features to maintain a safe digital environment by preventing internet access and in-app purchases. The company ensures all its apps are free from inappropriate language, adult content, hidden charges, and advertising.\n",
         "url": "http://www.kidzinmind.com",
-        "ogimage": "placeholder.png",
         "heroImage": "placeholder.png",
         "internalpath": "kidzinmind"
     },
@@ -1399,7 +1338,6 @@
         "audience": "5 - 12",
         "description": "DK Findout! is dedicated to producing the ultimate teaching tool for educators and students alike. The program offers easy-to-access, authoritative content with subject-based, curriculum-linked articles to aid classroom learning and teaching. It also provides up-to-date resources and creative ideas suitable for assignments and projects.",
         "url": "https://www.dkfindout.com",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_116.png",
         "internalpath": "dk-find-out"
     },
@@ -1436,8 +1374,7 @@
         "description": "The company offers an extensive math program that utilizes automated Adaptive Learning to strengthen students' foundational math skills and evolve them into critical mathematical thinkers. The program guarantees students are operating at an optimal learning pace while simultaneously enhancing their mathematical abilities and problem-solving strategies. The curriculum encompasses a wide range of topics including Basic Operations, Fractions, Percentages, Ratio & Proportion, Numeration, Geometry, Data, Statistics, Graphs, Probability, Patterns, and Algebra.",
         "url": "https://www.bagginthedragon.com",
         "heroImage": "placeholder.png",
-        "internalpath": "baggin-the-dragon-maths-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "baggin-the-dragon-maths-online"
     },
     {
         "companyName": "Math Invaders Online",
@@ -1448,8 +1385,7 @@
         "description": "Maths Invaders Online is a learning platform that enhances comprehensive maths processing power and fluency in maths facts. It provides hundreds of questions for fast-paced learning, making use of adaptive technology to cater to each student's needs. This system encompasses a wide variety of mathematics topics, such as addition, subtraction, multiplication, division, fractions, decimals, percentages, numeration, square roots, powers, counting squares, and directed numbers.",
         "url": "https://www.mathsinvaders.com",
         "heroImage": "placeholder.png",
-        "internalpath": "math-invaders-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "math-invaders-online"
     },
     {
         "companyName": "Typing Tournament Online",
@@ -1460,8 +1396,7 @@
         "description": "Typing Tournament is an interactive course designed to teach touch typing through a variety of 128 lessons, games and drills. The course progressively introduces the keyboard to users, encouraging correct finger placement, and allows users to begin at their current typing level and progress at their own pace. The program, which utilizes a medieval tournament theme to make learning engaging, also offers useful management tools for parents and teachers.",
         "url": "https://www.typingtournament.com",
         "heroImage": "placeholder.png",
-        "internalpath": "typing-tournament-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "typing-tournament-online"
     },
     {
         "companyName": "Volcanic Panic Reading Success Online",
@@ -1472,8 +1407,7 @@
         "description": "The company offers a comprehensive reading program focused on developing core skills in students through automated Adaptive Learning. Their program covers a wide range of areas, including phonics, phonemics, sight words, advanced vocabulary, comprehension, and literary appreciation. With an aim to lay a solid foundation in reading, the program also works to enrich each child's overall reading experience.",
         "url": "https://www.volcanicpanic.com.au",
         "heroImage": "placeholder.png",
-        "internalpath": "volcanic-panic-reading-success-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "volcanic-panic-reading-success-online"
     },
     {
         "companyName": "Words Rock Online",
@@ -1484,8 +1418,7 @@
         "description": "Words Rock Online is a literacy program that utilizes adaptive learning methods to progressively teach the intricacies of the English language. The program covers a wide range of language concepts including grammar, punctuation, spelling, idioms, metaphors, and other linguistic elements. Moreover, it fosters higher-order language thinking and problem-solving skills.",
         "url": "https://www.wordsrock.com",
         "heroImage": "placeholder.png",
-        "internalpath": "words-rock-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "words-rock-online"
     },
     {
         "companyName": "WORD Force Reading Adventures",
@@ -1496,8 +1429,7 @@
         "description": "WORD Force Reading Adventures is a complimentary, game-oriented reading program designed to make learning exciting for children. The program features humorous characters and an engaging \"save the world\" plot to keep kids entertained. This approach helps children develop crucial literacy skills while having a great time.",
         "url": "https://wordforce.everfi.com/",
         "heroImage": "astroseal_124.png",
-        "internalpath": "word-force-reading-adventures",
-        "ogimage": "placeholder.png"
+        "internalpath": "word-force-reading-adventures"
     },
     {
         "companyName": "Every Body Curious website",
@@ -1508,8 +1440,7 @@
         "description": "Every Body Curious is an educational web series aimed at young viewers and their parents, exploring topics related to sexuality, anatomy, and healthy relationships in a digital context. The series features renowned sex educators addressing genuine inquiries from children, promoting open and honest discussions. The content is designed for families seeking evidence-based resources to help guide such conversations with their kids.",
         "url": "https://everybodycurious.com/",
         "heroImage": "astroseal_125.png",
-        "internalpath": "every-body-curious-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "every-body-curious-website"
     },
     {
         "companyName": "Fabulingua",
@@ -1532,8 +1463,7 @@
         "description": "Storybook is a leading parenting app used in over 60 countries, offering resources for improving your child's sleep such as bedtime stories, lullabies, and massage techniques. The app provides more than 25 massage series and bedtime stories catered to children aged 0-12 years old. It promotes a relaxing sleep routine for children by combining lullabies and stories with soothing massages.",
         "url": "https://storybook-app.com",
         "heroImage": "astroseal_127.png",
-        "internalpath": "storybook-bedtime-stories-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "storybook-bedtime-stories-app"
     },
     {
         "companyName": "Famli Kids",
@@ -1556,8 +1486,7 @@
         "description": "Funexpected is an acclaimed platform designed to cultivate mathematical thinking in children aged 3-7. It contributes to the improvement of essential skills like number sense, logic, spatial intelligence, as well as coding and algorithm comprehension. The platform prioritizes fostering an understanding of these skills as opposed to simple memorization.",
         "url": "https://funexpectedapps.com/",
         "heroImage": "astroseal_129.png",
-        "internalpath": "funexpected-math-for-kids",
-        "ogimage": "placeholder.png"
+        "internalpath": "funexpected-math-for-kids"
     },
     {
         "companyName": "Tiny Minies: Learning Games",
@@ -1568,8 +1497,7 @@
         "description": "Tiny Minies is an app, specially curated by child development experts and teachers, that facilitates learning through interactive games for pre-school children. It promotes intellectual, physical, and social-emotional growth in kids under five through its diverse range of games. In addition to offering personalized progress plans, the app emphasizes effective utilization of screen time for everyday brain development activities.",
         "url": "https://kids.gamester.com.tr",
         "heroImage": "astroseal_130.png",
-        "internalpath": "tiny-minies-learning-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "tiny-minies-learning-games"
     },
     {
         "companyName": "Puppy Rayn & Friends website",
@@ -1579,7 +1507,6 @@
         "audience": "5 - 8",
         "description": "Puppy Rayn and Friends is a company which aims to create an enjoyable and safe platform for children, families, and educators that is free of adverts. It primarily hosts the Puppy Rayn and Friends Comic Strip, while also supplying a variety of engaging and educational content that can be downloaded at no cost. Moreover, the company offers customizable, low-cost worksheet services tailored for educators and caretakers.",
         "url": "http://www.puppyrayn.com",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_131.png",
         "internalpath": "puppy-rayn--friends-website"
     },
@@ -1628,8 +1555,7 @@
         "description": "The Gumboot Kids is a company that inspires kids to discover the marvels of nature through mindful exploration. Their offerings include videos like \"Scout & the Gumboot Kids\", \"Daisy & the Gumboot Kids\" and \"Jessie & the Gumboot Kids\", which explore nature mysteries, crafts, and songs respectively. Additionally, they also provide learning kits, home activities, books, and plush toys for sale to enhance the learning experience.",
         "url": "https://www.gumbootkids.com",
         "heroImage": "placeholder.png",
-        "internalpath": "gumboot-kids-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "gumboot-kids-website"
     },
     {
         "companyName": "Kids Hub (France",
@@ -1640,8 +1566,7 @@
         "description": "As there is no description provided, it is impossible to write a summary about this specific company's activities. We would need detailed information regarding their services, mission, and history. Once we have that information, we can create a comprehensive summary of what the company does.",
         "url": "https://www.kidshub.mobi/",
         "heroImage": "astroseal_136.png",
-        "internalpath": "kids-hub-france",
-        "ogimage": "placeholder.png"
+        "internalpath": "kids-hub-france"
     },
     {
         "companyName": "MrsWordsmith.com",
@@ -1676,8 +1601,7 @@
         "description": "Eggstime.com is a company that specializes in providing educational content through interactive stories, games, and videos. The company includes various conceptual characters, like King Eggs, MagiK Eggs, Lucky Eggs, and Happy Eggs, who embark on a variety of adventures. These experiences aim to engage young minds, making learning a fun and enjoyable process.",
         "url": "https://eggstime.com",
         "heroImage": "astroseal_139.png",
-        "internalpath": "eggstimecom",
-        "ogimage": "placeholder.png"
+        "internalpath": "eggstimecom"
     },
     {
         "companyName": "Futaba Classroom Games for Kids",
@@ -1700,8 +1624,7 @@
         "description": "The company provides an engaging and interactive platform for kids to bake their favorite Pizza. It offers a real-life baking experience but without the associated kitchen mess. The organization ensures children have fun while learning the process of making a pizza from scratch.",
         "url": "https://www.kidoverse.net/",
         "heroImage": "astroseal_141.png",
-        "internalpath": "kido-pizzeria-game",
-        "ogimage": "placeholder.png"
+        "internalpath": "kido-pizzeria-game"
     },
     {
         "companyName": "ABC Garbage Truck",
@@ -1712,8 +1635,7 @@
         "description": "The company creates an interactive app for kids, designed to make learning enjoyable and engaging. The app features a garbage truck with a robotic arm, tasked with collecting all the letters of the alphabet in a neighborhood setting. By touching a letter, the user can see the garbage truck animate and collect it, thus assisting children in learning the alphabet.",
         "url": "http://www.kids1stpuzzles.com",
         "heroImage": "astroseal_142.png",
-        "internalpath": "abc-garbage-truck",
-        "ogimage": "placeholder.png"
+        "internalpath": "abc-garbage-truck"
     },
     {
         "companyName": "AsKids Insights Portal (surveys and panels for kids and families",
@@ -1748,8 +1670,7 @@
         "description": "KIDZBOP.fr serves as the French platform for KIDZ BOP, the top music brand targeting children aged 5 to 12 in the U.S. The brand produces recreations of popular songs, performed by children for children. Beyond music, the KIDZ BOP brand encompasses videos, live events, licensed merchandise, and more, all celebrating the unique voices of children.",
         "url": "https://kidzbop.fr/home",
         "heroImage": "astroseal_145.png",
-        "internalpath": "kidz-bop-kids-france-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidz-bop-kids-france-website"
     },
     {
         "companyName": "Kidz Bop Kids (Germany website",
@@ -1760,8 +1681,7 @@
         "description": "KIDZBOP.de is the official German platform for KIDZ BOP, the leading U.S. music brand geared towards children aged 5-12. The brand features current popular songs recreated and performed by children for their peers. KIDZ BOP showcases the genuine voices of children through their music, videos, live performances, and various licensed merchandise.",
         "url": "https://kidzbop.de/home",
         "heroImage": "astroseal_146.png",
-        "internalpath": "kidz-bop-kids-germany-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidz-bop-kids-germany-website"
     },
     {
         "companyName": "Kidz Bop Kids (Mexico website",
@@ -1772,8 +1692,7 @@
         "description": "KIDZBOP.mx is the accredited Mexican platform for KIDZ BOP, a leading children's music brand in the U.S. KIDZ BOP specializes in producing popular contemporary songs covered by children aged 5 to 12. The brand supports children's self-expression through various mediums such as music, videos, live performances, and a range of licensed merchandise.\n",
         "url": "https://kidzbop.mx/home",
         "heroImage": "astroseal_147.png",
-        "internalpath": "kidz-bop-kids-mexico-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidz-bop-kids-mexico-website"
     },
     {
         "companyName": "Kidz Bop Kids (UK website",
@@ -1784,8 +1703,7 @@
         "description": "KIDZBOP.co.uk serves as the UK's official platform for KIDZ BOP, the U.S.'s leading music brand for children aged 5-12 years. The brand specializes in producing today's top songs, which are performed by children for their peers. Besides music, KIDZ BOP also engages its young audience in other ways such as with videos, live performances, and through offering licensed merchandise.",
         "url": "https://kidzbop.co.uk/home",
         "heroImage": "astroseal_148.png",
-        "internalpath": "kidz-bop-kids-uk-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidz-bop-kids-uk-website"
     },
     {
         "companyName": "Kinderling Kids Radio",
@@ -1796,8 +1714,7 @@
         "description": "The company offers live radio and on-demand audio programs specifically tailored for children. Their range of content includes meditations, music, and stories. These programs aim to assist in calming kids and aiding their daily routines, garnering appreciative feedback from parents as well.",
         "url": "https://www.kinderlingkids.com/",
         "heroImage": "astroseal_149.png",
-        "internalpath": "kinderling-kids-radio",
-        "ogimage": "placeholder.png"
+        "internalpath": "kinderling-kids-radio"
     },
     {
         "companyName": "Kujo's Kid Zone website",
@@ -1820,8 +1737,7 @@
         "description": "As there is no description provided, it is not feasible to offer a summary about the company's operations. Additional information detailing the company's industry, services, and target market is needed. Once more details are available, a precise summary can be written.",
         "url": "https://squat.telequebec.tv/jeux/42",
         "heroImage": "astroseal_151.png",
-        "internalpath": "la-liste-des-choses-qui-existent-survey-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "la-liste-des-choses-qui-existent-survey-website"
     },
     {
         "companyName": "Feelu",
@@ -1832,8 +1748,7 @@
         "description": "Feelu is a company that supports the mental health of children aged 3-8 years by enhancing their emotional and social abilities. The company provides a platform that introduces various emotions to children using interactive videos and games which also promote mindfulness, kindness, and gratitude. Additionally, Feelu offers guidance on how children can respond to bullying situations effectively and safely.",
         "url": "https://feelu.ca/",
         "heroImage": "astroseal_152.png",
-        "internalpath": "feelu",
-        "ogimage": "placeholder.png"
+        "internalpath": "feelu"
     },
     {
         "companyName": "LogicLike Kids",
@@ -1848,7 +1763,7 @@
         "internalpath": "logiclike-kids"
     },
     {
-        "companyName": "EggMania \u2013 Where's the Egg in Exactly?",
+        "companyName": "EggMania – Where's the Egg in Exactly?",
         "publisher": "Mania Tales",
         "productType": "Mobile",
         "productCategory": "Education",
@@ -1856,8 +1771,7 @@
         "description": "EggMania is an award-winning children's tale designed as an engaging and educational tool in today's digital world, focusing on areas such as language development, creative writing, art, science, and speech. Spanning 190 pages, the story combines original art and advanced vocabulary with interactive, touch-sensitive definitions. Along with its enriching content, EggMania also incorporates an educational game to facilitate learning through play.",
         "url": "http://maniatales.com/",
         "heroImage": "astroseal_154.png",
-        "internalpath": "eggmania--wheres-the-egg-in-exactly",
-        "ogimage": "placeholder.png"
+        "internalpath": "eggmania--wheres-the-egg-in-exactly"
     },
     {
         "companyName": "Ducktv.tv",
@@ -1868,8 +1782,7 @@
         "description": "DuckTV provides animations, cartoons, and miniseries, offering fun and entertainment designed specificaly for young viewers. The company features beloved characters like Shippi the sheep and Sappi the pink elephant, engaging children in entertaining activities such as roller skating. DuckTV also promotes creative crafting tutorials led by the character Hubbi, all without advertisement interruptions, broadcasting a variety of humorous stories 24/7.",
         "url": "https://ducktv.tv/",
         "heroImage": "astroseal_155.png",
-        "internalpath": "ducktvtv",
-        "ogimage": "placeholder.png"
+        "internalpath": "ducktvtv"
     },
     {
         "companyName": "MuslimKids.TV (child login area",
@@ -1892,8 +1805,7 @@
         "description": "Founded in 2020, the company provides a broad selection of children's content that includes cartoons, videos, podcasts, e-books, and games. The offerings are designed for entertainment and to supplement e-learning programs. Content is organized and categorized according to age range.",
         "url": "https://www.kidsandfun.net",
         "heroImage": "astroseal_157.png",
-        "internalpath": "kids-and-fun-south-africa",
-        "ogimage": "placeholder.png"
+        "internalpath": "kids-and-fun-south-africa"
     },
     {
         "companyName": "Be Centsable Smart website for kids",
@@ -1904,8 +1816,7 @@
         "description": "BeCentsableSmart.com offers a financial literacy subscription program meant to help parents educate their children aged 6-12 about money management. It comprises a wide variety of materials including animated TV series, comics, books, and lesson plans. The program also incorporates engaging games and merchandise to further enhance children's learning experience.",
         "url": "https://becentsablesmart.com",
         "heroImage": "astroseal_158.png",
-        "internalpath": "be-centsable-smart-website-for-kids",
-        "ogimage": "placeholder.png"
+        "internalpath": "be-centsable-smart-website-for-kids"
     },
     {
         "companyName": "AcamyKids: La App para aprender jugando",
@@ -1928,8 +1839,7 @@
         "description": "As the text suggests, there is no available description for the company. Therefore, it's currently impossible to provide an accurate summary of the company's operations or services. Once more information becomes available, a comprehensive summary can be created.",
         "url": "https://clearwaterkids.org",
         "heroImage": "placeholder.png",
-        "internalpath": "clearwater-kids-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "clearwater-kids-website"
     },
     {
         "companyName": "Cadbury PlayPad app",
@@ -1940,8 +1850,7 @@
         "description": "The company provides augmented reality experiences aimed at enhancing child development. They offer interactive learning about a variety of topics including animals, monuments, and vehicles. These fun educational experiences assist children in developing their knowledge in an engaging way.",
         "url": "https://cadburyplaypad.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "cadbury-playpad-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "cadbury-playpad-app"
     },
     {
         "companyName": "GENIONS",
@@ -1976,8 +1885,7 @@
         "description": "Originator's Endless Learning Academy is an interactive educational app designed to prepare children for preschool, kindergarten, first grade, and further education. The use of the app is fun for kids, involving a broad and ever-expanding curriculum, facilitated by engaging Endless monsters. This technique, which is used by millions of children, ensures joyful learning while giving children a crucial head start in schooling.",
         "url": "https://www.originatorkids.com/?p=982",
         "heroImage": "astroseal_164.png",
-        "internalpath": "endless-learning-academy",
-        "ogimage": "placeholder.png"
+        "internalpath": "endless-learning-academy"
     },
     {
         "companyName": "Papumba Academy",
@@ -1988,8 +1896,7 @@
         "description": "Papumba Academy is a global learning app aimed at children aged 2 to 6, designed to facilitate learning through play. The interactive platform allows kids to acquire knowledge about animals, the alphabet, numbers, music, and drawing in a fun and engaging way. The app, designed by early education experts, also includes features for logic and memory training, and is certified by reputable partners in the early childhood learning sector.",
         "url": "https://www.papumba.com",
         "heroImage": "placeholder.png",
-        "internalpath": "papumba-academy",
-        "ogimage": "placeholder.png"
+        "internalpath": "papumba-academy"
     },
     {
         "companyName": "Pazu Games App Series",
@@ -2000,8 +1907,7 @@
         "description": "Pazu provides a variety of fun and educational games for children, aimed at enhancing their essential skills. The platform is globally recommended by educational experts, trusted by millions of parents. By subscribing to Pazu, parents ensure their children receive engaging educational content.",
         "url": "https://pazugames.com",
         "heroImage": "astroseal_166.png",
-        "internalpath": "pazu-games-app-series",
-        "ogimage": "placeholder.png"
+        "internalpath": "pazu-games-app-series"
     },
     {
         "companyName": "Zac Browser",
@@ -2012,8 +1918,7 @@
         "description": "The company is certified by the kidSAFE Seal Program, demonstrating it provides a secure interactive environment for children. The kidSAFE Seal serves as an authorization mark for companies that prioritize children's safety in technology. As a certified member, the company is allowed to display the esteemed kidSAFE seal.",
         "url": "https://zacbrowser.com/",
         "heroImage": "astroseal_167.png",
-        "internalpath": "zac-browser",
-        "ogimage": "placeholder.png"
+        "internalpath": "zac-browser"
     },
     {
         "companyName": "Smurfs' Magic Match",
@@ -2036,8 +1941,7 @@
         "description": "LingoAce is an educational technology company specialized in offering immersive language learning experiences for learners aged three to 15 years, across various proficiency levels and cultural backgrounds. The company utilizes experienced, native-speaking teachers to deliver globally accredited Chinese syllabi using animations, gamification, and AI in both group and individual live classes. The primary goal of LingoAce is to equip the upcoming generation to become confident communicators, opening doors to future opportunities.",
         "url": "https://student.lingoace.com/login.html?redirect=%2Fhome",
         "heroImage": "astroseal_169.png",
-        "internalpath": "lingoace-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "lingoace-web-and-mobile"
     },
     {
         "companyName": "Prickly Bear",
@@ -2060,8 +1964,7 @@
         "description": "ProProfs offers paid products for creating quizzes and online courses beneficial for education and business sectors. As a leading software as a service (SAAS) provider, it provides tools for building and testing knowledge. These tools include Quiz, Survey, Knowledge base, and Training products, aimed towards trainers, marketers and educators; all the features are powerfully simple and don't require users to download or learn expensive software.\n",
         "url": "https://www.proprofs.com",
         "heroImage": "astroseal_171.png",
-        "internalpath": "proprofscom-paid-products",
-        "ogimage": "placeholder.png"
+        "internalpath": "proprofscom-paid-products"
     },
     {
         "companyName": "Q",
@@ -2072,8 +1975,7 @@
         "description": "Q-files is an innovative platform that offers the first completely free and ad-free online encyclopedia tailored for children. The company works to provide a comprehensive learning resource for young users. It stands out in its dedication to making key knowledge accessible worldwide without the interference of advertisements.",
         "url": "https://www.q-files.com/",
         "heroImage": "astroseal_172.png",
-        "internalpath": "q",
-        "ogimage": "placeholder.png"
+        "internalpath": "q"
     },
     {
         "companyName": "ReadON Learning Platform",
@@ -2084,8 +1986,7 @@
         "description": "ReadON is a company that focuses on providing services for children facing difficulties in learning. Their offerings are specifically tailored to assist these children in overcoming their educational challenges. The core essence of their design is to improve and aid the learning abilities of struggling learners.",
         "url": "https://readon.ai/",
         "heroImage": "astroseal_173.png",
-        "internalpath": "readon-learning-platform",
-        "ogimage": "placeholder.png"
+        "internalpath": "readon-learning-platform"
     },
     {
         "companyName": "ProblemScape",
@@ -2096,8 +1997,7 @@
         "description": "ProblemScape focuses on introductory algebra and is aligned with the 6th-grade Expressions and Equations strand of the CCSS. The learning takes place in the 3D virtual world of Arithma, offering an immersive and interactive learning experience. The game's scenario is based on an adventure where students help the locals who can't do math due to the kidnapping of the math experts, the Xperts, by the PiRats.",
         "url": "https://www.roundedlearning.com/games",
         "heroImage": "astroseal_174.png",
-        "internalpath": "problemscape",
-        "ogimage": "placeholder.png"
+        "internalpath": "problemscape"
     },
     {
         "companyName": "Run Jump Play TV website",
@@ -2108,8 +2008,7 @@
         "description": "Run Jump Play is a compelling animated series that tells the stories of five children living on the autism spectrum, who discover bravery, camaraderie, and enjoyment through sports. The series dispels myths and shatters stereotypes associated with autism. Its goal is to promote inclusivity, as well as support and respect for athletes navigating the spectrum.",
         "url": "https://runjumpplay.tv/",
         "heroImage": "astroseal_175.png",
-        "internalpath": "run-jump-play-tv-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "run-jump-play-tv-website"
     },
     {
         "companyName": "PlayKids+ Kids Learning Games",
@@ -2120,8 +2019,7 @@
         "description": "PlayKids+ is a company that provides a range of educational games and popular TV shows and cartoons for children's learning and entertainment. The platform allows for offline play, enhancing user accessibility. The primary objective of PlayKids is to promote an enjoyable learning experience for children.",
         "url": "https://us.playkids.com/",
         "heroImage": "astroseal_176.png",
-        "internalpath": "playkids-kids-learning-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "playkids-kids-learning-games"
     },
     {
         "companyName": "Imagination Station San Diego website",
@@ -2132,8 +2030,7 @@
         "description": "The Scripps Performing Arts Academy is a professional training establishment for ballet, theatre, dance, and music. It offers a creative atmosphere designed to boost self-confidence, self-esteem, and teamwork among its students. While doing so, the academy ensures the fundamental values of dance as an art form are not compromised.",
         "url": "https://www.imaginationstationsandiego.com",
         "heroImage": "astroseal_177.png",
-        "internalpath": "imagination-station-san-diego-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "imagination-station-san-diego-website"
     },
     {
         "companyName": "The Fun Farm",
@@ -2153,9 +2050,8 @@
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
-        "description": "Simone and her friends Lana, Bevan and Jackson spend their time in Rowat High School's MakerSpace and on a video chat platform called \u2018Konnect\u2019. They engage in constant group discussions and entertain each other. Their collective activities involve solving high school dilemmas and deciphering the Emerald Code.",
+        "description": "Simone and her friends Lana, Bevan and Jackson spend their time in Rowat High School's MakerSpace and on a video chat platform called ‘Konnect’. They engage in constant group discussions and entertain each other. Their collective activities involve solving high school dilemmas and deciphering the Emerald Code.",
         "url": "https://emeraldcode.ca/",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_179.png",
         "internalpath": "emeraldcodeca"
     },
@@ -2180,8 +2076,7 @@
         "description": "The company provides an interactive app designed to nurture self-reliance among kids. Through task and ad quests within the app, kids can learn important life skills, and earn rewards that reflect their personal interests. The company also offers parents resources to monitor their child's progress and tools to help develop these skills further.",
         "url": "https://sidequest.net/",
         "heroImage": "astroseal_181.png",
-        "internalpath": "sidequest-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "sidequest-web-and-mobile"
     },
     {
         "companyName": "Annedroids Web Games",
@@ -2191,7 +2086,6 @@
         "audience": "3 - 8",
         "description": "Annedroids is a TV show targeted at 6-11 year-olds, featuring a young genius who constructs sentient robots in a junkyard. Annedroids Interactive leverages the show's characters and settings to enhance and develop the scientific concepts promoted on the series. Both the TV show and its digital properties serve as positive role models to engage children with STEM curriculum - Science, Technology, Engineering and Math.\n",
         "url": "https://www.annedroids.com/",
-        "ogimage": "placeholder.png",
         "heroImage": "placeholder.png",
         "internalpath": "annedroids-web-games"
     },
@@ -2204,8 +2098,7 @@
         "description": "Dino Dana is an Emmy Award-winning dinosaur-themed show featuring a female lead, the first of its kind. Dino Dana Digital extends the show's narrative, allowing fans to engage with Dana's enthusiastic exploration and discovery. Apart from information about the show and its characters, DinoDana.com also offers engaging, vibrant HTML5 games for children, introducing them to numerous dinosaurs and fostering their own sense of discovery.",
         "url": "https://www.dinodana.com/",
         "heroImage": "astroseal_183.png",
-        "internalpath": "dinodana-website",
-        "ogimage": "placeholder.png"
+        "internalpath": "dinodana-website"
     },
     {
         "companyName": "Giver 150 Kids Web Game",
@@ -2216,8 +2109,7 @@
         "description": "Giver150 is a TV show which chronicles the journey of kids from various parts of Canada who converge in Ottawa to construct the country's largest playground in commemoration of Canada's 150th anniversary. It also features an affiliated website that includes 10 scavenger hunt modules, each related to a different Canadian province or territory. These modules showcase a playground being built and allow users to view blueprints that transport them into historical moments in Canada, as they search for the remaining designs.",
         "url": "https://giver150kids.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "giver-150-kids-web-game",
-        "ogimage": "placeholder.png"
+        "internalpath": "giver-150-kids-web-game"
     },
     {
         "companyName": "StoryChopsticks",
@@ -2228,8 +2120,7 @@
         "description": "StoryChopsticks is a company that focuses on educating young children in the Chinese language through creative storytelling techniques. Their unique teaching methods involve interaction with children's imaginations, making learning Chinese a fascinating experience. Their innovative approach ensures both an engaging and interesting linguistic journey for kids.",
         "url": "https://storychopsticks.com",
         "heroImage": "astroseal_185.png",
-        "internalpath": "storychopsticks",
-        "ogimage": "placeholder.png"
+        "internalpath": "storychopsticks"
     },
     {
         "companyName": "Super Simple (mobile",
@@ -2251,7 +2142,6 @@
         "audience": "0 - 5",
         "description": "Super Simple has been facilitating fun and straightforward educational experience for pre-schoolers globally for over a decade. It produces songs and shows targeted at this age group. These materials have gained substantial trust and love from audiences on the internet.",
         "url": "https://www.youtube.com/c/supersimplesongs/videos",
-        "ogimage": "placeholder.png",
         "heroImage": "placeholder.png",
         "internalpath": "super-simple-songs-youtube-video-content"
     },
@@ -2288,8 +2178,7 @@
         "description": "BASIQs is a company devoted to enhancing the intellectual understanding of sports in young athletes. They aim to take the mental aspects of sports beyond traditional practices, training, and scouting, and integrate them into commonly used smart devices. The company's primary mission is to promote learning and foster a love for the sport in athletes.",
         "url": "https://www.basiqs.com",
         "heroImage": "astroseal_190.png",
-        "internalpath": "basiqs-baseball",
-        "ogimage": "placeholder.png"
+        "internalpath": "basiqs-baseball"
     },
     {
         "companyName": "Gummies Playground",
@@ -2300,8 +2189,7 @@
         "description": "Gummies Playground is an educational games platform designed for preschoolers, based on a curriculum approved by educators. It offers a variety of nine different games ranging in difficulty level, allowing adjustment to accommodate a child's abilities. These games assist children in learning basic concepts such as numbers, colors, shapes, and animals, while also addressing fundamental cognitive and physical milestones.",
         "url": "https://www.squinkgames.com/",
         "heroImage": "astroseal_191.png",
-        "internalpath": "gummies-playground",
-        "ogimage": "placeholder.png"
+        "internalpath": "gummies-playground"
     },
     {
         "companyName": "Pango and friends",
@@ -2311,7 +2199,6 @@
         "audience": "0 - 8",
         "description": "Pango offers interactive storybooks designed to foster engagement and learning for children, allowing them to drive the story forward through physical interactions such as touching, shaking, and scratching. The company provides five unpublished stories, filled with humorous adventures, vibrant illustrations, and adorable characters. Pango's unique offer is available in a variety of languages including English, French, Spanish, German, Italian, Chinese, Korean, and Japanese.\n",
         "url": "https://www.studio-pango.com/",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_192.png",
         "internalpath": "pango-and-friends"
     },
@@ -2324,8 +2211,7 @@
         "description": "SyncUP Kids Watch is a smartwatch specifically designed for children aged 5 to 12. Parents or trusted individuals can communicate with and track the watch using companion apps designed for iPhone and Android. These apps contain a variety of location features, enabling reliable real-time monitoring of the child's location.",
         "url": "https://www.t-mobile.com/content/t-mobile/consumer/internet-of-things/iot-devices/syncup-kids-smartwatch.html",
         "heroImage": "astroseal_193.png",
-        "internalpath": "t",
-        "ogimage": "placeholder.png"
+        "internalpath": "t"
     },
     {
         "companyName": "Reading.com: Raising Readers",
@@ -2348,8 +2234,7 @@
         "description": "Fundo Kidz is a digital educational game tailored to the cognitive development of children aged 2-7 years, aiming to entertain while promoting personal growth through engaging activities. The gaming activities span a wide range, many of which are inspired by real-life experiences to keep the learning process relevant and interesting. It also provides detailed reports to parents, enabling them to monitor their child's time usage and performance in each activity.",
         "url": "https://fundokidz.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "fundo-kidz",
-        "ogimage": "placeholder.png"
+        "internalpath": "fundo-kidz"
     },
     {
         "companyName": "BYJUS.com (India site",
@@ -2372,8 +2257,7 @@
         "description": "Tigapo is a groundbreaking provider of solutions for amusement centers, including family entertainment centers and arcade bars. The company pioneers innovative approaches like a cloud-based management solution. It also features a cashless, contactless payment system for these entertainment venues.",
         "url": "https://tigapo.nayax.com",
         "heroImage": "astroseal_197.png",
-        "internalpath": "tigapo-play-system",
-        "ogimage": "placeholder.png"
+        "internalpath": "tigapo-play-system"
     },
     {
         "companyName": "Dounia augmented reality",
@@ -2396,8 +2280,7 @@
         "description": "Toon Goggles offers an on-demand entertainment service specially designed for kids. The platform provides a variety of kid-safe cartoons, games, and music. They offer a free trial for anyone wanting to check out their services.",
         "url": "https://www.toongoggles.com",
         "heroImage": "astroseal_199.png",
-        "internalpath": "toongogglescom",
-        "ogimage": "placeholder.png"
+        "internalpath": "toongogglescom"
     },
     {
         "companyName": "TotallyAwesome Apps & Sites Advertising Solutions",
@@ -2420,8 +2303,7 @@
         "description": "Mother Goose Club provides award-winning educational content primarily designed for preschoolers, including hundreds of games, books, and videos that are updated on a monthly basis. Their characters engage young children through song, rhyme, play, and dance to make learning an entertaining experience. The company's mission is to promote early literacy, mathematics, and multiple other elementary-level subjects, catering to parents, teachers, and children worldwide.",
         "url": "https://storytoys.com/apps/mother-goose-club/",
         "heroImage": "astroseal_201.png",
-        "internalpath": "mother-goose-club-kids--baby-videos-books-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "mother-goose-club-kids--baby-videos-books-games"
     },
     {
         "companyName": "Transum.org",
@@ -2456,8 +2338,7 @@
         "description": "Math Makers is a unique, award-winning educational game designed to make learning math enjoyable for kids aged 4-10. The game cleverly incorporates mathematical problem-solving into gameplay, helping young learners grasp challenging concepts like place value, fractions, addition, and subtraction. Loved by millions globally, this innovative learning tool transforms the math learning experience by teaching concepts in a non-studious manner.",
         "url": "https://ululab.com/math-makers/",
         "heroImage": "astroseal_204.png",
-        "internalpath": "math-makers",
-        "ogimage": "placeholder.png"
+        "internalpath": "math-makers"
     },
     {
         "companyName": "OckyPocky",
@@ -2468,8 +2349,7 @@
         "description": "OckyPocky is an interactive learning app specifically designed for children aged 2-6 years, offering numerous activity-based videos. The app is designed for children to use independently, requiring minimal parental assistance, thus freeing up time for parents. It also provides a platform for parent-child interaction through shared viewing experiences for further bonding.",
         "url": "https://www.ockypocky.com/",
         "heroImage": "astroseal_205.png",
-        "internalpath": "ockypocky",
-        "ogimage": "placeholder.png"
+        "internalpath": "ockypocky"
     },
     {
         "companyName": "Kiddies Club (Spain",
@@ -2480,8 +2360,7 @@
         "description": "As there is no description available, I cannot provide an informative and accurate summary about the company. With proper information such as the industry the company functions in, its philosophy, services or products, and its target audience, a suitable summary can be created. Please provide more details about the company.",
         "url": "https://www.kiddies-club.com/",
         "heroImage": "astroseal_206.png",
-        "internalpath": "kiddies-club-spain",
-        "ogimage": "placeholder.png"
+        "internalpath": "kiddies-club-spain"
     },
     {
         "companyName": "TeensUP",
@@ -2492,8 +2371,7 @@
         "description": "The company's activities are currently not specified. Further information would be required to summarize what the company does. Due to a lack of available description, it is difficult to discern the nature of its operation or industry.",
         "url": "https://www.teensup.net/",
         "heroImage": "astroseal_207.png",
-        "internalpath": "teensup",
-        "ogimage": "placeholder.png"
+        "internalpath": "teensup"
     },
     {
         "companyName": "WuKong Education (web and mobile",
@@ -2516,8 +2394,7 @@
         "description": "AdaptedMind is a company that offers personalized learning plans for children by identifying individual strengths and weaknesses through their algorithm. Their learning programs include subjects such as math, reading, science, and social studies. They make education enjoyable by incorporating interactive games and incentives like maps, levels, cute monsters, and rewards into the learning process.",
         "url": "https://www.adaptedmind.com",
         "heroImage": "astroseal_209.png",
-        "internalpath": "adaptedmindcom-learning-platform-and-mini",
-        "ogimage": "placeholder.png"
+        "internalpath": "adaptedmindcom-learning-platform-and-mini"
     },
     {
         "companyName": "Afterverse Games (PK XD, PK XD Runner, Crafty Lands",
@@ -2528,8 +2405,7 @@
         "description": "PK XD is a company that offers a platform for players to create and engage in their own virtual experiences. It provides an opportunity to join an adventure with millions of other participants worldwide. The company boasts an amazing and expansive online world for users to explore, adding to their overall gaming experience.",
         "url": "https://afterverse.com/en",
         "heroImage": "astroseal_210.png",
-        "internalpath": "afterverse-games-pk-xd-pk-xd-runner-crafty-lands",
-        "ogimage": "placeholder.png"
+        "internalpath": "afterverse-games-pk-xd-pk-xd-runner-crafty-lands"
     },
     {
         "companyName": "AI World School website",
@@ -2576,8 +2452,7 @@
         "description": "Family Orbit is an app designed for family safety and connectivity that includes features like location tracking and child monitoring. The app allows parents to monitor their children's phone activities, as well as receive automatic notifications when their kids arrive at or leave predetermined locations. Furthermore, it provides a platform for secure private messaging and photo sharing among family members.",
         "url": "https://www.familyorbit.com/",
         "heroImage": "astroseal_214.png",
-        "internalpath": "family-orbit",
-        "ogimage": "placeholder.png"
+        "internalpath": "family-orbit"
     },
     {
         "companyName": "Aumio Sleep & Meditation App",
@@ -2600,8 +2475,7 @@
         "description": "AWE Learning is a company that specializes in developing digital learning tools that prioritize literacy. They have a range of platinum products including the Early Literacy Station, AfterSchool Edge, and Platinum Online. These products are specifically targeted towards young learners aged between 2 and 12 years old.",
         "url": "https://awelearning.com/",
         "heroImage": "astroseal_216.png",
-        "internalpath": "awe-learnings-platinum-products-early-literacy-station-afterschool-edge-platinum-online",
-        "ogimage": "placeholder.png"
+        "internalpath": "awe-learnings-platinum-products-early-literacy-station-afterschool-edge-platinum-online"
     },
     {
         "companyName": "BanjoRobinson.com",
@@ -2612,8 +2486,7 @@
         "description": "Banjo delivers year-round letters, stickers, and surprises to children that aim to spark their curiosity about the fascinating world around them. The company encourages children's creativity by nudging them to write or draw in response to the received items. The ultimate goal is to enhance their interest in travel, humor, kindness, and compassion.",
         "url": "https://www.banjorobinson.com/",
         "heroImage": "astroseal_217.png",
-        "internalpath": "banjorobinsoncom",
-        "ogimage": "placeholder.png"
+        "internalpath": "banjorobinsoncom"
     },
     {
         "companyName": "Bebi Toddler Games",
@@ -2636,8 +2509,7 @@
         "description": "Lingo Bus is an online platform dedicated to teaching Chinese to children aged 5 through 12. The company offers live classes over the internet to students globally. Their service is designed to provide flexible and convenient scheduling for children and their families.",
         "url": "https://www.lingobus.com/",
         "heroImage": "astroseal_219.png",
-        "internalpath": "lingo-bus-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "lingo-bus-web-and-mobile"
     },
     {
         "companyName": "Pixical tutoring platform",
@@ -2648,8 +2520,7 @@
         "description": "Pixical is a company that provides live online lessons in a variety of disciplines. They offer instruction in chess, music, art, dance, and photography. The lessons are delivered by experienced teachers for an enriched learning experience.",
         "url": "https://pixical.com/",
         "heroImage": "astroseal_220.png",
-        "internalpath": "pixical-tutoring-platform",
-        "ogimage": "placeholder.png"
+        "internalpath": "pixical-tutoring-platform"
     },
     {
         "companyName": "Blippi.com",
@@ -2664,16 +2535,15 @@
         "internalpath": "blippicom"
     },
     {
-        "companyName": "Caderno M\u00e1gico",
-        "publisher": "Caderno M\u00e1gico",
+        "companyName": "Caderno Mágico",
+        "publisher": "Caderno Mágico",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
         "description": "Learn Playing uses an interactive, rewards-based method to make learning engaging and enjoyable, thereby enhancing school success rates. The company has developed over 14,000 exercises following early childhood and primary education curricula, ranging from Infantile 1 to Sixth Course. Their approach aims to foster children's future by making education more playful and accessible.",
         "url": "https://www.cadernomagico.com.br",
         "heroImage": "placeholder.png",
-        "internalpath": "caderno-m\u00e1gico",
-        "ogimage": "placeholder.png"
+        "internalpath": "caderno-mágico"
     },
     {
         "companyName": "Caribu",
@@ -2732,8 +2602,7 @@
         "description": "Mello is a unique platform that encourages children to create their own stories by intertwining gaming and literature elements. By promoting personal expression, Mello essentially empowers children to become the architects of their narratives. Thus, this tool not only facilitates fun and learning but also fosters creativity and innovation among children.\n",
         "url": "https://www.daidream.io/#solution",
         "heroImage": "placeholder.png",
-        "internalpath": "tales-of-mello",
-        "ogimage": "placeholder.png"
+        "internalpath": "tales-of-mello"
     },
     {
         "companyName": "Dopiverse app",
@@ -2744,8 +2613,7 @@
         "description": "Dopiverse is a renowned educational game for children aged 6-12, conceived by a team of skilled educators, designers, and programmers. It innovatively merges gaming, education, and animation to offer an engaging learning platform. While interacting with friends globally, kids can join this virtual universe to learn in an enjoyable and safe environment.",
         "url": "https://dopiverse.com/",
         "heroImage": "astroseal_228.png",
-        "internalpath": "dopiverse-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "dopiverse-app"
     },
     {
         "companyName": "Educacross (Web and Mobile",
@@ -2755,7 +2623,6 @@
         "audience": "5 - 12",
         "description": "Educacross is an innovative teaching-learning platform that specializes in Mathematics and Literacy for children aged between 4 to 12. Utilising techniques such as gamification, customization, and digital games, it offers engaging and developmentally suitable education experiences for different educational stakeholders. Powered by Artificial Intelligence, the platform has been proven through research to contribute substantially towards students' performance and learning evolution.",
         "url": "https://www.educacross.com.br",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_229.png",
         "internalpath": "educacross-web-and-mobile"
     },
@@ -2816,8 +2683,7 @@
         "description": "GlishArabic is an interactive platform dedicated to teaching Arabic to children. It uses English as a bridge language in the learning process. The platform ensures a safe learning environment for young learners.",
         "url": "https://glisharabic.com/",
         "heroImage": "astroseal_234.png",
-        "internalpath": "glisharabic-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "glisharabic-web-and-mobile"
     },
     {
         "companyName": "Happypillar",
@@ -2852,8 +2718,7 @@
         "description": "Aha World is a mobile application that enables users to create personalized role playing games. It offers an explorative gaming environment filled with fascinating characters, impressive locations, and cute animals. The app also provides building games and dress-up dolls, allowing users to bring their dream games to life.",
         "url": "https://ahaworld.com",
         "heroImage": "astroseal_237.png",
-        "internalpath": "aha-world",
-        "ogimage": "placeholder.png"
+        "internalpath": "aha-world"
     },
     {
         "companyName": "Bookful",
@@ -2864,8 +2729,7 @@
         "description": "Bookful is a company that fosters a love for reading in kids through interactive 3D/AR animations, making learning both fun and engaging. These animations bring the book's characters and plot to life, enhancing children's comprehension of the content. The company successfully transforms screen time into an active educational experience, enjoyed by children, parents, and teachers alike.\n",
         "url": "https://bookful.app/",
         "heroImage": "astroseal_238.png",
-        "internalpath": "bookful",
-        "ogimage": "placeholder.png"
+        "internalpath": "bookful"
     },
     {
         "companyName": "EduEdu",
@@ -2888,8 +2752,7 @@
         "description": "iPracticeMath is a web-based educational platform designed to make learning math engaging and enjoyable, primarily for elementary and middle school students. The company's mission is to offer improved education to all, with a simple, step-by-step teaching methodology. They are also working on extending their coverage to include high school math.",
         "url": "https://www.ipracticemath.com",
         "heroImage": "placeholder.png",
-        "internalpath": "ipracticemathcom",
-        "ogimage": "placeholder.png"
+        "internalpath": "ipracticemathcom"
     },
     {
         "companyName": "JoMo Kids",
@@ -2924,8 +2787,7 @@
         "description": "KIDOZ In-App is a service that increases user engagement by providing kids with access to entertaining and relevant content within an existing app. It uses a content recommendation system that sorts through a library of over 200,000 items to find content that suits the specific application. The system also utilizes machine learning technology to continually adjust the content stream based on its performance, enhancing user retention and repeated use of the app.",
         "url": "https://kidoz.net/kidoz-os",
         "heroImage": "placeholder.png",
-        "internalpath": "kidoz-os",
-        "ogimage": "placeholder.png"
+        "internalpath": "kidoz-os"
     },
     {
         "companyName": "KidzType.com",
@@ -2948,8 +2810,7 @@
         "description": "Touch typists focus on speed, often overlooking the importance of accuracy which can lead to numerous errors in their work. Gaining muscle memory through understanding the location of keys on the keyboard is a useful solution for this as it allows for more accurate typing. Known as touch typing, this method improves efficiency as it eliminates the need to consistently check the keyboard or the source text, thereby minimizing interruptions in thought processes.",
         "url": "https://typedojo.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "typedojocom",
-        "ogimage": "placeholder.png"
+        "internalpath": "typedojocom"
     },
     {
         "companyName": "Kyna English",
@@ -2960,8 +2821,7 @@
         "description": "As there is no provided description, it's not possible to summarize what the company does. In order to provide an accurate summary, further details about the company are needed. Once information on the company's industry, services, products, or mission is provided, a summary can be generated.",
         "url": "https://kynaforkids.vn",
         "heroImage": "astroseal_246.png",
-        "internalpath": "kyna-english",
-        "ogimage": "placeholder.png"
+        "internalpath": "kyna-english"
     },
     {
         "companyName": "Spanish Safari",
@@ -3032,8 +2892,7 @@
         "description": "Misa is a company that provides next-generation social robots. These advanced machines are designed to interact with humans in a social environment. The company's aim is to create and improve robotic technology to enable meaningful human-robot interactions.",
         "url": "https://www.heymisa.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "misa-robot--companion-app",
-        "ogimage": "placeholder.png"
+        "internalpath": "misa-robot--companion-app"
     },
     {
         "companyName": "Jackrun (Alexa Skill",
@@ -3068,8 +2927,7 @@
         "description": "Rockerbox News is an educational application targeted towards curious children aged 8-12, offering a wealth of global news, facts, and knowledge. The app allows users to personalize their newsfeeds to acquire daily updates on various countries and cultures. The content is written by contributors worldwide, offering diverse perspectives.",
         "url": "https://myrockerbox.com",
         "heroImage": "astroseal_255.png",
-        "internalpath": "rockerbox-news",
-        "ogimage": "placeholder.png"
+        "internalpath": "rockerbox-news"
     },
     {
         "companyName": "Nex Playground",
@@ -3104,8 +2962,7 @@
         "description": "The Berenstain Bears is a widely beloved book series that has been popular since its first title was released in 1962. The books follow the adventures of the Bear family, consisting of Mama, Papa, Sister, Brother, Honey, and their friends throughout Bear Country. These stories are also available as informative and entertaining book apps.",
         "url": "https://edu.oceanhousemedia.com/berenstain-bears/",
         "heroImage": "astroseal_258.png",
-        "internalpath": "berenstain-bears",
-        "ogimage": "placeholder.png"
+        "internalpath": "berenstain-bears"
     },
     {
         "companyName": "Otsimo | Special Education Autism Learning Games",
@@ -3116,8 +2973,7 @@
         "description": "Otsimo Special Education is a mobile educational app tailormade for children with learning or developmental disorders such as autism, down's syndrome, and apraxia. It offers over 200 gamified activities intended to enhance motor and core skills in a user-friendly manner. Recognized as the best Autism App by Autism Parenting Magazine, Otsimo is ad-free and includes a feature to provide families with daily progress reports.",
         "url": "https://otsimo.com/en/",
         "heroImage": "astroseal_259.png",
-        "internalpath": "otsimo--special-education-autism-learning-games",
-        "ogimage": "placeholder.png"
+        "internalpath": "otsimo--special-education-autism-learning-games"
     },
     {
         "companyName": "Picture Lingo",
@@ -3128,8 +2984,7 @@
         "description": "Picture Lingo is a specialized application developed for young English learners up to the age of 7. It offers an engaging learning experience through audio and illustrated rhyming books. The app's primary focus is to facilitate language learning in a fun, enjoyable way.",
         "url": "https://picturelingo.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "picture-lingo",
-        "ogimage": "placeholder.png"
+        "internalpath": "picture-lingo"
     },
     {
         "companyName": "PlaymatesToys.com",
@@ -3140,8 +2995,7 @@
         "description": "Playmates Toys, with its 50-year history, is a leading and innovative company in the global toy industry. They specialize in the creation of imaginative products and the development of brand franchises. Their business approach focuses on generating profitable, long-term brand management and distribution.",
         "url": "https://www.playmatestoys.com/",
         "heroImage": "astroseal_261.png",
-        "internalpath": "playmatestoyscom",
-        "ogimage": "placeholder.png"
+        "internalpath": "playmatestoyscom"
     },
     {
         "companyName": "Jenga.com",
@@ -3151,7 +3005,6 @@
         "audience": "5 - 13+",
         "description": "The company produces a classic Jenga game, which includes 54 precision-crafted, hardwood blocks. The game is set up using an included loading tray to build the initial tower. The blocks are stacked in sets of three, placed alongside each other and at right angles to the previous level for gameplay.",
         "url": "https://www.jenga.com",
-        "ogimage": "placeholder.png",
         "heroImage": "astroseal_262.png",
         "internalpath": "jengacom"
     },
@@ -3164,8 +3017,7 @@
         "description": "Monster Guard is an innovative application developed to help children overcome their fear of monsters, known as teraphobia. Rather than denying the existence of monsters, the app empowers children and alters their perception by introducing 'Monty,' a friendly monster with bedtime tales. The character's reassuring presence helps teach children that monsters can be furry and friendly, aiming to ensure scare-free bedtime, a solution many parents have been seeking.",
         "url": "https://monsterguardapp.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "monster-guard",
-        "ogimage": "placeholder.png"
+        "internalpath": "monster-guard"
     },
     {
         "companyName": "Robotify EDU platform",
@@ -3176,8 +3028,7 @@
         "description": "Robotify is an Ed-Tech firm that specializes in making coding and robotics knowledge more reachable. This global company uses in-browser robotics simulation as a learning tool. Its main aim is to aid both students and educators in the tech sector.",
         "url": "https://edu.robotify.com",
         "heroImage": "astroseal_264.png",
-        "internalpath": "robotify-edu-platform",
-        "ogimage": "placeholder.png"
+        "internalpath": "robotify-edu-platform"
     },
     {
         "companyName": "Rocket ad service for youth",
@@ -3188,8 +3039,7 @@
         "description": "Rocket is an award-winning content marketing business that caters specifically to brands targeting families. The company specializes in creating and sharing content that engages various demographic groups, ranging from parents of preschoolers to the Gen-Z population. They assist in delivering successful marketing campaigns for their clients.",
         "url": "https://www.wearerocket.co.uk/",
         "heroImage": "placeholder.png",
-        "internalpath": "rocket-ad-service-for-youth",
-        "ogimage": "placeholder.png"
+        "internalpath": "rocket-ad-service-for-youth"
     },
     {
         "companyName": "Rooplay",
@@ -3224,8 +3074,7 @@
         "description": "Curious World is an early learning app, aimed at children ages 2-7, that fosters a love of learning through offering hundreds of ad-free games, books, and videos. The content, which is carefully selected and frequently updated, allows children to explore their interests and increase self-confidence. The app also provides peace of mind to parents as it paves the way for their child's future success.",
         "url": "https://www.curiousworld.com",
         "heroImage": "astroseal_268.png",
-        "internalpath": "curious-world-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "curious-world-mobile"
     },
     {
         "companyName": "Curious World (Web",
@@ -3236,8 +3085,7 @@
         "description": "Curious World is an educational platform specifically designed to inspire children between ages 2-7 through an ad-free selection of books, games, and videos that encourages them to explore their interests. The company regularly adds fresh content to keep children continuously engaged and fosters a love for learning that prepares them for future success. The platform ensures a worry-free experience for parents as all content is carefully curated.",
         "url": "https://kidsy.curiousworld.com",
         "heroImage": "placeholder.png",
-        "internalpath": "curious-world-web",
-        "ogimage": "placeholder.png"
+        "internalpath": "curious-world-web"
     },
     {
         "companyName": "Hopster Coding Safari for Kids",
@@ -3272,8 +3120,7 @@
         "description": "Fact Monster is a company that provides reliable educational resources including an encyclopedia, dictionary, thesaurus, atlas, a homework center, and educational games. Their content is designed to supplement learning outside the classroom, providing children with facts in a safe environment. The material is written and edited by experts, ensuring trusted and reliable information.",
         "url": "https://www.factmonster.com",
         "heroImage": "astroseal_272.png",
-        "internalpath": "factmonstercom",
-        "ogimage": "placeholder.png"
+        "internalpath": "factmonstercom"
     },
     {
         "companyName": "JoJoin (web and mobile",
@@ -3284,8 +3131,7 @@
         "description": "JoJoin is a digital content platform centered on fostering the growth of overseas children through Chinese reading. The platform provides services to children aged 3-12 years globally, reaching 37 different countries and regions. The company's objective is to motivate children's interest in Chinese reading and help them develop independent reading habits while enhancing their self-expression skills.",
         "url": "https://www.jojoin.cc/",
         "heroImage": "astroseal_273.png",
-        "internalpath": "jojoin-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "jojoin-web-and-mobile"
     },
     {
         "companyName": "Smartli (web and mobile",
@@ -3308,8 +3154,7 @@
         "description": "Starfall Education Foundation is a nonprofit organization that provides free and low-pricing learning experiences for children, encouraging successful learning through exploration. Utilizing their website and classrooms, Starfall facilitates a fun, collaborative environment where children can learn through the engaging tools of wonderment and play. The teaching approach emphasizes positive reinforcement to foster confidence, motivation, and success among children.",
         "url": "https://www.starfall.com",
         "heroImage": "astroseal_275.png",
-        "internalpath": "starfallcom",
-        "ogimage": "placeholder.png"
+        "internalpath": "starfallcom"
     },
     {
         "companyName": "StudioArabiya.com",
@@ -3332,8 +3177,7 @@
         "description": "Studycat is a company founded by educators and parents aiming to make language learning enjoyable for children worldwide through its digital curriculums and game-based approach. They strive to foster independent and confident learners, and involve parents, teachers, and children in the learning process. The ultimate goal of Studycat is to empower young learners by presenting languages as an opportunity to expand their horizons.",
         "url": "https://studycat.com/",
         "heroImage": "astroseal_277.png",
-        "internalpath": "studycat-fun-app-series-english-chinese-french-german-spanish",
-        "ogimage": "placeholder.png"
+        "internalpath": "studycat-fun-app-series-english-chinese-french-german-spanish"
     },
     {
         "companyName": "Skills Tutelage (web and mobile",
@@ -3344,8 +3188,7 @@
         "description": "The company provides an innovative application designed to assist non-vocal or less communicative children in expressing their feelings, moods, and emotions. The tool uses a selection of fun and aesthetically pleasing pictures, which the children can choose from to successfully convey their thoughts and needs. This application is geared toward promoting better communication between such children and their parents, siblings, family, and friends.",
         "url": "https://skillstutelage.com/",
         "heroImage": "placeholder.png",
-        "internalpath": "skills-tutelage-web-and-mobile",
-        "ogimage": "placeholder.png"
+        "internalpath": "skills-tutelage-web-and-mobile"
     },
     {
         "companyName": "Tankee",
@@ -3380,8 +3223,7 @@
         "description": "UG Labs specializes in developing a conversational engine that creates an interactive experience for children and families. This technological advancement deviates from the conventional methods, blending play and education effectively. Through this, the company has the capability of bringing characters to life, thereby enriching the user experience.",
         "url": "https://www.uglabs.io/",
         "heroImage": "astroseal_281.png",
-        "internalpath": "yuugi-conversational-ai-speech",
-        "ogimage": "placeholder.png"
+        "internalpath": "yuugi-conversational-ai-speech"
     },
     {
         "companyName": "Utopia AI Moderator solution",
@@ -3392,8 +3234,7 @@
         "description": "Utopia AI Moderator provides an automated moderation service for user-generated content, including chats, posts, comments, user profiles, and pictures. The system filters out inappropriate content such as explicit materials, bullying, harassment, phishing and spam, and explains to the user why their message was blocked. This patented technology designed to protect children is available in all languages.",
         "url": "https://utopiaanalytics.com/utopia-ai-moderator/",
         "heroImage": "placeholder.png",
-        "internalpath": "utopia-ai-moderator-solution",
-        "ogimage": "placeholder.png"
+        "internalpath": "utopia-ai-moderator-solution"
     },
     {
         "companyName": "Animal Jam",
@@ -3428,8 +3269,7 @@
         "description": "The company is dedicated to aiding families in their spiritual journey by connecting them with God. They do this mainly through offering a range of books, stories, and other resources. Their mission is inspired by the scripture verse John 15:4, emphasizing mutual dwelling and connection with God.",
         "url": "https://www.gominno.com/",
         "heroImage": "astroseal_285.png",
-        "internalpath": "minno-kids-web-mobile-smart-tv",
-        "ogimage": "placeholder.png"
+        "internalpath": "minno-kids-web-mobile-smart-tv"
     },
     {
         "companyName": "Xplora Kids Smartwatches (X6Play and XGO3",

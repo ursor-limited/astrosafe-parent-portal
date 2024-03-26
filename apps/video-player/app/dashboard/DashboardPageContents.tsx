@@ -425,7 +425,6 @@ export default function DashboardPageContents() {
   const onScroll = () => {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
-      console.log(scrollTop, clientHeight, scrollHeight);
       if (scrollTop + clientHeight > scrollHeight - 800) {
         PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
           setLatestPageIndex(latestPageIndex + 1);

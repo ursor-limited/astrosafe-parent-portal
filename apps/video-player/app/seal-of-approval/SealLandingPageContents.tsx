@@ -3,7 +3,7 @@
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
@@ -40,6 +40,13 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   //   "booboo.txt",
   //   "text/plain"
   // );
+
+  const listRef = useRef(null);
+
+  const scrollIntoView = () =>
+    //@ts-ignore
+    listRef?.current?.scrollIntoView({ behavior: "smooth" });
+
   return (
     <AstroLandingPage
       fainterSpaceGlow
@@ -79,14 +86,18 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               </LandingPageViewport>,
             ]
           : []),
-        <LandingPageViewport
-          key="list"
-          supertitle="Out list"
-          title="AstroSafe Approved Companies"
-          mobile={isMobile}
-        >
-          <ApprovedCompaniesList mobile={isMobile} />
-        </LandingPageViewport>,
+        <Stack key="list" ref={listRef}>
+          <LandingPageViewport
+            supertitle="Our list"
+            title="AstroSafe Approved Companies"
+            mobile={isMobile}
+          >
+            <ApprovedCompaniesList
+              mobile={isMobile}
+              pageChangeCallback={scrollIntoView}
+            />
+          </LandingPageViewport>
+        </Stack>,
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
@@ -102,7 +113,12 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
           >
             Enrol to program
           </UrsorButton>
-          <UrsorButton size={isMobile ? "medium" : "large"} width="226px" dark>
+          <UrsorButton
+            size={isMobile ? "medium" : "large"}
+            width="226px"
+            dark
+            onClick={scrollIntoView}
+          >
             View list
           </UrsorButton>
         </Stack>

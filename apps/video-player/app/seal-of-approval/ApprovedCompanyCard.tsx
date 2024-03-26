@@ -35,18 +35,16 @@ export const ApprovedCompanyCard = (
           display: "flex",
         }}
       >
-        {props.ogimage ? (
-          <Image
-            src={`${S3_BASE_URL}/thumbnails/${props.ogimage}`}
-            alt="Approved company"
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        ) : (
-          <Stack sx={{ filter: "grayscale(100%)", opacity: 0.65 }}>
-            <GraphIllustration width="120px" height="120px" />
-          </Stack>
-        )}
+        <Image
+          src={
+            props.ogimage
+              ? `${S3_BASE_URL}/thumbnails/${props.ogimage}`
+              : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
+          }
+          alt="Approved company"
+          fill
+          style={{ objectFit: "cover" }}
+        />
       </div>
       <Stack flex={1} justifyContent="space-between">
         <Typography

@@ -8,7 +8,7 @@ import { useWindowSize } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import AstroLandingPage from "@/app/tools/multiplication-chart/[urlId]/AstroLandingPage";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { IApprovedCompany } from "../ApprovedCompaniesList";
+import { IApprovedCompany, S3_BASE_URL } from "../ApprovedCompaniesList";
 import { ApprovedCompanyCard } from "../ApprovedCompanyCard";
 import LandingPageViewport from "@/app/tools/multiplication-chart/[urlId]/LandingPageViewport";
 import { VisualLinkCardsSubtler } from "@/app/components/landing/VisualLinkCardsSubtler";
@@ -24,7 +24,7 @@ export default function IndividualSealLandingPageContents(
   const router = useRouter();
   return (
     <AstroLandingPage
-      title={[props.name, "AstroSafe Seal Member"]}
+      title={[props.companyName, "AstroSafe Seal Member"]}
       subtitle="This page confirms that the website, mobile app, or other technology shown below is a member in the AstroSAFE Seal Program. This means that the product below has been independently reviewed, certified, and/or listed by AstroSAFE to meet certain standards of online safety and/or privacy, and is authorised to display the AstroSAFE Seal shown below."
       mobile={isMobile}
       faqs={{
@@ -47,39 +47,60 @@ export default function IndividualSealLandingPageContents(
           pt="100px"
           px={isMobile ? "24px" : undefined}
         >
-          {props.screenshotUrl ? (
-            isMobile ? (
-              <div
-                style={{
-                  position: "relative",
-                  height: "320px",
-                  width: "100%",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                  boxShadow: "0 0 30px rgba(0,0,0,0.05)",
-                }}
-              >
+          <Stack position="relative">
+            <Stack
+              position="absolute"
+              top="50%"
+              left="50%"
+              sx={{ transform: "translate(-50%, -50%)" }}
+            >
+              <Typography variant="h2" color={PALETTE.font.light}>
+                {props.companyName}
+              </Typography>
+            </Stack>
+            {props.heroImage ? (
+              isMobile ? (
+                <div
+                  style={{
+                    position: "relative",
+                    height: "320px",
+                    width: "100%",
+                    borderRadius: "12px",
+                    overflow: "hidden",
+                    boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                  }}
+                >
+                  <Image
+                    src={
+                      props.heroImage
+                        ? `${S3_BASE_URL}/${props.heroImage}`
+                        : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
+                    }
+                    style={{ objectFit: "cover" }}
+                    fill
+                    alt={`${props.companyName} screenshot`}
+                    priority
+                  />
+                </div>
+              ) : (
                 <Image
-                  src={props.screenshotUrl}
-                  style={{ objectFit: "cover" }}
-                  fill
-                  alt={`${props.name} screenshot`}
+                  src={
+                    props.heroImage
+                      ? `${S3_BASE_URL}/${props.heroImage}`
+                      : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
+                  }
+                  width={1000}
+                  height={580}
+                  alt={`${props.companyName} screenshot`}
+                  style={{
+                    boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                    borderRadius: "12px",
+                  }}
+                  priority
                 />
-              </div>
-            ) : (
-              <Image
-                src={props.screenshotUrl}
-                width={1000}
-                height={580}
-                alt={`${props.name} screenshot`}
-                style={{
-                  boxShadow: "0 0 30px rgba(0,0,0,0.05)",
-                  borderRadius: "12px",
-                }}
-                priority
-              />
-            )
-          ) : null}
+              )
+            ) : null}
+          </Stack>
           <Stack width={isMobile ? "100%" : "1000px"}>
             <ApprovedCompanyCard {...props} mobile={isMobile} />
           </Stack>
@@ -93,7 +114,7 @@ export default function IndividualSealLandingPageContents(
           >
             <Typography bold>Description</Typography>
             <Typography color={PALETTE.secondary.grey[5]}>
-              {props.productDescription}
+              {props.description}
             </Typography>
           </Stack>
         </Stack>,
