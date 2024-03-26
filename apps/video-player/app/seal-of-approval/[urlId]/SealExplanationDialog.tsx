@@ -14,7 +14,7 @@ const SealExplanationDialog = (props: {
     onCloseCallback={props.closeCallback}
     noOverflowHidden
     dynamicHeight
-    noPadding
+    noPadding={props.mobile}
   >
     <Stack
       spacing={props.mobile ? undefined : "20px"}
@@ -79,7 +79,7 @@ const SealExplanationDialog = (props: {
         direction={props.mobile ? "column" : "row"}
         p="16px"
         boxSizing="border-box"
-        spacing="24px"
+        spacing={props.mobile ? "16px" : "24px"}
       >
         <Stack
           minWidth={props.mobile ? "100%" : "170px"}
