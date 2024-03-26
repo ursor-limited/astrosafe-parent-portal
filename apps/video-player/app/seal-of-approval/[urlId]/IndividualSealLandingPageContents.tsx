@@ -68,15 +68,20 @@ export default function IndividualSealLandingPageContents(
             pt="100px"
             px={isMobile ? "24px" : undefined}
           >
-            <Stack position="relative">
+            <Stack position="relative" width="100%">
               {props.heroImage?.includes("placeholder") ? (
                 <Stack
                   position="absolute"
                   top="50%"
                   left="50%"
                   sx={{ transform: "translate(-50%, -50%)" }}
+                  zIndex={2}
                 >
-                  <Typography variant="h2" color={PALETTE.font.light}>
+                  <Typography
+                    variant={isMobile ? "large" : "h2"}
+                    bold
+                    color={PALETTE.font.light}
+                  >
                     {props.companyName}
                   </Typography>
                 </Stack>
@@ -99,7 +104,11 @@ export default function IndividualSealLandingPageContents(
                           ? `${S3_BASE_URL}/${props.heroImage}`
                           : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
                       }
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        objectFit: "cover",
+                        boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                        borderRadius: "12px",
+                      }}
                       fill
                       alt={`${props.companyName} screenshot`}
                       priority
@@ -222,6 +231,7 @@ export default function IndividualSealLandingPageContents(
       <SealExplanationDialog
         open={explanationDialogOpen}
         closeCallback={() => setExplanationDialogOpen(false)}
+        mobile={isMobile}
       />
     </>
   );

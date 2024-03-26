@@ -173,6 +173,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
       <SealExplanationDialog
         open={explanationDialogOpen}
         closeCallback={() => setExplanationDialogOpen(false)}
+        mobile={isMobile}
       />
     </>
   );
