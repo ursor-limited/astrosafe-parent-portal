@@ -12,6 +12,7 @@ const SealExplanationDialog = (props: {
     open={props.open}
     onCloseCallback={props.closeCallback}
     noOverflowHidden
+    dynamicHeight
   >
     <Stack spacing="20px">
       <Stack
@@ -23,7 +24,8 @@ const SealExplanationDialog = (props: {
         spacing="24px"
       >
         <Stack
-          width="250px"
+          minWidth="170px"
+          width="170px"
           bgcolor="rgb(255,255,255)"
           justifyContent="center"
           alignItems="center"
@@ -50,6 +52,45 @@ const SealExplanationDialog = (props: {
             "4. Appropriate parent/guardian controls for managing child accounts.",
             "5. Provision of rules and educational resources addressing online safety.",
             "6. The product takes into account the accessibility needs of all kids.",
+          ].map((x, i) => (
+            <Typography key={i} color={PALETTE.secondary.grey[4]}>
+              {x}
+            </Typography>
+          ))}
+        </Stack>
+      </Stack>
+      <Stack
+        borderRadius="12px"
+        bgcolor="rgb(255,255,255)"
+        direction="row"
+        p="16px"
+        boxSizing="border-box"
+        spacing="24px"
+      >
+        <Stack
+          minWidth="170px"
+          width="170px"
+          bgcolor="rgb(255,255,255)"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="12px"
+          boxShadow={`0 0 30px ${"#ddd6ff"}`}
+        >
+          <Image
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+            alt="Astro seal"
+            height={80}
+            width={134}
+          />
+        </Stack>
+        <Stack spacing="5px">
+          <Typography bold>AstroSafe Approved</Typography>
+          <Typography color={PALETTE.secondary.grey[4]}>
+            Requires adherence to the following overarching principles:
+          </Typography>
+          {[
+            "1. Designed for use by children, families, and/or educational institutions.",
+            "2. Promoting learning and developmental outcomes for children.",
           ].map((x, i) => (
             <Typography key={i} color={PALETTE.secondary.grey[4]}>
               {x}
