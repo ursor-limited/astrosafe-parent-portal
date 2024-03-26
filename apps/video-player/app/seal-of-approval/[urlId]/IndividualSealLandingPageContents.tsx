@@ -134,7 +134,14 @@ export default function IndividualSealLandingPageContents(
               direction={isMobile ? "column" : "row"}
               spacing={isMobile ? "8px" : "12px"}
             >
-              <UrsorButton width="226px" dark variant="tertiary">
+              <UrsorButton
+                width="226px"
+                dark
+                variant="tertiary"
+                onClick={() =>
+                  (window.location.href = "mailto:hello@astrosafe.co")
+                }
+              >
                 Enrol now
               </UrsorButton>
               <UrsorButton
@@ -178,6 +185,9 @@ export default function IndividualSealLandingPageContents(
               width="226px"
               dark
               variant="tertiary"
+              onClick={() =>
+                (window.location.href = "mailto:hello@astrosafe.co")
+              }
             >
               Enrol to program
             </UrsorButton>

@@ -110,6 +110,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
             width="226px"
             dark
             variant="tertiary"
+            onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
           >
             Enrol to program
           </UrsorButton>
