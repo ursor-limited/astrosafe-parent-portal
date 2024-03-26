@@ -40,36 +40,24 @@
     "faqs": {
         "cards": [
             {
-                "question": "Is the AstroSafe Worksheet Generator free to use?",
-                "answer": "The worksheet generator is free for 30 days with no credit card details needed. After the trial period ends you will be prompted to upgrade to our paid product. Alternatively you can continue on the Lite plan which still provides full access but limits usage."
+                "question": "What is the AstroSafe Seal of Approval?",
+                "answer": "The AstroSafe seal of approval represents products, brands, and tools that our team believe help make the world a bit better for kids. We understand that building a better internet for kids is a team effort and want to recognise the teams across the globe making this goal a reality!"
             },
             {
-                "question": "Can I create different worksheets?",
-                "answer": "Of course - we have a bunch of tools to create different worksheets all across the math curriculum. Create a free account and check out the dashboard to see what you can create! If you want worksheets we don't currently offer - just email hello@astrosafe.co and let us know!"
+                "question": "How can I apply?",
+                "answer": "Send us an email at hello@astrosafe.co  our review team will ask a few brief questions and we will typically have an approval decision made within a week."
             },
             {
-                "question": "How do I select topics for the worksheets?",
-                "answer": "Choose from a wide range of math topics suitable for various grades and curriculum standards directly on the tool's interface."
+                "question": "How can I amend information about my company?",
+                "answer": "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we’ll fix it ASAP!"
             },
             {
-                "question": "Can I customize the worksheets?",
-                "answer": "Yes, the tool allows for customization in terms of difficulty level, number of questions, and specific math topics."
+                "question": "What are the evaluation criteria?",
+                "answer": "We evaluate if submissions meet the minimum standards on the following criteria: 1) Is it designed for use by children, families, and/or educational institutions? 2) Does it promote learning and developmental outcomes for children?"
             },
             {
-                "question": "How do I download or print the generated worksheets?",
-                "answer": "After generating the worksheet, options for downloading as a PDF or printing directly from the website will be provided."
-            },
-            {
-                "question": "Is there a fee for using this worksheet generator?",
-                "answer": "For detailed information on any potential costs or subscription models, please refer to the Astrosafe website."
-            },
-            {
-                "question": "How does the worksheet generator work?",
-                "answer": "The worksheet generator uses a mixture of AI and our templates to create worksheets fine-tuned for your classroom."
-            },
-            {
-                "question": "Do you offer school discounts?",
-                "answer": "Yes we do! If you're interested in creating an account for all of the teachers in your school please contact hello@astrosafe.co and we can create a plan that works for you!"
+                "question": "Is it free to apply to?",
+                "answer": "Of course! We don’t charge to be featured in our approved list, we only require the company meets our evaluation criteria."
             }
         ]
     }
