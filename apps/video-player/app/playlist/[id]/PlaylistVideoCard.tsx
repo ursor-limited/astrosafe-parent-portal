@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
-import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import Image from "next/image";
 import dayjs from "dayjs";

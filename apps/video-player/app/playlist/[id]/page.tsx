@@ -19,6 +19,10 @@ const DUMMY_CONTENTS: IPlaylist["contents"] = [
     contentId: "BOO",
   },
   {
+    type: "worksheet",
+    contentId: "65f80360d8210303bcf22e32",
+  },
+  {
     type: "video",
     contentId: "65f5f6bdd8210303bcf22dfb",
   },

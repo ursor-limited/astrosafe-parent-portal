@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
+import { useRouter } from "next/navigation";
 
 export interface ILink {
   id: string;
@@ -93,6 +94,7 @@ const LinkCard = (props: {
     [props.color]
   );
 
+  const router = useRouter();
   return (
     <Stack
       position="relative"
@@ -109,7 +111,7 @@ const LinkCard = (props: {
         boxSizing="border-box"
         flex={1}
         spacing="5px"
-        onClick={props.clickCallback}
+        onClick={() => router.push(props.url)}
         sx={{
           cursor: "pointer",
           transition: "0.2s",
@@ -128,13 +130,7 @@ const LinkCard = (props: {
           }}
           position="relative"
         />
-        <Stack
-          px="4px"
-          pb="4px"
-          pt="2px"
-          justifyContent="space-between"
-          flex={1}
-        >
+        <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
           <Stack direction="row">
             <Typography
               bold

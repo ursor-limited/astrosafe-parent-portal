@@ -28,8 +28,9 @@ import { IAstroCanvasElement } from "@/app/editor/Canvas";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import PlaylistVideoCard from "./PlaylistVideoCard";
 import LinkCard, { ILink } from "@/app/components/LinkCard";
+import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 
-export type AstroPlaylistContent = "video" | "link";
+export type AstroPlaylistContent = "video" | "link" | "worksheet";
 
 export interface IPlaylist {
   id: string;
@@ -81,11 +82,22 @@ export default function PlaylistPageContents(props: IPlaylist) {
     loadVideos();
   }, [userDetails?.user?.id]);
 
+  const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  const loadWorksheets = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
+        setWorksheets(_.reverse(ws.slice()))
+      );
+  };
+  useEffect(() => {
+    loadWorksheets();
+  }, [userDetails?.user?.id]);
+
   const [links, setLinks] = useState<ILink[]>([
     {
       id: "BOO",
       title: "BOOOO",
-      url: "hs.fi",
+      url: "https://nytimes.com",
       imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/astroLogo!.png",
       color: "#22e08b",
     },
@@ -96,9 +108,6 @@ export default function PlaylistPageContents(props: IPlaylist) {
   //       setLinks(links)
   //     );
   // };
-  useEffect(() => {
-    loadVideos();
-  }, [userDetails?.user?.id]);
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -172,6 +181,11 @@ export default function PlaylistPageContents(props: IPlaylist) {
               } else if (c.type === "link") {
                 const link = links.find((v) => v.id === c.contentId);
                 return link ? <LinkCard key={link.id} {...link} /> : null;
+              } else if (c.type === "worksheet") {
+                const worksheet = worksheets.find((w) => w.id === c.contentId);
+                return worksheet ? (
+                  <PlaylistWorksheetPreview key={worksheet.id} {...worksheet} />
+                ) : null;
               }
             })}
           </Stack>
