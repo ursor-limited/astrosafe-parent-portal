@@ -167,8 +167,7 @@ export interface ILinkDialogProps {
   open: boolean;
   link?: ILink;
   url?: string;
-  channelId?: string;
-  stackId?: string;
+  lessonId?: string;
   platform?: boolean;
   updateCallback?: () => void;
   closeCallback: () => void;
@@ -516,6 +515,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
     url,
     imageUrl: downloadImageUrl,
     color,
+    lessonId: props.lessonId,
   });
 
   const getUpdateDetails = () => ({

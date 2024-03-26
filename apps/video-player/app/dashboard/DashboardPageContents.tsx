@@ -286,6 +286,7 @@ export const ToolButton = (props: {
   info: string;
   mobile?: boolean;
   fullWidth?: boolean;
+  strongShadow?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -296,7 +297,11 @@ export const ToolButton = (props: {
         width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
         minHeight="66px"
         borderRadius="8px"
-        boxShadow="0 0 16px rgba(0,0,0,0.02)"
+        boxShadow={
+          props.strongShadow
+            ? "0 0 16px rgba(0,0,0,0.05)"
+            : "0 0 16px rgba(0,0,0,0.02)"
+        }
         bgcolor="rgb(255,255,255)"
         position="relative"
       >

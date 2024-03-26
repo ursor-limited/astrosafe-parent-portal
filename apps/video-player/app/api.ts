@@ -238,8 +238,8 @@ class ApiController {
       });
   }
   static async getURLImagePreview(url: any) {
-    return post("link/URLImagePreview", { url }).then((response: any) =>
-      response.json()
+    return post("link/URLImagePreview", { url }).then(
+      (response: any) => response?.json()
     );
   }
   static async createLink(details: any) {

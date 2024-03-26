@@ -231,6 +231,7 @@ export default function PlaylistPageContents(props: IPlaylist) {
           setLinks([...links, link]);
           setContents([{ type: "link", contentId: link.id }, ...contents]);
         }}
+        lessonId={props.id}
       />
     </>
   );

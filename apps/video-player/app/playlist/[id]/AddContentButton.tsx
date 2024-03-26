@@ -38,6 +38,7 @@ export default function AddContentButton(props: {
                       setOpen(false);
                     }}
                     fullWidth
+                    strongShadow
                   />
                 </Stack>
               );
