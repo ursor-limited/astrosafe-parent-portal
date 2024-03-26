@@ -28,9 +28,12 @@ import NotificationContext from "@/app/components/NotificationContext";
 import { IAstroCanvasElement } from "@/app/editor/Canvas";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import PlaylistVideoCard from "./PlaylistVideoCard";
-import LinkCard, { ILink } from "@/app/components/LinkCard";
+import LinkCard from "@/app/components/LinkCard";
 import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";
+import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
+import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
+import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 
 export type AstroPlaylistContent = "video" | "link" | "worksheet";
 
@@ -121,7 +124,17 @@ export default function PlaylistPageContents(props: IPlaylist) {
   >([]);
   useEffect(() => setContents(props.contents), [props.contents]);
 
-  const [createDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
+  const [worksheetDialogOpen, setWorksheetDialogOpen] =
+    useState<boolean>(false);
+  const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
+  const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
+  const [lessonDialogOpen, setLessonDialogOpen] = useState<boolean>(false);
+  const contentCallbacks: Record<AstroContent, () => void> = {
+    worksheet: () => setWorksheetDialogOpen(true),
+    video: () => setVideoDialogOpen(true),
+    link: () => setLinkDialogOpen(true),
+    lesson: () => setLessonDialogOpen(true),
+  };
 
   return (
     <>
@@ -131,7 +144,7 @@ export default function PlaylistPageContents(props: IPlaylist) {
           createdAt={props.createdAt}
           rightStuff={
             <Stack direction="row" spacing="12px">
-              <AddContentButton />
+              <AddContentButton callback={(type) => contentCallbacks[type]()} />
               {userDetails?.user?.id &&
               userDetails?.user?.id === props.creatorId ? (
                 <Stack
@@ -202,6 +215,18 @@ export default function PlaylistPageContents(props: IPlaylist) {
         deletionCallback={submitDeletion}
         category="playlist"
         title={props.title}
+      />
+      <VideoCreationDialog
+        open={videoDialogOpen}
+        closeCallback={() => setVideoDialogOpen(false)}
+      />
+      <WorksheetCreationDialog
+        open={worksheetDialogOpen}
+        closeCallback={() => setWorksheetDialogOpen(false)}
+      />
+      <LinkDialog
+        open={linkDialogOpen}
+        closeCallback={() => setLinkDialogOpen(false)}
       />
     </>
   );

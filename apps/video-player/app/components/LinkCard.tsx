@@ -3,16 +3,7 @@ import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-
-export interface ILink {
-  id: string;
-  creatorId?: string;
-  title: string;
-  url: string;
-  imageUrl: string;
-  color: string;
-  starter?: boolean;
-}
+import { ILink } from "../dashboard/LinkDialog";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
