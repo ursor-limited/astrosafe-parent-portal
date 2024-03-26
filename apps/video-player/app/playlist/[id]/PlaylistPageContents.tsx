@@ -13,6 +13,7 @@ import {
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import Pencil from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
@@ -29,6 +30,7 @@ import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import PlaylistVideoCard from "./PlaylistVideoCard";
 import LinkCard, { ILink } from "@/app/components/LinkCard";
 import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
+import AddContentButton from "./AddContentButton";
 
 export type AstroPlaylistContent = "video" | "link" | "worksheet";
 
@@ -119,6 +121,8 @@ export default function PlaylistPageContents(props: IPlaylist) {
   >([]);
   useEffect(() => setContents(props.contents), [props.contents]);
 
+  const [createDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <Stack p="40px" overflow="scroll">
@@ -127,6 +131,7 @@ export default function PlaylistPageContents(props: IPlaylist) {
           createdAt={props.createdAt}
           rightStuff={
             <Stack direction="row" spacing="12px">
+              <AddContentButton />
               {userDetails?.user?.id &&
               userDetails?.user?.id === props.creatorId ? (
                 <Stack

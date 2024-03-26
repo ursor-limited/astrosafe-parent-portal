@@ -42,8 +42,6 @@ const UpgradeDialog = dynamic(
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet";
-
 export type AstroContentSort = "abc" | "createdAt";
 
 export default function MobileDashboardPageContents() {

@@ -38,8 +38,6 @@ import { TRIAL_DAYS } from "../account/AccountPageContents";
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet";
-
 export type AstroContentSort = "abc" | "createdAt";
 
 export const SearchInput = (props: {

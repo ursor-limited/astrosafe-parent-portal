@@ -30,6 +30,7 @@ import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import {
+  AstroContent,
   FilterRow,
   SearchInput,
   ToolButton,
@@ -46,8 +47,6 @@ const UpgradeDialog = dynamic(
 );
 
 export const GRID_SPACING = "20px";
-
-export type AstroContent = "video" | "worksheet";
 
 export type AstroContentSort = "abc" | "createdAt";
 
@@ -270,8 +269,7 @@ export default function MobileDashboardPageContents() {
               setVideoCreationDialogOpen(true);
             }}
             infoButtonPosition={280}
-            infoTitle="Safe video link"
-            infoBody={
+            info={
               "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
             }
           />
@@ -283,8 +281,7 @@ export default function MobileDashboardPageContents() {
             icon={ChecklistIcon}
             onClick={() => setWorksheetCreationDialogOpen(true)}
             infoButtonPosition={300}
-            infoTitle="Math worksheet"
-            infoBody={
+            info={
               "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
             }
           />

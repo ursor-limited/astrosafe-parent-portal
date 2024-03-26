@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
@@ -28,14 +29,11 @@ import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
-import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
-import UpgradePromptDialog from "../components/UpgradeDialog";
 import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
-import { ASTRO_MAGICAL_GRADIENT } from "../components/header2";
 import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
@@ -49,9 +47,54 @@ const UpgradeDialog = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
+export interface IAstroContentBranding {
+  title: string;
+  description: string;
+  color: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  infoButtonPosition: number;
+  info: string;
+}
+export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
+  video: {
+    title: "SafeTube - safe videos",
+    description:
+      "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+    color: PALETTE.secondary.blue[3],
+    icon: CirclePlayIcon,
+    infoButtonPosition: 300,
+    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+  },
+  worksheet: {
+    title: "Worksheet Generator",
+    description:
+      "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+    color: PALETTE.secondary.pink[5],
+    icon: ChecklistIcon,
+    infoButtonPosition: 290,
+    info: "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+  },
+  lesson: {
+    title: "Lesson",
+    description: "Create dynamic and vivacious collections of content.",
+    color: PALETTE.secondary.green[5],
+    icon: VersionsIcon,
+    infoButtonPosition: 170,
+    info: "The heat trapped in the custard will carry it over to that perfect state of just-cooked as it cools. I like to put it out on the table, tucked under a clean dishcloth, so it’s ready and waiting for a casual reveal when we’re ready to eat.",
+  },
+  link: {
+    title: "Link",
+    description: "Add a link to some non-naughty site.",
+    color: PALETTE.secondary.orange[5],
+    icon: LinkIcon,
+    infoButtonPosition: 150,
+    info: "We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+  },
+};
+
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet" | "playlist";
+export type AstroContent = "video" | "worksheet" | "lesson" | "link";
 
 export type AstroContentSort = "abc" | "createdAt";
 
@@ -240,9 +283,9 @@ export const ToolButton = (props: {
   description: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   infoButtonPosition: number;
-  infoTitle: string;
-  infoBody: string;
+  info: string;
   mobile?: boolean;
+  fullWidth?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -250,7 +293,7 @@ export const ToolButton = (props: {
     <>
       <Stack
         direction="row"
-        width={props.mobile ? undefined : "370px"}
+        width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
         minHeight="66px"
         borderRadius="8px"
         boxShadow="0 0 16px rgba(0,0,0,0.02)"
@@ -299,6 +342,11 @@ export const ToolButton = (props: {
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
+              svg: {
+                path: {
+                  fill: PALETTE.font.light,
+                },
+              },
             }}
             bgcolor={props.color}
           >
@@ -335,8 +383,8 @@ export const ToolButton = (props: {
       <StepperOverlay
         open={overlayOpen}
         closeCallback={() => setOverlayOpen(false)}
-        title={props.infoTitle}
-        body={props.infoBody}
+        title={props.title}
+        body={props.info}
       />
     </>
   );
@@ -620,8 +668,7 @@ export default function DashboardPageContents() {
                 setVideoCreationDialogOpen(true);
               }}
               infoButtonPosition={280}
-              infoTitle="Safe video link"
-              infoBody={
+              info={
                 "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
               }
             />
@@ -632,8 +679,7 @@ export default function DashboardPageContents() {
               icon={ChecklistIcon}
               onClick={() => setWorksheetCreationDialogOpen(true)}
               infoButtonPosition={300}
-              infoTitle="Math worksheet"
-              infoBody={
+              info={
                 "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
               }
             />
