@@ -68,7 +68,7 @@ export default function IndividualSealLandingPageContents(
             pt="100px"
             px={isMobile ? "24px" : undefined}
           >
-            <Stack position="relative" width="100%">
+            <Stack position="relative" width="100%" alignItems="center">
               {props.heroImage?.includes("placeholder") ? (
                 <Stack
                   position="absolute"
