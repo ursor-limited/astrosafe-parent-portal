@@ -244,10 +244,7 @@ const ApprovedCompaniesList = (props: {
               !selectedType &&
               !selectedAudience) ||
             ((!searchValue ||
-              [c.companyName, c.description, c.publisher]
-                .join("")
-                .toLowerCase()
-                .includes(searchValue)) &&
+              c.companyName.toLowerCase().includes(searchValue)) &&
               (!selectedCategory ||
                 c.productCategory.includes(selectedCategory)) &&
               (!selectedType || c.productType.includes(selectedType)) &&
@@ -357,12 +354,21 @@ const ApprovedCompaniesList = (props: {
                     href={`seal-of-approval/${c.internalpath}`}
                     style={{ textDecoration: "none" }}
                   >
-                    <ApprovedCompanyCard
-                      {...c}
-                      white
-                      shadow
-                      mobile={props.mobile}
-                    />
+                    <Stack
+                      flex={1}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.7 },
+                        transition: "0.2s",
+                      }}
+                    >
+                      <ApprovedCompanyCard
+                        {...c}
+                        white
+                        shadow
+                        mobile={props.mobile}
+                      />
+                    </Stack>
                   </Link>
                 </UrsorFadeIn>
               ))

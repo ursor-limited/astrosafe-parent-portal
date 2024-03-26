@@ -14,6 +14,7 @@ import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSub
 import ValueProposition from "../tools/multiplication-chart/[urlId]/ValueProposition";
 import companies from "./companies.json";
 import ApprovedCompaniesList from "./ApprovedCompaniesList";
+import SealExplanationDialog from "./[urlId]/SealExplanationDialog";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -47,98 +48,133 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
     //@ts-ignore
     listRef?.current?.scrollIntoView({ behavior: "smooth" });
 
+  const [explanationDialogOpen, setExplanationDialogOpen] =
+    useState<boolean>(false);
+
   return (
-    <AstroLandingPage
-      fainterSpaceGlow
-      title={[props.heading]}
-      subtitle={props.subHeading}
-      mobile={isMobile}
-      faqs={props.faqs}
-      viewports={[
-        ...(props.visualLinkCardsSubtler
-          ? [
-              <LandingPageViewport
-                key="seals"
-                supertitle={props.visualLinkCardsSubtler.supertitle}
-                subtitle={props.visualLinkCardsSubtler.subtitle}
-                title={props.visualLinkCardsSubtler.title}
-                mobile={isMobile}
-              >
-                <VisualLinkCardsSubtler
-                  {...props.visualLinkCardsSubtler}
+    <>
+      <AstroLandingPage
+        fainterSpaceGlow
+        title={[props.heading]}
+        subtitle={props.subHeading}
+        mobile={isMobile}
+        faqs={props.faqs}
+        viewports={[
+          ...(props.visualLinkCardsSubtler
+            ? [
+                <LandingPageViewport
+                  key="seals"
+                  supertitle={props.visualLinkCardsSubtler.supertitle}
+                  subtitle={props.visualLinkCardsSubtler.subtitle}
+                  title={props.visualLinkCardsSubtler.title}
                   mobile={isMobile}
-                />
-              </LandingPageViewport>,
-            ]
-          : []),
-        ...(props.valueProposition
-          ? [
-              <LandingPageViewport
-                key="valueProposition"
-                supertitle={props.valueProposition.supertitle}
-                title={props.valueProposition.title}
-                mobile={isMobile}
-              >
-                <ValueProposition
-                  items={props.valueProposition.cards}
+                >
+                  <Stack
+                    direction={isMobile ? "column" : "row"}
+                    spacing={isMobile ? "8px" : "12px"}
+                  >
+                    <UrsorButton
+                      width="226px"
+                      dark
+                      variant="tertiary"
+                      onClick={() =>
+                        (window.location.href = "mailto:hello@astrosafe.co")
+                      }
+                    >
+                      Enrol now
+                    </UrsorButton>
+                    <UrsorButton
+                      strongShadow
+                      width="226px"
+                      dark
+                      onClick={() => setExplanationDialogOpen(true)}
+                    >
+                      Learn more
+                    </UrsorButton>
+                  </Stack>
+                  <VisualLinkCardsSubtler
+                    {...props.visualLinkCardsSubtler}
+                    mobile={isMobile}
+                  />
+                </LandingPageViewport>,
+              ]
+            : []),
+          ...(props.valueProposition
+            ? [
+                <LandingPageViewport
+                  key="valueProposition"
+                  supertitle={props.valueProposition.supertitle}
+                  title={props.valueProposition.title}
                   mobile={isMobile}
-                />
-              </LandingPageViewport>,
-            ]
-          : []),
-        <Stack key="list" ref={listRef}>
-          <LandingPageViewport
-            supertitle="Our list"
-            title="AstroSafe Approved Companies"
-            mobile={isMobile}
-          >
-            <ApprovedCompaniesList
+                >
+                  <ValueProposition
+                    items={props.valueProposition.cards}
+                    mobile={isMobile}
+                  />
+                </LandingPageViewport>,
+              ]
+            : []),
+          <Stack key="list" ref={listRef}>
+            <LandingPageViewport
+              supertitle="Our list"
+              title="AstroSafe Approved Companies"
               mobile={isMobile}
-              pageChangeCallback={scrollIntoView}
-            />
-          </LandingPageViewport>
-        </Stack>,
-      ]}
-    >
-      <Stack width="100%" alignItems="center" spacing="32px">
-        <Stack
-          direction={isMobile ? "column" : "row"}
-          spacing={isMobile ? "8px" : "12px"}
-        >
-          <UrsorButton
-            size={isMobile ? "medium" : "large"}
-            width="226px"
-            dark
-            variant="tertiary"
-            onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
-          >
-            Enrol to program
-          </UrsorButton>
-          <UrsorButton
-            size={isMobile ? "medium" : "large"}
-            width="226px"
-            dark
-            onClick={scrollIntoView}
-          >
-            View list
-          </UrsorButton>
-        </Stack>
-        <Stack position="relative" height={isMobile ? "80px" : "150px"}>
+            >
+              <ApprovedCompaniesList
+                mobile={isMobile}
+                pageChangeCallback={scrollIntoView}
+              />
+            </LandingPageViewport>
+          </Stack>,
+        ]}
+      >
+        <Stack width="100%" alignItems="center" spacing="32px">
           <Stack
-            position="absolute"
-            top={0}
-            sx={{ transform: "translateX(-50%)" }}
+            direction={isMobile ? "column" : "row"}
+            spacing={isMobile ? "8px" : "12px"}
           >
-            <Image
-              src="https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png"
-              width={isMobile ? 380 : 873}
-              height={isMobile ? 138 : 316}
-              alt="Astro Seals illustration"
-              priority
-            />
+            <UrsorButton
+              size={isMobile ? "medium" : "large"}
+              width="226px"
+              dark
+              variant="tertiary"
+              onClick={() =>
+                (window.location.href = "mailto:hello@astrosafe.co")
+              }
+            >
+              Enrol to program
+            </UrsorButton>
+            <UrsorButton
+              size={isMobile ? "medium" : "large"}
+              width="226px"
+              dark
+              onClick={scrollIntoView}
+            >
+              View list
+            </UrsorButton>
+          </Stack>
+          <Stack position="relative" height={isMobile ? "80px" : "150px"}>
+            <Stack
+              position="absolute"
+              top={0}
+              sx={{ transform: "translateX(-50%)" }}
+            >
+              <Image
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png"
+                width={isMobile ? 380 : 873}
+                height={isMobile ? 138 : 316}
+                alt="Astro Seals illustration"
+                priority
+              />
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
-    </AstroLandingPage>
+      </AstroLandingPage>
+      <SealExplanationDialog
+        open={explanationDialogOpen}
+        closeCallback={() => setExplanationDialogOpen(false)}
+        mobile={isMobile}
+      />
+    </>
   );
 }

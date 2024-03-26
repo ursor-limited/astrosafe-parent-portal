@@ -34,12 +34,29 @@ export default function IndividualSealLandingPageContents(
         faqs={{
           cards: [
             {
-              question: "Boo",
-              answer: "Guu",
+              question: "What is the AstroSafe Seal of Approval?",
+              answer:
+                "The AstroSafe seal of approval represents products, brands, and tools that our team believe help make the world a bit better for kids. We understand that building a better internet for kids is a team effort and want to recognise the teams across the globe making this goal a reality!",
             },
             {
-              question: "Noo",
-              answer: "Joo",
+              question: "How can I apply?",
+              answer:
+                "Send us an email at hello@astrosafe.co  our review team will ask a few brief questions and we will typically have an approval decision made within a week.",
+            },
+            {
+              question: "How can I amend information about my company?",
+              answer:
+                "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we’ll fix it ASAP!",
+            },
+            {
+              question: "What are the evaluation criteria?",
+              answer:
+                "We evaluate if submissions meet the minimum standards on the following criteria: 1) Is it designed for use by children, families, and/or educational institutions? 2) Does it promote learning and developmental outcomes for children?",
+            },
+            {
+              question: "Is it free to apply to?",
+              answer:
+                "Of course! We don’t charge to be featured in our approved list, we only require the company meets our evaluation criteria.",
             },
           ],
         }}
@@ -51,15 +68,20 @@ export default function IndividualSealLandingPageContents(
             pt="100px"
             px={isMobile ? "24px" : undefined}
           >
-            <Stack position="relative">
+            <Stack position="relative" width="100%">
               {props.heroImage?.includes("placeholder") ? (
                 <Stack
                   position="absolute"
                   top="50%"
                   left="50%"
                   sx={{ transform: "translate(-50%, -50%)" }}
+                  zIndex={2}
                 >
-                  <Typography variant="h2" color={PALETTE.font.light}>
+                  <Typography
+                    variant={isMobile ? "large" : "h2"}
+                    bold
+                    color={PALETTE.font.light}
+                  >
                     {props.companyName}
                   </Typography>
                 </Stack>
@@ -82,7 +104,11 @@ export default function IndividualSealLandingPageContents(
                           ? `${S3_BASE_URL}/${props.heroImage}`
                           : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
                       }
-                      style={{ objectFit: "cover" }}
+                      style={{
+                        objectFit: "cover",
+                        boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                        borderRadius: "12px",
+                      }}
                       fill
                       alt={`${props.companyName} screenshot`}
                       priority
@@ -205,6 +231,7 @@ export default function IndividualSealLandingPageContents(
       <SealExplanationDialog
         open={explanationDialogOpen}
         closeCallback={() => setExplanationDialogOpen(false)}
+        mobile={isMobile}
       />
     </>
   );
