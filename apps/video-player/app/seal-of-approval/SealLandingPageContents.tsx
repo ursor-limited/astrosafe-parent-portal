@@ -3,7 +3,7 @@
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
@@ -22,6 +22,31 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   const router = useRouter();
+
+  // function download(content: any, fileName: string, contentType: string) {
+  //   var a = document.createElement("a");
+  //   var file = new Blob([content], { type: contentType });
+  //   a.href = URL.createObjectURL(file);
+  //   a.download = fileName;
+  //   a.click();
+  // }
+  // download(
+  //   JSON.stringify(
+  //     companies.map((c) => ({
+  //       ...c,
+  //       ogimage: c.ogimage.includes("placeholder") ? undefined : c.ogimage,
+  //     }))
+  //   ),
+  //   "booboo.txt",
+  //   "text/plain"
+  // );
+
+  const listRef = useRef(null);
+
+  const scrollIntoView = () =>
+    //@ts-ignore
+    listRef?.current?.scrollIntoView({ behavior: "smooth" });
+
   return (
     <AstroLandingPage
       fainterSpaceGlow
@@ -61,14 +86,18 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
               </LandingPageViewport>,
             ]
           : []),
-        <LandingPageViewport
-          key="list"
-          supertitle="Out list"
-          title="AstroSafe Approved Companies"
-          mobile={isMobile}
-        >
-          <ApprovedCompaniesList mobile={isMobile} />
-        </LandingPageViewport>,
+        <Stack key="list" ref={listRef}>
+          <LandingPageViewport
+            supertitle="Our list"
+            title="AstroSafe Approved Companies"
+            mobile={isMobile}
+          >
+            <ApprovedCompaniesList
+              mobile={isMobile}
+              pageChangeCallback={scrollIntoView}
+            />
+          </LandingPageViewport>
+        </Stack>,
       ]}
     >
       <Stack width="100%" alignItems="center" spacing="32px">
@@ -81,10 +110,16 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
             width="226px"
             dark
             variant="tertiary"
+            onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
           >
             Enrol to program
           </UrsorButton>
-          <UrsorButton size={isMobile ? "medium" : "large"} width="226px" dark>
+          <UrsorButton
+            size={isMobile ? "medium" : "large"}
+            width="226px"
+            dark
+            onClick={scrollIntoView}
+          >
             View list
           </UrsorButton>
         </Stack>

@@ -229,6 +229,7 @@ export const Captioned = (props: {
       opacity: props.disabled ? 0.45 : 1,
       pointerEvents: props.disabled ? "none" : undefined,
     }}
+    position="relative"
   >
     <Stack direction="row" justifyContent="space-between">
       {props.text ? (

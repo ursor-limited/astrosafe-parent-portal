@@ -43,6 +43,7 @@ export const CircularButton = (props: {
       border={`2px solid ${props.color || PALETTE.primary.navy}`}
       justifyContent="center"
       alignItems="center"
+      bgcolor="rgb(255,255,255)"
       sx={{
         svg: {
           path: {

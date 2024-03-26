@@ -3,24 +3,12 @@
 import { Stack } from "@mui/system";
 import Link from "next/link";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import Logo from "@/images/logo.svg";
-import Kitemark from "@/images/coloredKitemark.svg";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
-import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import React, { useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useRouter } from "next/navigation";
-import dynamic from "next/dynamic";
-import mixpanel from "mixpanel-browser";
-import UpgradePromptDialog from "./SignupPromptDialog";
-import UrsorPopover from "./UrsorPopover";
 
 export const HEADER_HEIGHT = 86;
 
@@ -29,127 +17,6 @@ export const ASTRO_MAGICAL_GRADIENT =
 
 export const STRIPE_CUSTOMER_PORTAL_URL =
   "https://billing.stripe.com/p/login/test_8wMfZYfAK4M2fJe4gg";
-
-const ProfileButton = (props: { initials: string }) => (
-  <Stack
-    p="2px"
-    boxSizing="border-box"
-    sx={{
-      background: ASTRO_MAGICAL_GRADIENT,
-    }}
-    borderRadius="100%"
-    height="42px"
-    width="42px"
-  >
-    <Stack
-      flex={1}
-      borderRadius="100%"
-      justifyContent="center"
-      alignItems="center"
-      bgcolor="#253D4D"
-    >
-      <Typography bold color={PALETTE.font.light}>
-        {props.initials}
-      </Typography>
-    </Stack>
-  </Stack>
-);
-
-const ProfilePopupButton = (props: {
-  callback: () => void;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  text: string;
-  // hoveringOnCallback: () => void;
-  // hoveringOffCallback: () => void;
-}) => {
-  const [hovering, setHovering] = useState<boolean>(false);
-  return (
-    <Stack
-      height="36px"
-      minHeight="36px"
-      sx={{
-        cursor: "pointer",
-        "&:hover": { opacity: 0.7 },
-        transition: "0.2s",
-        svg: {
-          path: {
-            fill: hovering
-              ? PALETTE.secondary.purple[2]
-              : PALETTE.secondary.grey[5],
-          },
-        },
-      }}
-      onClick={props.callback}
-      direction="row"
-      spacing="8px"
-      alignItems="center"
-      px="20px"
-      bgcolor={hovering ? PALETTE.secondary.grey[1] : undefined}
-      onMouseEnter={() => {
-        setHovering(true);
-      }}
-      onMouseLeave={() => {
-        setHovering(false);
-      }}
-    >
-      <props.icon height="16px" width="16px" />
-      <Typography
-        variant="small"
-        bold
-        color={
-          hovering ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[5]
-        }
-      >
-        {props.text}
-      </Typography>
-    </Stack>
-  );
-};
-
-const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  return (
-    <UrsorPopover
-      open={open}
-      content={props.children}
-      closeCallback={() => setOpen(false)}
-      placement="left"
-      noPadding
-    >
-      <Stack
-        direction="row"
-        spacing="8px"
-        alignItems="center"
-        px="23px"
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.7 },
-          transition: "0.2s",
-          svg: {
-            transform: `rotate(${open ? 180 : 0}deg)`,
-            transition: "0.2s",
-            path: {
-              fill: open ? PALETTE.secondary.purple[2] : "rgb(255,255,255)",
-            },
-          },
-        }}
-        onClick={() => setOpen(true)}
-      >
-        <Typography
-          bold
-          variant="medium"
-          color={open ? PALETTE.secondary.purple[2] : "rgb(255,255,255)"}
-          sx={{
-            transition: "0.2s",
-          }}
-        >
-          {props.text}
-        </Typography>
-        <ChevronDownIcon width="20px" height="20px" />
-      </Stack>
-    </UrsorPopover>
-  );
-};
 
 const ProductsPopoverProductButton = (props: {
   title: string;
@@ -215,220 +82,211 @@ const ProductsPopoverProductButton = (props: {
 };
 
 const ProductsPopoverColumn = (props: {
+  alwaysOpen: boolean;
   title: string;
   links: { text: string; url: string }[];
-}) => (
-  <Stack spacing="12px">
-    <Stack direction="row" alignItems="center" spacing="8px">
-      <Typography variant="small" bold>
-        {props.title}
-      </Typography>
-      <ChevronRightIcon width="16px" height="16px" />
-    </Stack>
-    {props.links.map((link, i) => (
-      <Link
-        key={i}
-        href={link.url}
-        target="_blank"
-        style={{
-          textDecoration: "none",
-          color: "unset",
-        }}
-        rel="noreferrer"
-      >
-        <Stack
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-          }}
-        >
-          <Typography variant="small">{link.text}</Typography>
-        </Stack>
-      </Link>
-    ))}
-  </Stack>
-);
-
-export const Header = (props: {
-  showUpgradeButtons?: boolean;
-  showSigninButton?: boolean;
-  createMoreVideosButton?: boolean;
-  signinCallback?: () => void;
-  mobile?: boolean;
-  createNewButton?: boolean;
-  hidePopupDashboardButton?: boolean;
+  spaceBetween: boolean;
 }) => {
-  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  useEffect(() => setOpen(!!props.alwaysOpen), []);
+  return (
+    // <DynamicContainer duration={800} fullWidth>
+    <Stack spacing="12px">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent={props.spaceBetween ? "space-between" : undefined}
+        spacing="8px"
+        onClick={() => !props.alwaysOpen && setOpen(!open)}
+        sx={{
+          svg: {
+            transform: !props.alwaysOpen
+              ? `rotate(${open ? 270 : 90}deg)`
+              : undefined,
+            transition: "0.2s",
+          },
+        }}
+      >
+        <Typography variant="small" bold>
+          {props.title}
+        </Typography>
+        <ChevronRightIcon width="16px" height="16px" />
+      </Stack>
+      {open ? (
+        <Stack spacing="12px">
+          {props.links.map((link, i) => (
+            <Link
+              key={i}
+              href={link.url}
+              target="_blank"
+              style={{
+                textDecoration: "none",
+                color: "unset",
+              }}
+              rel="noreferrer"
+            >
+              <Stack
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                }}
+              >
+                <Typography variant="small">{link.text}</Typography>
+              </Stack>
+            </Link>
+          ))}
+        </Stack>
+      ) : null}
+    </Stack>
+    // </DynamicContainer>
+  );
+};
+
+const ProductsPopoverContents = (props: { mobile?: boolean }) => {
   return (
     <Stack
-      direction="row"
-      width="100%"
-      height={`${86}px`}
-      minHeight={`${86}px`}
-      alignItems="center"
-      justifyContent="space-between"
-      px="67px"
-      boxSizing="border-box"
-      bgcolor={PALETTE.primary.navy}
+      height={props.mobile ? undefined : "292px"}
+      width={props.mobile ? undefined : "842px"}
+      bgcolor="rgb(255,255,255)"
+      borderRadius="12px"
+      direction={props.mobile ? "column" : "row"}
+      p="12px"
+      spacing="24px"
     >
-      <Stack direction="row">
-        <Stack
-          width="fit-content"
-          pr="54px"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.8 },
-            transition: "0.2s",
-          }}
-        >
-          <Link href="https://astrosafe.co/">
-            <Logo width={65} />
-          </Link>
+      <Stack
+        bgcolor={PALETTE.secondary.grey[1]}
+        width={props.mobile ? undefined : "300px"}
+        height={props.mobile ? "268px" : undefined}
+        p="12px"
+        pb={props.mobile ? "4px" : undefined}
+        borderRadius="10px"
+        boxSizing="border-box"
+        spacing={props.mobile ? "12px" : "20px"}
+      >
+        <Typography variant="medium" bold>
+          Products
+        </Typography>
+        <Stack flex={1} justifyContent="space-between">
+          <ProductsPopoverProductButton
+            title="Worksheet generator"
+            body="Personalised and printable worksheets made in seconds."
+            icon={ChecklistIcon}
+            color={PALETTE.secondary.blue[3]}
+            url="/tools/math-worksheet-generator"
+          />
+          <ProductsPopoverProductButton
+            title="SafeTube - Safe Videos"
+            body="Reduce ads, remove distracting content, and increase focus."
+            icon={CirclePlayIcon}
+            color="#FC5C5C"
+            url="/tools/safetube"
+          />
+          <ProductsPopoverProductButton
+            title="Browser"
+            body="Keep students safe with a browser built for the classroom."
+            icon={GlobeIcon}
+            color={PALETTE.secondary.purple[2]}
+            url="https://app.astrosafe.co"
+          />
         </Stack>
-        <HeaderButton text="Products">
-          <Stack
-            // height="292px"
-            // width="842px"
-            bgcolor="rgb(255,255,255)"
-            borderRadius="12px"
-            direction="row"
-            p="12px"
-            spacing="24px"
+      </Stack>
+      <Stack flex={1} p="12px" spacing="20px">
+        <Typography variant="medium" bold>
+          Tools
+        </Typography>
+        <Stack
+          direction={props.mobile ? "column" : "row"}
+          spacing={props.mobile ? "12px" : "56px"}
+        >
+          <ProductsPopoverColumn
+            alwaysOpen={!props.mobile}
+            title="Times tables"
+            links={[
+              {
+                text: "5 times tables",
+                url: "/tools/multiplication-chart/5-times-table-worksheet",
+              },
+              {
+                text: "6 times tables",
+                url: "/tools/multiplication-chart/6-times-table-worksheet",
+              },
+              {
+                text: "7 times tables",
+                url: "/tools/multiplication-chart/7-times-table-worksheet",
+              },
+              {
+                text: "8 times tables",
+                url: "/tools/multiplication-chart/8-times-table-worksheet",
+              },
+              {
+                text: "9 times tables",
+                url: "/tools/multiplication-chart/9-times-table-worksheet",
+              },
+              {
+                text: "10 times tables",
+                url: "/tools/multiplication-chart/10-times-table-worksheet",
+              },
+            ]}
+            spaceBetween={!!props.mobile}
+          />
+          <ProductsPopoverColumn
+            alwaysOpen={!props.mobile}
+            title="All tools"
+            links={[
+              {
+                text: "Chore charts",
+                url: "https://www.astrosafe.co/tools/chore-charts-for-kids",
+              },
+              {
+                text: "Websites for kids",
+                url: "https://www.astrosafe.co/tools/websites-for-kids",
+              },
+              {
+                text: "Meditation for kids",
+                url: "https://www.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids",
+              },
+              {
+                text: "Safe search engine",
+                url: "https://www.astrosafe.co/tools/kids-safe-search-engine",
+              },
+            ]}
+            spaceBetween={!!props.mobile}
+          />
+          <ProductsPopoverColumn
+            alwaysOpen={!props.mobile}
+            title="More"
+            links={[
+              {
+                text: "About",
+                url: "https://www.astrosafe.co/about",
+              },
+              {
+                text: "FAQs",
+                url: "https://www.astrosafe.co/faqs",
+              },
+              {
+                text: "Blogs",
+                url: "https://www.astrosafe.co/blog",
+              },
+            ]}
+            spaceBetween={!!props.mobile}
+          />
+        </Stack>
+      </Stack>
+      <Stack spacing="8px">
+        {props.mobile ? (
+          <UrsorButton
+            width="100%"
+            variant="secondary"
+            onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
           >
-            <Stack
-              bgcolor={PALETTE.secondary.grey[1]}
-              width="300px"
-              p="12px"
-              borderRadius="10px"
-              spacing="20px"
-            >
-              <Typography variant="medium" bold>
-                Products
-              </Typography>
-              <Stack flex={1} justifyContent="space-between">
-                <ProductsPopoverProductButton
-                  title="Worksheet generator"
-                  body="Personalised and printable worksheets made in seconds."
-                  icon={ChecklistIcon}
-                  color={PALETTE.secondary.blue[3]}
-                  url="https://astrosafe.co/tools/math-worksheet-generator"
-                />
-                <ProductsPopoverProductButton
-                  title="SafeTube - Safe Videos"
-                  body="Reduce ads, remove distracting content, and increase focus."
-                  icon={CirclePlayIcon}
-                  color="#FC5C5C"
-                  url="https://astrosafe.co/tools/safetube"
-                />
-                <ProductsPopoverProductButton
-                  title="Browser"
-                  body="Keep students safe with a browser built for the classroom."
-                  icon={GlobeIcon}
-                  color={PALETTE.secondary.purple[2]}
-                  url="https://app.astrosafe.co"
-                />
-              </Stack>
-            </Stack>
-            <Stack flex={1} p="12px" spacing="20px">
-              <Typography variant="medium" bold>
-                Tools
-              </Typography>
-              <Stack direction="row" spacing="56px">
-                <ProductsPopoverColumn
-                  title="Times tables"
-                  links={[
-                    {
-                      text: "5 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/5-times-table-worksheet",
-                    },
-                    {
-                      text: "6 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/6-times-table-worksheet",
-                    },
-                    {
-                      text: "7 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/7-times-table-worksheet",
-                    },
-                    {
-                      text: "8 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/8-times-table-worksheet",
-                    },
-                    {
-                      text: "9 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/9-times-table-worksheet",
-                    },
-                    {
-                      text: "10 times tables",
-                      url: "https://astrosafe.co/tools/multiplication-chart/10-times-table-worksheet",
-                    },
-                  ]}
-                />
-                <ProductsPopoverColumn
-                  title="All tools"
-                  links={[
-                    {
-                      text: "Chore charts",
-                      url: "https://www.astrosafe.co/tools/chore-charts-for-kids",
-                    },
-                    {
-                      text: "Websites for kids",
-                      url: "https://www.astrosafe.co/tools/websites-for-kids",
-                    },
-                    {
-                      text: "Meditation for kids",
-                      url: "https://www.astrosafe.co/tools/15-minutes-meditation-for-family-time-and-kids",
-                    },
-                    {
-                      text: "Safe search engine",
-                      url: "https://www.astrosafe.co/tools/kids-safe-search-engine",
-                    },
-                  ]}
-                />
-                <ProductsPopoverColumn
-                  title="More"
-                  links={[
-                    {
-                      text: "About",
-                      url: "https://www.astrosafe.co/about",
-                    },
-                    {
-                      text: "FAQs",
-                      url: "https://www.astrosafe.co/faqs",
-                    },
-                    {
-                      text: "Blogs",
-                      url: "https://www.astrosafe.co/blog",
-                    },
-                  ]}
-                />
-              </Stack>
-            </Stack>
-          </Stack>
-        </HeaderButton>
+            Contact sales
+          </UrsorButton>
+        ) : null}
       </Stack>
-
-      <Stack spacing="8px" direction="row">
-        <UrsorButton
-          backgroundColor="transparent"
-          hoverOpacity={0.7}
-          onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
-        >
-          Contact sales
-        </UrsorButton>
-        {/* <UrsorButton
-          dark
-          variant="tertiary"
-          onClick={loginWithPopup}
-          endIcon={PersonIcon}
-        >
-          Login
-        </UrsorButton> */}
-      </Stack>
-      <UpgradePromptDialog
-        open={upgradeDialogOpen}
-        closeCallback={() => setUpgradeDialogOpen(false)}
-      />
     </Stack>
   );
 };
+
+export default ProductsPopoverContents;

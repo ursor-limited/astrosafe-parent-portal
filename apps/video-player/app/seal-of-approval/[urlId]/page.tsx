@@ -12,10 +12,10 @@ export async function generateMetadata({
   params: { urlId: string };
 }): Promise<Metadata> {
   const company = (companies as IApprovedCompany[]).find(
-    (c) => c.urlId === params.urlId
+    (c) => c.internalpath === params.urlId
   );
   return {
-    title: company?.name,
+    title: company?.companyName,
     description: "AstroSafe Seal Member",
   };
 }
@@ -28,7 +28,7 @@ async function IndividualSealLandingPage({
   // const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
   //   ?.isMobile;
   const company = (companies as IApprovedCompany[]).find(
-    (c) => c.urlId === params.urlId
+    (c) => c.internalpath === params.urlId
   );
   return company ? <IndividualSealLandingPageContents {...company} /> : <></>;
 }

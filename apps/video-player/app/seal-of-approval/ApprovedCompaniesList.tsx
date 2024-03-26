@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import X from "@/images/icons/X.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelect from "../components/UrsorSelect";
@@ -12,128 +12,62 @@ import _ from "lodash";
 import { SearchInput } from "../dashboard/DashboardPageContents";
 import { ApprovedCompanyCard } from "./ApprovedCompanyCard";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import Link from "next/link";
+
+export const S3_BASE_URL =
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal";
 
 const PAGE_SIZE = 10;
 
 const TARGET_AUDIENCES = [
-  "Preschoolers (ages 3-5)",
-  "Kids (ages 5-8)",
-  "Tweens (ages 8-12)",
-  "Parents and Families",
-  "Teachers and Schools",
-  "Publishers and Developers",
-  "Older kids (ages 10 and up)",
-  "Babies and Toddlers (ages 0-3)",
-  "Unspecified",
+  "0 - 5",
+  "0 - 8",
+  "3 - 5",
+  "3 - 8",
+  "0 - 12",
+  "3 - 12",
+  "3 - 13+",
+  "5 - 8",
+  "5 - 12",
+  "5 - 13+",
+  "8 - 12",
+  "8 - 13+",
+  "10 - 13+",
+  "Adults",
 ];
 
 const PRODUCT_TYPES = [
-  "Smart TV app",
-  "Google",
+  "Mobile",
+  "Physical",
+  "TV",
+  "Tablet",
+  "Tools",
   "Website",
-  "Vendor service",
-  "PC software",
-  "Mobile app (Apple)",
-  "Mobile app (Google)",
-  "Web service",
-  "Connected product",
-  "VR app",
-  "Amazon",
-  "Tablet device",
-  "Mac",
-  "Windows",
 ];
 
 const PRODUCT_CATEGORIES = [
-  "Educational",
-  "TV and Video",
+  "Education",
   "Games",
-  "Educational",
-  "School and Homework Activities",
-  "Service Provider",
-  "Analytics",
-  "Advertising / marketing",
-  "Virtual World",
-  "Programming and Coding",
-  "Creativity",
-  "Math and Numbers",
-  "Shapes and Colors",
-  "Alphabet and Letters",
-  "Language Learning",
-  "Books and Reading",
-  "Words and Vocabulary",
-  "Programming and Coding",
-  "Parental Controls",
-  "TV and Video",
-  "Child-Lock Features",
-  "Business",
-  "Service Provider",
-  "Safety Tools and Resources",
-  "Brain and Cognitive Development",
-  "News and Current Events",
-  "Music and Song",
-  "Third Party Apps",
-  "Safety Tools and Resources",
-  "Nutrition and Wellness",
-  "Cartoons",
-  "Food and Drink",
-  "Social Network",
-  "Chat and Messaging",
-  "Words and Vocabulary",
-  "Social Skills",
-  "Alphabet and Letters",
-  "Science and Nature",
-  "Travel and Geography",
-  "Toys and Physical Play",
-  "Content Filtering and Moderation",
-  "Books and Reading",
-  "Music and Song",
-  "MMO (Massively Multiplayer Online)",
-  "Games",
-  "Social Network",
-  "Analytics",
-  "Coloring and Art",
-  "History",
-  "Animals",
-  "Environment",
-  "E-Commerce",
-  "Virtual World",
-  "Holidays",
-  "User-Generated Content",
-  "Family Tasks and Chores",
-  "Money and Financial",
-  "Religion",
-  "Business",
-  "Browsing and Search",
-  "Health and Anatomy",
-  "Nutrition and Wellness",
-  "Family Tasks and Chores",
-  "Science and Nature",
-  "Math and Numbers",
-  "Holidays",
-  "User-Generated Content",
-  "Health and Anatomy",
-  "Sports",
-  "Phone Services",
-  "Unspecified",
-  "Content Filtering and Moderation",
-  "Photo Sharing",
-  "Space and Astronomy",
-  "Third Party Apps",
-  "Toys and Physical Play",
+  "Health",
+  "Physical",
+  "Safety",
+  "Social",
+  "TV",
+  "Tools",
+  "VR",
 ];
 
 export interface IApprovedCompany {
-  urlId?: string;
-  name: string;
+  internalpath?: string;
+  companyName: string;
   publisher: string;
   productType: string;
   productCategory: string;
-  targetAudience: string;
-  productDescription: string;
+  audience: string;
+  description: string;
   url: string;
-  imageUrl?: string;
-  screenshotUrl?: string;
+  ogimage?: string;
+  heroImage?: string;
 }
 
 const PageChevrons = (props: {
@@ -279,7 +213,10 @@ const PageSelection = (props: {
   );
 };
 
-const ApprovedCompaniesList = (props: { mobile: boolean }) => {
+const ApprovedCompaniesList = (props: {
+  mobile: boolean;
+  pageChangeCallback: () => void;
+}) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   // const [companies, setCompanies] = useState<IApprovedCompany[]>([]);
   // //@ts-ignore
@@ -307,15 +244,14 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
               !selectedType &&
               !selectedAudience) ||
             ((!searchValue ||
-              [c.name, c.productDescription, c.publisher]
+              [c.companyName, c.description, c.publisher]
                 .join("")
                 .toLowerCase()
                 .includes(searchValue)) &&
               (!selectedCategory ||
                 c.productCategory.includes(selectedCategory)) &&
               (!selectedType || c.productType.includes(selectedType)) &&
-              (!selectedAudience ||
-                c.targetAudience.includes(selectedAudience)))
+              (!selectedAudience || c.audience.includes(selectedAudience)))
         )
       ),
     [selectedCategory, selectedType, selectedAudience, searchValue]
@@ -324,6 +260,7 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
     <Stack
       width={props.mobile ? undefined : "1000px"}
       maxWidth={props.mobile ? undefined : "990px"}
+      spacing="22px"
     >
       <Stack
         direction={props.mobile ? "column" : "row"}
@@ -405,12 +342,6 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
         </Captioned>
       </Stack>
       <Stack spacing="20px">
-        <PageSelection
-          pageIndex={pageIndex}
-          setPageIndex={setPageIndex}
-          totalN={filteredCompanies.length}
-          mobile={props.mobile}
-        />
         <Stack alignItems="center" spacing={props.mobile ? "14px" : "24px"}>
           {filteredCompanies.length > 0 ? (
             (filteredCompanies as IApprovedCompany[])
@@ -419,14 +350,20 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
                 <UrsorFadeIn
                   delay={i * 100}
                   duration={600}
+                  fullWidth
                   key={`${selectedCategory}_${i}_${pageIndex}`}
                 >
-                  <ApprovedCompanyCard
-                    {...c}
-                    white
-                    shadow
-                    mobile={props.mobile}
-                  />
+                  <Link
+                    href={`seal-of-approval/${c.internalpath}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <ApprovedCompanyCard
+                      {...c}
+                      white
+                      shadow
+                      mobile={props.mobile}
+                    />
+                  </Link>
                 </UrsorFadeIn>
               ))
           ) : (
@@ -452,6 +389,15 @@ const ApprovedCompaniesList = (props: { mobile: boolean }) => {
             </UrsorFadeIn>
           )}
         </Stack>
+        <PageSelection
+          pageIndex={pageIndex}
+          setPageIndex={(i) => {
+            setPageIndex(i);
+            props.pageChangeCallback();
+          }}
+          totalN={filteredCompanies.length}
+          mobile={props.mobile}
+        />
       </Stack>
     </Stack>
   );
