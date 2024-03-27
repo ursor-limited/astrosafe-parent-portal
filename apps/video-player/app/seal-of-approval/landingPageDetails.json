@@ -1,16 +1,16 @@
 {
     "urlId": "seal",
     "pageTitle": "AstroSafe Approval program",
-    "metaDescription": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
-    "heading": "AstroSafe Approval program",
-    "subHeading": "The AstroSAFE Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
+    "metaDescription": "The AstroSafe Approval Program offers an independent safety verification service and seal-of-approval program tailored for websites and technologies catering to children.",
+    "heading": "AstroSafe Seal",
+    "subHeading": "An independent, safety and quality verification service tailored for products catering to children.",
     "visualLinkCardsSubtler": {
         "supertitle": "Our seals",
         "title": "What is the AstroSafe seal?",
         "subtitle": "The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods.",
         "cards": [
             {
-                "title": "AstroSafe Certified",
+                "title": "AstroSafe Approved",
                 "text": "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png",
                 "backgroundColor": "#E2E9F8"
@@ -28,12 +28,12 @@
         "supertitle": "About",
         "cards": [
             {
-                "text": "The AstroSAFE Certification Program offers an independent, safety verification service and seal-of-approval program tailored for websites and technologies catering to children. This includes online gaming platforms, educational portals, virtual environments, mobile applications, tablet devices, interactive toys, and similar digital services.",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
+                "text": "The AstroSafe Seal Program offers an independent, safety and quality verification service and seal-of-approval program tailored for websites and technologies catering to children. This includes online gaming platforms, educational portals, virtual environments, mobile applications, tablet devices, interactive toys, and similar digital services.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal_program_image_1.png"
             },
             {
-                "text": "The products and services that meet our stringent safety and privacy criteria benefit from inclusion in a select list of AstroSAFE certified offerings, will be granted one of our esteemed AstroSAFE seals for showcasing on their respective platforms, and will be included as safe and discoverable links inside of our AstroSAFE browser.",
-                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320550.png"
+                "text": "The products and services that meet our stringent safety and privacy criteria benefit from inclusion in a select list of AstroSafe certified offerings, will be granted one of our esteemed AstroSafe seals for showcasing on their respective platforms, and will be included as safe and discoverable links inside of our AstroSafe browser.",
+                "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal_program_image_2.png"
             }
         ]
     },
@@ -49,7 +49,7 @@
             },
             {
                 "question": "How can I amend information about my company?",
-                "answer": "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we’ll fix it ASAP!"
+                "answer": "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we'll fix it ASAP!"
             },
             {
                 "question": "What are the evaluation criteria?",
@@ -57,7 +57,7 @@
             },
             {
                 "question": "Is it free to apply to?",
-                "answer": "Of course! We don’t charge to be featured in our approved list, we only require the company meets our evaluation criteria."
+                "answer": "Of course! We don't charge to be featured in our approved list, we only require the company meets our evaluation criteria."
             }
         ]
     }
