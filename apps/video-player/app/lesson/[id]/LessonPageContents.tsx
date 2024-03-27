@@ -51,19 +51,40 @@ export type AstroLessonContent = Omit<AstroContent, "lesson">;
 //   creatorId?: string;
 // }
 
-export default function LessonPageContents(
-  props: ILesson & {
-    videos: IVideo[];
-    worksheets: IWorksheet[];
-    links: ILink[];
-  }
-) {
+// as {
+//   lesson: ILesson;
+//   actualContents: {
+//     videos: IVideo[];
+//     worksheets: IWorksheet[];
+//     links: ILink[];
+//   };
+
+export default function LessonPageContents(props: { lessonId: string }) {
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [links, setLinks] = useState<ILink[]>([]);
+  const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLessonWithContents(props.lessonId).then((response) => {
+        if (!response) return;
+        response?.lesson && setLesson(response.lesson);
+        response?.actualContents?.videos &&
+          setVideos(response.actualContents.videos);
+        response?.actualContents?.worksheets &&
+          setWorksheets(response.actualContents.worksheets);
+        response?.actualContents?.links &&
+          setLinks(response.actualContents.links);
+      });
+  }, [props.lessonId]);
+
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
   const submitDeletion = () =>
-    ApiController.deleteWorksheet(props.id).then(() =>
+    lesson?.id &&
+    ApiController.deleteWorksheet(lesson.id).then(() =>
       router.push("/dashboard")
     );
 
@@ -84,21 +105,21 @@ export default function LessonPageContents(
   //   }
   // }, [userDetails.user]);
 
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  // const [videos, setVideos] = useState<IVideo[]>([]);
   // const loadVideos = () => {
   //   userDetails?.user?.id &&
   //     ApiController.getUserVideos(userDetails.user.id).then((videos) =>
   //       setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
   //     );
   // };
-  useEffect(() => {
-    setVideos(props.videos); //loadVideos();
-  }, [props.videos]);
+  // useEffect(() => {
+  //   setVideos(props.videos); //loadVideos();
+  // }, [props.videos]);
 
-  const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
-  useEffect(() => {
-    setWorksheets(props.worksheets); //loadVideos();
-  }, [props.worksheets]);
+  // const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  // useEffect(() => {
+  //   setWorksheets(props.worksheets); //loadVideos();
+  // }, [props.worksheets]);
   // const loadWorksheets = () => {
   //   userDetails?.user?.id &&
   //     ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
@@ -109,10 +130,10 @@ export default function LessonPageContents(
   //   loadWorksheets();
   // }, [userDetails?.user?.id]);
 
-  const [links, setLinks] = useState<ILink[]>([]);
-  useEffect(() => {
-    setLinks(props.links); //loadVideos();
-  }, [props.links]);
+  // const [links, setLinks] = useState<ILink[]>([]);
+  // useEffect(() => {
+  //   setLinks(props.links); //loadVideos();
+  // }, [props.links]);
   // const loadLinks = () => {
   //   userDetails?.user?.id &&
   //     ApiController.getLinks(userDetails.user.id).then((links) =>
@@ -128,7 +149,7 @@ export default function LessonPageContents(
       contentId: string;
     }[]
   >([]);
-  useEffect(() => setContents(props.contents), [props.contents]);
+  useEffect(() => setContents(lesson?.contents || []), [lesson?.contents]);
 
   const updateLesson = (
     lesson: ILesson,
@@ -160,23 +181,23 @@ export default function LessonPageContents(
     <>
       <Stack p="40px" overflow="scroll">
         <BigCard
-          title={props.title}
-          description={props.description}
-          createdAt={props.createdAt}
+          title={lesson?.title ?? ""}
+          description={lesson?.description ?? ""}
+          createdAt={lesson?.createdAt ?? undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
               <AddContentButton callback={(type) => contentCallbacks[type]()} />
               {userDetails?.user?.id &&
-              userDetails?.user?.id === props.creatorId ? (
+              userDetails?.user?.id === lesson?.creatorId ? (
                 <Stack
                   sx={{
                     pointerEvents:
-                      userDetails?.user?.id === props.creatorId
+                      userDetails?.user?.id === lesson?.creatorId
                         ? undefined
                         : "none",
                     opacity:
                       userDetails?.user?.id &&
-                      userDetails?.user?.id !== props.creatorId
+                      userDetails?.user?.id !== lesson?.creatorId
                         ? 0
                         : 1,
                   }}
@@ -246,14 +267,14 @@ export default function LessonPageContents(
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={submitDeletion}
         category="playlist"
-        title={props.title}
+        title={lesson?.title ?? ""}
       />
       <VideoCreationDialog
         open={videoDialogOpen}
         closeCallback={() => setVideoDialogOpen(false)}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.id, "video", id).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(props.lessonId, "video", id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -261,7 +282,7 @@ export default function LessonPageContents(
         open={worksheetDialogOpen}
         closeCallback={() => setWorksheetDialogOpen(false)}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.id, "worksheet", id).then(
+          ApiController.addToLesson(props.lessonId, "worksheet", id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
@@ -270,7 +291,7 @@ export default function LessonPageContents(
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(link) => {
-          ApiController.addToLesson(props.id, "link", link.id).then(
+          ApiController.addToLesson(props.lessonId, "link", link.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}

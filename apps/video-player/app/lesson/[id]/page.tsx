@@ -56,36 +56,17 @@ export async function generateMetadata({
 }
 
 async function LessonPage({ params }: { params: { id: string } }) {
-  const details = (await ApiController.getLessonWithContents(params.id)) as {
-    lesson: ILesson;
-    actualContents: {
-      videos: IVideo[];
-      worksheets: IWorksheet[];
-      links: ILink[];
-    };
-  };
   //const { width } = useWindowSize();
   // const [isMobile, setIsMobile] = useState<boolean>(false);
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
   //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-  return details ? (
+  return (
     <AuthWrapper>
       <UserProvider>
-        {!isMobile ? (
-          <LessonPageContents
-            {...details.lesson}
-            videos={details?.actualContents?.videos || []}
-            worksheets={details?.actualContents?.worksheets || []}
-            links={details?.actualContents?.links || []}
-          />
-        ) : (
-          <></>
-        )}
+        {!isMobile ? <LessonPageContents lessonId={params.id} /> : <></>}
       </UserProvider>
     </AuthWrapper>
-  ) : (
-    <></>
   );
 }
 
