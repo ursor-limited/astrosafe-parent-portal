@@ -39,6 +39,7 @@ import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
+import LessonCreationDialog from "./LessonCreationDialog";
 
 const PAGE_SIZE = 30;
 
@@ -797,6 +798,10 @@ export default function DashboardPageContents() {
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
+      />
+      <LessonCreationDialog
+        open={lessonCreationDialogOpen}
+        closeCallback={() => setLessonCreationDialogOpen(false)}
       />
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(
