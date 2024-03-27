@@ -10,6 +10,7 @@ import {
   IEquationWorksheetParameters,
   INumberBondWorksheetParameters,
   IWorksheet,
+  WorksheetId,
 } from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
@@ -35,6 +36,49 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
+
+export const getNPages = (worksheet: IWorksheet) => {
+  if (worksheet.worksheetId === "equation") {
+    const params = worksheet.parameters as IEquationWorksheetParameters;
+    return (
+      1 +
+      Math.ceil(
+        (params.pairs.length -
+          (params.topic === "division"
+            ? 12
+            : params.orientation === "horizontal"
+            ? 16
+            : 20)) /
+          (params.topic === "division"
+            ? 12
+            : params.orientation === "horizontal"
+            ? 20
+            : 24)
+      )
+    );
+  } else if (worksheet.worksheetId === "numberBond") {
+    const params = worksheet.parameters as INumberBondWorksheetParameters;
+    return (
+      1 +
+      Math.ceil(
+        (params.leftNumbers.length -
+          (params.orientation === "horizontal"
+            ? NUMBER_BOND_HORIZONTAL_ROWS_N
+            : NUMBER_BOND_VERTICAL_ROWS_N) *
+            (params.orientation === "horizontal"
+              ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+              : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
+          ((params.orientation === "horizontal"
+            ? NUMBER_BOND_HORIZONTAL_ROWS_N
+            : NUMBER_BOND_VERTICAL_ROWS_N) *
+            (params.orientation === "horizontal"
+              ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
+              : NUMBER_BOND_VERTICAL_N_COLUMNS))
+      )
+    );
+  }
+  return 1;
+};
 
 const SLIDE_SIZE_SCALE = 0.3;
 const SLIDE_WIDTH = 210 * SLIDE_SIZE_SCALE; // mm
@@ -340,46 +384,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
 
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
-    const params = props.parameters as IEquationWorksheetParameters;
-    if (props.worksheetId === "equation") {
-      setNPages(
-        1 +
-          Math.ceil(
-            (params.pairs.length -
-              (params.topic === "division"
-                ? 12
-                : props.parameters.orientation === "horizontal"
-                ? 16
-                : 20)) /
-              (params.topic === "division"
-                ? 12
-                : params.orientation === "horizontal"
-                ? 20
-                : 24)
-          )
-      );
-    } else if (props.worksheetId === "numberBond") {
-      const params = props.parameters as INumberBondWorksheetParameters;
-      setNPages(
-        1 +
-          Math.ceil(
-            (params.leftNumbers.length -
-              (params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_ROWS_N
-                : NUMBER_BOND_VERTICAL_ROWS_N) *
-                (params.orientation === "horizontal"
-                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
-                  : NUMBER_BOND_VERTICAL_N_COLUMNS)) /
-              ((params.orientation === "horizontal"
-                ? NUMBER_BOND_HORIZONTAL_ROWS_N
-                : NUMBER_BOND_VERTICAL_ROWS_N) *
-                (params.orientation === "horizontal"
-                  ? NUMBER_BOND_HORIZONTAL_N_COLUMNS
-                  : NUMBER_BOND_VERTICAL_N_COLUMNS))
-          )
-      );
-    }
-  }, [props.parameters, props.worksheetId]);
+    setNPages(getNPages(props));
+  }, [props]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 

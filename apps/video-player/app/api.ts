@@ -184,7 +184,6 @@ class ApiController {
     description?: string,
     creatorId?: string
   ) {
-    console.log(pairs, topic);
     return post("canvas/worksheet/equation", {
       title,
       description,
@@ -228,8 +227,23 @@ class ApiController {
       response.json()
     );
   }
-  static async doIt() {
-    return get(`canvas/doIt`).then((response: any) => response.json());
+  static async isBlocked(url: any) {
+    return post("link/isBlocked", { url })
+      .then((response: any) => response.json())
+      .catch((error) => {
+        console.log(error.status);
+        if (error.status === 405) {
+          return true;
+        }
+      });
+  }
+  static async getURLImagePreview(url: any) {
+    return post("link/URLImagePreview", { url }).then(
+      (response: any) => response?.json()
+    );
+  }
+  static async createLink(details: any) {
+    return post("link", details).then((response: any) => response.json());
   }
 }
 

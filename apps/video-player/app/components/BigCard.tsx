@@ -22,7 +22,7 @@ const BigCard = (props: {
         width="83%"
         pb="24px"
         borderRadius="16px"
-        bgcolor={PALETTE.secondary.grey[1]}
+        bgcolor="rgb(255,255,255)"
       >
         <Stack spacing="50px" width="100%">
           <Stack
