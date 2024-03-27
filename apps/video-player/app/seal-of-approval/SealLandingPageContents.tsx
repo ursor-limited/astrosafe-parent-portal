@@ -116,8 +116,8 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
             : []),
           <Stack key="list" ref={listRef}>
             <LandingPageViewport
-              supertitle="Our list"
-              title="AstroSafe Approved Companies"
+              supertitle="Seal members"
+              title="AstroSafe Seal recipients"
               mobile={isMobile}
             >
               <ApprovedCompaniesList
@@ -142,7 +142,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                 (window.location.href = "mailto:hello@astrosafe.co")
               }
             >
-              Enrol to program
+              Enrol now
             </UrsorButton>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
