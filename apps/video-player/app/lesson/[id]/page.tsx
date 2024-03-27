@@ -6,7 +6,7 @@ import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import PlaylistPageContents from "./PlaylistPageContents";
+import LessonPageContents from "./LessonPageContents";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import { ILink } from "@/app/dashboard/LinkDialog";
 
@@ -56,7 +56,7 @@ export async function generateMetadata({
 }
 
 async function LessonPage({ params }: { params: { id: string } }) {
-  const details = (await ApiController.getLesson(params.id)) as {
+  const details = (await ApiController.getLessonWithContents(params.id)) as {
     lesson: ILesson;
     actualContents: {
       videos: IVideo[];
@@ -73,11 +73,11 @@ async function LessonPage({ params }: { params: { id: string } }) {
     <AuthWrapper>
       <UserProvider>
         {!isMobile ? (
-          <PlaylistPageContents
+          <LessonPageContents
             {...details.lesson}
-            videos={details.actualContents.videos}
-            worksheets={details.actualContents.worksheets}
-            links={details.actualContents.links}
+            videos={details?.actualContents?.videos || []}
+            worksheets={details?.actualContents?.worksheets || []}
+            links={details?.actualContents?.links || []}
           />
         ) : (
           <></>

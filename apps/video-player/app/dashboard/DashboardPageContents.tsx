@@ -40,6 +40,7 @@ import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
+import { ILesson } from "../lesson/[id]/page";
 
 const PAGE_SIZE = 30;
 
@@ -397,6 +398,17 @@ export const ToolButton = (props: {
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const loadLessons = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLessons(userDetails.user.id).then((l) =>
+        setLessons(_.reverse(l.slice()))
+      );
+  };
+  useEffect(() => {
+    loadLessons();
+  }, [userDetails?.user?.id]);
+
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
@@ -430,6 +442,8 @@ export default function DashboardPageContents() {
       }
     }
   };
+
+  console.log(lessons);
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 

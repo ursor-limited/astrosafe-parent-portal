@@ -50,7 +50,7 @@ export type AstroLessonContent = Omit<AstroContent, "lesson">;
 //   creatorId?: string;
 // }
 
-export default function PlaylistPageContents(
+export default function LessonPageContents(
   props: ILesson & {
     videos: IVideo[];
     worksheets: IWorksheet[];
@@ -160,6 +160,7 @@ export default function PlaylistPageContents(
       <Stack p="40px" overflow="scroll">
         <BigCard
           title={props.title}
+          description={props.description}
           createdAt={props.createdAt}
           rightStuff={
             <Stack direction="row" spacing="12px">
