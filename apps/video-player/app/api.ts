@@ -3,6 +3,7 @@ import {
   INumberBondWorksheetParameters,
   WorksheetTopic,
 } from "./components/WorksheetGenerator";
+import { AstroLessonContent } from "./lesson/[id]/LessonPageContents";
 
 export interface IVideo {
   id: string;
@@ -85,6 +86,24 @@ const dellete = (route: string) =>
 // });
 
 class ApiController {
+  static async createLesson(details: any) {
+    return post("lesson", details).then((response: any) => response.json());
+  }
+  static async getLesson(id: string) {
+    return get(`lesson/${id}`).then((response: any) => response.json());
+  }
+  static async getLessonWithContents(id: string) {
+    return get(`lesson/${id}/withContents`).then((response: any) => response.json());
+  }
+  static async getUserLessons(id: string) {
+    //@ts-ignore
+    return get(`lesson/user/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async addToLesson(id: string, type: AstroLessonContent, contentId: string) {
+    return post(`lesson/add`, { id, type, contentId }).then((response: any) => response.json());
+  }
   static async createVideo(details: any) {
     return post("video", details).then((response: any) => response.json());
   }

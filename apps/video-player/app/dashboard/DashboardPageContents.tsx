@@ -39,6 +39,10 @@ import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
+import LessonCreationDialog from "./LessonCreationDialog";
+import { ILesson } from "../lesson/[id]/page";
+import { ILink } from "./LinkDialog";
+import LessonCard from "../components/LessonCard";
 
 const PAGE_SIZE = 30;
 
@@ -58,8 +62,7 @@ export interface IAstroContentBranding {
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
     title: "SafeTube - safe videos",
-    description:
-      "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+    description: "Free of ads. Safe to share.",
     color: PALETTE.secondary.blue[3],
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
@@ -67,8 +70,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   },
   worksheet: {
     title: "Worksheet Generator",
-    description:
-      "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+    description: "Printable & finished in seconds.",
     color: PALETTE.secondary.pink[5],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
@@ -76,7 +78,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   },
   lesson: {
     title: "Lesson",
-    description: "Create dynamic and vivacious collections of content.",
+    description: "Dynamic and vivacious collection.",
     color: PALETTE.secondary.green[5],
     icon: VersionsIcon,
     infoButtonPosition: 170,
@@ -398,6 +400,17 @@ export const ToolButton = (props: {
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const loadLessons = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLessons(userDetails.user.id).then((l) =>
+        setLessons(_.reverse(l.slice()))
+      );
+  };
+  useEffect(() => {
+    loadLessons();
+  }, [userDetails?.user?.id]);
+
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
@@ -437,13 +450,13 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet;
+      details: IVideo | IWorksheet | ILesson | ILink;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet;
+      details: IVideo | IWorksheet | ILesson | ILink;
     }[]
   >([]);
   useEffect(() => {
@@ -485,6 +498,16 @@ export default function DashboardPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
+    const lessonDetails = lessons
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "lesson" as AstroContent,
+        details: l,
+      }));
     const allContentDetails = _.orderBy(
       [
         ...(selectedContentType && selectedContentType !== "video"
@@ -493,6 +516,9 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "lesson"
+          ? []
+          : lessonDetails),
       ],
       (c) =>
         selectedSort === "createdAt"
@@ -502,6 +528,7 @@ export default function DashboardPageContents() {
     );
     setCards(allContentDetails);
   }, [
+    lessons,
     videos,
     worksheets,
     nColumns,
@@ -510,12 +537,13 @@ export default function DashboardPageContents() {
     selectedSort,
   ]);
 
-  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
-
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
 
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
+    useState<boolean>(false);
+
+  const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
 
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
@@ -664,6 +692,15 @@ export default function DashboardPageContents() {
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
             <ToolButton
+              title="Create lesson"
+              description={CONTENT_BRANDING.lesson.description}
+              color={CONTENT_BRANDING.lesson.color}
+              icon={CONTENT_BRANDING.lesson.icon}
+              onClick={() => setLessonCreationDialogOpen(true)}
+              infoButtonPosition={215}
+              info={CONTENT_BRANDING.lesson.info}
+            />
+            <ToolButton
               title="Create safe video link"
               description="Free of ads. Safe to share."
               color={PALETTE.secondary.blue[3]}
@@ -764,13 +801,19 @@ export default function DashboardPageContents() {
                         delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
                         duration={900}
                       >
-                        {
-                          item.type === "video" ? (
-                            <VideoCard {...(item.details as IVideo)} />
-                          ) : (
-                            <WorksheetCard {...(item.details as IWorksheet)} />
-                          ) // other card
-                        }
+                        {item.type === "video" ? (
+                          <VideoCard {...(item.details as IVideo)} />
+                        ) : item.type === "worksheet" ? (
+                          <WorksheetCard {...(item.details as IWorksheet)} />
+                        ) : item.type === "lesson" ? (
+                          <LessonCard
+                            {...(item.details as ILesson)}
+                            imageUrls={[]}
+                            clickCallback={() =>
+                              router.push(`/lesson/${item.details.id}`)
+                            }
+                          />
+                        ) : null}
                       </UrsorFadeIn>
                     </Stack>
                   ))}
@@ -787,6 +830,10 @@ export default function DashboardPageContents() {
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
+      />
+      <LessonCreationDialog
+        open={lessonCreationDialogOpen}
+        closeCallback={() => setLessonCreationDialogOpen(false)}
       />
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(

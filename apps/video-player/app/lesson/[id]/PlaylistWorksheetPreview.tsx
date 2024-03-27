@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import { useRouter } from "next/navigation";
 {
   /* <PageSelector
         pageIndex={pageIndex}
@@ -22,9 +23,11 @@ import ChevronRight from "@/images/icons/ChevronRight.svg";
 }
 
 const PlaylistWorksheetPreview = (props: IWorksheet) => {
+  const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [nPages, setNPages] = useState<number>(0);
   useEffect(() => setNPages(getNPages(props)), [props]);
+  const router = useRouter();
   return (
     <Stack
       position="relative"
@@ -65,38 +68,41 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
             />
           )}
         </Stack>
-        <Stack
-          direction="row"
-          spacing="10px"
-          position="absolute"
-          top="726px"
-          right="20px"
-        >
+        {nPages > 1 ? (
           <Stack
-            sx={{
-              opacity: pageIndex === 0 ? 0.4 : 1,
-              pointerEvents: pageIndex === 0 ? "none" : undefined,
-            }}
+            direction="row"
+            spacing="10px"
+            position="absolute"
+            top="726px"
+            right="20px"
+            zIndex={2}
           >
-            <CircularButton
-              icon={ChevronLeft}
-              color={PALETTE.secondary.purple[2]}
-              onClick={() => setPageIndex(pageIndex - 1)}
-            />
+            <Stack
+              sx={{
+                opacity: pageIndex === 0 ? 0.4 : 1,
+                pointerEvents: pageIndex === 0 ? "none" : undefined,
+              }}
+            >
+              <CircularButton
+                icon={ChevronLeft}
+                color={PALETTE.secondary.purple[2]}
+                onClick={() => setPageIndex(pageIndex - 1)}
+              />
+            </Stack>
+            <Stack
+              sx={{
+                opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
+                pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
+              }}
+            >
+              <CircularButton
+                icon={ChevronRight}
+                color={PALETTE.secondary.purple[2]}
+                onClick={() => setPageIndex(pageIndex + 1)}
+              />
+            </Stack>
           </Stack>
-          <Stack
-            sx={{
-              opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
-              pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
-            }}
-          >
-            <CircularButton
-              icon={ChevronRight}
-              color={PALETTE.secondary.purple[2]}
-              onClick={() => setPageIndex(pageIndex + 1)}
-            />
-          </Stack>
-        </Stack>
+        ) : null}
       </Stack>
       <Stack py="6px">
         <Typography
@@ -108,6 +114,25 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
           {props.title}
         </Typography>
       </Stack>
+      <Stack
+        width="100%"
+        height="100%"
+        top={0}
+        left={0}
+        position="absolute"
+        onMouseEnter={() => {
+          setHovering(true);
+        }}
+        onMouseLeave={() => {
+          setHovering(false);
+        }}
+        bgcolor={hovering ? "rgba(255,255,255,0.4)" : undefined}
+        sx={{
+          cursor: "pointer",
+          transition: "0.2s",
+        }}
+        onClick={() => router.push(`/worksheet/${props.id}`)}
+      />
     </Stack>
   );
 };

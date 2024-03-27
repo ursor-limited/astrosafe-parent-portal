@@ -198,6 +198,7 @@ export default function WorksheetGenerator(props: {
   fadeIn?: boolean;
   glow?: boolean;
   buttonText?: string;
+  callback?: (id: string) => void;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
@@ -270,9 +271,11 @@ export default function WorksheetGenerator(props: {
         setFreeWorksheetCreationCount(freeWorksheetCreationCount + 1);
         setFreeWorksheetIds([...freeWorksheetIds, id]);
       }
-      router.push(
-        !props.landOnWorksheetPage ? "/dashboard" : `/worksheet/${id}`
-      );
+      props.callback
+        ? props.callback(id)
+        : router.push(
+            !props.landOnWorksheetPage ? "/dashboard" : `/worksheet/${id}`
+          );
     });
   };
 

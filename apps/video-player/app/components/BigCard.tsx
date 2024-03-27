@@ -11,15 +11,22 @@ const BigCard = (props: {
   title: string;
   description?: string;
   createdAt?: string;
+  minHeight?: string;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
   const userDetails = useUserContext().user;
   return (
-    <Stack alignItems="center" justifyContent="center" spacing="100px">
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      spacing="100px"
+      minHeight={props.minHeight}
+    >
       <Stack
         position="relative"
         width="83%"
+        height="100%"
         pb="24px"
         borderRadius="16px"
         bgcolor="rgb(255,255,255)"
@@ -52,7 +59,7 @@ const BigCard = (props: {
             </Stack>
             {props.rightStuff}
           </Stack>
-          <Stack spacing="32px" px="24px">
+          <Stack spacing="28px" px="24px">
             <Stack spacing="4px">
               {props.createdAt ? (
                 <Typography>{getFormattedDate(props.createdAt)}</Typography>
