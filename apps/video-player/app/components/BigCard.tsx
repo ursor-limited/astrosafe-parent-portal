@@ -30,6 +30,7 @@ const BigCard = (props: {
         pb="24px"
         borderRadius="16px"
         bgcolor="rgb(255,255,255)"
+        spacing="26px"
       >
         <Stack spacing="50px" width="100%">
           <Stack
@@ -59,7 +60,7 @@ const BigCard = (props: {
             </Stack>
             {props.rightStuff}
           </Stack>
-          <Stack spacing="28px" px="24px">
+          <Stack spacing="22px" px="24px">
             <Stack spacing="4px">
               {props.createdAt ? (
                 <Typography>{getFormattedDate(props.createdAt)}</Typography>
