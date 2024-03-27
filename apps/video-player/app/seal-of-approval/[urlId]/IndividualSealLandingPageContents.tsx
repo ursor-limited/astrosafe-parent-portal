@@ -28,8 +28,8 @@ export default function IndividualSealLandingPageContents(
   return (
     <>
       <AstroLandingPage
-        title={[props.companyName, "AstroSafe Seal Member"]}
-        subtitle="This page confirms that the website, mobile app, or other technology shown below is a member in the AstroSAFE Seal Program. This means that the product below has been independently reviewed, certified, and/or listed by AstroSAFE to meet certain standards of online safety and/or privacy, and is authorised to display the AstroSAFE Seal shown below."
+        title={[props.companyName]}
+        subtitle="This page confirms that the website, mobile app, or other technology shown below is a member in the AstroSafe Seal Program."
         mobile={isMobile}
         faqs={{
           cards: [
@@ -46,7 +46,7 @@ export default function IndividualSealLandingPageContents(
             {
               question: "How can I amend information about my company?",
               answer:
-                "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we’ll fix it ASAP!",
+                "Send us an email at hello@astrosafe.co (preferably with a company email to speed up the identification process) and let u know what we got wrong and we'll fix it ASAP!",
             },
             {
               question: "What are the evaluation criteria?",
@@ -56,7 +56,7 @@ export default function IndividualSealLandingPageContents(
             {
               question: "Is it free to apply to?",
               answer:
-                "Of course! We don’t charge to be featured in our approved list, we only require the company meets our evaluation criteria.",
+                "Of course! We don't charge to be featured in our approved list, we only require the company meets our evaluation criteria.",
             },
           ],
         }}
@@ -215,7 +215,7 @@ export default function IndividualSealLandingPageContents(
                 (window.location.href = "mailto:hello@astrosafe.co")
               }
             >
-              Enrol to program
+              Enrol now
             </UrsorButton>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
