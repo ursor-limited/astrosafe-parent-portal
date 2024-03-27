@@ -58,8 +58,7 @@ export interface IAstroContentBranding {
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
     title: "SafeTube - safe videos",
-    description:
-      "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+    description: "Free of ads. Safe to share.",
     color: PALETTE.secondary.blue[3],
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
@@ -67,8 +66,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   },
   worksheet: {
     title: "Worksheet Generator",
-    description:
-      "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+    description: "Printable & finished in seconds.",
     color: PALETTE.secondary.pink[5],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
@@ -76,7 +74,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   },
   lesson: {
     title: "Lesson",
-    description: "Create dynamic and vivacious collections of content.",
+    description: "Dynamic and vivacious collection.",
     color: PALETTE.secondary.green[5],
     icon: VersionsIcon,
     infoButtonPosition: 170,
@@ -518,6 +516,9 @@ export default function DashboardPageContents() {
   const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
     useState<boolean>(false);
 
+  const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
+    useState<boolean>(false);
+
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
     []
@@ -663,6 +664,15 @@ export default function DashboardPageContents() {
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
+            <ToolButton
+              title="Create lesson"
+              description={CONTENT_BRANDING.lesson.description}
+              color={CONTENT_BRANDING.lesson.color}
+              icon={CONTENT_BRANDING.lesson.icon}
+              onClick={() => setLessonCreationDialogOpen(true)}
+              infoButtonPosition={215}
+              info={CONTENT_BRANDING.lesson.info}
+            />
             <ToolButton
               title="Create safe video link"
               description="Free of ads. Safe to share."
