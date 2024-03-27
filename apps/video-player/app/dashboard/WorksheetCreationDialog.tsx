@@ -1,15 +1,15 @@
 import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
-import WorksheetGenerator from "../components/WorksheetGenerator";
-import { useState } from "react";
-import { Slider } from "@mui/material";
-import SignupPromptDialog from "./SignupPromptDialog";
+import WorksheetGenerator, {
+  IWorksheet,
+} from "../components/WorksheetGenerator";
 
 export const TITLE_CHARACTER_LIMIT = 40;
 
 const WorksheetCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  creationCallback?: (worksheetId: string) => void;
   mobile?: boolean;
 }) => {
   return (
@@ -30,6 +30,10 @@ const WorksheetCreationDialog = (props: {
           mobile={props.mobile}
           noPadding
           landOnWorksheetPage
+          callback={(id) => {
+            props.creationCallback?.(id);
+            props.closeCallback();
+          }}
         />
       </Stack>
     </UrsorDialog>

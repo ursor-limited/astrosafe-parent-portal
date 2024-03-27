@@ -34,22 +34,29 @@ import AddContentButton from "./AddContentButton";
 import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
+import { ILesson } from "./page";
 
-export type AstroPlaylistContent = "video" | "link" | "worksheet";
+export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
-export interface IPlaylist {
-  id: string;
-  title: string;
-  description?: string;
-  contents: {
-    type: AstroPlaylistContent;
-    contentId: string;
-  }[];
-  createdAt: string;
-  creatorId: string;
-}
+// export interface IPlaylist {
+//   id: string;
+//   title: string;
+//   description?: string;
+//   contents: {
+//     type: AstroLessonContent;
+//     contentId: string;
+//   }[];
+//   createdAt: string;
+//   creatorId?: string;
+// }
 
-export default function PlaylistPageContents(props: IPlaylist) {
+export default function PlaylistPageContents(
+  props: ILesson & {
+    videos: IVideo[];
+    worksheets: IWorksheet[];
+    links: ILink[];
+  }
+) {
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
   const router = useRouter();
@@ -77,36 +84,34 @@ export default function PlaylistPageContents(props: IPlaylist) {
   // }, [userDetails.user]);
 
   const [videos, setVideos] = useState<IVideo[]>([]);
-  const loadVideos = () => {
-    userDetails?.user?.id &&
-      ApiController.getUserVideos(userDetails.user.id).then((videos) =>
-        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-      );
-  };
+  // const loadVideos = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getUserVideos(userDetails.user.id).then((videos) =>
+  //       setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
+  //     );
+  // };
   useEffect(() => {
-    loadVideos();
-  }, [userDetails?.user?.id]);
+    setVideos(props.videos); //loadVideos();
+  }, [props.videos]);
 
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
-  const loadWorksheets = () => {
-    userDetails?.user?.id &&
-      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
-        setWorksheets(_.reverse(ws.slice()))
-      );
-  };
   useEffect(() => {
-    loadWorksheets();
-  }, [userDetails?.user?.id]);
+    setWorksheets(props.worksheets); //loadVideos();
+  }, [props.worksheets]);
+  // const loadWorksheets = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
+  //       setWorksheets(_.reverse(ws.slice()))
+  //     );
+  // };
+  // useEffect(() => {
+  //   loadWorksheets();
+  // }, [userDetails?.user?.id]);
 
-  const [links, setLinks] = useState<ILink[]>([
-    {
-      id: "BOO",
-      title: "BOOOO",
-      url: "https://nytimes.com",
-      imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/astroLogo!.png",
-      color: "#22e08b",
-    },
-  ]);
+  const [links, setLinks] = useState<ILink[]>([]);
+  useEffect(() => {
+    setLinks(props.links); //loadVideos();
+  }, [props.links]);
   // const loadLinks = () => {
   //   userDetails?.user?.id &&
   //     ApiController.getLinks(userDetails.user.id).then((links) =>
@@ -118,11 +123,25 @@ export default function PlaylistPageContents(props: IPlaylist) {
 
   const [contents, setContents] = useState<
     {
-      type: AstroPlaylistContent;
+      type: AstroLessonContent;
       contentId: string;
     }[]
   >([]);
   useEffect(() => setContents(props.contents), [props.contents]);
+
+  const updateLesson = (
+    lesson: ILesson,
+    actualContents: {
+      videos: IVideo[];
+      worksheets: IWorksheet[];
+      links: ILink[];
+    }
+  ) => {
+    setContents(lesson.contents);
+    setVideos(actualContents.videos);
+    setWorksheets(actualContents.worksheets);
+    setLinks(actualContents.links);
+  };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
@@ -219,19 +238,29 @@ export default function PlaylistPageContents(props: IPlaylist) {
       <VideoCreationDialog
         open={videoDialogOpen}
         closeCallback={() => setVideoDialogOpen(false)}
+        creationCallback={(id) => {
+          ApiController.addToLesson(props.id, "video", id).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
+          );
+        }}
       />
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
         closeCallback={() => setWorksheetDialogOpen(false)}
+        creationCallback={(id) => {
+          ApiController.addToLesson(props.id, "worksheet", id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
+          );
+        }}
       />
       <LinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(link) => {
-          setLinks([...links, link]);
-          setContents([{ type: "link", contentId: link.id }, ...contents]);
+          ApiController.addToLesson(props.id, "link", link.id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
+          );
         }}
-        lessonId={props.id}
       />
     </>
   );

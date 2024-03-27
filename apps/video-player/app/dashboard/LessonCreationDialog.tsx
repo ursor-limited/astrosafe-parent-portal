@@ -1,10 +1,12 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
-import Image from "next/image";
-import { PALETTE, Typography, UrsorInputField, UrsorTextField } from "ui";
+import { UrsorInputField, UrsorTextField } from "ui";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
+import ApiController from "../api";
+import { useRouter } from "next/navigation";
+import PencilIcon from "@/images/icons/Pencil.svg";
 
 const LessonCreationDialog = (props: {
   open: boolean;
@@ -12,6 +14,12 @@ const LessonCreationDialog = (props: {
 }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const router = useRouter();
+  const submitCreation = () =>
+    ApiController.createLesson({
+      title,
+      description,
+    }).then((lesson) => router.push(`/lesson/${lesson.id}`));
   return (
     <UrsorDialog
       supertitle="Name your Lesson"
@@ -20,6 +28,7 @@ const LessonCreationDialog = (props: {
       dynamicHeight
       width="488px"
       noPadding={isMobile}
+      button={{ text: "Create", callback: submitCreation, icon: PencilIcon }}
     >
       <Stack spacing="20px" width="100%">
         <Captioned text="Title">
