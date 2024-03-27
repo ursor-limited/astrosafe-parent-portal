@@ -68,39 +68,41 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
             />
           )}
         </Stack>
-        <Stack
-          direction="row"
-          spacing="10px"
-          position="absolute"
-          top="726px"
-          right="20px"
-          zIndex={2}
-        >
+        {nPages > 1 ? (
           <Stack
-            sx={{
-              opacity: pageIndex === 0 ? 0.4 : 1,
-              pointerEvents: pageIndex === 0 ? "none" : undefined,
-            }}
+            direction="row"
+            spacing="10px"
+            position="absolute"
+            top="726px"
+            right="20px"
+            zIndex={2}
           >
-            <CircularButton
-              icon={ChevronLeft}
-              color={PALETTE.secondary.purple[2]}
-              onClick={() => setPageIndex(pageIndex - 1)}
-            />
+            <Stack
+              sx={{
+                opacity: pageIndex === 0 ? 0.4 : 1,
+                pointerEvents: pageIndex === 0 ? "none" : undefined,
+              }}
+            >
+              <CircularButton
+                icon={ChevronLeft}
+                color={PALETTE.secondary.purple[2]}
+                onClick={() => setPageIndex(pageIndex - 1)}
+              />
+            </Stack>
+            <Stack
+              sx={{
+                opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
+                pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
+              }}
+            >
+              <CircularButton
+                icon={ChevronRight}
+                color={PALETTE.secondary.purple[2]}
+                onClick={() => setPageIndex(pageIndex + 1)}
+              />
+            </Stack>
           </Stack>
-          <Stack
-            sx={{
-              opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
-              pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
-            }}
-          >
-            <CircularButton
-              icon={ChevronRight}
-              color={PALETTE.secondary.purple[2]}
-              onClick={() => setPageIndex(pageIndex + 1)}
-            />
-          </Stack>
-        </Stack>
+        ) : null}
       </Stack>
       <Stack py="6px">
         <Typography

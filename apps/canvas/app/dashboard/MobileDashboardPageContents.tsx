@@ -34,6 +34,7 @@ import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { FilterRow, SearchInput, ToolButton } from "./DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { AstroContent } from "./DashboardPageContents";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),

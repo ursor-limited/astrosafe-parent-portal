@@ -35,6 +35,7 @@ import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import { ILesson } from "./page";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -210,22 +211,33 @@ export default function LessonPageContents(
           }
         >
           <Stack spacing="20px" width="40%" px="24px">
-            {contents.map((c) => {
-              if (c.type === "video") {
-                const video = videos.find((v) => v.id === c.contentId);
-                return video ? (
-                  <PlaylistVideoCard key={video.id} {...video} />
-                ) : null;
-              } else if (c.type === "link") {
-                const link = links.find((v) => v.id === c.contentId);
-                return link ? <LinkCard key={link.id} {...link} /> : null;
-              } else if (c.type === "worksheet") {
-                const worksheet = worksheets.find((w) => w.id === c.contentId);
-                return worksheet ? (
-                  <PlaylistWorksheetPreview key={worksheet.id} {...worksheet} />
-                ) : null;
-              }
-            })}
+            {_.reverse(contents.slice())
+              .map((c) => {
+                if (c.type === "video") {
+                  const video = videos.find((v) => v.id === c.contentId);
+                  return video ? (
+                    <PlaylistVideoCard key={video.id} {...video} />
+                  ) : null;
+                } else if (c.type === "link") {
+                  const link = links.find((v) => v.id === c.contentId);
+                  return link ? <LinkCard key={link.id} {...link} /> : null;
+                } else if (c.type === "worksheet") {
+                  const worksheet = worksheets.find(
+                    (w) => w.id === c.contentId
+                  );
+                  return worksheet ? (
+                    <PlaylistWorksheetPreview
+                      key={worksheet.id}
+                      {...worksheet}
+                    />
+                  ) : null;
+                }
+              })
+              .map((card, i) => (
+                <UrsorFadeIn duration={800} key={i}>
+                  {card}
+                </UrsorFadeIn>
+              ))}
           </Stack>
         </BigCard>
       </Stack>

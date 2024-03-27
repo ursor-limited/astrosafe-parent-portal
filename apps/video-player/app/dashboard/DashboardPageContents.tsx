@@ -41,6 +41,8 @@ import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
+import { ILink } from "./LinkDialog";
+import LessonCard from "../components/LessonCard";
 
 const PAGE_SIZE = 30;
 
@@ -443,20 +445,18 @@ export default function DashboardPageContents() {
     }
   };
 
-  console.log(lessons);
-
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet;
+      details: IVideo | IWorksheet | ILesson | ILink;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet;
+      details: IVideo | IWorksheet | ILesson | ILink;
     }[]
   >([]);
   useEffect(() => {
@@ -498,6 +498,16 @@ export default function DashboardPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
+    const lessonDetails = lessons
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "lesson" as AstroContent,
+        details: l,
+      }));
     const allContentDetails = _.orderBy(
       [
         ...(selectedContentType && selectedContentType !== "video"
@@ -506,6 +516,9 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "lesson"
+          ? []
+          : lessonDetails),
       ],
       (c) =>
         selectedSort === "createdAt"
@@ -515,6 +528,7 @@ export default function DashboardPageContents() {
     );
     setCards(allContentDetails);
   }, [
+    lessons,
     videos,
     worksheets,
     nColumns,
@@ -522,8 +536,6 @@ export default function DashboardPageContents() {
     searchValue,
     selectedSort,
   ]);
-
-  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
     useState<boolean>(false);
@@ -789,13 +801,19 @@ export default function DashboardPageContents() {
                         delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
                         duration={900}
                       >
-                        {
-                          item.type === "video" ? (
-                            <VideoCard {...(item.details as IVideo)} />
-                          ) : (
-                            <WorksheetCard {...(item.details as IWorksheet)} />
-                          ) // other card
-                        }
+                        {item.type === "video" ? (
+                          <VideoCard {...(item.details as IVideo)} />
+                        ) : item.type === "worksheet" ? (
+                          <WorksheetCard {...(item.details as IWorksheet)} />
+                        ) : item.type === "lesson" ? (
+                          <LessonCard
+                            {...(item.details as ILesson)}
+                            imageUrls={[]}
+                            clickCallback={() =>
+                              router.push(`/lesson/${item.details.id}`)
+                            }
+                          />
+                        ) : null}
                       </UrsorFadeIn>
                     </Stack>
                   ))}
