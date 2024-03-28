@@ -184,7 +184,7 @@ export default function IndividualSealLandingPageContents(
               cards={[
                 {
                   title: "AstroSafe Certified",
-                  text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                  text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is beneficial for kids.",
                   imageUrl:
                     "https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png",
                   backgroundColor: "#E2E9F8",
