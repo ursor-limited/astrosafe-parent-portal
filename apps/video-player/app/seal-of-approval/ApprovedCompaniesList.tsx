@@ -1,9 +1,10 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import companies from "./companies.json";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import X from "@/images/icons/X.svg";
 import { useEffect, useRef, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";

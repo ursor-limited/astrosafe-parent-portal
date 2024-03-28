@@ -219,6 +219,7 @@ const ProductsPopoverContents = (props: {
   noSignIn?: boolean;
 }) => {
   const { loginWithRedirect, user } = useAuth0();
+  const router = useRouter();
   return (
     <Stack
       height={props.mobile ? undefined : "292px"}
@@ -267,6 +268,11 @@ const ProductsPopoverContents = (props: {
         </Stack>
       </Stack>
       <Stack flex={1} p="12px" spacing="20px">
+        <Stack onClick={() => router.push("/seal-of-approval")}>
+          <Typography variant="medium" bold>
+            Safeseal
+          </Typography>
+        </Stack>
         <Typography variant="medium" bold>
           Tools
         </Typography>

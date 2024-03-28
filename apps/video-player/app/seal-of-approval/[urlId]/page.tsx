@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import companies from "../companies.json";
-import { IApprovedCompany } from "../ApprovedCompaniesList";
+import { IApprovedCompany, S3_BASE_URL } from "../ApprovedCompaniesList";
 import IndividualSealLandingPageContents from "./IndividualSealLandingPageContents";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
@@ -18,7 +18,7 @@ export async function generateMetadata({
     title: `${company?.companyName} - AstroSafe Seal Member`,
     description: company?.description,
     openGraph: {
-      images: company?.heroImage,
+      images: `${S3_BASE_URL}/${company?.heroImage}`,
       title: `${company?.companyName} - AstroSafe Seal Member`,
       description: company?.description,
     },
