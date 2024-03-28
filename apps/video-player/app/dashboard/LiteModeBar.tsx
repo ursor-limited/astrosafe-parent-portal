@@ -1,9 +1,11 @@
 import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
+import { useUserContext } from "../components/UserContext";
 
 const MAX_LITE_MODE_ACTIONS = 2;
 
 const LiteModeBar = (props: { nLeft: number; upgradeCallback: () => void }) => {
+  const userDetails = useUserContext().user;
   return (
     <Stack
       position="absolute"
@@ -27,7 +29,7 @@ const LiteModeBar = (props: { nLeft: number; upgradeCallback: () => void }) => {
     >
       <Stack direction="row" spacing="5px">
         <Typography variant="medium" color="rgb(255,255,255)" bold>
-          {props.nLeft}
+          {MAX_LITE_MODE_ACTIONS - (userDetails?.creations ?? 0)}
         </Typography>
         <Typography
           variant="medium"

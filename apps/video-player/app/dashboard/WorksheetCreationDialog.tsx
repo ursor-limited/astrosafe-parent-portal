@@ -30,10 +30,14 @@ const WorksheetCreationDialog = (props: {
           mobile={props.mobile}
           noPadding
           landOnWorksheetPage
-          callback={(id) => {
-            props.creationCallback?.(id);
-            props.closeCallback();
-          }}
+          callback={
+            props.creationCallback
+              ? (id) => {
+                  props.creationCallback?.(id);
+                  props.closeCallback();
+                }
+              : undefined
+          }
         />
       </Stack>
     </UrsorDialog>
