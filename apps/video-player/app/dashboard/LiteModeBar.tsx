@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
 import { useUserContext } from "../components/UserContext";
 
-const MAX_LITE_MODE_ACTIONS = 2;
+const MAX_LITE_MODE_ACTIONS = 3;
 
 export const useOutOfCreations = () => {
   const nCreations = useUserContext().user?.creations ?? 0;

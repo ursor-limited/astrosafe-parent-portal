@@ -903,10 +903,10 @@ export default function DashboardPageContents() {
           setUpgradeDialogOpen(true);
         }}
       />
-      <LiteModeBar
-        //nLeft={1}
-        upgradeCallback={() => setUpgradeDialogOpen(true)}
-      />
+      {!userDetails.user?.subscribed &&
+      getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+        <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
+      ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
