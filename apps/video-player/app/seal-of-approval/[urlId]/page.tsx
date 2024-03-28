@@ -15,10 +15,13 @@ export async function generateMetadata({
     (c) => c.internalpath === params.urlId
   );
   return {
+    metadataBase: new URL(
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal"
+    ),
     title: `${company?.companyName} - AstroSafe Seal Member`,
     description: company?.description,
     openGraph: {
-      images: `$https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/${company?.heroImage}`,
+      images: `/${company?.heroImage}`,
       title: `${company?.companyName} - AstroSafe Seal Member`,
       description: company?.description,
     },
