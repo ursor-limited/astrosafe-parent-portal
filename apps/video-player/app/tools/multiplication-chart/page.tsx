@@ -17,6 +17,12 @@ export const dynamic = "force-static"; // for SEO, as explained in https://githu
 export const metadata: Metadata = {
   title: landingPageDetails?.pageTitle,
   description: landingPageDetails?.metaDescription,
+  openGraph: {
+    images:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Screenshot+2024-03-28+at+14.09.01.png",
+    title: landingPageDetails?.pageTitle,
+    description: landingPageDetails?.metaDescription,
+  },
 };
 
 async function MainWorksheetsLandingPage() {

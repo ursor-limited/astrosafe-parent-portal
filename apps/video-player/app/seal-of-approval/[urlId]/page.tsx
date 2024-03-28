@@ -33,8 +33,6 @@ async function IndividualSealLandingPage({
 }: {
   params: { urlId: string };
 }) {
-  // const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
-  //   ?.isMobile;
   const company = (companies as IApprovedCompany[]).find(
     (c) => c.internalpath === params.urlId
   );
