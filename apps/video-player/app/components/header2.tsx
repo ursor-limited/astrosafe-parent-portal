@@ -39,8 +39,13 @@ export const HEADER_HEIGHT = 86;
 export const ASTRO_MAGICAL_GRADIENT =
   "linear-gradient(150deg, #FD9B41, #F279C5, #1D62F6, #0AE799)";
 
-const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
+const HeaderButton = (props: {
+  text: string;
+  url?: string;
+  children?: React.ReactNode;
+}) => {
   const [open, setOpen] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <UrsorPopover
       open={open}
@@ -52,9 +57,8 @@ const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
     >
       <Stack
         direction="row"
-        spacing="8px"
+        spacing="3px"
         alignItems="center"
-        px="23px"
         sx={{
           cursor: "pointer",
           "&:hover": { opacity: 0.7 },
@@ -67,11 +71,12 @@ const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
             },
           },
         }}
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          props.url ? router.push(props.url) : setOpen(true);
+        }}
       >
         <Typography
           bold
-          variant="medium"
           color={open ? PALETTE.secondary.purple[2] : "rgb(255,255,255)"}
           sx={{
             transition: "0.2s",
@@ -79,7 +84,7 @@ const HeaderButton = (props: { text: string; children: React.ReactNode }) => {
         >
           {props.text}
         </Typography>
-        <ChevronDownIcon width="20px" height="20px" />
+        {!props.url ? <ChevronDownIcon width="20px" height="20px" /> : null}
       </Stack>
     </UrsorPopover>
   );
@@ -153,6 +158,7 @@ const ProductsPopoverColumn = (props: {
   title: string;
   links: { text: string; url: string }[];
   spaceBetween: boolean;
+  noChevron?: boolean;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   useEffect(() => setOpen(!!props.alwaysOpen), []);
@@ -177,7 +183,9 @@ const ProductsPopoverColumn = (props: {
           <Typography variant="small" bold>
             {props.title}
           </Typography>
-          <ChevronRightIcon width="16px" height="16px" />
+          {!props.noChevron ? (
+            <ChevronRightIcon width="16px" height="16px" />
+          ) : null}
         </Stack>
         {open ? (
           <Stack spacing="12px">
@@ -300,6 +308,7 @@ const ProductsPopoverContents = (props: {
               },
             ]}
             spaceBetween={!!props.mobile}
+            noChevron={!props.mobile}
           />
           <ProductsPopoverColumn
             alwaysOpen={!props.mobile}
@@ -323,6 +332,7 @@ const ProductsPopoverContents = (props: {
               },
             ]}
             spaceBetween={!!props.mobile}
+            noChevron={!props.mobile}
           />
           <ProductsPopoverColumn
             alwaysOpen={!props.mobile}
@@ -342,6 +352,7 @@ const ProductsPopoverContents = (props: {
               },
             ]}
             spaceBetween={!!props.mobile}
+            noChevron={!props.mobile}
           />
         </Stack>
       </Stack>
@@ -351,6 +362,7 @@ const ProductsPopoverContents = (props: {
             width="100%"
             variant="secondary"
             onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+            fontSize="16px"
           >
             Contact sales
           </UrsorButton>
@@ -412,37 +424,42 @@ export const Header = (props: {
 
   return (
     <>
-      <Stack
-        direction="row"
-        width="100%"
-        height={`${86}px`}
-        minHeight={`${86}px`}
-        alignItems="center"
-        justifyContent="space-between"
-        px={props.mobile ? "20px" : "67px"}
-        boxSizing="border-box"
-      >
-        <Stack direction="row">
-          <Stack
-            width="fit-content"
-            pr="54px"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.8 },
-              transition: "0.2s",
-            }}
-          >
-            <Link href="https://astrosafe.co/">
-              <Logo width={65} />
-            </Link>
+      <Stack alignItems="center" width="100%">
+        <Stack
+          direction="row"
+          height={`${60}px`}
+          minHeight={`${60}px`}
+          alignItems="center"
+          justifyContent="space-between"
+          //px={props.mobile ? "20px" : "67px"}
+          boxSizing="border-box"
+          maxWidth="1320px"
+          width="1320px"
+        >
+          <Stack direction="row">
+            <Stack
+              width="fit-content"
+              pr="51px"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.8 },
+                transition: "0.2s",
+              }}
+            >
+              <Link href="https://astrosafe.co/">
+                <Logo width={65} />
+              </Link>
+            </Stack>
+            {!props.mobile ? (
+              <Stack direction="row" spacing="20px">
+                <HeaderButton text="Products">
+                  <ProductsPopoverContents />
+                </HeaderButton>
+                <HeaderButton text="Safeseal" url="/seal-of-approval" />
+              </Stack>
+            ) : null}
           </Stack>
-          {!props.mobile ? (
-            <HeaderButton text="Products">
-              <ProductsPopoverContents />
-            </HeaderButton>
-          ) : null}
-        </Stack>
-        {/* {props.showSigninButton ? (
+          {/* {props.showSigninButton ? (
           <UrsorButton
             dark
             variant="tertiary"
@@ -456,59 +473,63 @@ export const Header = (props: {
           </UrsorButton>
         ) : null} */}
 
-        {props.mobile ? (
-          <Stack direction="row" spacing="8px">
-            {user ? <ProfileButton /> : null}
-            <MobileMenuButton noSignIn={props.noSignIn} />
-          </Stack>
-        ) : (
-          <Stack spacing="8px" direction="row">
-            <UrsorFadeIn duration={800}>
-              {!user ? (
-                <UrsorButton
-                  backgroundColor="transparent"
-                  hoverOpacity={0.7}
-                  onClick={() =>
-                    (window.location.href = "mailto:hello@astrosafe.co")
-                  }
-                >
-                  Contact sales
-                </UrsorButton>
-              ) : (
+          {props.mobile ? (
+            <Stack direction="row" spacing="8px">
+              {user ? <ProfileButton /> : null}
+              <MobileMenuButton noSignIn={props.noSignIn} />
+            </Stack>
+          ) : (
+            <Stack spacing="0px" direction="row">
+              <UrsorFadeIn duration={800}>
+                {!user ? (
+                  <UrsorButton
+                    backgroundColor="transparent"
+                    hoverOpacity={0.7}
+                    onClick={() =>
+                      (window.location.href = "mailto:hello@astrosafe.co")
+                    }
+                    fontSize="16px"
+                  >
+                    Contact sales
+                  </UrsorButton>
+                ) : (
+                  <UrsorButton
+                    dark
+                    hoverOpacity={0.7}
+                    backgroundColor="transparent"
+                    borderColor="rgb(255,255,255)"
+                    fontColor="rgb(255,255,255)"
+                    onClick={() => router.push("/dashboard")}
+                    //onClick={() => ApiController.doIt()}
+                    endIcon={HomeIcon}
+                  >
+                    Go to Dashboard
+                  </UrsorButton>
+                )}
+              </UrsorFadeIn>
+              {user ? (
+                <UrsorFadeIn duration={800}>
+                  <Stack direction="row" spacing="12px">
+                    <ProfileButton />
+                  </Stack>
+                </UrsorFadeIn>
+              ) : !props.noSignIn ? (
                 <UrsorButton
                   dark
-                  hoverOpacity={0.7}
-                  backgroundColor="transparent"
-                  borderColor="rgb(255,255,255)"
-                  fontColor="rgb(255,255,255)"
-                  onClick={() => router.push("/dashboard")}
-                  //onClick={() => ApiController.doIt()}
-                  endIcon={HomeIcon}
+                  variant="tertiary"
+                  onClick={() => {
+                    loginWithPopup();
+                    //mixpanel.track("clicked header sign up");
+                  }}
+                  endIcon={PersonIcon}
+                  fontSize="16px"
+                  height="40px"
+                  paddingX="20px"
                 >
-                  Go to Dashboard
+                  Log in
                 </UrsorButton>
-              )}
-            </UrsorFadeIn>
-            {user ? (
-              <UrsorFadeIn duration={800}>
-                <Stack direction="row" spacing="12px">
-                  <ProfileButton />
-                </Stack>
-              </UrsorFadeIn>
-            ) : !props.noSignIn ? (
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => {
-                  loginWithPopup();
-                  //mixpanel.track("clicked header sign up");
-                }}
-                endIcon={PersonIcon}
-              >
-                Sign in
-              </UrsorButton>
-            ) : null}
-            {/* <UrsorButton
+              ) : null}
+              {/* <UrsorButton
               dark
               variant="tertiary"
               onClick={loginWithPopup}
@@ -516,18 +537,19 @@ export const Header = (props: {
             >
               Login
             </UrsorButton> */}
-          </Stack>
-        )}
-        {/* )} */}
-        {/* <UpgradeDialog
+            </Stack>
+          )}
+          {/* )} */}
+          {/* <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
       /> */}
+        </Stack>
+        <UpgradePromptDialog
+          open={upgradeDialogOpen}
+          closeCallback={() => setUpgradeDialogOpen(false)}
+        />
       </Stack>
-      <UpgradePromptDialog
-        open={upgradeDialogOpen}
-        closeCallback={() => setUpgradeDialogOpen(false)}
-      />
     </>
   );
 };

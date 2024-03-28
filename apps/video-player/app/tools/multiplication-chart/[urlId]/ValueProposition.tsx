@@ -79,7 +79,7 @@ const ValueProposition = (props: {
       ) : (
         props.items
           .map((item, i) => [
-            <Stack key={`content${i}`} spacing="32px" justifyContent="center">
+            <Stack key={`content${i}`} spacing="16px" justifyContent="center">
               {item.title ? (
                 <Stack
                   sx={{

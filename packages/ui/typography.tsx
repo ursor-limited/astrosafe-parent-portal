@@ -5,8 +5,8 @@ import type { SxProps } from "@mui/system";
 import { Box } from "@mui/system";
 import { PALETTE } from "./palette";
 
-export const DEFAULT_FONT_WEIGHT = 327;
-export const BOLD_FONT_WEIGHT = 470;
+export const DEFAULT_FONT_WEIGHT = 360;
+export const BOLD_FONT_WEIGHT = 500;
 
 export const getMaxLinesStyle = (n: number) => ({
   display: "-webkit-box",
