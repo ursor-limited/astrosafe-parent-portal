@@ -21,7 +21,7 @@ export async function generateMetadata({
     title: `${company?.companyName} - AstroSafe Seal Member`,
     description: company?.description,
     openGraph: {
-      images: `/${company?.heroImage}`,
+      images: `https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/${company?.heroImage}`,
       title: `${company?.companyName} - AstroSafe Seal Member`,
       description: company?.description,
     },
