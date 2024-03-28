@@ -43,7 +43,8 @@ import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
 import { ILink } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
-import LiteModeBar from "./LiteModeBar";
+import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
+import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 
 const PAGE_SIZE = 30;
 
@@ -622,6 +623,11 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user?.subscribed]);
 
+  const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
+    useState<boolean>(false);
+
+  const outOfCreations = useOutOfCreations();
+
   return (
     <>
       <PageLayout
@@ -692,22 +698,28 @@ export default function DashboardPageContents() {
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-            {/* <ToolButton
+            <ToolButton
               title="Create lesson"
               description={CONTENT_BRANDING.lesson.description}
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
-              onClick={() => setLessonCreationDialogOpen(true)}
+              onClick={() => {
+                outOfCreations
+                  ? setNoCreationsLeftDialogOpen(true)
+                  : setLessonCreationDialogOpen(true);
+              }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
-            /> */}
+            />
             <ToolButton
               title="Create safe video link"
               description="Free of ads. Safe to share."
               color={PALETTE.secondary.blue[3]}
               icon={CirclePlayIcon}
               onClick={() => {
-                setVideoCreationDialogOpen(true);
+                outOfCreations
+                  ? setNoCreationsLeftDialogOpen(true)
+                  : setVideoCreationDialogOpen(true);
               }}
               infoButtonPosition={280}
               info={
@@ -719,7 +731,11 @@ export default function DashboardPageContents() {
               description="Printable & finished in seconds."
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
-              onClick={() => setWorksheetCreationDialogOpen(true)}
+              onClick={() => {
+                outOfCreations
+                  ? setNoCreationsLeftDialogOpen(true)
+                  : setWorksheetCreationDialogOpen(true);
+              }}
               infoButtonPosition={300}
               info={
                 "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
@@ -887,10 +903,15 @@ export default function DashboardPageContents() {
           setUpgradeDialogOpen(true);
         }}
       />
-      {/* <LiteModeBar
-        nLeft={1}
+      <LiteModeBar
+        //nLeft={1}
         upgradeCallback={() => setUpgradeDialogOpen(true)}
-      /> */}
+      />
+      <NoCreationsLeftDialog
+        open={noCreationsLeftDialogOpen}
+        closeCallback={() => setNoCreationsLeftDialogOpen(false)}
+        callback={() => setUpgradeDialogOpen(true)}
+      />
     </>
   );
 }

@@ -4,7 +4,12 @@ import { useUserContext } from "../components/UserContext";
 
 const MAX_LITE_MODE_ACTIONS = 2;
 
-const LiteModeBar = (props: { nLeft: number; upgradeCallback: () => void }) => {
+export const useOutOfCreations = () => {
+  const nCreations = useUserContext().user?.creations ?? 0;
+  return nCreations >= MAX_LITE_MODE_ACTIONS;
+};
+
+const LiteModeBar = (props: { upgradeCallback: () => void }) => {
   const userDetails = useUserContext().user;
   return (
     <Stack
