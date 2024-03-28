@@ -427,10 +427,10 @@ export const Header = (props: {
           minHeight={`${60}px`}
           alignItems="center"
           justifyContent="space-between"
-          //px={props.mobile ? "20px" : "67px"}
+          px={props.mobile ? "20px" : undefined}
           boxSizing="border-box"
-          maxWidth="1320px"
-          width="1320px"
+          maxWidth={props.mobile ? "100%" : "1320px"}
+          width={props.mobile ? "100%" : "1320px"}
         >
           <Stack direction="row">
             <Stack

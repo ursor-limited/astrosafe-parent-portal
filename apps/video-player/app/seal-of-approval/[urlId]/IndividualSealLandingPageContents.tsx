@@ -156,12 +156,9 @@ export default function IndividualSealLandingPageContents(
             supertitle="Certification"
             subtitle="The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods."
           >
-            <Stack
-              direction={isMobile ? "column" : "row"}
-              spacing={isMobile ? "8px" : "12px"}
-            >
+            <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
               <UrsorButton
-                width="226px"
+                width={isMobile ? "160px" : "226px"}
                 dark
                 variant="tertiary"
                 onClick={() =>
@@ -171,9 +168,8 @@ export default function IndividualSealLandingPageContents(
                 Enrol now
               </UrsorButton>
               <UrsorButton
-                strongShadow
-                width="226px"
-                dark
+                variant="secondary"
+                width={isMobile ? "160px" : "226px"}
                 onClick={() => setExplanationDialogOpen(true)}
               >
                 Learn more
@@ -202,13 +198,10 @@ export default function IndividualSealLandingPageContents(
         ]}
       >
         <Stack width="100%" alignItems="center" spacing="32px">
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            spacing={isMobile ? "8px" : "12px"}
-          >
+          <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               variant="tertiary"
               onClick={() =>
@@ -219,7 +212,7 @@ export default function IndividualSealLandingPageContents(
             </UrsorButton>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               onClick={() => router.push("/seal-of-approval")}
             >
