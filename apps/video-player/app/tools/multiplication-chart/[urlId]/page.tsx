@@ -34,7 +34,7 @@ export async function generateMetadata({
     description: details?.metaDescription,
     openGraph: {
       images:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/Screenshot+2024-03-28+at+14.09.01.png",
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
       title: details?.pageTitle,
       description: details?.metaDescription,
     },

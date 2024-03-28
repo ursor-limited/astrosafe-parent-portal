@@ -93,16 +93,22 @@ class ApiController {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }
   static async getLessonWithContents(id: string) {
-    return get(`lesson/${id}/withContents`).then((response: any) => response.json());
-  }
-  static async getUserLessons(id: string) {
-    //@ts-ignore
-    return get(`lesson/user/${id}`).then((response: any) =>
+    return get(`lesson/${id}/withContents`).then((response: any) =>
       response.json()
     );
   }
-  static async addToLesson(id: string, type: AstroLessonContent, contentId: string) {
-    return post(`lesson/add`, { id, type, contentId }).then((response: any) => response.json());
+  static async getUserLessons(id: string) {
+    //@ts-ignore
+    return get(`lesson/user/${id}`).then((response: any) => response.json());
+  }
+  static async addToLesson(
+    id: string,
+    type: AstroLessonContent,
+    contentId: string
+  ) {
+    return post(`lesson/add`, { id, type, contentId }).then((response: any) =>
+      response.json()
+    );
   }
   static async createVideo(details: any) {
     return post("video", details).then((response: any) => response.json());
@@ -263,6 +269,11 @@ class ApiController {
   }
   static async createLink(details: any) {
     return post("link", details).then((response: any) => response.json());
+  }
+  static async clearPediodCreations(id: string) {
+    return get(`video/clearPediodCreations/${id}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 
