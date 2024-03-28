@@ -115,21 +115,31 @@ export default function IndividualSealLandingPageContents(
                     />
                   </div>
                 ) : (
-                  <Image
-                    src={
-                      props.heroImage
-                        ? `${S3_BASE_URL}/${props.heroImage}`
-                        : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
-                    }
-                    width={1000}
-                    height={580}
-                    alt={`${props.companyName} screenshot`}
-                    style={{
-                      boxShadow: "0 0 30px rgba(0,0,0,0.05)",
-                      borderRadius: "12px",
-                    }}
-                    priority
-                  />
+                  <>
+                    {/* <Stack
+                      position="absolute"
+                      height="100%"
+                      width="580px"
+                      bgcolor="rgba(0,0,0,0.5)"
+                      borderRadius="12px"
+                    /> */}
+                    <Image
+                      src={
+                        props.heroImage
+                          ? `${S3_BASE_URL}/${props.heroImage}`
+                          : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
+                      }
+                      width={1000}
+                      height={580}
+                      alt={`${props.companyName} screenshot`}
+                      style={{
+                        boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                        borderRadius: "12px",
+                        filter: "brightness(70%)",
+                      }}
+                      priority
+                    />
+                  </>
                 )
               ) : null}
             </Stack>
