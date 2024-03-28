@@ -273,9 +273,11 @@ const ProductsPopoverContents = (props: {
             Safeseal
           </Typography>
         </Stack>
-        <Typography variant="medium" bold>
-          Tools
-        </Typography>
+        {props.mobile ? (
+          <Typography variant="medium" bold>
+            Tools
+          </Typography>
+        ) : null}
         <Stack
           direction={props.mobile ? "column" : "row"}
           spacing={props.mobile ? "12px" : "56px"}
