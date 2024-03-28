@@ -1,7 +1,7 @@
 [
     {
-        "publisher": "Kidoodle.TV",
-        "companyName": "A Parent Media Co.",
+        "companyName": "Kidoodle.TV",
+        "publisher": "A Parent Media Co.",
         "productType": "TV",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -12,8 +12,8 @@
         "internalpath": "kidoodletv"
     },
     {
-        "publisher": "ABCya! Games",
-        "companyName": "ABCya.com (IXL Learning)",
+        "companyName": "ABCya! Games",
+        "publisher": "ABCya.com (IXL Learning)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -24,8 +24,8 @@
         "ogimage": "thumbnail_1.png"
     },
     {
-        "publisher": "Quantum Demand",
-        "companyName": "AdMetricsPro",
+        "companyName": "Quantum Demand",
+        "publisher": "AdMetricsPro",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -36,8 +36,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "ABCmouse",
-        "companyName": "Age of Learning",
+        "companyName": "ABCmouse",
+        "publisher": "Age of Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -48,8 +48,8 @@
         "ogimage": "thumbnail_3.png"
     },
     {
-        "publisher": "Adventure Academy",
-        "companyName": "Age of Learning",
+        "companyName": "Adventure Academy",
+        "publisher": "Age of Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -60,8 +60,8 @@
         "ogimage": "thumbnail_4.png"
     },
     {
-        "publisher": "Tinkercad",
-        "companyName": "Autodesk",
+        "companyName": "Tinkercad",
+        "publisher": "Autodesk",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "8 - 12",
@@ -72,8 +72,8 @@
         "internalpath": "tinkercad-web-and-mobile"
     },
     {
-        "publisher": "Mathseeds Mobile App",
-        "companyName": "Blake eLearning",
+        "companyName": "Mathseeds Mobile App",
+        "publisher": "Blake eLearning",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -84,8 +84,8 @@
         "internalpath": "mathseeds-mobile-app"
     },
     {
-        "publisher": "Reading Eggs",
-        "companyName": "Blake eLearning",
+        "companyName": "Reading Eggs",
+        "publisher": "Blake eLearning",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -96,8 +96,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Bookelicious.com",
-        "companyName": "Bookelicious LLC",
+        "companyName": "Bookelicious.com",
+        "publisher": "Bookelicious LLC",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 13+",
@@ -108,8 +108,8 @@
         "internalpath": "bookeliciouscom"
     },
     {
-        "publisher": "CamblyKids.com",
-        "companyName": "Cambly",
+        "companyName": "CamblyKids.com",
+        "publisher": "Cambly",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -120,8 +120,8 @@
         "ogimage": "thumbnail_9.png"
     },
     {
-        "publisher": "Channel Factory's ViewIQ Solution",
-        "companyName": "Channel Factory",
+        "companyName": "Channel Factory's ViewIQ Solution",
+        "publisher": "Channel Factory",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -132,8 +132,8 @@
         "ogimage": "thumbnail_10.png"
     },
     {
-        "publisher": "CareBears.com",
-        "companyName": "Cloudco Entertainment",
+        "companyName": "CareBears.com",
+        "publisher": "Cloudco Entertainment",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -144,8 +144,8 @@
         "ogimage": "thumbnail_11.png"
     },
     {
-        "publisher": "codeSpark Academy Kids Coding",
-        "companyName": "codeSpark by BEGiN",
+        "companyName": "codeSpark Academy Kids Coding",
+        "publisher": "codeSpark by BEGiN",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -156,8 +156,8 @@
         "internalpath": "codespark-academy-kids-coding"
     },
     {
-        "publisher": "Sensical for Smart TVs and Streaming Platforms",
-        "companyName": "Common Sense Networks",
+        "companyName": "Sensical for Smart TVs and Streaming Platforms",
+        "publisher": "Common Sense Networks",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -168,8 +168,8 @@
         "internalpath": "sensical-for-smart-tvs-and-streaming-platforms"
     },
     {
-        "publisher": "Sensical.tv Website",
-        "companyName": "Common Sense Networks",
+        "companyName": "Sensical.tv Website",
+        "publisher": "Common Sense Networks",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -180,8 +180,8 @@
         "ogimage": "thumbnail_14.png"
     },
     {
-        "publisher": "Data Theorem's Mobile Protect Solution",
-        "companyName": "Data Theorem",
+        "companyName": "Data Theorem's Mobile Protect Solution",
+        "publisher": "Data Theorem",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -192,8 +192,8 @@
         "ogimage": "thumbnail_15.png"
     },
     {
-        "publisher": "Kidzovo mobile app",
-        "companyName": "Deepmedia Interactive",
+        "companyName": "Kidzovo mobile app",
+        "publisher": "Deepmedia Interactive",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -204,8 +204,8 @@
         "internalpath": "kidzovo-mobile-app"
     },
     {
-        "publisher": "Dr. Panda Apps",
-        "companyName": "DR. PANDA",
+        "companyName": "Dr. Panda Apps",
+        "publisher": "DR. PANDA",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -216,8 +216,8 @@
         "ogimage": "thumbnail_17.png"
     },
     {
-        "publisher": "Paco El Chato website",
-        "companyName": "E1 Technology",
+        "companyName": "Paco El Chato website",
+        "publisher": "E1 Technology",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -228,8 +228,8 @@
         "internalpath": "paco-el-chato-website"
     },
     {
-        "publisher": "Enthusiast Gaming Ad Platform",
-        "companyName": "Enthusiast Gaming Inc.",
+        "companyName": "Enthusiast Gaming Ad Platform",
+        "publisher": "Enthusiast Gaming Inc.",
         "productType": "Tools",
         "productCategory": "Games",
         "audience": "8 - 12",
@@ -240,8 +240,8 @@
         "internalpath": "enthusiast-gaming-ad-platform"
     },
     {
-        "publisher": "Applaydu & Friends Game",
-        "companyName": "Ferrero Trading Lux S.A.",
+        "companyName": "Applaydu & Friends Game",
+        "publisher": "Ferrero Trading Lux S.A.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -252,8 +252,8 @@
         "internalpath": "applaydu--friends-game"
     },
     {
-        "publisher": "Applaydu family games",
-        "companyName": "Ferrero Trading Lux S.A.",
+        "companyName": "Applaydu family games",
+        "publisher": "Ferrero Trading Lux S.A.",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -264,8 +264,8 @@
         "internalpath": "applaydu-family-games"
     },
     {
-        "publisher": "Peppa Pig App Series",
-        "companyName": "Find Your Fun, Inc.",
+        "companyName": "Peppa Pig App Series",
+        "publisher": "Find Your Fun, Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -276,8 +276,8 @@
         "ogimage": "thumbnail_22.png"
     },
     {
-        "publisher": "The Week Junior kids' website",
-        "companyName": "Future PLC",
+        "companyName": "The Week Junior kids' website",
+        "publisher": "Future PLC",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -288,8 +288,8 @@
         "ogimage": "thumbnail_23.png"
     },
     {
-        "publisher": "HappyKids TV Mobile App",
-        "companyName": "Future Today",
+        "companyName": "HappyKids TV Mobile App",
+        "publisher": "Future Today",
         "productType": "Mobile",
         "productCategory": "TV",
         "audience": "0 - 12",
@@ -300,8 +300,8 @@
         "internalpath": "happykids-tv-mobile-app"
     },
     {
-        "publisher": "GameAnalytics",
-        "companyName": "GameAnalytics (Mobvista)",
+        "companyName": "GameAnalytics",
+        "publisher": "GameAnalytics (Mobvista)",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -312,8 +312,8 @@
         "ogimage": "thumbnail_25.png"
     },
     {
-        "publisher": "Pingo by FindMyKids",
-        "companyName": "Geo Track Technologies, Inc.",
+        "companyName": "Pingo by FindMyKids",
+        "publisher": "Geo Track Technologies, Inc.",
         "productType": "Mobile",
         "productCategory": "Safety",
         "audience": "5 - 13+",
@@ -324,8 +324,8 @@
         "internalpath": "pingo-by-findmykids-under"
     },
     {
-        "publisher": "GoNoodle Kids Videos App",
-        "companyName": "GoNoodle, Inc.",
+        "companyName": "GoNoodle Kids Videos App",
+        "publisher": "GoNoodle, Inc.",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -336,8 +336,8 @@
         "ogimage": "thumbnail_27.png"
     },
     {
-        "publisher": "GoNoodle on Smart TVs and Streaming Devices",
-        "companyName": "GoNoodle, Inc.",
+        "companyName": "GoNoodle on Smart TVs and Streaming Devices",
+        "publisher": "GoNoodle, Inc.",
         "productType": "TV",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -348,8 +348,8 @@
         "ogimage": "thumbnail_28.png"
     },
     {
-        "publisher": "Good2Collect.com",
-        "companyName": "good2grow",
+        "companyName": "Good2Collect.com",
+        "publisher": "good2grow",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -360,8 +360,8 @@
         "ogimage": "thumbnail_29.png"
     },
     {
-        "publisher": "GROM",
-        "companyName": "Grom Social",
+        "companyName": "GROM",
+        "publisher": "Grom Social",
         "productType": "Mobile",
         "productCategory": "Social",
         "audience": "3 - 12",
@@ -372,8 +372,8 @@
         "internalpath": "grom"
     },
     {
-        "publisher": "Word Tag",
-        "companyName": "Hatch House Games (Mrs. Wordsmith)",
+        "companyName": "Word Tag",
+        "publisher": "Hatch House Games (Mrs. Wordsmith)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 12",
@@ -384,8 +384,8 @@
         "internalpath": "word-tag"
     },
     {
-        "publisher": "HOMER Learn & Grow",
-        "companyName": "HOMER Learning by BEGiN",
+        "companyName": "HOMER Learn & Grow",
+        "publisher": "HOMER Learning by BEGiN",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -396,8 +396,8 @@
         "internalpath": "homer-learn--grow"
     },
     {
-        "publisher": "KidloLand",
-        "companyName": "IDZ Digital Private Limited",
+        "companyName": "KidloLand",
+        "publisher": "IDZ Digital Private Limited",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -408,8 +408,8 @@
         "ogimage": "thumbnail_33.png"
     },
     {
-        "publisher": "bekids App Series",
-        "companyName": "iHuman",
+        "companyName": "bekids App Series",
+        "publisher": "iHuman",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -420,8 +420,8 @@
         "ogimage": "thumbnail_34.png"
     },
     {
-        "publisher": "Education.com",
-        "companyName": "IXL Learning",
+        "companyName": "Education.com",
+        "publisher": "IXL Learning",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -432,8 +432,8 @@
         "internalpath": "educationcom"
     },
     {
-        "publisher": "IXL App",
-        "companyName": "IXL Learning",
+        "companyName": "IXL App",
+        "publisher": "IXL Learning",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "Adults",
@@ -444,8 +444,8 @@
         "ogimage": "thumbnail_36.png"
     },
     {
-        "publisher": "Multiplication.com",
-        "companyName": "IXL Learning",
+        "companyName": "Multiplication.com",
+        "publisher": "IXL Learning",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -456,8 +456,8 @@
         "ogimage": "thumbnail_37.png"
     },
     {
-        "publisher": "Quia Web",
-        "companyName": "IXL Learning",
+        "companyName": "Quia Web",
+        "publisher": "IXL Learning",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -468,8 +468,8 @@
         "ogimage": "thumbnail_38.png"
     },
     {
-        "publisher": "Kids Web Services",
         "companyName": "Kids Web Services",
+        "publisher": "Kids Web Services",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -480,8 +480,8 @@
         "ogimage": "thumbnail_39.png"
     },
     {
-        "publisher": "Kidz Bop Kids",
-        "companyName": "Kidz Bop Enterprises LLC",
+        "companyName": "Kidz Bop Kids",
+        "publisher": "Kidz Bop Enterprises LLC",
         "productType": "Website",
         "productCategory": "TV",
         "audience": "5 - 12",
@@ -492,8 +492,8 @@
         "ogimage": "thumbnail_40.png"
     },
     {
-        "publisher": "Kinzoo",
-        "companyName": "Kinzoo Technologies, Inc.",
+        "companyName": "Kinzoo",
+        "publisher": "Kinzoo Technologies, Inc.",
         "productType": "Mobile",
         "productCategory": "TV",
         "audience": "5 - 12",
@@ -504,8 +504,8 @@
         "internalpath": "kinzoo"
     },
     {
-        "publisher": "KUBO Portal and KUBO Play",
-        "companyName": "KUBO Robotics",
+        "companyName": "KUBO Portal and KUBO Play",
+        "publisher": "KUBO Robotics",
         "productType": "Tools",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -516,8 +516,8 @@
         "internalpath": "kubo-portal-and-kubo-play-web-and-mobile"
     },
     {
-        "publisher": "Explore.LittlePassports.com",
-        "companyName": "Little Passports by BEGiN",
+        "companyName": "Explore.LittlePassports.com",
+        "publisher": "Little Passports by BEGiN",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -528,8 +528,8 @@
         "internalpath": "explorelittlepassportscom"
     },
     {
-        "publisher": "MarcoPolo World School",
-        "companyName": "MarcoPolo Learning",
+        "companyName": "MarcoPolo World School",
+        "publisher": "MarcoPolo Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -540,8 +540,8 @@
         "ogimage": "thumbnail_44.png"
     },
     {
-        "publisher": "MC EduHub platform",
-        "companyName": "Marshall Cavendish Education",
+        "companyName": "MC EduHub platform",
+        "publisher": "Marshall Cavendish Education",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -552,8 +552,8 @@
         "ogimage": "thumbnail_45.png"
     },
     {
-        "publisher": "MathPlayground.com",
-        "companyName": "Math Playground",
+        "companyName": "MathPlayground.com",
+        "publisher": "Math Playground",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -564,8 +564,8 @@
         "internalpath": "mathplaygroundcom"
     },
     {
-        "publisher": "The Kryptografima by MathBait",
-        "companyName": "Mathbait",
+        "companyName": "The Kryptografima by MathBait",
+        "publisher": "Mathbait",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "10 - 13+",
@@ -576,8 +576,8 @@
         "ogimage": "thumbnail_47.png"
     },
     {
-        "publisher": "Matific.com school version",
-        "companyName": "Matific",
+        "companyName": "Matific.com school version",
+        "publisher": "Matific",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -588,8 +588,8 @@
         "internalpath": "matificcom-school-version-student-site"
     },
     {
-        "publisher": "Miko 3 Robot",
-        "companyName": "Miko (RN Chidakashi Technologies)",
+        "companyName": "Miko 3 Robot",
+        "publisher": "Miko (RN Chidakashi Technologies)",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -600,8 +600,8 @@
         "internalpath": "miko-3-robot"
     },
     {
-        "publisher": "Miko Mini Robot",
-        "companyName": "Miko (RN Chidakashi Technologies)",
+        "companyName": "Miko Mini Robot",
+        "publisher": "Miko (RN Chidakashi Technologies)",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -612,20 +612,20 @@
         "internalpath": "miko-mini-robot"
     },
     {
-        "publisher": "Mintegral Mobile Ad Platform",
-        "companyName": "Mintegral International Ltd. (Mobvista)",
+        "companyName": "Mintegral Mobile Ad Platform",
+        "publisher": "Mintegral International Ltd. (Mobvista)",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
-        "description": "Mintegral is a leading Asian mobile advertising platform, offering a comprehensive suite of programmatic products and services such as their Advertiser Self-service Platform, DSP, SSP, Ad Exchange and DMP. Its rapid growth affirms its significant presence in the digital marketing sector. Furthermore, the company's Mindworks Creative Studio provides innovative creative solutions to publishers and brands, spanning traditional to the latest interactive ad formats.",
+        "description": "Mintegral is a leading Asian mobile advertising platform, offering a comprehensive suite of programmatic products and services such as their Advertiser Self-service Platform, DSP, SSP, Ad Exchange and DMP. Its rapid growth affirms its significant presence in the digital marketing sector. Furthermore, the company's Mindworks Creative Studio provides innovative creative solutions to companyNames and brands, spanning traditional to the latest interactive ad formats.",
         "url": "https://www.mintegral.com/en/",
         "ogimage": "thumbnail_51.png",
         "heroImage": "astroseal_51.png",
         "internalpath": "mintegral-mobile-ad-platform-with-coppa-settings"
     },
     {
-        "publisher": "ToxMod voice moderation solution",
-        "companyName": "Modulate, Inc.",
+        "companyName": "ToxMod voice moderation solution",
+        "publisher": "Modulate, Inc.",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "8 - 12",
@@ -636,8 +636,8 @@
         "internalpath": "toxmod-voice-moderation-solution"
     },
     {
-        "publisher": "Lingokids",
-        "companyName": "Monkimun",
+        "companyName": "Lingokids",
+        "publisher": "Monkimun",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -648,8 +648,8 @@
         "internalpath": "lingokids"
     },
     {
-        "publisher": "PAW Patrol Academy",
-        "companyName": "Originator Kids (Sago Sago Toys)",
+        "companyName": "PAW Patrol Academy",
+        "publisher": "Originator Kids (Sago Sago Toys)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -660,8 +660,8 @@
         "internalpath": "paw-patrol-academy"
     },
     {
-        "publisher": "Kiddopia",
-        "companyName": "Paper Boat Apps",
+        "companyName": "Kiddopia",
+        "publisher": "Paper Boat Apps",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -672,8 +672,8 @@
         "internalpath": "kiddopia"
     },
     {
-        "publisher": "Piggy Panda Learning Games",
-        "companyName": "Piggy Panda, Inc.",
+        "companyName": "Piggy Panda Learning Games",
+        "publisher": "Piggy Panda, Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -684,8 +684,8 @@
         "ogimage": "thumbnail_56.png"
     },
     {
-        "publisher": "Pinna Children's Audio Stories Mobile App",
-        "companyName": "Pinna",
+        "companyName": "Pinna Children's Audio Stories Mobile App",
+        "publisher": "Pinna",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -696,8 +696,8 @@
         "internalpath": "pinna-childrens-audio-stories-mobile-app"
     },
     {
-        "publisher": "Pinna.fm web player",
-        "companyName": "Pinna",
+        "companyName": "Pinna.fm web player",
+        "publisher": "Pinna",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -708,8 +708,8 @@
         "ogimage": "thumbnail_58.png"
     },
     {
-        "publisher": "Playwire Media Ad Platform",
-        "companyName": "Playwire Media",
+        "companyName": "Playwire Media Ad Platform",
+        "publisher": "Playwire Media",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -720,8 +720,8 @@
         "ogimage": "thumbnail_59.png"
     },
     {
-        "publisher": "Kids.Poki.com",
-        "companyName": "Poki Kids",
+        "companyName": "Kids.Poki.com",
+        "publisher": "Poki Kids",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -732,8 +732,8 @@
         "ogimage": "thumbnail_60.png"
     },
     {
-        "publisher": "Precise.TV Ad Platform",
-        "companyName": "Precise TV",
+        "companyName": "Precise.TV Ad Platform",
+        "publisher": "Precise TV",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -744,8 +744,8 @@
         "ogimage": "thumbnail_61.png"
     },
     {
-        "publisher": "ReadTheory.org",
-        "companyName": "ReadTheory",
+        "companyName": "ReadTheory.org",
+        "publisher": "ReadTheory",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -756,8 +756,8 @@
         "internalpath": "readtheoryorg-under"
     },
     {
-        "publisher": "Rec Room",
         "companyName": "Rec Room",
+        "publisher": "Rec Room",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -768,8 +768,8 @@
         "internalpath": "rec-room-junior-mode"
     },
     {
-        "publisher": "The ROBLOX Platform on Mobile",
-        "companyName": "ROBLOX",
+        "companyName": "The ROBLOX Platform on Mobile",
+        "publisher": "ROBLOX",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -780,8 +780,8 @@
         "internalpath": "the-roblox-platform-on-mobile-under"
     },
     {
-        "publisher": "Sago Mini Series of Standalone Apps",
-        "companyName": "Sago Sago Toys Inc.",
+        "companyName": "Sago Mini Series of Standalone Apps",
+        "publisher": "Sago Sago Toys Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -792,8 +792,8 @@
         "internalpath": "sago-mini-series-of-standalone-apps"
     },
     {
-        "publisher": "The Piknik Family of Apps",
-        "companyName": "Sago Sago Toys Inc.",
+        "companyName": "The Piknik Family of Apps",
+        "publisher": "Sago Sago Toys Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -804,8 +804,8 @@
         "ogimage": "thumbnail_66.png"
     },
     {
-        "publisher": "PJ Masks App Series",
-        "companyName": "Scary Beasties Ltd",
+        "companyName": "PJ Masks App Series",
+        "publisher": "Scary Beasties Ltd",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -816,8 +816,8 @@
         "internalpath": "pj-masks-app-series"
     },
     {
-        "publisher": "SplashLearn.com",
-        "companyName": "StudyPad",
+        "companyName": "SplashLearn.com",
+        "publisher": "StudyPad",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -828,8 +828,8 @@
         "internalpath": "splashlearncom"
     },
     {
-        "publisher": "Super Biz ad service",
-        "companyName": "Super League Gaming",
+        "companyName": "Super Biz ad service",
+        "publisher": "Super League Gaming",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -840,8 +840,8 @@
         "ogimage": "thumbnail_69.png"
     },
     {
-        "publisher": "SuperAwesome Ad Platform",
-        "companyName": "SuperAwesome",
+        "companyName": "SuperAwesome Ad Platform",
+        "publisher": "SuperAwesome",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -852,8 +852,8 @@
         "ogimage": "thumbnail_70.png"
     },
     {
-        "publisher": "Masterpiece for Osmo",
-        "companyName": "Tangible Play",
+        "companyName": "Masterpiece for Osmo",
+        "publisher": "Tangible Play",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -864,8 +864,8 @@
         "internalpath": "masterpiece-for-osmo"
     },
     {
-        "publisher": "Alcatel JOY TAB KIDS tablet series - Kidomi",
-        "companyName": "TCT Mobile",
+        "companyName": "Alcatel JOY TAB KIDS tablet series - Kidomi",
+        "publisher": "TCT Mobile",
         "productType": "Tablet",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -876,8 +876,8 @@
         "ogimage": "thumbnail_72.png"
     },
     {
-        "publisher": "Ducksters.com",
-        "companyName": "Technological Solutions",
+        "companyName": "Ducksters.com",
+        "publisher": "Technological Solutions",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -888,8 +888,8 @@
         "ogimage": "thumbnail_73.png"
     },
     {
-        "publisher": "MySciLife",
-        "companyName": "The Source for Learning",
+        "companyName": "MySciLife",
+        "publisher": "The Source for Learning",
         "productType": "Website",
         "productCategory": "Social",
         "audience": "10 - 13+",
@@ -900,8 +900,8 @@
         "internalpath": "myscilife"
     },
     {
-        "publisher": "Rangers Wanted",
-        "companyName": "Theodore Roosevelt Presidential Library",
+        "companyName": "Rangers Wanted",
+        "publisher": "Theodore Roosevelt Presidential Library",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -912,8 +912,8 @@
         "ogimage": "thumbnail_75.png"
     },
     {
-        "publisher": "BYJU'S FutureSchool platform for kids",
-        "companyName": "Think & Learn Private Limited (BYJU'S)",
+        "companyName": "BYJU'S FutureSchool platform for kids",
+        "publisher": "Think & Learn Private Limited (BYJU'S)",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -924,8 +924,8 @@
         "internalpath": "byjus-futureschool-platform-for-kids"
     },
     {
-        "publisher": "BYJU'S Learning App featuring Disney",
-        "companyName": "Think & Learn Private Limited (BYJU'S)",
+        "companyName": "BYJU'S Learning App featuring Disney",
+        "publisher": "Think & Learn Private Limited (BYJU'S)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -936,8 +936,8 @@
         "ogimage": "thumbnail_77.png"
     },
     {
-        "publisher": "TotallyKidz Ad Platform",
-        "companyName": "TotallyKidz (Evolve Media)",
+        "companyName": "TotallyKidz Ad Platform",
+        "publisher": "TotallyKidz (Evolve Media)",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -948,8 +948,8 @@
         "internalpath": "totallykidz-ad-platform"
     },
     {
-        "publisher": "PanelPolls.com",
-        "companyName": "Touchstone Research",
+        "companyName": "PanelPolls.com",
+        "publisher": "Touchstone Research",
         "productType": "Website",
         "productCategory": "Tools",
         "audience": "8 - 13+",
@@ -960,8 +960,8 @@
         "ogimage": "thumbnail_79.png"
     },
     {
-        "publisher": "WildCraft: Animal Sim Online",
-        "companyName": "Turbo Rocket Games",
+        "companyName": "WildCraft: Animal Sim Online",
+        "publisher": "Turbo Rocket Games",
         "productType": "Mobile",
         "productCategory": "VR",
         "audience": "8 - 13+",
@@ -972,8 +972,8 @@
         "ogimage": "thumbnail_80.png"
     },
     {
-        "publisher": "Tynker",
         "companyName": "Tynker",
+        "publisher": "Tynker",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -984,8 +984,8 @@
         "internalpath": "tynker"
     },
     {
-        "publisher": "Tynker.com",
-        "companyName": "Tynker",
+        "companyName": "Tynker.com",
+        "publisher": "Tynker",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -996,8 +996,8 @@
         "internalpath": "tynkercom-logged"
     },
     {
-        "publisher": "PortableNorthPole.com",
-        "companyName": "UgroupMedia Inc.",
+        "companyName": "PortableNorthPole.com",
+        "publisher": "UgroupMedia Inc.",
         "productType": "Website",
         "productCategory": "TV",
         "audience": "3 - 8",
@@ -1008,8 +1008,8 @@
         "internalpath": "portablenorthpolecom-child-experience"
     },
     {
-        "publisher": "Dash and Dot Companion Apps",
-        "companyName": "Wonder Workshop",
+        "companyName": "Dash and Dot Companion Apps",
+        "publisher": "Wonder Workshop",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "8 - 12",
@@ -1020,8 +1020,8 @@
         "ogimage": "thumbnail_84.png"
     },
     {
-        "publisher": "Zigazoo Kids",
-        "companyName": "Zigazoo, Inc.",
+        "companyName": "Zigazoo Kids",
+        "publisher": "Zigazoo, Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -1032,8 +1032,8 @@
         "ogimage": "thumbnail_85.png"
     },
     {
-        "publisher": "Dino Planet",
-        "companyName": "1EDTECH",
+        "companyName": "Dino Planet",
+        "publisher": "1EDTECH",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1044,8 +1044,8 @@
         "internalpath": "dino-planet"
     },
     {
-        "publisher": "Toddler Learning Games - Kiddoverse",
-        "companyName": "22learn, LLC",
+        "companyName": "Toddler Learning Games - Kiddoverse",
+        "publisher": "22learn, LLC",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -1056,8 +1056,8 @@
         "ogimage": "thumbnail_87.png"
     },
     {
-        "publisher": "Accessibyte.com",
-        "companyName": "Accessibyte",
+        "companyName": "Accessibyte.com",
+        "publisher": "Accessibyte",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -1068,8 +1068,8 @@
         "ogimage": "thumbnail_88.png"
     },
     {
-        "publisher": "AgentPiggy.com",
-        "companyName": "Agent Piggy",
+        "companyName": "AgentPiggy.com",
+        "publisher": "Agent Piggy",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -1080,8 +1080,8 @@
         "ogimage": "thumbnail_89.png"
     },
     {
-        "publisher": "Alma Studio",
-        "companyName": "ALMA STUDIOS",
+        "companyName": "Alma Studio",
+        "publisher": "ALMA STUDIOS",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1092,8 +1092,8 @@
         "ogimage": "thumbnail_90.png"
     },
     {
-        "publisher": "Finding Stuff Out Web Game",
-        "companyName": "Apartment 11 Productions",
+        "companyName": "Finding Stuff Out Web Game",
+        "publisher": "Apartment 11 Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -1104,8 +1104,8 @@
         "ogimage": "thumbnail_91.png"
     },
     {
-        "publisher": "Look Kool Website",
-        "companyName": "Apartment 11 Productions",
+        "companyName": "Look Kool Website",
+        "publisher": "Apartment 11 Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -1116,8 +1116,8 @@
         "ogimage": "thumbnail_92.png"
     },
     {
-        "publisher": "Raven's Quest Web Game",
-        "companyName": "Apartment 11 Productions",
+        "companyName": "Raven's Quest Web Game",
+        "publisher": "Apartment 11 Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -1128,8 +1128,8 @@
         "internalpath": "ravens-quest-web-game"
     },
     {
-        "publisher": "The Mystery Files Web Game",
-        "companyName": "Apartment 11 Productions",
+        "companyName": "The Mystery Files Web Game",
+        "publisher": "Apartment 11 Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -1140,8 +1140,8 @@
         "ogimage": "thumbnail_94.png"
     },
     {
-        "publisher": "Wacky Story World Web Game",
-        "companyName": "Apartment 11 Productions",
+        "companyName": "Wacky Story World Web Game",
+        "publisher": "Apartment 11 Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1152,8 +1152,8 @@
         "ogimage": "thumbnail_95.png"
     },
     {
-        "publisher": "Mondly Kids by Pearson",
-        "companyName": "ATI STUDIOS",
+        "companyName": "Mondly Kids by Pearson",
+        "publisher": "ATI STUDIOS",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -1164,8 +1164,8 @@
         "ogimage": "thumbnail_96.png"
     },
     {
-        "publisher": "Mammouth 3 mini site",
-        "companyName": "Attraction Images Productions X",
+        "companyName": "Mammouth 3 mini site",
+        "publisher": "Attraction Images Productions X",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 8",
@@ -1176,8 +1176,8 @@
         "internalpath": "mammouth-3-mini-site"
     },
     {
-        "publisher": "Alix et les merveilleux mini web site",
-        "companyName": "Avanti Group",
+        "companyName": "Alix et les merveilleux mini web site",
+        "publisher": "Avanti Group",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1188,8 +1188,8 @@
         "internalpath": "alix-et-les-merveilleux-mini-web-site"
     },
     {
-        "publisher": "Superland: Story Maker Games",
-        "companyName": "AWDIO",
+        "companyName": "Superland: Story Maker Games",
+        "publisher": "AWDIO",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -1200,8 +1200,8 @@
         "internalpath": "superland-story-maker-games"
     },
     {
-        "publisher": "BabyTV",
-        "companyName": "Baby Network Limited",
+        "companyName": "BabyTV",
+        "publisher": "Baby Network Limited",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -1212,8 +1212,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Masterhobbies.online",
-        "companyName": "Beecell Digital Media",
+        "companyName": "Masterhobbies.online",
+        "publisher": "Beecell Digital Media",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -1224,8 +1224,8 @@
         "internalpath": "masterhobbiesonline"
     },
     {
-        "publisher": "Mawaheb.online",
-        "companyName": "Beecell Digital Media",
+        "companyName": "Mawaheb.online",
+        "publisher": "Beecell Digital Media",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -1236,8 +1236,8 @@
         "internalpath": "mawahebonline"
     },
     {
-        "publisher": "Behrman House Online Learning Center",
-        "companyName": "Behrman House",
+        "companyName": "Behrman House Online Learning Center",
+        "publisher": "Behrman House",
         "productType": "Tools",
         "productCategory": "Education",
         "audience": "8 - 12",
@@ -1248,8 +1248,8 @@
         "ogimage": "thumbnail_103.png"
     },
     {
-        "publisher": "I Spy With Lola",
-        "companyName": "BeiZ",
+        "companyName": "I Spy With Lola",
+        "publisher": "BeiZ",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1260,8 +1260,8 @@
         "internalpath": "i-spy-with-lola"
     },
     {
-        "publisher": "Biddeo advertising service for YouTube",
-        "companyName": "Biddeo Media Solutions",
+        "companyName": "Biddeo advertising service for YouTube",
+        "publisher": "Biddeo Media Solutions",
         "productType": "Tools",
         "productCategory": "TV",
         "audience": "5 - 12",
@@ -1272,8 +1272,8 @@
         "internalpath": "biddeo-advertising-service-for-youtube"
     },
     {
-        "publisher": "16 Hudson: Lili's New Year eBook",
-        "companyName": "Big Bad Boo",
+        "companyName": "16 Hudson: Lili's New Year eBook",
+        "publisher": "Big Bad Boo",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1284,8 +1284,8 @@
         "ogimage": "thumbnail_106.png"
     },
     {
-        "publisher": "Reading Eggs Junior Websites",
-        "companyName": "Blake eLearning",
+        "companyName": "Reading Eggs Junior Websites",
+        "publisher": "Blake eLearning",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -1296,8 +1296,8 @@
         "internalpath": "reading-eggs-junior-websites"
     },
     {
-        "publisher": "Reading Eggspress Websites",
-        "companyName": "Blake eLearning",
+        "companyName": "Reading Eggspress Websites",
+        "publisher": "Blake eLearning",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1308,8 +1308,8 @@
         "internalpath": "reading-eggspress-websites"
     },
     {
-        "publisher": "Alphablocks World",
-        "companyName": "Blue Zoo Productions",
+        "companyName": "Alphablocks World",
+        "publisher": "Blue Zoo Productions",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1320,8 +1320,8 @@
         "internalpath": "alphablocks-world"
     },
     {
-        "publisher": "Boddle Learning",
         "companyName": "Boddle Learning",
+        "publisher": "Boddle Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -1332,8 +1332,8 @@
         "internalpath": "boddle-learning-web-and-mobile"
     },
     {
-        "publisher": "Bookopolis.com",
-        "companyName": "Bookopolis",
+        "companyName": "Bookopolis.com",
+        "publisher": "Bookopolis",
         "productType": "Website",
         "productCategory": "Social",
         "audience": "8 - 12",
@@ -1344,8 +1344,8 @@
         "internalpath": "bookopoliscom"
     },
     {
-        "publisher": "KidzInMind",
-        "companyName": "Buongiorno",
+        "companyName": "KidzInMind",
+        "publisher": "Buongiorno",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -1356,8 +1356,8 @@
         "internalpath": "kidzinmind"
     },
     {
-        "publisher": "Cartoon Network App",
-        "companyName": "Cartoon Network",
+        "companyName": "Cartoon Network App",
+        "publisher": "Cartoon Network",
         "productType": "Mobile",
         "productCategory": "TV",
         "audience": "3 - 12",
@@ -1368,8 +1368,8 @@
         "internalpath": "cartoon-network-app"
     },
     {
-        "publisher": "ChuChu TV Nursery Rhymes Pro",
-        "companyName": "ChuChu TV",
+        "companyName": "ChuChu TV Nursery Rhymes Pro",
+        "publisher": "ChuChu TV",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -1380,8 +1380,8 @@
         "internalpath": "chuchu-tv-nursery-rhymes-pro"
     },
     {
-        "publisher": "Codeverse coding platform",
-        "companyName": "Codeverse",
+        "companyName": "Codeverse coding platform",
+        "publisher": "Codeverse",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -1392,8 +1392,8 @@
         "internalpath": "codeverse-coding-platform"
     },
     {
-        "publisher": "DK Find Out!",
-        "companyName": "DK Publishing",
+        "companyName": "DK Find Out!",
+        "publisher": "DK Publishing",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -1404,8 +1404,8 @@
         "internalpath": "dk-find-out"
     },
     {
-        "publisher": "Monkey Junior App",
-        "companyName": "Early Start",
+        "companyName": "Monkey Junior App",
+        "publisher": "Early Start",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 5",
@@ -1416,8 +1416,8 @@
         "internalpath": "monkey-junior-app"
     },
     {
-        "publisher": "EarthRangers.com",
-        "companyName": "Earth Rangers",
+        "companyName": "EarthRangers.com",
+        "publisher": "Earth Rangers",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -1428,8 +1428,8 @@
         "internalpath": "earthrangerscom"
     },
     {
-        "publisher": "Baggin' the Dragon Maths Online",
-        "companyName": "EdAlive",
+        "companyName": "Baggin' the Dragon Maths Online",
+        "publisher": "EdAlive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -1440,8 +1440,8 @@
         "ogimage": "thumbnail_119.png"
     },
     {
-        "publisher": "Math Invaders Online",
-        "companyName": "EdAlive",
+        "companyName": "Math Invaders Online",
+        "publisher": "EdAlive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -1452,8 +1452,8 @@
         "ogimage": "thumbnail_120.png"
     },
     {
-        "publisher": "Typing Tournament Online",
-        "companyName": "EdAlive",
+        "companyName": "Typing Tournament Online",
+        "publisher": "EdAlive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -1464,8 +1464,8 @@
         "ogimage": "thumbnail_121.png"
     },
     {
-        "publisher": "Volcanic Panic Reading Success Online",
-        "companyName": "EdAlive",
+        "companyName": "Volcanic Panic Reading Success Online",
+        "publisher": "EdAlive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -1476,8 +1476,8 @@
         "ogimage": "thumbnail_122.png"
     },
     {
-        "publisher": "Words Rock Online",
-        "companyName": "EdAlive",
+        "companyName": "Words Rock Online",
+        "publisher": "EdAlive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -1488,8 +1488,8 @@
         "ogimage": "thumbnail_123.png"
     },
     {
-        "publisher": "WORD Force Reading Adventures",
-        "companyName": "EVERFI",
+        "companyName": "WORD Force Reading Adventures",
+        "publisher": "EVERFI",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1500,8 +1500,8 @@
         "ogimage": "thumbnail_124.png"
     },
     {
-        "publisher": "Every Body Curious website",
-        "companyName": "Every Body Curious",
+        "companyName": "Every Body Curious website",
+        "publisher": "Every Body Curious",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 12",
@@ -1512,8 +1512,8 @@
         "ogimage": "thumbnail_125.png"
     },
     {
-        "publisher": "Fabulingua",
-        "companyName": "FabuLingua",
+        "companyName": "Fabulingua",
+        "publisher": "FabuLingua",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -1524,8 +1524,8 @@
         "internalpath": "fabulingua"
     },
     {
-        "publisher": "Storybook: Bedtime Stories App",
-        "companyName": "Familify",
+        "companyName": "Storybook: Bedtime Stories App",
+        "publisher": "Familify",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1536,8 +1536,8 @@
         "ogimage": "thumbnail_127.png"
     },
     {
-        "publisher": "Famli Kids",
-        "companyName": "Famli",
+        "companyName": "Famli Kids",
+        "publisher": "Famli",
         "productType": "Mobile",
         "productCategory": "Health",
         "audience": "5 - 12",
@@ -1548,8 +1548,8 @@
         "internalpath": "famli-kids"
     },
     {
-        "publisher": "Funexpected Math for Kids",
-        "companyName": "Funexpected",
+        "companyName": "Funexpected Math for Kids",
+        "publisher": "Funexpected",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1560,8 +1560,8 @@
         "ogimage": "thumbnail_129.png"
     },
     {
-        "publisher": "Tiny Minies: Learning Games",
-        "companyName": "Gamester Inc.",
+        "companyName": "Tiny Minies: Learning Games",
+        "publisher": "Gamester Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -1572,8 +1572,8 @@
         "ogimage": "thumbnail_130.png"
     },
     {
-        "publisher": "Puppy Rayn & Friends website",
-        "companyName": "GEB",
+        "companyName": "Puppy Rayn & Friends website",
+        "publisher": "GEB",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -1584,8 +1584,8 @@
         "internalpath": "puppy-rayn--friends-website"
     },
     {
-        "publisher": "GlobalToons.TV",
-        "companyName": "Global Toons",
+        "companyName": "GlobalToons.TV",
+        "publisher": "Global Toons",
         "productType": "Website",
         "productCategory": "TV",
         "audience": "3 - 8",
@@ -1596,8 +1596,8 @@
         "internalpath": "globaltoonstv"
     },
     {
-        "publisher": "One Globe Kids",
-        "companyName": "Globe Smart Kids",
+        "companyName": "One Globe Kids",
+        "publisher": "Globe Smart Kids",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1608,8 +1608,8 @@
         "internalpath": "one-globe-kids"
     },
     {
-        "publisher": "OneGlobeKids.com",
-        "companyName": "Globe Smart Kids",
+        "companyName": "OneGlobeKids.com",
+        "publisher": "Globe Smart Kids",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1620,8 +1620,8 @@
         "internalpath": "oneglobekidscom-online-friends"
     },
     {
-        "publisher": "Gumboot Kids website",
-        "companyName": "Gumboot Kids Media",
+        "companyName": "Gumboot Kids website",
+        "publisher": "Gumboot Kids Media",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1632,8 +1632,8 @@
         "ogimage": "thumbnail_135.png"
     },
     {
-        "publisher": "Kids Hub",
-        "companyName": "Happy Apps S.L.",
+        "companyName": "Kids Hub",
+        "publisher": "Happy Apps S.L.",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1644,8 +1644,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "MrsWordsmith.com",
-        "companyName": "Hatch House Games",
+        "companyName": "MrsWordsmith.com",
+        "publisher": "Hatch House Games",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -1656,8 +1656,8 @@
         "internalpath": "mrswordsmithcom"
     },
     {
-        "publisher": "HoloToyz app",
-        "companyName": "HoloToyz",
+        "companyName": "HoloToyz app",
+        "publisher": "HoloToyz",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1668,8 +1668,8 @@
         "internalpath": "holotoyz-app"
     },
     {
-        "publisher": "EggsTime.com",
-        "companyName": "Imex Leader, Inc.",
+        "companyName": "EggsTime.com",
+        "publisher": "Imex Leader, Inc.",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1680,8 +1680,8 @@
         "ogimage": "thumbnail_139.png"
     },
     {
-        "publisher": "Futaba Classroom Games for Kids",
-        "companyName": "INKids Education",
+        "companyName": "Futaba Classroom Games for Kids",
+        "publisher": "INKids Education",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -1692,8 +1692,8 @@
         "internalpath": "futaba-classroom-games-for-kids"
     },
     {
-        "publisher": "Kido Pizzeria Game",
-        "companyName": "Kidoverse",
+        "companyName": "Kido Pizzeria Game",
+        "publisher": "Kidoverse",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1704,8 +1704,8 @@
         "ogimage": "thumbnail_141.png"
     },
     {
-        "publisher": "ABC Garbage Truck",
-        "companyName": "Kids 1st Puzzles",
+        "companyName": "ABC Garbage Truck",
+        "publisher": "Kids 1st Puzzles",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -1716,8 +1716,8 @@
         "ogimage": "thumbnail_142.png"
     },
     {
-        "publisher": "AsKids Insights Portal",
-        "companyName": "Kids Corp",
+        "companyName": "AsKids Insights Portal",
+        "publisher": "Kids Corp",
         "productType": "Website",
         "productCategory": "VR",
         "audience": "5 - 13+",
@@ -1728,8 +1728,8 @@
         "internalpath": "askids-insights-portal-surveys-and-panels-for-kids-and-families"
     },
     {
-        "publisher": "Kite Ad Platform",
-        "companyName": "Kids Corp",
+        "companyName": "Kite Ad Platform",
+        "publisher": "Kids Corp",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "5 - 12",
@@ -1740,8 +1740,8 @@
         "internalpath": "kite-ad-platform-powered-by-kids-corp"
     },
     {
-        "publisher": "Kidz Bop Kids",
-        "companyName": "Kidz Bop Enterprises LLC",
+        "companyName": "Kidz Bop Kids",
+        "publisher": "Kidz Bop Enterprises LLC",
         "productType": "Website",
         "productCategory": "TV",
         "audience": "5 - 12",
@@ -1752,8 +1752,8 @@
         "ogimage": "thumbnail_148.png"
     },
     {
-        "publisher": "Kinderling Kids Radio",
-        "companyName": "Kinderling",
+        "companyName": "Kinderling Kids Radio",
+        "publisher": "Kinderling",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1764,8 +1764,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Kujo's Kid Zone website",
-        "companyName": "Kujo's Kid Zone",
+        "companyName": "Kujo's Kid Zone website",
+        "publisher": "Kujo's Kid Zone",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1776,8 +1776,8 @@
         "internalpath": "kujos-kid-zone-website"
     },
     {
-        "publisher": "\"La liste des choses qui existent\" survey website",
-        "companyName": "La Pasteque Production",
+        "companyName": "\"La liste des choses qui existent\" survey website",
+        "publisher": "La Pasteque Production",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "10 - 13+",
@@ -1788,8 +1788,8 @@
         "ogimage": "thumbnail_151.png"
     },
     {
-        "publisher": "Feelu",
-        "companyName": "Little Whale Inc.",
+        "companyName": "Feelu",
+        "publisher": "Little Whale Inc.",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -1800,8 +1800,8 @@
         "ogimage": "thumbnail_152.png"
     },
     {
-        "publisher": "LogicLike Kids",
-        "companyName": "LogicLike LLC",
+        "companyName": "LogicLike Kids",
+        "publisher": "LogicLike LLC",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -1812,8 +1812,8 @@
         "internalpath": "logiclike-kids"
     },
     {
-        "publisher": "EggMania \u2013 Where's the Egg in Exactly?",
-        "companyName": "Mania Tales",
+        "companyName": "EggMania \u2013 Where's the Egg in Exactly?",
+        "publisher": "Mania Tales",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -1824,8 +1824,8 @@
         "ogimage": "thumbnail_154.png"
     },
     {
-        "publisher": "Ducktv.tv",
-        "companyName": "MEGA MAX MEDIA",
+        "companyName": "Ducktv.tv",
+        "publisher": "MEGA MAX MEDIA",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -1836,8 +1836,8 @@
         "ogimage": "thumbnail_155.png"
     },
     {
-        "publisher": "MuslimKids.TV",
-        "companyName": "Milo Productions",
+        "companyName": "MuslimKids.TV",
+        "publisher": "Milo Productions",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -1848,8 +1848,8 @@
         "internalpath": "muslimkidstv-child-login-area"
     },
     {
-        "publisher": "Kids and Fun",
-        "companyName": "Mobile Software Digital Services, S.L.",
+        "companyName": "Kids and Fun",
+        "publisher": "Mobile Software Digital Services, S.L.",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -1860,8 +1860,8 @@
         "ogimage": "thumbnail_157.png"
     },
     {
-        "publisher": "Be Centsable Smart website for kids",
-        "companyName": "Norm Hill Entertainment",
+        "companyName": "Be Centsable Smart website for kids",
+        "publisher": "Norm Hill Entertainment",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -1872,8 +1872,8 @@
         "ogimage": "thumbnail_158.png"
     },
     {
-        "publisher": "AcamyKids: La App para aprender jugando",
-        "companyName": "Nueva Gestion",
+        "companyName": "AcamyKids: La App para aprender jugando",
+        "publisher": "Nueva Gestion",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1884,8 +1884,8 @@
         "internalpath": "acamykids-la-app-para-aprender-jugando"
     },
     {
-        "publisher": "ClearWater Kids website",
-        "companyName": "Ontario Water Centre",
+        "companyName": "ClearWater Kids website",
+        "publisher": "Ontario Water Centre",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -1896,8 +1896,8 @@
         "ogimage": "thumbnail_160.png"
     },
     {
-        "publisher": "Cadbury PlayPad app",
-        "companyName": "OOBEDU",
+        "companyName": "Cadbury PlayPad app",
+        "publisher": "OOBEDU",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1908,8 +1908,8 @@
         "ogimage": "thumbnail_161.png"
     },
     {
-        "publisher": "GENIONS",
-        "companyName": "OOBEDU",
+        "companyName": "GENIONS",
+        "publisher": "OOBEDU",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1920,8 +1920,8 @@
         "internalpath": "genions"
     },
     {
-        "publisher": "Orbiterra",
         "companyName": "Orbiterra",
+        "publisher": "Orbiterra",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -1932,8 +1932,8 @@
         "internalpath": "orbiterra-web-and-mobile"
     },
     {
-        "publisher": "Endless Learning Academy",
-        "companyName": "Originator Kids (Sago Sago Toys)",
+        "companyName": "Endless Learning Academy",
+        "publisher": "Originator Kids (Sago Sago Toys)",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -1944,8 +1944,8 @@
         "ogimage": "thumbnail_164.png"
     },
     {
-        "publisher": "Papumba Academy",
-        "companyName": "Papumba",
+        "companyName": "Papumba Academy",
+        "publisher": "Papumba",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -1956,8 +1956,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Pazu Games App Series",
-        "companyName": "Pazu Games",
+        "companyName": "Pazu Games App Series",
+        "publisher": "Pazu Games",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -1968,8 +1968,8 @@
         "ogimage": "thumbnail_166.png"
     },
     {
-        "publisher": "Zac Browser",
-        "companyName": "People CD",
+        "companyName": "Zac Browser",
+        "publisher": "People CD",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 8",
@@ -1980,8 +1980,8 @@
         "ogimage": "thumbnail_167.png"
     },
     {
-        "publisher": "Smurfs' Magic Match",
-        "companyName": "PopReach",
+        "companyName": "Smurfs' Magic Match",
+        "publisher": "PopReach",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -1992,8 +1992,8 @@
         "internalpath": "smurfs-magic-match"
     },
     {
-        "publisher": "LingoAce",
-        "companyName": "PPLINGO",
+        "companyName": "LingoAce",
+        "publisher": "PPLINGO",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2004,8 +2004,8 @@
         "ogimage": "thumbnail_169.png"
     },
     {
-        "publisher": "Prickly Bear",
         "companyName": "Prickly Bear",
+        "publisher": "Prickly Bear",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -2016,8 +2016,8 @@
         "internalpath": "prickly-bear"
     },
     {
-        "publisher": "ProProfs.com",
-        "companyName": "Proprofs.com",
+        "companyName": "ProProfs.com",
+        "publisher": "Proprofs.com",
         "productType": "Tools",
         "productCategory": "Education",
         "audience": "Adults",
@@ -2028,8 +2028,8 @@
         "ogimage": "thumbnail_171.png"
     },
     {
-        "publisher": "Q",
-        "companyName": "Q-files",
+        "companyName": "Q",
+        "publisher": "Q-files",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -2040,8 +2040,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "ReadON Learning Platform",
-        "companyName": "ReadON",
+        "companyName": "ReadON Learning Platform",
+        "publisher": "ReadON",
         "productType": "Tools",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2052,8 +2052,8 @@
         "ogimage": "thumbnail_173.png"
     },
     {
-        "publisher": "ProblemScape",
-        "companyName": "RoundEd Learning",
+        "companyName": "ProblemScape",
+        "publisher": "RoundEd Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2064,8 +2064,8 @@
         "ogimage": "thumbnail_174.png"
     },
     {
-        "publisher": "Run Jump Play TV website",
-        "companyName": "Run Jump Play",
+        "companyName": "Run Jump Play TV website",
+        "publisher": "Run Jump Play",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2076,8 +2076,8 @@
         "ogimage": "thumbnail_175.png"
     },
     {
-        "publisher": "PlayKids+ Kids Learning Games",
-        "companyName": "Sandbox & Co (Sandbox Kids)",
+        "companyName": "PlayKids+ Kids Learning Games",
+        "publisher": "Sandbox & Co (Sandbox Kids)",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -2088,8 +2088,8 @@
         "ogimage": "thumbnail_176.png"
     },
     {
-        "publisher": "Imagination Station San Diego website",
-        "companyName": "Scripps Performing Arts Academy",
+        "companyName": "Imagination Station San Diego website",
+        "publisher": "Scripps Performing Arts Academy",
         "productType": "Website",
         "productCategory": "Health",
         "audience": "5 - 12",
@@ -2100,8 +2100,8 @@
         "ogimage": "thumbnail_177.png"
     },
     {
-        "publisher": "The Fun Farm",
-        "companyName": "Self Esteem Inspiration & Love Pty Ltd",
+        "companyName": "The Fun Farm",
+        "publisher": "Self Esteem Inspiration & Love Pty Ltd",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2112,8 +2112,8 @@
         "internalpath": "the-fun-farm"
     },
     {
-        "publisher": "EmeraldCode.ca",
-        "companyName": "Shaftesbury",
+        "companyName": "EmeraldCode.ca",
+        "publisher": "Shaftesbury",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2124,8 +2124,8 @@
         "internalpath": "emeraldcodeca"
     },
     {
-        "publisher": "Shoonya Kids app",
-        "companyName": "Shoonya Kids",
+        "companyName": "Shoonya Kids app",
+        "publisher": "Shoonya Kids",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -2136,8 +2136,8 @@
         "internalpath": "shoonya-kids-app"
     },
     {
-        "publisher": "SideQuest",
         "companyName": "SideQuest",
+        "publisher": "SideQuest",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2148,8 +2148,8 @@
         "ogimage": "thumbnail_181.png"
     },
     {
-        "publisher": "Annedroids Web Games",
-        "companyName": "Sinking Ship Interactive",
+        "companyName": "Annedroids Web Games",
+        "publisher": "Sinking Ship Interactive",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2160,8 +2160,8 @@
         "internalpath": "annedroids-web-games"
     },
     {
-        "publisher": "DinoDana Website",
-        "companyName": "Sinking Ship Interactive",
+        "companyName": "DinoDana Website",
+        "publisher": "Sinking Ship Interactive",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 5",
@@ -2172,8 +2172,8 @@
         "ogimage": "thumbnail_183.png"
     },
     {
-        "publisher": "Giver 150 Kids Web Game",
-        "companyName": "Sinking Ship Interactive",
+        "companyName": "Giver 150 Kids Web Game",
+        "publisher": "Sinking Ship Interactive",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2184,8 +2184,8 @@
         "ogimage": "thumbnail_184.png"
     },
     {
-        "publisher": "StoryChopsticks",
-        "companyName": "Sistero Pte Ltd",
+        "companyName": "StoryChopsticks",
+        "publisher": "Sistero Pte Ltd",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2196,8 +2196,8 @@
         "ogimage": "thumbnail_185.png"
     },
     {
-        "publisher": "Super Simple",
-        "companyName": "Skyship Entertainment",
+        "companyName": "Super Simple",
+        "publisher": "Skyship Entertainment",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -2208,8 +2208,8 @@
         "internalpath": "super-simple-mobile"
     },
     {
-        "publisher": "Super Simple Songs YouTube video content",
-        "companyName": "Skyship Entertainment",
+        "companyName": "Super Simple Songs YouTube video content",
+        "publisher": "Skyship Entertainment",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -2220,8 +2220,8 @@
         "internalpath": "super-simple-songs-youtube-video-content"
     },
     {
-        "publisher": "Lou Adventures",
-        "companyName": "Sparkstone Investments",
+        "companyName": "Lou Adventures",
+        "publisher": "Sparkstone Investments",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2232,8 +2232,8 @@
         "internalpath": "lou-adventures"
     },
     {
-        "publisher": "Handwriting in Hebrew",
-        "companyName": "Sphoonx",
+        "companyName": "Handwriting in Hebrew",
+        "publisher": "Sphoonx",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2244,8 +2244,8 @@
         "internalpath": "handwriting-in-hebrew"
     },
     {
-        "publisher": "BASIQs Baseball",
-        "companyName": "Sport BASIQs",
+        "companyName": "BASIQs Baseball",
+        "publisher": "Sport BASIQs",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -2256,8 +2256,8 @@
         "ogimage": "thumbnail_190.png"
     },
     {
-        "publisher": "Gummies Playground",
-        "companyName": "Squink Games",
+        "companyName": "Gummies Playground",
+        "publisher": "Squink Games",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 5",
@@ -2268,8 +2268,8 @@
         "ogimage": "thumbnail_191.png"
     },
     {
-        "publisher": "Pango and friends",
-        "companyName": "Studio Pango",
+        "companyName": "Pango and friends",
+        "publisher": "Studio Pango",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -2280,8 +2280,8 @@
         "internalpath": "pango-and-friends"
     },
     {
-        "publisher": "T",
-        "companyName": "T-Mobile",
+        "companyName": "T",
+        "publisher": "T-Mobile",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2292,8 +2292,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Reading.com: Raising Readers",
-        "companyName": "Teaching.com",
+        "companyName": "Reading.com: Raising Readers",
+        "publisher": "Teaching.com",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2304,8 +2304,8 @@
         "internalpath": "readingcom-raising-readers"
     },
     {
-        "publisher": "Fundo Kidz",
-        "companyName": "Tecvivid",
+        "companyName": "Fundo Kidz",
+        "publisher": "Tecvivid",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -2316,8 +2316,8 @@
         "ogimage": "thumbnail_195.png"
     },
     {
-        "publisher": "BYJUS.com",
-        "companyName": "Think & Learn Private Limited (BYJU'S)",
+        "companyName": "BYJUS.com",
+        "publisher": "Think & Learn Private Limited (BYJU'S)",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -2328,8 +2328,8 @@
         "internalpath": "byjuscom-india-site"
     },
     {
-        "publisher": "Tigapo Play System",
-        "companyName": "Tigapo Ltd.",
+        "companyName": "Tigapo Play System",
+        "publisher": "Tigapo Ltd.",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "Adults",
@@ -2340,8 +2340,8 @@
         "ogimage": "thumbnail_197.png"
     },
     {
-        "publisher": "Dounia augmented reality",
-        "companyName": "Tobo Studio",
+        "companyName": "Dounia augmented reality",
+        "publisher": "Tobo Studio",
         "productType": "Mobile",
         "productCategory": "VR",
         "audience": "3 - 12",
@@ -2352,8 +2352,8 @@
         "internalpath": "dounia-augmented-reality"
     },
     {
-        "publisher": "ToonGoggles.com",
-        "companyName": "Toon Goggles",
+        "companyName": "ToonGoggles.com",
+        "publisher": "Toon Goggles",
         "productType": "Website",
         "productCategory": "TV",
         "audience": "3 - 12",
@@ -2364,20 +2364,20 @@
         "ogimage": "thumbnail_199.png"
     },
     {
-        "publisher": "TotallyAwesome Apps & Sites Advertising Solutions",
-        "companyName": "TotallyAwesome",
+        "companyName": "TotallyAwesome Apps & Sites Advertising Solutions",
+        "publisher": "TotallyAwesome",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
-        "description": "TotallyAwesome is a special marketing and media platform centering on facilitating secure, effective, and pertinent connections between brands and the youth. In the digital world, the company seeks to make a positive impact for its youthful target market, placing it at the core of its operations. They offer the only advertising platform worldwide specifically designed for advertisers, providing programmatically accessible and fully compliant access to a wide network of premium youth publishers without collecting personal data.",
+        "description": "TotallyAwesome is a special marketing and media platform centering on facilitating secure, effective, and pertinent connections between brands and the youth. In the digital world, the company seeks to make a positive impact for its youthful target market, placing it at the core of its operations. They offer the only advertising platform worldwide specifically designed for advertisers, providing programmatically accessible and fully compliant access to a wide network of premium youth companyNames without collecting personal data.",
         "url": "https://totallyawesome.tv",
         "ogimage": "thumbnail_200.png",
         "heroImage": "astroseal_200.png",
         "internalpath": "totallyawesome-apps--sites-advertising-solutions"
     },
     {
-        "publisher": "Mother Goose Club: Kids & Baby Videos, Books, Games",
-        "companyName": "Touch Press",
+        "companyName": "Mother Goose Club: Kids & Baby Videos, Books, Games",
+        "publisher": "Touch Press",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -2388,8 +2388,8 @@
         "ogimage": "thumbnail_201.png"
     },
     {
-        "publisher": "Transum.org",
-        "companyName": "Transum",
+        "companyName": "Transum.org",
+        "publisher": "Transum",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "Adults",
@@ -2400,8 +2400,8 @@
         "internalpath": "transumorg"
     },
     {
-        "publisher": "tutorJr",
-        "companyName": "TutorABC",
+        "companyName": "tutorJr",
+        "publisher": "TutorABC",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -2412,8 +2412,8 @@
         "internalpath": "tutorjr-web-and-mobile"
     },
     {
-        "publisher": "Math Makers",
-        "companyName": "Ululab Inc.",
+        "companyName": "Math Makers",
+        "publisher": "Ululab Inc.",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2424,8 +2424,8 @@
         "ogimage": "thumbnail_204.png"
     },
     {
-        "publisher": "OckyPocky",
-        "companyName": "WhizKidz Media",
+        "companyName": "OckyPocky",
+        "publisher": "WhizKidz Media",
         "productType": "Mobile",
         "productCategory": "TV",
         "audience": "0 - 8",
@@ -2436,8 +2436,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Kiddies Club",
-        "companyName": "Whole Way Mobile Services, S.L.",
+        "companyName": "Kiddies Club",
+        "publisher": "Whole Way Mobile Services, S.L.",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -2448,8 +2448,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "TeensUP",
-        "companyName": "Whole Way Mobile Services, S.L.",
+        "companyName": "TeensUP",
+        "publisher": "Whole Way Mobile Services, S.L.",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -2460,8 +2460,8 @@
         "ogimage": "thumbnail_207.png"
     },
     {
-        "publisher": "WuKong Education",
-        "companyName": "Wukong Education",
+        "companyName": "WuKong Education",
+        "publisher": "Wukong Education",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2472,8 +2472,8 @@
         "internalpath": "wukong-education-web-and-mobile"
     },
     {
-        "publisher": "AdaptedMind.com learning platform and mini",
-        "companyName": "AdaptedMind",
+        "companyName": "AdaptedMind.com learning platform and mini",
+        "publisher": "AdaptedMind",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -2484,8 +2484,8 @@
         "ogimage": "thumbnail_209.png"
     },
     {
-        "publisher": "Afterverse Games, Crafty Lands",
-        "companyName": "Afterverse",
+        "companyName": "Afterverse Games, Crafty Lands",
+        "publisher": "Afterverse",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -2496,8 +2496,8 @@
         "ogimage": "thumbnail_210.png"
     },
     {
-        "publisher": "AI World School website",
-        "companyName": "AI World School",
+        "companyName": "AI World School website",
+        "publisher": "AI World School",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -2508,8 +2508,8 @@
         "internalpath": "ai-world-school-website"
     },
     {
-        "publisher": "Amanda content moderation platform",
-        "companyName": "Aiba",
+        "companyName": "Amanda content moderation platform",
+        "publisher": "Aiba",
         "productType": "Tools",
         "productCategory": "Safety",
         "audience": "Adults",
@@ -2520,8 +2520,8 @@
         "internalpath": "amanda-content-moderation-platform"
     },
     {
-        "publisher": "ClassUp tutoring platform",
-        "companyName": "ALGORITHM OF LEARNING INC.",
+        "companyName": "ClassUp tutoring platform",
+        "publisher": "ALGORITHM OF LEARNING INC.",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -2532,8 +2532,8 @@
         "internalpath": "classup-tutoring-platform-web-and-mobile"
     },
     {
-        "publisher": "Family Orbit",
-        "companyName": "AppObit",
+        "companyName": "Family Orbit",
+        "publisher": "AppObit",
         "productType": "Mobile",
         "productCategory": "Social",
         "audience": "8 - 13+",
@@ -2544,8 +2544,8 @@
         "ogimage": "thumbnail_214.png"
     },
     {
-        "publisher": "Aumio Sleep & Meditation App",
-        "companyName": "Aumio",
+        "companyName": "Aumio Sleep & Meditation App",
+        "publisher": "Aumio",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2556,8 +2556,8 @@
         "internalpath": "aumio-sleep--meditation-app"
     },
     {
-        "publisher": "AWE Learning's platinum products",
-        "companyName": "AWE Learning",
+        "companyName": "AWE Learning's platinum products",
+        "publisher": "AWE Learning",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2568,8 +2568,8 @@
         "ogimage": "thumbnail_216.png"
     },
     {
-        "publisher": "BanjoRobinson.com",
-        "companyName": "Banjo Robinson",
+        "companyName": "BanjoRobinson.com",
+        "publisher": "Banjo Robinson",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2580,8 +2580,8 @@
         "ogimage": "thumbnail_217.png"
     },
     {
-        "publisher": "Bebi Toddler Games",
-        "companyName": "BEBI FAMILY GAMES",
+        "companyName": "Bebi Toddler Games",
+        "publisher": "BEBI FAMILY GAMES",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 5",
@@ -2592,8 +2592,8 @@
         "internalpath": "bebi-toddler-games"
     },
     {
-        "publisher": "Lingo Bus",
-        "companyName": "Beijing Qian Yu Technology",
+        "companyName": "Lingo Bus",
+        "publisher": "Beijing Qian Yu Technology",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2604,8 +2604,8 @@
         "ogimage": "thumbnail_219.png"
     },
     {
-        "publisher": "Pixical tutoring platform",
-        "companyName": "Better Ed Co.",
+        "companyName": "Pixical tutoring platform",
+        "publisher": "Better Ed Co.",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -2616,8 +2616,8 @@
         "ogimage": "thumbnail_220.png"
     },
     {
-        "publisher": "Blippi.com",
-        "companyName": "Blippi",
+        "companyName": "Blippi.com",
+        "publisher": "Blippi",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -2628,8 +2628,8 @@
         "internalpath": "blippicom"
     },
     {
-        "publisher": "Caderno M\u00e1gico",
         "companyName": "Caderno M\u00e1gico",
+        "publisher": "Caderno M\u00e1gico",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2640,8 +2640,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Caribu",
         "companyName": "Caribu",
+        "publisher": "Caribu",
         "productType": "Mobile",
         "productCategory": "Social",
         "audience": "3 - 8",
@@ -2652,8 +2652,8 @@
         "internalpath": "caribu"
     },
     {
-        "publisher": "Classover.com",
-        "companyName": "Classover, Inc.",
+        "companyName": "Classover.com",
+        "publisher": "Classover, Inc.",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2664,8 +2664,8 @@
         "internalpath": "classovercom"
     },
     {
-        "publisher": "Cognishine web platform",
-        "companyName": "Cognishine",
+        "companyName": "Cognishine web platform",
+        "publisher": "Cognishine",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -2676,8 +2676,8 @@
         "internalpath": "cognishine-web-platform"
     },
     {
-        "publisher": "CosmicCubs.com",
-        "companyName": "Cosmic Cubs, LLC",
+        "companyName": "CosmicCubs.com",
+        "publisher": "Cosmic Cubs, LLC",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2688,8 +2688,8 @@
         "internalpath": "cosmiccubscom"
     },
     {
-        "publisher": "Tales of Mello",
-        "companyName": "Daidream d.o.o. (Tales of Mello)",
+        "companyName": "Tales of Mello",
+        "publisher": "Daidream d.o.o. (Tales of Mello)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2700,8 +2700,8 @@
         "ogimage": "thumbnail_227.png"
     },
     {
-        "publisher": "Dopiverse app",
-        "companyName": "Doping Technology",
+        "companyName": "Dopiverse app",
+        "publisher": "Doping Technology",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 13+",
@@ -2712,8 +2712,8 @@
         "ogimage": "thumbnail_228.png"
     },
     {
-        "publisher": "Educacross",
         "companyName": "Educacross",
+        "publisher": "Educacross",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2724,8 +2724,8 @@
         "internalpath": "educacross-web-and-mobile"
     },
     {
-        "publisher": "Edurino",
         "companyName": "Edurino",
+        "publisher": "Edurino",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2736,8 +2736,8 @@
         "internalpath": "edurino"
     },
     {
-        "publisher": "Go With Charlotte website",
-        "companyName": "End Inertia Creative",
+        "companyName": "Go With Charlotte website",
+        "publisher": "End Inertia Creative",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2748,8 +2748,8 @@
         "internalpath": "go-with-charlotte-website"
     },
     {
-        "publisher": "ICANTECH learning platform",
-        "companyName": "Galaxy Education",
+        "companyName": "ICANTECH learning platform",
+        "publisher": "Galaxy Education",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2760,8 +2760,8 @@
         "internalpath": "icantech-learning-platform"
     },
     {
-        "publisher": "Genie messaging app",
-        "companyName": "Genie Online, Inc.",
+        "companyName": "Genie messaging app",
+        "publisher": "Genie Online, Inc.",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2772,8 +2772,8 @@
         "internalpath": "genie-messaging-app"
     },
     {
-        "publisher": "GlishArabic",
         "companyName": "GlishArabic",
+        "publisher": "GlishArabic",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 13+",
@@ -2784,8 +2784,8 @@
         "ogimage": "thumbnail_234.png"
     },
     {
-        "publisher": "Happypillar",
         "companyName": "Happypillar",
+        "publisher": "Happypillar",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "Adults",
@@ -2796,8 +2796,8 @@
         "internalpath": "happypillar"
     },
     {
-        "publisher": "Hoot Reading",
         "companyName": "Hoot Reading",
+        "publisher": "Hoot Reading",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2808,8 +2808,8 @@
         "internalpath": "hoot-reading"
     },
     {
-        "publisher": "Aha World",
-        "companyName": "iHuman",
+        "companyName": "Aha World",
+        "publisher": "iHuman",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2820,8 +2820,8 @@
         "ogimage": "thumbnail_237.png"
     },
     {
-        "publisher": "Bookful",
-        "companyName": "Inception VR",
+        "companyName": "Bookful",
+        "publisher": "Inception VR",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2832,8 +2832,8 @@
         "ogimage": "thumbnail_238.png"
     },
     {
-        "publisher": "EduEdu",
-        "companyName": "Instituto ABCD",
+        "companyName": "EduEdu",
+        "publisher": "Instituto ABCD",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 8",
@@ -2844,8 +2844,8 @@
         "internalpath": "eduedu"
     },
     {
-        "publisher": "iPracticeMath.com",
-        "companyName": "iPracticeMath",
+        "companyName": "iPracticeMath.com",
+        "publisher": "iPracticeMath",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -2856,8 +2856,8 @@
         "ogimage": "thumbnail_240.png"
     },
     {
-        "publisher": "JoMo Kids",
         "companyName": "JoMo Kids",
+        "publisher": "JoMo Kids",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2868,8 +2868,8 @@
         "internalpath": "jomo-kids"
     },
     {
-        "publisher": "Kiddie Kredit",
         "companyName": "Kiddie Kredit",
+        "publisher": "Kiddie Kredit",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -2880,8 +2880,8 @@
         "internalpath": "kiddie-kredit"
     },
     {
-        "publisher": "Kidoz OS",
-        "companyName": "Kidoz Inc",
+        "companyName": "Kidoz OS",
+        "publisher": "Kidoz Inc",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "5 - 12",
@@ -2892,8 +2892,8 @@
         "ogimage": "thumbnail_243.png"
     },
     {
-        "publisher": "KidzType.com",
-        "companyName": "KidzType",
+        "companyName": "KidzType.com",
+        "publisher": "KidzType",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -2904,8 +2904,8 @@
         "internalpath": "kidztypecom"
     },
     {
-        "publisher": "TypeDojo.com",
-        "companyName": "KidzType",
+        "companyName": "TypeDojo.com",
+        "publisher": "KidzType",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -2916,8 +2916,8 @@
         "ogimage": "thumbnail_245.png"
     },
     {
-        "publisher": "Kyna English",
-        "companyName": "Kyna For Kids",
+        "companyName": "Kyna English",
+        "publisher": "Kyna For Kids",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2928,8 +2928,8 @@
         "ogimage": "thumbnail_246.png"
     },
     {
-        "publisher": "Spanish Safari",
-        "companyName": "Learn Safari",
+        "companyName": "Spanish Safari",
+        "publisher": "Learn Safari",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -2940,8 +2940,8 @@
         "internalpath": "spanish-safari"
     },
     {
-        "publisher": "Loritos World",
-        "companyName": "Loritos Learning",
+        "companyName": "Loritos World",
+        "publisher": "Loritos Learning",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -2952,8 +2952,8 @@
         "internalpath": "loritos-world"
     },
     {
-        "publisher": "Carrots&Cake Parental Control",
-        "companyName": "MagicHabits Labs Limited",
+        "companyName": "Carrots&Cake Parental Control",
+        "publisher": "MagicHabits Labs Limited",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -2964,8 +2964,8 @@
         "internalpath": "carrotscake-parental-control"
     },
     {
-        "publisher": "Moshi Kids: Stories & Games",
-        "companyName": "Mind Candy",
+        "companyName": "Moshi Kids: Stories & Games",
+        "publisher": "Mind Candy",
         "productType": "Mobile",
         "productCategory": "Health",
         "audience": "3 - 8",
@@ -2976,8 +2976,8 @@
         "internalpath": "moshi-kids-stories--games"
     },
     {
-        "publisher": "Moshi Monsters Egg Hunt",
-        "companyName": "Mind Candy",
+        "companyName": "Moshi Monsters Egg Hunt",
+        "publisher": "Mind Candy",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 8",
@@ -2988,8 +2988,8 @@
         "internalpath": "moshi-monsters-egg-hunt"
     },
     {
-        "publisher": "Misa Robot + companion app",
-        "companyName": "Misa Robotics",
+        "companyName": "Misa Robot + companion app",
+        "publisher": "Misa Robotics",
         "productType": "Physical",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -3000,8 +3000,8 @@
         "ogimage": "thumbnail_252.png"
     },
     {
-        "publisher": "Jackrun",
-        "companyName": "Multiplay & Much More",
+        "companyName": "Jackrun",
+        "publisher": "Multiplay & Much More",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -3012,8 +3012,8 @@
         "internalpath": "jackrun-alexa-skill"
     },
     {
-        "publisher": "Muslimeto.com",
-        "companyName": "Muslimeto",
+        "companyName": "Muslimeto.com",
+        "publisher": "Muslimeto",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -3024,8 +3024,8 @@
         "internalpath": "muslimetocom"
     },
     {
-        "publisher": "Rockerbox News",
-        "companyName": "My Rockerbox",
+        "companyName": "Rockerbox News",
+        "publisher": "My Rockerbox",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "8 - 12",
@@ -3036,8 +3036,8 @@
         "ogimage": "thumbnail_255.png"
     },
     {
-        "publisher": "Nex Playground",
-        "companyName": "Nex",
+        "companyName": "Nex Playground",
+        "publisher": "Nex",
         "productType": "Physical",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -3048,8 +3048,8 @@
         "internalpath": "nex-playground"
     },
     {
-        "publisher": "NourishInteractive.com/Kids",
-        "companyName": "Nourish Interactive",
+        "companyName": "NourishInteractive.com/Kids",
+        "publisher": "Nourish Interactive",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -3060,8 +3060,8 @@
         "internalpath": "nourishinteractivecomkids"
     },
     {
-        "publisher": "Berenstain Bears",
-        "companyName": "Oceanhouse Media",
+        "companyName": "Berenstain Bears",
+        "publisher": "Oceanhouse Media",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -3072,8 +3072,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Otsimo | Special Education Autism Learning Games",
-        "companyName": "Otsimo",
+        "companyName": "Otsimo | Special Education Autism Learning Games",
+        "publisher": "Otsimo",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -3084,8 +3084,8 @@
         "ogimage": "thumbnail_259.png"
     },
     {
-        "publisher": "Picture Lingo",
-        "companyName": "Picture Learning",
+        "companyName": "Picture Lingo",
+        "publisher": "Picture Learning",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 8",
@@ -3096,8 +3096,8 @@
         "ogimage": "thumbnail_260.png"
     },
     {
-        "publisher": "PlaymatesToys.com",
-        "companyName": "Playmates",
+        "companyName": "PlaymatesToys.com",
+        "publisher": "Playmates",
         "productType": "Website",
         "productCategory": "Physical",
         "audience": "3 - 12",
@@ -3108,8 +3108,8 @@
         "ogimage": "thumbnail_261.png"
     },
     {
-        "publisher": "Jenga.com",
-        "companyName": "Pokonobe Associates",
+        "companyName": "Jenga.com",
+        "publisher": "Pokonobe Associates",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 13+",
@@ -3120,8 +3120,8 @@
         "internalpath": "jengacom"
     },
     {
-        "publisher": "Monster Guard",
-        "companyName": "Reels2Media",
+        "companyName": "Monster Guard",
+        "publisher": "Reels2Media",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -3132,8 +3132,8 @@
         "ogimage": "thumbnail_263.png"
     },
     {
-        "publisher": "Robotify EDU platform",
-        "companyName": "Robotify Labs",
+        "companyName": "Robotify EDU platform",
+        "publisher": "Robotify Labs",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "8 - 13+",
@@ -3144,8 +3144,8 @@
         "ogimage": "thumbnail_264.png"
     },
     {
-        "publisher": "Rocket ad service for youth",
-        "companyName": "Rocket",
+        "companyName": "Rocket ad service for youth",
+        "publisher": "Rocket",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -3156,8 +3156,8 @@
         "ogimage": "thumbnail_265.png"
     },
     {
-        "publisher": "Rooplay",
-        "companyName": "Rooplay Media",
+        "companyName": "Rooplay",
+        "publisher": "Rooplay Media",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -3168,8 +3168,8 @@
         "internalpath": "rooplay"
     },
     {
-        "publisher": "Poptropica",
-        "companyName": "Sandbox & Co (Sandbox Games)",
+        "companyName": "Poptropica",
+        "publisher": "Sandbox & Co (Sandbox Games)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "8 - 12",
@@ -3180,8 +3180,8 @@
         "internalpath": "poptropica-mobile"
     },
     {
-        "publisher": "Curious World",
-        "companyName": "Sandbox & Co (Sandbox Kids)",
+        "companyName": "Curious World",
+        "publisher": "Sandbox & Co (Sandbox Kids)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -3192,8 +3192,8 @@
         "ogimage": "thumbnail_268.png"
     },
     {
-        "publisher": "Curious World",
-        "companyName": "Sandbox & Co (Sandbox Kids)",
+        "companyName": "Curious World",
+        "publisher": "Sandbox & Co (Sandbox Kids)",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "3 - 8",
@@ -3204,8 +3204,8 @@
         "ogimage": "placeholder.png"
     },
     {
-        "publisher": "Hopster Coding Safari for Kids",
-        "companyName": "Sandbox & Co (Sandbox Kids)",
+        "companyName": "Hopster Coding Safari for Kids",
+        "publisher": "Sandbox & Co (Sandbox Kids)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "0 - 8",
@@ -3216,8 +3216,8 @@
         "internalpath": "hopster-coding-safari-for-kids"
     },
     {
-        "publisher": "Kidomi",
-        "companyName": "Sandbox & Co (Sandbox Kids)",
+        "companyName": "Kidomi",
+        "publisher": "Sandbox & Co (Sandbox Kids)",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -3228,8 +3228,8 @@
         "internalpath": "kidomi-mobile"
     },
     {
-        "publisher": "FactMonster.com",
-        "companyName": "Sandbox & Co (Sandbox Learning)",
+        "companyName": "FactMonster.com",
+        "publisher": "Sandbox & Co (Sandbox Learning)",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -3240,8 +3240,8 @@
         "ogimage": "thumbnail_272.png"
     },
     {
-        "publisher": "JoJoin",
-        "companyName": "Smart Bean Education Technology",
+        "companyName": "JoJoin",
+        "publisher": "Smart Bean Education Technology",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 12",
@@ -3252,8 +3252,8 @@
         "ogimage": "thumbnail_273.png"
     },
     {
-        "publisher": "Smartli",
         "companyName": "Smartli",
+        "publisher": "Smartli",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "3 - 12",
@@ -3264,8 +3264,8 @@
         "internalpath": "smartli-web-and-mobile"
     },
     {
-        "publisher": "Starfall.com",
-        "companyName": "Starfall",
+        "companyName": "Starfall.com",
+        "publisher": "Starfall",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -3276,8 +3276,8 @@
         "ogimage": "thumbnail_275.png"
     },
     {
-        "publisher": "StudioArabiya.com",
-        "companyName": "Studio Arabiya",
+        "companyName": "StudioArabiya.com",
+        "publisher": "Studio Arabiya",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -3288,8 +3288,8 @@
         "internalpath": "studioarabiyacom"
     },
     {
-        "publisher": "Studycat Fun App Series",
-        "companyName": "Studycat",
+        "companyName": "Studycat Fun App Series",
+        "publisher": "Studycat",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "3 - 8",
@@ -3300,8 +3300,8 @@
         "ogimage": "thumbnail_277.png"
     },
     {
-        "publisher": "Skills Tutelage",
-        "companyName": "T-Skills",
+        "companyName": "Skills Tutelage",
+        "publisher": "T-Skills",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "0 - 5",
@@ -3312,8 +3312,8 @@
         "ogimage": "thumbnail_278.png"
     },
     {
-        "publisher": "Tankee",
         "companyName": "Tankee",
+        "publisher": "Tankee",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -3324,8 +3324,8 @@
         "internalpath": "tankee"
     },
     {
-        "publisher": "TarteeleQuran.com",
-        "companyName": "Tarteelequran.com",
+        "companyName": "TarteeleQuran.com",
+        "publisher": "Tarteelequran.com",
         "productType": "Website",
         "productCategory": "Education",
         "audience": "5 - 13+",
@@ -3336,8 +3336,8 @@
         "internalpath": "tarteelequrancom"
     },
     {
-        "publisher": "Yuugi conversational AI speech",
-        "companyName": "UGLabs Inc.",
+        "companyName": "Yuugi conversational AI speech",
+        "publisher": "UGLabs Inc.",
         "productType": "Mobile",
         "productCategory": "Tools",
         "audience": "5 - 12",
@@ -3348,8 +3348,8 @@
         "ogimage": "thumbnail_281.png"
     },
     {
-        "publisher": "Utopia AI Moderator solution",
-        "companyName": "Utopia Analytics",
+        "companyName": "Utopia AI Moderator solution",
+        "publisher": "Utopia Analytics",
         "productType": "Tools",
         "productCategory": "Tools",
         "audience": "Adults",
@@ -3360,8 +3360,8 @@
         "ogimage": "thumbnail_282.png"
     },
     {
-        "publisher": "Animal Jam",
-        "companyName": "WildWorks and National Geographic",
+        "companyName": "Animal Jam",
+        "publisher": "WildWorks and National Geographic",
         "productType": "Mobile",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -3372,8 +3372,8 @@
         "internalpath": "animal-jam"
     },
     {
-        "publisher": "Animal Jam",
-        "companyName": "WildWorks and National Geographic",
+        "companyName": "Animal Jam",
+        "publisher": "WildWorks and National Geographic",
         "productType": "Website",
         "productCategory": "Games",
         "audience": "5 - 12",
@@ -3384,8 +3384,8 @@
         "internalpath": "animal-jam"
     },
     {
-        "publisher": "Minno Kids",
-        "companyName": "Winsome Truth (Minno)",
+        "companyName": "Minno Kids",
+        "publisher": "Winsome Truth (Minno)",
         "productType": "Mobile",
         "productCategory": "Education",
         "audience": "5 - 12",
@@ -3396,8 +3396,8 @@
         "ogimage": "thumbnail_285.png"
     },
     {
-        "publisher": "Xplora Kids Smartwatches",
-        "companyName": "XPLORA Technologies AS",
+        "companyName": "Xplora Kids Smartwatches",
+        "publisher": "XPLORA Technologies AS",
         "productType": "Physical",
         "productCategory": "Health",
         "audience": "3 - 12",
@@ -3408,8 +3408,8 @@
         "internalpath": "xplora-kids-smartwatches-x6play-and-xgo3"
     },
     {
-        "publisher": "FABA Raccontastorie",
-        "companyName": "FABA Srl",
+        "companyName": "FABA Raccontastorie",
+        "publisher": "FABA Srl",
         "productType": "Physical",
         "productCategory": "Education",
         "audience": "3-8",
@@ -3421,8 +3421,8 @@
 
     },
     {
-        "publisher": "Cubetto",
-        "companyName": "Primo Toys",
+        "companyName": "Cubetto",
+        "publisher": "Primo Toys",
         "productType": "Physical",
         "productCategory": "Education",
         "audience": "3-8",
@@ -3433,8 +3433,8 @@
         "internalpath": "cubetto"
     },
     {
-      "companyName": "Curiscope",
-      "publisher": "Virtual Reality",
+      "publisher": "Curiscope",
+      "companyName": "Virtual Reality",
       "productType": "Physical",
       "productCategory": "VR",
       "audience": "5-13+",
@@ -3445,8 +3445,8 @@
       "internalpath": "curiscope"
     },
     {
-      "companyName": "Otto HP",
-      "publisher": "Otto HP Robot",
+      "publisher": "Otto HP",
+      "companyName": "Otto HP Robot",
       "productType": "Physical",
       "productCategory": "Education",
       "audience": "8-13+",
@@ -3457,8 +3457,8 @@
       "internalpath": "otto-hp"
     },
     {
-      "companyName": "Robo Wunderkind",
       "publisher": "Robo Wunderkind",
+      "companyName": "Robo Wunderkind",
       "productType": "Physical",
       "productCategory": "Education",
       "audience": "8-13+",
