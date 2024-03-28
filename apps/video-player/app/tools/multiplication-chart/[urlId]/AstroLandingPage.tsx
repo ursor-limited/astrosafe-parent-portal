@@ -65,7 +65,7 @@ export default function AstroLandingPage(props: {
                 variant={props.mobile ? "h4" : "h1"}
                 sx={{
                   textAlign: "center",
-                  fontSize: props.mobile ? "28px" : undefined,
+                  ...(props.mobile ? { fontSize: "28px" } : {}),
                   lineHeight: "116%",
                 }}
                 bold
