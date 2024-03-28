@@ -43,6 +43,7 @@ import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
 import { ILink } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
+import LiteModeBar from "./LiteModeBar";
 
 const PAGE_SIZE = 30;
 
@@ -853,6 +854,7 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
+
       <DashboardSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
@@ -884,6 +886,10 @@ export default function DashboardPageContents() {
           setTrialExpirationDialogOpen(false);
           setUpgradeDialogOpen(true);
         }}
+      />
+      <LiteModeBar
+        nLeft={1}
+        upgradeCallback={() => setUpgradeDialogOpen(true)}
       />
     </>
   );

@@ -79,19 +79,6 @@ const ValueProposition = (props: {
       ) : (
         props.items
           .map((item, i) => [
-            <div
-              key={`image${i}`}
-              style={{
-                position: "relative",
-                width: "452px",
-                minWidth: "452px",
-                height: "100%",
-                borderRadius: "16px",
-                overflow: "hidden",
-              }}
-            >
-              <Image src={item.imageUrl} fill alt="visual link card image" />
-            </div>,
             <Stack key={`content${i}`} spacing="32px" justifyContent="center">
               {item.title ? (
                 <Stack
@@ -117,6 +104,19 @@ const ValueProposition = (props: {
                 {item.text}
               </Typography>
             </Stack>,
+            <div
+              key={`image${i}`}
+              style={{
+                position: "relative",
+                width: "452px",
+                minWidth: "452px",
+                height: "100%",
+                borderRadius: "16px",
+                overflow: "hidden",
+              }}
+            >
+              <Image src={item.imageUrl} fill alt="visual link card image" />
+            </div>,
           ])
           .map((pair, i) => (
             <Stack
