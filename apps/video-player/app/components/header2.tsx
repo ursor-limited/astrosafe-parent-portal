@@ -24,10 +24,8 @@ import { useUserContext } from "./UserContext";
 import UpgradePromptDialog from "./UpgradeDialog";
 import { useWindowSize } from "usehooks-ts";
 import DynamicContainer from "./DynamicContainer";
-import UrsorFadeIn from "./UrsorFadeIn";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileButton from "./ProfileButton";
-import ApiController from "../api";
 
 const UrsorPopover = dynamic(
   () => import("@/app/components/UrsorPopover"),
@@ -480,39 +478,35 @@ export const Header = (props: {
             </Stack>
           ) : (
             <Stack spacing="0px" direction="row">
-              <UrsorFadeIn duration={800}>
-                {!user ? (
-                  <UrsorButton
-                    backgroundColor="transparent"
-                    hoverOpacity={0.7}
-                    onClick={() =>
-                      (window.location.href = "mailto:hello@astrosafe.co")
-                    }
-                    fontSize="16px"
-                  >
-                    Contact sales
-                  </UrsorButton>
-                ) : (
-                  <UrsorButton
-                    dark
-                    hoverOpacity={0.7}
-                    backgroundColor="transparent"
-                    borderColor="rgb(255,255,255)"
-                    fontColor="rgb(255,255,255)"
-                    onClick={() => router.push("/dashboard")}
-                    //onClick={() => ApiController.doIt()}
-                    endIcon={HomeIcon}
-                  >
-                    Go to Dashboard
-                  </UrsorButton>
-                )}
-              </UrsorFadeIn>
+              {!user ? (
+                <UrsorButton
+                  backgroundColor="transparent"
+                  hoverOpacity={0.7}
+                  onClick={() =>
+                    (window.location.href = "mailto:hello@astrosafe.co")
+                  }
+                  fontSize="16px"
+                >
+                  Contact sales
+                </UrsorButton>
+              ) : (
+                <UrsorButton
+                  dark
+                  hoverOpacity={0.7}
+                  backgroundColor="transparent"
+                  borderColor="rgb(255,255,255)"
+                  fontColor="rgb(255,255,255)"
+                  onClick={() => router.push("/dashboard")}
+                  //onClick={() => ApiController.doIt()}
+                  endIcon={HomeIcon}
+                >
+                  Go to Dashboard
+                </UrsorButton>
+              )}
               {user ? (
-                <UrsorFadeIn duration={800}>
-                  <Stack direction="row" spacing="12px">
-                    <ProfileButton />
-                  </Stack>
-                </UrsorFadeIn>
+                <Stack direction="row" spacing="12px">
+                  <ProfileButton />
+                </Stack>
               ) : !props.noSignIn ? (
                 <UrsorButton
                   dark
