@@ -164,25 +164,30 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           sx={{ cursor: "pointer" }}
           position="relative"
           width="100%"
-          onClick={() => setOpen(true)}
+          //onClick={() => setOpen(true)}
+          direction="row"
+          bgcolor={props.white ? "rgb(255,255,255)" : PALETTE.secondary.grey[1]}
+          borderRadius="8px"
         >
           <Stack
             width="100%"
-            sx={{ pointerEvents: "none" }}
+            //sx={{ pointerEvents: "none" }}
             onClick={() => setOpen(true)}
           >
-            <UrsorInputField
-              value={getDisplayValue()}
-              placeholder={props.placeholder}
-              width="100%"
-              leftAlign
-              backgroundColor={props.white ? "rgb(255,255,255)" : undefined}
-            />
+            <Stack sx={{ pointerEvents: "none" }}>
+              <UrsorInputField
+                value={getDisplayValue()}
+                placeholder={props.placeholder}
+                width="100%"
+                leftAlign
+                // backgroundColor={props.white ? "rgb(255,255,255)" : undefined}
+              />
+            </Stack>
           </Stack>
 
           <Stack
-            position="absolute"
-            right={0}
+            //position="absolute"
+            //right={0}
             height="100%"
             width="35px"
             justifyContent="center"
@@ -197,6 +202,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
                 },
               },
             }}
+            onClick={() => (props.selected.length === 0 ? setOpen(true) : null)}
           >
             {props.clearAllCallback && props.selected.length > 0 ? (
               <X

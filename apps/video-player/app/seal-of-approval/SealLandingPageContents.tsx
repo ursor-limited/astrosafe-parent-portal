@@ -69,12 +69,9 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                   title={props.visualLinkCardsSubtler.title}
                   mobile={isMobile}
                 >
-                  <Stack
-                    direction={isMobile ? "column" : "row"}
-                    spacing={isMobile ? "8px" : "12px"}
-                  >
+                  <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
                     <UrsorButton
-                      width="226px"
+                      width={isMobile ? "160px" : "226px"}
                       dark
                       variant="tertiary"
                       onClick={() =>
@@ -84,7 +81,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                       Enrol now
                     </UrsorButton>
                     <UrsorButton
-                      width="226px"
+                      width={isMobile ? "160px" : "226px"}
                       variant="secondary"
                       onClick={() => setExplanationDialogOpen(true)}
                     >
@@ -128,13 +125,10 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
         ]}
       >
         <Stack width="100%" alignItems="center" spacing="32px">
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            spacing={isMobile ? "8px" : "12px"}
-          >
+          <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               variant="tertiary"
               onClick={() =>
@@ -145,7 +139,7 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
             </UrsorButton>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               onClick={scrollIntoView}
             >

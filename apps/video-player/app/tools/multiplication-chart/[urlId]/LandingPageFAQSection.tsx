@@ -122,7 +122,7 @@ export const LandingPageFAQSection = (props: {
         minHeight="462px"
         py="100px"
         spacing={props.mobile ? "12px" : "20px"}
-        px="24px"
+        //px="24px"
         boxSizing="border-box"
       >
         <Stack

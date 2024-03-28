@@ -17,6 +17,9 @@ export async function generateMetadata({
   return {
     title: company?.companyName,
     description: "AstroSafe Seal Member",
+    openGraph: {
+      images: company?.ogimage,
+    },
   };
 }
 
