@@ -13,8 +13,6 @@ import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
-import CreditCardIcon from "@/images/icons/CreditCard.svg";
 import X from "@/images/icons/X.svg";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -477,7 +475,7 @@ export const Header = (props: {
               <MobileMenuButton noSignIn={props.noSignIn} />
             </Stack>
           ) : (
-            <Stack spacing="0px" direction="row">
+            <Stack spacing={"14px"} direction="row">
               {!user ? (
                 <UrsorButton
                   backgroundColor="transparent"
@@ -486,6 +484,7 @@ export const Header = (props: {
                     (window.location.href = "mailto:hello@astrosafe.co")
                   }
                   fontSize="16px"
+                  paddingX="8px"
                 >
                   Contact sales
                 </UrsorButton>
