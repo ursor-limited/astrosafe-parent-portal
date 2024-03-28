@@ -40,7 +40,7 @@ export default function AstroLandingPage(props: {
         alignItems="center"
         width="100%"
         pb={props.mobile ? "20px" : "50px"}
-        pt="30px"
+        pt="10px"
       >
         <Stack
           maxWidth={props.mobile ? undefined : "780px"}
@@ -65,6 +65,8 @@ export default function AstroLandingPage(props: {
                 variant={props.mobile ? "h4" : "h1"}
                 sx={{
                   textAlign: "center",
+                  ...(props.mobile ? { fontSize: "28px" } : {}),
+                  lineHeight: "116%",
                 }}
                 bold
                 htmlTag="h1"
@@ -76,11 +78,13 @@ export default function AstroLandingPage(props: {
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
-            color="rgb(255,255,255)"
+            bold
+            color={PALETTE.secondary.grey[2]}
             sx={{
               textAlign: "center",
               lineHeight: props.mobile ? "22px" : "28px",
               width: props.mobile ? undefined : "660px",
+              paddingX: props.mobile ? "16px" : undefined,
             }}
             htmlTag="h2"
           >

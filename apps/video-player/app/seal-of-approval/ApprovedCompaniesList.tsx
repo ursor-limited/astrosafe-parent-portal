@@ -1,9 +1,10 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import companies from "./companies.json";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import X from "@/images/icons/X.svg";
 import { useEffect, useRef, useState } from "react";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
@@ -272,7 +273,8 @@ const ApprovedCompaniesList = (props: {
               }))}
               selected={selectedCategory ? [selectedCategory] : []}
               callback={(c) => setSelectedCategory(c)}
-              width={props.mobile ? "100%" : "220px"}
+              clearAllCallback={() => setSelectedCategory(null)}
+              width={props.mobile ? "100%" : "234px"}
               fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
@@ -286,7 +288,8 @@ const ApprovedCompaniesList = (props: {
               }))}
               selected={selectedType ? [selectedType] : []}
               callback={(t) => setSelectedType(t)}
-              width={props.mobile ? "100%" : "220px"}
+              clearAllCallback={() => setSelectedType(null)}
+              width={props.mobile ? "100%" : "234px"}
               fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
@@ -300,13 +303,14 @@ const ApprovedCompaniesList = (props: {
               }))}
               selected={selectedAudience ? [selectedAudience] : []}
               callback={(a) => setSelectedAudience(a)}
-              width={props.mobile ? "100%" : "220px"}
+              clearAllCallback={() => setSelectedAudience(null)}
+              width={props.mobile ? "100%" : "234px"}
               fieldWidth={props.mobile ? "100%" : undefined}
               zIndex={999999999}
               leftAlignPopover
             />
           </Captioned>
-          <Stack
+          {/* <Stack
             sx={{
               opacity:
                 selectedAudience || selectedCategory || selectedType ? 1 : 0,
@@ -323,20 +327,25 @@ const ApprovedCompaniesList = (props: {
             alignItems={props.mobile ? "center" : undefined}
           >
             <X height="24px" width="24px" />
-          </Stack>
-        </Stack>
-        <Captioned text="Search" noFlex>
-          <SearchInput
-            value={searchValue}
-            callback={(value: string) => {
-              setSearchValue(value);
-            }}
-            clearCallback={() => setSearchValue("")}
-            height="40px"
-            fullWidth={props.mobile}
-            grey
+          </Stack> */}
+          <Stack
+            height="100%"
+            width="2px"
+            bgcolor={PALETTE.secondary.grey[2]}
           />
-        </Captioned>
+          <Captioned text="Search" noFlex>
+            <SearchInput
+              value={searchValue}
+              callback={(value: string) => {
+                setSearchValue(value);
+              }}
+              clearCallback={() => setSearchValue("")}
+              height="40px"
+              fullWidth
+              grey
+            />
+          </Captioned>
+        </Stack>
       </Stack>
       <Stack spacing="20px">
         <Stack alignItems="center" spacing={props.mobile ? "14px" : "24px"}>

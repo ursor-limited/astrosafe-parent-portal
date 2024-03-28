@@ -57,7 +57,11 @@ const ValueProposition = (props: {
                       "-webkit-background-clip": "text",
                     }}
                   >
-                    <Typography variant="h4" htmlTag="h4">
+                    <Typography
+                      variant="h4"
+                      htmlTag="h4"
+                      sx={{ textAlign: "center" }}
+                    >
                       {item.title}
                     </Typography>
                   </Stack>
@@ -79,11 +83,11 @@ const ValueProposition = (props: {
       ) : (
         props.items
           .map((item, i) => [
-            <Stack key={`content${i}`} spacing="32px" justifyContent="center">
+            <Stack key={`content${i}`} spacing="16px" justifyContent="center">
               {item.title ? (
                 <Stack
                   sx={{
-                    background: item.color,
+                    background: PALETTE.secondary.grey[5],
                     "-webkit-text-fill-color": "transparent",
                     backgroundClip: "text",
                     "-webkit-background-clip": "text",

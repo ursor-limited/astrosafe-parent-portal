@@ -142,6 +142,8 @@ export interface UrsorButtonProps {
   onClick?: () => void;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  fontSize?: string;
+  paddingY?: string;
   backgroundColor?: string;
   borderColor?: string;
   hoverOpacity?: number;
@@ -156,6 +158,8 @@ export interface UrsorButtonProps {
   shadow?: boolean;
   strongShadow?: boolean;
   width?: string;
+  height?: string;
+  paddingX?: string;
   iconSpin?: boolean;
 }
 
@@ -185,7 +189,7 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       borderRadius={`${HEIGHTS[size] / 2}px`}
       boxSizing="border-box"
       direction="row"
-      height={HEIGHTS[size]}
+      height={props.height || HEIGHTS[size]}
       justifyContent="center"
       onClick={props.onClick}
       onMouseDown={() => {
@@ -201,9 +205,17 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
       onMouseUp={() => {
         setPressed(false);
       }}
-      px={`${PADDINGS[size].x}px`}
-      pl={props.startIcon ? `${0.7 * PADDINGS[size].x}px` : undefined}
-      pr={props.endIcon ? `${0.7 * PADDINGS[size].x}px` : undefined}
+      px={props.paddingX || `${PADDINGS[size].x}px`}
+      pl={
+        props.startIcon && !props.paddingX
+          ? `${0.7 * PADDINGS[size].x}px`
+          : undefined
+      }
+      pr={
+        props.endIcon && !props.paddingX
+          ? `${0.7 * PADDINGS[size].x}px`
+          : undefined
+      }
       spacing="12px"
       boxShadow={
         // eslint-disable-next-line no-nested-ternary -- no tyme to fiks dis
@@ -255,6 +267,8 @@ export function UrsorButton(props: UrsorButtonProps): JSX.Element {
         noWrap
         sx={{
           transition: "0.2s",
+          paddingY: props.paddingY,
+          ...(props.fontSize ? { fontSize: props.fontSize } : {}),
         }}
         variant={size}
       >

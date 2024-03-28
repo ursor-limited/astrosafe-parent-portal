@@ -35,7 +35,7 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
       boxSizing="border-box"
       borderRadius="12px"
       p="4px"
-      bgcolor={PALETTE.secondary.purple[1]}
+      bgcolor={PALETTE.secondary.pink[3]}
       boxShadow="0 0 60px rgba(0,0,0,0.07)"
     >
       <Stack position="relative" height="790px">
@@ -85,7 +85,7 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
             >
               <CircularButton
                 icon={ChevronLeft}
-                color={PALETTE.secondary.purple[2]}
+                color={PALETTE.secondary.pink[3]}
                 onClick={() => setPageIndex(pageIndex - 1)}
               />
             </Stack>
@@ -97,7 +97,7 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
             >
               <CircularButton
                 icon={ChevronRight}
-                color={PALETTE.secondary.purple[2]}
+                color={PALETTE.secondary.pink[3]}
                 onClick={() => setPageIndex(pageIndex + 1)}
               />
             </Stack>

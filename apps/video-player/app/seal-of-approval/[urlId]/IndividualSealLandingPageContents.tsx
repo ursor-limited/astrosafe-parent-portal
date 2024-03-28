@@ -115,21 +115,31 @@ export default function IndividualSealLandingPageContents(
                     />
                   </div>
                 ) : (
-                  <Image
-                    src={
-                      props.heroImage
-                        ? `${S3_BASE_URL}/${props.heroImage}`
-                        : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
-                    }
-                    width={1000}
-                    height={580}
-                    alt={`${props.companyName} screenshot`}
-                    style={{
-                      boxShadow: "0 0 30px rgba(0,0,0,0.05)",
-                      borderRadius: "12px",
-                    }}
-                    priority
-                  />
+                  <>
+                    {/* <Stack
+                      position="absolute"
+                      height="100%"
+                      width="580px"
+                      bgcolor="rgba(0,0,0,0.5)"
+                      borderRadius="12px"
+                    /> */}
+                    <Image
+                      src={
+                        props.heroImage
+                          ? `${S3_BASE_URL}/${props.heroImage}`
+                          : "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal/placeholder.png"
+                      }
+                      width={1000}
+                      height={580}
+                      alt={`${props.companyName} screenshot`}
+                      style={{
+                        boxShadow: "0 0 30px rgba(0,0,0,0.05)",
+                        borderRadius: "12px",
+                        filter: "brightness(70%)",
+                      }}
+                      priority
+                    />
+                  </>
                 )
               ) : null}
             </Stack>
@@ -156,12 +166,9 @@ export default function IndividualSealLandingPageContents(
             supertitle="Certification"
             subtitle="The AstroSAFE Seal Program was established by a consortium of ed-tech and kid-tech practitioners, educators and parents to promote the safety and security of all children growing up with the realities of digital childhoods."
           >
-            <Stack
-              direction={isMobile ? "column" : "row"}
-              spacing={isMobile ? "8px" : "12px"}
-            >
+            <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
               <UrsorButton
-                width="226px"
+                width={isMobile ? "160px" : "226px"}
                 dark
                 variant="tertiary"
                 onClick={() =>
@@ -171,9 +178,8 @@ export default function IndividualSealLandingPageContents(
                 Enrol now
               </UrsorButton>
               <UrsorButton
-                strongShadow
-                width="226px"
-                dark
+                variant="secondary"
+                width={isMobile ? "160px" : "226px"}
                 onClick={() => setExplanationDialogOpen(true)}
               >
                 Learn more
@@ -184,7 +190,7 @@ export default function IndividualSealLandingPageContents(
               cards={[
                 {
                   title: "AstroSafe Certified",
-                  text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                  text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is beneficial for kids.",
                   imageUrl:
                     "https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png",
                   backgroundColor: "#E2E9F8",
@@ -202,13 +208,10 @@ export default function IndividualSealLandingPageContents(
         ]}
       >
         <Stack width="100%" alignItems="center" spacing="32px">
-          <Stack
-            direction={isMobile ? "column" : "row"}
-            spacing={isMobile ? "8px" : "12px"}
-          >
+          <Stack direction="row" spacing={isMobile ? "8px" : "12px"}>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               variant="tertiary"
               onClick={() =>
@@ -219,7 +222,7 @@ export default function IndividualSealLandingPageContents(
             </UrsorButton>
             <UrsorButton
               size={isMobile ? "medium" : "large"}
-              width="226px"
+              width={isMobile ? "160px" : "226px"}
               dark
               onClick={() => router.push("/seal-of-approval")}
             >

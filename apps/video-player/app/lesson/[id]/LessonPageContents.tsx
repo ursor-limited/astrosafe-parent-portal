@@ -21,11 +21,8 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
-import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
-import { useLocalStorage } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
-import { IAstroCanvasElement } from "@/app/editor/Canvas";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import PlaylistVideoCard from "./PlaylistVideoCard";
 import LinkCard from "@/app/components/LinkCard";
@@ -36,28 +33,11 @@ import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import { ILesson } from "./page";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
+import UpgradeDialog from "@/app/components/UpgradeDialog";
+import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
-
-// export interface IPlaylist {
-//   id: string;
-//   title: string;
-//   description?: string;
-//   contents: {
-//     type: AstroLessonContent;
-//     contentId: string;
-//   }[];
-//   createdAt: string;
-//   creatorId?: string;
-// }
-
-// as {
-//   lesson: ILesson;
-//   actualContents: {
-//     videos: IVideo[];
-//     worksheets: IWorksheet[];
-//     links: ILink[];
-//   };
 
 export default function LessonPageContents(props: { lessonId: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
@@ -177,6 +157,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
     lesson: () => setLessonDialogOpen(true),
   };
 
+  const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
+    useState<boolean>(false);
+
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  const outOfCreations = useOutOfCreations();
+
   return (
     <>
       <Stack p="40px" overflow="scroll">
@@ -186,7 +173,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
           createdAt={lesson?.createdAt ?? undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
-              <AddContentButton callback={(type) => contentCallbacks[type]()} />
+              <AddContentButton
+                callback={(type) =>
+                  outOfCreations
+                    ? setNoCreationsLeftDialogOpen(true)
+                    : contentCallbacks[type]()
+                }
+              />
               {userDetails?.user?.id &&
               userDetails?.user?.id === lesson?.creatorId ? (
                 <Stack
@@ -295,6 +288,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
+      />
+      <NoCreationsLeftDialog
+        open={noCreationsLeftDialogOpen}
+        closeCallback={() => setNoCreationsLeftDialogOpen(false)}
+        callback={() => setUpgradeDialogOpen(true)}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
       />
     </>
   );

@@ -15,7 +15,7 @@ export interface IVisualLinkCard {
   imageUrl: string;
 }
 
-const VisualLinkCard = (props: IVisualLinkCard) => {
+const VisualLinkCard = (props: IVisualLinkCard & { mobile: boolean }) => {
   const router = useRouter();
   return (
     <Stack
@@ -32,7 +32,7 @@ const VisualLinkCard = (props: IVisualLinkCard) => {
       <div
         style={{
           width: "100%",
-          height: isMobile ? "230px" : "291px",
+          height: props.mobile ? "230px" : "291px",
           position: "relative",
           borderRadius: "12px",
           overflow: "hidden",
@@ -90,8 +90,10 @@ export const VisualLinkCards = (props: {
     <Stack spacing={SPACING}>
       {_.chunk(props.cards, props.mobile ? 1 : 2).map((pair, i) => (
         <Stack spacing={SPACING} key={i} direction="row">
-          <VisualLinkCard {...pair[0]} />
-          {pair[1] ? <VisualLinkCard {...pair[1]} /> : null}
+          <VisualLinkCard {...pair[0]} mobile={props.mobile} />
+          {pair[1] ? (
+            <VisualLinkCard {...pair[1]} mobile={props.mobile} />
+          ) : null}
         </Stack>
       ))}
     </Stack>

@@ -167,22 +167,24 @@ export const ApprovedCompanyCard = (
           </Stack>
         ) : null}
       </Stack>
-      <Stack
-        pl="16px"
-        sx={{
-          transform: "rotate(-4deg)",
-        }}
-        position="absolute"
-        bottom="0px"
-        left="-10px"
-      >
-        <Image
-          src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
-          alt="Astro background"
-          height={40}
-          width={67}
-        />
-      </Stack>
+      {props.mobile ? (
+        <Stack
+          pl="16px"
+          sx={{
+            transform: "rotate(-4deg)",
+          }}
+          position="absolute"
+          bottom="0px"
+          left="-10px"
+        >
+          <Image
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/approved.png"
+            alt="Astro background"
+            height={40}
+            width={67}
+          />
+        </Stack>
+      ) : null}
     </Stack>
   );
 };
