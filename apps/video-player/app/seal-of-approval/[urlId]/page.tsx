@@ -15,10 +15,12 @@ export async function generateMetadata({
     (c) => c.internalpath === params.urlId
   );
   return {
-    title: company?.companyName,
-    description: "AstroSafe Seal Member",
+    title: `${company?.companyName} - AstroSafe Seal Member`,
+    description: company?.description,
     openGraph: {
-      images: company?.ogimage,
+      images: company?.heroImage,
+      title: `${company?.companyName} - AstroSafe Seal Member`,
+      description: company?.description,
     },
   };
 }
