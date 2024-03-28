@@ -49,10 +49,10 @@ const ValueProposition = (props: {
                   alt="visual link card image"
                 />
               </div>
-              <Stack key={i} height="200px" spacing="14px" alignItems="center">
+              <Stack key={i} height="200px" spacing="7px" alignItems="center">
                 <Stack
                   sx={{
-                    background: item.color,
+                    background: PALETTE.secondary.grey[5],
                     "-webkit-text-fill-color": "transparent",
                     backgroundClip: "text",
                     "-webkit-background-clip": "text",

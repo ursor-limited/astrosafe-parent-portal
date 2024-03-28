@@ -84,9 +84,8 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                       Enrol now
                     </UrsorButton>
                     <UrsorButton
-                      strongShadow
                       width="226px"
-                      dark
+                      variant="secondary"
                       onClick={() => setExplanationDialogOpen(true)}
                     >
                       Learn more

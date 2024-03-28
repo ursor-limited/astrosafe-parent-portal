@@ -76,7 +76,8 @@ export default function AstroLandingPage(props: {
           </Stack>
           <Typography
             variant={props.mobile ? "normal" : "large"}
-            color="rgb(255,255,255)"
+            bold
+            color={PALETTE.secondary.grey[2]}
             sx={{
               textAlign: "center",
               lineHeight: props.mobile ? "22px" : "28px",
