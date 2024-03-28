@@ -62,7 +62,7 @@ export const ApprovedCompanyCard = (
             paddingRight: "8px",
           }}
         >
-          {props.ogimage ? (
+          {props.ogimage && !props.ogimage.includes("placeholder") ? (
             <Image
               src={`${S3_BASE_URL}/thumbnails/${props.ogimage}`}
               alt="Approved company"
