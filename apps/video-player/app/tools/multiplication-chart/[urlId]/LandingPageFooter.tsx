@@ -155,7 +155,7 @@ export const LandingPageFooter = (props: { mobile?: boolean }) => {
         direction={props.mobile ? "column" : "row"}
         height={props.mobile ? undefined : "236px"}
         width="100%"
-        maxWidth="calc(1320px + 2 * 24px)"
+        maxWidth={props.mobile ? undefined : "calc(1320px + 2 * 24px)"}
         px="24px"
         py="35px"
         justifyContent="space-between"

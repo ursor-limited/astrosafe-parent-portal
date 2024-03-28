@@ -123,6 +123,7 @@ export const LandingPageFAQSection = (props: {
         py="100px"
         spacing={props.mobile ? "12px" : "20px"}
         px="24px"
+        boxSizing="border-box"
       >
         <Stack
           alignItems="center"

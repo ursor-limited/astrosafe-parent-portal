@@ -33,6 +33,7 @@ const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 const VideoCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  creationCallback?: (videoId: string) => void;
 }) => {
   const router = useRouter();
   const [url, setUrl] = useState<string>("");
@@ -133,7 +134,10 @@ const VideoCreationDialog = (props: {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
       setFreeVideoIds([...freeVideoIds, v.id]);
-      router.push(`/video/${v.id}`);
+      props.creationCallback
+        ? props.creationCallback(v.id)
+        : router.push(`/video/${v.id}`);
+      props.closeCallback();
     });
   };
 

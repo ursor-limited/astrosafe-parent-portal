@@ -102,7 +102,7 @@ const LinkCard = (props: {
         boxSizing="border-box"
         flex={1}
         spacing="5px"
-        onClick={() => router.push(props.url)}
+        onClick={() => router.push(`https://${getPrefixRemovedUrl(props.url)}`)}
         sx={{
           cursor: "pointer",
           transition: "0.2s",

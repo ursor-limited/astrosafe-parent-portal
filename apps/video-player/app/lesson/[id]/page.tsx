@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from "react";
-import WorksheetPageContents, { IPlaylist } from "./PlaylistPageContents";
-import ApiController from "@/app/api";
+import ApiController, { IVideo } from "@/app/api";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import PlaylistPageContents from "./PlaylistPageContents";
+import LessonPageContents from "./LessonPageContents";
+import { AstroContent } from "@/app/dashboard/DashboardPageContents";
+import { ILink } from "@/app/dashboard/LinkDialog";
 
-const DUMMY_CONTENTS: IPlaylist["contents"] = [
+export interface ILesson {
+  id: string;
+  creatorId?: string;
+  title: string;
+  description?: string;
+  contents: {
+    type: AstroContent;
+    contentId: string;
+  }[];
+  createdAt: string;
+}
+
+const DUMMY_CONTENTS: ILesson["contents"] = [
   {
     type: "video",
     contentId: "65f5f42bd8210303bcf22dea",
@@ -35,39 +48,26 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
+  const details = (await ApiController.getLesson(params.id)) as ILesson;
   return {
     title: details.title,
     description: "Create math worksheets with Astro Worksheet Generator.",
   };
 }
 
-async function PlaylistPage({ params }: { params: { id: string } }) {
-  const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
+async function LessonPage({ params }: { params: { id: string } }) {
   //const { width } = useWindowSize();
   // const [isMobile, setIsMobile] = useState<boolean>(false);
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
   //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
-  return details ? (
+  return (
     <AuthWrapper>
       <UserProvider>
-        {!isMobile ? (
-          <PlaylistPageContents
-            id="booo"
-            title="BOO"
-            contents={DUMMY_CONTENTS}
-            createdAt="2024-03-28"
-            creatorId="BOO"
-          />
-        ) : (
-          <></>
-        )}
+        {!isMobile ? <LessonPageContents lessonId={params.id} /> : <></>}
       </UserProvider>
     </AuthWrapper>
-  ) : (
-    <></>
   );
 }
 
-export default PlaylistPage;
+export default LessonPage;

@@ -28,10 +28,14 @@
         "supertitle": "About",
         "cards": [
             {
+                "title": "Awarding the best in class",
+                "color": "#3C3C43",
                 "text": "The AstroSafe Seal Program offers an independent, safety and quality verification service and seal-of-approval program tailored for websites and technologies catering to children. This includes online gaming platforms, educational portals, virtual environments, mobile applications, tablet devices, interactive toys, and similar digital services.",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal_program_image_1.png"
             },
             {
+                "title": "Committed to child safety",
+                "color": "#3C3C43",
                 "text": "The products and services that meet our stringent safety and privacy criteria benefit from inclusion in a select list of AstroSafe certified offerings, will be granted one of our esteemed AstroSafe seals for showcasing on their respective platforms, and will be included as safe and discoverable links inside of our AstroSafe browser.",
                 "imageUrl": "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal_program_image_2.png"
             }
