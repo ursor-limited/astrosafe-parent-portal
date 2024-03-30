@@ -21,6 +21,8 @@ import mixpanel from "mixpanel-browser";
 import InvalidUrlView from "./InvalidUrlView";
 import SignupPromptDialog from "@/app/dashboard/SignupPromptDialog";
 import { useUserContext } from "@/app/components/UserContext";
+import { isMobile } from "react-device-detect";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const Player = dynamic(
   () => import("@/app/components/player"),
@@ -89,8 +91,8 @@ function CreationPageContents(props: { details: IVideo }) {
   //   props.details?.description && setDescription(props.details.description);
   // }, [props.details?.description]);
 
-  const [showForbiddenVideoView, setShowForbiddenVideoView] =
-    useState<boolean>(false);
+  // const [showForbiddenVideoView, setShowForbiddenVideoView] =
+  //   useState<boolean>(false);
 
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
@@ -131,8 +133,8 @@ function CreationPageContents(props: { details: IVideo }) {
       .then((details) => {
         if (!details.html) {
           setShowInvalidUrlView(true);
-        } else if (details.error?.includes("403")) {
-          setShowForbiddenVideoView(true);
+          // } else if (details.error?.includes("403")) {
+          //   setShowForbiddenVideoView(true);
         } else {
           setUrl(deNoCookiefy(extractUrl(details.html)));
           setTitle(details.title);
@@ -247,7 +249,10 @@ function CreationPageContents(props: { details: IVideo }) {
   return (
     <Stack width="100vw" height="100vh" overflow="scroll">
       {!fullscreen ? (
-        <Header signinCallback={() => setLandInDashboardAfterCreation(true)} />
+        <Header
+          signinCallback={() => setLandInDashboardAfterCreation(true)}
+          mobile={isMobile}
+        />
       ) : null}
       {props.details && provider && url ? (
         <Stack
@@ -674,10 +679,15 @@ function CreationPageContents(props: { details: IVideo }) {
           ) : null}
         </Stack>
       ) : showInvalidUrlView ? (
-        <InvalidUrlView mobile={mobile} />
-      ) : showForbiddenVideoView ? (
-        <ForbiddenVideoView />
-      ) : null}
+        <UrsorFadeIn delay={3000} duration={1000}>
+          <InvalidUrlView mobile={mobile} />
+        </UrsorFadeIn>
+      ) : // : showForbiddenVideoView ? (
+      //   <UrsorFadeIn delay={3000} duration={1000}>
+      //     <ForbiddenVideoView />
+      //   </UrsorFadeIn>
+      // )
+      null}
       {/* {!fullscreen ? (
         <Footer fontScale={Math.min(playerWidth, VIDEO_WIDTH) / VIDEO_WIDTH} />
       ) : null} */}
