@@ -172,7 +172,7 @@ export default function IndividualSealLandingPageContents(
                 dark
                 variant="tertiary"
                 onClick={() =>
-                  (window.location.href = "mailto:hello@astrosafe.co")
+                  (window.location.href = "https://form.typeform.com/to/mVezziat")
                 }
               >
                 Enrol now
@@ -215,7 +215,7 @@ export default function IndividualSealLandingPageContents(
               dark
               variant="tertiary"
               onClick={() =>
-                (window.location.href = "mailto:hello@astrosafe.co")
+                (window.location.href = "https://form.typeform.com/to/mVezziat")
               }
             >
               Enrol now
