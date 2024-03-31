@@ -172,7 +172,7 @@ export default function IndividualSealLandingPageContents(
                 dark
                 variant="tertiary"
                 onClick={() =>
-                  (window.location.href = "mailto:hello@astrosafe.co")
+                  (window.location.href = "https://form.typeform.com/to/mVezziat")
                 }
               >
                 Enrol now
@@ -197,7 +197,7 @@ export default function IndividualSealLandingPageContents(
                 },
                 {
                   title: "AstroSafe Certified+",
-                  text: "Awarded to products we believe to meet minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
+                  text: "Awarded to products we believe meet the minimum standards of safety & privacy, and the product is one that is beneficial for kids.",
                   imageUrl:
                     "https://ursorassets.s3.eu-west-1.amazonaws.com/approved2.png",
                   backgroundColor: "#DFDAFA",
@@ -215,7 +215,7 @@ export default function IndividualSealLandingPageContents(
               dark
               variant="tertiary"
               onClick={() =>
-                (window.location.href = "mailto:hello@astrosafe.co")
+                (window.location.href = "https://form.typeform.com/to/mVezziat")
               }
             >
               Enrol now
