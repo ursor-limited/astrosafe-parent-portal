@@ -170,6 +170,7 @@ const VideoCreationDialog = (props: {
         noPadding
         dynamicHeight
         paddingTop="52px"
+        paddingX={isMobile ? undefined : "32px"}
       >
         <Stack
           flex={1}
