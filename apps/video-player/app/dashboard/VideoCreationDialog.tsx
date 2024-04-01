@@ -22,6 +22,7 @@ import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
+import TimeRange from "./TimeRange";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -164,29 +165,30 @@ const VideoCreationDialog = (props: {
         //   disabled: !url,
         // }}
         onCloseCallback={props.closeCallback}
-        width="1000px"
-        maxWidth="1000px"
-        noPadding={isMobile}
+        width="926px"
+        maxWidth="926px"
+        noPadding
         dynamicHeight
+        paddingTop="52px"
       >
         <Stack
           flex={1}
           direction={isMobile ? "column" : "row"}
           spacing="40px"
-          width={isMobile ? "100%" : "95%"}
+          // width={isMobile ? "100%" : "95%"}
           overflow="hidden"
-          px="16px"
-          py="20px"
+          px={isMobile ? "16px" : "40px"}
+          py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
-          <Stack spacing="20px" flex={1}>
-            <Captioned text="URL">
+          <Stack spacing="20px" flex={1} width="358px">
+            <Captioned text="Video URL">
               <UrsorInputField
                 value={originalUrl}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setOriginalUrl(event.target.value)
                 }
-                placeholder="URL"
+                placeholder="Youtube or Vimeo"
                 width="100%"
                 leftAlign
                 boldValue
@@ -217,107 +219,13 @@ const VideoCreationDialog = (props: {
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setDescription(event.target.value)
                 }
-                placeholder="Description"
+                placeholder="Optional"
                 width="100%"
+                height="179px"
                 boldValue
               />
             </Captioned>
-            <Captioned text="Start and end time">
-              <Stack
-                bgcolor={PALETTE.secondary.grey[1]}
-                borderRadius="8px"
-                height="40px"
-                justifyContent="center"
-                px="10px"
-              >
-                <Stack
-                  direction="row"
-                  // spacing={mobile ? "20px" : "44px"}
-                  spacing={"20px"}
-                  justifyContent="center"
-                  width="100%"
-                  sx={{
-                    pointerEvents: !originalUrl ? "none" : undefined,
-                    opacity: originalUrl ? 1 : 0.5,
-                    ".MuiSlider-root": {
-                      color: "transparent !important",
-                    },
-                    ".MuiSlider-rail": {
-                      opacity: 0.4,
-                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                    },
-                    ".MuiSlider-track": {
-                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                    },
-                    ".MuiSlider-thumb": {
-                      "&:nth-of-type(3)": {
-                        background: "#F279C5",
-                      },
-                      "&:nth-of-type(4)": {
-                        background: "#FD9B41",
-                      },
-                    },
-                  }}
-                >
-                  <DurationLabel
-                    value={range?.[0] ?? 0}
-                    incrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [Math.min(duration, range[0] + 1), range[1]]
-                          : undefined
-                      )
-                    }
-                    decrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [Math.max(0, range[0] - 1), range[1]]
-                          : undefined
-                      )
-                    }
-                  />
-                  <Slider
-                    min={0}
-                    max={duration}
-                    valueLabelDisplay="off"
-                    getAriaLabel={() => "Temperature range"}
-                    value={range}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                      setRange(newValue as number[]);
-                    }}
-                  />
-                  <DurationLabel
-                    value={range?.[1] ?? 0}
-                    incrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [range[0], Math.min(duration, range[1] + 1)]
-                          : undefined
-                      )
-                    }
-                    decrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [range[0], Math.max(0, range[1] - 1)]
-                          : undefined
-                      )
-                    }
-                  />
-                </Stack>
-              </Stack>
-            </Captioned>
+            {isMobile ? <TimeRange setRange={setRange} /> : null}
           </Stack>
           {!isMobile ? (
             <Stack
@@ -342,14 +250,15 @@ const VideoCreationDialog = (props: {
                   noBackdrop
                 />
               ) : null}
-              <Typography maxLines={2} bold>
+              {/* <Typography maxLines={2} bold>
                 {title}
               </Typography>
               <Stack flex={1} overflow="hidden">
                 <Typography variant="small" maxLines={2}>
                   {description}
                 </Typography>
-              </Stack>
+              </Stack> */}
+              <TimeRange setRange={setRange} />
               <UrsorButton
                 onClick={() => {
                   submit();
