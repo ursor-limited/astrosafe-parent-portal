@@ -92,7 +92,7 @@ const VideoCreationDialog = (props: {
   }, [url]);
 
   const [duration, setDuration] = useState<number | undefined>(10);
-  const [range, setRange] = useState<number[] | undefined>(undefined);
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
   useEffect(() => {
     duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
@@ -259,7 +259,12 @@ const VideoCreationDialog = (props: {
                   {description}
                 </Typography>
               </Stack> */}
-              <TimeRange setRange={setRange} />
+              <TimeRange
+                range={range}
+                duration={duration}
+                setRange={setRange}
+                originalUrl={originalUrl}
+              />
               <UrsorButton
                 onClick={() => {
                   submit();
