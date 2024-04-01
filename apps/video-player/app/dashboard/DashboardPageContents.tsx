@@ -628,6 +628,29 @@ export default function DashboardPageContents() {
 
   const outOfCreations = useOutOfCreations();
 
+  // useEffect(() => {
+  //   !userDetails.user?.subscribed &&
+  //     userDetails.user?.freeTrialStart &&
+  //     -dayjs().diff(userDetails.user.freeTrialStart);
+  // }, [userDetails.user]);
+
+  useEffect(() => {
+    if (
+      !userDetails.user?.subscribed &&
+      userDetails.user?.freeTrialStart &&
+      (!userDetails.user.periodCreationsClearedAt ||
+        dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
+    ) {
+      // const dayOfMonthToCheckOn =
+      //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
+      // (!userDetails.user.periodCreationsClearedAt ||
+      //   dayjs().date() >= dayOfMonthToCheckOn) &&
+      ApiController.clearPediodCreations(userDetails.user.id).then(
+        userDetails.refresh
+      );
+    }
+  }, [userDetails.user]);
+
   return (
     <>
       <PageLayout
@@ -905,7 +928,9 @@ export default function DashboardPageContents() {
       />
       {!userDetails.user?.subscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
-        <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
+        <UrsorFadeIn duration={1000}>
+          <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
+        </UrsorFadeIn>
       ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}

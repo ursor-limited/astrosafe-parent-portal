@@ -68,6 +68,11 @@ module.exports = withSvgr({
         permanent: true,
       },
       {
+        source: "/safetube",
+        destination: "/tools/safetube",
+        permanent: true,
+      },
+      {
         source: "/v",
         destination: "/tools/safetube",
         permanent: true,
