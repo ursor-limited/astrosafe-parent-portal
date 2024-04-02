@@ -548,6 +548,10 @@ export default function DashboardPageContents() {
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
 
+  const [lessonEditingDialogId, setLessonEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
     []
@@ -892,6 +896,14 @@ export default function DashboardPageContents() {
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
       />
+      {lessonEditingDialogId ? (
+        <LessonCreationDialog
+          open={lessonCreationDialogOpen}
+          closeCallback={() => setLessonEditingDialogId(undefined)}
+          updateCallback={loadLessons}
+          lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,

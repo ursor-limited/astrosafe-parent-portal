@@ -287,9 +287,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
       <LessonCreationDialog
         open={editingDialogOpen}
         closeCallback={() => setEditingDialogOpen(false)}
-        lessonId={lesson?.id}
-        title={lesson?.title}
-        description={lesson?.description}
+        lesson={lesson}
         updateCallback={reloadLessonDetails}
       />
       <DeletionDialog

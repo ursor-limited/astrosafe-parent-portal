@@ -4,8 +4,10 @@ import { ILesson } from "../lesson/[id]/page";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import UrsorActionButton from "./UrsorActionButton";
 
 export const spin = keyframes`
   from {
@@ -17,7 +19,11 @@ export const spin = keyframes`
 `;
 
 const LessonCard = (
-  props: ILesson & { imageUrls: string[]; clickCallback: () => void }
+  props: ILesson & {
+    imageUrls: string[];
+    clickCallback: () => void;
+    editingCallback: () => void;
+  }
 ) => {
   return (
     <>
@@ -34,6 +40,19 @@ const LessonCard = (
         position="relative"
         pb="6px"
       >
+        <Stack position="absolute" top="11px" right="11px" zIndex={2}>
+          <UrsorActionButton
+            size="32px"
+            iconSize="16px"
+            actions={[
+              {
+                text: "Edit",
+                kallback: props.editingCallback,
+                icon: PencilIcon,
+              },
+            ]}
+          />
+        </Stack>
         <Stack
           flex={1}
           onClick={props.clickCallback}

@@ -9,23 +9,22 @@ import { useRouter } from "next/navigation";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
+import { ILesson } from "../lesson/[id]/page";
 
 const LessonCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  lessonId?: string;
-  title?: string;
-  description?: string;
+  lesson?: ILesson;
   updateCallback?: () => void;
 }) => {
   const [title, setTitle] = useState<string>("");
   useEffect(() => {
-    props.title && setTitle(props.title);
-  }, [props.title]);
+    props.lesson?.title && setTitle(props.lesson.title);
+  }, [props.lesson?.title]);
   const [description, setDescription] = useState<string>("");
   useEffect(() => {
-    props.description && setDescription(props.description);
-  }, [props.description]);
+    props.lesson?.description && setDescription(props.lesson.description);
+  }, [props.lesson?.description]);
   const router = useRouter();
   const userId = useUserContext().user?.id;
   const notificationCtx = useContext(NotificationContext);
@@ -36,8 +35,8 @@ const LessonCreationDialog = (props: {
       creatorId: userId,
     }).then((lesson) => router.push(`/lesson/${lesson.id}`));
   const submitUpdate = () =>
-    props.lessonId &&
-    ApiController.updateLesson(props.lessonId, {
+    props.lesson?.id &&
+    ApiController.updateLesson(props.lesson.id, {
       title,
       description,
     })
@@ -46,15 +45,15 @@ const LessonCreationDialog = (props: {
       .then(() => notificationCtx.success("Lesson updated."));
   return (
     <UrsorDialog
-      supertitle={props.title ? "Edit your Lesson" : "Name your Lesson"}
+      supertitle={props.lesson?.title ? "Edit your Lesson" : "Name your Lesson"}
       open={props.open}
       onCloseCallback={props.closeCallback}
       dynamicHeight
       width="488px"
       noPadding={isMobile}
       button={{
-        text: props.title ? "Update" : "Create",
-        callback: () => (props.lessonId ? submitUpdate() : submitCreation()),
+        text: props.lesson?.title ? "Update" : "Create",
+        callback: () => (props.lesson?.id ? submitUpdate() : submitCreation()),
         icon: PencilIcon,
       }}
     >
