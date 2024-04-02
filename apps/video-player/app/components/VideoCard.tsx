@@ -5,11 +5,12 @@ import { IVideo } from "../api";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
 import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
+import UrsorActionButton from "./UrsorActionButton";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -18,7 +19,7 @@ const PLACEHOLDER_THUMBNAIL =
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const VideoCard = (props: IVideo) => {
+const VideoCard = (props: IVideo & { editingCallback: () => void }) => {
   const router = useRouter();
   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
     undefined
@@ -50,6 +51,19 @@ const VideoCard = (props: IVideo) => {
       boxShadow="0 0 12px rgba(0,0,0,0.06)"
       pb="12px"
     >
+      <Stack position="absolute" top="16px" right="16px" zIndex={2}>
+        <UrsorActionButton
+          size="32px"
+          iconSize="16px"
+          actions={[
+            {
+              text: "Edit",
+              kallback: props.editingCallback,
+              icon: PencilIcon,
+            },
+          ]}
+        />
+      </Stack>
       <Stack
         flex={1}
         spacing="8px"
@@ -73,7 +87,7 @@ const VideoCard = (props: IVideo) => {
           bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
           position="relative"
         >
-          <Stack
+          {/* <Stack
             position="absolute"
             borderRadius="100%"
             width="32px"
@@ -85,8 +99,8 @@ const VideoCard = (props: IVideo) => {
             right="12px"
             zIndex={2}
           >
-            <ArrowUpRight width="20px" height="20px" />
-          </Stack>
+            <MoreIcon width="20px" height="20px" />
+          </Stack> */}
           {!props.thumbnailUrl ? (
             <Stack flex={1} justifyContent="center" alignItems="center">
               <Image

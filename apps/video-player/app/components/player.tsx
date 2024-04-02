@@ -188,6 +188,7 @@ const Player = (props: {
     if (!url || !document) return;
     removePreviousScript();
     var tag = document.createElement("script");
+    //tag.id = url;
     tag.src = url?.includes("youtube")
       ? "https://www.youtube.com/iframe_api"
       : "https://player.vimeo.com/api/player.js";

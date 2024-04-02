@@ -651,6 +651,10 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user]);
 
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   return (
     <>
       <PageLayout
@@ -842,7 +846,12 @@ export default function DashboardPageContents() {
                         duration={900}
                       >
                         {item.type === "video" ? (
-                          <VideoCard {...(item.details as IVideo)} />
+                          <VideoCard
+                            {...(item.details as IVideo)}
+                            editingCallback={() =>
+                              setVideoEditingDialogId(item.details.id)
+                            }
+                          />
                         ) : item.type === "worksheet" ? (
                           <WorksheetCard {...(item.details as IWorksheet)} />
                         ) : item.type === "lesson" ? (
@@ -867,6 +876,14 @@ export default function DashboardPageContents() {
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={!!videoEditingDialogId}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadVideos}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
