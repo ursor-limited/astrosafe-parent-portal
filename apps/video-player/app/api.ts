@@ -89,6 +89,11 @@ class ApiController {
   static async createLesson(details: any) {
     return post("lesson", details).then((response: any) => response.json());
   }
+  static async updateLesson(id: string, details: any) {
+    return patch(`lesson/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }

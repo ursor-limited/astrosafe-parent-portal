@@ -15,6 +15,8 @@ export interface IUrsorActionButtonProps {
   light?: boolean;
   background?: string;
   fontColor?: string;
+  //shadow?: boolean;
+  border?: boolean;
   buttonClickCallback?: () => void;
 }
 
@@ -49,10 +51,20 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           },
         }}
         borderRadius="100%"
+        border={
+          props.border
+            ? `2px solid ${
+                props.fontColor ||
+                (props.light ? PALETTE.font.light : PALETTE.font.dark)
+              }`
+            : undefined
+        }
+        boxSizing="border-box"
         onClick={() => {
           setOpen(true);
           props.buttonClickCallback?.();
         }}
+        //boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.05)" : undefined}
       >
         <MoreIcon
           height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
