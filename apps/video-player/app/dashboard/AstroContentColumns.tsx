@@ -23,6 +23,7 @@ export interface IVideo {
   startTime?: number;
   endTime?: number;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface IAstroContentColumnsProps {

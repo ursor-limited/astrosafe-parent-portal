@@ -100,7 +100,7 @@ export const GRID_SPACING = "20px";
 
 export type AstroContent = "video" | "worksheet" | "lesson" | "link";
 
-export type AstroContentSort = "abc" | "createdAt";
+export type AstroContentSort = "abc" | "updatedAt";
 
 export const getTrialDaysLeft = (freeTrialStart?: string) =>
   TRIAL_DAYS - dayjs().diff(freeTrialStart, "days");
@@ -476,7 +476,7 @@ export default function DashboardPageContents() {
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
-    useState<AstroContentSort>("createdAt");
+    useState<AstroContentSort>("updatedAt");
 
   useEffect(() => {
     const videoDetails = videos
@@ -523,10 +523,10 @@ export default function DashboardPageContents() {
           : lessonDetails),
       ],
       (c) =>
-        selectedSort === "createdAt"
-          ? new Date(c.details.createdAt)
+        selectedSort === "updatedAt"
+          ? new Date(c.details.updatedAt)
           : c.details.title.toLowerCase(),
-      selectedSort === "createdAt" ? "desc" : "asc"
+      selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
@@ -813,10 +813,10 @@ export default function DashboardPageContents() {
               <SortButton
                 selected={selectedSort}
                 callback={(id) => setSelectedSort(id)}
-                types={["abc", "createdAt"]}
+                types={["abc", "updatedAt"]}
                 displayNames={{
                   abc: "Alphabetical",
-                  createdAt: "Most recent",
+                  updatedAt: "Most recent",
                 }}
                 width="204px"
               />
@@ -865,6 +865,9 @@ export default function DashboardPageContents() {
                             clickCallback={() =>
                               router.push(`/lesson/${item.details.id}`)
                             }
+                            editingCallback={() =>
+                              setLessonEditingDialogId(item.details.id)
+                            }
                           />
                         ) : null}
                       </UrsorFadeIn>
@@ -898,7 +901,7 @@ export default function DashboardPageContents() {
       />
       {lessonEditingDialogId ? (
         <LessonCreationDialog
-          open={lessonCreationDialogOpen}
+          open={!!lessonEditingDialogId}
           closeCallback={() => setLessonEditingDialogId(undefined)}
           updateCallback={loadLessons}
           lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
