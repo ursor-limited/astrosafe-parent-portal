@@ -232,6 +232,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       key={image.id}
                       {...image}
                       editingCallback={() => setImageEditingDialogId(image.id)}
+                      deletionCallback={loadLesson}
                     />
                   ) : null;
                 } else if (c.type === "worksheet") {

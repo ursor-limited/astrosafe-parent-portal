@@ -215,7 +215,7 @@ class ApiController {
   static async searchImages(query: string) {
     return post("unsplash/search", {
       query,
-      count: 9,
+      count: 10,
     }).then((response: any) => response.json());
   }
 

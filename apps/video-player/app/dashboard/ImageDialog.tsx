@@ -128,7 +128,7 @@ export default function ImageDialog(props: IImageDialogProps) {
       ApiController.searchImages(searchValue)
         .then((images) =>
           setSearchResultImageUrls(
-            images?.map((image: any) => image.urls?.small)
+            images?.map((image: any) => image.urls?.regular)
           )
         )
         .then(() => setLoading(false));
