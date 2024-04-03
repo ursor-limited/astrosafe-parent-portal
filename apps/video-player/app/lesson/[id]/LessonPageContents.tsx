@@ -113,6 +113,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
@@ -220,7 +224,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 if (c.type === "video") {
                   const video = videos?.find((v) => v.id === c.contentId);
                   return video ? (
-                    <PlaylistVideoCard key={video.id} {...video} />
+                    <PlaylistVideoCard
+                      key={video.id}
+                      {...video}
+                      editingCallback={() => setVideoEditingDialogId(video.id)}
+                      deletionCallback={loadLesson}
+                    />
                   ) : null;
                 } else if (c.type === "link") {
                   const link = links?.find((v) => v.id === c.contentId);
@@ -277,6 +286,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={true}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
         closeCallback={() => setWorksheetDialogOpen(false)}

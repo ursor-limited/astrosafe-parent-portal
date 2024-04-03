@@ -14,6 +14,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
 import DeletionDialog from "./DeletionDialog";
 import NotificationContext from "./NotificationContext";
+import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -151,7 +152,7 @@ const VideoCard = (
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
+              sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
             >
               <Typography variant="small">
                 {getFormattedDate(props.createdAt)}
