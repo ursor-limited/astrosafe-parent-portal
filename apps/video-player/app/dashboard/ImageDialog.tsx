@@ -44,9 +44,7 @@ export interface IImage {
 
 export interface IImageDialogProps {
   open: boolean;
-  id?: string;
-  url?: string;
-  title?: string;
+  image?: IImage;
   lessonId?: string;
   updateCallback?: () => void;
   closeCallback: () => void;
@@ -59,15 +57,20 @@ export default function ImageDialog(props: IImageDialogProps) {
   const [description, setDescription] = useState<string>("");
 
   useEffect(() => {
-    props.title && setTitle(props.title);
-  }, [props.title]);
+    props.image?.title && setTitle(props.image?.title);
+  }, [props.image?.title]);
+
+  useEffect(() => {
+    props.image?.description && setDescription(props.image?.description);
+  }, [props.image?.description]);
 
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
     undefined
   );
   useEffect(() => {
-    props.url && setDownloadImageUrl(props.url);
-  }, [props.url]);
+    props.image?.url && setDownloadImageUrl(props.image?.url);
+    props.image?.url && setPreviewImageUrl(props.image?.url);
+  }, [props.image?.url]);
 
   const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(
     undefined
@@ -95,18 +98,20 @@ export default function ImageDialog(props: IImageDialogProps) {
   const getCreationDetails = () => ({
     creatorId: userDetails?.id,
     title,
+    description,
     url: downloadImageUrl,
     // lessonId: props.lessonId,
   });
 
   const getUpdateDetails = () => ({
     title,
+    description,
     url: downloadImageUrl,
   });
 
   const submitUpdate = () =>
-    props.id &&
-    ApiController.updateImage(props.id, getUpdateDetails())
+    props.image?.id &&
+    ApiController.updateImage(props.image?.id, getUpdateDetails())
       .then((image) => {
         imageUploadCallback?.();
         props.updateCallback?.();
@@ -210,6 +215,7 @@ export default function ImageDialog(props: IImageDialogProps) {
                       <Stack key={i} flex={1} spacing="10px">
                         {column.map((image, j) => (
                           <Stack
+                            key={j}
                             sx={{
                               position: "relative",
                               width: "100%",
@@ -341,14 +347,16 @@ export default function ImageDialog(props: IImageDialogProps) {
             </LessonImageUploader>
           </Stack>
           <UrsorButton
-            onClick={() => (props.id ? submitUpdate() : submitCreation())}
+            onClick={() =>
+              props.image?.id ? submitUpdate() : submitCreation()
+            }
             dark
             variant="tertiary"
             endIcon={PencilIcon}
             width="100%"
             disabled={!downloadImageUrl}
           >
-            {props.id ? "Update" : "Create"}
+            {props.image?.id ? "Update" : "Create"}
           </UrsorButton>
         </Stack>
       </Stack>

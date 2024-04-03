@@ -115,6 +115,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
+  const [imageEditingDialogId, setImageEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
   const contentCallbacks: Record<AstroContent, () => void> = {
     worksheet: () => setWorksheetDialogOpen(true),
     video: () => setVideoDialogOpen(true),
@@ -224,7 +227,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   return link ? <LinkCard key={link.id} {...link} /> : null;
                 } else if (c.type === "image") {
                   const image = images?.find((i) => i.id === c.contentId);
-                  return image ? <ImageCard key={image.id} {...image} /> : null;
+                  return image ? (
+                    <ImageCard
+                      key={image.id}
+                      {...image}
+                      editingCallback={() => setImageEditingDialogId(image.id)}
+                    />
+                  ) : null;
                 } else if (c.type === "worksheet") {
                   const worksheet = worksheets?.find(
                     (w) => w.id === c.contentId
@@ -294,6 +303,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {imageEditingDialogId ? (
+        <ImageDialog
+          open={true}
+          closeCallback={() => setImageEditingDialogId(undefined)}
+          updateCallback={loadLesson}
+          image={images.find((i) => i.id === imageEditingDialogId)}
+        />
+      ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
