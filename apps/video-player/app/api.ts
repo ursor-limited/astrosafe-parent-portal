@@ -95,6 +95,9 @@ class ApiController {
       response.json()
     );
   }
+  static async deleteLesson(id: string) {
+    return dellete(`lesson/${id}`).then((response: any) => response.json());
+  }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }

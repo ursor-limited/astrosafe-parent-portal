@@ -1,16 +1,19 @@
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { IVideo } from "../api";
+import ApiController, { IVideo } from "../api";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
 import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
+import DeletionDialog from "./DeletionDialog";
+import NotificationContext from "./NotificationContext";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -19,7 +22,9 @@ const PLACEHOLDER_THUMBNAIL =
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const VideoCard = (props: IVideo & { editingCallback: () => void }) => {
+const VideoCard = (
+  props: IVideo & { editingCallback: () => void; deletionCallback: () => void }
+) => {
   const router = useRouter();
   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
     undefined
@@ -34,60 +39,77 @@ const VideoCard = (props: IVideo & { editingCallback: () => void }) => {
       setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
     }
   }, [props.createdAt]);
+
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const notificationCtx = React.useContext(NotificationContext);
+
+  const submitDeletion = () =>
+    ApiController.deleteVideo(props.id)
+      .then(props.deletionCallback)
+      .then(() => notificationCtx.negativeSuccess("Deleted Video Link."));
+
   return (
-    <Stack
-      height="260px"
-      borderRadius="12px"
-      bgcolor="rgb(255,255,255)"
-      p="4px"
-      overflow="hidden"
-      sx={{
-        backdropFilter: "blur(4px)",
-        outline: orangeBorderOn
-          ? `3px solid ${PALETTE.system.orange}`
-          : undefined,
-      }}
-      position="relative"
-      boxShadow="0 0 12px rgba(0,0,0,0.06)"
-      pb="12px"
-    >
-      <Stack position="absolute" top="16px" right="16px" zIndex={2}>
-        <UrsorActionButton
-          size="32px"
-          iconSize="16px"
-          actions={[
-            {
-              text: "Edit",
-              kallback: props.editingCallback,
-              icon: PencilIcon,
-            },
-          ]}
-        />
-      </Stack>
+    <>
       <Stack
-        flex={1}
-        spacing="8px"
+        height="260px"
+        borderRadius="12px"
+        bgcolor="rgb(255,255,255)"
+        p="4px"
+        overflow="hidden"
         sx={{
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
-          cursor: "pointer",
+          backdropFilter: "blur(4px)",
+          outline: orangeBorderOn
+            ? `3px solid ${PALETTE.system.orange}`
+            : undefined,
         }}
-        onClick={() => router.push(`/video/${props.id}`)}
+        position="relative"
+        boxShadow="0 0 12px rgba(0,0,0,0.06)"
+        pb="12px"
       >
+        <Stack position="absolute" top="16px" right="16px" zIndex={2}>
+          <UrsorActionButton
+            size="32px"
+            iconSize="16px"
+            actions={[
+              {
+                text: "Edit",
+                kallback: props.editingCallback,
+                icon: PencilIcon,
+              },
+              {
+                text: "Delete",
+                kallback: () => setDeletionDialogOpen(true),
+                icon: TrashcanIcon,
+                color: PALETTE.system.red,
+              },
+            ]}
+          />
+        </Stack>
         <Stack
-          height="163px"
-          width="100%"
+          flex={1}
+          spacing="8px"
           sx={{
-            backgroundImage: `url(${props.thumbnailUrl})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+            cursor: "pointer",
           }}
-          borderRadius="10px 10px 0 0"
-          bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
-          position="relative"
+          onClick={() => router.push(`/video/${props.id}`)}
         >
-          {/* <Stack
+          <Stack
+            height="163px"
+            width="100%"
+            sx={{
+              backgroundImage: `url(${props.thumbnailUrl})`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+            borderRadius="10px 10px 0 0"
+            bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
+            position="relative"
+          >
+            {/* <Stack
             position="absolute"
             borderRadius="100%"
             width="32px"
@@ -101,44 +123,54 @@ const VideoCard = (props: IVideo & { editingCallback: () => void }) => {
           >
             <MoreIcon width="20px" height="20px" />
           </Stack> */}
-          {!props.thumbnailUrl ? (
-            <Stack flex={1} justifyContent="center" alignItems="center">
-              <Image
-                src={PLACEHOLDER_THUMBNAIL}
-                width={200}
-                height={100}
-                alt="Intro square"
-              />
+            {!props.thumbnailUrl ? (
+              <Stack flex={1} justifyContent="center" alignItems="center">
+                <Image
+                  src={PLACEHOLDER_THUMBNAIL}
+                  width={200}
+                  height={100}
+                  alt="Intro square"
+                />
+              </Stack>
+            ) : null}
+            <Stack
+              flex={1}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
+              }}
+            >
+              <Play width="40px" height="40px" />
             </Stack>
-          ) : null}
-          <Stack
-            flex={1}
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
-            }}
-          >
-            <Play width="40px" height="40px" />
           </Stack>
-        </Stack>
-        <Stack flex={1} justifyContent="space-between">
-          <Typography variant="medium" bold maxLines={2}>
-            {props.title}
-          </Typography>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
-          >
-            <Typography variant="small">
-              {getFormattedDate(props.createdAt)}
+          <Stack flex={1} justifyContent="space-between">
+            <Typography variant="medium" bold maxLines={2}>
+              {props.title}
             </Typography>
-            <CirclePlayIcon height="20px" width="20px" />
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
+            >
+              <Typography variant="small">
+                {getFormattedDate(props.createdAt)}
+              </Typography>
+              <CirclePlayIcon height="20px" width="20px" />
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
-    </Stack>
+      {deletionDialogOpen ? (
+        <DeletionDialog
+          open={deletionDialogOpen}
+          closeCallback={() => setDeletionDialogOpen(false)}
+          deletionCallback={submitDeletion}
+          category="Safe Video Link"
+          title={props.title}
+        />
+      ) : null}
+    </>
   );
 };
 

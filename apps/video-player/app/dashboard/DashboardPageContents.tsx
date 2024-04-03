@@ -855,6 +855,7 @@ export default function DashboardPageContents() {
                             editingCallback={() =>
                               setVideoEditingDialogId(item.details.id)
                             }
+                            deletionCallback={loadVideos}
                           />
                         ) : item.type === "worksheet" ? (
                           <WorksheetCard {...(item.details as IWorksheet)} />
@@ -868,6 +869,7 @@ export default function DashboardPageContents() {
                             editingCallback={() =>
                               setLessonEditingDialogId(item.details.id)
                             }
+                            deletionCallback={loadLessons}
                           />
                         ) : null}
                       </UrsorFadeIn>

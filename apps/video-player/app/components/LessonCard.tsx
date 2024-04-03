@@ -8,6 +8,9 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 import UrsorActionButton from "./UrsorActionButton";
+import ApiController from "../api";
+import NotificationContext from "./NotificationContext";
+import DeletionDialog from "./DeletionDialog";
 
 export const spin = keyframes`
   from {
@@ -23,8 +26,15 @@ const LessonCard = (
     imageUrls: string[];
     clickCallback: () => void;
     editingCallback: () => void;
+    deletionCallback: () => void;
   }
 ) => {
+  const notificationCtx = useContext(NotificationContext);
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const submitDeletion = () =>
+    ApiController.deleteLesson(props.id).then(() =>
+      notificationCtx.negativeSuccess("Deleted Lesson.")
+    );
   return (
     <>
       <Stack
@@ -182,6 +192,15 @@ const LessonCard = (
           </Stack>
         </Stack>
       </Stack>
+      {deletionDialogOpen ? (
+        <DeletionDialog
+          open={deletionDialogOpen}
+          closeCallback={() => setDeletionDialogOpen(false)}
+          deletionCallback={submitDeletion}
+          category="Lesson"
+          title={props.title}
+        />
+      ) : null}
     </>
   );
 };

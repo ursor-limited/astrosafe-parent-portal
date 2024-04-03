@@ -38,6 +38,7 @@ import UpgradeDialog from "@/app/components/UpgradeDialog";
 import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
+import PaletteButton from "@/app/components/PaletteButton";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -72,9 +73,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const submitDeletion = () =>
     lesson?.id &&
-    ApiController.deleteWorksheet(lesson.id).then(() =>
-      router.push("/dashboard")
-    );
+    ApiController.deleteLesson(lesson.id)
+      .then(() => router.push("/dashboard"))
+      .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
 
   const userDetails = useUserContext();
   // const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
