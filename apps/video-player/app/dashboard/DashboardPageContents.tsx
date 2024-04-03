@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
@@ -94,13 +95,21 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
   },
+  image: {
+    title: "Image",
+    description: "Add a wholesome image.",
+    color: PALETTE.secondary.grey[4],
+    icon: ImageIcon,
+    infoButtonPosition: 150,
+    info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+  },
 };
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet" | "lesson" | "link";
+export type AstroContent = "video" | "worksheet" | "lesson" | "link" | "image";
 
-export type AstroContentSort = "abc" | "createdAt";
+export type AstroContentSort = "abc" | "updatedAt";
 
 export const getTrialDaysLeft = (freeTrialStart?: string) =>
   TRIAL_DAYS - dayjs().diff(freeTrialStart, "days");
@@ -476,7 +485,7 @@ export default function DashboardPageContents() {
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
-    useState<AstroContentSort>("createdAt");
+    useState<AstroContentSort>("updatedAt");
 
   useEffect(() => {
     const videoDetails = videos
@@ -523,10 +532,10 @@ export default function DashboardPageContents() {
           : lessonDetails),
       ],
       (c) =>
-        selectedSort === "createdAt"
-          ? new Date(c.details.createdAt)
+        selectedSort === "updatedAt"
+          ? new Date(c.details.updatedAt)
           : c.details.title.toLowerCase(),
-      selectedSort === "createdAt" ? "desc" : "asc"
+      selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
@@ -547,6 +556,10 @@ export default function DashboardPageContents() {
 
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
+
+  const [lessonEditingDialogId, setLessonEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
 
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
@@ -650,6 +663,10 @@ export default function DashboardPageContents() {
       );
     }
   }, [userDetails.user]);
+
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
 
   return (
     <>
@@ -805,10 +822,10 @@ export default function DashboardPageContents() {
               <SortButton
                 selected={selectedSort}
                 callback={(id) => setSelectedSort(id)}
-                types={["abc", "createdAt"]}
+                types={["abc", "updatedAt"]}
                 displayNames={{
                   abc: "Alphabetical",
-                  createdAt: "Most recent",
+                  updatedAt: "Most recent",
                 }}
                 width="204px"
               />
@@ -842,7 +859,13 @@ export default function DashboardPageContents() {
                         duration={900}
                       >
                         {item.type === "video" ? (
-                          <VideoCard {...(item.details as IVideo)} />
+                          <VideoCard
+                            {...(item.details as IVideo)}
+                            editingCallback={() =>
+                              setVideoEditingDialogId(item.details.id)
+                            }
+                            deletionCallback={loadVideos}
+                          />
                         ) : item.type === "worksheet" ? (
                           <WorksheetCard {...(item.details as IWorksheet)} />
                         ) : item.type === "lesson" ? (
@@ -852,6 +875,10 @@ export default function DashboardPageContents() {
                             clickCallback={() =>
                               router.push(`/lesson/${item.details.id}`)
                             }
+                            editingCallback={() =>
+                              setLessonEditingDialogId(item.details.id)
+                            }
+                            deletionCallback={loadLessons}
                           />
                         ) : null}
                       </UrsorFadeIn>
@@ -867,6 +894,14 @@ export default function DashboardPageContents() {
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={!!videoEditingDialogId}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadVideos}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
@@ -875,6 +910,14 @@ export default function DashboardPageContents() {
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
       />
+      {lessonEditingDialogId ? (
+        <LessonCreationDialog
+          open={!!lessonEditingDialogId}
+          closeCallback={() => setLessonEditingDialogId(undefined)}
+          updateCallback={loadLessons}
+          lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,

@@ -174,7 +174,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             <ChevronLeft height="27px" />
           </Box>
         ) : null}
-        {!props.noCloseButton ? (
+        {/* {!props.noCloseButton ? (
           <Box
             position="absolute"
             top={props.noPadding ? "10px" : PADDING}
@@ -189,7 +189,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           >
             <X height="27px" />
           </Box>
-        ) : null}
+        ) : null} */}
         {_.isNumber(props.step) && props.nSteps ? (
           <Stack
             width="100%"
@@ -211,31 +211,62 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           sx={_.isNumber(props.step) ? animation : null}
           overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
-          {props.subtitle || props.title || props.supertitle ? (
+          {props.subtitle ||
+          props.title ||
+          props.supertitle ||
+          props.onCloseCallback ? (
             <Stack
               spacing="12px"
-              maxWidth={props.titleMaxWidth}
+              width="100%"
               alignItems="center"
               textAlign="center"
               //maxWidth="476px"
+              px={props.paddingX}
+              boxSizing="border-box"
             >
-              {props.supertitle ? (
-                <Typography
-                  variant={props.title ? "medium" : "large"}
-                  bold
-                  color={PALETTE.font.dark}
-                >
-                  {props.supertitle}
-                </Typography>
+              {props.supertitle || props.onCloseCallback ? (
+                <Stack direction="row" width="100%">
+                  <Stack width="100%" alignItems="center">
+                    <Typography
+                      variant={props.title ? "medium" : "large"}
+                      bold
+                      color={PALETTE.font.dark}
+                    >
+                      {props.supertitle}
+                    </Typography>
+                  </Stack>
+                  <Stack width={0} position="relative">
+                    <Stack position="absolute" right={0} top={0}>
+                      {props.onCloseCallback ? (
+                        <Box
+                          position="absolute"
+                          // top={props.noPadding ? "10px" : PADDING}
+                          // right={props.noPadding ? "10px" : PADDING}
+                          onClick={props.onCloseCallback}
+                          sx={{
+                            cursor: "pointer",
+                            "&:hover": { opacity: 0.6 },
+                            transition: "0.2s",
+                            zIndex: Z_INDEX,
+                          }}
+                        >
+                          <X height="27px" />
+                        </Box>
+                      ) : null}
+                    </Stack>
+                  </Stack>
+                </Stack>
               ) : null}
               {props.title ? (
-                <Typography
-                  variant={props.titleSize || "h3"}
-                  color={PALETTE.secondary.purple[2]}
-                  sx={{ maxWidth: props.titleMaxWidth }}
-                >
-                  {props.title}
-                </Typography>
+                <Stack maxWidth={props.titleMaxWidth}>
+                  <Typography
+                    variant={props.titleSize || "h3"}
+                    color={PALETTE.secondary.purple[2]}
+                    sx={{ maxWidth: props.titleMaxWidth }}
+                  >
+                    {props.title}
+                  </Typography>
+                </Stack>
               ) : null}
               {props.subtitle ? (
                 <Stack alignItems="center">
