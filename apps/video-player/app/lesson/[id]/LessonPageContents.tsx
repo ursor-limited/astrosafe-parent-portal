@@ -139,6 +139,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  console.log(contents);
+
   return (
     <>
       <Stack p="40px" overflow="scroll">
@@ -312,15 +314,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
-      <ImageDialog
-        open={imageDialogOpen}
-        closeCallback={() => setImageDialogOpen(false)}
-        creationCallback={(link) => {
-          ApiController.addToLesson(props.lessonId, "image", link.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
-          );
-        }}
-      />
+      {imageDialogOpen ? (
+        <ImageDialog
+          open={imageDialogOpen}
+          closeCallback={() => setImageDialogOpen(false)}
+          creationCallback={(link) => {
+            ApiController.addToLesson(props.lessonId, "image", link.id).then(
+              (response) =>
+                updateLesson(response.lesson, response.actualContents)
+            );
+          }}
+        />
+      ) : null}
       {imageEditingDialogId ? (
         <ImageDialog
           open={true}
