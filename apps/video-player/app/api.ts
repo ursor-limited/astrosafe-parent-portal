@@ -210,6 +210,14 @@ class ApiController {
       body: uploadFile,
     }).then((response: any) => response.json());
   }
+
+  static async searchImages(query: string) {
+    return post("img/search", {
+      query,
+      count: 9,
+    }).then((response: any) => response.json());
+  }
+
   static async createEquationWorksheet(
     title: string,
     orientation: EquationOrientation,

@@ -25,6 +25,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import DesktopDownloadIcon from "@/images/icons/DesktopDownloadIcon.svg";
 import UrsorPopover from "../components/UrsorPopover";
 import Image from "next/image";
+import UrsorLoading from "../components/UrsorLoading";
 
 export interface IImage {
   id: string;
@@ -104,6 +105,17 @@ export default function ImageDialog(props: IImageDialogProps) {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
 
   const [searchValue, setSearchValue] = useState<string>("");
+  useEffect(() => {
+    setLoading(true);
+    searchValue &&
+      ApiController.searchImages(searchValue)
+        .then((images) =>
+          setSearchResultImageUrls(
+            images?.map((image: any) => image.urls?.small_s3)
+          )
+        )
+        .then(() => setLoading(false));
+  }, [searchValue]);
 
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
@@ -113,6 +125,8 @@ export default function ImageDialog(props: IImageDialogProps) {
     "https://media.cnn.com/api/v1/images/stellar/prod/ap23287701320485.jpg?q=w_1110,c_fill/f_webp",
     "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-928597722.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp",
   ]);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
     <UrsorDialog
@@ -139,54 +153,61 @@ export default function ImageDialog(props: IImageDialogProps) {
               noPadding
               closeCallback={() => setPopoverOpen(false)}
               content={
-                <Stack
-                  p="10px"
-                  direction="row"
-                  width="100%"
-                  spacing="10px"
-                  boxSizing="border-box"
-                >
-                  {[
-                    searchResultImageUrls.slice(
-                      0,
-                      Math.ceil(searchResultImageUrls.length / 2)
-                    ),
-                    searchResultImageUrls.slice(
-                      Math.ceil(searchResultImageUrls.length / 2)
-                    ),
-                  ].map((column, i) => (
-                    <Stack key={i} flex={1} spacing="10px">
-                      {column.map((image, j) => (
-                        <Stack
-                          sx={{
-                            position: "relative",
-                            width: "100%",
-                            height: "130px",
-                            borderRadius: "6px",
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            "&:hover": { opacity: 0.7 },
-                            transition: "0.2s",
-                          }}
-                          onClick={() => {
-                            setPreviewImageUrl(image);
-                            setDownloadImageUrl(image);
-                            setPopoverOpen(false);
-                          }}
-                        >
-                          <Image
-                            key={j}
-                            src={image}
-                            fill
-                            unoptimized
-                            style={{ objectFit: "cover" }}
-                            alt={`search result ${i},${j}`}
-                          />
-                        </Stack>
-                      ))}
-                    </Stack>
-                  ))}
-                </Stack>
+                loading ? (
+                  <UrsorLoading />
+                ) : (
+                  <Stack
+                    p="10px"
+                    direction="row"
+                    width="100%"
+                    spacing="10px"
+                    boxSizing="border-box"
+                  >
+                    {(searchResultImageUrls.slice
+                      ? [
+                          searchResultImageUrls.slice(
+                            0,
+                            Math.ceil(searchResultImageUrls.length / 2)
+                          ),
+                          searchResultImageUrls.slice(
+                            Math.ceil(searchResultImageUrls.length / 2)
+                          ),
+                        ]
+                      : []
+                    ).map((column, i) => (
+                      <Stack key={i} flex={1} spacing="10px">
+                        {column.map((image, j) => (
+                          <Stack
+                            sx={{
+                              position: "relative",
+                              width: "100%",
+                              height: "130px",
+                              borderRadius: "6px",
+                              overflow: "hidden",
+                              cursor: "pointer",
+                              "&:hover": { opacity: 0.7 },
+                              transition: "0.2s",
+                            }}
+                            onClick={() => {
+                              setPreviewImageUrl(image);
+                              setDownloadImageUrl(image);
+                              setPopoverOpen(false);
+                            }}
+                          >
+                            <Image
+                              key={j}
+                              src={image}
+                              fill
+                              unoptimized
+                              style={{ objectFit: "cover" }}
+                              alt={`search result ${i},${j}`}
+                            />
+                          </Stack>
+                        ))}
+                      </Stack>
+                    ))}
+                  </Stack>
+                )
               }
             >
               <Stack onClick={() => setPopoverOpen(true)}>
