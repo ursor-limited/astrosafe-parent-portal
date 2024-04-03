@@ -38,7 +38,7 @@ import UpgradeDialog from "@/app/components/UpgradeDialog";
 import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
-import PaletteButton from "@/app/components/PaletteButton";
+import ImageDialog from "@/app/dashboard/ImageDialog";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -158,12 +158,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useState<boolean>(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
-  const [lessonDialogOpen, setLessonDialogOpen] = useState<boolean>(false);
+  const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const contentCallbacks: Record<AstroContent, () => void> = {
     worksheet: () => setWorksheetDialogOpen(true),
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
-    lesson: () => setLessonDialogOpen(true),
+    image: () => setImageDialogOpen(true),
+    lesson: () => null,
   };
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
@@ -321,6 +322,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(link) => {
           ApiController.addToLesson(props.lessonId, "link", link.id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
+          );
+        }}
+      />
+      <ImageDialog
+        open={imageDialogOpen}
+        closeCallback={() => setImageDialogOpen(false)}
+        creationCallback={(link) => {
+          ApiController.addToLesson(props.lessonId, "image", link.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}

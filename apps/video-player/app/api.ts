@@ -284,6 +284,9 @@ class ApiController {
       response.json()
     );
   }
+  static async createImage(details: any) {
+    return post("image", details).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

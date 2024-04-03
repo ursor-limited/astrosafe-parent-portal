@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
@@ -94,11 +95,19 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
   },
+  image: {
+    title: "Image",
+    description: "Add a wholesome image.",
+    color: PALETTE.secondary.grey[4],
+    icon: ImageIcon,
+    infoButtonPosition: 150,
+    info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+  },
 };
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet" | "lesson" | "link";
+export type AstroContent = "video" | "worksheet" | "lesson" | "link" | "image";
 
 export type AstroContentSort = "abc" | "updatedAt";
 
