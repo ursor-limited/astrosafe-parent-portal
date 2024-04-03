@@ -69,12 +69,7 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitCreation = async () =>
     ApiController.createImage(getCreationDetails())
       .then((image) => {
-        // mixpanel.track("link created", {
-        //   url,
-        //   stackId,
-        //   schoolId: link.schoolId,
-        //   creatorId: link.creatorId,
-        // });
+        imageUploadCallback?.();
         props.creationCallback?.(image);
         props.closeCallback();
       })
@@ -160,9 +155,12 @@ export default function ImageDialog(props: IImageDialogProps) {
                             position: "relative",
                             width: "100%",
                             height: "130px",
-
                             borderRadius: "6px",
                             overflow: "hidden",
+                          }}
+                          onClick={() => {
+                            setPreviewImageUrl(image);
+                            setDownloadImageUrl(image);
                           }}
                         >
                           <Image
