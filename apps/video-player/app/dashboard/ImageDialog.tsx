@@ -1,6 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Box, Stack, alpha } from "@mui/system";
-import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
+import {
+  PALETTE,
+  Typography,
+  UrsorButton,
+  UrsorInputField,
+  UrsorTextField,
+} from "ui";
 import _ from "lodash";
 import { getPrefixRemovedUrl } from "../components/LinkCard";
 import ApiController from "../api";
@@ -40,6 +46,7 @@ export interface IImageDialogProps {
 
 export default function ImageDialog(props: IImageDialogProps) {
   const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [url, setUrl] = useState("");
 
   useEffect(() => {
@@ -126,7 +133,7 @@ export default function ImageDialog(props: IImageDialogProps) {
         <Stack flex={1} spacing="20px" overflow="hidden">
           <Captioned text="Search Unsplash" noFlex>
             <UrsorPopover
-              open={true}
+              open={popoverOpen}
               zIndex={9999}
               buttonWidth
               noPadding
@@ -150,17 +157,21 @@ export default function ImageDialog(props: IImageDialogProps) {
                   ].map((column, i) => (
                     <Stack key={i} flex={1} spacing="10px">
                       {column.map((image, j) => (
-                        <div
-                          style={{
+                        <Stack
+                          sx={{
                             position: "relative",
                             width: "100%",
                             height: "130px",
                             borderRadius: "6px",
                             overflow: "hidden",
+                            cursor: "pointer",
+                            "&:hover": { opacity: 0.7 },
+                            transition: "0.2s",
                           }}
                           onClick={() => {
                             setPreviewImageUrl(image);
                             setDownloadImageUrl(image);
+                            setPopoverOpen(false);
                           }}
                         >
                           <Image
@@ -171,24 +182,33 @@ export default function ImageDialog(props: IImageDialogProps) {
                             style={{ objectFit: "cover" }}
                             alt={`search result ${i},${j}`}
                           />
-                        </div>
+                        </Stack>
                       ))}
                     </Stack>
                   ))}
                 </Stack>
               }
             >
-              <UrsorInputField
-                value={searchValue}
-                placeholder="Search a topic"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setSearchValue(event.target.value);
-                }}
-                leftAlign
-                width="100%"
-              />
+              <Stack onClick={() => setPopoverOpen(true)}>
+                <UrsorInputField
+                  value={searchValue}
+                  placeholder="Search a topic"
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setSearchValue(event.target.value);
+                  }}
+                  leftAlign
+                  width="100%"
+                />
+              </Stack>
             </UrsorPopover>
           </Captioned>
+          <Stack height="28px" justifyContent="center">
+            <Stack
+              height="2px"
+              width="100%"
+              bgcolor={PALETTE.secondary.grey[2]}
+            />
+          </Stack>
           <Captioned text="Title" noFlex>
             <Stack position="absolute" top="-4px" right="0px">
               <CharactersIndicator n={title.length} max={40} />
@@ -201,6 +221,18 @@ export default function ImageDialog(props: IImageDialogProps) {
               }}
               leftAlign
               width="100%"
+            />
+          </Captioned>
+          <Captioned text="Description">
+            <UrsorTextField
+              value={description}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDescription(event.target.value)
+              }
+              placeholder="Optional"
+              width="100%"
+              height="161px"
+              boldValue
             />
           </Captioned>
         </Stack>
@@ -240,16 +272,18 @@ export default function ImageDialog(props: IImageDialogProps) {
                 alignItems="center"
                 bgcolor="rgba(255,255,255,0.2)"
               >
-                <Stack spacing="10px" alignItems="center">
-                  <DesktopDownloadIcon height="60px" width="60px" />
-                  <Typography
-                    color={PALETTE.secondary.grey[3]}
-                    variant="small"
-                    sx={{ width: "82px", textAlign: "center" }}
-                  >
-                    Upload your own photo
-                  </Typography>
-                </Stack>
+                {!previewImageUrl ? (
+                  <Stack spacing="10px" alignItems="center">
+                    <DesktopDownloadIcon height="60px" width="60px" />
+                    <Typography
+                      color={PALETTE.secondary.grey[3]}
+                      variant="small"
+                      sx={{ width: "82px", textAlign: "center" }}
+                    >
+                      Upload your own photo
+                    </Typography>
+                  </Stack>
+                ) : null}
               </Stack>
             </LessonImageUploader>
           </Stack>
@@ -259,6 +293,7 @@ export default function ImageDialog(props: IImageDialogProps) {
             variant="tertiary"
             endIcon={PencilIcon}
             width="100%"
+            disabled={!downloadImageUrl}
           >
             Create
           </UrsorButton>
