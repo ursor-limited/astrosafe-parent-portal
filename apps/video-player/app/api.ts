@@ -42,6 +42,7 @@ const post = (route: string, body: any) =>
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      cache: "no-store",
     }
   );
 
@@ -197,7 +198,7 @@ class ApiController {
     fileExtension: string,
     contentType: string
   ) {
-    return post(`/img/sign`, {
+    return post(`/unsplash/sign`, {
       fileExtension,
       contentType,
     }).then((response: any) => response.json());
@@ -212,7 +213,7 @@ class ApiController {
   }
 
   static async searchImages(query: string) {
-    return post("img/search", {
+    return post("unsplash/search", {
       query,
       count: 9,
     }).then((response: any) => response.json());
@@ -294,6 +295,14 @@ class ApiController {
   }
   static async createImage(details: any) {
     return post("image", details).then((response: any) => response.json());
+  }
+  static async deleteImage(id: string) {
+    return dellete(`image/${id}`).then((response: any) => response);
+  }
+  static async updateImage(id: string, details: any) {
+    return patch(`image/${id}`, details).then((response: any) =>
+      response.json()
+    );
   }
 }
 

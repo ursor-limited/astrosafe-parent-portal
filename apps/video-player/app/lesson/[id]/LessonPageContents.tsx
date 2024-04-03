@@ -38,7 +38,8 @@ import UpgradeDialog from "@/app/components/UpgradeDialog";
 import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
-import ImageDialog from "@/app/dashboard/ImageDialog";
+import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
+import ImageCard from "@/app/components/ImageCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -46,6 +47,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
+  const [images, setImages] = useState<IImage[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
 
   const loadLesson = () =>
@@ -58,6 +60,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
         setWorksheets(response.actualContents.worksheets);
       response?.actualContents?.links &&
         setLinks(response.actualContents.links);
+      response?.actualContents?.images &&
+        setImages(response.actualContents.images);
     });
 
   const reloadLessonDetails = () =>
@@ -78,57 +82,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
       .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
 
   const userDetails = useUserContext();
-  // const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
-  //   useState<boolean>(false);
-  // useEffect(() => {
-  //   setSignupPromptDialogOpen(
-  //     !props.creatorId && !userDetails.loading && !userDetails.user?.id
-  //   );
-  // }, [userDetails.user?.id, userDetails.loading, props.creatorId]);
-
-  // const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
-  // useEffect(() => {
-  //   if (userDetails.user && !signedIn) {
-  //     router.push("/dashboard");
-  //     //setSignedIn(true);
-  //   }
-  // }, [userDetails.user]);
-
-  // const [videos, setVideos] = useState<IVideo[]>([]);
-  // const loadVideos = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getUserVideos(userDetails.user.id).then((videos) =>
-  //       setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-  //     );
-  // };
-  // useEffect(() => {
-  //   setVideos(props.videos); //loadVideos();
-  // }, [props.videos]);
-
-  // const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
-  // useEffect(() => {
-  //   setWorksheets(props.worksheets); //loadVideos();
-  // }, [props.worksheets]);
-  // const loadWorksheets = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
-  //       setWorksheets(_.reverse(ws.slice()))
-  //     );
-  // };
-  // useEffect(() => {
-  //   loadWorksheets();
-  // }, [userDetails?.user?.id]);
-
-  // const [links, setLinks] = useState<ILink[]>([]);
-  // useEffect(() => {
-  //   setLinks(props.links); //loadVideos();
-  // }, [props.links]);
-  // const loadLinks = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getLinks(userDetails.user.id).then((links) =>
-  //       setLinks(links)
-  //     );
-  // };
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -146,12 +99,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
       videos: IVideo[];
       worksheets: IWorksheet[];
       links: ILink[];
+      images: IImage[];
     }
   ) => {
+    console.log(actualContents);
     setContents(lesson.contents);
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
+    setImages(actualContents.images);
   };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
@@ -259,15 +215,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
             {_.reverse(contents.slice())
               .map((c) => {
                 if (c.type === "video") {
-                  const video = videos.find((v) => v.id === c.contentId);
+                  const video = videos?.find((v) => v.id === c.contentId);
                   return video ? (
                     <PlaylistVideoCard key={video.id} {...video} />
                   ) : null;
                 } else if (c.type === "link") {
-                  const link = links.find((v) => v.id === c.contentId);
+                  const link = links?.find((v) => v.id === c.contentId);
                   return link ? <LinkCard key={link.id} {...link} /> : null;
+                } else if (c.type === "image") {
+                  const image = images?.find((i) => i.id === c.contentId);
+                  return image ? <ImageCard key={image.id} {...image} /> : null;
                 } else if (c.type === "worksheet") {
-                  const worksheet = worksheets.find(
+                  const worksheet = worksheets?.find(
                     (w) => w.id === c.contentId
                   );
                   return worksheet ? (

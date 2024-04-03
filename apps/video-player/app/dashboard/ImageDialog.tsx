@@ -25,17 +25,26 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import DesktopDownloadIcon from "@/images/icons/DesktopDownloadIcon.svg";
 import UrsorPopover from "../components/UrsorPopover";
 import Image from "next/image";
-import UrsorLoading from "../components/UrsorLoading";
+import dynamic from "next/dynamic";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
+
+const UrsorLoading = dynamic(
+  () => import("../components/UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export interface IImage {
   id: string;
   url: string;
   title?: string;
   description?: string;
+  creatorId: string;
+  createdAt: string;
 }
 
 export interface IImageDialogProps {
   open: boolean;
+  id?: string;
   url?: string;
   title?: string;
   lessonId?: string;
@@ -48,19 +57,18 @@ export interface IImageDialogProps {
 export default function ImageDialog(props: IImageDialogProps) {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [url, setUrl] = useState("");
 
   useEffect(() => {
     props.title && setTitle(props.title);
   }, [props.title]);
 
-  useEffect(() => {
-    props.url && setUrl(props.url);
-  }, [props.url]);
-
   const [downloadImageUrl, setDownloadImageUrl] = useState<string | undefined>(
     undefined
   );
+  useEffect(() => {
+    props.url && setDownloadImageUrl(props.url);
+  }, [props.url]);
+
   const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(
     undefined
   );
@@ -87,44 +95,46 @@ export default function ImageDialog(props: IImageDialogProps) {
   const getCreationDetails = () => ({
     creatorId: userDetails?.id,
     title,
-    url,
-    lessonId: props.lessonId,
+    url: downloadImageUrl,
+    // lessonId: props.lessonId,
   });
 
   const getUpdateDetails = () => ({
     title,
-    url,
+    url: downloadImageUrl,
   });
 
-  const submitUpdate = () => null;
-  // ApiController.updateLink(props.link?.id, getUpdateDetails())
-  //   .then(props.updateCallback)
-  //   .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
-  //   .catch((error) => notificationCtx.error(error.message));
+  const submitUpdate = () =>
+    props.id &&
+    ApiController.updateImage(props.id, getUpdateDetails())
+      .then((image) => {
+        imageUploadCallback?.();
+        props.updateCallback?.();
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Updated Image"));
 
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
 
   const [searchValue, setSearchValue] = useState<string>("");
   useEffect(() => {
-    setLoading(true);
-    searchValue &&
+    if (searchValue) {
+      setLoading(true);
       ApiController.searchImages(searchValue)
         .then((images) =>
           setSearchResultImageUrls(
-            images?.map((image: any) => image.urls?.small_s3)
+            images?.map((image: any) => image.urls?.small)
           )
         )
         .then(() => setLoading(false));
+    }
   }, [searchValue]);
 
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
-  const [searchResultImageUrls, setSearchResultImageUrls] = useState<string[]>([
-    "https://media.cnn.com/api/v1/images/stellar/prod/220708134945-20220708-a-case-for-the-alarm-clock-illustration.jpg?q=w_2000,c_fill/f_webp",
-    "https://media.cnn.com/api/v1/images/stellar/prod/240321171948-solar-eclipse-thumb.jpg?c=16x9&q=w_850,c_fill",
-    "https://media.cnn.com/api/v1/images/stellar/prod/ap23287701320485.jpg?q=w_1110,c_fill/f_webp",
-    "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-928597722.jpg?c=16x9&q=h_653,w_1160,c_fill/f_webp",
-  ]);
+  const [searchResultImageUrls, setSearchResultImageUrls] = useState<string[]>(
+    []
+  );
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -154,7 +164,29 @@ export default function ImageDialog(props: IImageDialogProps) {
               closeCallback={() => setPopoverOpen(false)}
               content={
                 loading ? (
-                  <UrsorLoading />
+                  <Stack alignItems="center" justifyContent="center" p="12px">
+                    <UrsorLoading />
+                  </Stack>
+                ) : searchResultImageUrls.length === 0 ? (
+                  <Stack
+                    spacing="10px"
+                    sx={{ opacity: 0.5, filter: "grayscale(100%)" }}
+                    alignItems="center"
+                    justifyContent="center"
+                    p="12px"
+                  >
+                    <Image
+                      height={150}
+                      width={150}
+                      src={WonderingIllustration}
+                      alt="No results illustration"
+                    />
+                    {searchValue ? (
+                      <Typography variant="medium" bold>
+                        No results
+                      </Typography>
+                    ) : null}
+                  </Stack>
                 ) : (
                   <Stack
                     p="10px"
@@ -309,14 +341,14 @@ export default function ImageDialog(props: IImageDialogProps) {
             </LessonImageUploader>
           </Stack>
           <UrsorButton
-            onClick={submitCreation}
+            onClick={() => (props.id ? submitUpdate() : submitCreation())}
             dark
             variant="tertiary"
             endIcon={PencilIcon}
             width="100%"
             disabled={!downloadImageUrl}
           >
-            Create
+            {props.id ? "Update" : "Create"}
           </UrsorButton>
         </Stack>
       </Stack>
