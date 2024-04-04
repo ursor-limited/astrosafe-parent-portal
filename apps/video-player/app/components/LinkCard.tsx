@@ -127,7 +127,7 @@ const LinkCard = (props: {
         <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
           <Stack flex={1} justifyContent="space-between">
             <Typography
-              color="rgba(255,255,255)"
+              color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
               variant="medium"
               bold
               maxLines={2}
@@ -137,9 +137,20 @@ const LinkCard = (props: {
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: "rgba(255,255,255,0.93)" } } }}
+              sx={{
+                svg: {
+                  path: {
+                    fill: lightText
+                      ? "rgba(255,255,255,0.93)"
+                      : "rgba(0,0,0,0.8)",
+                  },
+                },
+              }}
             >
-              <Typography color="rgba(255,255,255,0.93)" variant="small">
+              <Typography
+                color={lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"}
+                variant="small"
+              >
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <LinkIcon height="20px" width="20px" />

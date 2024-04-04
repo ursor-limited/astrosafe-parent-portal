@@ -5,6 +5,7 @@ import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 import UrsorActionButton from "./UrsorActionButton";
@@ -32,9 +33,9 @@ const LessonCard = (
   const notificationCtx = useContext(NotificationContext);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   const submitDeletion = () =>
-    ApiController.deleteLesson(props.id).then(() =>
-      notificationCtx.negativeSuccess("Deleted Lesson.")
-    );
+    ApiController.deleteLesson(props.id)
+      .then(() => notificationCtx.negativeSuccess("Deleted Lesson."))
+      .then(props.deletionCallback);
   return (
     <>
       <Stack
@@ -59,6 +60,12 @@ const LessonCard = (
                 text: "Edit",
                 kallback: props.editingCallback,
                 icon: PencilIcon,
+              },
+              {
+                text: "Delete",
+                kallback: () => setDeletionDialogOpen(true),
+                icon: TrashcanIcon,
+                color: PALETTE.system.red,
               },
             ]}
           />
@@ -192,15 +199,15 @@ const LessonCard = (
           </Stack>
         </Stack>
       </Stack>
-      {deletionDialogOpen ? (
-        <DeletionDialog
-          open={deletionDialogOpen}
-          closeCallback={() => setDeletionDialogOpen(false)}
-          deletionCallback={submitDeletion}
-          category="Lesson"
-          title={props.title}
-        />
-      ) : null}
+      {/* {deletionDialogOpen ? ( */}
+      <DeletionDialog
+        open={deletionDialogOpen}
+        closeCallback={() => setDeletionDialogOpen(false)}
+        deletionCallback={submitDeletion}
+        category="Lesson"
+        title={props.title}
+      />
+      {/* ) : null} */}
     </>
   );
 };
