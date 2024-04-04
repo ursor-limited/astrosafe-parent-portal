@@ -120,7 +120,11 @@ const VideoCreationDialog = (props: {
   }, [Math.floor((duration ?? 0) / 3)]);
 
   useEffect(() => {
-    if (_.isNumber(props.video?.startTime) && props.video.endTime) {
+    if (
+      props.video &&
+      _.isNumber(props.video?.startTime) &&
+      props.video.endTime
+    ) {
       setRange([props.video?.startTime, props.video.endTime]);
       setDuration(props.video.endTime - props.video.startTime);
     }
