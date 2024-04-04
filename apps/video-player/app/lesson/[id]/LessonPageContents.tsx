@@ -41,6 +41,9 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
+import TextEditorToolbar from "@/app/components/TextEditorToolBar";
+import AstroText from "@/app/dashboard/AstroText";
+import "react-quill/dist/quill.snow.css";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -222,6 +225,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
+          <Stack position="absolute" top={0} right={0}>
+            <TextEditorToolbar id="aaa" />
+          </Stack>
+          <Stack>
+            <AstroText id="aaa" value="" valueChangeCallback={() => null} />
+          </Stack>
           <Stack spacing="20px" width="40%" px="24px">
             {_.reverse(contents.slice())
               .map((c) => {
@@ -316,7 +325,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
-      {/* <TextDialog
+      <TextDialog
         open={textDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(text) => {
@@ -324,7 +333,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
-      /> */}
+      />
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}

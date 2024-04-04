@@ -83,8 +83,7 @@ export const TextEditorToolbar = (props: { id: string }) => {
       style={{
         background: "rgb(255,255,255)",
         fontFamily: "unset",
-        boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-        borderRadius: "12px",
+        borderRadius: "12px 12px 0 0",
         width: "fit-content",
       }}
     >

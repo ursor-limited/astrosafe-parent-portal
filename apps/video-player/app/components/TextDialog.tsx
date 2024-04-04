@@ -1,33 +1,13 @@
 import { Stack } from "@mui/system";
-import RocketIcon from "@/images/icons/RocketIcon.svg";
-import { useRouter } from "next/navigation";
 import UrsorDialog from "./UrsorDialog";
 import { useContext, useEffect, useState } from "react";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import {
-  PALETTE,
-  Typography,
-  UrsorButton,
-  UrsorInputField,
-  UrsorTextField,
-} from "ui";
-import { Slider } from "@mui/material";
-import DurationLabel from "../editor/duration-label";
-import Player from "./player";
-import { deNoCookiefy } from "./utils";
-import ApiController from "../api";
-import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import SignupPromptDialog from "../dashboard/SignupPromptDialog";
-import { useUserContext } from "./UserContext";
-import VideoSignupPromptDialog from "./VideoSignupPromptDialog";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import _, { uniqueId } from "lodash";
 import { isMobile } from "react-device-detect";
-import TimeRange from "../dashboard/TimeRange";
-import { IVideo } from "../dashboard/AstroContentColumns";
 import NotificationContext from "./NotificationContext";
 import AstroText from "../dashboard/AstroText";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import { randomUUID } from "crypto";
+import TextEditorToolbar from "./TextEditorToolBar";
 
 export interface IText {
   id: string;
@@ -40,7 +20,7 @@ const TextCreationDialog = (props: {
   open: boolean;
   text?: IText;
   closeCallback: () => void;
-  creationCallback?: (textId: string) => void;
+  creationCallback?: (text: IText) => void;
   editingCallback?: () => void;
 }) => {
   const [value, setValue] = useState<string>("");
@@ -51,7 +31,7 @@ const TextCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext);
 
   const [quillId, setQuillId] = useState<string>("");
-  useEffect(() => setQuillId(crypto.randomUUID()), []);
+  useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
   //useEffect(() => )
   // const submitCreation = () => {
   //   setLoading(true);
@@ -82,21 +62,31 @@ const TextCreationDialog = (props: {
         }
         open={props.open}
         onCloseCallback={props.closeCallback}
-        width="569px"
-        maxWidth="569px"
+        width="709px"
+        maxWidth="709px"
         noPadding
         dynamicHeight
         paddingTop="52px"
         paddingX={isMobile ? undefined : "32px"}
       >
-        <Stack>
-          {quillId ? (
-            <AstroText
-              id={quillId}
-              value={value}
-              valueChangeCallback={setValue}
-            />
-          ) : null}
+        <Stack
+          flex={1}
+          width="100%"
+          alignItems="center"
+          pb="24px"
+          spacing="20px"
+        >
+          <Stack>
+            <TextEditorToolbar id={quillId} />
+            {quillId ? (
+              <AstroText
+                id={quillId}
+                value={value}
+                valueChangeCallback={setValue}
+                height="120px"
+              />
+            ) : null}
+          </Stack>
           <UrsorButton dark variant="tertiary" endIcon={PencilIcon}>
             Create
           </UrsorButton>
