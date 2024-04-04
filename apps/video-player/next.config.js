@@ -13,6 +13,7 @@ module.exports = withSvgr({
       "https://astro-monorepo-canvas.vercel.app",
       "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
       "ursorassets.s3.eu-west-1.amazonaws.com",
+      "https://ursorimagespublic.s3.amazonaws.com",
       "i.ytimg.com",
       "assets-global.website-files.com",
       "images.unsplash.com",
