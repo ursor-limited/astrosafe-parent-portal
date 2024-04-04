@@ -121,6 +121,7 @@ export interface ILink {
   url: string;
   imageUrl: string;
   color: string;
+  createdAt: string;
 }
 
 const CREATION_SUCCESS_MESSAGE = "Link added";
