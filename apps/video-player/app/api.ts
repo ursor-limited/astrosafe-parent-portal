@@ -198,7 +198,7 @@ class ApiController {
     fileExtension: string,
     contentType: string
   ) {
-    return post(`/unsplash/sign`, {
+    return post(`unsplash/sign`, {
       fileExtension,
       contentType,
     }).then((response: any) => response.json());
