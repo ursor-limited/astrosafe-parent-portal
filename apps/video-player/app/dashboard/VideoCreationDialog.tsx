@@ -92,7 +92,7 @@ const VideoCreationDialog = (props: {
         } else if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          !url && setUrl(deNoCookiefy(extractUrl(details.html)));
+          setUrl(deNoCookiefy(extractUrl(details.html)));
           !title && setTitle(details.title);
           //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
@@ -243,16 +243,23 @@ const VideoCreationDialog = (props: {
             width={props.noPlayer ? "480px" : "358px"}
           >
             <Captioned text="Video URL">
-              <UrsorInputField
-                value={originalUrl}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setOriginalUrl(event.target.value)
-                }
-                placeholder="Youtube or Vimeo"
-                width="100%"
-                leftAlign
-                boldValue
-              />
+              <Stack
+                sx={{
+                  opacity: props.video ? 0.5 : 1,
+                  pointerEvents: props.video ? "none" : undefined,
+                }}
+              >
+                <UrsorInputField
+                  value={originalUrl}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setOriginalUrl(event.target.value)
+                  }
+                  placeholder="Youtube or Vimeo"
+                  width="100%"
+                  leftAlign
+                  boldValue
+                />
+              </Stack>
             </Captioned>
 
             <Stack
@@ -333,7 +340,7 @@ const VideoCreationDialog = (props: {
                     endIcon={props.video ? PencilIcon : RocketIcon}
                     width="100%"
                   >
-                    {props.video ? "Update" : "Edit"}
+                    {props.video ? "Update" : "Create"}
                   </UrsorButton>
                 </>
               ) : null}

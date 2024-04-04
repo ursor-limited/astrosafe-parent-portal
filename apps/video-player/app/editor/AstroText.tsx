@@ -1,3 +1,5 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import AstroElementFrame from "./AstroElementFrame";
 import { useEffect, useState } from "react";

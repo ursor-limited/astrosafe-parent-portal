@@ -5,8 +5,11 @@ import { useUserContext } from "../components/UserContext";
 const MAX_LITE_MODE_ACTIONS = 3;
 
 export const useOutOfCreations = () => {
-  const nCreations = useUserContext().user?.creations ?? 0;
-  return nCreations >= MAX_LITE_MODE_ACTIONS;
+  const userDetails = useUserContext().user;
+  return (
+    !userDetails?.subscribed &&
+    (userDetails?.creations ?? 0 >= MAX_LITE_MODE_ACTIONS)
+  );
 };
 
 const LiteModeBar = (props: { upgradeCallback: () => void }) => {

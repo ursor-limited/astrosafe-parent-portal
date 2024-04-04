@@ -18,6 +18,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import TextDialog from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
@@ -40,6 +41,9 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
+import TextEditorToolbar from "@/app/components/TextEditorToolBar";
+import AstroText from "@/app/dashboard/AstroText";
+import "react-quill/dist/quill.snow.css";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -118,6 +122,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
 
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
+  const [textDialogOpen, setTextDialogOpen] = useState<boolean>(false);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
     string | undefined
@@ -310,6 +315,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(link) => {
           ApiController.addToLesson(props.lessonId, "link", link.id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
+          );
+        }}
+      />
+      <TextDialog
+        open={textDialogOpen}
+        closeCallback={() => setLinkDialogOpen(false)}
+        creationCallback={(text) => {
+          ApiController.addToLesson(props.lessonId, "text", text.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}

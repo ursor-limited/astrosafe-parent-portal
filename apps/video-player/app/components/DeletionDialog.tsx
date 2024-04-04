@@ -9,7 +9,7 @@ import {
 } from "./UrsorDialog";
 
 const WIDTH = "550px";
-const MIN_HEIGHT = "470px";
+const MIN_HEIGHT = "315px";
 
 export interface IDeletionDialogProps {
   open: boolean;
@@ -66,12 +66,12 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
                 {props.title}
               </Typography>
             ) : null}
-            <Typography variant="medium" sx={{ textAlign: "center" }}>
+            {/* <Typography variant="medium" sx={{ textAlign: "center" }}>
               {'To confirm your intention, please type "delete" below.'}
-            </Typography>
+            </Typography> */}
           </Stack>
         </Stack>
-        <Stack alignItems="center">
+        {/* <Stack alignItems="center">
           <UrsorInputField
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setDeletionPhrase(event.target.value)
@@ -80,7 +80,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
             placeholder={"delete"}
             width="100%"
           />
-        </Stack>
+        </Stack> */}
         <Stack spacing="12px" alignItems="center">
           <Stack position="relative">
             <Stack
@@ -89,10 +89,10 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
               justifyContent="center"
               alignItems="center"
               top="-24px"
-              sx={{
-                opacity: deletionPhrase === "delete" ? 1 : 0,
-                transition: "0.5s",
-              }}
+              // sx={{
+              //   opacity: deletionPhrase === "delete" ? 1 : 0,
+              //   transition: "0.5s",
+              // }}
             >
               <Typography
                 variant="small"
@@ -115,7 +115,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
                   props.closeCallback();
                 }}
                 backgroundColor={PALETTE.system.red}
-                disabled={deletionPhrase !== "delete"}
+                //disabled={deletionPhrase !== "delete"}
                 width={props.mobile ? "200px" : "300px"}
               >
                 Do it
