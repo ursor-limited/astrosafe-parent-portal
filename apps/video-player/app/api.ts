@@ -209,7 +209,7 @@ class ApiController {
       method: "PUT",
       headers: { "Content-Type": uploadFile.type },
       body: uploadFile,
-    }).then((response: any) => response.json());
+    }).then((response: any) => response);
   }
 
   static async searchImages(query: string) {
