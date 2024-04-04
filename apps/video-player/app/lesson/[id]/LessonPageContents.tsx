@@ -18,6 +18,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import TextDialog from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
@@ -118,6 +119,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
 
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
+  const [textDialogOpen, setTextDialogOpen] = useState<boolean>(true);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
     string | undefined
@@ -314,6 +316,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {/* <TextDialog
+        open={textDialogOpen}
+        closeCallback={() => setLinkDialogOpen(false)}
+        creationCallback={(text) => {
+          ApiController.addToLesson(props.lessonId, "text", text.id).then(
+            (response) => updateLesson(response.lesson, response.actualContents)
+          );
+        }}
+      /> */}
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}
