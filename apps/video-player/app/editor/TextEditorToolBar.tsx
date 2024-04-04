@@ -39,7 +39,7 @@ export const formats = [
   "align",
   "strike",
   "script",
-  "blockquote",
+  //"blockquote",
   //   "background",
   "list",
   "bullet",

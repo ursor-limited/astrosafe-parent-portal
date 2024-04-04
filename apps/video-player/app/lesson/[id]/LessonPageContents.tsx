@@ -18,7 +18,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import TextDialog from "@/app/components/TextDialog";
+import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
@@ -41,8 +41,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
-import TextEditorToolbar from "@/app/components/TextEditorToolBar";
-import AstroText from "@/app/dashboard/AstroText";
+import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
@@ -52,21 +51,31 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
   const [images, setImages] = useState<IImage[]>([]);
+  const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
 
   const loadLesson = () =>
-    ApiController.getLessonWithContents(props.lessonId).then((response) => {
-      if (!response) return;
-      response?.lesson && setLesson(response.lesson);
-      response?.actualContents?.videos &&
-        setVideos(response.actualContents.videos);
-      response?.actualContents?.worksheets &&
-        setWorksheets(response.actualContents.worksheets);
-      response?.actualContents?.links &&
-        setLinks(response.actualContents.links);
-      response?.actualContents?.images &&
-        setImages(response.actualContents.images);
-    });
+    ApiController.getLessonWithContents(props.lessonId).then(
+      (response: any) => {
+        if (!response) return;
+        response?.lesson && setLesson(response.lesson);
+        response?.actualContents?.videos &&
+          setVideos(response.actualContents.videos);
+        response?.actualContents?.worksheets &&
+          setWorksheets(response.actualContents.worksheets);
+        response?.actualContents?.links &&
+          setLinks(response.actualContents.links);
+        response?.actualContents?.images &&
+          setImages(response.actualContents.images);
+        response?.actualContents?.texts &&
+          setTexts(
+            response.actualContents.texts.map((t: any) => ({
+              ...t,
+              value: t.value.replaceAll("&lt;", "<"),
+            }))
+          );
+      }
+    );
 
   const reloadLessonDetails = () =>
     ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
@@ -104,14 +113,20 @@ export default function LessonPageContents(props: { lessonId: string }) {
       worksheets: IWorksheet[];
       links: ILink[];
       images: IImage[];
+      texts: IText[];
     }
   ) => {
-    console.log(actualContents);
     setContents(lesson.contents);
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
     setImages(actualContents.images);
+    setTexts(
+      actualContents.texts.map((t: any) => ({
+        ...t,
+        value: t.value.replaceAll("&lt;", "<"),
+      }))
+    );
   };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
@@ -127,6 +142,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
 
   const [textDialogOpen, setTextDialogOpen] = useState<boolean>(false);
+  const [textEditingDialogId, setTextEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
     string | undefined
@@ -136,6 +155,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
     image: () => setImageDialogOpen(true),
+    text: () => setTextDialogOpen(true),
     lesson: () => null,
   };
 
@@ -250,6 +270,16 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       deleteCallback={loadLesson}
                     />
                   ) : null;
+                } else if (c.type === "text") {
+                  const text = texts?.find((t) => t.id === c.contentId);
+                  return text ? (
+                    <TextCard
+                      key={text.id}
+                      {...text}
+                      editCallback={() => setTextEditingDialogId(text.id)}
+                      deleteCallback={loadLesson}
+                    />
+                  ) : null;
                 } else if (c.type === "image") {
                   const image = images?.find((i) => i.id === c.contentId);
                   return image ? (
@@ -338,13 +368,21 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <TextDialog
         open={textDialogOpen}
-        closeCallback={() => setLinkDialogOpen(false)}
+        closeCallback={() => setTextDialogOpen(false)}
         creationCallback={(text) => {
           ApiController.addToLesson(props.lessonId, "text", text.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
+      {textEditingDialogId ? (
+        <TextDialog
+          open={true}
+          closeCallback={() => setTextEditingDialogId(undefined)}
+          updateCallback={loadLesson}
+          text={texts.find((t) => t.id === textEditingDialogId)}
+        />
+      ) : null}
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}

@@ -8,6 +8,8 @@ import NotificationContext from "./NotificationContext";
 import AstroText from "../dashboard/AstroText";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TextEditorToolbar from "./TextEditorToolBar";
+import ApiController from "../api";
+import { useUserContext } from "./UserContext";
 
 export interface IText {
   id: string;
@@ -21,7 +23,7 @@ const TextCreationDialog = (props: {
   text?: IText;
   closeCallback: () => void;
   creationCallback?: (text: IText) => void;
-  editingCallback?: () => void;
+  updateCallback?: () => void;
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => {
@@ -30,29 +32,38 @@ const TextCreationDialog = (props: {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const userDetails = useUserContext().user;
+
   const [quillId, setQuillId] = useState<string>("");
   useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
-  //useEffect(() => )
-  // const submitCreation = () => {
-  //   setLoading(true);
-  //   ApiController.createVideo({
-  //     title,
-  //     description,
-  //     url,
-  //     thumbnailUrl,
-  //     startTime: range?.[0],
-  //     endTime: range?.[1],
-  //     creatorId: userDetails.user?.id,
-  //   }).then(async (v) => {
-  //     setLoading(false);
-  //     setFreeVideoCreationCount(freeVideoCreationCount + 1);
-  //     setFreeVideoIds([...freeVideoIds, v.id]);
-  //     props.creationCallback
-  //       ? props.creationCallback(v.id)
-  //       : router.push(`/video/${v.id}`);
-  //     props.closeCallback();
-  //   });
-  // };
+
+  const submitCreation = async () =>
+    ApiController.createText(getCreationDetails())
+      .then((text) => {
+        props.creationCallback?.(text);
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Created Text"))
+      .then(() => setValue(""));
+
+  const getCreationDetails = () => ({
+    creatorId: userDetails?.id,
+    value,
+  });
+
+  const getUpdateDetails = () => ({
+    value,
+  });
+
+  const submitUpdate = () =>
+    props.text?.id &&
+    ApiController.updateText(props.text?.id, getUpdateDetails())
+      .then(() => {
+        props.updateCallback?.();
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Updated Text"))
+      .then(() => setValue(""));
 
   return (
     <>
@@ -62,8 +73,8 @@ const TextCreationDialog = (props: {
         }
         open={props.open}
         onCloseCallback={props.closeCallback}
-        width="709px"
-        maxWidth="709px"
+        width="650px"
+        maxWidth="650px"
         noPadding
         dynamicHeight
         paddingTop="52px"
@@ -87,8 +98,14 @@ const TextCreationDialog = (props: {
               />
             ) : null}
           </Stack>
-          <UrsorButton dark variant="tertiary" endIcon={PencilIcon}>
-            Create
+          <UrsorButton
+            dark
+            variant="tertiary"
+            endIcon={PencilIcon}
+            disabled={!value}
+            onClick={() => (props.text?.id ? submitUpdate() : submitCreation())}
+          >
+            {props.text?.id ? "Update" : "Create"}
           </UrsorButton>
         </Stack>
       </UrsorDialog>

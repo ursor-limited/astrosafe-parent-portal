@@ -39,8 +39,8 @@ export const formats = [
   "align",
   "strike",
   "script",
-  "blockquote",
-  //   "background",
+  //"blockquote",
+  "background",
   "list",
   "bullet",
   //   "indent",
@@ -124,7 +124,7 @@ export const TextEditorToolbar = (props: { id: string }) => {
       <span className="ql-formats">
         {/* <button className="ql-script" value="super" />
       <button className="ql-script" value="sub" /> */}
-        <button className="ql-blockquote" />
+        {/* <button className="ql-blockquote" /> */}
         {/* <button className="ql-direction" /> */}
       </span>
       <span className="ql-formats">
