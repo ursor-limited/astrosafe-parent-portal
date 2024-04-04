@@ -133,7 +133,11 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                       <Stack key={item.details.id}>
                         <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
                           {item.type === "video" ? (
-                            <VideoCard {...(item.details as IVideo)} />
+                            <VideoCard
+                              {...(item.details as IVideo)}
+                              editingCallback={() => null}
+                              deletionCallback={() => null}
+                            />
                           ) : null}
                         </UrsorFadeIn>
                       </Stack>
