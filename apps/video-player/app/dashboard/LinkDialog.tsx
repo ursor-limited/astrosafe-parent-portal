@@ -541,6 +541,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
     props.link?.id &&
     ApiController.updateLink(props.link?.id, getUpdateDetails())
       .then(() => {
+        imageUploadCallback?.();
         props.updateCallback?.();
         props.closeCallback();
       })
