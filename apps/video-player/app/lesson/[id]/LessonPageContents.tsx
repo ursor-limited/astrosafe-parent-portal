@@ -18,7 +18,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import TextDialog from "@/app/components/TextDialog";
+import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
@@ -52,6 +52,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
   const [images, setImages] = useState<IImage[]>([]);
+  const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
 
   const loadLesson = () =>
@@ -66,6 +67,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         setLinks(response.actualContents.links);
       response?.actualContents?.images &&
         setImages(response.actualContents.images);
+      response?.actualContents?.texts && setTexts(response.actualContents.text);
     });
 
   const reloadLessonDetails = () =>
@@ -104,6 +106,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
       worksheets: IWorksheet[];
       links: ILink[];
       images: IImage[];
+      texts: IText[];
     }
   ) => {
     console.log(actualContents);
@@ -112,6 +115,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
     setImages(actualContents.images);
+    setTexts(actualContents.texts);
   };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
@@ -136,6 +140,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
     image: () => setImageDialogOpen(true),
+    text: () => setTextDialogOpen(true),
     lesson: () => null,
   };
 

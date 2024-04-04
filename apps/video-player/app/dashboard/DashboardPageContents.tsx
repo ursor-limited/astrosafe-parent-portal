@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
@@ -42,10 +43,11 @@ import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
-import { ILink } from "./LinkDialog";
+import { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
+import { light } from "@mui/material/styles/createPalette";
 
 const PAGE_SIZE = 30;
 
@@ -92,7 +94,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     description: "Add a link to some non-naughty site.",
     color: PALETTE.secondary.orange[5],
     icon: LinkIcon,
-    infoButtonPosition: 150,
+    infoButtonPosition: 136,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
   },
   image: {
@@ -103,11 +105,25 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
   },
+  text: {
+    title: "Text",
+    description: "Add some styled and well-crafted copy.",
+    color: PALETTE.secondary.yellow[4],
+    icon: TypographyIcon,
+    infoButtonPosition: 136,
+    info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
+  },
 };
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet" | "lesson" | "link" | "image";
+export type AstroContent =
+  | "video"
+  | "worksheet"
+  | "lesson"
+  | "link"
+  | "image"
+  | "text";
 
 export type AstroContentSort = "abc" | "updatedAt";
 
@@ -303,6 +319,8 @@ export const ToolButton = (props: {
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
+  const [lightText, setLightText] = useState<boolean>(false);
+  useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
   return (
     <>
       <Stack
@@ -339,7 +357,7 @@ export const ToolButton = (props: {
             transition: "0.2s",
             svg: {
               path: {
-                fill: `${PALETTE.secondary.grey[4]} !important`,
+                fill: `${PALETTE.secondary.grey[5]} !important`,
               },
             },
           }}
@@ -362,7 +380,9 @@ export const ToolButton = (props: {
               transition: "0.2s",
               svg: {
                 path: {
-                  fill: PALETTE.font.light,
+                  fill: !lightText
+                    ? PALETTE.secondary.grey[5]
+                    : PALETTE.font.light,
                 },
               },
             }}
@@ -371,13 +391,20 @@ export const ToolButton = (props: {
             <props.icon height="35px" width="35px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="space-between">
-            <Typography variant="medium" bold color={props.color}>
+            <Typography
+              variant="medium"
+              bold
+              color={lightText ? props.color : PALETTE.secondary.grey[5]}
+            >
               {props.title}
             </Typography>
             <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
-              color={alpha(props.color, 0.7)}
+              color={alpha(
+                lightText ? props.color : PALETTE.secondary.grey[5],
+                0.7
+              )}
             >
               {props.description}
             </Typography>
