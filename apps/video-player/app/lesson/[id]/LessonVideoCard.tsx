@@ -1,20 +1,19 @@
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ApiController, { IVideo } from "../api";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import Image from "next/image";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import UrsorActionButton from "./UrsorActionButton";
-import DeletionDialog from "./DeletionDialog";
-import NotificationContext from "./NotificationContext";
-import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import ApiController, { IVideo } from "@/app/api";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import DeletionDialog from "@/app/components/DeletionDialog";
+import NotificationContext from "@/app/components/NotificationContext";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -23,7 +22,7 @@ const PLACEHOLDER_THUMBNAIL =
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const VideoCard = (
+const LessonVideoCard = (
   props: IVideo & { editingCallback: () => void; deletionCallback: () => void }
 ) => {
   const router = useRouter();
@@ -31,15 +30,6 @@ const VideoCard = (
     undefined
   );
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -53,19 +43,12 @@ const VideoCard = (
   return (
     <>
       <Stack
-        height="260px"
         borderRadius="12px"
         bgcolor="rgb(255,255,255)"
         p="4px"
         overflow="hidden"
-        sx={{
-          backdropFilter: "blur(4px)",
-          outline: orangeBorderOn
-            ? `3px solid ${PALETTE.system.orange}`
-            : undefined,
-        }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
+        boxShadow="0 0 22px rgba(0,0,0,0.1)"
         pb="12px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
@@ -98,7 +81,7 @@ const VideoCard = (
           onClick={() => router.push(`/video/${props.id}`)}
         >
           <Stack
-            height="163px"
+            height="331px"
             width="100%"
             sx={{
               backgroundImage: `url(${props.thumbnailUrl})`,
@@ -111,19 +94,35 @@ const VideoCard = (
             position="relative"
           >
             {/* <Stack
-            position="absolute"
-            borderRadius="100%"
-            width="32px"
-            height="32px"
-            justifyContent="center"
-            alignItems="center"
-            bgcolor={PALETTE.secondary.grey[1]}
-            top="12px"
-            right="12px"
-            zIndex={2}
-          >
-            <MoreIcon width="20px" height="20px" />
-          </Stack> */}
+              position="absolute"
+              borderRadius="100%"
+              width="32px"
+              height="32px"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor={PALETTE.secondary.grey[1]}
+              top="12px"
+              right="12px"
+              zIndex={2}
+            >
+              <UrsorActionButton
+                size="32px"
+                iconSize="16px"
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: props.editingCallback,
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
+            </Stack> */}
             {!props.thumbnailUrl ? (
               <Stack flex={1} justifyContent="center" alignItems="center">
                 <Image
@@ -152,7 +151,7 @@ const VideoCard = (
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
+              sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
             >
               <Typography variant="small">
                 {getFormattedDate(props.createdAt)}
@@ -175,4 +174,4 @@ const VideoCard = (
   );
 };
 
-export default VideoCard;
+export default LessonVideoCard;

@@ -4,8 +4,14 @@ import { ILesson } from "../lesson/[id]/page";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import UrsorActionButton from "./UrsorActionButton";
+import ApiController from "../api";
+import NotificationContext from "./NotificationContext";
+import DeletionDialog from "./DeletionDialog";
 
 export const spin = keyframes`
   from {
@@ -17,8 +23,19 @@ export const spin = keyframes`
 `;
 
 const LessonCard = (
-  props: ILesson & { imageUrls: string[]; clickCallback: () => void }
+  props: ILesson & {
+    imageUrls: string[];
+    clickCallback: () => void;
+    editingCallback: () => void;
+    deletionCallback: () => void;
+  }
 ) => {
+  const notificationCtx = useContext(NotificationContext);
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const submitDeletion = () =>
+    ApiController.deleteLesson(props.id)
+      .then(() => notificationCtx.negativeSuccess("Deleted Lesson."))
+      .then(props.deletionCallback);
   return (
     <>
       <Stack
@@ -34,6 +51,25 @@ const LessonCard = (
         position="relative"
         pb="6px"
       >
+        <Stack position="absolute" top="11px" right="11px" zIndex={2}>
+          <UrsorActionButton
+            size="32px"
+            iconSize="16px"
+            actions={[
+              {
+                text: "Edit",
+                kallback: props.editingCallback,
+                icon: PencilIcon,
+              },
+              {
+                text: "Delete",
+                kallback: () => setDeletionDialogOpen(true),
+                icon: TrashcanIcon,
+                color: PALETTE.system.red,
+              },
+            ]}
+          />
+        </Stack>
         <Stack
           flex={1}
           onClick={props.clickCallback}
@@ -163,6 +199,15 @@ const LessonCard = (
           </Stack>
         </Stack>
       </Stack>
+      {/* {deletionDialogOpen ? ( */}
+      <DeletionDialog
+        open={deletionDialogOpen}
+        closeCallback={() => setDeletionDialogOpen(false)}
+        deletionCallback={submitDeletion}
+        category="Lesson"
+        title={props.title}
+      />
+      {/* ) : null} */}
     </>
   );
 };

@@ -10,7 +10,7 @@ import {
   INumberBondWorksheetParameters,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import Pencil from "@/images/icons/Pencil.svg";
@@ -24,7 +24,7 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
-import PlaylistVideoCard from "./PlaylistVideoCard";
+import PlaylistVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";
@@ -36,6 +36,10 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
 import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
+import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
+import ImageCard from "@/app/components/ImageCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -43,19 +47,28 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
+  const [images, setImages] = useState<IImage[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+
+  const loadLesson = () =>
+    ApiController.getLessonWithContents(props.lessonId).then((response) => {
+      if (!response) return;
+      response?.lesson && setLesson(response.lesson);
+      response?.actualContents?.videos &&
+        setVideos(response.actualContents.videos);
+      response?.actualContents?.worksheets &&
+        setWorksheets(response.actualContents.worksheets);
+      response?.actualContents?.links &&
+        setLinks(response.actualContents.links);
+      response?.actualContents?.images &&
+        setImages(response.actualContents.images);
+    });
+
+  const reloadLessonDetails = () =>
+    ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+
   useEffect(() => {
-    props.lessonId &&
-      ApiController.getLessonWithContents(props.lessonId).then((response) => {
-        if (!response) return;
-        response?.lesson && setLesson(response.lesson);
-        response?.actualContents?.videos &&
-          setVideos(response.actualContents.videos);
-        response?.actualContents?.worksheets &&
-          setWorksheets(response.actualContents.worksheets);
-        response?.actualContents?.links &&
-          setLinks(response.actualContents.links);
-      });
+    props.lessonId && loadLesson();
   }, [props.lessonId]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
@@ -64,62 +77,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const submitDeletion = () =>
     lesson?.id &&
-    ApiController.deleteWorksheet(lesson.id).then(() =>
-      router.push("/dashboard")
-    );
+    ApiController.deleteLesson(lesson.id)
+      .then(() => router.push("/dashboard"))
+      .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
 
   const userDetails = useUserContext();
-  // const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
-  //   useState<boolean>(false);
-  // useEffect(() => {
-  //   setSignupPromptDialogOpen(
-  //     !props.creatorId && !userDetails.loading && !userDetails.user?.id
-  //   );
-  // }, [userDetails.user?.id, userDetails.loading, props.creatorId]);
-
-  // const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
-  // useEffect(() => {
-  //   if (userDetails.user && !signedIn) {
-  //     router.push("/dashboard");
-  //     //setSignedIn(true);
-  //   }
-  // }, [userDetails.user]);
-
-  // const [videos, setVideos] = useState<IVideo[]>([]);
-  // const loadVideos = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getUserVideos(userDetails.user.id).then((videos) =>
-  //       setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-  //     );
-  // };
-  // useEffect(() => {
-  //   setVideos(props.videos); //loadVideos();
-  // }, [props.videos]);
-
-  // const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
-  // useEffect(() => {
-  //   setWorksheets(props.worksheets); //loadVideos();
-  // }, [props.worksheets]);
-  // const loadWorksheets = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
-  //       setWorksheets(_.reverse(ws.slice()))
-  //     );
-  // };
-  // useEffect(() => {
-  //   loadWorksheets();
-  // }, [userDetails?.user?.id]);
-
-  // const [links, setLinks] = useState<ILink[]>([]);
-  // useEffect(() => {
-  //   setLinks(props.links); //loadVideos();
-  // }, [props.links]);
-  // const loadLinks = () => {
-  //   userDetails?.user?.id &&
-  //     ApiController.getLinks(userDetails.user.id).then((links) =>
-  //       setLinks(links)
-  //     );
-  // };
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -137,24 +99,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
       videos: IVideo[];
       worksheets: IWorksheet[];
       links: ILink[];
+      images: IImage[];
     }
   ) => {
+    console.log(actualContents);
     setContents(lesson.contents);
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
+    setImages(actualContents.images);
   };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
-  const [lessonDialogOpen, setLessonDialogOpen] = useState<boolean>(false);
+  const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
+  const [imageEditingDialogId, setImageEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
   const contentCallbacks: Record<AstroContent, () => void> = {
     worksheet: () => setWorksheetDialogOpen(true),
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
-    lesson: () => setLessonDialogOpen(true),
+    image: () => setImageDialogOpen(true),
+    lesson: () => null,
   };
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
@@ -163,6 +136,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
   const outOfCreations = useOutOfCreations();
+
+  const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
+
+  console.log(contents);
 
   return (
     <>
@@ -182,26 +159,45 @@ export default function LessonPageContents(props: { lessonId: string }) {
               />
               {userDetails?.user?.id &&
               userDetails?.user?.id === lesson?.creatorId ? (
-                <Stack
-                  sx={{
-                    pointerEvents:
-                      userDetails?.user?.id === lesson?.creatorId
-                        ? undefined
-                        : "none",
-                    opacity:
-                      userDetails?.user?.id &&
-                      userDetails?.user?.id !== lesson?.creatorId
-                        ? 0
-                        : 1,
-                  }}
-                >
-                  <CircularButton
-                    icon={TrashcanIcon}
-                    color={PALETTE.system.red}
-                    onClick={() => setDeletionDialogOpen(true)}
-                  />
-                </Stack>
-              ) : null}
+                <UrsorActionButton
+                  size="43px"
+                  iconSize="17px"
+                  //background={PALETTE.secondary.grey[1]}
+                  border
+                  actions={[
+                    {
+                      text: "Edit",
+                      kallback: () => setEditingDialogOpen(true),
+                      icon: PencilIcon,
+                    },
+                    {
+                      text: "Delete",
+                      kallback: () => setDeletionDialogOpen(true),
+                      icon: TrashcanIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
+                />
+              ) : // <Stack
+              //   sx={{
+              //     pointerEvents:
+              //       userDetails?.user?.id === lesson?.creatorId
+              //         ? undefined
+              //         : "none",
+              //     opacity:
+              //       userDetails?.user?.id &&
+              //       userDetails?.user?.id !== lesson?.creatorId
+              //         ? 0
+              //         : 1,
+              //   }}
+              // >
+              //   <CircularButton
+              //     icon={TrashcanIcon}
+              //     color={PALETTE.system.red}
+              //     onClick={() => setDeletionDialogOpen(true)}
+              //   />
+              // </Stack>
+              null}
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
@@ -228,15 +224,30 @@ export default function LessonPageContents(props: { lessonId: string }) {
             {_.reverse(contents.slice())
               .map((c) => {
                 if (c.type === "video") {
-                  const video = videos.find((v) => v.id === c.contentId);
+                  const video = videos?.find((v) => v.id === c.contentId);
                   return video ? (
-                    <PlaylistVideoCard key={video.id} {...video} />
+                    <PlaylistVideoCard
+                      key={video.id}
+                      {...video}
+                      editingCallback={() => setVideoEditingDialogId(video.id)}
+                      deletionCallback={loadLesson}
+                    />
                   ) : null;
                 } else if (c.type === "link") {
-                  const link = links.find((v) => v.id === c.contentId);
+                  const link = links?.find((v) => v.id === c.contentId);
                   return link ? <LinkCard key={link.id} {...link} /> : null;
+                } else if (c.type === "image") {
+                  const image = images?.find((i) => i.id === c.contentId);
+                  return image ? (
+                    <ImageCard
+                      key={image.id}
+                      {...image}
+                      editingCallback={() => setImageEditingDialogId(image.id)}
+                      deletionCallback={loadLesson}
+                    />
+                  ) : null;
                 } else if (c.type === "worksheet") {
-                  const worksheet = worksheets.find(
+                  const worksheet = worksheets?.find(
                     (w) => w.id === c.contentId
                   );
                   return worksheet ? (
@@ -255,6 +266,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
           </Stack>
         </BigCard>
       </Stack>
+      <LessonCreationDialog
+        open={editingDialogOpen}
+        closeCallback={() => setEditingDialogOpen(false)}
+        lesson={lesson}
+        updateCallback={reloadLessonDetails}
+      />
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}
@@ -271,6 +288,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={true}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
         closeCallback={() => setWorksheetDialogOpen(false)}
@@ -289,6 +314,26 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {imageDialogOpen ? (
+        <ImageDialog
+          open={imageDialogOpen}
+          closeCallback={() => setImageDialogOpen(false)}
+          creationCallback={(link) => {
+            ApiController.addToLesson(props.lessonId, "image", link.id).then(
+              (response) =>
+                updateLesson(response.lesson, response.actualContents)
+            );
+          }}
+        />
+      ) : null}
+      {imageEditingDialogId ? (
+        <ImageDialog
+          open={true}
+          closeCallback={() => setImageEditingDialogId(undefined)}
+          updateCallback={loadLesson}
+          image={images.find((i) => i.id === imageEditingDialogId)}
+        />
+      ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}

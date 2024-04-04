@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
 import { ILink } from "../dashboard/LinkDialog";
+import { getFormattedDate } from "./VideoCard";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
@@ -74,6 +76,7 @@ const LinkCard = (props: {
   url: ILink["url"];
   imageUrl: ILink["imageUrl"];
   color: ILink["color"];
+  createdAt: ILink["createdAt"];
   clickCallback?: () => void;
   editCallback?: () => void;
   duplicateCallback?: () => void;
@@ -122,16 +125,36 @@ const LinkCard = (props: {
           position="relative"
         />
         <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
-          <Stack direction="row">
+          <Stack flex={1} justifyContent="space-between">
             <Typography
-              bold
+              color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
               variant="medium"
-              color={lightText ? PALETTE.font.light : PALETTE.font.dark}
-              maxLines={3}
+              bold
+              maxLines={2}
             >
               {props.title}
             </Typography>
-            <Stack minWidth="25px" width="25px" />
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{
+                svg: {
+                  path: {
+                    fill: lightText
+                      ? "rgba(255,255,255,0.93)"
+                      : "rgba(0,0,0,0.8)",
+                  },
+                },
+              }}
+            >
+              <Typography
+                color={lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"}
+                variant="small"
+              >
+                {getFormattedDate(props.createdAt)}
+              </Typography>
+              <LinkIcon height="20px" width="20px" />
+            </Stack>
           </Stack>
           {/* <Stack direction="row" spacing="4px">
             <Typography

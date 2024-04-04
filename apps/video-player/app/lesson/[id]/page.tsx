@@ -20,6 +20,7 @@ export interface ILesson {
     contentId: string;
   }[];
   createdAt: string;
+  updatedAt: string;
 }
 
 const DUMMY_CONTENTS: ILesson["contents"] = [

@@ -1,8 +1,9 @@
 import { Stack } from "@mui/system";
 import RocketIcon from "@/images/icons/RocketIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import {
   PALETTE,
@@ -22,6 +23,9 @@ import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
+import TimeRange from "./TimeRange";
+import { IVideo } from "./AstroContentColumns";
+import NotificationContext from "../components/NotificationContext";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -34,11 +38,25 @@ const VideoCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
   creationCallback?: (videoId: string) => void;
+  editingCallback?: () => void;
+  video?: IVideo;
+  noPlayer?: boolean;
 }) => {
   const router = useRouter();
   const [url, setUrl] = useState<string>("");
+  useEffect(() => {
+    props.video?.url && setUrl(props.video.url);
+  }, [props.video?.url]);
+
   const [title, setTitle] = useState<string>("");
+  useEffect(() => {
+    props.video?.title && setTitle(props.video.title);
+  }, [props.video?.title]);
+
   const [description, setDescription] = useState<string>("");
+  useEffect(() => {
+    props.video?.description && setDescription(props.video.description);
+  }, [props.video?.description]);
 
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
@@ -48,6 +66,11 @@ const VideoCreationDialog = (props: {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const [originalUrl, setOriginalUrl] = useState<string>("");
+  useEffect(
+    () => props.video && setOriginalUrl(props.video.url),
+    [props.video?.id]
+  );
+
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
   );
@@ -69,8 +92,8 @@ const VideoCreationDialog = (props: {
         } else if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          setUrl(deNoCookiefy(extractUrl(details.html)));
-          setTitle(details.title);
+          !url && setUrl(deNoCookiefy(extractUrl(details.html)));
+          !title && setTitle(details.title);
           //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
@@ -91,10 +114,21 @@ const VideoCreationDialog = (props: {
   }, [url]);
 
   const [duration, setDuration] = useState<number | undefined>(10);
-  const [range, setRange] = useState<number[] | undefined>(undefined);
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
   useEffect(() => {
-    duration && setRange([0, duration]);
+    !props.video && duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
+
+  useEffect(() => {
+    if (
+      props.video &&
+      _.isNumber(props.video?.startTime) &&
+      props.video.endTime
+    ) {
+      setRange([props.video?.startTime, props.video.endTime]);
+      setDuration(props.video.endTime - props.video.startTime);
+    }
+  }, [props.video?.id]);
 
   const { width } = useWindowSize();
 
@@ -120,7 +154,8 @@ const VideoCreationDialog = (props: {
     []
   );
 
-  const submit = () => {
+  const notificationCtx = useContext(NotificationContext);
+  const submitCreation = () => {
     setLoading(true);
     ApiController.createVideo({
       title,
@@ -141,18 +176,39 @@ const VideoCreationDialog = (props: {
     });
   };
 
+  const submitUpdate = () => {
+    setLoading(true);
+    props.video?.id &&
+      ApiController.updateVideo(props.video.id, {
+        title,
+        description,
+        url,
+        thumbnailUrl,
+        startTime: range?.[0],
+        endTime: range?.[1],
+      }).then(async (v) => {
+        setLoading(false);
+        props.editingCallback?.();
+        props.closeCallback();
+        notificationCtx.success("Video updated.");
+      });
+  };
+
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
-
-  const [landInDashboardAfterCreation, setLandInDashboardAfterCreation] =
-    useLocalStorage<boolean>("landInDashboardAfterCreation", false);
 
   const userDetails = useUserContext();
 
   return (
     <>
       <UrsorDialog
-        supertitle={isMobile ? undefined : "Create safe video link"}
+        supertitle={
+          isMobile
+            ? undefined
+            : props.video
+            ? "Edit safe video link"
+            : "Create safe video link"
+        }
         open={props.open}
         // button={{
         //   text: "Create",
@@ -164,29 +220,35 @@ const VideoCreationDialog = (props: {
         //   disabled: !url,
         // }}
         onCloseCallback={props.closeCallback}
-        width="1000px"
-        maxWidth="1000px"
-        noPadding={isMobile}
+        width={props.noPlayer ? "560px" : "926px"}
+        maxWidth={props.noPlayer ? "560px" : "926px"}
+        noPadding
         dynamicHeight
+        paddingTop="52px"
+        paddingX={isMobile ? undefined : "32px"}
       >
         <Stack
           flex={1}
-          direction={isMobile ? "column" : "row"}
+          direction={isMobile || props.noPlayer ? "column" : "row"}
           spacing="40px"
-          width={isMobile ? "100%" : "95%"}
+          // width={isMobile ? "100%" : "95%"}
           overflow="hidden"
-          px="16px"
-          py="20px"
+          px={isMobile ? "16px" : "40px"}
+          py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
-          <Stack spacing="20px" flex={1}>
-            <Captioned text="URL">
+          <Stack
+            spacing="20px"
+            flex={1}
+            width={props.noPlayer ? "480px" : "358px"}
+          >
+            <Captioned text="Video URL">
               <UrsorInputField
                 value={originalUrl}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setOriginalUrl(event.target.value)
                 }
-                placeholder="URL"
+                placeholder="Youtube or Vimeo"
                 width="100%"
                 leftAlign
                 boldValue
@@ -217,115 +279,24 @@ const VideoCreationDialog = (props: {
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setDescription(event.target.value)
                 }
-                placeholder="Description"
+                placeholder="Optional"
                 width="100%"
+                height={props.video ? "100px" : "179px"}
                 boldValue
               />
             </Captioned>
-            <Captioned text="Start and end time">
-              <Stack
-                bgcolor={PALETTE.secondary.grey[1]}
-                borderRadius="8px"
-                height="40px"
-                justifyContent="center"
-                px="10px"
-              >
-                <Stack
-                  direction="row"
-                  // spacing={mobile ? "20px" : "44px"}
-                  spacing={"20px"}
-                  justifyContent="center"
-                  width="100%"
-                  sx={{
-                    pointerEvents: !originalUrl ? "none" : undefined,
-                    opacity: originalUrl ? 1 : 0.5,
-                    ".MuiSlider-root": {
-                      color: "transparent !important",
-                    },
-                    ".MuiSlider-rail": {
-                      opacity: 0.4,
-                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                    },
-                    ".MuiSlider-track": {
-                      background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-                    },
-                    ".MuiSlider-thumb": {
-                      "&:nth-of-type(3)": {
-                        background: "#F279C5",
-                      },
-                      "&:nth-of-type(4)": {
-                        background: "#FD9B41",
-                      },
-                    },
-                  }}
-                >
-                  <DurationLabel
-                    value={range?.[0] ?? 0}
-                    incrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [Math.min(duration, range[0] + 1), range[1]]
-                          : undefined
-                      )
-                    }
-                    decrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [Math.max(0, range[0] - 1), range[1]]
-                          : undefined
-                      )
-                    }
-                  />
-                  <Slider
-                    min={0}
-                    max={duration}
-                    valueLabelDisplay="off"
-                    getAriaLabel={() => "Temperature range"}
-                    value={range}
-                    onChange={(event: Event, newValue: number | number[]) => {
-                      setRange(newValue as number[]);
-                    }}
-                  />
-                  <DurationLabel
-                    value={range?.[1] ?? 0}
-                    incrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [range[0], Math.min(duration, range[1] + 1)]
-                          : undefined
-                      )
-                    }
-                    decrementCallback={() =>
-                      setRange(
-                        duration &&
-                          range &&
-                          _.isNumber(range?.[0]) &&
-                          _.isNumber(range?.[1])
-                          ? [range[0], Math.max(0, range[1] - 1)]
-                          : undefined
-                      )
-                    }
-                  />
-                </Stack>
-              </Stack>
-            </Captioned>
+            {isMobile || props.noPlayer ? (
+              <TimeRange
+                range={range}
+                duration={duration}
+                setRange={setRange}
+                originalUrl={originalUrl}
+              />
+            ) : null}
           </Stack>
           {!isMobile ? (
-            <Stack
-              width={VIDEO_WIDTH}
-              //height={VIDEO_HEIGHT}
-              spacing="6px"
-            >
-              {provider ? (
+            <Stack width={VIDEO_WIDTH} spacing="6px">
+              {provider && !props.noPlayer ? (
                 <Player
                   url={url}
                   provider={provider}
@@ -334,7 +305,9 @@ const VideoCreationDialog = (props: {
                     Math.min(playerWidth, VIDEO_WIDTH) *
                     (VIDEO_HEIGHT / VIDEO_WIDTH)
                   }
-                  setDuration={(d) => d && setDuration(d)}
+                  setDuration={(d) => {
+                    d && setDuration(d);
+                  }}
                   noKitemark
                   top="120px"
                   playingCallback={(p) => setPlaying(p)}
@@ -342,40 +315,42 @@ const VideoCreationDialog = (props: {
                   noBackdrop
                 />
               ) : null}
-              <Typography maxLines={2} bold>
-                {title}
-              </Typography>
-              <Stack flex={1} overflow="hidden">
-                <Typography variant="small" maxLines={2}>
-                  {description}
-                </Typography>
-              </Stack>
-              <UrsorButton
-                onClick={() => {
-                  submit();
-                }}
-                disabled={!url}
-                dark
-                variant="tertiary"
-                endIcon={RocketIcon}
-                width="100%"
-              >
-                Create
-              </UrsorButton>
+              {!props.noPlayer ? (
+                <>
+                  <TimeRange
+                    range={range}
+                    duration={duration}
+                    setRange={setRange}
+                    originalUrl={originalUrl}
+                  />
+                  <UrsorButton
+                    onClick={() => {
+                      props.video ? submitUpdate() : submitCreation();
+                    }}
+                    disabled={!url}
+                    dark
+                    variant="tertiary"
+                    endIcon={props.video ? PencilIcon : RocketIcon}
+                    width="100%"
+                  >
+                    {props.video ? "Update" : "Edit"}
+                  </UrsorButton>
+                </>
+              ) : null}
             </Stack>
           ) : null}
-          {isMobile ? (
+          {isMobile || props.noPlayer ? (
             <UrsorButton
               onClick={() => {
-                submit();
+                props.video ? submitUpdate() : submitCreation();
               }}
               disabled={!url}
               dark
               variant="tertiary"
-              endIcon={RocketIcon}
+              endIcon={props.video ? PencilIcon : RocketIcon}
               width="100%"
             >
-              Create
+              {props.video ? "Update" : "Create"}
             </UrsorButton>
           ) : null}
         </Stack>
@@ -383,7 +358,7 @@ const VideoCreationDialog = (props: {
       <VideoSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
-        createCallback={submit}
+        createCallback={submitCreation}
         //signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={false}
       />

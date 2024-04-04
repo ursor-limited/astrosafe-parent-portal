@@ -15,6 +15,7 @@ export interface IVideo {
   startTime?: number;
   endTime?: number;
   createdAt: string;
+  updatedAt: string;
 }
 
 const BACKEND_URLS = {
@@ -41,6 +42,7 @@ const post = (route: string, body: any) =>
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      cache: "no-store",
     }
   );
 
@@ -88,6 +90,14 @@ const dellete = (route: string) =>
 class ApiController {
   static async createLesson(details: any) {
     return post("lesson", details).then((response: any) => response.json());
+  }
+  static async updateLesson(id: string, details: any) {
+    return patch(`lesson/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async deleteLesson(id: string) {
+    return dellete(`lesson/${id}`)
   }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
@@ -188,7 +198,7 @@ class ApiController {
     fileExtension: string,
     contentType: string
   ) {
-    return post(`/img/sign`, {
+    return post(`/unsplash/sign`, {
       fileExtension,
       contentType,
     }).then((response: any) => response.json());
@@ -201,6 +211,14 @@ class ApiController {
       body: uploadFile,
     }).then((response: any) => response.json());
   }
+
+  static async searchImages(query: string) {
+    return post("unsplash/search", {
+      query,
+      count: 10,
+    }).then((response: any) => response.json());
+  }
+
   static async createEquationWorksheet(
     title: string,
     orientation: EquationOrientation,
@@ -272,6 +290,17 @@ class ApiController {
   }
   static async clearPediodCreations(id: string) {
     return get(`video/clearPediodCreations/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async createImage(details: any) {
+    return post("image", details).then((response: any) => response.json());
+  }
+  static async deleteImage(id: string) {
+    return dellete(`image/${id}`).then((response: any) => response);
+  }
+  static async updateImage(id: string, details: any) {
+    return patch(`image/${id}`, details).then((response: any) =>
       response.json()
     );
   }

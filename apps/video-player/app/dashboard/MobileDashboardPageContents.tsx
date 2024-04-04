@@ -322,7 +322,11 @@ export default function MobileDashboardPageContents() {
         {cards.map((card, i) => (
           <UrsorFadeIn key={card.details.id} delay={i * 120} duration={800}>
             {card.type === "video" ? (
-              <VideoCard {...(card.details as IVideo)} />
+              <VideoCard
+                {...(card.details as IVideo)}
+                deletionCallback={() => null}
+                editingCallback={() => null}
+              />
             ) : (
               <WorksheetCard {...(card.details as IWorksheet)} />
             )}

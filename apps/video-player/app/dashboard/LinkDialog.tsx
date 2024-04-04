@@ -86,6 +86,7 @@ export const ImageButton = (props: {
       ]}
       closeCallback={() => setOpen(false)}
       placement={props.leftAlign ? "left" : "right"}
+      zIndex={9999}
     >
       <Stack
         borderRadius="100%"
@@ -120,6 +121,7 @@ export interface ILink {
   url: string;
   imageUrl: string;
   color: string;
+  createdAt: string;
 }
 
 const CREATION_SUCCESS_MESSAGE = "Link added";
@@ -225,6 +227,7 @@ export const PaletteButton = (props: {
         open={open}
         closeCallback={() => setOpen(false)}
         placement="right"
+        zIndex={9999}
         content={
           <Stack
             spacing="16px"

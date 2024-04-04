@@ -50,6 +50,7 @@ export interface IActionPopupProps {
   placement?: IUrsorPopoverProps["placement"];
   disableOverflowFlip?: boolean;
   closeCallback: () => void;
+  zIndex?: number;
   children: React.ReactNode;
 }
 
@@ -62,6 +63,7 @@ export default function ActionPopup(props: IActionPopupProps) {
       }
       closeCallback={props.closeCallback}
       placement={props.placement}
+      zIndex={props.zIndex}
     >
       {props.children}
     </UrsorPopover>

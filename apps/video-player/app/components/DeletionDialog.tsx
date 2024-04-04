@@ -16,7 +16,7 @@ export interface IDeletionDialogProps {
   closeCallback: () => void;
   deletionCallback: () => void;
   category: string;
-  title: string;
+  title?: string;
   mobile?: boolean;
 }
 
@@ -50,18 +50,22 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           >{`Remove ${props.category}`}</Typography>
           <Stack alignItems="center" spacing="5px">
             <Typography variant="medium" sx={{ textAlign: "center" }}>
-              {`Are you sure you want to delete`}
+              {`Are you sure you want to delete ${
+                !props.title ? "this " + props.category + "?" : ""
+              }`}
             </Typography>
-            <Typography
-              variant="medium"
-              bold
-              sx={{
-                textAlign: "center",
-              }}
-              maxLines={2}
-            >
-              {props.title}
-            </Typography>
+            {props.title ? (
+              <Typography
+                variant="medium"
+                bold
+                sx={{
+                  textAlign: "center",
+                }}
+                maxLines={2}
+              >
+                {props.title}
+              </Typography>
+            ) : null}
             <Typography variant="medium" sx={{ textAlign: "center" }}>
               {'To confirm your intention, please type "delete" below.'}
             </Typography>
