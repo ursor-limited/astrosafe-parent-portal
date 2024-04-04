@@ -122,6 +122,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
 
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
+  const [linkEditingDialogId, setLinkEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [textDialogOpen, setTextDialogOpen] = useState<boolean>(false);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
@@ -143,8 +147,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const outOfCreations = useOutOfCreations();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
-
-  console.log(contents);
 
   return (
     <>
@@ -240,7 +242,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   ) : null;
                 } else if (c.type === "link") {
                   const link = links?.find((v) => v.id === c.contentId);
-                  return link ? <LinkCard key={link.id} {...link} /> : null;
+                  return link ? (
+                    <LinkCard
+                      key={link.id}
+                      {...link}
+                      editCallback={() => setLinkEditingDialogId(link.id)}
+                      deleteCallback={loadLesson}
+                    />
+                  ) : null;
                 } else if (c.type === "image") {
                   const image = images?.find((i) => i.id === c.contentId);
                   return image ? (
@@ -319,6 +328,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {linkEditingDialogId ? (
+        <LinkDialog
+          open={true}
+          closeCallback={() => setLinkEditingDialogId(undefined)}
+          updateCallback={loadLesson}
+          link={links.find((l) => l.id === linkEditingDialogId)}
+        />
+      ) : null}
       <TextDialog
         open={textDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}

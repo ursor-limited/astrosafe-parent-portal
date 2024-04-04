@@ -136,6 +136,7 @@ const ImageCard = (
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
           category="Image"
+          title={props.title}
         />
       ) : null}
     </>
