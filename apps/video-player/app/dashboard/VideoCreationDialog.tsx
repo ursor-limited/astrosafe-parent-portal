@@ -92,7 +92,7 @@ const VideoCreationDialog = (props: {
         } else if (details.error?.includes("403")) {
           setShowForbiddenVideoView(true);
         } else {
-          !url && setUrl(deNoCookiefy(extractUrl(details.html)));
+          setUrl(deNoCookiefy(extractUrl(details.html)));
           !title && setTitle(details.title);
           //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
@@ -118,6 +118,8 @@ const VideoCreationDialog = (props: {
   useEffect(() => {
     !props.video && duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
+
+  console.log(duration);
 
   useEffect(() => {
     if (

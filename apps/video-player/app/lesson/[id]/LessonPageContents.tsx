@@ -122,7 +122,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
 
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
-  const [textDialogOpen, setTextDialogOpen] = useState<boolean>(true);
+  const [textDialogOpen, setTextDialogOpen] = useState<boolean>(false);
   const [imageDialogOpen, setImageDialogOpen] = useState<boolean>(false);
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
     string | undefined
@@ -225,12 +225,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          <Stack position="absolute" top={0} right={0}>
-            <TextEditorToolbar id="aaa" />
-          </Stack>
-          <Stack>
-            <AstroText id="aaa" value="" valueChangeCallback={() => null} />
-          </Stack>
           <Stack spacing="20px" width="40%" px="24px">
             {_.reverse(contents.slice())
               .map((c) => {
