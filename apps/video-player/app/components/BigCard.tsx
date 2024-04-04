@@ -65,9 +65,11 @@ const BigCard = (props: {
               {props.createdAt ? (
                 <Typography>{getFormattedDate(props.createdAt)}</Typography>
               ) : null}
-              <Typography variant="h2">{props.title}</Typography>
+              <Typography htmlTag="h1" variant="h2">
+                {props.title}
+              </Typography>
             </Stack>
-            <Typography>{props.description}</Typography>
+            <Typography htmlTag="h2">{props.description}</Typography>
           </Stack>
         </Stack>
         {props.children}
