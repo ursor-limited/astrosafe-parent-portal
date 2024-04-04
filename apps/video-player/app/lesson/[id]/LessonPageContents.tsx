@@ -24,7 +24,7 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
-import PlaylistVideoCard from "./PlaylistVideoCard";
+import PlaylistVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";

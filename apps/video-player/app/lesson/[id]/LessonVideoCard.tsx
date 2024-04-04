@@ -22,7 +22,7 @@ const PLACEHOLDER_THUMBNAIL =
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const PlaylistVideoCard = (
+const LessonVideoCard = (
   props: IVideo & { editingCallback: () => void; deletionCallback: () => void }
 ) => {
   const router = useRouter();
@@ -174,4 +174,4 @@ const PlaylistVideoCard = (
   );
 };
 
-export default PlaylistVideoCard;
+export default LessonVideoCard;
