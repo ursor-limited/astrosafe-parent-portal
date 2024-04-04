@@ -119,8 +119,6 @@ const VideoCreationDialog = (props: {
     !props.video && duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
 
-  console.log(duration);
-
   useEffect(() => {
     if (
       props.video &&
@@ -245,16 +243,23 @@ const VideoCreationDialog = (props: {
             width={props.noPlayer ? "480px" : "358px"}
           >
             <Captioned text="Video URL">
-              <UrsorInputField
-                value={originalUrl}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setOriginalUrl(event.target.value)
-                }
-                placeholder="Youtube or Vimeo"
-                width="100%"
-                leftAlign
-                boldValue
-              />
+              <Stack
+                sx={{
+                  opacity: props.video ? 0.5 : 1,
+                  pointerEvents: props.video ? "none" : undefined,
+                }}
+              >
+                <UrsorInputField
+                  value={originalUrl}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setOriginalUrl(event.target.value)
+                  }
+                  placeholder="Youtube or Vimeo"
+                  width="100%"
+                  leftAlign
+                  boldValue
+                />
+              </Stack>
             </Captioned>
 
             <Stack
@@ -335,7 +340,7 @@ const VideoCreationDialog = (props: {
                     endIcon={props.video ? PencilIcon : RocketIcon}
                     width="100%"
                   >
-                    {props.video ? "Update" : "Edit"}
+                    {props.video ? "Update" : "Create"}
                   </UrsorButton>
                 </>
               ) : null}
