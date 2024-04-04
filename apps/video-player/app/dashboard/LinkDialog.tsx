@@ -537,19 +537,22 @@ export default function LinkDialog(props: ILinkDialogProps) {
     lessonId: props.lessonId,
   });
 
+  const submitUpdate = () =>
+    props.link?.id &&
+    ApiController.updateLink(props.link?.id, getUpdateDetails())
+      .then(() => {
+        props.updateCallback?.();
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Updated Link"));
+
   const getUpdateDetails = () => ({
     title,
+    description,
     url,
-    accessibleUrl,
     imageUrl: downloadImageUrl,
     color,
   });
-
-  const submitUpdate = () => null;
-  // ApiController.updateLink(props.link?.id, getUpdateDetails())
-  //   .then(props.updateCallback)
-  //   .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
-  //   .catch((error) => notificationCtx.error(error.message));
 
   const isWideDomain = (url: string) =>
     WIDE_DOMAINS.includes(getPrefixRemovedUrl(url).replace("/", ""));
@@ -567,16 +570,6 @@ export default function LinkDialog(props: ILinkDialogProps) {
   const [dropzoneRef, setDropzoneRef] = useState<HTMLElement | null>();
 
   const [displayUrlInvalidity, setDisplayUrlInvalidity] = useState(false);
-
-  const completionCallback = async () => {
-    (props.link ? submitUpdate() : submitCreation())
-      ?.then(props.closeCallback)
-      .then(imageUploadCallback)
-      .catch((error) => {
-        notificationCtx.negativeSuccess(error.message);
-        setDisplayUrlInvalidity(true);
-      });
-  };
 
   const supertitle = `${props.link ? "Edit" : "Add a"} ${
     props.platform ? "Platform" : "Link"

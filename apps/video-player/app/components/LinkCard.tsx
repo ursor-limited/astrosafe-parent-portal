@@ -6,6 +6,12 @@ import { useRouter } from "next/navigation";
 import { ILink } from "../dashboard/LinkDialog";
 import { getFormattedDate } from "./VideoCard";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import UrsorActionButton from "./UrsorActionButton";
+import DeletionDialog from "./DeletionDialog";
+import ApiController from "../api";
+import NotificationContext from "./NotificationContext";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
@@ -72,6 +78,7 @@ export const getAbsoluteUrl = (url: string) =>
   `https://${getPrefixRemovedUrl(url)}`;
 
 const LinkCard = (props: {
+  id: ILink["id"];
   title: ILink["title"];
   url: ILink["url"];
   imageUrl: ILink["imageUrl"];
@@ -79,6 +86,7 @@ const LinkCard = (props: {
   createdAt: ILink["createdAt"];
   clickCallback?: () => void;
   editCallback?: () => void;
+  deleteCallback?: () => void;
   duplicateCallback?: () => void;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -88,75 +96,109 @@ const LinkCard = (props: {
     [props.color]
   );
 
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
   const router = useRouter();
+
+  const notificationCtx = React.useContext(NotificationContext);
+
+  const submitDeletion = () =>
+    ApiController.deleteLink(props.id)
+      .then(props.deleteCallback)
+      .then(() => notificationCtx.negativeSuccess("Deleted Link."));
+
   return (
-    <Stack
-      position="relative"
-      width="100%"
-      minHeight="313px"
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-    >
+    <>
       <Stack
-        bgcolor={props.color || "rgb(255,255,255)"}
-        borderRadius="12px"
-        overflow="hidden"
-        border={`4px solid ${props.color || "rgb(255,255,255)"}`}
-        boxSizing="border-box"
-        flex={1}
-        spacing="5px"
-        onClick={() => router.push(`https://${getPrefixRemovedUrl(props.url)}`)}
-        sx={{
-          cursor: "pointer",
-          transition: "0.2s",
-          "&:hover": { opacity: 0.6 },
-        }}
+        position="relative"
+        width="100%"
+        minHeight="313px"
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
       >
+        <Stack position="absolute" top="16px" right="16px" zIndex={2}>
+          <UrsorActionButton
+            size="32px"
+            iconSize="16px"
+            actions={[
+              {
+                text: "Edit",
+                kallback: () => props.editCallback?.(),
+                icon: PencilIcon,
+              },
+              {
+                text: "Delete",
+                kallback: () => setDeletionDialogOpen(true),
+                icon: TrashcanIcon,
+                color: PALETTE.system.red,
+              },
+            ]}
+          />
+        </Stack>
         <Stack
-          width="100%"
-          minHeight="304px"
+          bgcolor={props.color || "rgb(255,255,255)"}
+          borderRadius="12px"
+          overflow="hidden"
+          border={`4px solid ${props.color || "rgb(255,255,255)"}`}
+          boxSizing="border-box"
+          flex={1}
+          spacing="5px"
+          onClick={() =>
+            router.push(`https://${getPrefixRemovedUrl(props.url)}`)
+          }
           sx={{
-            backgroundColor: "rgba(255,255,255,0.15)",
-            backgroundImage: `url(${props.imageUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            boxSizing: "border-box",
+            cursor: "pointer",
+            transition: "0.2s",
+            "&:hover": { opacity: 0.6 },
           }}
-          position="relative"
-        />
-        <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
-          <Stack flex={1} justifyContent="space-between">
-            <Typography
-              color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
-              variant="medium"
-              bold
-              maxLines={2}
-            >
-              {props.title}
-            </Typography>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{
-                svg: {
-                  path: {
-                    fill: lightText
-                      ? "rgba(255,255,255,0.93)"
-                      : "rgba(0,0,0,0.8)",
-                  },
-                },
-              }}
-            >
+        >
+          <Stack
+            width="100%"
+            minHeight="304px"
+            sx={{
+              backgroundColor: "rgba(255,255,255,0.15)",
+              backgroundImage: `url(${props.imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              boxSizing: "border-box",
+            }}
+            position="relative"
+          />
+          <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
+            <Stack flex={1} justifyContent="space-between">
               <Typography
-                color={lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"}
-                variant="small"
+                color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                variant="medium"
+                bold
+                maxLines={2}
               >
-                {getFormattedDate(props.createdAt)}
+                {props.title}
               </Typography>
-              <LinkIcon height="20px" width="20px" />
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: lightText
+                        ? "rgba(255,255,255,0.93)"
+                        : "rgba(0,0,0,0.8)",
+                    },
+                  },
+                }}
+              >
+                <Typography
+                  color={
+                    lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"
+                  }
+                  variant="small"
+                >
+                  {getFormattedDate(props.createdAt)}
+                </Typography>
+                <LinkIcon height="20px" width="20px" />
+              </Stack>
             </Stack>
-          </Stack>
-          {/* <Stack direction="row" spacing="4px">
+            {/* <Stack direction="row" spacing="4px">
             <Typography
               variant="small"
               color={alpha(
@@ -177,9 +219,17 @@ const LinkCard = (props: {
               {agoText.text}
             </Typography>
           </Stack> */}
+          </Stack>
         </Stack>
       </Stack>
-    </Stack>
+      <DeletionDialog
+        open={deletionDialogOpen}
+        closeCallback={() => setDeletionDialogOpen(false)}
+        deletionCallback={submitDeletion}
+        category="Link"
+        title={props.title}
+      />
+    </>
   );
 };
 

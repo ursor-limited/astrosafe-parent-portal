@@ -288,6 +288,14 @@ class ApiController {
   static async createLink(details: any) {
     return post("link", details).then((response: any) => response.json());
   }
+  static async deleteLink(id: string) {
+    return dellete(`link/${id}`)
+  }
+  static async updateLink(id: string, details: any) {
+    return patch(`link/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
   static async clearPediodCreations(id: string) {
     return get(`video/clearPediodCreations/${id}`).then((response: any) =>
       response.json()
