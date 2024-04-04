@@ -15,7 +15,7 @@ export interface IUrsorActionButtonProps {
   light?: boolean;
   background?: string;
   fontColor?: string;
-  //shadow?: boolean;
+  shadow?: boolean;
   border?: boolean;
   buttonClickCallback?: () => void;
 }
@@ -64,7 +64,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           setOpen(true);
           props.buttonClickCallback?.();
         }}
-        //boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.05)" : undefined}
+        boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.06)" : undefined}
       >
         <MoreIcon
           height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}

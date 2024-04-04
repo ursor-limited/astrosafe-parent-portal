@@ -312,6 +312,17 @@ class ApiController {
       response.json()
     );
   }
+  static async createText(details: any) {
+    return post("text", details).then((response: any) => response.json());
+  }
+  static async updateText(id: string, details: any) {
+    return patch(`text/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async deleteText(id: string) {
+    return dellete(`text/${id}`).then((response: any) => response);
+  }
 }
 
 export default ApiController;
