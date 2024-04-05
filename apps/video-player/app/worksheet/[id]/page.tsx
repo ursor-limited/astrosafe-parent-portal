@@ -30,7 +30,7 @@ async function WorksheetPage({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { share: string };
+  searchParams: { lesson: string };
 }) {
   const details = (await ApiController.getWorksheet(params.id)) as IWorksheet;
   //const { width } = useWindowSize();
@@ -42,9 +42,12 @@ async function WorksheetPage({
     <AuthWrapper>
       <UserProvider>
         {isMobile ? (
-          <MobileWorksheetPageContents {...details} />
+          <MobileWorksheetPageContents
+            {...details}
+            lessonId={searchParams.lesson}
+          />
         ) : (
-          <WorksheetPageContents {...details} />
+          <WorksheetPageContents {...details} lessonId={searchParams.lesson} />
         )}
       </UserProvider>
     </AuthWrapper>

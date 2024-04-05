@@ -179,7 +179,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           description={details.description}
           createdAt={details.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
-          backText={props.lessonId ? "Back to Lesson" : null}
+          backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&
