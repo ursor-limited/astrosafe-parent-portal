@@ -98,7 +98,7 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
   </Stack>
 );
 
-function VideoPageContents(props: { details: IVideo }) {
+function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   const { user } = useAuth0();
 
   const [details, setDetails] = useState<IVideo | undefined>(undefined);
@@ -178,6 +178,8 @@ function VideoPageContents(props: { details: IVideo }) {
           title={details.title}
           description={details.description}
           createdAt={details.createdAt}
+          backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
+          backText={props.lessonId ? "Back to Lesson" : null}
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&

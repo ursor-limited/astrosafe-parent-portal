@@ -24,7 +24,10 @@ export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
 const VideoCard = (
-  props: IVideo & { editingCallback: () => void; deletionCallback: () => void }
+  props: IVideo & {
+    editingCallback: () => void;
+    deletionCallback: () => void;
+  }
 ) => {
   const router = useRouter();
   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(

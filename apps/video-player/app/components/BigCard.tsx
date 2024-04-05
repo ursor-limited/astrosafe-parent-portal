@@ -12,6 +12,8 @@ const BigCard = (props: {
   description?: string;
   createdAt?: string;
   minHeight?: string;
+  backRoute?: string;
+  backText?: string;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -51,11 +53,15 @@ const BigCard = (props: {
                   path: { fill: PALETTE.secondary.grey[4] },
                 },
               }}
-              onClick={() => router.push(userDetails ? "/dashboard" : "/")}
+              onClick={() =>
+                router.push(
+                  props.backRoute || (userDetails ? "/dashboard" : "/")
+                )
+              }
             >
               <ChevronLeft width="20px" height="20px" />
               <Typography color={PALETTE.secondary.grey[4]}>
-                Back to Home
+                {props.backText || "Back to Home"}
               </Typography>
             </Stack>
             {props.rightStuff}

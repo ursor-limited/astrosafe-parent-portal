@@ -23,7 +23,11 @@ export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
 const LessonVideoCard = (
-  props: IVideo & { editingCallback: () => void; deletionCallback: () => void }
+  props: IVideo & {
+    lessonId: string;
+    editingCallback: () => void;
+    deletionCallback: () => void;
+  }
 ) => {
   const router = useRouter();
   const [currentPageUrl, setCurrentPageUrl] = useState<string | undefined>(
@@ -78,7 +82,13 @@ const LessonVideoCard = (
             transition: "0.2s",
             cursor: "pointer",
           }}
-          onClick={() => router.push(`/video/${props.id}`)}
+          onClick={() =>
+            router.push(
+              `/video/${props.id}${
+                props.lessonId ? `?lesson=${props.lessonId}` : ""
+              }`
+            )
+          }
         >
           <Stack
             height="331px"
