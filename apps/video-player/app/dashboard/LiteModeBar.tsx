@@ -8,7 +8,7 @@ export const useOutOfCreations = () => {
   const userDetails = useUserContext().user;
   return (
     !userDetails?.subscribed &&
-    (userDetails?.creations ?? 0 >= MAX_LITE_MODE_ACTIONS)
+    (userDetails?.creations ?? 0) >= MAX_LITE_MODE_ACTIONS
   );
 };
 
