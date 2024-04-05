@@ -22,6 +22,7 @@ export interface ISafeTubeUser {
 
 export interface IUserContext {
   user?: ISafeTubeUser;
+  loaded: boolean;
   loading?: boolean;
   //paymentLink?: string;
   refresh?: () => void;
@@ -49,22 +50,25 @@ const UserProvider = (props: IUserProviderProps) => {
   );
   const { user, isLoading } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   useEffect(() => {
     //user?.email && mixpanel.track("signed in");
     setTimeout(
       () => {
         loadUser();
       },
-      props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
+      props.checkoutSessionId || upgradedNotificationPending ? 3500 : 0 // to make sure that there is enough time to store the subscription change before fetching
     );
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
       setSignedIn(true);
     }
-  }, [user?.email]);
+  }, [user?.email, isLoading]);
 
   const loadUser = () => {
+    console.log(loaded, "--=-=-=-");
     if (user?.email && user?.sub) {
+      console.log(loaded, "--=xxxxxx");
       setLoading(true);
       ApiController.getUser(user.email, user.sub)
         .then((u) =>
@@ -74,7 +78,13 @@ const UserProvider = (props: IUserProviderProps) => {
                 setSafeTubeUser(u)
               )
         )
-        .then(() => setLoading(false));
+        .then(() => {
+          setLoading(false);
+          setLoaded(true);
+        })
+        .catch(() => setLoaded(true));
+    } else {
+      setLoaded(!isLoading);
     }
   };
 
@@ -133,6 +143,7 @@ const UserProvider = (props: IUserProviderProps) => {
       value={{
         user: safeTubeUser,
         loading,
+        loaded,
         //paymentLink,
         clear: () => setSafeTubeUser(undefined),
         refresh: loadUser,
