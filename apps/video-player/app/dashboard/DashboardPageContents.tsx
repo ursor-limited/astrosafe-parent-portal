@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack, alpha } from "@mui/system";
+import { Stack, alpha, keyframes } from "@mui/system";
 import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
@@ -11,6 +11,7 @@ import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { IVideo } from "./AstroContentColumns";
@@ -47,7 +48,16 @@ import { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
-import { light } from "@mui/material/styles/createPalette";
+import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
+
+export const spin = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(180deg);
+}
+`;
 
 const PAGE_SIZE = 30;
 
@@ -287,9 +297,15 @@ export const FilterRow = (props: {
   <Stack direction="row" spacing="12px">
     <FilterButton
       text="All"
-      icon={VersionsIcon}
+      icon={Star}
       selected={!props.selected}
       onClick={() => props.callback(null)}
+    />
+    <FilterButton
+      text="Lessons"
+      icon={CONTENT_BRANDING.lesson.icon}
+      selected={props.selected === "lesson"}
+      onClick={() => props.callback("lesson")}
     />
     <FilterButton
       text="Videos"
@@ -441,9 +457,9 @@ export default function DashboardPageContents() {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
-      ApiController.getUserLessons(userDetails.user.id).then((l) =>
-        setLessons(_.reverse(l.slice()))
-      );
+      ApiController.getUserLessons(userDetails.user.id)
+        .then((l) => setLessons(_.reverse(l.slice())))
+        .finally(() => setLessonsLoaded(true));
   };
   useEffect(() => {
     loadLessons();
@@ -452,9 +468,13 @@ export default function DashboardPageContents() {
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
-      ApiController.getUserVideos(userDetails.user.id).then((videos) =>
-        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-      );
+      ApiController.getUserVideos(userDetails.user.id)
+        .then((videos) =>
+          setVideos(
+            _.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl)
+          )
+        )
+        .finally(() => setVideosLoaded(true));
   };
   useEffect(() => {
     loadVideos();
@@ -463,9 +483,9 @@ export default function DashboardPageContents() {
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
   const loadWorksheets = () => {
     userDetails?.user?.id &&
-      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
-        setWorksheets(_.reverse(ws.slice()))
-      );
+      ApiController.getUserWorksheets(userDetails.user.id)
+        .then((ws) => setWorksheets(_.reverse(ws.slice())))
+        .finally(() => setWorksheetsLoaded(true));
   };
   useEffect(() => {
     loadWorksheets();
@@ -692,6 +712,21 @@ export default function DashboardPageContents() {
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
   >(undefined);
+
+  const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
+  const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
+  const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
+  const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setAnyLoaded(
+        (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
+          worksheets.length > 0 ||
+          videos.length > 0 ||
+          lessons.length > 0
+      ),
+    [worksheetsLoaded, videosLoaded, lessonsLoaded]
+  );
 
   return (
     <>
@@ -957,7 +992,32 @@ export default function DashboardPageContents() {
           lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
         />
       ) : null}
-      {!selectedContentType && worksheets.length === 0 && videos.length === 0
+      {!anyLoaded
+        ? createPortal(
+            <Stack
+              position="absolute"
+              top={0}
+              width="100vw"
+              height="100vh"
+              justifyContent="center"
+              alignItems="center"
+              zIndex={999}
+            >
+              <Stack
+                sx={{
+                  animation: `${spin} 1.6s linear infinite`,
+                }}
+              >
+                <PinkPurpleStar height={60} width={60} />
+              </Stack>
+            </Stack>,
+            document.body
+          )
+        : null}
+      {anyLoaded &&
+      !selectedContentType &&
+      worksheets.length === 0 &&
+      videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
             document.body

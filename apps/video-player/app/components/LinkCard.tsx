@@ -81,6 +81,7 @@ const LinkCard = (props: {
   id: ILink["id"];
   title: ILink["title"];
   url: ILink["url"];
+  description?: ILink["description"];
   imageUrl: ILink["imageUrl"];
   color: ILink["color"];
   createdAt: ILink["createdAt"];
@@ -174,6 +175,17 @@ const LinkCard = (props: {
               >
                 {props.title}
               </Typography>
+              {props.description ? (
+                <Stack pb="9px" pt="2px">
+                  <Typography
+                    color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                    variant="medium"
+                    maxLines={2}
+                  >
+                    {props.description}
+                  </Typography>
+                </Stack>
+              ) : null}
               <Stack
                 direction="row"
                 justifyContent="space-between"
