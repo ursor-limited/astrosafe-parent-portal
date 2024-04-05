@@ -24,12 +24,11 @@ export interface IUserContext {
   user?: ISafeTubeUser;
   loaded: boolean;
   loading?: boolean;
-  //paymentLink?: string;
   refresh?: () => void;
   clear?: () => void;
 }
 
-const UserContext = createContext<IUserContext>({});
+const UserContext = createContext<IUserContext>({ loaded: false });
 
 const useUserContext = () => {
   const context = useContext(UserContext);
@@ -144,7 +143,6 @@ const UserProvider = (props: IUserProviderProps) => {
         user: safeTubeUser,
         loading,
         loaded,
-        //paymentLink,
         clear: () => setSafeTubeUser(undefined),
         refresh: loadUser,
       }}
