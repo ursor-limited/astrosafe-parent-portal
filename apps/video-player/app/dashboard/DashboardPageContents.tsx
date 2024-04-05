@@ -614,18 +614,16 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user?.id, freeVideoIds.length]);
 
-  const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
-    useState<boolean>(false);
-  useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 2500);
-  }, []);
+  // const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
+  //   useState<boolean>(false);
+  // useEffect(() => {
+  //   setTimeout(() => setSignupPromptDialogCanOpen(true), 3500);
+  // }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setSignupPromptDialogOpen(
-      signupPromptDialogCanOpen && !userDetails.loading && !userDetails.user?.id
-    );
-  }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
+    setSignupPromptDialogOpen(userDetails.loaded && !userDetails.user?.id);
+  }, [userDetails.user?.id, userDetails.loaded]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
