@@ -712,14 +712,24 @@ export default function DashboardPageContents() {
                 icon: VerifiedIcon,
                 callback: () => setUpgradeDialogOpen(true),
               }
-            : undefined
+            : userDetails.user.subscriptionDeletionDate
+            ? {
+                text: "Renew",
+                icon: VerifiedIcon,
+                callback: () =>
+                  router.push(
+                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                  ),
+              }
+            : null
         }
         buttonRowExtraElement={
           <Stack direction="row" spacing="12px" alignItems="center">
             {!userDetails.user?.subscribed ||
             userDetails.user.subscriptionDeletionDate ? (
               <>
-                {getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+                {!userDetails.user?.subscriptionDeletionDate &&
+                getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
                   <Typography
                     variant="medium"
                     color={PALETTE.secondary.grey[4]}
@@ -750,7 +760,11 @@ export default function DashboardPageContents() {
                       variant="medium"
                       color={PALETTE.secondary.grey[4]}
                     >
-                      days left
+                      {`days left${
+                        userDetails.user?.subscriptionDeletionDate
+                          ? " in your plan"
+                          : ""
+                      }`}
                     </Typography>
                   </Stack>
                 )}
