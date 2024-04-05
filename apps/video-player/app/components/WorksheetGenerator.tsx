@@ -32,6 +32,7 @@ export type IWorksheet = {
   description: string;
   parameters: IWorksheetParameters;
   createdAt: string;
+  updatedAt: string;
   creatorId: string;
 };
 

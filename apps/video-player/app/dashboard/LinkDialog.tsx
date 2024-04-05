@@ -1,11 +1,19 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Box, Stack, alpha } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import {
+  PALETTE,
+  Typography,
+  UrsorButton,
+  UrsorInputField,
+  UrsorTextField,
+} from "ui";
 import ActionPopup from "../components/ActionPopup";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import SyncIcon from "@/images/icons/Sync.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
 import UrsorPopover from "../components/UrsorPopover";
 import { SecondaryColor } from "ui/palette";
 import _ from "lodash";
@@ -22,6 +30,7 @@ import LessonImageUploader from "./LessonImageUploader";
 import dayjs from "dayjs";
 import InvalidUrlDialog from "./InvalidUrlDialog";
 import BlockedSiteDialog from "./BlockedSiteDialog";
+import { getFormattedDate } from "../components/VideoCard";
 // import mixpanel from "mixpanel-browser";
 
 export const getTopImageStyle = (url: string, height: string) => ({
@@ -86,6 +95,7 @@ export const ImageButton = (props: {
       ]}
       closeCallback={() => setOpen(false)}
       placement={props.leftAlign ? "left" : "right"}
+      zIndex={9999}
     >
       <Stack
         borderRadius="100%"
@@ -117,15 +127,17 @@ export interface ILink {
   id: string;
   creatorId?: string;
   title: string;
+  description?: string;
   url: string;
   imageUrl: string;
   color: string;
+  createdAt: string;
 }
 
 const CREATION_SUCCESS_MESSAGE = "Link added";
 const UPDATE_SUCCESS_MESSAGE = "Link updated";
-export const CARD_WIDTH = "270px";
-const CARD_HEIGHT = "243px";
+export const CARD_WIDTH = "387px";
+const CARD_HEIGHT = "316px";
 const IMAGE_HEIGHT = "204px";
 const CARD_PADDING = "16px";
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
@@ -225,6 +237,7 @@ export const PaletteButton = (props: {
         open={open}
         closeCallback={() => setOpen(false)}
         placement="right"
+        zIndex={9999}
         content={
           <Stack
             spacing="16px"
@@ -313,13 +326,18 @@ export function DialogSection(props: {
 export default function LinkDialog(props: ILinkDialogProps) {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState("");
+  const [description, setDescription] = useState<string>("");
+
+  useEffect(() => {
+    props.link?.description && setDescription(props.link.description);
+  }, [props.link?.description]);
 
   useEffect(() => {
     props.link?.title && setTitle(props.link.title);
   }, [props.link?.title]);
 
   useEffect(() => {
-    props.link?.url && setTitle(props.link.url);
+    props.link?.url && setUrl(props.link.url);
   }, [props.link?.url]);
 
   const [accessibleUrl, setAccessibleUrl] = useState("");
@@ -512,25 +530,30 @@ export default function LinkDialog(props: ILinkDialogProps) {
   const getCreationDetails = () => ({
     creatorId: userDetails?.id,
     title,
+    description,
     url,
     imageUrl: downloadImageUrl,
     color,
     lessonId: props.lessonId,
   });
 
+  const submitUpdate = () =>
+    props.link?.id &&
+    ApiController.updateLink(props.link?.id, getUpdateDetails())
+      .then(() => {
+        imageUploadCallback?.();
+        props.updateCallback?.();
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Updated Link"));
+
   const getUpdateDetails = () => ({
     title,
+    description,
     url,
-    accessibleUrl,
     imageUrl: downloadImageUrl,
     color,
   });
-
-  const submitUpdate = () => null;
-  // ApiController.updateLink(props.link?.id, getUpdateDetails())
-  //   .then(props.updateCallback)
-  //   .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
-  //   .catch((error) => notificationCtx.error(error.message));
 
   const isWideDomain = (url: string) =>
     WIDE_DOMAINS.includes(getPrefixRemovedUrl(url).replace("/", ""));
@@ -549,44 +572,23 @@ export default function LinkDialog(props: ILinkDialogProps) {
 
   const [displayUrlInvalidity, setDisplayUrlInvalidity] = useState(false);
 
-  const completionCallback = async () => {
-    (props.link ? submitUpdate() : submitCreation())
-      ?.then(props.closeCallback)
-      .then(imageUploadCallback)
-      .catch((error) => {
-        notificationCtx.negativeSuccess(error.message);
-        setDisplayUrlInvalidity(true);
-      });
-  };
-
   const supertitle = `${props.link ? "Edit" : "Add a"} ${
     props.platform ? "Platform" : "Link"
   }`;
 
-  const [stackCreationDialogOpen, setStackCreationDialogOpen] =
-    useState<boolean>(false);
-
-  const [channelCreationDialogOpen, setChannelCreationDialogOpen] =
-    useState<boolean>(false);
+  const [lightText, setLightText] = useState<boolean>(false);
+  useEffect(() => setLightText(shouldBeLightText(color)), [color]);
 
   return (
     <>
       <UrsorDialog
-        title={`${props.link ? "Edit" : "Add"} ${
-          props.platform ? "Platform" : "Link"
-        }`}
         supertitle={supertitle}
         open={props.open}
-        button={{
-          text: "Complete",
-          callback: () => isValidUrl(url).then(completionCallback),
-          disabled: !title || !url || urlStatus === "blocked",
-        }}
         onCloseCallback={() => {
           props.closeCallback();
           clear();
         }}
-        fitContent
+        dynamicHeight
       >
         <Stack
           direction="row"
@@ -596,7 +598,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
           overflow="hidden"
         >
           <Stack flex={1} spacing="20px" overflow="hidden">
-            <Captioned text="Put your URL or PDF link here" noFlex>
+            <Captioned text="Add URL" noFlex>
               <UrlInput
                 url={url}
                 urlStatus={urlStatus}
@@ -610,19 +612,37 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned>
 
-            <Captioned text="Title" noFlex>
-              <Stack position="absolute" top="-4px" right="0px">
-                <CharactersIndicator n={title.length} max={MAX_CHARACTERS} />
-              </Stack>
+            <Stack height="28px" justifyContent="center">
+              <Stack
+                height="2px"
+                width="100%"
+                bgcolor={PALETTE.secondary.grey[2]}
+              />
+            </Stack>
+
+            <Captioned text="Title">
               <UrsorInputField
                 value={title}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitle(event.target.value)
+                }
                 placeholder="Title"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setTitle(event.target.value.slice(0, MAX_CHARACTERS));
-                  setUsingTypedTitle(true);
-                }}
-                leftAlign
                 width="100%"
+                leftAlign
+                boldValue
+              />
+            </Captioned>
+
+            <Captioned text="Description">
+              <UrsorTextField
+                value={description}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setDescription(event.target.value)
+                }
+                placeholder="Description"
+                width="100%"
+                height="144px"
+                boldValue
               />
             </Captioned>
             {/* <Captioned text="Title">
@@ -640,40 +660,41 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned> */}
           </Stack>
-          <Stack
-            width={CARD_WIDTH}
-            minWidth={CARD_WIDTH}
-            height={CARD_HEIGHT}
-            minHeight={CARD_HEIGHT}
-            borderRadius="12px"
-            bgcolor={color}
-            sx={{
-              transition: "0.2s",
-            }}
-            border={`4px solid ${color}`}
-            overflow="hidden"
-            position="relative"
-          >
-            <LessonImageUploader
-              previewUrlCallback={setPreviewImageUrl}
-              downloadUrlCallback={(url, upload) => {
-                setDownloadImageUrl(url);
-                setImageUploadCallback(() => upload);
-                setUsingUploadedImage(true);
+          <Stack justifyContent="space-between">
+            <Stack
+              width={CARD_WIDTH}
+              minWidth={CARD_WIDTH}
+              height={CARD_HEIGHT}
+              minHeight={CARD_HEIGHT}
+              borderRadius="12px"
+              bgcolor={color}
+              sx={{
+                transition: "0.2s",
               }}
-              ref={setDropzoneRef}
+              border={`4px solid ${color}`}
+              overflow="hidden"
+              position="relative"
             >
-              <Stack
-                sx={{
-                  ...getTopImageStyle(previewImageUrl ?? "", IMAGE_HEIGHT),
+              <LessonImageUploader
+                previewUrlCallback={setPreviewImageUrl}
+                downloadUrlCallback={(url, upload) => {
+                  setDownloadImageUrl(url);
+                  setImageUploadCallback(() => upload);
+                  setUsingUploadedImage(true);
                 }}
-                justifyContent="center"
-                alignItems="center"
-                bgcolor="rgba(255,255,255,0.2)"
-              />
-            </LessonImageUploader>
-            <Stack px="4px" py="8px" flex={1} justifyContent="space-between">
-              {/* <InputTypography //@ts-ignore
+                ref={setDropzoneRef}
+              >
+                <Stack
+                  sx={{
+                    ...getTopImageStyle(previewImageUrl ?? "", IMAGE_HEIGHT),
+                  }}
+                  justifyContent="center"
+                  alignItems="center"
+                  bgcolor="rgba(255,255,255,0.2)"
+                />
+              </LessonImageUploader>
+              <Stack px="4px" py="8px" flex={1} justifyContent="space-between">
+                {/* <InputTypography //@ts-ignore
                 value={title}
                 variant="large"
                 bold
@@ -688,20 +709,53 @@ export default function LinkDialog(props: ILinkDialogProps) {
                   setTitle(event.target.value)
                 }
               /> */}
-              <Typography
-                bold
-                variant="medium"
-                color={alpha(
-                  shouldBeLightText(color)
-                    ? PALETTE.font.light
-                    : PALETTE.font.dark,
-                  title ? 1 : 0.5
-                )}
-                maxLines={2}
-              >
-                {title}
-              </Typography>
-              {/* <Typography
+
+                <Typography
+                  color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                  variant="medium"
+                  bold
+                  maxLines={2}
+                >
+                  {title}
+                </Typography>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: lightText
+                          ? "rgba(255,255,255,0.93)"
+                          : "rgba(0,0,0,0.8)",
+                      },
+                    },
+                  }}
+                >
+                  <Typography
+                    color={
+                      lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"
+                    }
+                    variant="small"
+                  >
+                    {getFormattedDate(new Date().toISOString())}
+                  </Typography>
+                  <LinkIcon height="20px" width="20px" />
+                </Stack>
+
+                {/* <Typography
+                  bold
+                  variant="medium"
+                  color={alpha(
+                    shouldBeLightText(color)
+                      ? PALETTE.font.light
+                      : PALETTE.font.dark,
+                    title ? 1 : 0.5
+                  )}
+                  maxLines={2}
+                >
+                  {title}
+                </Typography> */}
+                {/* <Typography
                 variant="small"
                 color={alpha(
                   shouldBeLightText(color)
@@ -712,23 +766,36 @@ export default function LinkDialog(props: ILinkDialogProps) {
               >
                 {dayjs().format("Do MMMM YYYY")}
               </Typography> */}
+              </Stack>
+              <Stack
+                position="absolute"
+                right="10px"
+                top="10px"
+                zIndex={2}
+                direction="row"
+                spacing="7px"
+              >
+                <PaletteButton selected={color} callback={(c) => setColor(c)} />
+                <ImageButton
+                  usingPlaceholderImage={usingPlaceholderImage}
+                  uploadCallback={() => dropzoneRef?.click()}
+                  randomizeCallback={setRandomImage}
+                  padding={5}
+                />
+              </Stack>
             </Stack>
-            <Stack
-              position="absolute"
-              right="10px"
-              top="10px"
-              zIndex={2}
-              direction="row"
-              spacing="7px"
+            <UrsorButton
+              onClick={() =>
+                props.link?.id ? submitUpdate() : submitCreation()
+              }
+              dark
+              variant="tertiary"
+              endIcon={PencilIcon}
+              width="100%"
+              disabled={!downloadImageUrl}
             >
-              <PaletteButton selected={color} callback={(c) => setColor(c)} />
-              <ImageButton
-                usingPlaceholderImage={usingPlaceholderImage}
-                uploadCallback={() => dropzoneRef?.click()}
-                randomizeCallback={setRandomImage}
-                padding={5}
-              />
-            </Stack>
+              {props.link?.id ? "Update" : "Create"}
+            </UrsorButton>
           </Stack>
         </Stack>
       </UrsorDialog>

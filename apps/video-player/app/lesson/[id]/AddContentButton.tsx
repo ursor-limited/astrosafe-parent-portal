@@ -14,7 +14,13 @@ export default function AddContentButton(props: {
   callback: (type: AstroContent) => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
-  const contentOrder: AstroContent[] = ["worksheet", "video", "link"];
+  const contentOrder: AstroContent[] = [
+    "worksheet",
+    "video",
+    "image",
+    "text",
+    "link",
+  ];
 
   return (
     <>

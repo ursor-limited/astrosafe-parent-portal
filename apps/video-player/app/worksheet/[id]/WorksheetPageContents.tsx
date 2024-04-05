@@ -347,7 +347,9 @@ export function TabSwitch(props: {
   );
 }
 
-export default function WorksheetPageContents(props: IWorksheet) {
+export default function WorksheetPageContents(
+  props: IWorksheet & { lessonId?: string }
+) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
   const openPrintDialog = useReactToPrint({
@@ -519,6 +521,8 @@ export default function WorksheetPageContents(props: IWorksheet) {
         <BigCard
           title={props.title}
           createdAt={props.createdAt}
+          backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
+          backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&

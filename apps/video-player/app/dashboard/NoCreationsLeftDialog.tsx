@@ -38,7 +38,7 @@ const NoCreationsLeftDialog = (props: {
           }}
         >
           <UrsorButton
-            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
+            backgroundColor={`linear-gradient(150deg, #7B61FF, #89AFFF)`}
             onClick={props.callback}
             endIcon={RocketIcon}
           >

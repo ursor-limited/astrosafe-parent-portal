@@ -40,7 +40,7 @@ export const formats = [
   "strike",
   "script",
   //"blockquote",
-  //   "background",
+  "background",
   "list",
   "bullet",
   //   "indent",
@@ -83,8 +83,7 @@ export const TextEditorToolbar = (props: { id: string }) => {
       style={{
         background: "rgb(255,255,255)",
         fontFamily: "unset",
-        boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-        borderRadius: "12px",
+        borderRadius: "12px 12px 0 0",
         width: "fit-content",
       }}
     >
@@ -125,7 +124,7 @@ export const TextEditorToolbar = (props: { id: string }) => {
       <span className="ql-formats">
         {/* <button className="ql-script" value="super" />
       <button className="ql-script" value="sub" /> */}
-        <button className="ql-blockquote" />
+        {/* <button className="ql-blockquote" /> */}
         {/* <button className="ql-direction" /> */}
       </span>
       <span className="ql-formats">

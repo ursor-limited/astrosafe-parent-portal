@@ -15,6 +15,7 @@ export interface IVideo {
   startTime?: number;
   endTime?: number;
   createdAt: string;
+  updatedAt: string;
 }
 
 const BACKEND_URLS = {
@@ -41,6 +42,7 @@ const post = (route: string, body: any) =>
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
+      cache: "no-store",
     }
   );
 
@@ -89,20 +91,34 @@ class ApiController {
   static async createLesson(details: any) {
     return post("lesson", details).then((response: any) => response.json());
   }
+  static async updateLesson(id: string, details: any) {
+    return patch(`lesson/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async deleteLesson(id: string) {
+    return dellete(`lesson/${id}`)
+  }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }
   static async getLessonWithContents(id: string) {
-    return get(`lesson/${id}/withContents`).then((response: any) => response.json());
-  }
-  static async getUserLessons(id: string) {
-    //@ts-ignore
-    return get(`lesson/user/${id}`).then((response: any) =>
+    return get(`lesson/${id}/withContents`).then((response: any) =>
       response.json()
     );
   }
-  static async addToLesson(id: string, type: AstroLessonContent, contentId: string) {
-    return post(`lesson/add`, { id, type, contentId }).then((response: any) => response.json());
+  static async getUserLessons(id: string) {
+    //@ts-ignore
+    return get(`lesson/user/${id}`).then((response: any) => response.json());
+  }
+  static async addToLesson(
+    id: string,
+    type: AstroLessonContent,
+    contentId: string
+  ) {
+    return post(`lesson/add`, { id, type, contentId }).then((response: any) =>
+      response.json()
+    );
   }
   static async createVideo(details: any) {
     return post("video", details).then((response: any) => response.json());
@@ -182,7 +198,7 @@ class ApiController {
     fileExtension: string,
     contentType: string
   ) {
-    return post(`/img/sign`, {
+    return post(`unsplash/sign`, {
       fileExtension,
       contentType,
     }).then((response: any) => response.json());
@@ -193,8 +209,16 @@ class ApiController {
       method: "PUT",
       headers: { "Content-Type": uploadFile.type },
       body: uploadFile,
+    }).then((response: any) => response);
+  }
+
+  static async searchImages(query: string) {
+    return post("unsplash/search", {
+      query,
+      count: 10,
     }).then((response: any) => response.json());
   }
+
   static async createEquationWorksheet(
     title: string,
     orientation: EquationOrientation,
@@ -263,6 +287,41 @@ class ApiController {
   }
   static async createLink(details: any) {
     return post("link", details).then((response: any) => response.json());
+  }
+  static async deleteLink(id: string) {
+    return dellete(`link/${id}`)
+  }
+  static async updateLink(id: string, details: any) {
+    return patch(`link/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async clearPediodCreations(id: string) {
+    return get(`video/clearPediodCreations/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async createImage(details: any) {
+    return post("image", details).then((response: any) => response.json());
+  }
+  static async deleteImage(id: string) {
+    return dellete(`image/${id}`).then((response: any) => response);
+  }
+  static async updateImage(id: string, details: any) {
+    return patch(`image/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async createText(details: any) {
+    return post("text", details).then((response: any) => response.json());
+  }
+  static async updateText(id: string, details: any) {
+    return patch(`text/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async deleteText(id: string) {
+    return dellete(`text/${id}`).then((response: any) => response);
   }
 }
 

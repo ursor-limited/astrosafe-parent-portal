@@ -5,8 +5,11 @@ import { useUserContext } from "../components/UserContext";
 const MAX_LITE_MODE_ACTIONS = 3;
 
 export const useOutOfCreations = () => {
-  const nCreations = useUserContext().user?.creations ?? 0;
-  return nCreations >= MAX_LITE_MODE_ACTIONS;
+  const userDetails = useUserContext().user;
+  return (
+    !userDetails?.subscribed &&
+    (userDetails?.creations ?? 0 >= MAX_LITE_MODE_ACTIONS)
+  );
 };
 
 const LiteModeBar = (props: { upgradeCallback: () => void }) => {
@@ -38,10 +41,10 @@ const LiteModeBar = (props: { upgradeCallback: () => void }) => {
         </Typography>
         <Typography
           variant="medium"
-          color="rgba(255,255,255,0.7)"
+          color="rgba(255,255,255,0.83)"
           bold
         >{`/ ${MAX_LITE_MODE_ACTIONS}`}</Typography>
-        <Typography variant="medium" color="rgba(255,255,255,0.7)">
+        <Typography variant="medium" color="rgba(255,255,255,0.83)">
           content creations left this month.
         </Typography>
       </Stack>

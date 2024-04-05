@@ -72,7 +72,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   const [popperElement, setPopperElement] = React.useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement:
-      props.placement === "left"
+      props.placement === "left" || props.buttonWidth
         ? "bottom-start"
         : props.placement === "right"
         ? "bottom-end"
@@ -214,7 +214,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   {props.content ? (
                     <Box
                       width={
-                        props.width //?? props.buttonWidth ? width : undefined
+                        props.width ?? props.buttonWidth ? width : undefined
                       }
                       borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                       p={props.noCard || props.noPadding ? undefined : PADDING}

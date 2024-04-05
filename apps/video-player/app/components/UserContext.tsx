@@ -17,6 +17,7 @@ export interface ISafeTubeUser {
   createdAt: string;
   freeTrialStart?: string;
   creations: number;
+  periodCreationsClearedAt: string;
 }
 
 export interface IUserContext {
@@ -52,14 +53,9 @@ const UserProvider = (props: IUserProviderProps) => {
     //user?.email && mixpanel.track("signed in");
     setTimeout(
       () => {
-        console.log(
-          props.checkoutSessionId,
-          props.checkoutSessionId || upgradedNotificationPending ? 1000 : 0,
-          "()()()()("
-        );
         loadUser();
       },
-      props.checkoutSessionId || upgradedNotificationPending ? 1000 : 0 // to make sure that there is enough time to store the subscription change before fetching
+      props.checkoutSessionId || upgradedNotificationPending ? 1500 : 0 // to make sure that there is enough time to store the subscription change before fetching
     );
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
@@ -81,8 +77,6 @@ const UserProvider = (props: IUserProviderProps) => {
         .then(() => setLoading(false));
     }
   };
-
-  console.log(safeTubeUser);
 
   useEffect(() => {
     if (props.checkoutSessionId) {

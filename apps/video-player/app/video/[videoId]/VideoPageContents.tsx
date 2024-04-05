@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
+import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -97,12 +98,15 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
   </Stack>
 );
 
-function VideoPageContents(props: { details: IVideo }) {
+function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   const { user } = useAuth0();
+
+  const [details, setDetails] = useState<IVideo | undefined>(undefined);
+  useEffect(() => setDetails(props.details), [props.details]);
 
   const notificationCtx = React.useContext(NotificationContext);
 
-  const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
+  const provider = details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
   const [fullscreen, setFullscreen] = useState<boolean>(false);
 
@@ -127,9 +131,10 @@ function VideoPageContents(props: { details: IVideo }) {
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
   useEffect(() => {
-    dayjs().diff(props.details.createdAt, "seconds") < 10 &&
+    details?.createdAt &&
+      dayjs().diff(details.createdAt, "seconds") < 10 &&
       notificationCtx.success("Video created.");
-  }, [props.details.createdAt]);
+  }, [details?.createdAt]);
 
   useEffect(() => {
     mixpanel.init(
@@ -164,17 +169,21 @@ function VideoPageContents(props: { details: IVideo }) {
 
   const userDetails = useUserContext();
 
-  return props.details && provider ? (
+  const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
+
+  return details && provider ? (
     <>
       <Stack p="40px" overflow="scroll">
         <BigCard
-          title={props.details.title}
-          description={props.details.description}
-          createdAt={props.details.createdAt}
+          title={details.title}
+          description={details.description}
+          createdAt={details.createdAt}
+          backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
+          backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&
-              userDetails?.user?.id === props.details.creatorId ? (
+              userDetails?.user?.id === details.creatorId ? (
                 <CircularButton
                   icon={TrashcanIcon}
                   color={PALETTE.system.red}
@@ -192,13 +201,21 @@ function VideoPageContents(props: { details: IVideo }) {
               >
                 Share link
               </UrsorButton>
+              <UrsorButton
+                dark
+                variant="tertiary"
+                onClick={() => setEditingDialogOpen(true)}
+                endIcon={LinkIcon}
+              >
+                Edit
+              </UrsorButton>
             </Stack>
           }
         >
           <Stack px="24px" flex={1}>
             <Stack flex={1} pt="30px" ref={setSizeRef}>
               <Player
-                url={props.details.url}
+                url={details.url}
                 provider={provider}
                 width={videoWidth}
                 height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
@@ -216,8 +233,21 @@ function VideoPageContents(props: { details: IVideo }) {
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={submitDeletion}
         category="video"
-        title={props.details.title}
+        title={details.title}
       />
+      {editingDialogOpen ? (
+        <VideoCreationDialog
+          open={editingDialogOpen}
+          closeCallback={() => setEditingDialogOpen(false)}
+          editingCallback={() =>
+            ApiController.getVideoDetails(details.id).then((video) =>
+              setDetails(video)
+            )
+          }
+          video={details}
+          noPlayer
+        />
+      ) : null}
     </>
   ) : (
     <></>

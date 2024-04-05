@@ -5,6 +5,8 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import TypographyIcon from "@/images/icons/TypographyIcon.svg";
+import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
@@ -41,10 +43,11 @@ import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
-import { ILink } from "./LinkDialog";
+import { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
+import { light } from "@mui/material/styles/createPalette";
 
 const PAGE_SIZE = 30;
 
@@ -91,16 +94,38 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     description: "Add a link to some non-naughty site.",
     color: PALETTE.secondary.orange[5],
     icon: LinkIcon,
-    infoButtonPosition: 150,
+    infoButtonPosition: 136,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+  },
+  image: {
+    title: "Image",
+    description: "Add a wholesome image.",
+    color: PALETTE.secondary.grey[4],
+    icon: ImageIcon,
+    infoButtonPosition: 150,
+    info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
+  },
+  text: {
+    title: "Text",
+    description: "Add some styled and well-crafted copy.",
+    color: PALETTE.secondary.yellow[4],
+    icon: TypographyIcon,
+    infoButtonPosition: 136,
+    info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
   },
 };
 
 export const GRID_SPACING = "20px";
 
-export type AstroContent = "video" | "worksheet" | "lesson" | "link";
+export type AstroContent =
+  | "video"
+  | "worksheet"
+  | "lesson"
+  | "link"
+  | "image"
+  | "text";
 
-export type AstroContentSort = "abc" | "createdAt";
+export type AstroContentSort = "abc" | "updatedAt";
 
 export const getTrialDaysLeft = (freeTrialStart?: string) =>
   TRIAL_DAYS - dayjs().diff(freeTrialStart, "days");
@@ -294,6 +319,8 @@ export const ToolButton = (props: {
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
+  const [lightText, setLightText] = useState<boolean>(false);
+  useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
   return (
     <>
       <Stack
@@ -330,7 +357,7 @@ export const ToolButton = (props: {
             transition: "0.2s",
             svg: {
               path: {
-                fill: `${PALETTE.secondary.grey[4]} !important`,
+                fill: `${PALETTE.secondary.grey[5]} !important`,
               },
             },
           }}
@@ -353,7 +380,9 @@ export const ToolButton = (props: {
               transition: "0.2s",
               svg: {
                 path: {
-                  fill: PALETTE.font.light,
+                  fill: !lightText
+                    ? PALETTE.secondary.grey[5]
+                    : PALETTE.font.light,
                 },
               },
             }}
@@ -362,13 +391,20 @@ export const ToolButton = (props: {
             <props.icon height="35px" width="35px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="space-between">
-            <Typography variant="medium" bold color={props.color}>
+            <Typography
+              variant="medium"
+              bold
+              color={lightText ? props.color : PALETTE.secondary.grey[5]}
+            >
               {props.title}
             </Typography>
             <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
-              color={alpha(props.color, 0.7)}
+              color={alpha(
+                lightText ? props.color : PALETTE.secondary.grey[5],
+                0.7
+              )}
             >
               {props.description}
             </Typography>
@@ -476,7 +512,7 @@ export default function DashboardPageContents() {
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
-    useState<AstroContentSort>("createdAt");
+    useState<AstroContentSort>("updatedAt");
 
   useEffect(() => {
     const videoDetails = videos
@@ -523,10 +559,10 @@ export default function DashboardPageContents() {
           : lessonDetails),
       ],
       (c) =>
-        selectedSort === "createdAt"
-          ? new Date(c.details.createdAt)
+        selectedSort === "updatedAt"
+          ? new Date(c.details.updatedAt)
           : c.details.title.toLowerCase(),
-      selectedSort === "createdAt" ? "desc" : "asc"
+      selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
@@ -547,6 +583,10 @@ export default function DashboardPageContents() {
 
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
+
+  const [lessonEditingDialogId, setLessonEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
 
   const [freeWorksheetIds, setFreeWorksheetIds] = useLocalStorage<string[]>(
     "freeWorksheetIds",
@@ -577,7 +617,7 @@ export default function DashboardPageContents() {
   const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 4000);
+    setTimeout(() => setSignupPromptDialogCanOpen(true), 2500);
   }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
@@ -627,6 +667,33 @@ export default function DashboardPageContents() {
     useState<boolean>(false);
 
   const outOfCreations = useOutOfCreations();
+
+  // useEffect(() => {
+  //   !userDetails.user?.subscribed &&
+  //     userDetails.user?.freeTrialStart &&
+  //     -dayjs().diff(userDetails.user.freeTrialStart);
+  // }, [userDetails.user]);
+
+  useEffect(() => {
+    if (
+      !userDetails.user?.subscribed &&
+      userDetails.user?.freeTrialStart &&
+      (!userDetails.user.periodCreationsClearedAt ||
+        dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
+    ) {
+      // const dayOfMonthToCheckOn =
+      //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
+      // (!userDetails.user.periodCreationsClearedAt ||
+      //   dayjs().date() >= dayOfMonthToCheckOn) &&
+      ApiController.clearPediodCreations(userDetails.user.id).then(
+        userDetails.refresh
+      );
+    }
+  }, [userDetails.user]);
+
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
 
   return (
     <>
@@ -782,10 +849,10 @@ export default function DashboardPageContents() {
               <SortButton
                 selected={selectedSort}
                 callback={(id) => setSelectedSort(id)}
-                types={["abc", "createdAt"]}
+                types={["abc", "updatedAt"]}
                 displayNames={{
                   abc: "Alphabetical",
-                  createdAt: "Most recent",
+                  updatedAt: "Most recent",
                 }}
                 width="204px"
               />
@@ -819,7 +886,13 @@ export default function DashboardPageContents() {
                         duration={900}
                       >
                         {item.type === "video" ? (
-                          <VideoCard {...(item.details as IVideo)} />
+                          <VideoCard
+                            {...(item.details as IVideo)}
+                            editingCallback={() =>
+                              setVideoEditingDialogId(item.details.id)
+                            }
+                            deletionCallback={loadVideos}
+                          />
                         ) : item.type === "worksheet" ? (
                           <WorksheetCard {...(item.details as IWorksheet)} />
                         ) : item.type === "lesson" ? (
@@ -829,6 +902,10 @@ export default function DashboardPageContents() {
                             clickCallback={() =>
                               router.push(`/lesson/${item.details.id}`)
                             }
+                            editingCallback={() =>
+                              setLessonEditingDialogId(item.details.id)
+                            }
+                            deletionCallback={loadLessons}
                           />
                         ) : null}
                       </UrsorFadeIn>
@@ -844,6 +921,14 @@ export default function DashboardPageContents() {
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={!!videoEditingDialogId}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadVideos}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
@@ -852,6 +937,14 @@ export default function DashboardPageContents() {
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
       />
+      {lessonEditingDialogId ? (
+        <LessonCreationDialog
+          open={!!lessonEditingDialogId}
+          closeCallback={() => setLessonEditingDialogId(undefined)}
+          updateCallback={loadLessons}
+          lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
       {!selectedContentType && worksheets.length === 0 && videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
@@ -905,7 +998,9 @@ export default function DashboardPageContents() {
       />
       {!userDetails.user?.subscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
-        <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
+        <UrsorFadeIn duration={1000}>
+          <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
+        </UrsorFadeIn>
       ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}

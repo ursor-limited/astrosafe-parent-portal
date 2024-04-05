@@ -96,7 +96,10 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
   </Stack>
 );
 
-function MobileVideoPageContents(props: { details: IVideo }) {
+function MobileVideoPageContents(props: {
+  details: IVideo;
+  lessonId?: string;
+}) {
   const { user } = useAuth0();
 
   const notificationCtx = React.useContext(NotificationContext);
