@@ -55,6 +55,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
 
+  console.log(links, "---");
+
   const loadLesson = () =>
     ApiController.getLessonWithContents(props.lessonId).then(
       (response: any) => {

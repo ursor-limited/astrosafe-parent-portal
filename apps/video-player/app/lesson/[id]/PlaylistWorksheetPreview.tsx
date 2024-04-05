@@ -118,6 +118,17 @@ const PlaylistWorksheetPreview = (
           >
             {props.title}
           </Typography>
+          {props.description ? (
+            <Stack pb="9px" pt="2px">
+              <Typography
+                color="rgb(255,255,255)"
+                variant="medium"
+                maxLines={2}
+              >
+                {props.description}
+              </Typography>
+            </Stack>
+          ) : null}
           <Stack
             direction="row"
             justifyContent="space-between"

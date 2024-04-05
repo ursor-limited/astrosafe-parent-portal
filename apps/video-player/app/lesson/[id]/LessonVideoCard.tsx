@@ -158,6 +158,13 @@ const LessonVideoCard = (
             <Typography variant="medium" bold maxLines={2}>
               {props.title}
             </Typography>
+            {props.description ? (
+              <Stack pb="9px" pt="2px">
+                <Typography variant="medium" maxLines={2}>
+                  {props.description}
+                </Typography>
+              </Stack>
+            ) : null}
             <Stack
               direction="row"
               justifyContent="space-between"
