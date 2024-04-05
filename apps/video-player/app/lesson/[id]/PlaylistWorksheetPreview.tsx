@@ -22,7 +22,9 @@ import { useRouter } from "next/navigation";
       /> */
 }
 
-const PlaylistWorksheetPreview = (props: IWorksheet) => {
+const PlaylistWorksheetPreview = (
+  props: IWorksheet & { lessonId?: string }
+) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [nPages, setNPages] = useState<number>(0);
@@ -131,7 +133,13 @@ const PlaylistWorksheetPreview = (props: IWorksheet) => {
           cursor: "pointer",
           transition: "0.2s",
         }}
-        onClick={() => router.push(`/worksheet/${props.id}`)}
+        onClick={() =>
+          router.push(
+            `/worksheet/${props.id}${
+              props.lessonId ? `?lesson=${props.lessonId}` : ""
+            }`
+          )
+        }
       />
     </Stack>
   );

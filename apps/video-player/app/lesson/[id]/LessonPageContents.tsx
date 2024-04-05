@@ -25,7 +25,7 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
-import PlaylistVideoCard from "./LessonVideoCard";
+import LessonVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";
@@ -253,11 +253,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 if (c.type === "video") {
                   const video = videos?.find((v) => v.id === c.contentId);
                   return video ? (
-                    <PlaylistVideoCard
+                    <LessonVideoCard
                       key={video.id}
                       {...video}
                       editingCallback={() => setVideoEditingDialogId(video.id)}
                       deletionCallback={loadLesson}
+                      lessonId={props.lessonId}
                     />
                   ) : null;
                 } else if (c.type === "link") {
@@ -298,6 +299,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     <PlaylistWorksheetPreview
                       key={worksheet.id}
                       {...worksheet}
+                      lessonId={props.lessonId}
                     />
                   ) : null;
                 }

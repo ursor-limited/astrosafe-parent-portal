@@ -37,7 +37,7 @@ async function VideoPage({
   searchParams,
 }: {
   params: { videoId: string };
-  searchParams: { share: string };
+  searchParams: { lesson: string };
 }) {
   const videoDetails = await ApiController.getVideoDetails(params.videoId);
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
@@ -46,9 +46,15 @@ async function VideoPage({
     <AuthWrapper>
       <UserProvider>
         {isMobile ? (
-          <MobileVideoPageContents details={videoDetails} />
+          <MobileVideoPageContents
+            details={videoDetails}
+            lessonId={searchParams.lesson}
+          />
         ) : (
-          <VideoPageContents details={videoDetails} />
+          <VideoPageContents
+            details={videoDetails}
+            lessonId={searchParams.lesson}
+          />
         )}
       </UserProvider>
     </AuthWrapper>
