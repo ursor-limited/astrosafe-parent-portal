@@ -152,13 +152,13 @@ const VideoCard = (
             <Typography variant="medium" bold maxLines={2}>
               {props.title}
             </Typography>
-            {props.description ? (
+            {/* {props.description ? (
               <Stack py="5px">
                 <Typography variant="medium" maxLines={2}>
                   {props.description}
                 </Typography>
               </Stack>
-            ) : null}
+            ) : null} */}
             <Stack
               direction="row"
               justifyContent="space-between"
