@@ -12,7 +12,9 @@ import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
+import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import { useRouter } from "next/navigation";
+import { getFormattedDate } from "./LessonVideoCard";
 {
   /* <PageSelector
         pageIndex={pageIndex}
@@ -107,14 +109,26 @@ const PlaylistWorksheetPreview = (
         ) : null}
       </Stack>
       <Stack py="6px">
-        <Typography
-          bold
-          variant="medium"
-          color={PALETTE.font.light}
-          maxLines={2}
-        >
-          {props.title}
-        </Typography>
+        <Stack flex={1} justifyContent="space-between">
+          <Typography
+            variant="medium"
+            bold
+            maxLines={2}
+            color="rgb(255,255,255)"
+          >
+            {props.title}
+          </Typography>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+          >
+            <Typography variant="small" color="rgb(255,255,255)">
+              {getFormattedDate(props.createdAt)}
+            </Typography>
+            <ChecklistIcon height="20px" width="20px" />
+          </Stack>
+        </Stack>
       </Stack>
       <Stack
         width="100%"
