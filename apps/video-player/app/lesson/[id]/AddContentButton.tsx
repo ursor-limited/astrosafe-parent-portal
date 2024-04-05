@@ -3,7 +3,7 @@ import { Dialog } from "@mui/material";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import UrsorPopover from "@/app/components/UrsorPopover";
-import PencilIcon from "@/images/icons/Pencil.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import {
   AstroContent,
   CONTENT_BRANDING,
@@ -32,7 +32,7 @@ export default function AddContentButton(props: {
             bgcolor="rgb(255,255,255)"
             borderRadius="12px"
             spacing="10px"
-            width="500px"
+            width="420px"
           >
             {contentOrder.map((c, i) => {
               return (
@@ -55,16 +55,15 @@ export default function AddContentButton(props: {
         maxHeight
         clickableFloatedButton
         noPadding
-        placement="left"
         noFloatButton
       >
         <UrsorButton
           dark
           variant="tertiary"
           onClick={() => setOpen(true)}
-          endIcon={PencilIcon}
+          endIcon={PlusIcon}
         >
-          Add Content
+          Add
         </UrsorButton>
       </UrsorPopover>
     </>
