@@ -37,7 +37,9 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import { A4_HEIGHT, A4_WIDTH } from "./AstroWorksheetPage";
 
-export default function MobileWorksheetPageContents(props: IWorksheet) {
+export default function MobileWorksheetPageContents(
+  props: IWorksheet & { lessonId?: string }
+) {
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
   const openPrintDialog = useReactToPrint({
