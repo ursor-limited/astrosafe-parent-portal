@@ -43,6 +43,7 @@ const submitSubscriptionRenewed = async (email) =>
       `${
         BACKEND_URLS[process.env.NODE_ENV]
       }/video/user/${email}/renewSubscription`
+      // { subscriptionItemId }
     )
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
@@ -58,10 +59,11 @@ const submitSubscriptionDeletionDate = async (email, deletionDate) =>
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
-const submitCheckoutSessionId = async (checkoutSessionId) =>
+const submitDetails = async (checkoutSessionId, productId) =>
   axios
     .post(`${BACKEND_URLS[process.env.NODE_ENV]}/video/checkoutSessionId`, {
       checkoutSessionId,
+      productId,
     })
     .catch((error) => console.log(error));
 
@@ -82,6 +84,8 @@ exports.handler = async function (event) {
 
     console.log(`Event Type: ${eventType}`);
     console.log(jsonData);
+
+    console.log("BUUU", stripeEvent.data.object?.subscription_details);
 
     const subscriptionId = stripeEvent.data.object.id;
     const customerId = stripeEvent.data.object.customer;
@@ -106,7 +110,10 @@ exports.handler = async function (event) {
             stripeEvent.data.object.cancel_at
           );
         } else {
-          await submitSubscriptionRenewed(customerEmail);
+          await submitSubscriptionRenewed(
+            customerEmail
+            // stripeEvent.data.object?.subscription_item
+          );
         }
         break;
       case "customer.subscription.deleted":
@@ -121,7 +128,13 @@ exports.handler = async function (event) {
             subscription: stripeEvent.data.object?.subscription,
           })
           .then((x) => x?.data?.[0]?.id)
-          .then((id) => submitCheckoutSessionId(id));
+          .then((id) =>
+            stripe.subscriptions
+              .retrieve(stripeEvent.data.object?.subscription)
+              .then((s) => {
+                submitDetails(id, s?.items?.data?.[0].price?.product);
+              })
+          );
         await submitPaymentSucceeded(customerEmail);
         break;
       }
