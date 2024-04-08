@@ -199,8 +199,8 @@
         "audience": "0 - 8",
         "description": "Kidzovo is an engaging learning app designed to offer personalized interactive educational experiences for children aged 2-8. Using content from popular creators such as SciShow Kids and Kiboomers, the app incorporates diverse activities that involve screen tapping, voice responses, and on-screen coloring. The app also features a mascot named Ovo the owl, who interacts with the child, and allows parents to monitor their child\u2019s learning progress. Moreover, it is 100% ad-free.",
         "url": "https://kidzovo.com/",
-        "ogimage": "thumbnail_16.jpg",
-        "heroImage": "astroseal_16.png",
+        "ogimage": "thumbnail_16.png",
+        "heroImage": "astroseal_16.jpg",
         "internalpath": "kidzovo-mobile-app"
     },
     {
