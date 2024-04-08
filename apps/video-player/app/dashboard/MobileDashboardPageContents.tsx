@@ -545,7 +545,6 @@ export default function MobileDashboardPageContents() {
           />
         </UrsorFadeIn>
       ) : null}
-      <LiteModeBar mobile upgradeCallback={() => setUpgradeDialogOpen(true)} />
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
