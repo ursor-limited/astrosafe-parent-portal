@@ -327,7 +327,7 @@ export default function MobileDashboardPageContents() {
       overflow="scroll"
       pt="20px"
     >
-      <Stack direction="row" spacing="12px" justifyContent="flex-end">
+      <Stack direction="row" spacing="12px" justifyContent="flex-end" px="20px">
         <Stack direction="row" spacing="12px" alignItems="center">
           {!userDetails.user?.subscribed ||
           userDetails.user.subscriptionDeletionDate ? (
@@ -472,7 +472,7 @@ export default function MobileDashboardPageContents() {
         </Stack>
       </UrsorFadeIn>
       {cards.length > 0 ? (
-        <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px">
+        <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px" px="20px">
           {cards.map((card, i) => (
             <UrsorFadeIn key={card.details.id} delay={i * 120} duration={800}>
               {card.type === "video" ? (
