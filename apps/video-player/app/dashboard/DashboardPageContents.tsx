@@ -294,7 +294,7 @@ export const FilterRow = (props: {
   selected: AstroContent | null;
   callback: (newSelected: AstroContent | null) => void;
 }) => (
-  <Stack direction="row" spacing="12px">
+  <Stack direction="row" spacing="12px" px="20px">
     <FilterButton
       text="All"
       icon={Star}
@@ -319,6 +319,7 @@ export const FilterRow = (props: {
       selected={props.selected === "worksheet"}
       onClick={() => props.callback("worksheet")}
     />
+    <Stack minWidth="28px" />
   </Stack>
 );
 
@@ -812,7 +813,7 @@ export default function DashboardPageContents() {
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-            {/* <ToolButton
+            <ToolButton
               title="Create lesson"
               description={CONTENT_BRANDING.lesson.description}
               color={CONTENT_BRANDING.lesson.color}
@@ -824,7 +825,7 @@ export default function DashboardPageContents() {
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
-            /> */}
+            />
             <ToolButton
               title="Create safe video link"
               description="Free of ads. Safe to share."

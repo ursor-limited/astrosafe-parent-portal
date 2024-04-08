@@ -12,7 +12,10 @@ export const useOutOfCreations = () => {
   );
 };
 
-const LiteModeBar = (props: { upgradeCallback: () => void }) => {
+const LiteModeBar = (props: {
+  mobile?: boolean;
+  upgradeCallback: () => void;
+}) => {
   const userDetails = useUserContext().user;
   return (
     <Stack
@@ -22,8 +25,8 @@ const LiteModeBar = (props: { upgradeCallback: () => void }) => {
       right={0}
       marginLeft="auto"
       marginRight="auto"
-      width="680px"
-      height="64px"
+      width={!props.mobile ? "680px" : undefined}
+      height={!props.mobile ? "64px" : undefined}
       sx={{
         background: "linear-gradient(16deg, #F279C5, #1D62F6)",
       }}
@@ -32,10 +35,17 @@ const LiteModeBar = (props: { upgradeCallback: () => void }) => {
       borderRadius="12px"
       zIndex={999}
       //boxShadow="0 0 24px rgba(0,0,0,0.08)"
-      direction="row"
-      spacing="24px"
+      direction={props.mobile ? "column" : "row"}
+      spacing={props.mobile ? "6px" : "24px"}
+      py={props.mobile ? "18px" : undefined}
+      mx={props.mobile ? "20px !important" : undefined}
     >
-      <Stack direction="row" spacing="5px">
+      <Stack
+        direction="row"
+        spacing="5px"
+        width={props.mobile ? "90%" : undefined}
+        justifyContent={props.mobile ? "center" : undefined}
+      >
         <Typography variant="medium" color="rgb(255,255,255)" bold>
           {MAX_LITE_MODE_ACTIONS - (userDetails?.creations ?? 0)}
         </Typography>

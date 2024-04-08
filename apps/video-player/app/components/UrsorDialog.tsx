@@ -155,7 +155,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         px={props.paddingX}
         pt={props.paddingTop}
         borderRadius="25px"
-        overflow="hidden"
+        overflow={props.scrollable ? "scroll" : "hidden"}
         flex={1}
       >
         {props.backButtonCallback ? (
