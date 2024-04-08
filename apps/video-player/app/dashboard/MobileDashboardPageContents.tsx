@@ -31,6 +31,7 @@ import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import {
   AstroContent,
+  CONTENT_BRANDING,
   FilterRow,
   SearchInput,
   ToolButton,
@@ -40,6 +41,14 @@ import {
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import ProfileButton from "../components/ProfileButton";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
+import Image from "next/image";
+import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
+import TrialExpirationDialog from "./TrialExpirationDialog";
+import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
+import LessonCreationDialog from "./LessonCreationDialog";
+import { ILesson } from "../lesson/[id]/page";
+import { isMobile } from "react-device-detect";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
@@ -50,15 +59,66 @@ export const GRID_SPACING = "20px";
 
 export type AstroContentSort = "abc" | "createdAt";
 
+export const MobileEmptyStateIllustration = (props: {
+  children: React.ReactNode;
+}) => (
+  <Stack
+    flex={1}
+    justifyContent="center"
+    alignItems="center"
+    sx={{
+      pointerEvents: "none",
+      filter: "grayscale(1)",
+    }}
+    zIndex={999}
+  >
+    <UrsorFadeIn delay={500} duration={800}>
+      <Stack position="relative" spacing="18px">
+        <Stack sx={{ opacity: 0.3 }}>
+          <Image
+            height={207}
+            width={217}
+            src={WonderingIllustration}
+            alt="Empty state illustration"
+          />
+        </Stack>
+        <Stack width="100%" alignItems="center" position="absolute" top="170px">
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[3]}
+            sx={{ textAlign: "center" }}
+          >
+            {props.children}
+          </Typography>
+        </Stack>
+      </Stack>
+    </UrsorFadeIn>
+  </Stack>
+);
+
 export default function MobileDashboardPageContents() {
   const userDetails = useUserContext();
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const loadLessons = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLessons(userDetails.user.id)
+        .then((l) => setLessons(_.reverse(l.slice())))
+        .finally(() => setLessonsLoaded(true));
+  };
+  useEffect(() => {
+    loadLessons();
+  }, [userDetails?.user?.id]);
 
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
-      ApiController.getUserVideos(userDetails.user.id).then((videos) =>
-        setVideos(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
-      );
+      ApiController.getUserVideos(userDetails.user.id)
+        .then((videos) =>
+          setVideos(
+            _.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl)
+          )
+        )
+        .finally(() => setVideosLoaded(true));
   };
   useEffect(() => {
     loadVideos();
@@ -67,13 +127,20 @@ export default function MobileDashboardPageContents() {
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
   const loadWorksheets = () => {
     userDetails?.user?.id &&
-      ApiController.getUserWorksheets(userDetails.user.id).then((ws) =>
-        setWorksheets(_.reverse(ws.slice()))
-      );
+      ApiController.getUserWorksheets(userDetails.user.id)
+        .then((ws) => setWorksheets(_.reverse(ws.slice())))
+        .finally(() => setWorksheetsLoaded(true));
   };
   useEffect(() => {
     loadWorksheets();
   }, [userDetails?.user?.id]);
+
+  const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
+    useState<boolean>(false);
+
+  const [lessonEditingDialogId, setLessonEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
 
   const [cards, setCards] = useState<
     {
@@ -171,30 +238,94 @@ export default function MobileDashboardPageContents() {
     }
   }, [userDetails.user?.id, freeVideoIds.length]);
 
-  const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
-    useState<boolean>(false);
-  useEffect(() => {
-    setTimeout(() => setSignupPromptDialogCanOpen(true), 1000);
-  }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
-    setSignupPromptDialogOpen(
-      signupPromptDialogCanOpen && !userDetails.loading && !userDetails.user?.id
-    );
-  }, [userDetails.user?.id, userDetails.loading, signupPromptDialogCanOpen]);
+    setSignupPromptDialogOpen(userDetails.loaded && !userDetails.user?.id);
+  }, [userDetails.user?.id, userDetails.loaded]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    userDetails.user?.id &&
+      !userDetails.user?.freeTrialStart &&
+      ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
+        userDetails.refresh
+      );
+  }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
+
   const router = useRouter();
+
+  const [
+    trialExpirationDialogAlreadySeen,
+    setTrialExpirationDialogAlreadySeen,
+  ] = useLocalStorage<boolean>("trialExpirationDialogAlreadySeen", false);
+
+  const [trialExpirationDialogOpen, setTrialExpirationDialogOpen] =
+    useState<boolean>(false);
+  useEffect(() => {
+    if (
+      !trialExpirationDialogAlreadySeen &&
+      !userDetails.user?.subscribed &&
+      userDetails.user?.freeTrialStart &&
+      getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
+    ) {
+      setTrialExpirationDialogOpen(
+        !userDetails.user?.subscribed &&
+          getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
+      );
+      setTrialExpirationDialogAlreadySeen(true);
+    }
+  }, [userDetails.user?.subscribed]);
+
+  const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
+    useState<boolean>(false);
+
+  const outOfCreations = useOutOfCreations();
+
+  useEffect(() => {
+    if (
+      !userDetails.user?.subscribed &&
+      userDetails.user?.freeTrialStart &&
+      (!userDetails.user.periodCreationsClearedAt ||
+        dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
+    ) {
+      // const dayOfMonthToCheckOn =
+      //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
+      // (!userDetails.user.periodCreationsClearedAt ||
+      //   dayjs().date() >= dayOfMonthToCheckOn) &&
+      ApiController.clearPediodCreations(userDetails.user.id).then(
+        userDetails.refresh
+      );
+    }
+  }, [userDetails.user]);
+
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
+  const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
+  const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
+  const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setAnyLoaded(
+        (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
+          worksheets.length > 0 ||
+          videos.length > 0 ||
+          lessons.length > 0
+      ),
+    [worksheetsLoaded, videosLoaded, lessonsLoaded]
+  );
 
   return (
     <Stack
-      p="20px"
       spacing="20px"
       bgcolor={PALETTE.secondary.grey[1]}
       flex={1}
       overflow="scroll"
+      pt="20px"
     >
       <Stack direction="row" spacing="12px" justifyContent="flex-end">
         <Stack direction="row" spacing="12px" alignItems="center">
@@ -248,7 +379,7 @@ export default function MobileDashboardPageContents() {
           {userDetails.user ? <ProfileButton light /> : undefined}
         </Stack>
       </Stack>
-      <Stack spacing="20px">
+      <Stack spacing="20px" px="20px">
         <Stack justifyContent="space-between" direction="row">
           <Typography variant="h4">Home</Typography>
         </Stack>
@@ -258,7 +389,21 @@ export default function MobileDashboardPageContents() {
         </Typography>
       </Stack>
       <UrsorFadeIn duration={700}>
-        <Stack spacing="12px">
+        <Stack spacing="12px" px="20px">
+          <ToolButton
+            mobile
+            title="Create lesson"
+            description={CONTENT_BRANDING.lesson.description}
+            color={CONTENT_BRANDING.lesson.color}
+            icon={CONTENT_BRANDING.lesson.icon}
+            onClick={() => {
+              outOfCreations
+                ? setNoCreationsLeftDialogOpen(true)
+                : setLessonCreationDialogOpen(true);
+            }}
+            infoButtonPosition={215}
+            info={CONTENT_BRANDING.lesson.info}
+          />
           <ToolButton
             mobile
             title="Create safe video link"
@@ -266,7 +411,9 @@ export default function MobileDashboardPageContents() {
             color={PALETTE.secondary.blue[3]}
             icon={CirclePlayIcon}
             onClick={() => {
-              setVideoCreationDialogOpen(true);
+              outOfCreations
+                ? setNoCreationsLeftDialogOpen(true)
+                : setVideoCreationDialogOpen(true);
             }}
             infoButtonPosition={280}
             info={
@@ -279,7 +426,11 @@ export default function MobileDashboardPageContents() {
             description="Printable & finished in seconds."
             color={PALETTE.secondary.pink[5]}
             icon={ChecklistIcon}
-            onClick={() => setWorksheetCreationDialogOpen(true)}
+            onClick={() => {
+              outOfCreations
+                ? setNoCreationsLeftDialogOpen(true)
+                : setWorksheetCreationDialogOpen(true);
+            }}
             infoButtonPosition={300}
             info={
               "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
@@ -287,16 +438,18 @@ export default function MobileDashboardPageContents() {
           />
         </Stack>
       </UrsorFadeIn>
-      <Stack minHeight="20px" justifyContent="center">
+      <Stack minHeight="20px" justifyContent="center" px="20px">
         <Stack height="2px" bgcolor={PALETTE.secondary.grey[2]} />
       </Stack>
       <UrsorFadeIn duration={700} delay={200}>
         <Stack spacing="12px">
-          <FilterRow
-            selected={selectedContentType}
-            callback={(newSelected) => setSelectedContentType(newSelected)}
-          />
-          <Stack direction="row" spacing="12px">
+          <Stack overflow="scroll" py="3px" width="100%" pr="20px">
+            <FilterRow
+              selected={selectedContentType}
+              callback={(newSelected) => setSelectedContentType(newSelected)}
+            />
+          </Stack>
+          <Stack direction="row" spacing="12px" px="20px">
             <SearchInput
               value={searchValue ?? ""}
               callback={(value: string) => {
@@ -318,21 +471,23 @@ export default function MobileDashboardPageContents() {
           </Stack>
         </Stack>
       </UrsorFadeIn>
-      <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px">
-        {cards.map((card, i) => (
-          <UrsorFadeIn key={card.details.id} delay={i * 120} duration={800}>
-            {card.type === "video" ? (
-              <VideoCard
-                {...(card.details as IVideo)}
-                deletionCallback={() => null}
-                editingCallback={() => null}
-              />
-            ) : (
-              <WorksheetCard {...(card.details as IWorksheet)} />
-            )}
-          </UrsorFadeIn>
-        ))}
-      </Stack>
+      {cards.length > 0 ? (
+        <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px">
+          {cards.map((card, i) => (
+            <UrsorFadeIn key={card.details.id} delay={i * 120} duration={800}>
+              {card.type === "video" ? (
+                <VideoCard
+                  {...(card.details as IVideo)}
+                  deletionCallback={() => null}
+                  editingCallback={() => null}
+                />
+              ) : (
+                <WorksheetCard {...(card.details as IWorksheet)} />
+              )}
+            </UrsorFadeIn>
+          ))}
+        </Stack>
+      ) : null}
       <VideoCreationDialog
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
@@ -342,32 +497,59 @@ export default function MobileDashboardPageContents() {
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
         mobile
       />
-      {!selectedContentType && worksheets.length === 0 && videos.length === 0
-        ? createPortal(
-            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
-            document.body
-          )
-        : null}
-      {selectedContentType === "video" && videos.length === 0
-        ? createPortal(
-            <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
-            document.body
-          )
-        : null}
-      {selectedContentType === "worksheet" && worksheets.length === 0
-        ? createPortal(
-            <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
-            document.body
-          )
-        : null}
-      <DashboardSignupPromptDialog
-        open={signupPromptDialogOpen}
-        closeCallback={() => setSignupPromptDialogOpen(false)}
-        mobile
+      <LessonCreationDialog
+        open={lessonCreationDialogOpen}
+        closeCallback={() => setLessonCreationDialogOpen(false)}
       />
+      {!selectedContentType &&
+      worksheets.length === 0 &&
+      videos.length === 0 ? (
+        <MobileEmptyStateIllustration>
+          No content yet.
+        </MobileEmptyStateIllustration>
+      ) : null}
+      {selectedContentType === "video" && videos.length === 0 ? (
+        <MobileEmptyStateIllustration>
+          No videos yet.
+        </MobileEmptyStateIllustration>
+      ) : null}
+      {selectedContentType === "worksheet" && worksheets.length === 0 ? (
+        <MobileEmptyStateIllustration>
+          No worksheets yet.
+        </MobileEmptyStateIllustration>
+      ) : null}
+
       <UpgradeDialog
+        mobile={isMobile}
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+      />
+      <TrialExpirationDialog
+        open={trialExpirationDialogOpen}
+        closeCallback={() => setTrialExpirationDialogOpen(false)}
+        openQuestionnaireCallback={() => {
+          //setQuestionnaireDialogOpen(true);
+          setTrialExpirationDialogOpen(false);
+        }}
+        upgradeCallback={() => {
+          setTrialExpirationDialogOpen(false);
+          setUpgradeDialogOpen(true);
+        }}
+      />
+      {!userDetails.user?.subscribed &&
+      getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+        <UrsorFadeIn duration={1000}>
+          <LiteModeBar
+            mobile
+            upgradeCallback={() => setUpgradeDialogOpen(true)}
+          />
+        </UrsorFadeIn>
+      ) : null}
+      <LiteModeBar mobile upgradeCallback={() => setUpgradeDialogOpen(true)} />
+      <NoCreationsLeftDialog
+        open={noCreationsLeftDialogOpen}
+        closeCallback={() => setNoCreationsLeftDialogOpen(false)}
+        callback={() => setUpgradeDialogOpen(true)}
       />
     </Stack>
   );
