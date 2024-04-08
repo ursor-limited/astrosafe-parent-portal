@@ -9,6 +9,7 @@ import { headers } from "next/headers";
 import LessonPageContents from "./LessonPageContents";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import { ILink } from "@/app/dashboard/LinkDialog";
+import MobileLessonPageContents from "./MobileLessonPageContents";
 
 export interface ILesson {
   id: string;
@@ -65,7 +66,11 @@ async function LessonPage({ params }: { params: { id: string } }) {
   return (
     <AuthWrapper>
       <UserProvider>
-        {!isMobile ? <LessonPageContents lessonId={params.id} /> : <></>}
+        {isMobile ? (
+          <MobileLessonPageContents lessonId={params.id} />
+        ) : (
+          <LessonPageContents lessonId={params.id} />
+        )}
       </UserProvider>
     </AuthWrapper>
   );

@@ -21,7 +21,6 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
@@ -43,11 +42,10 @@ import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
-export default function LessonPageContents(props: { lessonId: string }) {
+export default function MobileLessonPageContents(props: { lessonId: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
@@ -172,213 +170,185 @@ export default function LessonPageContents(props: { lessonId: string }) {
   return (
     <>
       <Stack p="40px" overflow="scroll">
-        <BigCard
-          title={lesson?.title ?? ""}
-          description={lesson?.description ?? ""}
-          createdAt={lesson?.createdAt ?? undefined}
-          rightStuff={
-            <Stack direction="row" spacing="12px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === lesson?.creatorId ? (
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  //background={PALETTE.secondary.grey[1]}
-                  border
-                  actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => setEditingDialogOpen(true),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
-              ) : // <Stack
-              //   sx={{
-              //     pointerEvents:
-              //       userDetails?.user?.id === lesson?.creatorId
-              //         ? undefined
-              //         : "none",
-              //     opacity:
-              //       userDetails?.user?.id &&
-              //       userDetails?.user?.id !== lesson?.creatorId
-              //         ? 0
-              //         : 1,
-              //   }}
-              // >
-              //   <CircularButton
-              //     icon={TrashcanIcon}
-              //     color={PALETTE.system.red}
-              //     onClick={() => setDeletionDialogOpen(true)}
-              //   />
-              // </Stack>
-              null}
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
-              >
-                <ShareIcon width="22px" height="22px" />
-              </Stack>
-            </Stack>
-          }
-        >
-          {/* <Stack
-            position="absolute"
-            left={0}
-            right={0}
-            top={0}
-            marginLeft="auto !important"
-            marginRight="auto !important"
-            height="100%"
-            width="2px"
-            bgcolor={PALETTE.secondary.grey[3]}
-          ></Stack> */}
-          <Stack width="100%">
+        <Stack direction="row" spacing="12px">
+          {userDetails?.user?.id &&
+          userDetails?.user?.id === lesson?.creatorId ? (
+            <UrsorActionButton
+              size="43px"
+              iconSize="17px"
+              //background={PALETTE.secondary.grey[1]}
+              border
+              actions={[
+                {
+                  text: "Edit",
+                  kallback: () => setEditingDialogOpen(true),
+                  icon: PencilIcon,
+                },
+                {
+                  text: "Delete",
+                  kallback: () => setDeletionDialogOpen(true),
+                  icon: TrashcanIcon,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          ) : null}
+
+          <Stack
+            borderRadius="100%"
+            border={`2px solid ${PALETTE.primary.navy}`}
+            height="39px"
+            width="39px"
+            justifyContent="center"
+            alignItems="center"
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              notificationCtx.success("Copied URL to clipboard.");
+            }}
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+            }}
+          >
+            <ShareIcon width="22px" height="22px" />
+          </Stack>
+        </Stack>
+
+        {lesson ? (
+          <Stack>
+            <Typography variant="medium" bold color="rgb(255,255,255)">
+              {lesson?.title}
+            </Typography>
+            <Typography variant="small" color="rgb(255,255,255)">
+              {lesson?.description}
+            </Typography>
+          </Stack>
+        ) : null}
+
+        <Stack width="100%">
+          <Stack
+            height="110px"
+            position="fixed"
+            left="50%"
+            sx={{ transform: "translate(-50%)" }}
+            zIndex={3}
+          >
             <Stack
-              height="110px"
-              position="fixed"
-              left="50%"
-              sx={{ transform: "translate(-50%)" }}
-              zIndex={3}
-            >
-              <Stack
-                position="absolute"
-                left={0}
-                right={0}
-                top={0}
-                marginLeft="auto !important"
-                marginRight="auto !important"
-                height="100%"
-                width="2px"
-                bgcolor={PALETTE.secondary.grey[3]}
+              position="absolute"
+              left={0}
+              right={0}
+              top={0}
+              marginLeft="auto !important"
+              marginRight="auto !important"
+              height="100%"
+              width="2px"
+              bgcolor={PALETTE.secondary.grey[3]}
+            />
+            <Stack sx={{ zIndex: 2 }}>
+              <AddContentButton
+                mobile
+                callback={(type) =>
+                  outOfCreations
+                    ? setNoCreationsLeftDialogOpen(true)
+                    : contentCallbacks[type]()
+                }
               />
-              <Stack sx={{ zIndex: 2 }}>
-                <AddContentButton
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
-                />
-              </Stack>
-            </Stack>
-            <Stack px="24px" pt="105px">
-              {_.reverse(contents.slice())
-                .map((c) => {
-                  if (c.type === "video") {
-                    const video = videos?.find((v) => v.id === c.contentId);
-                    return video ? (
-                      <LessonVideoCard
-                        key={video.id}
-                        {...video}
-                        editingCallback={() =>
-                          setVideoEditingDialogId(video.id)
-                        }
-                        deletionCallback={loadLesson}
-                        lessonId={props.lessonId}
-                      />
-                    ) : null;
-                  } else if (c.type === "link") {
-                    const link = links?.find((v) => v.id === c.contentId);
-                    return link ? (
-                      <LinkCard
-                        key={link.id}
-                        {...link}
-                        editCallback={() => setLinkEditingDialogId(link.id)}
-                        deleteCallback={loadLesson}
-                      />
-                    ) : null;
-                  } else if (c.type === "text") {
-                    const text = texts?.find((t) => t.id === c.contentId);
-                    return text ? (
-                      <TextCard
-                        key={text.id}
-                        {...text}
-                        editCallback={() => setTextEditingDialogId(text.id)}
-                        deleteCallback={loadLesson}
-                      />
-                    ) : null;
-                  } else if (c.type === "image") {
-                    const image = images?.find((i) => i.id === c.contentId);
-                    return image ? (
-                      <ImageCard
-                        key={image.id}
-                        {...image}
-                        editingCallback={() =>
-                          setImageEditingDialogId(image.id)
-                        }
-                        deletionCallback={loadLesson}
-                      />
-                    ) : null;
-                  } else if (c.type === "worksheet") {
-                    const worksheet = worksheets?.find(
-                      (w) => w.id === c.contentId
-                    );
-                    return worksheet ? (
-                      <PlaylistWorksheetPreview
-                        key={worksheet.id}
-                        {...worksheet}
-                        lessonId={props.lessonId}
-                      />
-                    ) : null;
-                  }
-                })
-                .map((card, i) => (
-                  <UrsorFadeIn duration={800} key={i}>
-                    <Stack
-                      //width="100%"
-                      alignItems={i % 2 ? "flex-end" : "flex-start"}
-                      position="relative"
-                    >
-                      <Stack width="40%">{card}</Stack>
-                      <Stack
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={0}
-                        marginLeft="auto !important"
-                        marginRight="auto !important"
-                        height={i < contents.length - 1 ? "100%" : "50%"}
-                        width="2px"
-                        bgcolor={PALETTE.secondary.grey[3]}
-                      />
-                      <Stack
-                        bgcolor={PALETTE.secondary.purple[1]}
-                        height="20px"
-                        width="20px"
-                        borderRadius="100%"
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={0}
-                        bottom={0}
-                        margin="auto"
-                      />
-                    </Stack>
-                  </UrsorFadeIn>
-                ))}
             </Stack>
           </Stack>
-        </BigCard>
+          <Stack px="24px" pt="105px">
+            {_.reverse(contents.slice())
+              .map((c) => {
+                if (c.type === "video") {
+                  const video = videos?.find((v) => v.id === c.contentId);
+                  return video ? (
+                    <LessonVideoCard
+                      key={video.id}
+                      {...video}
+                      editingCallback={() => setVideoEditingDialogId(video.id)}
+                      deletionCallback={loadLesson}
+                      lessonId={props.lessonId}
+                    />
+                  ) : null;
+                } else if (c.type === "link") {
+                  const link = links?.find((v) => v.id === c.contentId);
+                  return link ? (
+                    <LinkCard
+                      key={link.id}
+                      {...link}
+                      editCallback={() => setLinkEditingDialogId(link.id)}
+                      deleteCallback={loadLesson}
+                    />
+                  ) : null;
+                } else if (c.type === "text") {
+                  const text = texts?.find((t) => t.id === c.contentId);
+                  return text ? (
+                    <TextCard
+                      key={text.id}
+                      {...text}
+                      editCallback={() => setTextEditingDialogId(text.id)}
+                      deleteCallback={loadLesson}
+                    />
+                  ) : null;
+                } else if (c.type === "image") {
+                  const image = images?.find((i) => i.id === c.contentId);
+                  return image ? (
+                    <ImageCard
+                      key={image.id}
+                      {...image}
+                      editingCallback={() => setImageEditingDialogId(image.id)}
+                      deletionCallback={loadLesson}
+                    />
+                  ) : null;
+                } else if (c.type === "worksheet") {
+                  const worksheet = worksheets?.find(
+                    (w) => w.id === c.contentId
+                  );
+                  return worksheet ? (
+                    <PlaylistWorksheetPreview
+                      key={worksheet.id}
+                      {...worksheet}
+                      lessonId={props.lessonId}
+                    />
+                  ) : null;
+                }
+              })
+              .map((card, i) => (
+                <UrsorFadeIn duration={800} key={i}>
+                  <Stack
+                    //width="100%"
+                    alignItems={i % 2 ? "flex-end" : "flex-start"}
+                    position="relative"
+                  >
+                    <Stack width="40%">{card}</Stack>
+                    <Stack
+                      position="absolute"
+                      left={0}
+                      right={0}
+                      top={0}
+                      marginLeft="auto !important"
+                      marginRight="auto !important"
+                      height={i < contents.length - 1 ? "100%" : "50%"}
+                      width="2px"
+                      bgcolor={PALETTE.secondary.grey[3]}
+                    />
+                    <Stack
+                      bgcolor={PALETTE.secondary.purple[1]}
+                      height="20px"
+                      width="20px"
+                      borderRadius="100%"
+                      position="absolute"
+                      left={0}
+                      right={0}
+                      top={0}
+                      bottom={0}
+                      margin="auto"
+                    />
+                  </Stack>
+                </UrsorFadeIn>
+              ))}
+          </Stack>
+        </Stack>
       </Stack>
       <LessonCreationDialog
         open={editingDialogOpen}
