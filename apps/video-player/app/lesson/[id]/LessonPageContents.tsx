@@ -13,7 +13,6 @@ import {
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import Pencil from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
@@ -21,13 +20,11 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import LessonVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
-import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
@@ -43,7 +40,7 @@ import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import LessonWorksheetPreview from "./LessonWorksheetPreview";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -132,6 +129,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
+  const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
@@ -334,10 +335,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       (w) => w.id === c.contentId
                     );
                     return worksheet ? (
-                      <PlaylistWorksheetPreview
+                      <LessonWorksheetPreview
                         key={worksheet.id}
                         {...worksheet}
                         lessonId={props.lessonId}
+                        editingCallback={() =>
+                          setWorksheetEditingDialogId(worksheet.id)
+                        }
+                        deletionCallback={loadLesson}
                       />
                     ) : null;
                   }
@@ -419,6 +424,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
           );
         }}
       />
+      {worksheetEditingDialogId ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setWorksheetEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+        />
+      ) : null}
       <LinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}

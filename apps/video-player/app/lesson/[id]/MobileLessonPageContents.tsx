@@ -26,7 +26,6 @@ import NotificationContext from "@/app/components/NotificationContext";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import LessonVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
-import PlaylistWorksheetPreview from "./PlaylistWorksheetPreview";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
@@ -42,6 +41,7 @@ import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
+import LessonWorksheetPreview from "./LessonWorksheetPreview";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -305,10 +305,15 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                     (w) => w.id === c.contentId
                   );
                   return worksheet ? (
-                    <PlaylistWorksheetPreview
+                    <LessonWorksheetPreview
                       key={worksheet.id}
                       {...worksheet}
                       lessonId={props.lessonId}
+                      editingCallback={
+                        () => null
+                        //setWorksheetEditingDialogId(worksheet.id)
+                      }
+                      deletionCallback={loadLesson}
                     />
                   ) : null;
                 }

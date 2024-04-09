@@ -188,6 +188,7 @@ export const CategorySelectionButton = (props: {
 };
 
 export default function WorksheetGenerator(props: {
+  worksheet?: IWorksheet;
   worksheetId?: IWorksheet["worksheetId"];
   title?: IWorksheet["title"];
   nProblems?: number;
@@ -200,12 +201,29 @@ export default function WorksheetGenerator(props: {
   glow?: boolean;
   buttonText?: string;
   callback?: (id: string) => void;
+  updateCallback?: () => void;
 }) {
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
   const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [nProblems, setNProblems] = useState<number | undefined>(10);
+  const [nProblems, setNProblems] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    if (props.worksheet) {
+      props.worksheet.worksheetId === "equation" &&
+        setNProblems(
+          (props.worksheet.parameters as IEquationWorksheetParameters).pairs
+            .length
+        );
+      props.worksheet.worksheetId === "numberBond" &&
+        setNProblems(
+          (props.worksheet.parameters as INumberBondWorksheetParameters)
+            .leftNumbers.length
+        );
+    } else {
+      setNProblems(10);
+    }
+  }, [props.worksheet]);
 
   useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
   useEffect(
@@ -245,11 +263,11 @@ export default function WorksheetGenerator(props: {
   const [creationCallback, setCreationCallback] = useState<
     null | (() => Promise<string>)
   >(null);
+  const [updateCallback, setUpdateCallback] = useState<
+    null | (() => Promise<string>)
+  >(null);
 
   const [regenerationCount, setRegenerationCount] = useState<number>(0);
-
-  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
-    useState<boolean>(false);
 
   const [freeWorksheetCreationCount, setFreeWorksheetCreationCount] =
     useLocalStorage<number>("freeWorksheetCreationCount", 0);
@@ -277,6 +295,13 @@ export default function WorksheetGenerator(props: {
         : router.push(
             !props.landOnWorksheetPage ? "/dashboard" : `/worksheet/${id}`
           );
+    });
+  };
+
+  const submitUpdate = () => {
+    setLoading(true);
+    updateCallback?.().then((id) => {
+      props.updateCallback?.();
     });
   };
 
@@ -399,10 +424,12 @@ export default function WorksheetGenerator(props: {
             {worksheetId === "equation" ? (
               <WorksheetGeneratorEquationModule
                 {...(specificSettings as IEquationWorksheetGeneratorSettings)}
+                id={props.worksheet?.id}
                 callback={(newPreviewWorksheet) =>
                   setPreviewWorksheet(newPreviewWorksheet)
                 }
                 setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                setUpdateCallback={(cc) => setUpdateCallback(() => cc)}
                 nProblems={nProblems}
                 setNProblems={setNProblems}
                 setNPages={setNPages}
@@ -411,14 +438,20 @@ export default function WorksheetGenerator(props: {
                 topic={topic}
                 pageIndex={selectedPageIndex}
                 regenerationCount={regenerationCount}
+                pairs={
+                  (props.worksheet?.parameters as IEquationWorksheetParameters)
+                    ?.pairs
+                }
               />
             ) : worksheetId === "numberBond" ? (
               <WorksheetGeneratorNumberBondModule
                 {...(specificSettings as INumberBondWorksheetGeneratorSettings)}
+                id={props.worksheet?.id}
                 callback={(newPreviewWorksheet) =>
                   setPreviewWorksheet(newPreviewWorksheet)
                 }
                 setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                setUpdateCallback={(cc) => setUpdateCallback(() => cc)}
                 nProblems={nProblems}
                 setNProblems={setNProblems}
                 setNPages={setNPages}
@@ -431,7 +464,9 @@ export default function WorksheetGenerator(props: {
             ) : null}
             {props.mobile ? (
               <UrsorButton
-                onClick={submitCreation}
+                onClick={() =>
+                  props.worksheet ? submitUpdate() : submitCreation()
+                }
                 dark
                 variant="tertiary"
                 endIcon={PencilIcon}

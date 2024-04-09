@@ -138,11 +138,13 @@ const TriangularNumberBondConfigurationIcon = (props: {
 
 export function WorksheetGeneratorNumberBondModule(
   props: INumberBondWorksheetGeneratorSettings & {
+    id?: string;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number | undefined;
     setNProblems: (n: number) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
+    setUpdateCallback: (cc: () => Promise<string>) => void;
     title: string;
     description?: string;
     topic: WorksheetTopic;
@@ -231,7 +233,6 @@ export function WorksheetGeneratorNumberBondModule(
     props.setCreationCallback(() =>
       ApiController.createNumberBondWorksheet(
         props.title,
-
         orientation,
         sum ?? 0,
         empty,
@@ -245,6 +246,18 @@ export function WorksheetGeneratorNumberBondModule(
         // })
         .then((ws) => ws.id)
     );
+    props.id &&
+      props.setUpdateCallback(() =>
+        ApiController.updateNumberBondWorksheet(
+          props.id!,
+          props.title,
+          orientation,
+          sum ?? 0,
+          empty,
+          leftNumbers,
+          props.description
+        )
+      );
   }, [
     props.title,
     props.description,

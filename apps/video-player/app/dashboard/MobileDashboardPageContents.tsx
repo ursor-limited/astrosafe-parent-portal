@@ -448,6 +448,7 @@ export default function MobileDashboardPageContents() {
             <FilterRow
               selected={selectedContentType}
               callback={(newSelected) => setSelectedContentType(newSelected)}
+              mobile
             />
           </Stack>
           <Stack direction="row" spacing="12px" px="20px">
@@ -475,7 +476,7 @@ export default function MobileDashboardPageContents() {
       {cards.length > 0 ? (
         <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px" px="20px">
           {cards.map((card, i) => (
-            <UrsorFadeIn delay={i * 190} duration={900}>
+            <UrsorFadeIn key={i} delay={i * 190} duration={900}>
               {card.type === "video" ? (
                 <VideoCard
                   {...(card.details as IVideo)}

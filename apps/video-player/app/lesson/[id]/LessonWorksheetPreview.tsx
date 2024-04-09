@@ -13,8 +13,11 @@ import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
 import { getFormattedDate } from "./LessonVideoCard";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
 {
   /* <PageSelector
         pageIndex={pageIndex}
@@ -24,8 +27,12 @@ import { getFormattedDate } from "./LessonVideoCard";
       /> */
 }
 
-const PlaylistWorksheetPreview = (
-  props: IWorksheet & { lessonId?: string }
+const LessonWorksheetPreview = (
+  props: IWorksheet & {
+    lessonId?: string;
+    editingCallback: () => void;
+    deletionCallback: () => void;
+  }
 ) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -42,6 +49,26 @@ const PlaylistWorksheetPreview = (
       bgcolor={PALETTE.secondary.pink[3]}
       boxShadow="0 0 60px rgba(0,0,0,0.07)"
     >
+      <Stack position="absolute" top="16px" right="16px" zIndex={2}>
+        <UrsorActionButton
+          size="32px"
+          iconSize="16px"
+          shadow
+          actions={[
+            {
+              text: "Edit",
+              kallback: props.editingCallback,
+              icon: PencilIcon,
+            },
+            {
+              text: "Delete",
+              kallback: () => null, //setDeletionDialogOpen(true),
+              icon: TrashcanIcon,
+              color: PALETTE.system.red,
+            },
+          ]}
+        />
+      </Stack>
       <Stack position="relative" height="790px">
         <Stack
           sx={{ transform: "scale(0.703)", transformOrigin: "top left" }}
@@ -170,4 +197,4 @@ const PlaylistWorksheetPreview = (
   );
 };
 
-export default PlaylistWorksheetPreview;
+export default LessonWorksheetPreview;

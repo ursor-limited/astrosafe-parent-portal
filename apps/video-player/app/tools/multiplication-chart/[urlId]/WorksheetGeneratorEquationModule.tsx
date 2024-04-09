@@ -9,6 +9,7 @@ import {
   EquationOrientation,
   WorksheetTopic,
   IEquationWorksheetGeneratorSettings,
+  IEquationWorksheetParameters,
 } from "../../../components/WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
@@ -16,50 +17,38 @@ import { useUserContext } from "@/app/components/UserContext";
 
 const MAX_N_PROBLEMS = 100;
 
-export const getZeroHandledNumber = (n: string) =>
-  // {
-  //   if (!n) {
-  //     return 0;
-  //   } else {
-  //     const onlyNumbersString = n.match(/\d+/)?.[0];
-  //     const leadingZeroRemovedString = onlyNumbersString?.slice(
-  //       onlyNumbersString[0] === "0" ? 1 : 0
-  //     );
-  //     return Math.min(
-  //       leadingZeroRemovedString ? parseInt(leadingZeroRemovedString) : 0,
-  //       MAX_N_PROBLEMS
-  //     );
-  //   }
-  // };
-  {
-    if (!n) {
-      return undefined;
-    } else {
-      const onlyNumbersString = n.match(/\d+/)?.[0];
-      const leadingZeroRemovedString =
-        onlyNumbersString === "0"
-          ? "0"
-          : onlyNumbersString?.slice(onlyNumbersString[0] === "0" ? 1 : 0);
-      return !leadingZeroRemovedString
-        ? undefined
-        : parseInt(leadingZeroRemovedString);
-    }
-  };
+export const getZeroHandledNumber = (n: string) => {
+  if (!n) {
+    return undefined;
+  } else {
+    const onlyNumbersString = n.match(/\d+/)?.[0];
+    const leadingZeroRemovedString =
+      onlyNumbersString === "0"
+        ? "0"
+        : onlyNumbersString?.slice(onlyNumbersString[0] === "0" ? 1 : 0);
+    return !leadingZeroRemovedString
+      ? undefined
+      : parseInt(leadingZeroRemovedString);
+  }
+};
 
 export function WorksheetGeneratorEquationModule(
   props: IEquationWorksheetGeneratorSettings & {
+    id?: string;
     nDigits: number;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number | undefined;
     setNProblems: (n: number | undefined) => void;
     setNPages: (n: number) => void;
     setCreationCallback: (cc: () => Promise<string>) => void;
+    setUpdateCallback: (cc: () => Promise<string>) => void;
     title: string;
     description: string;
     topic: WorksheetTopic;
     pageIndex: number;
     regenerationCount: number;
     whiteFields?: boolean;
+    pairs?: IEquationWorksheetParameters["pairs"];
   }
 ) {
   const [orientation, setOrientation] =
@@ -84,6 +73,10 @@ export function WorksheetGeneratorEquationModule(
 
   const [pairs, setPairs] = useState<[number, number][]>([]);
   useEffect(() => {
+    props.pairs && setPairs(props.pairs);
+  }, [props.pairs]);
+  useEffect(() => {
+    if (props.pairs && pairs.length === 0) return;
     if (props.topic === "addition") {
       const maxx = max || 1;
       const fullAnswerSets = _(Math.floor((props.nProblems ?? 0) / maxx))
@@ -194,6 +187,17 @@ export function WorksheetGeneratorEquationModule(
         userDetails?.user?.id
       ).then((ws) => ws.id)
     );
+    props.id &&
+      props.setUpdateCallback(() =>
+        ApiController.updateEquationWorksheet(
+          props.id!,
+          props.title,
+          orientation,
+          props.topic,
+          pairs,
+          props.description
+        )
+      );
   }, [
     props.title,
     props.description,

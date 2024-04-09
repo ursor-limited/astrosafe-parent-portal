@@ -10,7 +10,9 @@ const WorksheetCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
   creationCallback?: (worksheetId: string) => void;
+  editingCallback?: () => void;
   mobile?: boolean;
+  worksheet?: IWorksheet;
 }) => {
   return (
     <UrsorDialog
@@ -27,6 +29,7 @@ const WorksheetCreationDialog = (props: {
         overflow={props.mobile ? "scroll" : undefined}
       >
         <WorksheetGenerator
+          worksheet={props.worksheet}
           mobile={props.mobile}
           noPadding
           landOnWorksheetPage
@@ -38,6 +41,7 @@ const WorksheetCreationDialog = (props: {
                 }
               : undefined
           }
+          updateCallback={props.editingCallback}
         />
       </Stack>
     </UrsorDialog>
