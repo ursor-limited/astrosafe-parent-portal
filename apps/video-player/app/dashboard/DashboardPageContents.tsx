@@ -548,7 +548,7 @@ export default function DashboardPageContents() {
         details: l,
       }));
     const worksheetDetails = worksheets
-      .filter((x) => x.worksheetId)
+      .filter((x) => x.worksheetComponent)
       .filter(
         (x) =>
           !searchValue ||

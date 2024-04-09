@@ -1,6 +1,6 @@
 import {
   EquationOrientation,
-  INumberBondWorksheetParameters,
+  INumberBondWorksheetSettings,
   WorksheetTopic,
 } from "./components/WorksheetGenerator";
 import { AstroLessonContent } from "./lesson/[id]/LessonPageContents";
@@ -97,7 +97,7 @@ class ApiController {
     );
   }
   static async deleteLesson(id: string) {
-    return dellete(`lesson/${id}`)
+    return dellete(`lesson/${id}`);
   }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
@@ -223,7 +223,7 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    pairs: [number, number][],
+    values: [number, number][],
     description?: string,
     creatorId?: string
   ) {
@@ -231,10 +231,10 @@ class ApiController {
       title,
       description,
       creatorId,
-      parameters: {
+      values,
+      settings: {
         orientation,
         topic,
-        pairs,
       },
     }).then((response: any) => response.json());
   }
@@ -243,16 +243,16 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    pairs: [number, number][],
-    description?: string,
+    values: [number, number][],
+    description?: string
   ) {
     return patch(`canvas/worksheet/equation/${id}`, {
       title,
       description,
-      parameters: {
+      values,
+      settings: {
         orientation,
         topic,
-        pairs,
       },
     }).then((response: any) => response.json());
   }
@@ -260,8 +260,8 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     sum: number,
-    empty: INumberBondWorksheetParameters["empty"],
-    leftNumbers: number[],
+    empty: INumberBondWorksheetSettings["empty"],
+    values: number[],
     description?: string,
     creatorId?: string
   ) {
@@ -269,7 +269,8 @@ class ApiController {
       title,
       description,
       creatorId,
-      parameters: { orientation, sum, empty, leftNumbers },
+      values,
+      parameters: { orientation, sum, empty },
     }).then((response: any) => response.json());
   }
   static async updateNumberBondWorksheet(
@@ -277,7 +278,7 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     sum: number,
-    empty: INumberBondWorksheetParameters["empty"],
+    empty: INumberBondWorksheetSettings["empty"],
     leftNumbers: number[],
     description?: string,
     creatorId?: string
@@ -286,7 +287,7 @@ class ApiController {
       title,
       description,
       creatorId,
-      parameters: { orientation, sum, empty, leftNumbers },
+      settings: { orientation, sum, empty, leftNumbers },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {
@@ -324,7 +325,7 @@ class ApiController {
     return post("link", details).then((response: any) => response.json());
   }
   static async deleteLink(id: string) {
-    return dellete(`link/${id}`)
+    return dellete(`link/${id}`);
   }
   static async updateLink(id: string, details: any) {
     return patch(`link/${id}`, details).then((response: any) =>

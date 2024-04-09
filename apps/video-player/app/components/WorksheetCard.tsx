@@ -80,16 +80,16 @@ const WorksheetCard = (props: IWorksheet) => {
             margin="auto"
             overflow="hidden"
           >
-            {props.worksheetId === "equation" ? (
+            {props.worksheetComponent === "equation" ? (
               <EquationWorksheet
                 title={props.title}
-                {...props.parameters}
+                {...props.settings}
                 pageIndex={0}
               />
-            ) : props.worksheetId === "numberBond" ? (
+            ) : props.worksheetComponent === "numberBond" ? (
               <NumberBondWorksheet
                 title={props.title}
-                {...props.parameters}
+                {...props.settings}
                 pageIndex={0}
               />
             ) : null}

@@ -3,7 +3,7 @@ import landingPageDetails from "./math-worksheet.json";
 import {} from "@/app/worksheet/[id]/EquationWorksheet";
 import {
   WorksheetTopic,
-  WorksheetId,
+  WorksheetComponent,
 } from "../../components/WorksheetGenerator";
 import { Metadata } from "next";
 import LandingPageContents, {
@@ -30,7 +30,7 @@ async function MainWorksheetsLandingPage() {
       ...landingPageDetails.worksheetGenerator,
       topic: landingPageDetails.worksheetGenerator.topic as WorksheetTopic,
       worksheetId: landingPageDetails.worksheetGenerator
-        .worksheetId as WorksheetId,
+        .worksheetId as WorksheetComponent,
     },
   };
   return <LandingPageContents {...details} />;

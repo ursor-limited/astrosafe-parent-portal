@@ -1,6 +1,6 @@
 import {
-  IEquationWorksheetParameters,
-  INumberBondWorksheetParameters,
+  IEquationWorksheetSettings,
+  INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
 import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
@@ -27,17 +27,16 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
       /> */
 }
 
-const LessonWorksheetPreview = (
-  props: IWorksheet & {
-    lessonId?: string;
-    editingCallback: () => void;
-    deletionCallback: () => void;
-  }
-) => {
+const LessonWorksheetPreview = (props: {
+  worksheet: IWorksheet;
+  lessonId?: string;
+  editingCallback: () => void;
+  deletionCallback: () => void;
+}) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [nPages, setNPages] = useState<number>(0);
-  useEffect(() => setNPages(getNPages(props)), [props]);
+  useEffect(() => setNPages(getNPages(props.worksheet)), [props.worksheet]);
   const router = useRouter();
   return (
     <Stack
@@ -76,25 +75,29 @@ const LessonWorksheetPreview = (
           top={0}
           left={0}
         >
-          {props.worksheetId === "equation" ? (
+          {props.worksheet.worksheetComponent === "equation" ? (
             <EquationWorksheet
-              title={props.title}
-              description={props.description}
-              orientation={props.parameters.orientation}
-              topic={(props.parameters as IEquationWorksheetParameters).topic}
-              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              title={props.worksheet.title}
+              description={props.worksheet.description}
+              orientation={props.worksheet.settings.orientation}
+              topic={
+                (props.worksheet.settings as IEquationWorksheetSettings).topic
+              }
+              pairs={props.worksheet.values}
               pageIndex={pageIndex}
             />
           ) : (
             <NumberBondWorksheet
-              title={props.title}
-              description={props.description}
-              orientation={props.parameters.orientation}
-              sum={(props.parameters as INumberBondWorksheetParameters).sum}
-              empty={(props.parameters as INumberBondWorksheetParameters).empty}
-              leftNumbers={
-                (props.parameters as INumberBondWorksheetParameters).leftNumbers
+              title={props.worksheet.title}
+              description={props.worksheet.description}
+              orientation={props.worksheet.settings.orientation}
+              sum={
+                (props.worksheet.settings as INumberBondWorksheetSettings).sum
               }
+              empty={
+                (props.worksheet.settings as INumberBondWorksheetSettings).empty
+              }
+              leftNumbers={props.worksheet.values}
               pageIndex={pageIndex}
             />
           )}
@@ -143,16 +146,16 @@ const LessonWorksheetPreview = (
             maxLines={2}
             color="rgb(255,255,255)"
           >
-            {props.title}
+            {props.worksheet.title}
           </Typography>
-          {props.description ? (
+          {props.worksheet.description ? (
             <Stack pb="9px" pt="2px">
               <Typography
                 color="rgb(255,255,255)"
                 variant="medium"
                 maxLines={2}
               >
-                {props.description}
+                {props.worksheet.description}
               </Typography>
             </Stack>
           ) : null}
@@ -162,7 +165,7 @@ const LessonWorksheetPreview = (
             sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
           >
             <Typography variant="small" color="rgb(255,255,255)">
-              {getFormattedDate(props.createdAt)}
+              {getFormattedDate(props.worksheet.createdAt)}
             </Typography>
             <ChecklistIcon height="20px" width="20px" />
           </Stack>
@@ -187,7 +190,7 @@ const LessonWorksheetPreview = (
         }}
         onClick={() =>
           router.push(
-            `/worksheet/${props.id}${
+            `/worksheet/${props.worksheet.id}${
               props.lessonId ? `?lesson=${props.lessonId}` : ""
             }`
           )

@@ -16,7 +16,13 @@ const WorksheetCreationDialog = (props: {
 }) => {
   return (
     <UrsorDialog
-      supertitle={props.mobile ? undefined : "Create worksheet"}
+      supertitle={
+        props.mobile
+          ? undefined
+          : props.worksheet
+          ? "Update worksheet"
+          : "Create worksheet"
+      }
       open={props.open}
       onCloseCallback={props.closeCallback}
       maxWidth="880px"

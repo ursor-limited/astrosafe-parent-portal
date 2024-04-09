@@ -7,9 +7,9 @@ import { Captioned } from "./LandingPageContents";
 import {
   CategorySelectionButton,
   EquationOrientation,
+  IEquationWorksheetSettings,
+  IWorksheet,
   WorksheetTopic,
-  IEquationWorksheetGeneratorSettings,
-  IEquationWorksheetParameters,
 } from "../../../components/WorksheetGenerator";
 import { UrsorInputField } from "ui";
 import _ from "lodash";
@@ -33,7 +33,7 @@ export const getZeroHandledNumber = (n: string) => {
 };
 
 export function WorksheetGeneratorEquationModule(
-  props: IEquationWorksheetGeneratorSettings & {
+  props: IEquationWorksheetSettings & {
     id?: string;
     nDigits: number;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
@@ -48,7 +48,7 @@ export function WorksheetGeneratorEquationModule(
     pageIndex: number;
     regenerationCount: number;
     whiteFields?: boolean;
-    pairs?: IEquationWorksheetParameters["pairs"];
+    pairs?: IWorksheet["values"];
   }
 ) {
   const [orientation, setOrientation] =
@@ -87,12 +87,12 @@ export function WorksheetGeneratorEquationModule(
         _.range(maxx),
         (props.nProblems ?? 0) % maxx
       );
-      setPairs(
-        [...fullAnswerSets, ...partialAnswerSet].map((x) => {
-          const value = randomize ? x : factor || 1;
-          return [value, _.sample(_.range(maxx - value + 1)) || 1];
-        })
-      );
+      // setPairs(
+      //   [...fullAnswerSets, ...partialAnswerSet].map((x) => {
+      //     const value = randomize ? x : factor || 1;
+      //     return [value, _.sample(_.range(maxx - value + 1)) || 1];
+      //   })
+      // );
     } else if (props.topic === "subtraction") {
       const maxx = (max ?? 0) + 1;
       const fullSets = _(Math.floor((props.nProblems ?? 0) / maxx))

@@ -5,11 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import {
-  IEquationWorksheetParameters,
-  INumberBondWorksheetParameters,
-  IWorksheet,
-} from "@/app/components/WorksheetGenerator";
+import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -307,7 +303,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                   return worksheet ? (
                     <LessonWorksheetPreview
                       key={worksheet.id}
-                      {...worksheet}
+                      worksheet={worksheet}
                       lessonId={props.lessonId}
                       editingCallback={
                         () => null
