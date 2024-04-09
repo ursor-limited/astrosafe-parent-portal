@@ -60,7 +60,7 @@ export const getNPages = (worksheet: IWorksheet) => {
     return (
       1 +
       Math.ceil(
-        (params.leftNumbers.length -
+        (worksheet.values.length -
           (params.orientation === "horizontal"
             ? NUMBER_BOND_HORIZONTAL_ROWS_N
             : NUMBER_BOND_VERTICAL_ROWS_N) *

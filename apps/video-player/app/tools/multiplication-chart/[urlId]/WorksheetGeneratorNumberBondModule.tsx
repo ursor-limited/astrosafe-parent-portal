@@ -7,8 +7,8 @@ import { Captioned } from "./LandingPageContents";
 import {
   CategorySelectionButton,
   EquationOrientation,
+  INumberBondWorksheetSettings,
   WorksheetTopic,
-  INumberBondWorksheetGeneratorSettings,
 } from "../../../components/WorksheetGenerator";
 import { PALETTE, UrsorInputField } from "ui";
 import _, { fill } from "lodash";
@@ -137,7 +137,7 @@ const TriangularNumberBondConfigurationIcon = (props: {
 );
 
 export function WorksheetGeneratorNumberBondModule(
-  props: INumberBondWorksheetGeneratorSettings & {
+  props: INumberBondWorksheetSettings & {
     id?: string;
     callback: (newPreviewWorksheet: React.ReactNode) => void;
     nProblems: number | undefined;
@@ -153,6 +153,9 @@ export function WorksheetGeneratorNumberBondModule(
     whiteFields?: boolean;
   }
 ) {
+  const [changedValueAffectingSettings, setChangedValueAffectingSettings] =
+    useState<boolean>(false);
+
   const [sum, setSum] = useState<number | undefined>(3);
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
@@ -170,6 +173,10 @@ export function WorksheetGeneratorNumberBondModule(
 
   const [leftNumbers, setLeftNumbers] = useState<number[]>([]);
   useEffect(() => {
+    if (props.leftNumbers && !changedValueAffectingSettings) {
+      setLeftNumbers(props.leftNumbers);
+      return;
+    }
     const fullsetSize = (sum ?? 0) - 1;
     const fullSet = _.range(1, sum);
     if (fullSet.length === 0) {
@@ -213,8 +220,6 @@ export function WorksheetGeneratorNumberBondModule(
   const [previewWorksheet, setPreviewWorksheet] = useState<
     React.ReactNode | undefined
   >(undefined);
-
-  const router = useRouter();
 
   const userDetails = useUserContext();
 
@@ -282,6 +287,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("horizontal");
                 setEmpty("sum");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <LinearNumberBondConfigurationIcon
@@ -294,6 +300,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("horizontal");
                 setEmpty("one");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <LinearNumberBondConfigurationIcon
@@ -306,6 +313,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("horizontal");
                 setEmpty("both");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <LinearNumberBondConfigurationIcon
@@ -318,6 +326,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("vertical");
                 setEmpty("sum");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <TriangularNumberBondConfigurationIcon
@@ -330,6 +339,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("vertical");
                 setEmpty("one");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <TriangularNumberBondConfigurationIcon
@@ -342,6 +352,7 @@ export function WorksheetGeneratorNumberBondModule(
               onClick={() => {
                 setOrientation("vertical");
                 setEmpty("both");
+                setChangedValueAffectingSettings(true);
               }}
             >
               <TriangularNumberBondConfigurationIcon
@@ -358,6 +369,7 @@ export function WorksheetGeneratorNumberBondModule(
             value={sum?.toString() ?? ""}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               setSum(getZeroHandledNumber(event.target.value));
+              setChangedValueAffectingSettings(true);
             }}
             placeholder="Enter number"
             width="100%"
@@ -373,6 +385,7 @@ export function WorksheetGeneratorNumberBondModule(
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               const x = getZeroHandledNumber(event.target.value);
               props.setNProblems(Math.min(x ?? 0, MAX_N_PROBLEMS));
+              setChangedValueAffectingSettings(true);
             }}
             placeholder="Enter number"
             width="100%"

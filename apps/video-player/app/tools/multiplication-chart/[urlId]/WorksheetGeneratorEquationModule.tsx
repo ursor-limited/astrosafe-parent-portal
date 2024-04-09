@@ -51,6 +51,9 @@ export function WorksheetGeneratorEquationModule(
     pairs?: IWorksheet["values"];
   }
 ) {
+  const [changedValueAffectingSettings, setChangedValueAffectingSettings] =
+    useState<boolean>(false);
+
   const [orientation, setOrientation] =
     useState<EquationOrientation>("horizontal");
   const [factor, setFactor] = useState<number | undefined>(1);
@@ -72,11 +75,14 @@ export function WorksheetGeneratorEquationModule(
   }, [props.factor]);
 
   const [pairs, setPairs] = useState<[number, number][]>([]);
+  // useEffect(() => {
+  //   props.pairs && setPairs(props.pairs);
+  // }, [props.pairs]);
   useEffect(() => {
-    props.pairs && setPairs(props.pairs);
-  }, [props.pairs]);
-  useEffect(() => {
-    if (props.pairs && pairs.length === 0) return;
+    if (props.pairs && !changedValueAffectingSettings) {
+      setPairs(props.pairs);
+      return;
+    }
     if (props.topic === "addition") {
       const maxx = max || 1;
       const fullAnswerSets = _(Math.floor((props.nProblems ?? 0) / maxx))
@@ -87,12 +93,12 @@ export function WorksheetGeneratorEquationModule(
         _.range(maxx),
         (props.nProblems ?? 0) % maxx
       );
-      // setPairs(
-      //   [...fullAnswerSets, ...partialAnswerSet].map((x) => {
-      //     const value = randomize ? x : factor || 1;
-      //     return [value, _.sample(_.range(maxx - value + 1)) || 1];
-      //   })
-      // );
+      setPairs(
+        [...fullAnswerSets, ...partialAnswerSet].map((x) => {
+          const value = randomize ? x : factor || 1;
+          return [value, _.sample(_.range(maxx - value + 1)) || 1];
+        })
+      );
     } else if (props.topic === "subtraction") {
       const maxx = (max ?? 0) + 1;
       const fullSets = _(Math.floor((props.nProblems ?? 0) / maxx))
@@ -239,9 +245,10 @@ export function WorksheetGeneratorEquationModule(
           >
             <UrsorInputField
               value={factor?.toString() ?? ""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setFactor(getZeroHandledNumber(event.target.value))
-              }
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setFactor(getZeroHandledNumber(event.target.value));
+                setChangedValueAffectingSettings(true);
+              }}
               placeholder="Enter number"
               leftAlign
               boldValue
@@ -262,9 +269,10 @@ export function WorksheetGeneratorEquationModule(
           >
             <UrsorInputField
               value={max?.toString() ?? ""}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setMax(getZeroHandledNumber(event.target.value))
-              }
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setMax(getZeroHandledNumber(event.target.value));
+                setChangedValueAffectingSettings(true);
+              }}
               placeholder="Enter number"
               leftAlign
               boldValue
@@ -279,19 +287,28 @@ export function WorksheetGeneratorEquationModule(
             <Stack direction="row" spacing="10px">
               <CategorySelectionButton
                 selected={nDigits === 1}
-                onClick={() => setNDigits(1)}
+                onClick={() => {
+                  setNDigits(1);
+                  setChangedValueAffectingSettings(true);
+                }}
               >
                 1
               </CategorySelectionButton>
               <CategorySelectionButton
                 selected={nDigits === 2}
-                onClick={() => setNDigits(2)}
+                onClick={() => {
+                  setNDigits(2);
+                  setChangedValueAffectingSettings(true);
+                }}
               >
                 2
               </CategorySelectionButton>
               <CategorySelectionButton
                 selected={nDigits === 3}
-                onClick={() => setNDigits(3)}
+                onClick={() => {
+                  setNDigits(3);
+                  setChangedValueAffectingSettings(true);
+                }}
               >
                 3
               </CategorySelectionButton>
@@ -308,6 +325,7 @@ export function WorksheetGeneratorEquationModule(
               props.setNProblems(
                 _.isNumber(x) ? Math.min(x ?? 0, MAX_N_PROBLEMS) : undefined
               );
+              setChangedValueAffectingSettings(true);
             }}
             placeholder="Enter number"
             width="100%"
@@ -321,7 +339,9 @@ export function WorksheetGeneratorEquationModule(
           <Stack direction="row" spacing="10px">
             <CategorySelectionButton
               selected={orientation === "horizontal"}
-              onClick={() => setOrientation("horizontal")}
+              onClick={() => {
+                setOrientation("horizontal");
+              }}
             >
               Short
             </CategorySelectionButton>

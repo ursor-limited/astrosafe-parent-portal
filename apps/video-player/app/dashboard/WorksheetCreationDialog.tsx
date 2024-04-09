@@ -3,6 +3,8 @@ import UrsorDialog from "../components/UrsorDialog";
 import WorksheetGenerator, {
   IWorksheet,
 } from "../components/WorksheetGenerator";
+import NotificationContext from "../components/NotificationContext";
+import { useContext } from "react";
 
 export const TITLE_CHARACTER_LIMIT = 40;
 
@@ -14,6 +16,7 @@ const WorksheetCreationDialog = (props: {
   mobile?: boolean;
   worksheet?: IWorksheet;
 }) => {
+  const notificationCtx = useContext(NotificationContext);
   return (
     <UrsorDialog
       supertitle={
@@ -47,7 +50,11 @@ const WorksheetCreationDialog = (props: {
                 }
               : undefined
           }
-          updateCallback={props.editingCallback}
+          updateCallback={() => {
+            props.editingCallback?.();
+            props.closeCallback();
+            notificationCtx.success("Updated Worksheet");
+          }}
         />
       </Stack>
     </UrsorDialog>

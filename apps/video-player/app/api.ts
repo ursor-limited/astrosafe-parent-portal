@@ -270,7 +270,7 @@ class ApiController {
       description,
       creatorId,
       values,
-      parameters: { orientation, sum, empty },
+      settings: { orientation, sum, empty },
     }).then((response: any) => response.json());
   }
   static async updateNumberBondWorksheet(

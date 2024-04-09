@@ -447,6 +447,7 @@ export default function WorksheetGenerator(props: {
                 topic={topic}
                 pageIndex={selectedPageIndex}
                 regenerationCount={regenerationCount}
+                leftNumbers={props.worksheet?.values as [number, number]}
               />
             ) : null}
             {props.mobile ? (
@@ -494,7 +495,9 @@ export default function WorksheetGenerator(props: {
                     onClick={() => setRegenerationCount(regenerationCount + 1)}
                   />
                   <UrsorButton
-                    onClick={submitCreation}
+                    onClick={() =>
+                      props.worksheet ? submitUpdate() : submitCreation()
+                    }
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
