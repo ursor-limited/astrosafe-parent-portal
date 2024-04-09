@@ -73,6 +73,12 @@ export function WorksheetGeneratorEquationModule(
   useEffect(() => {
     props.factor && setFactor(props.factor);
   }, [props.factor]);
+  useEffect(() => {
+    props.max && setMax(props.max);
+  }, [props.max]);
+  useEffect(() => {
+    props.random && setRandomize(props.random);
+  }, [props.random]);
 
   const [pairs, setPairs] = useState<[number, number][]>([]);
   // useEffect(() => {
@@ -188,6 +194,9 @@ export function WorksheetGeneratorEquationModule(
         props.title,
         orientation,
         props.topic,
+        factor,
+        max || 1,
+        randomize,
         pairs,
         props.description,
         userDetails?.user?.id
@@ -200,6 +209,9 @@ export function WorksheetGeneratorEquationModule(
           props.title,
           orientation,
           props.topic,
+          factor,
+          max || 1,
+          randomize,
           pairs,
           props.description
         )
@@ -211,6 +223,8 @@ export function WorksheetGeneratorEquationModule(
     nDigits,
     factor,
     pairs,
+    max,
+    randomize,
     props.pageIndex,
     orientation,
     userDetails.user?.id,

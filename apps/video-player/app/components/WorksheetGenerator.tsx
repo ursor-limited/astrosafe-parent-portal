@@ -72,6 +72,8 @@ export interface IEquationWorksheetSettings {
   orientation: EquationOrientation;
   nDigits: number;
   factor: number;
+  max: number;
+  random: boolean;
 }
 
 export interface INumberBondWorksheetSettings {

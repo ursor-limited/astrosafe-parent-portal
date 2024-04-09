@@ -35,6 +35,7 @@ const LessonWorksheetPreview = (props: {
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
+  useEffect(() => setPageIndex(0), [props.worksheet.updatedAt]);
   const [nPages, setNPages] = useState<number>(0);
   useEffect(() => setNPages(getNPages(props.worksheet)), [props.worksheet]);
   const router = useRouter();

@@ -223,9 +223,12 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
+    factor: number,
+    max: number,
+    random: boolean,
     values: [number, number][],
     description?: string,
-    creatorId?: string
+    creatorId?: string,
   ) {
     return post("canvas/worksheet/equation", {
       title,
@@ -235,6 +238,9 @@ class ApiController {
       settings: {
         orientation,
         topic,
+        factor,
+        max, 
+        random
       },
     }).then((response: any) => response.json());
   }
@@ -243,6 +249,9 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
+    factor: number,
+    max: number,
+    random: boolean,
     values: [number, number][],
     description?: string
   ) {
@@ -253,6 +262,9 @@ class ApiController {
       settings: {
         orientation,
         topic,
+        factor,
+        max, 
+        random
       },
     }).then((response: any) => response.json());
   }
