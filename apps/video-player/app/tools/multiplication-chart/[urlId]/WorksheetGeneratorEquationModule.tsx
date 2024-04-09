@@ -194,10 +194,10 @@ export function WorksheetGeneratorEquationModule(
         props.title,
         orientation,
         props.topic,
-        factor,
         max || 1,
         randomize,
         pairs,
+        factor,
         props.description,
         userDetails?.user?.id
       ).then((ws) => ws.id)
@@ -209,10 +209,10 @@ export function WorksheetGeneratorEquationModule(
           props.title,
           orientation,
           props.topic,
-          factor,
           max || 1,
           randomize,
           pairs,
+          factor,
           props.description
         )
       );

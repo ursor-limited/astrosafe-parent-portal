@@ -223,10 +223,10 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    factor: number,
     max: number,
     random: boolean,
     values: [number, number][],
+    factor?: number,
     description?: string,
     creatorId?: string,
   ) {
@@ -249,10 +249,10 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    factor: number,
     max: number,
     random: boolean,
     values: [number, number][],
+    factor?: number,
     description?: string
   ) {
     return patch(`canvas/worksheet/equation/${id}`, {
@@ -291,7 +291,7 @@ class ApiController {
     orientation: EquationOrientation,
     sum: number,
     empty: INumberBondWorksheetSettings["empty"],
-    leftNumbers: number[],
+    values: number[],
     description?: string,
     creatorId?: string
   ) {
@@ -299,7 +299,8 @@ class ApiController {
       title,
       description,
       creatorId,
-      settings: { orientation, sum, empty, leftNumbers },
+      values,
+      settings: { orientation, sum, empty },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {

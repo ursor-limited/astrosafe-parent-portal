@@ -367,7 +367,15 @@ export default function WorksheetGenerator(props: {
                 bgcolor={PALETTE.secondary.grey[2]}
               />
             </Stack>
-            <Stack direction="row" spacing="20px">
+            <Stack
+              direction="row"
+              spacing="20px"
+              sx={{
+                opacity: props.worksheet ? 0.35 : 1,
+                //pointerEvents: props.worksheet ? "none" : undefined,
+                cursor: props.worksheet ? "not-allowed" : undefined,
+              }}
+            >
               <Captioned text="Worksheet topic">
                 <UrsorSelect
                   items={[
@@ -393,6 +401,7 @@ export default function WorksheetGenerator(props: {
                   width="100%"
                   zIndex={999999999}
                   leftAlignPopover
+                  disabled={!!props.worksheet}
                 />
               </Captioned>
               <Captioned text="Question type">
@@ -410,6 +419,7 @@ export default function WorksheetGenerator(props: {
                   width="100%"
                   zIndex={999999999}
                   leftAlignPopover
+                  disabled={!!props.worksheet}
                 />
               </Captioned>
             </Stack>
