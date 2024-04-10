@@ -952,7 +952,7 @@ export default function DashboardPageContents() {
                             editingCallback={() =>
                               setWorksheetEditingDialogId(item.details.id)
                             }
-                            deletionCallback={loadLessons}
+                            deletionCallback={loadWorksheets}
                           />
                         ) : item.type === "lesson" ? (
                           <LessonCard
