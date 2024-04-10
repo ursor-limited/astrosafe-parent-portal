@@ -171,12 +171,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
   return (
     <>
       <Stack p="16px" overflow="scroll">
-        <Stack
-          width="100%"
-          direction="row"
-          justifyContent="space-between"
-          spacing="12px"
-        >
+        <Stack width="100%" direction="row" justifyContent="space-between">
           <Stack
             direction="row"
             alignItems="center"
@@ -196,7 +191,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               Back to Home
             </Typography>
           </Stack>
-          <Stack direction="row">
+          <Stack direction="row" spacing="12px">
             {userDetails?.user?.id &&
             userDetails?.user?.id === lesson?.creatorId ? (
               <UrsorActionButton

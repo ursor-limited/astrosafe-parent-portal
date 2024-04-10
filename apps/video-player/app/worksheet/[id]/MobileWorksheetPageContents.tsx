@@ -72,8 +72,6 @@ export default function MobileWorksheetPageContents(
     }
   }, [printAnswerSheetDialogOpen, printableAnswerSheetRef]);
 
-  const [mode, setMode] = useState<"worksheet" | "markscheme">("worksheet");
-
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
     const params = props.settings as IEquationWorksheetSettings;
@@ -99,7 +97,7 @@ export default function MobileWorksheetPageContents(
       setNPages(
         1 +
           Math.ceil(
-            (params.leftNumbers.length -
+            (props.values.length -
               (params.orientation === "horizontal"
                 ? NUMBER_BOND_HORIZONTAL_ROWS_N
                 : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -238,74 +236,111 @@ export default function MobileWorksheetPageContents(
         )}
       </Stack>
       <Stack spacing="22px" overflow="scroll">
-        <Stack direction="row" justifyContent="space-between" p="20px">
-          {/* {userDetails?.user?.id
-            userDetails?.user?.id === props.creatorId ? ( */}
-          <Stack direction="row" spacing="10px">
+        <Stack p="20px" spacing="22px">
+          <Stack direction="row" justifyContent="space-between">
             <Stack
-              sx={{
-                pointerEvents:
-                  userDetails?.user?.id === props.creatorId
-                    ? undefined
-                    : "none",
-                opacity:
-                  userDetails?.user?.id &&
-                  userDetails?.user?.id !== props.creatorId
-                    ? 0
-                    : 1,
-              }}
-            >
-              <CircularButton
-                icon={TrashcanIcon}
-                color={PALETTE.system.red}
-                onClick={() => setDeletionDialogOpen(true)}
-              />
-            </Stack>
-            {/* ) : null} */}
-            <Stack
-              borderRadius="100%"
-              border="2px solid rgb(255,255,255)"
-              height="39px"
-              width="39px"
-              justifyContent="center"
+              direction="row"
               alignItems="center"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
+              spacing="3px"
               sx={{
                 cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
+                "&:hover": { opacity: 0.7 },
                 transition: "0.2s",
                 svg: {
-                  path: {
-                    fill: "rgb(255,255,255)",
-                  },
+                  path: { fill: PALETTE.secondary.grey[1] },
                 },
               }}
+              onClick={() =>
+                router.push(
+                  props.lessonId
+                    ? `/lesson/${props.lessonId}`
+                    : userDetails
+                    ? "/dashboard"
+                    : "/"
+                )
+              }
             >
-              <ShareIcon width="22px" height="22px" />
+              <ChevronLeft width="20px" height="20px" />
+              <Typography color={PALETTE.secondary.grey[1]}>
+                {props.lessonId ? "Back to Lesson" : "Back to Home"}
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing="10px">
+              <Stack
+                sx={{
+                  pointerEvents:
+                    userDetails?.user?.id === props.creatorId
+                      ? undefined
+                      : "none",
+                  opacity:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id !== props.creatorId
+                      ? 0
+                      : 1,
+                }}
+              >
+                <CircularButton
+                  icon={TrashcanIcon}
+                  noBackground
+                  color={PALETTE.system.red}
+                  onClick={() => setDeletionDialogOpen(true)}
+                />
+              </Stack>
+              {/* ) : null} */}
+              <Stack
+                borderRadius="100%"
+                border="2px solid rgb(255,255,255)"
+                height="39px"
+                width="39px"
+                justifyContent="center"
+                alignItems="center"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                  svg: {
+                    path: {
+                      fill: "rgb(255,255,255)",
+                    },
+                  },
+                }}
+              >
+                <ShareIcon width="22px" height="22px" />
+              </Stack>
             </Stack>
           </Stack>
-          <Stack spacing="5px">
-            <UrsorButton
-              size="small"
-              dark
-              variant="tertiary"
-              onClick={() => save(true)}
-              width="200px"
-            >
-              Download answers
-            </UrsorButton>
-            <UrsorButton
-              size="small"
-              dark
-              variant="tertiary"
-              onClick={() => save()}
-              width="200px"
-            >
-              Download worksheet
-            </UrsorButton>
+          <Stack direction="row" justifyContent="space-between">
+            {/* {userDetails?.user?.id
+            userDetails?.user?.id === props.creatorId ? ( */}
+
+            <Stack spacing="5px" direction="row" width="100%">
+              <Stack width="100%">
+                <UrsorButton
+                  size="small"
+                  dark
+                  variant="tertiary"
+                  onClick={() => save(true)}
+                  width="100%"
+                >
+                  Download answers
+                </UrsorButton>
+              </Stack>
+              <Stack width="100%">
+                <UrsorButton
+                  size="small"
+                  dark
+                  variant="tertiary"
+                  onClick={() => save()}
+                  width="100%"
+                >
+                  Download worksheet
+                </UrsorButton>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
         <Stack spacing="12px" px="20px" pb="20px">

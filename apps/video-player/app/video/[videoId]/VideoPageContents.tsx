@@ -31,6 +31,7 @@ const Player = dynamic(
 export const CircularButton = (props: {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   color?: string;
+  noBackground?: boolean;
   onClick: () => void;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -44,7 +45,7 @@ export const CircularButton = (props: {
       border={`2px solid ${props.color || PALETTE.primary.navy}`}
       justifyContent="center"
       alignItems="center"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={props.noBackground ? undefined : "rgb(255,255,255)"}
       sx={{
         svg: {
           path: {
