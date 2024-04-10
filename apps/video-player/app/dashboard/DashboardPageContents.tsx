@@ -694,22 +694,22 @@ export default function DashboardPageContents() {
   //     -dayjs().diff(userDetails.user.freeTrialStart);
   // }, [userDetails.user]);
 
-  useEffect(() => {
-    if (
-      !userDetails.user?.subscribed &&
-      userDetails.user?.freeTrialStart &&
-      (!userDetails.user.periodCreationsClearedAt ||
-        dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
-    ) {
-      // const dayOfMonthToCheckOn =
-      //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
-      // (!userDetails.user.periodCreationsClearedAt ||
-      //   dayjs().date() >= dayOfMonthToCheckOn) &&
-      ApiController.clearPediodCreations(userDetails.user.id).then(
-        userDetails.refresh
-      );
-    }
-  }, [userDetails.user]);
+  // useEffect(() => {
+  //   if (
+  //     !userDetails.user?.subscribed &&
+  //     userDetails.user?.freeTrialStart &&
+  //     (!userDetails.user.periodCreationsClearedAt ||
+  //       dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
+  //   ) {
+  //     // const dayOfMonthToCheckOn =
+  //     //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
+  //     // (!userDetails.user.periodCreationsClearedAt ||
+  //     //   dayjs().date() >= dayOfMonthToCheckOn) &&
+  //     ApiController.clearPediodCreations(userDetails.user.id).then(
+  //       userDetails.refresh
+  //     );
+  //   }
+  // }, [userDetails.user]);
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
@@ -1036,6 +1036,7 @@ export default function DashboardPageContents() {
         : null}
       {anyLoaded &&
       !selectedContentType &&
+      lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(

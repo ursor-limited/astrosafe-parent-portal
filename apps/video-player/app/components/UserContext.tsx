@@ -47,7 +47,7 @@ const UserProvider = (props: IUserProviderProps) => {
   const [safeTubeUser, setSafeTubeUser] = useState<ISafeTubeUser | undefined>(
     undefined
   );
-  const { user, isLoading } = useAuth0();
+  const { user, isLoading, error } = useAuth0();
   const [loading, setLoading] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   useEffect(() => {
@@ -66,7 +66,6 @@ const UserProvider = (props: IUserProviderProps) => {
 
   const loadUser = () => {
     if (user?.email && user?.sub) {
-      console.log(loaded, "--=xxxxxx");
       setLoading(true);
       ApiController.getUser(user.email, user.sub)
         .then((u) =>
