@@ -591,6 +591,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
         }}
         dynamicHeight
         noPadding
+        noCloseButton={isMobile}
       >
         <Stack
           direction={isMobile ? "column" : "row"}

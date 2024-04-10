@@ -63,6 +63,8 @@ export default function AddContentButton(props: {
           height="32px"
           width="32px"
           borderRadius="100%"
+          border="2px solid rgb(255,255,255)"
+          boxShadow="0 0 45px rgba(0,0,0,0.4)"
           bgcolor={PALETTE.secondary.purple[2]}
           justifyContent="center"
           alignItems="center"

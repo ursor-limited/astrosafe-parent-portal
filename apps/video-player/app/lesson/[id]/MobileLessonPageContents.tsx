@@ -324,11 +324,11 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                       key={worksheet.id}
                       worksheet={worksheet}
                       lessonId={props.lessonId}
-                      editingCallback={
-                        () => null
-                        //setWorksheetEditingDialogId(worksheet.id)
+                      editingCallback={() =>
+                        setWorksheetEditingDialogId(worksheet.id)
                       }
                       deletionCallback={loadLesson}
+                      mobile
                     />
                   ) : null;
                 }
