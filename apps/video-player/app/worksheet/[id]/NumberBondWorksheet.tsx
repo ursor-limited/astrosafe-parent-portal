@@ -121,7 +121,7 @@ const VerticalEquationQuestion = (props: {
 }) => (
   <WorksheetQuestion n={props.n} top="65px" left="50px">
     <Stack
-      width="260px"
+      //width="260px"
       height="280px"
       alignItems="center"
       justifyContent="center"

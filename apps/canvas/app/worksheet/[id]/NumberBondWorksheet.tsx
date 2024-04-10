@@ -118,81 +118,83 @@ const VerticalEquationQuestion = (props: {
   empty: INumberBondWorksheetParameters["empty"];
   n: number;
   showAnswer: boolean;
-}) => (
-  <WorksheetQuestion n={props.n} top="65px" left="50px">
-    <Stack
-      width="260px"
-      height="280px"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ breakInside: "avoid" }}
-      spacing="20px"
-      position="relative"
-    >
+}) => {
+  return (
+    <WorksheetQuestion n={props.n} top="65px" left="50px">
       <Stack
-        position="absolute"
-        width="38px"
-        sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
-        height="2px"
-        bgcolor={PALETTE.secondary.grey[2]}
-      />
-      <Stack
-        position="absolute"
-        width="38px"
-        sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
-        height="2px"
-        bgcolor={PALETTE.secondary.grey[2]}
-      />
-      <ValueCircle>
-        <Typography
-          color={
-            props.empty === "sum" ? PALETTE.secondary.purple[2] : undefined
-          }
-          variant="h4"
-          sx={{ fontWeight: 350 }}
-        >
-          {!props.showAnswer && props.empty === "sum" ? undefined : props.sum}
-        </Typography>
-      </ValueCircle>
-      <Stack direction="row" spacing="40px" zIndex={999}>
+        width="260px"
+        height="280px"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ breakInside: "avoid" }}
+        spacing="20px"
+        position="relative"
+      >
+        <Stack
+          position="absolute"
+          width="38px"
+          sx={{ transform: "translate(24px, 10px) rotate(57deg)" }}
+          height="2px"
+          bgcolor={PALETTE.secondary.grey[2]}
+        />
+        <Stack
+          position="absolute"
+          width="38px"
+          sx={{ transform: "translate(-28px, 0px) rotate(-57deg)" }}
+          height="2px"
+          bgcolor={PALETTE.secondary.grey[2]}
+        />
         <ValueCircle>
           <Typography
-            variant="h4"
             color={
-              props.empty === "both" ? PALETTE.secondary.purple[2] : undefined
+              props.empty === "sum" ? PALETTE.secondary.purple[2] : undefined
             }
-            sx={{
-              fontWeight: !(props.showAnswer && props.empty === "both")
-                ? 350
-                : undefined,
-            }}
+            variant="h4"
+            sx={{ fontWeight: 350 }}
           >
-            {props.empty !== "both" || props.showAnswer
-              ? props.leftNumber
-              : null}
+            {!props.showAnswer && props.empty === "sum" ? undefined : props.sum}
           </Typography>
         </ValueCircle>
-        <ValueCircle>
-          <Typography
-            variant="h4"
-            color={
-              props.empty !== "sum" ? PALETTE.secondary.purple[2] : undefined
-            }
-            sx={{
-              fontWeight: !(props.showAnswer || props.empty === "sum")
-                ? 350
-                : undefined,
-            }}
-          >
-            {props.showAnswer || props.empty === "sum"
-              ? props.sum - props.leftNumber
-              : null}
-          </Typography>
-        </ValueCircle>
+        <Stack direction="row" spacing="40px" zIndex={999}>
+          <ValueCircle>
+            <Typography
+              variant="h4"
+              color={
+                props.empty === "both" ? PALETTE.secondary.purple[2] : undefined
+              }
+              sx={{
+                fontWeight: !(props.showAnswer && props.empty === "both")
+                  ? 350
+                  : undefined,
+              }}
+            >
+              {props.empty !== "both" || props.showAnswer
+                ? props.leftNumber
+                : null}
+            </Typography>
+          </ValueCircle>
+          <ValueCircle>
+            <Typography
+              variant="h4"
+              color={
+                props.empty !== "sum" ? PALETTE.secondary.purple[2] : undefined
+              }
+              sx={{
+                fontWeight: !(props.showAnswer || props.empty === "sum")
+                  ? 350
+                  : undefined,
+              }}
+            >
+              {props.showAnswer || props.empty === "sum"
+                ? props.sum - props.leftNumber
+                : null}
+            </Typography>
+          </ValueCircle>
+        </Stack>
       </Stack>
-    </Stack>
-  </WorksheetQuestion>
-);
+    </WorksheetQuestion>
+  );
+};
 
 const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
   (
