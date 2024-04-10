@@ -305,6 +305,10 @@ export default function MobileDashboardPageContents() {
     string | undefined
   >(undefined);
 
+  const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
@@ -486,7 +490,13 @@ export default function MobileDashboardPageContents() {
                   deletionCallback={loadVideos}
                 />
               ) : card.type === "worksheet" ? (
-                <WorksheetCard {...(card.details as IWorksheet)} />
+                <WorksheetCard
+                  {...(card.details as IWorksheet)}
+                  editingCallback={() =>
+                    setWorksheetEditingDialogId(card.details.id)
+                  }
+                  deletionCallback={loadWorksheets}
+                />
               ) : card.type === "lesson" ? (
                 <LessonCard
                   {...(card.details as ILesson)}
@@ -521,6 +531,14 @@ export default function MobileDashboardPageContents() {
         closeCallback={() => setWorksheetCreationDialogOpen(false)}
         mobile
       />
+      {worksheetEditingDialogId ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setWorksheetEditingDialogId(undefined)}
+          editingCallback={loadWorksheets}
+          worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+        />
+      ) : null}
       <LessonCreationDialog
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
