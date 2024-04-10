@@ -251,7 +251,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               />
             </Stack>
           </Stack>
-          <Stack pt="65px" width="100%">
+          <Stack pt="65px" width="100%" spacing="16px">
             {_.reverse(contents.slice())
               .map((c) => {
                 if (c.type === "video") {
