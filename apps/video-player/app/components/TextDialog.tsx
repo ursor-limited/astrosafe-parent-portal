@@ -24,6 +24,7 @@ const TextCreationDialog = (props: {
   closeCallback: () => void;
   creationCallback?: (text: IText) => void;
   updateCallback?: () => void;
+  mobile?: boolean;
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => {
@@ -77,7 +78,7 @@ const TextCreationDialog = (props: {
         maxWidth="650px"
         noPadding
         dynamicHeight
-        paddingTop="52px"
+        paddingTop={props.mobile ? undefined : "52px"}
         paddingX={isMobile ? undefined : "32px"}
       >
         <Stack
@@ -86,6 +87,8 @@ const TextCreationDialog = (props: {
           alignItems="center"
           pb="24px"
           spacing="20px"
+          p={props.mobile ? "16px" : undefined}
+          boxSizing="border-box"
         >
           <Stack>
             <TextEditorToolbar id={quillId} />

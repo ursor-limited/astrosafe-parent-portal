@@ -359,6 +359,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
+        mobile
       />
       <LinkDialog
         open={linkDialogOpen}
@@ -385,6 +386,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
+        mobile
       />
       {textEditingDialogId ? (
         <TextDialog
@@ -392,6 +394,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           closeCallback={() => setTextEditingDialogId(undefined)}
           updateCallback={loadLesson}
           text={texts.find((t) => t.id === textEditingDialogId)}
+          mobile
         />
       ) : null}
       {imageDialogOpen ? (
