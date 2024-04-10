@@ -24,7 +24,7 @@ export interface IUrsorSelectProps {
   leftAlign?: boolean;
   leftAlignPopover?: boolean;
   keepOpenOnSelect?: boolean;
-  width: string;
+  width: number | string;
   fieldWidth?: string;
   white?: boolean;
   callback: (id: string) => void;
