@@ -7,7 +7,7 @@ import { useReactToPrint } from "react-to-print";
 import _ from "lodash";
 import {
   EquationOrientation,
-  INumberBondWorksheetParameters,
+  INumberBondWorksheetSettings,
 } from "@/app/components/WorksheetGenerator";
 import AstroWorksheetPage from "./AstroWorksheetPage";
 import WorksheetQuestion from "./WorksheetQuestion";
@@ -44,7 +44,7 @@ export const ValueCircle = (props: { children: React.ReactNode }) => (
 const HorizontalEquationQuestion = (props: {
   sum: number;
   leftNumber: number;
-  empty: INumberBondWorksheetParameters["empty"];
+  empty: INumberBondWorksheetSettings["empty"];
   n: number;
   showAnswer: boolean;
 }) => (
@@ -115,7 +115,7 @@ const HorizontalEquationQuestion = (props: {
 const VerticalEquationQuestion = (props: {
   sum: number;
   leftNumber: number;
-  empty: INumberBondWorksheetParameters["empty"];
+  empty: INumberBondWorksheetSettings["empty"];
   n: number;
   showAnswer: boolean;
 }) => (
@@ -200,7 +200,7 @@ const NumberBondWorksheet = forwardRef<HTMLDivElement, any>(
       title?: string;
       description?: string;
       sum: number;
-      empty: INumberBondWorksheetParameters["empty"];
+      empty: INumberBondWorksheetSettings["empty"];
       leftNumbers: number[];
       orientation: EquationOrientation;
       printButtonCallback?: () => void;
