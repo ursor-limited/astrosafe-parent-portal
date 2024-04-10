@@ -56,8 +56,8 @@ export default function AddContentButton(props: {
         closeCallback={() => setOpen(false)}
         maxHeight
         clickableFloatedButton
-        noPadding
         noFloatButton
+        noPadding
       >
         <Stack
           height="32px"

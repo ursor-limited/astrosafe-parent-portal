@@ -9,6 +9,7 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -126,6 +127,10 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
+  const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
@@ -168,56 +173,76 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       <Stack p="16px" overflow="scroll">
         <Stack
           width="100%"
-          justifyContent="flex-end"
           direction="row"
+          justifyContent="space-between"
           spacing="12px"
         >
-          {userDetails?.user?.id &&
-          userDetails?.user?.id === lesson?.creatorId ? (
-            <UrsorActionButton
-              size="43px"
-              iconSize="17px"
-              //background={PALETTE.secondary.grey[1]}
-              border
-              actions={[
-                {
-                  text: "Edit",
-                  kallback: () => setEditingDialogOpen(true),
-                  icon: PencilIcon,
-                },
-                {
-                  text: "Delete",
-                  kallback: () => setDeletionDialogOpen(true),
-                  icon: TrashcanIcon,
-                  color: PALETTE.system.red,
-                },
-              ]}
-            />
-          ) : null}
-
           <Stack
-            borderRadius="100%"
-            border={`2px solid ${PALETTE.secondary.purple[2]}`}
-            height="39px"
-            width="39px"
-            justifyContent="center"
+            direction="row"
             alignItems="center"
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              notificationCtx.success("Copied URL to clipboard.");
-            }}
+            spacing="3px"
             sx={{
               cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
+              "&:hover": { opacity: 0.7 },
               transition: "0.2s",
               svg: {
-                path: {
-                  fill: PALETTE.secondary.purple[2],
-                },
+                path: { fill: PALETTE.secondary.grey[1] },
               },
             }}
+            onClick={() => router.push(userDetails ? "/dashboard" : "/")}
           >
-            <ShareIcon width="22px" height="22px" />
+            <ChevronLeft width="20px" height="20px" />
+            <Typography color={PALETTE.secondary.grey[1]}>
+              Back to Home
+            </Typography>
+          </Stack>
+          <Stack direction="row">
+            {userDetails?.user?.id &&
+            userDetails?.user?.id === lesson?.creatorId ? (
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                //background={PALETTE.secondary.grey[1]}
+                border
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: () => setEditingDialogOpen(true),
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
+            ) : null}
+            <Stack
+              borderRadius="100%"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              height="39px"
+              width="39px"
+              justifyContent="center"
+              alignItems="center"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notificationCtx.success("Copied URL to clipboard.");
+              }}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.purple[2],
+                  },
+                },
+              }}
+            >
+              <ShareIcon width="22px" height="22px" />
+            </Stack>
           </Stack>
         </Stack>
 
@@ -361,6 +386,15 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         }}
         mobile
       />
+      {worksheetEditingDialogId ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setWorksheetEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+          mobile
+        />
+      ) : null}
       <LinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
@@ -421,10 +455,12 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
         callback={() => setUpgradeDialogOpen(true)}
+        mobile
       />
       <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+        mobile
       />
     </>
   );

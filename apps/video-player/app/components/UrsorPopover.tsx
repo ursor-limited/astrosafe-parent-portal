@@ -35,7 +35,7 @@ type ButtonFloat = "zIndex" | "duplicate";
 
 export interface IUrsorPopoverProps {
   open: boolean;
-  width?: string;
+  width?: number;
   fieldWidth?: string;
   buttonWidth?: boolean;
   closeCallback: () => void;
