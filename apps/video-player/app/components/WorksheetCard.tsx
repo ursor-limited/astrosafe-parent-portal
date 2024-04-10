@@ -46,7 +46,7 @@ const WorksheetCard = (
   return (
     <>
       <Stack
-        height="317px"
+        //height="317px"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         boxSizing="border-box"
@@ -61,7 +61,7 @@ const WorksheetCard = (
             ? `3px solid ${PALETTE.system.orange}`
             : undefined,
         }}
-        pb="7px"
+        pb="6px"
         position="relative"
       >
         <Stack position="absolute" top="11px" right="11px" zIndex={2}>
@@ -143,8 +143,8 @@ const WorksheetCard = (
               </Stack>
             </Stack>
           </Stack>
-          <Stack zIndex={2} flex={1} bgcolor="rgb(255,255,255)">
-            <Stack flex={1} justifyContent="space-between">
+          <Stack flex={1} alignItems="space-between">
+            <Stack height="45px">
               <Typography
                 color={PALETTE.secondary.grey[5]}
                 variant="medium"
@@ -153,16 +153,16 @@ const WorksheetCard = (
               >
                 {props.title}
               </Typography>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ svg: { path: { fill: PALETTE.secondary.pink[4] } } }}
-              >
-                <Typography variant="small">
-                  {getFormattedDate(props.createdAt)}
-                </Typography>
-                <ChecklistIcon height="20px" width="20px" />
-              </Stack>
+            </Stack>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ svg: { path: { fill: PALETTE.secondary.pink[4] } } }}
+            >
+              <Typography variant="small">
+                {getFormattedDate(props.createdAt)}
+              </Typography>
+              <ChecklistIcon height="20px" width="20px" />
             </Stack>
           </Stack>
         </Stack>
