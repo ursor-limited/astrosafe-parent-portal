@@ -164,8 +164,18 @@ export default function MobileDashboardPageContents() {
           !searchValue ||
           x.title.toLowerCase().includes(searchValue.toLowerCase())
       )
-      .map((l) => ({
+      .map((v) => ({
         type: "video" as AstroContent,
+        details: v,
+      }));
+    const lessonDetails = lessons
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "lesson" as AstroContent,
         details: l,
       }));
     const worksheetDetails = worksheets
@@ -187,6 +197,9 @@ export default function MobileDashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "lesson"
+          ? []
+          : lessonDetails),
       ],
       (c) =>
         selectedSort === "createdAt"
@@ -195,7 +208,14 @@ export default function MobileDashboardPageContents() {
       selectedSort === "createdAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
-  }, [videos, worksheets, selectedContentType, searchValue, selectedSort]);
+  }, [
+    videos,
+    worksheets,
+    lessons,
+    selectedContentType,
+    searchValue,
+    selectedSort,
+  ]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
 
@@ -543,7 +563,16 @@ export default function MobileDashboardPageContents() {
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
       />
+      {lessonEditingDialogId ? (
+        <LessonCreationDialog
+          open={!!lessonEditingDialogId}
+          closeCallback={() => setLessonEditingDialogId(undefined)}
+          updateCallback={loadLessons}
+          lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
       {!selectedContentType &&
+      lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0 ? (
         <MobileEmptyStateIllustration>
@@ -555,12 +584,21 @@ export default function MobileDashboardPageContents() {
           No videos yet.
         </MobileEmptyStateIllustration>
       ) : null}
+      {selectedContentType === "lesson" && lessons.length === 0 ? (
+        <MobileEmptyStateIllustration>
+          No lessons yet.
+        </MobileEmptyStateIllustration>
+      ) : null}
       {selectedContentType === "worksheet" && worksheets.length === 0 ? (
         <MobileEmptyStateIllustration>
           No worksheets yet.
         </MobileEmptyStateIllustration>
       ) : null}
-
+      <DashboardSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+        mobile
+      />
       <UpgradeDialog
         mobile={isMobile}
         open={upgradeDialogOpen}

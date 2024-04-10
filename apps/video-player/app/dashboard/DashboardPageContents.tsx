@@ -1050,6 +1050,12 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
+      {selectedContentType === "lesson" && lessons.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
       {selectedContentType === "worksheet" && worksheets.length === 0
         ? createPortal(
             <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,

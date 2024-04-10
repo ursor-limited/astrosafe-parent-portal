@@ -236,7 +236,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                       {props.supertitle}
                     </Typography>
                   </Stack>
-                  <Stack width={0} position="relative">
+                  <Stack
+                    width={0}
+                    position="relative"
+                    sx={{ transform: "translateX(-24px)" }}
+                  >
                     <Stack position="absolute" right={0} top={0}>
                       {props.onCloseCallback ? (
                         <Box

@@ -9,6 +9,7 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import Pencil from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -126,6 +127,10 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
+  const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
@@ -165,58 +170,83 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   return (
     <>
-      <Stack p="40px" overflow="scroll">
-        <Stack direction="row" spacing="12px">
-          {userDetails?.user?.id &&
-          userDetails?.user?.id === lesson?.creatorId ? (
-            <UrsorActionButton
-              size="43px"
-              iconSize="17px"
-              //background={PALETTE.secondary.grey[1]}
-              border
-              actions={[
-                {
-                  text: "Edit",
-                  kallback: () => setEditingDialogOpen(true),
-                  icon: PencilIcon,
-                },
-                {
-                  text: "Delete",
-                  kallback: () => setDeletionDialogOpen(true),
-                  icon: TrashcanIcon,
-                  color: PALETTE.system.red,
-                },
-              ]}
-            />
-          ) : null}
-
+      <Stack p="16px" overflow="scroll">
+        <Stack width="100%" direction="row" justifyContent="space-between">
           <Stack
-            borderRadius="100%"
-            border={`2px solid ${PALETTE.primary.navy}`}
-            height="39px"
-            width="39px"
-            justifyContent="center"
+            direction="row"
             alignItems="center"
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              notificationCtx.success("Copied URL to clipboard.");
-            }}
+            spacing="3px"
             sx={{
               cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
+              "&:hover": { opacity: 0.7 },
               transition: "0.2s",
+              svg: {
+                path: { fill: PALETTE.secondary.grey[1] },
+              },
             }}
+            onClick={() => router.push(userDetails ? "/dashboard" : "/")}
           >
-            <ShareIcon width="22px" height="22px" />
+            <ChevronLeft width="20px" height="20px" />
+            <Typography color={PALETTE.secondary.grey[1]}>
+              Back to Home
+            </Typography>
+          </Stack>
+          <Stack direction="row" spacing="12px">
+            {userDetails?.user?.id &&
+            userDetails?.user?.id === lesson?.creatorId ? (
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                //background={PALETTE.secondary.grey[1]}
+                border
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: () => setEditingDialogOpen(true),
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
+            ) : null}
+            <Stack
+              borderRadius="100%"
+              border={`2px solid ${PALETTE.secondary.purple[2]}`}
+              height="39px"
+              width="39px"
+              justifyContent="center"
+              alignItems="center"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                notificationCtx.success("Copied URL to clipboard.");
+              }}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.purple[2],
+                  },
+                },
+              }}
+            >
+              <ShareIcon width="22px" height="22px" />
+            </Stack>
           </Stack>
         </Stack>
 
         {lesson ? (
-          <Stack>
-            <Typography variant="medium" bold color="rgb(255,255,255)">
+          <Stack pt="20px">
+            <Typography htmlTag="h1" variant="h5" bold color="rgb(255,255,255)">
               {lesson?.title}
             </Typography>
-            <Typography variant="small" color="rgb(255,255,255)">
+            <Typography htmlTag="h2" variant="small" color="rgb(255,255,255)">
               {lesson?.description}
             </Typography>
           </Stack>
@@ -230,17 +260,6 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             sx={{ transform: "translate(-50%)" }}
             zIndex={3}
           >
-            <Stack
-              position="absolute"
-              left={0}
-              right={0}
-              top={0}
-              marginLeft="auto !important"
-              marginRight="auto !important"
-              height="100%"
-              width="2px"
-              bgcolor={PALETTE.secondary.grey[3]}
-            />
             <Stack sx={{ zIndex: 2 }}>
               <AddContentButton
                 mobile
@@ -252,7 +271,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               />
             </Stack>
           </Stack>
-          <Stack px="24px" pt="105px">
+          <Stack pt="65px" width="100%" spacing="16px">
             {_.reverse(contents.slice())
               .map((c) => {
                 if (c.type === "video") {
@@ -305,47 +324,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                       key={worksheet.id}
                       worksheet={worksheet}
                       lessonId={props.lessonId}
-                      editingCallback={
-                        () => null
-                        //setWorksheetEditingDialogId(worksheet.id)
+                      editingCallback={() =>
+                        setWorksheetEditingDialogId(worksheet.id)
                       }
                       deletionCallback={loadLesson}
+                      mobile
                     />
                   ) : null;
                 }
               })
               .map((card, i) => (
                 <UrsorFadeIn duration={800} key={i}>
-                  <Stack
-                    //width="100%"
-                    alignItems={i % 2 ? "flex-end" : "flex-start"}
-                    position="relative"
-                  >
-                    <Stack width="40%">{card}</Stack>
-                    <Stack
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      top={0}
-                      marginLeft="auto !important"
-                      marginRight="auto !important"
-                      height={i < contents.length - 1 ? "100%" : "50%"}
-                      width="2px"
-                      bgcolor={PALETTE.secondary.grey[3]}
-                    />
-                    <Stack
-                      bgcolor={PALETTE.secondary.purple[1]}
-                      height="20px"
-                      width="20px"
-                      borderRadius="100%"
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      top={0}
-                      bottom={0}
-                      margin="auto"
-                    />
-                  </Stack>
+                  {card}
                 </UrsorFadeIn>
               ))}
           </Stack>
@@ -389,7 +379,17 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
+        mobile
       />
+      {worksheetEditingDialogId ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setWorksheetEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+          mobile
+        />
+      ) : null}
       <LinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
@@ -415,6 +415,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
+        mobile
       />
       {textEditingDialogId ? (
         <TextDialog
@@ -422,6 +423,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           closeCallback={() => setTextEditingDialogId(undefined)}
           updateCallback={loadLesson}
           text={texts.find((t) => t.id === textEditingDialogId)}
+          mobile
         />
       ) : null}
       {imageDialogOpen ? (
@@ -448,10 +450,12 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
         callback={() => setUpgradeDialogOpen(true)}
+        mobile
       />
       <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+        mobile
       />
     </>
   );

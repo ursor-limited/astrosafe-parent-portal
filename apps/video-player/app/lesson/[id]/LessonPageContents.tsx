@@ -268,6 +268,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 width="2px"
                 bgcolor={PALETTE.secondary.grey[3]}
               />
+
               <Stack sx={{ zIndex: 2 }}>
                 <AddContentButton
                   callback={(type) =>

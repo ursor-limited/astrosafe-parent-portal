@@ -31,6 +31,7 @@ import dayjs from "dayjs";
 import InvalidUrlDialog from "./InvalidUrlDialog";
 import BlockedSiteDialog from "./BlockedSiteDialog";
 import { getFormattedDate } from "../components/VideoCard";
+import { isMobile } from "react-device-detect";
 // import mixpanel from "mixpanel-browser";
 
 export const getTopImageStyle = (url: string, height: string) => ({
@@ -582,20 +583,24 @@ export default function LinkDialog(props: ILinkDialogProps) {
   return (
     <>
       <UrsorDialog
-        supertitle={supertitle}
+        supertitle={isMobile ? undefined : supertitle}
         open={props.open}
         onCloseCallback={() => {
           props.closeCallback();
           clear();
         }}
         dynamicHeight
+        noPadding
+        noCloseButton={isMobile}
       >
         <Stack
-          direction="row"
+          direction={isMobile ? "column" : "row"}
           width="100%"
           flex={1}
-          spacing="32px"
+          spacing={isMobile ? "12px" : "32px"}
           overflow="hidden"
+          p="16px"
+          boxSizing="border-box"
         >
           <Stack flex={1} spacing="20px" overflow="hidden">
             <Captioned text="Add URL" noFlex>
@@ -612,13 +617,15 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned>
 
-            <Stack height="28px" justifyContent="center">
-              <Stack
-                height="2px"
-                width="100%"
-                bgcolor={PALETTE.secondary.grey[2]}
-              />
-            </Stack>
+            {!isMobile ? (
+              <Stack height="28px" justifyContent="center">
+                <Stack
+                  height="2px"
+                  width="100%"
+                  bgcolor={PALETTE.secondary.grey[2]}
+                />
+              </Stack>
+            ) : null}
 
             <Captioned text="Title">
               <UrsorInputField
@@ -633,18 +640,20 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned>
 
-            <Captioned text="Description">
-              <UrsorTextField
-                value={description}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(event.target.value)
-                }
-                placeholder="Description"
-                width="100%"
-                height="144px"
-                boldValue
-              />
-            </Captioned>
+            {!isMobile ? (
+              <Captioned text="Description">
+                <UrsorTextField
+                  value={description}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setDescription(event.target.value)
+                  }
+                  placeholder="Description"
+                  width="100%"
+                  height="144px"
+                  boldValue
+                />
+              </Captioned>
+            ) : null}
             {/* <Captioned text="Title">
               <UrsorInputField
                 value={title}
@@ -660,12 +669,15 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned> */}
           </Stack>
-          <Stack justifyContent="space-between">
+          <Stack
+            justifyContent="space-between"
+            spacing={isMobile ? "12px" : undefined}
+          >
             <Stack
-              width={CARD_WIDTH}
-              minWidth={CARD_WIDTH}
-              height={CARD_HEIGHT}
-              minHeight={CARD_HEIGHT}
+              width={isMobile ? undefined : CARD_WIDTH}
+              minWidth={isMobile ? undefined : CARD_WIDTH}
+              height={isMobile ? undefined : CARD_HEIGHT}
+              minHeight={isMobile ? undefined : CARD_HEIGHT}
               borderRadius="12px"
               bgcolor={color}
               sx={{

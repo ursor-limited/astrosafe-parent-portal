@@ -56,17 +56,32 @@ export default function AddContentButton(props: {
         closeCallback={() => setOpen(false)}
         maxHeight
         clickableFloatedButton
-        noPadding
         noFloatButton
+        noPadding
       >
-        <UrsorButton
-          dark
-          variant="tertiary"
+        <Stack
+          height="32px"
+          width="32px"
+          borderRadius="100%"
+          border={props.mobile ? "2px solid rgb(255,255,255)" : undefined}
+          boxShadow={props.mobile ? "0 0 45px rgba(0,0,0,0.4)" : undefined}
+          bgcolor={PALETTE.secondary.purple[2]}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.7 },
+            transition: "0.2s",
+            svg: {
+              path: {
+                fill: "rgb(255,255,255)",
+              },
+            },
+          }}
           onClick={() => setOpen(true)}
-          endIcon={PlusIcon}
         >
-          Add
-        </UrsorButton>
+          <PlusIcon width="20px" height="20px" />
+        </Stack>
       </UrsorPopover>
     </>
   );

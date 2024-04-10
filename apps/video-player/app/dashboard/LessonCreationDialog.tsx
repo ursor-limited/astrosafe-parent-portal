@@ -49,7 +49,7 @@ const LessonCreationDialog = (props: {
       open={props.open}
       onCloseCallback={props.closeCallback}
       dynamicHeight
-      width="488px"
+      width={"488px"}
       //noPadding={isMobile}
       button={{
         text: props.lesson?.title ? "Update" : "Create",

@@ -32,6 +32,7 @@ const WorksheetCreationDialog = (props: {
       dynamicHeight
       noOverflowHidden
       noPadding={props.mobile}
+      noCloseButton={props.mobile}
     >
       <Stack
         p={props.mobile ? "20px" : undefined}

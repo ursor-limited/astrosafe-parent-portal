@@ -21,6 +21,12 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import { useWindowSize } from "usehooks-ts";
+
+const DEFAULT_WIDTH = 566;
+const DEFAULT_HEIGHT = 790;
+const DEFAULT_SCALE = 0.703;
+
 {
   /* <PageSelector
         pageIndex={pageIndex}
@@ -35,6 +41,7 @@ const LessonWorksheetPreview = (props: {
   lessonId?: string;
   editingCallback: () => void;
   deletionCallback: () => void;
+  mobile?: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [pageIndex, setPageIndex] = useState<number>(0);
@@ -51,11 +58,18 @@ const LessonWorksheetPreview = (props: {
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Worksheet."));
 
+  const { width } = useWindowSize();
+  const [mobileScale, setMobileScale] = useState<number>(1);
+  useEffect(
+    () => setMobileScale(Math.min(1, (width - 35) / DEFAULT_WIDTH)),
+    [width]
+  );
+
   return (
     <>
       <Stack
         position="relative"
-        width="566px"
+        width={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
         boxSizing="border-box"
         borderRadius="12px"
         p="4px"
@@ -82,9 +96,12 @@ const LessonWorksheetPreview = (props: {
             ]}
           />
         </Stack>
-        <Stack position="relative" height="790px">
+        <Stack position="relative" height={`${DEFAULT_HEIGHT * mobileScale}px`}>
           <Stack
-            sx={{ transform: "scale(0.703)", transformOrigin: "top left" }}
+            sx={{
+              transform: `scale(${DEFAULT_SCALE * mobileScale})`,
+              transformOrigin: "top left",
+            }}
             position="absolute"
             top={0}
             left={0}
@@ -122,7 +139,7 @@ const LessonWorksheetPreview = (props: {
               direction="row"
               spacing="10px"
               position="absolute"
-              top="726px"
+              top={`${726 * mobileScale}px`}
               right="20px"
               zIndex={2}
             >
