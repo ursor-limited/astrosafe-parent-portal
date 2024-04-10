@@ -43,7 +43,7 @@ export interface IAstroLandingPage {
     worksheetId: WorksheetComponent;
     title: string;
     nProblems: number;
-    specificSettings?: ISpecificWorksheetSettings & {
+    specificSettings?: Omit<ISpecificWorksheetSettings, "max" | "random"> & {
       topic: WorksheetTopic;
     };
   };

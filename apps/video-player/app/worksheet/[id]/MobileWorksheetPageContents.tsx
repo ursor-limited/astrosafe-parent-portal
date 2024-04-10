@@ -7,8 +7,8 @@ import { useReactToPrint } from "react-to-print";
 import EquationWorksheet from "./EquationWorksheet";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
-  IEquationWorksheetParameters,
-  INumberBondWorksheetParameters,
+  IEquationWorksheetSettings,
+  INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
@@ -76,12 +76,12 @@ export default function MobileWorksheetPageContents(
 
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
-    const params = props.settings as IEquationWorksheetParameters;
+    const params = props.settings as IEquationWorksheetSettings;
     if (props.worksheetComponent === "equation") {
       setNPages(
         1 +
           Math.ceil(
-            (params.pairs.length -
+            (props.values.length -
               (params.topic === "division"
                 ? 12
                 : props.settings.orientation === "horizontal"
@@ -95,7 +95,7 @@ export default function MobileWorksheetPageContents(
           )
       );
     } else if (props.worksheetComponent === "numberBond") {
-      const params = props.settings as INumberBondWorksheetParameters;
+      const params = props.settings as INumberBondWorksheetSettings;
       setNPages(
         1 +
           Math.ceil(
@@ -191,10 +191,10 @@ export default function MobileWorksheetPageContents(
                 printableId={`answerspage${i}`}
                 title={props.title}
                 description={props.description}
-                topic={(props.settings as IEquationWorksheetParameters).topic}
+                topic={(props.settings as IEquationWorksheetSettings).topic}
                 orientation={props.settings.orientation}
                 pageIndex={i}
-                pairs={(props.settings as IEquationWorksheetParameters).pairs}
+                pairs={props.values}
                 showAnswers
               />
               <EquationWorksheet
@@ -202,10 +202,10 @@ export default function MobileWorksheetPageContents(
                 printableId={`page${i}`}
                 title={props.title}
                 description={props.description}
-                topic={(props.settings as IEquationWorksheetParameters).topic}
+                topic={(props.settings as IEquationWorksheetSettings).topic}
                 orientation={props.settings.orientation}
                 pageIndex={i}
-                pairs={(props.settings as IEquationWorksheetParameters).pairs}
+                pairs={props.values}
               />
             </>
           ) : props.worksheetComponent === "numberBond" ? (
@@ -215,13 +215,11 @@ export default function MobileWorksheetPageContents(
                 printableId={`answerspage${i}`}
                 title={props.title}
                 description={props.description}
-                sum={(props.settings as INumberBondWorksheetParameters).sum}
+                sum={(props.settings as INumberBondWorksheetSettings).sum}
                 orientation={props.settings.orientation}
                 pageIndex={i}
-                leftNumbers={
-                  (props.settings as INumberBondWorksheetParameters).leftNumbers
-                }
-                empty={(props.settings as INumberBondWorksheetParameters).empty}
+                leftNumbers={props.values}
+                empty={(props.settings as INumberBondWorksheetSettings).empty}
                 showAnswers
               />
               <NumberBondWorksheet
@@ -229,13 +227,11 @@ export default function MobileWorksheetPageContents(
                 printableId={`page${i}`}
                 title={props.title}
                 description={props.description}
-                sum={(props.settings as INumberBondWorksheetParameters).sum}
+                sum={(props.settings as INumberBondWorksheetSettings).sum}
                 orientation={props.settings.orientation}
                 pageIndex={i}
-                leftNumbers={
-                  (props.settings as INumberBondWorksheetParameters).leftNumbers
-                }
-                empty={(props.settings as INumberBondWorksheetParameters).empty}
+                leftNumbers={props.values}
+                empty={(props.settings as INumberBondWorksheetSettings).empty}
               />
             </>
           ) : null
@@ -334,14 +330,10 @@ export default function MobileWorksheetPageContents(
                     key={i}
                     title={props.title}
                     description={props.description}
-                    topic={
-                      (props.settings as IEquationWorksheetParameters).topic
-                    }
+                    topic={(props.settings as IEquationWorksheetSettings).topic}
                     orientation={props.settings.orientation}
                     pageIndex={i}
-                    pairs={
-                      (props.settings as IEquationWorksheetParameters).pairs
-                    }
+                    pairs={props.values}
                     showAnswers
                   />
                 ) : props.worksheetComponent === "numberBond" ? (
@@ -349,15 +341,12 @@ export default function MobileWorksheetPageContents(
                     key={i}
                     title={props.title}
                     description={props.description}
-                    sum={(props.settings as INumberBondWorksheetParameters).sum}
+                    sum={(props.settings as INumberBondWorksheetSettings).sum}
                     orientation={props.settings.orientation}
                     pageIndex={i}
-                    leftNumbers={
-                      (props.settings as INumberBondWorksheetParameters)
-                        .leftNumbers
-                    }
+                    leftNumbers={props.values}
                     empty={
-                      (props.settings as INumberBondWorksheetParameters).empty
+                      (props.settings as INumberBondWorksheetSettings).empty
                     }
                     showAnswers
                   />
