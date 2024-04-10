@@ -49,6 +49,7 @@ import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
 import { isMobile } from "react-device-detect";
+import LessonCard from "../components/LessonCard";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
@@ -145,7 +146,7 @@ export default function MobileDashboardPageContents() {
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet;
+      details: IVideo | IWorksheet | ILesson;
     }[]
   >([]);
 
@@ -168,7 +169,7 @@ export default function MobileDashboardPageContents() {
         details: l,
       }));
     const worksheetDetails = worksheets
-      .filter((x) => x.worksheetId)
+      .filter((x) => x.worksheetComponent)
       .filter(
         (x) =>
           !searchValue ||
@@ -447,6 +448,7 @@ export default function MobileDashboardPageContents() {
             <FilterRow
               selected={selectedContentType}
               callback={(newSelected) => setSelectedContentType(newSelected)}
+              mobile
             />
           </Stack>
           <Stack direction="row" spacing="12px" px="20px">
@@ -474,16 +476,30 @@ export default function MobileDashboardPageContents() {
       {cards.length > 0 ? (
         <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px" px="20px">
           {cards.map((card, i) => (
-            <UrsorFadeIn key={card.details.id} delay={i * 120} duration={800}>
+            <UrsorFadeIn key={i} delay={i * 190} duration={900}>
               {card.type === "video" ? (
                 <VideoCard
                   {...(card.details as IVideo)}
-                  deletionCallback={() => null}
-                  editingCallback={() => null}
+                  editingCallback={() =>
+                    setVideoEditingDialogId(card.details.id)
+                  }
+                  deletionCallback={loadVideos}
                 />
-              ) : (
+              ) : card.type === "worksheet" ? (
                 <WorksheetCard {...(card.details as IWorksheet)} />
-              )}
+              ) : card.type === "lesson" ? (
+                <LessonCard
+                  {...(card.details as ILesson)}
+                  imageUrls={[]}
+                  clickCallback={() =>
+                    router.push(`/lesson/${card.details.id}`)
+                  }
+                  editingCallback={() =>
+                    setLessonEditingDialogId(card.details.id)
+                  }
+                  deletionCallback={loadLessons}
+                />
+              ) : null}
             </UrsorFadeIn>
           ))}
         </Stack>
@@ -492,6 +508,14 @@ export default function MobileDashboardPageContents() {
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
+      {videoEditingDialogId ? (
+        <VideoCreationDialog
+          open={!!videoEditingDialogId}
+          closeCallback={() => setVideoEditingDialogId(undefined)}
+          editingCallback={loadVideos}
+          video={videos.find((v) => v.id === videoEditingDialogId)}
+        />
+      ) : null}
       <WorksheetCreationDialog
         open={worksheetCreationDialogOpen}
         closeCallback={() => setWorksheetCreationDialogOpen(false)}

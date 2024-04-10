@@ -224,7 +224,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               px={props.paddingX}
               boxSizing="border-box"
             >
-              {props.supertitle || props.onCloseCallback ? (
+              {props.supertitle ||
+              (props.onCloseCallback && !props.noCloseButton) ? (
                 <Stack direction="row" width="100%">
                   <Stack width="100%" alignItems="center">
                     <Typography

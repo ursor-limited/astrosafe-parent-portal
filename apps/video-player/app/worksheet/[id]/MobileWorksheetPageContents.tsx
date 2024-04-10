@@ -76,15 +76,15 @@ export default function MobileWorksheetPageContents(
 
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
-    const params = props.parameters as IEquationWorksheetParameters;
-    if (props.worksheetId === "equation") {
+    const params = props.settings as IEquationWorksheetParameters;
+    if (props.worksheetComponent === "equation") {
       setNPages(
         1 +
           Math.ceil(
             (params.pairs.length -
               (params.topic === "division"
                 ? 12
-                : props.parameters.orientation === "horizontal"
+                : props.settings.orientation === "horizontal"
                 ? 16
                 : 20)) /
               (params.topic === "division"
@@ -94,8 +94,8 @@ export default function MobileWorksheetPageContents(
                 : 24)
           )
       );
-    } else if (props.worksheetId === "numberBond") {
-      const params = props.parameters as INumberBondWorksheetParameters;
+    } else if (props.worksheetComponent === "numberBond") {
+      const params = props.settings as INumberBondWorksheetParameters;
       setNPages(
         1 +
           Math.ceil(
@@ -115,7 +115,7 @@ export default function MobileWorksheetPageContents(
           )
       );
     }
-  }, [props.parameters, props.worksheetId]);
+  }, [props.settings, props.worksheetComponent]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -184,17 +184,17 @@ export default function MobileWorksheetPageContents(
         position="absolute"
       >
         {[...Array(nPages).keys()].map((i) =>
-          props.worksheetId === "equation" ? (
+          props.worksheetComponent === "equation" ? (
             <>
               <EquationWorksheet
                 key={i}
                 printableId={`answerspage${i}`}
                 title={props.title}
                 description={props.description}
-                topic={(props.parameters as IEquationWorksheetParameters).topic}
-                orientation={props.parameters.orientation}
+                topic={(props.settings as IEquationWorksheetParameters).topic}
+                orientation={props.settings.orientation}
                 pageIndex={i}
-                pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+                pairs={(props.settings as IEquationWorksheetParameters).pairs}
                 showAnswers
               />
               <EquationWorksheet
@@ -202,29 +202,26 @@ export default function MobileWorksheetPageContents(
                 printableId={`page${i}`}
                 title={props.title}
                 description={props.description}
-                topic={(props.parameters as IEquationWorksheetParameters).topic}
-                orientation={props.parameters.orientation}
+                topic={(props.settings as IEquationWorksheetParameters).topic}
+                orientation={props.settings.orientation}
                 pageIndex={i}
-                pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+                pairs={(props.settings as IEquationWorksheetParameters).pairs}
               />
             </>
-          ) : props.worksheetId === "numberBond" ? (
+          ) : props.worksheetComponent === "numberBond" ? (
             <>
               <NumberBondWorksheet
                 key={i}
                 printableId={`answerspage${i}`}
                 title={props.title}
                 description={props.description}
-                sum={(props.parameters as INumberBondWorksheetParameters).sum}
-                orientation={props.parameters.orientation}
+                sum={(props.settings as INumberBondWorksheetParameters).sum}
+                orientation={props.settings.orientation}
                 pageIndex={i}
                 leftNumbers={
-                  (props.parameters as INumberBondWorksheetParameters)
-                    .leftNumbers
+                  (props.settings as INumberBondWorksheetParameters).leftNumbers
                 }
-                empty={
-                  (props.parameters as INumberBondWorksheetParameters).empty
-                }
+                empty={(props.settings as INumberBondWorksheetParameters).empty}
                 showAnswers
               />
               <NumberBondWorksheet
@@ -232,16 +229,13 @@ export default function MobileWorksheetPageContents(
                 printableId={`page${i}`}
                 title={props.title}
                 description={props.description}
-                sum={(props.parameters as INumberBondWorksheetParameters).sum}
-                orientation={props.parameters.orientation}
+                sum={(props.settings as INumberBondWorksheetParameters).sum}
+                orientation={props.settings.orientation}
                 pageIndex={i}
                 leftNumbers={
-                  (props.parameters as INumberBondWorksheetParameters)
-                    .leftNumbers
+                  (props.settings as INumberBondWorksheetParameters).leftNumbers
                 }
-                empty={
-                  (props.parameters as INumberBondWorksheetParameters).empty
-                }
+                empty={(props.settings as INumberBondWorksheetParameters).empty}
               />
             </>
           ) : null
@@ -335,37 +329,35 @@ export default function MobileWorksheetPageContents(
                   transformOrigin: "top left",
                 }}
               >
-                {props.worksheetId === "equation" ? (
+                {props.worksheetComponent === "equation" ? (
                   <EquationWorksheet
                     key={i}
                     title={props.title}
                     description={props.description}
                     topic={
-                      (props.parameters as IEquationWorksheetParameters).topic
+                      (props.settings as IEquationWorksheetParameters).topic
                     }
-                    orientation={props.parameters.orientation}
+                    orientation={props.settings.orientation}
                     pageIndex={i}
                     pairs={
-                      (props.parameters as IEquationWorksheetParameters).pairs
+                      (props.settings as IEquationWorksheetParameters).pairs
                     }
                     showAnswers
                   />
-                ) : props.worksheetId === "numberBond" ? (
+                ) : props.worksheetComponent === "numberBond" ? (
                   <NumberBondWorksheet
                     key={i}
                     title={props.title}
                     description={props.description}
-                    sum={
-                      (props.parameters as INumberBondWorksheetParameters).sum
-                    }
-                    orientation={props.parameters.orientation}
+                    sum={(props.settings as INumberBondWorksheetParameters).sum}
+                    orientation={props.settings.orientation}
                     pageIndex={i}
                     leftNumbers={
-                      (props.parameters as INumberBondWorksheetParameters)
+                      (props.settings as INumberBondWorksheetParameters)
                         .leftNumbers
                     }
                     empty={
-                      (props.parameters as INumberBondWorksheetParameters).empty
+                      (props.settings as INumberBondWorksheetParameters).empty
                     }
                     showAnswers
                   />

@@ -23,6 +23,7 @@ const WorksheetCard = (props: IWorksheet) => {
       setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
     }
   }, []);
+  console.log(props.settings);
   return (
     <Stack
       height="317px"
@@ -80,16 +81,20 @@ const WorksheetCard = (props: IWorksheet) => {
             margin="auto"
             overflow="hidden"
           >
-            {props.worksheetId === "equation" ? (
+            {props.worksheetComponent === "equation" ? (
               <EquationWorksheet
                 title={props.title}
-                {...props.parameters}
+                description={props.description}
+                {...props.settings}
+                pairs={props.values}
                 pageIndex={0}
               />
-            ) : props.worksheetId === "numberBond" ? (
+            ) : props.worksheetComponent === "numberBond" ? (
               <NumberBondWorksheet
                 title={props.title}
-                {...props.parameters}
+                description={props.description}
+                {...props.settings}
+                leftNumbers={props.values}
                 pageIndex={0}
               />
             ) : null}

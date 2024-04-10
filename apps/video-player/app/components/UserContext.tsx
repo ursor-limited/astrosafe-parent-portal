@@ -65,7 +65,6 @@ const UserProvider = (props: IUserProviderProps) => {
   }, [user?.email, isLoading]);
 
   const loadUser = () => {
-    console.log(loaded, "--=-=-=-");
     if (user?.email && user?.sub) {
       console.log(loaded, "--=xxxxxx");
       setLoading(true);

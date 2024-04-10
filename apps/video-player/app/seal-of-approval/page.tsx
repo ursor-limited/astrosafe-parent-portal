@@ -2,7 +2,10 @@ import React from "react";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
-import { WorksheetId, WorksheetTopic } from "../components/WorksheetGenerator";
+import {
+  WorksheetComponent,
+  WorksheetTopic,
+} from "../components/WorksheetGenerator";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import landingPageDetails from "./landingPageDetails.json";
 import SealLandingPageContents from "./SealLandingPageContents";

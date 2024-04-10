@@ -224,23 +224,23 @@ const VideoCreationDialog = (props: {
         maxWidth={props.noPlayer ? "560px" : "926px"}
         noPadding
         dynamicHeight
-        paddingTop="52px"
+        paddingTop={isMobile ? "0px" : "52px"}
         paddingX={isMobile ? undefined : "32px"}
       >
         <Stack
           flex={1}
           direction={isMobile || props.noPlayer ? "column" : "row"}
           spacing="40px"
-          // width={isMobile ? "100%" : "95%"}
+          width={isMobile ? "100%" : undefined}
           overflow="hidden"
-          px={isMobile ? "16px" : "40px"}
+          px={isMobile ? "20px" : "40px"}
           py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
           <Stack
             spacing="20px"
             flex={1}
-            width={props.noPlayer ? "480px" : "358px"}
+            width={isMobile ? undefined : props.noPlayer ? "480px" : "358px"}
           >
             <Captioned text="Video URL">
               <Stack

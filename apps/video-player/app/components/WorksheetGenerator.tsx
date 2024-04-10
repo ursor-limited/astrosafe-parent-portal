@@ -27,28 +27,25 @@ export type EquationOrientation = "horizontal" | "vertical";
 
 export type IWorksheet = {
   id: string;
-  worksheetId: WorksheetId;
+  values: any[];
+  worksheetComponent: WorksheetComponent;
   title: string;
   description: string;
-  parameters: IWorksheetParameters;
+  settings: ISpecificWorksheetSettings;
   createdAt: string;
   updatedAt: string;
   creatorId: string;
 };
 
-export type IWorksheetParameters =
-  | IEquationWorksheetParameters
-  | INumberBondWorksheetParameters;
+export type ISpecificWorksheetSettings =
+  | IEquationWorksheetSettings
+  | INumberBondWorksheetSettings;
 
-export type ISpecificWorksheetGeneratorSettings =
-  | IEquationWorksheetGeneratorSettings
-  | INumberBondWorksheetGeneratorSettings;
+export type WorksheetComponent = "equation" | "numberBond";
 
-export type WorksheetId = "equation" | "numberBond";
-
-export const WORKSHEET_TOPIC_WORKSHEET_IDS: Record<
+export const WORKSHEET_TOPIC_WORKSHEET_COMPONENTS: Record<
   WorksheetTopic,
-  WorksheetId[]
+  WorksheetComponent[]
 > = {
   addition: ["equation", "numberBond"],
   subtraction: ["equation"],
@@ -56,7 +53,10 @@ export const WORKSHEET_TOPIC_WORKSHEET_IDS: Record<
   division: ["equation"],
 };
 
-export const WORKSHEET_ID_DISPLAY_NAMES: Record<WorksheetId, string> = {
+export const WORKSHEET_COMPONENT_DISPLAY_NAMES: Record<
+  WorksheetComponent,
+  string
+> = {
   equation: "Equation",
   numberBond: "Number bond",
 };
@@ -67,28 +67,21 @@ export type WorksheetTopic =
   | "multiplication"
   | "division";
 
-export interface IEquationWorksheetParameters {
+export interface IEquationWorksheetSettings {
   topic: WorksheetTopic;
   orientation: EquationOrientation;
-  pairs: [number, number][];
+  nDigits: number;
+  factor: number;
+  max: number;
+  random: boolean;
 }
 
-export type IEquationWorksheetGeneratorSettings = Omit<
-  IEquationWorksheetParameters,
-  "pairs"
-> & { nDigits: number; factor: number };
-
-export interface INumberBondWorksheetParameters {
+export interface INumberBondWorksheetSettings {
   orientation: EquationOrientation;
   sum: number;
   leftNumbers: number[];
   empty: "sum" | "one" | "both";
 }
-
-export type INumberBondWorksheetGeneratorSettings = Omit<
-  INumberBondWorksheetParameters,
-  "leftNumbers"
->;
 
 const RefreshButton = (props: { onClick: () => void }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -188,11 +181,12 @@ export const CategorySelectionButton = (props: {
 };
 
 export default function WorksheetGenerator(props: {
-  worksheetId?: IWorksheet["worksheetId"];
-  title?: IWorksheet["title"];
-  nProblems?: number;
-  topic?: WorksheetTopic;
-  specificSettings?: ISpecificWorksheetGeneratorSettings;
+  worksheet?: IWorksheet;
+  // worksheetComponent?: IWorksheet["worksheetComponent"];
+  // title?: IWorksheet["title"];
+  // nProblems?: number;
+  // topic?: WorksheetTopic;
+  // specificSettings?: ISpecificWorksheetSettings;
   noPadding?: boolean;
   landOnWorksheetPage?: boolean;
   mobile?: boolean;
@@ -200,36 +194,50 @@ export default function WorksheetGenerator(props: {
   glow?: boolean;
   buttonText?: string;
   callback?: (id: string) => void;
+  updateCallback?: () => void;
 }) {
+  //const [topic, setTopic] = useState<WorksheetTopic>("addition");
+  const [worksheetComponent, setWorksheetComponent] =
+    useState<WorksheetComponent>("equation");
   const [topic, setTopic] = useState<WorksheetTopic>("addition");
-  const [worksheetId, setWorksheetId] = useState<WorksheetId>("equation");
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [nProblems, setNProblems] = useState<number | undefined>(10);
+  const [nProblems, setNProblems] = useState<number | undefined>(undefined);
+  useEffect(() => {
+    if (props.worksheet) {
+      props.worksheet.worksheetComponent === "equation" &&
+        setNProblems(props.worksheet.values.length);
+      props.worksheet.worksheetComponent === "numberBond" &&
+        setNProblems(props.worksheet.values.length);
+    } else {
+      setNProblems(10);
+    }
+  }, [props.worksheet]);
 
-  useEffect(() => props.topic && setTopic(props.topic), [props.topic]);
   useEffect(
-    () => props.worksheetId && setWorksheetId(props.worksheetId),
-    [props.worksheetId]
+    () =>
+      props.worksheet?.worksheetComponent &&
+      setWorksheetComponent(props.worksheet.worksheetComponent),
+    [props.worksheet?.worksheetComponent]
   );
   useEffect(() => {
-    props.title && setTitle(props.title);
-  }, [props.title]);
+    props.worksheet?.title && setTitle(props.worksheet.title);
+  }, [props.worksheet?.title]);
   useEffect(() => {
-    props.nProblems && setNProblems(props.nProblems);
-  }, [props.nProblems]);
+    props.worksheet?.values && setNProblems(props.worksheet?.values.length);
+  }, [props.worksheet?.values]);
 
   useEffect(() => {
-    !WORKSHEET_TOPIC_WORKSHEET_IDS[topic].includes(worksheetId) &&
-      setWorksheetId(WORKSHEET_TOPIC_WORKSHEET_IDS[topic]?.[0]);
-  }, [topic]);
+    !WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic].includes(worksheetComponent) &&
+      setWorksheetComponent(WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic]?.[0]);
+  }, [topic, worksheetComponent]);
 
   const [specificSettings, setSpecificSettings] = useState<
-    ISpecificWorksheetGeneratorSettings | undefined
+    ISpecificWorksheetSettings | undefined
   >(undefined);
   useEffect(
-    () => setSpecificSettings(props.specificSettings),
-    [props.specificSettings]
+    () => setSpecificSettings(props.worksheet?.settings),
+    [props.worksheet?.settings]
   );
 
   const [selectedPageIndex, setSelectedPageIndex] = useState<number>(0);
@@ -245,11 +253,11 @@ export default function WorksheetGenerator(props: {
   const [creationCallback, setCreationCallback] = useState<
     null | (() => Promise<string>)
   >(null);
+  const [updateCallback, setUpdateCallback] = useState<
+    null | (() => Promise<string>)
+  >(null);
 
   const [regenerationCount, setRegenerationCount] = useState<number>(0);
-
-  const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
-    useState<boolean>(false);
 
   const [freeWorksheetCreationCount, setFreeWorksheetCreationCount] =
     useLocalStorage<number>("freeWorksheetCreationCount", 0);
@@ -277,6 +285,13 @@ export default function WorksheetGenerator(props: {
         : router.push(
             !props.landOnWorksheetPage ? "/dashboard" : `/worksheet/${id}`
           );
+    });
+  };
+
+  const submitUpdate = () => {
+    setLoading(true);
+    updateCallback?.().then((id) => {
+      props.updateCallback?.();
     });
   };
 
@@ -352,7 +367,15 @@ export default function WorksheetGenerator(props: {
                 bgcolor={PALETTE.secondary.grey[2]}
               />
             </Stack>
-            <Stack direction="row" spacing="20px">
+            <Stack
+              direction="row"
+              spacing="20px"
+              sx={{
+                opacity: props.worksheet ? 0.35 : 1,
+                //pointerEvents: props.worksheet ? "none" : undefined,
+                cursor: props.worksheet ? "not-allowed" : undefined,
+              }}
+            >
               <Captioned text="Worksheet topic">
                 <UrsorSelect
                   items={[
@@ -378,31 +401,37 @@ export default function WorksheetGenerator(props: {
                   width="100%"
                   zIndex={999999999}
                   leftAlignPopover
+                  disabled={!!props.worksheet}
                 />
               </Captioned>
               <Captioned text="Question type">
                 <UrsorSelect
-                  items={WORKSHEET_TOPIC_WORKSHEET_IDS[topic].map((t) => ({
-                    id: t,
-                    value: WORKSHEET_ID_DISPLAY_NAMES[t],
-                  }))}
-                  selected={[worksheetId]}
+                  items={WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic].map(
+                    (t) => ({
+                      id: t,
+                      value: WORKSHEET_COMPONENT_DISPLAY_NAMES[t],
+                    })
+                  )}
+                  selected={[worksheetComponent]}
                   callback={(wid: string) => {
-                    setWorksheetId(wid as WorksheetId);
+                    setWorksheetComponent(wid as WorksheetComponent);
                   }}
                   width="100%"
                   zIndex={999999999}
                   leftAlignPopover
+                  disabled={!!props.worksheet}
                 />
               </Captioned>
             </Stack>
-            {worksheetId === "equation" ? (
+            {worksheetComponent === "equation" ? (
               <WorksheetGeneratorEquationModule
-                {...(specificSettings as IEquationWorksheetGeneratorSettings)}
-                callback={(newPreviewWorksheet) =>
+                {...(specificSettings as IEquationWorksheetSettings)}
+                id={props.worksheet?.id}
+                callback={(newPreviewWorksheet: any) =>
                   setPreviewWorksheet(newPreviewWorksheet)
                 }
-                setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                setCreationCallback={(cc: any) => setCreationCallback(() => cc)}
+                setUpdateCallback={(cc: any) => setUpdateCallback(() => cc)}
                 nProblems={nProblems}
                 setNProblems={setNProblems}
                 setNPages={setNPages}
@@ -411,14 +440,17 @@ export default function WorksheetGenerator(props: {
                 topic={topic}
                 pageIndex={selectedPageIndex}
                 regenerationCount={regenerationCount}
+                pairs={props.worksheet?.values}
               />
-            ) : worksheetId === "numberBond" ? (
+            ) : worksheetComponent === "numberBond" ? (
               <WorksheetGeneratorNumberBondModule
-                {...(specificSettings as INumberBondWorksheetGeneratorSettings)}
-                callback={(newPreviewWorksheet) =>
+                {...(specificSettings as INumberBondWorksheetSettings)}
+                id={props.worksheet?.id}
+                callback={(newPreviewWorksheet: any) =>
                   setPreviewWorksheet(newPreviewWorksheet)
                 }
-                setCreationCallback={(cc) => setCreationCallback(() => cc)}
+                setCreationCallback={(cc: any) => setCreationCallback(() => cc)}
+                setUpdateCallback={(cc: any) => setUpdateCallback(() => cc)}
                 nProblems={nProblems}
                 setNProblems={setNProblems}
                 setNPages={setNPages}
@@ -427,17 +459,20 @@ export default function WorksheetGenerator(props: {
                 topic={topic}
                 pageIndex={selectedPageIndex}
                 regenerationCount={regenerationCount}
+                leftNumbers={props.worksheet?.values as [number, number]}
               />
             ) : null}
             {props.mobile ? (
               <UrsorButton
-                onClick={submitCreation}
+                onClick={() =>
+                  props.worksheet ? submitUpdate() : submitCreation()
+                }
                 dark
                 variant="tertiary"
                 endIcon={PencilIcon}
                 width="100%"
               >
-                {props.buttonText || "Create"}
+                {props.buttonText || props.worksheet ? "Update" : "Create"}
               </UrsorButton>
             ) : null}
           </Stack>
@@ -472,13 +507,15 @@ export default function WorksheetGenerator(props: {
                     onClick={() => setRegenerationCount(regenerationCount + 1)}
                   />
                   <UrsorButton
-                    onClick={submitCreation}
+                    onClick={() =>
+                      props.worksheet ? submitUpdate() : submitCreation()
+                    }
                     dark
                     variant="tertiary"
                     endIcon={PencilIcon}
                     width="100%"
                   >
-                    {props.buttonText || "Create"}
+                    {props.buttonText || props.worksheet ? "Update" : "Create"}
                   </UrsorButton>
                 </Stack>
               </Stack>

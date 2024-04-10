@@ -293,8 +293,9 @@ export const FilterButton = (props: {
 export const FilterRow = (props: {
   selected: AstroContent | null;
   callback: (newSelected: AstroContent | null) => void;
+  mobile?: boolean;
 }) => (
-  <Stack direction="row" spacing="12px" px="20px">
+  <Stack direction="row" spacing="12px" px={props.mobile ? "20px" : undefined}>
     <FilterButton
       text="All"
       icon={Star}
@@ -547,7 +548,7 @@ export default function DashboardPageContents() {
         details: l,
       }));
     const worksheetDetails = worksheets
-      .filter((x) => x.worksheetId)
+      .filter((x) => x.worksheetComponent)
       .filter(
         (x) =>
           !searchValue ||

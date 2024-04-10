@@ -12,8 +12,8 @@ import OtherPageCard from "./OtherPageCard";
 import { IntroSteps } from "./IntroSteps";
 import {
   WorksheetTopic,
-  ISpecificWorksheetGeneratorSettings,
-  WorksheetId,
+  WorksheetComponent,
+  ISpecificWorksheetSettings,
 } from "../../../components/WorksheetGenerator";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
@@ -40,10 +40,10 @@ export interface IAstroLandingPage {
   subHeading: string;
   worksheetGenerator?: {
     topic: WorksheetTopic;
-    worksheetId: WorksheetId;
+    worksheetId: WorksheetComponent;
     title: string;
     nProblems: number;
-    specificSettings?: ISpecificWorksheetGeneratorSettings & {
+    specificSettings?: ISpecificWorksheetSettings & {
       topic: WorksheetTopic;
     };
   };
@@ -60,7 +60,7 @@ export interface IAstroLandingPage {
     body: string;
     worksheetPreviewParameters: {
       questionTopic: WorksheetTopic;
-      questionType: WorksheetId;
+      questionType: WorksheetComponent;
       title: string;
       worksheetParameters: {
         factor: number;

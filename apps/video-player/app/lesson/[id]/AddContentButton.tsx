@@ -12,6 +12,7 @@ import {
 
 export default function AddContentButton(props: {
   callback: (type: AstroContent) => void;
+  mobile?: boolean;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const contentOrder: AstroContent[] = [
@@ -32,7 +33,8 @@ export default function AddContentButton(props: {
             bgcolor="rgb(255,255,255)"
             borderRadius="12px"
             spacing="10px"
-            width="420px"
+            boxSizing="border-box"
+            width={props.mobile ? "100%" : "420px"}
           >
             {contentOrder.map((c, i) => {
               return (

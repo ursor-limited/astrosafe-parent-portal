@@ -7,10 +7,9 @@ import { useReactToPrint } from "react-to-print";
 import EquationWorksheet from "./EquationWorksheet";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import {
-  IEquationWorksheetParameters,
-  INumberBondWorksheetParameters,
+  IEquationWorksheetSettings,
+  INumberBondWorksheetSettings,
   IWorksheet,
-  WorksheetId,
 } from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
@@ -38,12 +37,12 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 
 export const getNPages = (worksheet: IWorksheet) => {
-  if (worksheet.worksheetId === "equation") {
-    const params = worksheet.parameters as IEquationWorksheetParameters;
+  if (worksheet.worksheetComponent === "equation") {
+    const params = worksheet.settings as IEquationWorksheetSettings;
     return (
       1 +
       Math.ceil(
-        (params.pairs.length -
+        (worksheet.values.length -
           (params.topic === "division"
             ? 12
             : params.orientation === "horizontal"
@@ -56,12 +55,12 @@ export const getNPages = (worksheet: IWorksheet) => {
             : 24)
       )
     );
-  } else if (worksheet.worksheetId === "numberBond") {
-    const params = worksheet.parameters as INumberBondWorksheetParameters;
+  } else if (worksheet.worksheetComponent === "numberBond") {
+    const params = worksheet.settings as INumberBondWorksheetSettings;
     return (
       1 +
       Math.ceil(
-        (params.leftNumbers.length -
+        (worksheet.values.length -
           (params.orientation === "horizontal"
             ? NUMBER_BOND_HORIZONTAL_ROWS_N
             : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -450,31 +449,29 @@ export default function WorksheetPageContents(
         position="absolute"
       >
         {[...Array(nPages).keys()].map((i) =>
-          props.worksheetId === "equation" ? (
+          props.worksheetComponent === "equation" ? (
             <EquationWorksheet
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
               description={props.description}
-              topic={(props.parameters as IEquationWorksheetParameters).topic}
-              orientation={props.parameters.orientation}
+              topic={(props.settings as IEquationWorksheetSettings).topic}
+              orientation={props.settings.orientation}
               pageIndex={i}
-              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              pairs={props.values}
               showAnswers
             />
-          ) : props.worksheetId === "numberBond" ? (
+          ) : props.worksheetComponent === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
               printableId={`answerspage${i}`}
               title={props.title}
               description={props.description}
-              sum={(props.parameters as INumberBondWorksheetParameters).sum}
-              orientation={props.parameters.orientation}
+              sum={(props.settings as INumberBondWorksheetSettings).sum}
+              orientation={props.settings.orientation}
               pageIndex={i}
-              leftNumbers={
-                (props.parameters as INumberBondWorksheetParameters).leftNumbers
-              }
-              empty={(props.parameters as INumberBondWorksheetParameters).empty}
+              leftNumbers={props.values}
+              empty={(props.settings as INumberBondWorksheetSettings).empty}
               showAnswers
             />
           ) : null
@@ -488,30 +485,28 @@ export default function WorksheetPageContents(
         position="absolute"
       >
         {[...Array(nPages).keys()].map((i) =>
-          props.worksheetId === "equation" ? (
+          props.worksheetComponent === "equation" ? (
             <EquationWorksheet
               key={i}
               printableId={`page${i}`}
               title={props.title}
               description={props.description}
-              topic={(props.parameters as IEquationWorksheetParameters).topic}
-              orientation={props.parameters.orientation}
+              topic={(props.settings as IEquationWorksheetSettings).topic}
+              orientation={props.settings.orientation}
               pageIndex={i}
-              pairs={(props.parameters as IEquationWorksheetParameters).pairs}
+              pairs={props.values}
             />
-          ) : props.worksheetId === "numberBond" ? (
+          ) : props.worksheetComponent === "numberBond" ? (
             <NumberBondWorksheet
               key={i}
               printableId={`page${i}`}
               title={props.title}
               description={props.description}
-              sum={(props.parameters as INumberBondWorksheetParameters).sum}
-              orientation={props.parameters.orientation}
+              sum={(props.settings as INumberBondWorksheetSettings).sum}
+              orientation={props.settings.orientation}
               pageIndex={i}
-              leftNumbers={
-                (props.parameters as INumberBondWorksheetParameters).leftNumbers
-              }
-              empty={(props.parameters as INumberBondWorksheetParameters).empty}
+              leftNumbers={props.values}
+              empty={(props.settings as INumberBondWorksheetSettings).empty}
             />
           ) : null
         )}
@@ -582,40 +577,32 @@ export default function WorksheetPageContents(
                   yPadding={30}
                   items={[...Array(nPages).keys()].map((i) => (
                     <CarouselItem key={i} n={i + 1}>
-                      {props.worksheetId === "equation" ? (
+                      {props.worksheetComponent === "equation" ? (
                         <EquationWorksheet
                           key={i}
                           title={props.title}
                           description={props.description}
                           topic={
-                            (props.parameters as IEquationWorksheetParameters)
-                              .topic
+                            (props.settings as IEquationWorksheetSettings).topic
                           }
-                          orientation={props.parameters.orientation}
+                          orientation={props.settings.orientation}
                           pageIndex={i}
-                          pairs={
-                            (props.parameters as IEquationWorksheetParameters)
-                              .pairs
-                          }
+                          pairs={props.values}
                           answers={mode === "markscheme"}
                         />
-                      ) : props.worksheetId === "numberBond" ? (
+                      ) : props.worksheetComponent === "numberBond" ? (
                         <NumberBondWorksheet
                           key={i}
                           title={props.title}
                           description={props.description}
                           sum={
-                            (props.parameters as INumberBondWorksheetParameters)
-                              .sum
+                            (props.settings as INumberBondWorksheetSettings).sum
                           }
-                          orientation={props.parameters.orientation}
+                          orientation={props.settings.orientation}
                           pageIndex={i}
-                          leftNumbers={
-                            (props.parameters as INumberBondWorksheetParameters)
-                              .leftNumbers
-                          }
+                          leftNumbers={props.values}
                           empty={
-                            (props.parameters as INumberBondWorksheetParameters)
+                            (props.settings as INumberBondWorksheetSettings)
                               .empty
                           }
                           answers={mode === "markscheme"}
