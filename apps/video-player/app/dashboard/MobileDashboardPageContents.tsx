@@ -247,13 +247,13 @@ export default function MobileDashboardPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    userDetails.user?.id &&
-      !userDetails.user?.freeTrialStart &&
-      ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
-        userDetails.refresh
-      );
-  }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
+  // useEffect(() => {
+  //   userDetails.user?.id &&
+  //     !userDetails.user?.freeTrialStart &&
+  //     ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
+  //       userDetails.refresh
+  //     );
+  // }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
 
   const router = useRouter();
 
