@@ -59,14 +59,24 @@ export default function AddContentButton(props: {
         noPadding
         noFloatButton
       >
-        <UrsorButton
-          dark
-          variant="tertiary"
+        <Stack
+          height="32px"
+          width="32px"
+          borderRadius="100%"
+          bgcolor={PALETTE.secondary.purple[2]}
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            svg: {
+              path: {
+                fill: "rgb(255,255,255)",
+              },
+            },
+          }}
           onClick={() => setOpen(true)}
-          endIcon={PlusIcon}
         >
-          Add
-        </UrsorButton>
+          <PlusIcon width="20px" height="20px" />
+        </Stack>
       </UrsorPopover>
     </>
   );

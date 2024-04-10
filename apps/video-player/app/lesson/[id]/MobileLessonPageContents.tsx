@@ -165,8 +165,13 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   return (
     <>
-      <Stack p="40px" overflow="scroll">
-        <Stack direction="row" spacing="12px">
+      <Stack p="16px" overflow="scroll">
+        <Stack
+          width="100%"
+          justifyContent="flex-end"
+          direction="row"
+          spacing="12px"
+        >
           {userDetails?.user?.id &&
           userDetails?.user?.id === lesson?.creatorId ? (
             <UrsorActionButton
@@ -192,7 +197,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
           <Stack
             borderRadius="100%"
-            border={`2px solid ${PALETTE.primary.navy}`}
+            border={`2px solid ${PALETTE.secondary.purple[2]}`}
             height="39px"
             width="39px"
             justifyContent="center"
@@ -205,6 +210,11 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.purple[2],
+                },
+              },
             }}
           >
             <ShareIcon width="22px" height="22px" />
@@ -212,11 +222,11 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         </Stack>
 
         {lesson ? (
-          <Stack>
-            <Typography variant="medium" bold color="rgb(255,255,255)">
+          <Stack pt="20px">
+            <Typography htmlTag="h1" variant="h5" bold color="rgb(255,255,255)">
               {lesson?.title}
             </Typography>
-            <Typography variant="small" color="rgb(255,255,255)">
+            <Typography htmlTag="h2" variant="small" color="rgb(255,255,255)">
               {lesson?.description}
             </Typography>
           </Stack>
@@ -230,17 +240,6 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             sx={{ transform: "translate(-50%)" }}
             zIndex={3}
           >
-            <Stack
-              position="absolute"
-              left={0}
-              right={0}
-              top={0}
-              marginLeft="auto !important"
-              marginRight="auto !important"
-              height="100%"
-              width="2px"
-              bgcolor={PALETTE.secondary.grey[3]}
-            />
             <Stack sx={{ zIndex: 2 }}>
               <AddContentButton
                 mobile
@@ -252,7 +251,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               />
             </Stack>
           </Stack>
-          <Stack px="24px" pt="105px">
+          <Stack pt="65px" width="100%">
             {_.reverse(contents.slice())
               .map((c) => {
                 if (c.type === "video") {
@@ -316,36 +315,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               })
               .map((card, i) => (
                 <UrsorFadeIn duration={800} key={i}>
-                  <Stack
-                    //width="100%"
-                    alignItems={i % 2 ? "flex-end" : "flex-start"}
-                    position="relative"
-                  >
-                    <Stack width="40%">{card}</Stack>
-                    <Stack
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      top={0}
-                      marginLeft="auto !important"
-                      marginRight="auto !important"
-                      height={i < contents.length - 1 ? "100%" : "50%"}
-                      width="2px"
-                      bgcolor={PALETTE.secondary.grey[3]}
-                    />
-                    <Stack
-                      bgcolor={PALETTE.secondary.purple[1]}
-                      height="20px"
-                      width="20px"
-                      borderRadius="100%"
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      top={0}
-                      bottom={0}
-                      margin="auto"
-                    />
-                  </Stack>
+                  {card}
                 </UrsorFadeIn>
               ))}
           </Stack>

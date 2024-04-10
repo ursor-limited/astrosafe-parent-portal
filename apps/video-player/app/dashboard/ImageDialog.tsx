@@ -27,6 +27,7 @@ import UrsorPopover from "../components/UrsorPopover";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import { isMobile } from "react-device-detect";
 
 const UrsorLoading = dynamic(
   () => import("../components/UrsorLoading"),
@@ -100,7 +101,6 @@ export default function ImageDialog(props: IImageDialogProps) {
     title,
     description,
     url: downloadImageUrl,
-    // lessonId: props.lessonId,
   });
 
   const getUpdateDetails = () => ({
@@ -145,19 +145,22 @@ export default function ImageDialog(props: IImageDialogProps) {
 
   return (
     <UrsorDialog
-      supertitle="Add an image"
+      supertitle={isMobile ? undefined : "Add an image"}
       open={props.open}
       onCloseCallback={props.closeCallback}
       fitContent
       dynamicHeight
+      noPadding={isMobile}
     >
       <Stack
-        direction="row"
+        direction={isMobile ? "column" : "row"}
         width="100%"
         flex={1}
         spacing="32px"
         overflow="hidden"
         pt="16px"
+        p="16px"
+        boxSizing="border-box"
       >
         <Stack flex={1} spacing="20px" overflow="hidden">
           <Captioned text="Search Unsplash" noFlex>
@@ -290,16 +293,16 @@ export default function ImageDialog(props: IImageDialogProps) {
               }
               placeholder="Optional"
               width="100%"
-              height="161px"
+              height={isMobile ? "80px" : "161px"}
               boldValue
             />
           </Captioned>
         </Stack>
         <Stack spacing="20px">
           <Stack
-            width="440px"
-            minWidth="440px"
-            // height="362px"
+            width={isMobile ? "100%" : "440px"}
+            minWidth={isMobile ? "100%" : "440px"}
+            height={isMobile ? "250px" : undefined}
             // minHeight="362px"
             borderRadius="12px"
             bgcolor="rgb(0,0,0)"
@@ -320,7 +323,10 @@ export default function ImageDialog(props: IImageDialogProps) {
             >
               <Stack
                 sx={{
-                  ...getTopImageStyle(previewImageUrl ?? "", "362px"),
+                  ...getTopImageStyle(
+                    previewImageUrl ?? "",
+                    isMobile ? "100%" : "362px"
+                  ),
                   svg: {
                     path: {
                       fill: PALETTE.secondary.grey[3],
