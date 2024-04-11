@@ -60,6 +60,7 @@ export default function AddContentButton(props: {
         clickableFloatedButton
         noFloatButton
         noPadding
+        flip
       >
         <Stack
           height="32px"
