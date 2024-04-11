@@ -23,6 +23,8 @@ export default function AddContentButton(props: {
     "link",
   ];
 
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <>
       <UrsorPopover
@@ -63,22 +65,29 @@ export default function AddContentButton(props: {
           height="32px"
           width="32px"
           borderRadius="100%"
-          border={props.mobile ? "2px solid rgb(255,255,255)" : undefined}
+          border={`2px solid ${PALETTE.secondary.purple[2]}`}
           boxShadow={props.mobile ? "0 0 50px rgba(0,0,0,0.3)" : undefined}
-          bgcolor={PALETTE.secondary.purple[2]}
+          bgcolor={hovering ? PALETTE.secondary.purple[2] : undefined}
           justifyContent="center"
           alignItems="center"
           sx={{
             cursor: "pointer",
-            "&:hover": { opacity: 0.7 },
             transition: "0.2s",
             svg: {
               path: {
-                fill: "rgb(255,255,255)",
+                fill: hovering
+                  ? "rgb(255,255,255)"
+                  : PALETTE.secondary.purple[2],
               },
             },
           }}
           onClick={() => setOpen(true)}
+          onMouseEnter={() => {
+            setHovering(true);
+          }}
+          onMouseLeave={() => {
+            setHovering(false);
+          }}
         >
           <PlusIcon width="20px" height="20px" />
         </Stack>

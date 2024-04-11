@@ -166,6 +166,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  const [hoveringContentId, setHoveringContentId] = useState<
+    string | undefined
+  >(undefined);
+  const [hoveringAboveCenter, setHoveringAboveCenter] =
+    useState<boolean>(false);
+
+  console.log(hoveringAboveCenter);
+
+  // useEffect(() => {
+  //   div.addEventListener("mousemove", function (event) {
+  //     var rect = div.getBoundingClientRect();
+  //     var x = event.clientX - rect.left;
+  //     var y = event.clientY - rect.top;
+
+  //     console.log("Cursor position: " + x + "," + y);
+  //   });
+  // }, []);
+
   return (
     <>
       <Stack p="40px" overflow="scroll">
@@ -196,26 +214,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     },
                   ]}
                 />
-              ) : // <Stack
-              //   sx={{
-              //     pointerEvents:
-              //       userDetails?.user?.id === lesson?.creatorId
-              //         ? undefined
-              //         : "none",
-              //     opacity:
-              //       userDetails?.user?.id &&
-              //       userDetails?.user?.id !== lesson?.creatorId
-              //         ? 0
-              //         : 1,
-              //   }}
-              // >
-              //   <CircularButton
-              //     icon={TrashcanIcon}
-              //     color={PALETTE.system.red}
-              //     onClick={() => setDeletionDialogOpen(true)}
-              //   />
-              // </Stack>
-              null}
+              ) : null}
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
@@ -251,35 +250,28 @@ export default function LessonPageContents(props: { lessonId: string }) {
           ></Stack> */}
           <Stack width="100%">
             <Stack
-              height="110px"
-              position="fixed"
-              left="50%"
-              sx={{ transform: "translate(-50%)" }}
-              zIndex={3}
+              //height="20px"
+              //left="50%"
+              //sx={{ transform: "translate(-50%)" }}
+              //zIndex={3}
+              alignItems="center"
+              pt="20px"
             >
+              <AddContentButton
+                callback={(type) =>
+                  outOfCreations
+                    ? setNoCreationsLeftDialogOpen(true)
+                    : contentCallbacks[type]()
+                }
+              />
+
               <Stack
-                position="absolute"
-                left={0}
-                right={0}
-                top={0}
-                marginLeft="auto !important"
-                marginRight="auto !important"
-                height="100%"
+                height="40px"
                 width="2px"
                 bgcolor={PALETTE.secondary.grey[3]}
               />
-
-              <Stack sx={{ zIndex: 2 }}>
-                <AddContentButton
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
-                />
-              </Stack>
             </Stack>
-            <Stack px="24px" pt="105px">
+            <Stack px="24px">
               {_.reverse(contents.slice())
                 .map((c) => {
                   if (c.type === "video") {
@@ -348,9 +340,22 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 .map((card, i) => (
                   <UrsorFadeIn duration={800} key={i}>
                     <Stack
-                      //width="100%"
                       alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
+                      onMouseEnter={() => {
+                        setHoveringContentId(card?.props.id);
+                      }}
+                      onMouseLeave={() => {
+                        setHoveringContentId(undefined);
+                      }}
+                      onMouseMove={(event) => {
+                        //@ts-ignore
+                        const rect = event?.target?.getBoundingClientRect();
+                        //console.log(rect);
+                        setHoveringAboveCenter(
+                          event.pageY < rect.height / 2 + rect.top
+                        );
+                      }}
                     >
                       <Stack width="40%">{card}</Stack>
                       <Stack
