@@ -9,7 +9,8 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import LinkIcon from "@/images/icons/LinkIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon2.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
 import BigCard from "@/app/components/BigCard";
@@ -19,6 +20,7 @@ import { useUserContext } from "@/app/components/UserContext";
 import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -165,7 +167,13 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   const submitDeletion = () =>
     ApiController.deleteVideo(props.details.id).then(() =>
-      router.push("/dashboard")
+      router.push(
+        props.lessonId
+          ? `/lesson/${props.lessonId}`
+          : userDetails
+          ? "/dashboard"
+          : "/"
+      )
     );
 
   const userDetails = useUserContext();
@@ -182,34 +190,49 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
-            <Stack direction="row" spacing="12px">
+            <Stack direction="row" spacing="10px">
               {userDetails?.user?.id &&
-              userDetails?.user?.id === details.creatorId ? (
-                <CircularButton
-                  icon={TrashcanIcon}
-                  color={PALETTE.system.red}
-                  onClick={() => setDeletionDialogOpen(true)}
+              userDetails?.user?.id === props.details?.creatorId ? (
+                <UrsorActionButton
+                  size="43px"
+                  iconSize="17px"
+                  //background={PALETTE.secondary.grey[1]}
+                  border
+                  actions={[
+                    {
+                      text: "Edit",
+                      kallback: () => setEditingDialogOpen(true),
+                      icon: PencilIcon,
+                    },
+                    {
+                      text: "Delete",
+                      kallback: () => setDeletionDialogOpen(true),
+                      icon: TrashcanIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
                 />
               ) : null}
-              <UrsorButton
-                dark
-                variant="tertiary"
+
+              <Stack
+                borderRadius="100%"
+                border={`2px solid ${PALETTE.primary.navy}`}
+                height="39px"
+                width="39px"
+                justifyContent="center"
+                alignItems="center"
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
                   notificationCtx.success("Copied URL to clipboard.");
                 }}
-                endIcon={LinkIcon}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                }}
               >
-                Share link
-              </UrsorButton>
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => setEditingDialogOpen(true)}
-                endIcon={LinkIcon}
-              >
-                Edit
-              </UrsorButton>
+                <ShareIcon width="22px" height="22px" />
+              </Stack>
             </Stack>
           }
         >

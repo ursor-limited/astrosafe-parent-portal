@@ -47,7 +47,10 @@ async function WorksheetPage({
             lessonId={searchParams.lesson}
           />
         ) : (
-          <WorksheetPageContents {...details} lessonId={searchParams.lesson} />
+          <WorksheetPageContents
+            details={details}
+            lessonId={searchParams.lesson}
+          />
         )}
       </UserProvider>
     </AuthWrapper>
