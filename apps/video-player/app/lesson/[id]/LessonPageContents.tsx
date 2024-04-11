@@ -209,8 +209,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const { height } = useWindowSize();
 
-  console.log(contentInsertionIndex, "-====");
-
   return (
     <>
       <Stack

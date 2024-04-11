@@ -268,6 +268,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                     ? setNoCreationsLeftDialogOpen(true)
                     : contentCallbacks[type]()
                 }
+                clickOutsideCloseCallback={() => null}
               />
             </Stack>
           </Stack>
@@ -358,7 +359,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={videoDialogOpen}
         closeCallback={() => setVideoDialogOpen(false)}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "video", id).then(
+          ApiController.addToLesson(props.lessonId, 0, "video", id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
@@ -375,7 +376,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={worksheetDialogOpen}
         closeCallback={() => setWorksheetDialogOpen(false)}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "worksheet", id).then(
+          ApiController.addToLesson(props.lessonId, 0, "worksheet", id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
@@ -394,7 +395,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
         creationCallback={(link) => {
-          ApiController.addToLesson(props.lessonId, "link", link.id).then(
+          ApiController.addToLesson(props.lessonId, 0, "link", link.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
@@ -411,7 +412,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         open={textDialogOpen}
         closeCallback={() => setTextDialogOpen(false)}
         creationCallback={(text) => {
-          ApiController.addToLesson(props.lessonId, "text", text.id).then(
+          ApiController.addToLesson(props.lessonId, 0, "text", text.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
           );
         }}
@@ -431,7 +432,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           open={imageDialogOpen}
           closeCallback={() => setImageDialogOpen(false)}
           creationCallback={(link) => {
-            ApiController.addToLesson(props.lessonId, "image", link.id).then(
+            ApiController.addToLesson(props.lessonId, 0, "image", link.id).then(
               (response) =>
                 updateLesson(response.lesson, response.actualContents)
             );
