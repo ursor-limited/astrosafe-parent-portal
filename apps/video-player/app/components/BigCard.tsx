@@ -14,6 +14,7 @@ const BigCard = (props: {
   minHeight?: string;
   backRoute?: string;
   backText?: string;
+  width?: string;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const BigCard = (props: {
     >
       <Stack
         position="relative"
-        width="83%"
+        width={props.width || "83%"}
         height="100%"
         pb="24px"
         borderRadius="16px"

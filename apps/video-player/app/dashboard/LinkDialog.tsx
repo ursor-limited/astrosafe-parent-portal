@@ -590,7 +590,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
           clear();
         }}
         dynamicHeight
-        noPadding
+        noPadding={isMobile}
         noCloseButton={isMobile}
       >
         <Stack
@@ -599,7 +599,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
           flex={1}
           spacing={isMobile ? "12px" : "32px"}
           overflow="hidden"
-          p="16px"
+          p={isMobile ? "16px" : undefined}
           boxSizing="border-box"
         >
           <Stack flex={1} spacing="20px" overflow="hidden">

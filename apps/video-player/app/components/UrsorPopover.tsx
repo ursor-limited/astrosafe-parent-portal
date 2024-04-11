@@ -46,7 +46,6 @@ export interface IUrsorPopoverProps {
   floatButton?: ButtonFloat; // whether to keep the button above the backdrop
   noFloatButton?: boolean;
   clickableFloatedButton?: boolean;
-  disableOverflowFlip?: boolean;
   animation?: string;
   fadedOut?: boolean;
   content: React.ReactNode;
@@ -57,6 +56,7 @@ export interface IUrsorPopoverProps {
   disabled?: boolean;
   zIndex?: number;
   margin?: string;
+  flip?: boolean;
   children: React.ReactNode; // the button
 }
 
@@ -77,7 +77,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
         : props.placement === "right"
         ? "bottom-end"
         : "bottom", ///props.leftAlign ? "bottom-start" : "bottom",
-    modifiers: [{ name: "flip", enabled: !props.disableOverflowFlip }],
+    modifiers: [{ name: "flip", enabled: props.flip }],
   });
 
   const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
@@ -227,8 +227,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         boxShadow: "0 0 30px rgba(0,0,0,0.09)",
                       }}
                       height="100%"
-                      //maxWidth={maxWidth}
-                      maxHeight={maxHeight}
+                      maxHeight={!props.flip ? maxHeight : undefined}
                       overflow="scroll"
                     >
                       {props.content}

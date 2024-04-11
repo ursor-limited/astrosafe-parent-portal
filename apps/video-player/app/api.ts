@@ -113,10 +113,11 @@ class ApiController {
   }
   static async addToLesson(
     id: string,
+    index: number,
     type: AstroLessonContent,
     contentId: string
   ) {
-    return post(`lesson/add`, { id, type, contentId }).then((response: any) =>
+    return post(`lesson/add`, { id, index, type, contentId }).then((response: any) =>
       response.json()
     );
   }

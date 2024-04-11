@@ -1,9 +1,8 @@
 "use client";
 
-import { Stack } from "@mui/system";
+import { Stack, alpha, keyframes } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
-import _ from "lodash";
-import { useReactToPrint } from "react-to-print";
+import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -37,6 +36,16 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
+import { useWindowSize } from "usehooks-ts";
+
+export const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -98,7 +107,19 @@ export default function LessonPageContents(props: { lessonId: string }) {
       contentId: string;
     }[]
   >([]);
-  useEffect(() => setContents(lesson?.contents || []), [lesson?.contents]);
+  useEffect(
+    () =>
+      setContents(
+        lesson
+          ? _.compact([
+              ...lesson.contentOrder.map((contentId) =>
+                lesson.contents.find((c) => c.contentId === contentId)
+              ),
+            ])
+          : []
+      ),
+    [lesson?.contents, lesson?.contentOrder]
+  );
 
   const updateLesson = (
     lesson: ILesson,
@@ -110,7 +131,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
-    setContents(lesson.contents);
+    setContents(
+      _.compact([
+        ...lesson.contentOrder.map((contentId) =>
+          lesson.contents.find((c) => c.contentId === contentId)
+        ),
+      ])
+    );
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
@@ -166,13 +193,36 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  const [hoveringContentIndex, setHoveringContentIndex] = useState<
+    number | undefined
+  >(undefined);
+  const [hoveringAboveCenter, setHoveringAboveCenter] =
+    useState<boolean>(false);
+  const [contentInsertionIndex, setContentInsertionIndex] = useState<
+    number | undefined
+  >(undefined);
+
+  const [mouseY, setMouseY] = useState<number>(0);
+
+  const [contentsColumnRef, setContentsColumnRef] =
+    useState<HTMLElement | null>(null);
+
+  const { height } = useWindowSize();
+
+  console.log(contentInsertionIndex, "-====");
+
   return (
     <>
-      <Stack p="40px" overflow="scroll">
+      <Stack
+        p="40px"
+        overflow="scroll"
+        onMouseMove={(event) => setMouseY(event.pageY)}
+      >
         <BigCard
           title={lesson?.title ?? ""}
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
+          width="78%"
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&
@@ -180,7 +230,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
-                  //background={PALETTE.secondary.grey[1]}
                   border
                   actions={[
                     {
@@ -196,26 +245,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     },
                   ]}
                 />
-              ) : // <Stack
-              //   sx={{
-              //     pointerEvents:
-              //       userDetails?.user?.id === lesson?.creatorId
-              //         ? undefined
-              //         : "none",
-              //     opacity:
-              //       userDetails?.user?.id &&
-              //       userDetails?.user?.id !== lesson?.creatorId
-              //         ? 0
-              //         : 1,
-              //   }}
-              // >
-              //   <CircularButton
-              //     icon={TrashcanIcon}
-              //     color={PALETTE.system.red}
-              //     onClick={() => setDeletionDialogOpen(true)}
-              //   />
-              // </Stack>
-              null}
+              ) : null}
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
@@ -238,49 +268,129 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          {/* <Stack
-            position="absolute"
-            left={0}
-            right={0}
-            top={0}
-            marginLeft="auto !important"
-            marginRight="auto !important"
+          <Stack
             height="100%"
-            width="2px"
-            bgcolor={PALETTE.secondary.grey[3]}
-          ></Stack> */}
-          <Stack width="100%">
-            <Stack
-              height="110px"
-              position="fixed"
-              left="50%"
-              sx={{ transform: "translate(-50%)" }}
-              zIndex={3}
-            >
+            position="fixed"
+            top={0}
+            left="50%"
+            sx={{
+              transform: `translateY(-26px)`,
+              opacity: 0,
+              animation: `${fadeIn} 0.2s ease-in`,
+              animationFillMode: "forwards",
+            }}
+            zIndex={3}
+          >
+            <Stack height="100%" position="relative">
               <Stack
                 position="absolute"
-                left={0}
-                right={0}
-                top={0}
-                marginLeft="auto !important"
-                marginRight="auto !important"
-                height="100%"
-                width="2px"
-                bgcolor={PALETTE.secondary.grey[3]}
-              />
-
-              <Stack sx={{ zIndex: 2 }}>
+                top={
+                  contents.length === 0
+                    ? contentsColumnRef?.getBoundingClientRect()?.top
+                    : !hoveringContentIndex || hoveringContentIndex === 0
+                    ? Math.max(
+                        mouseY - 18,
+                        (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
+                          60
+                      )
+                    : Math.min(mouseY - 18, height - 100)
+                }
+                left={-18}
+                onClick={() =>
+                  setContentInsertionIndex(
+                    !_.isNumber(hoveringContentIndex)
+                      ? 0
+                      : Math.max(
+                          0,
+                          hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
+                        )
+                  )
+                }
+                alignItems="center"
+              >
                 <AddContentButton
                   callback={(type) =>
                     outOfCreations
                       ? setNoCreationsLeftDialogOpen(true)
                       : contentCallbacks[type]()
                   }
+                  clickOutsideCloseCallback={() =>
+                    setContentInsertionIndex(undefined)
+                  }
                 />
+
+                {contents.length > 0 &&
+                (!hoveringContentIndex || hoveringContentIndex === 0) ? (
+                  <Stack
+                    width="2px"
+                    height={
+                      20 +
+                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                        0) /
+                        2
+                    }
+                    bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                  />
+                ) : null}
+                {hoveringContentIndex === contents.length - 1 ? (
+                  <Stack
+                    sx={{
+                      transform: `translateY(-${
+                        20 +
+                        (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                          0) /
+                          2
+                      }px)`,
+                    }}
+                    width="2px"
+                    height={
+                      20 +
+                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                        0) /
+                        2
+                    }
+                    bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                  />
+                ) : null}
               </Stack>
             </Stack>
-            <Stack px="24px" pt="105px">
-              {_.reverse(contents.slice())
+          </Stack>
+
+          <Stack width="100%" pt="36px">
+            {/* <Stack
+              alignItems="center"
+              pt="60px"
+              pb="60px"
+              sx={{
+                pointerEvents: !showTopAdditionButton ? "none" : undefined,
+              }}
+              height="50px"
+            >
+              {showTopAdditionButton ? (
+                <Stack
+                  sx={{
+                    animation: `${fadeIn} 0.2s ease-in`,
+                    animationFillMode: "forwards",
+                  }}
+                  onMouseEnter={() => setHoveringContentIndex(undefined)}
+                  onClick={() => setContentInsertionIndex(0)}
+                >
+                  <AddContentButton
+                    callback={(type) =>
+                      outOfCreations
+                        ? setNoCreationsLeftDialogOpen(true)
+                        : contentCallbacks[type]()
+                    }
+                    clickOutsideCloseCallback={() =>
+                      setContentInsertionIndex(undefined)
+                    }
+                  />
+                </Stack>
+              ) : null}
+            </Stack> */}
+
+            <Stack px="24px" ref={setContentsColumnRef}>
+              {contents
                 .map((c) => {
                   if (c.type === "video") {
                     const video = videos?.find((v) => v.id === c.contentId);
@@ -346,36 +456,56 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   }
                 })
                 .map((card, i) => (
-                  <UrsorFadeIn duration={800} key={i}>
+                  <UrsorFadeIn duration={800} key={card?.key}>
                     <Stack
-                      //width="100%"
+                      id={card?.props.id}
                       alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
+                      onMouseEnter={() => {
+                        setHoveringContentIndex(i);
+                      }}
+                      onMouseMove={(event) => {
+                        setHoveringContentIndex(i);
+                        //@ts-ignore
+                        const rect = event?.target?.getBoundingClientRect();
+                        setHoveringAboveCenter(
+                          event.pageY < rect.height / 2 + rect.top
+                        );
+                      }}
                     >
-                      <Stack width="40%">{card}</Stack>
-                      <Stack
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={0}
-                        marginLeft="auto !important"
-                        marginRight="auto !important"
-                        height={i < contents.length - 1 ? "100%" : "50%"}
-                        width="2px"
-                        bgcolor={PALETTE.secondary.grey[3]}
-                      />
-                      <Stack
-                        bgcolor={PALETTE.secondary.purple[1]}
-                        height="20px"
-                        width="20px"
-                        borderRadius="100%"
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={0}
-                        bottom={0}
-                        margin="auto"
-                      />
+                      <Stack width="46%">{card}</Stack>
+                      {contents.length > 1 ? (
+                        <>
+                          <Stack
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={i === 0 ? undefined : 0}
+                            bottom={i === 0 ? 0 : undefined}
+                            marginLeft="auto !important"
+                            marginRight="auto !important"
+                            height={
+                              i === 0 || i === contents.length - 1
+                                ? "50%"
+                                : "100%"
+                            }
+                            width="2px"
+                            bgcolor={PALETTE.secondary.grey[3]}
+                          />
+                          <Stack
+                            bgcolor={PALETTE.secondary.purple[1]}
+                            height="20px"
+                            width="20px"
+                            borderRadius="100%"
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={0}
+                            bottom={0}
+                            margin="auto"
+                          />
+                        </>
+                      ) : null}
                     </Stack>
                   </UrsorFadeIn>
                 ))}
@@ -398,10 +528,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
       />
       <VideoCreationDialog
         open={videoDialogOpen}
-        closeCallback={() => setVideoDialogOpen(false)}
+        closeCallback={() => {
+          setVideoDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "video", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "video",
+            id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -415,10 +553,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
-        closeCallback={() => setWorksheetDialogOpen(false)}
+        closeCallback={() => {
+          setWorksheetDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "worksheet", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "worksheet",
+            id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -432,10 +578,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <LinkDialog
         open={linkDialogOpen}
-        closeCallback={() => setLinkDialogOpen(false)}
+        closeCallback={() => {
+          setLinkDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(link) => {
-          ApiController.addToLesson(props.lessonId, "link", link.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "link",
+            link.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -449,10 +603,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <TextDialog
         open={textDialogOpen}
-        closeCallback={() => setTextDialogOpen(false)}
+        closeCallback={() => {
+          setTextDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(text) => {
-          ApiController.addToLesson(props.lessonId, "text", text.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "text",
+            text.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -467,11 +629,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}
-          closeCallback={() => setImageDialogOpen(false)}
+          closeCallback={() => {
+            setImageDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
           creationCallback={(link) => {
-            ApiController.addToLesson(props.lessonId, "image", link.id).then(
-              (response) =>
-                updateLesson(response.lesson, response.actualContents)
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "image",
+              link.id
+            ).then((response) =>
+              updateLesson(response.lesson, response.actualContents)
             );
           }}
         />

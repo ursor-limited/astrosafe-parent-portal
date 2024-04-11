@@ -196,7 +196,6 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
-                  //background={PALETTE.secondary.grey[1]}
                   border
                   actions={[
                     {
