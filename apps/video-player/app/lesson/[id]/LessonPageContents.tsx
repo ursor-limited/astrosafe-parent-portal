@@ -382,6 +382,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     animation: `${fadeIn} 0.2s ease-in`,
                     animationFillMode: "forwards",
                   }}
+                  onMouseEnter={() => setHoveringContentIndex(undefined)}
                 >
                   <AddContentButton
                     callback={(type) =>
@@ -475,9 +476,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
-                      onMouseLeave={() => {
-                        setHoveringContentIndex(undefined);
-                      }}
+                      // onMouseLeave={() => {
+                      //   setHoveringContentIndex(undefined);
+                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore
