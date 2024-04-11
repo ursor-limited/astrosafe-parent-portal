@@ -1,6 +1,6 @@
 "use client";
 
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
 import { useReactToPrint } from "react-to-print";
@@ -37,6 +37,15 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
+
+export const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -98,7 +107,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       contentId: string;
     }[]
   >([]);
-  useEffect(() => setContents(lesson?.contents || []), [lesson?.contents]);
+  useEffect(
+    () => setContents(_.reverse(lesson ? [...lesson.contents] : [])),
+    [lesson?.contents]
+  );
 
   const updateLesson = (
     lesson: ILesson,
@@ -166,23 +178,46 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
-  const [hoveringContentId, setHoveringContentId] = useState<
-    string | undefined
+  const [hoveringContentIndex, setHoveringContentIndex] = useState<
+    number | undefined
   >(undefined);
   const [hoveringAboveCenter, setHoveringAboveCenter] =
     useState<boolean>(false);
+  const [addContentButtonRelativeY, setAddContentButtonRelativeY] =
+    useState<number>(0);
 
-  console.log(hoveringAboveCenter);
+  useEffect(() => {
+    if (
+      !_.isNumber(hoveringContentIndex) ||
+      (hoveringContentIndex === 0 && hoveringAboveCenter) ||
+      (hoveringContentIndex === contents.length - 1 && !hoveringAboveCenter)
+    ) {
+      setHoveringContentIndex(undefined);
+      return;
+    }
 
-  // useEffect(() => {
-  //   div.addEventListener("mousemove", function (event) {
-  //     var rect = div.getBoundingClientRect();
-  //     var x = event.clientX - rect.left;
-  //     var y = event.clientY - rect.top;
+    const currentElementRect = document
+      .getElementById(contents[hoveringContentIndex].contentId)
+      ?.getBoundingClientRect();
+    if (!currentElementRect) return;
+    const currentElementCenter =
+      currentElementRect.top + currentElementRect?.height / 2;
 
-  //     console.log("Cursor position: " + x + "," + y);
-  //   });
-  // }, []);
+    const adjacentElementRect = document
+      .getElementById(
+        contents[hoveringContentIndex + (hoveringAboveCenter ? -1 : 1)]
+          .contentId
+      )
+      ?.getBoundingClientRect();
+    if (!adjacentElementRect) return;
+    const adjacentElementCenter =
+      adjacentElementRect.top + adjacentElementRect?.height / 2;
+    setAddContentButtonRelativeY(
+      (adjacentElementCenter - currentElementCenter) / 2
+    );
+  }, [hoveringContentIndex, hoveringAboveCenter, contents]);
+
+  console.log(hoveringContentIndex);
 
   return (
     <>
@@ -237,6 +272,30 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
+          {/* {_.isNumber(hoveringContentIndex) ? (
+            <Stack
+              position="absolute"
+              height="100%"
+              width="50px"
+              top={0}
+              left={0}
+              right={0}
+              marginLeft="auto"
+              marginRight="auto"
+              zIndex={999999}
+              // sx={{
+              //   transform: `translateY(${addContentButtonRelativeY}px)`,
+              // }}
+            >
+              <AddContentButton
+                callback={(type) =>
+                  outOfCreations
+                    ? setNoCreationsLeftDialogOpen(true)
+                    : contentCallbacks[type]()
+                }
+              />
+            </Stack>
+          ) : null} */}
           {/* <Stack
             position="absolute"
             left={0}
@@ -272,7 +331,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
               />
             </Stack>
             <Stack px="24px">
-              {_.reverse(contents.slice())
+              {contents
                 .map((c) => {
                   if (c.type === "video") {
                     const video = videos?.find((v) => v.id === c.contentId);
@@ -340,15 +399,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 .map((card, i) => (
                   <UrsorFadeIn duration={800} key={i}>
                     <Stack
+                      id={card?.props.id}
                       alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
                       onMouseEnter={() => {
-                        setHoveringContentId(card?.props.id);
+                        setHoveringContentIndex(i);
                       }}
                       onMouseLeave={() => {
-                        setHoveringContentId(undefined);
+                        setHoveringContentIndex(undefined);
                       }}
                       onMouseMove={(event) => {
+                        setHoveringContentIndex(i);
                         //@ts-ignore
                         const rect = event?.target?.getBoundingClientRect();
                         //console.log(rect);
@@ -357,6 +418,40 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
+                      {hoveringContentIndex === i ? (
+                        <Stack
+                          height="100%"
+                          position="absolute"
+                          top={0}
+                          // bottom={0}
+                          left={0}
+                          right={0}
+                          marginLeft="auto"
+                          marginRight="auto"
+                          alignItems="center"
+                          justifyContent="center"
+                          zIndex={99999}
+                          sx={{
+                            opacity: 0,
+                            animation: `${fadeIn} 0.2s ease-in`,
+                            animationFillMode: "forwards",
+                          }}
+                        >
+                          <Stack
+                            sx={{
+                              transform: `translateY(${addContentButtonRelativeY}px)`,
+                            }}
+                          >
+                            <AddContentButton
+                              callback={(type) =>
+                                outOfCreations
+                                  ? setNoCreationsLeftDialogOpen(true)
+                                  : contentCallbacks[type]()
+                              }
+                            />
+                          </Stack>
+                        </Stack>
+                      ) : null}
                       <Stack width="40%">{card}</Stack>
                       <Stack
                         position="absolute"

@@ -67,7 +67,7 @@ export default function AddContentButton(props: {
           borderRadius="100%"
           border={`2px solid ${PALETTE.secondary.purple[2]}`}
           boxShadow={props.mobile ? "0 0 50px rgba(0,0,0,0.3)" : undefined}
-          bgcolor={hovering ? PALETTE.secondary.purple[2] : undefined}
+          bgcolor={hovering ? PALETTE.secondary.purple[2] : "rgb(255,255,255)"}
           justifyContent="center"
           alignItems="center"
           sx={{
