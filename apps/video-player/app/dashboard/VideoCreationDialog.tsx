@@ -293,14 +293,6 @@ const VideoCreationDialog = (props: {
                 boldValue
               />
             </Captioned>
-            {isMobile || props.noPlayer ? (
-              <TimeRange
-                range={range}
-                duration={duration}
-                setRange={setRange}
-                originalUrl={originalUrl}
-              />
-            ) : null}
           </Stack>
           {!isMobile ? (
             <Stack width={VIDEO_WIDTH} spacing="6px">

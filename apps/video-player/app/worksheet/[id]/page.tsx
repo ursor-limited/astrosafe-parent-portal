@@ -43,7 +43,7 @@ async function WorksheetPage({
       <UserProvider>
         {isMobile ? (
           <MobileWorksheetPageContents
-            {...details}
+            details={details}
             lessonId={searchParams.lesson}
           />
         ) : (
