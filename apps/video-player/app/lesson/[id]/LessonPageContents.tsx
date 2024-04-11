@@ -204,21 +204,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [mouseY, setMouseY] = useState<number>(0);
 
-  const [showTopAdditionButton, setShowTopAdditionButton] =
-    useState<boolean>(false);
-  useEffect(
-    () =>
-      setShowTopAdditionButton(
-        !_.isNumber(hoveringContentIndex) ||
-          (hoveringContentIndex === 0 && hoveringAboveCenter)
-      ),
-    [hoveringAboveCenter, hoveringContentIndex]
-  );
-
   const [contentsColumnRef, setContentsColumnRef] =
     useState<HTMLElement | null>(null);
 
   const { height } = useWindowSize();
+
+  console.log(contentInsertionIndex, "-====");
 
   return (
     <>
@@ -277,92 +268,94 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          {contents.length > 1 ? (
-            <Stack
-              height="100%"
-              position="fixed"
-              top={0}
-              left="50%"
-              sx={{
-                transform: `translateY(-26px)`,
-                opacity: 0,
-                animation: `${fadeIn} 0.2s ease-in`,
-                animationFillMode: "forwards",
-              }}
-              zIndex={3}
-            >
-              <Stack height="100%" position="relative">
-                <Stack
-                  position="absolute"
-                  top={
-                    !hoveringContentIndex || hoveringContentIndex === 0
-                      ? Math.max(
-                          mouseY - 18,
-                          (contentsColumnRef?.getBoundingClientRect()?.top ??
-                            0) - 60
+          <Stack
+            height="100%"
+            position="fixed"
+            top={0}
+            left="50%"
+            sx={{
+              transform: `translateY(-26px)`,
+              opacity: 0,
+              animation: `${fadeIn} 0.2s ease-in`,
+              animationFillMode: "forwards",
+            }}
+            zIndex={3}
+          >
+            <Stack height="100%" position="relative">
+              <Stack
+                position="absolute"
+                top={
+                  contents.length === 0
+                    ? contentsColumnRef?.getBoundingClientRect()?.top
+                    : !hoveringContentIndex || hoveringContentIndex === 0
+                    ? Math.max(
+                        mouseY - 18,
+                        (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
+                          60
+                      )
+                    : Math.min(mouseY - 18, height - 100)
+                }
+                left={-18}
+                onClick={() =>
+                  setContentInsertionIndex(
+                    !_.isNumber(hoveringContentIndex)
+                      ? 0
+                      : Math.max(
+                          0,
+                          hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
                         )
-                      : Math.min(mouseY - 18, height - 100)
+                  )
+                }
+                alignItems="center"
+              >
+                <AddContentButton
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
                   }
-                  left={-18}
-                  onClick={() =>
-                    setContentInsertionIndex(
-                      !_.isNumber(hoveringContentIndex)
-                        ? 0
-                        : Math.max(
-                            0,
-                            hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
-                          )
-                    )
+                  clickOutsideCloseCallback={() =>
+                    setContentInsertionIndex(undefined)
                   }
-                  alignItems="center"
-                >
-                  <AddContentButton
-                    callback={(type) =>
-                      outOfCreations
-                        ? setNoCreationsLeftDialogOpen(true)
-                        : contentCallbacks[type]()
-                    }
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
+                />
 
-                  {!hoveringContentIndex || hoveringContentIndex === 0 ? (
-                    <Stack
-                      width="2px"
-                      height={
+                {contents.length > 0 &&
+                (!hoveringContentIndex || hoveringContentIndex === 0) ? (
+                  <Stack
+                    width="2px"
+                    height={
+                      20 +
+                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                        0) /
+                        2
+                    }
+                    bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                  />
+                ) : null}
+                {hoveringContentIndex === contents.length - 1 ? (
+                  <Stack
+                    sx={{
+                      transform: `translateY(-${
                         20 +
                         (contentsColumnRef?.getBoundingClientRect?.()?.height ??
                           0) /
                           2
-                      }
-                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
-                    />
-                  ) : null}
-                  {hoveringContentIndex === contents.length - 1 ? (
-                    <Stack
-                      sx={{
-                        transform: `translateY(-${
-                          20 +
-                          (contentsColumnRef?.getBoundingClientRect?.()
-                            ?.height ?? 0) /
-                            2
-                        }px)`,
-                      }}
-                      width="2px"
-                      height={
-                        20 +
-                        (contentsColumnRef?.getBoundingClientRect?.()?.height ??
-                          0) /
-                          2
-                      }
-                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
-                    />
-                  ) : null}
-                </Stack>
+                      }px)`,
+                    }}
+                    width="2px"
+                    height={
+                      20 +
+                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                        0) /
+                        2
+                    }
+                    bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                  />
+                ) : null}
               </Stack>
             </Stack>
-          ) : null}
+          </Stack>
+
           <Stack width="100%" pt="36px">
             {/* <Stack
               alignItems="center"
