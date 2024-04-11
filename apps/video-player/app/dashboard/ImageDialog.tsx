@@ -151,6 +151,7 @@ export default function ImageDialog(props: IImageDialogProps) {
       fitContent
       dynamicHeight
       noPadding={isMobile}
+      noCloseButton
     >
       <Stack
         direction={isMobile ? "column" : "row"}

@@ -351,7 +351,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
               //sx={{ transform: "translate(-50%)" }}
               //zIndex={3}
               alignItems="center"
-              pt="20px"
+              pt="60px"
+              pb="60px"
             >
               <AddContentButton
                 callback={(type) =>
@@ -490,17 +491,22 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         </Stack>
                       ) : null} */}
                       <Stack width="40%">{card}</Stack>
+
                       <Stack
                         position="absolute"
                         left={0}
                         right={0}
-                        top={0}
+                        top={i === 0 ? undefined : 0}
+                        bottom={i === 0 ? 0 : undefined}
                         marginLeft="auto !important"
                         marginRight="auto !important"
-                        height={i < contents.length - 1 ? "100%" : "50%"}
+                        height={
+                          i === 0 || i === contents.length - 1 ? "50%" : "100%"
+                        }
                         width="2px"
                         bgcolor={PALETTE.secondary.grey[3]}
                       />
+
                       <Stack
                         bgcolor={PALETTE.secondary.purple[1]}
                         height="20px"
