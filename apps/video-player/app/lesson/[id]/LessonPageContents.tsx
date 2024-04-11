@@ -3,7 +3,6 @@
 import { Stack, keyframes } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
-import { useReactToPrint } from "react-to-print";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -122,7 +121,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
-    setContents(lesson.contents);
+    setContents(_.reverse(lesson.contents));
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
@@ -186,49 +185,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [contentInsertionIndex, setContentInsertionIndex] = useState<
     number | undefined
   >(undefined);
-  // useEffect(
-  //   () =>
-  //     !_.isNumber(contentInsertionIndex) &&
-  //     setContentInsertionIndex(
-  //       !hoveringContentIndex
-  //         ? 0
-  //         : Math.max(0, hoveringContentIndex + (hoveringAboveCenter ? -1 : 1))
-  //     ),
-  //   [hoveringAboveCenter, hoveringContentIndex]
-  // );
-  // const [addContentButtonRelativeY, setAddContentButtonRelativeY] =
-  //   useState<number>(0);
-
-  // useEffect(() => {
-  //   if (
-  //     !_.isNumber(hoveringContentIndex) ||
-  //     (hoveringContentIndex === 0 && hoveringAboveCenter) ||
-  //     (hoveringContentIndex === contents.length - 1 && !hoveringAboveCenter)
-  //   ) {
-  //     setHoveringContentIndex(undefined);
-  //     return;
-  //   }
-
-  //   const currentElementRect = document
-  //     .getElementById(contents[hoveringContentIndex].contentId)
-  //     ?.getBoundingClientRect();
-  //   if (!currentElementRect) return;
-  //   const currentElementCenter =
-  //     currentElementRect.top + currentElementRect?.height / 2;
-
-  //   const adjacentElementRect = document
-  //     .getElementById(
-  //       contents[hoveringContentIndex + (hoveringAboveCenter ? -1 : 1)]
-  //         .contentId
-  //     )
-  //     ?.getBoundingClientRect();
-  //   if (!adjacentElementRect) return;
-  //   const adjacentElementCenter =
-  //     adjacentElementRect.top + adjacentElementRect?.height / 2;
-  //   setAddContentButtonRelativeY(
-  //     (adjacentElementCenter - currentElementCenter) / 2
-  //   );
-  // }, [hoveringContentIndex, hoveringAboveCenter, contents]);
 
   const [mouseY, setMouseY] = useState<number>(0);
 
@@ -261,7 +217,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
-                  //background={PALETTE.secondary.grey[1]}
                   border
                   actions={[
                     {
@@ -300,42 +255,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          {/* {_.isNumber(hoveringContentIndex) ? (
-            <Stack
-              position="absolute"
-              height="100%"
-              width="50px"
-              top={0}
-              left={0}
-              right={0}
-              marginLeft="auto"
-              marginRight="auto"
-              zIndex={999999}
-              // sx={{
-              //   transform: `translateY(${addContentButtonRelativeY}px)`,
-              // }}
-            >
-              <AddContentButton
-                callback={(type) =>
-                  outOfCreations
-                    ? setNoCreationsLeftDialogOpen(true)
-                    : contentCallbacks[type]()
-                }
-              />
-            </Stack>
-          ) : null} */}
-          {/* <Stack
-            position="absolute"
-            left={0}
-            right={0}
-            top={0}
-            marginLeft="auto !important"
-            marginRight="auto !important"
-            height="100%"
-            width="2px"
-            bgcolor={PALETTE.secondary.grey[3]}
-          ></Stack> */}
-          {!showTopAdditionButton ? (
+          {!showTopAdditionButton && contents.length > 1 ? (
             <Stack
               height="100%"
               bgcolor="cyan"
@@ -350,18 +270,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
               }}
               zIndex={3}
             >
-              {/* <Stack
-              position="absolute"
-              left={0}
-              right={0}
-              top={0}
-              marginLeft="auto !important"
-              marginRight="auto !important"
-              height="100%"
-              width="2px"
-              bgcolor={PALETTE.secondary.grey[3]}
-            /> */}
-
               <Stack height="100%" position="relative">
                 <Stack
                   position="absolute"
@@ -394,10 +302,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
           ) : null}
           <Stack width="100%">
             <Stack
-              //height="20px"
-              //left="50%"
-              //sx={{ transform: "translate(-50%)" }}
-              //zIndex={3}
               alignItems="center"
               pt="60px"
               pb="60px"
@@ -427,12 +331,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   />
                 </Stack>
               ) : null}
-
-              {/* <Stack
-                height="40px"
-                width="2px"
-                bgcolor={PALETTE.secondary.grey[3]}
-              /> */}
             </Stack>
 
             <Stack px="24px">
@@ -502,7 +400,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   }
                 })
                 .map((card, i) => (
-                  <UrsorFadeIn duration={800} key={i}>
+                  <UrsorFadeIn duration={800} key={card?.key}>
                     <Stack
                       id={card?.props.id}
                       alignItems={i % 2 ? "flex-end" : "flex-start"}
@@ -510,84 +408,48 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
-                      // onMouseLeave={() => {
-                      //   setHoveringContentIndex(undefined);
-                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore
                         const rect = event?.target?.getBoundingClientRect();
-                        //console.log(rect);
                         setHoveringAboveCenter(
                           event.pageY < rect.height / 2 + rect.top
                         );
                       }}
                     >
-                      {/* {hoveringContentIndex === i ? (
-                        <Stack
-                          height="100%"
-                          position="absolute"
-                          top={0}
-                          // bottom={0}
-                          left={0}
-                          right={0}
-                          marginLeft="auto"
-                          marginRight="auto"
-                          alignItems="center"
-                          justifyContent="center"
-                          zIndex={99999}
-                          sx={{
-                            opacity: 0,
-                            animation: `${fadeIn} 0.2s ease-in`,
-                            animationFillMode: "forwards",
-                          }}
-                        >
-                          <Stack
-                            sx={{
-                              transform: `translateY(${addContentButtonRelativeY}px)`,
-                            }}
-                          >
-                            <AddContentButton
-                              callback={(type) =>
-                                outOfCreations
-                                  ? setNoCreationsLeftDialogOpen(true)
-                                  : contentCallbacks[type]()
-                              }
-                            />
-                          </Stack>
-                        </Stack>
-                      ) : null} */}
                       <Stack width="40%">{card}</Stack>
-
-                      {/* {_.isNumber(hoveringPreviousContentIndex) ? ( */}
-                      <Stack
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={i === 0 ? undefined : 0}
-                        bottom={i === 0 ? 0 : undefined}
-                        marginLeft="auto !important"
-                        marginRight="auto !important"
-                        height={
-                          i === 0 || i === contents.length - 1 ? "50%" : "100%"
-                        }
-                        width="2px"
-                        bgcolor={PALETTE.secondary.grey[3]}
-                      />
-                      {/* ) : null} */}
-
-                      <Stack
-                        bgcolor={PALETTE.secondary.purple[1]}
-                        height="20px"
-                        width="20px"
-                        borderRadius="100%"
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={0}
-                        bottom={0}
-                        margin="auto"
-                      />
+                      {contents.length > 1 ? (
+                        <>
+                          <Stack
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={i === 0 ? undefined : 0}
+                            bottom={i === 0 ? 0 : undefined}
+                            marginLeft="auto !important"
+                            marginRight="auto !important"
+                            height={
+                              i === 0 || i === contents.length - 1
+                                ? "50%"
+                                : "100%"
+                            }
+                            width="2px"
+                            bgcolor={PALETTE.secondary.grey[3]}
+                          />
+                          <Stack
+                            bgcolor={PALETTE.secondary.purple[1]}
+                            height="20px"
+                            width="20px"
+                            borderRadius="100%"
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={0}
+                            bottom={0}
+                            margin="auto"
+                          />
+                        </>
+                      ) : null}
                     </Stack>
                   </UrsorFadeIn>
                 ))}
@@ -615,8 +477,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "video", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "video",
+            id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -635,8 +502,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, "worksheet", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "worksheet",
+            id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -655,8 +527,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(link) => {
-          ApiController.addToLesson(props.lessonId, "link", link.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "link",
+            link.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -675,8 +552,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(text) => {
-          ApiController.addToLesson(props.lessonId, "text", text.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "text",
+            text.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -696,9 +578,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
             setContentInsertionIndex(undefined);
           }}
           creationCallback={(link) => {
-            ApiController.addToLesson(props.lessonId, "image", link.id).then(
-              (response) =>
-                updateLesson(response.lesson, response.actualContents)
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "image",
+              link.id
+            ).then((response) =>
+              updateLesson(response.lesson, response.actualContents)
             );
           }}
         />

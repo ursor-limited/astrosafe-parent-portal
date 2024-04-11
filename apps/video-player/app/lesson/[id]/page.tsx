@@ -20,6 +20,7 @@ export interface ILesson {
     type: AstroContent;
     contentId: string;
   }[];
+  contentOrder: string[];
   createdAt: string;
   updatedAt: string;
 }
