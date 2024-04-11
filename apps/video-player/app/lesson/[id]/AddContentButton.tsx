@@ -13,6 +13,7 @@ import {
 export default function AddContentButton(props: {
   callback: (type: AstroContent) => void;
   mobile?: boolean;
+  clickOutsideCloseCallback: () => void;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const contentOrder: AstroContent[] = [
@@ -55,7 +56,10 @@ export default function AddContentButton(props: {
             })}
           </Stack>
         }
-        closeCallback={() => setOpen(false)}
+        closeCallback={() => {
+          setOpen(false);
+          props.clickOutsideCloseCallback();
+        }}
         maxHeight
         clickableFloatedButton
         noFloatButton

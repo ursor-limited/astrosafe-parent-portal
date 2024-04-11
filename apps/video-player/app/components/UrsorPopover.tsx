@@ -227,7 +227,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         boxShadow: "0 0 30px rgba(0,0,0,0.09)",
                       }}
                       height="100%"
-                      //maxWidth={maxWidth}
                       maxHeight={!props.flip ? maxHeight : undefined}
                       overflow="scroll"
                     >

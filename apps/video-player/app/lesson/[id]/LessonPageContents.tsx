@@ -183,6 +183,19 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
   const [hoveringAboveCenter, setHoveringAboveCenter] =
     useState<boolean>(false);
+  const [contentInsertionIndex, setContentInsertionIndex] = useState<
+    number | undefined
+  >(undefined);
+  // useEffect(
+  //   () =>
+  //     !_.isNumber(contentInsertionIndex) &&
+  //     setContentInsertionIndex(
+  //       !hoveringContentIndex
+  //         ? 0
+  //         : Math.max(0, hoveringContentIndex + (hoveringAboveCenter ? -1 : 1))
+  //     ),
+  //   [hoveringAboveCenter, hoveringContentIndex]
+  // );
   // const [addContentButtonRelativeY, setAddContentButtonRelativeY] =
   //   useState<number>(0);
 
@@ -229,6 +242,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ),
     [hoveringAboveCenter, hoveringContentIndex]
   );
+
+  console.log(contentInsertionIndex);
 
   return (
     <>
@@ -350,12 +365,29 @@ export default function LessonPageContents(props: { lessonId: string }) {
             /> */}
 
               <Stack height="100%" position="relative">
-                <Stack position="absolute" top={mouseY - 18} left={-18}>
+                <Stack
+                  position="absolute"
+                  top={mouseY - 18}
+                  left={-18}
+                  onClick={() =>
+                    setContentInsertionIndex(
+                      !_.isNumber(hoveringContentIndex)
+                        ? 0
+                        : Math.max(
+                            0,
+                            hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
+                          )
+                    )
+                  }
+                >
                   <AddContentButton
                     callback={(type) =>
                       outOfCreations
                         ? setNoCreationsLeftDialogOpen(true)
                         : contentCallbacks[type]()
+                    }
+                    clickOutsideCloseCallback={() =>
+                      setContentInsertionIndex(undefined)
                     }
                   />
                 </Stack>
@@ -389,6 +421,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       outOfCreations
                         ? setNoCreationsLeftDialogOpen(true)
                         : contentCallbacks[type]()
+                    }
+                    clickOutsideCloseCallback={() =>
+                      setContentInsertionIndex(undefined)
                     }
                   />
                 </Stack>
@@ -576,7 +611,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       />
       <VideoCreationDialog
         open={videoDialogOpen}
-        closeCallback={() => setVideoDialogOpen(false)}
+        closeCallback={() => {
+          setVideoDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(id) => {
           ApiController.addToLesson(props.lessonId, "video", id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
@@ -593,7 +631,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
-        closeCallback={() => setWorksheetDialogOpen(false)}
+        closeCallback={() => {
+          setWorksheetDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(id) => {
           ApiController.addToLesson(props.lessonId, "worksheet", id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
@@ -610,7 +651,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <LinkDialog
         open={linkDialogOpen}
-        closeCallback={() => setLinkDialogOpen(false)}
+        closeCallback={() => {
+          setLinkDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(link) => {
           ApiController.addToLesson(props.lessonId, "link", link.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
@@ -627,7 +671,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ) : null}
       <TextDialog
         open={textDialogOpen}
-        closeCallback={() => setTextDialogOpen(false)}
+        closeCallback={() => {
+          setTextDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(text) => {
           ApiController.addToLesson(props.lessonId, "text", text.id).then(
             (response) => updateLesson(response.lesson, response.actualContents)
@@ -645,7 +692,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}
-          closeCallback={() => setImageDialogOpen(false)}
+          closeCallback={() => {
+            setImageDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
           creationCallback={(link) => {
             ApiController.addToLesson(props.lessonId, "image", link.id).then(
               (response) =>
