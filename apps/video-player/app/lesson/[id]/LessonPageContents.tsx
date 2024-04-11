@@ -243,8 +243,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [hoveringAboveCenter, hoveringContentIndex]
   );
 
-  console.log(contentInsertionIndex);
-
   return (
     <>
       <Stack
@@ -415,6 +413,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     animationFillMode: "forwards",
                   }}
                   onMouseEnter={() => setHoveringContentIndex(undefined)}
+                  onClick={() => setContentInsertionIndex(0)}
                 >
                   <AddContentButton
                     callback={(type) =>
