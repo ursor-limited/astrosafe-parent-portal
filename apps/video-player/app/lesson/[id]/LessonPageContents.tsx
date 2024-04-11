@@ -217,11 +217,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
     );
   }, [hoveringContentIndex, hoveringAboveCenter, contents]);
 
-  console.log(hoveringContentIndex);
+  const [mouseY, setMouseY] = useState<number>(0);
 
   return (
     <>
-      <Stack p="40px" overflow="scroll">
+      <Stack
+        p="40px"
+        overflow="scroll"
+        onMouseMove={(event) => setMouseY(event.pageY)}
+      >
         <BigCard
           title={lesson?.title ?? ""}
           description={lesson?.description ?? ""}
@@ -307,6 +311,39 @@ export default function LessonPageContents(props: { lessonId: string }) {
             width="2px"
             bgcolor={PALETTE.secondary.grey[3]}
           ></Stack> */}
+          <Stack
+            height="100%"
+            bgcolor="cyan"
+            position="fixed"
+            top={0}
+            left="50%"
+            sx={{ transform: `translateY(-26px)` }}
+            zIndex={3}
+          >
+            {/* <Stack
+              position="absolute"
+              left={0}
+              right={0}
+              top={0}
+              marginLeft="auto !important"
+              marginRight="auto !important"
+              height="100%"
+              width="2px"
+              bgcolor={PALETTE.secondary.grey[3]}
+            /> */}
+
+            <Stack height="100%" position="relative">
+              <Stack position="absolute" top={mouseY - 18} left={-18}>
+                <AddContentButton
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
+                  }
+                />
+              </Stack>
+            </Stack>
+          </Stack>
           <Stack width="100%">
             <Stack
               //height="20px"
@@ -324,11 +361,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 }
               />
 
-              <Stack
+              {/* <Stack
                 height="40px"
                 width="2px"
                 bgcolor={PALETTE.secondary.grey[3]}
-              />
+              /> */}
             </Stack>
             <Stack px="24px">
               {contents
@@ -418,7 +455,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      {hoveringContentIndex === i ? (
+                      {/* {hoveringContentIndex === i ? (
                         <Stack
                           height="100%"
                           position="absolute"
@@ -451,7 +488,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             />
                           </Stack>
                         </Stack>
-                      ) : null}
+                      ) : null} */}
                       <Stack width="40%">{card}</Stack>
                       <Stack
                         position="absolute"
