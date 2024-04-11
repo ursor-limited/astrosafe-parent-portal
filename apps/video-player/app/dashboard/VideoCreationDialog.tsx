@@ -289,7 +289,7 @@ const VideoCreationDialog = (props: {
                 }
                 placeholder="Optional"
                 width="100%"
-                height={props.video ? "100px" : "179px"}
+                height={isMobile ? "60px" : props.video ? "100px" : "179px"}
                 boldValue
               />
             </Captioned>
