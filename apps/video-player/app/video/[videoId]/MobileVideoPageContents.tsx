@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
 import ApiController, { IVideo } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon2.svg";
+import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import LinkIcon from "@/images/icons/LinkIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
 import BigCard from "@/app/components/BigCard";
@@ -18,6 +19,9 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
+import { CircularButton } from "./VideoPageContents";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -27,86 +31,67 @@ const Player = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-export const CircularButton = (props: {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  color?: string;
-  onClick: () => void;
-}) => {
-  const [hovering, setHovering] = useState<boolean>(false);
-  return (
-    <Stack
-      height="39px"
-      width="39px"
-      minHeight="38px"
-      minWidth="38px"
-      borderRadius="100%"
-      border={`2px solid ${props.color || PALETTE.primary.navy}`}
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        svg: {
-          path: {
-            fill: props.color || PALETTE.primary.navy,
-          },
-        },
-        cursor: "pointer",
-        "&:hover": { opacity: 0.6 },
-        transition: "0.2s",
-      }}
-      onMouseEnter={() => {
-        setHovering(true);
-      }}
-      onMouseLeave={() => {
-        setHovering(false);
-      }}
-      onClick={props.onClick}
-    >
-      <props.icon height="20px" width="20px" />
-    </Stack>
-  );
-};
+// export const CircularButton = (props: {
+//   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+//   color?: string;
+//   onClick: () => void;
+// }) => {
+//   const [hovering, setHovering] = useState<boolean>(false);
+//   return (
+//     <Stack
+//       height="39px"
+//       width="39px"
+//       minHeight="38px"
+//       minWidth="38px"
+//       borderRadius="100%"
+//       border={`2px solid ${props.color || PALETTE.primary.navy}`}
+//       justifyContent="center"
+//       alignItems="center"
+//       sx={{
+//         svg: {
+//           path: {
+//             fill: props.color || PALETTE.primary.navy,
+//           },
+//         },
+//         cursor: "pointer",
+//         "&:hover": { opacity: 0.6 },
+//         transition: "0.2s",
+//       }}
+//       onMouseEnter={() => {
+//         setHovering(true);
+//       }}
+//       onMouseLeave={() => {
+//         setHovering(false);
+//       }}
+//       onClick={props.onClick}
+//     >
+//       <props.icon height="20px" width="20px" />
+//     </Stack>
+//   );
+// };
 
 const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
-
-const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
-const SigninPromptBar = (props: { signInCallback: () => void }) => (
-  <Stack
-    position="fixed"
-    zIndex={999999}
-    width="100%"
-    height="76px"
-    justifyContent="center"
-    alignItems="center"
-    sx={{ background: GRADIENT }}
-    direction="row"
-    spacing="20px"
-  >
-    <Typography variant="large" bold color={PALETTE.font.light}>
-      Sign in within 30 min to save and share your safe video.
-    </Typography>
-    <UrsorButton
-      dark
-      endIcon={PersonIcon}
-      fontColor="#F88A83"
-      onClick={props.signInCallback}
-    >
-      Sign in
-    </UrsorButton>
-  </Stack>
-);
 
 function MobileVideoPageContents(props: {
   details: IVideo;
   lessonId?: string;
 }) {
+  const [video, setVideo] = useState<IVideo | undefined>(undefined);
+  useEffect(() => setVideo(props.details), []);
+
+  const loadVideo = () =>
+    ApiController.getVideoDetails(props.details.id).then((v) => setVideo(v));
+  useEffect(() => {
+    loadVideo();
+  }, [props.details.id]);
+
   const { user } = useAuth0();
 
   const notificationCtx = React.useContext(NotificationContext);
 
   const provider = props.details?.url.includes("vimeo") ? "vimeo" : "youtube";
   const [duration, setDuration] = useState<number | undefined>(undefined);
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
 
   const [playing, setPlaying] = useState<boolean>(false);
 
@@ -156,21 +141,106 @@ function MobileVideoPageContents(props: {
   }, [sizeRef?.getBoundingClientRect().width, width]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
   const submitDeletion = () =>
     ApiController.deleteVideo(props.details.id).then(() =>
-      router.push("/dashboard")
+      router.push(
+        props.lessonId
+          ? `/lesson/${props.lessonId}`
+          : userDetails
+          ? "/dashboard"
+          : "/"
+      )
     );
 
   const userDetails = useUserContext();
 
-  return props.details && provider ? (
+  return video && provider ? (
     <>
       <Stack p="20px" spacing="22px" overflow="scroll" flex={1}>
         <Stack spacing="12px">
-          <Stack direction="row" spacing="12px" justifyContent="space-between">
+          <Stack direction="row" justifyContent="space-between">
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing="3px"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                svg: {
+                  path: { fill: PALETTE.secondary.grey[1] },
+                },
+              }}
+              onClick={() =>
+                router.push(
+                  props.lessonId
+                    ? `/lesson/${props.lessonId}`
+                    : userDetails
+                    ? "/dashboard"
+                    : "/"
+                )
+              }
+            >
+              <ChevronLeft width="20px" height="20px" />
+              <Typography color={PALETTE.secondary.grey[1]}>
+                {props.lessonId ? "Back to Lesson" : "Back to Home"}
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing="10px">
+              {userDetails?.user?.id &&
+              userDetails?.user?.id === video?.creatorId ? (
+                <UrsorActionButton
+                  size="43px"
+                  iconSize="17px"
+                  //background={PALETTE.secondary.grey[1]}
+                  border
+                  actions={[
+                    {
+                      text: "Edit",
+                      kallback: () => setEditingDialogOpen(true),
+                      icon: PencilIcon,
+                    },
+                    {
+                      text: "Delete",
+                      kallback: () => setDeletionDialogOpen(true),
+                      icon: TrashcanIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
+                />
+              ) : null}
+
+              <Stack
+                borderRadius="100%"
+                border="2px solid rgb(255,255,255)"
+                height="39px"
+                width="39px"
+                justifyContent="center"
+                alignItems="center"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                  svg: {
+                    path: {
+                      fill: "rgb(255,255,255)",
+                    },
+                  },
+                }}
+              >
+                <ShareIcon width="22px" height="22px" />
+              </Stack>
+            </Stack>
+          </Stack>
+          {/* <Stack direction="row" spacing="12px" justifyContent="space-between">
             {userDetails?.user?.id &&
             userDetails?.user?.id === props.details.creatorId ? (
               <CircularButton
@@ -190,17 +260,17 @@ function MobileVideoPageContents(props: {
             >
               Share link
             </UrsorButton>
-          </Stack>
+          </Stack> */}
           <Stack pt="60px">
             <Typography variant="medium" bold color="rgb(255,255,255)">
-              {props.details.title}
+              {video.title}
             </Typography>
             <Typography variant="small" color="rgb(255,255,255)">
-              {props.details.description}
+              {video.description}
             </Typography>
             <Stack pt="30px" ref={setSizeRef} alignItems="center" height="100%">
               <Player
-                url={props.details.url}
+                url={video.url}
                 provider={provider}
                 width={videoWidth}
                 height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
@@ -213,12 +283,20 @@ function MobileVideoPageContents(props: {
           </Stack>
         </Stack>
       </Stack>
+      {editingDialogOpen ? (
+        <VideoCreationDialog
+          open={true}
+          closeCallback={() => setEditingDialogOpen(false)}
+          editingCallback={loadVideo}
+          video={video}
+        />
+      ) : null}
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={submitDeletion}
         category="video"
-        title={props.details.title}
+        title={video.title}
         mobile
       />
     </>

@@ -11,6 +11,7 @@ import {
   INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -20,11 +21,9 @@ import BigCard from "@/app/components/BigCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -35,11 +34,22 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
-import { A4_HEIGHT, A4_WIDTH } from "./AstroWorksheetPage";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 
-export default function MobileWorksheetPageContents(
-  props: IWorksheet & { lessonId?: string }
-) {
+export default function MobileWorksheetPageContents(props: {
+  details: IWorksheet;
+  lessonId?: string;
+}) {
+  const [worksheet, setWorksheet] = useState<IWorksheet | undefined>(undefined);
+  useEffect(() => setWorksheet(props.details), []);
+
+  const loadWorksheet = () =>
+    ApiController.getWorksheet(props.details.id).then((w) => setWorksheet(w));
+  useEffect(() => {
+    loadWorksheet();
+  }, [props.details.id]);
+
   const [printDialogOpen, setPrintDialogOpen] = useState<boolean>(false);
 
   const openPrintDialog = useReactToPrint({
@@ -74,15 +84,16 @@ export default function MobileWorksheetPageContents(
 
   const [nPages, setNPages] = useState<number>(1);
   useEffect(() => {
-    const params = props.settings as IEquationWorksheetSettings;
-    if (props.worksheetComponent === "equation") {
+    if (!worksheet) return;
+    const params = worksheet.settings as IEquationWorksheetSettings;
+    if (worksheet.worksheetComponent === "equation") {
       setNPages(
         1 +
           Math.ceil(
-            (props.values.length -
+            (worksheet.values.length -
               (params.topic === "division"
                 ? 12
-                : props.settings.orientation === "horizontal"
+                : params.orientation === "horizontal"
                 ? 16
                 : 20)) /
               (params.topic === "division"
@@ -92,12 +103,12 @@ export default function MobileWorksheetPageContents(
                 : 24)
           )
       );
-    } else if (props.worksheetComponent === "numberBond") {
-      const params = props.settings as INumberBondWorksheetSettings;
+    } else if (worksheet.worksheetComponent === "numberBond") {
+      const params = worksheet.settings as INumberBondWorksheetSettings;
       setNPages(
         1 +
           Math.ceil(
-            (props.values.length -
+            (worksheet.values.length -
               (params.orientation === "horizontal"
                 ? NUMBER_BOND_HORIZONTAL_ROWS_N
                 : NUMBER_BOND_VERTICAL_ROWS_N) *
@@ -113,15 +124,22 @@ export default function MobileWorksheetPageContents(
           )
       );
     }
-  }, [props.settings, props.worksheetComponent]);
+  }, [worksheet]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
   const submitDeletion = () =>
-    ApiController.deleteWorksheet(props.id).then(() =>
-      router.push("/dashboard")
+    ApiController.deleteWorksheet(props.details.id).then(() =>
+      router.push(
+        props.lessonId
+          ? `/lesson/${props.lessonId}`
+          : userDetails
+          ? "/dashboard"
+          : "/"
+      )
     );
 
   const userDetails = useUserContext();
@@ -129,9 +147,9 @@ export default function MobileWorksheetPageContents(
     useState<boolean>(false);
   useEffect(() => {
     setSignupPromptDialogOpen(
-      !props.creatorId && !userDetails.loading && !userDetails.user?.id
+      !props.details.creatorId && !userDetails.loading && !userDetails.user?.id
     );
-  }, [userDetails.user?.id, userDetails.loading, props.creatorId]);
+  }, [userDetails.user?.id, userDetails.loading, props.details.creatorId]);
 
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   useEffect(() => {
@@ -159,7 +177,7 @@ export default function MobileWorksheetPageContents(
         }
       })
     );
-    pdf.save(`${props.title}${answers ? " Answers" : ""}.pdf`);
+    pdf.save(`${worksheet?.title}${answers ? " Answers" : ""}.pdf`);
   };
 
   const { loginWithPopup, loginWithRedirect } = useAuth0();
@@ -172,7 +190,7 @@ export default function MobileWorksheetPageContents(
     setPageScale(width / 880);
   }, [width]);
 
-  return (
+  return worksheet ? (
     <>
       <Stack
         sx={{
@@ -182,54 +200,58 @@ export default function MobileWorksheetPageContents(
         position="absolute"
       >
         {[...Array(nPages).keys()].map((i) =>
-          props.worksheetComponent === "equation" ? (
+          worksheet.worksheetComponent === "equation" ? (
             <>
               <EquationWorksheet
                 key={i}
                 printableId={`answerspage${i}`}
-                title={props.title}
-                description={props.description}
-                topic={(props.settings as IEquationWorksheetSettings).topic}
-                orientation={props.settings.orientation}
+                title={worksheet.title}
+                description={worksheet.description}
+                topic={(worksheet.settings as IEquationWorksheetSettings).topic}
+                orientation={worksheet.settings.orientation}
                 pageIndex={i}
-                pairs={props.values}
+                pairs={worksheet.values}
                 showAnswers
               />
               <EquationWorksheet
                 key={i}
                 printableId={`page${i}`}
-                title={props.title}
-                description={props.description}
-                topic={(props.settings as IEquationWorksheetSettings).topic}
-                orientation={props.settings.orientation}
+                title={worksheet.title}
+                description={worksheet.description}
+                topic={(worksheet.settings as IEquationWorksheetSettings).topic}
+                orientation={worksheet.settings.orientation}
                 pageIndex={i}
-                pairs={props.values}
+                pairs={worksheet.values}
               />
             </>
-          ) : props.worksheetComponent === "numberBond" ? (
+          ) : worksheet.worksheetComponent === "numberBond" ? (
             <>
               <NumberBondWorksheet
                 key={i}
                 printableId={`answerspage${i}`}
-                title={props.title}
-                description={props.description}
-                sum={(props.settings as INumberBondWorksheetSettings).sum}
-                orientation={props.settings.orientation}
+                title={worksheet.title}
+                description={worksheet.description}
+                sum={(worksheet.settings as INumberBondWorksheetSettings).sum}
+                orientation={worksheet.settings.orientation}
                 pageIndex={i}
-                leftNumbers={props.values}
-                empty={(props.settings as INumberBondWorksheetSettings).empty}
+                leftNumbers={worksheet.values}
+                empty={
+                  (worksheet.settings as INumberBondWorksheetSettings).empty
+                }
                 showAnswers
               />
               <NumberBondWorksheet
                 key={i}
                 printableId={`page${i}`}
-                title={props.title}
-                description={props.description}
-                sum={(props.settings as INumberBondWorksheetSettings).sum}
-                orientation={props.settings.orientation}
+                title={worksheet.title}
+                description={worksheet.description}
+                sum={(worksheet.settings as INumberBondWorksheetSettings).sum}
+                orientation={worksheet.settings.orientation}
                 pageIndex={i}
-                leftNumbers={props.values}
-                empty={(props.settings as INumberBondWorksheetSettings).empty}
+                leftNumbers={worksheet.values}
+                empty={
+                  (worksheet.settings as INumberBondWorksheetSettings).empty
+                }
               />
             </>
           ) : null
@@ -266,50 +288,54 @@ export default function MobileWorksheetPageContents(
               </Typography>
             </Stack>
             <Stack direction="row" spacing="10px">
-              <Stack
-                sx={{
-                  pointerEvents:
-                    userDetails?.user?.id === props.creatorId
-                      ? undefined
-                      : "none",
-                  opacity:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id !== props.creatorId
-                      ? 0
-                      : 1,
-                }}
-              >
-                <CircularButton
-                  icon={TrashcanIcon}
-                  noBackground
-                  color={PALETTE.system.red}
-                  onClick={() => setDeletionDialogOpen(true)}
-                />
-              </Stack>
-              {/* ) : null} */}
-              <Stack
-                borderRadius="100%"
-                border="2px solid rgb(255,255,255)"
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                  svg: {
-                    path: {
-                      fill: "rgb(255,255,255)",
+              <Stack direction="row" spacing="10px">
+                {userDetails?.user?.id &&
+                userDetails?.user?.id === worksheet.creatorId ? (
+                  <UrsorActionButton
+                    size="43px"
+                    iconSize="17px"
+                    //background={PALETTE.secondary.grey[1]}
+                    border
+                    actions={[
+                      {
+                        text: "Edit",
+                        kallback: () => setEditingDialogOpen(true),
+                        icon: PencilIcon,
+                      },
+                      {
+                        text: "Delete",
+                        kallback: () => setDeletionDialogOpen(true),
+                        icon: TrashcanIcon,
+                        color: PALETTE.system.red,
+                      },
+                    ]}
+                  />
+                ) : null}
+
+                <Stack
+                  borderRadius="100%"
+                  border="2px solid rgb(255,255,255)"
+                  height="39px"
+                  width="39px"
+                  justifyContent="center"
+                  alignItems="center"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    notificationCtx.success("Copied URL to clipboard.");
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                    svg: {
+                      path: {
+                        fill: "rgb(255,255,255)",
+                      },
                     },
-                  },
-                }}
-              >
-                <ShareIcon width="22px" height="22px" />
+                  }}
+                >
+                  <ShareIcon width="22px" height="22px" />
+                </Stack>
               </Stack>
             </Stack>
           </Stack>
@@ -360,28 +386,32 @@ export default function MobileWorksheetPageContents(
                   transformOrigin: "top left",
                 }}
               >
-                {props.worksheetComponent === "equation" ? (
+                {worksheet.worksheetComponent === "equation" ? (
                   <EquationWorksheet
                     key={i}
-                    title={props.title}
-                    description={props.description}
-                    topic={(props.settings as IEquationWorksheetSettings).topic}
-                    orientation={props.settings.orientation}
+                    title={worksheet.title}
+                    description={worksheet.description}
+                    topic={
+                      (worksheet.settings as IEquationWorksheetSettings).topic
+                    }
+                    orientation={worksheet.settings.orientation}
                     pageIndex={i}
-                    pairs={props.values}
+                    pairs={worksheet.values}
                     showAnswers
                   />
-                ) : props.worksheetComponent === "numberBond" ? (
+                ) : worksheet.worksheetComponent === "numberBond" ? (
                   <NumberBondWorksheet
                     key={i}
-                    title={props.title}
-                    description={props.description}
-                    sum={(props.settings as INumberBondWorksheetSettings).sum}
-                    orientation={props.settings.orientation}
+                    title={worksheet.title}
+                    description={worksheet.description}
+                    sum={
+                      (worksheet.settings as INumberBondWorksheetSettings).sum
+                    }
+                    orientation={worksheet.settings.orientation}
                     pageIndex={i}
-                    leftNumbers={props.values}
+                    leftNumbers={worksheet.values}
                     empty={
-                      (props.settings as INumberBondWorksheetSettings).empty
+                      (worksheet.settings as INumberBondWorksheetSettings).empty
                     }
                     showAnswers
                   />
@@ -396,7 +426,7 @@ export default function MobileWorksheetPageContents(
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={submitDeletion}
         category="worksheet"
-        title={props.title}
+        title={worksheet.title}
       />
       <WorksheetSignupPromptDialog
         open={signupPromptDialogOpen}
@@ -404,6 +434,15 @@ export default function MobileWorksheetPageContents(
         callback={() => loginWithPopup()}
         mobile={false}
       />
+      {editingDialogOpen ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setEditingDialogOpen(false)}
+          editingCallback={loadWorksheet}
+          worksheet={worksheet}
+          mobile
+        />
+      ) : null}
     </>
-  );
+  ) : null;
 }
