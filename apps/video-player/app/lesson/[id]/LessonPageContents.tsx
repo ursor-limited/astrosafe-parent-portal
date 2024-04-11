@@ -183,41 +183,52 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >(undefined);
   const [hoveringAboveCenter, setHoveringAboveCenter] =
     useState<boolean>(false);
-  const [addContentButtonRelativeY, setAddContentButtonRelativeY] =
-    useState<number>(0);
+  // const [addContentButtonRelativeY, setAddContentButtonRelativeY] =
+  //   useState<number>(0);
 
-  useEffect(() => {
-    if (
-      !_.isNumber(hoveringContentIndex) ||
-      (hoveringContentIndex === 0 && hoveringAboveCenter) ||
-      (hoveringContentIndex === contents.length - 1 && !hoveringAboveCenter)
-    ) {
-      setHoveringContentIndex(undefined);
-      return;
-    }
+  // useEffect(() => {
+  //   if (
+  //     !_.isNumber(hoveringContentIndex) ||
+  //     (hoveringContentIndex === 0 && hoveringAboveCenter) ||
+  //     (hoveringContentIndex === contents.length - 1 && !hoveringAboveCenter)
+  //   ) {
+  //     setHoveringContentIndex(undefined);
+  //     return;
+  //   }
 
-    const currentElementRect = document
-      .getElementById(contents[hoveringContentIndex].contentId)
-      ?.getBoundingClientRect();
-    if (!currentElementRect) return;
-    const currentElementCenter =
-      currentElementRect.top + currentElementRect?.height / 2;
+  //   const currentElementRect = document
+  //     .getElementById(contents[hoveringContentIndex].contentId)
+  //     ?.getBoundingClientRect();
+  //   if (!currentElementRect) return;
+  //   const currentElementCenter =
+  //     currentElementRect.top + currentElementRect?.height / 2;
 
-    const adjacentElementRect = document
-      .getElementById(
-        contents[hoveringContentIndex + (hoveringAboveCenter ? -1 : 1)]
-          .contentId
-      )
-      ?.getBoundingClientRect();
-    if (!adjacentElementRect) return;
-    const adjacentElementCenter =
-      adjacentElementRect.top + adjacentElementRect?.height / 2;
-    setAddContentButtonRelativeY(
-      (adjacentElementCenter - currentElementCenter) / 2
-    );
-  }, [hoveringContentIndex, hoveringAboveCenter, contents]);
+  //   const adjacentElementRect = document
+  //     .getElementById(
+  //       contents[hoveringContentIndex + (hoveringAboveCenter ? -1 : 1)]
+  //         .contentId
+  //     )
+  //     ?.getBoundingClientRect();
+  //   if (!adjacentElementRect) return;
+  //   const adjacentElementCenter =
+  //     adjacentElementRect.top + adjacentElementRect?.height / 2;
+  //   setAddContentButtonRelativeY(
+  //     (adjacentElementCenter - currentElementCenter) / 2
+  //   );
+  // }, [hoveringContentIndex, hoveringAboveCenter, contents]);
 
   const [mouseY, setMouseY] = useState<number>(0);
+
+  const [showTopAdditionButton, setShowTopAdditionButton] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setShowTopAdditionButton(
+        !_.isNumber(hoveringContentIndex) ||
+          (hoveringContentIndex === 0 && hoveringAboveCenter)
+      ),
+    [hoveringAboveCenter, hoveringContentIndex]
+  );
 
   return (
     <>
@@ -311,16 +322,22 @@ export default function LessonPageContents(props: { lessonId: string }) {
             width="2px"
             bgcolor={PALETTE.secondary.grey[3]}
           ></Stack> */}
-          <Stack
-            height="100%"
-            bgcolor="cyan"
-            position="fixed"
-            top={0}
-            left="50%"
-            sx={{ transform: `translateY(-26px)` }}
-            zIndex={3}
-          >
-            {/* <Stack
+          {!showTopAdditionButton ? (
+            <Stack
+              height="100%"
+              bgcolor="cyan"
+              position="fixed"
+              top={0}
+              left="50%"
+              sx={{
+                transform: `translateY(-26px)`,
+                opacity: 0,
+                animation: `${fadeIn} 0.2s ease-in`,
+                animationFillMode: "forwards",
+              }}
+              zIndex={3}
+            >
+              {/* <Stack
               position="absolute"
               left={0}
               right={0}
@@ -332,18 +349,19 @@ export default function LessonPageContents(props: { lessonId: string }) {
               bgcolor={PALETTE.secondary.grey[3]}
             /> */}
 
-            <Stack height="100%" position="relative">
-              <Stack position="absolute" top={mouseY - 18} left={-18}>
-                <AddContentButton
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
-                />
+              <Stack height="100%" position="relative">
+                <Stack position="absolute" top={mouseY - 18} left={-18}>
+                  <AddContentButton
+                    callback={(type) =>
+                      outOfCreations
+                        ? setNoCreationsLeftDialogOpen(true)
+                        : contentCallbacks[type]()
+                    }
+                  />
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
+          ) : null}
           <Stack width="100%">
             <Stack
               //height="20px"
@@ -353,14 +371,27 @@ export default function LessonPageContents(props: { lessonId: string }) {
               alignItems="center"
               pt="60px"
               pb="60px"
+              sx={{
+                pointerEvents: !showTopAdditionButton ? "none" : undefined,
+              }}
+              height="50px"
             >
-              <AddContentButton
-                callback={(type) =>
-                  outOfCreations
-                    ? setNoCreationsLeftDialogOpen(true)
-                    : contentCallbacks[type]()
-                }
-              />
+              {showTopAdditionButton ? (
+                <Stack
+                  sx={{
+                    animation: `${fadeIn} 0.2s ease-in`,
+                    animationFillMode: "forwards",
+                  }}
+                >
+                  <AddContentButton
+                    callback={(type) =>
+                      outOfCreations
+                        ? setNoCreationsLeftDialogOpen(true)
+                        : contentCallbacks[type]()
+                    }
+                  />
+                </Stack>
+              ) : null}
 
               {/* <Stack
                 height="40px"
@@ -368,6 +399,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 bgcolor={PALETTE.secondary.grey[3]}
               /> */}
             </Stack>
+
             <Stack px="24px">
               {contents
                 .map((c) => {
@@ -492,6 +524,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       ) : null} */}
                       <Stack width="40%">{card}</Stack>
 
+                      {/* {_.isNumber(hoveringPreviousContentIndex) ? ( */}
                       <Stack
                         position="absolute"
                         left={0}
@@ -506,6 +539,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         width="2px"
                         bgcolor={PALETTE.secondary.grey[3]}
                       />
+                      {/* ) : null} */}
 
                       <Stack
                         bgcolor={PALETTE.secondary.purple[1]}
