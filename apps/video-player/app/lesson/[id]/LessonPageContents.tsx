@@ -1,8 +1,8 @@
 "use client";
 
-import { Stack, keyframes } from "@mui/system";
+import { Stack, alpha, keyframes } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
-import _ from "lodash";
+import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -36,6 +36,7 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
+import { useWindowSize } from "usehooks-ts";
 
 export const fadeIn = keyframes`
 from {
@@ -107,8 +108,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }[]
   >([]);
   useEffect(
-    () => setContents(_.reverse(lesson ? [...lesson.contents] : [])),
-    [lesson?.contents]
+    () =>
+      setContents(
+        lesson
+          ? _.compact([
+              ...lesson.contentOrder.map((contentId) =>
+                lesson.contents.find((c) => c.contentId === contentId)
+              ),
+            ])
+          : []
+      ),
+    [lesson?.contents, lesson?.contentOrder]
   );
 
   const updateLesson = (
@@ -121,7 +131,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
-    setContents(_.reverse(lesson.contents));
+    setContents(
+      _.compact([
+        ...lesson.contentOrder.map((contentId) =>
+          lesson.contents.find((c) => c.contentId === contentId)
+        ),
+      ])
+    );
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
@@ -199,6 +215,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [hoveringAboveCenter, hoveringContentIndex]
   );
 
+  const [contentsColumnRef, setContentsColumnRef] =
+    useState<HTMLElement | null>(null);
+
+  const { height } = useWindowSize();
+
   return (
     <>
       <Stack
@@ -210,6 +231,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           title={lesson?.title ?? ""}
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
+          width="78%"
           rightStuff={
             <Stack direction="row" spacing="12px">
               {userDetails?.user?.id &&
@@ -255,10 +277,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          {!showTopAdditionButton && contents.length > 1 ? (
+          {contents.length > 1 ? (
             <Stack
               height="100%"
-              bgcolor="cyan"
               position="fixed"
               top={0}
               left="50%"
@@ -273,7 +294,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
               <Stack height="100%" position="relative">
                 <Stack
                   position="absolute"
-                  top={mouseY - 18}
+                  top={
+                    !hoveringContentIndex || hoveringContentIndex === 0
+                      ? Math.max(
+                          mouseY - 18,
+                          (contentsColumnRef?.getBoundingClientRect()?.top ??
+                            0) - 60
+                        )
+                      : Math.min(mouseY - 18, height - 100)
+                  }
                   left={-18}
                   onClick={() =>
                     setContentInsertionIndex(
@@ -285,6 +314,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           )
                     )
                   }
+                  alignItems="center"
                 >
                   <AddContentButton
                     callback={(type) =>
@@ -296,12 +326,45 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       setContentInsertionIndex(undefined)
                     }
                   />
+
+                  {!hoveringContentIndex || hoveringContentIndex === 0 ? (
+                    <Stack
+                      width="2px"
+                      height={
+                        20 +
+                        (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                          0) /
+                          2
+                      }
+                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                    />
+                  ) : null}
+                  {hoveringContentIndex === contents.length - 1 ? (
+                    <Stack
+                      sx={{
+                        transform: `translateY(-${
+                          20 +
+                          (contentsColumnRef?.getBoundingClientRect?.()
+                            ?.height ?? 0) /
+                            2
+                        }px)`,
+                      }}
+                      width="2px"
+                      height={
+                        20 +
+                        (contentsColumnRef?.getBoundingClientRect?.()?.height ??
+                          0) /
+                          2
+                      }
+                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                    />
+                  ) : null}
                 </Stack>
               </Stack>
             </Stack>
           ) : null}
-          <Stack width="100%">
-            <Stack
+          <Stack width="100%" pt="36px">
+            {/* <Stack
               alignItems="center"
               pt="60px"
               pb="60px"
@@ -331,9 +394,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   />
                 </Stack>
               ) : null}
-            </Stack>
+            </Stack> */}
 
-            <Stack px="24px">
+            <Stack px="24px" ref={setContentsColumnRef}>
               {contents
                 .map((c) => {
                   if (c.type === "video") {
@@ -417,7 +480,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      <Stack width="40%">{card}</Stack>
+                      <Stack width="46%">{card}</Stack>
                       {contents.length > 1 ? (
                         <>
                           <Stack

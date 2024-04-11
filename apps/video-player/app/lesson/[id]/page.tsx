@@ -8,7 +8,6 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import LessonPageContents from "./LessonPageContents";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
-import { ILink } from "@/app/dashboard/LinkDialog";
 import MobileLessonPageContents from "./MobileLessonPageContents";
 
 export interface ILesson {
