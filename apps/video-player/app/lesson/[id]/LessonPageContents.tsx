@@ -282,11 +282,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             }}
             zIndex={3}
             onWheel={(event) => {
-              console.log(event, "90909");
               pageRef?.scroll({
                 //@ts-ignore
                 top: event?.deltaY + pageRef.scrollTop,
-                //behavior: "smooth",
               });
               event.preventDefault();
             }}
@@ -369,39 +367,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           </Stack>
 
-          <Stack width="100%" pt="36px">
-            {/* <Stack
-              alignItems="center"
-              pt="60px"
-              pb="60px"
-              sx={{
-                pointerEvents: !showTopAdditionButton ? "none" : undefined,
-              }}
-              height="50px"
-            >
-              {showTopAdditionButton ? (
-                <Stack
-                  sx={{
-                    animation: `${fadeIn} 0.2s ease-in`,
-                    animationFillMode: "forwards",
-                  }}
-                  onMouseEnter={() => setHoveringContentIndex(undefined)}
-                  onClick={() => setContentInsertionIndex(0)}
-                >
-                  <AddContentButton
-                    callback={(type) =>
-                      outOfCreations
-                        ? setNoCreationsLeftDialogOpen(true)
-                        : contentCallbacks[type]()
-                    }
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
-                </Stack>
-              ) : null}
-            </Stack> */}
-
+          <Stack width="100%" pt="36px" minHeight="44px">
             <Stack px="24px" ref={setContentsColumnRef}>
               {contents
                 .map((c) => {
