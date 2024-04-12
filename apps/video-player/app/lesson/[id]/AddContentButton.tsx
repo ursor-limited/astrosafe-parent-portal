@@ -30,6 +30,7 @@ export default function AddContentButton(props: {
     <>
       <UrsorPopover
         open={open}
+        fieldWidth="20px"
         content={
           <Stack
             p="16px"
@@ -72,7 +73,11 @@ export default function AddContentButton(props: {
           borderRadius="100%"
           border={`2px solid ${PALETTE.secondary.purple[2]}`}
           boxShadow={props.mobile ? "0 0 50px rgba(0,0,0,0.3)" : undefined}
-          bgcolor={hovering ? PALETTE.secondary.purple[2] : "rgb(255,255,255)"}
+          bgcolor={
+            hovering || props.mobile
+              ? PALETTE.secondary.purple[2]
+              : "rgb(255,255,255)"
+          }
           justifyContent="center"
           alignItems="center"
           sx={{
@@ -80,9 +85,10 @@ export default function AddContentButton(props: {
             transition: "0.2s",
             svg: {
               path: {
-                fill: hovering
-                  ? "rgb(255,255,255)"
-                  : PALETTE.secondary.purple[2],
+                fill:
+                  hovering || props.mobile
+                    ? "rgb(255,255,255)"
+                    : PALETTE.secondary.purple[2],
               },
             },
           }}

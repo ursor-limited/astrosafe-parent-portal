@@ -54,6 +54,7 @@ const LessonCreationDialog = (props: {
       button={{
         text: props.lesson?.title ? "Update" : "Create",
         callback: () => (props.lesson?.id ? submitUpdate() : submitCreation()),
+        disabled: !title,
         icon: PencilIcon,
       }}
     >
