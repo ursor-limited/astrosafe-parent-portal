@@ -11,10 +11,6 @@ import {
   INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BigCard from "@/app/components/BigCard";
@@ -205,7 +201,7 @@ export default function MobileWorksheetPageContents(props: {
           worksheet.worksheetComponent === "equation" ? (
             <>
               <EquationWorksheet
-                key={i}
+                key={"eAnswers" + i}
                 printableId={`answerspage${i}`}
                 title={worksheet.title}
                 description={worksheet.description}
@@ -216,7 +212,7 @@ export default function MobileWorksheetPageContents(props: {
                 showAnswers
               />
               <EquationWorksheet
-                key={i}
+                key={"e" + i}
                 printableId={`page${i}`}
                 title={worksheet.title}
                 description={worksheet.description}
@@ -229,7 +225,7 @@ export default function MobileWorksheetPageContents(props: {
           ) : worksheet.worksheetComponent === "numberBond" ? (
             <>
               <NumberBondWorksheet
-                key={i}
+                key={"nbAnswers" + i}
                 printableId={`answerspage${i}`}
                 title={worksheet.title}
                 description={worksheet.description}
@@ -243,7 +239,7 @@ export default function MobileWorksheetPageContents(props: {
                 showAnswers
               />
               <NumberBondWorksheet
-                key={i}
+                key={"nb" + i}
                 printableId={`page${i}`}
                 title={worksheet.title}
                 description={worksheet.description}
@@ -320,7 +316,7 @@ export default function MobileWorksheetPageContents(props: {
               >
                 {worksheet.worksheetComponent === "equation" ? (
                   <EquationWorksheet
-                    key={i}
+                    key={"e" + i}
                     title={worksheet.title}
                     description={worksheet.description}
                     topic={
@@ -333,7 +329,7 @@ export default function MobileWorksheetPageContents(props: {
                   />
                 ) : worksheet.worksheetComponent === "numberBond" ? (
                   <NumberBondWorksheet
-                    key={i}
+                    key={"nb" + i}
                     title={worksheet.title}
                     description={worksheet.description}
                     sum={
