@@ -173,6 +173,7 @@ const VideoCreationDialog = (props: {
         ? props.creationCallback(v.id)
         : router.push(`/video/${v.id}`);
       props.closeCallback();
+      notificationCtx.success("Created Safe Video Link");
     });
   };
 

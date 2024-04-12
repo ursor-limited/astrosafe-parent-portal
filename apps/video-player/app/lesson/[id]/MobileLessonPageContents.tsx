@@ -100,7 +100,19 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       contentId: string;
     }[]
   >([]);
-  useEffect(() => setContents(lesson?.contents || []), [lesson?.contents]);
+  useEffect(
+    () =>
+      setContents(
+        lesson
+          ? _.compact([
+              ...lesson.contentOrder.map((contentId) =>
+                lesson.contents.find((c) => c.contentId === contentId)
+              ),
+            ])
+          : []
+      ),
+    [lesson?.contents, lesson?.contentOrder]
+  );
 
   const updateLesson = (
     lesson: ILesson,
@@ -112,7 +124,13 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
-    setContents(lesson.contents);
+    setContents(
+      _.compact([
+        ...lesson.contentOrder.map((contentId) =>
+          lesson.contents.find((c) => c.contentId === contentId)
+        ),
+      ])
+    );
     setVideos(actualContents.videos);
     setWorksheets(actualContents.worksheets);
     setLinks(actualContents.links);
@@ -167,6 +185,10 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
   const outOfCreations = useOutOfCreations();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
+
+  const [contentInsertionIndex, setContentInsertionIndex] = useState<
+    number | undefined
+  >(undefined);
 
   return (
     <>
@@ -252,28 +274,23 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           </Stack>
         ) : null}
 
-        <Stack width="100%">
+        <Stack width="100%" pt="16px">
           <Stack
-            height="110px"
-            position="fixed"
-            left="50%"
-            sx={{ transform: "translate(-50%)" }}
-            zIndex={3}
+            alignItems="center"
+            onClick={() => setContentInsertionIndex(0)}
           >
-            <Stack sx={{ zIndex: 2 }}>
-              <AddContentButton
-                mobile
-                callback={(type) =>
-                  outOfCreations
-                    ? setNoCreationsLeftDialogOpen(true)
-                    : contentCallbacks[type]()
-                }
-                clickOutsideCloseCallback={() => null}
-              />
-            </Stack>
+            <AddContentButton
+              mobile
+              callback={(type) =>
+                outOfCreations
+                  ? setNoCreationsLeftDialogOpen(true)
+                  : contentCallbacks[type]()
+              }
+              clickOutsideCloseCallback={() => null}
+            />
           </Stack>
-          <Stack pt="65px" width="100%" spacing="16px">
-            {_.reverse(contents.slice())
+          <Stack pt="20px" width="100%" spacing="16px">
+            {contents
               .map((c) => {
                 if (c.type === "video") {
                   const video = videos?.find((v) => v.id === c.contentId);
@@ -336,7 +353,26 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
               })
               .map((card, i) => (
                 <UrsorFadeIn duration={800} key={i}>
-                  {card}
+                  <Stack spacing="16px" justifyContent="center">
+                    {card}
+                    <Stack
+                      width="100%"
+                      alignItems="center"
+                      onClick={() => setContentInsertionIndex(i + 1)}
+                    >
+                      <AddContentButton
+                        mobile
+                        callback={(type) =>
+                          outOfCreations
+                            ? setNoCreationsLeftDialogOpen(true)
+                            : contentCallbacks[type]()
+                        }
+                        clickOutsideCloseCallback={() =>
+                          setContentInsertionIndex(undefined)
+                        }
+                      />
+                    </Stack>
+                  </Stack>
                 </UrsorFadeIn>
               ))}
           </Stack>
@@ -355,15 +391,25 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         category="playlist"
         title={lesson?.title ?? ""}
       />
-      <VideoCreationDialog
-        open={videoDialogOpen}
-        closeCallback={() => setVideoDialogOpen(false)}
-        creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, 0, "video", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
-          );
-        }}
-      />
+      {videoDialogOpen ? (
+        <VideoCreationDialog
+          open={videoDialogOpen}
+          closeCallback={() => {
+            setVideoDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(id) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "video",
+              id
+            ).then((response) =>
+              updateLesson(response.lesson, response.actualContents)
+            );
+          }}
+        />
+      ) : null}
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={true}
@@ -374,10 +420,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       ) : null}
       <WorksheetCreationDialog
         open={worksheetDialogOpen}
-        closeCallback={() => setWorksheetDialogOpen(false)}
+        closeCallback={() => {
+          setWorksheetDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(id) => {
-          ApiController.addToLesson(props.lessonId, 0, "worksheet", id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "worksheet",
+            id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
         mobile
@@ -393,10 +447,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       ) : null}
       <LinkDialog
         open={linkDialogOpen}
-        closeCallback={() => setLinkDialogOpen(false)}
+        closeCallback={() => {
+          setLinkDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(link) => {
-          ApiController.addToLesson(props.lessonId, 0, "link", link.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "link",
+            link.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -410,10 +472,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       ) : null}
       <TextDialog
         open={textDialogOpen}
-        closeCallback={() => setTextDialogOpen(false)}
+        closeCallback={() => {
+          setTextDialogOpen(false);
+          setContentInsertionIndex(undefined);
+        }}
         creationCallback={(text) => {
-          ApiController.addToLesson(props.lessonId, 0, "text", text.id).then(
-            (response) => updateLesson(response.lesson, response.actualContents)
+          ApiController.addToLesson(
+            props.lessonId,
+            contentInsertionIndex ?? 0,
+            "text",
+            text.id
+          ).then((response) =>
+            updateLesson(response.lesson, response.actualContents)
           );
         }}
         mobile
@@ -430,11 +500,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
       {imageDialogOpen ? (
         <ImageDialog
           open={imageDialogOpen}
-          closeCallback={() => setImageDialogOpen(false)}
+          closeCallback={() => {
+            setImageDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
           creationCallback={(link) => {
-            ApiController.addToLesson(props.lessonId, 0, "image", link.id).then(
-              (response) =>
-                updateLesson(response.lesson, response.actualContents)
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "image",
+              link.id
+            ).then((response) =>
+              updateLesson(response.lesson, response.actualContents)
             );
           }}
         />

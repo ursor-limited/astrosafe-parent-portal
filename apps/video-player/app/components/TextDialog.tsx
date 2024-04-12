@@ -80,6 +80,7 @@ const TextCreationDialog = (props: {
         dynamicHeight
         paddingTop={props.mobile ? undefined : "52px"}
         paddingX={isMobile ? undefined : "32px"}
+        noCloseButton={props.mobile}
       >
         <Stack
           flex={1}
