@@ -11,11 +11,12 @@ import {
 } from "@/app/dashboard/DashboardPageContents";
 
 export default function AddContentButton(props: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
   callback: (type: AstroContent) => void;
   mobile?: boolean;
   clickOutsideCloseCallback: () => void;
 }) {
-  const [open, setOpen] = useState<boolean>(false);
   const contentOrder: AstroContent[] = [
     "worksheet",
     "video",
@@ -29,7 +30,7 @@ export default function AddContentButton(props: {
   return (
     <>
       <UrsorPopover
-        open={open}
+        open={props.open}
         fieldWidth="20px"
         content={
           <Stack
@@ -47,7 +48,7 @@ export default function AddContentButton(props: {
                     {...CONTENT_BRANDING[c]}
                     onClick={() => {
                       props.callback(c);
-                      setOpen(false);
+                      props.setOpen(false);
                     }}
                     fullWidth
                     strongShadow
@@ -58,7 +59,7 @@ export default function AddContentButton(props: {
           </Stack>
         }
         closeCallback={() => {
-          setOpen(false);
+          props.setOpen(false);
           props.clickOutsideCloseCallback();
         }}
         maxHeight
@@ -92,7 +93,7 @@ export default function AddContentButton(props: {
               },
             },
           }}
-          onClick={() => setOpen(true)}
+          onClick={() => props.setOpen(true)}
           onMouseEnter={() => {
             setHovering(true);
           }}

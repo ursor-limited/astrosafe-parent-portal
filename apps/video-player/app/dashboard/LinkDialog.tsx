@@ -804,7 +804,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
               variant="tertiary"
               endIcon={PencilIcon}
               width="100%"
-              disabled={!downloadImageUrl}
+              disabled={!downloadImageUrl || !title}
             >
               {props.link?.id ? "Update" : "Create"}
             </UrsorButton>

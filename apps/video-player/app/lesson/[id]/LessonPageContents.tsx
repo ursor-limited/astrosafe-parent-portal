@@ -131,6 +131,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
+    setLesson(lesson);
     setContents(
       _.compact([
         ...lesson.contentOrder.map((contentId) =>
@@ -211,6 +212,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [pageRef, setPageRef] = useState<HTMLElement | null>(null);
 
+  const [addContentPopoverOpen, setAddContentPopoverOpen] =
+    useState<boolean>(false);
+
+  console.log(contentInsertionIndex);
+
   return (
     <>
       <Stack
@@ -286,7 +292,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 //@ts-ignore
                 top: event?.deltaY + pageRef.scrollTop,
               });
-              event.preventDefault();
+              //event.preventDefault();
             }}
           >
             <Stack height="100%" position="relative">
@@ -304,19 +310,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     : Math.min(mouseY - 18, height - 100)
                 }
                 left={-18}
-                onClick={() =>
-                  setContentInsertionIndex(
-                    !_.isNumber(hoveringContentIndex)
-                      ? 0
-                      : Math.max(
-                          0,
-                          hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
-                        )
-                  )
-                }
+                onClick={() => {
+                  if (addContentPopoverOpen) return;
+                  const elementBounds = lesson?.contentOrder.map((id) => ({
+                    id,
+                    bounds: document
+                      .getElementById(id)
+                      ?.getBoundingClientRect?.(),
+                  }));
+                  const hoverElement = elementBounds?.find(
+                    (b) =>
+                      mouseY < (b.bounds?.bottom ?? 0) &&
+                      mouseY > (b.bounds?.top ?? 0)
+                  );
+                  console.log(elementBounds, "-----");
+                  hoverElement &&
+                    setContentInsertionIndex(
+                      (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
+                        (mouseY <
+                        (hoverElement.bounds?.top ?? 0) +
+                          (hoverElement.bounds?.height ?? 0) / 2
+                          ? 0
+                          : 1)
+                    );
+                }}
                 alignItems="center"
               >
                 <AddContentButton
+                  open={addContentPopoverOpen}
+                  setOpen={setAddContentPopoverOpen}
                   callback={(type) =>
                     outOfCreations
                       ? setNoCreationsLeftDialogOpen(true)
