@@ -43,6 +43,7 @@ export default function UrsorNotificationBar(
       margin="auto auto"
       height={HEIGHT}
       width={WIDTH}
+      maxWidth="calc(90% - 28px)"
       bgcolor={
         notificationCtx.type && notificationCtx.message
           ? COLORS[notificationCtx.type]

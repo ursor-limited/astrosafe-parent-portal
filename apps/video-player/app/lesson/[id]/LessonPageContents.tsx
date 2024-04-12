@@ -131,6 +131,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
       texts: IText[];
     }
   ) => {
+    setLesson(lesson);
     setContents(
       _.compact([
         ...lesson.contentOrder.map((contentId) =>
@@ -209,9 +210,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const { height } = useWindowSize();
 
+  const [pageRef, setPageRef] = useState<HTMLElement | null>(null);
+
+  const [addContentPopoverOpen, setAddContentPopoverOpen] =
+    useState<boolean>(false);
+
+  console.log(contentInsertionIndex);
+
   return (
     <>
       <Stack
+        ref={setPageRef}
         p="40px"
         overflow="scroll"
         onMouseMove={(event) => setMouseY(event.pageY)}
@@ -278,6 +287,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
               animationFillMode: "forwards",
             }}
             zIndex={3}
+            onWheel={(event) => {
+              pageRef?.scroll({
+                //@ts-ignore
+                top: event?.deltaY + pageRef.scrollTop,
+              });
+              //event.preventDefault();
+            }}
           >
             <Stack height="100%" position="relative">
               <Stack
@@ -285,7 +301,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 top={
                   contents.length === 0
                     ? contentsColumnRef?.getBoundingClientRect()?.top
-                    : !hoveringContentIndex || hoveringContentIndex === 0
+                    : mouseY < height / 2 //!hoveringContentIndex || hoveringContentIndex === 0
                     ? Math.max(
                         mouseY - 18,
                         (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
@@ -294,19 +310,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     : Math.min(mouseY - 18, height - 100)
                 }
                 left={-18}
-                onClick={() =>
-                  setContentInsertionIndex(
-                    !_.isNumber(hoveringContentIndex)
-                      ? 0
-                      : Math.max(
-                          0,
-                          hoveringContentIndex + (hoveringAboveCenter ? 0 : 1)
-                        )
-                  )
-                }
+                onClick={() => {
+                  if (addContentPopoverOpen) return;
+                  const elementBounds = lesson?.contentOrder.map((id) => ({
+                    id,
+                    bounds: document
+                      .getElementById(id)
+                      ?.getBoundingClientRect?.(),
+                  }));
+                  const hoverElement = elementBounds?.find(
+                    (b) =>
+                      mouseY < (b.bounds?.bottom ?? 0) &&
+                      mouseY > (b.bounds?.top ?? 0)
+                  );
+                  console.log(elementBounds, "-----");
+                  hoverElement &&
+                    setContentInsertionIndex(
+                      (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
+                        (mouseY <
+                        (hoverElement.bounds?.top ?? 0) +
+                          (hoverElement.bounds?.height ?? 0) / 2
+                          ? 0
+                          : 1)
+                    );
+                }}
                 alignItems="center"
               >
                 <AddContentButton
+                  open={addContentPopoverOpen}
+                  setOpen={setAddContentPopoverOpen}
                   callback={(type) =>
                     outOfCreations
                       ? setNoCreationsLeftDialogOpen(true)
@@ -328,12 +360,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         2
                     }
                     bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                    sx={{
+                      transform: "translateX(8px)",
+                    }}
                   />
                 ) : null}
                 {hoveringContentIndex === contents.length - 1 ? (
                   <Stack
                     sx={{
-                      transform: `translateY(-${
+                      transform: `translate(8px, -${
                         20 +
                         (contentsColumnRef?.getBoundingClientRect?.()?.height ??
                           0) /
@@ -354,39 +389,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           </Stack>
 
-          <Stack width="100%" pt="36px">
-            {/* <Stack
-              alignItems="center"
-              pt="60px"
-              pb="60px"
-              sx={{
-                pointerEvents: !showTopAdditionButton ? "none" : undefined,
-              }}
-              height="50px"
-            >
-              {showTopAdditionButton ? (
-                <Stack
-                  sx={{
-                    animation: `${fadeIn} 0.2s ease-in`,
-                    animationFillMode: "forwards",
-                  }}
-                  onMouseEnter={() => setHoveringContentIndex(undefined)}
-                  onClick={() => setContentInsertionIndex(0)}
-                >
-                  <AddContentButton
-                    callback={(type) =>
-                      outOfCreations
-                        ? setNoCreationsLeftDialogOpen(true)
-                        : contentCallbacks[type]()
-                    }
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
-                </Stack>
-              ) : null}
-            </Stack> */}
-
+          <Stack width="100%" pt="36px" minHeight="44px">
             <Stack px="24px" ref={setContentsColumnRef}>
               {contents
                 .map((c) => {
@@ -462,6 +465,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
+                      // onMouseLeave={() => {
+                      //   setHoveringContentIndex(undefined);
+                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore

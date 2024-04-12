@@ -135,7 +135,7 @@ export default function IndividualSealLandingPageContents(
                       style={{
                         boxShadow: "0 0 30px rgba(0,0,0,0.05)",
                         borderRadius: "12px",
-                        filter: "brightness(70%)",
+                        filter: props.heroImage ? undefined : "brightness(70%)",
                       }}
                       priority
                     />
@@ -172,7 +172,8 @@ export default function IndividualSealLandingPageContents(
                 dark
                 variant="tertiary"
                 onClick={() =>
-                  (window.location.href = "https://form.typeform.com/to/mVezziat")
+                  (window.location.href =
+                    "https://form.typeform.com/to/mVezziat")
                 }
               >
                 Enrol now

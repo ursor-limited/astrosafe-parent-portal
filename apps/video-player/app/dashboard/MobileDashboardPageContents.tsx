@@ -2,7 +2,6 @@
 
 import { Stack, alpha } from "@mui/system";
 import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
