@@ -367,62 +367,64 @@ export default function WorksheetGenerator(props: {
                 bgcolor={PALETTE.secondary.grey[2]}
               />
             </Stack>
-            <Stack
-              direction="row"
-              spacing="20px"
-              sx={{
-                opacity: props.worksheet ? 0.35 : 1,
-                //pointerEvents: props.worksheet ? "none" : undefined,
-                cursor: props.worksheet ? "not-allowed" : undefined,
-              }}
-            >
-              <Captioned text="Worksheet topic">
-                <UrsorSelect
-                  items={[
-                    {
-                      id: "multiplication",
-                      value: "Multiplication (x)",
-                    },
-                    {
-                      id: "division",
-                      value: "Division (÷)",
-                    },
-                    {
-                      id: "addition",
-                      value: "Addition (+)",
-                    },
-                    {
-                      id: "subtraction",
-                      value: "Subtraction (-)",
-                    },
-                  ]}
-                  selected={[topic]}
-                  callback={(t: string) => setTopic(t as WorksheetTopic)}
-                  width="100%"
-                  zIndex={999999999}
-                  leftAlignPopover
-                  disabled={!!props.worksheet}
-                />
-              </Captioned>
-              <Captioned text="Question type">
-                <UrsorSelect
-                  items={WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic].map(
-                    (t) => ({
-                      id: t,
-                      value: WORKSHEET_COMPONENT_DISPLAY_NAMES[t],
-                    })
-                  )}
-                  selected={[worksheetComponent]}
-                  callback={(wid: string) => {
-                    setWorksheetComponent(wid as WorksheetComponent);
-                  }}
-                  width="100%"
-                  zIndex={999999999}
-                  leftAlignPopover
-                  disabled={!!props.worksheet}
-                />
-              </Captioned>
-            </Stack>
+            {!props.worksheet ? (
+              <Stack
+                direction="row"
+                spacing="20px"
+                sx={{
+                  opacity: props.worksheet ? 0.35 : 1,
+                  //pointerEvents: props.worksheet ? "none" : undefined,
+                  cursor: props.worksheet ? "not-allowed" : undefined,
+                }}
+              >
+                <Captioned text="Worksheet topic">
+                  <UrsorSelect
+                    items={[
+                      {
+                        id: "multiplication",
+                        value: "Multiplication (x)",
+                      },
+                      {
+                        id: "division",
+                        value: "Division (÷)",
+                      },
+                      {
+                        id: "addition",
+                        value: "Addition (+)",
+                      },
+                      {
+                        id: "subtraction",
+                        value: "Subtraction (-)",
+                      },
+                    ]}
+                    selected={[topic]}
+                    callback={(t: string) => setTopic(t as WorksheetTopic)}
+                    width="100%"
+                    zIndex={999999999}
+                    leftAlignPopover
+                    disabled={!!props.worksheet}
+                  />
+                </Captioned>
+                <Captioned text="Question type">
+                  <UrsorSelect
+                    items={WORKSHEET_TOPIC_WORKSHEET_COMPONENTS[topic].map(
+                      (t) => ({
+                        id: t,
+                        value: WORKSHEET_COMPONENT_DISPLAY_NAMES[t],
+                      })
+                    )}
+                    selected={[worksheetComponent]}
+                    callback={(wid: string) => {
+                      setWorksheetComponent(wid as WorksheetComponent);
+                    }}
+                    width="100%"
+                    zIndex={999999999}
+                    leftAlignPopover
+                    disabled={!!props.worksheet}
+                  />
+                </Captioned>
+              </Stack>
+            ) : null}
             {worksheetComponent === "equation" ? (
               <WorksheetGeneratorEquationModule
                 {...(specificSettings as IEquationWorksheetSettings)}

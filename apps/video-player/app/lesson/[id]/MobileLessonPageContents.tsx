@@ -190,6 +190,10 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
     number | undefined
   >(undefined);
 
+  const [addContentPopoverOpenId, setAddContentPopoverOpenId] = useState<
+    string | undefined
+  >(undefined);
+
   return (
     <>
       <Stack p="16px" overflow="scroll">
@@ -281,6 +285,10 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           >
             <AddContentButton
               mobile
+              open={addContentPopoverOpenId === "first"}
+              setOpen={(o) =>
+                setAddContentPopoverOpenId((o ? "first" : undefined) as string)
+              }
               callback={(type) =>
                 outOfCreations
                   ? setNoCreationsLeftDialogOpen(true)
@@ -362,6 +370,16 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                     >
                       <AddContentButton
                         mobile
+                        open={addContentPopoverOpenId === card?.key}
+                        setOpen={(o) =>
+                          setAddContentPopoverOpenId(
+                            (o
+                              ? card?.key
+                                ? card?.key
+                                : undefined
+                              : undefined) as string
+                          )
+                        }
                         callback={(type) =>
                           outOfCreations
                             ? setNoCreationsLeftDialogOpen(true)

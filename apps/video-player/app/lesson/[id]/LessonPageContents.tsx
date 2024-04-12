@@ -215,8 +215,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
-  console.log(contentInsertionIndex);
-
   return (
     <>
       <Stack
@@ -323,7 +321,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       mouseY < (b.bounds?.bottom ?? 0) &&
                       mouseY > (b.bounds?.top ?? 0)
                   );
-                  console.log(elementBounds, "-----");
                   hoverElement &&
                     setContentInsertionIndex(
                       (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +

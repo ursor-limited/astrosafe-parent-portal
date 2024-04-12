@@ -34,6 +34,7 @@ export default function DeletionDialog(props: IDeletionDialogProps) {
           maxWidth: WIDTH,
           minHeight: MIN_HEIGHT,
           borderRadius: BORDER_RADIUS,
+          margin: "20px",
         },
       }}
       sx={{

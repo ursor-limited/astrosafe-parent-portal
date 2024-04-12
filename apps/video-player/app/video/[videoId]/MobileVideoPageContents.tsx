@@ -167,6 +167,7 @@ function MobileVideoPageContents(props: {
         creatorId={video?.creatorId}
         editingCallback={() => setEditingDialogOpen(true)}
         deletionCallback={() => setDeletionDialogOpen(true)}
+        lessonId={props.lessonId}
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">
           <Player

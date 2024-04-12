@@ -36,6 +36,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
+import MobilePageCard from "@/app/dashboard/MobilePageCard";
 
 export default function MobileWorksheetPageContents(props: {
   details: IWorksheet;
@@ -185,10 +186,11 @@ export default function MobileWorksheetPageContents(props: {
   const notificationCtx = useContext(NotificationContext);
 
   const { width } = useWindowSize();
+  const [pageRef, setPageRef] = useState<HTMLElement | null>(null);
   const [pageScale, setPageScale] = useState<number>(1);
   useEffect(() => {
-    setPageScale(width / 880);
-  }, [width]);
+    setPageScale((pageRef?.getBoundingClientRect()?.width ?? 0) / 790);
+  }, [pageRef?.getBoundingClientRect()?.width]);
 
   return worksheet ? (
     <>
@@ -257,125 +259,53 @@ export default function MobileWorksheetPageContents(props: {
           ) : null
         )}
       </Stack>
-      <Stack spacing="22px" overflow="scroll">
-        <Stack p="20px" spacing="22px">
-          <Stack direction="row" justifyContent="space-between">
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing="3px"
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
-                svg: {
-                  path: { fill: PALETTE.secondary.grey[1] },
-                },
-              }}
-              onClick={() =>
-                router.push(
-                  props.lessonId
-                    ? `/lesson/${props.lessonId}`
-                    : userDetails
-                    ? "/dashboard"
-                    : "/"
-                )
-              }
-            >
-              <ChevronLeft width="20px" height="20px" />
-              <Typography color={PALETTE.secondary.grey[1]}>
-                {props.lessonId ? "Back to Lesson" : "Back to Home"}
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing="10px">
-              <Stack direction="row" spacing="10px">
-                {userDetails?.user?.id &&
-                userDetails?.user?.id === worksheet.creatorId ? (
-                  <UrsorActionButton
-                    size="43px"
-                    iconSize="17px"
-                    //background={PALETTE.secondary.grey[1]}
-                    border
-                    actions={[
-                      {
-                        text: "Edit",
-                        kallback: () => setEditingDialogOpen(true),
-                        icon: PencilIcon,
-                      },
-                      {
-                        text: "Delete",
-                        kallback: () => setDeletionDialogOpen(true),
-                        icon: TrashcanIcon,
-                        color: PALETTE.system.red,
-                      },
-                    ]}
-                  />
-                ) : null}
 
-                <Stack
-                  borderRadius="100%"
-                  border="2px solid rgb(255,255,255)"
-                  height="39px"
-                  width="39px"
-                  justifyContent="center"
-                  alignItems="center"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    notificationCtx.success("Copied URL to clipboard.");
-                  }}
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                    svg: {
-                      path: {
-                        fill: "rgb(255,255,255)",
-                      },
-                    },
-                  }}
-                >
-                  <ShareIcon width="22px" height="22px" />
-                </Stack>
-              </Stack>
+      <MobilePageCard
+        title={props.details.title}
+        description={props.details.description}
+        creatorId={props.details?.creatorId}
+        editingCallback={() => setEditingDialogOpen(true)}
+        deletionCallback={() => setDeletionDialogOpen(true)}
+        lessonId={props.lessonId}
+      >
+        <Stack direction="row" justifyContent="space-between">
+          <Stack spacing="5px" direction="row" width="100%">
+            <Stack width="100%">
+              <UrsorButton
+                size="small"
+                dark
+                variant="tertiary"
+                onClick={() => save(true)}
+                width="100%"
+                fontSize="12px"
+              >
+                Download answers
+              </UrsorButton>
             </Stack>
-          </Stack>
-          <Stack direction="row" justifyContent="space-between">
-            {/* {userDetails?.user?.id
-            userDetails?.user?.id === props.creatorId ? ( */}
-
-            <Stack spacing="5px" direction="row" width="100%">
-              <Stack width="100%">
-                <UrsorButton
-                  size="small"
-                  dark
-                  variant="tertiary"
-                  onClick={() => save(true)}
-                  width="100%"
-                >
-                  Download answers
-                </UrsorButton>
-              </Stack>
-              <Stack width="100%">
-                <UrsorButton
-                  size="small"
-                  dark
-                  variant="tertiary"
-                  onClick={() => save()}
-                  width="100%"
-                >
-                  Download worksheet
-                </UrsorButton>
-              </Stack>
+            <Stack width="100%">
+              <UrsorButton
+                size="small"
+                dark
+                variant="tertiary"
+                onClick={() => save()}
+                width="100%"
+                fontSize="12px"
+              >
+                Download worksheet
+              </UrsorButton>
             </Stack>
           </Stack>
         </Stack>
-        <Stack spacing="12px" px="20px" pb="20px">
+        <Stack spacing="12px">
           {[...Array(nPages).keys()].map((i) => (
             <Stack
               key={i}
               width="100%"
-              height={((width - 40) * 297) / 210}
+              height={
+                ((pageRef?.getBoundingClientRect()?.width ?? 0) * 297) / 210
+              }
               position="relative"
+              ref={setPageRef}
             >
               <Stack
                 position="absolute"
@@ -385,6 +315,8 @@ export default function MobileWorksheetPageContents(props: {
                   transform: `scale(${pageScale})`,
                   transformOrigin: "top left",
                 }}
+                //border={`1px solid ${PALETTE.secondary.purple[1]}`}
+                boxShadow="0 0 15px rgba(0,0,0,0.1)"
               >
                 {worksheet.worksheetComponent === "equation" ? (
                   <EquationWorksheet
@@ -420,7 +352,7 @@ export default function MobileWorksheetPageContents(props: {
             </Stack>
           ))}
         </Stack>
-      </Stack>
+      </MobilePageCard>
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}
