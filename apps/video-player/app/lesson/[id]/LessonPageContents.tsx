@@ -285,7 +285,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 top={
                   contents.length === 0
                     ? contentsColumnRef?.getBoundingClientRect()?.top
-                    : !hoveringContentIndex || hoveringContentIndex === 0
+                    : mouseY < height / 2 //!hoveringContentIndex || hoveringContentIndex === 0
                     ? Math.max(
                         mouseY - 18,
                         (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
@@ -328,12 +328,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         2
                     }
                     bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                    sx={{
+                      transform: "translateX(8px)",
+                    }}
                   />
                 ) : null}
                 {hoveringContentIndex === contents.length - 1 ? (
                   <Stack
                     sx={{
-                      transform: `translateY(-${
+                      transform: `translate(8px, -${
                         20 +
                         (contentsColumnRef?.getBoundingClientRect?.()?.height ??
                           0) /
@@ -462,6 +465,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
+                      // onMouseLeave={() => {
+                      //   setHoveringContentIndex(undefined);
+                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore

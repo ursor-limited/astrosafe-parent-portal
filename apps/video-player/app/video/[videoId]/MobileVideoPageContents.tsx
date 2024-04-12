@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import { CircularButton } from "./VideoPageContents";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
+import MobilePageCard from "@/app/dashboard/MobilePageCard";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -160,134 +161,26 @@ function MobileVideoPageContents(props: {
 
   return video && provider ? (
     <>
-      <Stack p="20px" spacing="22px" overflow="scroll" flex={1}>
-        <Stack
-          spacing="12px"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="16px"
-          p="12px"
-          boxSizing="border-box"
-        >
-          <Stack direction="row" justifyContent="space-between">
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing="3px"
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
-                // svg: {
-                //   path: { fill: PALETTE.secondary.grey[1] },
-                // },
-              }}
-              onClick={() =>
-                router.push(
-                  props.lessonId
-                    ? `/lesson/${props.lessonId}`
-                    : userDetails
-                    ? "/dashboard"
-                    : "/"
-                )
-              }
-            >
-              <ChevronLeft width="20px" height="20px" />
-              <Typography>
-                {props.lessonId ? "Back to Lesson" : "Back to Home"}
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing="10px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === video?.creatorId ? (
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => setEditingDialogOpen(true),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
-              ) : null}
-
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                  svg: {
-                    path: {
-                      fill: PALETTE.primary.navy,
-                    },
-                  },
-                }}
-              >
-                <ShareIcon width="22px" height="22px" />
-              </Stack>
-            </Stack>
-          </Stack>
-          {/* <Stack direction="row" spacing="12px" justifyContent="space-between">
-            {userDetails?.user?.id &&
-            userDetails?.user?.id === props.details.creatorId ? (
-              <CircularButton
-                icon={TrashcanIcon}
-                color={PALETTE.system.red}
-                onClick={() => setDeletionDialogOpen(true)}
-              />
-            ) : null}
-            <UrsorButton
-              dark
-              variant="tertiary"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
-              endIcon={LinkIcon}
-            >
-              Share link
-            </UrsorButton>
-          </Stack> */}
-          <Stack pt="60px">
-            <Typography htmlTag="h1" variant="medium" bold>
-              {video.title}
-            </Typography>
-            <Typography htmlTag="h2" variant="small">
-              {video.description}
-            </Typography>
-            <Stack pt="30px" ref={setSizeRef} alignItems="center" height="100%">
-              <Player
-                url={video.url}
-                provider={provider}
-                width={videoWidth}
-                height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
-                setDuration={(d) => d && setDuration(d)}
-                noKitemark={videoWidth < VIDEO_WIDTH}
-                top="120px"
-                playingCallback={(p) => setPlaying(p)}
-              />
-            </Stack>
-          </Stack>
+      <MobilePageCard
+        title={props.details.title}
+        description={props.details.description}
+        creatorId={video?.creatorId}
+        editingCallback={() => setEditingDialogOpen(true)}
+        deletionCallback={() => setDeletionDialogOpen(true)}
+      >
+        <Stack ref={setSizeRef} alignItems="center" height="100%">
+          <Player
+            url={video.url}
+            provider={provider}
+            width={videoWidth}
+            height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+            setDuration={(d) => d && setDuration(d)}
+            noKitemark={videoWidth < VIDEO_WIDTH}
+            top="120px"
+            playingCallback={(p) => setPlaying(p)}
+          />
         </Stack>
-      </Stack>
+      </MobilePageCard>
       {editingDialogOpen ? (
         <VideoCreationDialog
           open={true}

@@ -23,9 +23,13 @@ import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useWindowSize } from "usehooks-ts";
 
+const A4_HEIGHT = 297;
+const A4_WIDTH = 210;
+
+const PADDING = 4;
 const DEFAULT_WIDTH = 566;
 const DEFAULT_HEIGHT = 790;
-const DEFAULT_SCALE = 0.703;
+//const DEFAULT_SCALE = 0.703;
 
 {
   /* <PageSelector
@@ -59,20 +63,29 @@ const LessonWorksheetPreview = (props: {
       .then(() => notificationCtx.negativeSuccess("Deleted Worksheet."));
 
   const { width } = useWindowSize();
-  const [mobileScale, setMobileScale] = useState<number>(1);
-  useEffect(
-    () => setMobileScale(Math.min(1, (width - 35) / DEFAULT_WIDTH)),
-    [width]
-  );
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  const [cardWidth, setCardWidth] = useState<number>(DEFAULT_WIDTH);
+  useEffect(() => {
+    ref && setCardWidth(ref.getBoundingClientRect?.()?.width);
+  }, [width, ref?.getBoundingClientRect?.()?.width]);
+
+  const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
+  const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
+  useEffect(() => {
+    setWorksheetPageWidth(cardWidth - 2 * PADDING);
+    setWorksheetPageHeight(((cardWidth - 2 * PADDING) * A4_HEIGHT) / A4_WIDTH);
+  }, [width, cardWidth]);
 
   return (
     <>
       <Stack
+        ref={setRef}
         position="relative"
-        width={props.mobile ? "100%" : `${DEFAULT_WIDTH}px`}
+        width="100%"
         boxSizing="border-box"
         borderRadius="12px"
-        p="4px"
+        p={`${PADDING}px`}
         bgcolor={PALETTE.secondary.pink[3]}
         boxShadow="0 0 60px rgba(0,0,0,0.07)"
       >
@@ -96,10 +109,15 @@ const LessonWorksheetPreview = (props: {
             ]}
           />
         </Stack>
-        <Stack position="relative" height={`${DEFAULT_HEIGHT * mobileScale}px`}>
+        <Stack
+          position="relative"
+          height={`${worksheetPageHeight}px`}
+          borderRadius="8px"
+          overflow="hidden"
+        >
           <Stack
             sx={{
-              transform: `scale(${DEFAULT_SCALE * mobileScale})`,
+              transform: `scale(${(0.2643 * worksheetPageWidth) / A4_WIDTH})`,
               transformOrigin: "top left",
             }}
             position="absolute"
@@ -139,7 +157,7 @@ const LessonWorksheetPreview = (props: {
               direction="row"
               spacing="10px"
               position="absolute"
-              top={`${726 * mobileScale}px`}
+              top={`${726 * (A4_WIDTH / worksheetPageWidth)}px`}
               right="20px"
               zIndex={2}
             >
