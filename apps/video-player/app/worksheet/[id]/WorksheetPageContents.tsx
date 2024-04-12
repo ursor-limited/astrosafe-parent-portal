@@ -17,7 +17,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import BigCard from "@/app/components/BigCard";
+import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
@@ -535,7 +535,7 @@ export default function WorksheetPageContents(props: {
       </Stack>
 
       <Stack p="40px" overflow="scroll">
-        <BigCard
+        <PageCard
           title={worksheet.title}
           createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
@@ -689,7 +689,7 @@ export default function WorksheetPageContents(props: {
               </UrsorFadeIn>
             </Stack>
           ) : null}
-        </BigCard>
+        </PageCard>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

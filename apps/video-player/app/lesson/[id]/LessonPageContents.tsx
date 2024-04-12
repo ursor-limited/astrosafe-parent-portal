@@ -10,7 +10,7 @@ import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import BigCard from "@/app/components/BigCard";
+import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
@@ -218,12 +218,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
   return (
     <>
       <Stack
+        height="100%"
         ref={setPageRef}
-        p="40px"
+        px="40px"
         overflow="scroll"
         onMouseMove={(event) => setMouseY(event.pageY)}
       >
-        <BigCard
+        <Stack height="40px" minHeight="40px" />
+        <PageCard
           title={lesson?.title ?? ""}
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
@@ -305,7 +307,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
                           60
                       )
-                    : Math.min(mouseY - 18, height - 100)
+                    : Math.min(mouseY - 18, height - 50)
                 }
                 left={-18}
                 onClick={() => {
@@ -321,7 +323,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       mouseY < (b.bounds?.bottom ?? 0) &&
                       mouseY > (b.bounds?.top ?? 0)
                   );
-                  hoverElement &&
+                  if (hoverElement) {
                     setContentInsertionIndex(
                       (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
                         (mouseY <
@@ -330,6 +332,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           ? 0
                           : 1)
                     );
+                  } else if (
+                    mouseY >
+                    (contentsColumnRef?.getBoundingClientRect()?.bottom ?? 0)
+                  ) {
+                    setContentInsertionIndex(contents.length);
+                  }
                 }}
                 alignItems="center"
               >
@@ -512,7 +520,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 ))}
             </Stack>
           </Stack>
-        </BigCard>
+        </PageCard>
       </Stack>
       <LessonCreationDialog
         open={editingDialogOpen}
