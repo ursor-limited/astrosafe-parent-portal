@@ -407,7 +407,13 @@ export default function WorksheetPageContents(props: {
 
   const submitDeletion = () =>
     ApiController.deleteWorksheet(props.details.id).then(() =>
-      router.push("/dashboard")
+      router.push(
+        props.lessonId
+          ? `/lesson/${props.lessonId}`
+          : userDetails
+          ? "/dashboard"
+          : "/"
+      )
     );
 
   const userDetails = useUserContext();
