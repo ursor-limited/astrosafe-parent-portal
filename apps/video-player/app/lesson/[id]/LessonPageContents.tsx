@@ -209,9 +209,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const { height } = useWindowSize();
 
+  const [pageRef, setPageRef] = useState<HTMLElement | null>(null);
+
   return (
     <>
       <Stack
+        ref={setPageRef}
         p="40px"
         overflow="scroll"
         onMouseMove={(event) => setMouseY(event.pageY)}
@@ -278,6 +281,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
               animationFillMode: "forwards",
             }}
             zIndex={3}
+            onWheel={(event) => {
+              console.log(event, "90909");
+              pageRef?.scroll({
+                //@ts-ignore
+                top: event?.deltaY + pageRef.scrollTop,
+                //behavior: "smooth",
+              });
+              event.preventDefault();
+            }}
           >
             <Stack height="100%" position="relative">
               <Stack
