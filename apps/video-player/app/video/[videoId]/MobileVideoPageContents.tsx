@@ -161,7 +161,13 @@ function MobileVideoPageContents(props: {
   return video && provider ? (
     <>
       <Stack p="20px" spacing="22px" overflow="scroll" flex={1}>
-        <Stack spacing="12px">
+        <Stack
+          spacing="12px"
+          bgcolor="rgb(255,255,255)"
+          borderRadius="16px"
+          p="12px"
+          boxSizing="border-box"
+        >
           <Stack direction="row" justifyContent="space-between">
             <Stack
               direction="row"
@@ -171,9 +177,9 @@ function MobileVideoPageContents(props: {
                 cursor: "pointer",
                 "&:hover": { opacity: 0.7 },
                 transition: "0.2s",
-                svg: {
-                  path: { fill: PALETTE.secondary.grey[1] },
-                },
+                // svg: {
+                //   path: { fill: PALETTE.secondary.grey[1] },
+                // },
               }}
               onClick={() =>
                 router.push(
@@ -186,7 +192,7 @@ function MobileVideoPageContents(props: {
               }
             >
               <ChevronLeft width="20px" height="20px" />
-              <Typography color={PALETTE.secondary.grey[1]}>
+              <Typography>
                 {props.lessonId ? "Back to Lesson" : "Back to Home"}
               </Typography>
             </Stack>
@@ -196,7 +202,6 @@ function MobileVideoPageContents(props: {
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
-                  //background={PALETTE.secondary.grey[1]}
                   border
                   actions={[
                     {
@@ -216,7 +221,7 @@ function MobileVideoPageContents(props: {
 
               <Stack
                 borderRadius="100%"
-                border="2px solid rgb(255,255,255)"
+                border={`2px solid ${PALETTE.primary.navy}`}
                 height="39px"
                 width="39px"
                 justifyContent="center"
@@ -231,7 +236,7 @@ function MobileVideoPageContents(props: {
                   transition: "0.2s",
                   svg: {
                     path: {
-                      fill: "rgb(255,255,255)",
+                      fill: PALETTE.primary.navy,
                     },
                   },
                 }}
@@ -262,10 +267,10 @@ function MobileVideoPageContents(props: {
             </UrsorButton>
           </Stack> */}
           <Stack pt="60px">
-            <Typography variant="medium" bold color="rgb(255,255,255)">
+            <Typography htmlTag="h1" variant="medium" bold>
               {video.title}
             </Typography>
-            <Typography variant="small" color="rgb(255,255,255)">
+            <Typography htmlTag="h2" variant="small">
               {video.description}
             </Typography>
             <Stack pt="30px" ref={setSizeRef} alignItems="center" height="100%">
