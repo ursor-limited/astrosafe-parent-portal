@@ -13,7 +13,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
-import BigCard from "@/app/components/BigCard";
+import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";

@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { getFormattedDate } from "./VideoCard";
 import { useUserContext } from "./UserContext";
 
-const BigCard = (props: {
+const PageCard = (props: {
   rightStuff: React.ReactNode;
   title: string;
   description?: string;
@@ -29,9 +29,10 @@ const BigCard = (props: {
       <Stack
         position="relative"
         width={props.width || "83%"}
-        height="100%"
+        flex={1}
+        minHeight="fit-content"
         pb="24px"
-        borderRadius="16px"
+        borderRadius="16px 16px 0 0"
         bgcolor="rgb(255,255,255)"
         spacing="26px"
       >
@@ -85,4 +86,4 @@ const BigCard = (props: {
   );
 };
 
-export default BigCard;
+export default PageCard;

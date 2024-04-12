@@ -13,7 +13,7 @@ import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
-import BigCard from "@/app/components/BigCard";
+import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
@@ -183,7 +183,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   return details && provider ? (
     <>
       <Stack p="40px" overflow="scroll">
-        <BigCard
+        <PageCard
           title={details.title}
           description={details.description}
           createdAt={details.createdAt}
@@ -249,7 +249,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
               />
             </Stack>
           </Stack>
-        </BigCard>
+        </PageCard>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
