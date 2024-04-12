@@ -22,6 +22,7 @@ const MobilePageCard = (props: {
   creatorId?: string;
   title: string;
   description?: string;
+  belowButtonsElement?: React.ReactNode;
   editingCallback?: () => void;
   deletionCallback?: () => void;
 }) => {
@@ -113,8 +114,9 @@ const MobilePageCard = (props: {
             </Stack>
           </Stack>
         </Stack>
+        {props.belowButtonsElement}
         <Stack pt="60px" pb="22px">
-          <Typography htmlTag="h1" variant="medium" bold>
+          <Typography htmlTag="h1" variant="large" bold>
             {props.title}
           </Typography>
           {props.description ? (
