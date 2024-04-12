@@ -70,6 +70,10 @@ const LessonWorksheetPreview = (props: {
     ref && setCardWidth(ref.getBoundingClientRect?.()?.width);
   }, [width, ref?.getBoundingClientRect?.()?.width]);
 
+  // const [worksheetPageRef, setWorksheetPageRef] = useState<HTMLElement | null>(
+  //   null
+  // );
+
   const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
   const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
   useEffect(() => {
@@ -114,6 +118,7 @@ const LessonWorksheetPreview = (props: {
           height={`${worksheetPageHeight}px`}
           borderRadius="8px"
           overflow="hidden"
+          //ref={setWorksheetPageRef}
         >
           <Stack
             sx={{
@@ -157,7 +162,7 @@ const LessonWorksheetPreview = (props: {
               direction="row"
               spacing="10px"
               position="absolute"
-              top={`${726 * (A4_WIDTH / worksheetPageWidth)}px`}
+              top={`${worksheetPageHeight - 64}px`}
               right="20px"
               zIndex={2}
             >

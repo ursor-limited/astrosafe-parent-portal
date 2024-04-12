@@ -367,7 +367,7 @@ export default function WorksheetGenerator(props: {
                 bgcolor={PALETTE.secondary.grey[2]}
               />
             </Stack>
-            {!props.worksheet ? (
+            {!props.mobile || !props.worksheet ? (
               <Stack
                 direction="row"
                 spacing="20px"
