@@ -32,6 +32,7 @@ export default function AddContentButton(props: {
       <UrsorPopover
         open={props.open}
         fieldWidth="20px"
+        width="calc(100% - 38px)"
         content={
           <Stack
             p="16px"

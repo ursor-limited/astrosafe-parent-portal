@@ -214,7 +214,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                   {props.content ? (
                     <Box
                       width={
-                        props.width ?? props.buttonWidth ? width : undefined
+                        props.width ?? (props.buttonWidth ? width : undefined)
                       }
                       borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                       p={props.noCard || props.noPadding ? undefined : PADDING}
