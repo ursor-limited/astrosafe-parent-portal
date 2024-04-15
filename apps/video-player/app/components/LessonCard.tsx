@@ -24,7 +24,6 @@ export const spin = keyframes`
 
 const LessonCard = (
   props: ILesson & {
-    imageUrls: string[];
     clickCallback: () => void;
     editingCallback: () => void;
     deletionCallback: () => void;
@@ -36,6 +35,7 @@ const LessonCard = (
     ApiController.deleteLesson(props.id)
       .then(() => notificationCtx.negativeSuccess("Deleted Lesson."))
       .then(props.deletionCallback);
+
   return (
     <>
       <Stack
@@ -101,12 +101,12 @@ const LessonCard = (
                 },
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                backgroundImage: props.imageUrls[0]
+                backgroundImage: props.imageUrls?.[0]
                   ? `url(${props.imageUrls[0]})`
                   : undefined,
               }}
             >
-              {!props.imageUrls[0] ? (
+              {!props.imageUrls?.[0] ? (
                 <Stack
                   sx={{
                     animation: `${spin} 9s linear`,
@@ -131,12 +131,12 @@ const LessonCard = (
                   },
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundImage: props.imageUrls[1]
+                  backgroundImage: props.imageUrls?.[1]
                     ? `url(${props.imageUrls[1]})`
                     : undefined,
                 }}
               >
-                {!props.imageUrls[1] ? (
+                {!props.imageUrls?.[1] ? (
                   <Stack
                     sx={{
                       animation: `${spin} 12s linear`,
@@ -161,12 +161,12 @@ const LessonCard = (
                   },
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundImage: props.imageUrls[2]
+                  backgroundImage: props.imageUrls?.[2]
                     ? `url(${props.imageUrls[2]})`
                     : undefined,
                 }}
               >
-                {!props.imageUrls[2] ? (
+                {!props.imageUrls?.[2] ? (
                   <Stack
                     sx={{
                       animation: `${spin} 4s linear`,

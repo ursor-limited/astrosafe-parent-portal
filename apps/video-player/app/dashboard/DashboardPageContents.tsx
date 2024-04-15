@@ -460,7 +460,9 @@ export default function DashboardPageContents() {
   const loadLessons = () => {
     userDetails?.user?.id &&
       ApiController.getUserLessons(userDetails.user.id)
-        .then((l) => setLessons(_.reverse(l.slice())))
+        .then((l) => {
+          setLessons(_.reverse(l.slice()));
+        })
         .finally(() => setLessonsLoaded(true));
   };
   useEffect(() => {
@@ -957,7 +959,6 @@ export default function DashboardPageContents() {
                         ) : item.type === "lesson" ? (
                           <LessonCard
                             {...(item.details as ILesson)}
-                            imageUrls={[]}
                             clickCallback={() =>
                               router.push(`/lesson/${item.details.id}`)
                             }
