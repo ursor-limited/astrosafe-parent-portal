@@ -14,6 +14,7 @@ import ApiController, { IVideo } from "@/app/api";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import NotificationContext from "@/app/components/NotificationContext";
+import useOrangeBorder from "@/app/components/useOrangeBorder";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -44,6 +45,8 @@ const LessonVideoCard = (
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Video Link."));
 
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
   return (
     <>
       <Stack
@@ -54,6 +57,11 @@ const LessonVideoCard = (
         position="relative"
         boxShadow="0 0 22px rgba(0,0,0,0.1)"
         pb="12px"
+        sx={{
+          outline: orangeBorderOn
+            ? `3px solid ${PALETTE.system.orange}`
+            : undefined,
+        }}
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton

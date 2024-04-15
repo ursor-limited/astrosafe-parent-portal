@@ -256,8 +256,8 @@ export default function MobileWorksheetPageContents(props: {
       </Stack>
 
       <MobilePageCard
-        title={props.details.title}
-        description={props.details.description}
+        title={worksheet.title}
+        description={worksheet.description}
         creatorId={props.details?.creatorId}
         editingCallback={() => setEditingDialogOpen(true)}
         deletionCallback={() => setDeletionDialogOpen(true)}
