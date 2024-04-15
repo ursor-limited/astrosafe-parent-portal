@@ -194,6 +194,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  const [hoveringOnContentCard, setHoveringOnContentCard] =
+    useState<boolean>(false);
   const [hoveringContentIndex, setHoveringContentIndex] = useState<
     number | undefined
   >(undefined);
@@ -331,7 +333,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 // updateBottomCardCenter();
               }}
             >
-              <Stack height="100%" position="relative">
+              <Stack
+                height="100%"
+                position="relative"
+                sx={{
+                  opacity: hoveringOnContentCard ? 0 : 1,
+                  transition: "0.2s",
+                }}
+              >
                 <Stack
                   position="absolute"
                   top={
@@ -501,9 +510,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
-                      // onMouseLeave={() => {
-                      //   setHoveringContentIndex(undefined);
-                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore
@@ -513,7 +519,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      <Stack width="46%">{card}</Stack>
+                      <Stack
+                        width="46%"
+                        onMouseEnter={() => {
+                          setHoveringOnContentCard(true);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveringOnContentCard(false);
+                        }}
+                      >
+                        {card}
+                      </Stack>
 
                       {contents.length > 1 ? (
                         <Stack
