@@ -332,6 +332,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 // updateTopCardCenter();
                 // updateBottomCardCenter();
               }}
+              onMouseEnter={() => setHoveringOnContentCard(false)}
             >
               <Stack
                 height="100%"
@@ -519,16 +520,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      <Stack
-                        width="46%"
-                        onMouseEnter={() => {
-                          setHoveringOnContentCard(true);
-                        }}
-                        onMouseLeave={() => {
-                          setHoveringOnContentCard(false);
-                        }}
-                      >
-                        {card}
+                      <Stack width="100%" direction="row">
+                        <Stack
+                          width="46%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
+                        <Stack
+                          flex={1}
+                          onMouseMove={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        />
                       </Stack>
 
                       {contents.length > 1 ? (

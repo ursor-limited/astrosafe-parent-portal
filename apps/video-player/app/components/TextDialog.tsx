@@ -92,7 +92,7 @@ const TextCreationDialog = (props: {
           p={props.mobile ? "16px" : undefined}
           boxSizing="border-box"
         >
-          <Stack>
+          <Stack width="100%">
             <TextEditorToolbar id={quillId} />
             {quillId ? (
               <AstroText
