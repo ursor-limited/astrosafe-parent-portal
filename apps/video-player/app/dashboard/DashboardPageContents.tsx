@@ -32,7 +32,7 @@ import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import dayjs from "dayjs";
@@ -339,8 +339,45 @@ export const ToolButton = (props: {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
   const [lightText, setLightText] = useState<boolean>(false);
   useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
+  const [titleRef, setTitleRef] = useState<HTMLElement | null>(null);
+  const [infoButtonX, setInfoButtonX] = useState<number>(0);
+  const [infoButtonY, setInfoButtonY] = useState<number>(0);
+  const { width } = useWindowSize();
+  useEffect(() => {
+    setInfoButtonX(titleRef?.getBoundingClientRect?.().right ?? 0);
+    setInfoButtonY(
+      (titleRef?.getBoundingClientRect?.().bottom ?? 0) -
+        (titleRef?.getBoundingClientRect?.().height ?? 0) +
+        6
+    );
+  }, [
+    titleRef?.getBoundingClientRect?.().right,
+    titleRef?.getBoundingClientRect?.().bottom,
+    width,
+  ]);
   return (
     <>
+      {createPortal(
+        <Stack
+          position="absolute"
+          top={infoButtonY}
+          left={infoButtonX + 12}
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+            svg: {
+              path: {
+                fill: `${PALETTE.secondary.grey[5]} !important`,
+              },
+            },
+          }}
+          onClick={() => setOverlayOpen(true)}
+        >
+          <InfoIcon width="14px" height="14px" />
+        </Stack>,
+        document.body
+      )}
       <Stack
         direction="row"
         width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
@@ -367,24 +404,7 @@ export const ToolButton = (props: {
             transition: "0.2s",
           }}
         />
-        <Stack
-          position="absolute"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            svg: {
-              path: {
-                fill: `${PALETTE.secondary.grey[5]} !important`,
-              },
-            },
-          }}
-          onClick={() => setOverlayOpen(true)}
-          top="16px"
-          left={`${props.infoButtonPosition}px`}
-        >
-          <InfoIcon width="14px" height="14px" />
-        </Stack>
+
         <Stack direction="row" spacing="14px" flex={1}>
           <Stack
             width="70px"
@@ -409,13 +429,15 @@ export const ToolButton = (props: {
             <props.icon height="35px" width="35px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="space-between">
-            <Typography
-              variant="medium"
-              bold
-              color={lightText ? props.color : PALETTE.secondary.grey[5]}
-            >
-              {props.title}
-            </Typography>
+            <Stack ref={setTitleRef} width="fit-content">
+              <Typography
+                variant="medium"
+                bold
+                color={lightText ? props.color : PALETTE.secondary.grey[5]}
+              >
+                {props.title}
+              </Typography>
+            </Stack>
             <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
