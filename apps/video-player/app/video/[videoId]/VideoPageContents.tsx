@@ -182,7 +182,17 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   return details && provider ? (
     <>
-      <Stack p="40px" overflow="scroll">
+      <Stack
+        px="40px"
+        pt="40px"
+        overflow="scroll"
+        bgcolor={
+          userDetails?.user?.id && userDetails.user.id === details?.creatorId
+            ? PALETTE.secondary.grey[1]
+            : undefined
+        }
+        flex={1}
+      >
         <PageCard
           title={details.title}
           description={details.description}
