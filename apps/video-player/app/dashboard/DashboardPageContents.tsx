@@ -456,11 +456,15 @@ export const ToolButton = (props: {
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
-  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const [lessonsWithImages, setLessonsWithImages] = useState<
+    { lesson: ILesson; imageUrls: string[] }[]
+  >([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
       ApiController.getUserLessons(userDetails.user.id)
-        .then((l) => setLessons(_.reverse(l.slice())))
+        .then((l) => {
+          setLessonsWithImages(_.reverse(l.slice()));
+        })
         .finally(() => setLessonsLoaded(true));
   };
   useEffect(() => {
@@ -510,13 +514,21 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details:
+        | IVideo
+        | IWorksheet
+        | { lesson: ILesson; imageUrls: string[] }
+        | ILink;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details:
+        | IVideo
+        | IWorksheet
+        | { lesson: ILesson; imageUrls: string[] }
+        | ILink;
     }[]
   >([]);
   useEffect(() => {
@@ -558,11 +570,11 @@ export default function DashboardPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
-    const lessonDetails = lessons
+    const lessonDetails = lessonsWithImages
       .filter(
         (x) =>
           !searchValue ||
-          x.title.toLowerCase().includes(searchValue.toLowerCase())
+          x.lesson.title.toLowerCase().includes(searchValue.toLowerCase())
       )
       .map((l) => ({
         type: "lesson" as AstroContent,
@@ -582,13 +594,13 @@ export default function DashboardPageContents() {
       ],
       (c) =>
         selectedSort === "updatedAt"
-          ? new Date(c.details.updatedAt)
+          ? new Date(c.details?.updatedAt || c.details.lesson.updatedAt)
           : c.details.title.toLowerCase(),
       selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
-    lessons,
+    lessonsWithImages,
     videos,
     worksheets,
     nColumns,
@@ -729,7 +741,7 @@ export default function DashboardPageContents() {
         (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
-          lessons.length > 0
+          lessonsWithImages.length > 0
       ),
     [worksheetsLoaded, videosLoaded, lessonsLoaded]
   );
@@ -956,8 +968,8 @@ export default function DashboardPageContents() {
                           />
                         ) : item.type === "lesson" ? (
                           <LessonCard
-                            {...(item.details as ILesson)}
-                            imageUrls={[]}
+                            {...(item.details.lesson as ILesson)}
+                            imageUrls={item.details.imageUrls}
                             clickCallback={() =>
                               router.push(`/lesson/${item.details.id}`)
                             }
@@ -1009,7 +1021,10 @@ export default function DashboardPageContents() {
           open={!!lessonEditingDialogId}
           closeCallback={() => setLessonEditingDialogId(undefined)}
           updateCallback={loadLessons}
-          lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+          lesson={
+            lessonsWithImages.find((l) => l.lesson.id === lessonEditingDialogId)
+              ?.lesson
+          }
         />
       ) : null}
       {!anyLoaded
@@ -1036,7 +1051,7 @@ export default function DashboardPageContents() {
         : null}
       {anyLoaded &&
       !selectedContentType &&
-      lessons.length === 0 &&
+      lessonsWithImages.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(
@@ -1050,7 +1065,7 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
-      {selectedContentType === "lesson" && lessons.length === 0
+      {selectedContentType === "lesson" && lessonsWithImages.length === 0
         ? createPortal(
             <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
             document.body
