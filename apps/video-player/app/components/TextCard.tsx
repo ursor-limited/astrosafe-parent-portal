@@ -59,7 +59,6 @@ const LinkCard = (
   return (
     <>
       <Stack
-        width="100%"
         borderRadius="12px"
         bgcolor="rgb(255,255,255)"
         p="4px"

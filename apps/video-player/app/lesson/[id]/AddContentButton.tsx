@@ -73,7 +73,6 @@ export default function AddContentButton(props: {
           width="32px"
           borderRadius="100%"
           border={`2px solid ${PALETTE.secondary.purple[2]}`}
-          boxShadow={props.mobile ? "0 0 50px rgba(0,0,0,0.3)" : undefined}
           bgcolor={
             hovering || props.mobile
               ? PALETTE.secondary.purple[2]
