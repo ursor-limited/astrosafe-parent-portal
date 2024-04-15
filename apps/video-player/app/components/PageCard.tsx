@@ -2,7 +2,6 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
 import { getFormattedDate } from "./VideoCard";
 import { useUserContext } from "./UserContext";
 
@@ -25,13 +24,14 @@ const PageCard = (props: {
       justifyContent="center"
       spacing="100px"
       minHeight={props.minHeight}
+      flex={1}
     >
       <Stack
         position="relative"
         width={props.width || "83%"}
         flex={1}
         minHeight="fit-content"
-        pb="24px"
+        //pb="24px"
         borderRadius="16px 16px 0 0"
         bgcolor="rgb(255,255,255)"
         spacing="26px"
@@ -81,6 +81,7 @@ const PageCard = (props: {
           </Stack>
         </Stack>
         {props.children}
+        <Stack height="24px" />
       </Stack>
     </Stack>
   );

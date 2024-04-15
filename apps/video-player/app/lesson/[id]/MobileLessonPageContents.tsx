@@ -39,6 +39,7 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
+import MobilePageCard from "@/app/dashboard/MobilePageCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -196,206 +197,139 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   return (
     <>
-      <Stack p="16px" overflow="scroll">
-        <Stack width="100%" direction="row" justifyContent="space-between">
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing="3px"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              svg: {
-                path: { fill: PALETTE.secondary.grey[1] },
-              },
-            }}
-            onClick={() => router.push(userDetails ? "/dashboard" : "/")}
-          >
-            <ChevronLeft width="20px" height="20px" />
-            <Typography color={PALETTE.secondary.grey[1]}>
-              Back to Home
-            </Typography>
-          </Stack>
-          <Stack direction="row" spacing="12px">
-            {userDetails?.user?.id &&
-            userDetails?.user?.id === lesson?.creatorId ? (
-              <UrsorActionButton
-                size="43px"
-                iconSize="17px"
-                //background={PALETTE.secondary.grey[1]}
-                border
-                actions={[
-                  {
-                    text: "Edit",
-                    kallback: () => setEditingDialogOpen(true),
-                    icon: PencilIcon,
-                  },
-                  {
-                    text: "Delete",
-                    kallback: () => setDeletionDialogOpen(true),
-                    icon: TrashcanIcon,
-                    color: PALETTE.system.red,
-                  },
-                ]}
-              />
-            ) : null}
+      {lesson ? (
+        <MobilePageCard
+          title={lesson.title}
+          description={lesson.description}
+          creatorId={lesson.creatorId}
+          editingCallback={() => setEditingDialogOpen(true)}
+          deletionCallback={() => setDeletionDialogOpen(true)}
+        >
+          <Stack width="100%" pt="16px">
             <Stack
-              borderRadius="100%"
-              border={`2px solid ${PALETTE.secondary.purple[2]}`}
-              height="39px"
-              width="39px"
-              justifyContent="center"
               alignItems="center"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
-                svg: {
-                  path: {
-                    fill: PALETTE.secondary.purple[2],
-                  },
-                },
-              }}
+              onClick={() => setContentInsertionIndex(0)}
             >
-              <ShareIcon width="22px" height="22px" />
+              <AddContentButton
+                mobile
+                open={addContentPopoverOpenId === "first"}
+                setOpen={(o) =>
+                  setAddContentPopoverOpenId(
+                    (o ? "first" : undefined) as string
+                  )
+                }
+                callback={(type) =>
+                  outOfCreations
+                    ? setNoCreationsLeftDialogOpen(true)
+                    : contentCallbacks[type]()
+                }
+                clickOutsideCloseCallback={() => null}
+              />
+            </Stack>
+            <Stack pt="20px" width="100%" spacing="16px">
+              {contents
+                .map((c) => {
+                  if (c.type === "video") {
+                    const video = videos?.find((v) => v.id === c.contentId);
+                    return video ? (
+                      <LessonVideoCard
+                        key={video.id}
+                        {...video}
+                        editingCallback={() =>
+                          setVideoEditingDialogId(video.id)
+                        }
+                        deletionCallback={loadLesson}
+                        lessonId={props.lessonId}
+                      />
+                    ) : null;
+                  } else if (c.type === "link") {
+                    const link = links?.find((v) => v.id === c.contentId);
+                    return link ? (
+                      <LinkCard
+                        key={link.id}
+                        {...link}
+                        editCallback={() => setLinkEditingDialogId(link.id)}
+                        deleteCallback={loadLesson}
+                      />
+                    ) : null;
+                  } else if (c.type === "text") {
+                    const text = texts?.find((t) => t.id === c.contentId);
+                    return text ? (
+                      <TextCard
+                        key={text.id}
+                        {...text}
+                        editCallback={() => setTextEditingDialogId(text.id)}
+                        deleteCallback={loadLesson}
+                      />
+                    ) : null;
+                  } else if (c.type === "image") {
+                    const image = images?.find((i) => i.id === c.contentId);
+                    return image ? (
+                      <ImageCard
+                        key={image.id}
+                        {...image}
+                        editingCallback={() =>
+                          setImageEditingDialogId(image.id)
+                        }
+                        deletionCallback={loadLesson}
+                      />
+                    ) : null;
+                  } else if (c.type === "worksheet") {
+                    const worksheet = worksheets?.find(
+                      (w) => w.id === c.contentId
+                    );
+                    return worksheet ? (
+                      <LessonWorksheetPreview
+                        key={worksheet.id}
+                        worksheet={worksheet}
+                        lessonId={props.lessonId}
+                        editingCallback={() =>
+                          setWorksheetEditingDialogId(worksheet.id)
+                        }
+                        deletionCallback={loadLesson}
+                        mobile
+                      />
+                    ) : null;
+                  }
+                })
+                .map((card, i) => (
+                  <UrsorFadeIn duration={800} key={i}>
+                    <Stack spacing="16px" justifyContent="center">
+                      {card}
+                      <Stack
+                        width="100%"
+                        alignItems="center"
+                        onClick={() => setContentInsertionIndex(i + 1)}
+                      >
+                        <AddContentButton
+                          mobile
+                          open={addContentPopoverOpenId === card?.key}
+                          setOpen={(o) =>
+                            setAddContentPopoverOpenId(
+                              (o
+                                ? card?.key
+                                  ? card?.key
+                                  : undefined
+                                : undefined) as string
+                            )
+                          }
+                          callback={(type) =>
+                            outOfCreations
+                              ? setNoCreationsLeftDialogOpen(true)
+                              : contentCallbacks[type]()
+                          }
+                          clickOutsideCloseCallback={() =>
+                            setContentInsertionIndex(undefined)
+                          }
+                        />
+                      </Stack>
+                    </Stack>
+                  </UrsorFadeIn>
+                ))}
             </Stack>
           </Stack>
-        </Stack>
-
-        {lesson ? (
-          <Stack pt="20px">
-            <Typography htmlTag="h1" variant="h5" bold color="rgb(255,255,255)">
-              {lesson?.title}
-            </Typography>
-            <Typography htmlTag="h2" variant="small" color="rgb(255,255,255)">
-              {lesson?.description}
-            </Typography>
-          </Stack>
-        ) : null}
-
-        <Stack width="100%" pt="16px">
-          <Stack
-            alignItems="center"
-            onClick={() => setContentInsertionIndex(0)}
-          >
-            <AddContentButton
-              mobile
-              open={addContentPopoverOpenId === "first"}
-              setOpen={(o) =>
-                setAddContentPopoverOpenId((o ? "first" : undefined) as string)
-              }
-              callback={(type) =>
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : contentCallbacks[type]()
-              }
-              clickOutsideCloseCallback={() => null}
-            />
-          </Stack>
-          <Stack pt="20px" width="100%" spacing="16px">
-            {contents
-              .map((c) => {
-                if (c.type === "video") {
-                  const video = videos?.find((v) => v.id === c.contentId);
-                  return video ? (
-                    <LessonVideoCard
-                      key={video.id}
-                      {...video}
-                      editingCallback={() => setVideoEditingDialogId(video.id)}
-                      deletionCallback={loadLesson}
-                      lessonId={props.lessonId}
-                    />
-                  ) : null;
-                } else if (c.type === "link") {
-                  const link = links?.find((v) => v.id === c.contentId);
-                  return link ? (
-                    <LinkCard
-                      key={link.id}
-                      {...link}
-                      editCallback={() => setLinkEditingDialogId(link.id)}
-                      deleteCallback={loadLesson}
-                    />
-                  ) : null;
-                } else if (c.type === "text") {
-                  const text = texts?.find((t) => t.id === c.contentId);
-                  return text ? (
-                    <TextCard
-                      key={text.id}
-                      {...text}
-                      editCallback={() => setTextEditingDialogId(text.id)}
-                      deleteCallback={loadLesson}
-                    />
-                  ) : null;
-                } else if (c.type === "image") {
-                  const image = images?.find((i) => i.id === c.contentId);
-                  return image ? (
-                    <ImageCard
-                      key={image.id}
-                      {...image}
-                      editingCallback={() => setImageEditingDialogId(image.id)}
-                      deletionCallback={loadLesson}
-                    />
-                  ) : null;
-                } else if (c.type === "worksheet") {
-                  const worksheet = worksheets?.find(
-                    (w) => w.id === c.contentId
-                  );
-                  return worksheet ? (
-                    <LessonWorksheetPreview
-                      key={worksheet.id}
-                      worksheet={worksheet}
-                      lessonId={props.lessonId}
-                      editingCallback={() =>
-                        setWorksheetEditingDialogId(worksheet.id)
-                      }
-                      deletionCallback={loadLesson}
-                      mobile
-                    />
-                  ) : null;
-                }
-              })
-              .map((card, i) => (
-                <UrsorFadeIn duration={800} key={i}>
-                  <Stack spacing="16px" justifyContent="center">
-                    {card}
-                    <Stack
-                      width="100%"
-                      alignItems="center"
-                      onClick={() => setContentInsertionIndex(i + 1)}
-                    >
-                      <AddContentButton
-                        mobile
-                        open={addContentPopoverOpenId === card?.key}
-                        setOpen={(o) =>
-                          setAddContentPopoverOpenId(
-                            (o
-                              ? card?.key
-                                ? card?.key
-                                : undefined
-                              : undefined) as string
-                          )
-                        }
-                        callback={(type) =>
-                          outOfCreations
-                            ? setNoCreationsLeftDialogOpen(true)
-                            : contentCallbacks[type]()
-                        }
-                        clickOutsideCloseCallback={() =>
-                          setContentInsertionIndex(undefined)
-                        }
-                      />
-                    </Stack>
-                  </Stack>
-                </UrsorFadeIn>
-              ))}
-          </Stack>
-        </Stack>
-      </Stack>
+        </MobilePageCard>
+      ) : null}
       <LessonCreationDialog
         open={editingDialogOpen}
         closeCallback={() => setEditingDialogOpen(false)}

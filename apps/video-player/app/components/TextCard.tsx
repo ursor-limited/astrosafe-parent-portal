@@ -59,7 +59,6 @@ const LinkCard = (
   return (
     <>
       <Stack
-        width="100%"
         borderRadius="12px"
         bgcolor="rgb(255,255,255)"
         p="4px"
@@ -71,7 +70,7 @@ const LinkCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
+        boxShadow="0 0 13px rgba(0,0,0,0.08)"
         pb="12px"
         pt="50px"
       >

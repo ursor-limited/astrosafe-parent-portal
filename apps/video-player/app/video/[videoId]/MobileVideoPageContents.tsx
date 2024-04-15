@@ -162,8 +162,8 @@ function MobileVideoPageContents(props: {
   return video && provider ? (
     <>
       <MobilePageCard
-        title={props.details.title}
-        description={props.details.description}
+        title={video.title}
+        description={video.description}
         creatorId={video?.creatorId}
         editingCallback={() => setEditingDialogOpen(true)}
         deletionCallback={() => setDeletionDialogOpen(true)}

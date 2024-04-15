@@ -30,12 +30,15 @@ const MobilePageCard = (props: {
   const userDetails = useUserContext();
   const notificationCtx = useContext(NotificationContext);
   return (
-    <Stack p="20px" spacing="22px" overflow="scroll" flex={1}>
+    <Stack px="20px" pt="20px" spacing="22px" overflow="scroll" flex={1}>
       <Stack
         spacing="12px"
         bgcolor="rgb(255,255,255)"
-        borderRadius="16px"
+        borderRadius="16px 16px 0 0"
         p="12px"
+        pb="24px"
+        flex={1}
+        minHeight="fit-content"
         boxSizing="border-box"
       >
         <Stack direction="row" justifyContent="space-between">
