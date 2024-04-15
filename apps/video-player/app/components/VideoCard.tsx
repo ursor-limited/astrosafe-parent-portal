@@ -68,7 +68,7 @@ const VideoCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
+        boxShadow="0 0 20px rgba(0,0,0,0.08)"
         pb="12px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>

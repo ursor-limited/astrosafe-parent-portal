@@ -70,7 +70,7 @@ const LinkCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 13px rgba(0,0,0,0.08)"
+        boxShadow="0 0 20px rgba(0,0,0,0.08)"
         pb="12px"
         pt="50px"
       >

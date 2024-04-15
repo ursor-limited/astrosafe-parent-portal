@@ -194,6 +194,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  const [hoveringOnContentCard, setHoveringOnContentCard] =
+    useState<boolean>(false);
   const [hoveringContentIndex, setHoveringContentIndex] = useState<
     number | undefined
   >(undefined);
@@ -252,6 +254,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
         px="40px"
         overflow="scroll"
         onMouseMove={(event) => setMouseY(event.pageY)}
+        bgcolor={
+          userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
+            ? PALETTE.secondary.grey[1]
+            : undefined
+        }
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard
@@ -304,103 +311,112 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
         >
-          <Stack
-            height="100%"
-            position="fixed"
-            top={0}
-            left="50%"
-            sx={{
-              transform: `translateY(-26px)`,
-              opacity: 0,
-              animation: `${fadeIn} 0.2s ease-in`,
-              animationFillMode: "forwards",
-            }}
-            zIndex={3}
-            onWheel={(event) => {
-              pageRef?.scroll({
-                //@ts-ignore
-                top: event?.deltaY + pageRef.scrollTop,
-              });
-              // updateTopCardCenter();
-              // updateBottomCardCenter();
-            }}
-          >
-            <Stack height="100%" position="relative">
+          {userDetails.user?.id && userDetails.user.id === lesson?.creatorId ? (
+            <Stack
+              height="100%"
+              position="fixed"
+              top={0}
+              left="50%"
+              sx={{
+                transform: `translateY(-26px)`,
+                opacity: 0,
+                animation: `${fadeIn} 0.2s ease-in`,
+                animationFillMode: "forwards",
+              }}
+              zIndex={3}
+              onWheel={(event) => {
+                pageRef?.scroll({
+                  //@ts-ignore
+                  top: event?.deltaY + pageRef.scrollTop,
+                });
+                // updateTopCardCenter();
+                // updateBottomCardCenter();
+              }}
+            >
               <Stack
-                position="absolute"
-                top={
-                  contents.length === 0
-                    ? contentsColumnRef?.getBoundingClientRect()?.top
-                    : mouseY < height / 2
-                    ? Math.max(
-                        mouseY - 18,
-                        (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
-                          60
-                      )
-                    : Math.min(mouseY - 10, height - 50)
-                }
-                left={-18}
-                onClick={() => {
-                  if (addContentPopoverOpen) return;
-                  const elementBounds = lesson?.contentOrder.map((id) => ({
-                    id,
-                    bounds: document
-                      .getElementById(id)
-                      ?.getBoundingClientRect?.(),
-                  }));
-                  const hoverElement = elementBounds?.find(
-                    (b) =>
-                      mouseY < (b.bounds?.bottom ?? 0) &&
-                      mouseY > (b.bounds?.top ?? 0)
-                  );
-                  if (hoverElement) {
-                    setContentInsertionIndex(
-                      (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
-                        (mouseY <
-                        (hoverElement.bounds?.top ?? 0) +
-                          (hoverElement.bounds?.height ?? 0) / 2
-                          ? 0
-                          : 1)
-                    );
-                  } else if (
-                    mouseY >
-                    (contentsColumnRef?.getBoundingClientRect()?.bottom ?? 0)
-                  ) {
-                    setContentInsertionIndex(contents.length);
-                  }
+                height="100%"
+                position="relative"
+                sx={{
+                  opacity: hoveringOnContentCard ? 0 : 1,
+                  transition: "0.2s",
                 }}
-                alignItems="center"
               >
-                <AddContentButton
-                  open={addContentPopoverOpen}
-                  setOpen={setAddContentPopoverOpen}
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
+                <Stack
+                  position="absolute"
+                  top={
+                    contents.length === 0
+                      ? contentsColumnRef?.getBoundingClientRect()?.top
+                      : mouseY < height / 2
+                      ? Math.max(
+                          mouseY - 18,
+                          (contentsColumnRef?.getBoundingClientRect()?.top ??
+                            0) - 60
+                        )
+                      : Math.min(mouseY - 10, height - 50)
                   }
-                  clickOutsideCloseCallback={() =>
-                    setContentInsertionIndex(undefined)
-                  }
-                />
-
-                {contents.length > 0 &&
-                (!_.isNumber(hoveringContentIndex) ||
-                  (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
-                  <Stack
-                    sx={{
-                      transform: `translate(8px, -${28}px)`,
-                    }}
-                    width="2px"
-                    height={
-                      (topCardRef?.getBoundingClientRect?.().top ?? 0) +
-                      (topCardRef?.getBoundingClientRect?.().height ?? 0) / 2 -
-                      mouseY
+                  left={-18}
+                  onClick={() => {
+                    if (addContentPopoverOpen) return;
+                    const elementBounds = lesson?.contentOrder.map((id) => ({
+                      id,
+                      bounds: document
+                        .getElementById(id)
+                        ?.getBoundingClientRect?.(),
+                    }));
+                    const hoverElement = elementBounds?.find(
+                      (b) =>
+                        mouseY < (b.bounds?.bottom ?? 0) &&
+                        mouseY > (b.bounds?.top ?? 0)
+                    );
+                    if (hoverElement) {
+                      setContentInsertionIndex(
+                        (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
+                          (mouseY <
+                          (hoverElement.bounds?.top ?? 0) +
+                            (hoverElement.bounds?.height ?? 0) / 2
+                            ? 0
+                            : 1)
+                      );
+                    } else if (
+                      mouseY >
+                      (contentsColumnRef?.getBoundingClientRect()?.bottom ?? 0)
+                    ) {
+                      setContentInsertionIndex(contents.length);
                     }
-                    bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                  }}
+                  alignItems="center"
+                >
+                  <AddContentButton
+                    open={addContentPopoverOpen}
+                    setOpen={setAddContentPopoverOpen}
+                    callback={(type) =>
+                      outOfCreations
+                        ? setNoCreationsLeftDialogOpen(true)
+                        : contentCallbacks[type]()
+                    }
+                    clickOutsideCloseCallback={() =>
+                      setContentInsertionIndex(undefined)
+                    }
                   />
-                ) : null}
-                {/* {hoveringContentIndex === contents.length - 1 ? (
+
+                  {contents.length > 0 &&
+                  (!_.isNumber(hoveringContentIndex) ||
+                    (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
+                    <Stack
+                      sx={{
+                        transform: `translate(8px, -${28}px)`,
+                      }}
+                      width="2px"
+                      height={
+                        (topCardRef?.getBoundingClientRect?.().top ?? 0) +
+                        (topCardRef?.getBoundingClientRect?.().height ?? 0) /
+                          2 -
+                        mouseY
+                      }
+                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                    />
+                  ) : null}
+                  {/* {hoveringContentIndex === contents.length - 1 ? (
                   <Stack
                     sx={{
                       transform: `translate(8px, -${
@@ -412,9 +428,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
                   />
                 ) : null} */}
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
+          ) : null}
 
           <Stack width="100%" pt="36px" minHeight="44px">
             <Stack px="24px" ref={setContentsColumnRef}>
@@ -493,9 +510,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
                       }}
-                      // onMouseLeave={() => {
-                      //   setHoveringContentIndex(undefined);
-                      // }}
                       onMouseMove={(event) => {
                         setHoveringContentIndex(i);
                         //@ts-ignore
@@ -505,7 +519,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      <Stack width="46%">{card}</Stack>
+                      <Stack
+                        width="46%"
+                        onMouseEnter={() => {
+                          setHoveringOnContentCard(true);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveringOnContentCard(false);
+                        }}
+                      >
+                        {card}
+                      </Stack>
 
                       {contents.length > 1 ? (
                         <Stack

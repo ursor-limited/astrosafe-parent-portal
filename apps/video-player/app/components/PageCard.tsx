@@ -35,6 +35,7 @@ const PageCard = (props: {
         borderRadius="16px 16px 0 0"
         bgcolor="rgb(255,255,255)"
         spacing="26px"
+        boxShadow="0 0 56px rgba(0,0,0,0.055)"
       >
         <Stack spacing="50px" width="100%">
           <Stack
