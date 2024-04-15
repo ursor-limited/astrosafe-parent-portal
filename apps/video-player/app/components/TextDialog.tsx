@@ -16,6 +16,7 @@ export interface IText {
   value: string;
   creatorId: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 const TextCreationDialog = (props: {

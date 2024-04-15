@@ -12,6 +12,7 @@ import UrsorActionButton from "./UrsorActionButton";
 import DeletionDialog from "./DeletionDialog";
 import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
+import useOrangeBorder from "./useOrangeBorder";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
@@ -85,6 +86,7 @@ const LinkCard = (props: {
   imageUrl: ILink["imageUrl"];
   color: ILink["color"];
   createdAt: ILink["createdAt"];
+  updatedAt: ILink["updatedAt"];
   clickCallback?: () => void;
   editCallback?: () => void;
   deleteCallback?: () => void;
@@ -107,6 +109,8 @@ const LinkCard = (props: {
     ApiController.deleteLink(props.id)
       .then(props.deleteCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Link."));
+
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   return (
     <>
@@ -151,6 +155,9 @@ const LinkCard = (props: {
             cursor: "pointer",
             transition: "0.2s",
             "&:hover": { opacity: 0.6 },
+            outline: orangeBorderOn
+              ? `3px solid ${PALETTE.system.orange}`
+              : undefined,
           }}
         >
           <Stack

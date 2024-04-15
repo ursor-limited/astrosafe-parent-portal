@@ -41,6 +41,7 @@ export interface IImage {
   description?: string;
   creatorId: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface IImageDialogProps {

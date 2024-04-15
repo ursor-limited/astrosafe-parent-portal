@@ -15,8 +15,7 @@ import UrsorActionButton from "./UrsorActionButton";
 import NotificationContext from "./NotificationContext";
 import ApiController from "../api";
 import DeletionDialog from "./DeletionDialog";
-
-export const ORANGE_BORDER_DURATION = 8;
+import useOrangeBorder from "./useOrangeBorder";
 
 const WorksheetCard = (
   props: IWorksheet & {
@@ -25,15 +24,7 @@ const WorksheetCard = (
   }
 ) => {
   const router = useRouter();
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, []);
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   const notificationCtx = useContext(NotificationContext);
 

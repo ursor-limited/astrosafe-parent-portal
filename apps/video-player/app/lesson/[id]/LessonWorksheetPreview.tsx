@@ -22,6 +22,7 @@ import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useWindowSize } from "usehooks-ts";
+import useOrangeBorder from "@/app/components/useOrangeBorder";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -70,16 +71,14 @@ const LessonWorksheetPreview = (props: {
     ref && setCardWidth(ref.getBoundingClientRect?.()?.width);
   }, [width, ref?.getBoundingClientRect?.()?.width]);
 
-  // const [worksheetPageRef, setWorksheetPageRef] = useState<HTMLElement | null>(
-  //   null
-  // );
-
   const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
   const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
   useEffect(() => {
     setWorksheetPageWidth(cardWidth - 2 * PADDING);
     setWorksheetPageHeight(((cardWidth - 2 * PADDING) * A4_HEIGHT) / A4_WIDTH);
   }, [width, cardWidth]);
+
+  const orangeBorderOn = useOrangeBorder(props.worksheet.updatedAt);
 
   return (
     <>
@@ -92,6 +91,11 @@ const LessonWorksheetPreview = (props: {
         p={`${PADDING}px`}
         bgcolor={PALETTE.secondary.pink[3]}
         boxShadow="0 0 60px rgba(0,0,0,0.07)"
+        sx={{
+          outline: orangeBorderOn
+            ? `3px solid ${PALETTE.system.orange}`
+            : undefined,
+        }}
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton

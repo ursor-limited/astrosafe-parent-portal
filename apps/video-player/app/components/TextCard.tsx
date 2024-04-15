@@ -13,9 +13,9 @@ import DeletionDialog from "./DeletionDialog";
 import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import { IText } from "./TextDialog";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import "react-quill/dist/quill.core.css";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import useOrangeBorder from "./useOrangeBorder";
 
 const TextPreview = (props: { value: string }) => (
   <div
@@ -41,20 +41,12 @@ const LinkCard = (
 
   const notificationCtx = React.useContext(NotificationContext);
 
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
-
   const submitDeletion = () =>
     ApiController.deleteLink(props.id)
       .then(props.deleteCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Text."));
+
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   return (
     <>

@@ -3,12 +3,10 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
 import { PALETTE, Typography } from "ui";
-import Play from "@/images/play.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
@@ -17,6 +15,7 @@ import NotificationContext from "./NotificationContext";
 import { IImage } from "../dashboard/ImageDialog";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import useOrangeBorder from "./useOrangeBorder";
 dayjs.extend(advancedFormat);
 
 const ImageCard = (
@@ -30,15 +29,6 @@ const ImageCard = (
     undefined
   );
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -48,6 +38,8 @@ const ImageCard = (
     ApiController.deleteImage(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
+
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   return (
     <>
