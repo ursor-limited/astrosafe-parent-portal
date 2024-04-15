@@ -215,6 +215,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
+  const [topCardRef, setTopCardRef] = useState<HTMLElement | null>(null);
+
+  const [topCardCenter, setTopCardCenter] = useState<number>(0);
+  // const updateTopCardCenter = () => {
+  //   if (contents) {
+  //     if (topCard) {
+  //       setTopCardCenter(rect?.top + (rect?.height ?? 0) / 2);
+  //     }
+  //   }
+  // };
+
+  const [bottomCardCenter, setBottomCardCenter] = useState<number>(0);
+  const updateBottomCardCenter = () => {
+    if (contents) {
+      const rect = document
+        .getElementById(contents[(contents?.length || 1) - 1]?.contentId)
+        ?.getBoundingClientRect?.();
+      if (rect) {
+        setBottomCardCenter(rect?.top + (rect?.height ?? 0) / 2);
+      }
+    }
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      updateBottomCardCenter();
+      // updateTopCardCenter();
+    }, 1300);
+  }, [contents, topCardRef]);
+
   return (
     <>
       <Stack
@@ -292,7 +321,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 //@ts-ignore
                 top: event?.deltaY + pageRef.scrollTop,
               });
-              //event.preventDefault();
+              // updateTopCardCenter();
+              // updateBottomCardCenter();
             }}
           >
             <Stack height="100%" position="relative">
@@ -301,13 +331,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 top={
                   contents.length === 0
                     ? contentsColumnRef?.getBoundingClientRect()?.top
-                    : mouseY < height / 2 //!hoveringContentIndex || hoveringContentIndex === 0
+                    : mouseY < height / 2
                     ? Math.max(
                         mouseY - 18,
                         (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
                           60
                       )
-                    : Math.min(mouseY - 18, height - 50)
+                    : Math.min(mouseY - 10, height - 50)
                 }
                 left={-18}
                 onClick={() => {
@@ -355,41 +385,33 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 />
 
                 {contents.length > 0 &&
-                (!hoveringContentIndex || hoveringContentIndex === 0) ? (
+                (!_.isNumber(hoveringContentIndex) ||
+                  (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
                   <Stack
+                    sx={{
+                      transform: `translate(8px, -${28}px)`,
+                    }}
                     width="2px"
                     height={
-                      20 +
-                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
-                        0) /
-                        2
+                      (topCardRef?.getBoundingClientRect?.().top ?? 0) +
+                      (topCardRef?.getBoundingClientRect?.().height ?? 0) / 2 -
+                      mouseY
                     }
                     bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
-                    sx={{
-                      transform: "translateX(8px)",
-                    }}
                   />
                 ) : null}
-                {hoveringContentIndex === contents.length - 1 ? (
+                {/* {hoveringContentIndex === contents.length - 1 ? (
                   <Stack
                     sx={{
                       transform: `translate(8px, -${
-                        20 +
-                        (contentsColumnRef?.getBoundingClientRect?.()?.height ??
-                          0) /
-                          2
+                        mouseY - bottomCardCenter + 28
                       }px)`,
                     }}
                     width="2px"
-                    height={
-                      20 +
-                      (contentsColumnRef?.getBoundingClientRect?.()?.height ??
-                        0) /
-                        2
-                    }
+                    height={mouseY - bottomCardCenter}
                     bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
                   />
-                ) : null}
+                ) : null} */}
               </Stack>
             </Stack>
           </Stack>
@@ -464,6 +486,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 .map((card, i) => (
                   <UrsorFadeIn duration={800} key={card?.key}>
                     <Stack
+                      ref={i === 0 ? setTopCardRef : undefined}
                       id={card?.props.id}
                       alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
@@ -483,38 +506,57 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       }}
                     >
                       <Stack width="46%">{card}</Stack>
+
                       {contents.length > 1 ? (
-                        <>
-                          <Stack
-                            position="absolute"
-                            left={0}
-                            right={0}
-                            top={i === 0 ? undefined : 0}
-                            bottom={i === 0 ? 0 : undefined}
-                            marginLeft="auto !important"
-                            marginRight="auto !important"
-                            height={
-                              i === 0 || i === contents.length - 1
-                                ? "50%"
-                                : "100%"
-                            }
-                            width="2px"
-                            bgcolor={PALETTE.secondary.grey[3]}
-                          />
-                          <Stack
-                            bgcolor={PALETTE.secondary.purple[1]}
-                            height="20px"
-                            width="20px"
-                            borderRadius="100%"
-                            position="absolute"
-                            left={0}
-                            right={0}
-                            top={0}
-                            bottom={0}
-                            margin="auto"
-                          />
-                        </>
+                        <Stack
+                          position="absolute"
+                          left={0}
+                          right={0}
+                          top={i === 0 ? undefined : 0}
+                          bottom={i === 0 ? 0 : undefined}
+                          marginLeft="auto !important"
+                          marginRight="auto !important"
+                          height={
+                            i === 0 || i === contents.length - 1
+                              ? "50%"
+                              : "100%"
+                          }
+                          width="2px"
+                          bgcolor={PALETTE.secondary.grey[3]}
+                        />
                       ) : null}
+                      {contents.length > 0 && i === contents.length - 1 ? (
+                        <Stack
+                          sx={{
+                            background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                          }}
+                          position="absolute"
+                          width="2px"
+                          top="50%"
+                          height={
+                            contents.length === 1
+                              ? height - bottomCardCenter
+                              : `calc(50% + 41px)`
+                          }
+                          // height={height - bottomCardCenter}
+                          left={0}
+                          right={0}
+                          marginRight="auto"
+                          marginLeft="auto"
+                        />
+                      ) : null}
+                      <Stack
+                        bgcolor={PALETTE.secondary.purple[1]}
+                        height="20px"
+                        width="20px"
+                        borderRadius="100%"
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        top={0}
+                        bottom={0}
+                        margin="auto"
+                      />
                     </Stack>
                   </UrsorFadeIn>
                 ))}
