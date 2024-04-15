@@ -121,35 +121,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [lesson?.contents, lesson?.contentOrder]
   );
 
-  const updateLesson = (
-    lesson: ILesson,
-    actualContents: {
-      videos: IVideo[];
-      worksheets: IWorksheet[];
-      links: ILink[];
-      images: IImage[];
-      texts: IText[];
-    }
-  ) => {
-    setLesson(lesson);
-    setContents(
-      _.compact([
-        ...lesson.contentOrder.map((contentId) =>
-          lesson.contents.find((c) => c.contentId === contentId)
-        ),
-      ])
-    );
-    setVideos(actualContents.videos);
-    setWorksheets(actualContents.worksheets);
-    setLinks(actualContents.links);
-    setImages(actualContents.images);
-    setTexts(
-      actualContents.texts.map((t: any) => ({
-        ...t,
-        value: t.value.replaceAll("&lt;", "<"),
-      }))
-    );
-  };
+  // const updateLesson = (
+  //   lesson: ILesson,
+  //   actualContents: {
+  //     videos: IVideo[];
+  //     worksheets: IWorksheet[];
+  //     links: ILink[];
+  //     images: IImage[];
+  //     texts: IText[];
+  //   }
+  // ) => {
+  //   setLesson(lesson);
+  //   setContents(
+  //     _.compact([
+  //       ...lesson.contentOrder.map((contentId) =>
+  //         lesson.contents.find((c) => c.contentId === contentId)
+  //       ),
+  //     ])
+  //   );
+  //   setVideos(actualContents.videos);
+  //   setWorksheets(actualContents.worksheets);
+  //   setLinks(actualContents.links);
+  //   setImages(actualContents.images);
+  //   setTexts(
+  //     actualContents.texts.map((t: any) => ({
+  //       ...t,
+  //       value: t.value.replaceAll("&lt;", "<"),
+  //     }))
+  //   );
+  // };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
@@ -622,8 +622,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "video",
             id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -647,8 +648,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "worksheet",
             id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -672,8 +674,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "link",
             link.id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -697,8 +700,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "text",
             text.id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -723,8 +727,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
               contentInsertionIndex ?? 0,
               "image",
               link.id
-            ).then((response) =>
-              updateLesson(response.lesson, response.actualContents)
+            ).then(
+              loadLesson
+              //esson(response.lesson, response.actualContents)
             );
           }}
         />

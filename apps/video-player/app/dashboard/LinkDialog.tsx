@@ -46,7 +46,7 @@ export const getTopImageStyle = (url: string, height: string) => ({
 });
 
 const BUTTON_ICON_SIZE = "16px";
-export const MAX_CHARACTERS = 48;
+//export const MAX_CHARACTERS = 48;
 const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern";
 
@@ -463,7 +463,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
             setPreviewImageUrl(result.img);
           }
           if (!!result?.title && !usingTypedTitle) {
-            setTitle(result?.title.slice(0, MAX_CHARACTERS));
+            setTitle(result?.title);
           }
         }
       }),
