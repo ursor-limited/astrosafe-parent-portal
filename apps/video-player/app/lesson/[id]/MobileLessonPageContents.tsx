@@ -206,26 +206,30 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           deletionCallback={() => setDeletionDialogOpen(true)}
         >
           <Stack width="100%" pt="16px">
-            <Stack
-              alignItems="center"
-              onClick={() => setContentInsertionIndex(0)}
-            >
-              <AddContentButton
-                mobile
-                open={addContentPopoverOpenId === "first"}
-                setOpen={(o) =>
-                  setAddContentPopoverOpenId(
-                    (o ? "first" : undefined) as string
-                  )
-                }
-                callback={(type) =>
-                  outOfCreations
-                    ? setNoCreationsLeftDialogOpen(true)
-                    : contentCallbacks[type]()
-                }
-                clickOutsideCloseCallback={() => null}
-              />
-            </Stack>
+            {userDetails?.user?.id &&
+            lesson &&
+            userDetails.user.id === lesson.creatorId ? (
+              <Stack
+                alignItems="center"
+                onClick={() => setContentInsertionIndex(0)}
+              >
+                <AddContentButton
+                  mobile
+                  open={addContentPopoverOpenId === "first"}
+                  setOpen={(o) =>
+                    setAddContentPopoverOpenId(
+                      (o ? "first" : undefined) as string
+                    )
+                  }
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
+                  }
+                  clickOutsideCloseCallback={() => null}
+                />
+              </Stack>
+            ) : null}
             <Stack pt="20px" width="100%" spacing="16px">
               {contents
                 .map((c) => {
@@ -296,33 +300,37 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                   <UrsorFadeIn duration={800} key={i}>
                     <Stack spacing="16px" justifyContent="center">
                       {card}
-                      <Stack
-                        width="100%"
-                        alignItems="center"
-                        onClick={() => setContentInsertionIndex(i + 1)}
-                      >
-                        <AddContentButton
-                          mobile
-                          open={addContentPopoverOpenId === card?.key}
-                          setOpen={(o) =>
-                            setAddContentPopoverOpenId(
-                              (o
-                                ? card?.key
+                      {userDetails?.user?.id &&
+                      lesson &&
+                      userDetails.user.id === lesson.creatorId ? (
+                        <Stack
+                          width="100%"
+                          alignItems="center"
+                          onClick={() => setContentInsertionIndex(i + 1)}
+                        >
+                          <AddContentButton
+                            mobile
+                            open={addContentPopoverOpenId === card?.key}
+                            setOpen={(o) =>
+                              setAddContentPopoverOpenId(
+                                (o
                                   ? card?.key
-                                  : undefined
-                                : undefined) as string
-                            )
-                          }
-                          callback={(type) =>
-                            outOfCreations
-                              ? setNoCreationsLeftDialogOpen(true)
-                              : contentCallbacks[type]()
-                          }
-                          clickOutsideCloseCallback={() =>
-                            setContentInsertionIndex(undefined)
-                          }
-                        />
-                      </Stack>
+                                    ? card?.key
+                                    : undefined
+                                  : undefined) as string
+                              )
+                            }
+                            callback={(type) =>
+                              outOfCreations
+                                ? setNoCreationsLeftDialogOpen(true)
+                                : contentCallbacks[type]()
+                            }
+                            clickOutsideCloseCallback={() =>
+                              setContentInsertionIndex(undefined)
+                            }
+                          />
+                        </Stack>
+                      ) : null}
                     </Stack>
                   </UrsorFadeIn>
                 ))}

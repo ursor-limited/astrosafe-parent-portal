@@ -30,7 +30,20 @@ const MobilePageCard = (props: {
   const userDetails = useUserContext();
   const notificationCtx = useContext(NotificationContext);
   return (
-    <Stack px="20px" pt="20px" spacing="22px" overflow="scroll" flex={1}>
+    <Stack
+      px="20px"
+      pt="20px"
+      spacing="22px"
+      overflow="scroll"
+      flex={1}
+      bgcolor={
+        userDetails?.user?.id &&
+        props?.creatorId &&
+        userDetails.user.id === props.creatorId
+          ? PALETTE.secondary.grey[1]
+          : undefined
+      }
+    >
       <Stack
         spacing="12px"
         bgcolor="rgb(255,255,255)"
@@ -40,6 +53,7 @@ const MobilePageCard = (props: {
         flex={1}
         minHeight="fit-content"
         boxSizing="border-box"
+        boxShadow="0 0 14px rgba(0,0,0,0.05)"
       >
         <Stack direction="row" justifyContent="space-between">
           <Stack
