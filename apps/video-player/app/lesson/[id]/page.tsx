@@ -20,6 +20,7 @@ export interface ILesson {
     contentId: string;
   }[];
   contentOrder: string[];
+  imageUrls?: string[];
   createdAt: string;
   updatedAt: string;
 }
