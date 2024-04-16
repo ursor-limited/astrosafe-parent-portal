@@ -628,6 +628,10 @@ export default function WorksheetPageContents(props: {
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
+          editingEnabled={
+            !!userDetails?.user?.id &&
+            userDetails.user.id === props.details.creatorId
+          }
         >
           {nPages ? (
             <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
