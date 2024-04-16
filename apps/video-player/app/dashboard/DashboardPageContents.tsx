@@ -51,6 +51,9 @@ import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
 import DashboardPageCreateButton from "./DashboardPageCreateButton";
 
+const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
+const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
+
 export const spin = keyframes`
 from {
   transform: rotate(0deg);
@@ -158,7 +161,7 @@ export const SearchInput = (props: {
   return (
     <Stack
       height={props.height || "28px"}
-      width={props.fullWidth ? undefined : "180px"}
+      width={props.fullWidth ? undefined : "160px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"
@@ -432,7 +435,7 @@ export const ToolButton = (props: {
           >
             <props.icon height="20px" width="20px" />
           </Stack>
-          <Stack flex={1} py="11px" justifyContent="space-between">
+          <Stack flex={1} py="11px" justifyContent="center">
             <Stack ref={setTitleRef} width="fit-content">
               <Typography
                 bold
@@ -770,6 +773,22 @@ export default function DashboardPageContents() {
     null
   );
 
+  const { width } = useWindowSize();
+  const [filterMultiRow, setFilterMultiRow] = useState<boolean>(false);
+  useEffect(
+    () => setFilterMultiRow(width < FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD),
+    [width]
+  );
+  const [shortenedToolNameInButton, setShortenedToolNameInButton] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setShortenedToolNameInButton(
+        width < SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD
+      ),
+    [width]
+  );
+
   return (
     <>
       <PageLayout
@@ -855,7 +874,7 @@ export default function DashboardPageContents() {
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
             <ToolButton
-              title="Create lesson"
+              title={shortenedToolNameInButton ? "Lesson" : "Create lesson"}
               description={CONTENT_BRANDING.lesson.description}
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
@@ -868,7 +887,11 @@ export default function DashboardPageContents() {
               info={CONTENT_BRANDING.lesson.info}
             />
             <ToolButton
-              title="Create safe video link"
+              title={
+                shortenedToolNameInButton
+                  ? "Safe video"
+                  : "Create safe video link"
+              }
               description="Free of ads. Safe to share."
               color={PALETTE.secondary.blue[3]}
               icon={CirclePlayIcon}
@@ -886,7 +909,11 @@ export default function DashboardPageContents() {
               }
             />
             <ToolButton
-              title="Create math worksheet"
+              title={
+                shortenedToolNameInButton
+                  ? "Worksheet"
+                  : "Create math worksheet"
+              }
               description="Printable & finished in seconds."
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
@@ -922,8 +949,9 @@ export default function DashboardPageContents() {
         <UrsorFadeIn duration={700} delay={200}>
           <Stack
             pl={`${SIDEBAR_X_MARGIN}px`}
-            direction="row"
+            direction={filterMultiRow ? "column" : "row"}
             justifyContent="space-between"
+            spacing="12px"
           >
             <Stack direction="row" spacing="12px">
               <Stack
@@ -1000,6 +1028,7 @@ export default function DashboardPageContents() {
                         ? PALETTE.font.dark
                         : PALETTE.secondary.grey[4]
                     }
+                    noWrap
                   >
                     All Contents
                   </Typography>
