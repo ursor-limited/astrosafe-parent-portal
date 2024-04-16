@@ -244,6 +244,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
               </Stack>
             </Stack>
           }
+          editingCallback={() => setEditingDialogOpen(true)}
         >
           <Stack px="24px" flex={1}>
             <Stack flex={1} pt="30px" ref={setSizeRef}>
