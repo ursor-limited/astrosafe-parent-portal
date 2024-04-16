@@ -1,6 +1,7 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { useRouter } from "next/navigation";
 import { getFormattedDate } from "./VideoCard";
 import { useUserContext } from "./UserContext";
@@ -14,6 +15,7 @@ const PageCard = (props: {
   backRoute?: string;
   backText?: string;
   width?: string;
+  editingCallback?: () => void;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -74,11 +76,59 @@ const PageCard = (props: {
               {props.createdAt ? (
                 <Typography>{getFormattedDate(props.createdAt)}</Typography>
               ) : null}
-              <Typography htmlTag="h1" variant="h2">
-                {props.title}
-              </Typography>
+              <Stack
+                direction="row"
+                spacing="12px"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
+                alignItems="center"
+              >
+                <Typography htmlTag="h1" variant="h2">
+                  {props.title}
+                </Typography>
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                  onClick={props.editingCallback}
+                >
+                  <PencilIcon width="24px" height="24px" />
+                </Stack>
+              </Stack>
             </Stack>
-            <Typography htmlTag="h2">{props.description}</Typography>
+            {props.description ? (
+              <Stack
+                direction="row"
+                spacing="12px"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
+                alignItems="center"
+              >
+                <Typography htmlTag="h2">{props.description}</Typography>
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                  onClick={props.editingCallback}
+                >
+                  <PencilIcon width="18px" height="18px" />
+                </Stack>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         {props.children}

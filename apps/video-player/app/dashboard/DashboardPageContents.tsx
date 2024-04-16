@@ -1030,10 +1030,7 @@ export default function DashboardPageContents() {
           </Stack>
         </Stack>
       </PageLayout>
-      {/* <VideoCreationDialog
-        open={videoCreationDialogOpen}
-        closeCallback={() => setVideoCreationDialogOpen(false)}
-      />
+
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={!!videoEditingDialogId}
@@ -1042,10 +1039,7 @@ export default function DashboardPageContents() {
           video={videos.find((v) => v.id === videoEditingDialogId)}
         />
       ) : null}
-      <WorksheetCreationDialog
-        open={worksheetCreationDialogOpen}
-        closeCallback={() => setWorksheetCreationDialogOpen(false)}
-      />
+
       {worksheetEditingDialogId ? (
         <WorksheetCreationDialog
           open={true}
@@ -1053,7 +1047,7 @@ export default function DashboardPageContents() {
           editingCallback={loadWorksheets}
           worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
         />
-      ) : null} */}
+      ) : null}
       <LessonCreationDialog
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}

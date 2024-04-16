@@ -598,31 +598,6 @@ export default function WorksheetPageContents(props: {
                       ]}
                     />
                   ) : null}
-
-                  {/* <Stack
-                    borderRadius="100%"
-                    border="2px solid rgb(255,255,255)"
-                    height="39px"
-                    width="39px"
-                    justifyContent="center"
-                    alignItems="center"
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
-                      notificationCtx.success("Copied URL to clipboard.");
-                    }}
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.6 },
-                      transition: "0.2s",
-                      svg: {
-                        path: {
-                          fill: "rgb(255,255,255)",
-                        },
-                      },
-                    }}
-                  >
-                    <ShareIcon width="22px" height="22px" />
-                  </Stack> */}
                 </Stack>
               </Stack>
               <Stack
@@ -652,6 +627,7 @@ export default function WorksheetPageContents(props: {
               </UrsorButton>
             </Stack>
           }
+          editingCallback={() => setEditingDialogOpen(true)}
         >
           {nPages ? (
             <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
