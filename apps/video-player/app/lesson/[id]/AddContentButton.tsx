@@ -107,8 +107,9 @@ export default function AddContentButton(props: {
             {_.chunk(contentOrder, 3).map((row, i) => {
               return (
                 <Stack key={i} spacing="12px" direction="row">
-                  {row.map((c) => (
+                  {row.map((c, j) => (
                     <AddContentButtonDialogContentButton
+                      key={j}
                       icon={CONTENT_BRANDING[c].icon}
                       color={CONTENT_BRANDING[c].color}
                       title={CONTENT_BRANDING[c].title}
