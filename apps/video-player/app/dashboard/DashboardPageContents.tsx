@@ -359,7 +359,7 @@ export const ToolButton = (props: {
   ]);
   return (
     <>
-      {!props.noInfo
+      {/* {!props.noInfo
         ? createPortal(
             <Stack
               position="absolute"
@@ -381,11 +381,11 @@ export const ToolButton = (props: {
             </Stack>,
             document.body
           )
-        : null}
+        : null} */}
       <Stack
         direction="row"
-        width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
-        minHeight="66px"
+        width={props.fullWidth ? "100%" : props.mobile ? undefined : "294px"}
+        minHeight="40px"
         borderRadius="8px"
         boxShadow={
           props.strongShadow
@@ -411,7 +411,7 @@ export const ToolButton = (props: {
 
         <Stack direction="row" spacing="14px" flex={1}>
           <Stack
-            width="70px"
+            width="44px"
             height="100%"
             alignItems="center"
             justifyContent="center"
@@ -430,19 +430,18 @@ export const ToolButton = (props: {
             }}
             bgcolor={props.color}
           >
-            <props.icon height="35px" width="35px" />
+            <props.icon height="20px" width="20px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="space-between">
             <Stack ref={setTitleRef} width="fit-content">
               <Typography
-                variant="medium"
                 bold
                 color={lightText ? props.color : PALETTE.secondary.grey[5]}
               >
                 {props.title}
               </Typography>
             </Stack>
-            <Typography
+            {/* <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
               color={alpha(
@@ -451,7 +450,7 @@ export const ToolButton = (props: {
               )}
             >
               {props.description}
-            </Typography>
+            </Typography> */}
           </Stack>
           <Stack
             height="100%"
