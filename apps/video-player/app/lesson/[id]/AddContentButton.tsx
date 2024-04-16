@@ -51,6 +51,7 @@ export default function AddContentButton(props: {
                       props.callback(c);
                       props.setOpen(false);
                     }}
+                    noInfo
                     fullWidth
                     strongShadow
                   />

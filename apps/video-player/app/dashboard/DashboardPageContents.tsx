@@ -49,6 +49,7 @@ import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
+import DashboardPageCreateButton from "./DashboardPageCreateButton";
 
 export const spin = keyframes`
 from {
@@ -334,6 +335,7 @@ export const ToolButton = (props: {
   mobile?: boolean;
   fullWidth?: boolean;
   strongShadow?: boolean;
+  noInfo?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
@@ -357,27 +359,29 @@ export const ToolButton = (props: {
   ]);
   return (
     <>
-      {createPortal(
-        <Stack
-          position="absolute"
-          top={infoButtonY}
-          left={infoButtonX + 12}
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            svg: {
-              path: {
-                fill: `${PALETTE.secondary.grey[5]} !important`,
-              },
-            },
-          }}
-          onClick={() => setOverlayOpen(true)}
-        >
-          <InfoIcon width="14px" height="14px" />
-        </Stack>,
-        document.body
-      )}
+      {!props.noInfo
+        ? createPortal(
+            <Stack
+              position="absolute"
+              top={infoButtonY}
+              left={infoButtonX + 12}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: `${PALETTE.secondary.grey[5]} !important`,
+                  },
+                },
+              }}
+              onClick={() => setOverlayOpen(true)}
+            >
+              <InfoIcon width="14px" height="14px" />
+            </Stack>,
+            document.body
+          )
+        : null}
       <Stack
         direction="row"
         width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
@@ -953,46 +957,49 @@ export default function DashboardPageContents() {
             >
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                  {column.map((item, j) => (
-                    <Stack
-                      key={`${item.details.id}${selectedSort}`}
-                      spacing={GRID_SPACING}
-                    >
-                      <UrsorFadeIn
-                        delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
-                        duration={900}
+                  {[
+                    ...(i === 0 ? [<DashboardPageCreateButton />] : []),
+                    ...column.map((item, j) => (
+                      <Stack
+                        key={`${item.details.id}${selectedSort}`}
+                        spacing={GRID_SPACING}
                       >
-                        {item.type === "video" ? (
-                          <VideoCard
-                            {...(item.details as IVideo)}
-                            editingCallback={() =>
-                              setVideoEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadVideos}
-                          />
-                        ) : item.type === "worksheet" ? (
-                          <WorksheetCard
-                            {...(item.details as IWorksheet)}
-                            editingCallback={() =>
-                              setWorksheetEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadWorksheets}
-                          />
-                        ) : item.type === "lesson" ? (
-                          <LessonCard
-                            {...(item.details as ILesson)}
-                            clickCallback={() =>
-                              router.push(`/lesson/${item.details.id}`)
-                            }
-                            editingCallback={() =>
-                              setLessonEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadLessons}
-                          />
-                        ) : null}
-                      </UrsorFadeIn>
-                    </Stack>
-                  ))}
+                        <UrsorFadeIn
+                          delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
+                          duration={900}
+                        >
+                          {item.type === "video" ? (
+                            <VideoCard
+                              {...(item.details as IVideo)}
+                              editingCallback={() =>
+                                setVideoEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadVideos}
+                            />
+                          ) : item.type === "worksheet" ? (
+                            <WorksheetCard
+                              {...(item.details as IWorksheet)}
+                              editingCallback={() =>
+                                setWorksheetEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadWorksheets}
+                            />
+                          ) : item.type === "lesson" ? (
+                            <LessonCard
+                              {...(item.details as ILesson)}
+                              clickCallback={() =>
+                                router.push(`/lesson/${item.details.id}`)
+                              }
+                              editingCallback={() =>
+                                setLessonEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadLessons}
+                            />
+                          ) : null}
+                        </UrsorFadeIn>
+                      </Stack>
+                    )),
+                  ]}
                 </Stack>
               ))}
             </Stack>
