@@ -762,6 +762,14 @@ export default function DashboardPageContents() {
     [worksheetsLoaded, videosLoaded, lessonsLoaded]
   );
 
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
   return (
     <>
       <PageLayout
@@ -865,9 +873,12 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.blue[3]}
               icon={CirclePlayIcon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setVideoCreationDialogOpen(true);
+                if (outOfCreations) {
+                  setNoCreationsLeftDialogOpen(true);
+                } else {
+                  setLessonCreationDialogOpen(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
+                }
               }}
               infoButtonPosition={280}
               info={
@@ -880,9 +891,14 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setWorksheetCreationDialogOpen(true);
+                if (outOfCreations) {
+                  setNoCreationsLeftDialogOpen(true);
+                } else {
+                  setLessonCreationDialogOpen(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson(
+                    "worksheet"
+                  );
+                }
               }}
               infoButtonPosition={300}
               info={
@@ -958,7 +974,15 @@ export default function DashboardPageContents() {
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
                   {[
-                    ...(i === 0 ? [<DashboardPageCreateButton />] : []),
+                    ...(i === 0
+                      ? [
+                          <Stack
+                            onClick={() => setLessonCreationDialogOpen(true)}
+                          >
+                            <DashboardPageCreateButton />
+                          </Stack>,
+                        ]
+                      : []),
                     ...column.map((item, j) => (
                       <Stack
                         key={`${item.details.id}${selectedSort}`}
@@ -1006,7 +1030,7 @@ export default function DashboardPageContents() {
           </Stack>
         </Stack>
       </PageLayout>
-      <VideoCreationDialog
+      {/* <VideoCreationDialog
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
@@ -1029,7 +1053,7 @@ export default function DashboardPageContents() {
           editingCallback={loadWorksheets}
           worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
         />
-      ) : null}
+      ) : null} */}
       <LessonCreationDialog
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}

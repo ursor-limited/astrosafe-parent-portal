@@ -10,6 +10,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { ILesson } from "../lesson/[id]/page";
+import { useLocalStorage } from "usehooks-ts";
 
 const LessonCreationDialog = (props: {
   open: boolean;
@@ -28,12 +29,27 @@ const LessonCreationDialog = (props: {
   const router = useRouter();
   const userId = useUserContext().user?.id;
   const notificationCtx = useContext(NotificationContext);
+
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
   const submitCreation = () =>
     ApiController.createLesson({
       title,
       description,
       creatorId: userId,
-    }).then((lesson) => router.push(`/lesson/${lesson.id}`));
+    }).then((lesson) => {
+      setOpenContentDialogInLessonId(lesson.id);
+      router.push(`/lesson/${lesson.id}`);
+    });
   const submitUpdate = () =>
     props.lesson?.id &&
     ApiController.updateLesson(props.lesson.id, {
@@ -43,6 +59,7 @@ const LessonCreationDialog = (props: {
       .then(props.updateCallback)
       .then(props.closeCallback)
       .then(() => notificationCtx.success("Lesson updated."));
+
   return (
     <UrsorDialog
       supertitle={props.lesson?.title ? "Edit your Lesson" : "Name your Lesson"}

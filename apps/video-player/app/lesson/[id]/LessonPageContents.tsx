@@ -278,8 +278,21 @@ export default function LessonPageContents(props: { lessonId: string }) {
           width="78%"
           rightStuff={
             <Stack direction="row" spacing="12px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === lesson?.creatorId ? (
+              <Stack
+                sx={{
+                  opacity:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === lesson?.creatorId
+                      ? 1
+                      : 0,
+                  pointerEvents:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === lesson?.creatorId
+                      ? undefined
+                      : "none",
+                  transition: "0.2s",
+                }}
+              >
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
@@ -298,7 +311,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     },
                   ]}
                 />
-              ) : null}
+              </Stack>
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
