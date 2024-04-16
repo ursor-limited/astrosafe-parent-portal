@@ -460,7 +460,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
                     <Stack
                       sx={{
-                        transform: `translate(8px, -${28}px)`,
+                        transform: `translateY(-${28}px)`,
                       }}
                       width="2px"
                       height={

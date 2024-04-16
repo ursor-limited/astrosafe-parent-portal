@@ -77,17 +77,17 @@ export interface IAstroContentBranding {
 }
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
-    title: "SafeTube - safe videos",
+    title: "Safe Video",
     description: "Free of ads. Safe to share.",
-    color: PALETTE.secondary.blue[3],
+    color: "#FC5C5C",
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
     info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
   },
   worksheet: {
-    title: "Worksheet Generator",
+    title: "Worksheet",
     description: "Printable & finished in seconds.",
-    color: PALETTE.secondary.pink[5],
+    color: PALETTE.secondary.blue[3],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
     info: "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
@@ -103,7 +103,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   link: {
     title: "Link",
     description: "Add a link to some non-naughty site.",
-    color: PALETTE.secondary.orange[5],
+    color: PALETTE.secondary.orange[3],
     icon: LinkIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -111,7 +111,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   image: {
     title: "Image",
     description: "Add a wholesome image.",
-    color: PALETTE.secondary.grey[4],
+    color: PALETTE.secondary.pink[3],
     icon: ImageIcon,
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -119,7 +119,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   text: {
     title: "Text",
     description: "Add some styled and well-crafted copy.",
-    color: PALETTE.secondary.yellow[4],
+    color: "#41C5FD",
     icon: TypographyIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
