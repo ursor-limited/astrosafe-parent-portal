@@ -976,6 +976,7 @@ export default function DashboardPageContents() {
                     ...(i === 0
                       ? [
                           <Stack
+                            key="new"
                             onClick={() => setLessonCreationDialogOpen(true)}
                           >
                             <DashboardPageCreateButton />
