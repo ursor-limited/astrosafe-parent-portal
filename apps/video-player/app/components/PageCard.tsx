@@ -16,6 +16,7 @@ const PageCard = (props: {
   backText?: string;
   width?: string;
   editingCallback?: () => void;
+  editingEnabled?: boolean;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -91,16 +92,18 @@ const PageCard = (props: {
                 <Typography htmlTag="h1" variant="h2">
                   {props.title}
                 </Typography>
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                  }}
-                  onClick={props.editingCallback}
-                >
-                  <PencilIcon width="24px" height="24px" />
-                </Stack>
+                {props.editingEnabled ? (
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.6 },
+                      transition: "0.2s",
+                    }}
+                    onClick={props.editingCallback}
+                  >
+                    <PencilIcon width="24px" height="24px" />
+                  </Stack>
+                ) : null}
               </Stack>
             </Stack>
             {props.description ? (
@@ -117,16 +120,18 @@ const PageCard = (props: {
                 alignItems="center"
               >
                 <Typography htmlTag="h2">{props.description}</Typography>
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                  }}
-                  onClick={props.editingCallback}
-                >
-                  <PencilIcon width="18px" height="18px" />
-                </Stack>
+                {props.editingEnabled ? (
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.6 },
+                      transition: "0.2s",
+                    }}
+                    onClick={props.editingCallback}
+                  >
+                    <PencilIcon width="18px" height="18px" />
+                  </Stack>
+                ) : null}
               </Stack>
             ) : null}
           </Stack>

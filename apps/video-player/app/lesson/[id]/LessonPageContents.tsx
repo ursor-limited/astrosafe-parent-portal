@@ -365,6 +365,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
+          editingEnabled={
+            userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
+          }
         >
           {userDetails.user?.id && userDetails.user.id === lesson?.creatorId ? (
             <Stack

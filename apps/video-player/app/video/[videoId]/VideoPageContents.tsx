@@ -245,6 +245,10 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
+          editingEnabled={
+            !!userDetails?.user?.id &&
+            userDetails.user.id === props.details.creatorId
+          }
         >
           <Stack px="24px" flex={1}>
             <Stack flex={1} pt="30px" ref={setSizeRef}>
