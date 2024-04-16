@@ -562,7 +562,7 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (selectedBinaryFilter === "all") {
       if (selectedMultipleFilter === "all") {
-        setFilteredCards(cards);
+        setFilteredCards(cards.filter((c) => c.type !== "lesson"));
       } else {
         setFilteredCards(
           cards.filter((c) => c.type === selectedMultipleFilter)
@@ -1023,6 +1023,7 @@ export default function DashboardPageContents() {
                     image: "Image",
                     text: "Text",
                   }}
+                  noText
                 />
               </Stack>
             </Stack>
