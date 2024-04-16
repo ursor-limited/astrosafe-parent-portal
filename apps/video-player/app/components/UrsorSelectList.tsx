@@ -45,7 +45,9 @@ export default function UrsorSelectList(props: IUrsorSelectListProps) {
           }}
         >
           {item.icon}
-          <Typography bold>{item.value}</Typography>
+          <Typography variant="small" bold>
+            {item.value}
+          </Typography>
         </Stack>
       ))}
     </Stack>

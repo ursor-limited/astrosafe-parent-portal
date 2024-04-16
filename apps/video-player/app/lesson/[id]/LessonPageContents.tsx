@@ -300,6 +300,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
+        sx={{
+          transition: "1s",
+        }}
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard

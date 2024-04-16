@@ -543,6 +543,9 @@ export default function WorksheetPageContents(props: {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
+        sx={{
+          transition: "1s",
+        }}
         flex={1}
       >
         <PageCard
@@ -552,28 +555,6 @@ export default function WorksheetPageContents(props: {
           backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
             <Stack direction="row" spacing="12px">
-              {/* {userDetails?.user?.id &&
-              userDetails?.user?.id === props.creatorId ? (
-                <Stack
-                  sx={{
-                    pointerEvents:
-                      userDetails?.user?.id === props.creatorId
-                        ? undefined
-                        : "none",
-                    opacity:
-                      userDetails?.user?.id &&
-                      userDetails?.user?.id !== props.creatorId
-                        ? 0
-                        : 1,
-                  }}
-                >
-                  <CircularButton
-                    icon={TrashcanIcon}
-                    color={PALETTE.system.red}
-                    onClick={() => setDeletionDialogOpen(true)}
-                  />
-                </Stack>
-              ) : null} */}
               <Stack direction="row" spacing="10px">
                 <Stack direction="row" spacing="10px">
                   {userDetails?.user?.id &&

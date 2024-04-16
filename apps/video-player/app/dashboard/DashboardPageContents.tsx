@@ -8,9 +8,9 @@ import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
-import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import RepoIcon from "@/images/icons/RepoIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -526,7 +526,7 @@ export default function DashboardPageContents() {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
       if (scrollTop + clientHeight > scrollHeight - 800) {
-        PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
+        PAGE_SIZE * (latestPageIndex + 1) < filteredCards.length &&
           setLatestPageIndex(latestPageIndex + 1);
       }
     }
@@ -546,15 +546,45 @@ export default function DashboardPageContents() {
       details: IVideo | IWorksheet | ILesson | ILink;
     }[]
   >([]);
+  const [filteredCards, setFilteredCards] = useState<
+    {
+      type: AstroContent;
+      details: IVideo | IWorksheet | ILesson | ILink;
+    }[]
+  >([]);
+  const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
+    "lessons" | "all"
+  >("lessons");
+  const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
+    "all" | "video" | "worksheet" | "image" | "text"
+  >("all");
+
   useEffect(() => {
-    const pageLimitedCards = cards.slice(0, (latestPageIndex + 1) * PAGE_SIZE);
+    if (selectedBinaryFilter === "all") {
+      if (selectedMultipleFilter === "all") {
+        setFilteredCards(cards);
+      } else {
+        setFilteredCards(
+          cards.filter((c) => c.type === selectedMultipleFilter)
+        );
+      }
+    } else {
+      setFilteredCards(cards.filter((c) => c.type === "lesson"));
+    }
+  }, [cards, selectedBinaryFilter, selectedMultipleFilter]);
+
+  useEffect(() => {
+    const pageLimitedCards = filteredCards.slice(
+      0,
+      (latestPageIndex + 1) * PAGE_SIZE
+    );
     const chunked = _.chunk(pageLimitedCards, nColumns);
     setCardColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns, cards, latestPageIndex]);
+  }, [nColumns, filteredCards, latestPageIndex]);
 
   const [selectedContentType, setSelectedContentType] =
     useState<AstroContent | null>(null);
@@ -623,12 +653,6 @@ export default function DashboardPageContents() {
     searchValue,
     selectedSort,
   ]);
-
-  const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
-    useState<boolean>(false);
-
-  const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
-    useState<boolean>(false);
 
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
@@ -714,29 +738,6 @@ export default function DashboardPageContents() {
     useState<boolean>(false);
 
   const outOfCreations = useOutOfCreations();
-
-  // useEffect(() => {
-  //   !userDetails.user?.subscribed &&
-  //     userDetails.user?.freeTrialStart &&
-  //     -dayjs().diff(userDetails.user.freeTrialStart);
-  // }, [userDetails.user]);
-
-  // useEffect(() => {
-  //   if (
-  //     !userDetails.user?.subscribed &&
-  //     userDetails.user?.freeTrialStart &&
-  //     (!userDetails.user.periodCreationsClearedAt ||
-  //       dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
-  //   ) {
-  //     // const dayOfMonthToCheckOn =
-  //     //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
-  //     // (!userDetails.user.periodCreationsClearedAt ||
-  //     //   dayjs().date() >= dayOfMonthToCheckOn) &&
-  //     ApiController.clearPediodCreations(userDetails.user.id).then(
-  //       userDetails.refresh
-  //     );
-  //   }
-  // }, [userDetails.user]);
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
@@ -924,10 +925,107 @@ export default function DashboardPageContents() {
             direction="row"
             justifyContent="space-between"
           >
-            <FilterRow
-              selected={selectedContentType}
-              callback={(newSelected) => setSelectedContentType(newSelected)}
-            />
+            <Stack direction="row" spacing="12px">
+              <Stack
+                height="28px"
+                bgcolor="rgb(255,255,255)"
+                borderRadius="56px"
+                direction="row"
+                alignItems="center"
+                px="16px"
+                spacing="10px"
+              >
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                    svg: {
+                      path: {
+                        fill:
+                          selectedBinaryFilter === "lessons"
+                            ? PALETTE.font.dark
+                            : PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  direction="row"
+                  spacing="4px"
+                  alignItems="center"
+                  onClick={() => setSelectedBinaryFilter("lessons")}
+                >
+                  <VersionsIcon height="16px" width="16px" />
+                  <Typography
+                    variant="small"
+                    bold
+                    color={
+                      selectedBinaryFilter === "lessons"
+                        ? PALETTE.font.dark
+                        : PALETTE.secondary.grey[4]
+                    }
+                  >
+                    Lessons
+                  </Typography>
+                </Stack>
+                <Stack
+                  bgcolor={PALETTE.secondary.grey[2]}
+                  width="1px"
+                  height="18px"
+                />
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                    svg: {
+                      path: {
+                        fill:
+                          selectedBinaryFilter === "all"
+                            ? PALETTE.font.dark
+                            : PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  direction="row"
+                  spacing="4px"
+                  alignItems="center"
+                  onClick={() => setSelectedBinaryFilter("all")}
+                >
+                  <RepoIcon height="16px" width="16px" />
+                  <Typography
+                    variant="small"
+                    bold
+                    color={
+                      selectedBinaryFilter === "all"
+                        ? PALETTE.font.dark
+                        : PALETTE.secondary.grey[4]
+                    }
+                  >
+                    All Contents
+                  </Typography>
+                </Stack>
+              </Stack>
+
+              <Stack
+                sx={{
+                  opacity: selectedBinaryFilter === "all" ? 1 : 0,
+                  transition: "0.2s",
+                }}
+              >
+                <SortButton
+                  selected={selectedMultipleFilter}
+                  callback={(id) => setSelectedMultipleFilter(id)}
+                  types={["all", "video", "worksheet", "image", "text"]}
+                  displayNames={{
+                    all: "All",
+                    video: "Video",
+                    worksheet: "Worksheet",
+                    image: "Image",
+                    text: "Text",
+                  }}
+                />
+              </Stack>
+            </Stack>
             <Stack
               direction="row"
               spacing="12px"
