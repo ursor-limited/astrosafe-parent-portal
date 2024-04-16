@@ -191,6 +191,9 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
+        sx={{
+          transition: "1s",
+        }}
         flex={1}
       >
         <PageCard
