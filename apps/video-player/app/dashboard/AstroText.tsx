@@ -25,6 +25,7 @@ const AstroText = (props: {
   //useEffect(() => setValue(props.value), [props.value]);
   return (
     <Stack
+      width="100%"
       sx={{
         ".ql-container": {
           fontFamily: "unset",

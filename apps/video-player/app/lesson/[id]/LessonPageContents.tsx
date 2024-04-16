@@ -36,7 +36,7 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
 export const fadeIn = keyframes`
 from {
@@ -121,35 +121,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [lesson?.contents, lesson?.contentOrder]
   );
 
-  const updateLesson = (
-    lesson: ILesson,
-    actualContents: {
-      videos: IVideo[];
-      worksheets: IWorksheet[];
-      links: ILink[];
-      images: IImage[];
-      texts: IText[];
-    }
-  ) => {
-    setLesson(lesson);
-    setContents(
-      _.compact([
-        ...lesson.contentOrder.map((contentId) =>
-          lesson.contents.find((c) => c.contentId === contentId)
-        ),
-      ])
-    );
-    setVideos(actualContents.videos);
-    setWorksheets(actualContents.worksheets);
-    setLinks(actualContents.links);
-    setImages(actualContents.images);
-    setTexts(
-      actualContents.texts.map((t: any) => ({
-        ...t,
-        value: t.value.replaceAll("&lt;", "<"),
-      }))
-    );
-  };
+  // const updateLesson = (
+  //   lesson: ILesson,
+  //   actualContents: {
+  //     videos: IVideo[];
+  //     worksheets: IWorksheet[];
+  //     links: ILink[];
+  //     images: IImage[];
+  //     texts: IText[];
+  //   }
+  // ) => {
+  //   setLesson(lesson);
+  //   setContents(
+  //     _.compact([
+  //       ...lesson.contentOrder.map((contentId) =>
+  //         lesson.contents.find((c) => c.contentId === contentId)
+  //       ),
+  //     ])
+  //   );
+  //   setVideos(actualContents.videos);
+  //   setWorksheets(actualContents.worksheets);
+  //   setLinks(actualContents.links);
+  //   setImages(actualContents.images);
+  //   setTexts(
+  //     actualContents.texts.map((t: any) => ({
+  //       ...t,
+  //       value: t.value.replaceAll("&lt;", "<"),
+  //     }))
+  //   );
+  // };
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
@@ -218,6 +218,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useState<boolean>(false);
 
   const [topCardRef, setTopCardRef] = useState<HTMLElement | null>(null);
+  const [bottomCardRef, setBottomCardRef] = useState<HTMLElement | null>(null);
 
   const [topCardCenter, setTopCardCenter] = useState<number>(0);
   // const updateTopCardCenter = () => {
@@ -231,20 +232,60 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [bottomCardCenter, setBottomCardCenter] = useState<number>(0);
   const updateBottomCardCenter = () => {
     if (contents) {
-      const rect = document
-        .getElementById(contents[(contents?.length || 1) - 1]?.contentId)
-        ?.getBoundingClientRect?.();
+      const rect = (
+        contents.length === 1 ? topCardRef : bottomCardRef
+      )?.getBoundingClientRect?.();
+      console.log(rect);
       if (rect) {
         setBottomCardCenter(rect?.top + (rect?.height ?? 0) / 2);
       }
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      updateBottomCardCenter();
-      // updateTopCardCenter();
-    }, 1300);
-  }, [contents, topCardRef]);
+    // setTimeout(() => {
+    updateBottomCardCenter();
+    // updateTopCardCenter();
+    // }, 1300);
+    // setTimeout(() => {
+    //   updateBottomCardCenter();
+    //   // updateTopCardCenter();
+    // }, 1300);
+  }, [
+    contents,
+    topCardRef?.getBoundingClientRect?.().top,
+    bottomCardRef?.getBoundingClientRect?.().top,
+  ]);
+
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
+  useEffect(() => {
+    if (openContentDialogInLessonId === props.lessonId) {
+      setTimeout(() => {
+        if (typeOfContentDialogToOpenUponLandingInNewLesson === "video") {
+          setVideoDialogOpen(true);
+          setOpenContentDialogInLessonId(null);
+          setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
+        }
+        if (typeOfContentDialogToOpenUponLandingInNewLesson === "worksheet") {
+          setWorksheetDialogOpen(true);
+          setOpenContentDialogInLessonId(null);
+          setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
+        }
+      }, 1000);
+    }
+  }, [
+    openContentDialogInLessonId,
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+  ]);
 
   return (
     <>
@@ -268,8 +309,21 @@ export default function LessonPageContents(props: { lessonId: string }) {
           width="78%"
           rightStuff={
             <Stack direction="row" spacing="12px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === lesson?.creatorId ? (
+              <Stack
+                sx={{
+                  opacity:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === lesson?.creatorId
+                      ? 1
+                      : 0,
+                  pointerEvents:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === lesson?.creatorId
+                      ? undefined
+                      : "none",
+                  transition: "0.2s",
+                }}
+              >
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
@@ -288,7 +342,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     },
                   ]}
                 />
-              ) : null}
+              </Stack>
               <Stack
                 borderRadius="100%"
                 border={`2px solid ${PALETTE.primary.navy}`}
@@ -332,12 +386,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 // updateTopCardCenter();
                 // updateBottomCardCenter();
               }}
+              onMouseEnter={() => setHoveringOnContentCard(false)}
             >
               <Stack
                 height="100%"
                 position="relative"
                 sx={{
-                  opacity: hoveringOnContentCard ? 0 : 1,
+                  opacity:
+                    contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
                   transition: "0.2s",
                 }}
               >
@@ -404,7 +460,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
                     <Stack
                       sx={{
-                        transform: `translate(8px, -${28}px)`,
+                        transform: `translateY(-${28}px)`,
                       }}
                       width="2px"
                       height={
@@ -503,9 +559,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 .map((card, i) => (
                   <UrsorFadeIn duration={800} key={card?.key}>
                     <Stack
-                      ref={i === 0 ? setTopCardRef : undefined}
+                      ref={
+                        i === 0
+                          ? setTopCardRef
+                          : i === contents.length - 1
+                          ? setBottomCardRef
+                          : undefined
+                      }
                       id={card?.props.id}
-                      alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
@@ -520,15 +581,26 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       }}
                     >
                       <Stack
-                        width="46%"
-                        onMouseEnter={() => {
-                          setHoveringOnContentCard(true);
-                        }}
-                        onMouseLeave={() => {
-                          setHoveringOnContentCard(false);
-                        }}
+                        width="100%"
+                        direction={i % 2 ? "row-reverse" : "row"}
                       >
-                        {card}
+                        <Stack
+                          width="46%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
+                        <Stack
+                          flex={1}
+                          onMouseMove={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        />
                       </Stack>
 
                       {contents.length > 1 ? (
@@ -557,11 +629,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           position="absolute"
                           width="2px"
                           top="50%"
-                          height={
-                            contents.length === 1
-                              ? height - bottomCardCenter
-                              : `calc(50% + 41px)`
-                          }
+                          height={height - bottomCardCenter}
                           // height={height - bottomCardCenter}
                           left={0}
                           right={0}
@@ -613,8 +681,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "video",
             id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -638,8 +707,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "worksheet",
             id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -663,8 +733,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "link",
             link.id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -688,8 +759,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "text",
             text.id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
+          ).then(
+            loadLesson
+            //esson(response.lesson, response.actualContents)
           );
         }}
       />
@@ -714,8 +786,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
               contentInsertionIndex ?? 0,
               "image",
               link.id
-            ).then((response) =>
-              updateLesson(response.lesson, response.actualContents)
+            ).then(
+              loadLesson
+              //esson(response.lesson, response.actualContents)
             );
           }}
         />

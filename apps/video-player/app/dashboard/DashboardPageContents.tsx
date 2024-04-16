@@ -32,7 +32,7 @@ import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import dayjs from "dayjs";
@@ -49,6 +49,7 @@ import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
+import DashboardPageCreateButton from "./DashboardPageCreateButton";
 
 export const spin = keyframes`
 from {
@@ -76,17 +77,17 @@ export interface IAstroContentBranding {
 }
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
-    title: "SafeTube - safe videos",
+    title: "Safe Video",
     description: "Free of ads. Safe to share.",
-    color: PALETTE.secondary.blue[3],
+    color: "#FC5C5C",
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
     info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
   },
   worksheet: {
-    title: "Worksheet Generator",
+    title: "Worksheet",
     description: "Printable & finished in seconds.",
-    color: PALETTE.secondary.pink[5],
+    color: PALETTE.secondary.blue[3],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
     info: "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
@@ -102,7 +103,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   link: {
     title: "Link",
     description: "Add a link to some non-naughty site.",
-    color: PALETTE.secondary.orange[5],
+    color: PALETTE.secondary.orange[3],
     icon: LinkIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -110,7 +111,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   image: {
     title: "Image",
     description: "Add a wholesome image.",
-    color: PALETTE.secondary.grey[4],
+    color: PALETTE.secondary.pink[3],
     icon: ImageIcon,
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -118,7 +119,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   text: {
     title: "Text",
     description: "Add some styled and well-crafted copy.",
-    color: PALETTE.secondary.yellow[4],
+    color: "#41C5FD",
     icon: TypographyIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
@@ -334,17 +335,57 @@ export const ToolButton = (props: {
   mobile?: boolean;
   fullWidth?: boolean;
   strongShadow?: boolean;
+  noInfo?: boolean;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
   const [lightText, setLightText] = useState<boolean>(false);
   useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
+  const [titleRef, setTitleRef] = useState<HTMLElement | null>(null);
+  const [infoButtonX, setInfoButtonX] = useState<number>(0);
+  const [infoButtonY, setInfoButtonY] = useState<number>(0);
+  const { width } = useWindowSize();
+  useEffect(() => {
+    setInfoButtonX(titleRef?.getBoundingClientRect?.().right ?? 0);
+    setInfoButtonY(
+      (titleRef?.getBoundingClientRect?.().bottom ?? 0) -
+        (titleRef?.getBoundingClientRect?.().height ?? 0) +
+        6
+    );
+  }, [
+    titleRef?.getBoundingClientRect?.().right,
+    titleRef?.getBoundingClientRect?.().bottom,
+    width,
+  ]);
   return (
     <>
+      {/* {!props.noInfo
+        ? createPortal(
+            <Stack
+              position="absolute"
+              top={infoButtonY}
+              left={infoButtonX + 12}
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: `${PALETTE.secondary.grey[5]} !important`,
+                  },
+                },
+              }}
+              onClick={() => setOverlayOpen(true)}
+            >
+              <InfoIcon width="14px" height="14px" />
+            </Stack>,
+            document.body
+          )
+        : null} */}
       <Stack
         direction="row"
-        width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
-        minHeight="66px"
+        width={props.fullWidth ? "100%" : props.mobile ? undefined : "294px"}
+        minHeight="40px"
         borderRadius="8px"
         boxShadow={
           props.strongShadow
@@ -367,27 +408,10 @@ export const ToolButton = (props: {
             transition: "0.2s",
           }}
         />
-        <Stack
-          position="absolute"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            svg: {
-              path: {
-                fill: `${PALETTE.secondary.grey[5]} !important`,
-              },
-            },
-          }}
-          onClick={() => setOverlayOpen(true)}
-          top="16px"
-          left={`${props.infoButtonPosition}px`}
-        >
-          <InfoIcon width="14px" height="14px" />
-        </Stack>
+
         <Stack direction="row" spacing="14px" flex={1}>
           <Stack
-            width="70px"
+            width="44px"
             height="100%"
             alignItems="center"
             justifyContent="center"
@@ -406,17 +430,18 @@ export const ToolButton = (props: {
             }}
             bgcolor={props.color}
           >
-            <props.icon height="35px" width="35px" />
+            <props.icon height="20px" width="20px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="space-between">
-            <Typography
-              variant="medium"
-              bold
-              color={lightText ? props.color : PALETTE.secondary.grey[5]}
-            >
-              {props.title}
-            </Typography>
-            <Typography
+            <Stack ref={setTitleRef} width="fit-content">
+              <Typography
+                bold
+                color={lightText ? props.color : PALETTE.secondary.grey[5]}
+              >
+                {props.title}
+              </Typography>
+            </Stack>
+            {/* <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
               color={alpha(
@@ -425,7 +450,7 @@ export const ToolButton = (props: {
               )}
             >
               {props.description}
-            </Typography>
+            </Typography> */}
           </Stack>
           <Stack
             height="100%"
@@ -736,6 +761,14 @@ export default function DashboardPageContents() {
     [worksheetsLoaded, videosLoaded, lessonsLoaded]
   );
 
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
   return (
     <>
       <PageLayout
@@ -839,9 +872,12 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.blue[3]}
               icon={CirclePlayIcon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setVideoCreationDialogOpen(true);
+                if (outOfCreations) {
+                  setNoCreationsLeftDialogOpen(true);
+                } else {
+                  setLessonCreationDialogOpen(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
+                }
               }}
               infoButtonPosition={280}
               info={
@@ -854,9 +890,14 @@ export default function DashboardPageContents() {
               color={PALETTE.secondary.pink[5]}
               icon={ChecklistIcon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setWorksheetCreationDialogOpen(true);
+                if (outOfCreations) {
+                  setNoCreationsLeftDialogOpen(true);
+                } else {
+                  setLessonCreationDialogOpen(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson(
+                    "worksheet"
+                  );
+                }
               }}
               infoButtonPosition={300}
               info={
@@ -931,53 +972,64 @@ export default function DashboardPageContents() {
             >
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                  {column.map((item, j) => (
-                    <Stack
-                      key={`${item.details.id}${selectedSort}`}
-                      spacing={GRID_SPACING}
-                    >
-                      <UrsorFadeIn
-                        delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
-                        duration={900}
+                  {[
+                    ...(i === 0
+                      ? [
+                          <Stack
+                            onClick={() => setLessonCreationDialogOpen(true)}
+                          >
+                            <DashboardPageCreateButton />
+                          </Stack>,
+                        ]
+                      : []),
+                    ...column.map((item, j) => (
+                      <Stack
+                        key={`${item.details.id}${selectedSort}`}
+                        spacing={GRID_SPACING}
                       >
-                        {item.type === "video" ? (
-                          <VideoCard
-                            {...(item.details as IVideo)}
-                            editingCallback={() =>
-                              setVideoEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadVideos}
-                          />
-                        ) : item.type === "worksheet" ? (
-                          <WorksheetCard
-                            {...(item.details as IWorksheet)}
-                            editingCallback={() =>
-                              setWorksheetEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadWorksheets}
-                          />
-                        ) : item.type === "lesson" ? (
-                          <LessonCard
-                            {...(item.details as ILesson)}
-                            clickCallback={() =>
-                              router.push(`/lesson/${item.details.id}`)
-                            }
-                            editingCallback={() =>
-                              setLessonEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadLessons}
-                          />
-                        ) : null}
-                      </UrsorFadeIn>
-                    </Stack>
-                  ))}
+                        <UrsorFadeIn
+                          delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
+                          duration={900}
+                        >
+                          {item.type === "video" ? (
+                            <VideoCard
+                              {...(item.details as IVideo)}
+                              editingCallback={() =>
+                                setVideoEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadVideos}
+                            />
+                          ) : item.type === "worksheet" ? (
+                            <WorksheetCard
+                              {...(item.details as IWorksheet)}
+                              editingCallback={() =>
+                                setWorksheetEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadWorksheets}
+                            />
+                          ) : item.type === "lesson" ? (
+                            <LessonCard
+                              {...(item.details as ILesson)}
+                              clickCallback={() =>
+                                router.push(`/lesson/${item.details.id}`)
+                              }
+                              editingCallback={() =>
+                                setLessonEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadLessons}
+                            />
+                          ) : null}
+                        </UrsorFadeIn>
+                      </Stack>
+                    )),
+                  ]}
                 </Stack>
               ))}
             </Stack>
           </Stack>
         </Stack>
       </PageLayout>
-      <VideoCreationDialog
+      {/* <VideoCreationDialog
         open={videoCreationDialogOpen}
         closeCallback={() => setVideoCreationDialogOpen(false)}
       />
@@ -1000,7 +1052,7 @@ export default function DashboardPageContents() {
           editingCallback={loadWorksheets}
           worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
         />
-      ) : null}
+      ) : null} */}
       <LessonCreationDialog
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
