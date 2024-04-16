@@ -218,6 +218,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useState<boolean>(false);
 
   const [topCardRef, setTopCardRef] = useState<HTMLElement | null>(null);
+  const [bottomCardRef, setBottomCardRef] = useState<HTMLElement | null>(null);
 
   const [topCardCenter, setTopCardCenter] = useState<number>(0);
   // const updateTopCardCenter = () => {
@@ -231,20 +232,29 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [bottomCardCenter, setBottomCardCenter] = useState<number>(0);
   const updateBottomCardCenter = () => {
     if (contents) {
-      const rect = document
-        .getElementById(contents[(contents?.length || 1) - 1]?.contentId)
-        ?.getBoundingClientRect?.();
+      const rect = (
+        contents.length === 1 ? topCardRef : bottomCardRef
+      )?.getBoundingClientRect?.();
+      console.log(rect);
       if (rect) {
         setBottomCardCenter(rect?.top + (rect?.height ?? 0) / 2);
       }
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      updateBottomCardCenter();
-      // updateTopCardCenter();
-    }, 1300);
-  }, [contents, topCardRef]);
+    // setTimeout(() => {
+    updateBottomCardCenter();
+    // updateTopCardCenter();
+    // }, 1300);
+    // setTimeout(() => {
+    //   updateBottomCardCenter();
+    //   // updateTopCardCenter();
+    // }, 1300);
+  }, [
+    contents,
+    topCardRef?.getBoundingClientRect?.().top,
+    bottomCardRef?.getBoundingClientRect?.().top,
+  ]);
 
   return (
     <>
@@ -338,7 +348,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 height="100%"
                 position="relative"
                 sx={{
-                  opacity: hoveringOnContentCard ? 0 : 1,
+                  opacity:
+                    contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
                   transition: "0.2s",
                 }}
               >
@@ -504,9 +515,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 .map((card, i) => (
                   <UrsorFadeIn duration={800} key={card?.key}>
                     <Stack
-                      ref={i === 0 ? setTopCardRef : undefined}
+                      ref={
+                        i === 0
+                          ? setTopCardRef
+                          : i === contents.length - 1
+                          ? setBottomCardRef
+                          : undefined
+                      }
                       id={card?.props.id}
-                      alignItems={i % 2 ? "flex-end" : "flex-start"}
                       position="relative"
                       onMouseEnter={() => {
                         setHoveringContentIndex(i);
@@ -520,7 +536,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         );
                       }}
                     >
-                      <Stack width="100%" direction="row">
+                      <Stack
+                        width="100%"
+                        direction={i % 2 ? "row-reverse" : "row"}
+                      >
                         <Stack
                           width="46%"
                           onMouseEnter={() => {
@@ -566,11 +585,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           position="absolute"
                           width="2px"
                           top="50%"
-                          height={
-                            contents.length === 1
-                              ? height - bottomCardCenter
-                              : `calc(50% + 41px)`
-                          }
+                          height={height - bottomCardCenter}
                           // height={height - bottomCardCenter}
                           left={0}
                           right={0}
