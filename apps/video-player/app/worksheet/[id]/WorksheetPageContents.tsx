@@ -629,7 +629,7 @@ export default function WorksheetPageContents(props: {
           }
           editingCallback={() => setEditingDialogOpen(true)}
           editingEnabled={
-            userDetails?.user?.id &&
+            !!userDetails?.user?.id &&
             userDetails.user.id === props.details.creatorId
           }
         >
