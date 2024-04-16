@@ -14,6 +14,7 @@ import React, { useEffect } from "react";
 
 // Modules object for setting up the Quill editor
 export const getModules = (id: string) => ({
+  clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
     // handlers: {

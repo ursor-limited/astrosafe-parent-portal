@@ -522,6 +522,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
         //   schoolId: link.schoolId,
         //   creatorId: link.creatorId,
         // });
+        imageUploadCallback?.();
         props.creationCallback?.(link);
         clear();
         props.closeCallback();

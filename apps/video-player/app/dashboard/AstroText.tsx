@@ -20,9 +20,6 @@ const AstroText = (props: {
   preview?: boolean;
   height?: string;
 }) => {
-  // const [value, setValue] = useState<string>("");
-  // useE
-  //useEffect(() => setValue(props.value), [props.value]);
   return (
     <Stack
       width="100%"

@@ -27,7 +27,7 @@ const TextPreview = (props: { value: string }) => (
   />
 );
 
-const LinkCard = (
+const TextCard = (
   props: IText & {
     clickCallback?: () => void;
     editCallback?: () => void;
@@ -130,4 +130,4 @@ const LinkCard = (
   );
 };
 
-export default LinkCard;
+export default TextCard;
