@@ -30,14 +30,6 @@ const LessonCreationDialog = (props: {
   const userId = useUserContext().user?.id;
   const notificationCtx = useContext(NotificationContext);
 
-  const [
-    typeOfContentDialogToOpenUponLandingInNewLesson,
-    setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | null>(
-    "typeOfContentDialogToOpenUponLandingInNewLesson",
-    null
-  );
-
   const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 

@@ -36,7 +36,7 @@ import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
 export const fadeIn = keyframes`
 from {
@@ -254,6 +254,37 @@ export default function LessonPageContents(props: { lessonId: string }) {
     contents,
     topCardRef?.getBoundingClientRect?.().top,
     bottomCardRef?.getBoundingClientRect?.().top,
+  ]);
+
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
+  useEffect(() => {
+    if (openContentDialogInLessonId === props.lessonId) {
+      setTimeout(() => {
+        if (typeOfContentDialogToOpenUponLandingInNewLesson === "video") {
+          setVideoDialogOpen(true);
+          setOpenContentDialogInLessonId(null);
+          setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
+        }
+        if (typeOfContentDialogToOpenUponLandingInNewLesson === "worksheet") {
+          setWorksheetDialogOpen(true);
+          setOpenContentDialogInLessonId(null);
+          setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
+        }
+      }, 1000);
+    }
+  }, [
+    openContentDialogInLessonId,
+    typeOfContentDialogToOpenUponLandingInNewLesson,
   ]);
 
   return (
