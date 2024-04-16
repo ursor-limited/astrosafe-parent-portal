@@ -38,6 +38,9 @@ import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 
+const DOT_CARD_Y = 20;
+const CARD_SPACING = 20;
+
 export const fadeIn = keyframes`
 from {
   opacity: 0;
@@ -121,36 +124,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [lesson?.contents, lesson?.contentOrder]
   );
 
-  // const updateLesson = (
-  //   lesson: ILesson,
-  //   actualContents: {
-  //     videos: IVideo[];
-  //     worksheets: IWorksheet[];
-  //     links: ILink[];
-  //     images: IImage[];
-  //     texts: IText[];
-  //   }
-  // ) => {
-  //   setLesson(lesson);
-  //   setContents(
-  //     _.compact([
-  //       ...lesson.contentOrder.map((contentId) =>
-  //         lesson.contents.find((c) => c.contentId === contentId)
-  //       ),
-  //     ])
-  //   );
-  //   setVideos(actualContents.videos);
-  //   setWorksheets(actualContents.worksheets);
-  //   setLinks(actualContents.links);
-  //   setImages(actualContents.images);
-  //   setTexts(
-  //     actualContents.texts.map((t: any) => ({
-  //       ...t,
-  //       value: t.value.replaceAll("&lt;", "<"),
-  //     }))
-  //   );
-  // };
-
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
   const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
@@ -219,15 +192,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [topCardRef, setTopCardRef] = useState<HTMLElement | null>(null);
   const [bottomCardRef, setBottomCardRef] = useState<HTMLElement | null>(null);
-
-  const [topCardCenter, setTopCardCenter] = useState<number>(0);
-  // const updateTopCardCenter = () => {
-  //   if (contents) {
-  //     if (topCard) {
-  //       setTopCardCenter(rect?.top + (rect?.height ?? 0) / 2);
-  //     }
-  //   }
-  // };
 
   const [bottomCardCenter, setBottomCardCenter] = useState<number>(0);
   const updateBottomCardCenter = () => {
