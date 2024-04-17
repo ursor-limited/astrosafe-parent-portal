@@ -20,7 +20,7 @@ dayjs.extend(advancedFormat);
 
 const ImageCard = (
   props: IImage & {
-    setHeight: (height: number) => void;
+    setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
   }
@@ -44,7 +44,7 @@ const ImageCard = (
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
   useEffect(
-    () => props.setHeight(ref?.getBoundingClientRect?.()?.height ?? 0),
+    () => props.setHeight?.(ref?.getBoundingClientRect?.()?.height ?? 0),
     [ref?.getBoundingClientRect?.()?.height]
   );
 
