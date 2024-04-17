@@ -264,6 +264,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                         {...text}
                         editCallback={() => setTextEditingDialogId(text.id)}
                         deleteCallback={loadLesson}
+                        setHeight={() => null}
                       />
                     ) : null;
                   } else if (c.type === "image") {
