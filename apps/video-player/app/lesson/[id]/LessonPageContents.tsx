@@ -431,6 +431,92 @@ export default function LessonPageContents(props: { lessonId: string }) {
             !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
           }
         >
+          <Stack
+            height="100%"
+            position="fixed"
+            bgcolor="yellow"
+            top={0}
+            left="50%"
+            sx={{
+              transform: `translateY(-26px)`,
+              opacity: 0,
+              animation: `${fadeIn} 0.2s ease-in`,
+              animationFillMode: "forwards",
+            }}
+            zIndex={4}
+            onWheel={(event) => {
+              pageRef?.scroll({
+                //@ts-ignore
+                top: event?.deltaY + pageRef.scrollTop,
+              });
+            }}
+          >
+            <Stack
+              position="absolute"
+              top={
+                _.isNumber(staticAddButtonY)
+                  ? staticAddButtonY - 18
+                  : contents.length === 0
+                  ? contentsColumnRef?.getBoundingClientRect()?.top
+                  : mouseY < height / 2
+                  ? Math.max(
+                      mouseY - 18,
+                      (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
+                        60
+                    )
+                  : Math.min(mouseY - 10, height - 50)
+              }
+              left={-18}
+              onClick={() => {
+                setStaticAddButtonY(mouseY);
+                if (addContentPopoverOpen) return;
+                const dotYs =
+                  lesson?.contentOrder.map(
+                    (id) =>
+                      (document
+                        .getElementById(`${id}dot`)
+                        ?.getBoundingClientRect?.()?.top ?? 0) +
+                      document.body.scrollTop
+                  ) ?? [];
+                if (mouseY < (dotYs?.[0] ?? 0)) {
+                  setContentInsertionIndex(0);
+                } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
+                  setContentInsertionIndex(contents.length);
+                } else {
+                  const closestY = dotYs?.reduce(
+                    (a, b) => (b <= mouseY && a < b ? b : a),
+                    0
+                  );
+                  const closestNumberIndex = dotYs?.indexOf(closestY);
+                  setContentInsertionIndex(
+                    closestNumberIndex + (mouseY < closestY ? 0 : 1)
+                  );
+                }
+              }}
+              alignItems="center"
+            >
+              <Stack
+                sx={{
+                  opacity:
+                    contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                  transition: "0.2s",
+                }}
+              >
+                <AddContentButton
+                  open={addContentPopoverOpen}
+                  setOpen={setAddContentPopoverOpen}
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
+                  }
+                  clickOutsideCloseCallback={() =>
+                    setContentInsertionIndex(undefined)
+                  }
+                />
+              </Stack>
+            </Stack>
+          </Stack>
           <Stack width="100%" pt="36px" minHeight="44px">
             <Stack
               px="24px"
@@ -534,7 +620,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                      */}
 
-                    <Stack
+                    {/* <Stack
                       position="absolute"
                       top={
                         _.isNumber(staticAddButtonY)
@@ -599,7 +685,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           }
                         />
                       </Stack>
-                    </Stack>
+                    </Stack> */}
                   </Stack>
                 </Stack>
               ) : null}
