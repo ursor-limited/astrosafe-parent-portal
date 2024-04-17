@@ -314,18 +314,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   useEffect(() => {
     contents &&
-      setTimeout(
-        () =>
-          setContentsWithDotY(
-            contents.map((c) => ({
-              ...c,
-              dotY:
-                (document
-                  .getElementById(`${c?.contentId}dot`)
-                  ?.getBoundingClientRect?.()?.top ?? 0) + 8,
-            }))
-          ),
-        1000
+      setContentsWithDotY(
+        contents.map((c) => ({
+          ...c,
+          dotY:
+            (document
+              .getElementById(`${c?.contentId}dot`)
+              ?.getBoundingClientRect?.()?.top ?? 0) + 8,
+        }))
       );
   }, [contents]);
 
@@ -368,8 +364,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
       contentsColumnRef?.getBoundingClientRect()?.top,
     ]
   );
-
-  console.log(contentsWithDotY[0]?.dotY, addButtonY);
 
   return (
     <>
