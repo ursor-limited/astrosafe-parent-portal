@@ -178,7 +178,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         })
       )
     );
-  }, [contentsWithCardHeight, lesson]);
+  }, [contentsWithCardHeight, lesson, contents]);
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
