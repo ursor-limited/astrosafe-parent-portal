@@ -334,6 +334,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
     !contentInsertionIndex && setStaticAddButtonY(null);
   }, [contentInsertionIndex]);
 
+  const [contentColumnWidth, setContentColumnWidth] = useState<number>(0);
+  useEffect(
+    () =>
+      setContentColumnWidth(
+        (0.98 *
+          ((contentsColumnRef?.getBoundingClientRect?.()?.width ?? 0) - 48)) /
+          2
+      ),
+    [contentsColumnRef?.getBoundingClientRect?.()?.width]
+  );
+
   return (
     <>
       <Stack
@@ -357,6 +368,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
           width="78%"
+          noBottomPadding
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack
@@ -419,154 +431,178 @@ export default function LessonPageContents(props: { lessonId: string }) {
             !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
           }
         >
-          {userDetails.user?.id && userDetails.user.id === lesson?.creatorId ? (
+          <Stack width="100%" pt="36px" minHeight="44px">
             <Stack
-              height="100%"
-              position="fixed"
-              top={0}
-              left="50%"
-              sx={{
-                transform: `translateY(-26px)`,
-                opacity: 0,
-                animation: `${fadeIn} 0.2s ease-in`,
-                animationFillMode: "forwards",
-              }}
-              zIndex={3}
-              onWheel={(event) => {
-                pageRef?.scroll({
-                  //@ts-ignore
-                  top: event?.deltaY + pageRef.scrollTop,
-                });
-                // updateTopCardCenter();
-                // updateBottomCardCenter();
-              }}
-              onMouseEnter={() => setHoveringOnContentCard(false)}
+              px="24px"
+              ref={setContentsColumnRef}
+              position="relative"
+              pb="48px"
             >
-              <Stack height="100%" position="relative">
-                {contentsWithDotY[0]?.dotY &&
-                mouseY < contentsWithDotY[0]?.dotY ? (
-                  <Stack
-                    width="2px"
-                    height={
-                      contentsWithDotY[0]?.dotY -
-                      mouseY -
-                      document.body.scrollTop -
-                      26
-                    }
-                    bgcolor={PALETTE.secondary.grey[3]}
-                    position="absolute"
-                    left="-1px"
-                    right={0}
-                    marginRight="auto"
-                    marginLeft="auto"
-                    top={mouseY}
-                  />
-                ) : null}
-                {contentsWithDotY[0]?.dotY &&
-                contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
-                  <Stack
-                    width="2px"
-                    height={
-                      contentsWithDotY[contentsWithDotY.length - 1].dotY -
-                      contentsWithDotY[0].dotY
-                    }
-                    bgcolor={PALETTE.secondary.grey[3]}
-                    position="absolute"
-                    left="-1px"
-                    right={0}
-                    marginRight="auto"
-                    marginLeft="auto"
-                    top={contentsWithDotY[0].dotY - 12}
-                  />
-                ) : null}
-
+              {userDetails.user?.id &&
+              userDetails.user.id === lesson?.creatorId ? (
                 <Stack
                   position="absolute"
-                  top={
-                    _.isNumber(staticAddButtonY)
-                      ? staticAddButtonY - 18
-                      : contents.length === 0
-                      ? contentsColumnRef?.getBoundingClientRect()?.top
-                      : mouseY < height / 2
-                      ? Math.max(
-                          mouseY - 18,
-                          (contentsColumnRef?.getBoundingClientRect()?.top ??
-                            0) - 60
-                        )
-                      : Math.min(mouseY - 10, height - 50)
-                  }
-                  left={-18}
-                  onClick={() => {
-                    setStaticAddButtonY(mouseY);
-                    if (addContentPopoverOpen) return;
-                    const dotYs = lesson?.contentOrder.map(
-                      (id) =>
-                        (document
-                          .getElementById(`${id}dot`)
-                          ?.getBoundingClientRect?.()?.top ?? 0) +
-                        document.body.scrollTop
-                    );
-                    if (mouseY < (dotYs?.[0] ?? 0)) {
-                      setContentInsertionIndex(0);
-                    } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                      setContentInsertionIndex(contents.length);
-                    } else {
-                      const closestY = dotYs.reduce(
-                        (a, b) => (b <= mouseY && a < b ? b : a),
-                        0
-                      );
-                      const closestNumberIndex = dotYs.indexOf(closestY);
-                      setContentInsertionIndex(
-                        closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                      );
-                    }
+                  height="100%"
+                  width="50px"
+                  right={0}
+                  left={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  onWheel={(event) => {
+                    pageRef?.scroll({
+                      //@ts-ignore
+                      top: event?.deltaY + pageRef.scrollTop,
+                    });
                   }}
-                  alignItems="center"
+                  onMouseEnter={() => setHoveringOnContentCard(false)}
                 >
-                  <Stack
-                    sx={{
-                      opacity:
-                        contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                      transition: "0.2s",
-                    }}
-                  >
-                    <AddContentButton
-                      open={addContentPopoverOpen}
-                      setOpen={setAddContentPopoverOpen}
-                      callback={(type) =>
-                        outOfCreations
-                          ? setNoCreationsLeftDialogOpen(true)
-                          : contentCallbacks[type]()
-                      }
-                      clickOutsideCloseCallback={() =>
-                        setContentInsertionIndex(undefined)
-                      }
-                    />
-                  </Stack>
-                  {/* {contents.length > 0 &&
-                  (!_.isNumber(hoveringContentIndex) ||
-                    (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
+                  <Stack height="100%" position="relative">
+                    {/* {contentsWithDotY[0]?.dotY &&
+                    mouseY < contentsWithDotY[0]?.dotY ? (
+                      <Stack
+                        width="2px"
+                        height={
+                          contentsWithDotY[0]?.dotY -
+                          mouseY -
+                          document.body.scrollTop -
+                          26
+                        }
+                        bgcolor={PALETTE.secondary.grey[3]}
+                        position="absolute"
+                        left="-1px"
+                        right={0}
+                        marginRight="auto"
+                        marginLeft="auto"
+                        top={mouseY}
+                      />
+                    ) : null} */}
+                    {contentsWithDotY[0]?.dotY &&
+                    contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
+                      <Stack
+                        width="2px"
+                        height={
+                          "100%"
+                          // contentsWithDotY[contentsWithDotY.length - 1].dotY -
+                          // (contentsColumnRef?.getBoundingClientRect?.()?.top ??
+                          //   0) -
+                          // 50
+                        }
+                        bgcolor={PALETTE.secondary.grey[3]}
+                        position="absolute"
+                        left="-1px"
+                        right={0}
+                        marginRight="auto"
+                        marginLeft="auto"
+                        top="50px"
+                      />
+                    ) : null}
+
                     <Stack
+                      width="100%"
+                      height="260px"
+                      bgcolor="rgb(255,255,255)"
                       sx={{
-                        transform: `translateY(-${28}px)`,
+                        background: `linear-gradient(0, rgb(255,255,255), rgba(255,255,255,0))`,
                       }}
+                      position="absolute"
+                      right={0}
+                      marginRight="auto"
+                      marginLeft="auto"
+                      bottom={0}
+                      zIndex={3}
+                    />
+
+                    {/* <Stack
                       width="2px"
                       height={
-                        (topCardRef?.getBoundingClientRect?.().top ?? 0) +
-                        (topCardRef?.getBoundingClientRect?.().height ?? 0) /
-                          2 -
-                        mouseY
+                        lineTailHeight
                       }
-                      bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
+                      bgcolor="rgb(255,255,255)"
+                      // sx={{
+                      //   background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                      // }}
+                      position="absolute"
+                      left="-1px"
+                      right={0}
+                      marginRight="auto"
+                      marginLeft="auto"
+                      top={`${
+                        contentsWithDotY[contentsWithDotY.length - 1]?.dotY -
+                        303
+                      }px`}
+                      zIndex={3}
                     />
-                  ) : null} */}
-                </Stack>
-              </Stack>
-            </Stack>
-          ) : null}
+                     */}
 
-          <Stack width="100%" pt="36px" minHeight="44px">
-            <Stack px="24px" ref={setContentsColumnRef}>
+                    <Stack
+                      position="absolute"
+                      top={
+                        _.isNumber(staticAddButtonY)
+                          ? staticAddButtonY - 18
+                          : contents.length === 0
+                          ? contentsColumnRef?.getBoundingClientRect()?.top
+                          : mouseY < height / 2
+                          ? Math.max(
+                              mouseY - 18,
+                              (contentsColumnRef?.getBoundingClientRect()
+                                ?.top ?? 0) - 60
+                            )
+                          : Math.min(mouseY - 10, height - 50)
+                      }
+                      left={-18}
+                      onClick={() => {
+                        setStaticAddButtonY(mouseY);
+                        if (addContentPopoverOpen) return;
+                        const dotYs = lesson?.contentOrder.map(
+                          (id) =>
+                            (document
+                              .getElementById(`${id}dot`)
+                              ?.getBoundingClientRect?.()?.top ?? 0) +
+                            document.body.scrollTop
+                        );
+                        if (mouseY < (dotYs?.[0] ?? 0)) {
+                          setContentInsertionIndex(0);
+                        } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
+                          setContentInsertionIndex(contents.length);
+                        } else {
+                          const closestY = dotYs.reduce(
+                            (a, b) => (b <= mouseY && a < b ? b : a),
+                            0
+                          );
+                          const closestNumberIndex = dotYs.indexOf(closestY);
+                          setContentInsertionIndex(
+                            closestNumberIndex + (mouseY < closestY ? 0 : 1)
+                          );
+                        }
+                      }}
+                      alignItems="center"
+                    >
+                      <Stack
+                        sx={{
+                          opacity:
+                            contents.length === 0 || !hoveringOnContentCard
+                              ? 1
+                              : 0,
+                          transition: "0.2s",
+                        }}
+                      >
+                        <AddContentButton
+                          open={addContentPopoverOpen}
+                          setOpen={setAddContentPopoverOpen}
+                          callback={(type) =>
+                            outOfCreations
+                              ? setNoCreationsLeftDialogOpen(true)
+                              : contentCallbacks[type]()
+                          }
+                          clickOutsideCloseCallback={() =>
+                            setContentInsertionIndex(undefined)
+                          }
+                        />
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                </Stack>
+              ) : null}
               <Stack direction="row">
                 <Stack flex={1}>
                   <ContentCards
@@ -940,6 +976,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           pointerEvents: "none",
         }}
         position="absolute"
+        width={contentColumnWidth}
       >
         <ContentCards
           contents={contents}

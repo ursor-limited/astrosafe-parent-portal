@@ -17,6 +17,7 @@ const PageCard = (props: {
   width?: string;
   editingCallback?: () => void;
   editingEnabled?: boolean;
+  noBottomPadding?: boolean;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -39,6 +40,7 @@ const PageCard = (props: {
         bgcolor="rgb(255,255,255)"
         spacing="26px"
         boxShadow="0 0 56px rgba(0,0,0,0.055)"
+        overflow="hidden"
       >
         <Stack spacing="50px" width="100%">
           <Stack
@@ -137,7 +139,7 @@ const PageCard = (props: {
           </Stack>
         </Stack>
         {props.children}
-        <Stack height="24px" />
+        {!props.noBottomPadding ? <Stack height="24px" /> : null}
       </Stack>
     </Stack>
   );
