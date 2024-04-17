@@ -46,6 +46,7 @@ const LessonWorksheetPreview = (props: {
   lessonId?: string;
   editingCallback: () => void;
   deletionCallback: () => void;
+  setHeight: (height: number) => void;
   mobile?: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -79,6 +80,11 @@ const LessonWorksheetPreview = (props: {
   }, [width, cardWidth]);
 
   const orangeBorderOn = useOrangeBorder(props.worksheet.updatedAt);
+
+  useEffect(
+    () => props.setHeight(ref?.getBoundingClientRect?.()?.height ?? 0),
+    [ref?.getBoundingClientRect?.()?.height]
+  );
 
   return (
     <>

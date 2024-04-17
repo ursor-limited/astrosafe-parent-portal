@@ -26,6 +26,7 @@ export const getFormattedDate = (date: string) =>
 const LessonVideoCard = (
   props: IVideo & {
     lessonId: string;
+    setHeight: (height: number) => void;
     editingCallback: () => void;
     deletionCallback: () => void;
   }
@@ -47,9 +48,16 @@ const LessonVideoCard = (
 
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(
+    () => props.setHeight(ref?.getBoundingClientRect?.()?.height ?? 0),
+    [ref?.getBoundingClientRect?.()?.height]
+  );
+
   return (
     <>
       <Stack
+        ref={setRef}
         borderRadius="12px"
         bgcolor="rgb(255,255,255)"
         p="4px"

@@ -37,7 +37,6 @@ const WorksheetCard = (
   return (
     <>
       <Stack
-        //height="317px"
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         boxSizing="border-box"
