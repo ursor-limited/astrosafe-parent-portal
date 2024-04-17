@@ -41,8 +41,8 @@ import { HEIGHTS } from "ui/ursor-button";
 import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
 
-const DOT_CARD_Y = 20;
-const CARD_SPACING = 20;
+const DOT_CARD_Y = 40;
+const CARD_SPACING = 100;
 const RIGHT_COLUMN_Y_OFFSET = 60;
 
 export const fadeIn = keyframes`
@@ -314,14 +314,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   useEffect(() => {
     contents &&
-      setContentsWithDotY(
-        contents.map((c) => ({
-          ...c,
-          dotY:
-            (document
-              .getElementById(`${c?.contentId}dot`)
-              ?.getBoundingClientRect?.()?.top ?? 0) + 8,
-        }))
+      setTimeout(
+        () =>
+          setContentsWithDotY(
+            contents.map((c) => ({
+              ...c,
+              dotY:
+                (document
+                  .getElementById(`${c?.contentId}dot`)
+                  ?.getBoundingClientRect?.()?.top ?? 0) + 8,
+            }))
+          ),
+        1000
       );
   }, [contents]);
 
@@ -438,15 +442,44 @@ export default function LessonPageContents(props: { lessonId: string }) {
               }}
               onMouseEnter={() => setHoveringOnContentCard(false)}
             >
-              <Stack
-                height="100%"
-                position="relative"
-                sx={{
-                  opacity:
-                    contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                  transition: "0.2s",
-                }}
-              >
+              <Stack height="100%" position="relative">
+                {contentsWithDotY[0]?.dotY &&
+                mouseY < contentsWithDotY[0]?.dotY ? (
+                  <Stack
+                    width="2px"
+                    height={
+                      contentsWithDotY[0]?.dotY -
+                      mouseY -
+                      document.body.scrollTop -
+                      26
+                    }
+                    bgcolor={PALETTE.secondary.grey[3]}
+                    position="absolute"
+                    left="-1px"
+                    right={0}
+                    marginRight="auto"
+                    marginLeft="auto"
+                    top={mouseY}
+                  />
+                ) : null}
+                {contentsWithDotY[0]?.dotY &&
+                contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
+                  <Stack
+                    width="2px"
+                    height={
+                      contentsWithDotY[contentsWithDotY.length - 1].dotY -
+                      contentsWithDotY[0].dotY
+                    }
+                    bgcolor={PALETTE.secondary.grey[3]}
+                    position="absolute"
+                    left="-1px"
+                    right={0}
+                    marginRight="auto"
+                    marginLeft="auto"
+                    top={contentsWithDotY[0].dotY - 12}
+                  />
+                ) : null}
+
                 <Stack
                   position="absolute"
                   top={
@@ -490,19 +523,27 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   }}
                   alignItems="center"
                 >
-                  <AddContentButton
-                    open={addContentPopoverOpen}
-                    setOpen={setAddContentPopoverOpen}
-                    callback={(type) =>
-                      outOfCreations
-                        ? setNoCreationsLeftDialogOpen(true)
-                        : contentCallbacks[type]()
-                    }
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
-                  {contents.length > 0 &&
+                  <Stack
+                    sx={{
+                      opacity:
+                        contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                      transition: "0.2s",
+                    }}
+                  >
+                    <AddContentButton
+                      open={addContentPopoverOpen}
+                      setOpen={setAddContentPopoverOpen}
+                      callback={(type) =>
+                        outOfCreations
+                          ? setNoCreationsLeftDialogOpen(true)
+                          : contentCallbacks[type]()
+                      }
+                      clickOutsideCloseCallback={() =>
+                        setContentInsertionIndex(undefined)
+                      }
+                    />
+                  </Stack>
+                  {/* {contents.length > 0 &&
                   (!_.isNumber(hoveringContentIndex) ||
                     (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
                     <Stack
@@ -518,7 +559,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       }
                       bgcolor={alpha(PALETTE.secondary.grey[3], 0.4)}
                     />
-                  ) : null}
+                  ) : null} */}
                 </Stack>
               </Stack>
             </Stack>
@@ -600,7 +641,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             bgcolor={PALETTE.secondary.grey[3]}
                           />
                         ) : null} */}
-                        {contents.length > 0 && i === contents.length - 1 ? (
+                        {/* {contents.length > 0 && i === contents.length - 1 ? (
                           <Stack
                             sx={{
                               background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
@@ -614,7 +655,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             marginRight="auto"
                             marginLeft="auto"
                           />
-                        ) : null}
+                        ) : null} */}
                         <Stack
                           // @ts-ignore
                           id={`${card?.props?.id}dot`}
@@ -697,7 +738,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           {card}
                         </Stack>
 
-                        {contents.length > 1 ? (
+                        {/* {contents.length > 1 ? (
                           <Stack
                             position="absolute"
                             left={0}
@@ -729,7 +770,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             marginRight="auto"
                             marginLeft="auto"
                           />
-                        ) : null}
+                        ) : null} */}
                       </Stack>
                     )}
                   />
