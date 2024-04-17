@@ -304,6 +304,29 @@ export default function LessonPageContents(props: { lessonId: string }) {
     typeOfContentDialogToOpenUponLandingInNewLesson,
   ]);
 
+  const [contentsWithDotY, setContentsWithDotY] = useState<
+    {
+      type: AstroLessonContent;
+      contentId: string;
+      dotY: number;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    contents &&
+      setContentsWithDotY(
+        contents.map((c) => ({
+          ...c,
+          dotY:
+            (document
+              .getElementById(`${c?.contentId}dot`)
+              ?.getBoundingClientRect?.()?.top ?? 0) + 8,
+        }))
+      );
+  }, [contents]);
+
+  console.log(contentsWithDotY);
+
   return (
     <>
       <Stack
@@ -593,6 +616,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           />
                         ) : null}
                         <Stack
+                          // @ts-ignore
+                          id={`${card?.props?.id}dot`}
                           bgcolor={PALETTE.secondary.purple[1]}
                           height="16px"
                           width="16px"
@@ -650,6 +675,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         alignItems="flex-end"
                       >
                         <Stack
+                          // @ts-ignore
+                          id={`${card?.props?.id}dot`}
                           bgcolor={PALETTE.secondary.purple[1]}
                           height="16px"
                           width="16px"
