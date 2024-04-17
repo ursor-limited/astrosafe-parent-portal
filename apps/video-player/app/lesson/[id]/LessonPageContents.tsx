@@ -331,7 +331,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [staticAddButtonY, setStaticAddButtonY] = useState<number | null>(null);
   useEffect(() => {
-    !contentInsertionIndex && setStaticAddButtonY(null);
+    !_.isNumber(contentInsertionIndex) && setStaticAddButtonY(null);
   }, [contentInsertionIndex]);
 
   const [contentColumnWidth, setContentColumnWidth] = useState<number>(0);
@@ -344,6 +344,32 @@ export default function LessonPageContents(props: { lessonId: string }) {
       ),
     [contentsColumnRef?.getBoundingClientRect?.()?.width]
   );
+
+  const [addButtonY, setAddButtonY] = useState<number>(0);
+  useEffect(
+    () =>
+      setAddButtonY(
+        _.isNumber(staticAddButtonY)
+          ? staticAddButtonY - 18
+          : contents.length === 0
+          ? contentsColumnRef?.getBoundingClientRect()?.top ?? 0
+          : mouseY < height / 2
+          ? Math.max(
+              mouseY - 18,
+              (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) - 60
+            )
+          : Math.min(mouseY - 10, height - 50)
+      ),
+    [
+      staticAddButtonY,
+      contents,
+      mouseY,
+      height,
+      contentsColumnRef?.getBoundingClientRect()?.top,
+    ]
+  );
+
+  console.log(contentsWithDotY[0]?.dotY, addButtonY);
 
   return (
     <>
@@ -443,7 +469,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
               animation: `${fadeIn} 0.2s ease-in`,
               animationFillMode: "forwards",
             }}
-            zIndex={4}
+            zIndex={3}
             onWheel={(event) => {
               pageRef?.scroll({
                 //@ts-ignore
@@ -453,19 +479,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           >
             <Stack
               position="absolute"
-              top={
-                _.isNumber(staticAddButtonY)
-                  ? staticAddButtonY - 18
-                  : contents.length === 0
-                  ? contentsColumnRef?.getBoundingClientRect()?.top
-                  : mouseY < height / 2
-                  ? Math.max(
-                      mouseY - 18,
-                      (contentsColumnRef?.getBoundingClientRect()?.top ?? 0) -
-                        60
-                    )
-                  : Math.min(mouseY - 10, height - 50)
-              }
+              top={addButtonY}
               left={-18}
               onClick={() => {
                 setStaticAddButtonY(mouseY);
@@ -494,6 +508,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 }
               }}
               alignItems="center"
+              zIndex={8}
             >
               <Stack
                 sx={{
@@ -562,6 +577,35 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         top={mouseY}
                       />
                     ) : null} */}
+                    {contentsWithDotY[0]?.dotY &&
+                    mouseY < contentsWithDotY[0]?.dotY ? (
+                      <Stack
+                        width="2px"
+                        height={`${Math.min(
+                          100,
+                          contentsWithDotY[0]?.dotY -
+                            addButtonY -
+                            document.body.scrollTop -
+                            30
+                        )}px`}
+                        sx={{
+                          transform: `translateY(-${Math.min(
+                            100,
+                            contentsWithDotY[0]?.dotY -
+                              addButtonY -
+                              document.body.scrollTop -
+                              30
+                          )}px)`,
+                        }}
+                        bgcolor={PALETTE.secondary.grey[3]}
+                        position="absolute"
+                        left={0}
+                        right={0}
+                        marginRight="auto"
+                        marginLeft="auto"
+                        top={`${DOT_CARD_Y}px`}
+                      />
+                    ) : null}
                     {contentsWithDotY[0]?.dotY &&
                     contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
                       <Stack
@@ -788,6 +832,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           position="absolute"
                           right="-8px"
                           top={`${DOT_CARD_Y}px`}
+                          zIndex={2}
                         />
                       </Stack>
                     )}
@@ -847,6 +892,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           position="absolute"
                           left="-8px"
                           top={`${DOT_CARD_Y}px`}
+                          zIndex={2}
                         />
                         <Stack
                           width="96%"

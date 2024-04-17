@@ -129,10 +129,11 @@ export default function AddContentButton(props: {
           props.clickOutsideCloseCallback();
         }}
         maxHeight
-        clickableFloatedButton
+        //clickableFloatedButton
         noFloatButton
         noPadding
         flip
+        zIndex={7}
       >
         <Stack
           height="32px"
