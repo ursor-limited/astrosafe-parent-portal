@@ -43,6 +43,7 @@ import TextCreationDialog from "@/app/components/TextDialog";
 
 const DOT_CARD_Y = 20;
 const CARD_SPACING = 20;
+const RIGHT_COLUMN_Y_OFFSET = 60;
 
 export const fadeIn = keyframes`
 from {
@@ -135,10 +136,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }[]
   >([]);
 
-  console.log("22a", contentsWithCardHeight);
-
-  useEffect(() => setContentsWithCardHeight([]), []);
-
   const [contentsWithSide, setContentsWithSide] = useState<
     {
       type: AstroLessonContent;
@@ -146,26 +143,42 @@ export default function LessonPageContents(props: { lessonId: string }) {
       left: boolean;
     }[]
   >([]);
+
   useEffect(() => {
-    if (
-      !contentsWithCardHeight ||
-      contentsWithCardHeight.some((c) => !c.height)
-    )
-      return;
+    if (!lesson || contentsWithCardHeight.length / 2 < contents.length) return; // TODO: get rid of the / 2
     var leftHeightSum = 0;
-    var rightHeightSum = 0;
+    var rightHeightSum = RIGHT_COLUMN_Y_OFFSET;
     setContentsWithSide(
-      contentsWithCardHeight?.map((c) => {
-        if (leftHeightSum > rightHeightSum) {
-          rightHeightSum += CARD_SPACING + c.height!;
-        }
-        return {
-          ...c,
-          left: leftHeightSum < rightHeightSum,
-        };
-      })
+      _.compact(
+        lesson.contentOrder.map((contentId, i) => {
+          const content = contentsWithCardHeight.find(
+            (co) => co.contentId === contentId
+          );
+          if (!content) return;
+          if (i === 0) {
+            leftHeightSum += content.height ?? 0;
+            return {
+              type: content.type,
+              contentId: content.contentId,
+              left: true,
+            };
+          } else {
+            const left = leftHeightSum < rightHeightSum;
+            if (leftHeightSum > rightHeightSum) {
+              rightHeightSum += CARD_SPACING + (content.height ?? 0);
+            } else {
+              leftHeightSum += CARD_SPACING + (content.height ?? 0);
+            }
+            return {
+              type: content.type,
+              contentId: content.contentId,
+              left,
+            };
+          }
+        })
+      )
     );
-  }, [contentsWithCardHeight]);
+  }, [contentsWithCardHeight, lesson]);
 
   const [worksheetDialogOpen, setWorksheetDialogOpen] =
     useState<boolean>(false);
@@ -216,6 +229,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [hoveringContentIndex, setHoveringContentIndex] = useState<
     number | undefined
   >(undefined);
+  const [hoveringContentSide, setHoveringContentSide] = useState<
+    "left" | "right" | null
+  >(null);
   const [hoveringAboveCenter, setHoveringAboveCenter] =
     useState<boolean>(false);
   const [contentInsertionIndex, setContentInsertionIndex] = useState<
@@ -250,14 +266,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }
   };
   useEffect(() => {
-    // setTimeout(() => {
     updateBottomCardCenter();
-    // updateTopCardCenter();
-    // }, 1300);
-    // setTimeout(() => {
-    //   updateBottomCardCenter();
-    //   // updateTopCardCenter();
-    // }, 1300);
   }, [
     contents,
     topCardRef?.getBoundingClientRect?.().top,
@@ -494,101 +503,211 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
           <Stack width="100%" pt="36px" minHeight="44px">
             <Stack px="24px" ref={setContentsColumnRef}>
-              <ContentCards
-                contents={contents}
-                videos={videos}
-                links={links}
-                texts={texts}
-                images={images}
-                worksheets={worksheets}
-                lessonId={props.lessonId}
-                setVideoEditingDialogId={setVideoEditingDialogId}
-                setLinkEditingDialogId={setLinkEditingDialogId}
-                setTextEditingDialogId={setTextEditingDialogId}
-                setImageEditingDialogId={setImageEditingDialogId}
-                setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                updateCallback={loadLesson}
-                wrapper={(card, i) => (
-                  <Stack
-                    ref={
-                      i === 0
-                        ? setTopCardRef
-                        : i === contents.length - 1
-                        ? setBottomCardRef
-                        : undefined
-                    }
-                    //id={card?.props.id}
-                    position="relative"
-                    onMouseEnter={() => {
-                      setHoveringContentIndex(i);
-                    }}
-                    onMouseMove={(event) => {
-                      setHoveringContentIndex(i);
-                      //@ts-ignore
-                      const rect = event?.target?.getBoundingClientRect();
-                      setHoveringAboveCenter(
-                        event.pageY < rect.height / 2 + rect.top
-                      );
-                    }}
-                  >
-                    <Stack
-                      width="46%"
-                      onMouseEnter={() => {
-                        setHoveringOnContentCard(true);
-                      }}
-                      onMouseLeave={() => {
-                        setHoveringOnContentCard(false);
-                      }}
-                    >
-                      {card}
-                    </Stack>
-
-                    {contents.length > 1 ? (
+              <Stack direction="row">
+                <Stack flex={1}>
+                  <ContentCards
+                    contents={contentsWithSide
+                      .filter((c) => c.left)
+                      .map((c) => ({ contentId: c.contentId, type: c.type }))}
+                    videos={videos}
+                    links={links}
+                    texts={texts}
+                    images={images}
+                    worksheets={worksheets}
+                    lessonId={props.lessonId}
+                    setVideoEditingDialogId={setVideoEditingDialogId}
+                    setLinkEditingDialogId={setLinkEditingDialogId}
+                    setTextEditingDialogId={setTextEditingDialogId}
+                    setImageEditingDialogId={setImageEditingDialogId}
+                    setWorksheetEditingDialogId={setWorksheetEditingDialogId}
+                    updateCallback={loadLesson}
+                    wrapper={(card, i) => (
                       <Stack
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        top={i === 0 ? undefined : 0}
-                        bottom={i === 0 ? 0 : undefined}
-                        marginLeft="auto !important"
-                        marginRight="auto !important"
-                        height={
-                          i === 0 || i === contents.length - 1 ? "50%" : "100%"
+                        ref={
+                          i === 0
+                            ? setTopCardRef
+                            : i === contents.length - 1
+                            ? setBottomCardRef
+                            : undefined
                         }
-                        width="2px"
-                        bgcolor={PALETTE.secondary.grey[3]}
-                      />
-                    ) : null}
-                    {contents.length > 0 && i === contents.length - 1 ? (
-                      <Stack
-                        sx={{
-                          background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                        //id={card?.props.id}
+                        position="relative"
+                        onMouseEnter={() => {
+                          setHoveringContentSide("left");
+                          setHoveringContentIndex(i);
                         }}
-                        position="absolute"
-                        width="2px"
-                        top="50%"
-                        height={height - bottomCardCenter}
-                        left={0}
-                        right={0}
-                        marginRight="auto"
-                        marginLeft="auto"
-                      />
-                    ) : null}
-                    <Stack
-                      bgcolor={PALETTE.secondary.purple[1]}
-                      height="20px"
-                      width="20px"
-                      borderRadius="100%"
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      top={0}
-                      bottom={0}
-                      margin="auto"
-                    />
-                  </Stack>
-                )}
-              />
+                        onMouseMove={(event) => {
+                          setHoveringContentSide("left");
+                          setHoveringContentIndex(i);
+                          //@ts-ignore
+                          const rect = event?.target?.getBoundingClientRect();
+                          setHoveringAboveCenter(
+                            event.pageY < rect.height / 2 + rect.top
+                          );
+                        }}
+                        pb={`${CARD_SPACING}px`}
+                      >
+                        <Stack
+                          width="96%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
+
+                        {/* {contents.length > 1 ? (
+                          <Stack
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={i === 0 ? undefined : 0}
+                            bottom={i === 0 ? 0 : undefined}
+                            marginLeft="auto !important"
+                            marginRight="auto !important"
+                            height={
+                              i === 0 || i === contents.length - 1
+                                ? "50%"
+                                : "100%"
+                            }
+                            width="2px"
+                            bgcolor={PALETTE.secondary.grey[3]}
+                          />
+                        ) : null} */}
+                        {contents.length > 0 && i === contents.length - 1 ? (
+                          <Stack
+                            sx={{
+                              background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                            }}
+                            position="absolute"
+                            width="2px"
+                            top="50%"
+                            height={height - bottomCardCenter}
+                            left={0}
+                            right={0}
+                            marginRight="auto"
+                            marginLeft="auto"
+                          />
+                        ) : null}
+                        <Stack
+                          bgcolor={PALETTE.secondary.purple[1]}
+                          height="16px"
+                          width="16px"
+                          borderRadius="100%"
+                          position="absolute"
+                          right="-8px"
+                          top={`${DOT_CARD_Y}px`}
+                        />
+                      </Stack>
+                    )}
+                  />
+                </Stack>
+                <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
+                  <ContentCards
+                    contents={contentsWithSide
+                      .filter((c) => !c.left)
+                      .map((c) => ({ contentId: c.contentId, type: c.type }))}
+                    videos={videos}
+                    links={links}
+                    texts={texts}
+                    images={images}
+                    worksheets={worksheets}
+                    lessonId={props.lessonId}
+                    setVideoEditingDialogId={setVideoEditingDialogId}
+                    setLinkEditingDialogId={setLinkEditingDialogId}
+                    setTextEditingDialogId={setTextEditingDialogId}
+                    setImageEditingDialogId={setImageEditingDialogId}
+                    setWorksheetEditingDialogId={setWorksheetEditingDialogId}
+                    updateCallback={loadLesson}
+                    wrapper={(card, i) => (
+                      <Stack
+                        // ref={
+                        //   i === 0
+                        //     ? setTopCardRef
+                        //     : i === contents.length - 1
+                        //     ? setBottomCardRef
+                        //     : undefined
+                        // }
+                        //id={card?.props.id}
+                        position="relative"
+                        onMouseEnter={() => {
+                          setHoveringContentSide("right");
+                          setHoveringContentIndex(i);
+                        }}
+                        onMouseMove={(event) => {
+                          setHoveringContentSide("right");
+                          setHoveringContentIndex(i);
+                          //@ts-ignore
+                          const rect = event?.target?.getBoundingClientRect();
+                          setHoveringAboveCenter(
+                            event.pageY < rect.height / 2 + rect.top
+                          );
+                        }}
+                        pb={`${CARD_SPACING}px`}
+                        alignItems="flex-end"
+                      >
+                        <Stack
+                          bgcolor={PALETTE.secondary.purple[1]}
+                          height="16px"
+                          width="16px"
+                          borderRadius="100%"
+                          position="absolute"
+                          left="-8px"
+                          top={`${DOT_CARD_Y}px`}
+                        />
+                        <Stack
+                          width="96%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
+
+                        {contents.length > 1 ? (
+                          <Stack
+                            position="absolute"
+                            left={0}
+                            right={0}
+                            top={i === 0 ? undefined : 0}
+                            bottom={i === 0 ? 0 : undefined}
+                            marginLeft="auto !important"
+                            marginRight="auto !important"
+                            height={
+                              i === 0 || i === contents.length - 1
+                                ? "50%"
+                                : "100%"
+                            }
+                            width="2px"
+                            bgcolor={PALETTE.secondary.grey[3]}
+                          />
+                        ) : null}
+                        {contents.length > 0 && i === contents.length - 1 ? (
+                          <Stack
+                            sx={{
+                              background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                            }}
+                            position="absolute"
+                            width="2px"
+                            top="50%"
+                            height={height - bottomCardCenter}
+                            left={0}
+                            right={0}
+                            marginRight="auto"
+                            marginLeft="auto"
+                          />
+                        ) : null}
+                      </Stack>
+                    )}
+                  />
+                </Stack>
+              </Stack>
             </Stack>
           </Stack>
         </PageCard>
