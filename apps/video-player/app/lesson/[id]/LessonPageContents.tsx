@@ -145,7 +145,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >([]);
 
   useEffect(() => {
-    if (!lesson || contentsWithCardHeight.length / 2 < contents.length) return; // TODO: get rid of the / 2
+    if (!lesson || contentsWithCardHeight.length === 0) return; // TODO: get rid of the / 2
     var leftHeightSum = 0;
     var rightHeightSum = RIGHT_COLUMN_Y_OFFSET;
     setContentsWithSide(
