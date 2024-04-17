@@ -639,7 +639,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       marginRight="auto"
                       marginLeft="auto"
                       bottom={0}
-                      zIndex={3}
+                      zIndex={2}
                     />
 
                     {/* <Stack
