@@ -26,7 +26,7 @@ export const getFormattedDate = (date: string) =>
 const LessonVideoCard = (
   props: IVideo & {
     lessonId: string;
-    setHeight: (height: number) => void;
+    setHeight?: (height: number) => void;
     editingCallback: () => void;
     deletionCallback: () => void;
   }
@@ -50,7 +50,7 @@ const LessonVideoCard = (
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
   useEffect(
-    () => props.setHeight(ref?.getBoundingClientRect?.()?.height ?? 0),
+    () => props.setHeight?.(ref?.getBoundingClientRect?.()?.height ?? 0),
     [ref?.getBoundingClientRect?.()?.height]
   );
 
