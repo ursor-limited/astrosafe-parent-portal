@@ -325,7 +325,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       );
   }, [contents]);
 
-  console.log(contentsWithDotY);
+  const [staticAddButtonY, setStaticAddButtonY] = useState<number | null>(null);
+  useEffect(() => {
+    !contentInsertionIndex && setStaticAddButtonY(null);
+  }, [contentInsertionIndex]);
 
   return (
     <>
@@ -447,7 +450,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 <Stack
                   position="absolute"
                   top={
-                    contents.length === 0
+                    _.isNumber(staticAddButtonY)
+                      ? staticAddButtonY - 18
+                      : contents.length === 0
                       ? contentsColumnRef?.getBoundingClientRect()?.top
                       : mouseY < height / 2
                       ? Math.max(
@@ -459,32 +464,28 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   }
                   left={-18}
                   onClick={() => {
+                    setStaticAddButtonY(mouseY);
                     if (addContentPopoverOpen) return;
-                    const elementBounds = lesson?.contentOrder.map((id) => ({
-                      id,
-                      bounds: document
-                        .getElementById(id)
-                        ?.getBoundingClientRect?.(),
-                    }));
-                    const hoverElement = elementBounds?.find(
-                      (b) =>
-                        mouseY < (b.bounds?.bottom ?? 0) &&
-                        mouseY > (b.bounds?.top ?? 0)
+                    const dotYs = lesson?.contentOrder.map(
+                      (id) =>
+                        (document
+                          .getElementById(`${id}dot`)
+                          ?.getBoundingClientRect?.()?.top ?? 0) +
+                        document.body.scrollTop
                     );
-                    if (hoverElement) {
-                      setContentInsertionIndex(
-                        (lesson?.contentOrder.indexOf(hoverElement.id) ?? 0) +
-                          (mouseY <
-                          (hoverElement.bounds?.top ?? 0) +
-                            (hoverElement.bounds?.height ?? 0) / 2
-                            ? 0
-                            : 1)
-                      );
-                    } else if (
-                      mouseY >
-                      (contentsColumnRef?.getBoundingClientRect()?.bottom ?? 0)
-                    ) {
+                    if (mouseY < (dotYs?.[0] ?? 0)) {
+                      setContentInsertionIndex(0);
+                    } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
                       setContentInsertionIndex(contents.length);
+                    } else {
+                      const closestY = dotYs.reduce(
+                        (a, b) => (b <= mouseY && a < b ? b : a),
+                        0
+                      );
+                      const closestNumberIndex = dotYs.indexOf(closestY);
+                      setContentInsertionIndex(
+                        closestNumberIndex + (mouseY < closestY ? 0 : 1)
+                      );
                     }
                   }}
                   alignItems="center"
@@ -501,7 +502,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       setContentInsertionIndex(undefined)
                     }
                   />
-
                   {contents.length > 0 &&
                   (!_.isNumber(hoveringContentIndex) ||
                     (hoveringContentIndex === 0 && hoveringAboveCenter)) ? (
