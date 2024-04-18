@@ -359,7 +359,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     <>
       <Stack
         ref={setPageRef}
-        px="40px"
+        px="20px"
         overflow="scroll"
         flex={1}
         bgcolor={
@@ -376,7 +376,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
           title={lesson?.title ?? ""}
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
-          width="78%"
           noBottomPadding
           rightStuff={
             <Stack direction="row" spacing="12px">
@@ -664,73 +663,75 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                   ) : (
                     <Stack position="relative">
-                      <Stack
-                        key="starter"
-                        width="94%"
-                        onMouseEnter={() => {
-                          setHovering(true);
-                        }}
-                        onMouseLeave={() => {
-                          setHovering(false);
-                        }}
-                        onClick={() => setStarterAddContentPopoverOpen(true)}
-                      >
+                      <UrsorFadeIn delay={500} duration={800}>
                         <Stack
-                          height="459px"
-                          border={`2px solid ${
-                            hovering
-                              ? PALETTE.secondary.purple[2]
-                              : PALETTE.secondary.grey[3]
-                          }`}
-                          borderRadius="12px"
-                          justifyContent="center"
-                          alignItems="center"
-                          sx={{
-                            transition: "0.2s",
-                            cursor: "pointer",
-                            svg: {
-                              path: {
-                                transition: "0.2s",
-                                fill: hovering
-                                  ? PALETTE.secondary.purple[2]
-                                  : PALETTE.secondary.grey[3],
-                              },
-                            },
+                          key="starter"
+                          width="94%"
+                          onMouseEnter={() => {
+                            setHovering(true);
                           }}
+                          onMouseLeave={() => {
+                            setHovering(false);
+                          }}
+                          onClick={() => setStarterAddContentPopoverOpen(true)}
                         >
                           <Stack
-                            sx={{
-                              transform: "translateY(20px)",
-                              filter: `grayscale(${hovering ? 0 : 100}%)`,
-                              opacity: hovering ? 1 : 0.5,
-                              transition: "0.2s",
-                            }}
-                          >
-                            <Image
-                              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
-                              height={243}
-                              width={243}
-                              alt="graph illustration"
-                            />
-                          </Stack>
-
-                          <PlusIcon height="32px" width="32px" />
-                          <Typography
-                            color={
+                            height="459px"
+                            border={`2px solid ${
                               hovering
                                 ? PALETTE.secondary.purple[2]
                                 : PALETTE.secondary.grey[3]
-                            }
+                            }`}
+                            borderRadius="12px"
+                            justifyContent="center"
+                            alignItems="center"
                             sx={{
                               transition: "0.2s",
+                              cursor: "pointer",
+                              svg: {
+                                path: {
+                                  transition: "0.2s",
+                                  fill: hovering
+                                    ? PALETTE.secondary.purple[2]
+                                    : PALETTE.secondary.grey[3],
+                                },
+                              },
                             }}
-                            bold
-                            variant="large"
                           >
-                            Add
-                          </Typography>
+                            <Stack
+                              sx={{
+                                transform: "translateY(20px)",
+                                filter: `grayscale(${hovering ? 0 : 100}%)`,
+                                opacity: hovering ? 1 : 0.5,
+                                transition: "0.2s",
+                              }}
+                            >
+                              <Image
+                                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
+                                height={243}
+                                width={243}
+                                alt="graph illustration"
+                              />
+                            </Stack>
+
+                            <PlusIcon height="32px" width="32px" />
+                            <Typography
+                              color={
+                                hovering
+                                  ? PALETTE.secondary.purple[2]
+                                  : PALETTE.secondary.grey[3]
+                              }
+                              sx={{
+                                transition: "0.2s",
+                              }}
+                              bold
+                              variant="large"
+                            >
+                              Add
+                            </Typography>
+                          </Stack>
                         </Stack>
-                      </Stack>
+                      </UrsorFadeIn>
                       <Stack
                         position="absolute"
                         top={`${DOT_CARD_Y}px`}
