@@ -43,6 +43,9 @@ import MobilePageCard from "@/app/dashboard/MobilePageCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
+export const cleanTextValueIntoInnerHTML = (value: string) =>
+  value.replaceAll("&lt;", "<");
+
 export default function MobileLessonPageContents(props: { lessonId: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -68,7 +71,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           setTexts(
             response.actualContents.texts.map((t: any) => ({
               ...t,
-              value: t.value.replaceAll("&lt;", "<"),
+              value: cleanTextValueIntoInnerHTML(t.value),
             }))
           );
       }

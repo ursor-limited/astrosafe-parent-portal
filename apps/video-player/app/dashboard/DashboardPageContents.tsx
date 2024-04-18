@@ -54,6 +54,9 @@ import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryCont
 import ImageDialog, { IImage } from "./ImageDialog";
 import ImageCard from "../components/ImageCard";
 import LinkCard from "../components/LinkCard";
+import TextCreationDialog, { IText } from "../components/TextDialog";
+import TextCard from "../components/TextCard";
+import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -538,6 +541,24 @@ export default function DashboardPageContents() {
     loadImages();
   }, [userDetails?.user?.id]);
 
+  const [texts, setTexts] = useState<IText[]>([]);
+  const loadTexts = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserTexts(userDetails.user.id)
+        .then((texts) =>
+          setTexts(
+            _.reverse(texts.slice()).map((t: IText) => ({
+              ...t,
+              value: cleanTextValueIntoInnerHTML(t.value),
+            }))
+          )
+        )
+        .finally(() => setTextsLoaded(true));
+  };
+  useEffect(() => {
+    loadTexts();
+  }, [userDetails?.user?.id]);
+
   const [links, setLinks] = useState<ILink[]>([]);
   const loadLinks = () => {
     userDetails?.user?.id &&
@@ -566,19 +587,19 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[]
   >([]);
   const [filteredCards, setFilteredCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[]
   >([]);
   const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
@@ -654,6 +675,16 @@ export default function DashboardPageContents() {
         type: "image" as AstroContent,
         details: i,
       }));
+    const textDetails = texts
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.value?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((t) => ({
+        type: "text" as AstroContent,
+        details: t,
+      }));
     const linkDetails = links
       .filter(
         (x) =>
@@ -688,6 +719,9 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "link"
           ? []
           : linkDetails),
+        ...(selectedContentType && selectedContentType !== "text"
+          ? []
+          : textDetails),
         ...(selectedContentType && selectedContentType !== "lesson"
           ? []
           : lessonDetails),
@@ -695,6 +729,8 @@ export default function DashboardPageContents() {
       (c) =>
         selectedSort === "updatedAt"
           ? new Date(c.details.updatedAt)
+          : c.type === "text" // @ts-ignore
+          ? c.details.value?.toLowerCase() // @ts-ignore
           : c.details.title?.toLowerCase(),
       selectedSort === "updatedAt" ? "desc" : "asc"
     );
@@ -703,6 +739,7 @@ export default function DashboardPageContents() {
     lessons,
     images,
     videos,
+    texts,
     links,
     worksheets,
     nColumns,
@@ -799,11 +836,16 @@ export default function DashboardPageContents() {
     string | undefined
   >(undefined);
 
+  const [textEditingDialogId, setTextEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
   const [linksLoaded, setLinksLoaded] = useState<boolean>(false);
+  const [textsLoaded, setTextsLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   useEffect(
     () =>
@@ -812,14 +854,23 @@ export default function DashboardPageContents() {
           videosLoaded &&
           lessonsLoaded &&
           linksLoaded &&
+          textsLoaded &&
           imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
           images.length > 0 ||
           links.length > 0 ||
+          texts.length > 0 ||
           lessons.length > 0
       ),
-    [worksheetsLoaded, videosLoaded, imagesLoaded, linksLoaded, lessonsLoaded]
+    [
+      worksheetsLoaded,
+      videosLoaded,
+      imagesLoaded,
+      linksLoaded,
+      textsLoaded,
+      lessonsLoaded,
+    ]
   );
 
   const [
@@ -1138,6 +1189,14 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadImages}
                             />
+                          ) : item.type === "text" ? (
+                            <TextCard
+                              {...(item.details as IText)}
+                              editCallback={() =>
+                                setTextEditingDialogId(item.details.id)
+                              }
+                              deleteCallback={loadTexts}
+                            />
                           ) : item.type === "link" ? (
                             <LinkCard
                               {...(item.details as ILink)}
@@ -1213,6 +1272,14 @@ export default function DashboardPageContents() {
           closeCallback={() => setLinkEditingDialogId(undefined)}
           updateCallback={loadLinks}
           link={links.find((l) => l.id === linkEditingDialogId)}
+        />
+      ) : null}
+      {textEditingDialogId ? (
+        <TextCreationDialog
+          open={true}
+          closeCallback={() => setTextEditingDialogId(undefined)}
+          updateCallback={loadTexts}
+          text={texts.find((t) => t.id === textEditingDialogId)}
         />
       ) : null}
       {!anyLoaded
