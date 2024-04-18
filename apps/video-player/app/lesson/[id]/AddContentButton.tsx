@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import {
@@ -78,7 +78,8 @@ export default function AddContentButton(props: {
   setOpen: (open: boolean) => void;
   callback: (type: AstroContent) => void;
   mobile?: boolean;
-  clickOutsideCloseCallback: () => void;
+  clickOutsideCloseCallback?: () => void;
+  standardStyle?: boolean;
 }) {
   const contentOrder: AstroContent[] = [
     "video",
@@ -126,7 +127,7 @@ export default function AddContentButton(props: {
         }
         closeCallback={() => {
           props.setOpen(false);
-          props.clickOutsideCloseCallback();
+          props.clickOutsideCloseCallback?.();
         }}
         maxHeight
         //clickableFloatedButton
@@ -135,40 +136,54 @@ export default function AddContentButton(props: {
         flip
         zIndex={7}
       >
-        <Stack
-          height="32px"
-          width="32px"
-          borderRadius="100%"
-          border={`2px solid ${PALETTE.secondary.purple[2]}`}
-          bgcolor={
-            hovering || props.mobile
-              ? PALETTE.secondary.purple[2]
-              : "rgb(255,255,255)"
-          }
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            svg: {
-              path: {
-                fill:
-                  hovering || props.mobile
-                    ? "rgb(255,255,255)"
-                    : PALETTE.secondary.purple[2],
+        {props.standardStyle ? (
+          <UrsorButton
+            variant="secondary"
+            endIcon={PlusIcon}
+            backgroundColor="white"
+            borderColor={PALETTE.primary.navy}
+            fontColor={PALETTE.primary.navy}
+            hoverOpacity={0.7}
+            onClick={() => props.setOpen(true)}
+          >
+            Add new
+          </UrsorButton>
+        ) : (
+          <Stack
+            height="32px"
+            width="32px"
+            borderRadius="100%"
+            border={`2px solid ${PALETTE.secondary.purple[2]}`}
+            bgcolor={
+              hovering || props.mobile
+                ? PALETTE.secondary.purple[2]
+                : "rgb(255,255,255)"
+            }
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              svg: {
+                path: {
+                  fill:
+                    hovering || props.mobile
+                      ? "rgb(255,255,255)"
+                      : PALETTE.secondary.purple[2],
+                },
               },
-            },
-          }}
-          onClick={() => props.setOpen(true)}
-          onMouseEnter={() => {
-            setHovering(true);
-          }}
-          onMouseLeave={() => {
-            setHovering(false);
-          }}
-        >
-          <PlusIcon width="20px" height="20px" />
-        </Stack>
+            }}
+            onClick={() => props.setOpen(true)}
+            onMouseEnter={() => {
+              setHovering(true);
+            }}
+            onMouseLeave={() => {
+              setHovering(false);
+            }}
+          >
+            <PlusIcon width="20px" height="20px" />
+          </Stack>
+        )}
       </UrsorPopover>
     </>
   );

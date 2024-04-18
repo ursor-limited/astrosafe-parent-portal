@@ -251,6 +251,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
+  const [headerAddContentPopoverOpen, setHeaderAddContentPopoverOpen] =
+    useState<boolean>(false);
+
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
@@ -343,24 +346,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
-  console.log(mouseY, "444d");
-
   return (
     <>
       <Stack
-        //height="100%"
         ref={setPageRef}
         px="40px"
         overflow="scroll"
-        // onMouseMove={(event) =>
-        //   !addContentPopoverOpen &&
-        //   !worksheetDialogOpen &&
-        //   !videoDialogOpen &&
-        //   !imageDialogOpen &&
-        //   !linkDialogOpen &&
-        //   !textDialogOpen &&
-        //   setMouseY(event.pageY)
-        // }
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
             ? PALETTE.secondary.grey[1]
@@ -393,7 +384,30 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       : "none",
                   transition: "0.2s",
                 }}
+                direction="row"
+                spacing="12px"
               >
+                <AddContentButton
+                  open={headerAddContentPopoverOpen}
+                  setOpen={setHeaderAddContentPopoverOpen}
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
+                  }
+                  standardStyle
+                />
+                <UrsorButton
+                  dark
+                  variant="tertiary"
+                  endIcon={ShareIcon}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    notificationCtx.success("Copied URL to clipboard.");
+                  }}
+                >
+                  Share link
+                </UrsorButton>
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
@@ -412,25 +426,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     },
                   ]}
                 />
-              </Stack>
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
-              >
-                <ShareIcon width="22px" height="22px" />
               </Stack>
             </Stack>
           }
