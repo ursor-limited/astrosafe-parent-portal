@@ -12,7 +12,6 @@ import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPa
 import { UrsorButton } from "ui";
 import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSubtler";
 import ValueProposition from "../tools/multiplication-chart/[urlId]/ValueProposition";
-import companies from "./companies.json";
 import ApprovedCompaniesList from "./ApprovedCompaniesList";
 import SealExplanationDialog from "./[urlId]/SealExplanationDialog";
 
@@ -75,7 +74,8 @@ export default function SealLandingPageContents(props: IAstroLandingPage) {
                       dark
                       variant="tertiary"
                       onClick={() =>
-                        (window.location.href = "https://form.typeform.com/to/mVezziat")
+                        (window.location.href =
+                          "https://form.typeform.com/to/mVezziat")
                       }
                     >
                       Enrol now
