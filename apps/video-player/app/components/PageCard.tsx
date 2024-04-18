@@ -30,7 +30,7 @@ const PageCard = (props: {
       spacing="100px"
       minHeight={props.minHeight}
       height={props.fullHeight ? "100%" : undefined}
-      //overflow="scroll"
+      flex={1}
     >
       <Stack
         position="relative"
