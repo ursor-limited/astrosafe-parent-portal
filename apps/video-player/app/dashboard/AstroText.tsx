@@ -6,12 +6,12 @@ import TextEditorToolbar, {
 } from "../components/TextEditorToolBar";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.core.css";
-import ReactQuill from "react-quill";
+//import ReactQuill from "react-quill";
 
-// const ReactQuill = dynamic(
-//   () => import("react-quill"),
-//   { ssr: false } // not including this component on server-side due to its dependence on 'document'
-// );
+const ReactQuill = dynamic(
+  () => import("react-quill"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const AstroText = (props: {
   id: string;
