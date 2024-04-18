@@ -44,7 +44,7 @@ import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
-import { ILink, shouldBeLightText } from "./LinkDialog";
+import LinkDialog, { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
@@ -53,6 +53,7 @@ import DashboardPageCreateButton from "./DashboardPageCreateButton";
 import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
 import ImageDialog, { IImage } from "./ImageDialog";
 import ImageCard from "../components/ImageCard";
+import LinkCard from "../components/LinkCard";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -537,6 +538,17 @@ export default function DashboardPageContents() {
     loadImages();
   }, [userDetails?.user?.id]);
 
+  const [links, setLinks] = useState<ILink[]>([]);
+  const loadLinks = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLinks(userDetails.user.id)
+        .then((links) => setLinks(_.reverse(links.slice())))
+        .finally(() => setLinksLoaded(true));
+  };
+  useEffect(() => {
+    loadLinks();
+  }, [userDetails?.user?.id]);
+
   const [latestPageIndex, setLatestPageIndex] = useState<number>(0);
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const onScroll = () => {
@@ -573,7 +585,7 @@ export default function DashboardPageContents() {
     "lessons" | "all"
   >("lessons");
   const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
-    "all" | "video" | "worksheet" | "image" | "text"
+    "all" | "video" | "worksheet" | "image" | "text" | "link"
   >("all");
 
   useEffect(() => {
@@ -642,6 +654,16 @@ export default function DashboardPageContents() {
         type: "image" as AstroContent,
         details: i,
       }));
+    const linkDetails = links
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "link" as AstroContent,
+        details: l,
+      }));
     const lessonDetails = lessons
       .filter(
         (x) =>
@@ -663,6 +685,9 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "image"
           ? []
           : imageDetails),
+        ...(selectedContentType && selectedContentType !== "link"
+          ? []
+          : linkDetails),
         ...(selectedContentType && selectedContentType !== "lesson"
           ? []
           : lessonDetails),
@@ -678,6 +703,7 @@ export default function DashboardPageContents() {
     lessons,
     images,
     videos,
+    links,
     worksheets,
     nColumns,
     selectedContentType,
@@ -769,27 +795,37 @@ export default function DashboardPageContents() {
     string | undefined
   >(undefined);
 
+  const [linkEditingDialogId, setLinkEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
+  const [linksLoaded, setLinksLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   useEffect(
     () =>
       setAnyLoaded(
-        (worksheetsLoaded && videosLoaded && lessonsLoaded && imagesLoaded) ||
+        (worksheetsLoaded &&
+          videosLoaded &&
+          lessonsLoaded &&
+          linksLoaded &&
+          imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
           images.length > 0 ||
+          links.length > 0 ||
           lessons.length > 0
       ),
-    [worksheetsLoaded, videosLoaded, imagesLoaded, lessonsLoaded]
+    [worksheetsLoaded, videosLoaded, imagesLoaded, linksLoaded, lessonsLoaded]
   );
 
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | "image" | null>(
+  ] = useLocalStorage<"video" | "worksheet" | "link" | "image" | null>(
     "typeOfContentDialogToOpenUponLandingInNewLesson",
     null
   );
@@ -1001,12 +1037,13 @@ export default function DashboardPageContents() {
                 <SortButton
                   selected={selectedMultipleFilter}
                   callback={(id) => setSelectedMultipleFilter(id)}
-                  types={["all", "video", "worksheet", "image", "text"]}
+                  types={["all", "video", "worksheet", "image", "text", "link"]}
                   displayNames={{
                     all: "All",
                     video: "Video",
                     worksheet: "Worksheet",
                     image: "Image",
+                    link: "Link",
                     text: "Text",
                   }}
                   noText
@@ -1101,6 +1138,15 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadImages}
                             />
+                          ) : item.type === "link" ? (
+                            <LinkCard
+                              {...(item.details as ILink)}
+                              editCallback={() =>
+                                setLinkEditingDialogId(item.details.id)
+                              }
+                              deleteCallback={loadLinks}
+                              height="260px"
+                            />
                           ) : item.type === "lesson" ? (
                             <LessonCard
                               {...(item.details as ILesson)}
@@ -1159,6 +1205,14 @@ export default function DashboardPageContents() {
           closeCallback={() => setImageEditingDialogId(undefined)}
           updateCallback={loadImages}
           image={images.find((i) => i.id === imageEditingDialogId)}
+        />
+      ) : null}
+      {linkEditingDialogId ? (
+        <LinkDialog
+          open={true}
+          closeCallback={() => setLinkEditingDialogId(undefined)}
+          updateCallback={loadLinks}
+          link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
       {!anyLoaded

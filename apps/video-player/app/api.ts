@@ -146,6 +146,12 @@ class ApiController {
       response.json()
     );
   }
+  static async getUserLinks(id: string) {
+    //@ts-ignore
+    return get(`link/user/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
   static async getUserVideos(id: string) {
     //@ts-ignore
     return get(`video/user/${id}/videos`).then((response: any) =>
