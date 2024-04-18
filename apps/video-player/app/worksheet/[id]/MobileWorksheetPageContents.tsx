@@ -151,7 +151,6 @@ export default function MobileWorksheetPageContents(props: {
   useEffect(() => {
     if (userDetails.user && !signedIn) {
       router.push("/dashboard");
-      //setSignedIn(true);
     }
   }, [userDetails.user]);
 
