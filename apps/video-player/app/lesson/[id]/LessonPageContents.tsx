@@ -68,6 +68,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ApiController.getLessonWithContents(props.lessonId).then(
       (response: any) => {
         if (!response) return;
+        setStaticAddButtonY(null);
         response?.lesson && setLesson(response.lesson);
         response?.actualContents?.videos &&
           setVideos(response.actualContents.videos);
@@ -342,6 +343,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
+  console.log(mouseY, "444d");
+
   return (
     <>
       <Stack
@@ -349,7 +352,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
         ref={setPageRef}
         px="40px"
         overflow="scroll"
-        onMouseMove={(event) => setMouseY(event.pageY)}
+        // onMouseMove={(event) =>
+        //   !addContentPopoverOpen &&
+        //   !worksheetDialogOpen &&
+        //   !videoDialogOpen &&
+        //   !imageDialogOpen &&
+        //   !linkDialogOpen &&
+        //   !textDialogOpen &&
+        //   setMouseY(event.pageY)
+        // }
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
             ? PALETTE.secondary.grey[1]
@@ -432,11 +443,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
           userDetails.user.id === lesson?.creatorId ? (
             <Stack
               height="100%"
+              width="48px"
               position="fixed"
               top={0}
               left="50%"
               sx={{
-                transform: `translateY(-26px)`,
+                transform: `translate(-24px, -26px)`,
                 opacity: 0,
                 animation: `${fadeIn} 0.2s ease-in`,
                 animationFillMode: "forwards",
@@ -448,11 +460,29 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   top: event?.deltaY + pageRef.scrollTop,
                 });
               }}
+              onMouseMove={(event) => {
+                !addContentPopoverOpen &&
+                  !worksheetDialogOpen &&
+                  !videoDialogOpen &&
+                  !imageDialogOpen &&
+                  !linkDialogOpen &&
+                  !textDialogOpen &&
+                  setMouseY(event.pageY);
+              }}
+              onMouseEnter={() => {
+                setHoveringOnContentCard(false);
+              }}
+              onMouseLeave={() => {
+                setHoveringOnContentCard(true);
+              }}
             >
               <Stack
                 position="absolute"
                 top={addButtonY}
-                left={-18}
+                left={0}
+                right={0}
+                marginLeft="auto"
+                marginRight="auto"
                 onClick={() => {
                   setStaticAddButtonY(mouseY);
                   if (addContentPopoverOpen) return;
@@ -549,7 +579,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         top={mouseY}
                       />
                     ) : null} */}
-                  {!!userDetails?.user?.id &&
+                  {!hoveringOnContentCard &&
+                  !!userDetails?.user?.id &&
                   userDetails.user.id === lesson?.creatorId &&
                   contentsWithDotY[0]?.dotY &&
                   mouseY < contentsWithDotY[0]?.dotY ? (
@@ -745,12 +776,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       >
                         <Stack
                           width="96%"
-                          onMouseEnter={() => {
-                            setHoveringOnContentCard(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveringOnContentCard(false);
-                          }}
+                          // onMouseEnter={() => {
+                          //   setHoveringOnContentCard(true);
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setHoveringOnContentCard(false);
+                          // }}
                         >
                           {card}
                         </Stack>
@@ -862,12 +893,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         />
                         <Stack
                           width="96%"
-                          onMouseEnter={() => {
-                            setHoveringOnContentCard(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveringOnContentCard(false);
-                          }}
+                          // onMouseEnter={() => {
+                          //   setHoveringOnContentCard(true);
+                          // }}
+                          // onMouseLeave={() => {
+                          //   setHoveringOnContentCard(false);
+                          // }}
                         >
                           {card}
                         </Stack>
