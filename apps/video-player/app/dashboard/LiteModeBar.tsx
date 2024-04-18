@@ -1,6 +1,7 @@
 import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
 import { useUserContext } from "../components/UserContext";
+import RocketIcon from "@/images/icons/RocketIcon.svg";
 
 const MAX_LITE_MODE_ACTIONS = 3;
 
@@ -20,19 +21,18 @@ const LiteModeBar = (props: {
   return (
     <Stack
       position="absolute"
-      bottom="40px"
+      bottom={0}
       left={0}
       right={0}
       marginLeft="auto"
       marginRight="auto"
-      width={!props.mobile ? "680px" : undefined}
+      width="100%"
       height={!props.mobile ? "64px" : undefined}
       sx={{
         background: "linear-gradient(16deg, #F279C5, #1D62F6)",
       }}
       justifyContent="center"
       alignItems="center"
-      borderRadius="12px"
       zIndex={999}
       //boxShadow="0 0 24px rgba(0,0,0,0.08)"
       direction={props.mobile ? "column" : "row"}
@@ -67,7 +67,7 @@ const LiteModeBar = (props: {
         onClick={props.upgradeCallback}
       >
         <Stack sx={{ pointerEvents: "none" }}>
-          <UrsorButton dark fontColor="#4166EE">
+          <UrsorButton dark fontColor="#4166EE" endIcon={RocketIcon}>
             Upgrade to unlimited
           </UrsorButton>
         </Stack>

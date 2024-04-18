@@ -8,6 +8,7 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
@@ -40,6 +41,9 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { HEIGHTS } from "ui/ursor-button";
 import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
+import GraphIllustration from "@/images/GraphIllustration.svg";
+import Image from "next/image";
+import AddContentDialog from "./AddContentDialog";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
@@ -251,6 +255,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
+  const [headerAddContentPopoverOpen, setHeaderAddContentPopoverOpen] =
+    useState<boolean>(false);
+
+  const [starterAddContentDialogOpen, setStarterAddContentPopoverOpen] =
+    useState<boolean>(false);
+
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
@@ -343,24 +353,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
-  console.log(mouseY, "444d");
+  const [hovering, setHovering] = useState<boolean>(false);
 
   return (
     <>
       <Stack
-        //height="100%"
         ref={setPageRef}
         px="40px"
         overflow="scroll"
-        // onMouseMove={(event) =>
-        //   !addContentPopoverOpen &&
-        //   !worksheetDialogOpen &&
-        //   !videoDialogOpen &&
-        //   !imageDialogOpen &&
-        //   !linkDialogOpen &&
-        //   !textDialogOpen &&
-        //   setMouseY(event.pageY)
-        // }
+        flex={1}
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
             ? PALETTE.secondary.grey[1]
@@ -393,7 +394,30 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       : "none",
                   transition: "0.2s",
                 }}
+                direction="row"
+                spacing="12px"
               >
+                <AddContentButton
+                  open={headerAddContentPopoverOpen}
+                  setOpen={setHeaderAddContentPopoverOpen}
+                  callback={(type) =>
+                    outOfCreations
+                      ? setNoCreationsLeftDialogOpen(true)
+                      : contentCallbacks[type]()
+                  }
+                  standardStyle
+                />
+                <UrsorButton
+                  dark
+                  variant="tertiary"
+                  endIcon={ShareIcon}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    notificationCtx.success("Copied URL to clipboard.");
+                  }}
+                >
+                  Share link
+                </UrsorButton>
                 <UrsorActionButton
                   size="43px"
                   iconSize="17px"
@@ -413,25 +437,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   ]}
                 />
               </Stack>
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
-              >
-                <ShareIcon width="22px" height="22px" />
-              </Stack>
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
@@ -439,7 +444,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
             !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
           }
         >
-          {!!userDetails?.user?.id &&
+          {contents.length > 0 &&
+          !!userDetails?.user?.id &&
           userDetails.user.id === lesson?.creatorId ? (
             <Stack
               height="100%"
@@ -560,68 +566,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 onMouseEnter={() => setHoveringOnContentCard(false)}
               >
                 <Stack height="100%" position="relative">
-                  {/* {contentsWithDotY[0]?.dotY &&
-                    mouseY < contentsWithDotY[0]?.dotY ? (
-                      <Stack
-                        width="2px"
-                        height={
-                          contentsWithDotY[0]?.dotY -
-                          mouseY -
-                          document.body.scrollTop -
-                          26
-                        }
-                        bgcolor={PALETTE.secondary.grey[3]}
-                        position="absolute"
-                        left="-1px"
-                        right={0}
-                        marginRight="auto"
-                        marginLeft="auto"
-                        top={mouseY}
-                      />
-                    ) : null} */}
-                  {/* {!hoveringOnContentCard &&
-                  !!userDetails?.user?.id &&
-                  userDetails.user.id === lesson?.creatorId &&
-                  contentsWithDotY[0]?.dotY &&
-                  mouseY < contentsWithDotY[0]?.dotY ? (
+                  {contents.length === 0 ||
+                  (contentsWithDotY[0]?.dotY &&
+                    contentsWithDotY[contentsWithDotY.length - 1]?.dotY) ? (
                     <Stack
                       width="2px"
-                      height={`${Math.min(
-                        100,
-                        contentsWithDotY[0]?.dotY -
-                          addButtonY -
-                          document.body.scrollTop -
-                          30
-                      )}px`}
-                      sx={{
-                        transform: `translateY(-${Math.min(
-                          100,
-                          contentsWithDotY[0]?.dotY -
-                            addButtonY -
-                            document.body.scrollTop -
-                            30
-                        )}px)`,
-                      }}
-                      bgcolor={PALETTE.secondary.grey[3]}
-                      position="absolute"
-                      left={0}
-                      right={0}
-                      marginRight="auto"
-                      marginLeft="auto"
-                      top={`${DOT_CARD_Y}px`}
-                    />
-                  ) : null} */}
-                  {contentsWithDotY[0]?.dotY &&
-                  contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
-                    <Stack
-                      width="2px"
-                      height={
-                        "calc(100% - 50px)"
-                        // contentsWithDotY[contentsWithDotY.length - 1].dotY -
-                        // (contentsColumnRef?.getBoundingClientRect?.()?.top ??
-                        //   0) -
-                        // 50
-                      }
+                      height={"calc(100% - 50px)"}
                       bgcolor={PALETTE.secondary.grey[3]}
                       position="absolute"
                       left="-1px"
@@ -646,194 +596,157 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     bottom={0}
                     zIndex={2}
                   />
-
-                  {/* <Stack
-                      width="2px"
-                      height={
-                        lineTailHeight
-                      }
-                      bgcolor="rgb(255,255,255)"
-                      // sx={{
-                      //   background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
-                      // }}
-                      position="absolute"
-                      left="-1px"
-                      right={0}
-                      marginRight="auto"
-                      marginLeft="auto"
-                      top={`${
-                        contentsWithDotY[contentsWithDotY.length - 1]?.dotY -
-                        303
-                      }px`}
-                      zIndex={3}
-                    />
-                     */}
-
-                  {/* <Stack
-                      position="absolute"
-                      top={
-                        _.isNumber(staticAddButtonY)
-                          ? staticAddButtonY - 18
-                          : contents.length === 0
-                          ? contentsColumnRef?.getBoundingClientRect()?.top
-                          : mouseY < height / 2
-                          ? Math.max(
-                              mouseY - 18,
-                              (contentsColumnRef?.getBoundingClientRect()
-                                ?.top ?? 0) - 60
-                            )
-                          : Math.min(mouseY - 10, height - 50)
-                      }
-                      left={-18}
-                      onClick={() => {
-                        setStaticAddButtonY(mouseY);
-                        if (addContentPopoverOpen) return;
-                        const dotYs = lesson?.contentOrder.map(
-                          (id) =>
-                            (document
-                              .getElementById(`${id}dot`)
-                              ?.getBoundingClientRect?.()?.top ?? 0) +
-                            document.body.scrollTop
-                        );
-                        if (mouseY < (dotYs?.[0] ?? 0)) {
-                          setContentInsertionIndex(0);
-                        } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                          setContentInsertionIndex(contents.length);
-                        } else {
-                          const closestY = dotYs.reduce(
-                            (a, b) => (b <= mouseY && a < b ? b : a),
-                            0
-                          );
-                          const closestNumberIndex = dotYs.indexOf(closestY);
-                          setContentInsertionIndex(
-                            closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                          );
-                        }
-                      }}
-                      alignItems="center"
-                    >
-                      <Stack
-                        sx={{
-                          opacity:
-                            contents.length === 0 || !hoveringOnContentCard
-                              ? 1
-                              : 0,
-                          transition: "0.2s",
-                        }}
-                      >
-                        <AddContentButton
-                          open={addContentPopoverOpen}
-                          setOpen={setAddContentPopoverOpen}
-                          callback={(type) =>
-                            outOfCreations
-                              ? setNoCreationsLeftDialogOpen(true)
-                              : contentCallbacks[type]()
-                          }
-                          clickOutsideCloseCallback={() =>
-                            setContentInsertionIndex(undefined)
-                          }
-                        />
-                      </Stack>
-                    </Stack> */}
                 </Stack>
               </Stack>
 
               <Stack direction="row">
                 <Stack flex={1}>
-                  <ContentCards
-                    contents={contentsWithSide
-                      .filter((c) => c.left)
-                      .map((c) => ({ contentId: c.contentId, type: c.type }))}
-                    videos={videos}
-                    links={links}
-                    texts={texts}
-                    images={images}
-                    worksheets={worksheets}
-                    lessonId={props.lessonId}
-                    setVideoEditingDialogId={setVideoEditingDialogId}
-                    setLinkEditingDialogId={setLinkEditingDialogId}
-                    setTextEditingDialogId={setTextEditingDialogId}
-                    setImageEditingDialogId={setImageEditingDialogId}
-                    setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                    updateCallback={loadLesson}
-                    wrapper={(card, i) => (
+                  {contents.length > 0 ? (
+                    <ContentCards
+                      contents={contentsWithSide
+                        .filter((c) => c.left)
+                        .map((c) => ({ contentId: c.contentId, type: c.type }))}
+                      videos={videos}
+                      links={links}
+                      texts={texts}
+                      images={images}
+                      worksheets={worksheets}
+                      lessonId={props.lessonId}
+                      setVideoEditingDialogId={setVideoEditingDialogId}
+                      setLinkEditingDialogId={setLinkEditingDialogId}
+                      setTextEditingDialogId={setTextEditingDialogId}
+                      setImageEditingDialogId={setImageEditingDialogId}
+                      setWorksheetEditingDialogId={setWorksheetEditingDialogId}
+                      updateCallback={loadLesson}
+                      wrapper={(card, i) => (
+                        <Stack
+                          position="relative"
+                          onMouseEnter={() => {
+                            setHoveringContentSide("left");
+                            setHoveringContentIndex(i);
+                          }}
+                          onMouseMove={(event) => {
+                            setHoveringContentSide("left");
+                            setHoveringContentIndex(i);
+                            //@ts-ignore
+                            const rect = event?.target?.getBoundingClientRect();
+                            setHoveringAboveCenter(
+                              event.pageY < rect.height / 2 + rect.top
+                            );
+                          }}
+                          pb={`${CARD_SPACING}px`}
+                        >
+                          <Stack
+                            width="96%"
+                            onMouseEnter={() => {
+                              setHoveringOnContentCard(true);
+                            }}
+                            onMouseLeave={() => {
+                              setHoveringOnContentCard(false);
+                            }}
+                          >
+                            {card}
+                          </Stack>
+                          <Stack
+                            // @ts-ignore
+                            id={`${card?.props?.id}dot`}
+                            bgcolor={PALETTE.secondary.purple[1]}
+                            height="16px"
+                            width="16px"
+                            borderRadius="100%"
+                            position="absolute"
+                            right="-8px"
+                            top={`${DOT_CARD_Y}px`}
+                            zIndex={2}
+                          />
+                        </Stack>
+                      )}
+                    />
+                  ) : (
+                    <Stack position="relative">
                       <Stack
-                        position="relative"
+                        key="starter"
+                        width="94%"
                         onMouseEnter={() => {
-                          setHoveringContentSide("left");
-                          setHoveringContentIndex(i);
+                          setHovering(true);
                         }}
-                        onMouseMove={(event) => {
-                          setHoveringContentSide("left");
-                          setHoveringContentIndex(i);
-                          //@ts-ignore
-                          const rect = event?.target?.getBoundingClientRect();
-                          setHoveringAboveCenter(
-                            event.pageY < rect.height / 2 + rect.top
-                          );
+                        onMouseLeave={() => {
+                          setHovering(false);
                         }}
-                        pb={`${CARD_SPACING}px`}
+                        onClick={() => setStarterAddContentPopoverOpen(true)}
                       >
                         <Stack
-                          width="96%"
-                          onMouseEnter={() => {
-                            setHoveringOnContentCard(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveringOnContentCard(false);
+                          height="459px"
+                          border={`2px solid ${
+                            hovering
+                              ? PALETTE.secondary.purple[2]
+                              : PALETTE.secondary.grey[3]
+                          }`}
+                          borderRadius="12px"
+                          justifyContent="center"
+                          alignItems="center"
+                          sx={{
+                            transition: "0.2s",
+                            cursor: "pointer",
+                            svg: {
+                              path: {
+                                transition: "0.2s",
+                                fill: hovering
+                                  ? PALETTE.secondary.purple[2]
+                                  : PALETTE.secondary.grey[3],
+                              },
+                            },
                           }}
                         >
-                          {card}
-                        </Stack>
-
-                        {/* {contents.length > 1 ? (
-                          <Stack
-                            position="absolute"
-                            left={0}
-                            right={0}
-                            top={i === 0 ? undefined : 0}
-                            bottom={i === 0 ? 0 : undefined}
-                            marginLeft="auto !important"
-                            marginRight="auto !important"
-                            height={
-                              i === 0 || i === contents.length - 1
-                                ? "50%"
-                                : "100%"
-                            }
-                            width="2px"
-                            bgcolor={PALETTE.secondary.grey[3]}
-                          />
-                        ) : null} */}
-                        {/* {contents.length > 0 && i === contents.length - 1 ? (
                           <Stack
                             sx={{
-                              background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
+                              transform: "translateY(20px)",
+                              filter: `grayscale(${hovering ? 0 : 100}%)`,
+                              opacity: hovering ? 1 : 0.5,
+                              transition: "0.2s",
                             }}
-                            position="absolute"
-                            width="2px"
-                            top="50%"
-                            height={height - bottomCardCenter}
-                            left={0}
-                            right={0}
-                            marginRight="auto"
-                            marginLeft="auto"
-                          />
-                        ) : null} */}
+                          >
+                            <Image
+                              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
+                              height={243}
+                              width={243}
+                              alt="graph illustration"
+                            />
+                          </Stack>
+
+                          <PlusIcon height="32px" width="32px" />
+                          <Typography
+                            color={
+                              hovering
+                                ? PALETTE.secondary.purple[2]
+                                : PALETTE.secondary.grey[3]
+                            }
+                            sx={{
+                              transition: "0.2s",
+                            }}
+                            bold
+                            variant="large"
+                          >
+                            Add
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                      <Stack
+                        position="absolute"
+                        top={`${DOT_CARD_Y}px`}
+                        right="-8px"
+                      >
                         <Stack
                           // @ts-ignore
-                          id={`${card?.props?.id}dot`}
+                          id="starterdot"
                           bgcolor={PALETTE.secondary.purple[1]}
                           height="16px"
                           width="16px"
                           borderRadius="100%"
-                          position="absolute"
-                          right="-8px"
-                          top={`${DOT_CARD_Y}px`}
-                          zIndex={2}
                         />
                       </Stack>
-                    )}
-                  />
+                    </Stack>
+                  )}
                 </Stack>
                 <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
                   <ContentCards
@@ -854,14 +767,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     updateCallback={loadLesson}
                     wrapper={(card, i) => (
                       <Stack
-                        // ref={
-                        //   i === 0
-                        //     ? setTopCardRef
-                        //     : i === contents.length - 1
-                        //     ? setBottomCardRef
-                        //     : undefined
-                        // }
-                        //id={card?.props.id}
                         position="relative"
                         onMouseEnter={() => {
                           setHoveringContentSide("right");
@@ -891,51 +796,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           top={`${DOT_CARD_Y}px`}
                           zIndex={2}
                         />
-                        <Stack
-                          width="96%"
-                          // onMouseEnter={() => {
-                          //   setHoveringOnContentCard(true);
-                          // }}
-                          // onMouseLeave={() => {
-                          //   setHoveringOnContentCard(false);
-                          // }}
-                        >
-                          {card}
-                        </Stack>
-
-                        {/* {contents.length > 1 ? (
-                          <Stack
-                            position="absolute"
-                            left={0}
-                            right={0}
-                            top={i === 0 ? undefined : 0}
-                            bottom={i === 0 ? 0 : undefined}
-                            marginLeft="auto !important"
-                            marginRight="auto !important"
-                            height={
-                              i === 0 || i === contents.length - 1
-                                ? "50%"
-                                : "100%"
-                            }
-                            width="2px"
-                            bgcolor={PALETTE.secondary.grey[3]}
-                          />
-                        ) : null}
-                        {contents.length > 0 && i === contents.length - 1 ? (
-                          <Stack
-                            sx={{
-                              background: `linear-gradient(0, rgb(255,255,255), ${PALETTE.secondary.grey[3]})`,
-                            }}
-                            position="absolute"
-                            width="2px"
-                            top="50%"
-                            height={height - bottomCardCenter}
-                            left={0}
-                            right={0}
-                            marginRight="auto"
-                            marginLeft="auto"
-                          />
-                        ) : null} */}
+                        <Stack width="96%">{card}</Stack>
                       </Stack>
                     )}
                   />
@@ -970,10 +831,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "video",
             id
-          ).then(
-            loadLesson
-            //esson(response.lesson, response.actualContents)
-          );
+          ).then(loadLesson);
         }}
       />
       {videoEditingDialogId ? (
@@ -996,10 +854,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "worksheet",
             id
-          ).then(
-            loadLesson
-            //esson(response.lesson, response.actualContents)
-          );
+          ).then(loadLesson);
         }}
       />
       {worksheetEditingDialogId ? (
@@ -1022,10 +877,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "link",
             link.id
-          ).then(
-            loadLesson
-            //esson(response.lesson, response.actualContents)
-          );
+          ).then(loadLesson);
         }}
       />
       {linkEditingDialogId ? (
@@ -1048,10 +900,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             contentInsertionIndex ?? 0,
             "text",
             text.id
-          ).then(
-            loadLesson
-            //esson(response.lesson, response.actualContents)
-          );
+          ).then(loadLesson);
         }}
       />
       {textEditingDialogId ? (
@@ -1075,10 +924,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
               contentInsertionIndex ?? 0,
               "image",
               link.id
-            ).then(
-              loadLesson
-              //esson(response.lesson, response.actualContents)
-            );
+            ).then(loadLesson);
           }}
         />
       ) : null}
@@ -1142,6 +988,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
           updateCallback={loadLesson}
         />
       </Stack>
+      <AddContentDialog
+        open={starterAddContentDialogOpen}
+        setOpen={setStarterAddContentPopoverOpen}
+        callback={(type) =>
+          outOfCreations
+            ? setNoCreationsLeftDialogOpen(true)
+            : contentCallbacks[type]()
+        }
+      />
     </>
   );
 }

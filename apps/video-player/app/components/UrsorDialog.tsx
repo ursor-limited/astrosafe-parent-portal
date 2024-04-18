@@ -222,7 +222,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               alignItems="center"
               textAlign="center"
               //maxWidth="476px"
-              px={props.paddingX}
+              //px={props.paddingX}
               boxSizing="border-box"
             >
               {props.supertitle ||
