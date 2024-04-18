@@ -140,6 +140,12 @@ class ApiController {
       (response: any) => response.json()
     );
   }
+  static async getUserImages(id: string) {
+    //@ts-ignore
+    return get(`image/user/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
   static async getUserVideos(id: string) {
     //@ts-ignore
     return get(`video/user/${id}/videos`).then((response: any) =>

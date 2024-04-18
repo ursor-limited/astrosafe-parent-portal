@@ -51,6 +51,8 @@ import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
 import DashboardPageCreateButton from "./DashboardPageCreateButton";
 import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
+import ImageDialog, { IImage } from "./ImageDialog";
+import ImageCard from "../components/ImageCard";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -524,6 +526,17 @@ export default function DashboardPageContents() {
     loadWorksheets();
   }, [userDetails?.user?.id]);
 
+  const [images, setImages] = useState<IImage[]>([]);
+  const loadImages = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserImages(userDetails.user.id)
+        .then((images) => setImages(_.reverse(images.slice())))
+        .finally(() => setImagesLoaded(true));
+  };
+  useEffect(() => {
+    loadImages();
+  }, [userDetails?.user?.id]);
+
   const [latestPageIndex, setLatestPageIndex] = useState<number>(0);
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const onScroll = () => {
@@ -541,19 +554,19 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage;
     }[]
   >([]);
   const [filteredCards, setFilteredCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage;
     }[]
   >([]);
   const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
@@ -619,6 +632,16 @@ export default function DashboardPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
+    const imageDetails = images
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((i) => ({
+        type: "image" as AstroContent,
+        details: i,
+      }));
     const lessonDetails = lessons
       .filter(
         (x) =>
@@ -637,6 +660,9 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "image"
+          ? []
+          : imageDetails),
         ...(selectedContentType && selectedContentType !== "lesson"
           ? []
           : lessonDetails),
@@ -644,12 +670,13 @@ export default function DashboardPageContents() {
       (c) =>
         selectedSort === "updatedAt"
           ? new Date(c.details.updatedAt)
-          : c.details.title.toLowerCase(),
+          : c.details.title?.toLowerCase(),
       selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
     lessons,
+    images,
     videos,
     worksheets,
     nColumns,
@@ -738,25 +765,31 @@ export default function DashboardPageContents() {
     string | undefined
   >(undefined);
 
+  const [imageEditingDialogId, setImageEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   useEffect(
     () =>
       setAnyLoaded(
-        (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
+        (worksheetsLoaded && videosLoaded && lessonsLoaded && imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
+          images.length > 0 ||
           lessons.length > 0
       ),
-    [worksheetsLoaded, videosLoaded, lessonsLoaded]
+    [worksheetsLoaded, videosLoaded, imagesLoaded, lessonsLoaded]
   );
 
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | null>(
+  ] = useLocalStorage<"video" | "worksheet" | "image" | null>(
     "typeOfContentDialogToOpenUponLandingInNewLesson",
     null
   );
@@ -1060,6 +1093,14 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadWorksheets}
                             />
+                          ) : item.type === "image" ? (
+                            <ImageCard
+                              {...(item.details as IImage)}
+                              editingCallback={() =>
+                                setImageEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadImages}
+                            />
                           ) : item.type === "lesson" ? (
                             <LessonCard
                               {...(item.details as ILesson)}
@@ -1110,6 +1151,14 @@ export default function DashboardPageContents() {
           closeCallback={() => setLessonEditingDialogId(undefined)}
           updateCallback={loadLessons}
           lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
+      {imageEditingDialogId ? (
+        <ImageDialog
+          open={true}
+          closeCallback={() => setImageEditingDialogId(undefined)}
+          updateCallback={loadImages}
+          image={images.find((i) => i.id === imageEditingDialogId)}
         />
       ) : null}
       {!anyLoaded
