@@ -50,6 +50,7 @@ import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
 import DashboardPageCreateButton from "./DashboardPageCreateButton";
+import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -184,14 +185,14 @@ export const SearchInput = (props: {
       onMouseLeave={() => setHovering(false)}
       boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.03)" : undefined}
     >
-      <SearchIcon width="20px" height="20px" />
+      <SearchIcon width="24px" height="24px" />
       <Input
         style={{
           textAlign: "left",
           textOverflow: "ellipsis",
           fontSize: FONT_SIZES["small"],
           color: PALETTE.font.dark,
-          fontWeight: BOLD_FONT_WEIGHT,
+          fontWeight: 480,
           lineHeight: "100%",
           transition: "0.2s",
           fontFamily: "inherit",
@@ -690,11 +691,6 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user?.id, freeVideoIds.length]);
 
-  // const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
-  //   useState<boolean>(false);
-  // useEffect(() => {
-  //   setTimeout(() => setSignupPromptDialogCanOpen(true), 3500);
-  // }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
@@ -704,14 +700,6 @@ export default function DashboardPageContents() {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
     useState<boolean>(false);
-
-  // useEffect(() => {
-  //   userDetails.user?.id &&
-  //     !userDetails.user?.freeTrialStart &&
-  //     ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
-  //       userDetails.refresh
-  //     );
-  // }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
 
   const router = useRouter();
 
@@ -794,11 +782,10 @@ export default function DashboardPageContents() {
       <PageLayout
         ref={scrollableRef}
         onScroll={onScroll}
-        title="Home"
+        title="Create a Lesson"
         bodyWidth="100%"
         selectedSidebarItemId="home"
         scrollable
-        description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         button={
           !userDetails.user?.subscribed
             ? {
@@ -893,7 +880,7 @@ export default function DashboardPageContents() {
                   : "Create safe video link"
               }
               description="Free of ads. Safe to share."
-              color={PALETTE.secondary.blue[3]}
+              color={CONTENT_BRANDING.video.color}
               icon={CirclePlayIcon}
               onClick={() => {
                 if (outOfCreations) {
@@ -915,7 +902,7 @@ export default function DashboardPageContents() {
                   : "Create math worksheet"
               }
               description="Printable & finished in seconds."
-              color={PALETTE.secondary.pink[5]}
+              color={CONTENT_BRANDING.worksheet.color}
               icon={ChecklistIcon}
               onClick={() => {
                 if (outOfCreations) {
@@ -954,86 +941,10 @@ export default function DashboardPageContents() {
             spacing="12px"
           >
             <Stack direction="row" spacing="12px">
-              <Stack
-                height="28px"
-                bgcolor="rgb(255,255,255)"
-                borderRadius="56px"
-                direction="row"
-                alignItems="center"
-                px="16px"
-                spacing="10px"
-              >
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                    svg: {
-                      path: {
-                        fill:
-                          selectedBinaryFilter === "lessons"
-                            ? PALETTE.font.dark
-                            : PALETTE.secondary.grey[4],
-                      },
-                    },
-                  }}
-                  direction="row"
-                  spacing="4px"
-                  alignItems="center"
-                  onClick={() => setSelectedBinaryFilter("lessons")}
-                >
-                  <VersionsIcon height="16px" width="16px" />
-                  <Typography
-                    variant="small"
-                    bold
-                    color={
-                      selectedBinaryFilter === "lessons"
-                        ? PALETTE.font.dark
-                        : PALETTE.secondary.grey[4]
-                    }
-                  >
-                    Lessons
-                  </Typography>
-                </Stack>
-                <Stack
-                  bgcolor={PALETTE.secondary.grey[2]}
-                  width="1px"
-                  height="18px"
-                />
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.6 },
-                    transition: "0.2s",
-                    svg: {
-                      path: {
-                        fill:
-                          selectedBinaryFilter === "all"
-                            ? PALETTE.font.dark
-                            : PALETTE.secondary.grey[4],
-                      },
-                    },
-                  }}
-                  direction="row"
-                  spacing="4px"
-                  alignItems="center"
-                  onClick={() => setSelectedBinaryFilter("all")}
-                >
-                  <RepoIcon height="16px" width="16px" />
-                  <Typography
-                    variant="small"
-                    bold
-                    color={
-                      selectedBinaryFilter === "all"
-                        ? PALETTE.font.dark
-                        : PALETTE.secondary.grey[4]
-                    }
-                    noWrap
-                  >
-                    All Contents
-                  </Typography>
-                </Stack>
-              </Stack>
+              <DashboardPageBinaryContentFilterSelection
+                selected={selectedBinaryFilter}
+                callback={(s) => setSelectedBinaryFilter(s)}
+              />
 
               <Stack
                 sx={{
