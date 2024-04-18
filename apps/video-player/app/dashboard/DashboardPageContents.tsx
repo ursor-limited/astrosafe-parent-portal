@@ -689,7 +689,10 @@ export default function DashboardPageContents() {
       .filter(
         (x) =>
           !searchValue ||
-          x.title?.toLowerCase().includes(searchValue.toLowerCase())
+          [x.title, x.url]
+            .join()
+            ?.toLowerCase()
+            .includes(searchValue.toLowerCase())
       )
       .map((l) => ({
         type: "link" as AstroContent,

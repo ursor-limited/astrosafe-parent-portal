@@ -30,6 +30,7 @@ import dayjs from "dayjs";
 import { TRIAL_DAYS } from "../account/AccountPageContents";
 import {
   AstroContent,
+  AstroContentSort,
   CONTENT_BRANDING,
   FilterRow,
   SearchInput,
@@ -50,7 +51,13 @@ import { ILesson } from "../lesson/[id]/page";
 import { isMobile } from "react-device-detect";
 import LessonCard from "../components/LessonCard";
 import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
-import { ILink } from "./LinkDialog";
+import LinkDialog, { ILink } from "./LinkDialog";
+import TextCreationDialog, { IText } from "../components/TextDialog";
+import ImageDialog, { IImage } from "./ImageDialog";
+import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
+import TextCard from "../components/TextCard";
+import LinkCard from "../components/LinkCard";
+import ImageCard from "../components/ImageCard";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
@@ -58,8 +65,6 @@ const UpgradeDialog = dynamic(
 );
 
 export const GRID_SPACING = "20px";
-
-export type AstroContentSort = "abc" | "createdAt";
 
 export const MobileEmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -137,6 +142,46 @@ export default function MobileDashboardPageContents() {
     loadWorksheets();
   }, [userDetails?.user?.id]);
 
+  const [images, setImages] = useState<IImage[]>([]);
+  const loadImages = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserImages(userDetails.user.id)
+        .then((images) => setImages(_.reverse(images.slice())))
+        .finally(() => setImagesLoaded(true));
+  };
+  useEffect(() => {
+    loadImages();
+  }, [userDetails?.user?.id]);
+
+  const [texts, setTexts] = useState<IText[]>([]);
+  const loadTexts = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserTexts(userDetails.user.id)
+        .then((texts) =>
+          setTexts(
+            _.reverse(texts.slice()).map((t: IText) => ({
+              ...t,
+              value: cleanTextValueIntoInnerHTML(t.value),
+            }))
+          )
+        )
+        .finally(() => setTextsLoaded(true));
+  };
+  useEffect(() => {
+    loadTexts();
+  }, [userDetails?.user?.id]);
+
+  const [links, setLinks] = useState<ILink[]>([]);
+  const loadLinks = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLinks(userDetails.user.id)
+        .then((links) => setLinks(_.reverse(links.slice())))
+        .finally(() => setLinksLoaded(true));
+  };
+  useEffect(() => {
+    loadLinks();
+  }, [userDetails?.user?.id]);
+
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
 
@@ -144,10 +189,22 @@ export default function MobileDashboardPageContents() {
     string | undefined
   >(undefined);
 
+  const [imageEditingDialogId, setImageEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [linkEditingDialogId, setLinkEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [textEditingDialogId, setTextEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[]
   >([]);
 
@@ -156,7 +213,7 @@ export default function MobileDashboardPageContents() {
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
   const [selectedSort, setSelectedSort] =
-    useState<AstroContentSort>("createdAt");
+    useState<AstroContentSort>("updatedAt");
 
   useEffect(() => {
     const videoDetails = videos
@@ -165,18 +222,8 @@ export default function MobileDashboardPageContents() {
           !searchValue ||
           x.title.toLowerCase().includes(searchValue.toLowerCase())
       )
-      .map((v) => ({
-        type: "video" as AstroContent,
-        details: v,
-      }));
-    const lessonDetails = lessons
-      .filter(
-        (x) =>
-          !searchValue ||
-          x.title.toLowerCase().includes(searchValue.toLowerCase())
-      )
       .map((l) => ({
-        type: "lesson" as AstroContent,
+        type: "video" as AstroContent,
         details: l,
       }));
     const worksheetDetails = worksheets
@@ -190,6 +237,49 @@ export default function MobileDashboardPageContents() {
         type: "worksheet" as AstroContent,
         details: ws,
       }));
+    const imageDetails = images
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((i) => ({
+        type: "image" as AstroContent,
+        details: i,
+      }));
+    const textDetails = texts
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.value?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((t) => ({
+        type: "text" as AstroContent,
+        details: t,
+      }));
+    const linkDetails = links
+      .filter(
+        (x) =>
+          !searchValue ||
+          [x.title, x.url]
+            .join()
+            ?.toLowerCase()
+            .includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "link" as AstroContent,
+        details: l,
+      }));
+    const lessonDetails = lessons
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "lesson" as AstroContent,
+        details: l,
+      }));
     const allContentDetails = _.orderBy(
       [
         ...(selectedContentType && selectedContentType !== "video"
@@ -198,26 +288,39 @@ export default function MobileDashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "image"
+          ? []
+          : imageDetails),
+        ...(selectedContentType && selectedContentType !== "link"
+          ? []
+          : linkDetails),
+        ...(selectedContentType && selectedContentType !== "text"
+          ? []
+          : textDetails),
         ...(selectedContentType && selectedContentType !== "lesson"
           ? []
           : lessonDetails),
       ],
       (c) =>
-        selectedSort === "createdAt"
-          ? new Date(c.details.createdAt)
-          : c.details.title.toLowerCase(),
-      selectedSort === "createdAt" ? "desc" : "asc"
+        selectedSort === "updatedAt"
+          ? new Date(c.details.updatedAt)
+          : c.type === "text" // @ts-ignore
+          ? c.details.value?.toLowerCase() // @ts-ignore
+          : c.details.title?.toLowerCase(),
+      selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
-    videos,
-    worksheets,
     lessons,
+    images,
+    videos,
+    texts,
+    links,
+    worksheets,
     selectedContentType,
     searchValue,
     selectedSort,
   ]);
-
   const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
 
   const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
@@ -305,23 +408,6 @@ export default function MobileDashboardPageContents() {
 
   const outOfCreations = useOutOfCreations();
 
-  // useEffect(() => {
-  //   if (
-  //     !userDetails.user?.subscribed &&
-  //     userDetails.user?.freeTrialStart &&
-  //     (!userDetails.user.periodCreationsClearedAt ||
-  //       dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
-  //   ) {
-  //     // const dayOfMonthToCheckOn =
-  //     //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
-  //     // (!userDetails.user.periodCreationsClearedAt ||
-  //     //   dayjs().date() >= dayOfMonthToCheckOn) &&
-  //     ApiController.clearPediodCreations(userDetails.user.id).then(
-  //       userDetails.refresh
-  //     );
-  //   }
-  // }, [userDetails.user]);
-
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
   >(undefined);
@@ -333,29 +419,47 @@ export default function MobileDashboardPageContents() {
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
+  const [linksLoaded, setLinksLoaded] = useState<boolean>(false);
+  const [textsLoaded, setTextsLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   useEffect(
     () =>
       setAnyLoaded(
-        (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
+        (worksheetsLoaded &&
+          videosLoaded &&
+          lessonsLoaded &&
+          linksLoaded &&
+          textsLoaded &&
+          imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
+          images.length > 0 ||
+          links.length > 0 ||
+          texts.length > 0 ||
           lessons.length > 0
       ),
-    [worksheetsLoaded, videosLoaded, lessonsLoaded]
+    [
+      worksheetsLoaded,
+      videosLoaded,
+      imagesLoaded,
+      linksLoaded,
+      textsLoaded,
+      lessonsLoaded,
+    ]
   );
 
   const [filteredCards, setFilteredCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[]
   >([]);
   const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
     "lessons" | "all"
   >("lessons");
   const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
-    "all" | "video" | "worksheet" | "image" | "text"
+    "all" | "video" | "worksheet" | "image" | "text" | "link"
   >("all");
 
   useEffect(() => {
@@ -511,13 +615,14 @@ export default function MobileDashboardPageContents() {
               <SortButton
                 selected={selectedMultipleFilter}
                 callback={(id) => setSelectedMultipleFilter(id)}
-                types={["all", "video", "worksheet", "image", "text"]}
+                types={["all", "video", "worksheet", "image", "text", "link"]}
                 displayNames={{
                   all: "All",
                   video: "Video",
                   worksheet: "Worksheet",
                   image: "Image",
                   text: "Text",
+                  link: "Link",
                 }}
                 noText
               />
@@ -535,10 +640,10 @@ export default function MobileDashboardPageContents() {
             <SortButton
               selected={selectedSort}
               callback={(id) => setSelectedSort(id)}
-              types={["abc", "createdAt"]}
+              types={["abc", "updatedAt"]}
               displayNames={{
                 abc: "Alphabetical",
-                createdAt: "Most recent",
+                updatedAt: "Most recent",
               }}
               width="204px"
             />
@@ -564,6 +669,27 @@ export default function MobileDashboardPageContents() {
                     setWorksheetEditingDialogId(card.details.id)
                   }
                   deletionCallback={loadWorksheets}
+                />
+              ) : card.type === "image" ? (
+                <ImageCard
+                  {...(card.details as IImage)}
+                  editingCallback={() =>
+                    setImageEditingDialogId(card.details.id)
+                  }
+                  deletionCallback={loadImages}
+                />
+              ) : card.type === "text" ? (
+                <TextCard
+                  {...(card.details as IText)}
+                  editCallback={() => setTextEditingDialogId(card.details.id)}
+                  deleteCallback={loadTexts}
+                />
+              ) : card.type === "link" ? (
+                <LinkCard
+                  {...(card.details as ILink)}
+                  editCallback={() => setLinkEditingDialogId(card.details.id)}
+                  deleteCallback={loadLinks}
+                  height="260px"
                 />
               ) : card.type === "lesson" ? (
                 <LessonCard
@@ -617,6 +743,31 @@ export default function MobileDashboardPageContents() {
           closeCallback={() => setLessonEditingDialogId(undefined)}
           updateCallback={loadLessons}
           lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
+        />
+      ) : null}
+      {imageEditingDialogId ? (
+        <ImageDialog
+          open={true}
+          closeCallback={() => setImageEditingDialogId(undefined)}
+          updateCallback={loadImages}
+          image={images.find((i) => i.id === imageEditingDialogId)}
+        />
+      ) : null}
+      {linkEditingDialogId ? (
+        <LinkDialog
+          open={true}
+          closeCallback={() => setLinkEditingDialogId(undefined)}
+          updateCallback={loadLinks}
+          link={links.find((l) => l.id === linkEditingDialogId)}
+        />
+      ) : null}
+      {textEditingDialogId ? (
+        <TextCreationDialog
+          open={true}
+          closeCallback={() => setTextEditingDialogId(undefined)}
+          updateCallback={loadTexts}
+          text={texts.find((t) => t.id === textEditingDialogId)}
+          mobile
         />
       ) : null}
       {!selectedContentType &&
