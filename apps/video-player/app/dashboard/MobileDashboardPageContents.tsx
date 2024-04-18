@@ -49,6 +49,8 @@ import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
 import { isMobile } from "react-device-detect";
 import LessonCard from "../components/LessonCard";
+import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
+import { ILink } from "./LinkDialog";
 
 const UpgradeDialog = dynamic(
   () => import("@/app/components/UpgradeDialog"),
@@ -343,6 +345,33 @@ export default function MobileDashboardPageContents() {
     [worksheetsLoaded, videosLoaded, lessonsLoaded]
   );
 
+  const [filteredCards, setFilteredCards] = useState<
+    {
+      type: AstroContent;
+      details: IVideo | IWorksheet | ILesson | ILink;
+    }[]
+  >([]);
+  const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
+    "lessons" | "all"
+  >("lessons");
+  const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
+    "all" | "video" | "worksheet" | "image" | "text"
+  >("all");
+
+  useEffect(() => {
+    if (selectedBinaryFilter === "all") {
+      if (selectedMultipleFilter === "all") {
+        setFilteredCards(cards.filter((c) => c.type !== "lesson"));
+      } else {
+        setFilteredCards(
+          cards.filter((c) => c.type === selectedMultipleFilter)
+        );
+      }
+    } else {
+      setFilteredCards(cards.filter((c) => c.type === "lesson"));
+    }
+  }, [cards, selectedBinaryFilter, selectedMultipleFilter]);
+
   return (
     <Stack
       spacing="20px"
@@ -405,12 +434,12 @@ export default function MobileDashboardPageContents() {
       </Stack>
       <Stack spacing="20px" px="20px">
         <Stack justifyContent="space-between" direction="row">
-          <Typography variant="h4">Home</Typography>
+          <Typography variant="h4">Create a Lesson</Typography>
         </Stack>
-        <Typography color={PALETTE.secondary.grey[4]}>
+        {/* <Typography color={PALETTE.secondary.grey[4]}>
           Welcome to your Astrosafe dashboard! Here you can manage you safetube,
           worksheets and more.
-        </Typography>
+        </Typography> */}
       </Stack>
       <UrsorFadeIn duration={700}>
         <Stack spacing="12px" px="20px">
@@ -432,7 +461,7 @@ export default function MobileDashboardPageContents() {
             mobile
             title="Create safe video link"
             description="Free of ads. Safe to share."
-            color={PALETTE.secondary.blue[3]}
+            color={CONTENT_BRANDING.video.color}
             icon={CirclePlayIcon}
             onClick={() => {
               outOfCreations
@@ -448,7 +477,7 @@ export default function MobileDashboardPageContents() {
             mobile
             title="Create math worksheet"
             description="Printable & finished in seconds."
-            color={PALETTE.secondary.pink[5]}
+            color={CONTENT_BRANDING.worksheet.color}
             icon={ChecklistIcon}
             onClick={() => {
               outOfCreations
@@ -467,12 +496,32 @@ export default function MobileDashboardPageContents() {
       </Stack>
       <UrsorFadeIn duration={700} delay={200}>
         <Stack spacing="12px">
-          <Stack overflow="scroll" py="3px" width="100%" pr="20px">
-            <FilterRow
-              selected={selectedContentType}
-              callback={(newSelected) => setSelectedContentType(newSelected)}
-              mobile
+          <Stack direction="row" spacing="12px" px="20px">
+            <DashboardPageBinaryContentFilterSelection
+              selected={selectedBinaryFilter}
+              callback={(s) => setSelectedBinaryFilter(s)}
             />
+
+            <Stack
+              sx={{
+                opacity: selectedBinaryFilter === "all" ? 1 : 0,
+                transition: "0.2s",
+              }}
+            >
+              <SortButton
+                selected={selectedMultipleFilter}
+                callback={(id) => setSelectedMultipleFilter(id)}
+                types={["all", "video", "worksheet", "image", "text"]}
+                displayNames={{
+                  all: "All",
+                  video: "Video",
+                  worksheet: "Worksheet",
+                  image: "Image",
+                  text: "Text",
+                }}
+                noText
+              />
+            </Stack>
           </Stack>
           <Stack direction="row" spacing="12px" px="20px">
             <SearchInput
@@ -496,9 +545,9 @@ export default function MobileDashboardPageContents() {
           </Stack>
         </Stack>
       </UrsorFadeIn>
-      {cards.length > 0 ? (
+      {filteredCards.length > 0 ? (
         <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px" px="20px">
-          {cards.map((card, i) => (
+          {filteredCards.map((card, i) => (
             <UrsorFadeIn key={i} delay={i * 190} duration={900}>
               {card.type === "video" ? (
                 <VideoCard
@@ -556,6 +605,7 @@ export default function MobileDashboardPageContents() {
           closeCallback={() => setWorksheetEditingDialogId(undefined)}
           editingCallback={loadWorksheets}
           worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+          mobile
         />
       ) : null}
       <LessonCreationDialog

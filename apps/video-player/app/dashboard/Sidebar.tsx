@@ -4,9 +4,7 @@ import * as React from "react";
 import { Stack, keyframes } from "@mui/system";
 import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
-import HomeIcon from "@/images/icons/HomeIcon.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import GearIcon from "@/images/icons/GearIcon.svg";
+import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import { useRouter } from "next/navigation";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
@@ -184,8 +182,8 @@ export default function Sidebar(props: ISidebarProps) {
     {
       id: "home",
       tourId: "home-button",
-      icon: HomeIcon,
-      title: "Home",
+      icon: VersionsIcon,
+      title: "Lessons",
       callback: () => router.push("/dashboard"),
     },
     // {
