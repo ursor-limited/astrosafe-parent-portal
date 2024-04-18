@@ -18,6 +18,7 @@ const PageCard = (props: {
   editingCallback?: () => void;
   editingEnabled?: boolean;
   noBottomPadding?: boolean;
+  fullHeight?: boolean;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -28,7 +29,8 @@ const PageCard = (props: {
       justifyContent="center"
       spacing="100px"
       minHeight={props.minHeight}
-      flex={1}
+      height={props.fullHeight ? "100%" : undefined}
+      //overflow="scroll"
     >
       <Stack
         position="relative"
@@ -40,7 +42,6 @@ const PageCard = (props: {
         bgcolor="rgb(255,255,255)"
         spacing="26px"
         boxShadow="0 0 56px rgba(0,0,0,0.055)"
-        overflow="hidden"
       >
         <Stack spacing="50px" width="100%">
           <Stack

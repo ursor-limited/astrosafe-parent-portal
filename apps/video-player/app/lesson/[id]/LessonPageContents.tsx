@@ -348,7 +348,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   return (
     <>
       <Stack
-        height="100%"
+        //height="100%"
         ref={setPageRef}
         px="40px"
         overflow="scroll"
@@ -516,7 +516,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   sx={{
                     opacity:
                       contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.2s",
+                    transition: "0.5s",
                   }}
                 >
                   <AddContentButton
@@ -579,7 +579,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         top={mouseY}
                       />
                     ) : null} */}
-                  {!hoveringOnContentCard &&
+                  {/* {!hoveringOnContentCard &&
                   !!userDetails?.user?.id &&
                   userDetails.user.id === lesson?.creatorId &&
                   contentsWithDotY[0]?.dotY &&
@@ -610,13 +610,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       marginLeft="auto"
                       top={`${DOT_CARD_Y}px`}
                     />
-                  ) : null}
+                  ) : null} */}
                   {contentsWithDotY[0]?.dotY &&
                   contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
                     <Stack
                       width="2px"
                       height={
-                        "100%"
+                        "calc(100% - 50px)"
                         // contentsWithDotY[contentsWithDotY.length - 1].dotY -
                         // (contentsColumnRef?.getBoundingClientRect?.()?.top ??
                         //   0) -
@@ -776,12 +776,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       >
                         <Stack
                           width="96%"
-                          // onMouseEnter={() => {
-                          //   setHoveringOnContentCard(true);
-                          // }}
-                          // onMouseLeave={() => {
-                          //   setHoveringOnContentCard(false);
-                          // }}
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
                         >
                           {card}
                         </Stack>
