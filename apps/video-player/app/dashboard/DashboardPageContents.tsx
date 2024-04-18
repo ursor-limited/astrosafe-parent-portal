@@ -691,11 +691,6 @@ export default function DashboardPageContents() {
     }
   }, [userDetails.user?.id, freeVideoIds.length]);
 
-  // const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
-  //   useState<boolean>(false);
-  // useEffect(() => {
-  //   setTimeout(() => setSignupPromptDialogCanOpen(true), 3500);
-  // }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
@@ -705,14 +700,6 @@ export default function DashboardPageContents() {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
     useState<boolean>(false);
-
-  // useEffect(() => {
-  //   userDetails.user?.id &&
-  //     !userDetails.user?.freeTrialStart &&
-  //     ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
-  //       userDetails.refresh
-  //     );
-  // }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
 
   const router = useRouter();
 

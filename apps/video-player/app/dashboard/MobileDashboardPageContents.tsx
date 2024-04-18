@@ -568,7 +568,6 @@ export default function MobileDashboardPageContents() {
               ) : card.type === "lesson" ? (
                 <LessonCard
                   {...(card.details as ILesson)}
-                  imageUrls={[]}
                   clickCallback={() =>
                     router.push(`/lesson/${card.details.id}`)
                   }
