@@ -535,7 +535,7 @@ export default function WorksheetPageContents(props: {
       </Stack>
 
       <Stack
-        px="40px"
+        px="20px"
         pt="40px"
         overflow="scroll"
         bgcolor={

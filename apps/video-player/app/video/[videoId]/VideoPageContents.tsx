@@ -183,7 +183,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   return details && provider ? (
     <>
       <Stack
-        px="40px"
+        px="20px"
         pt="40px"
         overflow="scroll"
         bgcolor={
