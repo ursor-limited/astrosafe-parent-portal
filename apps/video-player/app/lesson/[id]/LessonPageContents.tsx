@@ -708,27 +708,34 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             >
                               <Image
                                 src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
-                                height={243}
-                                width={243}
+                                height={170}
+                                width={170}
                                 alt="graph illustration"
                               />
                             </Stack>
 
-                            <PlusIcon height="32px" width="32px" />
-                            <Typography
-                              color={
-                                hovering
-                                  ? PALETTE.secondary.purple[2]
-                                  : PALETTE.secondary.grey[3]
-                              }
-                              sx={{
-                                transition: "0.2s",
-                              }}
-                              bold
-                              variant="large"
+                            <Stack
+                              direction="row"
+                              spacing="7px"
+                              justifyContent="center"
+                              alignItems="center"
                             >
-                              Add
-                            </Typography>
+                              <PlusIcon height="24px" width="24px" />
+                              <Typography
+                                color={
+                                  hovering
+                                    ? PALETTE.secondary.purple[2]
+                                    : PALETTE.secondary.grey[3]
+                                }
+                                sx={{
+                                  transition: "0.2s",
+                                }}
+                                bold
+                                variant="large"
+                              >
+                                Add
+                              </Typography>
+                            </Stack>
                           </Stack>
                         </Stack>
                       </UrsorFadeIn>
