@@ -777,6 +777,19 @@ export default function DashboardPageContents() {
     [width]
   );
 
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
+  const redirectToNewLessonWithContentCreationDialogOpen = () =>
+    ApiController.createLesson({
+      title: "New Lesson",
+      description: "A new collection of Contents",
+      creatorId: userDetails.user?.id,
+    }).then((lesson) => {
+      setOpenContentDialogInLessonId(lesson.id);
+      router.push(`/lesson/${lesson.id}`);
+    });
+
   return (
     <>
       <PageLayout
@@ -886,8 +899,8 @@ export default function DashboardPageContents() {
                 if (outOfCreations) {
                   setNoCreationsLeftDialogOpen(true);
                 } else {
-                  setLessonCreationDialogOpen(true);
                   setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
+                  redirectToNewLessonWithContentCreationDialogOpen();
                 }
               }}
               infoButtonPosition={280}
@@ -908,10 +921,10 @@ export default function DashboardPageContents() {
                 if (outOfCreations) {
                   setNoCreationsLeftDialogOpen(true);
                 } else {
-                  setLessonCreationDialogOpen(true);
                   setTypeOfContentDialogToOpenUponLandingInNewLesson(
                     "worksheet"
                   );
+                  redirectToNewLessonWithContentCreationDialogOpen();
                 }
               }}
               infoButtonPosition={300}
