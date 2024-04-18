@@ -250,29 +250,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
-  const [topCardRef, setTopCardRef] = useState<HTMLElement | null>(null);
-  const [bottomCardRef, setBottomCardRef] = useState<HTMLElement | null>(null);
-
-  const [bottomCardCenter, setBottomCardCenter] = useState<number>(0);
-  const updateBottomCardCenter = () => {
-    if (contents) {
-      const rect = (
-        contents.length === 1 ? topCardRef : bottomCardRef
-      )?.getBoundingClientRect?.();
-      console.log(rect);
-      if (rect) {
-        setBottomCardCenter(rect?.top + (rect?.height ?? 0) / 2);
-      }
-    }
-  };
-  useEffect(() => {
-    updateBottomCardCenter();
-  }, [
-    contents,
-    topCardRef?.getBoundingClientRect?.().top,
-    bottomCardRef?.getBoundingClientRect?.().top,
-  ]);
-
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
@@ -451,81 +428,83 @@ export default function LessonPageContents(props: { lessonId: string }) {
             !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
           }
         >
-          <Stack
-            height="100%"
-            position="fixed"
-            bgcolor="yellow"
-            top={0}
-            left="50%"
-            sx={{
-              transform: `translateY(-26px)`,
-              opacity: 0,
-              animation: `${fadeIn} 0.2s ease-in`,
-              animationFillMode: "forwards",
-            }}
-            zIndex={3}
-            onWheel={(event) => {
-              pageRef?.scroll({
-                //@ts-ignore
-                top: event?.deltaY + pageRef.scrollTop,
-              });
-            }}
-          >
+          {!!userDetails?.user?.id &&
+          userDetails.user.id === lesson?.creatorId ? (
             <Stack
-              position="absolute"
-              top={addButtonY}
-              left={-18}
-              onClick={() => {
-                setStaticAddButtonY(mouseY);
-                if (addContentPopoverOpen) return;
-                const dotYs =
-                  lesson?.contentOrder.map(
-                    (id) =>
-                      (document
-                        .getElementById(`${id}dot`)
-                        ?.getBoundingClientRect?.()?.top ?? 0) +
-                      document.body.scrollTop
-                  ) ?? [];
-                if (mouseY < (dotYs?.[0] ?? 0)) {
-                  setContentInsertionIndex(0);
-                } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                  setContentInsertionIndex(contents.length);
-                } else {
-                  const closestY = dotYs?.reduce(
-                    (a, b) => (b <= mouseY && a < b ? b : a),
-                    0
-                  );
-                  const closestNumberIndex = dotYs?.indexOf(closestY);
-                  setContentInsertionIndex(
-                    closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                  );
-                }
+              height="100%"
+              position="fixed"
+              top={0}
+              left="50%"
+              sx={{
+                transform: `translateY(-26px)`,
+                opacity: 0,
+                animation: `${fadeIn} 0.2s ease-in`,
+                animationFillMode: "forwards",
               }}
-              alignItems="center"
-              zIndex={8}
+              zIndex={3}
+              onWheel={(event) => {
+                pageRef?.scroll({
+                  //@ts-ignore
+                  top: event?.deltaY + pageRef.scrollTop,
+                });
+              }}
             >
               <Stack
-                sx={{
-                  opacity:
-                    contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                  transition: "0.2s",
+                position="absolute"
+                top={addButtonY}
+                left={-18}
+                onClick={() => {
+                  setStaticAddButtonY(mouseY);
+                  if (addContentPopoverOpen) return;
+                  const dotYs =
+                    lesson?.contentOrder.map(
+                      (id) =>
+                        (document
+                          .getElementById(`${id}dot`)
+                          ?.getBoundingClientRect?.()?.top ?? 0) +
+                        document.body.scrollTop
+                    ) ?? [];
+                  if (mouseY < (dotYs?.[0] ?? 0)) {
+                    setContentInsertionIndex(0);
+                  } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
+                    setContentInsertionIndex(contents.length);
+                  } else {
+                    const closestY = dotYs?.reduce(
+                      (a, b) => (b <= mouseY && a < b ? b : a),
+                      0
+                    );
+                    const closestNumberIndex = dotYs?.indexOf(closestY);
+                    setContentInsertionIndex(
+                      closestNumberIndex + (mouseY < closestY ? 0 : 1)
+                    );
+                  }
                 }}
+                alignItems="center"
+                zIndex={8}
               >
-                <AddContentButton
-                  open={addContentPopoverOpen}
-                  setOpen={setAddContentPopoverOpen}
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
-                  clickOutsideCloseCallback={() =>
-                    setContentInsertionIndex(undefined)
-                  }
-                />
+                <Stack
+                  sx={{
+                    opacity:
+                      contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                    transition: "0.2s",
+                  }}
+                >
+                  <AddContentButton
+                    open={addContentPopoverOpen}
+                    setOpen={setAddContentPopoverOpen}
+                    callback={(type) =>
+                      outOfCreations
+                        ? setNoCreationsLeftDialogOpen(true)
+                        : contentCallbacks[type]()
+                    }
+                    clickOutsideCloseCallback={() =>
+                      setContentInsertionIndex(undefined)
+                    }
+                  />
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
+          ) : null}
           <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
             <Stack
               px="24px"
@@ -534,26 +513,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
               pb="48px"
               flex={1}
             >
-              {userDetails.user?.id &&
-              userDetails.user.id === lesson?.creatorId ? (
-                <Stack
-                  position="absolute"
-                  height="100%"
-                  width="50px"
-                  right={0}
-                  left={0}
-                  marginLeft="auto"
-                  marginRight="auto"
-                  onWheel={(event) => {
-                    pageRef?.scroll({
-                      //@ts-ignore
-                      top: event?.deltaY + pageRef.scrollTop,
-                    });
-                  }}
-                  onMouseEnter={() => setHoveringOnContentCard(false)}
-                >
-                  <Stack height="100%" position="relative">
-                    {/* {contentsWithDotY[0]?.dotY &&
+              <Stack
+                position="absolute"
+                height="100%"
+                width="50px"
+                right={0}
+                left={0}
+                marginLeft="auto"
+                marginRight="auto"
+                onWheel={(event) => {
+                  pageRef?.scroll({
+                    //@ts-ignore
+                    top: event?.deltaY + pageRef.scrollTop,
+                  });
+                }}
+                onMouseEnter={() => setHoveringOnContentCard(false)}
+              >
+                <Stack height="100%" position="relative">
+                  {/* {contentsWithDotY[0]?.dotY &&
                     mouseY < contentsWithDotY[0]?.dotY ? (
                       <Stack
                         width="2px"
@@ -572,72 +549,74 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         top={mouseY}
                       />
                     ) : null} */}
-                    {contentsWithDotY[0]?.dotY &&
-                    mouseY < contentsWithDotY[0]?.dotY ? (
-                      <Stack
-                        width="2px"
-                        height={`${Math.min(
+                  {!!userDetails?.user?.id &&
+                  userDetails.user.id === lesson?.creatorId &&
+                  contentsWithDotY[0]?.dotY &&
+                  mouseY < contentsWithDotY[0]?.dotY ? (
+                    <Stack
+                      width="2px"
+                      height={`${Math.min(
+                        100,
+                        contentsWithDotY[0]?.dotY -
+                          addButtonY -
+                          document.body.scrollTop -
+                          30
+                      )}px`}
+                      sx={{
+                        transform: `translateY(-${Math.min(
                           100,
                           contentsWithDotY[0]?.dotY -
                             addButtonY -
                             document.body.scrollTop -
                             30
-                        )}px`}
-                        sx={{
-                          transform: `translateY(-${Math.min(
-                            100,
-                            contentsWithDotY[0]?.dotY -
-                              addButtonY -
-                              document.body.scrollTop -
-                              30
-                          )}px)`,
-                        }}
-                        bgcolor={PALETTE.secondary.grey[3]}
-                        position="absolute"
-                        left={0}
-                        right={0}
-                        marginRight="auto"
-                        marginLeft="auto"
-                        top={`${DOT_CARD_Y}px`}
-                      />
-                    ) : null}
-                    {contentsWithDotY[0]?.dotY &&
-                    contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
-                      <Stack
-                        width="2px"
-                        height={
-                          "100%"
-                          // contentsWithDotY[contentsWithDotY.length - 1].dotY -
-                          // (contentsColumnRef?.getBoundingClientRect?.()?.top ??
-                          //   0) -
-                          // 50
-                        }
-                        bgcolor={PALETTE.secondary.grey[3]}
-                        position="absolute"
-                        left="-1px"
-                        right={0}
-                        marginRight="auto"
-                        marginLeft="auto"
-                        top="50px"
-                      />
-                    ) : null}
-
-                    <Stack
-                      width="100%"
-                      height="260px"
-                      bgcolor="rgb(255,255,255)"
-                      sx={{
-                        background: `linear-gradient(0, rgb(255,255,255), rgba(255,255,255,0))`,
+                        )}px)`,
                       }}
+                      bgcolor={PALETTE.secondary.grey[3]}
                       position="absolute"
+                      left={0}
                       right={0}
                       marginRight="auto"
                       marginLeft="auto"
-                      bottom={0}
-                      zIndex={2}
+                      top={`${DOT_CARD_Y}px`}
                     />
+                  ) : null}
+                  {contentsWithDotY[0]?.dotY &&
+                  contentsWithDotY[contentsWithDotY.length - 1]?.dotY ? (
+                    <Stack
+                      width="2px"
+                      height={
+                        "100%"
+                        // contentsWithDotY[contentsWithDotY.length - 1].dotY -
+                        // (contentsColumnRef?.getBoundingClientRect?.()?.top ??
+                        //   0) -
+                        // 50
+                      }
+                      bgcolor={PALETTE.secondary.grey[3]}
+                      position="absolute"
+                      left="-1px"
+                      right={0}
+                      marginRight="auto"
+                      marginLeft="auto"
+                      top="50px"
+                    />
+                  ) : null}
 
-                    {/* <Stack
+                  <Stack
+                    width="100%"
+                    height="260px"
+                    bgcolor="rgb(255,255,255)"
+                    sx={{
+                      background: `linear-gradient(0, rgb(255,255,255), rgba(255,255,255,0))`,
+                    }}
+                    position="absolute"
+                    right={0}
+                    marginRight="auto"
+                    marginLeft="auto"
+                    bottom={0}
+                    zIndex={2}
+                  />
+
+                  {/* <Stack
                       width="2px"
                       height={
                         lineTailHeight
@@ -659,7 +638,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                      */}
 
-                    {/* <Stack
+                  {/* <Stack
                       position="absolute"
                       top={
                         _.isNumber(staticAddButtonY)
@@ -725,9 +704,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         />
                       </Stack>
                     </Stack> */}
-                  </Stack>
                 </Stack>
-              ) : null}
+              </Stack>
+
               <Stack direction="row">
                 <Stack flex={1}>
                   <ContentCards
@@ -748,14 +727,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     updateCallback={loadLesson}
                     wrapper={(card, i) => (
                       <Stack
-                        ref={
-                          i === 0
-                            ? setTopCardRef
-                            : i === contents.length - 1
-                            ? setBottomCardRef
-                            : undefined
-                        }
-                        //id={card?.props.id}
                         position="relative"
                         onMouseEnter={() => {
                           setHoveringContentSide("left");
