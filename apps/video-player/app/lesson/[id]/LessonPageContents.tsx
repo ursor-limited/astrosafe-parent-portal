@@ -41,6 +41,8 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { HEIGHTS } from "ui/ursor-button";
 import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
+import GraphIllustration from "@/images/GraphIllustration.svg";
+import Image from "next/image";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
@@ -346,6 +348,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
       contentsColumnRef?.getBoundingClientRect()?.top,
     ]
   );
+
+  const [hovering, setHovering] = useState<boolean>(false);
 
   return (
     <>
@@ -656,25 +660,65 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                   ) : (
                     <Stack position="relative">
-                      <Stack key="starter" width="94%">
+                      <Stack
+                        key="starter"
+                        width="94%"
+                        onMouseEnter={() => {
+                          setHovering(true);
+                        }}
+                        onMouseLeave={() => {
+                          setHovering(false);
+                        }}
+                      >
                         <Stack
                           height="459px"
-                          border={`2px solid ${PALETTE.secondary.grey[3]}`}
+                          border={`2px solid ${
+                            hovering
+                              ? PALETTE.secondary.purple[2]
+                              : PALETTE.secondary.grey[3]
+                          }`}
                           borderRadius="12px"
-                          spacing="2px"
                           justifyContent="center"
                           alignItems="center"
                           sx={{
+                            transition: "0.2s",
+                            cursor: "pointer",
                             svg: {
                               path: {
-                                fill: PALETTE.secondary.grey[3],
+                                transition: "0.2s",
+                                fill: hovering
+                                  ? PALETTE.secondary.purple[2]
+                                  : PALETTE.secondary.grey[3],
                               },
                             },
                           }}
                         >
+                          <Stack
+                            sx={{
+                              transform: "translateY(20px)",
+                              filter: `grayscale(${hovering ? 0 : 100}%)`,
+                              opacity: hovering ? 1 : 0.5,
+                              transition: "0.2s",
+                            }}
+                          >
+                            <Image
+                              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
+                              height={243}
+                              width={243}
+                              alt="graph illustration"
+                            />
+                          </Stack>
+
                           <PlusIcon height="32px" width="32px" />
                           <Typography
-                            color={PALETTE.secondary.grey[3]}
+                            color={
+                              hovering
+                                ? PALETTE.secondary.purple[2]
+                                : PALETTE.secondary.grey[3]
+                            }
+                            sx={{
+                              transition: "0.2s",
+                            }}
                             bold
                             variant="large"
                           >
