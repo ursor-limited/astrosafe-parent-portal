@@ -43,6 +43,7 @@ import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
 import GraphIllustration from "@/images/GraphIllustration.svg";
 import Image from "next/image";
+import AddContentDialog from "./AddContentDialog";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
@@ -255,6 +256,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useState<boolean>(false);
 
   const [headerAddContentPopoverOpen, setHeaderAddContentPopoverOpen] =
+    useState<boolean>(false);
+
+  const [starterAddContentDialogOpen, setStarterAddContentPopoverOpen] =
     useState<boolean>(false);
 
   const [
@@ -669,6 +673,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         onMouseLeave={() => {
                           setHovering(false);
                         }}
+                        onClick={() => setStarterAddContentPopoverOpen(true)}
                       >
                         <Stack
                           height="459px"
@@ -983,6 +988,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
           updateCallback={loadLesson}
         />
       </Stack>
+      <AddContentDialog
+        open={starterAddContentDialogOpen}
+        setOpen={setStarterAddContentPopoverOpen}
+        callback={(type) =>
+          outOfCreations
+            ? setNoCreationsLeftDialogOpen(true)
+            : contentCallbacks[type]()
+        }
+      />
     </>
   );
 }

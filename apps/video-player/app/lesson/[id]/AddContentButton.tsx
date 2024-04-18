@@ -10,7 +10,7 @@ import {
 } from "@/app/dashboard/DashboardPageContents";
 import _ from "lodash";
 
-const AddContentButtonDialogContentButton = (props: {
+export const AddContentButtonDialogContentButton = (props: {
   callback: () => void;
   title: string;
   color: string;
@@ -80,6 +80,7 @@ export default function AddContentButton(props: {
   mobile?: boolean;
   clickOutsideCloseCallback?: () => void;
   standardStyle?: boolean;
+  right?: boolean;
 }) {
   const contentOrder: AstroContent[] = [
     "video",
