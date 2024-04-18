@@ -87,6 +87,7 @@ const LinkCard = (props: {
   color: ILink["color"];
   createdAt: ILink["createdAt"];
   updatedAt: ILink["updatedAt"];
+  height?: string;
   clickCallback?: () => void;
   editCallback?: () => void;
   deleteCallback?: () => void;
@@ -125,7 +126,7 @@ const LinkCard = (props: {
         ref={setRef}
         position="relative"
         width="100%"
-        minHeight="313px"
+        minHeight={props.height || "313px"}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
@@ -170,7 +171,7 @@ const LinkCard = (props: {
         >
           <Stack
             width="100%"
-            minHeight="304px"
+            minHeight={props.height ? `calc(${props.height} - 9px)` : "304px"}
             sx={{
               backgroundColor: "rgba(255,255,255,0.15)",
               backgroundImage: `url(${props.imageUrl})`,

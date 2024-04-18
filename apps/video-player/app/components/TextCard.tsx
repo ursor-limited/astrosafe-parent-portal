@@ -43,7 +43,7 @@ const TextCard = (
   const notificationCtx = React.useContext(NotificationContext);
 
   const submitDeletion = () =>
-    ApiController.deleteLink(props.id)
+    ApiController.deleteText(props.id)
       .then(props.deleteCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Text."));
 
