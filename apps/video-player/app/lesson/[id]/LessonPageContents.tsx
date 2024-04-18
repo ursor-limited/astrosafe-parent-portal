@@ -526,12 +526,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
               </Stack>
             </Stack>
           </Stack>
-          <Stack width="100%" pt="36px" minHeight="44px">
+          <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
             <Stack
               px="24px"
               ref={setContentsColumnRef}
               position="relative"
               pb="48px"
+              flex={1}
             >
               {userDetails.user?.id &&
               userDetails.user.id === lesson?.creatorId ? (
