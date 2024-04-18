@@ -999,11 +999,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
       <AddContentDialog
         open={starterAddContentDialogOpen}
         setOpen={setStarterAddContentPopoverOpen}
-        callback={(type) =>
-          outOfCreations
-            ? setNoCreationsLeftDialogOpen(true)
-            : contentCallbacks[type]()
-        }
+        callback={(type) => contentCallbacks[type]()}
+        premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
       />
     </>
   );

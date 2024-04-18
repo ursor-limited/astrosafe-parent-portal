@@ -14,6 +14,7 @@ export const AddContentButtonDialogContentButton = (props: {
   callback: () => void;
   title: string;
   color: string;
+  premiumLock?: boolean;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -39,7 +40,33 @@ export const AddContentButtonDialogContentButton = (props: {
         transition: "0.2s",
         opacity: hovering ? 0.8 : 1,
       }}
+      position="relative"
     >
+      {props.premiumLock ? (
+        <Stack
+          position="absolute"
+          top="5px"
+          right="5px"
+          height="16px"
+          width="53px"
+          bgcolor={PALETTE.secondary.purple[2]}
+          justifyContent="center"
+          alignItems="center"
+          borderRadius="8px"
+          zIndex={3}
+        >
+          <Typography
+            color="rgb(255,255,255)"
+            variant="tiny"
+            bold
+            sx={{
+              fontSize: "8px",
+            }}
+          >
+            Premium
+          </Typography>
+        </Stack>
+      ) : null}
       <Stack
         borderRadius="10px"
         bgcolor={props.color}
@@ -48,6 +75,7 @@ export const AddContentButtonDialogContentButton = (props: {
         justifyContent="center"
         alignItems="center"
         sx={{
+          opacity: props.premiumLock ? 0.4 : 1,
           svg: {
             path: {
               fill: "rgb(255,255,255)",
@@ -61,7 +89,13 @@ export const AddContentButtonDialogContentButton = (props: {
         <Typography
           variant="small"
           bold
-          color={hovering ? props.color : PALETTE.secondary.grey[5]}
+          color={
+            props.premiumLock
+              ? PALETTE.secondary.grey[3]
+              : hovering
+              ? props.color
+              : PALETTE.secondary.grey[5]
+          }
           sx={{
             transition: "0.2s",
           }}
@@ -83,11 +117,11 @@ export default function AddContentButton(props: {
   right?: boolean;
 }) {
   const contentOrder: AstroContent[] = [
-    "video",
-    "worksheet",
     "link",
     "image",
     "text",
+    "video",
+    "worksheet",
   ];
 
   const [hovering, setHovering] = useState<boolean>(false);
