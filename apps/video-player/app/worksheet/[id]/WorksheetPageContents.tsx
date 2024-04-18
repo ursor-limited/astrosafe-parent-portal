@@ -547,12 +547,14 @@ export default function WorksheetPageContents(props: {
           transition: "1s",
         }}
         flex={1}
+        height="100%"
       >
         <PageCard
           title={worksheet.title}
           createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={props.lessonId ? "Back to Lesson" : undefined}
+          fullHeight
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="10px">
