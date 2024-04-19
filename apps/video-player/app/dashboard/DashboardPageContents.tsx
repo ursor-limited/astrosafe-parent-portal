@@ -914,6 +914,8 @@ export default function DashboardPageContents() {
 
   const onBasicMode = useOnBasicMode();
 
+  const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -1003,7 +1005,8 @@ export default function DashboardPageContents() {
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
               onClick={() => {
-                createLessonAndRedirect(true);
+                setAlreadySubmitting(true);
+                !alreadySubmitting && createLessonAndRedirect(true);
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
@@ -1020,7 +1023,8 @@ export default function DashboardPageContents() {
               onClick={() => {
                 if (onBasicMode) {
                   setUpgradeDialogOpen(true);
-                } else {
+                } else if (!alreadySubmitting) {
+                  setAlreadySubmitting(true);
                   setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
                   createLessonAndRedirect(true);
                 }
@@ -1042,7 +1046,8 @@ export default function DashboardPageContents() {
               onClick={() => {
                 if (onBasicMode) {
                   setUpgradeDialogOpen(true);
-                } else {
+                } else if (!alreadySubmitting) {
+                  setAlreadySubmitting(true);
                   setTypeOfContentDialogToOpenUponLandingInNewLesson(
                     "worksheet"
                   );
