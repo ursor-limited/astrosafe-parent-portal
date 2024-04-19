@@ -474,7 +474,7 @@ export default function WorksheetGenerator(props: {
                 endIcon={PencilIcon}
                 width="100%"
               >
-                {props.buttonText || props.worksheet ? "Update" : "Create"}
+                {props.buttonText || (props.worksheet ? "Update" : "Create")}
               </UrsorButton>
             ) : null}
           </Stack>
@@ -517,7 +517,8 @@ export default function WorksheetGenerator(props: {
                     endIcon={PencilIcon}
                     width="100%"
                   >
-                    {props.buttonText || props.worksheet ? "Update" : "Create"}
+                    {props.buttonText ||
+                      (props.worksheet ? "Update" : "Create")}
                   </UrsorButton>
                 </Stack>
               </Stack>

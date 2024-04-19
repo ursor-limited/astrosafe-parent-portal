@@ -585,7 +585,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
   return (
     <>
       <UrsorDialog
-        supertitle={isMobile ? undefined : supertitle}
+        supertitle={isMobile ? undefined : "Add a Link to your Lesson"}
         open={props.open}
         onCloseCallback={() => {
           props.closeCallback();
@@ -808,7 +808,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
               width="100%"
               disabled={!downloadImageUrl || !title}
             >
-              {props.link?.id ? "Update" : "Create"}
+              {props.link?.id ? "Update" : "Add"}
             </UrsorButton>
           </Stack>
         </Stack>

@@ -37,6 +37,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
@@ -355,6 +356,12 @@ export default function WorksheetPageContents(props: {
   const [worksheet, setWorksheet] = useState<IWorksheet | undefined>(undefined);
   useEffect(() => setWorksheet(props.details), []);
 
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
+
   const loadWorksheet = () =>
     ApiController.getWorksheet(props.details.id).then((w) => setWorksheet(w));
   useEffect(() => {
@@ -553,54 +560,53 @@ export default function WorksheetPageContents(props: {
           title={worksheet.title}
           createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
-          backText={props.lessonId ? "Back to Lesson" : undefined}
+          backText={
+            props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
           fullHeight
           rightStuff={
             <Stack direction="row" spacing="12px">
-              <Stack direction="row" spacing="10px">
-                <Stack direction="row" spacing="10px">
-                  {userDetails?.user?.id &&
-                  userDetails?.user?.id === worksheet.creatorId ? (
-                    <UrsorActionButton
-                      size="43px"
-                      iconSize="17px"
-                      //background={PALETTE.secondary.grey[1]}
-                      border
-                      actions={[
-                        {
-                          text: "Edit",
-                          kallback: () => setEditingDialogOpen(true),
-                          icon: PencilIcon,
-                        },
-                        {
-                          text: "Delete",
-                          kallback: () => setDeletionDialogOpen(true),
-                          icon: TrashcanIcon,
-                          color: PALETTE.system.red,
-                        },
-                      ]}
-                    />
-                  ) : null}
-                </Stack>
-              </Stack>
               <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  notificationCtx.success("Copied URL to clipboard.");
-                }}
                 sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
+                  opacity:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === props.details.creatorId
+                      ? 1
+                      : 0,
+                  pointerEvents:
+                    userDetails?.user?.id &&
+                    userDetails?.user?.id === props.details.creatorId
+                      ? undefined
+                      : "none",
                   transition: "0.2s",
                 }}
+                direction="row"
+                spacing="12px"
               >
-                <ShareIcon width="22px" height="22px" />
+                <UrsorButton
+                  variant="secondary"
+                  backgroundColor="white"
+                  endIcon={ShareIcon}
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    notificationCtx.success("Copied URL to clipboard.");
+                  }}
+                >
+                  Share Worksheet
+                </UrsorButton>
+                <UrsorActionButton
+                  size="43px"
+                  iconSize="17px"
+                  border
+                  actions={[
+                    {
+                      text: "Delete",
+                      kallback: () => setDeletionDialogOpen(true),
+                      icon: TrashcanIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
+                />
               </Stack>
               <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
                 Download answers

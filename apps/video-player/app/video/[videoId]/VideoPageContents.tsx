@@ -21,6 +21,7 @@ import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -106,6 +107,12 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   const [details, setDetails] = useState<IVideo | undefined>(undefined);
   useEffect(() => setDetails(props.details), [props.details]);
+
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
 
   const notificationCtx = React.useContext(NotificationContext);
 
@@ -201,50 +208,56 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           description={details.description}
           createdAt={details.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
-          backText={props.lessonId ? "Back to Lesson" : undefined}
+          backText={
+            props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
           rightStuff={
-            <Stack direction="row" spacing="10px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === props.details?.creatorId ? (
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => setEditingDialogOpen(true),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
-              ) : null}
-
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
+            <Stack
+              sx={{
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? 1
+                    : 0,
+                pointerEvents:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? undefined
+                    : "none",
+                transition: "0.2s",
+              }}
+              direction="row"
+              spacing="12px"
+            >
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={ShareIcon}
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
                   notificationCtx.success("Copied URL to clipboard.");
                 }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
               >
-                <ShareIcon width="22px" height="22px" />
-              </Stack>
+                Share Video
+              </UrsorButton>
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                border
+                actions={[
+                  // {
+                  //   text: "Edit",
+                  //   kallback: () => setEditingDialogOpen(true),
+                  //   icon: PencilIcon,
+                  // },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}

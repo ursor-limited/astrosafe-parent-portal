@@ -207,8 +207,8 @@ const VideoCreationDialog = (props: {
           isMobile
             ? undefined
             : props.video
-            ? "Edit safe video link"
-            : "Create safe video link"
+            ? "Edit Safe Video Link"
+            : "Add a Safe Video Link to your Lesson"
         }
         open={props.open}
         // button={{
@@ -334,7 +334,7 @@ const VideoCreationDialog = (props: {
                     endIcon={props.video ? PencilIcon : RocketIcon}
                     width="100%"
                   >
-                    {props.video ? "Update" : "Create"}
+                    {props.video ? "Update" : "Add"}
                   </UrsorButton>
                 </>
               ) : null}
@@ -351,7 +351,7 @@ const VideoCreationDialog = (props: {
               endIcon={props.video ? PencilIcon : RocketIcon}
               width="100%"
             >
-              {props.video ? "Update" : "Create"}
+              {props.video ? "Update" : "Add"}
             </UrsorButton>
           ) : null}
         </Stack>

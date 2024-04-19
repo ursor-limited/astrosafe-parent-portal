@@ -23,8 +23,8 @@ const WorksheetCreationDialog = (props: {
         props.mobile
           ? undefined
           : props.worksheet
-          ? "Update worksheet"
-          : "Create worksheet"
+          ? "Update Worksheet"
+          : "Add a Worksheet to your Lesson"
       }
       open={props.open}
       onCloseCallback={props.closeCallback}
@@ -56,6 +56,7 @@ const WorksheetCreationDialog = (props: {
             props.closeCallback();
             notificationCtx.success("Updated Worksheet");
           }}
+          buttonText="Add"
         />
       </Stack>
     </UrsorDialog>
