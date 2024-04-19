@@ -183,6 +183,7 @@ export default function ImageDialog(props: IImageDialogProps) {
               zIndex={9999}
               buttonWidth
               noPadding
+              maxHeight="351px"
               closeCallback={() => setPopoverOpen(false)}
               content={
                 loading ? (
