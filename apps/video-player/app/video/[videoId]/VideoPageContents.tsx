@@ -140,11 +140,11 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  useEffect(() => {
-    details?.createdAt &&
-      dayjs().diff(details.createdAt, "seconds") < 10 &&
-      notificationCtx.success("Video created.");
-  }, [details?.createdAt]);
+  // useEffect(() => {
+  //   details?.createdAt &&
+  //     dayjs().diff(details.createdAt, "seconds") < 10 &&
+  //     notificationCtx.success("Video created.");
+  // }, [details?.createdAt]);
 
   useEffect(() => {
     mixpanel.init(

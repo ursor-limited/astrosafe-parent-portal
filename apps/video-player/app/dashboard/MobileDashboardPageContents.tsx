@@ -32,6 +32,7 @@ import {
   AstroContent,
   AstroContentSort,
   CONTENT_BRANDING,
+  DEFAULT_LESSON_TITLE,
   FilterRow,
   SearchInput,
   ToolButton,
@@ -476,6 +477,29 @@ export default function MobileDashboardPageContents() {
     }
   }, [cards, selectedBinaryFilter, selectedMultipleFilter]);
 
+  const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
+
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | "link" | "image" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
+  const createLessonAndRedirect = (openContentDialog?: boolean) =>
+    ApiController.createLesson({
+      title: DEFAULT_LESSON_TITLE,
+      description: "A new collection of Contents",
+      creatorId: userDetails.user?.id,
+    }).then((lesson) => {
+      openContentDialog && setOpenContentDialogInLessonId(lesson.id);
+      router.push(`/lesson/${lesson.id}`);
+    });
+
   return (
     <Stack
       spacing="20px"
@@ -554,9 +578,8 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.lesson.color}
             icon={CONTENT_BRANDING.lesson.icon}
             onClick={() => {
-              onBasicMode
-                ? setNoCreationsLeftDialogOpen(true)
-                : setLessonCreationDialogOpen(true);
+              setAlreadySubmitting(true);
+              !alreadySubmitting && createLessonAndRedirect(true);
             }}
             infoButtonPosition={215}
             info={CONTENT_BRANDING.lesson.info}
@@ -568,9 +591,13 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.video.color}
             icon={CirclePlayIcon}
             onClick={() => {
-              onBasicMode
-                ? setNoCreationsLeftDialogOpen(true)
-                : setVideoCreationDialogOpen(true);
+              if (onBasicMode) {
+                setUpgradeDialogOpen(true);
+              } else if (!alreadySubmitting) {
+                setAlreadySubmitting(true);
+                setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
+                createLessonAndRedirect(true);
+              }
             }}
             infoButtonPosition={280}
             info={
@@ -584,9 +611,13 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.worksheet.color}
             icon={ChecklistIcon}
             onClick={() => {
-              onBasicMode
-                ? setNoCreationsLeftDialogOpen(true)
-                : setWorksheetCreationDialogOpen(true);
+              if (onBasicMode) {
+                setUpgradeDialogOpen(true);
+              } else if (!alreadySubmitting) {
+                setAlreadySubmitting(true);
+                setTypeOfContentDialogToOpenUponLandingInNewLesson("worksheet");
+                createLessonAndRedirect(true);
+              }
             }}
             infoButtonPosition={300}
             info={

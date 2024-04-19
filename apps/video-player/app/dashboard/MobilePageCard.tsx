@@ -23,8 +23,11 @@ const MobilePageCard = (props: {
   title: string;
   description?: string;
   belowButtonsElement?: React.ReactNode;
+  copyCallback?: () => void;
   editingCallback?: () => void;
   deletionCallback?: () => void;
+  backCallback?: () => void;
+  backText?: string;
 }) => {
   const router = useRouter();
   const userDetails = useUserContext();
@@ -65,20 +68,20 @@ const MobilePageCard = (props: {
               "&:hover": { opacity: 0.7 },
               transition: "0.2s",
             }}
-            onClick={() =>
-              router.push(
-                props.lessonId
-                  ? `/lesson/${props.lessonId}`
-                  : userDetails
-                  ? "/dashboard"
-                  : "/"
-              )
+            onClick={
+              props.backCallback ||
+              (() =>
+                router.push(
+                  props.lessonId
+                    ? `/lesson/${props.lessonId}`
+                    : userDetails
+                    ? "/dashboard"
+                    : "/"
+                ))
             }
           >
             <ChevronLeft width="20px" height="20px" />
-            <Typography>
-              {props.lessonId ? "Back to Lesson" : "Back to Dashboard"}
-            </Typography>
+            <Typography>{props.backText || "Back to Dashboard"}</Typography>
           </Stack>
           <Stack direction="row" spacing="8px">
             {userDetails?.user?.id &&
@@ -112,10 +115,13 @@ const MobilePageCard = (props: {
               width="32px"
               justifyContent="center"
               alignItems="center"
-              onClick={() => {
-                navigator.clipboard.writeText(window.location.href);
-                notificationCtx.success("Copied URL to clipboard.");
-              }}
+              onClick={
+                props.copyCallback ||
+                (() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                })
+              }
               sx={{
                 cursor: "pointer",
                 "&:hover": { opacity: 0.6 },

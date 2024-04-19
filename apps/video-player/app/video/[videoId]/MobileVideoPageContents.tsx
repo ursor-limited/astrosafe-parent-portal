@@ -23,6 +23,7 @@ import { CircularButton } from "./VideoPageContents";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -81,6 +82,12 @@ function MobileVideoPageContents(props: {
   const [video, setVideo] = useState<IVideo | undefined>(undefined);
   useEffect(() => setVideo(props.details), []);
 
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
+
   const loadVideo = () =>
     ApiController.getVideoDetails(props.details.id).then((v) => setVideo(v));
   useEffect(() => {
@@ -114,10 +121,11 @@ function MobileVideoPageContents(props: {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  useEffect(() => {
-    dayjs().diff(props.details.createdAt, "seconds") < 10 &&
-      notificationCtx.success("Video created.");
-  }, [props.details.createdAt]);
+  // useEffect(() => {
+  //   video?.createdAt &&
+  //     dayjs().diff(video.createdAt, "seconds") < 10 &&
+  //     notificationCtx.success("Video created.");
+  // }, [video?.createdAt]);
 
   useEffect(() => {
     mixpanel.init(
@@ -167,6 +175,9 @@ function MobileVideoPageContents(props: {
         creatorId={video?.creatorId}
         editingCallback={() => setEditingDialogOpen(true)}
         deletionCallback={() => setDeletionDialogOpen(true)}
+        backText={
+          props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+        }
         lessonId={props.lessonId}
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">

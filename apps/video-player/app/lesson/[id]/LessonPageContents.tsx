@@ -22,8 +22,6 @@ import {
   AstroContent,
   DEFAULT_LESSON_TITLE,
 } from "@/app/dashboard/DashboardPageContents";
-import LessonVideoCard from "./LessonVideoCard";
-import LinkCard from "@/app/components/LinkCard";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
@@ -32,19 +30,13 @@ import { ILesson } from "./page";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
-import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
-import ImageCard from "@/app/components/ImageCard";
-import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
-import LessonWorksheetPreview from "./LessonWorksheetPreview";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import { HEIGHTS } from "ui/ursor-button";
 import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
-import GraphIllustration from "@/images/GraphIllustration.svg";
 import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
 
@@ -227,8 +219,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useState<boolean>(false);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
-
-  const onBasicMode = useOnBasicMode();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
