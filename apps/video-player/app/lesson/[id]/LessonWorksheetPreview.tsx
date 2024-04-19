@@ -7,7 +7,7 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
 import NumberBondWorksheet from "@/app/worksheet/[id]/NumberBondWorksheet";
 import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
@@ -23,23 +23,13 @@ import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useWindowSize } from "usehooks-ts";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
+import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
 
 const PADDING = 4;
 const DEFAULT_WIDTH = 566;
-const DEFAULT_HEIGHT = 790;
-//const DEFAULT_SCALE = 0.703;
-
-{
-  /* <PageSelector
-        pageIndex={pageIndex}
-        back={() => setPageIndex(pageIndex - 1)}
-        forward={() => setPageIndex(pageIndex + 1)}
-        nPages={getNPages(props)}
-      /> */
-}
 
 const LessonWorksheetPreview = (props: {
   worksheet: IWorksheet;
@@ -95,8 +85,8 @@ const LessonWorksheetPreview = (props: {
         boxSizing="border-box"
         borderRadius="12px"
         p={`${PADDING}px`}
-        bgcolor={PALETTE.secondary.pink[3]}
-        boxShadow="0 0 60px rgba(0,0,0,0.07)"
+        bgcolor={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
+        //boxShadow="0 0 60px rgba(0,0,0,0.07)"
         sx={{
           outline: orangeBorderOn
             ? `3px solid ${PALETTE.system.orange}`
@@ -209,14 +199,14 @@ const LessonWorksheetPreview = (props: {
               variant="medium"
               bold
               maxLines={2}
-              color="rgb(255,255,255)"
+              color={PALETTE.secondary.grey[5]}
             >
               {props.worksheet.title}
             </Typography>
             {props.worksheet.description ? (
               <Stack pb="9px" pt="2px">
                 <Typography
-                  color="rgb(255,255,255)"
+                  color={PALETTE.secondary.grey[5]}
                   variant="medium"
                   maxLines={2}
                 >
@@ -227,9 +217,9 @@ const LessonWorksheetPreview = (props: {
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+              sx={{ svg: { path: { fill: CONTENT_BRANDING.worksheet.color } } }}
             >
-              <Typography variant="small" color="rgb(255,255,255)">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.worksheet.createdAt)}
               </Typography>
               <ChecklistIcon height="20px" width="20px" />
