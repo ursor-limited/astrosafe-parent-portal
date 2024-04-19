@@ -39,7 +39,7 @@ export interface IUrsorPopoverProps {
   fieldWidth?: string;
   buttonWidth?: boolean;
   closeCallback: () => void;
-  maxHeight?: boolean;
+  maxHeight?: string;
   yOffset?: number; // px
   placement?: "right" | "left";
   cornerRadius?: string;
@@ -227,7 +227,9 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                         boxShadow: "0 0 30px rgba(0,0,0,0.09)",
                       }}
                       height="100%"
-                      maxHeight={!props.flip ? maxHeight : undefined}
+                      maxHeight={
+                        props.maxHeight || (!props.flip ? maxHeight : undefined)
+                      }
                       overflow="scroll"
                     >
                       {props.content}

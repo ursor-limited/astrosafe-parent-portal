@@ -23,8 +23,14 @@ const AstroText = (props: {
   return (
     <Stack
       width="100%"
+      flex={1}
       sx={{
+        ".quill": {
+          flex: 1,
+          display: "flex",
+        },
         ".ql-container": {
+          flex: 1,
           fontFamily: "unset",
           height: "unset",
           //border: "none !important",
@@ -34,6 +40,8 @@ const AstroText = (props: {
         ".ql-editor": {
           padding: "8px",
           height: props.height,
+          maxHeight: 0,
+          minHeight: "100%",
         },
         ".ql-blank": { opacity: 0.7 },
       }}
@@ -45,18 +53,16 @@ const AstroText = (props: {
           dangerouslySetInnerHTML={{ __html: props.value }}
         />
       ) : (
-        <Stack>
-          <ReactQuill
-            theme="snow"
-            value={props.value}
-            onChange={(v) => {
-              props.valueChangeCallback(v);
-            }}
-            modules={getModules(props.id)}
-            formats={formats}
-            placeholder="Write something nice"
-          />
-        </Stack>
+        <ReactQuill
+          theme="snow"
+          value={props.value}
+          onChange={(v) => {
+            props.valueChangeCallback(v);
+          }}
+          modules={getModules(props.id)}
+          formats={formats}
+          placeholder="Write something nice"
+        />
       )}
     </Stack>
   );
