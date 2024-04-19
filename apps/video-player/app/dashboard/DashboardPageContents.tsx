@@ -747,7 +747,6 @@ export default function DashboardPageContents() {
     texts,
     links,
     worksheets,
-    nColumns,
     selectedContentType,
     searchValue,
     selectedSort,
@@ -1148,7 +1147,8 @@ export default function DashboardPageContents() {
             >
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                  {[
+                  {
+                    //[
                     // ...(i === 0
                     //   ? [
                     //       <Stack
@@ -1159,7 +1159,7 @@ export default function DashboardPageContents() {
                     //       </Stack>,
                     //     ]
                     //   : []),
-                    ...column.map((item, j) => (
+                    column.map((item, j) => (
                       <Stack
                         key={`${item.details.id}${selectedSort}`}
                         spacing={GRID_SPACING}
@@ -1223,8 +1223,9 @@ export default function DashboardPageContents() {
                           ) : null}
                         </UrsorFadeIn>
                       </Stack>
-                    )),
-                  ]}
+                    ))
+                    //]
+                  }
                 </Stack>
               ))}
             </Stack>
