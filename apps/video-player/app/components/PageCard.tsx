@@ -13,6 +13,7 @@ const PageCard = (props: {
   createdAt?: string;
   minHeight?: string;
   backRoute?: string;
+  backCallback?: () => void;
   backText?: string;
   width?: string;
   editingCallback?: () => void;
@@ -63,10 +64,12 @@ const PageCard = (props: {
                   path: { fill: PALETTE.secondary.grey[4] },
                 },
               }}
-              onClick={() =>
-                router.push(
-                  props.backRoute || (userDetails ? "/dashboard" : "/")
-                )
+              onClick={
+                props.backCallback ||
+                (() =>
+                  router.push(
+                    props.backRoute || (userDetails ? "/dashboard" : "/")
+                  ))
               }
             >
               <ChevronLeft width="20px" height="20px" />
@@ -76,10 +79,12 @@ const PageCard = (props: {
             </Stack>
             {props.rightStuff}
           </Stack>
-          <Stack spacing="22px" px="24px">
-            <Stack spacing="4px">
+          <Stack spacing="14px" px="24px">
+            <Stack spacing="2px">
               {props.createdAt ? (
-                <Typography>{getFormattedDate(props.createdAt)}</Typography>
+                <Typography color={PALETTE.secondary.grey[4]}>
+                  {getFormattedDate(props.createdAt)}
+                </Typography>
               ) : null}
               <Stack
                 direction="row"
