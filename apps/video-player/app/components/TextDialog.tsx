@@ -79,10 +79,9 @@ const TextCreationDialog = (props: {
         }
         open={props.open}
         onCloseCallback={props.closeCallback}
-        width="650px"
-        maxWidth="650px"
+        width="836px"
+        maxWidth="836px"
         noPadding
-        dynamicHeight
         paddingTop={props.mobile ? undefined : "52px"}
         paddingX={isMobile ? undefined : "32px"}
         noCloseButton={props.mobile}
@@ -96,14 +95,13 @@ const TextCreationDialog = (props: {
           p={props.mobile ? "16px" : undefined}
           boxSizing="border-box"
         >
-          <Stack width="100%">
+          <Stack width="100%" flex={1}>
             <TextEditorToolbar id={quillId} />
             {quillId ? (
               <AstroText
                 id={quillId}
                 value={value}
                 valueChangeCallback={setValue}
-                height="120px"
               />
             ) : null}
           </Stack>
