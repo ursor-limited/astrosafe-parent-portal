@@ -18,7 +18,10 @@ import ApiController, { IVideo } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
-import { AstroContent } from "@/app/dashboard/DashboardPageContents";
+import {
+  AstroContent,
+  DEFAULT_LESSON_TITLE,
+} from "@/app/dashboard/DashboardPageContents";
 import LessonVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import AddContentButton from "./AddContentButton";
@@ -355,6 +358,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [hovering, setHovering] = useState<boolean>(false);
 
+  const [needToTitle, setNeedToTitle] = useState<boolean>(false);
+  useEffect(
+    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
+    [lesson?.title]
+  );
+
   return (
     <>
       <Stack
@@ -377,6 +386,16 @@ export default function LessonPageContents(props: { lessonId: string }) {
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
           noBottomPadding
+          backCallback={
+            needToTitle
+              ? () => {
+                  setEditingDialogOpen(true);
+                  notificationCtx.success(
+                    "Please add a title to your Lesson before leaving."
+                  );
+                }
+              : undefined
+          }
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack
@@ -408,8 +427,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   variant="tertiary"
                   endIcon={ShareIcon}
                   onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    notificationCtx.success("Copied URL to clipboard.");
+                    if (needToTitle) {
+                      setEditingDialogOpen(true);
+                      notificationCtx.success(
+                        "Please add a title to your Lesson before sharing it."
+                      );
+                    } else {
+                      navigator.clipboard.writeText(window.location.href);
+                      notificationCtx.success("Copied URL to clipboard.");
+                    }
                   }}
                 >
                   Share link

@@ -58,8 +58,10 @@ import TextCreationDialog, { IText } from "../components/TextDialog";
 import TextCard from "../components/TextCard";
 import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
 
-const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1015;
+const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
+
+export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
 
 export const spin = keyframes`
 from {
@@ -901,13 +903,13 @@ export default function DashboardPageContents() {
   const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 
-  const redirectToNewLessonWithContentCreationDialogOpen = () =>
+  const createLessonAndRedirect = (openContentDialog?: boolean) =>
     ApiController.createLesson({
-      title: "New Lesson",
+      title: DEFAULT_LESSON_TITLE,
       description: "A new collection of Contents",
       creatorId: userDetails.user?.id,
     }).then((lesson) => {
-      setOpenContentDialogInLessonId(lesson.id);
+      openContentDialog && setOpenContentDialogInLessonId(lesson.id);
       router.push(`/lesson/${lesson.id}`);
     });
 
@@ -997,12 +999,12 @@ export default function DashboardPageContents() {
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
             <ToolButton
-              title={shortenedToolNameInButton ? "Lesson" : "Create lesson"}
+              title={shortenedToolNameInButton ? "Lesson" : "Create Lesson"}
               description={CONTENT_BRANDING.lesson.description}
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
               onClick={() => {
-                setLessonCreationDialogOpen(true);
+                createLessonAndRedirect(true);
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
@@ -1011,7 +1013,7 @@ export default function DashboardPageContents() {
               title={
                 shortenedToolNameInButton
                   ? "Safe video"
-                  : "Create safe video link"
+                  : "Create Safe Video Link"
               }
               description="Free of ads. Safe to share."
               color={CONTENT_BRANDING.video.color}
@@ -1021,7 +1023,7 @@ export default function DashboardPageContents() {
                   setUpgradeDialogOpen(true);
                 } else {
                   setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
-                  redirectToNewLessonWithContentCreationDialogOpen();
+                  createLessonAndRedirect(true);
                 }
               }}
               infoButtonPosition={280}
@@ -1033,7 +1035,7 @@ export default function DashboardPageContents() {
               title={
                 shortenedToolNameInButton
                   ? "Worksheet"
-                  : "Create math worksheet"
+                  : "Create Math Worksheet"
               }
               description="Printable & finished in seconds."
               color={CONTENT_BRANDING.worksheet.color}
@@ -1045,7 +1047,7 @@ export default function DashboardPageContents() {
                   setTypeOfContentDialogToOpenUponLandingInNewLesson(
                     "worksheet"
                   );
-                  redirectToNewLessonWithContentCreationDialogOpen();
+                  createLessonAndRedirect(true);
                 }
               }}
               infoButtonPosition={300}
@@ -1098,7 +1100,7 @@ export default function DashboardPageContents() {
                     link: "Link",
                     text: "Text",
                   }}
-                  noText
+                  text="Type"
                 />
               </Stack>
             </Stack>
@@ -1147,16 +1149,16 @@ export default function DashboardPageContents() {
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing={GRID_SPACING}>
                   {[
-                    ...(i === 0
-                      ? [
-                          <Stack
-                            key="new"
-                            onClick={() => setLessonCreationDialogOpen(true)}
-                          >
-                            <DashboardPageCreateButton />
-                          </Stack>,
-                        ]
-                      : []),
+                    // ...(i === 0
+                    //   ? [
+                    //       <Stack
+                    //         key="new"
+                    //         onClick={() => setLessonCreationDialogOpen(true)}
+                    //       >
+                    //         <DashboardPageCreateButton />
+                    //       </Stack>,
+                    //     ]
+                    //   : []),
                     ...column.map((item, j) => (
                       <Stack
                         key={`${item.details.id}${selectedSort}`}
