@@ -90,10 +90,15 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitCreation = async () =>
     ApiController.createImage(getCreationDetails())
       .then((image) => {
-        imageUploadCallback?.().then(() => {
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.creationCallback?.(image);
+            props.closeCallback();
+          });
+        } else {
           props.creationCallback?.(image);
           props.closeCallback();
-        });
+        }
       })
       .then(() => notificationCtx.success("Created Image"))
       .catch((error) => notificationCtx.error(error.message));
@@ -114,10 +119,16 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitUpdate = () =>
     props.image?.id &&
     ApiController.updateImage(props.image?.id, getUpdateDetails())
-      .then((image) => {
-        imageUploadCallback?.();
-        props.updateCallback?.();
-        props.closeCallback();
+      .then(() => {
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.updateCallback?.();
+            props.closeCallback();
+          });
+        } else {
+          props.updateCallback?.();
+          props.closeCallback();
+        }
       })
       .then(() => notificationCtx.success("Updated Image"));
 
