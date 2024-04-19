@@ -172,7 +172,6 @@ export default function AddContentButton(props: {
           props.setOpen(false);
           props.clickOutsideCloseCallback?.();
         }}
-        maxHeight
         //clickableFloatedButton
         noFloatButton
         noPadding
