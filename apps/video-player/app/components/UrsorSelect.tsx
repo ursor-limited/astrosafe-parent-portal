@@ -150,7 +150,6 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         open={open}
         content={list}
         closeCallback={() => setOpen(false)}
-        maxHeight
         clickableFloatedButton
         noPadding
         placement={props.leftAlignPopover ? "left" : undefined}
