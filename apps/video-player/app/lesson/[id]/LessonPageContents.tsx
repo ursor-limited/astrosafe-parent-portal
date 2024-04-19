@@ -415,13 +415,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 direction="row"
                 spacing="12px"
               >
-                <AddContentButton
+                {/* <AddContentButton
                   open={headerAddContentPopoverOpen}
                   setOpen={setHeaderAddContentPopoverOpen}
                   callback={(type) => contentCallbacks[type]()}
                   premiumCallback={() => setUpgradeDialogOpen(true)}
                   standardStyle
-                />
+                /> */}
                 <UrsorButton
                   dark
                   variant="tertiary"
@@ -445,11 +445,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   iconSize="17px"
                   border
                   actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => setEditingDialogOpen(true),
-                      icon: PencilIcon,
-                    },
+                    // {
+                    //   text: "Edit",
+                    //   kallback: () => setEditingDialogOpen(true),
+                    //   icon: PencilIcon,
+                    // },
                     {
                       text: "Delete",
                       kallback: () => setDeletionDialogOpen(true),
@@ -696,7 +696,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           onClick={() => setStarterAddContentPopoverOpen(true)}
                         >
                           <Stack
-                            height="459px"
+                            height="230px"
                             border={`2px solid ${
                               hovering
                                 ? PALETTE.secondary.purple[2]
@@ -720,7 +720,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           >
                             <Stack
                               sx={{
-                                transform: "translateY(20px)",
+                                transform: "translateY(5px)",
                                 filter: `grayscale(${hovering ? 0 : 100}%)`,
                                 opacity: hovering ? 1 : 0.5,
                                 transition: "0.2s",
@@ -739,6 +739,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
                               spacing="7px"
                               justifyContent="center"
                               alignItems="center"
+                              sx={{
+                                transform: "translateY(-20px)",
+                              }}
                             >
                               <PlusIcon height="24px" width="24px" />
                               <Typography

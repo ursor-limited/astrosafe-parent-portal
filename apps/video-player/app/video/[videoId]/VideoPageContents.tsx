@@ -203,48 +203,52 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={props.lessonId ? "Back to Lesson" : undefined}
           rightStuff={
-            <Stack direction="row" spacing="10px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === props.details?.creatorId ? (
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => setEditingDialogOpen(true),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
-              ) : null}
-
-              <Stack
-                borderRadius="100%"
-                border={`2px solid ${PALETTE.primary.navy}`}
-                height="39px"
-                width="39px"
-                justifyContent="center"
-                alignItems="center"
+            <Stack
+              sx={{
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? 1
+                    : 0,
+                pointerEvents:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? undefined
+                    : "none",
+                transition: "0.2s",
+              }}
+              direction="row"
+              spacing="12px"
+            >
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={ShareIcon}
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
                   notificationCtx.success("Copied URL to clipboard.");
                 }}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
               >
-                <ShareIcon width="22px" height="22px" />
-              </Stack>
+                Share Video
+              </UrsorButton>
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                border
+                actions={[
+                  // {
+                  //   text: "Edit",
+                  //   kallback: () => setEditingDialogOpen(true),
+                  //   icon: PencilIcon,
+                  // },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}

@@ -146,7 +146,7 @@ export default function ImageDialog(props: IImageDialogProps) {
 
   return (
     <UrsorDialog
-      supertitle={isMobile ? undefined : "Add an image"}
+      supertitle={isMobile ? undefined : "Add an Image to your Lesson"}
       open={props.open}
       onCloseCallback={props.closeCallback}
       fitContent
@@ -364,7 +364,7 @@ export default function ImageDialog(props: IImageDialogProps) {
             width="100%"
             disabled={!downloadImageUrl}
           >
-            {props.image?.id ? "Update" : "Create"}
+            {props.image?.id ? "Update" : "Add"}
           </UrsorButton>
         </Stack>
       </Stack>

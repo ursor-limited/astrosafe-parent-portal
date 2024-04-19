@@ -77,7 +77,7 @@ const MobilePageCard = (props: {
           >
             <ChevronLeft width="20px" height="20px" />
             <Typography>
-              {props.lessonId ? "Back to Lesson" : "Back to Home"}
+              {props.lessonId ? "Back to Lesson" : "Back to Dashboard"}
             </Typography>
           </Stack>
           <Stack direction="row" spacing="8px">

@@ -71,10 +71,19 @@ const PageCard = (props: {
                     props.backRoute || (userDetails ? "/dashboard" : "/")
                   ))
               }
+              flex={1}
+              mr="30px"
             >
-              <ChevronLeft width="20px" height="20px" />
-              <Typography color={PALETTE.secondary.grey[4]}>
-                {props.backText || "Back to Home"}
+              <Stack width="20px" height="20px">
+                <ChevronLeft width="20px" height="20px" />
+              </Stack>
+
+              <Typography
+                color={PALETTE.secondary.grey[4]}
+                noWrap
+                sx={{ minWidth: "100%", maxWidth: 0 }}
+              >
+                {props.backText || "Back to Dashboard"}
               </Typography>
             </Stack>
             {props.rightStuff}

@@ -71,7 +71,11 @@ const TextCreationDialog = (props: {
     <>
       <UrsorDialog
         supertitle={
-          isMobile ? undefined : props.text ? "Edit Text" : "Create Text"
+          isMobile
+            ? undefined
+            : props.text
+            ? "Edit Text"
+            : "Add a Text to your Lesson"
         }
         open={props.open}
         onCloseCallback={props.closeCallback}
@@ -110,7 +114,7 @@ const TextCreationDialog = (props: {
             disabled={!value}
             onClick={() => (props.text?.id ? submitUpdate() : submitCreation())}
           >
-            {props.text?.id ? "Update" : "Create"}
+            {props.text?.id ? "Update" : "Add"}
           </UrsorButton>
         </Stack>
       </UrsorDialog>
