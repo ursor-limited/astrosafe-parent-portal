@@ -39,7 +39,10 @@ const TextCreationDialog = (props: {
   const [quillId, setQuillId] = useState<string>("");
   useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
 
-  const submitCreation = async () =>
+  const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
+
+  const submitCreation = async () => {
+    setAlreadySubmitting(true);
     ApiController.createText(getCreationDetails())
       .then((text) => {
         props.creationCallback?.(text);
@@ -47,6 +50,7 @@ const TextCreationDialog = (props: {
       })
       .then(() => notificationCtx.success("Created Text"))
       .then(() => setValue(""));
+  };
 
   const getCreationDetails = () => ({
     creatorId: userDetails?.id,
@@ -110,7 +114,11 @@ const TextCreationDialog = (props: {
             variant="tertiary"
             endIcon={PencilIcon}
             disabled={!value}
-            onClick={() => (props.text?.id ? submitUpdate() : submitCreation())}
+            onClick={() =>
+              props.text?.id
+                ? submitUpdate()
+                : !alreadySubmitting && submitCreation()
+            }
           >
             {props.text?.id ? "Update" : "Add"}
           </UrsorButton>
