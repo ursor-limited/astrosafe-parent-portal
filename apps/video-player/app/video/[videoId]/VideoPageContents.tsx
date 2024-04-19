@@ -21,6 +21,7 @@ import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -106,6 +107,12 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   const [details, setDetails] = useState<IVideo | undefined>(undefined);
   useEffect(() => setDetails(props.details), [props.details]);
+
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
 
   const notificationCtx = React.useContext(NotificationContext);
 
@@ -201,7 +208,9 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           description={details.description}
           createdAt={details.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
-          backText={props.lessonId ? "Back to Lesson" : undefined}
+          backText={
+            props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
           rightStuff={
             <Stack
               sx={{
