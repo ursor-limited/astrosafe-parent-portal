@@ -9,6 +9,8 @@ import {
   ToolButton,
 } from "@/app/dashboard/DashboardPageContents";
 import _ from "lodash";
+import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import { PREMIUM_CONTENTS } from "./AddContentDialog";
 
 export const AddContentButtonDialogContentButton = (props: {
   callback: () => void;
@@ -113,6 +115,7 @@ export default function AddContentButton(props: {
   callback: (type: AstroContent) => void;
   mobile?: boolean;
   clickOutsideCloseCallback?: () => void;
+  premiumCallback: () => void;
   standardStyle?: boolean;
   right?: boolean;
 }) {
@@ -123,6 +126,8 @@ export default function AddContentButton(props: {
     "video",
     "worksheet",
   ];
+
+  const outOfCreations = useOutOfCreations();
 
   const [hovering, setHovering] = useState<boolean>(false);
 
@@ -149,8 +154,13 @@ export default function AddContentButton(props: {
                       icon={CONTENT_BRANDING[c].icon}
                       color={CONTENT_BRANDING[c].color}
                       title={CONTENT_BRANDING[c].title}
+                      premiumLock={
+                        outOfCreations && PREMIUM_CONTENTS.includes(c)
+                      }
                       callback={() => {
-                        props.callback(c);
+                        outOfCreations && PREMIUM_CONTENTS.includes(c)
+                          ? props.premiumCallback()
+                          : props.callback(c);
                         props.setOpen(false);
                       }}
                     />

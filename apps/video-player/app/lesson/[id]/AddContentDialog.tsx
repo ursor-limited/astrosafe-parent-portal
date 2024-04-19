@@ -16,7 +16,7 @@ import { useUserContext } from "@/app/components/UserContext";
 import { useEffect, useState } from "react";
 import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
 
-const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet"];
+export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet"];
 
 const AddContentDialog = (props: {
   open: boolean;

@@ -47,7 +47,7 @@ const LiteModeBar = (props: {
         justifyContent={props.mobile ? "center" : undefined}
       >
         <Typography variant="medium" color="rgb(255,255,255)" bold>
-          {MAX_LITE_MODE_ACTIONS - (userDetails?.creations ?? 0)}
+          {Math.max(0, MAX_LITE_MODE_ACTIONS - (userDetails?.creations ?? 0))}
         </Typography>
         <Typography
           variant="medium"

@@ -399,11 +399,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 <AddContentButton
                   open={headerAddContentPopoverOpen}
                   setOpen={setHeaderAddContentPopoverOpen}
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
+                  callback={(type) => contentCallbacks[type]()}
+                  premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
                   standardStyle
                 />
                 <UrsorButton
@@ -527,11 +524,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   <AddContentButton
                     open={addContentPopoverOpen}
                     setOpen={setAddContentPopoverOpen}
-                    callback={(type) =>
-                      outOfCreations
-                        ? setNoCreationsLeftDialogOpen(true)
-                        : contentCallbacks[type]()
-                    }
+                    callback={(type) => contentCallbacks[type]()}
+                    premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
                     clickOutsideCloseCallback={() =>
                       setContentInsertionIndex(undefined)
                     }
