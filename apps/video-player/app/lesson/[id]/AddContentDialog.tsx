@@ -3,6 +3,7 @@ import { AddContentButtonDialogContentButton } from "./AddContentButton";
 import {
   AstroContent,
   CONTENT_BRANDING,
+  getTrialDaysLeft,
 } from "@/app/dashboard/DashboardPageContents";
 import _ from "lodash";
 import { Dialog } from "@mui/material";
@@ -11,19 +12,30 @@ import {
   BORDER_RADIUS,
   DEFAULT_FADEIN_DURATION,
 } from "@/app/components/UrsorDialog";
+import { useUserContext } from "@/app/components/UserContext";
+import { useEffect, useState } from "react";
+import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+
+export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet"];
 
 const AddContentDialog = (props: {
   open: boolean;
   setOpen: (open: boolean) => void;
   callback: (type: AstroContent) => void;
+  premiumCallback: () => void;
 }) => {
   const contentOrder: AstroContent[] = [
-    "video",
-    "worksheet",
     "link",
     "image",
     "text",
+    "video",
+    "worksheet",
   ];
+  const userDetails = useUserContext().user;
+  const [premiumLock, setPremiumLock] = useState<boolean>(false);
+
+  const outOfCreations = useOutOfCreations();
+
   return (
     <Dialog
       transitionDuration={DEFAULT_FADEIN_DURATION}
@@ -53,18 +65,23 @@ const AddContentDialog = (props: {
         {_.chunk(contentOrder, 3).map((row, i) => {
           return (
             <Stack key={i} spacing="12px" direction="row">
-              {row.map((c, j) => (
-                <AddContentButtonDialogContentButton
-                  key={j}
-                  icon={CONTENT_BRANDING[c].icon}
-                  color={CONTENT_BRANDING[c].color}
-                  title={CONTENT_BRANDING[c].title}
-                  callback={() => {
-                    props.callback(c);
-                    props.setOpen(false);
-                  }}
-                />
-              ))}
+              {row.map((c, j) => {
+                return (
+                  <AddContentButtonDialogContentButton
+                    key={j}
+                    icon={CONTENT_BRANDING[c].icon}
+                    color={CONTENT_BRANDING[c].color}
+                    title={CONTENT_BRANDING[c].title}
+                    premiumLock={outOfCreations && PREMIUM_CONTENTS.includes(c)}
+                    callback={() => {
+                      outOfCreations && PREMIUM_CONTENTS.includes(c)
+                        ? props.premiumCallback()
+                        : props.callback(c);
+                      props.setOpen(false);
+                    }}
+                  />
+                );
+              })}
             </Stack>
           );
         })}

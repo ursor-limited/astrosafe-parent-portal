@@ -1002,9 +1002,7 @@ export default function DashboardPageContents() {
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setLessonCreationDialogOpen(true);
+                setLessonCreationDialogOpen(true);
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
