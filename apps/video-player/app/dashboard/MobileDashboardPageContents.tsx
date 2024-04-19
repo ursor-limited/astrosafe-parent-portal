@@ -43,7 +43,7 @@ import dynamic from "next/dynamic";
 import ProfileButton from "../components/ProfileButton";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
 import Image from "next/image";
-import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
+import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import LessonCreationDialog from "./LessonCreationDialog";
@@ -406,7 +406,7 @@ export default function MobileDashboardPageContents() {
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
+  const onBasicMode = useOnBasicMode();
 
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined

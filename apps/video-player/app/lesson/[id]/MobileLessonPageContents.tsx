@@ -31,7 +31,7 @@ import { ILesson } from "./page";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
-import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
@@ -186,7 +186,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
+  const onBasicMode = useOnBasicMode();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
@@ -224,12 +224,9 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                       (o ? "first" : undefined) as string
                     )
                   }
-                  callback={(type) =>
-                    outOfCreations
-                      ? setNoCreationsLeftDialogOpen(true)
-                      : contentCallbacks[type]()
-                  }
+                  callback={(type) => contentCallbacks[type]()}
                   clickOutsideCloseCallback={() => null}
+                  premiumCallback={() => setUpgradeDialogOpen(true)}
                 />
               </Stack>
             ) : null}
@@ -328,6 +325,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                                 ? setNoCreationsLeftDialogOpen(true)
                                 : contentCallbacks[type]()
                             }
+                            premiumCallback={() => setUpgradeDialogOpen(true)}
                             clickOutsideCloseCallback={() =>
                               setContentInsertionIndex(undefined)
                             }

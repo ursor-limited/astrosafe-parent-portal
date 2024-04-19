@@ -9,7 +9,7 @@ import {
   ToolButton,
 } from "@/app/dashboard/DashboardPageContents";
 import _ from "lodash";
-import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 import { PREMIUM_CONTENTS } from "./AddContentDialog";
 
 export const AddContentButtonDialogContentButton = (props: {
@@ -127,7 +127,7 @@ export default function AddContentButton(props: {
     "worksheet",
   ];
 
-  const outOfCreations = useOutOfCreations();
+  const onBasicMode = useOnBasicMode();
 
   const [hovering, setHovering] = useState<boolean>(false);
 
@@ -154,11 +154,9 @@ export default function AddContentButton(props: {
                       icon={CONTENT_BRANDING[c].icon}
                       color={CONTENT_BRANDING[c].color}
                       title={CONTENT_BRANDING[c].title}
-                      premiumLock={
-                        outOfCreations && PREMIUM_CONTENTS.includes(c)
-                      }
+                      premiumLock={onBasicMode && PREMIUM_CONTENTS.includes(c)}
                       callback={() => {
-                        outOfCreations && PREMIUM_CONTENTS.includes(c)
+                        onBasicMode && PREMIUM_CONTENTS.includes(c)
                           ? props.premiumCallback()
                           : props.callback(c);
                         props.setOpen(false);

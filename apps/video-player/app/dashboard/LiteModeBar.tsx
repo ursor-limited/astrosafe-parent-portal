@@ -2,14 +2,23 @@ import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
 import { useUserContext } from "../components/UserContext";
 import RocketIcon from "@/images/icons/RocketIcon.svg";
+import { getTrialDaysLeft } from "./DashboardPageContents";
 
 const MAX_LITE_MODE_ACTIONS = 3;
 
-export const useOutOfCreations = () => {
+// export const useOutOfCreations = () => {
+//   const userDetails = useUserContext().user;
+//   return (
+//     !userDetails?.subscribed &&
+//     (userDetails?.creations ?? 0) >= MAX_LITE_MODE_ACTIONS
+//   );
+// };
+
+export const useOnBasicMode = () => {
   const userDetails = useUserContext().user;
   return (
     !userDetails?.subscribed &&
-    (userDetails?.creations ?? 0) >= MAX_LITE_MODE_ACTIONS
+    getTrialDaysLeft(userDetails?.freeTrialStart) <= 0
   );
 };
 
@@ -17,7 +26,6 @@ const LiteModeBar = (props: {
   mobile?: boolean;
   upgradeCallback: () => void;
 }) => {
-  const userDetails = useUserContext().user;
   return (
     <Stack
       position="absolute"
@@ -46,7 +54,10 @@ const LiteModeBar = (props: {
         width={props.mobile ? "90%" : undefined}
         justifyContent={props.mobile ? "center" : undefined}
       >
-        <Typography variant="medium" color="rgb(255,255,255)" bold>
+        <Typography variant="medium" color="rgba(255,255,255,0.83)">
+          You are currently on Basic Mode
+        </Typography>
+        {/* <Typography variant="medium" color="rgb(255,255,255)" bold>
           {Math.max(0, MAX_LITE_MODE_ACTIONS - (userDetails?.creations ?? 0))}
         </Typography>
         <Typography
@@ -56,7 +67,7 @@ const LiteModeBar = (props: {
         >{`/ ${MAX_LITE_MODE_ACTIONS}`}</Typography>
         <Typography variant="medium" color="rgba(255,255,255,0.83)">
           content creations left this month.
-        </Typography>
+        </Typography> */}
       </Stack>
       <Stack
         sx={{
@@ -68,7 +79,7 @@ const LiteModeBar = (props: {
       >
         <Stack sx={{ pointerEvents: "none" }}>
           <UrsorButton dark fontColor="#4166EE" endIcon={RocketIcon}>
-            Upgrade to unlimited
+            Upgrade to Premium
           </UrsorButton>
         </Stack>
       </Stack>
