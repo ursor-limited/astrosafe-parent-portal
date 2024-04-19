@@ -90,9 +90,10 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitCreation = async () =>
     ApiController.createImage(getCreationDetails())
       .then((image) => {
-        imageUploadCallback?.();
-        props.creationCallback?.(image);
-        props.closeCallback();
+        imageUploadCallback?.().then(() => {
+          props.creationCallback?.(image);
+          props.closeCallback();
+        });
       })
       .then(() => notificationCtx.success("Created Image"))
       .catch((error) => notificationCtx.error(error.message));

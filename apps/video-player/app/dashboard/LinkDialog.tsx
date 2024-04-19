@@ -32,6 +32,7 @@ import InvalidUrlDialog from "./InvalidUrlDialog";
 import BlockedSiteDialog from "./BlockedSiteDialog";
 import { getFormattedDate } from "../components/VideoCard";
 import { isMobile } from "react-device-detect";
+import { CONTENT_BRANDING } from "./DashboardPageContents";
 // import mixpanel from "mixpanel-browser";
 
 export const getTopImageStyle = (url: string, height: string) => ({
@@ -681,11 +682,11 @@ export default function LinkDialog(props: ILinkDialogProps) {
               height={isMobile ? undefined : CARD_HEIGHT}
               minHeight={isMobile ? undefined : CARD_HEIGHT}
               borderRadius="12px"
-              bgcolor={color}
+              bgcolor="#fff4ec"
               sx={{
                 transition: "0.2s",
               }}
-              border={`4px solid ${color}`}
+              border={`4px solid #fff4ec`}
               overflow="hidden"
               position="relative"
             >
@@ -725,7 +726,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
               /> */}
 
                 <Typography
-                  color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                  color={PALETTE.secondary.grey[5]}
                   variant="medium"
                   bold
                   maxLines={2}
@@ -738,48 +739,16 @@ export default function LinkDialog(props: ILinkDialogProps) {
                   sx={{
                     svg: {
                       path: {
-                        fill: lightText
-                          ? "rgba(255,255,255,0.93)"
-                          : "rgba(0,0,0,0.8)",
+                        fill: CONTENT_BRANDING.link.color,
                       },
                     },
                   }}
                 >
-                  <Typography
-                    color={
-                      lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"
-                    }
-                    variant="small"
-                  >
+                  <Typography color={PALETTE.secondary.grey[5]} variant="small">
                     {getFormattedDate(new Date().toISOString())}
                   </Typography>
                   <LinkIcon height="20px" width="20px" />
                 </Stack>
-
-                {/* <Typography
-                  bold
-                  variant="medium"
-                  color={alpha(
-                    shouldBeLightText(color)
-                      ? PALETTE.font.light
-                      : PALETTE.font.dark,
-                    title ? 1 : 0.5
-                  )}
-                  maxLines={2}
-                >
-                  {title}
-                </Typography> */}
-                {/* <Typography
-                variant="small"
-                color={alpha(
-                  shouldBeLightText(color)
-                    ? PALETTE.font.light
-                    : PALETTE.font.dark,
-                  0.8
-                )}
-              >
-                {dayjs().format("Do MMMM YYYY")}
-              </Typography> */}
               </Stack>
               <Stack
                 position="absolute"
@@ -789,7 +758,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
                 direction="row"
                 spacing="7px"
               >
-                <PaletteButton selected={color} callback={(c) => setColor(c)} />
+                {/* <PaletteButton selected={color} callback={(c) => setColor(c)} /> */}
                 <ImageButton
                   usingPlaceholderImage={usingPlaceholderImage}
                   uploadCallback={() => dropzoneRef?.click()}

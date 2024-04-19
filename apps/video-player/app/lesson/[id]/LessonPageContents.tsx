@@ -683,7 +683,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                   ) : (
                     <Stack position="relative">
-                      <UrsorFadeIn delay={500} duration={800}>
+                      <UrsorFadeIn delay={700} duration={800}>
                         <Stack
                           key="starter"
                           width="94%"
