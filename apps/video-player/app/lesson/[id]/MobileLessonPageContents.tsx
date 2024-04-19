@@ -321,7 +321,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                               )
                             }
                             callback={(type) =>
-                              outOfCreations
+                              onBasicMode
                                 ? setNoCreationsLeftDialogOpen(true)
                                 : contentCallbacks[type]()
                             }

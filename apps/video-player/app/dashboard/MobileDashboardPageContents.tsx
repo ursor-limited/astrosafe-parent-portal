@@ -554,7 +554,7 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.lesson.color}
             icon={CONTENT_BRANDING.lesson.icon}
             onClick={() => {
-              outOfCreations
+              onBasicMode
                 ? setNoCreationsLeftDialogOpen(true)
                 : setLessonCreationDialogOpen(true);
             }}
@@ -568,7 +568,7 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.video.color}
             icon={CirclePlayIcon}
             onClick={() => {
-              outOfCreations
+              onBasicMode
                 ? setNoCreationsLeftDialogOpen(true)
                 : setVideoCreationDialogOpen(true);
             }}
@@ -584,7 +584,7 @@ export default function MobileDashboardPageContents() {
             color={CONTENT_BRANDING.worksheet.color}
             icon={ChecklistIcon}
             onClick={() => {
-              outOfCreations
+              onBasicMode
                 ? setNoCreationsLeftDialogOpen(true)
                 : setWorksheetCreationDialogOpen(true);
             }}
