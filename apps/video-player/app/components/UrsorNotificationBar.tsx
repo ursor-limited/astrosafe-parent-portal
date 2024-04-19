@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { NotificationType } from "./NotificationProvider";
 import { PALETTE, Typography } from "ui";
 import NotificationContext from "./NotificationContext";
+import { isMobile } from "react-device-detect";
 
 const HEIGHT = "44px";
 const WIDTH = "421px";
@@ -41,7 +42,8 @@ export default function UrsorNotificationBar(
       left={0}
       right={0}
       margin="auto auto"
-      height={HEIGHT}
+      py={isMobile ? "8px" : 0}
+      minHeight={HEIGHT}
       width={WIDTH}
       maxWidth="calc(90% - 28px)"
       bgcolor={
@@ -63,7 +65,11 @@ export default function UrsorNotificationBar(
         justifyContent="center"
         alignItems="center"
       >
-        <Typography bold color={PALETTE.font.light}>
+        <Typography
+          bold
+          color={PALETTE.font.light}
+          sx={{ textAlign: "center" }}
+        >
           {notificationCtx.type === "error"
             ? `Technical Error: ${notificationCtx.message}`
             : notificationCtx.message}

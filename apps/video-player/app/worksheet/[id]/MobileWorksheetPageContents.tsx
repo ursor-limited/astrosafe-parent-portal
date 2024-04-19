@@ -32,6 +32,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export default function MobileWorksheetPageContents(props: {
   details: IWorksheet;
@@ -39,6 +40,12 @@ export default function MobileWorksheetPageContents(props: {
 }) {
   const [worksheet, setWorksheet] = useState<IWorksheet | undefined>(undefined);
   useEffect(() => setWorksheet(props.details), []);
+
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
 
   const loadWorksheet = () =>
     ApiController.getWorksheet(props.details.id).then((w) => setWorksheet(w));
@@ -260,6 +267,9 @@ export default function MobileWorksheetPageContents(props: {
         creatorId={props.details?.creatorId}
         editingCallback={() => setEditingDialogOpen(true)}
         deletionCallback={() => setDeletionDialogOpen(true)}
+        backText={
+          props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+        }
         lessonId={props.lessonId}
       >
         <Stack direction="row" justifyContent="space-between">
