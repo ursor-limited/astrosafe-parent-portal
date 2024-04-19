@@ -29,7 +29,7 @@ import { ILesson } from "./page";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
-import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
 import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
@@ -225,7 +225,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
+  const onBasicMode = useOnBasicMode();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
@@ -400,7 +400,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   open={headerAddContentPopoverOpen}
                   setOpen={setHeaderAddContentPopoverOpen}
                   callback={(type) => contentCallbacks[type]()}
-                  premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
+                  premiumCallback={() => setUpgradeDialogOpen(true)}
                   standardStyle
                 />
                 <UrsorButton
@@ -525,7 +525,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     open={addContentPopoverOpen}
                     setOpen={setAddContentPopoverOpen}
                     callback={(type) => contentCallbacks[type]()}
-                    premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
+                    premiumCallback={() => setUpgradeDialogOpen(true)}
                     clickOutsideCloseCallback={() =>
                       setContentInsertionIndex(undefined)
                     }
@@ -994,7 +994,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         open={starterAddContentDialogOpen}
         setOpen={setStarterAddContentPopoverOpen}
         callback={(type) => contentCallbacks[type]()}
-        premiumCallback={() => setNoCreationsLeftDialogOpen(true)}
+        premiumCallback={() => setUpgradeDialogOpen(true)}
       />
     </>
   );

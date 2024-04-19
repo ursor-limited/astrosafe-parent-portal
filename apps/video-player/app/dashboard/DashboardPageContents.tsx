@@ -46,7 +46,7 @@ import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
 import LinkDialog, { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
-import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
+import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
 import DashboardPageCreateButton from "./DashboardPageCreateButton";
@@ -821,8 +821,6 @@ export default function DashboardPageContents() {
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
-
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
   >(undefined);
@@ -912,6 +910,8 @@ export default function DashboardPageContents() {
       setOpenContentDialogInLessonId(lesson.id);
       router.push(`/lesson/${lesson.id}`);
     });
+
+  const onBasicMode = useOnBasicMode();
 
   return (
     <>
@@ -1017,8 +1017,8 @@ export default function DashboardPageContents() {
               color={CONTENT_BRANDING.video.color}
               icon={CirclePlayIcon}
               onClick={() => {
-                if (outOfCreations) {
-                  setNoCreationsLeftDialogOpen(true);
+                if (onBasicMode) {
+                  setUpgradeDialogOpen(true);
                 } else {
                   setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
                   redirectToNewLessonWithContentCreationDialogOpen();
@@ -1039,8 +1039,8 @@ export default function DashboardPageContents() {
               color={CONTENT_BRANDING.worksheet.color}
               icon={ChecklistIcon}
               onClick={() => {
-                if (outOfCreations) {
-                  setNoCreationsLeftDialogOpen(true);
+                if (onBasicMode) {
+                  setUpgradeDialogOpen(true);
                 } else {
                   setTypeOfContentDialogToOpenUponLandingInNewLesson(
                     "worksheet"
@@ -1366,8 +1366,7 @@ export default function DashboardPageContents() {
           setUpgradeDialogOpen(true);
         }}
       />
-      {!userDetails.user?.subscribed &&
-      getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+      {onBasicMode ? (
         <UrsorFadeIn duration={1000}>
           <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
         </UrsorFadeIn>

@@ -14,7 +14,7 @@ import {
 } from "@/app/components/UrsorDialog";
 import { useUserContext } from "@/app/components/UserContext";
 import { useEffect, useState } from "react";
-import { useOutOfCreations } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 
 export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet"];
 
@@ -34,7 +34,7 @@ const AddContentDialog = (props: {
   const userDetails = useUserContext().user;
   const [premiumLock, setPremiumLock] = useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
+  const onBasicMode = useOnBasicMode();
 
   return (
     <Dialog
@@ -72,9 +72,9 @@ const AddContentDialog = (props: {
                     icon={CONTENT_BRANDING[c].icon}
                     color={CONTENT_BRANDING[c].color}
                     title={CONTENT_BRANDING[c].title}
-                    premiumLock={outOfCreations && PREMIUM_CONTENTS.includes(c)}
+                    premiumLock={onBasicMode && PREMIUM_CONTENTS.includes(c)}
                     callback={() => {
-                      outOfCreations && PREMIUM_CONTENTS.includes(c)
+                      onBasicMode && PREMIUM_CONTENTS.includes(c)
                         ? props.premiumCallback()
                         : props.callback(c);
                       props.setOpen(false);
