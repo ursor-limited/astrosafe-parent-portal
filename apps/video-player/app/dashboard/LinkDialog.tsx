@@ -517,16 +517,16 @@ export default function LinkDialog(props: ILinkDialogProps) {
   const submitCreation = async () =>
     ApiController.createLink(getCreationDetails())
       .then((link) => {
-        // mixpanel.track("link created", {
-        //   url,
-        //   stackId,
-        //   schoolId: link.schoolId,
-        //   creatorId: link.creatorId,
-        // });
-        imageUploadCallback?.();
-        props.creationCallback?.(link);
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.creationCallback?.(link);
+            props.closeCallback();
+          });
+        } else {
+          props.creationCallback?.(link);
+          props.closeCallback();
+        }
         clear();
-        props.closeCallback();
       })
       .then(() => notificationCtx.success(CREATION_SUCCESS_MESSAGE))
       .catch((error) => notificationCtx.error(error.message));
@@ -545,9 +545,15 @@ export default function LinkDialog(props: ILinkDialogProps) {
     props.link?.id &&
     ApiController.updateLink(props.link?.id, getUpdateDetails())
       .then(() => {
-        imageUploadCallback?.();
-        props.updateCallback?.();
-        props.closeCallback();
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.updateCallback?.();
+            props.closeCallback();
+          });
+        } else {
+          props.updateCallback?.();
+          props.closeCallback();
+        }
       })
       .then(() => notificationCtx.success("Updated Link"));
 
