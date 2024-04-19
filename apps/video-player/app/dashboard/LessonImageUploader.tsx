@@ -71,15 +71,16 @@ const LessonImageUploader = forwardRef(
     };
 
     const setResizedFile = (file: File) => {
-      if (
-        file.size > COMPRESSION_FILE_SIZE_THRESHOLD &&
-        !["image/gif", "image/svg+xml"].includes(file.type)
-      ) {
-        // if it's bigger than 100kb
-        resizeFile(file);
-      } else {
-        setFile(file);
-      }
+      setFile(file);
+      // if (
+      //   file.size > COMPRESSION_FILE_SIZE_THRESHOLD &&
+      //   !["image/gif", "image/svg+xml"].includes(file.type)
+      // ) {
+      //   // if it's bigger than 100kb
+      //   resizeFile(file);
+      // } else {
+      //   setFile(file);
+      // }
     };
 
     const upload = (signedUrl: string) =>
