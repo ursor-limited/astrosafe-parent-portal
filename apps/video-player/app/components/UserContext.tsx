@@ -17,7 +17,6 @@ export interface ISafeTubeUser {
   createdAt: string;
   freeTrialStart?: string;
   creations: number;
-  periodCreationsClearedAt: string;
 }
 
 export interface IUserContext {

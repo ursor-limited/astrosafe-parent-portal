@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { IWorksheet } from "./WorksheetGenerator";
 import EquationWorksheet from "../worksheet/[id]/EquationWorksheet";
 import { PALETTE, Typography } from "ui";
@@ -16,6 +16,7 @@ import NotificationContext from "./NotificationContext";
 import ApiController from "../api";
 import DeletionDialog from "./DeletionDialog";
 import useOrangeBorder from "./useOrangeBorder";
+import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 
 const WorksheetCard = (
   props: IWorksheet & {
@@ -37,10 +38,10 @@ const WorksheetCard = (
   return (
     <>
       <Stack
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         borderRadius="12px"
         boxSizing="border-box"
-        border={`4px solid rgb(255,255,255)`}
+        //border={`4px solid rgb(255,255,255)`}
         overflow="hidden"
         boxShadow="0 0 12px rgba(0,0,0,0.06)"
         sx={{
@@ -133,7 +134,12 @@ const WorksheetCard = (
               </Stack>
             </Stack>
           </Stack>
-          <Stack flex={1} alignItems="space-between">
+          <Stack
+            flex={1}
+            alignItems="space-between"
+            px="4px"
+            boxSizing="border-box"
+          >
             <Stack height="45px">
               <Typography
                 color={PALETTE.secondary.grey[5]}
@@ -147,9 +153,9 @@ const WorksheetCard = (
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: PALETTE.secondary.pink[4] } } }}
+              sx={{ svg: { path: { fill: CONTENT_BRANDING.worksheet.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <ChecklistIcon height="20px" width="20px" />

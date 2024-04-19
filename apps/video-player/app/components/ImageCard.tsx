@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
@@ -53,7 +53,7 @@ const ImageCard = (
       <Stack
         ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.image.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -63,7 +63,7 @@ const ImageCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
+        //boxShadow="0 0 12px rgba(0,0,0,0.06)"
         pb="12px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
@@ -114,12 +114,21 @@ const ImageCard = (
             />
           </Stack>
           <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+            <Typography
+              color={PALETTE.secondary.grey[5]}
+              variant="medium"
+              bold
+              maxLines={2}
+            >
               {props.title}
             </Typography>
             {props.description ? (
               <Stack pb="9px" pt="2px">
-                <Typography variant="medium" maxLines={2}>
+                <Typography
+                  color={PALETTE.secondary.grey[5]}
+                  variant="medium"
+                  maxLines={2}
+                >
                   {props.description}
                 </Typography>
               </Stack>
@@ -129,7 +138,7 @@ const ImageCard = (
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <ImageIcon height="20px" width="20px" />

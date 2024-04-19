@@ -13,6 +13,7 @@ import DeletionDialog from "./DeletionDialog";
 import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import useOrangeBorder from "./useOrangeBorder";
+import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
@@ -150,10 +151,10 @@ const LinkCard = (props: {
           />
         </Stack>
         <Stack
-          bgcolor={props.color || "rgb(255,255,255)"}
+          bgcolor="#fff4ec"
           borderRadius="12px"
           overflow="hidden"
-          border={`4px solid ${props.color || "rgb(255,255,255)"}`}
+          border={`4px solid #fff4ec`}
           boxSizing="border-box"
           flex={1}
           spacing="5px"
@@ -184,7 +185,7 @@ const LinkCard = (props: {
           <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
             <Stack flex={1} justifyContent="space-between">
               <Typography
-                color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                color={PALETTE.secondary.grey[5]}
                 variant="medium"
                 bold
                 maxLines={2}
@@ -194,7 +195,7 @@ const LinkCard = (props: {
               {props.description ? (
                 <Stack pb="9px" pt="2px">
                   <Typography
-                    color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                    color={PALETTE.secondary.grey[5]}
                     variant="medium"
                     maxLines={2}
                   >
@@ -208,45 +209,17 @@ const LinkCard = (props: {
                 sx={{
                   svg: {
                     path: {
-                      fill: lightText
-                        ? "rgba(255,255,255,0.93)"
-                        : "rgba(0,0,0,0.8)",
+                      fill: CONTENT_BRANDING.link.color,
                     },
                   },
                 }}
               >
-                <Typography
-                  color={
-                    lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"
-                  }
-                  variant="small"
-                >
+                <Typography color={PALETTE.secondary.grey[5]} variant="small">
                   {getFormattedDate(props.createdAt)}
                 </Typography>
                 <LinkIcon height="20px" width="20px" />
               </Stack>
             </Stack>
-            {/* <Stack direction="row" spacing="4px">
-            <Typography
-              variant="small"
-              color={alpha(
-                lightText ? PALETTE.font.light : PALETTE.font.dark,
-                0.7
-              )}
-              bold
-            >
-              {agoText.value}
-            </Typography>
-            <Typography
-              variant="small"
-              color={alpha(
-                lightText ? PALETTE.font.light : PALETTE.font.dark,
-                0.7
-              )}
-            >
-              {agoText.text}
-            </Typography>
-          </Stack> */}
           </Stack>
         </Stack>
       </Stack>

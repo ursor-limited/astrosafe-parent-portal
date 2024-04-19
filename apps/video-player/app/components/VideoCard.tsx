@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
@@ -51,7 +51,7 @@ const VideoCard = (
       <Stack
         height="260px"
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.video.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -142,7 +142,12 @@ const VideoCard = (
             </Stack>
           </Stack>
           <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+            <Typography
+              color={PALETTE.secondary.grey[5]}
+              variant="medium"
+              bold
+              maxLines={2}
+            >
               {props.title}
             </Typography>
             <Stack
@@ -150,7 +155,7 @@ const VideoCard = (
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />

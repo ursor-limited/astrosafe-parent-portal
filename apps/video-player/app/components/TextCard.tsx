@@ -60,7 +60,7 @@ const TextCard = (
       <Stack
         ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.text.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -70,7 +70,7 @@ const TextCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 20px rgba(0,0,0,0.08)"
+        //boxShadow="0 0 20px rgba(0,0,0,0.08)"
         pb="12px"
         pt="50px"
       >
@@ -122,7 +122,7 @@ const TextCard = (
             },
           }}
         >
-          <Typography variant="small">
+          <Typography color={PALETTE.secondary.grey[5]} variant="small">
             {getFormattedDate(props.createdAt)}
           </Typography>
           <TypographyIcon height="20px" width="20px" />

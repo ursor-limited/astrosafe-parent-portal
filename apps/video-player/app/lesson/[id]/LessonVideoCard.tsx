@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
@@ -15,6 +15,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
+import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -59,11 +60,11 @@ const LessonVideoCard = (
       <Stack
         ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.video.color, 0.12)}
         p="4px"
         overflow="hidden"
         position="relative"
-        boxShadow="0 0 22px rgba(0,0,0,0.1)"
+        //boxShadow="0 0 22px rgba(0,0,0,0.1)"
         pb="12px"
         sx={{
           outline: orangeBorderOn
@@ -171,12 +172,21 @@ const LessonVideoCard = (
             </Stack>
           </Stack>
           <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+            <Typography
+              variant="medium"
+              bold
+              maxLines={2}
+              color={PALETTE.secondary.grey[5]}
+            >
               {props.title}
             </Typography>
             {props.description ? (
               <Stack pb="9px" pt="2px">
-                <Typography variant="medium" maxLines={2}>
+                <Typography
+                  variant="medium"
+                  maxLines={2}
+                  color={PALETTE.secondary.grey[5]}
+                >
                   {props.description}
                 </Typography>
               </Stack>
@@ -184,9 +194,9 @@ const LessonVideoCard = (
             <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
+              sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />
