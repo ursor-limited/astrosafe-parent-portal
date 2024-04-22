@@ -140,6 +140,8 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
 
 export const GRID_SPACING = "20px";
 
+export const LESSON_GRID_SPACING = "34px";
+
 export type AstroContent =
   | "video"
   | "worksheet"
@@ -1151,7 +1153,15 @@ export default function DashboardPageContents() {
               pt="8px"
             >
               {cardColumns.map((column, i) => (
-                <Stack key={i} flex={1} spacing={GRID_SPACING}>
+                <Stack
+                  key={i}
+                  flex={1}
+                  spacing={
+                    selectedBinaryFilter === "lessons"
+                      ? LESSON_GRID_SPACING
+                      : GRID_SPACING
+                  }
+                >
                   {
                     //[
                     // ...(i === 0
