@@ -271,6 +271,10 @@ export default function MobileWorksheetPageContents(props: {
           props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
         }
         lessonId={props.lessonId}
+        editingEnabled={
+          !!userDetails?.user?.id &&
+          userDetails.user.id === props.details.creatorId
+        }
       >
         <Stack direction="row" justifyContent="space-between">
           <Stack spacing="5px" direction="row" width="100%">
