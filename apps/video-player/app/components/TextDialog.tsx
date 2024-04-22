@@ -40,6 +40,7 @@ const TextCreationDialog = (props: {
   useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
 
   const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
+  useEffect(() => setAlreadySubmitting(false), [props.open]);
 
   const submitCreation = async () => {
     setAlreadySubmitting(true);
