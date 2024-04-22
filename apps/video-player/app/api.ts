@@ -385,10 +385,6 @@ class ApiController {
   static async deleteText(id: string) {
     return dellete(`text/${id}`).then((response: any) => response);
   }
-
-  static async migrate() {
-    return get(`video/migrate/boo`).then((response: any) => response);
-  }
 }
 
 export default ApiController;
