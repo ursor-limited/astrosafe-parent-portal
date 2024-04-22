@@ -244,8 +244,8 @@ const LessonCard = (
                 </Stack>
               </Stack>
             </Stack>
-            <Stack px="4px">
-              <Stack alignItems="space-between" flex={1}>
+            <Stack px="4px" spacing="12px">
+              <Stack alignItems="space-between" flex={1} minHeight="58px">
                 <Stack pt="8px">
                   <Typography bold variant="medium" maxLines={2}>
                     {props.title}
