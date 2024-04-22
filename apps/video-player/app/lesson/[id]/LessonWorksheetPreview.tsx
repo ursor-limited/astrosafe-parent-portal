@@ -214,7 +214,7 @@ const LessonWorksheetPreview = (props: {
                 </Typography>
               </Stack>
             ) : null}
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.worksheet.color } } }}
@@ -223,7 +223,7 @@ const LessonWorksheetPreview = (props: {
                 {getFormattedDate(props.worksheet.createdAt)}
               </Typography>
               <ChecklistIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
         <Stack

@@ -182,7 +182,7 @@ const LinkCard = (props: {
             }}
             position="relative"
           />
-          <Stack pb="4px" pt="2px" justifyContent="space-between" flex={1}>
+          <Stack justifyContent="space-between" flex={1}>
             <Stack flex={1} justifyContent="space-between">
               <Typography
                 color={PALETTE.secondary.grey[5]}
@@ -203,7 +203,7 @@ const LinkCard = (props: {
                   </Typography>
                 </Stack>
               ) : null}
-              <Stack
+              {/* <Stack
                 direction="row"
                 justifyContent="space-between"
                 sx={{
@@ -218,7 +218,7 @@ const LinkCard = (props: {
                   {getFormattedDate(props.createdAt)}
                 </Typography>
                 <LinkIcon height="20px" width="20px" />
-              </Stack>
+              </Stack> */}
             </Stack>
           </Stack>
         </Stack>

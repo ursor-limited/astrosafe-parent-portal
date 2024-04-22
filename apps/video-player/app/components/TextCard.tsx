@@ -72,7 +72,7 @@ const TextCard = (
         }}
         position="relative"
         //boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        pb="12px"
+        pb="6px"
         pt="50px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
@@ -112,7 +112,7 @@ const TextCard = (
           <TextPreview value={props.value} />
         </Stack>
 
-        <Stack
+        {/* <Stack
           direction="row"
           justifyContent="space-between"
           sx={{
@@ -127,7 +127,7 @@ const TextCard = (
             {getFormattedDate(props.createdAt)}
           </Typography>
           <TypographyIcon height="20px" width="20px" />
-        </Stack>
+        </Stack> */}
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

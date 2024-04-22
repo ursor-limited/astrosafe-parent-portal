@@ -591,22 +591,22 @@ export default function DashboardPageContents() {
   }, [userDetails?.user?.id]);
 
   const [texts, setTexts] = useState<IText[]>([]);
-  const loadTexts = () => {
-    userDetails?.user?.id &&
-      ApiController.getUserTexts(userDetails.user.id)
-        .then((texts) =>
-          setTexts(
-            _.reverse(texts.slice()).map((t: IText) => ({
-              ...t,
-              value: cleanTextValueIntoInnerHTML(t.value),
-            }))
-          )
-        )
-        .finally(() => setTextsLoaded(true));
-  };
-  useEffect(() => {
-    loadTexts();
-  }, [userDetails?.user?.id]);
+  // const loadTexts = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getUserTexts(userDetails.user.id)
+  //       .then((texts) =>
+  //         setTexts(
+  //           _.reverse(texts.slice()).map((t: IText) => ({
+  //             ...t,
+  //             value: cleanTextValueIntoInnerHTML(t.value),
+  //           }))
+  //         )
+  //       )
+  //       .finally(() => setTextsLoaded(true));
+  // };
+  // useEffect(() => {
+  //   loadTexts();
+  // }, [userDetails?.user?.id]);
 
   const [links, setLinks] = useState<ILink[]>([]);
   const loadLinks = () => {
@@ -655,7 +655,7 @@ export default function DashboardPageContents() {
     "lessons" | "all"
   >("lessons");
   const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
-    "all" | "video" | "worksheet" | "image" | "text" | "link"
+    "all" | "video" | "worksheet" | "image" | "link"
   >("all");
 
   useEffect(() => {
@@ -1144,14 +1144,14 @@ export default function DashboardPageContents() {
                 <SortButton
                   selected={selectedMultipleFilter}
                   callback={(id) => setSelectedMultipleFilter(id)}
-                  types={["all", "video", "worksheet", "image", "text", "link"]}
+                  types={["all", "video", "worksheet", "image", "link"]}
                   displayNames={{
                     all: "All",
                     video: "Video",
                     worksheet: "Worksheet",
                     image: "Image",
                     link: "Link",
-                    text: "Text",
+                    //text: "Text",
                   }}
                   text="Type"
                   disabled={selectedBinaryFilter !== "all"}

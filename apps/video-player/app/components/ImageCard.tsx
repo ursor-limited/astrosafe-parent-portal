@@ -63,8 +63,7 @@ const ImageCard = (
             : undefined,
         }}
         position="relative"
-        //boxShadow="0 0 12px rgba(0,0,0,0.06)"
-        pb="12px"
+        pb="8px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -123,7 +122,7 @@ const ImageCard = (
               {props.title}
             </Typography>
             {props.description ? (
-              <Stack pb="9px" pt="2px">
+              <Stack>
                 <Typography
                   color={PALETTE.secondary.grey[5]}
                   variant="medium"
@@ -133,7 +132,7 @@ const ImageCard = (
                 </Typography>
               </Stack>
             ) : null}
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
@@ -142,7 +141,7 @@ const ImageCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <ImageIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>

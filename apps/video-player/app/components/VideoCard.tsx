@@ -49,7 +49,7 @@ const VideoCard = (
   return (
     <>
       <Stack
-        height="260px"
+        //height="260px"
         borderRadius="12px"
         bgcolor={alpha(CONTENT_BRANDING.video.color, 0.12)}
         p="4px"
@@ -62,7 +62,7 @@ const VideoCard = (
         }}
         position="relative"
         boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        pb="12px"
+        pb="8px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -150,7 +150,7 @@ const VideoCard = (
             >
               {props.title}
             </Typography>
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
@@ -159,7 +159,7 @@ const VideoCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>
