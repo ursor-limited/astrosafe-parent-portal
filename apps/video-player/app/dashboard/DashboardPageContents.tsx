@@ -812,8 +812,13 @@ export default function DashboardPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      console.log("aaaaa", freeWorksheetIds);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
-        () => loadWorksheets()
+        () =>
+          setTimeout(() => {
+            loadWorksheets();
+            loadLessons();
+          }, 400)
       );
       setFreeWorksheetIds([]);
     }
@@ -823,10 +828,11 @@ export default function DashboardPageContents() {
     "freeVideoIds",
     []
   );
+
   useEffect(() => {
     if (userDetails.user?.id && freeVideoIds.length > 0) {
       ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
-        loadVideos()
+        setTimeout(loadVideos, 400)
       );
       setFreeVideoIds([]);
     }
@@ -1081,7 +1087,7 @@ export default function DashboardPageContents() {
               infoButtonPosition={280}
               info={CONTENT_BRANDING.video.info}
               infoImageUrl={CONTENT_BRANDING.video.infoImageUrl}
-              popoverTitle={CONTENT_BRANDING.lesson.title}
+              popoverTitle={CONTENT_BRANDING.video.title}
             />
             <ToolButton
               title={
@@ -1106,7 +1112,7 @@ export default function DashboardPageContents() {
               infoButtonPosition={300}
               info={CONTENT_BRANDING.worksheet.info}
               infoImageUrl={CONTENT_BRANDING.worksheet.infoImageUrl}
-              popoverTitle={CONTENT_BRANDING.lesson.title}
+              popoverTitle={CONTENT_BRANDING.worksheet.title}
             />
           </Stack>
         </UrsorFadeIn>
