@@ -909,21 +909,23 @@ export default function LessonPageContents(props: { lessonId: string }) {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      <TextDialog
-        open={textDialogOpen}
-        closeCallback={() => {
-          setTextDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(text) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "text",
-            text.id
-          ).then(loadLesson);
-        }}
-      />
+      {textDialogOpen ? (
+        <TextDialog
+          open={true}
+          closeCallback={() => {
+            setTextDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(text) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "text",
+              text.id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {textEditingDialogId ? (
         <TextCreationDialog
           open={true}

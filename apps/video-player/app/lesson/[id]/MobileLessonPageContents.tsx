@@ -493,24 +493,26 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      <TextDialog
-        open={textDialogOpen}
-        closeCallback={() => {
-          setTextDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(text) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "text",
-            text.id
-          ).then((response) =>
-            updateLesson(response.lesson, response.actualContents)
-          );
-        }}
-        mobile
-      />
+      {textDialogOpen ? (
+        <TextDialog
+          open={textDialogOpen}
+          closeCallback={() => {
+            setTextDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(text) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "text",
+              text.id
+            ).then((response) =>
+              updateLesson(response.lesson, response.actualContents)
+            );
+          }}
+          mobile
+        />
+      ) : null}
       {textEditingDialogId ? (
         <TextDialog
           open={true}
