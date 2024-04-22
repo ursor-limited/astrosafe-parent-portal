@@ -8,9 +8,9 @@ import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
-import InfoIcon from "@/images/icons/InfoIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import RepoIcon from "@/images/icons/RepoIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -32,7 +32,7 @@ import SortButton from "../components/SortButton";
 import { createPortal } from "react-dom";
 import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import dayjs from "dayjs";
@@ -44,11 +44,27 @@ import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
 import { ILesson } from "../lesson/[id]/page";
-import { ILink, shouldBeLightText } from "./LinkDialog";
+import LinkDialog, { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
-import LiteModeBar, { useOutOfCreations } from "./LiteModeBar";
+import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
+import DashboardPageCreateButton from "./DashboardPageCreateButton";
+import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
+import ImageDialog, { IImage } from "./ImageDialog";
+import ImageCard from "../components/ImageCard";
+import LinkCard from "../components/LinkCard";
+import TextCreationDialog, { IText } from "../components/TextDialog";
+import TextCard from "../components/TextCard";
+import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
+import Image from "next/image";
+
+const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
+const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
+
+const POPOVER_MARGIN = 10;
+
+export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
 
 export const spin = keyframes`
 from {
@@ -73,23 +89,28 @@ export interface IAstroContentBranding {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   infoButtonPosition: number;
   info: string;
+  infoImageUrl?: string;
 }
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
-    title: "SafeTube - safe videos",
+    title: "Video",
     description: "Free of ads. Safe to share.",
-    color: PALETTE.secondary.blue[3],
+    color: "#FC5C5C",
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
-    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link.",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/videoInfo.png",
   },
   worksheet: {
-    title: "Worksheet Generator",
+    title: "Worksheet",
     description: "Printable & finished in seconds.",
-    color: PALETTE.secondary.pink[5],
+    color: PALETTE.secondary.blue[3],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
-    info: "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+    info: "Customise a worksheet template to your students’ needs. We’ll do the rest.",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/worksheetInfo.png",
   },
   lesson: {
     title: "Lesson",
@@ -97,12 +118,14 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.green[5],
     icon: VersionsIcon,
     infoButtonPosition: 170,
-    info: "The heat trapped in the custard will carry it over to that perfect state of just-cooked as it cools. I like to put it out on the table, tucked under a clean dishcloth, so it’s ready and waiting for a casual reveal when we’re ready to eat.",
+    info: "Create digital lessons in minutes combining videos, quizzes, worksheets, images and websites!",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/lessonInfo.png",
   },
   link: {
     title: "Link",
     description: "Add a link to some non-naughty site.",
-    color: PALETTE.secondary.orange[5],
+    color: PALETTE.secondary.orange[3],
     icon: LinkIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding a naughty site. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -110,7 +133,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   image: {
     title: "Image",
     description: "Add a wholesome image.",
-    color: PALETTE.secondary.grey[4],
+    color: PALETTE.secondary.pink[3],
     icon: ImageIcon,
     infoButtonPosition: 150,
     info: "Don't you dare try adding a naughty image. We do not tolerate even a hint of violence, drugs, sexuality, or bad design.",
@@ -118,7 +141,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   text: {
     title: "Text",
     description: "Add some styled and well-crafted copy.",
-    color: PALETTE.secondary.yellow[4],
+    color: "#41C5FD",
     icon: TypographyIcon,
     infoButtonPosition: 136,
     info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
@@ -126,6 +149,8 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
 };
 
 export const GRID_SPACING = "20px";
+
+export const LESSON_GRID_SPACING = "34px";
 
 export type AstroContent =
   | "video"
@@ -157,7 +182,7 @@ export const SearchInput = (props: {
   return (
     <Stack
       height={props.height || "28px"}
-      width={props.fullWidth ? undefined : "180px"}
+      width={props.fullWidth ? undefined : "160px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"
@@ -180,14 +205,14 @@ export const SearchInput = (props: {
       onMouseLeave={() => setHovering(false)}
       boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.03)" : undefined}
     >
-      <SearchIcon width="20px" height="20px" />
+      <SearchIcon width="24px" height="24px" />
       <Input
         style={{
           textAlign: "left",
           textOverflow: "ellipsis",
           fontSize: FONT_SIZES["small"],
           color: PALETTE.font.dark,
-          fontWeight: BOLD_FONT_WEIGHT,
+          fontWeight: 480,
           lineHeight: "100%",
           transition: "0.2s",
           fontFamily: "inherit",
@@ -293,8 +318,9 @@ export const FilterButton = (props: {
 export const FilterRow = (props: {
   selected: AstroContent | null;
   callback: (newSelected: AstroContent | null) => void;
+  mobile?: boolean;
 }) => (
-  <Stack direction="row" spacing="12px">
+  <Stack direction="row" spacing="12px" px={props.mobile ? "20px" : undefined}>
     <FilterButton
       text="All"
       icon={Star}
@@ -319,6 +345,7 @@ export const FilterRow = (props: {
       selected={props.selected === "worksheet"}
       onClick={() => props.callback("worksheet")}
     />
+    <Stack minWidth="28px" />
   </Stack>
 );
 
@@ -332,17 +359,86 @@ export const ToolButton = (props: {
   mobile?: boolean;
   fullWidth?: boolean;
   strongShadow?: boolean;
+  noInfo?: boolean;
+  infoImageUrl?: string;
+  popoverTitle?: string;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
   const [lightText, setLightText] = useState<boolean>(false);
   useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  const [popoverY, setPopoverY] = useState<number>(0);
+  const [popoverX, setPopoverX] = useState<number>(0);
+  const [popoverWidth, setPopoverWidth] = useState<number>(0);
+  useEffect(() => {
+    ref?.getBoundingClientRect?.().bottom &&
+      setPopoverY(ref.getBoundingClientRect().bottom + POPOVER_MARGIN);
+    ref?.getBoundingClientRect?.().left &&
+      setPopoverX(ref.getBoundingClientRect().left);
+    ref?.getBoundingClientRect?.().width &&
+      setPopoverWidth(ref.getBoundingClientRect().width);
+  }, [
+    ref?.getBoundingClientRect?.().bottom,
+    ref?.getBoundingClientRect?.().left,
+    ref?.getBoundingClientRect?.().width,
+  ]);
+
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <>
+      {createPortal(
+        <Stack
+          position="absolute"
+          top={popoverY}
+          left={popoverX}
+          // sx={{
+          //   cursor: "pointer",
+          //   "&:hover": { opacity: 0.6 },
+          //   transition: "0.2s",
+          // }}
+          sx={{
+            opacity: hovering ? 1 : 0,
+            pointerEvents: "none",
+            transition: "0.4s",
+            transitionDelay: "0.6s",
+          }}
+          onClick={() => setOverlayOpen(true)}
+          bgcolor="rgb(255,255,255)"
+          borderRadius="12px"
+          width={popoverWidth}
+          boxShadow="0 0 22px rgba(0,0,0,0.05)"
+          spacing="6px"
+          p="20px"
+          boxSizing="border-box"
+          zIndex={999}
+        >
+          {props.infoImageUrl ? (
+            <Stack height="134px" width="254px" borderRadius="4px">
+              <Image
+                src={props.infoImageUrl}
+                // style={{ objectFit: "cover" }}
+                // fill
+                height={134}
+                width={254}
+                alt="info popover image"
+              />
+            </Stack>
+          ) : null}
+          <Typography variant="medium" bold>
+            {props.popoverTitle}
+          </Typography>
+          <Typography>{props.info}</Typography>
+        </Stack>,
+        document.body
+      )}
       <Stack
+        ref={setRef}
         direction="row"
-        width={props.fullWidth ? "100%" : props.mobile ? undefined : "370px"}
-        minHeight="66px"
+        width={props.fullWidth ? "100%" : props.mobile ? undefined : "294px"}
+        minHeight="40px"
         borderRadius="8px"
         boxShadow={
           props.strongShadow
@@ -351,6 +447,12 @@ export const ToolButton = (props: {
         }
         bgcolor="rgb(255,255,255)"
         position="relative"
+        onMouseEnter={() => {
+          setHovering(true);
+        }}
+        onMouseLeave={() => {
+          setHovering(false);
+        }}
       >
         <Stack
           width="100%"
@@ -365,27 +467,10 @@ export const ToolButton = (props: {
             transition: "0.2s",
           }}
         />
-        <Stack
-          position="absolute"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            svg: {
-              path: {
-                fill: `${PALETTE.secondary.grey[5]} !important`,
-              },
-            },
-          }}
-          onClick={() => setOverlayOpen(true)}
-          top="16px"
-          left={`${props.infoButtonPosition}px`}
-        >
-          <InfoIcon width="14px" height="14px" />
-        </Stack>
+
         <Stack direction="row" spacing="14px" flex={1}>
           <Stack
-            width="70px"
+            width="44px"
             height="100%"
             alignItems="center"
             justifyContent="center"
@@ -404,17 +489,18 @@ export const ToolButton = (props: {
             }}
             bgcolor={props.color}
           >
-            <props.icon height="35px" width="35px" />
+            <props.icon height="20px" width="20px" />
           </Stack>
-          <Stack flex={1} py="11px" justifyContent="space-between">
-            <Typography
-              variant="medium"
-              bold
-              color={lightText ? props.color : PALETTE.secondary.grey[5]}
-            >
-              {props.title}
-            </Typography>
-            <Typography
+          <Stack flex={1} py="11px" justifyContent="center">
+            <Stack width="fit-content">
+              <Typography
+                bold
+                color={lightText ? props.color : PALETTE.secondary.grey[5]}
+              >
+                {props.title}
+              </Typography>
+            </Stack>
+            {/* <Typography
               variant="small"
               sx={{ fontWeight: 380 }}
               color={alpha(
@@ -423,7 +509,7 @@ export const ToolButton = (props: {
               )}
             >
               {props.description}
-            </Typography>
+            </Typography> */}
           </Stack>
           <Stack
             height="100%"
@@ -458,7 +544,9 @@ export default function DashboardPageContents() {
   const loadLessons = () => {
     userDetails?.user?.id &&
       ApiController.getUserLessons(userDetails.user.id)
-        .then((l) => setLessons(_.reverse(l.slice())))
+        .then((l) => {
+          setLessons(_.reverse(l.slice()));
+        })
         .finally(() => setLessonsLoaded(true));
   };
   useEffect(() => {
@@ -491,13 +579,53 @@ export default function DashboardPageContents() {
     loadWorksheets();
   }, [userDetails?.user?.id]);
 
+  const [images, setImages] = useState<IImage[]>([]);
+  const loadImages = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserImages(userDetails.user.id)
+        .then((images) => setImages(_.reverse(images.slice())))
+        .finally(() => setImagesLoaded(true));
+  };
+  useEffect(() => {
+    loadImages();
+  }, [userDetails?.user?.id]);
+
+  const [texts, setTexts] = useState<IText[]>([]);
+  // const loadTexts = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getUserTexts(userDetails.user.id)
+  //       .then((texts) =>
+  //         setTexts(
+  //           _.reverse(texts.slice()).map((t: IText) => ({
+  //             ...t,
+  //             value: cleanTextValueIntoInnerHTML(t.value),
+  //           }))
+  //         )
+  //       )
+  //       .finally(() => setTextsLoaded(true));
+  // };
+  // useEffect(() => {
+  //   loadTexts();
+  // }, [userDetails?.user?.id]);
+
+  const [links, setLinks] = useState<ILink[]>([]);
+  const loadLinks = () => {
+    userDetails?.user?.id &&
+      ApiController.getUserLinks(userDetails.user.id)
+        .then((links) => setLinks(_.reverse(links.slice())))
+        .finally(() => setLinksLoaded(true));
+  };
+  useEffect(() => {
+    loadLinks();
+  }, [userDetails?.user?.id]);
+
   const [latestPageIndex, setLatestPageIndex] = useState<number>(0);
   const scrollableRef = useRef<HTMLDivElement | null>(null);
   const onScroll = () => {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
       if (scrollTop + clientHeight > scrollHeight - 800) {
-        PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
+        PAGE_SIZE * (latestPageIndex + 1) < filteredCards.length &&
           setLatestPageIndex(latestPageIndex + 1);
       }
     }
@@ -508,24 +636,54 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
     }[]
   >([]);
+  const [filteredCards, setFilteredCards] = useState<
+    {
+      type: AstroContent;
+      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
+    }[]
+  >([]);
+  const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
+    "lessons" | "all"
+  >("lessons");
+  const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
+    "all" | "video" | "worksheet" | "image" | "link"
+  >("all");
+
   useEffect(() => {
-    const pageLimitedCards = cards.slice(0, (latestPageIndex + 1) * PAGE_SIZE);
+    if (selectedBinaryFilter === "all") {
+      if (selectedMultipleFilter === "all") {
+        setFilteredCards(cards.filter((c) => c.type !== "lesson"));
+      } else {
+        setFilteredCards(
+          cards.filter((c) => c.type === selectedMultipleFilter)
+        );
+      }
+    } else {
+      setFilteredCards(cards.filter((c) => c.type === "lesson"));
+    }
+  }, [cards, selectedBinaryFilter, selectedMultipleFilter]);
+
+  useEffect(() => {
+    const pageLimitedCards = filteredCards.slice(
+      0,
+      (latestPageIndex + 1) * PAGE_SIZE
+    );
     const chunked = _.chunk(pageLimitedCards, nColumns);
     setCardColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns, cards, latestPageIndex]);
+  }, [nColumns, filteredCards, latestPageIndex]);
 
   const [selectedContentType, setSelectedContentType] =
     useState<AstroContent | null>(null);
@@ -546,7 +704,7 @@ export default function DashboardPageContents() {
         details: l,
       }));
     const worksheetDetails = worksheets
-      .filter((x) => x.worksheetId)
+      .filter((x) => x.worksheetComponent)
       .filter(
         (x) =>
           !searchValue ||
@@ -555,6 +713,39 @@ export default function DashboardPageContents() {
       .map((ws) => ({
         type: "worksheet" as AstroContent,
         details: ws,
+      }));
+    const imageDetails = images
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.title?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((i) => ({
+        type: "image" as AstroContent,
+        details: i,
+      }));
+    const textDetails = texts
+      .filter(
+        (x) =>
+          !searchValue ||
+          x.value?.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((t) => ({
+        type: "text" as AstroContent,
+        details: t,
+      }));
+    const linkDetails = links
+      .filter(
+        (x) =>
+          !searchValue ||
+          [x.title, x.url]
+            .join()
+            ?.toLowerCase()
+            .includes(searchValue.toLowerCase())
+      )
+      .map((l) => ({
+        type: "link" as AstroContent,
+        details: l,
       }));
     const lessonDetails = lessons
       .filter(
@@ -574,6 +765,15 @@ export default function DashboardPageContents() {
         ...(selectedContentType && selectedContentType !== "worksheet"
           ? []
           : worksheetDetails),
+        ...(selectedContentType && selectedContentType !== "image"
+          ? []
+          : imageDetails),
+        ...(selectedContentType && selectedContentType !== "link"
+          ? []
+          : linkDetails),
+        ...(selectedContentType && selectedContentType !== "text"
+          ? []
+          : textDetails),
         ...(selectedContentType && selectedContentType !== "lesson"
           ? []
           : lessonDetails),
@@ -581,25 +781,23 @@ export default function DashboardPageContents() {
       (c) =>
         selectedSort === "updatedAt"
           ? new Date(c.details.updatedAt)
-          : c.details.title.toLowerCase(),
+          : c.type === "text" // @ts-ignore
+          ? c.details.value?.toLowerCase() // @ts-ignore
+          : c.details.title?.toLowerCase(),
       selectedSort === "updatedAt" ? "desc" : "asc"
     );
     setCards(allContentDetails);
   }, [
     lessons,
+    images,
     videos,
+    texts,
+    links,
     worksheets,
-    nColumns,
     selectedContentType,
     searchValue,
     selectedSort,
   ]);
-
-  const [videoCreationDialogOpen, setVideoCreationDialogOpen] =
-    useState<boolean>(false);
-
-  const [worksheetCreationDialogOpen, setWorksheetCreationDialogOpen] =
-    useState<boolean>(false);
 
   const [lessonCreationDialogOpen, setLessonCreationDialogOpen] =
     useState<boolean>(false);
@@ -614,8 +812,13 @@ export default function DashboardPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
+      console.log("aaaaa", freeWorksheetIds);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
-        () => loadWorksheets()
+        () =>
+          setTimeout(() => {
+            loadWorksheets();
+            loadLessons();
+          }, 400)
       );
       setFreeWorksheetIds([]);
     }
@@ -625,20 +828,16 @@ export default function DashboardPageContents() {
     "freeVideoIds",
     []
   );
+
   useEffect(() => {
     if (userDetails.user?.id && freeVideoIds.length > 0) {
       ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
-        loadVideos()
+        setTimeout(loadVideos, 400)
       );
       setFreeVideoIds([]);
     }
   }, [userDetails.user?.id, freeVideoIds.length]);
 
-  // const [signupPromptDialogCanOpen, setSignupPromptDialogCanOpen] =
-  //   useState<boolean>(false);
-  // useEffect(() => {
-  //   setTimeout(() => setSignupPromptDialogCanOpen(true), 3500);
-  // }, []);
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
     useState<boolean>(false);
   useEffect(() => {
@@ -648,14 +847,6 @@ export default function DashboardPageContents() {
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
   const [questionnaireDialogOpen, setQuestionnaireDialogOpen] =
     useState<boolean>(false);
-
-  useEffect(() => {
-    userDetails.user?.id &&
-      !userDetails.user?.freeTrialStart &&
-      ApiController.submitFreeTrialStartDate(userDetails.user?.id).then(
-        userDetails.refresh
-      );
-  }, [userDetails.user?.id, userDetails.user?.freeTrialStart]);
 
   const router = useRouter();
 
@@ -684,60 +875,109 @@ export default function DashboardPageContents() {
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
 
-  const outOfCreations = useOutOfCreations();
-
-  // useEffect(() => {
-  //   !userDetails.user?.subscribed &&
-  //     userDetails.user?.freeTrialStart &&
-  //     -dayjs().diff(userDetails.user.freeTrialStart);
-  // }, [userDetails.user]);
-
-  useEffect(() => {
-    if (
-      !userDetails.user?.subscribed &&
-      userDetails.user?.freeTrialStart &&
-      (!userDetails.user.periodCreationsClearedAt ||
-        dayjs().diff(userDetails.user.periodCreationsClearedAt, "months") >= 1)
-    ) {
-      // const dayOfMonthToCheckOn =
-      //   (dayjs(userDetails.user?.freeTrialStart).date() + TRIAL_DAYS) % 30;
-      // (!userDetails.user.periodCreationsClearedAt ||
-      //   dayjs().date() >= dayOfMonthToCheckOn) &&
-      ApiController.clearPediodCreations(userDetails.user.id).then(
-        userDetails.refresh
-      );
-    }
-  }, [userDetails.user]);
-
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [worksheetEditingDialogId, setWorksheetEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [imageEditingDialogId, setImageEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [linkEditingDialogId, setLinkEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
+  const [textEditingDialogId, setTextEditingDialogId] = useState<
     string | undefined
   >(undefined);
 
   const [anyLoaded, setAnyLoaded] = useState<boolean>(false);
   const [worksheetsLoaded, setWorksheetsLoaded] = useState<boolean>(false);
   const [videosLoaded, setVideosLoaded] = useState<boolean>(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
+  const [linksLoaded, setLinksLoaded] = useState<boolean>(false);
+  const [textsLoaded, setTextsLoaded] = useState<boolean>(false);
   const [lessonsLoaded, setLessonsLoaded] = useState<boolean>(false);
   useEffect(
     () =>
       setAnyLoaded(
-        (worksheetsLoaded && videosLoaded && lessonsLoaded) ||
+        (worksheetsLoaded &&
+          videosLoaded &&
+          lessonsLoaded &&
+          linksLoaded &&
+          textsLoaded &&
+          imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
+          images.length > 0 ||
+          links.length > 0 ||
+          texts.length > 0 ||
           lessons.length > 0
       ),
-    [worksheetsLoaded, videosLoaded, lessonsLoaded]
+    [
+      worksheetsLoaded,
+      videosLoaded,
+      imagesLoaded,
+      linksLoaded,
+      textsLoaded,
+      lessonsLoaded,
+    ]
   );
+
+  const [
+    typeOfContentDialogToOpenUponLandingInNewLesson,
+    setTypeOfContentDialogToOpenUponLandingInNewLesson,
+  ] = useLocalStorage<"video" | "worksheet" | "link" | "image" | null>(
+    "typeOfContentDialogToOpenUponLandingInNewLesson",
+    null
+  );
+
+  const { width } = useWindowSize();
+  const [filterMultiRow, setFilterMultiRow] = useState<boolean>(false);
+  useEffect(
+    () => setFilterMultiRow(width < FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD),
+    [width]
+  );
+  const [shortenedToolNameInButton, setShortenedToolNameInButton] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setShortenedToolNameInButton(
+        width < SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD
+      ),
+    [width]
+  );
+
+  const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
+    useLocalStorage<string | null>("openContentDialogInLessonId", null);
+
+  const createLessonAndRedirect = (openContentDialog?: boolean) =>
+    ApiController.createLesson({
+      title: DEFAULT_LESSON_TITLE,
+      description: "A description for your lesson goes here!",
+      creatorId: userDetails.user?.id,
+    }).then((lesson) => {
+      openContentDialog && setOpenContentDialogInLessonId(lesson.id);
+      router.push(`/lesson/${lesson.id}`);
+    });
+
+  const onBasicMode = useOnBasicMode();
+
+  const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
 
   return (
     <>
       <PageLayout
         ref={scrollableRef}
         onScroll={onScroll}
-        title="Home"
+        title="Create a Lesson"
         bodyWidth="100%"
         selectedSidebarItemId="home"
         scrollable
-        description="Welcome to your Astrosafe dashboard! Here you can manage you safetube, worksheets and more."
         button={
           !userDetails.user?.subscribed
             ? {
@@ -812,48 +1052,67 @@ export default function DashboardPageContents() {
       >
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
-            {/* <ToolButton
-              title="Create lesson"
+            <ToolButton
+              title={shortenedToolNameInButton ? "Lesson" : "Create Lesson"}
               description={CONTENT_BRANDING.lesson.description}
               color={CONTENT_BRANDING.lesson.color}
               icon={CONTENT_BRANDING.lesson.icon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setLessonCreationDialogOpen(true);
+                setAlreadySubmitting(true);
+                !alreadySubmitting && createLessonAndRedirect(true);
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
-            /> */}
-            <ToolButton
-              title="Create safe video link"
-              description="Free of ads. Safe to share."
-              color={PALETTE.secondary.blue[3]}
-              icon={CirclePlayIcon}
-              onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setVideoCreationDialogOpen(true);
-              }}
-              infoButtonPosition={280}
-              info={
-                "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
-              }
+              infoImageUrl={CONTENT_BRANDING.lesson.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.lesson.title}
             />
             <ToolButton
-              title="Create math worksheet"
+              title={
+                shortenedToolNameInButton
+                  ? "Safe video"
+                  : "Create Safe Video Link"
+              }
+              description="Free of ads. Safe to share."
+              color={CONTENT_BRANDING.video.color}
+              icon={CirclePlayIcon}
+              onClick={() => {
+                if (onBasicMode) {
+                  setUpgradeDialogOpen(true);
+                } else if (!alreadySubmitting) {
+                  setAlreadySubmitting(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson("video");
+                  createLessonAndRedirect(true);
+                }
+              }}
+              infoButtonPosition={280}
+              info={CONTENT_BRANDING.video.info}
+              infoImageUrl={CONTENT_BRANDING.video.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.video.title}
+            />
+            <ToolButton
+              title={
+                shortenedToolNameInButton
+                  ? "Worksheet"
+                  : "Create Math Worksheet"
+              }
               description="Printable & finished in seconds."
-              color={PALETTE.secondary.pink[5]}
+              color={CONTENT_BRANDING.worksheet.color}
               icon={ChecklistIcon}
               onClick={() => {
-                outOfCreations
-                  ? setNoCreationsLeftDialogOpen(true)
-                  : setWorksheetCreationDialogOpen(true);
+                if (onBasicMode) {
+                  setUpgradeDialogOpen(true);
+                } else if (!alreadySubmitting) {
+                  setAlreadySubmitting(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson(
+                    "worksheet"
+                  );
+                  createLessonAndRedirect(true);
+                }
               }}
               infoButtonPosition={300}
-              info={
-                "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
-              }
+              info={CONTENT_BRANDING.worksheet.info}
+              infoImageUrl={CONTENT_BRANDING.worksheet.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.worksheet.title}
             />
           </Stack>
         </UrsorFadeIn>
@@ -872,13 +1131,39 @@ export default function DashboardPageContents() {
         <UrsorFadeIn duration={700} delay={200}>
           <Stack
             pl={`${SIDEBAR_X_MARGIN}px`}
-            direction="row"
+            direction={filterMultiRow ? "column" : "row"}
             justifyContent="space-between"
+            spacing="12px"
           >
-            <FilterRow
-              selected={selectedContentType}
-              callback={(newSelected) => setSelectedContentType(newSelected)}
-            />
+            <Stack direction="row" spacing="12px">
+              <DashboardPageBinaryContentFilterSelection
+                selected={selectedBinaryFilter}
+                callback={(s) => setSelectedBinaryFilter(s)}
+              />
+
+              <Stack
+                sx={{
+                  opacity: selectedBinaryFilter === "all" ? 1 : 0,
+                  transition: "0.2s",
+                }}
+              >
+                <SortButton
+                  selected={selectedMultipleFilter}
+                  callback={(id) => setSelectedMultipleFilter(id)}
+                  types={["all", "video", "worksheet", "image", "link"]}
+                  displayNames={{
+                    all: "All",
+                    video: "Video",
+                    worksheet: "Worksheet",
+                    image: "Image",
+                    link: "Link",
+                    //text: "Text",
+                  }}
+                  text="Type"
+                  disabled={selectedBinaryFilter !== "all"}
+                />
+              </Stack>
+            </Stack>
             <Stack
               direction="row"
               spacing="12px"
@@ -922,52 +1207,102 @@ export default function DashboardPageContents() {
               pt="8px"
             >
               {cardColumns.map((column, i) => (
-                <Stack key={i} flex={1} spacing={GRID_SPACING}>
-                  {column.map((item, j) => (
-                    <Stack
-                      key={`${item.details.id}${selectedSort}`}
-                      spacing={GRID_SPACING}
-                    >
-                      <UrsorFadeIn
-                        delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
-                        duration={900}
+                <Stack
+                  key={i}
+                  flex={1}
+                  spacing={
+                    selectedBinaryFilter === "lessons"
+                      ? LESSON_GRID_SPACING
+                      : GRID_SPACING
+                  }
+                >
+                  {
+                    //[
+                    // ...(i === 0
+                    //   ? [
+                    //       <Stack
+                    //         key="new"
+                    //         onClick={() => setLessonCreationDialogOpen(true)}
+                    //       >
+                    //         <DashboardPageCreateButton />
+                    //       </Stack>,
+                    //     ]
+                    //   : []),
+                    column.map((item, j) => (
+                      <Stack
+                        key={`${item.details.id}${selectedSort}`}
+                        spacing={GRID_SPACING}
                       >
-                        {item.type === "video" ? (
-                          <VideoCard
-                            {...(item.details as IVideo)}
-                            editingCallback={() =>
-                              setVideoEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadVideos}
-                          />
-                        ) : item.type === "worksheet" ? (
-                          <WorksheetCard {...(item.details as IWorksheet)} />
-                        ) : item.type === "lesson" ? (
-                          <LessonCard
-                            {...(item.details as ILesson)}
-                            imageUrls={[]}
-                            clickCallback={() =>
-                              router.push(`/lesson/${item.details.id}`)
-                            }
-                            editingCallback={() =>
-                              setLessonEditingDialogId(item.details.id)
-                            }
-                            deletionCallback={loadLessons}
-                          />
-                        ) : null}
-                      </UrsorFadeIn>
-                    </Stack>
-                  ))}
+                        <UrsorFadeIn
+                          delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
+                          duration={900}
+                        >
+                          {item.type === "video" ? (
+                            <VideoCard
+                              {...(item.details as IVideo)}
+                              editingCallback={() =>
+                                setVideoEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadVideos}
+                            />
+                          ) : item.type === "worksheet" ? (
+                            <WorksheetCard
+                              {...(item.details as IWorksheet)}
+                              editingCallback={() =>
+                                setWorksheetEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadWorksheets}
+                            />
+                          ) : item.type === "image" ? (
+                            <ImageCard
+                              {...(item.details as IImage)}
+                              editingCallback={() =>
+                                setImageEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadImages}
+                            />
+                          ) : // : item.type === "text" ? (
+                          //   <TextCard
+                          //     {...(item.details as IText)}
+                          //     editCallback={() =>
+                          //       setTextEditingDialogId(item.details.id)
+                          //     }
+                          //     deleteCallback={loadTexts}
+                          //   />
+                          // )
+                          item.type === "link" ? (
+                            <LinkCard
+                              {...(item.details as ILink)}
+                              editCallback={() =>
+                                setLinkEditingDialogId(item.details.id)
+                              }
+                              deleteCallback={loadLinks}
+                              height="260px"
+                            />
+                          ) : item.type === "lesson" ? (
+                            <LessonCard
+                              {...(item.details as ILesson)}
+                              clickCallback={() =>
+                                router.push(`/lesson/${item.details.id}`)
+                              }
+                              editingCallback={() =>
+                                setLessonEditingDialogId(item.details.id)
+                              }
+                              deletionCallback={loadLessons}
+                            />
+                          ) : null}
+                        </UrsorFadeIn>
+                      </Stack>
+                    ))
+                    //]
+                  }
                 </Stack>
               ))}
             </Stack>
           </Stack>
         </Stack>
       </PageLayout>
-      <VideoCreationDialog
-        open={videoCreationDialogOpen}
-        closeCallback={() => setVideoCreationDialogOpen(false)}
-      />
+
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={!!videoEditingDialogId}
@@ -976,10 +1311,15 @@ export default function DashboardPageContents() {
           video={videos.find((v) => v.id === videoEditingDialogId)}
         />
       ) : null}
-      <WorksheetCreationDialog
-        open={worksheetCreationDialogOpen}
-        closeCallback={() => setWorksheetCreationDialogOpen(false)}
-      />
+
+      {worksheetEditingDialogId ? (
+        <WorksheetCreationDialog
+          open={true}
+          closeCallback={() => setWorksheetEditingDialogId(undefined)}
+          editingCallback={loadWorksheets}
+          worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
+        />
+      ) : null}
       <LessonCreationDialog
         open={lessonCreationDialogOpen}
         closeCallback={() => setLessonCreationDialogOpen(false)}
@@ -992,6 +1332,30 @@ export default function DashboardPageContents() {
           lesson={lessons.find((l) => l.id === lessonEditingDialogId)}
         />
       ) : null}
+      {imageEditingDialogId ? (
+        <ImageDialog
+          open={true}
+          closeCallback={() => setImageEditingDialogId(undefined)}
+          updateCallback={loadImages}
+          image={images.find((i) => i.id === imageEditingDialogId)}
+        />
+      ) : null}
+      {linkEditingDialogId ? (
+        <LinkDialog
+          open={true}
+          closeCallback={() => setLinkEditingDialogId(undefined)}
+          updateCallback={loadLinks}
+          link={links.find((l) => l.id === linkEditingDialogId)}
+        />
+      ) : null}
+      {/* {textEditingDialogId ? (
+        <TextCreationDialog
+          open={true}
+          closeCallback={() => setTextEditingDialogId(undefined)}
+          updateCallback={loadTexts}
+          text={texts.find((t) => t.id === textEditingDialogId)}
+        />
+      ) : null} */}
       {!anyLoaded
         ? createPortal(
             <Stack
@@ -1016,6 +1380,7 @@ export default function DashboardPageContents() {
         : null}
       {anyLoaded &&
       !selectedContentType &&
+      lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(
@@ -1026,6 +1391,12 @@ export default function DashboardPageContents() {
       {selectedContentType === "video" && videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {selectedContentType === "lesson" && lessons.length === 0
+        ? createPortal(
+            <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
             document.body
           )
         : null}
@@ -1068,8 +1439,7 @@ export default function DashboardPageContents() {
           setUpgradeDialogOpen(true);
         }}
       />
-      {!userDetails.user?.subscribed &&
-      getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
+      {onBasicMode ? (
         <UrsorFadeIn duration={1000}>
           <LiteModeBar upgradeCallback={() => setUpgradeDialogOpen(true)} />
         </UrsorFadeIn>

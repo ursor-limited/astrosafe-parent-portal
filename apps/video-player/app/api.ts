@@ -1,6 +1,6 @@
 import {
   EquationOrientation,
-  INumberBondWorksheetParameters,
+  INumberBondWorksheetSettings,
   WorksheetTopic,
 } from "./components/WorksheetGenerator";
 import { AstroLessonContent } from "./lesson/[id]/LessonPageContents";
@@ -97,7 +97,7 @@ class ApiController {
     );
   }
   static async deleteLesson(id: string) {
-    return dellete(`lesson/${id}`)
+    return dellete(`lesson/${id}`);
   }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
@@ -113,11 +113,12 @@ class ApiController {
   }
   static async addToLesson(
     id: string,
+    index: number,
     type: AstroLessonContent,
     contentId: string
   ) {
-    return post(`lesson/add`, { id, type, contentId }).then((response: any) =>
-      response.json()
+    return post(`lesson/add`, { id, index, type, contentId }).then(
+      (response: any) => response.json()
     );
   }
   static async createVideo(details: any) {
@@ -138,6 +139,18 @@ class ApiController {
     return post(`video/getUser`, { auth0Id, auth0UserId }).then(
       (response: any) => response.json()
     );
+  }
+  static async getUserImages(id: string) {
+    //@ts-ignore
+    return get(`image/user/${id}`).then((response: any) => response.json());
+  }
+  static async getUserTexts(id: string) {
+    //@ts-ignore
+    return get(`text/user/${id}`).then((response: any) => response.json());
+  }
+  static async getUserLinks(id: string) {
+    //@ts-ignore
+    return get(`link/user/${id}`).then((response: any) => response.json());
   }
   static async getUserVideos(id: string) {
     //@ts-ignore
@@ -223,7 +236,10 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     topic: WorksheetTopic,
-    pairs: [number, number][],
+    max: number,
+    random: boolean,
+    values: [number, number][],
+    factor?: number,
     description?: string,
     creatorId?: string
   ) {
@@ -231,10 +247,37 @@ class ApiController {
       title,
       description,
       creatorId,
-      parameters: {
+      values,
+      settings: {
         orientation,
         topic,
-        pairs,
+        factor,
+        max,
+        random,
+      },
+    }).then((response: any) => response.json());
+  }
+  static async updateEquationWorksheet(
+    id: string,
+    title: string,
+    orientation: EquationOrientation,
+    topic: WorksheetTopic,
+    max: number,
+    random: boolean,
+    values: [number, number][],
+    factor?: number,
+    description?: string
+  ) {
+    return patch(`canvas/worksheet/equation/${id}`, {
+      title,
+      description,
+      values,
+      settings: {
+        orientation,
+        topic,
+        factor,
+        max,
+        random,
       },
     }).then((response: any) => response.json());
   }
@@ -242,8 +285,8 @@ class ApiController {
     title: string,
     orientation: EquationOrientation,
     sum: number,
-    empty: INumberBondWorksheetParameters["empty"],
-    leftNumbers: number[],
+    empty: INumberBondWorksheetSettings["empty"],
+    values: number[],
     description?: string,
     creatorId?: string
   ) {
@@ -251,7 +294,26 @@ class ApiController {
       title,
       description,
       creatorId,
-      parameters: { orientation, sum, empty, leftNumbers },
+      values,
+      settings: { orientation, sum, empty },
+    }).then((response: any) => response.json());
+  }
+  static async updateNumberBondWorksheet(
+    id: string,
+    title: string,
+    orientation: EquationOrientation,
+    sum: number,
+    empty: INumberBondWorksheetSettings["empty"],
+    values: number[],
+    description?: string,
+    creatorId?: string
+  ) {
+    return patch(`canvas/worksheet/numberBond/${id}`, {
+      title,
+      description,
+      creatorId,
+      values,
+      settings: { orientation, sum, empty },
     }).then((response: any) => response.json());
   }
   static async getWorksheet(id: string) {
@@ -265,11 +327,11 @@ class ApiController {
       response.json()
     );
   }
-  static async submitFreeTrialStartDate(id: string) {
-    return get(`canvas/startFreeTrial/${id}`).then((response: any) =>
-      response.json()
-    );
-  }
+  // static async submitFreeTrialStartDate(id: string) {
+  //   return get(`canvas/startFreeTrial/${id}`).then((response: any) =>
+  //     response.json()
+  //   );
+  // }
   static async isBlocked(url: any) {
     return post("link/isBlocked", { url })
       .then((response: any) => response.json())
@@ -289,7 +351,7 @@ class ApiController {
     return post("link", details).then((response: any) => response.json());
   }
   static async deleteLink(id: string) {
-    return dellete(`link/${id}`)
+    return dellete(`link/${id}`);
   }
   static async updateLink(id: string, details: any) {
     return patch(`link/${id}`, details).then((response: any) =>

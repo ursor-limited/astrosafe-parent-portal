@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
@@ -8,13 +8,13 @@ import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
 import DeletionDialog from "./DeletionDialog";
 import NotificationContext from "./NotificationContext";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import useOrangeBorder from "./useOrangeBorder";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -34,15 +34,6 @@ const VideoCard = (
     undefined
   );
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -53,12 +44,14 @@ const VideoCard = (
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Video Link."));
 
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
   return (
     <>
       <Stack
-        height="260px"
+        //height="260px"
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.video.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -68,8 +61,8 @@ const VideoCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
-        pb="12px"
+        boxShadow="0 0 20px rgba(0,0,0,0.08)"
+        pb="10px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -92,7 +85,7 @@ const VideoCard = (
         </Stack>
         <Stack
           flex={1}
-          spacing="8px"
+          spacing="9px"
           sx={{
             "&:hover": { opacity: 0.6 },
             transition: "0.2s",
@@ -148,8 +141,13 @@ const VideoCard = (
               <Play width="40px" height="40px" />
             </Stack>
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+          <Stack flex={1} justifyContent="space-between" spacing="2px" px="4px">
+            <Typography
+              color={PALETTE.secondary.grey[5]}
+              variant="medium"
+              bold
+              maxLines={2}
+            >
               {props.title}
             </Typography>
             <Stack
@@ -157,7 +155,7 @@ const VideoCard = (
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />

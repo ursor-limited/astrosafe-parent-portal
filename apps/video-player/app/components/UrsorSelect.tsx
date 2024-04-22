@@ -24,7 +24,7 @@ export interface IUrsorSelectProps {
   leftAlign?: boolean;
   leftAlignPopover?: boolean;
   keepOpenOnSelect?: boolean;
-  width: string;
+  width: number | string;
   fieldWidth?: string;
   white?: boolean;
   callback: (id: string) => void;
@@ -150,7 +150,6 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         open={open}
         content={list}
         closeCallback={() => setOpen(false)}
-        maxHeight
         clickableFloatedButton
         noPadding
         placement={props.leftAlignPopover ? "left" : undefined}
@@ -202,7 +201,11 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
                 },
               },
             }}
-            onClick={() => (props.selected.length === 0 ? setOpen(true) : null)}
+            onClick={() =>
+              props.clearAllCallback && props.selected.length > 0
+                ? null
+                : setOpen(true)
+            }
           >
             {props.clearAllCallback && props.selected.length > 0 ? (
               <X

@@ -173,6 +173,7 @@ const VideoCreationDialog = (props: {
         ? props.creationCallback(v.id)
         : router.push(`/video/${v.id}`);
       props.closeCallback();
+      notificationCtx.success("Created Safe Video Link");
     });
   };
 
@@ -206,8 +207,8 @@ const VideoCreationDialog = (props: {
           isMobile
             ? undefined
             : props.video
-            ? "Edit safe video link"
-            : "Create safe video link"
+            ? "Edit Safe Video Link"
+            : "Add a Safe Video Link to your Lesson"
         }
         open={props.open}
         // button={{
@@ -224,23 +225,24 @@ const VideoCreationDialog = (props: {
         maxWidth={props.noPlayer ? "560px" : "926px"}
         noPadding
         dynamicHeight
-        paddingTop="52px"
+        paddingTop={isMobile ? "0px" : "52px"}
         paddingX={isMobile ? undefined : "32px"}
+        noCloseButton={isMobile}
       >
         <Stack
           flex={1}
           direction={isMobile || props.noPlayer ? "column" : "row"}
           spacing="40px"
-          // width={isMobile ? "100%" : "95%"}
+          width={isMobile ? "100%" : undefined}
           overflow="hidden"
-          px={isMobile ? "16px" : "40px"}
+          px={isMobile ? "20px" : "40px"}
           py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
           <Stack
             spacing="20px"
             flex={1}
-            width={props.noPlayer ? "480px" : "358px"}
+            width={isMobile ? undefined : props.noPlayer ? "480px" : "358px"}
           >
             <Captioned text="Video URL">
               <Stack
@@ -288,18 +290,10 @@ const VideoCreationDialog = (props: {
                 }
                 placeholder="Optional"
                 width="100%"
-                height={props.video ? "100px" : "179px"}
+                height={isMobile ? "60px" : props.video ? "100px" : "179px"}
                 boldValue
               />
             </Captioned>
-            {isMobile || props.noPlayer ? (
-              <TimeRange
-                range={range}
-                duration={duration}
-                setRange={setRange}
-                originalUrl={originalUrl}
-              />
-            ) : null}
           </Stack>
           {!isMobile ? (
             <Stack width={VIDEO_WIDTH} spacing="6px">
@@ -340,7 +334,7 @@ const VideoCreationDialog = (props: {
                     endIcon={props.video ? PencilIcon : RocketIcon}
                     width="100%"
                   >
-                    {props.video ? "Update" : "Create"}
+                    {props.video ? "Update" : "Add"}
                   </UrsorButton>
                 </>
               ) : null}
@@ -357,7 +351,7 @@ const VideoCreationDialog = (props: {
               endIcon={props.video ? PencilIcon : RocketIcon}
               width="100%"
             >
-              {props.video ? "Update" : "Create"}
+              {props.video ? "Update" : "Add"}
             </UrsorButton>
           ) : null}
         </Stack>

@@ -136,6 +136,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           //minHeight: props.height || HEIGHT,
           height: props.dynamicHeight ? undefined : "100%",
           borderRadius: BORDER_RADIUS,
+          margin: "20px",
         },
       }}
       sx={{
@@ -155,7 +156,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         px={props.paddingX}
         pt={props.paddingTop}
         borderRadius="25px"
-        overflow="hidden"
+        overflow={props.scrollable ? "scroll" : "hidden"}
         flex={1}
       >
         {props.backButtonCallback ? (
@@ -221,10 +222,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               alignItems="center"
               textAlign="center"
               //maxWidth="476px"
-              px={props.paddingX}
+              //px={props.paddingX}
               boxSizing="border-box"
             >
-              {props.supertitle || props.onCloseCallback ? (
+              {props.supertitle ||
+              (props.onCloseCallback && !props.noCloseButton) ? (
                 <Stack direction="row" width="100%">
                   <Stack width="100%" alignItems="center">
                     <Typography
@@ -235,7 +237,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                       {props.supertitle}
                     </Typography>
                   </Stack>
-                  <Stack width={0} position="relative">
+                  <Stack
+                    width={0}
+                    position="relative"
+                    sx={{ transform: "translateX(-24px)" }}
+                  >
                     <Stack position="absolute" right={0} top={0}>
                       {props.onCloseCallback ? (
                         <Box

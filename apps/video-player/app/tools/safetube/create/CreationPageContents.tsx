@@ -177,12 +177,12 @@ function CreationPageContents(props: { details: IVideo }) {
 
   const userDetails = useUserContext();
 
-  useEffect(() => {
-    if (userDetails.user?.id && freeVideoIds.length > 0) {
-      ApiController.claimVideos(userDetails.user.id, freeVideoIds);
-      setFreeVideoIds([]);
-    }
-  }, [userDetails.user?.id, freeVideoIds.length]);
+  // useEffect(() => {
+  //   if (userDetails.user?.id && freeVideoIds.length > 0) {
+  //     ApiController.claimVideos(userDetails.user.id, freeVideoIds);
+  //     setFreeVideoIds([]);
+  //   }
+  // }, [userDetails.user?.id, freeVideoIds.length]);
 
   const router = useRouter();
   const submit = () => {
@@ -196,7 +196,7 @@ function CreationPageContents(props: { details: IVideo }) {
       startTime: range?.[0],
       endTime: range?.[1],
       creatorId: userDetails.user?.id,
-    }).then(async (v) => {
+    }).then(async (v: any) => {
       if (userDetails.user?.id) {
         // if (freeVideoIds.length > 0) {
         //   await ApiController.claimVideos(user.email, freeVideoIds);
@@ -206,7 +206,7 @@ function CreationPageContents(props: { details: IVideo }) {
         setFreeVideoCreationCount(freeVideoCreationCount + 1);
         setFreeVideoIds([...freeVideoIds, v.id]);
       }
-      router.push(userDetails.user?.id ? "/dashboard" : `/v/${v.id}`);
+      router.push(userDetails.user?.id ? "/dashboard" : `/video/${v.id}`);
       setLandInDashboardAfterCreation(false);
     });
   };

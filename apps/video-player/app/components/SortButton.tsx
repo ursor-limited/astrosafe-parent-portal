@@ -19,6 +19,9 @@ export interface IClassSortButtonProps<T extends string> {
   darkMode?: boolean;
   iconOnly?: boolean;
   width?: string;
+  text?: string;
+  noText?: boolean;
+  disabled?: boolean;
 }
 
 const SortButton = <T extends string>(
@@ -43,6 +46,7 @@ const SortButton = <T extends string>(
       }
       closeCallback={() => setOpen(false)}
       placement="right"
+      disabled={props.disabled}
     >
       {props.iconOnly ? (
         <Stack
@@ -64,11 +68,15 @@ const SortButton = <T extends string>(
           backgroundColor="rgb(255,255,255)"
           fontColor={PALETTE.secondary.grey[5]}
           iconColor={PALETTE.secondary.grey[5]}
+          iconSize={16}
           hoverOpacity={0.6}
           width={props.width}
         >
-          {/* @ts-ignore */}
-          {`Sort by: ${props.displayNames[props.selected]}`}
+          {props.noText
+            ? props.displayNames[props.selected]
+            : `${props.text || "Sort by"}: ${
+                props.displayNames[props.selected]
+              }`}
         </UrsorButton>
       )}
     </UrsorPopover>

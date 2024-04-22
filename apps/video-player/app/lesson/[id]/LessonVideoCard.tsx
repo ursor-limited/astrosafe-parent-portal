@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
@@ -14,6 +14,8 @@ import ApiController, { IVideo } from "@/app/api";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import NotificationContext from "@/app/components/NotificationContext";
+import useOrangeBorder from "@/app/components/useOrangeBorder";
+import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =
@@ -25,6 +27,7 @@ export const getFormattedDate = (date: string) =>
 const LessonVideoCard = (
   props: IVideo & {
     lessonId: string;
+    setHeight?: (height: number) => void;
     editingCallback: () => void;
     deletionCallback: () => void;
   }
@@ -44,16 +47,30 @@ const LessonVideoCard = (
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Video Link."));
 
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(
+    () => props.setHeight?.(ref?.getBoundingClientRect?.()?.height ?? 0),
+    [ref?.getBoundingClientRect?.()?.height]
+  );
+
   return (
     <>
       <Stack
+        ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.video.color, 0.12)}
         p="4px"
         overflow="hidden"
         position="relative"
-        boxShadow="0 0 22px rgba(0,0,0,0.1)"
-        pb="12px"
+        //boxShadow="0 0 22px rgba(0,0,0,0.1)"
+        pb="10px"
+        sx={{
+          outline: orangeBorderOn
+            ? `3px solid ${PALETTE.system.orange}`
+            : undefined,
+        }}
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -154,27 +171,36 @@ const LessonVideoCard = (
               <Play width="40px" height="40px" />
             </Stack>
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+          <Stack flex={1} justifyContent="space-between" px="4px">
+            <Typography
+              variant="medium"
+              bold
+              maxLines={2}
+              color={PALETTE.secondary.grey[5]}
+            >
               {props.title}
             </Typography>
             {props.description ? (
-              <Stack pb="9px" pt="2px">
-                <Typography variant="medium" maxLines={2}>
+              <Stack pb="8px" pt="6px">
+                <Typography
+                  variant="medium"
+                  maxLines={2}
+                  color={PALETTE.secondary.grey[5]}
+                >
                   {props.description}
                 </Typography>
               </Stack>
             ) : null}
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
-              sx={{ svg: { path: { fill: PALETTE.secondary.blue[3] } } }}
+              sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
             >
-              <Typography variant="small">
+              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>

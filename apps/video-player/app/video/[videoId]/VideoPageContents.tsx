@@ -9,16 +9,19 @@ import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import LinkIcon from "@/images/icons/LinkIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon2.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
-import BigCard from "@/app/components/BigCard";
+import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { ILesson } from "@/app/lesson/[id]/page";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -31,6 +34,7 @@ const Player = dynamic(
 export const CircularButton = (props: {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   color?: string;
+  noBackground?: boolean;
   onClick: () => void;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -44,7 +48,7 @@ export const CircularButton = (props: {
       border={`2px solid ${props.color || PALETTE.primary.navy}`}
       justifyContent="center"
       alignItems="center"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={props.noBackground ? undefined : "rgb(255,255,255)"}
       sx={{
         svg: {
           path: {
@@ -104,6 +108,12 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   const [details, setDetails] = useState<IVideo | undefined>(undefined);
   useEffect(() => setDetails(props.details), [props.details]);
 
+  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  useEffect(() => {
+    props.lessonId &&
+      ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+  }, [props.lessonId]);
+
   const notificationCtx = React.useContext(NotificationContext);
 
   const provider = details?.url.includes("vimeo") ? "vimeo" : "youtube";
@@ -130,11 +140,11 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
   const [mobile, setMobile] = useState<boolean>(false);
   useEffect(() => setMobile(playerWidth < VIDEO_WIDTH), [playerWidth]);
 
-  useEffect(() => {
-    details?.createdAt &&
-      dayjs().diff(details.createdAt, "seconds") < 10 &&
-      notificationCtx.success("Video created.");
-  }, [details?.createdAt]);
+  // useEffect(() => {
+  //   details?.createdAt &&
+  //     dayjs().diff(details.createdAt, "seconds") < 10 &&
+  //     notificationCtx.success("Video created.");
+  // }, [details?.createdAt]);
 
   useEffect(() => {
     mixpanel.init(
@@ -164,7 +174,13 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   const submitDeletion = () =>
     ApiController.deleteVideo(props.details.id).then(() =>
-      router.push("/dashboard")
+      router.push(
+        props.lessonId
+          ? `/lesson/${props.lessonId}`
+          : userDetails
+          ? "/dashboard"
+          : "/"
+      )
     );
 
   const userDetails = useUserContext();
@@ -173,43 +189,81 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   return details && provider ? (
     <>
-      <Stack p="40px" overflow="scroll">
-        <BigCard
+      <Stack
+        px="20px"
+        pt="40px"
+        overflow="scroll"
+        bgcolor={
+          userDetails?.user?.id && userDetails.user.id === details?.creatorId
+            ? PALETTE.secondary.grey[1]
+            : undefined
+        }
+        sx={{
+          transition: "1s",
+        }}
+        flex={1}
+      >
+        <PageCard
           title={details.title}
           description={details.description}
           createdAt={details.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
-          backText={props.lessonId ? "Back to Lesson" : undefined}
+          backText={
+            props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
           rightStuff={
-            <Stack direction="row" spacing="12px">
-              {userDetails?.user?.id &&
-              userDetails?.user?.id === details.creatorId ? (
-                <CircularButton
-                  icon={TrashcanIcon}
-                  color={PALETTE.system.red}
-                  onClick={() => setDeletionDialogOpen(true)}
-                />
-              ) : null}
+            <Stack
+              sx={{
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? 1
+                    : 0,
+                pointerEvents:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? undefined
+                    : "none",
+                transition: "0.2s",
+              }}
+              direction="row"
+              spacing="12px"
+            >
               <UrsorButton
                 dark
                 variant="tertiary"
+                endIcon={ShareIcon}
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
                   notificationCtx.success("Copied URL to clipboard.");
                 }}
-                endIcon={LinkIcon}
               >
-                Share link
+                Share Video
               </UrsorButton>
-              <UrsorButton
-                dark
-                variant="tertiary"
-                onClick={() => setEditingDialogOpen(true)}
-                endIcon={LinkIcon}
-              >
-                Edit
-              </UrsorButton>
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                border
+                actions={[
+                  // {
+                  //   text: "Edit",
+                  //   kallback: () => setEditingDialogOpen(true),
+                  //   icon: PencilIcon,
+                  // },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
             </Stack>
+          }
+          editingCallback={() => setEditingDialogOpen(true)}
+          editingEnabled={
+            !!userDetails?.user?.id &&
+            userDetails.user.id === props.details.creatorId
           }
         >
           <Stack px="24px" flex={1}>
@@ -226,7 +280,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
               />
             </Stack>
           </Stack>
-        </BigCard>
+        </PageCard>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

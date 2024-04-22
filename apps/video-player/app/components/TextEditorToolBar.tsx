@@ -14,6 +14,7 @@ import React, { useEffect } from "react";
 
 // Modules object for setting up the Quill editor
 export const getModules = (id: string) => ({
+  clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
     // handlers: {
@@ -38,7 +39,7 @@ export const formats = [
   "underline",
   "align",
   "strike",
-  "script",
+  // "script",
   //"blockquote",
   "background",
   "list",
@@ -47,7 +48,7 @@ export const formats = [
   "link",
   //   "image",
   "color",
-  "code-block",
+  // "code-block",
 ];
 
 const initQuill = async () => {
@@ -84,7 +85,6 @@ export const TextEditorToolbar = (props: { id: string }) => {
         background: "rgb(255,255,255)",
         fontFamily: "unset",
         borderRadius: "12px 12px 0 0",
-        width: "fit-content",
       }}
     >
       <span className="ql-formats">
@@ -137,11 +137,11 @@ export const TextEditorToolbar = (props: { id: string }) => {
         {/* <button className="ql-image" />
       <button className="ql-video" /> */}
       </span>
-      <span className="ql-formats">
+      {/* <span className="ql-formats">
         <button className="ql-formula" />
         <button className="ql-code-block" />
         <button className="ql-clean" />
-      </span>
+      </span> */}
       {/* <span className="ql-formats">
       <button className="ql-undo">
         <CustomUndo />

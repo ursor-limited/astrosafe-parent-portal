@@ -3,9 +3,6 @@ import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-import { ILink } from "../dashboard/LinkDialog";
-import { getFormattedDate } from "./VideoCard";
-import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import UrsorActionButton from "./UrsorActionButton";
@@ -13,9 +10,9 @@ import DeletionDialog from "./DeletionDialog";
 import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import { IText } from "./TextDialog";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import "react-quill/dist/quill.core.css";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import useOrangeBorder from "./useOrangeBorder";
 
 const TextPreview = (props: { value: string }) => (
   <div
@@ -24,11 +21,13 @@ const TextPreview = (props: { value: string }) => (
     dangerouslySetInnerHTML={{
       __html: props.value,
     }}
+    style={{ overflowWrap: "anywhere", color: PALETTE.font.dark }}
   />
 );
 
-const LinkCard = (
+const TextCard = (
   props: IText & {
+    setHeight?: (height: number) => void;
     clickCallback?: () => void;
     editCallback?: () => void;
     deleteCallback?: () => void;
@@ -41,27 +40,25 @@ const LinkCard = (
 
   const notificationCtx = React.useContext(NotificationContext);
 
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
-
   const submitDeletion = () =>
-    ApiController.deleteLink(props.id)
+    ApiController.deleteText(props.id)
       .then(props.deleteCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Text."));
+
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(
+    () => props.setHeight?.(ref?.getBoundingClientRect?.()?.height ?? 0),
+    [ref?.getBoundingClientRect?.()?.height]
+  );
 
   return (
     <>
       <Stack
-        width="100%"
+        ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.text.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -71,8 +68,8 @@ const LinkCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
-        pb="12px"
+        //boxShadow="0 0 20px rgba(0,0,0,0.08)"
+        pb="6px"
         pt="50px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
@@ -108,11 +105,12 @@ const LinkCard = (
               padding: "3px",
             },
           }}
+          px="4px"
         >
           <TextPreview value={props.value} />
         </Stack>
 
-        <Stack
+        {/* <Stack
           direction="row"
           justifyContent="space-between"
           sx={{
@@ -123,11 +121,11 @@ const LinkCard = (
             },
           }}
         >
-          <Typography variant="small">
+          <Typography color={PALETTE.secondary.grey[5]} variant="small">
             {getFormattedDate(props.createdAt)}
           </Typography>
           <TypographyIcon height="20px" width="20px" />
-        </Stack>
+        </Stack> */}
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
@@ -139,4 +137,4 @@ const LinkCard = (
   );
 };
 
-export default LinkCard;
+export default TextCard;

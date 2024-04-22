@@ -2,7 +2,7 @@
 import { Stack } from "@mui/system";
 import MultiplicationTable from "./MultiplicationTable";
 import {
-  WorksheetId,
+  WorksheetComponent,
   WorksheetTopic,
 } from "../../../components/WorksheetGenerator";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
@@ -10,7 +10,7 @@ import { UrsorButton } from "ui";
 
 export default function PrintableMultiplicationTable(props: {
   questionTopic: WorksheetTopic;
-  questionType: WorksheetId;
+  questionType: WorksheetComponent;
   title: string;
   worksheetParameters: {
     factor: number;

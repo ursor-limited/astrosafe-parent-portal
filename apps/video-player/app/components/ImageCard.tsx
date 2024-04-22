@@ -1,14 +1,12 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
 import { PALETTE, Typography } from "ui";
-import Play from "@/images/play.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import Image from "next/image";
-import { ORANGE_BORDER_DURATION } from "./WorksheetCard";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
@@ -17,12 +15,15 @@ import NotificationContext from "./NotificationContext";
 import { IImage } from "../dashboard/ImageDialog";
 import { getFormattedDate } from "./VideoCard";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import useOrangeBorder from "./useOrangeBorder";
 dayjs.extend(advancedFormat);
 
 const ImageCard = (
   props: IImage & {
+    setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    noFooter?: boolean;
   }
 ) => {
   const router = useRouter();
@@ -30,15 +31,6 @@ const ImageCard = (
     undefined
   );
   useEffect(() => setCurrentPageUrl(window?.location.href), []);
-  const [orangeBorderOn, setOrangeBorderOn] = useState<boolean>(false);
-  useEffect(() => {
-    if (
-      -dayjs(props.createdAt).diff(dayjs(), "seconds") < ORANGE_BORDER_DURATION
-    ) {
-      setOrangeBorderOn(true);
-      setTimeout(() => setOrangeBorderOn(false), ORANGE_BORDER_DURATION * 1000);
-    }
-  }, [props.createdAt]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -49,11 +41,20 @@ const ImageCard = (
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
 
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(
+    () => props.setHeight?.(ref?.getBoundingClientRect?.()?.height ?? 0),
+    [ref?.getBoundingClientRect?.()?.height]
+  );
+
   return (
     <>
       <Stack
+        ref={setRef}
         borderRadius="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={alpha(CONTENT_BRANDING.image.color, 0.12)}
         p="4px"
         overflow="hidden"
         sx={{
@@ -63,8 +64,7 @@ const ImageCard = (
             : undefined,
         }}
         position="relative"
-        boxShadow="0 0 12px rgba(0,0,0,0.06)"
-        pb="12px"
+        pb="10px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -113,27 +113,38 @@ const ImageCard = (
               alt="image!"
             />
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
-            <Typography variant="medium" bold maxLines={2}>
+          <Stack flex={1} justifyContent="space-between" px="4px">
+            <Typography
+              color={PALETTE.secondary.grey[5]}
+              variant="medium"
+              bold
+              maxLines={2}
+            >
               {props.title}
             </Typography>
             {props.description ? (
-              <Stack pb="9px" pt="2px">
-                <Typography variant="medium" maxLines={2}>
+              <Stack>
+                <Typography
+                  color={PALETTE.secondary.grey[5]}
+                  variant="medium"
+                  maxLines={2}
+                >
                   {props.description}
                 </Typography>
               </Stack>
             ) : null}
-            <Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
-            >
-              <Typography variant="small">
-                {getFormattedDate(props.createdAt)}
-              </Typography>
-              <ImageIcon height="20px" width="20px" />
-            </Stack>
+            {!props.noFooter ? (
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
+              >
+                <Typography variant="small" color={PALETTE.secondary.grey[5]}>
+                  {getFormattedDate(props.createdAt)}
+                </Typography>
+                <ImageIcon height="20px" width="20px" />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

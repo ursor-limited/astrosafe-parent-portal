@@ -5,9 +5,8 @@ import {} from "@/app/worksheet/[id]/EquationWorksheet";
 import {
   EquationOrientation,
   WorksheetTopic,
-  WorksheetId,
-  INumberBondWorksheetParameters,
-  INumberBondWorksheetGeneratorSettings,
+  WorksheetComponent,
+  INumberBondWorksheetSettings,
 } from "../../../components/WorksheetGenerator";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -54,16 +53,13 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
         worksheetGenerator={{
           ...details.worksheetGenerator,
           topic: details.worksheetGenerator.topic as WorksheetTopic,
-          worksheetId: details.worksheetGenerator.worksheetId as WorksheetId,
+          worksheetId: details.worksheetGenerator
+            .worksheetId as WorksheetComponent,
           specificSettings: {
             ...details.worksheetGenerator.specificSettings,
             orientation: details.worksheetGenerator.specificSettings
               .orientation as EquationOrientation,
             topic: details.worksheetGenerator.topic as WorksheetTopic,
-            empty: (
-              details.worksheetGenerator
-                .specificSettings as INumberBondWorksheetGeneratorSettings
-            )?.empty,
           },
         }}
         worksheetPreview={{
@@ -73,7 +69,7 @@ async function LandingPage({ params }: { params: { urlId: string } }) {
             questionTopic: details.worksheetPreview.worksheetPreviewParameters
               .questionTopic as WorksheetTopic,
             questionType: details.worksheetPreview.worksheetPreviewParameters
-              .questionType as WorksheetId,
+              .questionType as WorksheetComponent,
           },
         }}
       />

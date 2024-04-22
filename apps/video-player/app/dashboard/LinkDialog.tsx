@@ -31,6 +31,8 @@ import dayjs from "dayjs";
 import InvalidUrlDialog from "./InvalidUrlDialog";
 import BlockedSiteDialog from "./BlockedSiteDialog";
 import { getFormattedDate } from "../components/VideoCard";
+import { isMobile } from "react-device-detect";
+import { CONTENT_BRANDING } from "./DashboardPageContents";
 // import mixpanel from "mixpanel-browser";
 
 export const getTopImageStyle = (url: string, height: string) => ({
@@ -45,7 +47,7 @@ export const getTopImageStyle = (url: string, height: string) => ({
 });
 
 const BUTTON_ICON_SIZE = "16px";
-export const MAX_CHARACTERS = 48;
+//export const MAX_CHARACTERS = 48;
 const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern";
 
@@ -132,6 +134,7 @@ export interface ILink {
   imageUrl: string;
   color: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 const CREATION_SUCCESS_MESSAGE = "Link added";
@@ -461,7 +464,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
             setPreviewImageUrl(result.img);
           }
           if (!!result?.title && !usingTypedTitle) {
-            setTitle(result?.title.slice(0, MAX_CHARACTERS));
+            setTitle(result?.title);
           }
         }
       }),
@@ -514,15 +517,16 @@ export default function LinkDialog(props: ILinkDialogProps) {
   const submitCreation = async () =>
     ApiController.createLink(getCreationDetails())
       .then((link) => {
-        // mixpanel.track("link created", {
-        //   url,
-        //   stackId,
-        //   schoolId: link.schoolId,
-        //   creatorId: link.creatorId,
-        // });
-        props.creationCallback?.(link);
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.creationCallback?.(link);
+            props.closeCallback();
+          });
+        } else {
+          props.creationCallback?.(link);
+          props.closeCallback();
+        }
         clear();
-        props.closeCallback();
       })
       .then(() => notificationCtx.success(CREATION_SUCCESS_MESSAGE))
       .catch((error) => notificationCtx.error(error.message));
@@ -541,9 +545,15 @@ export default function LinkDialog(props: ILinkDialogProps) {
     props.link?.id &&
     ApiController.updateLink(props.link?.id, getUpdateDetails())
       .then(() => {
-        imageUploadCallback?.();
-        props.updateCallback?.();
-        props.closeCallback();
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.updateCallback?.();
+            props.closeCallback();
+          });
+        } else {
+          props.updateCallback?.();
+          props.closeCallback();
+        }
       })
       .then(() => notificationCtx.success("Updated Link"));
 
@@ -582,20 +592,24 @@ export default function LinkDialog(props: ILinkDialogProps) {
   return (
     <>
       <UrsorDialog
-        supertitle={supertitle}
+        supertitle={isMobile ? undefined : "Add a Link to your Lesson"}
         open={props.open}
         onCloseCallback={() => {
           props.closeCallback();
           clear();
         }}
         dynamicHeight
+        noPadding={isMobile}
+        noCloseButton={isMobile}
       >
         <Stack
-          direction="row"
+          direction={isMobile ? "column" : "row"}
           width="100%"
           flex={1}
-          spacing="32px"
+          spacing={isMobile ? "12px" : "32px"}
           overflow="hidden"
+          p={isMobile ? "16px" : undefined}
+          boxSizing="border-box"
         >
           <Stack flex={1} spacing="20px" overflow="hidden">
             <Captioned text="Add URL" noFlex>
@@ -612,13 +626,15 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned>
 
-            <Stack height="28px" justifyContent="center">
-              <Stack
-                height="2px"
-                width="100%"
-                bgcolor={PALETTE.secondary.grey[2]}
-              />
-            </Stack>
+            {!isMobile ? (
+              <Stack height="28px" justifyContent="center">
+                <Stack
+                  height="2px"
+                  width="100%"
+                  bgcolor={PALETTE.secondary.grey[2]}
+                />
+              </Stack>
+            ) : null}
 
             <Captioned text="Title">
               <UrsorInputField
@@ -633,18 +649,20 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned>
 
-            <Captioned text="Description">
-              <UrsorTextField
-                value={description}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(event.target.value)
-                }
-                placeholder="Description"
-                width="100%"
-                height="144px"
-                boldValue
-              />
-            </Captioned>
+            {!isMobile ? (
+              <Captioned text="Description">
+                <UrsorTextField
+                  value={description}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setDescription(event.target.value)
+                  }
+                  placeholder="Description"
+                  width="100%"
+                  height="144px"
+                  boldValue
+                />
+              </Captioned>
+            ) : null}
             {/* <Captioned text="Title">
               <UrsorInputField
                 value={title}
@@ -660,18 +678,21 @@ export default function LinkDialog(props: ILinkDialogProps) {
               />
             </Captioned> */}
           </Stack>
-          <Stack justifyContent="space-between">
+          <Stack
+            justifyContent="space-between"
+            spacing={isMobile ? "12px" : undefined}
+          >
             <Stack
-              width={CARD_WIDTH}
-              minWidth={CARD_WIDTH}
-              height={CARD_HEIGHT}
-              minHeight={CARD_HEIGHT}
+              width={isMobile ? undefined : CARD_WIDTH}
+              minWidth={isMobile ? undefined : CARD_WIDTH}
+              height={isMobile ? undefined : CARD_HEIGHT}
+              minHeight={isMobile ? undefined : CARD_HEIGHT}
               borderRadius="12px"
-              bgcolor={color}
+              bgcolor="#fff4ec"
               sx={{
                 transition: "0.2s",
               }}
-              border={`4px solid ${color}`}
+              border={`4px solid #fff4ec`}
               overflow="hidden"
               position="relative"
             >
@@ -711,7 +732,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
               /> */}
 
                 <Typography
-                  color={lightText ? "rgba(255,255,255)" : "rgba(0,0,0,0.9)"}
+                  color={PALETTE.secondary.grey[5]}
                   variant="medium"
                   bold
                   maxLines={2}
@@ -724,48 +745,16 @@ export default function LinkDialog(props: ILinkDialogProps) {
                   sx={{
                     svg: {
                       path: {
-                        fill: lightText
-                          ? "rgba(255,255,255,0.93)"
-                          : "rgba(0,0,0,0.8)",
+                        fill: CONTENT_BRANDING.link.color,
                       },
                     },
                   }}
                 >
-                  <Typography
-                    color={
-                      lightText ? "rgba(255,255,255,0.93)" : "rgba(0,0,0,0.8)"
-                    }
-                    variant="small"
-                  >
+                  <Typography color={PALETTE.secondary.grey[5]} variant="small">
                     {getFormattedDate(new Date().toISOString())}
                   </Typography>
                   <LinkIcon height="20px" width="20px" />
                 </Stack>
-
-                {/* <Typography
-                  bold
-                  variant="medium"
-                  color={alpha(
-                    shouldBeLightText(color)
-                      ? PALETTE.font.light
-                      : PALETTE.font.dark,
-                    title ? 1 : 0.5
-                  )}
-                  maxLines={2}
-                >
-                  {title}
-                </Typography> */}
-                {/* <Typography
-                variant="small"
-                color={alpha(
-                  shouldBeLightText(color)
-                    ? PALETTE.font.light
-                    : PALETTE.font.dark,
-                  0.8
-                )}
-              >
-                {dayjs().format("Do MMMM YYYY")}
-              </Typography> */}
               </Stack>
               <Stack
                 position="absolute"
@@ -775,7 +764,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
                 direction="row"
                 spacing="7px"
               >
-                <PaletteButton selected={color} callback={(c) => setColor(c)} />
+                {/* <PaletteButton selected={color} callback={(c) => setColor(c)} /> */}
                 <ImageButton
                   usingPlaceholderImage={usingPlaceholderImage}
                   uploadCallback={() => dropzoneRef?.click()}
@@ -792,9 +781,9 @@ export default function LinkDialog(props: ILinkDialogProps) {
               variant="tertiary"
               endIcon={PencilIcon}
               width="100%"
-              disabled={!downloadImageUrl}
+              disabled={!downloadImageUrl || !title}
             >
-              {props.link?.id ? "Update" : "Create"}
+              {props.link?.id ? "Update" : "Add"}
             </UrsorButton>
           </Stack>
         </Stack>

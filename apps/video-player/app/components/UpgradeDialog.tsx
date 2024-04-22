@@ -281,13 +281,15 @@ const UpgradeDialog = (props: {
       supertitle="Upgrade"
       title="Upgrade to Astrosafe premium and enjoy unlimited access."
       open={props.open}
-      titleSize={props.mobile ? "h4" : "h3"}
+      titleSize={props.mobile ? "h5" : "h3"}
       noOverflowHidden
       onCloseCallback={props.closeCallback}
       dynamicHeight
       width="1030px"
       maxWidth="1030px"
       titleMaxWidth="600px"
+      scrollable
+
       //paddingX="40px"
     >
       {/* <UrsorButton
@@ -314,7 +316,12 @@ const UpgradeDialog = (props: {
         pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
         publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       /> */}
-      <Stack direction="row" spacing="32px" width="100%" pt="20px">
+      <Stack
+        direction={props.mobile ? "column" : "row"}
+        spacing={props.mobile ? "12px" : "32px"}
+        width="100%"
+        pt="20px"
+      >
         <PricingCard
           title="Basic"
           subtitle="Monthly"

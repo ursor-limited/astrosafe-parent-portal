@@ -27,6 +27,7 @@ import UrsorPopover from "../components/UrsorPopover";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import { isMobile } from "react-device-detect";
 
 const UrsorLoading = dynamic(
   () => import("../components/UrsorLoading"),
@@ -40,6 +41,7 @@ export interface IImage {
   description?: string;
   creatorId: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface IImageDialogProps {
@@ -88,9 +90,15 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitCreation = async () =>
     ApiController.createImage(getCreationDetails())
       .then((image) => {
-        imageUploadCallback?.();
-        props.creationCallback?.(image);
-        props.closeCallback();
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.creationCallback?.(image);
+            props.closeCallback();
+          });
+        } else {
+          props.creationCallback?.(image);
+          props.closeCallback();
+        }
       })
       .then(() => notificationCtx.success("Created Image"))
       .catch((error) => notificationCtx.error(error.message));
@@ -100,7 +108,6 @@ export default function ImageDialog(props: IImageDialogProps) {
     title,
     description,
     url: downloadImageUrl,
-    // lessonId: props.lessonId,
   });
 
   const getUpdateDetails = () => ({
@@ -112,10 +119,16 @@ export default function ImageDialog(props: IImageDialogProps) {
   const submitUpdate = () =>
     props.image?.id &&
     ApiController.updateImage(props.image?.id, getUpdateDetails())
-      .then((image) => {
-        imageUploadCallback?.();
-        props.updateCallback?.();
-        props.closeCallback();
+      .then(() => {
+        if (imageUploadCallback) {
+          imageUploadCallback?.().then(() => {
+            props.updateCallback?.();
+            props.closeCallback();
+          });
+        } else {
+          props.updateCallback?.();
+          props.closeCallback();
+        }
       })
       .then(() => notificationCtx.success("Updated Image"));
 
@@ -145,19 +158,23 @@ export default function ImageDialog(props: IImageDialogProps) {
 
   return (
     <UrsorDialog
-      supertitle="Add an image"
+      supertitle={isMobile ? undefined : "Add an Image to your Lesson"}
       open={props.open}
       onCloseCallback={props.closeCallback}
       fitContent
       dynamicHeight
+      noPadding={isMobile}
+      noCloseButton
     >
       <Stack
-        direction="row"
+        direction={isMobile ? "column" : "row"}
         width="100%"
         flex={1}
         spacing="32px"
         overflow="hidden"
         pt="16px"
+        p="16px"
+        boxSizing="border-box"
       >
         <Stack flex={1} spacing="20px" overflow="hidden">
           <Captioned text="Search Unsplash" noFlex>
@@ -166,6 +183,7 @@ export default function ImageDialog(props: IImageDialogProps) {
               zIndex={9999}
               buttonWidth
               noPadding
+              maxHeight="351px"
               closeCallback={() => setPopoverOpen(false)}
               content={
                 loading ? (
@@ -290,16 +308,16 @@ export default function ImageDialog(props: IImageDialogProps) {
               }
               placeholder="Optional"
               width="100%"
-              height="161px"
+              height={isMobile ? "80px" : "161px"}
               boldValue
             />
           </Captioned>
         </Stack>
         <Stack spacing="20px">
           <Stack
-            width="440px"
-            minWidth="440px"
-            // height="362px"
+            width={isMobile ? "100%" : "440px"}
+            minWidth={isMobile ? "100%" : "440px"}
+            height={isMobile ? "250px" : undefined}
             // minHeight="362px"
             borderRadius="12px"
             bgcolor="rgb(0,0,0)"
@@ -320,7 +338,10 @@ export default function ImageDialog(props: IImageDialogProps) {
             >
               <Stack
                 sx={{
-                  ...getTopImageStyle(previewImageUrl ?? "", "362px"),
+                  ...getTopImageStyle(
+                    previewImageUrl ?? "",
+                    isMobile ? "100%" : "362px"
+                  ),
                   svg: {
                     path: {
                       fill: PALETTE.secondary.grey[3],
@@ -356,7 +377,7 @@ export default function ImageDialog(props: IImageDialogProps) {
             width="100%"
             disabled={!downloadImageUrl}
           >
-            {props.image?.id ? "Update" : "Create"}
+            {props.image?.id ? "Update" : "Add"}
           </UrsorButton>
         </Stack>
       </Stack>

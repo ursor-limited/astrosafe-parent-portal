@@ -16,6 +16,7 @@ export interface IText {
   value: string;
   creatorId: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 const TextCreationDialog = (props: {
@@ -24,6 +25,7 @@ const TextCreationDialog = (props: {
   closeCallback: () => void;
   creationCallback?: (text: IText) => void;
   updateCallback?: () => void;
+  mobile?: boolean;
 }) => {
   const [value, setValue] = useState<string>("");
   useEffect(() => {
@@ -37,7 +39,11 @@ const TextCreationDialog = (props: {
   const [quillId, setQuillId] = useState<string>("");
   useEffect(() => setQuillId(`a${crypto.randomUUID()}`), []); // the queryselector id cannot start with a digit
 
-  const submitCreation = async () =>
+  const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
+  useEffect(() => setAlreadySubmitting(false), [props.open]);
+
+  const submitCreation = async () => {
+    setAlreadySubmitting(true);
     ApiController.createText(getCreationDetails())
       .then((text) => {
         props.creationCallback?.(text);
@@ -45,6 +51,7 @@ const TextCreationDialog = (props: {
       })
       .then(() => notificationCtx.success("Created Text"))
       .then(() => setValue(""));
+  };
 
   const getCreationDetails = () => ({
     creatorId: userDetails?.id,
@@ -69,16 +76,20 @@ const TextCreationDialog = (props: {
     <>
       <UrsorDialog
         supertitle={
-          isMobile ? undefined : props.text ? "Edit Text" : "Create Text"
+          isMobile
+            ? undefined
+            : props.text
+            ? "Edit Text"
+            : "Add a Text to your Lesson"
         }
         open={props.open}
         onCloseCallback={props.closeCallback}
-        width="650px"
-        maxWidth="650px"
+        width="836px"
+        maxWidth="836px"
         noPadding
-        dynamicHeight
-        paddingTop="52px"
+        paddingTop={props.mobile ? undefined : "52px"}
         paddingX={isMobile ? undefined : "32px"}
+        noCloseButton={props.mobile}
       >
         <Stack
           flex={1}
@@ -86,15 +97,16 @@ const TextCreationDialog = (props: {
           alignItems="center"
           pb="24px"
           spacing="20px"
+          p={props.mobile ? "16px" : undefined}
+          boxSizing="border-box"
         >
-          <Stack>
+          <Stack width="100%" flex={1}>
             <TextEditorToolbar id={quillId} />
             {quillId ? (
               <AstroText
                 id={quillId}
                 value={value}
                 valueChangeCallback={setValue}
-                height="120px"
               />
             ) : null}
           </Stack>
@@ -103,9 +115,13 @@ const TextCreationDialog = (props: {
             variant="tertiary"
             endIcon={PencilIcon}
             disabled={!value}
-            onClick={() => (props.text?.id ? submitUpdate() : submitCreation())}
+            onClick={() =>
+              props.text?.id
+                ? submitUpdate()
+                : !alreadySubmitting && submitCreation()
+            }
           >
-            {props.text?.id ? "Update" : "Create"}
+            {props.text?.id ? "Update" : "Add"}
           </UrsorButton>
         </Stack>
       </UrsorDialog>
