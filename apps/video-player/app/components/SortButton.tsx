@@ -21,6 +21,7 @@ export interface IClassSortButtonProps<T extends string> {
   width?: string;
   text?: string;
   noText?: boolean;
+  disabled?: boolean;
 }
 
 const SortButton = <T extends string>(
@@ -45,6 +46,7 @@ const SortButton = <T extends string>(
       }
       closeCallback={() => setOpen(false)}
       placement="right"
+      disabled={props.disabled}
     >
       {props.iconOnly ? (
         <Stack

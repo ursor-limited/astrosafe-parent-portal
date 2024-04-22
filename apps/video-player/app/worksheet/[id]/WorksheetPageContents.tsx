@@ -563,7 +563,6 @@ export default function WorksheetPageContents(props: {
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
           }
-          fullHeight
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack

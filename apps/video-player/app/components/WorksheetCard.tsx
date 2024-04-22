@@ -52,7 +52,7 @@ const WorksheetCard = (
             ? `3px solid ${PALETTE.system.orange}`
             : undefined,
         }}
-        pb="6px"
+        pb="8px"
         position="relative"
       >
         <Stack position="absolute" top="11px" right="11px" zIndex={2}>
@@ -140,17 +140,16 @@ const WorksheetCard = (
             px="4px"
             boxSizing="border-box"
           >
-            <Stack height="45px">
-              <Typography
-                color={PALETTE.secondary.grey[5]}
-                variant="medium"
-                bold
-                maxLines={2}
-              >
-                {props.title}
-              </Typography>
-            </Stack>
-            <Stack
+            <Typography
+              color={PALETTE.secondary.grey[5]}
+              variant="medium"
+              bold
+              maxLines={2}
+            >
+              {props.title}
+            </Typography>
+
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.worksheet.color } } }}
@@ -159,7 +158,7 @@ const WorksheetCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <ChecklistIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>

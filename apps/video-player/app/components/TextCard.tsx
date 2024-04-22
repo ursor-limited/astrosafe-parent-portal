@@ -3,9 +3,6 @@ import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-import { ILink } from "../dashboard/LinkDialog";
-import { getFormattedDate } from "./VideoCard";
-import TypographyIcon from "@/images/icons/TypographyIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import UrsorActionButton from "./UrsorActionButton";
@@ -24,7 +21,7 @@ const TextPreview = (props: { value: string }) => (
     dangerouslySetInnerHTML={{
       __html: props.value,
     }}
-    style={{ overflowWrap: "anywhere", maxHeight: "300px" }}
+    style={{ overflowWrap: "anywhere", color: PALETTE.font.dark }}
   />
 );
 
@@ -72,7 +69,7 @@ const TextCard = (
         }}
         position="relative"
         //boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        pb="12px"
+        pb="6px"
         pt="50px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
@@ -112,7 +109,7 @@ const TextCard = (
           <TextPreview value={props.value} />
         </Stack>
 
-        <Stack
+        {/* <Stack
           direction="row"
           justifyContent="space-between"
           sx={{
@@ -127,7 +124,7 @@ const TextCard = (
             {getFormattedDate(props.createdAt)}
           </Typography>
           <TypographyIcon height="20px" width="20px" />
-        </Stack>
+        </Stack> */}
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

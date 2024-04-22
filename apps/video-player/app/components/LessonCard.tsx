@@ -116,7 +116,7 @@ const LessonCard = (
           width="100%"
           boxShadow="0 0 12px rgba(0,0,0,0.06)"
           position="relative"
-          pb="6px"
+          pb="4px"
         >
           <Stack
             flex={1}
@@ -228,14 +228,14 @@ const LessonCard = (
               </Stack>
             </Stack>
 
-            <Stack pt="8px" pb="4px" alignItems="space-between" flex={1}>
-              <Stack height="45px">
+            <Stack alignItems="space-between" flex={1}>
+              <Stack pt="8px">
                 <Typography bold variant="medium" maxLines={2}>
                   {props.title}
                 </Typography>
               </Stack>
             </Stack>
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.lesson.color } } }}
@@ -244,7 +244,7 @@ const LessonCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <VersionsIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>

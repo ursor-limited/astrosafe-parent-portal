@@ -591,22 +591,22 @@ export default function DashboardPageContents() {
   }, [userDetails?.user?.id]);
 
   const [texts, setTexts] = useState<IText[]>([]);
-  const loadTexts = () => {
-    userDetails?.user?.id &&
-      ApiController.getUserTexts(userDetails.user.id)
-        .then((texts) =>
-          setTexts(
-            _.reverse(texts.slice()).map((t: IText) => ({
-              ...t,
-              value: cleanTextValueIntoInnerHTML(t.value),
-            }))
-          )
-        )
-        .finally(() => setTextsLoaded(true));
-  };
-  useEffect(() => {
-    loadTexts();
-  }, [userDetails?.user?.id]);
+  // const loadTexts = () => {
+  //   userDetails?.user?.id &&
+  //     ApiController.getUserTexts(userDetails.user.id)
+  //       .then((texts) =>
+  //         setTexts(
+  //           _.reverse(texts.slice()).map((t: IText) => ({
+  //             ...t,
+  //             value: cleanTextValueIntoInnerHTML(t.value),
+  //           }))
+  //         )
+  //       )
+  //       .finally(() => setTextsLoaded(true));
+  // };
+  // useEffect(() => {
+  //   loadTexts();
+  // }, [userDetails?.user?.id]);
 
   const [links, setLinks] = useState<ILink[]>([]);
   const loadLinks = () => {
@@ -655,7 +655,7 @@ export default function DashboardPageContents() {
     "lessons" | "all"
   >("lessons");
   const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
-    "all" | "video" | "worksheet" | "image" | "text" | "link"
+    "all" | "video" | "worksheet" | "image" | "link"
   >("all");
 
   useEffect(() => {
@@ -1144,16 +1144,17 @@ export default function DashboardPageContents() {
                 <SortButton
                   selected={selectedMultipleFilter}
                   callback={(id) => setSelectedMultipleFilter(id)}
-                  types={["all", "video", "worksheet", "image", "text", "link"]}
+                  types={["all", "video", "worksheet", "image", "link"]}
                   displayNames={{
                     all: "All",
                     video: "Video",
                     worksheet: "Worksheet",
                     image: "Image",
                     link: "Link",
-                    text: "Text",
+                    //text: "Text",
                   }}
                   text="Type"
+                  disabled={selectedBinaryFilter !== "all"}
                 />
               </Stack>
             </Stack>
@@ -1254,15 +1255,16 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadImages}
                             />
-                          ) : item.type === "text" ? (
-                            <TextCard
-                              {...(item.details as IText)}
-                              editCallback={() =>
-                                setTextEditingDialogId(item.details.id)
-                              }
-                              deleteCallback={loadTexts}
-                            />
-                          ) : item.type === "link" ? (
+                          ) : // : item.type === "text" ? (
+                          //   <TextCard
+                          //     {...(item.details as IText)}
+                          //     editCallback={() =>
+                          //       setTextEditingDialogId(item.details.id)
+                          //     }
+                          //     deleteCallback={loadTexts}
+                          //   />
+                          // )
+                          item.type === "link" ? (
                             <LinkCard
                               {...(item.details as ILink)}
                               editCallback={() =>
@@ -1340,14 +1342,14 @@ export default function DashboardPageContents() {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      {textEditingDialogId ? (
+      {/* {textEditingDialogId ? (
         <TextCreationDialog
           open={true}
           closeCallback={() => setTextEditingDialogId(undefined)}
           updateCallback={loadTexts}
           text={texts.find((t) => t.id === textEditingDialogId)}
         />
-      ) : null}
+      ) : null} */}
       {!anyLoaded
         ? createPortal(
             <Stack

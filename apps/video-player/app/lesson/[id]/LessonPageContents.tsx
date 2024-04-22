@@ -534,7 +534,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   sx={{
                     opacity:
                       contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.5s",
+                    transition: "0.2s",
                   }}
                 >
                   <AddContentButton
@@ -673,7 +673,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     />
                   ) : (
                     <Stack position="relative">
-                      <UrsorFadeIn delay={700} duration={800}>
+                      <UrsorFadeIn delay={1000} duration={800}>
                         <Stack
                           key="starter"
                           width="94%"
@@ -909,21 +909,23 @@ export default function LessonPageContents(props: { lessonId: string }) {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      <TextDialog
-        open={textDialogOpen}
-        closeCallback={() => {
-          setTextDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(text) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "text",
-            text.id
-          ).then(loadLesson);
-        }}
-      />
+      {textDialogOpen ? (
+        <TextDialog
+          open={true}
+          closeCallback={() => {
+            setTextDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(text) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "text",
+              text.id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {textEditingDialogId ? (
         <TextCreationDialog
           open={true}

@@ -118,6 +118,7 @@ const PageCard = (props: {
                       transition: "0.2s",
                     }}
                     onClick={props.editingCallback}
+                    zIndex={5}
                   >
                     <PencilIcon width="24px" height="24px" />
                   </Stack>
@@ -146,6 +147,7 @@ const PageCard = (props: {
                       transition: "0.2s",
                     }}
                     onClick={props.editingCallback}
+                    zIndex={5}
                   >
                     <PencilIcon width="18px" height="18px" />
                   </Stack>

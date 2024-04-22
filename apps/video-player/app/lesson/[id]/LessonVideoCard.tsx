@@ -65,7 +65,7 @@ const LessonVideoCard = (
         overflow="hidden"
         position="relative"
         //boxShadow="0 0 22px rgba(0,0,0,0.1)"
-        pb="12px"
+        pb="10px"
         sx={{
           outline: orangeBorderOn
             ? `3px solid ${PALETTE.system.orange}`
@@ -181,7 +181,7 @@ const LessonVideoCard = (
               {props.title}
             </Typography>
             {props.description ? (
-              <Stack pb="9px" pt="2px">
+              <Stack pb="8px" pt="6px">
                 <Typography
                   variant="medium"
                   maxLines={2}
@@ -191,7 +191,7 @@ const LessonVideoCard = (
                 </Typography>
               </Stack>
             ) : null}
-            <Stack
+            {/* <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
@@ -200,7 +200,7 @@ const LessonVideoCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Stack>
