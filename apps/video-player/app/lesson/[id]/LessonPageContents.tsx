@@ -534,7 +534,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   sx={{
                     opacity:
                       contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.5s",
+                    transition: "0.2s",
                   }}
                 >
                   <AddContentButton
