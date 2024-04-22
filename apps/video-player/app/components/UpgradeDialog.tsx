@@ -329,7 +329,7 @@ const UpgradeDialog = (props: {
           currency={details.currencySymbol}
           unit="month"
           tinyText="No credit card required"
-          items={["2 Creations per week"]}
+          items={["Create lessons with text, images, and video."]}
           buttonText="Stay free"
           noButtonIcon
           callback={props.closeCallback}
@@ -365,10 +365,8 @@ const UpgradeDialog = (props: {
           tinyText={`Billed as ${details.currencySymbol}${details.monthly} / month`}
           items={[
             "Unlimited Worksheets",
-            "Unlimited Videos",
-            "Unlimited Device Monitoring",
-            "Unlimited Wikipedia pages",
-            "Remove Watermark",
+            `Unlimited Videos`,
+            "Share with your students",
           ]}
           callback={() => {
             router.push(email ? getPaymentUrl(email, "monthly") : "");

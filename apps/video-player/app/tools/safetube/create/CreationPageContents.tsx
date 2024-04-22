@@ -198,6 +198,11 @@ function CreationPageContents(props: { details: IVideo }) {
       creatorId: userDetails.user?.id,
     }).then(async (v: any) => {
       if (userDetails.user?.id) {
+        ApiController.createLesson({
+          title,
+          description,
+          creatorId: userDetails.user?.id,
+        }).then((l) => ApiController.addToLesson(l.id, 0, "video", v.id));
         // if (freeVideoIds.length > 0) {
         //   await ApiController.claimVideos(user.email, freeVideoIds);
         //   setFreeVideoIds([]);
