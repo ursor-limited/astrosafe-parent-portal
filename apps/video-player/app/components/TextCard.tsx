@@ -24,7 +24,7 @@ const TextPreview = (props: { value: string }) => (
     dangerouslySetInnerHTML={{
       __html: props.value,
     }}
-    style={{ overflowWrap: "anywhere", maxHeight: "300px" }}
+    style={{ overflowWrap: "anywhere" }}
   />
 );
 
