@@ -316,6 +316,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                         {...link}
                         editCallback={() => setLinkEditingDialogId(link.id)}
                         deleteCallback={loadLesson}
+                        noFooter
                       />
                     ) : null;
                   } else if (c.type === "text") {
@@ -338,6 +339,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                           setImageEditingDialogId(image.id)
                         }
                         deletionCallback={loadLesson}
+                        noFooter
                       />
                     ) : null;
                   } else if (c.type === "worksheet") {

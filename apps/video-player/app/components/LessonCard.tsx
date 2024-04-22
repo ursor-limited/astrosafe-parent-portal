@@ -53,9 +53,20 @@ const LessonCard = (
     );
   }, []);
 
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <>
-      <Stack width="100%" position="relative">
+      <Stack
+        width="100%"
+        position="relative"
+        onMouseEnter={() => {
+          setHovering(true);
+        }}
+        onMouseLeave={() => {
+          setHovering(false);
+        }}
+      >
         <Stack
           position="absolute"
           top={0}
@@ -67,7 +78,10 @@ const LessonCard = (
           height="60px"
           borderRadius="12px"
           bgcolor={stackCard1Color}
-          sx={{ transform: "rotate(-2.6deg) translateY(-7px)" }}
+          sx={{
+            transform: `rotate(-${hovering ? 6 : 2.6}deg) translateY(-7px)`,
+            transition: "0.4s",
+          }}
           boxShadow="0 0 12px rgba(0,0,0,0.06)"
           zIndex={0}
         />
@@ -82,7 +96,10 @@ const LessonCard = (
           height="60px"
           borderRadius="12px"
           bgcolor={stackCard2Color}
-          sx={{ transform: "rotate(1.4deg) translateY(-7px)" }}
+          sx={{
+            transform: `rotate(${hovering ? 5 : 1.4}deg) translateY(-7px)`,
+            transition: "0.4s",
+          }}
           boxShadow="0 0 12px rgba(0,0,0,0.06)"
           zIndex={0}
         />
@@ -116,7 +133,7 @@ const LessonCard = (
           width="100%"
           boxShadow="0 0 12px rgba(0,0,0,0.06)"
           position="relative"
-          pb="4px"
+          pb="6px"
         >
           <Stack
             flex={1}
@@ -227,24 +244,25 @@ const LessonCard = (
                 </Stack>
               </Stack>
             </Stack>
-
-            <Stack alignItems="space-between" flex={1}>
-              <Stack pt="8px">
-                <Typography bold variant="medium" maxLines={2}>
-                  {props.title}
+            <Stack px="4px">
+              <Stack alignItems="space-between" flex={1}>
+                <Stack pt="8px">
+                  <Typography bold variant="medium" maxLines={2}>
+                    {props.title}
+                  </Typography>
+                </Stack>
+              </Stack>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ svg: { path: { fill: CONTENT_BRANDING.lesson.color } } }}
+              >
+                <Typography variant="small">
+                  {getFormattedDate(props.createdAt)}
                 </Typography>
+                <VersionsIcon height="20px" width="20px" />
               </Stack>
             </Stack>
-            {/* <Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{ svg: { path: { fill: CONTENT_BRANDING.lesson.color } } }}
-            >
-              <Typography variant="small">
-                {getFormattedDate(props.createdAt)}
-              </Typography>
-              <VersionsIcon height="20px" width="20px" />
-            </Stack> */}
           </Stack>
         </Stack>
       </Stack>
