@@ -66,6 +66,7 @@ const UpgradeDialog = dynamic(
 );
 
 export const GRID_SPACING = "20px";
+export const LESSON_GRID_SPACING = "34px";
 
 export const MobileEmptyStateIllustration = (props: {
   children: React.ReactNode;
@@ -682,7 +683,17 @@ export default function MobileDashboardPageContents() {
         </Stack>
       </UrsorFadeIn>
       {filteredCards.length > 0 ? (
-        <Stack flex={1} pb="110px" spacing={GRID_SPACING} pt="8px" px="20px">
+        <Stack
+          flex={1}
+          pb="110px"
+          spacing={
+            selectedBinaryFilter === "lessons"
+              ? LESSON_GRID_SPACING
+              : GRID_SPACING
+          }
+          pt="8px"
+          px="20px"
+        >
           {filteredCards.map((card, i) => (
             <UrsorFadeIn key={i} delay={i * 190} duration={900}>
               {card.type === "video" ? (
