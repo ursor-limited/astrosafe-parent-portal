@@ -93,7 +93,7 @@ export interface IAstroContentBranding {
 }
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
-    title: "Safe Video",
+    title: "Video",
     description: "Free of ads. Safe to share.",
     color: "#FC5C5C",
     icon: CirclePlayIcon,
@@ -118,7 +118,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.green[5],
     icon: VersionsIcon,
     infoButtonPosition: 170,
-    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link.",
+    info: "Create digital lessons in minutes combining videos, quizzes, worksheets, images and websites!",
     infoImageUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/lessonInfo.png",
   },
@@ -952,7 +952,7 @@ export default function DashboardPageContents() {
   const createLessonAndRedirect = (openContentDialog?: boolean) =>
     ApiController.createLesson({
       title: DEFAULT_LESSON_TITLE,
-      description: "A new collection of Contents",
+      description: "A description for your lesson goes here!",
       creatorId: userDetails.user?.id,
     }).then((lesson) => {
       openContentDialog && setOpenContentDialogInLessonId(lesson.id);
