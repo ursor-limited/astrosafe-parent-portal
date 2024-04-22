@@ -17,11 +17,7 @@ import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";
 import WorksheetCreationDialog from "./WorksheetCreationDialog";
-import { BOLD_FONT_WEIGHT, FONT_SIZES } from "ui/typography";
-import { Input } from "@mui/material";
 import SortButton from "../components/SortButton";
-import { createPortal } from "react-dom";
-import { EmptyStateIllustration } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
@@ -461,7 +457,7 @@ export default function MobileDashboardPageContents() {
     "lessons" | "all"
   >("lessons");
   const [selectedMultipleFilter, setSelectedMultipleFilter] = useState<
-    "all" | "video" | "worksheet" | "image" | "text" | "link"
+    "all" | "video" | "worksheet" | "image" | "link"
   >("all");
 
   useEffect(() => {
@@ -647,13 +643,12 @@ export default function MobileDashboardPageContents() {
               <SortButton
                 selected={selectedMultipleFilter}
                 callback={(id) => setSelectedMultipleFilter(id)}
-                types={["all", "video", "worksheet", "image", "text", "link"]}
+                types={["all", "video", "worksheet", "image", "link"]}
                 displayNames={{
                   all: "All",
                   video: "Video",
                   worksheet: "Worksheet",
                   image: "Image",
-                  text: "Text",
                   link: "Link",
                 }}
                 noText
@@ -720,13 +715,14 @@ export default function MobileDashboardPageContents() {
                   }
                   deletionCallback={loadImages}
                 />
-              ) : card.type === "text" ? (
-                <TextCard
-                  {...(card.details as IText)}
-                  editCallback={() => setTextEditingDialogId(card.details.id)}
-                  deleteCallback={loadTexts}
-                />
-              ) : card.type === "link" ? (
+              ) : // : card.type === "text" ? (
+              //   <TextCard
+              //     {...(card.details as IText)}
+              //     editCallback={() => setTextEditingDialogId(card.details.id)}
+              //     deleteCallback={loadTexts}
+              //   />
+              // )
+              card.type === "link" ? (
                 <LinkCard
                   {...(card.details as ILink)}
                   editCallback={() => setLinkEditingDialogId(card.details.id)}
@@ -803,7 +799,7 @@ export default function MobileDashboardPageContents() {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      {textEditingDialogId ? (
+      {/* {textEditingDialogId ? (
         <TextCreationDialog
           open={true}
           closeCallback={() => setTextEditingDialogId(undefined)}
@@ -811,7 +807,7 @@ export default function MobileDashboardPageContents() {
           text={texts.find((t) => t.id === textEditingDialogId)}
           mobile
         />
-      ) : null}
+      ) : null} */}
       {!selectedContentType &&
       lessons.length === 0 &&
       worksheets.length === 0 &&

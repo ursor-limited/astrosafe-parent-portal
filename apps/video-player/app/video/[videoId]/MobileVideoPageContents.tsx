@@ -179,6 +179,10 @@ function MobileVideoPageContents(props: {
           props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
         }
         lessonId={props.lessonId}
+        editingEnabled={
+          !!userDetails?.user?.id &&
+          userDetails.user.id === props.details.creatorId
+        }
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">
           <Player

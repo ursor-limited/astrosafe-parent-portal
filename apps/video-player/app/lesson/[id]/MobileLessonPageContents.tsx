@@ -246,6 +246,9 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           title={lesson.title}
           description={lesson.description}
           creatorId={lesson.creatorId}
+          editingEnabled={
+            !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
+          }
           editingCallback={() => setEditingDialogOpen(true)}
           deletionCallback={() => setDeletionDialogOpen(true)}
           backCallback={

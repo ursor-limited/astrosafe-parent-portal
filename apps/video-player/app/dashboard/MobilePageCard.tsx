@@ -25,6 +25,7 @@ const MobilePageCard = (props: {
   belowButtonsElement?: React.ReactNode;
   copyCallback?: () => void;
   editingCallback?: () => void;
+  editingEnabled?: boolean;
   deletionCallback?: () => void;
   backCallback?: () => void;
   backText?: string;
@@ -139,13 +140,65 @@ const MobilePageCard = (props: {
         </Stack>
         {props.belowButtonsElement}
         <Stack pt="60px" pb="22px">
-          <Typography htmlTag="h1" variant="large" bold>
-            {props.title}
-          </Typography>
-          {props.description ? (
-            <Typography htmlTag="h2" variant="small">
-              {props.description}
+          <Stack
+            direction="row"
+            spacing="12px"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.grey[4],
+                },
+              },
+            }}
+            alignItems="center"
+          >
+            <Typography htmlTag="h1" variant="large" bold>
+              {props.title}
             </Typography>
+            {props.editingEnabled ? (
+              <Stack
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                  transition: "0.2s",
+                }}
+                onClick={props.editingCallback}
+                zIndex={5}
+              >
+                <PencilIcon width="18px" height="18px" />
+              </Stack>
+            ) : null}
+          </Stack>
+          {props.description ? (
+            <Stack
+              direction="row"
+              spacing="12px"
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.grey[4],
+                  },
+                },
+              }}
+              alignItems="center"
+            >
+              <Typography htmlTag="h2" variant="small">
+                {props.description}
+              </Typography>
+              {props.editingEnabled ? (
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                  onClick={props.editingCallback}
+                  zIndex={5}
+                >
+                  <PencilIcon width="14px" height="14px" />
+                </Stack>
+              ) : null}
+            </Stack>
           ) : null}
         </Stack>
         {props.children}
