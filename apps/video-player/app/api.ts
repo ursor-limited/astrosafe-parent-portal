@@ -117,8 +117,8 @@ class ApiController {
     type: AstroLessonContent,
     contentId: string
   ) {
-    return post(`lesson/add`, { id, index, type, contentId }).then((response: any) =>
-      response.json()
+    return post(`lesson/add`, { id, index, type, contentId }).then(
+      (response: any) => response.json()
     );
   }
   static async createVideo(details: any) {
@@ -142,21 +142,15 @@ class ApiController {
   }
   static async getUserImages(id: string) {
     //@ts-ignore
-    return get(`image/user/${id}`).then((response: any) =>
-      response.json()
-    );
+    return get(`image/user/${id}`).then((response: any) => response.json());
   }
   static async getUserTexts(id: string) {
     //@ts-ignore
-    return get(`text/user/${id}`).then((response: any) =>
-      response.json()
-    );
+    return get(`text/user/${id}`).then((response: any) => response.json());
   }
   static async getUserLinks(id: string) {
     //@ts-ignore
-    return get(`link/user/${id}`).then((response: any) =>
-      response.json()
-    );
+    return get(`link/user/${id}`).then((response: any) => response.json());
   }
   static async getUserVideos(id: string) {
     //@ts-ignore
@@ -247,7 +241,7 @@ class ApiController {
     values: [number, number][],
     factor?: number,
     description?: string,
-    creatorId?: string,
+    creatorId?: string
   ) {
     return post("canvas/worksheet/equation", {
       title,
@@ -258,8 +252,8 @@ class ApiController {
         orientation,
         topic,
         factor,
-        max, 
-        random
+        max,
+        random,
       },
     }).then((response: any) => response.json());
   }
@@ -282,8 +276,8 @@ class ApiController {
         orientation,
         topic,
         factor,
-        max, 
-        random
+        max,
+        random,
       },
     }).then((response: any) => response.json());
   }
@@ -390,6 +384,10 @@ class ApiController {
   }
   static async deleteText(id: string) {
     return dellete(`text/${id}`).then((response: any) => response);
+  }
+
+  static async migrate() {
+    return get(`video/migrate/boo`).then((response: any) => response);
   }
 }
 

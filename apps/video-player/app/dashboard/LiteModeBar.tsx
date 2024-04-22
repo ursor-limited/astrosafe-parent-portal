@@ -3,6 +3,7 @@ import { Typography, UrsorButton } from "ui";
 import { useUserContext } from "../components/UserContext";
 import RocketIcon from "@/images/icons/RocketIcon.svg";
 import { getTrialDaysLeft } from "./DashboardPageContents";
+import { isIOS } from "react-device-detect";
 
 const MAX_LITE_MODE_ACTIONS = 3;
 
@@ -29,7 +30,7 @@ const LiteModeBar = (props: {
   return (
     <Stack
       position="absolute"
-      bottom={0}
+      bottom="env(safe-area-inset-bottom)"
       left={0}
       right={0}
       marginLeft="auto"
