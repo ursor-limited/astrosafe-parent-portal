@@ -171,7 +171,7 @@ const LessonVideoCard = (
               <Play width="40px" height="40px" />
             </Stack>
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
+          <Stack flex={1} justifyContent="space-between" px="4px">
             <Typography
               variant="medium"
               bold

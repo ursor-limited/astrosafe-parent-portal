@@ -194,7 +194,7 @@ const LessonWorksheetPreview = (props: {
           ) : null}
         </Stack>
         <Stack py="6px">
-          <Stack flex={1} justifyContent="space-between">
+          <Stack flex={1} justifyContent="space-between" px="4px">
             <Typography
               variant="medium"
               bold

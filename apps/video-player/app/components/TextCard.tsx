@@ -105,6 +105,7 @@ const TextCard = (
               padding: "3px",
             },
           }}
+          px="4px"
         >
           <TextPreview value={props.value} />
         </Stack>
