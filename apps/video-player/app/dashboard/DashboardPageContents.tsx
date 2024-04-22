@@ -57,9 +57,12 @@ import LinkCard from "../components/LinkCard";
 import TextCreationDialog, { IText } from "../components/TextDialog";
 import TextCard from "../components/TextCard";
 import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
+import Image from "next/image";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
+
+const POPOVER_MARGIN = 10;
 
 export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
 
@@ -86,6 +89,7 @@ export interface IAstroContentBranding {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   infoButtonPosition: number;
   info: string;
+  infoImageUrl?: string;
 }
 export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   video: {
@@ -94,7 +98,9 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: "#FC5C5C",
     icon: CirclePlayIcon,
     infoButtonPosition: 300,
-    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player.",
+    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link.",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/videoInfo.png",
   },
   worksheet: {
     title: "Worksheet",
@@ -102,7 +108,9 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.blue[3],
     icon: ChecklistIcon,
     infoButtonPosition: 290,
-    info: "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds.",
+    info: "Customise a worksheet template to your students’ needs. We’ll do the rest.",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/worksheetInfo.png",
   },
   lesson: {
     title: "Lesson",
@@ -110,7 +118,9 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: PALETTE.secondary.green[5],
     icon: VersionsIcon,
     infoButtonPosition: 170,
-    info: "The heat trapped in the custard will carry it over to that perfect state of just-cooked as it cools. I like to put it out on the table, tucked under a clean dishcloth, so it’s ready and waiting for a casual reveal when we’re ready to eat.",
+    info: "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link.",
+    infoImageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/lessonInfo.png",
   },
   link: {
     title: "Link",
@@ -350,53 +360,82 @@ export const ToolButton = (props: {
   fullWidth?: boolean;
   strongShadow?: boolean;
   noInfo?: boolean;
+  infoImageUrl?: string;
+  popoverTitle?: string;
   onClick: () => void;
 }) => {
   const [overlayOpen, setOverlayOpen] = useState<boolean>(false);
   const [lightText, setLightText] = useState<boolean>(false);
   useEffect(() => setLightText(shouldBeLightText(props.color)), [props.color]);
-  const [titleRef, setTitleRef] = useState<HTMLElement | null>(null);
-  const [infoButtonX, setInfoButtonX] = useState<number>(0);
-  const [infoButtonY, setInfoButtonY] = useState<number>(0);
-  const { width } = useWindowSize();
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  const [popoverY, setPopoverY] = useState<number>(0);
+  const [popoverX, setPopoverX] = useState<number>(0);
+  const [popoverWidth, setPopoverWidth] = useState<number>(0);
   useEffect(() => {
-    setInfoButtonX(titleRef?.getBoundingClientRect?.().right ?? 0);
-    setInfoButtonY(
-      (titleRef?.getBoundingClientRect?.().bottom ?? 0) -
-        (titleRef?.getBoundingClientRect?.().height ?? 0) +
-        6
-    );
+    ref?.getBoundingClientRect?.().bottom &&
+      setPopoverY(ref.getBoundingClientRect().bottom + POPOVER_MARGIN);
+    ref?.getBoundingClientRect?.().left &&
+      setPopoverX(ref.getBoundingClientRect().left);
+    ref?.getBoundingClientRect?.().width &&
+      setPopoverWidth(ref.getBoundingClientRect().width);
   }, [
-    titleRef?.getBoundingClientRect?.().right,
-    titleRef?.getBoundingClientRect?.().bottom,
-    width,
+    ref?.getBoundingClientRect?.().top,
+    ref?.getBoundingClientRect?.().left,
+    ref?.getBoundingClientRect?.().width,
   ]);
+
+  const [hovering, setHovering] = useState<boolean>(false);
+
   return (
     <>
-      {/* {!props.noInfo
-        ? createPortal(
-            <Stack
-              position="absolute"
-              top={infoButtonY}
-              left={infoButtonX + 12}
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
-                svg: {
-                  path: {
-                    fill: `${PALETTE.secondary.grey[5]} !important`,
-                  },
-                },
-              }}
-              onClick={() => setOverlayOpen(true)}
-            >
-              <InfoIcon width="14px" height="14px" />
-            </Stack>,
-            document.body
-          )
-        : null} */}
+      {createPortal(
+        <Stack
+          position="absolute"
+          top={popoverY}
+          left={popoverX}
+          // sx={{
+          //   cursor: "pointer",
+          //   "&:hover": { opacity: 0.6 },
+          //   transition: "0.2s",
+          // }}
+          sx={{
+            opacity: hovering ? 1 : 0,
+            pointerEvents: "none",
+            transition: "0.4s",
+            transitionDelay: "0.6s",
+          }}
+          onClick={() => setOverlayOpen(true)}
+          bgcolor="rgb(255,255,255)"
+          borderRadius="12px"
+          width={popoverWidth}
+          boxShadow="0 0 22px rgba(0,0,0,0.05)"
+          spacing="6px"
+          p="20px"
+          boxSizing="border-box"
+          zIndex={999}
+        >
+          {props.infoImageUrl ? (
+            <Stack height="134px" width="254px" borderRadius="4px">
+              <Image
+                src={props.infoImageUrl}
+                // style={{ objectFit: "cover" }}
+                // fill
+                height={134}
+                width={254}
+                alt="info popover image"
+              />
+            </Stack>
+          ) : null}
+          <Typography variant="medium" bold>
+            {props.popoverTitle}
+          </Typography>
+          <Typography>{props.info}</Typography>
+        </Stack>,
+        document.body
+      )}
       <Stack
+        ref={setRef}
         direction="row"
         width={props.fullWidth ? "100%" : props.mobile ? undefined : "294px"}
         minHeight="40px"
@@ -408,6 +447,12 @@ export const ToolButton = (props: {
         }
         bgcolor="rgb(255,255,255)"
         position="relative"
+        onMouseEnter={() => {
+          setHovering(true);
+        }}
+        onMouseLeave={() => {
+          setHovering(false);
+        }}
       >
         <Stack
           width="100%"
@@ -447,7 +492,7 @@ export const ToolButton = (props: {
             <props.icon height="20px" width="20px" />
           </Stack>
           <Stack flex={1} py="11px" justifyContent="center">
-            <Stack ref={setTitleRef} width="fit-content">
+            <Stack width="fit-content">
               <Typography
                 bold
                 color={lightText ? props.color : PALETTE.secondary.grey[5]}
@@ -1012,6 +1057,8 @@ export default function DashboardPageContents() {
               }}
               infoButtonPosition={215}
               info={CONTENT_BRANDING.lesson.info}
+              infoImageUrl={CONTENT_BRANDING.lesson.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.lesson.title}
             />
             <ToolButton
               title={
@@ -1032,9 +1079,9 @@ export default function DashboardPageContents() {
                 }
               }}
               infoButtonPosition={280}
-              info={
-                "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
-              }
+              info={CONTENT_BRANDING.video.info}
+              infoImageUrl={CONTENT_BRANDING.video.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.lesson.title}
             />
             <ToolButton
               title={
@@ -1057,9 +1104,9 @@ export default function DashboardPageContents() {
                 }
               }}
               infoButtonPosition={300}
-              info={
-                "Customise a worksheet template to your students’ needs. We’ll do the rest. Download, print and share your worksheet in seconds."
-              }
+              info={CONTENT_BRANDING.worksheet.info}
+              infoImageUrl={CONTENT_BRANDING.worksheet.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.lesson.title}
             />
           </Stack>
         </UrsorFadeIn>
