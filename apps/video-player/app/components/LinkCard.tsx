@@ -14,6 +14,7 @@ import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import useOrangeBorder from "./useOrangeBorder";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import Link from "next/link";
 
 const LIGHT_TEXT_THRESHOLD = 200;
 
@@ -150,60 +151,66 @@ const LinkCard = (props: {
             ]}
           />
         </Stack>
-        <Stack
-          bgcolor="#fff4ec"
-          borderRadius="12px"
-          overflow="hidden"
-          border={`4px solid #fff4ec`}
-          boxSizing="border-box"
-          flex={1}
-          spacing="5px"
-          onClick={() =>
-            router.push(`https://${getPrefixRemovedUrl(props.url)}`)
-          }
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
-            outline: orangeBorderOn
-              ? `3px solid ${PALETTE.system.orange}`
-              : undefined,
-          }}
+        <Link
+          href={`https://${getPrefixRemovedUrl(props.url)}`}
+          style={{ textDecoration: "none" }}
+          rel="nofollow"
+          target="_blank"
         >
           <Stack
-            width="100%"
-            minHeight={props.height ? `calc(${props.height} - 9px)` : "304px"}
+            bgcolor="#fff4ec"
+            borderRadius="12px"
+            overflow="hidden"
+            border={`4px solid #fff4ec`}
+            boxSizing="border-box"
+            flex={1}
+            spacing="5px"
+            // onClick={() =>
+            //   router.push(`https://${getPrefixRemovedUrl(props.url)}`)
+            // }
             sx={{
-              backgroundColor: "rgba(255,255,255,0.15)",
-              backgroundImage: `url(${props.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              boxSizing: "border-box",
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+              outline: orangeBorderOn
+                ? `3px solid ${PALETTE.system.orange}`
+                : undefined,
             }}
-            position="relative"
-          />
-          <Stack justifyContent="space-between" flex={1}>
-            <Stack flex={1} justifyContent="space-between">
-              <Typography
-                color={PALETTE.secondary.grey[5]}
-                variant="medium"
-                bold
-                maxLines={2}
-              >
-                {props.title}
-              </Typography>
-              {props.description ? (
-                <Stack pb="9px" pt="2px">
-                  <Typography
-                    color={PALETTE.secondary.grey[5]}
-                    variant="medium"
-                    maxLines={2}
-                  >
-                    {props.description}
-                  </Typography>
-                </Stack>
-              ) : null}
-              {/* <Stack
+          >
+            <Stack
+              width="100%"
+              minHeight={props.height ? `calc(${props.height} - 9px)` : "304px"}
+              sx={{
+                backgroundColor: "rgba(255,255,255,0.15)",
+                backgroundImage: `url(${props.imageUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                boxSizing: "border-box",
+              }}
+              position="relative"
+            />
+            <Stack justifyContent="space-between" flex={1}>
+              <Stack flex={1} justifyContent="space-between">
+                <Typography
+                  color={PALETTE.secondary.grey[5]}
+                  variant="medium"
+                  bold
+                  maxLines={2}
+                >
+                  {props.title}
+                </Typography>
+                {props.description ? (
+                  <Stack pb="9px" pt="2px">
+                    <Typography
+                      color={PALETTE.secondary.grey[5]}
+                      variant="medium"
+                      maxLines={2}
+                    >
+                      {props.description}
+                    </Typography>
+                  </Stack>
+                ) : null}
+                {/* <Stack
                 direction="row"
                 justifyContent="space-between"
                 sx={{
@@ -219,9 +226,10 @@ const LinkCard = (props: {
                 </Typography>
                 <LinkIcon height="20px" width="20px" />
               </Stack> */}
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        </Link>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
