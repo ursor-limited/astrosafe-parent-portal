@@ -1255,15 +1255,16 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadImages}
                             />
-                          ) : item.type === "text" ? (
-                            <TextCard
-                              {...(item.details as IText)}
-                              editCallback={() =>
-                                setTextEditingDialogId(item.details.id)
-                              }
-                              deleteCallback={loadTexts}
-                            />
-                          ) : item.type === "link" ? (
+                          ) : // : item.type === "text" ? (
+                          //   <TextCard
+                          //     {...(item.details as IText)}
+                          //     editCallback={() =>
+                          //       setTextEditingDialogId(item.details.id)
+                          //     }
+                          //     deleteCallback={loadTexts}
+                          //   />
+                          // )
+                          item.type === "link" ? (
                             <LinkCard
                               {...(item.details as ILink)}
                               editCallback={() =>
@@ -1341,14 +1342,14 @@ export default function DashboardPageContents() {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      {textEditingDialogId ? (
+      {/* {textEditingDialogId ? (
         <TextCreationDialog
           open={true}
           closeCallback={() => setTextEditingDialogId(undefined)}
           updateCallback={loadTexts}
           text={texts.find((t) => t.id === textEditingDialogId)}
         />
-      ) : null}
+      ) : null} */}
       {!anyLoaded
         ? createPortal(
             <Stack
