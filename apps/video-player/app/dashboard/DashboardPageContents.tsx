@@ -1154,6 +1154,7 @@ export default function DashboardPageContents() {
                     text: "Text",
                   }}
                   text="Type"
+                  disabled={selectedBinaryFilter !== "all"}
                 />
               </Stack>
             </Stack>
