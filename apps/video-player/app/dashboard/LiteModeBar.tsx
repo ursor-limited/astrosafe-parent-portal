@@ -46,7 +46,6 @@ const LiteModeBar = (props: {
       direction={props.mobile ? "column" : "row"}
       spacing={props.mobile ? "6px" : "24px"}
       py={props.mobile ? "18px" : undefined}
-      mx={props.mobile ? "20px !important" : undefined}
     >
       <Stack
         direction="row"
