@@ -380,7 +380,7 @@ export const ToolButton = (props: {
     ref?.getBoundingClientRect?.().width &&
       setPopoverWidth(ref.getBoundingClientRect().width);
   }, [
-    ref?.getBoundingClientRect?.().top,
+    ref?.getBoundingClientRect?.().bottom,
     ref?.getBoundingClientRect?.().left,
     ref?.getBoundingClientRect?.().width,
   ]);
