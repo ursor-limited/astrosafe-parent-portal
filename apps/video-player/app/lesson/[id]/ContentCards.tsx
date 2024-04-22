@@ -100,6 +100,7 @@ const ContentCards = (props: {
                   setHeight={(height) => {
                     props.setHeight?.(link.id, height);
                   }}
+                  noFooter
                 />
               ) : null;
             } else if (c.type === "text") {
@@ -128,6 +129,7 @@ const ContentCards = (props: {
                   setHeight={(height) => {
                     props.setHeight?.(image.id, height);
                   }}
+                  noFooter
                 />
               ) : null;
             } else if (c.type === "worksheet") {

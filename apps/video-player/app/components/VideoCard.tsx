@@ -62,7 +62,7 @@ const VideoCard = (
         }}
         position="relative"
         boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        pb="8px"
+        pb="10px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -85,7 +85,7 @@ const VideoCard = (
         </Stack>
         <Stack
           flex={1}
-          spacing="8px"
+          spacing="9px"
           sx={{
             "&:hover": { opacity: 0.6 },
             transition: "0.2s",
@@ -141,7 +141,7 @@ const VideoCard = (
               <Play width="40px" height="40px" />
             </Stack>
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
+          <Stack flex={1} justifyContent="space-between" spacing="2px" px="4px">
             <Typography
               color={PALETTE.secondary.grey[5]}
               variant="medium"
@@ -150,7 +150,7 @@ const VideoCard = (
             >
               {props.title}
             </Typography>
-            {/* <Stack
+            <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.video.color } } }}
@@ -159,7 +159,7 @@ const VideoCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <CirclePlayIcon height="20px" width="20px" />
-            </Stack> */}
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

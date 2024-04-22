@@ -52,7 +52,7 @@ const WorksheetCard = (
             ? `3px solid ${PALETTE.system.orange}`
             : undefined,
         }}
-        pb="8px"
+        pb="10px"
         position="relative"
       >
         <Stack position="absolute" top="11px" right="11px" zIndex={2}>
@@ -75,7 +75,7 @@ const WorksheetCard = (
           />
         </Stack>
         <Stack
-          spacing="8px"
+          spacing="7px"
           onClick={() => router.push(`/worksheet/${props.id}`)}
         >
           <Stack
@@ -137,8 +137,9 @@ const WorksheetCard = (
           <Stack
             flex={1}
             alignItems="space-between"
-            px="4px"
+            px="6px"
             boxSizing="border-box"
+            spacing="2px"
           >
             <Typography
               color={PALETTE.secondary.grey[5]}
@@ -148,8 +149,7 @@ const WorksheetCard = (
             >
               {props.title}
             </Typography>
-
-            {/* <Stack
+            <Stack
               direction="row"
               justifyContent="space-between"
               sx={{ svg: { path: { fill: CONTENT_BRANDING.worksheet.color } } }}
@@ -158,7 +158,7 @@ const WorksheetCard = (
                 {getFormattedDate(props.createdAt)}
               </Typography>
               <ChecklistIcon height="20px" width="20px" />
-            </Stack> */}
+            </Stack>
           </Stack>
         </Stack>
       </Stack>

@@ -23,6 +23,7 @@ const ImageCard = (
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    noFooter?: boolean;
   }
 ) => {
   const router = useRouter();
@@ -63,7 +64,7 @@ const ImageCard = (
             : undefined,
         }}
         position="relative"
-        pb="8px"
+        pb="10px"
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
@@ -112,7 +113,7 @@ const ImageCard = (
               alt="image!"
             />
           </Stack>
-          <Stack flex={1} justifyContent="space-between">
+          <Stack flex={1} justifyContent="space-between" px="4px">
             <Typography
               color={PALETTE.secondary.grey[5]}
               variant="medium"
@@ -132,16 +133,18 @@ const ImageCard = (
                 </Typography>
               </Stack>
             ) : null}
-            {/* <Stack
-              direction="row"
-              justifyContent="space-between"
-              sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
-            >
-              <Typography variant="small" color={PALETTE.secondary.grey[5]}>
-                {getFormattedDate(props.createdAt)}
-              </Typography>
-              <ImageIcon height="20px" width="20px" />
-            </Stack> */}
+            {!props.noFooter ? (
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ svg: { path: { fill: CONTENT_BRANDING.image.color } } }}
+              >
+                <Typography variant="small" color={PALETTE.secondary.grey[5]}>
+                  {getFormattedDate(props.createdAt)}
+                </Typography>
+                <ImageIcon height="20px" width="20px" />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

@@ -94,6 +94,7 @@ const LinkCard = (props: {
   deleteCallback?: () => void;
   duplicateCallback?: () => void;
   setHeight?: (height: number) => void;
+  noFooter?: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   const [lightText, setLightText] = useState<boolean>(false);
@@ -182,8 +183,8 @@ const LinkCard = (props: {
             }}
             position="relative"
           />
-          <Stack justifyContent="space-between" flex={1}>
-            <Stack flex={1} justifyContent="space-between">
+          <Stack justifyContent="space-between" flex={1} px="4px">
+            <Stack flex={1} justifyContent="space-between" pb="8px" pt="3px">
               <Typography
                 color={PALETTE.secondary.grey[5]}
                 variant="medium"
@@ -193,7 +194,7 @@ const LinkCard = (props: {
                 {props.title}
               </Typography>
               {props.description ? (
-                <Stack pb="9px" pt="2px">
+                <Stack>
                   <Typography
                     color={PALETTE.secondary.grey[5]}
                     variant="medium"
@@ -203,22 +204,24 @@ const LinkCard = (props: {
                   </Typography>
                 </Stack>
               ) : null}
-              {/* <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{
-                  svg: {
-                    path: {
-                      fill: CONTENT_BRANDING.link.color,
+              {!props.noFooter ? (
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: CONTENT_BRANDING.link.color,
+                      },
                     },
-                  },
-                }}
-              >
-                <Typography color={PALETTE.secondary.grey[5]} variant="small">
-                  {getFormattedDate(props.createdAt)}
-                </Typography>
-                <LinkIcon height="20px" width="20px" />
-              </Stack> */}
+                  }}
+                >
+                  <Typography color={PALETTE.secondary.grey[5]} variant="small">
+                    {getFormattedDate(props.createdAt)}
+                  </Typography>
+                  <LinkIcon height="20px" width="20px" />
+                </Stack>
+              ) : null}
             </Stack>
           </Stack>
         </Stack>
