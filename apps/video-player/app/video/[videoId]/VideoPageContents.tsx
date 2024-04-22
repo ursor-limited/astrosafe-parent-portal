@@ -234,9 +234,8 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 variant="tertiary"
                 endIcon={ShareIcon}
                 onClick={() => {
-                  ApiController.migrate();
-                  // navigator.clipboard.writeText(window.location.href);
-                  // notificationCtx.success("Copied URL to clipboard.");
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
                 }}
               >
                 Share Video
