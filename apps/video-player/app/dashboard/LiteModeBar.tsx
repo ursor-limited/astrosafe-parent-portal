@@ -29,8 +29,8 @@ const LiteModeBar = (props: {
 }) => {
   return (
     <Stack
-      position="absolute"
-      bottom="env(safe-area-inset-bottom)"
+      position="fixed"
+      bottom={0}
       left={0}
       right={0}
       marginLeft="auto"
