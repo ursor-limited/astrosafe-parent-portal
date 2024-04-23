@@ -689,7 +689,7 @@ export default function MobileDashboardPageContents() {
       {filteredCards.length > 0 ? (
         <Stack
           flex={1}
-          pb="110px"
+          pb="160px"
           spacing={
             selectedBinaryFilter === "lessons"
               ? LESSON_GRID_SPACING
