@@ -55,13 +55,13 @@ const UserProvider = (props: IUserProviderProps) => {
       () => {
         loadUser();
       },
-      props.checkoutSessionId || upgradedNotificationPending ? 3500 : 0 // to make sure that there is enough time to store the subscription change before fetching
+      props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
     );
     if (user?.email && !signedIn) {
       notificationCtx.success("Signed in");
       setSignedIn(true);
     }
-  }, [user?.email, isLoading]);
+  }, [user?.email, isLoading, upgradedNotificationPending]);
 
   const loadUser = () => {
     if (user?.email && user?.sub) {
