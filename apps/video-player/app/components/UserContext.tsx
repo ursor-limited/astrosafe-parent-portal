@@ -55,7 +55,6 @@ const UserProvider = (props: IUserProviderProps) => {
     useLocalStorage<boolean>("upgradedNotificationPending", false);
 
   useEffect(() => {
-    //user?.email && mixpanel.track("signed in");
     setTimeout(
       () => {
         loadUser();

@@ -57,34 +57,72 @@ const PageCard = (props: {
               alignItems="center"
               spacing="3px"
               sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
                 svg: {
                   path: { fill: PALETTE.secondary.grey[4] },
                 },
               }}
-              onClick={
-                props.backCallback ||
-                (() =>
-                  router.push(
-                    props.backRoute || (userDetails ? "/dashboard" : "/")
-                  ))
-              }
               flex={1}
               mr="30px"
             >
-              <Stack width="20px" height="20px">
+              <Stack
+                width="20px"
+                height="20px"
+                onClick={
+                  props.backCallback ||
+                  (() =>
+                    router.push(
+                      props.backRoute || (userDetails ? "/dashboard" : "/")
+                    ))
+                }
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.7 },
+                  transition: "0.2s",
+                }}
+              >
                 <ChevronLeft width="20px" height="20px" />
               </Stack>
 
-              <Typography
-                color={PALETTE.secondary.grey[4]}
-                noWrap
-                sx={{ minWidth: "100%", maxWidth: 0 }}
+              <Stack
+                sx={{
+                  minWidth: "100%",
+                  maxWidth: 0,
+                }}
               >
-                {props.backText || "Back to Dashboard"}
-              </Typography>
+                {/* <Stack
+                  onClick={
+                    props.backCallback ||
+                    (() =>
+                      router.push(
+                        props.backRoute || (userDetails ? "/dashboard" : "/")
+                      ))
+                  }
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                > */}
+                <Typography
+                  color={PALETTE.secondary.grey[4]}
+                  noWrap
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                  onClick={
+                    props.backCallback ||
+                    (() =>
+                      router.push(
+                        props.backRoute || (userDetails ? "/dashboard" : "/")
+                      ))
+                  }
+                >
+                  {props.backText || "Back to Dashboard"}
+                </Typography>
+                {/* </Stack> */}
+              </Stack>
             </Stack>
             {props.rightStuff}
           </Stack>
