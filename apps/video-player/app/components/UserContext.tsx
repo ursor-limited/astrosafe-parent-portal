@@ -61,7 +61,7 @@ const UserProvider = (props: IUserProviderProps) => {
       notificationCtx.success("Signed in");
       setSignedIn(true);
     }
-  }, [user?.email, isLoading]);
+  }, [user?.email, isLoading, upgradedNotificationPending]);
 
   const loadUser = () => {
     if (user?.email && user?.sub) {
