@@ -248,9 +248,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [addContentPopoverOpen, setAddContentPopoverOpen] =
     useState<boolean>(false);
 
-  const [headerAddContentPopoverOpen, setHeaderAddContentPopoverOpen] =
-    useState<boolean>(false);
-
   const [starterAddContentDialogOpen, setStarterAddContentPopoverOpen] =
     useState<boolean>(false);
 
@@ -310,6 +307,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
   useEffect(() => {
     !_.isNumber(contentInsertionIndex) && setStaticAddButtonY(null);
   }, [contentInsertionIndex]);
+  // useEffect(() => {
+  //   upgradeDialogOpen && setStaticAddButtonY(null);
+  // }, [upgradeDialogOpen]);
 
   const [contentColumnWidth, setContentColumnWidth] = useState<number>(0);
   useEffect(
@@ -541,7 +541,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     open={addContentPopoverOpen}
                     setOpen={setAddContentPopoverOpen}
                     callback={(type) => contentCallbacks[type]()}
-                    premiumCallback={() => setUpgradeDialogOpen(true)}
+                    premiumCallback={() => {
+                      setUpgradeDialogOpen(true);
+                      setStaticAddButtonY(null);
+                      setAddContentPopoverOpen(false);
+                    }}
                     clickOutsideCloseCallback={() =>
                       setContentInsertionIndex(undefined)
                     }
@@ -966,7 +970,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
       />
       <UpgradeDialog
         open={upgradeDialogOpen}
-        closeCallback={() => setUpgradeDialogOpen(false)}
+        closeCallback={() => {
+          setUpgradeDialogOpen(false);
+          setStaticAddButtonY(null);
+        }}
       />
       <Stack
         sx={{
