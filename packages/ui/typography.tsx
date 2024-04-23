@@ -76,13 +76,13 @@ export interface TypographyProps {
   scale?: number;
   sx?: SxProps;
   htmlTag?: keyof JSX.IntrinsicElements;
+  onClick?: () => void;
   children: React.ReactNode;
 }
 
 export function Typography(props: TypographyProps): JSX.Element {
   return (
     <Box
-      //fontFamily={"Rubik"}
       color={props.color || PALETTE.font.dark}
       fontSize={`${
         (props.scale || 1) * FONT_SIZES[props.variant ?? "normal"]
@@ -96,6 +96,7 @@ export function Typography(props: TypographyProps): JSX.Element {
         (props.scale || 1) * LINE_HEIGHTS[props.variant ?? "normal"]
       }px`}
       maxWidth="fit-content"
+      onClick={props.onClick}
       //@ts-expect-error
       sx={{
         ...props.sx,

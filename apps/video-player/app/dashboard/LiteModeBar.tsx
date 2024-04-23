@@ -36,7 +36,7 @@ const LiteModeBar = (props: {
       marginLeft="auto"
       marginRight="auto"
       width="100%"
-      height={!props.mobile ? "64px" : undefined}
+      height={!props.mobile ? "48px" : undefined}
       sx={{
         background: "linear-gradient(16deg, #F279C5, #1D62F6)",
       }}
@@ -45,8 +45,8 @@ const LiteModeBar = (props: {
       zIndex={999}
       //boxShadow="0 0 24px rgba(0,0,0,0.08)"
       direction={props.mobile ? "column" : "row"}
-      spacing={props.mobile ? "6px" : "24px"}
-      py={props.mobile ? "18px" : undefined}
+      spacing={props.mobile ? "3px" : "16px"}
+      py={props.mobile ? "10px" : undefined}
     >
       <Stack
         direction="row"
@@ -54,7 +54,7 @@ const LiteModeBar = (props: {
         width={props.mobile ? "90%" : undefined}
         justifyContent={props.mobile ? "center" : undefined}
       >
-        <Typography variant="medium" color="rgba(255,255,255,0.83)">
+        <Typography bold color="rgba(255,255,255,0.83)">
           You are currently on Basic Mode
         </Typography>
         {/* <Typography variant="medium" color="rgb(255,255,255)" bold>
@@ -78,7 +78,13 @@ const LiteModeBar = (props: {
         onClick={props.upgradeCallback}
       >
         <Stack sx={{ pointerEvents: "none" }}>
-          <UrsorButton dark fontColor="#4166EE" endIcon={RocketIcon}>
+          <UrsorButton
+            dark
+            size="small"
+            fontColor="#4166EE"
+            endIcon={RocketIcon}
+            iconSize={14}
+          >
             Upgrade to Premium
           </UrsorButton>
         </Stack>

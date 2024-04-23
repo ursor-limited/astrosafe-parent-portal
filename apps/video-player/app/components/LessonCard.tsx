@@ -14,6 +14,7 @@ import NotificationContext from "./NotificationContext";
 import DeletionDialog from "./DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "../dashboard/LinkDialog";
 import _ from "lodash";
+import useOrangeBorder from "./useOrangeBorder";
 
 export const spin = keyframes`
   from {
@@ -54,6 +55,8 @@ const LessonCard = (
   }, []);
 
   const [hovering, setHovering] = useState<boolean>(false);
+
+  const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   return (
     <>
@@ -128,6 +131,9 @@ const LessonCard = (
           boxSizing="border-box"
           sx={{
             transition: "0.2s",
+            outline: orangeBorderOn
+              ? `3px solid ${PALETTE.system.orange}`
+              : undefined,
           }}
           bgcolor="rgb(255,255,255)"
           width="100%"
