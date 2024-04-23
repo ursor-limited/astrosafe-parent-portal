@@ -812,7 +812,6 @@ export default function DashboardPageContents() {
   );
   useEffect(() => {
     if (userDetails.user?.id && freeWorksheetIds.length > 0) {
-      console.log("aaaaa", freeWorksheetIds);
       ApiController.claimWorksheets(userDetails.user.id, freeWorksheetIds).then(
         () =>
           setTimeout(() => {
