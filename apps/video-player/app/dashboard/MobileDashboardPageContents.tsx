@@ -428,13 +428,13 @@ export default function MobileDashboardPageContents() {
           videosLoaded &&
           lessonsLoaded &&
           linksLoaded &&
-          textsLoaded &&
+          //textsLoaded &&
           imagesLoaded) ||
           worksheets.length > 0 ||
           videos.length > 0 ||
           images.length > 0 ||
           links.length > 0 ||
-          texts.length > 0 ||
+          // texts.length > 0 ||
           lessons.length > 0
       ),
     [
@@ -442,10 +442,19 @@ export default function MobileDashboardPageContents() {
       videosLoaded,
       imagesLoaded,
       linksLoaded,
-      textsLoaded,
+      //textsLoaded,
       lessonsLoaded,
+      videos,
+      images,
+      links,
+      lessons,
+      worksheets,
     ]
   );
+
+  useEffect(() => {
+    setTimeout(() => setAnyLoaded(true), 6000);
+  }, []);
 
   const [filteredCards, setFilteredCards] = useState<
     {
