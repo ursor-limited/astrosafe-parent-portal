@@ -1,7 +1,13 @@
 "use client";
 
 import { Stack, alpha, keyframes } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import React, {
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
@@ -39,10 +45,13 @@ import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
 import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
+import { createPortal } from "react-dom";
+import HoverCard from "./HoverCard";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
 const RIGHT_COLUMN_Y_OFFSET = 60;
+const CONTENT_PADDING_X = 24;
 
 export const fadeIn = keyframes`
 from {
@@ -354,8 +363,87 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [lesson?.title]
   );
 
+  const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
+  const handleDraggingEnd = useCallback(() => setDraggedContentId(null), []);
+  useEffect(() => {
+    window.addEventListener("mouseup", handleDraggingEnd);
+    return () => {
+      window.removeEventListener("mouseup", handleDraggingEnd);
+    };
+  }, [handleDraggingEnd]);
+
+  const [draggedElement, setDraggedElement] = useState<HTMLElement | null>(
+    null
+  );
+  const [draggedElementWidth, setDraggedElementWidth] = useState<number>(0);
+  const [
+    draggedElementTopMouseYSeparation,
+    setDraggedElementTopMouseYSeparation,
+  ] = useState<number>(0);
+  useEffect(() => {
+    if (draggedContentId) {
+      const el = document.getElementById(draggedContentId);
+      setDraggedElement(el);
+      setDraggedElementWidth(el?.getBoundingClientRect?.()?.width ?? 0);
+      setDraggedElementTopMouseYSeparation(
+        mouseY - (el?.getBoundingClientRect?.()?.top ?? 0)
+      );
+    } else {
+      setDraggedElement(null);
+    }
+  }, [draggedContentId]);
+
+  const handleMouseMove = useCallback(
+    (event: any) => {
+      !addContentPopoverOpen &&
+        !worksheetDialogOpen &&
+        !videoDialogOpen &&
+        !imageDialogOpen &&
+        !linkDialogOpen &&
+        !textDialogOpen &&
+        setMouseY(event.pageY);
+    },
+    [
+      addContentPopoverOpen,
+      worksheetDialogOpen,
+      videoDialogOpen,
+      imageDialogOpen,
+      linkDialogOpen,
+      textDialogOpen,
+    ]
+  );
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [handleMouseMove]);
+  // onMouseMove={(event) => {
+  //   !addContentPopoverOpen &&
+  //     !worksheetDialogOpen &&
+  //     !videoDialogOpen &&
+  //     !imageDialogOpen &&
+  //     !linkDialogOpen &&
+  //     !textDialogOpen &&
+  //     setMouseY(event.pageY);
+  // }}
+
   return (
     <>
+      {draggedElement
+        ? createPortal(
+            <HoverCard
+              y={mouseY - draggedElementTopMouseYSeparation}
+              x={
+                CONTENT_PADDING_X +
+                (contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0)
+              }
+              element={draggedElement}
+              width={draggedElementWidth}
+            />,
+            document.body
+          )
+        : null}
       <Stack
         ref={setPageRef}
         px="20px"
@@ -366,9 +454,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
-        sx={{
-          transition: "1s",
-        }}
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard
@@ -478,85 +563,101 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   top: event?.deltaY + pageRef.scrollTop,
                 });
               }}
-              onMouseMove={(event) => {
-                !addContentPopoverOpen &&
-                  !worksheetDialogOpen &&
-                  !videoDialogOpen &&
-                  !imageDialogOpen &&
-                  !linkDialogOpen &&
-                  !textDialogOpen &&
-                  setMouseY(event.pageY);
-              }}
-              onMouseEnter={() => {
-                setHoveringOnContentCard(false);
-              }}
-              onMouseLeave={() => {
-                setHoveringOnContentCard(true);
-              }}
+              // onMouseMove={(event) => {
+              //   !addContentPopoverOpen &&
+              //     !worksheetDialogOpen &&
+              //     !videoDialogOpen &&
+              //     !imageDialogOpen &&
+              //     !linkDialogOpen &&
+              //     !textDialogOpen &&
+              //     setMouseY(event.pageY);
+              // }}
+              // onMouseEnter={() => {
+              //   setHoveringOnContentCard(false);
+              // }}
+              // onMouseLeave={() => {
+              //   setHoveringOnContentCard(true);
+              // }}
             >
-              <Stack
-                position="absolute"
-                top={addButtonY}
-                left={0}
-                right={0}
-                marginLeft="auto"
-                marginRight="auto"
-                onClick={() => {
-                  setStaticAddButtonY(mouseY);
-                  if (addContentPopoverOpen) return;
-                  const dotYs =
-                    lesson?.contentOrder.map(
-                      (id) =>
-                        (document
-                          .getElementById(`${id}dot`)
-                          ?.getBoundingClientRect?.()?.top ?? 0) +
-                        document.body.scrollTop
-                    ) ?? [];
-                  if (mouseY < (dotYs?.[0] ?? 0)) {
-                    setContentInsertionIndex(0);
-                  } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                    setContentInsertionIndex(contents.length);
-                  } else {
-                    const closestY = dotYs?.reduce(
-                      (a, b) => (b <= mouseY && a < b ? b : a),
-                      0
-                    );
-                    const closestNumberIndex = dotYs?.indexOf(closestY);
-                    setContentInsertionIndex(
-                      closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                    );
-                  }
-                }}
-                alignItems="center"
-                zIndex={8}
-              >
+              {draggedContentId ? (
                 <Stack
-                  sx={{
-                    opacity:
-                      contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.2s",
-                  }}
-                >
-                  <AddContentButton
-                    open={addContentPopoverOpen}
-                    setOpen={setAddContentPopoverOpen}
-                    callback={(type) => contentCallbacks[type]()}
-                    premiumCallback={() => {
-                      setUpgradeDialogOpen(true);
-                      setStaticAddButtonY(null);
-                      setAddContentPopoverOpen(false);
-                    }}
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
+                  bgcolor={PALETTE.secondary.purple[1]}
+                  height="16px"
+                  width="16px"
+                  borderRadius="100%"
+                  position="absolute"
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  top={mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y}
+                  zIndex={2}
+                />
+              ) : (
+                <Stack
+                  position="absolute"
+                  top={addButtonY}
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  onClick={() => {
+                    setStaticAddButtonY(mouseY);
+                    if (addContentPopoverOpen) return;
+                    const dotYs =
+                      lesson?.contentOrder.map(
+                        (id) =>
+                          (document
+                            .getElementById(`${id}dot`)
+                            ?.getBoundingClientRect?.()?.top ?? 0) +
+                          document.body.scrollTop
+                      ) ?? [];
+                    if (mouseY < (dotYs?.[0] ?? 0)) {
+                      setContentInsertionIndex(0);
+                    } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
+                      setContentInsertionIndex(contents.length);
+                    } else {
+                      const closestY = dotYs?.reduce(
+                        (a, b) => (b <= mouseY && a < b ? b : a),
+                        0
+                      );
+                      const closestNumberIndex = dotYs?.indexOf(closestY);
+                      setContentInsertionIndex(
+                        closestNumberIndex + (mouseY < closestY ? 0 : 1)
+                      );
                     }
-                  />
+                  }}
+                  alignItems="center"
+                  zIndex={8}
+                >
+                  <Stack
+                    sx={{
+                      opacity:
+                        contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                      transition: "0.2s",
+                    }}
+                  >
+                    <AddContentButton
+                      open={addContentPopoverOpen}
+                      setOpen={setAddContentPopoverOpen}
+                      callback={(type) => contentCallbacks[type]()}
+                      premiumCallback={() => {
+                        setUpgradeDialogOpen(true);
+                        setStaticAddButtonY(null);
+                        setAddContentPopoverOpen(false);
+                      }}
+                      clickOutsideCloseCallback={() =>
+                        setContentInsertionIndex(undefined)
+                      }
+                    />
+                  </Stack>
                 </Stack>
-              </Stack>
+              )}
             </Stack>
           ) : null}
           <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
             <Stack
-              px="24px"
+              px={`${CONTENT_PADDING_X}px`}
               ref={setContentsColumnRef}
               position="relative"
               pb="48px"
@@ -631,6 +732,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       setImageEditingDialogId={setImageEditingDialogId}
                       setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                       updateCallback={loadLesson}
+                      dragStartCallback={setDraggedContentId}
+                      draggedContentId={
+                        draggedContentId ? draggedContentId : undefined
+                      }
                       wrapper={(card, i) => (
                         <Stack
                           position="relative"
@@ -648,6 +753,16 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             );
                           }}
                           pb={`${CARD_SPACING}px`}
+                          sx={{
+                            opacity:
+                              //@ts-ignore
+                              draggedContentId === card?.props?.id ? 0 : 1,
+                            pointerEvents:
+                              //@ts-ignore
+                              draggedContentId === card?.props?.id
+                                ? "none"
+                                : undefined,
+                          }}
                         >
                           <Stack
                             width="96%"
