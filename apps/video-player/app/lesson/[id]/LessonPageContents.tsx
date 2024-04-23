@@ -47,6 +47,7 @@ import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
 import { createPortal } from "react-dom";
 import HoverCard from "./HoverCard";
+import { cardClasses } from "@mui/material";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
@@ -117,6 +118,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [contentOrder, setContentOrder] = useState<string[]>([]);
+  useEffect(() => {
+    contentOrder.length === 0 && setContentOrder(lesson?.contentOrder || []);
+  }, [lesson?.contentOrder]);
+
   const [contents, setContents] = useState<
     {
       type: AstroLessonContent;
@@ -128,13 +134,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
       setContents(
         lesson
           ? _.compact([
-              ...lesson.contentOrder.map((contentId) =>
+              ...contentOrder.map((contentId) =>
                 lesson.contents.find((c) => c.contentId === contentId)
               ),
             ])
           : []
       ),
-    [lesson?.contents, lesson?.contentOrder]
+    [lesson?.contents, contentOrder]
   );
 
   const [contentsWithCardHeight, setContentsWithCardHeight] = useState<
@@ -159,7 +165,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     var rightHeightSum = RIGHT_COLUMN_Y_OFFSET;
     setContentsWithSide(
       _.compact(
-        lesson.contentOrder.map((contentId, i) => {
+        contentOrder.map((contentId, i) => {
           const content = contentsWithCardHeight.find(
             (co) => co.contentId === contentId
           );
@@ -366,21 +372,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
   const reorder = useCallback(() => {
     if (!lesson || !draggedContentId) return;
-    const newIndex = getContentInsertionIndex(
-      mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y
+    const newIndex = getContentMovingIndex(
+      mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
+      contentOrder.indexOf(draggedContentId)
     );
-    if (newIndex !== lesson.contentOrder.indexOf(draggedContentId)) {
-      const orderWithout = lesson.contentOrder.filter(
-        (id) => id !== draggedContentId
-      );
+    if (newIndex !== contentOrder.indexOf(draggedContentId)) {
+      const orderWithout = contentOrder.filter((id) => id !== draggedContentId);
       const newOrder = [
         ...orderWithout.slice(0, newIndex),
         draggedContentId,
         ...orderWithout.slice(newIndex),
       ];
-      console.log(lesson.contentOrder, newOrder);
+      ApiController.updateLesson(props.lessonId, {
+        contentOrder: newOrder,
+      });
+      setContentOrder(newOrder);
     }
   }, [lesson, draggedContentId, mouseY]);
+
   const handleDraggingEnd = useCallback(() => {
     reorder();
     setDraggedContentId(null);
@@ -450,7 +459,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
-      lesson?.contentOrder.map(
+      contentOrder.map(
         (id) =>
           (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
             ?.top ?? 0) + document.body.scrollTop
@@ -463,6 +472,34 @@ export default function LessonPageContents(props: { lessonId: string }) {
       const closestY = dotYs?.reduce((a, b) => (b <= y && a < b ? b : a), 0);
       const closestNumberIndex = dotYs?.indexOf(closestY);
       return closestNumberIndex + (y < closestY ? 0 : 1);
+    }
+  };
+
+  const getContentMovingIndex = (y: number, currentIndex: number) => {
+    console.log(currentIndex, "-----mmmm");
+    const dotYs =
+      contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce(
+        (a, b) => (Math.abs(y - a) < Math.abs(y - b) ? a : b),
+        dotYs[0]
+      );
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      console.log(closestY, closestNumberIndex, dotYs, y);
+      console.log("closest");
+      if (closestNumberIndex === currentIndex) {
+        return currentIndex;
+      } else {
+        return Math.max(0, closestNumberIndex - (y < closestY ? 1 : 0));
+      }
     }
   };
 
@@ -923,6 +960,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     setImageEditingDialogId={setImageEditingDialogId}
                     setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                     updateCallback={loadLesson}
+                    dragStartCallback={setDraggedContentId}
                     wrapper={(card, i) => (
                       <Stack
                         position="relative"
@@ -940,6 +978,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           );
                         }}
                         pb={`${CARD_SPACING}px`}
+                        sx={{
+                          opacity:
+                            //@ts-ignore
+                            draggedContentId === card?.props?.id ? 0 : 1,
+                          pointerEvents:
+                            //@ts-ignore
+                            draggedContentId === card?.props?.id
+                              ? "none"
+                              : undefined,
+                          transition: "0.2s",
+                        }}
                         alignItems="flex-end"
                       >
                         <Stack
@@ -954,7 +1003,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           top={`${DOT_CARD_Y}px`}
                           zIndex={2}
                         />
-                        <Stack width="96%">{card}</Stack>
+                        <Stack
+                          width="96%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
                       </Stack>
                     )}
                   />

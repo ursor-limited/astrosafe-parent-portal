@@ -84,10 +84,14 @@ const ContentCards = (props: {
             const image = props.images?.find((i) => i.id === c.contentId);
             return image ? (
               <Stack
-                id={image.id}
+                id={c.contentId}
+                key={c.contentId}
                 sx={{
                   pointerEvents:
                     props.draggedContentId === image.id ? "none" : undefined,
+                }}
+                onMouseDown={() => {
+                  props.dragStartCallback?.(c.contentId);
                 }}
               >
                 <ImageCard
@@ -101,7 +105,7 @@ const ContentCards = (props: {
                     props.setHeight?.(image.id, height);
                   }}
                   noFooter
-                  onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                  //onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 />
               </Stack>
             ) : null;

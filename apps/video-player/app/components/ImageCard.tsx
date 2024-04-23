@@ -66,7 +66,6 @@ const ImageCard = (
         }}
         position="relative"
         pb="10px"
-        onMouseDown={props.onDragStart}
       >
         <Stack position="absolute" top="16px" right="16px" zIndex={2}>
           <UrsorActionButton
