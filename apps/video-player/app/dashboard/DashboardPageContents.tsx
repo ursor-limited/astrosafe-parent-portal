@@ -933,6 +933,10 @@ export default function DashboardPageContents() {
     ]
   );
 
+  useEffect(() => {
+    setTimeout(() => setAnyLoaded(true), 6000);
+  }, []);
+
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
