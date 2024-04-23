@@ -364,7 +364,27 @@ export default function LessonPageContents(props: { lessonId: string }) {
   );
 
   const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
-  const handleDraggingEnd = useCallback(() => setDraggedContentId(null), []);
+  const reorder = useCallback(() => {
+    if (!lesson || !draggedContentId) return;
+    const newIndex = getContentInsertionIndex(
+      mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y
+    );
+    if (newIndex !== lesson.contentOrder.indexOf(draggedContentId)) {
+      const orderWithout = lesson.contentOrder.filter(
+        (id) => id !== draggedContentId
+      );
+      const newOrder = [
+        ...orderWithout.slice(0, newIndex),
+        draggedContentId,
+        ...orderWithout.slice(newIndex),
+      ];
+      console.log(lesson.contentOrder, newOrder);
+    }
+  }, [lesson, draggedContentId, mouseY]);
+  const handleDraggingEnd = useCallback(() => {
+    reorder();
+    setDraggedContentId(null);
+  }, [reorder]);
   useEffect(() => {
     window.addEventListener("mouseup", handleDraggingEnd);
     return () => {
@@ -427,6 +447,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
   //     !textDialogOpen &&
   //     setMouseY(event.pageY);
   // }}
+
+  const getContentInsertionIndex = (y: number) => {
+    const dotYs =
+      lesson?.contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce((a, b) => (b <= y && a < b ? b : a), 0);
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      return closestNumberIndex + (y < closestY ? 0 : 1);
+    }
+  };
 
   return (
     <>
@@ -604,28 +642,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   onClick={() => {
                     setStaticAddButtonY(mouseY);
                     if (addContentPopoverOpen) return;
-                    const dotYs =
-                      lesson?.contentOrder.map(
-                        (id) =>
-                          (document
-                            .getElementById(`${id}dot`)
-                            ?.getBoundingClientRect?.()?.top ?? 0) +
-                          document.body.scrollTop
-                      ) ?? [];
-                    if (mouseY < (dotYs?.[0] ?? 0)) {
-                      setContentInsertionIndex(0);
-                    } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                      setContentInsertionIndex(contents.length);
-                    } else {
-                      const closestY = dotYs?.reduce(
-                        (a, b) => (b <= mouseY && a < b ? b : a),
-                        0
-                      );
-                      const closestNumberIndex = dotYs?.indexOf(closestY);
-                      setContentInsertionIndex(
-                        closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                      );
-                    }
+                    setContentInsertionIndex(getContentInsertionIndex(mouseY));
                   }}
                   alignItems="center"
                   zIndex={8}
@@ -762,6 +779,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                               draggedContentId === card?.props?.id
                                 ? "none"
                                 : undefined,
+                            transition: "0.2s",
                           }}
                         >
                           <Stack
