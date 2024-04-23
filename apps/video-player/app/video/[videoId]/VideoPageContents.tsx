@@ -274,6 +274,8 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 width={videoWidth}
                 height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
                 setDuration={(d) => d && setDuration(d)}
+                startTime={details.startTime}
+                endTime={details.endTime}
                 noKitemark={videoWidth < VIDEO_WIDTH}
                 top="120px"
                 playingCallback={(p) => setPlaying(p)}
