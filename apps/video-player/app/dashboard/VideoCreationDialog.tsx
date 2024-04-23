@@ -309,6 +309,8 @@ const VideoCreationDialog = (props: {
                   setDuration={(d) => {
                     d && setDuration(d);
                   }}
+                  startTime={range?.[0] ?? 0}
+                  endTime={range?.[1] ?? 10}
                   noKitemark
                   top="120px"
                   playingCallback={(p) => setPlaying(p)}
