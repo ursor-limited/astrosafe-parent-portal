@@ -125,7 +125,9 @@ const PageCard = (props: {
                   {/* </Stack> */}
                 </Stack>
               </Stack>
-            ) : null}
+            ) : (
+              <Stack />
+            )}
             {props.rightStuff}
           </Stack>
           <Stack spacing="14px" px="24px">

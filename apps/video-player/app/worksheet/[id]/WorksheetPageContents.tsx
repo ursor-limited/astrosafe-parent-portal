@@ -38,12 +38,6 @@ import NumberBondWorksheet, {
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
-
-const A4_HEIGHT = 297;
-const A4_WIDTH = 210;
-
-const DEFAULT_WIDTH = 566;
 
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
@@ -474,22 +468,6 @@ export default function WorksheetPageContents(props: {
 
   const notificationCtx = useContext(NotificationContext);
 
-  const [pageIndex, setPageIndex] = useState<number>(0);
-  useEffect(() => setPageIndex(0), [props.details.updatedAt]);
-
-  const [cardRef, setCardRef] = useState<HTMLElement | null>(null);
-  const [cardWidth, setCardWidth] = useState<number>(DEFAULT_WIDTH);
-  useEffect(() => {
-    cardRef && setCardWidth(cardRef.getBoundingClientRect?.()?.width);
-  }, [width, cardRef?.getBoundingClientRect?.()?.width]);
-
-  const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
-  const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
-  useEffect(() => {
-    setWorksheetPageWidth(cardWidth);
-    setWorksheetPageHeight((cardWidth * A4_HEIGHT) / A4_WIDTH);
-  }, [width, cardWidth]);
-
   return worksheet ? (
     <>
       <Stack
@@ -643,79 +621,7 @@ export default function WorksheetPageContents(props: {
             userDetails.user.id === props.details.creatorId
           }
         >
-          <Stack
-            ref={setCardRef}
-            sx={{
-              transform: `scale(${(0.27 * worksheetPageWidth) / A4_WIDTH})`,
-              transformOrigin: "top left",
-            }}
-            position="absolute"
-            top={0}
-            left={0}
-          >
-            {props.details.worksheetComponent === "equation" ? (
-              <EquationWorksheet
-                title={props.details.title}
-                description={props.details.description}
-                orientation={props.details.settings.orientation}
-                topic={
-                  (props.details.settings as IEquationWorksheetSettings).topic
-                }
-                pairs={props.details.values}
-                pageIndex={pageIndex}
-              />
-            ) : (
-              <NumberBondWorksheet
-                title={props.details.title}
-                description={props.details.description}
-                orientation={props.details.settings.orientation}
-                sum={
-                  (props.details.settings as INumberBondWorksheetSettings).sum
-                }
-                empty={
-                  (props.details.settings as INumberBondWorksheetSettings).empty
-                }
-                leftNumbers={props.details.values}
-                pageIndex={pageIndex}
-              />
-            )}
-          </Stack>
-          {nPages > 1 ? (
-            <Stack
-              direction="row"
-              spacing="10px"
-              position="absolute"
-              top={`${worksheetPageHeight - 64}px`}
-              right="20px"
-              zIndex={2}
-            >
-              <Stack
-                sx={{
-                  opacity: pageIndex === 0 ? 0.4 : 1,
-                  pointerEvents: pageIndex === 0 ? "none" : undefined,
-                }}
-              >
-                <CircularButton
-                  icon={ChevronLeft}
-                  color={PALETTE.secondary.pink[3]}
-                  onClick={() => setPageIndex(pageIndex - 1)}
-                />
-              </Stack>
-              <Stack
-                sx={{
-                  opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
-                  pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
-                }}
-              >
-                <CircularButton
-                  icon={ChevronRight}
-                  color={PALETTE.secondary.pink[3]}
-                  onClick={() => setPageIndex(pageIndex + 1)}
-                />
-              </Stack>
-            </Stack>
-          ) : null}
-          {/* {nPages ? (
+          {nPages ? (
             <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
               <UrsorFadeIn delay={500} duration={1000} fullWidth>
                 <Carousel
@@ -760,7 +666,7 @@ export default function WorksheetPageContents(props: {
                 />
               </UrsorFadeIn>
             </Stack>
-          ) : null} */}
+          ) : null}
         </PageCard>
       </Stack>
       <DeletionDialog

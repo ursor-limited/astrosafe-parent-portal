@@ -20,6 +20,7 @@ import { useWindowSize } from "usehooks-ts";
 import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
 import { PALETTE } from "ui";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { useRouter } from "next/navigation";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -29,6 +30,7 @@ const DEFAULT_WIDTH = 566;
 
 const TimelineWorksheetCard = (
   props: IWorksheet & {
+    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -63,6 +65,8 @@ const TimelineWorksheetCard = (
   const [nPages, setNPages] = useState<number>(0);
   useEffect(() => setNPages(getNPages(props)), [props]);
 
+  const router = useRouter();
+
   return (
     <>
       <TimelineCard
@@ -83,16 +87,25 @@ const TimelineWorksheetCard = (
           height={`${worksheetPageHeight}px`}
           borderRadius="8px"
           overflow="hidden"
-          //ref={setWorksheetPageRef}
         >
           <Stack
             sx={{
-              transform: `scale(${(0.4 * worksheetPageWidth) / A4_WIDTH})`,
+              transform: `scale(${(0.27 * worksheetPageWidth) / A4_WIDTH})`,
               transformOrigin: "top left",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+              cursor: "pointer",
             }}
             position="absolute"
             top={0}
             left={0}
+            onClick={() =>
+              router.push(
+                `/worksheet/${props.id}${
+                  props.lessonId ? `?worksheet=${props.lessonId}` : ""
+                }`
+              )
+            }
           >
             {props.worksheetComponent === "equation" ? (
               <EquationWorksheet
@@ -132,7 +145,7 @@ const TimelineWorksheetCard = (
               >
                 <CircularButton
                   icon={ChevronLeft}
-                  color={PALETTE.secondary.pink[3]}
+                  color={PALETTE.secondary.grey[3]}
                   onClick={() => setPageIndex(pageIndex - 1)}
                 />
               </Stack>
@@ -144,7 +157,7 @@ const TimelineWorksheetCard = (
               >
                 <CircularButton
                   icon={ChevronRight}
-                  color={PALETTE.secondary.pink[3]}
+                  color={PALETTE.secondary.grey[3]}
                   onClick={() => setPageIndex(pageIndex + 1)}
                 />
               </Stack>

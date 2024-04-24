@@ -116,6 +116,7 @@ const ContentCards = (props: {
             return worksheet ? (
               <TimelineWorksheetCard
                 {...worksheet}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() =>
                   props.setWorksheetEditingDialogId(c.contentId)
