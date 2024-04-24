@@ -12,6 +12,7 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import React, { useState } from "react";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { Stack } from "@mui/system";
+import LessonImageCard from "./cards/LessonImageCard";
 
 const ContentCards = (props: {
   videos: IVideo[];
@@ -83,32 +84,43 @@ const ContentCards = (props: {
           } else if (c.type === "image") {
             const image = props.images?.find((i) => i.id === c.contentId);
             return image ? (
-              <Stack
-                id={c.contentId}
+              <LessonImageCard
+                {...image}
                 key={c.contentId}
-                sx={{
-                  pointerEvents:
-                    props.draggedContentId === image.id ? "none" : undefined,
+                editingCallback={() => props.setImageEditingDialogId(image.id)}
+                deletionCallback={props.updateCallback}
+                setHeight={(height) => {
+                  props.setHeight?.(image.id, height);
                 }}
-                onMouseDown={() => {
-                  props.dragStartCallback?.(c.contentId);
-                }}
-              >
-                <ImageCard
-                  key={image.id}
-                  {...image}
-                  editingCallback={() =>
-                    props.setImageEditingDialogId(image.id)
-                  }
-                  deletionCallback={props.updateCallback}
-                  setHeight={(height) => {
-                    props.setHeight?.(image.id, height);
-                  }}
-                  noFooter
-                  //onDragStart={() => props.dragStartCallback?.(c.contentId)}
-                />
-              </Stack>
-            ) : null;
+                onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                dragging={props.draggedContentId === image.id}
+              />
+            ) : // <Stack
+            //   id={c.contentId}
+            //   key={c.contentId}
+            //   sx={{
+            //     pointerEvents:
+            //       props.draggedContentId === image.id ? "none" : undefined,
+            //   }}
+            //   onMouseDown={() => {
+            //     props.dragStartCallback?.(c.contentId);
+            //   }}
+            // >
+            //   <ImageCard
+            //     key={image.id}
+            //     {...image}
+            //     editingCallback={() =>
+            //       props.setImageEditingDialogId(image.id)
+            //     }
+            //     deletionCallback={props.updateCallback}
+            //     setHeight={(height) => {
+            //       props.setHeight?.(image.id, height);
+            //     }}
+            //     noFooter
+            //     //onDragStart={() => props.dragStartCallback?.(c.contentId)}
+            //   />
+            // </Stack>
+            null;
           } else if (c.type === "worksheet") {
             const worksheet = props.worksheets?.find(
               (w) => w.id === c.contentId

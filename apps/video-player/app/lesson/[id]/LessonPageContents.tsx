@@ -476,7 +476,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   };
 
   const getContentMovingIndex = (y: number, currentIndex: number) => {
-    console.log(currentIndex, "-----mmmm");
     const dotYs =
       contentOrder.map(
         (id) =>
@@ -503,20 +502,42 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }
   };
 
+  console.log(
+    "000",
+    contentsColumnRef?.getBoundingClientRect?.()?.[
+      contentsWithSide.find((c) => c.contentId === draggedContentId)?.left
+        ? "left"
+        : "right"
+    ] ?? 0
+  );
+
   return (
     <>
       {draggedElement
         ? createPortal(
             <HoverCard
-              y={mouseY - draggedElementTopMouseYSeparation}
+              y={
+                mouseY -
+                draggedElementTopMouseYSeparation -
+                (contentsColumnRef?.getBoundingClientRect?.()?.top ?? 0)
+              }
               x={
-                CONTENT_PADDING_X +
-                (contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0)
+                CONTENT_PADDING_X //+
+                // (contentsColumnRef?.getBoundingClientRect?.()?.[
+                //   contentsWithSide.find((c) => c.contentId === draggedContentId)
+                //     ?.left
+                //     ? "left"
+                //     : "right"
+                // ] ?? 0)
+              }
+              left={
+                contentsWithSide.find((c) => c.contentId === draggedContentId)
+                  ?.left
               }
               element={draggedElement}
               width={draggedElementWidth}
             />,
-            document.body
+            contentsColumnRef ?? document.body
           )
         : null}
       <Stack
