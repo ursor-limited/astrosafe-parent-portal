@@ -109,7 +109,6 @@ const TimelineCard = (props: {
               <Typography
                 variant="medium"
                 bold
-                maxLines={2}
                 color={PALETTE.secondary.grey[5]}
               >
                 {props.title}
