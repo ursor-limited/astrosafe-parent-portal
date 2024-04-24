@@ -372,17 +372,21 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
   const reorder = useCallback(() => {
     if (!lesson || !draggedContentId) return;
+    const draggedContentIdIndex = contentOrder.indexOf(draggedContentId);
     const newIndex = getContentMovingIndex(
       mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
-      contentOrder.indexOf(draggedContentId)
+      draggedContentIdIndex
     );
-    if (newIndex !== contentOrder.indexOf(draggedContentId)) {
-      const orderWithout = contentOrder.filter((id) => id !== draggedContentId);
+    if (newIndex !== draggedContentIdIndex) {
+      //const orderWithout = contentOrder.filter((id) => id !== draggedContentId);
       const newOrder = [
-        ...orderWithout.slice(0, newIndex),
+        ...contentOrder
+          .slice(0, newIndex)
+          .filter((id) => id !== draggedContentId),
         draggedContentId,
-        ...orderWithout.slice(newIndex),
+        ...contentOrder.slice(newIndex).filter((id) => id !== draggedContentId),
       ];
+      //const newOrderWithoutOldId =  draggedContentIdIndex < newIndex ? [...newOrder.slice(0,draggedContentId)]
       ApiController.updateLesson(props.lessonId, {
         contentOrder: newOrder,
       });
@@ -492,12 +496,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
         dotYs[0]
       );
       const closestNumberIndex = dotYs?.indexOf(closestY);
-      console.log(closestY, closestNumberIndex, dotYs, y);
-      console.log("closest");
       if (closestNumberIndex === currentIndex) {
         return currentIndex;
       } else {
-        return Math.max(0, closestNumberIndex - (y < closestY ? 1 : 0));
+        return Math.max(0, closestNumberIndex + (y < closestY ? 0 : 1));
       }
     }
   };

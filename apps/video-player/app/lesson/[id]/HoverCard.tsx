@@ -21,6 +21,7 @@ const HoverCard = (props: {
       top={props.y}
       left={props.left ? props.x : undefined}
       right={!props.left ? props.x : undefined}
+      zIndex={5}
     >
       <div ref={ref} style={{ width: `${props.width}px` }} />
     </Stack>

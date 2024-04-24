@@ -1,8 +1,11 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import GrabberIcon from "@/images/icons/GrabberIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
 
 const LessonCard = (props: {
   id: string;
@@ -12,6 +15,8 @@ const LessonCard = (props: {
   setHeight?: (height: number) => void;
   onDragStart?: () => void;
   dragging?: boolean;
+  editingCallback?: () => void;
+  deletionCallback?: () => void;
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
@@ -30,7 +35,6 @@ const LessonCard = (props: {
       p="8px"
       pt={0}
       boxShadow="0 0 20px rgba(0,0,0,0.08)"
-      onMouseDown={props.onDragStart}
       bgcolor="rgb(255,255,255)"
       sx={{
         //pointerEvents: props.dragging ? "none" : undefined,
@@ -39,19 +43,50 @@ const LessonCard = (props: {
           : undefined,
       }}
     >
-      <Stack
-        height="48px"
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          cursor: props.dragging ? "grabbing" : "grab",
-          svg: {
-            transform: "rotate(90deg)",
-          },
-        }}
-      >
-        <GrabberIcon width="20px" height="20px" />
+      <Stack direction="row" width="100%" height="48px">
+        <Stack
+          width="100%"
+          alignItems="center"
+          justifyContent="center"
+          sx={{
+            cursor: props.dragging ? "grabbing" : "grab",
+            svg: {
+              transform: "rotate(90deg)",
+            },
+          }}
+          onMouseDown={props.onDragStart}
+        >
+          <GrabberIcon width="20px" height="20px" />
+        </Stack>
+        <Stack
+          position="relative"
+          width={0}
+          overflow="visible"
+          justifyContent="center"
+        >
+          <Stack position="absolute" right={0}>
+            <UrsorActionButton
+              size="32px"
+              iconSize="16px"
+              shadow
+              actions={[
+                {
+                  text: "Edit",
+                  kallback: () => props.editingCallback?.(),
+                  icon: PencilIcon,
+                },
+                {
+                  text: "Delete",
+                  kallback: () => props.deletionCallback?.(),
+                  icon: TrashcanIcon,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          </Stack>
+        </Stack>
       </Stack>
+
       <Stack borderRadius="8px" overflow="hidden">
         {props.children}
       </Stack>
