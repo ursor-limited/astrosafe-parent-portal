@@ -43,6 +43,8 @@ import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
 
+const DEFAULT_WIDTH = 566;
+
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
     const params = worksheet.settings as IEquationWorksheetSettings;
@@ -475,6 +477,12 @@ export default function WorksheetPageContents(props: {
   const [pageIndex, setPageIndex] = useState<number>(0);
   useEffect(() => setPageIndex(0), [props.details.updatedAt]);
 
+  const [cardRef, setCardRef] = useState<HTMLElement | null>(null);
+  const [cardWidth, setCardWidth] = useState<number>(DEFAULT_WIDTH);
+  useEffect(() => {
+    cardRef && setCardWidth(cardRef.getBoundingClientRect?.()?.width);
+  }, [width, cardRef?.getBoundingClientRect?.()?.width]);
+
   const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
   const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
   useEffect(() => {
@@ -636,6 +644,7 @@ export default function WorksheetPageContents(props: {
           }
         >
           <Stack
+            ref={setCardRef}
             sx={{
               transform: `scale(${(0.27 * worksheetPageWidth) / A4_WIDTH})`,
               transformOrigin: "top left",
@@ -644,23 +653,29 @@ export default function WorksheetPageContents(props: {
             top={0}
             left={0}
           >
-            {props.worksheetComponent === "equation" ? (
+            {props.details.worksheetComponent === "equation" ? (
               <EquationWorksheet
-                title={props.title}
-                description={props.description}
-                orientation={props.settings.orientation}
-                topic={(props.settings as IEquationWorksheetSettings).topic}
-                pairs={props.values}
+                title={props.details.title}
+                description={props.details.description}
+                orientation={props.details.settings.orientation}
+                topic={
+                  (props.details.settings as IEquationWorksheetSettings).topic
+                }
+                pairs={props.details.values}
                 pageIndex={pageIndex}
               />
             ) : (
               <NumberBondWorksheet
-                title={props.title}
-                description={props.description}
-                orientation={props.settings.orientation}
-                sum={(props.settings as INumberBondWorksheetSettings).sum}
-                empty={(props.settings as INumberBondWorksheetSettings).empty}
-                leftNumbers={props.values}
+                title={props.details.title}
+                description={props.details.description}
+                orientation={props.details.settings.orientation}
+                sum={
+                  (props.details.settings as INumberBondWorksheetSettings).sum
+                }
+                empty={
+                  (props.details.settings as INumberBondWorksheetSettings).empty
+                }
+                leftNumbers={props.details.values}
                 pageIndex={pageIndex}
               />
             )}

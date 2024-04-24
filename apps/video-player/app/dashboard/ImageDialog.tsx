@@ -294,7 +294,7 @@ export default function ImageDialog(props: IImageDialogProps) {
               value={title}
               placeholder="Optional"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setTitle(event.target.value.slice(0, 40));
+                setTitle(event.target.value);
               }}
               leftAlign
               width="100%"
