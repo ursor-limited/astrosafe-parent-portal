@@ -52,7 +52,7 @@ const ContentCards = (props: {
                 lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() =>
-                  props.setImageEditingDialogId(c.contentId)
+                  props.setVideoEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
                 setHeight={(height) => {

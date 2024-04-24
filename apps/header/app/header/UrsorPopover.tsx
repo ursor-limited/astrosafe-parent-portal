@@ -46,8 +46,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   const [yOffset, setYOffset] = useState<number | undefined>(undefined);
   const [maxWidth, setMaxWidth] = useState<number | undefined>(undefined);
 
-  console.log(maxWidth);
-
   const [referenceElement, setReferenceElement] =
     React.useState<HTMLElement | null>(null);
   const [popperElement, setPopperElement] = React.useState(null);

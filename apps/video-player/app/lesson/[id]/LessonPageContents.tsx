@@ -76,7 +76,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const loadLesson = () =>
     ApiController.getLessonWithContents(props.lessonId).then(
       (response: any) => {
-        console.log("ww", response?.lesson);
         if (!response) return;
         setStaticAddButtonY(null);
         response?.lesson && setLesson(response.lesson);
@@ -504,15 +503,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
       }
     }
   };
-
-  console.log(
-    "000",
-    contentsColumnRef?.getBoundingClientRect?.()?.[
-      contentsWithSide.find((c) => c.contentId === draggedContentId)?.left
-        ? "left"
-        : "right"
-    ] ?? 0
-  );
 
   return (
     <>
