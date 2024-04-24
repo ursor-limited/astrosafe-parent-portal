@@ -1,7 +1,6 @@
 import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
-import { IImage } from "@/app/dashboard/ImageDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useState } from "react";
 import ApiController from "@/app/api";
