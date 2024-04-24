@@ -562,30 +562,20 @@ export default function LessonPageContents(props: { lessonId: string }) {
           }
           rightStuff={
             <Stack direction="row" spacing="12px">
-              <Stack
-                sx={{
-                  opacity:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === lesson?.creatorId
-                      ? 1
-                      : 0,
-                  pointerEvents:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === lesson?.creatorId
-                      ? undefined
-                      : "none",
-                  transition: "0.2s",
-                }}
-                direction="row"
-                spacing="12px"
-              >
-                {/* <AddContentButton
-                  open={headerAddContentPopoverOpen}
-                  setOpen={setHeaderAddContentPopoverOpen}
-                  callback={(type) => contentCallbacks[type]()}
-                  premiumCallback={() => setUpgradeDialogOpen(true)}
-                  standardStyle
-                /> */}
+              <Stack direction="row" spacing="12px">
+                {!userDetails?.user?.id ||
+                userDetails?.user?.id !== lesson?.creatorId ? (
+                  <UrsorButton
+                    variant="secondary"
+                    backgroundColor="rgb(255,255,255)"
+                    endIcon={PencilIcon}
+                    onClick={() => {
+                      router.push("/dashboard");
+                    }}
+                  >
+                    Create your own
+                  </UrsorButton>
+                ) : null}
                 <UrsorButton
                   dark
                   variant="tertiary"
@@ -604,24 +594,27 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 >
                   Share link
                 </UrsorButton>
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    // {
-                    //   text: "Edit",
-                    //   kallback: () => setEditingDialogOpen(true),
-                    //   icon: PencilIcon,
-                    // },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
+                {userDetails?.user?.id &&
+                userDetails?.user?.id === lesson?.creatorId ? (
+                  <UrsorActionButton
+                    size="43px"
+                    iconSize="17px"
+                    border
+                    actions={[
+                      // {
+                      //   text: "Edit",
+                      //   kallback: () => setEditingDialogOpen(true),
+                      //   icon: PencilIcon,
+                      // },
+                      {
+                        text: "Delete",
+                        kallback: () => setDeletionDialogOpen(true),
+                        icon: TrashcanIcon,
+                        color: PALETTE.system.red,
+                      },
+                    ]}
+                  />
+                ) : null}
               </Stack>
             </Stack>
           }
