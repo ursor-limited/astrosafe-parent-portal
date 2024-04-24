@@ -18,6 +18,7 @@ const TimelineCard = (props: {
   color: string;
   editingCallback?: () => void;
   deletionCallback?: () => void;
+
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
