@@ -830,7 +830,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                               draggedContentId === card?.props?.id
                                 ? "none"
                                 : undefined,
-                            transition: "0.4s",
                           }}
                         >
                           <Stack
@@ -1001,7 +1000,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             draggedContentId === card?.props?.id
                               ? "none"
                               : undefined,
-                          transition: "0.4s",
                         }}
                         alignItems="flex-end"
                       >

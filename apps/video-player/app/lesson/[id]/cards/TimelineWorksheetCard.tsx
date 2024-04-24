@@ -87,7 +87,7 @@ const TimelineWorksheetCard = (
         >
           <Stack
             sx={{
-              transform: `scale(${(0.27 * worksheetPageWidth) / A4_WIDTH})`,
+              transform: `scale(${(0.4 * worksheetPageWidth) / A4_WIDTH})`,
               transformOrigin: "top left",
             }}
             position="absolute"
