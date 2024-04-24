@@ -841,7 +841,10 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (userDetails.user?.id && freeVideoIds.length > 0) {
       ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
-        setTimeout(loadVideos, 400)
+        setTimeout(() => {
+          loadWorksheets();
+          loadLessons();
+        }, 400)
       );
       setFreeVideoIds([]);
     }

@@ -37,8 +37,8 @@ const TimelineCard = (props: {
       id={props.id}
       ref={setRef}
       borderRadius="12px"
-      boxShadow="0 0 20px rgba(0,0,0,0.08)"
-      bgcolor="rgb(255,255,255)"
+      //boxShadow="0 0 20px rgba(0,0,0,0.08)"
+      bgcolor={PALETTE.secondary.grey[1]}
       overflow="hidden"
       sx={{
         //pointerEvents: props.dragging ? "none" : undefined,
@@ -47,7 +47,7 @@ const TimelineCard = (props: {
           : undefined,
       }}
     >
-      <Stack flex={1} bgcolor={props.color} p="8px" pt={0}>
+      <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
         {userDetails ? (
           <Stack direction="row" width="100%" height="48px">
             <Stack
@@ -75,7 +75,6 @@ const TimelineCard = (props: {
                 <UrsorActionButton
                   size="32px"
                   iconSize="16px"
-                  shadow
                   actions={[
                     {
                       text: "Edit",

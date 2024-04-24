@@ -130,11 +130,7 @@ const ContentCards = (props: {
             ) : null;
           }
         })
-        .map((card, i) => (
-          <UrsorFadeIn duration={800} key={card?.key}>
-            {props.wrapper ? props.wrapper(card, i) : card}
-          </UrsorFadeIn>
-        ))}
+        .map((card, i) => (props.wrapper ? props.wrapper(card, i) : card))}
     </>
   );
 };
