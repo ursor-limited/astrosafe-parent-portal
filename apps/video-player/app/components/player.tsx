@@ -201,7 +201,6 @@ const Player = (props: {
   const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
 
   const resume = () => {
-    console.log("333");
     setHasBegunPlaying(true);
     setEnded(false);
     if (
@@ -210,11 +209,9 @@ const Player = (props: {
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
-      console.log("0ccc");
       player?.playVideo();
       //setPlaying(true);
     } else if (url?.includes("vimeo")) {
-      console.log("0-0-0ddddd");
       player?.play();
     }
   };
