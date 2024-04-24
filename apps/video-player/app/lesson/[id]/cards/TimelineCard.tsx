@@ -7,7 +7,7 @@ import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 
-const LessonCard = (props: {
+const TimelineCard = (props: {
   id: string;
   title?: string;
   description?: string;
@@ -15,6 +15,7 @@ const LessonCard = (props: {
   setHeight?: (height: number) => void;
   onDragStart?: () => void;
   dragging?: boolean;
+  color: string;
   editingCallback?: () => void;
   deletionCallback?: () => void;
   children: React.ReactNode;
@@ -35,7 +36,7 @@ const LessonCard = (props: {
       p="8px"
       pt={0}
       boxShadow="0 0 20px rgba(0,0,0,0.08)"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={props.color}
       sx={{
         //pointerEvents: props.dragging ? "none" : undefined,
         outline: orangeBorderOn
@@ -91,7 +92,13 @@ const LessonCard = (props: {
         {props.children}
       </Stack>
       {props.title || props.description ? (
-        <Stack flex={1} justifyContent="space-between" px="4px" py="8px">
+        <Stack
+          flex={1}
+          justifyContent="space-between"
+          px="4px"
+          pt="11px"
+          pb="4px"
+        >
           {props.title ? (
             <Typography
               variant="medium"
@@ -117,4 +124,4 @@ const LessonCard = (props: {
   );
 };
 
-export default LessonCard;
+export default TimelineCard;

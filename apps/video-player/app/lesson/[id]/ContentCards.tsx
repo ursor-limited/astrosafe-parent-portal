@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { Stack } from "@mui/system";
 import LessonImageCard from "./cards/LessonImageCard";
+import LessonWorksheetCard from "./cards/LessonWorksheetCard";
 
 const ContentCards = (props: {
   videos: IVideo[];
@@ -126,18 +127,18 @@ const ContentCards = (props: {
               (w) => w.id === c.contentId
             );
             return worksheet ? (
-              <LessonWorksheetPreview
-                key={worksheet.id}
+              <LessonWorksheetCard
                 {...worksheet}
-                lessonId={props.lessonId}
+                key={c.contentId}
                 editingCallback={() =>
-                  props.setWorksheetEditingDialogId(worksheet.id)
+                  props.setImageEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
-                worksheet={worksheet}
                 setHeight={(height) => {
-                  props.setHeight?.(worksheet.id, height);
+                  props.setHeight?.(c.contentId, height);
                 }}
+                onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                dragging={props.draggedContentId === c.contentId}
               />
             ) : null;
           }

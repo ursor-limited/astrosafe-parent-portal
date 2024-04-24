@@ -1,11 +1,12 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
-import LessonCard from "./LessonCard";
+import TimelineCard from "./TimelineCard";
 import { IImage } from "@/app/dashboard/ImageDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
+import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 
 const LessonImageCard = (
   props: IImage & {
@@ -14,7 +15,6 @@ const LessonImageCard = (
     deletionCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    noFooter?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -25,12 +25,13 @@ const LessonImageCard = (
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
   return (
     <>
-      <LessonCard
+      <TimelineCard
         id={props.id}
         title={props.title}
         description={props.description}
         setHeight={props.setHeight}
         updatedAt={props.updatedAt}
+        color={alpha(CONTENT_BRANDING.image.color, 0.12)}
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
@@ -52,7 +53,7 @@ const LessonImageCard = (
             alt="image!"
           />
         </Stack>
-      </LessonCard>
+      </TimelineCard>
       {deletionDialogOpen ? (
         <DeletionDialog
           open={deletionDialogOpen}
