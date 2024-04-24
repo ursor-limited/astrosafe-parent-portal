@@ -34,10 +34,9 @@ const TimelineCard = (props: {
       id={props.id}
       ref={setRef}
       borderRadius="12px"
-      p="8px"
-      pt={0}
       boxShadow="0 0 20px rgba(0,0,0,0.08)"
-      bgcolor={props.color}
+      bgcolor="rgb(255,255,255)"
+      overflow="hidden"
       sx={{
         //pointerEvents: props.dragging ? "none" : undefined,
         outline: orangeBorderOn
@@ -45,82 +44,84 @@ const TimelineCard = (props: {
           : undefined,
       }}
     >
-      <Stack direction="row" width="100%" height="48px">
-        <Stack
-          width="100%"
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            cursor: props.dragging ? "grabbing" : "grab",
-            svg: {
-              transform: "rotate(90deg)",
-            },
-          }}
-          onMouseDown={props.onDragStart}
-        >
-          <GrabberIcon width="20px" height="20px" />
-        </Stack>
-        <Stack
-          position="relative"
-          width={0}
-          overflow="visible"
-          justifyContent="center"
-        >
-          <Stack position="absolute" right={0}>
-            <UrsorActionButton
-              size="32px"
-              iconSize="16px"
-              shadow
-              actions={[
-                {
-                  text: "Edit",
-                  kallback: () => props.editingCallback?.(),
-                  icon: PencilIcon,
-                },
-                {
-                  text: "Delete",
-                  kallback: () => props.deletionCallback?.(),
-                  icon: TrashcanIcon,
-                  color: PALETTE.system.red,
-                },
-              ]}
-            />
+      <Stack flex={1} bgcolor={props.color} p="8px" pt={0}>
+        <Stack direction="row" width="100%" height="48px">
+          <Stack
+            width="100%"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              cursor: props.dragging ? "grabbing" : "grab",
+              svg: {
+                transform: "rotate(90deg)",
+              },
+            }}
+            onMouseDown={props.onDragStart}
+          >
+            <GrabberIcon width="20px" height="20px" />
+          </Stack>
+          <Stack
+            position="relative"
+            width={0}
+            overflow="visible"
+            justifyContent="center"
+          >
+            <Stack position="absolute" right={0}>
+              <UrsorActionButton
+                size="32px"
+                iconSize="16px"
+                shadow
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: () => props.editingCallback?.(),
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => props.deletionCallback?.(),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
 
-      <Stack borderRadius="8px" overflow="hidden">
-        {props.children}
-      </Stack>
-      {props.title || props.description ? (
-        <Stack
-          flex={1}
-          justifyContent="space-between"
-          px="4px"
-          pt="11px"
-          pb="4px"
-        >
-          {props.title ? (
-            <Typography
-              variant="medium"
-              bold
-              maxLines={2}
-              color={PALETTE.secondary.grey[5]}
-            >
-              {props.title}
-            </Typography>
-          ) : null}
-          {props.description ? (
-            <Typography
-              variant="medium"
-              maxLines={2}
-              color={PALETTE.secondary.grey[5]}
-            >
-              {props.description}
-            </Typography>
-          ) : null}
+        <Stack borderRadius="8px" overflow="hidden">
+          {props.children}
         </Stack>
-      ) : null}
+        {props.title || props.description ? (
+          <Stack
+            flex={1}
+            justifyContent="space-between"
+            px="4px"
+            pt="11px"
+            pb="4px"
+          >
+            {props.title ? (
+              <Typography
+                variant="medium"
+                bold
+                maxLines={2}
+                color={PALETTE.secondary.grey[5]}
+              >
+                {props.title}
+              </Typography>
+            ) : null}
+            {props.description ? (
+              <Typography
+                variant="medium"
+                maxLines={2}
+                color={PALETTE.secondary.grey[5]}
+              >
+                {props.description}
+              </Typography>
+            ) : null}
+          </Stack>
+        ) : null}
+      </Stack>
     </Stack>
   );
 };

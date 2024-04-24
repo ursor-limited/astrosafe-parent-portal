@@ -76,6 +76,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const loadLesson = () =>
     ApiController.getLessonWithContents(props.lessonId).then(
       (response: any) => {
+        console.log("ww", response?.lesson);
         if (!response) return;
         setStaticAddButtonY(null);
         response?.lesson && setLesson(response.lesson);
@@ -120,8 +121,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [contentOrder, setContentOrder] = useState<string[]>([]);
   useEffect(() => {
-    contentOrder.length === 0 && setContentOrder(lesson?.contentOrder || []);
-  }, [lesson?.contentOrder]);
+    setContentOrder(lesson?.contentOrder || []);
+  }, [lesson]);
 
   const [contents, setContents] = useState<
     {

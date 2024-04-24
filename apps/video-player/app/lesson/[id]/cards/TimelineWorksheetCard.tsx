@@ -27,7 +27,7 @@ const A4_WIDTH = 210;
 const PADDING = 4;
 const DEFAULT_WIDTH = 566;
 
-const LessonWorksheetCard = (
+const TimelineWorksheetCard = (
   props: IWorksheet & {
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
@@ -87,7 +87,7 @@ const LessonWorksheetCard = (
         >
           <Stack
             sx={{
-              transform: `scale(${(0.268 * worksheetPageWidth) / A4_WIDTH})`,
+              transform: `scale(${(0.27 * worksheetPageWidth) / A4_WIDTH})`,
               transformOrigin: "top left",
             }}
             position="absolute"
@@ -165,4 +165,4 @@ const LessonWorksheetCard = (
   );
 };
 
-export default LessonWorksheetCard;
+export default TimelineWorksheetCard;

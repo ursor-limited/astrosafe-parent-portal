@@ -7,9 +7,12 @@ import { useContext, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { ILink } from "@/app/dashboard/LinkDialog";
+import { useRouter } from "next/navigation";
+import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 
-const LessonImageCard = (
-  props: IImage & {
+const TimelineLinkCard = (
+  props: ILink & {
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -20,9 +23,11 @@ const LessonImageCard = (
   const notificationCtx = useContext(NotificationContext);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   const submitDeletion = () =>
-    ApiController.deleteImage(props.id)
+    ApiController.deleteLink(props.id)
       .then(props.deletionCallback)
-      .then(() => notificationCtx.negativeSuccess("Deleted Image."));
+      .then(() => notificationCtx.negativeSuccess("Deleted Link."));
+
+  const router = useRouter();
   return (
     <>
       <TimelineCard
@@ -31,7 +36,7 @@ const LessonImageCard = (
         description={props.description}
         setHeight={props.setHeight}
         updatedAt={props.updatedAt}
-        color={alpha(CONTENT_BRANDING.image.color, 0.12)}
+        color={alpha(CONTENT_BRANDING.link.color, 0.12)}
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
@@ -40,17 +45,30 @@ const LessonImageCard = (
         <Stack
           alignItems="center"
           justifyContent="center"
-          p="12px"
-          height="363px"
+          height="419px"
           width="100%"
           overflow="hidden"
           position="relative"
+          onClick={() =>
+            router.push(`https://${getPrefixRemovedUrl(props.url)}`)
+          }
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
         >
-          <Image
-            src={props.url}
-            fill
-            style={{ objectFit: "cover" }}
-            alt="image!"
+          <Stack
+            width="100%"
+            height="100%"
+            sx={{
+              backgroundColor: "rgba(255,255,255,0.15)",
+              backgroundImage: `url(${props.imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              boxSizing: "border-box",
+            }}
+            position="relative"
           />
         </Stack>
       </TimelineCard>
@@ -67,4 +85,4 @@ const LessonImageCard = (
   );
 };
 
-export default LessonImageCard;
+export default TimelineLinkCard;

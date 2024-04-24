@@ -10,9 +10,22 @@ import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { ILink } from "@/app/dashboard/LinkDialog";
 import { useRouter } from "next/navigation";
 import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
+import { IText } from "@/app/components/TextDialog";
+import { PALETTE } from "ui";
 
-const LessonLinkCard = (
-  props: ILink & {
+const TextPreview = (props: { value: string }) => (
+  <div
+    key={new Date().getTime()}
+    className="view ql-editor"
+    dangerouslySetInnerHTML={{
+      __html: props.value,
+    }}
+    style={{ overflowWrap: "anywhere", color: PALETTE.font.dark }}
+  />
+);
+
+const TimelineTextCard = (
+  props: IText & {
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -23,53 +36,39 @@ const LessonLinkCard = (
   const notificationCtx = useContext(NotificationContext);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   const submitDeletion = () =>
-    ApiController.deleteLink(props.id)
+    ApiController.deleteText(props.id)
       .then(props.deletionCallback)
-      .then(() => notificationCtx.negativeSuccess("Deleted Link."));
+      .then(() => notificationCtx.negativeSuccess("Deleted Text."));
 
   const router = useRouter();
   return (
     <>
       <TimelineCard
         id={props.id}
-        title={props.title}
-        description={props.description}
         setHeight={props.setHeight}
         updatedAt={props.updatedAt}
-        color={alpha(CONTENT_BRANDING.link.color, 0.12)}
+        color={alpha(CONTENT_BRANDING.text.color, 0.12)}
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
       >
         <Stack
-          alignItems="center"
-          justifyContent="center"
-          height="419px"
-          width="100%"
-          overflow="hidden"
-          position="relative"
-          onClick={() =>
-            router.push(`https://${getPrefixRemovedUrl(props.url)}`)
-          }
+          key={new Date().getTime()}
           sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+            ".ql-container": {
+              fontFamily: "unset",
+              borderRadius: "12px",
+              height: "unset",
+              border: "none !important",
+            },
+            ".ql-editor": {
+              padding: "3px",
+            },
           }}
+          px="4px"
         >
-          <Stack
-            width="100%"
-            height="100%"
-            sx={{
-              backgroundColor: "rgba(255,255,255,0.15)",
-              backgroundImage: `url(${props.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              boxSizing: "border-box",
-            }}
-            position="relative"
-          />
+          <TextPreview value={props.value} />
         </Stack>
       </TimelineCard>
       {deletionDialogOpen ? (
@@ -77,12 +76,11 @@ const LessonLinkCard = (
           open={deletionDialogOpen}
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
-          category="Image"
-          title={props.title}
+          category="Text"
         />
       ) : null}
     </>
   );
 };
 
-export default LessonLinkCard;
+export default TimelineTextCard;

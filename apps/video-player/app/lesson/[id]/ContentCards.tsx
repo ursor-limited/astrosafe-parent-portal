@@ -12,9 +12,11 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import React, { useState } from "react";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { Stack } from "@mui/system";
-import LessonImageCard from "./cards/LessonImageCard";
-import LessonWorksheetCard from "./cards/LessonWorksheetCard";
-import LessonLinkCard from "./cards/LessonLinkCard";
+import TimelineImageCard from "./cards/TimelineImageCard";
+import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
+import TimelineLinkCard from "./cards/TimelineLinkCard";
+import TimelineTextCard from "./cards/TimelineTextCard";
+import TimelineVideoCard from "./cards/TimelineVideoCard";
 
 const ContentCards = (props: {
   videos: IVideo[];
@@ -45,21 +47,25 @@ const ContentCards = (props: {
           if (c.type === "video") {
             const video = props.videos?.find((v) => v.id === c.contentId);
             return video ? (
-              <LessonVideoCard
-                key={video.id}
+              <TimelineVideoCard
                 {...video}
-                editingCallback={() => props.setVideoEditingDialogId(video.id)}
-                deletionCallback={props.updateCallback}
                 lessonId={props.lessonId}
+                key={c.contentId}
+                editingCallback={() =>
+                  props.setImageEditingDialogId(c.contentId)
+                }
+                deletionCallback={props.updateCallback}
                 setHeight={(height) => {
-                  props.setHeight?.(video.id, height);
+                  props.setHeight?.(c.contentId, height);
                 }}
+                onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                dragging={props.draggedContentId === c.contentId}
               />
             ) : null;
           } else if (c.type === "link") {
             const link = props.links?.find((v) => v.id === c.contentId);
             return link ? (
-              <LessonLinkCard
+              <TimelineLinkCard
                 {...link}
                 key={c.contentId}
                 editingCallback={() => props.setLinkEditingDialogId(link.id)}
@@ -74,20 +80,24 @@ const ContentCards = (props: {
           } else if (c.type === "text") {
             const text = props.texts?.find((t) => t.id === c.contentId);
             return text ? (
-              <TextCard
-                key={text.id}
+              <TimelineTextCard
                 {...text}
-                editCallback={() => props.setTextEditingDialogId(text.id)}
-                deleteCallback={props.updateCallback}
+                key={c.contentId}
+                editingCallback={() =>
+                  props.setTextEditingDialogId(c.contentId)
+                }
+                deletionCallback={props.updateCallback}
                 setHeight={(height) => {
-                  props.setHeight?.(text.id, height);
+                  props.setHeight?.(c.contentId, height);
                 }}
+                onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                dragging={props.draggedContentId === c.contentId}
               />
             ) : null;
           } else if (c.type === "image") {
             const image = props.images?.find((i) => i.id === c.contentId);
             return image ? (
-              <LessonImageCard
+              <TimelineImageCard
                 {...image}
                 key={c.contentId}
                 editingCallback={() => props.setImageEditingDialogId(image.id)}
@@ -104,7 +114,7 @@ const ContentCards = (props: {
               (w) => w.id === c.contentId
             );
             return worksheet ? (
-              <LessonWorksheetCard
+              <TimelineWorksheetCard
                 {...worksheet}
                 key={c.contentId}
                 editingCallback={() =>
