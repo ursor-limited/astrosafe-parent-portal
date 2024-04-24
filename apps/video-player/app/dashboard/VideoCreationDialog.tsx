@@ -168,10 +168,14 @@ const VideoCreationDialog = (props: {
     }).then(async (v) => {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      setFreeVideoIds([...freeVideoIds, v.id]);
+      !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
         ? props.creationCallback(v.id)
         : router.push(`/video/${v.id}`);
+      setTitle("");
+      setDescription("");
+      setUrl("");
+      setOriginalUrl("");
       props.closeCallback();
       notificationCtx.success("Created Safe Video Link");
     });
