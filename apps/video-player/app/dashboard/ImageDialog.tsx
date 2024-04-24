@@ -18,7 +18,6 @@ import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageCont
 import UrlInput from "./UrlInput";
 import UrsorSelect from "../components/UrsorSelect";
 import LessonImageUploader from "./LessonImageUploader";
-import { CharactersIndicator } from "./LinkDialog";
 // import mixpanel from "mixpanel-browser";
 import { getTopImageStyle } from "./LinkDialog";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -287,14 +286,11 @@ export default function ImageDialog(props: IImageDialogProps) {
             />
           </Stack>
           <Captioned text="Title" noFlex>
-            <Stack position="absolute" top="-4px" right="0px">
-              <CharactersIndicator n={title.length} max={40} />
-            </Stack>
             <UrsorInputField
               value={title}
               placeholder="Optional"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                setTitle(event.target.value.slice(0, 40));
+                setTitle(event.target.value);
               }}
               leftAlign
               width="100%"

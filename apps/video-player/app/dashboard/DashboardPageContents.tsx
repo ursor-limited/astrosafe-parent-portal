@@ -416,14 +416,24 @@ export const ToolButton = (props: {
           zIndex={999}
         >
           {props.infoImageUrl ? (
-            <Stack height="134px" width="254px" borderRadius="4px">
-              <Image
+            <Stack height="134px" width="100%" borderRadius="4px">
+              {/* <Image
                 src={props.infoImageUrl}
-                // style={{ objectFit: "cover" }}
-                // fill
-                height={134}
-                width={254}
+                style={{ objectFit: "cover" }}
+                fill
                 alt="info popover image"
+              /> */}
+              <Stack
+                width="100%"
+                height="100%"
+                sx={{
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  backgroundImage: `url(${props.infoImageUrl})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  boxSizing: "border-box",
+                }}
+                position="relative"
               />
             </Stack>
           ) : null}
@@ -831,7 +841,10 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (userDetails.user?.id && freeVideoIds.length > 0) {
       ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
-        setTimeout(loadVideos, 400)
+        setTimeout(() => {
+          loadWorksheets();
+          loadLessons();
+        }, 400)
       );
       setFreeVideoIds([]);
     }

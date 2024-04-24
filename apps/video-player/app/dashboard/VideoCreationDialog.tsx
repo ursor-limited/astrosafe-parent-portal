@@ -26,6 +26,7 @@ import { isMobile } from "react-device-detect";
 import TimeRange from "./TimeRange";
 import { IVideo } from "./AstroContentColumns";
 import NotificationContext from "../components/NotificationContext";
+import ForbiddenVideoView from "../tools/safetube/create/ForbiddenVideoView";
 
 const PLACEHOLDER_DURATION = 4000;
 
@@ -87,13 +88,16 @@ const VideoCreationDialog = (props: {
     )
       .then((response) => response.json())
       .then((details) => {
-        if (!details.html) {
-          setShowInvalidUrlView(true);
-        } else if (details.error?.includes("403")) {
+        if (
+          !details.html ||
+          details.error?.includes("403") ||
+          details.error?.includes("401")
+        ) {
           setShowForbiddenVideoView(true);
         } else {
+          setShowForbiddenVideoView(false);
           setUrl(deNoCookiefy(extractUrl(details.html)));
-          !title && setTitle(details.title);
+          setTitle(details.title);
           //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
@@ -168,10 +172,14 @@ const VideoCreationDialog = (props: {
     }).then(async (v) => {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      setFreeVideoIds([...freeVideoIds, v.id]);
+      !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
         ? props.creationCallback(v.id)
         : router.push(`/video/${v.id}`);
+      setTitle("");
+      setDescription("");
+      setUrl("");
+      setOriginalUrl("");
       props.closeCallback();
       notificationCtx.success("Created Safe Video Link");
     });
@@ -296,7 +304,39 @@ const VideoCreationDialog = (props: {
             </Captioned>
           </Stack>
           {!isMobile ? (
-            <Stack width={VIDEO_WIDTH} spacing="6px">
+            <Stack width={VIDEO_WIDTH} spacing="6px" position="relative">
+              {showForbiddenVideoView ? (
+                <Stack
+                  flex={1}
+                  position="absolute"
+                  bgcolor="rgba(0,0,0,0.5)"
+                  top="20px"
+                  left={0}
+                  zIndex={5}
+                  height="220px"
+                  justifyContent="center"
+                  alignItems="center"
+                  px="40px"
+                >
+                  <Typography
+                    color="rgb(255,255,255)"
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Unfortunately, this video is not available to be embedded in
+                    3rd party platforms.
+                  </Typography>
+                  <Typography
+                    color="rgb(255,255,255)"
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Please try another video.
+                  </Typography>
+                </Stack>
+              ) : null}
               {provider && !props.noPlayer ? (
                 <Player
                   url={url}

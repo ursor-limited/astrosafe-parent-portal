@@ -52,44 +52,45 @@ const PageCard = (props: {
             pt="24px"
             justifyContent="space-between"
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing="3px"
-              sx={{
-                svg: {
-                  path: { fill: PALETTE.secondary.grey[4] },
-                },
-              }}
-              flex={1}
-              mr="30px"
-            >
+            {userDetails ? (
               <Stack
-                width="20px"
-                height="20px"
-                onClick={
-                  props.backCallback ||
-                  (() =>
-                    router.push(
-                      props.backRoute || (userDetails ? "/dashboard" : "/")
-                    ))
-                }
+                direction="row"
+                alignItems="center"
+                spacing="3px"
                 sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.7 },
-                  transition: "0.2s",
+                  svg: {
+                    path: { fill: PALETTE.secondary.grey[4] },
+                  },
                 }}
+                flex={1}
+                mr="30px"
               >
-                <ChevronLeft width="20px" height="20px" />
-              </Stack>
+                <Stack
+                  width="20px"
+                  height="20px"
+                  onClick={
+                    props.backCallback ||
+                    (() =>
+                      router.push(
+                        props.backRoute || (userDetails ? "/dashboard" : "/")
+                      ))
+                  }
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <ChevronLeft width="20px" height="20px" />
+                </Stack>
 
-              <Stack
-                sx={{
-                  minWidth: "100%",
-                  maxWidth: 0,
-                }}
-              >
-                {/* <Stack
+                <Stack
+                  sx={{
+                    minWidth: "100%",
+                    maxWidth: 0,
+                  }}
+                >
+                  {/* <Stack
                   onClick={
                     props.backCallback ||
                     (() =>
@@ -103,27 +104,30 @@ const PageCard = (props: {
                     transition: "0.2s",
                   }}
                 > */}
-                <Typography
-                  color={PALETTE.secondary.grey[4]}
-                  noWrap
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                  }}
-                  onClick={
-                    props.backCallback ||
-                    (() =>
-                      router.push(
-                        props.backRoute || (userDetails ? "/dashboard" : "/")
-                      ))
-                  }
-                >
-                  {props.backText || "Back to Dashboard"}
-                </Typography>
-                {/* </Stack> */}
+                  <Typography
+                    color={PALETTE.secondary.grey[4]}
+                    noWrap
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                    }}
+                    onClick={
+                      props.backCallback ||
+                      (() =>
+                        router.push(
+                          props.backRoute || (userDetails ? "/dashboard" : "/")
+                        ))
+                    }
+                  >
+                    {props.backText || "Back to Dashboard"}
+                  </Typography>
+                  {/* </Stack> */}
+                </Stack>
               </Stack>
-            </Stack>
+            ) : (
+              <Stack />
+            )}
             {props.rightStuff}
           </Stack>
           <Stack spacing="14px" px="24px">
