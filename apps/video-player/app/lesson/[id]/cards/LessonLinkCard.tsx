@@ -36,7 +36,7 @@ const LessonLinkCard = (
         description={props.description}
         setHeight={props.setHeight}
         updatedAt={props.updatedAt}
-        color={alpha(CONTENT_BRANDING.image.color, 0.12)}
+        color={alpha(CONTENT_BRANDING.link.color, 0.12)}
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
@@ -45,8 +45,7 @@ const LessonLinkCard = (
         <Stack
           alignItems="center"
           justifyContent="center"
-          p="12px"
-          height="363px"
+          height="419px"
           width="100%"
           overflow="hidden"
           position="relative"
@@ -59,11 +58,17 @@ const LessonLinkCard = (
             transition: "0.2s",
           }}
         >
-          <Image
-            src={props.imageUrl}
-            fill
-            style={{ objectFit: "cover" }}
-            alt="image!"
+          <Stack
+            width="100%"
+            height="100%"
+            sx={{
+              backgroundColor: "rgba(255,255,255,0.15)",
+              backgroundImage: `url(${props.imageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              boxSizing: "border-box",
+            }}
+            position="relative"
           />
         </Stack>
       </TimelineCard>
