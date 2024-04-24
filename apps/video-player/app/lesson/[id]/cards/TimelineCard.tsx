@@ -111,11 +111,7 @@ const TimelineCard = (props: {
               </Typography>
             ) : null}
             {props.description ? (
-              <Typography
-                variant="medium"
-                maxLines={2}
-                color={PALETTE.secondary.grey[5]}
-              >
+              <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
                 {props.description}
               </Typography>
             ) : null}

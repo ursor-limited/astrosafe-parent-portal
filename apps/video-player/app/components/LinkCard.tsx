@@ -198,7 +198,6 @@ const LinkCard = (props: {
                   <Typography
                     color={PALETTE.secondary.grey[5]}
                     variant="medium"
-                    maxLines={2}
                   >
                     {props.description}
                   </Typography>

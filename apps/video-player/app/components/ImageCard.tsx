@@ -125,11 +125,7 @@ const ImageCard = (
             </Typography>
             {props.description ? (
               <Stack>
-                <Typography
-                  color={PALETTE.secondary.grey[5]}
-                  variant="medium"
-                  maxLines={2}
-                >
+                <Typography color={PALETTE.secondary.grey[5]} variant="medium">
                   {props.description}
                 </Typography>
               </Stack>

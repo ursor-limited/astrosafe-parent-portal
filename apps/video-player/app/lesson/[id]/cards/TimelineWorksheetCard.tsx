@@ -157,7 +157,7 @@ const TimelineWorksheetCard = (
           open={deletionDialogOpen}
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
-          category="Image"
+          category="Worksheet"
           title={props.title}
         />
       ) : null}

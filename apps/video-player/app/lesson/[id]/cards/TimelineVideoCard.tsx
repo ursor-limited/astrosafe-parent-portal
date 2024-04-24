@@ -40,6 +40,8 @@ const TimelineVideoCard = (
     <>
       <TimelineCard
         id={props.id}
+        title={props.title}
+        description={props.description}
         setHeight={props.setHeight}
         updatedAt={props.updatedAt}
         color={alpha(CONTENT_BRANDING.video.color, 0.12)}
@@ -105,7 +107,7 @@ const TimelineVideoCard = (
           open={deletionDialogOpen}
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
-          category="Text"
+          category="Video"
         />
       ) : null}
     </>
