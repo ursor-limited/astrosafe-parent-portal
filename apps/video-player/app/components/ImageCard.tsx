@@ -23,6 +23,7 @@ const ImageCard = (
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    onDragStart?: () => void;
     noFooter?: boolean;
   }
 ) => {

@@ -1,7 +1,13 @@
 "use client";
 
 import { Stack, alpha, keyframes } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import React, {
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
@@ -39,10 +45,14 @@ import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
 import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
+import { createPortal } from "react-dom";
+import HoverCard from "./HoverCard";
+import { cardClasses } from "@mui/material";
 
 const DOT_CARD_Y = 40;
 const CARD_SPACING = 100;
 const RIGHT_COLUMN_Y_OFFSET = 60;
+const CONTENT_PADDING_X = 24;
 
 export const fadeIn = keyframes`
 from {
@@ -66,6 +76,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const loadLesson = () =>
     ApiController.getLessonWithContents(props.lessonId).then(
       (response: any) => {
+        console.log("ww", response?.lesson);
         if (!response) return;
         setStaticAddButtonY(null);
         response?.lesson && setLesson(response.lesson);
@@ -108,6 +119,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [contentOrder, setContentOrder] = useState<string[]>([]);
+  useEffect(() => {
+    setContentOrder(lesson?.contentOrder || []);
+  }, [lesson]);
+
   const [contents, setContents] = useState<
     {
       type: AstroLessonContent;
@@ -119,13 +135,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
       setContents(
         lesson
           ? _.compact([
-              ...lesson.contentOrder.map((contentId) =>
+              ...contentOrder.map((contentId) =>
                 lesson.contents.find((c) => c.contentId === contentId)
               ),
             ])
           : []
       ),
-    [lesson?.contents, lesson?.contentOrder]
+    [lesson?.contents, contentOrder]
   );
 
   const [contentsWithCardHeight, setContentsWithCardHeight] = useState<
@@ -150,7 +166,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     var rightHeightSum = RIGHT_COLUMN_Y_OFFSET;
     setContentsWithSide(
       _.compact(
-        lesson.contentOrder.map((contentId, i) => {
+        contentOrder.map((contentId, i) => {
           const content = contentsWithCardHeight.find(
             (co) => co.contentId === contentId
           );
@@ -354,8 +370,179 @@ export default function LessonPageContents(props: { lessonId: string }) {
     [lesson?.title]
   );
 
+  const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
+  const reorder = useCallback(() => {
+    if (!lesson || !draggedContentId) return;
+    const draggedContentIdIndex = contentOrder.indexOf(draggedContentId);
+    const newIndex = getContentMovingIndex(
+      mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
+      draggedContentIdIndex
+    );
+    if (newIndex !== draggedContentIdIndex) {
+      //const orderWithout = contentOrder.filter((id) => id !== draggedContentId);
+      const newOrder = [
+        ...contentOrder
+          .slice(0, newIndex)
+          .filter((id) => id !== draggedContentId),
+        draggedContentId,
+        ...contentOrder.slice(newIndex).filter((id) => id !== draggedContentId),
+      ];
+      //const newOrderWithoutOldId =  draggedContentIdIndex < newIndex ? [...newOrder.slice(0,draggedContentId)]
+      ApiController.updateLesson(props.lessonId, {
+        contentOrder: newOrder,
+      });
+      setContentOrder(newOrder);
+    }
+  }, [lesson, draggedContentId, mouseY]);
+
+  const handleDraggingEnd = useCallback(() => {
+    reorder();
+    setDraggedContentId(null);
+  }, [reorder]);
+  useEffect(() => {
+    window.addEventListener("mouseup", handleDraggingEnd);
+    return () => {
+      window.removeEventListener("mouseup", handleDraggingEnd);
+    };
+  }, [handleDraggingEnd]);
+
+  const [draggedElement, setDraggedElement] = useState<HTMLElement | null>(
+    null
+  );
+  const [draggedElementWidth, setDraggedElementWidth] = useState<number>(0);
+  const [
+    draggedElementTopMouseYSeparation,
+    setDraggedElementTopMouseYSeparation,
+  ] = useState<number>(0);
+  useEffect(() => {
+    if (draggedContentId) {
+      const el = document.getElementById(draggedContentId);
+      setDraggedElement(el);
+      setDraggedElementWidth(el?.getBoundingClientRect?.()?.width ?? 0);
+      setDraggedElementTopMouseYSeparation(
+        mouseY - (el?.getBoundingClientRect?.()?.top ?? 0)
+      );
+    } else {
+      setDraggedElement(null);
+    }
+  }, [draggedContentId]);
+
+  const handleMouseMove = useCallback(
+    (event: any) => {
+      !addContentPopoverOpen &&
+        !worksheetDialogOpen &&
+        !videoDialogOpen &&
+        !imageDialogOpen &&
+        !linkDialogOpen &&
+        !textDialogOpen &&
+        setMouseY(event.pageY);
+    },
+    [
+      addContentPopoverOpen,
+      worksheetDialogOpen,
+      videoDialogOpen,
+      imageDialogOpen,
+      linkDialogOpen,
+      textDialogOpen,
+    ]
+  );
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [handleMouseMove]);
+  // onMouseMove={(event) => {
+  //   !addContentPopoverOpen &&
+  //     !worksheetDialogOpen &&
+  //     !videoDialogOpen &&
+  //     !imageDialogOpen &&
+  //     !linkDialogOpen &&
+  //     !textDialogOpen &&
+  //     setMouseY(event.pageY);
+  // }}
+
+  const getContentInsertionIndex = (y: number) => {
+    const dotYs =
+      contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce((a, b) => (b <= y && a < b ? b : a), 0);
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      return closestNumberIndex + (y < closestY ? 0 : 1);
+    }
+  };
+
+  const getContentMovingIndex = (y: number, currentIndex: number) => {
+    const dotYs =
+      contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce(
+        (a, b) => (Math.abs(y - a) < Math.abs(y - b) ? a : b),
+        dotYs[0]
+      );
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      if (closestNumberIndex === currentIndex) {
+        return currentIndex;
+      } else {
+        return Math.max(0, closestNumberIndex + (y < closestY ? 0 : 1));
+      }
+    }
+  };
+
+  console.log(
+    "000",
+    contentsColumnRef?.getBoundingClientRect?.()?.[
+      contentsWithSide.find((c) => c.contentId === draggedContentId)?.left
+        ? "left"
+        : "right"
+    ] ?? 0
+  );
+
   return (
     <>
+      {draggedElement
+        ? createPortal(
+            <HoverCard
+              y={
+                mouseY -
+                draggedElementTopMouseYSeparation -
+                (contentsColumnRef?.getBoundingClientRect?.()?.top ?? 0)
+              }
+              x={
+                CONTENT_PADDING_X //+
+                // (contentsColumnRef?.getBoundingClientRect?.()?.[
+                //   contentsWithSide.find((c) => c.contentId === draggedContentId)
+                //     ?.left
+                //     ? "left"
+                //     : "right"
+                // ] ?? 0)
+              }
+              left={
+                contentsWithSide.find((c) => c.contentId === draggedContentId)
+                  ?.left
+              }
+              element={draggedElement}
+              width={draggedElementWidth}
+            />,
+            contentsColumnRef ?? document.body
+          )
+        : null}
       <Stack
         ref={setPageRef}
         px="20px"
@@ -366,9 +553,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
-        sx={{
-          transition: "1s",
-        }}
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard
@@ -478,85 +662,80 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   top: event?.deltaY + pageRef.scrollTop,
                 });
               }}
-              onMouseMove={(event) => {
-                !addContentPopoverOpen &&
-                  !worksheetDialogOpen &&
-                  !videoDialogOpen &&
-                  !imageDialogOpen &&
-                  !linkDialogOpen &&
-                  !textDialogOpen &&
-                  setMouseY(event.pageY);
-              }}
-              onMouseEnter={() => {
-                setHoveringOnContentCard(false);
-              }}
-              onMouseLeave={() => {
-                setHoveringOnContentCard(true);
-              }}
+              // onMouseMove={(event) => {
+              //   !addContentPopoverOpen &&
+              //     !worksheetDialogOpen &&
+              //     !videoDialogOpen &&
+              //     !imageDialogOpen &&
+              //     !linkDialogOpen &&
+              //     !textDialogOpen &&
+              //     setMouseY(event.pageY);
+              // }}
+              // onMouseEnter={() => {
+              //   setHoveringOnContentCard(false);
+              // }}
+              // onMouseLeave={() => {
+              //   setHoveringOnContentCard(true);
+              // }}
             >
-              <Stack
-                position="absolute"
-                top={addButtonY}
-                left={0}
-                right={0}
-                marginLeft="auto"
-                marginRight="auto"
-                onClick={() => {
-                  setStaticAddButtonY(mouseY);
-                  if (addContentPopoverOpen) return;
-                  const dotYs =
-                    lesson?.contentOrder.map(
-                      (id) =>
-                        (document
-                          .getElementById(`${id}dot`)
-                          ?.getBoundingClientRect?.()?.top ?? 0) +
-                        document.body.scrollTop
-                    ) ?? [];
-                  if (mouseY < (dotYs?.[0] ?? 0)) {
-                    setContentInsertionIndex(0);
-                  } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                    setContentInsertionIndex(contents.length);
-                  } else {
-                    const closestY = dotYs?.reduce(
-                      (a, b) => (b <= mouseY && a < b ? b : a),
-                      0
-                    );
-                    const closestNumberIndex = dotYs?.indexOf(closestY);
-                    setContentInsertionIndex(
-                      closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                    );
-                  }
-                }}
-                alignItems="center"
-                zIndex={8}
-              >
+              {draggedContentId ? (
                 <Stack
-                  sx={{
-                    opacity:
-                      contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.2s",
+                  bgcolor={PALETTE.secondary.purple[1]}
+                  height="16px"
+                  width="16px"
+                  borderRadius="100%"
+                  position="absolute"
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  top={mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y}
+                  zIndex={2}
+                />
+              ) : (
+                <Stack
+                  position="absolute"
+                  top={addButtonY}
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  onClick={() => {
+                    setStaticAddButtonY(mouseY);
+                    if (addContentPopoverOpen) return;
+                    setContentInsertionIndex(getContentInsertionIndex(mouseY));
                   }}
+                  alignItems="center"
+                  zIndex={8}
                 >
-                  <AddContentButton
-                    open={addContentPopoverOpen}
-                    setOpen={setAddContentPopoverOpen}
-                    callback={(type) => contentCallbacks[type]()}
-                    premiumCallback={() => {
-                      setUpgradeDialogOpen(true);
-                      setStaticAddButtonY(null);
-                      setAddContentPopoverOpen(false);
+                  <Stack
+                    sx={{
+                      opacity:
+                        contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                      transition: "0.2s",
                     }}
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
+                  >
+                    <AddContentButton
+                      open={addContentPopoverOpen}
+                      setOpen={setAddContentPopoverOpen}
+                      callback={(type) => contentCallbacks[type]()}
+                      premiumCallback={() => {
+                        setUpgradeDialogOpen(true);
+                        setStaticAddButtonY(null);
+                        setAddContentPopoverOpen(false);
+                      }}
+                      clickOutsideCloseCallback={() =>
+                        setContentInsertionIndex(undefined)
+                      }
+                    />
+                  </Stack>
                 </Stack>
-              </Stack>
+              )}
             </Stack>
           ) : null}
           <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
             <Stack
-              px="24px"
+              px={`${CONTENT_PADDING_X}px`}
               ref={setContentsColumnRef}
               position="relative"
               pb="48px"
@@ -631,6 +810,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       setImageEditingDialogId={setImageEditingDialogId}
                       setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                       updateCallback={loadLesson}
+                      dragStartCallback={setDraggedContentId}
+                      draggedContentId={
+                        draggedContentId ? draggedContentId : undefined
+                      }
                       wrapper={(card, i) => (
                         <Stack
                           position="relative"
@@ -648,6 +831,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             );
                           }}
                           pb={`${CARD_SPACING}px`}
+                          sx={{
+                            opacity:
+                              //@ts-ignore
+                              draggedContentId === card?.props?.id ? 0 : 1,
+                            pointerEvents:
+                              //@ts-ignore
+                              draggedContentId === card?.props?.id
+                                ? "none"
+                                : undefined,
+                            transition: "0.4s",
+                          }}
                         >
                           <Stack
                             width="96%"
@@ -790,6 +984,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     setImageEditingDialogId={setImageEditingDialogId}
                     setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                     updateCallback={loadLesson}
+                    dragStartCallback={setDraggedContentId}
                     wrapper={(card, i) => (
                       <Stack
                         position="relative"
@@ -807,6 +1002,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           );
                         }}
                         pb={`${CARD_SPACING}px`}
+                        sx={{
+                          opacity:
+                            //@ts-ignore
+                            draggedContentId === card?.props?.id ? 0 : 1,
+                          pointerEvents:
+                            //@ts-ignore
+                            draggedContentId === card?.props?.id
+                              ? "none"
+                              : undefined,
+                          transition: "0.4s",
+                        }}
                         alignItems="flex-end"
                       >
                         <Stack
@@ -821,7 +1027,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           top={`${DOT_CARD_Y}px`}
                           zIndex={2}
                         />
-                        <Stack width="96%">{card}</Stack>
+                        <Stack
+                          width="96%"
+                          onMouseEnter={() => {
+                            setHoveringOnContentCard(true);
+                          }}
+                          onMouseLeave={() => {
+                            setHoveringOnContentCard(false);
+                          }}
+                        >
+                          {card}
+                        </Stack>
                       </Stack>
                     )}
                   />
