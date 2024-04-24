@@ -6,6 +6,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
+import { useUserContext } from "@/app/components/UserContext";
 
 const TimelineCard = (props: {
   id: string;
@@ -29,6 +30,8 @@ const TimelineCard = (props: {
     [ref?.getBoundingClientRect?.()?.height]
   );
 
+  const userDetails = useUserContext().user;
+
   return (
     <Stack
       id={props.id}
@@ -45,49 +48,52 @@ const TimelineCard = (props: {
       }}
     >
       <Stack flex={1} bgcolor={props.color} p="8px" pt={0}>
-        <Stack direction="row" width="100%" height="48px">
-          <Stack
-            width="100%"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              cursor: props.dragging ? "grabbing" : "grab",
-              svg: {
-                transform: "rotate(90deg)",
-              },
-            }}
-            onMouseDown={props.onDragStart}
-          >
-            <GrabberIcon width="20px" height="20px" />
-          </Stack>
-          <Stack
-            position="relative"
-            width={0}
-            overflow="visible"
-            justifyContent="center"
-          >
-            <Stack position="absolute" right={0}>
-              <UrsorActionButton
-                size="32px"
-                iconSize="16px"
-                shadow
-                actions={[
-                  {
-                    text: "Edit",
-                    kallback: () => props.editingCallback?.(),
-                    icon: PencilIcon,
-                  },
-                  {
-                    text: "Delete",
-                    kallback: () => props.deletionCallback?.(),
-                    icon: TrashcanIcon,
-                    color: PALETTE.system.red,
-                  },
-                ]}
-              />
+        {userDetails ? (
+          <Stack direction="row" width="100%" height="48px">
+            <Stack
+              width="100%"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                cursor: props.dragging ? "grabbing" : "grab",
+                svg: {
+                  transform: "rotate(90deg)",
+                },
+              }}
+              onMouseDown={props.onDragStart}
+            >
+              <GrabberIcon width="20px" height="20px" />
+            </Stack>
+
+            <Stack
+              position="relative"
+              width={0}
+              overflow="visible"
+              justifyContent="center"
+            >
+              <Stack position="absolute" right={0}>
+                <UrsorActionButton
+                  size="32px"
+                  iconSize="16px"
+                  shadow
+                  actions={[
+                    {
+                      text: "Edit",
+                      kallback: () => props.editingCallback?.(),
+                      icon: PencilIcon,
+                    },
+                    {
+                      text: "Delete",
+                      kallback: () => props.deletionCallback?.(),
+                      icon: TrashcanIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
+                />
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        ) : null}
 
         <Stack borderRadius="8px" overflow="hidden">
           {props.children}
@@ -111,11 +117,7 @@ const TimelineCard = (props: {
               </Typography>
             ) : null}
             {props.description ? (
-              <Typography
-                variant="medium"
-                maxLines={2}
-                color={PALETTE.secondary.grey[5]}
-              >
+              <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
                 {props.description}
               </Typography>
             ) : null}
