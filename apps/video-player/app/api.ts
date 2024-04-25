@@ -380,6 +380,9 @@ class ApiController {
   static async duplicateLink(id: string, lessonId: string) {
     return post(`link/dupli/cate`, { id, lessonId });
   }
+  static async duplicateVideo(id: string, lessonId: string) {
+    return post(`video/dupli/cate`, { id, lessonId });
+  }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());
   }

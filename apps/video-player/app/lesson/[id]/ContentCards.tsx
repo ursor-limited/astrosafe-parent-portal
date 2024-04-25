@@ -55,6 +55,7 @@ const ContentCards = (props: {
                   props.setVideoEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
@@ -68,7 +69,6 @@ const ContentCards = (props: {
               <TimelineLinkCard
                 {...link}
                 lessonId={props.lessonId}
-                //lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() => props.setLinkEditingDialogId(link.id)}
                 deletionCallback={props.updateCallback}
