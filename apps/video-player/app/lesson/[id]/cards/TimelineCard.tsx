@@ -60,7 +60,10 @@ const TimelineCard = (props: {
                   transform: "rotate(90deg)",
                 },
               }}
-              onMouseDown={props.onDragStart}
+              onMouseDown={(e) => {
+                props.onDragStart?.();
+                e.preventDefault();
+              }}
             >
               <GrabberIcon width="20px" height="20px" />
             </Stack>
