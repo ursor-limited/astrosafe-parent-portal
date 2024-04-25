@@ -15,7 +15,8 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-
+import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
@@ -40,6 +41,7 @@ import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
 import { getFormattedDate } from "@/app/components/VideoCard";
+import AstroSwitch from "@/app/components/AstroSwitch";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -453,12 +455,14 @@ export default function WorksheetPageContents(props: {
     }
   }, [userDetails.user]);
 
-  const save = async (answers?: boolean) => {
+  const [showAnswers, setShowAnswers] = useState<boolean>(false);
+
+  const save = async () => {
     const pdf = new jsPDF();
     await Promise.all(
       [...Array(nPages).keys()].map((i) => {
         const input = document.getElementById(
-          `${answers ? "answers" : ""}page${i}`
+          `${showAnswers ? "answers" : ""}page${i}`
         );
         if (input) {
           return html2canvas(input, { scale: 3 }).then((canvas) => {
@@ -471,7 +475,7 @@ export default function WorksheetPageContents(props: {
         }
       })
     );
-    pdf.save(`${worksheet?.title}${answers ? " Answers" : ""}.pdf`);
+    pdf.save(`${worksheet?.title}${showAnswers ? " Answers" : ""}.pdf`);
   };
 
   const { loginWithPopup, loginWithRedirect } = useAuth0();
@@ -642,55 +646,84 @@ export default function WorksheetPageContents(props: {
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
           }
           rightStuff={
-            <Stack direction="row" spacing="12px">
+            <Stack
+              sx={{
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? 1
+                    : 0,
+                pointerEvents:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? undefined
+                    : "none",
+                transition: "0.2s",
+              }}
+              direction="row"
+              spacing="12px"
+            >
               <Stack
-                sx={{
-                  opacity:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === props.details.creatorId
-                      ? 1
-                      : 0,
-                  pointerEvents:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === props.details.creatorId
-                      ? undefined
-                      : "none",
-                  transition: "0.2s",
-                }}
                 direction="row"
-                spacing="12px"
+                bgcolor={PALETTE.secondary.grey[1]}
+                height="42px"
+                pr="4px"
+                pl="16px"
+                boxSizing="border-box"
+                borderRadius="21px"
+                alignItems="center"
+                spacing="8px"
               >
-                <UrsorButton
-                  variant="secondary"
-                  backgroundColor="white"
-                  endIcon={ShareIcon}
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    notificationCtx.success("Copied URL to clipboard.");
-                  }}
-                >
-                  Share Worksheet
-                </UrsorButton>
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
+                <Stack width="42px" sx={{ textAlign: "center" }}>
+                  <Typography
+                    bold
+                    variant="tiny"
+                    color={PALETTE.secondary.grey[5]}
+                  >
+                    Show answers
+                  </Typography>
+                </Stack>
+                <Stack onClick={() => setShowAnswers(!showAnswers)}>
+                  <AstroSwitch on={showAnswers} />
+                </Stack>
               </Stack>
-              <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
-                Download answers
+              <UrsorButton
+                backgroundColor="rgb(255,255,255)"
+                variant="secondary"
+                endIcon={DownloadIcon}
+                onClick={save}
+              >
+                Download
               </UrsorButton>
-              <UrsorButton dark variant="tertiary" onClick={() => save()}>
-                Download worksheet
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={ShareIcon}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+              >
+                Share Video
               </UrsorButton>
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                border
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: () => setEditingDialogOpen(true),
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
@@ -889,6 +922,7 @@ export default function WorksheetPageContents(props: {
                       }
                       pairs={props.details.values}
                       pageIndex={pageIndex}
+                      showAnswers={showAnswers}
                     />
                   ) : (
                     <NumberBondWorksheet
@@ -905,6 +939,7 @@ export default function WorksheetPageContents(props: {
                       }
                       leftNumbers={props.details.values}
                       pageIndex={pageIndex}
+                      showAnswers={showAnswers}
                     />
                   )}
                 </Stack>
