@@ -36,6 +36,7 @@ const TimelineWorksheetCard = (
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
   }
@@ -46,6 +47,11 @@ const TimelineWorksheetCard = (
     ApiController.deleteWorksheet(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Worksheet."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateWorksheet(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Worksheet."));
 
   const { width } = useWindowSize();
 
@@ -81,6 +87,7 @@ const TimelineWorksheetCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         widthRatio={WIDTH_RATIO}
       >

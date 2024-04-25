@@ -85,12 +85,13 @@ const ContentCards = (props: {
             return text ? (
               <TimelineTextCard
                 {...text}
-                //lessonId={props.lessonId}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() =>
                   props.setTextEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
@@ -128,6 +129,7 @@ const ContentCards = (props: {
                   props.setWorksheetEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
