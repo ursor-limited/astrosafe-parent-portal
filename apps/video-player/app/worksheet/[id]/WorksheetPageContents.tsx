@@ -39,6 +39,7 @@ import NumberBondWorksheet, {
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
+import { getFormattedDate } from "@/app/components/VideoCard";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -46,7 +47,7 @@ const A4_WIDTH = 210;
 const DEFAULT_WIDTH = 566;
 
 const WORKSHEET_WIDTH = 744;
-const WORKSHEET_HEIGHT = 908;
+const WORKSHEET_HEIGHT = 1052;
 
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
@@ -495,6 +496,18 @@ export default function WorksheetPageContents(props: {
   //   setWorksheetPageHeight((cardWidth * A4_HEIGHT) / A4_WIDTH);
   // }, [width, cardWidth]);
 
+  const [worksheetContainerRef, setWorksheetContainerRef] =
+    useState<HTMLElement | null>(null);
+  const [worksheetContainerWidth, setWorksheetContainerWidth] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setWorksheetContainerWidth(
+        worksheetContainerRef?.getBoundingClientRect?.().width ?? 0
+      ),
+    [worksheetContainerRef?.getBoundingClientRect?.().width]
+  );
+
   return worksheet ? (
     <>
       <Stack
@@ -583,75 +596,6 @@ export default function WorksheetPageContents(props: {
         flex={1}
         height="100%"
       >
-        {/* <Stack spacing="14px" px="24px">
-              <Stack spacing="2px">
-                {props.createdAt ? (
-                  <Typography color={PALETTE.secondary.grey[4]}>
-                    {getFormattedDate(props.createdAt)}
-                  </Typography>
-                ) : null}
-                <Stack
-                  direction="row"
-                  spacing="12px"
-                  sx={{
-                    svg: {
-                      path: {
-                        fill: PALETTE.secondary.grey[4],
-                      },
-                    },
-                  }}
-                  alignItems="center"
-                >
-                  {props.title ? (
-                    <Typography htmlTag="h1" variant="h2">
-                      {props.title}
-                    </Typography>
-                  ) : null}
-                  {props.editingEnabled ? (
-                    <Stack
-                      sx={{
-                        cursor: "pointer",
-                        "&:hover": { opacity: 0.6 },
-                        transition: "0.2s",
-                      }}
-                      onClick={props.editingCallback}
-                      zIndex={5}
-                    >
-                      <PencilIcon width="24px" height="24px" />
-                    </Stack>
-                  ) : null}
-                </Stack>
-              </Stack>
-              {props.description ? (
-                <Stack
-                  direction="row"
-                  spacing="12px"
-                  sx={{
-                    svg: {
-                      path: {
-                        fill: PALETTE.secondary.grey[4],
-                      },
-                    },
-                  }}
-                  alignItems="center"
-                >
-                  <Typography htmlTag="h2">{props.description}</Typography>
-                  {props.editingEnabled ? (
-                    <Stack
-                      sx={{
-                        cursor: "pointer",
-                        "&:hover": { opacity: 0.6 },
-                        transition: "0.2s",
-                      }}
-                      onClick={props.editingCallback}
-                      zIndex={5}
-                    >
-                      <PencilIcon width="18px" height="18px" />
-                    </Stack>
-                  ) : null}
-                </Stack>
-              ) : null}
-            </Stack> */}
         <PageCard
           //title={worksheet.title}
           //createdAt={worksheet.createdAt}
@@ -717,9 +661,83 @@ export default function WorksheetPageContents(props: {
             userDetails.user.id === props.details.creatorId
           }
         >
-          <Stack direction="row" px="24px" flex={1}>
-            <Stack flex={1}></Stack>
-            <Stack flex={1} width={`${WORKSHEET_WIDTH}px`} spacing="10px">
+          <Stack direction="row" flex={1} pt="20px">
+            <Stack flex={1}>
+              <Stack spacing="14px" px="24px">
+                <Stack spacing="2px">
+                  <Typography color={PALETTE.secondary.grey[4]}>
+                    {getFormattedDate(props.details.createdAt)}
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    spacing="12px"
+                    sx={{
+                      svg: {
+                        path: {
+                          fill: PALETTE.secondary.grey[4],
+                        },
+                      },
+                    }}
+                    alignItems="center"
+                  >
+                    <Typography htmlTag="h1" variant="h2">
+                      {props.details.title}
+                    </Typography>
+                    {/* {props.editingEnabled ? (
+                      <Stack
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": { opacity: 0.6 },
+                          transition: "0.2s",
+                        }}
+                        onClick={props.editingCallback}
+                        zIndex={5}
+                      >
+                        <PencilIcon width="24px" height="24px" />
+                      </Stack>
+                    ) : null} */}
+                  </Stack>
+                </Stack>
+                {props.details.description ? (
+                  <Stack
+                    direction="row"
+                    spacing="12px"
+                    sx={{
+                      svg: {
+                        path: {
+                          fill: PALETTE.secondary.grey[4],
+                        },
+                      },
+                    }}
+                    alignItems="center"
+                  >
+                    <Typography htmlTag="h2">
+                      {props.details.description}
+                    </Typography>
+                    {/* {props.editingEnabled ? (
+                      <Stack
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": { opacity: 0.6 },
+                          transition: "0.2s",
+                        }}
+                        onClick={props.editingCallback}
+                        zIndex={5}
+                      >
+                        <PencilIcon width="18px" height="18px" />
+                      </Stack>
+                    ) : null} */}
+                  </Stack>
+                ) : null}
+              </Stack>
+            </Stack>
+            <Stack
+              flex={1}
+              width={`${WORKSHEET_WIDTH}px`}
+              spacing="10px"
+              pr="24px"
+            >
               <Stack alignItems="flex-end" width="100%">
                 <Stack
                   direction="row"
@@ -777,8 +795,14 @@ export default function WorksheetPageContents(props: {
               </Stack>
 
               <Stack
+                ref={setWorksheetContainerRef}
                 flex={1}
-                minHeight={`${WORKSHEET_HEIGHT}px`}
+                minHeight={`${
+                  WORKSHEET_HEIGHT * (worksheetContainerWidth / WORKSHEET_WIDTH)
+                }px`}
+                maxHeight={`${
+                  WORKSHEET_HEIGHT * (worksheetContainerWidth / WORKSHEET_WIDTH)
+                }px`}
                 bgcolor="cyan"
                 position="relative"
                 border={`2px solid ${PALETTE.secondary.grey[3]}`}
@@ -790,7 +814,7 @@ export default function WorksheetPageContents(props: {
                   top={0}
                   left={0}
                   sx={{
-                    transform: `scale(${0.809})`,
+                    transform: `scale(${0.00126 * worksheetContainerWidth})`,
                     transformOrigin: "top left",
                   }}
                 >
