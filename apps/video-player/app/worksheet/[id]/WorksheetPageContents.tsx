@@ -22,7 +22,7 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
@@ -38,6 +38,14 @@ import NumberBondWorksheet, {
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
+
+const A4_HEIGHT = 297;
+const A4_WIDTH = 210;
+
+const DEFAULT_WIDTH = 566;
+
+const WORKSHEET_WIDTH = 744;
+const WORKSHEET_HEIGHT = 908;
 
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
@@ -468,6 +476,24 @@ export default function WorksheetPageContents(props: {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  useEffect(() => setPageIndex(0), [props.details.updatedAt]);
+
+  const { width } = useWindowSize();
+
+  // const [cardRef, setCardRef] = useState<HTMLElement | null>(null);
+  // const [cardWidth, setCardWidth] = useState<number>(DEFAULT_WIDTH);
+  // useEffect(() => {
+  //   cardRef && setCardWidth(cardRef.getBoundingClientRect?.()?.width);
+  // }, [width, cardRef?.getBoundingClientRect?.()?.width]);
+
+  // const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
+  // const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
+  // useEffect(() => {
+  //   setWorksheetPageWidth(cardWidth);
+  //   setWorksheetPageHeight((cardWidth * A4_HEIGHT) / A4_WIDTH);
+  // }, [width, cardWidth]);
+
   return worksheet ? (
     <>
       <Stack
@@ -621,52 +647,59 @@ export default function WorksheetPageContents(props: {
             userDetails.user.id === props.details.creatorId
           }
         >
-          {nPages ? (
-            <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-              <UrsorFadeIn delay={500} duration={1000} fullWidth>
-                <Carousel
-                  yPadding={30}
-                  items={[...Array(nPages).keys()].map((i) => (
-                    <CarouselItem key={i} n={i + 1}>
-                      {worksheet.worksheetComponent === "equation" ? (
-                        <EquationWorksheet
-                          key={i}
-                          title={worksheet.title}
-                          description={worksheet.description}
-                          topic={
-                            (worksheet.settings as IEquationWorksheetSettings)
-                              .topic
-                          }
-                          orientation={worksheet.settings.orientation}
-                          pageIndex={i}
-                          pairs={worksheet.values}
-                          answers={mode === "markscheme"}
-                        />
-                      ) : worksheet.worksheetComponent === "numberBond" ? (
-                        <NumberBondWorksheet
-                          key={i}
-                          title={worksheet.title}
-                          description={worksheet.description}
-                          sum={
-                            (worksheet.settings as INumberBondWorksheetSettings)
-                              .sum
-                          }
-                          orientation={worksheet.settings.orientation}
-                          pageIndex={i}
-                          leftNumbers={worksheet.values}
-                          empty={
-                            (worksheet.settings as INumberBondWorksheetSettings)
-                              .empty
-                          }
-                          answers={mode === "markscheme"}
-                        />
-                      ) : null}
-                    </CarouselItem>
-                  ))}
-                />
-              </UrsorFadeIn>
+          <Stack direction="row" px="24px">
+            <Stack flex={1}></Stack>
+            <Stack
+              flex={1}
+              width={`${WORKSHEET_WIDTH}px`}
+              height={`${WORKSHEET_HEIGHT}px`}
+              bgcolor="cyan"
+              position="relative"
+              border={`2px solid ${PALETTE.secondary.grey[3]}`}
+              borderRadius="12px"
+              overflow="hidden"
+            >
+              <Stack
+                position="absolute"
+                top={0}
+                left={0}
+                sx={{
+                  transform: `scale(${0.809})`,
+                  transformOrigin: "top left",
+                }}
+              >
+                {props.details.worksheetComponent === "equation" ? (
+                  <EquationWorksheet
+                    title={props.details.title}
+                    description={props.details.description}
+                    orientation={props.details.settings.orientation}
+                    topic={
+                      (props.details.settings as IEquationWorksheetSettings)
+                        .topic
+                    }
+                    pairs={props.details.values}
+                    pageIndex={pageIndex}
+                  />
+                ) : (
+                  <NumberBondWorksheet
+                    title={props.details.title}
+                    description={props.details.description}
+                    orientation={props.details.settings.orientation}
+                    sum={
+                      (props.details.settings as INumberBondWorksheetSettings)
+                        .sum
+                    }
+                    empty={
+                      (props.details.settings as INumberBondWorksheetSettings)
+                        .empty
+                    }
+                    leftNumbers={props.details.values}
+                    pageIndex={pageIndex}
+                  />
+                )}
+              </Stack>
             </Stack>
-          ) : null}
+          </Stack>
         </PageCard>
       </Stack>
       <DeletionDialog
