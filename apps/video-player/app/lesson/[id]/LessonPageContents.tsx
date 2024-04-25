@@ -361,12 +361,20 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
+  const [lessonNamingDialogSkipTo, setLessonNamingDialogSkipTo] = useState<
+    "back" | "share" | null
+  >(null);
+
   const [hovering, setHovering] = useState<boolean>(false);
 
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
-    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
-    [lesson?.title]
+    () =>
+      setNeedToTitle(
+        lesson?.title === DEFAULT_LESSON_TITLE &&
+          lessonNamingDialogSkipTo !== "share"
+      ),
+    [lesson?.title, lessonNamingDialogSkipTo]
   );
 
   const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
@@ -504,6 +512,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }
   };
 
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notificationCtx.success("Copied URL to clipboard.");
+  };
+
   return (
     <>
       {draggedElement
@@ -553,6 +566,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           backCallback={
             needToTitle
               ? () => {
+                  setLessonNamingDialogSkipTo("back");
                   setEditingDialogOpen(true);
                   notificationCtx.success(
                     "Please add a title to your Lesson before leaving."
@@ -582,13 +596,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   endIcon={ShareIcon}
                   onClick={() => {
                     if (needToTitle) {
+                      setLessonNamingDialogSkipTo("share");
                       setEditingDialogOpen(true);
                       notificationCtx.success(
                         "Please add a title to your Lesson before sharing it."
                       );
                     } else {
-                      navigator.clipboard.writeText(window.location.href);
-                      notificationCtx.success("Copied URL to clipboard.");
+                      copyUrl();
                     }
                   }}
                 >
@@ -1033,6 +1047,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setEditingDialogOpen(false)}
         lesson={lesson}
         updateCallback={reloadLessonDetails}
+        skipCallback={
+          lessonNamingDialogSkipTo
+            ? lessonNamingDialogSkipTo === "back"
+              ? () => router.push("/dashboard")
+              : () => copyUrl()
+            : undefined
+        }
       />
       <DeletionDialog
         open={deletionDialogOpen}
