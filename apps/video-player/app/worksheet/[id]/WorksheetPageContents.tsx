@@ -12,9 +12,10 @@ import {
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
@@ -647,56 +648,113 @@ export default function WorksheetPageContents(props: {
             userDetails.user.id === props.details.creatorId
           }
         >
-          <Stack direction="row" px="24px">
+          <Stack direction="row" px="24px" flex={1}>
             <Stack flex={1}></Stack>
-            <Stack
-              flex={1}
-              width={`${WORKSHEET_WIDTH}px`}
-              height={`${WORKSHEET_HEIGHT}px`}
-              bgcolor="cyan"
-              position="relative"
-              border={`2px solid ${PALETTE.secondary.grey[3]}`}
-              borderRadius="12px"
-              overflow="hidden"
-            >
+            <Stack flex={1} width={`${WORKSHEET_WIDTH}px`} spacing="10px">
+              <Stack alignItems="flex-end" width="100%">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  spacing="12px"
+                >
+                  <Typography color={PALETTE.secondary.grey[5]}>{`Page ${
+                    pageIndex + 1
+                  } of ${nPages}`}</Typography>
+                  <Stack direction="row" spacing="1px">
+                    <Stack
+                      onClick={() => setPageIndex(Math.max(pageIndex - 1, 0))}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                        pointerEvents: pageIndex === 0 ? "none" : undefined,
+                        svg: {
+                          path: {
+                            fill:
+                              pageIndex === 0
+                                ? PALETTE.secondary.grey[3]
+                                : PALETTE.secondary.grey[5],
+                          },
+                        },
+                      }}
+                    >
+                      <ChevronLeft width="20px" height="20px" />
+                    </Stack>
+                    <Stack
+                      onClick={() =>
+                        setPageIndex(Math.min(pageIndex + 1, nPages - 1))
+                      }
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                        pointerEvents:
+                          pageIndex === nPages - 1 ? "none" : undefined,
+                        svg: {
+                          path: {
+                            fill:
+                              pageIndex === nPages - 1
+                                ? PALETTE.secondary.grey[3]
+                                : PALETTE.secondary.grey[5],
+                          },
+                        },
+                      }}
+                    >
+                      <ChevronRight width="20px" height="20px" />
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+
               <Stack
-                position="absolute"
-                top={0}
-                left={0}
-                sx={{
-                  transform: `scale(${0.809})`,
-                  transformOrigin: "top left",
-                }}
+                flex={1}
+                minHeight={`${WORKSHEET_HEIGHT}px`}
+                bgcolor="cyan"
+                position="relative"
+                border={`2px solid ${PALETTE.secondary.grey[3]}`}
+                borderRadius="12px"
+                overflow="hidden"
               >
-                {props.details.worksheetComponent === "equation" ? (
-                  <EquationWorksheet
-                    title={props.details.title}
-                    description={props.details.description}
-                    orientation={props.details.settings.orientation}
-                    topic={
-                      (props.details.settings as IEquationWorksheetSettings)
-                        .topic
-                    }
-                    pairs={props.details.values}
-                    pageIndex={pageIndex}
-                  />
-                ) : (
-                  <NumberBondWorksheet
-                    title={props.details.title}
-                    description={props.details.description}
-                    orientation={props.details.settings.orientation}
-                    sum={
-                      (props.details.settings as INumberBondWorksheetSettings)
-                        .sum
-                    }
-                    empty={
-                      (props.details.settings as INumberBondWorksheetSettings)
-                        .empty
-                    }
-                    leftNumbers={props.details.values}
-                    pageIndex={pageIndex}
-                  />
-                )}
+                <Stack
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  sx={{
+                    transform: `scale(${0.809})`,
+                    transformOrigin: "top left",
+                  }}
+                >
+                  {props.details.worksheetComponent === "equation" ? (
+                    <EquationWorksheet
+                      title={props.details.title}
+                      description={props.details.description}
+                      orientation={props.details.settings.orientation}
+                      topic={
+                        (props.details.settings as IEquationWorksheetSettings)
+                          .topic
+                      }
+                      pairs={props.details.values}
+                      pageIndex={pageIndex}
+                    />
+                  ) : (
+                    <NumberBondWorksheet
+                      title={props.details.title}
+                      description={props.details.description}
+                      orientation={props.details.settings.orientation}
+                      sum={
+                        (props.details.settings as INumberBondWorksheetSettings)
+                          .sum
+                      }
+                      empty={
+                        (props.details.settings as INumberBondWorksheetSettings)
+                          .empty
+                      }
+                      leftNumbers={props.details.values}
+                      pageIndex={pageIndex}
+                    />
+                  )}
+                </Stack>
               </Stack>
             </Stack>
           </Stack>
