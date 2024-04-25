@@ -556,6 +556,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
+        sx={{
+          pointerEvents: draggedContentId ? "none" : undefined,
+        }}
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard
