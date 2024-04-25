@@ -12,9 +12,11 @@ const WIDTH_RATIO = 0.86;
 
 const TimelineImageCard = (
   props: IImage & {
+    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
   }
@@ -25,6 +27,11 @@ const TimelineImageCard = (
     ApiController.deleteImage(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateImage(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Image."));
 
   const [aspectRatio, setAspectRatio] = useState(2);
 
@@ -42,6 +49,7 @@ const TimelineImageCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
         widthRatio={WIDTH_RATIO}
       >
         <Stack

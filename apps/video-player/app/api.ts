@@ -34,14 +34,14 @@ const get = (route: string) =>
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`
   );
 
-const post = (route: string, body: any) =>
+const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : undefined,
       cache: "no-store",
     }
   );
@@ -373,6 +373,12 @@ class ApiController {
     return patch(`image/${id}`, details).then((response: any) =>
       response.json()
     );
+  }
+  static async duplicateImage(id: string, lessonId: string) {
+    return post(`image/dupli/cate`, { id, lessonId });
+  }
+  static async duplicateLink(id: string, lessonId: string) {
+    return post(`link/dupli/cate`, { id, lessonId });
   }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());

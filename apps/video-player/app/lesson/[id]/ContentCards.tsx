@@ -67,9 +67,12 @@ const ContentCards = (props: {
             return link ? (
               <TimelineLinkCard
                 {...link}
+                lessonId={props.lessonId}
+                //lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() => props.setLinkEditingDialogId(link.id)}
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(link.id, height);
                 }}
@@ -82,6 +85,7 @@ const ContentCards = (props: {
             return text ? (
               <TimelineTextCard
                 {...text}
+                //lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() =>
                   props.setTextEditingDialogId(c.contentId)
@@ -99,9 +103,11 @@ const ContentCards = (props: {
             return image ? (
               <TimelineImageCard
                 {...image}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() => props.setImageEditingDialogId(image.id)}
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(image.id, height);
                 }}

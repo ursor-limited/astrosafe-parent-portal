@@ -3,10 +3,13 @@ import { PALETTE, Typography } from "ui";
 import GrabberIcon from "@/images/icons/GrabberIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
+import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
+import ApiController from "@/app/api";
 
 const TimelineCard = (props: {
   id: string;
@@ -19,6 +22,7 @@ const TimelineCard = (props: {
   color: string;
   editingCallback?: () => void;
   deletionCallback?: () => void;
+  duplicationCallback?: () => void;
   widthRatio?: number;
   children: React.ReactNode;
 }) => {
@@ -75,7 +79,29 @@ const TimelineCard = (props: {
               overflow="visible"
               justifyContent="center"
             >
-              <Stack position="absolute" right={0}>
+              <Stack
+                position="absolute"
+                right={0}
+                direction="row"
+                spacing="8px"
+              >
+                <Stack
+                  height="32px"
+                  width="32px"
+                  //border={`2px solid ${PALETTE.primary.navy}`}
+                  bgcolor="rgb(255,255,255)"
+                  borderRadius="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    cursor: "pointer",
+                  }}
+                  onClick={props.duplicationCallback}
+                >
+                  <VersionsIcon height="16px" width="16px" />
+                </Stack>
                 <UrsorActionButton
                   size="32px"
                   iconSize="16px"
