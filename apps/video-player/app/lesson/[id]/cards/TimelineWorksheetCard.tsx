@@ -105,7 +105,7 @@ const TimelineWorksheetCard = (
             onClick={() =>
               router.push(
                 `/worksheet/${props.id}${
-                  props.lessonId ? `?worksheet=${props.lessonId}` : ""
+                  props.lessonId ? `?lesson=${props.lessonId}` : ""
                 }`
               )
             }

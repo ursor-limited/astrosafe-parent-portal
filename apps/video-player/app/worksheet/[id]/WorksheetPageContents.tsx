@@ -508,6 +508,44 @@ export default function WorksheetPageContents(props: {
     [worksheetContainerRef?.getBoundingClientRect?.().width]
   );
 
+  const SETTINGS_LINES_EQUATION = [
+    {
+      title: "Topic",
+      getValue: () =>
+        _.upperFirst(
+          (props.details.settings as IEquationWorksheetSettings).topic
+        ),
+    },
+    {
+      title: "Question type",
+      getValue: () =>
+        props.details.worksheetComponent === "equation"
+          ? "Equation"
+          : "Number bond",
+    },
+    {
+      title: "Specific number",
+      getValue: () =>
+        (props.details.settings as IEquationWorksheetSettings).factor,
+    },
+    {
+      title: "Format",
+      getValue: () =>
+        _.upperFirst(
+          (props.details.settings as IEquationWorksheetSettings).orientation
+        ),
+    },
+    {
+      title: "Max result",
+      getValue: () =>
+        (props.details.settings as IEquationWorksheetSettings).max,
+    },
+    {
+      title: "Amount of problems",
+      getValue: () => props.details.values.length,
+    },
+  ];
+
   return worksheet ? (
     <>
       <Stack
@@ -662,8 +700,8 @@ export default function WorksheetPageContents(props: {
           }
         >
           <Stack direction="row" flex={1} pt="20px">
-            <Stack flex={1}>
-              <Stack spacing="14px" px="24px">
+            <Stack flex={1} px="24px" spacing="24px">
+              <Stack spacing="14px">
                 <Stack spacing="2px">
                   <Typography color={PALETTE.secondary.grey[4]}>
                     {getFormattedDate(props.details.createdAt)}
@@ -730,6 +768,28 @@ export default function WorksheetPageContents(props: {
                     ) : null} */}
                   </Stack>
                 ) : null}
+              </Stack>
+              <Stack
+                bgcolor={PALETTE.secondary.grey[1]}
+                borderRadius="12px"
+                p="12px"
+                py="14px"
+                boxSizing="border-box"
+                spacing="12px"
+              >
+                <Typography bold>Worksheet settings</Typography>
+                <Stack spacing="12px">
+                  {SETTINGS_LINES_EQUATION.map((line, i) => (
+                    <Stack key={i} direction="row" spacing="5px">
+                      <Typography color={PALETTE.secondary.grey[4]}>
+                        {line.title}
+                      </Typography>
+                      <Typography color={PALETTE.secondary.grey[4]} bold>
+                        {line.getValue()}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Stack>
               </Stack>
             </Stack>
             <Stack
