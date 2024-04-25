@@ -583,9 +583,78 @@ export default function WorksheetPageContents(props: {
         flex={1}
         height="100%"
       >
+        {/* <Stack spacing="14px" px="24px">
+              <Stack spacing="2px">
+                {props.createdAt ? (
+                  <Typography color={PALETTE.secondary.grey[4]}>
+                    {getFormattedDate(props.createdAt)}
+                  </Typography>
+                ) : null}
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  alignItems="center"
+                >
+                  {props.title ? (
+                    <Typography htmlTag="h1" variant="h2">
+                      {props.title}
+                    </Typography>
+                  ) : null}
+                  {props.editingEnabled ? (
+                    <Stack
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                      }}
+                      onClick={props.editingCallback}
+                      zIndex={5}
+                    >
+                      <PencilIcon width="24px" height="24px" />
+                    </Stack>
+                  ) : null}
+                </Stack>
+              </Stack>
+              {props.description ? (
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  alignItems="center"
+                >
+                  <Typography htmlTag="h2">{props.description}</Typography>
+                  {props.editingEnabled ? (
+                    <Stack
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                      }}
+                      onClick={props.editingCallback}
+                      zIndex={5}
+                    >
+                      <PencilIcon width="18px" height="18px" />
+                    </Stack>
+                  ) : null}
+                </Stack>
+              ) : null}
+            </Stack> */}
         <PageCard
-          title={worksheet.title}
-          createdAt={worksheet.createdAt}
+          //title={worksheet.title}
+          //createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined

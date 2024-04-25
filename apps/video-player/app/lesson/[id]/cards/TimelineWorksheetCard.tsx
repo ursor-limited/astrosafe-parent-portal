@@ -28,6 +28,8 @@ const A4_WIDTH = 210;
 const PADDING = 4;
 const DEFAULT_WIDTH = 566;
 
+const WIDTH_RATIO = 0.8;
+
 const TimelineWorksheetCard = (
   props: IWorksheet & {
     lessonId: string;
@@ -80,6 +82,7 @@ const TimelineWorksheetCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
+        widthRatio={WIDTH_RATIO}
       >
         <Stack
           ref={setRef}
