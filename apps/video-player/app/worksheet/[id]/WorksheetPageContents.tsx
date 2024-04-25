@@ -465,7 +465,7 @@ export default function WorksheetPageContents(props: {
           `${showAnswers ? "answers" : ""}page${i}`
         );
         if (input) {
-          return html2canvas(input, { scale: 3 }).then((canvas) => {
+          return html2canvas(input, { scale: 1 }).then((canvas) => {
             const imgData = canvas.toDataURL("image/png");
             pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
             i < nPages - 1 && pdf.addPage();
