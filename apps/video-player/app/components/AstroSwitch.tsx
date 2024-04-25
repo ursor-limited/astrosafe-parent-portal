@@ -32,7 +32,7 @@ const AstroSwitch = (props: { on: boolean }) => {
             : PALETTE.secondary.grey[1],
           opacity: hovering ? 0.7 : 1,
           transition: "0.2s ease-out",
-          transform: `translateX(${props.on ? 0 : 46}px)`,
+          transform: `translateX(${!props.on ? 0 : 46}px)`,
         }}
       />
     </Stack>

@@ -483,7 +483,7 @@ export default function WorksheetPageContents(props: {
   const notificationCtx = useContext(NotificationContext);
 
   const [pageIndex, setPageIndex] = useState<number>(0);
-  useEffect(() => setPageIndex(0), [props.details.updatedAt]);
+  useEffect(() => setPageIndex(0), [worksheet?.updatedAt]);
 
   const { width } = useWindowSize();
 
@@ -516,37 +516,60 @@ export default function WorksheetPageContents(props: {
     {
       title: "Topic",
       getValue: () =>
-        _.upperFirst(
-          (props.details.settings as IEquationWorksheetSettings).topic
-        ),
+        _.upperFirst((worksheet?.settings as IEquationWorksheetSettings).topic),
     },
     {
       title: "Question type",
-      getValue: () =>
-        props.details.worksheetComponent === "equation"
-          ? "Equation"
-          : "Number bond",
+      getValue: () => "Equation",
     },
     {
       title: "Specific number",
       getValue: () =>
-        (props.details.settings as IEquationWorksheetSettings).factor,
+        (worksheet?.settings as IEquationWorksheetSettings).factor,
     },
     {
       title: "Format",
       getValue: () =>
         _.upperFirst(
-          (props.details.settings as IEquationWorksheetSettings).orientation
+          (worksheet?.settings as IEquationWorksheetSettings).orientation
         ),
     },
     {
       title: "Max result",
-      getValue: () =>
-        (props.details.settings as IEquationWorksheetSettings).max,
+      getValue: () => (worksheet?.settings as IEquationWorksheetSettings).max,
     },
     {
       title: "Amount of problems",
-      getValue: () => props.details.values.length,
+      getValue: () => worksheet?.values.length,
+    },
+  ];
+
+  const SETTINGS_LINES_NUMBER_BOND = [
+    {
+      title: "Question type",
+      getValue: () => "Number bond",
+    },
+    {
+      title: "Bonded number",
+      getValue: () => (worksheet?.settings as INumberBondWorksheetSettings).sum,
+    },
+    {
+      title: "Format",
+      getValue: () =>
+        _.upperFirst(
+          (worksheet?.settings as INumberBondWorksheetSettings).orientation
+        ),
+    },
+    {
+      title: "Empty",
+      getValue: () =>
+        _.upperFirst(
+          (worksheet?.settings as INumberBondWorksheetSettings).empty
+        ),
+    },
+    {
+      title: "Amount of problems",
+      getValue: () => worksheet?.values.length,
     },
   ];
 
@@ -704,7 +727,7 @@ export default function WorksheetPageContents(props: {
                   notificationCtx.success("Copied URL to clipboard.");
                 }}
               >
-                Share Video
+                Share link
               </UrsorButton>
               <UrsorActionButton
                 size="43px"
@@ -753,7 +776,7 @@ export default function WorksheetPageContents(props: {
                     alignItems="center"
                   >
                     <Typography htmlTag="h1" variant="h2">
-                      {props.details.title}
+                      {worksheet.title}
                     </Typography>
                     {/* {props.editingEnabled ? (
                       <Stack
@@ -770,7 +793,7 @@ export default function WorksheetPageContents(props: {
                     ) : null} */}
                   </Stack>
                 </Stack>
-                {props.details.description ? (
+                {worksheet.description ? (
                   <Stack
                     direction="row"
                     spacing="12px"
@@ -784,7 +807,7 @@ export default function WorksheetPageContents(props: {
                     alignItems="center"
                   >
                     <Typography htmlTag="h2">
-                      {props.details.description}
+                      {worksheet.description}
                     </Typography>
                     {/* {props.editingEnabled ? (
                       <Stack
@@ -812,10 +835,13 @@ export default function WorksheetPageContents(props: {
               >
                 <Typography bold>Worksheet settings</Typography>
                 <Stack spacing="12px">
-                  {SETTINGS_LINES_EQUATION.map((line, i) => (
+                  {(props.details.worksheetComponent === "equation"
+                    ? SETTINGS_LINES_EQUATION
+                    : SETTINGS_LINES_NUMBER_BOND
+                  ).map((line, i) => (
                     <Stack key={i} direction="row" spacing="5px">
                       <Typography color={PALETTE.secondary.grey[4]}>
-                        {line.title}
+                        {`${line.title}:`}
                       </Typography>
                       <Typography color={PALETTE.secondary.grey[4]} bold>
                         {line.getValue()}
@@ -911,33 +937,31 @@ export default function WorksheetPageContents(props: {
                     transformOrigin: "top left",
                   }}
                 >
-                  {props.details.worksheetComponent === "equation" ? (
+                  {worksheet.worksheetComponent === "equation" ? (
                     <EquationWorksheet
-                      title={props.details.title}
-                      description={props.details.description}
-                      orientation={props.details.settings.orientation}
+                      title={worksheet.title}
+                      description={worksheet.description}
+                      orientation={worksheet.settings.orientation}
                       topic={
-                        (props.details.settings as IEquationWorksheetSettings)
-                          .topic
+                        (worksheet.settings as IEquationWorksheetSettings).topic
                       }
-                      pairs={props.details.values}
+                      pairs={worksheet.values}
                       pageIndex={pageIndex}
                       showAnswers={showAnswers}
                     />
                   ) : (
                     <NumberBondWorksheet
-                      title={props.details.title}
-                      description={props.details.description}
-                      orientation={props.details.settings.orientation}
+                      title={worksheet.title}
+                      description={worksheet.description}
+                      orientation={worksheet.settings.orientation}
                       sum={
-                        (props.details.settings as INumberBondWorksheetSettings)
-                          .sum
+                        (worksheet.settings as INumberBondWorksheetSettings).sum
                       }
                       empty={
-                        (props.details.settings as INumberBondWorksheetSettings)
+                        (worksheet.settings as INumberBondWorksheetSettings)
                           .empty
                       }
-                      leftNumbers={props.details.values}
+                      leftNumbers={worksheet.values}
                       pageIndex={pageIndex}
                       showAnswers={showAnswers}
                     />

@@ -287,9 +287,13 @@ export default function WorksheetGenerator(props: {
 
   const submitUpdate = () => {
     setLoading(true);
-    updateCallback?.().then((id) => {
+    if (updateCallback) {
+      updateCallback?.().then((id) => {
+        props.updateCallback?.();
+      });
+    } else {
       props.updateCallback?.();
-    });
+    }
   };
 
   return (
