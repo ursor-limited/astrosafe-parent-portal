@@ -23,6 +23,11 @@ const TimelineImageCard = (
     ApiController.deleteImage(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
+
+  const [aspectRatio, setAspectRatio] = useState(2);
+  console.log(aspectRatio, "=m");
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
   return (
     <>
       <TimelineCard
@@ -38,10 +43,13 @@ const TimelineImageCard = (
         editingCallback={props.editingCallback}
       >
         <Stack
+          ref={setRef}
           alignItems="center"
           justifyContent="center"
           p="12px"
-          height="363px"
+          height={
+            ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) / aspectRatio
+          }
           width="100%"
           overflow="hidden"
           position="relative"
@@ -51,6 +59,9 @@ const TimelineImageCard = (
             fill
             style={{ objectFit: "cover" }}
             alt="image!"
+            onLoadingComplete={({ naturalWidth, naturalHeight }) => {
+              setAspectRatio(naturalWidth / naturalHeight);
+            }}
           />
         </Stack>
       </TimelineCard>
