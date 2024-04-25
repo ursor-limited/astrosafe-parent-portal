@@ -14,9 +14,11 @@ const WIDTH_RATIO = 0.65;
 
 const TimelineLinkCard = (
   props: ILink & {
+    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
   }
@@ -27,6 +29,11 @@ const TimelineLinkCard = (
     ApiController.deleteLink(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Link."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateLink(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Link."));
 
   const router = useRouter();
   return (
@@ -42,6 +49,7 @@ const TimelineLinkCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
         widthRatio={WIDTH_RATIO}
       >
         <Stack

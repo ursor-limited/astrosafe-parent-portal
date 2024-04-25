@@ -8,7 +8,7 @@ import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import { PALETTE, Typography } from "ui";
+import { PALETTE } from "ui";
 import Play from "@/images/play.svg";
 
 const PLACEHOLDER_THUMBNAIL =
@@ -23,6 +23,7 @@ const TimelineVideoCard = (
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
   }
@@ -33,6 +34,11 @@ const TimelineVideoCard = (
     ApiController.deleteVideo(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Video."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateVideo(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Video."));
 
   const router = useRouter();
 
@@ -49,6 +55,7 @@ const TimelineVideoCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
       >
         <Stack
           flex={1}
