@@ -3,13 +3,11 @@ import { PALETTE, Typography } from "ui";
 import GrabberIcon from "@/images/icons/GrabberIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
-import ApiController from "@/app/api";
 
 const TimelineCard = (props: {
   id: string;
@@ -100,7 +98,7 @@ const TimelineCard = (props: {
                   }}
                   onClick={props.duplicationCallback}
                 >
-                  <VersionsIcon height="16px" width="16px" />
+                  <DuplicateIcon height="22px" width="22px" />
                 </Stack>
                 <UrsorActionButton
                   size="32px"

@@ -31,9 +31,11 @@ const TextPreview = (props: { value: string }) => (
 
 const TimelineTextCard = (
   props: IText & {
+    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
   }
@@ -44,6 +46,11 @@ const TimelineTextCard = (
     ApiController.deleteText(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Text."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateText(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Text."));
 
   const router = useRouter();
   return (
@@ -57,6 +64,7 @@ const TimelineTextCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
         widthRatio={WIDTH_RATIO}
       >
         <Stack
