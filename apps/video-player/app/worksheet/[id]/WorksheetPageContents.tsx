@@ -12,8 +12,10 @@ import {
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -22,7 +24,7 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import WorksheetSignupPromptDialog from "@/app/components/WorksheetSignupPromptDialog";
-import { useLocalStorage } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "@/app/components/UserContext";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import jsPDF from "jspdf";
@@ -38,6 +40,16 @@ import NumberBondWorksheet, {
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
+import { getFormattedDate } from "@/app/components/VideoCard";
+import AstroSwitch from "@/app/components/AstroSwitch";
+
+const A4_HEIGHT = 297;
+const A4_WIDTH = 210;
+
+const DEFAULT_WIDTH = 566;
+
+const WORKSHEET_WIDTH = 744;
+const WORKSHEET_HEIGHT = 1052;
 
 export const getNPages = (worksheet: IWorksheet) => {
   if (worksheet.worksheetComponent === "equation") {
@@ -443,15 +455,17 @@ export default function WorksheetPageContents(props: {
     }
   }, [userDetails.user]);
 
-  const save = async (answers?: boolean) => {
+  const [showAnswers, setShowAnswers] = useState<boolean>(false);
+
+  const save = async () => {
     const pdf = new jsPDF();
     await Promise.all(
       [...Array(nPages).keys()].map((i) => {
         const input = document.getElementById(
-          `${answers ? "answers" : ""}page${i}`
+          `${showAnswers ? "answers" : ""}page${i}`
         );
         if (input) {
-          return html2canvas(input, { scale: 3 }).then((canvas) => {
+          return html2canvas(input, { scale: 1 }).then((canvas) => {
             const imgData = canvas.toDataURL("image/png");
             pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
             i < nPages - 1 && pdf.addPage();
@@ -461,12 +475,103 @@ export default function WorksheetPageContents(props: {
         }
       })
     );
-    pdf.save(`${worksheet?.title}${answers ? " Answers" : ""}.pdf`);
+    pdf.save(`${worksheet?.title}${showAnswers ? " Answers" : ""}.pdf`);
   };
 
   const { loginWithPopup, loginWithRedirect } = useAuth0();
 
   const notificationCtx = useContext(NotificationContext);
+
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  useEffect(() => setPageIndex(0), [worksheet?.updatedAt]);
+
+  const { width } = useWindowSize();
+
+  // const [cardRef, setCardRef] = useState<HTMLElement | null>(null);
+  // const [cardWidth, setCardWidth] = useState<number>(DEFAULT_WIDTH);
+  // useEffect(() => {
+  //   cardRef && setCardWidth(cardRef.getBoundingClientRect?.()?.width);
+  // }, [width, cardRef?.getBoundingClientRect?.()?.width]);
+
+  // const [worksheetPageWidth, setWorksheetPageWidth] = useState<number>(1);
+  // const [worksheetPageHeight, setWorksheetPageHeight] = useState<number>(1);
+  // useEffect(() => {
+  //   setWorksheetPageWidth(cardWidth);
+  //   setWorksheetPageHeight((cardWidth * A4_HEIGHT) / A4_WIDTH);
+  // }, [width, cardWidth]);
+
+  const [worksheetContainerRef, setWorksheetContainerRef] =
+    useState<HTMLElement | null>(null);
+  const [worksheetContainerWidth, setWorksheetContainerWidth] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setWorksheetContainerWidth(
+        worksheetContainerRef?.getBoundingClientRect?.().width ?? 0
+      ),
+    [worksheetContainerRef?.getBoundingClientRect?.().width]
+  );
+
+  const SETTINGS_LINES_EQUATION = [
+    {
+      title: "Topic",
+      getValue: () =>
+        _.upperFirst((worksheet?.settings as IEquationWorksheetSettings).topic),
+    },
+    {
+      title: "Question type",
+      getValue: () => "Equation",
+    },
+    {
+      title: "Specific number",
+      getValue: () =>
+        (worksheet?.settings as IEquationWorksheetSettings).factor,
+    },
+    {
+      title: "Format",
+      getValue: () =>
+        _.upperFirst(
+          (worksheet?.settings as IEquationWorksheetSettings).orientation
+        ),
+    },
+    {
+      title: "Max result",
+      getValue: () => (worksheet?.settings as IEquationWorksheetSettings).max,
+    },
+    {
+      title: "Amount of problems",
+      getValue: () => worksheet?.values.length,
+    },
+  ];
+
+  const SETTINGS_LINES_NUMBER_BOND = [
+    {
+      title: "Question type",
+      getValue: () => "Number bond",
+    },
+    {
+      title: "Bonded number",
+      getValue: () => (worksheet?.settings as INumberBondWorksheetSettings).sum,
+    },
+    {
+      title: "Format",
+      getValue: () =>
+        _.upperFirst(
+          (worksheet?.settings as INumberBondWorksheetSettings).orientation
+        ),
+    },
+    {
+      title: "Empty",
+      getValue: () =>
+        _.upperFirst(
+          (worksheet?.settings as INumberBondWorksheetSettings).empty
+        ),
+    },
+    {
+      title: "Amount of problems",
+      getValue: () => worksheet?.values.length,
+    },
+  ];
 
   return worksheet ? (
     <>
@@ -557,62 +662,91 @@ export default function WorksheetPageContents(props: {
         height="100%"
       >
         <PageCard
-          title={worksheet.title}
-          createdAt={worksheet.createdAt}
+          //title={worksheet.title}
+          //createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
           }
           rightStuff={
-            <Stack direction="row" spacing="12px">
+            <Stack
+              sx={{
+                opacity:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? 1
+                    : 0,
+                pointerEvents:
+                  userDetails?.user?.id &&
+                  userDetails?.user?.id === props.details.creatorId
+                    ? undefined
+                    : "none",
+                transition: "0.2s",
+              }}
+              direction="row"
+              spacing="12px"
+            >
               <Stack
-                sx={{
-                  opacity:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === props.details.creatorId
-                      ? 1
-                      : 0,
-                  pointerEvents:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === props.details.creatorId
-                      ? undefined
-                      : "none",
-                  transition: "0.2s",
-                }}
                 direction="row"
-                spacing="12px"
+                bgcolor={PALETTE.secondary.grey[1]}
+                height="42px"
+                pr="4px"
+                pl="16px"
+                boxSizing="border-box"
+                borderRadius="21px"
+                alignItems="center"
+                spacing="8px"
               >
-                <UrsorButton
-                  variant="secondary"
-                  backgroundColor="white"
-                  endIcon={ShareIcon}
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    notificationCtx.success("Copied URL to clipboard.");
-                  }}
-                >
-                  Share Worksheet
-                </UrsorButton>
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
+                <Stack width="42px" sx={{ textAlign: "center" }}>
+                  <Typography
+                    bold
+                    variant="tiny"
+                    color={PALETTE.secondary.grey[5]}
+                  >
+                    Show answers
+                  </Typography>
+                </Stack>
+                <Stack onClick={() => setShowAnswers(!showAnswers)}>
+                  <AstroSwitch on={showAnswers} />
+                </Stack>
               </Stack>
-              <UrsorButton dark variant="tertiary" onClick={() => save(true)}>
-                Download answers
+              <UrsorButton
+                backgroundColor="rgb(255,255,255)"
+                variant="secondary"
+                endIcon={DownloadIcon}
+                onClick={save}
+              >
+                Download
               </UrsorButton>
-              <UrsorButton dark variant="tertiary" onClick={() => save()}>
-                Download worksheet
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={ShareIcon}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  notificationCtx.success("Copied URL to clipboard.");
+                }}
+              >
+                Share link
               </UrsorButton>
+              <UrsorActionButton
+                size="43px"
+                iconSize="17px"
+                border
+                actions={[
+                  {
+                    text: "Edit",
+                    kallback: () => setEditingDialogOpen(true),
+                    icon: PencilIcon,
+                  },
+                  {
+                    text: "Delete",
+                    kallback: () => setDeletionDialogOpen(true),
+                    icon: TrashcanIcon,
+                    color: PALETTE.system.red,
+                  },
+                ]}
+              />
             </Stack>
           }
           editingCallback={() => setEditingDialogOpen(true)}
@@ -621,52 +755,221 @@ export default function WorksheetPageContents(props: {
             userDetails.user.id === props.details.creatorId
           }
         >
-          {nPages ? (
-            <Stack width="100%" alignItems="center" pt="30px" overflow="scroll">
-              <UrsorFadeIn delay={500} duration={1000} fullWidth>
-                <Carousel
-                  yPadding={30}
-                  items={[...Array(nPages).keys()].map((i) => (
-                    <CarouselItem key={i} n={i + 1}>
-                      {worksheet.worksheetComponent === "equation" ? (
-                        <EquationWorksheet
-                          key={i}
-                          title={worksheet.title}
-                          description={worksheet.description}
-                          topic={
-                            (worksheet.settings as IEquationWorksheetSettings)
-                              .topic
-                          }
-                          orientation={worksheet.settings.orientation}
-                          pageIndex={i}
-                          pairs={worksheet.values}
-                          answers={mode === "markscheme"}
-                        />
-                      ) : worksheet.worksheetComponent === "numberBond" ? (
-                        <NumberBondWorksheet
-                          key={i}
-                          title={worksheet.title}
-                          description={worksheet.description}
-                          sum={
-                            (worksheet.settings as INumberBondWorksheetSettings)
-                              .sum
-                          }
-                          orientation={worksheet.settings.orientation}
-                          pageIndex={i}
-                          leftNumbers={worksheet.values}
-                          empty={
-                            (worksheet.settings as INumberBondWorksheetSettings)
-                              .empty
-                          }
-                          answers={mode === "markscheme"}
-                        />
-                      ) : null}
-                    </CarouselItem>
+          <Stack direction="row" flex={1} pt="20px">
+            <Stack flex={1} px="24px" spacing="24px">
+              <Stack spacing="14px">
+                <Stack spacing="2px">
+                  <Typography color={PALETTE.secondary.grey[4]}>
+                    {getFormattedDate(props.details.createdAt)}
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    spacing="12px"
+                    sx={{
+                      svg: {
+                        path: {
+                          fill: PALETTE.secondary.grey[4],
+                        },
+                      },
+                    }}
+                    alignItems="center"
+                  >
+                    <Typography htmlTag="h1" variant="h2">
+                      {worksheet.title}
+                    </Typography>
+                    {/* {props.editingEnabled ? (
+                      <Stack
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": { opacity: 0.6 },
+                          transition: "0.2s",
+                        }}
+                        onClick={props.editingCallback}
+                        zIndex={5}
+                      >
+                        <PencilIcon width="24px" height="24px" />
+                      </Stack>
+                    ) : null} */}
+                  </Stack>
+                </Stack>
+                {worksheet.description ? (
+                  <Stack
+                    direction="row"
+                    spacing="12px"
+                    sx={{
+                      svg: {
+                        path: {
+                          fill: PALETTE.secondary.grey[4],
+                        },
+                      },
+                    }}
+                    alignItems="center"
+                  >
+                    <Typography htmlTag="h2">
+                      {worksheet.description}
+                    </Typography>
+                    {/* {props.editingEnabled ? (
+                      <Stack
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": { opacity: 0.6 },
+                          transition: "0.2s",
+                        }}
+                        onClick={props.editingCallback}
+                        zIndex={5}
+                      >
+                        <PencilIcon width="18px" height="18px" />
+                      </Stack>
+                    ) : null} */}
+                  </Stack>
+                ) : null}
+              </Stack>
+              <Stack
+                bgcolor={PALETTE.secondary.grey[1]}
+                borderRadius="12px"
+                p="12px"
+                py="14px"
+                boxSizing="border-box"
+                spacing="12px"
+              >
+                <Typography bold>Worksheet settings</Typography>
+                <Stack spacing="12px">
+                  {(props.details.worksheetComponent === "equation"
+                    ? SETTINGS_LINES_EQUATION
+                    : SETTINGS_LINES_NUMBER_BOND
+                  ).map((line, i) => (
+                    <Stack key={i} direction="row" spacing="5px">
+                      <Typography color={PALETTE.secondary.grey[4]}>
+                        {`${line.title}:`}
+                      </Typography>
+                      <Typography color={PALETTE.secondary.grey[4]} bold>
+                        {line.getValue()}
+                      </Typography>
+                    </Stack>
                   ))}
-                />
-              </UrsorFadeIn>
+                </Stack>
+              </Stack>
             </Stack>
-          ) : null}
+            <Stack
+              flex={1}
+              width={`${WORKSHEET_WIDTH}px`}
+              spacing="10px"
+              pr="24px"
+            >
+              <Stack alignItems="flex-end" width="100%">
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  spacing="12px"
+                >
+                  <Typography color={PALETTE.secondary.grey[5]}>{`Page ${
+                    pageIndex + 1
+                  } of ${nPages}`}</Typography>
+                  <Stack direction="row" spacing="1px">
+                    <Stack
+                      onClick={() => setPageIndex(Math.max(pageIndex - 1, 0))}
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                        pointerEvents: pageIndex === 0 ? "none" : undefined,
+                        svg: {
+                          path: {
+                            fill:
+                              pageIndex === 0
+                                ? PALETTE.secondary.grey[3]
+                                : PALETTE.secondary.grey[5],
+                          },
+                        },
+                      }}
+                    >
+                      <ChevronLeft width="20px" height="20px" />
+                    </Stack>
+                    <Stack
+                      onClick={() =>
+                        setPageIndex(Math.min(pageIndex + 1, nPages - 1))
+                      }
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                        pointerEvents:
+                          pageIndex === nPages - 1 ? "none" : undefined,
+                        svg: {
+                          path: {
+                            fill:
+                              pageIndex === nPages - 1
+                                ? PALETTE.secondary.grey[3]
+                                : PALETTE.secondary.grey[5],
+                          },
+                        },
+                      }}
+                    >
+                      <ChevronRight width="20px" height="20px" />
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+
+              <Stack
+                ref={setWorksheetContainerRef}
+                flex={1}
+                minHeight={`${
+                  WORKSHEET_HEIGHT * (worksheetContainerWidth / WORKSHEET_WIDTH)
+                }px`}
+                maxHeight={`${
+                  WORKSHEET_HEIGHT * (worksheetContainerWidth / WORKSHEET_WIDTH)
+                }px`}
+                bgcolor="cyan"
+                position="relative"
+                border={`2px solid ${PALETTE.secondary.grey[3]}`}
+                borderRadius="12px"
+                overflow="hidden"
+              >
+                <Stack
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  sx={{
+                    transform: `scale(${0.00126 * worksheetContainerWidth})`,
+                    transformOrigin: "top left",
+                  }}
+                >
+                  {worksheet.worksheetComponent === "equation" ? (
+                    <EquationWorksheet
+                      title={worksheet.title}
+                      description={worksheet.description}
+                      orientation={worksheet.settings.orientation}
+                      topic={
+                        (worksheet.settings as IEquationWorksheetSettings).topic
+                      }
+                      pairs={worksheet.values}
+                      pageIndex={pageIndex}
+                      showAnswers={showAnswers}
+                    />
+                  ) : (
+                    <NumberBondWorksheet
+                      title={worksheet.title}
+                      description={worksheet.description}
+                      orientation={worksheet.settings.orientation}
+                      sum={
+                        (worksheet.settings as INumberBondWorksheetSettings).sum
+                      }
+                      empty={
+                        (worksheet.settings as INumberBondWorksheetSettings)
+                          .empty
+                      }
+                      leftNumbers={worksheet.values}
+                      pageIndex={pageIndex}
+                      showAnswers={showAnswers}
+                    />
+                  )}
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
         </PageCard>
       </Stack>
       <DeletionDialog

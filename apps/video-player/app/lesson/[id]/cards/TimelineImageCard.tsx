@@ -8,6 +8,8 @@ import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 
+const WIDTH_RATIO = 0.86;
+
 const TimelineImageCard = (
   props: IImage & {
     setHeight?: (height: number) => void;
@@ -25,7 +27,6 @@ const TimelineImageCard = (
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
 
   const [aspectRatio, setAspectRatio] = useState(2);
-  console.log(aspectRatio, "=m");
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
   return (
@@ -41,6 +42,7 @@ const TimelineImageCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        widthRatio={WIDTH_RATIO}
       >
         <Stack
           ref={setRef}

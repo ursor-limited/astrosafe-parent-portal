@@ -10,6 +10,8 @@ import { ILink } from "@/app/dashboard/LinkDialog";
 import { useRouter } from "next/navigation";
 import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 
+const WIDTH_RATIO = 0.65;
+
 const TimelineLinkCard = (
   props: ILink & {
     setHeight?: (height: number) => void;
@@ -40,11 +42,12 @@ const TimelineLinkCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        widthRatio={WIDTH_RATIO}
       >
         <Stack
           alignItems="center"
           justifyContent="center"
-          height="419px"
+          height="350px"
           width="100%"
           overflow="hidden"
           position="relative"

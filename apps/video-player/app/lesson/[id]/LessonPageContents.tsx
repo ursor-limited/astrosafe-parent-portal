@@ -49,8 +49,8 @@ import { createPortal } from "react-dom";
 import HoverCard from "./HoverCard";
 import { cardClasses } from "@mui/material";
 
-const DOT_CARD_Y = 40;
-const CARD_SPACING = 100;
+const DOT_CARD_Y = 47;
+const CARD_SPACING = 120;
 const RIGHT_COLUMN_Y_OFFSET = 60;
 const CONTENT_PADDING_X = 24;
 
@@ -850,6 +850,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             onMouseLeave={() => {
                               setHoveringOnContentCard(false);
                             }}
+                            alignItems="flex-end"
                           >
                             {card}
                           </Stack>

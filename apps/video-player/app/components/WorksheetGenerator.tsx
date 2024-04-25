@@ -121,9 +121,6 @@ const RefreshButton = (props: { onClick: () => void }) => {
   );
 };
 
-const TITLE_CHARACTER_LIMIT = 30;
-const DESCRIPTION_CHARACTER_LIMIT = 180;
-
 export const CategorySelectionButton = (props: {
   selected: boolean;
   onClick: () => void;
@@ -290,9 +287,13 @@ export default function WorksheetGenerator(props: {
 
   const submitUpdate = () => {
     setLoading(true);
-    updateCallback?.().then((id) => {
+    if (updateCallback) {
+      updateCallback?.().then((id) => {
+        props.updateCallback?.();
+      });
+    } else {
       props.updateCallback?.();
-    });
+    }
   };
 
   return (
@@ -336,7 +337,6 @@ export default function WorksheetGenerator(props: {
               <UrsorInputField
                 value={title}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  event.target.value.length < TITLE_CHARACTER_LIMIT &&
                   setTitle(event.target.value)
                 }
                 placeholder="Type in your worksheet title"
@@ -350,7 +350,6 @@ export default function WorksheetGenerator(props: {
               <UrsorInputField
                 value={description}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  event.target.value.length < DESCRIPTION_CHARACTER_LIMIT &&
                   setDescription(event.target.value)
                 }
                 placeholder="Type in your worksheet description"

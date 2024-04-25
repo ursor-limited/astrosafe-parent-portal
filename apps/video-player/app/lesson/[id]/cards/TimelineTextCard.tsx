@@ -1,7 +1,6 @@
 import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
-import { IImage } from "@/app/dashboard/ImageDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useState } from "react";
 import ApiController from "@/app/api";
@@ -13,6 +12,8 @@ import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import { IText } from "@/app/components/TextDialog";
 import { PALETTE } from "ui";
 
+const WIDTH_RATIO = 0.94;
+
 const TextPreview = (props: { value: string }) => (
   <div
     key={new Date().getTime()}
@@ -20,7 +21,11 @@ const TextPreview = (props: { value: string }) => (
     dangerouslySetInnerHTML={{
       __html: props.value,
     }}
-    style={{ overflowWrap: "anywhere", color: PALETTE.font.dark }}
+    style={{
+      overflowWrap: "anywhere",
+      color: PALETTE.font.dark,
+      width: "100%",
+    }}
   />
 );
 
@@ -52,6 +57,7 @@ const TimelineTextCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        widthRatio={WIDTH_RATIO}
       >
         <Stack
           key={new Date().getTime()}

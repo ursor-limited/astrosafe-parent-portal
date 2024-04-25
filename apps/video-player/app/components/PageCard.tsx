@@ -8,7 +8,7 @@ import { useUserContext } from "./UserContext";
 
 const PageCard = (props: {
   rightStuff: React.ReactNode;
-  title: string;
+  title?: string;
   description?: string;
   createdAt?: string;
   minHeight?: string;
@@ -130,73 +130,77 @@ const PageCard = (props: {
             )}
             {props.rightStuff}
           </Stack>
-          <Stack spacing="14px" px="24px">
-            <Stack spacing="2px">
-              {props.createdAt ? (
-                <Typography color={PALETTE.secondary.grey[4]}>
-                  {getFormattedDate(props.createdAt)}
-                </Typography>
+          {props.title || props.description || props.createdAt ? (
+            <Stack spacing="14px" px="24px">
+              <Stack spacing="2px">
+                {props.createdAt ? (
+                  <Typography color={PALETTE.secondary.grey[4]}>
+                    {getFormattedDate(props.createdAt)}
+                  </Typography>
+                ) : null}
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  alignItems="center"
+                >
+                  {props.title ? (
+                    <Typography htmlTag="h1" variant="h2">
+                      {props.title}
+                    </Typography>
+                  ) : null}
+                  {props.editingEnabled ? (
+                    <Stack
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                      }}
+                      onClick={props.editingCallback}
+                      zIndex={5}
+                    >
+                      <PencilIcon width="24px" height="24px" />
+                    </Stack>
+                  ) : null}
+                </Stack>
+              </Stack>
+              {props.description ? (
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.secondary.grey[4],
+                      },
+                    },
+                  }}
+                  alignItems="center"
+                >
+                  <Typography htmlTag="h2">{props.description}</Typography>
+                  {props.editingEnabled ? (
+                    <Stack
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.6 },
+                        transition: "0.2s",
+                      }}
+                      onClick={props.editingCallback}
+                      zIndex={5}
+                    >
+                      <PencilIcon width="18px" height="18px" />
+                    </Stack>
+                  ) : null}
+                </Stack>
               ) : null}
-              <Stack
-                direction="row"
-                spacing="12px"
-                sx={{
-                  svg: {
-                    path: {
-                      fill: PALETTE.secondary.grey[4],
-                    },
-                  },
-                }}
-                alignItems="center"
-              >
-                <Typography htmlTag="h1" variant="h2">
-                  {props.title}
-                </Typography>
-                {props.editingEnabled ? (
-                  <Stack
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.6 },
-                      transition: "0.2s",
-                    }}
-                    onClick={props.editingCallback}
-                    zIndex={5}
-                  >
-                    <PencilIcon width="24px" height="24px" />
-                  </Stack>
-                ) : null}
-              </Stack>
             </Stack>
-            {props.description ? (
-              <Stack
-                direction="row"
-                spacing="12px"
-                sx={{
-                  svg: {
-                    path: {
-                      fill: PALETTE.secondary.grey[4],
-                    },
-                  },
-                }}
-                alignItems="center"
-              >
-                <Typography htmlTag="h2">{props.description}</Typography>
-                {props.editingEnabled ? (
-                  <Stack
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.6 },
-                      transition: "0.2s",
-                    }}
-                    onClick={props.editingCallback}
-                    zIndex={5}
-                  >
-                    <PencilIcon width="18px" height="18px" />
-                  </Stack>
-                ) : null}
-              </Stack>
-            ) : null}
-          </Stack>
+          ) : null}
         </Stack>
         {props.children}
         {!props.noBottomPadding ? <Stack height="24px" /> : null}

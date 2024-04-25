@@ -46,7 +46,12 @@ const AstroWorksheetPage = (props: {
           justifyContent="space-between"
         >
           {props.title ? (
-            <Typography color={PALETTE.font.dark} variant="h2" maxLines={1}>
+            <Typography
+              color={PALETTE.font.dark}
+              variant="h2"
+              maxLines={1}
+              sx={{ wordBreak: "break-all" }}
+            >
               {props.title}
             </Typography>
           ) : (
