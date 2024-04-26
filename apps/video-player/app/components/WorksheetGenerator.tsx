@@ -344,6 +344,7 @@ export default function WorksheetGenerator(props: {
                 leftAlign
                 boldValue
                 height="44px"
+                autoFocus
               />
             </Captioned>
             <Captioned text="Description">
