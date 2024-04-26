@@ -268,6 +268,7 @@ const VideoCreationDialog = (props: {
                   width="100%"
                   leftAlign
                   boldValue
+                  autoFocus={!props.video}
                 />
               </Stack>
             </Captioned>
@@ -288,6 +289,7 @@ const VideoCreationDialog = (props: {
                 width="100%"
                 leftAlign
                 boldValue
+                autoFocus={!!props.video}
               />
             </Captioned>
             <Captioned text="Description">

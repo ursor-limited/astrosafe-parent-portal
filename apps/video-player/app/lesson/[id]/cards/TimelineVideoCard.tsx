@@ -56,6 +56,7 @@ const TimelineVideoCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
+        widthRatio={1}
       >
         <Stack
           flex={1}

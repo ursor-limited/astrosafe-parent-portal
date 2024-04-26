@@ -300,6 +300,7 @@ export default function ImageDialog(props: IImageDialogProps) {
               }}
               leftAlign
               width="100%"
+              autoFocus
             />
           </Captioned>
           <Captioned text="Description">
