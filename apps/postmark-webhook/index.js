@@ -10,72 +10,71 @@ const BACKEND_URLS = {
 
 const createEmailSchedule = async (email) =>
   axios
-    .patch(
-      `${BACKEND_URLS[process.env.NODE_ENV]}/email/createemailschedule/${email}`
+    .post(
+      `${BACKEND_URLS[process.env.NODE_ENV]}/email/createEmailSchedule`,
+      { email }
       // TODO: Handle the type of email that was delivered based on the tag of the email.
       // for now we need to know the onboarding1 was delivered, and if it was set up their mailing schedule
       // and for the rest we need to know to remove them from the campaign
     )
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
-  
+
 const emailBounced = async (email) =>
   axios
-    .patch(
-      `${
-        BACKEND_URLS[process.env.NODE_ENV]
-      }/email/bounced/${email}`
+    .post(
+      `${BACKEND_URLS[process.env.NODE_ENV]}/email/bounced`,
+      { email }
       // if email bounces for now add them to a block list
     )
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
-  const emailSpamComplaint = async (email) =>
-    axios
-      .patch(
-        `${
-          BACKEND_URLS[process.env.NODE_ENV]
-        }/email/spamcomplaint/${email}`
-        // if email has spam complaint, for now remove tehm from future emails
-      )
-      .then((x) => console.log(x.data))
-      .catch((error) => console.log(error));
-  
-
+const emailSpamComplaint = async (email) =>
+  axios
+    .post(
+      `${BACKEND_URLS[process.env.NODE_ENV]}/email/spamComplaint`,
+      { email }
+      // if email has spam complaint, for now remove tehm from future emails
+    )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
 
 exports.handler = async function (event) {
-  
   try {
-    const postmarkEventBody = JSON.parse(event.body)
-    const eventType = postmarkEventBody.RecordType ? postmarkEventBody.RecordType  : "";
-    const eventTag = postmarkEventBody.Tag ? postmarkEventBody.Tag : ""  
-    var eventEmail = "" 
-    if (eventType === "") {
-      return;
-    } else if (eventType === "Delivery" ) {
-      eventEmail = postmarkEventBody.Recipient ? postmarkEventBody.Recipient : "";
-    } else {
-      eventEmail = postmarkEventBody.Email ? postmarkEventBody.Email : "";
-    }
+    const postmarkEventBody = JSON.parse(event.body);
+    const eventType = postmarkEventBody.RecordType
+      ? postmarkEventBody.RecordType
+      : "";
+    const eventTag = postmarkEventBody.Tag ? postmarkEventBody.Tag : "";
+    console.log("Tag:", eventTag);
 
-    if (eventEmail === "" || eventTag === "") {
-      return;
-    } 
+    if (!eventType) return;
+    const eventEmail =
+      eventType === "Delivery"
+        ? postmarkEventBody.Recipient
+        : postmarkEventBody.Email;
+
+    if (!eventEmail || !eventTag) return;
 
     switch (eventType) {
       case "Delivery":
-        if (eventTag === "onboarding1") {
-          createEmailSchedule(eventEmail)
-          console.log("this is the first onboarding email! Set up the email schedule")
+        if (eventTag === "onboarding1" || eventTag === "welcome-email") {
+          await createEmailSchedule(eventEmail);
+          console.log(
+            "this is the first onboarding email! Set up the email schedule"
+          );
         } else {
           // we don't need to remove emails because they're done by date
         }
         break;
       case "Bounce":
-        console.log("email bounced - remove from mailouts")
+        await emailBounced(eventEmail);
+        console.log("email bounced - remove from mailouts");
         break;
       case "SpamComplaint":
-        console.log("email spam complaint - remove from mailouts")
+        await emailSpamComplaint(eventEmail);
+        console.log("email spam complaint - remove from mailouts");
         break;
       default:
         console.log("Unhandled event with message Id:");
