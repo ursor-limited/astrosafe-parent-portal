@@ -734,11 +734,11 @@ export default function WorksheetPageContents(props: {
                 iconSize="17px"
                 border
                 actions={[
-                  {
-                    text: "Edit",
-                    kallback: () => setEditingDialogOpen(true),
-                    icon: PencilIcon,
-                  },
+                  // {
+                  //   text: "Edit",
+                  //   kallback: () => setEditingDialogOpen(true),
+                  //   icon: PencilIcon,
+                  // },
                   {
                     text: "Delete",
                     kallback: () => setDeletionDialogOpen(true),

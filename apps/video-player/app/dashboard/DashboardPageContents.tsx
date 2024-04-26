@@ -1202,10 +1202,10 @@ export default function DashboardPageContents() {
               <SortButton
                 selected={selectedSort}
                 callback={(id) => setSelectedSort(id)}
-                types={["abc", "updatedAt"]}
+                types={["updatedAt", "abc"]}
                 displayNames={{
-                  abc: "Alphabetical",
                   updatedAt: "Most recent",
+                  abc: "Alphabetical",
                 }}
                 width="204px"
               />
