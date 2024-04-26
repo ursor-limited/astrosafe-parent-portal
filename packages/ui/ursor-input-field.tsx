@@ -30,6 +30,7 @@ export interface UrsorInputFieldProps {
   onEnterKey?: () => void;
   onBlur?: () => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  autoFocus?: boolean;
   placeholder?: string;
   endIcon?: JSX.Element;
 }
@@ -113,6 +114,7 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       onMouseLeave={() => {
         setHovering(false);
       }}
+      autoFocus={props.autoFocus}
       placeholder={props.placeholder} //@ts-expect-error -- boo
       sx={customSx}
       value={props.value}

@@ -49,8 +49,8 @@ import { createPortal } from "react-dom";
 import HoverCard from "./HoverCard";
 import { cardClasses } from "@mui/material";
 
-const DOT_CARD_Y = 40;
-const CARD_SPACING = 100;
+const DOT_CARD_Y = 47;
+const CARD_SPACING = 120;
 const RIGHT_COLUMN_Y_OFFSET = 60;
 const CONTENT_PADDING_X = 24;
 
@@ -361,12 +361,20 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
+  const [lessonNamingDialogSkipTo, setLessonNamingDialogSkipTo] = useState<
+    "back" | "share" | null
+  >(null);
+
   const [hovering, setHovering] = useState<boolean>(false);
 
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
-    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
-    [lesson?.title]
+    () =>
+      setNeedToTitle(
+        lesson?.title === DEFAULT_LESSON_TITLE &&
+          lessonNamingDialogSkipTo !== "share"
+      ),
+    [lesson?.title, lessonNamingDialogSkipTo]
   );
 
   const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
@@ -413,11 +421,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
     draggedElementTopMouseYSeparation,
     setDraggedElementTopMouseYSeparation,
   ] = useState<number>(0);
+  const [draggedElementX, setDraggedElementX] = useState<number>(0);
   useEffect(() => {
     if (draggedContentId) {
       const el = document.getElementById(draggedContentId);
       setDraggedElement(el);
       setDraggedElementWidth(el?.getBoundingClientRect?.()?.width ?? 0);
+      setDraggedElementX(el?.getBoundingClientRect?.()?.left ?? 0);
       setDraggedElementTopMouseYSeparation(
         mouseY - (el?.getBoundingClientRect?.()?.top ?? 0)
       );
@@ -425,6 +435,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
       setDraggedElement(null);
     }
   }, [draggedContentId]);
+
+  const [singleContentsColumnWidth, setSingleContentsColumnWidth] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setSingleContentsColumnWidth(
+        (contentsColumnRef?.getBoundingClientRect?.()?.width ?? 0) / 2 -
+          CONTENT_PADDING_X * 2
+      ),
+    [contentsColumnRef?.getBoundingClientRect?.()?.width]
+  );
 
   const handleMouseMove = useCallback(
     (event: any) => {
@@ -504,6 +525,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
     }
   };
 
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notificationCtx.success("Copied URL to clipboard.");
+  };
+
   return (
     <>
       {draggedElement
@@ -515,7 +541,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 (contentsColumnRef?.getBoundingClientRect?.()?.top ?? 0)
               }
               x={
-                CONTENT_PADDING_X //+
+                draggedElementX -
+                (contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0)
                 // (contentsColumnRef?.getBoundingClientRect?.()?.[
                 //   contentsWithSide.find((c) => c.contentId === draggedContentId)
                 //     ?.left
@@ -543,6 +570,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
+        sx={{
+          pointerEvents: draggedContentId ? "none" : undefined,
+        }}
       >
         <Stack height="40px" minHeight="40px" />
         <PageCard
@@ -553,6 +583,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           backCallback={
             needToTitle
               ? () => {
+                  setLessonNamingDialogSkipTo("back");
                   setEditingDialogOpen(true);
                   notificationCtx.success(
                     "Please add a title to your Lesson before leaving."
@@ -582,13 +613,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   endIcon={ShareIcon}
                   onClick={() => {
                     if (needToTitle) {
+                      setLessonNamingDialogSkipTo("share");
                       setEditingDialogOpen(true);
                       notificationCtx.success(
                         "Please add a title to your Lesson before sharing it."
                       );
                     } else {
-                      navigator.clipboard.writeText(window.location.href);
-                      notificationCtx.success("Copied URL to clipboard.");
+                      copyUrl();
                     }
                   }}
                 >
@@ -797,8 +828,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       draggedContentId={
                         draggedContentId ? draggedContentId : undefined
                       }
+                      columnWidth={singleContentsColumnWidth}
                       wrapper={(card, i) => (
-                        <Stack
+                        <Stack //@ts-ignore
+                          key={card?.props?.id}
                           position="relative"
                           onMouseEnter={() => {
                             setHoveringContentSide("left");
@@ -833,6 +866,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                             onMouseLeave={() => {
                               setHoveringOnContentCard(false);
                             }}
+                            alignItems="flex-end"
                           >
                             {card}
                           </Stack>
@@ -967,8 +1001,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                     updateCallback={loadLesson}
                     dragStartCallback={setDraggedContentId}
+                    columnWidth={singleContentsColumnWidth}
                     wrapper={(card, i) => (
-                      <Stack
+                      <Stack //@ts-ignore
+                        key={card?.props?.id}
                         position="relative"
                         onMouseEnter={() => {
                           setHoveringContentSide("right");
@@ -1033,6 +1069,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setEditingDialogOpen(false)}
         lesson={lesson}
         updateCallback={reloadLessonDetails}
+        skipCallback={
+          lessonNamingDialogSkipTo
+            ? lessonNamingDialogSkipTo === "back"
+              ? () => router.push("/dashboard")
+              : () => copyUrl()
+            : undefined
+        }
       />
       <DeletionDialog
         open={deletionDialogOpen}
@@ -1188,6 +1231,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           images={images}
           worksheets={worksheets}
           lessonId={props.lessonId}
+          columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setLinkEditingDialogId={setLinkEditingDialogId}
           setTextEditingDialogId={setTextEditingDialogId}

@@ -8,12 +8,17 @@ import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 
+const WIDTH_RATIO = 0.86;
+
 const TimelineImageCard = (
   props: IImage & {
+    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
+    columnWidth: number;
     dragging?: boolean;
   }
 ) => {
@@ -23,6 +28,15 @@ const TimelineImageCard = (
     ApiController.deleteImage(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Image."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateImage(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Image."));
+
+  const [aspectRatio, setAspectRatio] = useState(2);
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
   return (
     <>
       <TimelineCard
@@ -36,12 +50,17 @@ const TimelineImageCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
+        width={WIDTH_RATIO * props.columnWidth}
       >
         <Stack
+          ref={setRef}
           alignItems="center"
           justifyContent="center"
           p="12px"
-          height="363px"
+          height={
+            ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) / aspectRatio
+          }
           width="100%"
           overflow="hidden"
           position="relative"
@@ -51,6 +70,9 @@ const TimelineImageCard = (
             fill
             style={{ objectFit: "cover" }}
             alt="image!"
+            onLoadingComplete={({ naturalWidth, naturalHeight }) => {
+              setAspectRatio(naturalWidth / naturalHeight);
+            }}
           />
         </Stack>
       </TimelineCard>

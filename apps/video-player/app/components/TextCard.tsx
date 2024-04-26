@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
@@ -13,17 +13,7 @@ import { IText } from "./TextDialog";
 import "react-quill/dist/quill.core.css";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 import useOrangeBorder from "./useOrangeBorder";
-
-const TextPreview = (props: { value: string }) => (
-  <div
-    key={new Date().getTime()}
-    className="view ql-editor"
-    dangerouslySetInnerHTML={{
-      __html: props.value,
-    }}
-    style={{ overflowWrap: "anywhere", color: PALETTE.font.dark }}
-  />
-);
+import { TextPreview } from "../lesson/[id]/cards/TimelineTextCard";
 
 const TextCard = (
   props: IText & {

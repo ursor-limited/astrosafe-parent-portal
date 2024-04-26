@@ -28,14 +28,18 @@ const A4_WIDTH = 210;
 const PADDING = 4;
 const DEFAULT_WIDTH = 566;
 
+const WIDTH_RATIO = 0.8;
+
 const TimelineWorksheetCard = (
   props: IWorksheet & {
     lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
+    columnWidth: number;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -44,6 +48,11 @@ const TimelineWorksheetCard = (
     ApiController.deleteWorksheet(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Worksheet."));
+
+  const submitDuplication = () =>
+    ApiController.duplicateWorksheet(props.id, props.lessonId)
+      .then(props.duplicationCallback)
+      .then(() => notificationCtx.success("Duplicated Worksheet."));
 
   const { width } = useWindowSize();
 
@@ -78,8 +87,10 @@ const TimelineWorksheetCard = (
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
-        editingCallback={props.editingCallback}
+        //editingCallback={props.editingCallback}
+        duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
+        width={WIDTH_RATIO * props.columnWidth}
       >
         <Stack
           ref={setRef}
@@ -102,7 +113,7 @@ const TimelineWorksheetCard = (
             onClick={() =>
               router.push(
                 `/worksheet/${props.id}${
-                  props.lessonId ? `?worksheet=${props.lessonId}` : ""
+                  props.lessonId ? `?lesson=${props.lessonId}` : ""
                 }`
               )
             }

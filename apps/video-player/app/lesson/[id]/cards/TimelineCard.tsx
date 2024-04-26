@@ -1,12 +1,17 @@
-import { Stack } from "@mui/system";
+import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import GrabberIcon from "@/images/icons/GrabberIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
+import DynamicContainer from "@/app/components/DynamicContainer";
+
+const COLLAPSE_HEIGHT_THRESHOLD = 80;
 
 const TimelineCard = (props: {
   id: string;
@@ -19,7 +24,8 @@ const TimelineCard = (props: {
   color: string;
   editingCallback?: () => void;
   deletionCallback?: () => void;
-
+  duplicationCallback?: () => void;
+  width: number;
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
@@ -32,6 +38,24 @@ const TimelineCard = (props: {
 
   const userDetails = useUserContext().user;
 
+  const [descriptionRef, setDescriptionRef] = useState<HTMLElement | null>(
+    null
+  );
+  const [descriptionHeight, setDescriptionHeight] = useState<number>(0);
+  useEffect(
+    () =>
+      setDescriptionHeight(
+        descriptionRef?.getBoundingClientRect?.()?.height ?? 0
+      ),
+    [descriptionRef?.getBoundingClientRect?.()?.height]
+  );
+
+  const [descriptionCollapsed, setDescriptionCollapsed] =
+    useState<boolean>(true);
+
+  const [hoveringOnDescription, setHoveringOnDescription] =
+    useState<boolean>(false);
+
   return (
     <Stack
       id={props.id}
@@ -39,13 +63,14 @@ const TimelineCard = (props: {
       borderRadius="12px"
       //boxShadow="0 0 20px rgba(0,0,0,0.08)"
       bgcolor={PALETTE.secondary.grey[1]}
-      overflow="hidden"
+      //overflow="hidden"
       sx={{
         //pointerEvents: props.dragging ? "none" : undefined,
         outline: orangeBorderOn
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
       }}
+      width={props.width}
     >
       <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
         {userDetails ? (
@@ -60,7 +85,10 @@ const TimelineCard = (props: {
                   transform: "rotate(90deg)",
                 },
               }}
-              onMouseDown={props.onDragStart}
+              onMouseDown={(e) => {
+                props.onDragStart?.();
+                //e.preventDefault();
+              }}
             >
               <GrabberIcon width="20px" height="20px" />
             </Stack>
@@ -71,22 +99,52 @@ const TimelineCard = (props: {
               overflow="visible"
               justifyContent="center"
             >
-              <Stack position="absolute" right={0}>
+              <Stack
+                position="absolute"
+                right={0}
+                direction="row"
+                spacing="8px"
+              >
+                <Stack
+                  height="32px"
+                  width="32px"
+                  //border={`2px solid ${PALETTE.primary.navy}`}
+                  bgcolor="rgb(255,255,255)"
+                  borderRadius="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    cursor: "pointer",
+                  }}
+                  onClick={props.duplicationCallback}
+                >
+                  <DuplicateIcon height="22px" width="22px" />
+                </Stack>
                 <UrsorActionButton
                   size="32px"
                   iconSize="16px"
                   actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => props.editingCallback?.(),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => props.deletionCallback?.(),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
+                    ...(props.editingCallback
+                      ? [
+                          {
+                            text: "Edit",
+                            kallback: () => props.editingCallback?.(),
+                            icon: PencilIcon,
+                          },
+                        ]
+                      : []),
+                    ...(props.deletionCallback
+                      ? [
+                          {
+                            text: "Delete",
+                            kallback: () => props.deletionCallback?.(),
+                            icon: TrashcanIcon,
+                            color: PALETTE.system.red,
+                          },
+                        ]
+                      : []),
                   ]}
                 />
               </Stack>
@@ -103,7 +161,10 @@ const TimelineCard = (props: {
             justifyContent="space-between"
             px="4px"
             pt="11px"
-            pb="4px"
+            position="relative"
+            pb={
+              descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? "20px" : undefined
+            }
           >
             {props.title ? (
               <Typography
@@ -115,9 +176,74 @@ const TimelineCard = (props: {
               </Typography>
             ) : null}
             {props.description ? (
-              <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
-                {props.description}
-              </Typography>
+              <Stack
+                ref={setDescriptionRef}
+                maxHeight={descriptionCollapsed ? "100px" : undefined}
+                overflow="hidden"
+                sx={{
+                  transition: "0.4s",
+                }}
+                onMouseEnter={() => {
+                  setHoveringOnDescription(true);
+                }}
+                onMouseLeave={() => {
+                  setHoveringOnDescription(false);
+                }}
+              >
+                <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
+                  {props.description}
+                </Typography>
+              </Stack>
+            ) : null}
+
+            {descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? (
+              <Stack
+                position="absolute"
+                bottom={0}
+                width="100%"
+                height="80px"
+                sx={{
+                  opacity: hoveringOnDescription ? 0.9 : 1,
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  background: descriptionCollapsed
+                    ? `linear-gradient(0deg,  ${
+                        PALETTE.secondary.grey[1]
+                      },  ${alpha(PALETTE.secondary.grey[1], 0.84)}, ${alpha(
+                        PALETTE.secondary.grey[1],
+                        0
+                      )})`
+                    : undefined,
+                  svg: {
+                    paddingRight: "4px",
+                    transform: `scale(${hoveringOnDescription ? 1.1 : 1})`,
+                    transition: "0.25s",
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
+                  },
+                }}
+                justifyContent="flex-end"
+                alignItems="center"
+                onClick={() => setDescriptionCollapsed(!descriptionCollapsed)}
+                onMouseEnter={() => {
+                  setHoveringOnDescription(true);
+                }}
+                onMouseLeave={() => {
+                  setHoveringOnDescription(false);
+                }}
+              >
+                <Stack
+                  sx={{
+                    transform: `rotate(${
+                      descriptionCollapsed ? 0 : 180
+                    }deg) translateY(-3px)`,
+                    transition: "0.2s",
+                  }}
+                >
+                  <ChevronDownIcon height="26px" width="26px" />
+                </Stack>
+              </Stack>
             ) : null}
           </Stack>
         ) : null}

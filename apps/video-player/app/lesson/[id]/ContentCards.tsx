@@ -29,6 +29,7 @@ const ContentCards = (props: {
     contentId: string;
   }[];
   lessonId: string;
+  columnWidth: number;
   wrapper?: (card: React.ReactNode, i: number) => React.ReactNode;
   setVideoEditingDialogId: (id: string) => void;
   setLinkEditingDialogId: (id: string) => void;
@@ -55,11 +56,13 @@ const ContentCards = (props: {
                   props.setVideoEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "link") {
@@ -67,14 +70,17 @@ const ContentCards = (props: {
             return link ? (
               <TimelineLinkCard
                 {...link}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() => props.setLinkEditingDialogId(link.id)}
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(link.id, height);
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "text") {
@@ -82,16 +88,19 @@ const ContentCards = (props: {
             return text ? (
               <TimelineTextCard
                 {...text}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() =>
                   props.setTextEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "image") {
@@ -99,14 +108,17 @@ const ContentCards = (props: {
             return image ? (
               <TimelineImageCard
                 {...image}
+                lessonId={props.lessonId}
                 key={c.contentId}
                 editingCallback={() => props.setImageEditingDialogId(image.id)}
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(image.id, height);
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "worksheet") {
@@ -122,11 +134,13 @@ const ContentCards = (props: {
                   props.setWorksheetEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
                 setHeight={(height) => {
                   props.setHeight?.(c.contentId, height);
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           }
