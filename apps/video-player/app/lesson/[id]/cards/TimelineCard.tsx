@@ -5,11 +5,11 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import ArrowBothIcon from "@/images/icons/ArrowBothIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
-import DynamicContainer from "@/app/components/DynamicContainer";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
 
@@ -55,6 +55,8 @@ const TimelineCard = (props: {
 
   const [hoveringOnDescription, setHoveringOnDescription] =
     useState<boolean>(false);
+
+  const [expanded, setExpanded] = useState<boolean>(false);
 
   return (
     <Stack
@@ -108,7 +110,22 @@ const TimelineCard = (props: {
                 <Stack
                   height="32px"
                   width="32px"
-                  //border={`2px solid ${PALETTE.primary.navy}`}
+                  bgcolor="rgb(255,255,255)"
+                  borderRadius="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setExpanded(true)}
+                >
+                  <ArrowBothIcon height="18px" width="18px" />
+                </Stack>
+                <Stack
+                  height="32px"
+                  width="32px"
                   bgcolor="rgb(255,255,255)"
                   borderRadius="100%"
                   justifyContent="center"
