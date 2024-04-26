@@ -18,6 +18,7 @@ const TimelineImageCard = (
     deletionCallback?: () => void;
     duplicationCallback?: () => void;
     onDragStart?: () => void;
+    columnWidth: number;
     dragging?: boolean;
   }
 ) => {
@@ -50,7 +51,7 @@ const TimelineImageCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        widthRatio={WIDTH_RATIO}
+        width={WIDTH_RATIO * props.columnWidth}
       >
         <Stack
           ref={setRef}

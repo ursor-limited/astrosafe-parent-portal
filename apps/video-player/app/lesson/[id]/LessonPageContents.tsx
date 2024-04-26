@@ -416,14 +416,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [draggedElement, setDraggedElement] = useState<HTMLElement | null>(
     null
   );
-  const [draggedElementX, setDraggedElementX] = useState<number>(0);
   const [draggedElementWidth, setDraggedElementWidth] = useState<number>(0);
-  const [contentsColumnX, setContentsColumnX] = useState<number>(0);
-  const [contentsColumnWidth, setContentsColumnWidth] = useState<number>(0);
   const [
     draggedElementTopMouseYSeparation,
     setDraggedElementTopMouseYSeparation,
   ] = useState<number>(0);
+  const [draggedElementX, setDraggedElementX] = useState<number>(0);
   useEffect(() => {
     if (draggedContentId) {
       const el = document.getElementById(draggedContentId);
@@ -433,16 +431,21 @@ export default function LessonPageContents(props: { lessonId: string }) {
       setDraggedElementTopMouseYSeparation(
         mouseY - (el?.getBoundingClientRect?.()?.top ?? 0)
       );
-      setContentsColumnX(
-        contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0
-      );
-      setContentsColumnWidth(
-        contentsColumnRef?.getBoundingClientRect?.()?.width ?? 0
-      );
     } else {
       setDraggedElement(null);
     }
   }, [draggedContentId]);
+
+  const [singleContentsColumnWidth, setSingleContentsColumnWidth] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setSingleContentsColumnWidth(
+        (contentsColumnRef?.getBoundingClientRect?.()?.width ?? 0) / 2 -
+          CONTENT_PADDING_X * 2
+      ),
+    [contentsColumnRef?.getBoundingClientRect?.()?.width]
+  );
 
   const handleMouseMove = useCallback(
     (event: any) => {
@@ -538,8 +541,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 (contentsColumnRef?.getBoundingClientRect?.()?.top ?? 0)
               }
               x={
-                draggedElementX // -
-                //(contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0) //+
+                draggedElementX -
+                (contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0)
                 // (contentsColumnRef?.getBoundingClientRect?.()?.[
                 //   contentsWithSide.find((c) => c.contentId === draggedContentId)
                 //     ?.left
@@ -547,19 +550,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 //     : "right"
                 // ] ?? 0)
               }
-              containerX={
-                contentsColumnX
-                //contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0
+              left={
+                contentsWithSide.find((c) => c.contentId === draggedContentId)
+                  ?.left
               }
-              containerWidth={contentsColumnWidth}
-              // left={
-              //   contentsWithSide.find((c) => c.contentId === draggedContentId)
-              //     ?.left
-              // }
               element={draggedElement}
               width={draggedElementWidth}
             />,
-            document.body
+            contentsColumnRef ?? document.body
           )
         : null}
       <Stack
@@ -830,6 +828,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       draggedContentId={
                         draggedContentId ? draggedContentId : undefined
                       }
+                      columnWidth={singleContentsColumnWidth}
                       wrapper={(card, i) => (
                         <Stack
                           position="relative"
@@ -1001,6 +1000,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     setWorksheetEditingDialogId={setWorksheetEditingDialogId}
                     updateCallback={loadLesson}
                     dragStartCallback={setDraggedContentId}
+                    columnWidth={singleContentsColumnWidth}
                     wrapper={(card, i) => (
                       <Stack
                         position="relative"
@@ -1229,6 +1229,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           images={images}
           worksheets={worksheets}
           lessonId={props.lessonId}
+          columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setLinkEditingDialogId={setLinkEditingDialogId}
           setTextEditingDialogId={setTextEditingDialogId}

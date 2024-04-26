@@ -6,8 +6,6 @@ const HoverCard = (props: {
   x: number;
   element: HTMLElement;
   width: number;
-  containerX: number;
-  containerWidth: number;
   left?: boolean;
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -17,29 +15,16 @@ const HoverCard = (props: {
     }
     ref.current?.appendChild(props.element.cloneNode(true));
   }, [props.element]);
-
   return (
     <Stack
       position="absolute"
       top={props.y}
-      left={props.containerX}
-      width={props.containerWidth / 2}
+      left={props.x}
       //left={props.left ? props.x : undefined}
       //right={!props.left ? props.x : undefined}
       zIndex={5}
-      height="30px"
-      bgcolor="cyan"
     >
-      <Stack width="100%" position="relative">
-        <div
-          ref={ref}
-          style={{
-            width: `${props.width}px`,
-            position: "absolute",
-            left: props.x - props.containerX,
-          }}
-        />
-      </Stack>
+      <div ref={ref} style={{ width: `${props.width}px` }} />
     </Stack>
   );
 };

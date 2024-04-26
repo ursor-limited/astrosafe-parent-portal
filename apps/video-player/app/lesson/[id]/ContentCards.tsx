@@ -29,6 +29,7 @@ const ContentCards = (props: {
     contentId: string;
   }[];
   lessonId: string;
+  columnWidth: number;
   wrapper?: (card: React.ReactNode, i: number) => React.ReactNode;
   setVideoEditingDialogId: (id: string) => void;
   setLinkEditingDialogId: (id: string) => void;
@@ -61,6 +62,7 @@ const ContentCards = (props: {
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "link") {
@@ -78,6 +80,7 @@ const ContentCards = (props: {
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "text") {
@@ -97,6 +100,7 @@ const ContentCards = (props: {
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "image") {
@@ -114,6 +118,7 @@ const ContentCards = (props: {
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           } else if (c.type === "worksheet") {
@@ -135,6 +140,7 @@ const ContentCards = (props: {
                 }}
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
               />
             ) : null;
           }
