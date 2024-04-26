@@ -57,202 +57,197 @@ const TimelineCard = (props: {
     useState<boolean>(false);
 
   return (
-    <DynamicContainer duration={200}>
-      <Stack
-        id={props.id}
-        ref={setRef}
-        borderRadius="12px"
-        //boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        bgcolor={PALETTE.secondary.grey[1]}
-        overflow="hidden"
-        sx={{
-          //pointerEvents: props.dragging ? "none" : undefined,
-          outline: orangeBorderOn
-            ? `3px solid ${PALETTE.system.orange}`
-            : undefined,
-        }}
-        width={props.width}
-      >
-        <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
-          {userDetails ? (
-            <Stack direction="row" width="100%" height="48px">
+    <Stack
+      id={props.id}
+      ref={setRef}
+      borderRadius="12px"
+      //boxShadow="0 0 20px rgba(0,0,0,0.08)"
+      bgcolor={PALETTE.secondary.grey[1]}
+      //overflow="hidden"
+      sx={{
+        //pointerEvents: props.dragging ? "none" : undefined,
+        outline: orangeBorderOn
+          ? `3px solid ${PALETTE.system.orange}`
+          : undefined,
+      }}
+      width={props.width}
+    >
+      <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
+        {userDetails ? (
+          <Stack direction="row" width="100%" height="48px">
+            <Stack
+              width="100%"
+              alignItems="center"
+              justifyContent="center"
+              sx={{
+                cursor: props.dragging ? "grabbing" : "grab",
+                svg: {
+                  transform: "rotate(90deg)",
+                },
+              }}
+              onMouseDown={(e) => {
+                props.onDragStart?.();
+                //e.preventDefault();
+              }}
+            >
+              <GrabberIcon width="20px" height="20px" />
+            </Stack>
+
+            <Stack
+              position="relative"
+              width={0}
+              overflow="visible"
+              justifyContent="center"
+            >
               <Stack
-                width="100%"
-                alignItems="center"
-                justifyContent="center"
+                position="absolute"
+                right={0}
+                direction="row"
+                spacing="8px"
+              >
+                <Stack
+                  height="32px"
+                  width="32px"
+                  //border={`2px solid ${PALETTE.primary.navy}`}
+                  bgcolor="rgb(255,255,255)"
+                  borderRadius="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  sx={{
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    cursor: "pointer",
+                  }}
+                  onClick={props.duplicationCallback}
+                >
+                  <DuplicateIcon height="22px" width="22px" />
+                </Stack>
+                <UrsorActionButton
+                  size="32px"
+                  iconSize="16px"
+                  actions={[
+                    ...(props.editingCallback
+                      ? [
+                          {
+                            text: "Edit",
+                            kallback: () => props.editingCallback?.(),
+                            icon: PencilIcon,
+                          },
+                        ]
+                      : []),
+                    ...(props.deletionCallback
+                      ? [
+                          {
+                            text: "Delete",
+                            kallback: () => props.deletionCallback?.(),
+                            icon: TrashcanIcon,
+                            color: PALETTE.system.red,
+                          },
+                        ]
+                      : []),
+                  ]}
+                />
+              </Stack>
+            </Stack>
+          </Stack>
+        ) : null}
+
+        <Stack borderRadius="8px" overflow="hidden">
+          {props.children}
+        </Stack>
+        {props.title || props.description ? (
+          <Stack
+            flex={1}
+            justifyContent="space-between"
+            px="4px"
+            pt="11px"
+            pb="4px"
+            position="relative"
+          >
+            {props.title ? (
+              <Typography
+                variant="medium"
+                bold
+                color={PALETTE.secondary.grey[5]}
+              >
+                {props.title}
+              </Typography>
+            ) : null}
+            {props.description ? (
+              <Stack
+                ref={setDescriptionRef}
+                maxHeight={descriptionCollapsed ? "100px" : undefined}
+                overflow="hidden"
                 sx={{
-                  cursor: props.dragging ? "grabbing" : "grab",
+                  transition: "0.4s",
+                }}
+                onMouseEnter={() => {
+                  setHoveringOnDescription(true);
+                }}
+                onMouseLeave={() => {
+                  setHoveringOnDescription(false);
+                }}
+              >
+                <Typography variant="medium" color={PALETTE.secondary.grey[5]}>
+                  {props.description}
+                </Typography>
+              </Stack>
+            ) : null}
+
+            {descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? (
+              <Stack
+                position="absolute"
+                bottom={0}
+                width="100%"
+                height="63px"
+                sx={{
+                  opacity: hoveringOnDescription ? 0.9 : 1,
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  background: descriptionCollapsed
+                    ? `linear-gradient(0deg,  ${
+                        PALETTE.secondary.grey[1]
+                      },  ${alpha(PALETTE.secondary.grey[1], 0.84)}, ${alpha(
+                        PALETTE.secondary.grey[1],
+                        0
+                      )})`
+                    : undefined,
                   svg: {
-                    transform: "rotate(90deg)",
+                    paddingRight: "4px",
+                    transform: `scale(${hoveringOnDescription ? 1.1 : 1})`,
+                    transition: "0.25s",
+                    path: {
+                      fill: PALETTE.secondary.grey[4],
+                    },
                   },
                 }}
-                onMouseDown={(e) => {
-                  props.onDragStart?.();
-                  //e.preventDefault();
+                justifyContent="flex-end"
+                alignItems="flex-end"
+                onClick={() => setDescriptionCollapsed(!descriptionCollapsed)}
+                onMouseEnter={() => {
+                  setHoveringOnDescription(true);
+                }}
+                onMouseLeave={() => {
+                  setHoveringOnDescription(false);
                 }}
               >
-                <GrabberIcon width="20px" height="20px" />
-              </Stack>
-
-              <Stack
-                position="relative"
-                width={0}
-                overflow="visible"
-                justifyContent="center"
-              >
                 <Stack
-                  position="absolute"
-                  right={0}
-                  direction="row"
-                  spacing="8px"
-                >
-                  <Stack
-                    height="32px"
-                    width="32px"
-                    //border={`2px solid ${PALETTE.primary.navy}`}
-                    bgcolor="rgb(255,255,255)"
-                    borderRadius="100%"
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{
-                      "&:hover": { opacity: 0.7 },
-                      transition: "0.2s",
-                      cursor: "pointer",
-                    }}
-                    onClick={props.duplicationCallback}
-                  >
-                    <DuplicateIcon height="22px" width="22px" />
-                  </Stack>
-                  <UrsorActionButton
-                    size="32px"
-                    iconSize="16px"
-                    actions={[
-                      ...(props.editingCallback
-                        ? [
-                            {
-                              text: "Edit",
-                              kallback: () => props.editingCallback?.(),
-                              icon: PencilIcon,
-                            },
-                          ]
-                        : []),
-                      ...(props.deletionCallback
-                        ? [
-                            {
-                              text: "Delete",
-                              kallback: () => props.deletionCallback?.(),
-                              icon: TrashcanIcon,
-                              color: PALETTE.system.red,
-                            },
-                          ]
-                        : []),
-                    ]}
-                  />
-                </Stack>
-              </Stack>
-            </Stack>
-          ) : null}
-
-          <Stack borderRadius="8px" overflow="hidden">
-            {props.children}
-          </Stack>
-          {props.title || props.description ? (
-            <Stack
-              flex={1}
-              justifyContent="space-between"
-              px="4px"
-              pt="11px"
-              pb="4px"
-              position="relative"
-            >
-              {props.title ? (
-                <Typography
-                  variant="medium"
-                  bold
-                  color={PALETTE.secondary.grey[5]}
-                >
-                  {props.title}
-                </Typography>
-              ) : null}
-              {props.description ? (
-                <Stack
-                  ref={setDescriptionRef}
-                  maxHeight={descriptionCollapsed ? "100px" : undefined}
-                  overflow="hidden"
                   sx={{
-                    transition: "0.4s",
-                  }}
-                  onMouseEnter={() => {
-                    setHoveringOnDescription(true);
-                  }}
-                  onMouseLeave={() => {
-                    setHoveringOnDescription(false);
-                  }}
-                >
-                  <Typography
-                    variant="medium"
-                    color={PALETTE.secondary.grey[5]}
-                  >
-                    {props.description}
-                  </Typography>
-                </Stack>
-              ) : null}
-
-              {descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? (
-                <Stack
-                  position="absolute"
-                  bottom={0}
-                  width="100%"
-                  height="66px"
-                  sx={{
-                    //opacity: hoveringOnDescription ? 0.9 : 1,
-
+                    transform: `rotate(${descriptionCollapsed ? 0 : 180}deg)`,
                     transition: "0.2s",
-                    background: descriptionCollapsed
-                      ? `linear-gradient(0deg,  ${
-                          PALETTE.secondary.grey[1]
-                        },  ${alpha(PALETTE.secondary.grey[1], 0.84)}, ${alpha(
-                          PALETTE.secondary.grey[1],
-                          0
-                        )})`
-                      : undefined,
-                    svg: {
-                      paddingRight: "4px",
-                      transform: `scale(${hoveringOnDescription ? 1.1 : 1})`,
-                      transition: "0.25s",
-                      path: {
-                        fill: PALETTE.secondary.grey[4],
-                      },
-                    },
                   }}
-                  justifyContent="flex-end"
-                  alignItems="flex-end"
+                  p="8px"
+                  borderRadius="100%"
+                  bgcolor={PALETTE.secondary.grey[1]}
                 >
-                  <Stack
-                    sx={{
-                      cursor: "pointer",
-                      transform: `rotate(${descriptionCollapsed ? 0 : 180}deg)`,
-                      transition: "0.2s",
-                    }}
-                    onClick={() =>
-                      setDescriptionCollapsed(!descriptionCollapsed)
-                    }
-                    onMouseEnter={() => {
-                      setHoveringOnDescription(true);
-                    }}
-                    onMouseLeave={() => {
-                      setHoveringOnDescription(false);
-                    }}
-                  >
-                    <ChevronDownIcon height="26px" width="26px" />
-                  </Stack>
+                  <ChevronDownIcon height="26px" width="26px" />
                 </Stack>
-              ) : null}
-            </Stack>
-          ) : null}
-        </Stack>
+              </Stack>
+            ) : null}
+          </Stack>
+        ) : null}
       </Stack>
-    </DynamicContainer>
+    </Stack>
   );
 };
 
