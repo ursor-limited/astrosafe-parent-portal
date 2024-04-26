@@ -830,7 +830,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       }
                       columnWidth={singleContentsColumnWidth}
                       wrapper={(card, i) => (
-                        <Stack
+                        <Stack //@ts-ignore
+                          key={card.props.id}
                           position="relative"
                           onMouseEnter={() => {
                             setHoveringContentSide("left");
@@ -1002,7 +1003,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     dragStartCallback={setDraggedContentId}
                     columnWidth={singleContentsColumnWidth}
                     wrapper={(card, i) => (
-                      <Stack
+                      <Stack //@ts-ignore
+                        key={card.props.id}
                         position="relative"
                         onMouseEnter={() => {
                           setHoveringContentSide("right");

@@ -97,7 +97,7 @@ const VideoCreationDialog = (props: {
         } else {
           setShowForbiddenVideoView(false);
           setUrl(deNoCookiefy(extractUrl(details.html)));
-          setTitle(details.title);
+          !editedTitle && setTitle(details.title);
           //setDescription(details.description); // vimeo has the description here; youtube requires the youtube api
           setThumbnailUrl(details.thumbnail_url);
         }
@@ -208,6 +208,8 @@ const VideoCreationDialog = (props: {
 
   const userDetails = useUserContext();
 
+  const [editedTitle, setEditedTitle] = useState<boolean>(false);
+
   return (
     <>
       <UrsorDialog
@@ -282,9 +284,10 @@ const VideoCreationDialog = (props: {
             <Captioned text="Title">
               <UrsorInputField
                 value={title}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
-                }
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setTitle(event.target.value);
+                  setEditedTitle(true);
+                }}
                 placeholder="Title"
                 width="100%"
                 leftAlign
