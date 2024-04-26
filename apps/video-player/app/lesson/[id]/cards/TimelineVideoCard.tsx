@@ -26,6 +26,7 @@ const TimelineVideoCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
+    columnWidth: number;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -56,6 +57,7 @@ const TimelineVideoCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
+        width={props.columnWidth}
       >
         <Stack
           flex={1}

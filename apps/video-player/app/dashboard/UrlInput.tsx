@@ -39,6 +39,7 @@ export default function UrlInput(props: IUrlInput) {
         }
         leftAlign
         onBlur={() => props.url && props.urlStatusUpdateCallback()}
+        autoFocus
       />
       {props.urlStatus === "approved" || props.urlStatus === "blocked" ? (
         <Stack

@@ -21,7 +21,7 @@ const TimelineCard = (props: {
   editingCallback?: () => void;
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
-  widthRatio?: number;
+  width: number;
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
@@ -48,7 +48,7 @@ const TimelineCard = (props: {
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
       }}
-      width={props.widthRatio ? `${props.widthRatio * 100}%` : undefined}
+      width={props.width}
     >
       <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
         {userDetails ? (

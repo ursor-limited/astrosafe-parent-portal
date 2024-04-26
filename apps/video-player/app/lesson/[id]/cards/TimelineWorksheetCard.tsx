@@ -39,6 +39,7 @@ const TimelineWorksheetCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
+    columnWidth: number;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -89,7 +90,7 @@ const TimelineWorksheetCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
-        widthRatio={WIDTH_RATIO}
+        width={WIDTH_RATIO * props.columnWidth}
       >
         <Stack
           ref={setRef}

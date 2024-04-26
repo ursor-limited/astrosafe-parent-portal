@@ -38,6 +38,7 @@ const TimelineTextCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
+    columnWidth: number;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -65,7 +66,7 @@ const TimelineTextCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        widthRatio={WIDTH_RATIO}
+        width={WIDTH_RATIO * props.columnWidth}
       >
         <Stack
           key={new Date().getTime()}
