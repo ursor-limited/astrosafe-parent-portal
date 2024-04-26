@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import { PALETTE } from "ui";
+import Link from "next/link";
 
 const WIDTH_RATIO = 0.65;
 
@@ -55,53 +56,59 @@ const TimelineLinkCard = (
         duplicationCallback={submitDuplication}
         width={WIDTH_RATIO * props.columnWidth}
       >
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          height="350px"
-          width="100%"
-          overflow="hidden"
-          position="relative"
-          onClick={() =>
-            router.push(`https://${getPrefixRemovedUrl(props.url)}`)
-          }
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
+        <Link
+          href={`https://${getPrefixRemovedUrl(props.url)}`}
+          target="_blank"
+          rel="nofollow"
+          style={{
+            textDecoration: "none",
           }}
         >
           <Stack
+            alignItems="center"
+            justifyContent="center"
+            height="350px"
             width="100%"
-            height="100%"
-            sx={{
-              backgroundColor: "rgba(255,255,255,0.15)",
-              backgroundImage: `url(${props.imageUrl})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              boxSizing: "border-box",
-              svg: {
-                path: {
-                  fill: PALETTE.font.light,
-                },
-              },
-            }}
+            overflow="hidden"
             position="relative"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+            }}
           >
             <Stack
-              flex={1}
-              bgcolor="rgba(0,0,0,0.4)"
-              justifyContent="center"
-              alignItems="center"
+              width="100%"
+              height="100%"
               sx={{
-                background: "rgba(0,0,0,0.25)",
-                // "radial-gradient(circle at center, rgba(0,0,0,0.27) 0, rgba(0,0,0,0) 80%)",
+                backgroundColor: "rgba(255,255,255,0.15)",
+                backgroundImage: `url(${props.imageUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                boxSizing: "border-box",
+                svg: {
+                  path: {
+                    fill: PALETTE.font.light,
+                  },
+                },
               }}
+              position="relative"
             >
-              <ArrowUpRightIcon height="62px" width="62px" />
+              <Stack
+                flex={1}
+                bgcolor="rgba(0,0,0,0.4)"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  background: "rgba(0,0,0,0.25)",
+                  // "radial-gradient(circle at center, rgba(0,0,0,0.27) 0, rgba(0,0,0,0) 80%)",
+                }}
+              >
+                <ArrowUpRightIcon height="62px" width="62px" />
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        </Link>
       </TimelineCard>
       {deletionDialogOpen ? (
         <DeletionDialog
