@@ -104,17 +104,25 @@ const TimelineCard = (props: {
                   size="32px"
                   iconSize="16px"
                   actions={[
-                    {
-                      text: "Edit",
-                      kallback: () => props.editingCallback?.(),
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Delete",
-                      kallback: () => props.deletionCallback?.(),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
+                    ...(props.editingCallback
+                      ? [
+                          {
+                            text: "Edit",
+                            kallback: () => props.editingCallback?.(),
+                            icon: PencilIcon,
+                          },
+                        ]
+                      : []),
+                    ...(props.deletionCallback
+                      ? [
+                          {
+                            text: "Delete",
+                            kallback: () => props.deletionCallback?.(),
+                            icon: TrashcanIcon,
+                            color: PALETTE.system.red,
+                          },
+                        ]
+                      : []),
                   ]}
                 />
               </Stack>

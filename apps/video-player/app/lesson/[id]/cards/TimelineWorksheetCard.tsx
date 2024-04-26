@@ -87,7 +87,7 @@ const TimelineWorksheetCard = (
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
-        editingCallback={props.editingCallback}
+        //editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         width={WIDTH_RATIO * props.columnWidth}
