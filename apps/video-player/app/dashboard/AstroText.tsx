@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextEditorToolbar, {
   getModules,
   formats,
@@ -20,6 +20,8 @@ const AstroText = (props: {
   preview?: boolean;
   height?: string;
 }) => {
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.focus(), [ref]);
   return (
     <Stack
       width="100%"
@@ -46,6 +48,7 @@ const AstroText = (props: {
         ".ql-blank": { opacity: 0.7 },
       }}
       // ref={setTextAreaRef}
+      ref={setRef}
     >
       {props.preview ? (
         <div
