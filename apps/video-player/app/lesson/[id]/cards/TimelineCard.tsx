@@ -181,7 +181,6 @@ const TimelineCard = (props: {
                   overflow="hidden"
                   sx={{
                     transition: "0.4s",
-                    cursor: "pointer",
                   }}
                   onMouseEnter={() => {
                     setHoveringOnDescription(true);
@@ -189,7 +188,6 @@ const TimelineCard = (props: {
                   onMouseLeave={() => {
                     setHoveringOnDescription(false);
                   }}
-                  onClick={() => setDescriptionCollapsed(!descriptionCollapsed)}
                 >
                   <Typography
                     variant="medium"
@@ -207,9 +205,9 @@ const TimelineCard = (props: {
                   width="100%"
                   height="66px"
                   sx={{
-                    opacity: hoveringOnDescription ? 0.9 : 1,
+                    //opacity: hoveringOnDescription ? 0.9 : 1,
+
                     transition: "0.2s",
-                    pointerEvents: "none",
                     background: descriptionCollapsed
                       ? `linear-gradient(0deg,  ${
                           PALETTE.secondary.grey[1]
@@ -220,9 +218,7 @@ const TimelineCard = (props: {
                       : undefined,
                     svg: {
                       paddingRight: "4px",
-                      transform: `scale(${
-                        hoveringOnDescription ? 1.1 : 1
-                      }) rotate(${descriptionCollapsed ? 0 : 180}deg)`,
+                      transform: `scale(${hoveringOnDescription ? 1.1 : 1})`,
                       transition: "0.25s",
                       path: {
                         fill: PALETTE.secondary.grey[4],
@@ -232,7 +228,24 @@ const TimelineCard = (props: {
                   justifyContent="flex-end"
                   alignItems="flex-end"
                 >
-                  <ChevronDownIcon height="26px" width="26px" />
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      transform: `rotate(${descriptionCollapsed ? 0 : 180}deg)`,
+                      transition: "0.2s",
+                    }}
+                    onClick={() =>
+                      setDescriptionCollapsed(!descriptionCollapsed)
+                    }
+                    onMouseEnter={() => {
+                      setHoveringOnDescription(true);
+                    }}
+                    onMouseLeave={() => {
+                      setHoveringOnDescription(false);
+                    }}
+                  >
+                    <ChevronDownIcon height="26px" width="26px" />
+                  </Stack>
                 </Stack>
               ) : null}
             </Stack>
