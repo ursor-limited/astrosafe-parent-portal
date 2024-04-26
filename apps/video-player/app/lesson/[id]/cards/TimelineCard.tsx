@@ -163,6 +163,9 @@ const TimelineCard = (props: {
             pt="11px"
             pb="4px"
             position="relative"
+            pb={
+              descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? "20px" : undefined
+            }
           >
             {props.title ? (
               <Typography
@@ -199,7 +202,7 @@ const TimelineCard = (props: {
                 position="absolute"
                 bottom={0}
                 width="100%"
-                height="63px"
+                height="80px"
                 sx={{
                   opacity: hoveringOnDescription ? 0.9 : 1,
                   cursor: "pointer",
@@ -222,7 +225,7 @@ const TimelineCard = (props: {
                   },
                 }}
                 justifyContent="flex-end"
-                alignItems="flex-end"
+                alignItems="center"
                 onClick={() => setDescriptionCollapsed(!descriptionCollapsed)}
                 onMouseEnter={() => {
                   setHoveringOnDescription(true);
@@ -233,12 +236,11 @@ const TimelineCard = (props: {
               >
                 <Stack
                   sx={{
-                    transform: `rotate(${descriptionCollapsed ? 0 : 180}deg)`,
+                    transform: `rotate(${
+                      descriptionCollapsed ? 0 : 180
+                    }deg) translateY(-3px)`,
                     transition: "0.2s",
                   }}
-                  p="8px"
-                  borderRadius="100%"
-                  bgcolor={PALETTE.secondary.grey[1]}
                 >
                   <ChevronDownIcon height="26px" width="26px" />
                 </Stack>
