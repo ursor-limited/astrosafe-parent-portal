@@ -26,6 +26,8 @@ const TimelineCard = (props: {
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
   width: number;
+  expanded: boolean;
+  expansionCallback: () => void;
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
@@ -56,8 +58,6 @@ const TimelineCard = (props: {
   const [hoveringOnDescription, setHoveringOnDescription] =
     useState<boolean>(false);
 
-  const [expanded, setExpanded] = useState<boolean>(false);
-
   return (
     <Stack
       id={props.id}
@@ -72,7 +72,7 @@ const TimelineCard = (props: {
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
       }}
-      width={props.width}
+      width={props.expanded ? "100%" : props.width}
     >
       <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
         {userDetails ? (
@@ -119,7 +119,7 @@ const TimelineCard = (props: {
                     transition: "0.2s",
                     cursor: "pointer",
                   }}
-                  onClick={() => setExpanded(true)}
+                  onClick={props.expansionCallback}
                 >
                   <ArrowBothIcon height="18px" width="18px" />
                 </Stack>
