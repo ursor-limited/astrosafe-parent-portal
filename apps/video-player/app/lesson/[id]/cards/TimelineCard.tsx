@@ -161,7 +161,6 @@ const TimelineCard = (props: {
             justifyContent="space-between"
             px="4px"
             pt="11px"
-            pb="4px"
             position="relative"
             pb={
               descriptionHeight > COLLAPSE_HEIGHT_THRESHOLD ? "20px" : undefined
