@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import ApiController from "./api";
+import Button from './Button';
+import styles from './Table.module.css'; // Import CSS module for styling
 
 export interface IUser {
     id: string;
@@ -13,13 +15,15 @@ export interface IUser {
     useDates: string[];
     subscriptionDeletionDate?: string;
     paymentFailed: boolean;
+    activityalldays?: number;
     activity1days?: number;
     activity7days?: number;
     activity14days?: number;
     activity28days?: number;
   }
   
-
+export type sortFilerTypes =  "auth0Id" | "createdAt" | "subscriptionDate" | "useDates" | "activity1days" | "activity7days" | "activity14days" | "activity28days" | "activityalldays";
+  
 // Suppose you have a list of dates in string format
 function getActivityInLastNDays(dateStrings: string[], N: number): number {
   
@@ -40,42 +44,50 @@ function getActivityInLastNDays(dateStrings: string[], N: number): number {
 export default function UserListPage() {
   const [userList, setUserList] = useState<IUser[] | null>(null);
   const [sortedUserList, setSortedUserList] = useState<IUser[] | null>(null);
-  const [sortBy, setSortBy] = useState<String | null>(null);
+  const [sortBy, setSortBy] = useState<"asc" | "desc" | null>(null);
+  const [sortField, setSortField] = useState<sortFilerTypes>('activity28days');
 
-  const sortActivity = () => {
-    if (sortBy === 'asc') {
-      setSortBy('desc');
+  const sortActivity = (srtFld: sortFilerTypes) => {
+    if (sortField === srtFld) {
+      if (sortBy === 'asc') {
+        setSortBy('desc');
+      } else {
+        setSortBy('asc');
+      }  
     } else {
-      setSortBy('asc');
+      setSortField(srtFld)
+      setSortBy('desc');
     }
   };
 
   useEffect(() => {
     ApiController.listAllUsers().then((usrLst) => {
       setUserList(usrLst)
-      const srtedUsrLst = [...usrLst].sort((a, b) => {
-        if (sortBy === 'asc') {
-          return a.activity28days - b.activity28days;
-        } else if (sortBy === 'desc') {
-          return b.activity28days - a.activity28days;
-        } else {
-          return 0;
-        }
-      });
-      setSortedUserList(srtedUsrLst)
+
+      setSortedUserList(usrLst)
     }
   )
   }, []);
 
+
+
   useEffect(() => {
     if (userList){
       const srtedUsrLst = [...userList].sort((a, b) => {
-        if (sortBy === 'asc') {
-          return (a.activity28days ?? 0) - (b.activity28days ?? 0);
-        } else if (sortBy === 'desc') {
-          return (b.activity28days ?? 0) - (a.activity28days ?? 0);
+        if (typeof a[sortField] === 'string' && typeof b[sortField] === 'string') {
+          return sortBy === 'asc' 
+          ? (a[sortField ?? "createdAt"] as string ?? "0").localeCompare(b[sortField ?? "createdAt"] as string ?? "0")
+          : (b[sortField ?? "createdAt"] as string ?? "0").localeCompare(a[sortField ?? "createdAt"] as string ?? "0");
+        } else if  (typeof a[sortField] === 'number' && typeof b[sortField] === 'number') {
+          if (sortBy === 'asc') {
+            return (a[sortField] as number ?? 0) - (b[sortField] as number ?? 0);
+          } else if (sortBy === 'desc') {
+            return (b[sortField] as number ?? 0) - (a[sortField] as number ?? 0);
+          } else {
+            return 0;
+          } 
         } else {
-          return 0;
+          return 0
         }
       });
       setSortedUserList(srtedUsrLst)  
@@ -85,6 +97,7 @@ export default function UserListPage() {
   useEffect(() => {
     const tmpUserList = userList?.map(user => ({
       ...user,
+      activityalldays: getActivityInLastNDays(user.useDates, 1500),
       activity1days: getActivityInLastNDays(user.useDates, 1),
       activity7days: getActivityInLastNDays(user.useDates, 7),
       activity14days: getActivityInLastNDays(user.useDates, 14),
@@ -98,20 +111,31 @@ export default function UserListPage() {
   
   return (userList ? 
     <div>
-    <h1>AAA</h1>
-    <h1>AA</h1>
-    <button onClick={sortActivity}>Sort by 28 day activity {sortBy === 'asc' ? '▲' : '▼'}</button> 
-    <h1>A</h1>
-    <ul>
+    <h1>Data</h1> 
 
+
+<table className={styles.table}>
+      <thead>
+    <tr>
+    {/* setSortField("activity7days") */}
+    <td>{<Button onClick={() => sortActivity("auth0Id")} sortingDirection={sortBy}>Email </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("createdAt")} sortingDirection={sortBy}>Created At </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("subscriptionDate")} sortingDirection={sortBy}>Subscribed </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("activityalldays")} sortingDirection={sortBy}>ActiveDays (all) </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("activity28days")} sortingDirection={sortBy}>ActiveDays (last 28) </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("activity14days")} sortingDirection={sortBy}>ActiveDays (last 14) </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("activity7days")} sortingDirection={sortBy}>ActiveDays (last 7) </Button>}</td>
+    <td>{<Button onClick={() => sortActivity("activity1days")} sortingDirection={sortBy}>ActiveDays (last 1) </Button>}</td>
+    <td> Profile Link </td>
+    </tr>
+    </thead>
+    <tbody>
       {(sortedUserList ?? []).map(item => (
     <tr key={item.id}>
       <td>{item.auth0Id}</td>
-      <td>{item.id}</td>
       <td>{item.createdAt?.split("T")[0]}</td>
-      <td>{item.updatedAt?.split("T")[0]}</td>
       <td>{item.subscriptionDate?.split("T")[0]}</td>
-      <td>{item.useDates.length}</td>
+      <td>{item.activityalldays}</td>
       <td>{item.activity28days}</td>
       <td>{item.activity14days}</td>
       <td>{item.activity7days}</td>
@@ -119,8 +143,8 @@ export default function UserListPage() {
       <td>{<a href={`http://localhost:3000/admin/${item.id}`}>Go to profile</a>}</td>
     </tr>
   ))}
-    </ul>
+     </tbody>
+</table>
   </div> : <></>
   );
 }
-
