@@ -39,14 +39,48 @@ function getActivityInLastNDays(dateStrings: string[], N: number): number {
 
 export default function UserListPage() {
   const [userList, setUserList] = useState<IUser[] | null>(null);
+  const [sortedUserList, setSortedUserList] = useState<IUser[] | null>(null);
+  const [sortBy, setSortBy] = useState<String | null>(null);
+
+  const sortActivity = () => {
+    if (sortBy === 'asc') {
+      setSortBy('desc');
+    } else {
+      setSortBy('asc');
+    }
+  };
 
   useEffect(() => {
-    // const userList: IUser = await ApiController.listAllUsers();
-    ApiController.listAllUsers().then((a) => {
-      setUserList(a)
+    ApiController.listAllUsers().then((usrLst) => {
+      setUserList(usrLst)
+      const srtedUsrLst = [...usrLst].sort((a, b) => {
+        if (sortBy === 'asc') {
+          return a.activity28days - b.activity28days;
+        } else if (sortBy === 'desc') {
+          return b.activity28days - a.activity28days;
+        } else {
+          return 0;
+        }
+      });
+      setSortedUserList(srtedUsrLst)
     }
   )
   }, []);
+
+  useEffect(() => {
+    if (userList){
+      const srtedUsrLst = [...userList].sort((a, b) => {
+        if (sortBy === 'asc') {
+          return (a.activity28days ?? 0) - (b.activity28days ?? 0);
+        } else if (sortBy === 'desc') {
+          return (b.activity28days ?? 0) - (a.activity28days ?? 0);
+        } else {
+          return 0;
+        }
+      });
+      setSortedUserList(srtedUsrLst)  
+    }
+  }, [sortBy]);
 
   useEffect(() => {
     const tmpUserList = userList?.map(user => ({
@@ -64,10 +98,13 @@ export default function UserListPage() {
   
   return (userList ? 
     <div>
-    <h1>My Data</h1>
+    <h1>AAA</h1>
+    <h1>AA</h1>
+    <button onClick={sortActivity}>Sort by 28 day activity {sortBy === 'asc' ? '▲' : '▼'}</button> 
+    <h1>A</h1>
     <ul>
 
-      {userList.map(item => (
+      {(sortedUserList ?? []).map(item => (
     <tr key={item.id}>
       <td>{item.auth0Id}</td>
       <td>{item.id}</td>
@@ -86,3 +123,4 @@ export default function UserListPage() {
   </div> : <></>
   );
 }
+
