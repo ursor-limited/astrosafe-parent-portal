@@ -40,12 +40,42 @@ function getActivityInLastNDays(dateStrings: string[], N: number): number {
   return count
 };
 
+const countNonZeroValues = (array: IUser[], field: sortFilerTypes) => {
+  return array.reduce((count, obj) => {
+    // Check if the field exists and its value is non-zero
+    if (obj.hasOwnProperty(field) && obj[field] !== 0) {
+      return count + 1; // Increment count if the condition is met
+    } else {
+      return count; // Otherwise, return the current count
+    }
+  }, 0); // Start with count initialized to 0
+};
 
 export default function UserListPage() {
   const [userList, setUserList] = useState<IUser[] | null>(null);
   const [sortedUserList, setSortedUserList] = useState<IUser[] | null>(null);
   const [sortBy, setSortBy] = useState<"asc" | "desc" | null>(null);
   const [sortField, setSortField] = useState<sortFilerTypes>('activity28days');
+
+  // create functions to get these summary statistics cheaply
+  const [totalVideos, setTotalVideos] = useState<number | null>(null);
+  const [totalVideosLast28, setTotalVideosLast28] = useState<number | null>(null);
+  const [totalVideosLast14, setTotalVideosLast14] = useState<number | null>(null);
+  const [totalVideosLast7, setTotalVideosLast7] = useState<number | null>(null);
+  const [totalVideosLast1, setTotalVideosLast1] = useState<number | null>(null);
+
+  const [totalLessons, setTotalLessons] = useState<number | null>(null);
+  const [totalLessonsLast28, setTotalLessonsLast28] = useState<number | null>(null);
+  const [totalLessonsLast14, setTotalLessonsLast14] = useState<number | null>(null);
+  const [totalLessonsLast7, setTotalLessonsLast7] = useState<number | null>(null);
+  const [totalLessonsLast1, setTotalLessonsLast1] = useState<number | null>(null);
+
+  const [aau, setAau] = useState<number | null>(null);
+  const [mau, setMau] = useState<number | null>(null);
+  const [wau, setWau] = useState<number | null>(null);
+  const [dau, setDau] = useState<number | null>(null);
+
+
 
   const sortActivity = (srtFld: sortFilerTypes) => {
     if (sortField === srtFld) {
@@ -63,7 +93,6 @@ export default function UserListPage() {
   useEffect(() => {
     ApiController.listAllUsers().then((usrLst) => {
       setUserList(usrLst)
-
       setSortedUserList(usrLst)
     }
   )
@@ -105,6 +134,17 @@ export default function UserListPage() {
     }));
     if (tmpUserList) {
       setUserList(tmpUserList)
+      setSortedUserList(tmpUserList)
+      const tmpAau = countNonZeroValues(tmpUserList, "activityalldays")
+      const tmpMau = countNonZeroValues(tmpUserList, "activity28days")
+      const tmpWau = countNonZeroValues(tmpUserList, "activity7days")
+      const tmpDau = countNonZeroValues(tmpUserList, "activity1days")
+
+      setAau(tmpAau)
+      setMau(tmpMau)
+      setWau(tmpWau)
+      setDau(tmpDau)
+
     } 
   }, [userList]);
 
@@ -112,7 +152,10 @@ export default function UserListPage() {
   return (userList ? 
     <div>
     <h1>Data</h1> 
-
+    Total active users: {aau} |
+    MAU: {mau} |
+    WAU: {wau} |
+    DAU: {dau} 
 
 <table className={styles.table}>
       <thead>
