@@ -709,21 +709,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   top: event?.deltaY + pageRef.scrollTop,
                 });
               }}
-              // onMouseMove={(event) => {
-              //   !addContentPopoverOpen &&
-              //     !worksheetDialogOpen &&
-              //     !videoDialogOpen &&
-              //     !imageDialogOpen &&
-              //     !linkDialogOpen &&
-              //     !textDialogOpen &&
-              //     setMouseY(event.pageY);
-              // }}
-              // onMouseEnter={() => {
-              //   setHoveringOnContentCard(false);
-              // }}
-              // onMouseLeave={() => {
-              //   setHoveringOnContentCard(true);
-              // }}
             >
               {draggedContentId ? (
                 <Stack
@@ -837,34 +822,88 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   />
                 </Stack>
               </Stack>
-              <Timeline
-                contents={contents}
-                contentsWithSide={contentsWithSide}
-                videos={videos}
-                images={images}
-                links={links}
-                worksheets={worksheets}
-                texts={texts}
-                lessonId={props.lessonId}
-                loadLesson={loadLesson}
-                singleContentsColumnWidth={singleContentsColumnWidth}
-                setDraggedContentId={setDraggedContentId}
-                setStarterAddContentPopoverOpen={() =>
-                  setStarterAddContentPopoverOpen(true)
-                }
-                setVideoEditingDialogId={setVideoEditingDialogId}
-                setImageEditingDialogId={setImageEditingDialogId}
-                setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                setTextEditingDialogId={setTextEditingDialogId}
-                setLinkEditingDialogId={setLinkEditingDialogId}
-                expansionCallback={(id) => {
-                  expandedContentIds.includes(id)
-                    ? setExpandedContentIds(
-                        expandedContentIds.filter((cid) => cid !== id)
-                      )
-                    : setExpandedContentIds([...expandedContentIds, id]);
-                }}
-              />
+              <Stack spacing="50px" pb="70px">
+                {expansionChunkedContentIds.map((chunk) => {
+                  if (
+                    chunk.length === 1 &&
+                    expandedContentIds.includes(chunk[0])
+                  ) {
+                    const expandedContent = contents.find(
+                      (c) => c.contentId === chunk[0]
+                    );
+                    return expandedContent ? (
+                      <Stack zIndex={3}>
+                        <ContentCards
+                          contents={[expandedContent]}
+                          expanded
+                          videos={videos}
+                          images={images}
+                          links={links}
+                          worksheets={worksheets}
+                          texts={texts}
+                          lessonId={props.lessonId}
+                          columnWidth={singleContentsColumnWidth}
+                          //  setDraggedContentId={setDraggedContentId}
+                          draggedContentId={
+                            draggedContentId ? draggedContentId : undefined
+                          }
+                          setVideoEditingDialogId={setVideoEditingDialogId}
+                          setImageEditingDialogId={setImageEditingDialogId}
+                          setWorksheetEditingDialogId={
+                            setWorksheetEditingDialogId
+                          }
+                          setTextEditingDialogId={setTextEditingDialogId}
+                          setLinkEditingDialogId={setLinkEditingDialogId}
+                          updateCallback={loadLesson}
+                        />
+                      </Stack>
+                    ) : null;
+                  } else {
+                    return (
+                      <Timeline
+                        contents={contents.filter((c) =>
+                          chunk.includes(c.contentId)
+                        )}
+                        contentsWithSide={contentsWithSide.filter((c) =>
+                          chunk.includes(c.contentId)
+                        )}
+                        videos={videos}
+                        images={images}
+                        links={links}
+                        worksheets={worksheets}
+                        texts={texts}
+                        lessonId={props.lessonId}
+                        loadLesson={loadLesson}
+                        singleContentsColumnWidth={singleContentsColumnWidth}
+                        setDraggedContentId={setDraggedContentId}
+                        draggedContentId={
+                          draggedContentId ? draggedContentId : undefined
+                        }
+                        setStarterAddContentPopoverOpen={() =>
+                          setStarterAddContentPopoverOpen(true)
+                        }
+                        setVideoEditingDialogId={setVideoEditingDialogId}
+                        setImageEditingDialogId={setImageEditingDialogId}
+                        setWorksheetEditingDialogId={
+                          setWorksheetEditingDialogId
+                        }
+                        setTextEditingDialogId={setTextEditingDialogId}
+                        setLinkEditingDialogId={setLinkEditingDialogId}
+                        expansionCallback={(id) => {
+                          expandedContentIds.includes(id)
+                            ? setExpandedContentIds(
+                                expandedContentIds.filter((cid) => cid !== id)
+                              )
+                            : setExpandedContentIds([
+                                ...expandedContentIds,
+                                id,
+                              ]);
+                        }}
+                      />
+                    );
+                  }
+                })}
+              </Stack>
             </Stack>
           </Stack>
         </PageCard>

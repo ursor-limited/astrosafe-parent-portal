@@ -10,7 +10,7 @@ import { PALETTE, Typography } from "ui";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const DOT_CARD_Y = 47;
 export const CARD_SPACING = 120;
@@ -47,14 +47,36 @@ const Timeline = (props: {
   //   setHovering: (on: boolean) => void;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
+  const [rightCards, setRightCards] = useState<
+    {
+      type: AstroLessonContent;
+      contentId: string;
+    }[]
+  >([]);
+  const [leftCards, setLeftCards] = useState<
+    {
+      type: AstroLessonContent;
+      contentId: string;
+    }[]
+  >([]);
+  useEffect(() => {
+    setRightCards(
+      props.contentsWithSide
+        .filter((c) => !c.left)
+        .map((c) => ({ contentId: c.contentId, type: c.type }))
+    );
+    setLeftCards(
+      props.contentsWithSide
+        .filter((c) => c.left)
+        .map((c) => ({ contentId: c.contentId, type: c.type }))
+    );
+  }, [props.contentsWithSide]);
   return (
     <Stack direction="row">
       <Stack flex={1}>
         {props.contents.length > 0 ? (
           <ContentCards
-            contents={props.contentsWithSide
-              .filter((c) => c.left)
-              .map((c) => ({ contentId: c.contentId, type: c.type }))}
+            contents={leftCards}
             videos={props.videos}
             links={props.links}
             texts={props.texts}
@@ -90,7 +112,7 @@ const Timeline = (props: {
                 //     event.pageY < rect.height / 2 + rect.top
                 //   );
                 // }}
-                pb={`${CARD_SPACING}px`}
+                pb={i < leftCards.length - 1 ? `${CARD_SPACING}px` : undefined}
                 sx={{
                   opacity:
                     //@ts-ignore
@@ -225,9 +247,7 @@ const Timeline = (props: {
       </Stack>
       <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
         <ContentCards
-          contents={props.contentsWithSide
-            .filter((c) => !c.left)
-            .map((c) => ({ contentId: c.contentId, type: c.type }))}
+          contents={rightCards}
           videos={props.videos}
           links={props.links}
           texts={props.texts}
@@ -260,7 +280,7 @@ const Timeline = (props: {
               //       event.pageY < rect.height / 2 + rect.top
               //     );
               //   }}
-              pb={`${CARD_SPACING}px`}
+              pb={i < rightCards.length - 1 ? `${CARD_SPACING}px` : undefined}
               sx={{
                 opacity:
                   //@ts-ignore

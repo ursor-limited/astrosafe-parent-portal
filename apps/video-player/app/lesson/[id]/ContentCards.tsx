@@ -41,6 +41,7 @@ const ContentCards = (props: {
   dragStartCallback?: (id: string) => void;
   expansionCallback?: (id: string) => void;
   draggedContentId?: string;
+  expanded?: boolean;
 }) => {
   return (
     <>
@@ -64,6 +65,7 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
@@ -83,6 +85,7 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
@@ -104,6 +107,7 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
@@ -123,6 +127,7 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
@@ -146,6 +151,7 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
