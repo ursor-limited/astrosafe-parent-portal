@@ -523,6 +523,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [expandedContentIds, setExpandedContentIds] = useState<string[]>([]);
 
+  console.log(expandedContentIds, "0");
+
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
   >([]);
@@ -823,7 +825,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 </Stack>
               </Stack>
               <Stack spacing="50px" pb="70px">
-                {expansionChunkedContentIds.map((chunk) => {
+                {expansionChunkedContentIds.map((chunk, i) => {
                   if (
                     chunk.length === 1 &&
                     expandedContentIds.includes(chunk[0])
@@ -832,7 +834,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       (c) => c.contentId === chunk[0]
                     );
                     return expandedContent ? (
-                      <Stack zIndex={3}>
+                      <Stack key={`${i}expanded`} zIndex={3}>
                         <ContentCards
                           contents={[expandedContent]}
                           expanded
@@ -855,12 +857,20 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           setTextEditingDialogId={setTextEditingDialogId}
                           setLinkEditingDialogId={setLinkEditingDialogId}
                           updateCallback={loadLesson}
+                          expansionCallback={() =>
+                            setExpandedContentIds(
+                              expandedContentIds.filter(
+                                (cid) => cid !== chunk[0]
+                              )
+                            )
+                          }
                         />
                       </Stack>
                     ) : null;
                   } else {
                     return (
                       <Timeline
+                        key={`${i}columns`}
                         contents={contents.filter((c) =>
                           chunk.includes(c.contentId)
                         )}
