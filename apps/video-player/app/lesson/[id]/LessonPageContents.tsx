@@ -53,6 +53,7 @@ import Timeline, {
   DOT_CARD_Y,
   RIGHT_COLUMN_Y_OFFSET,
 } from "./Timeline";
+import InitialAddContentButton from "./InitialAddContentButton";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -833,6 +834,15 @@ export default function LessonPageContents(props: { lessonId: string }) {
                 </Stack>
               </Stack>
               <Stack spacing="50px" pb="70px">
+                {contents.length === 0 ? (
+                  <Stack width="50%">
+                    <InitialAddContentButton
+                      setStarterAddContentPopoverOpen={() =>
+                        setStarterAddContentPopoverOpen(true)
+                      }
+                    />
+                  </Stack>
+                ) : null}
                 {expansionChunkedContentIds.map((chunk, i) => {
                   if (
                     chunk.length === 1 &&
@@ -916,9 +926,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         setDraggedContentId={setDraggedContentId}
                         draggedContentId={
                           draggedContentId ? draggedContentId : undefined
-                        }
-                        setStarterAddContentPopoverOpen={() =>
-                          setStarterAddContentPopoverOpen(true)
                         }
                         setVideoEditingDialogId={setVideoEditingDialogId}
                         setImageEditingDialogId={setImageEditingDialogId}
