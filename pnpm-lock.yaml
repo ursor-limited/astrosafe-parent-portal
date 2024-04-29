@@ -21,6 +21,18 @@ importers:
         specifier: latest
         version: 1.10.16
 
+  apps/daily-email-trigger:
+    dependencies:
+      axios:
+        specifier: ^1.6.0
+        version: 1.6.0
+      esbuild:
+        specifier: ^0.20.0
+        version: 0.20.0
+      express:
+        specifier: ^4.18.2
+        version: 4.18.2
+
   apps/header:
     dependencies:
       '@auth0/auth0-react':
