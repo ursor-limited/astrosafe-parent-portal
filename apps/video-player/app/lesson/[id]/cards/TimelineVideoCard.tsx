@@ -58,6 +58,7 @@ const TimelineVideoCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={props.columnWidth}
+        creatorId={props.creatorId}
       >
         <Stack
           flex={1}

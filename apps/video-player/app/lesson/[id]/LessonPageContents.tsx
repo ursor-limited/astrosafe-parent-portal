@@ -594,7 +594,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">
-                {!userDetails?.user?.id ||
+                {userDetails?.user?.id &&
                 userDetails?.user?.id !== lesson?.creatorId ? (
                   <UrsorButton
                     variant="secondary"
@@ -607,6 +607,22 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     Create your own
                   </UrsorButton>
                 ) : null}
+                {/* {userDetails?.user?.id &&
+                userDetails?.user?.id !== lesson?.creatorId ? (
+                  <UrsorButton
+                    variant="secondary"
+                    backgroundColor="rgb(255,255,255)"
+                    endIcon={PencilIcon}
+                    onClick={() =>
+                      ApiController.duplicateLesson(
+                        props.lessonId,
+                        userDetails.user!.id
+                      ).then((id) => router.push(`/lesson/${id}`))
+                    }
+                  >
+                    Make a copy
+                  </UrsorButton>
+                ) : null} */}
                 <UrsorButton
                   dark
                   variant="tertiary"

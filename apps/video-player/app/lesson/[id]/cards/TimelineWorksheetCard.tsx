@@ -91,6 +91,7 @@ const TimelineWorksheetCard = (
         duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         width={WIDTH_RATIO * props.columnWidth}
+        creatorId={props.creatorId}
       >
         <Stack
           ref={setRef}

@@ -127,7 +127,7 @@ export const getPlaceholderImageUrl = (n: number) =>
 
 export interface ILink {
   id: string;
-  creatorId?: string;
+  creatorId: string;
   title: string;
   description?: string;
   url: string;
