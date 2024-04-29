@@ -99,7 +99,7 @@ const TimelineCard = (props: {
               }}
               onMouseDown={(e) => {
                 props.onDragStart?.();
-                //e.preventDefault();
+                e.preventDefault();
               }}
             >
               <GrabberIcon width="20px" height="20px" />

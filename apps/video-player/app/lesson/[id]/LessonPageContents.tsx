@@ -501,6 +501,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
             ?.top ?? 0) + document.body.scrollTop
       ) ?? [];
+    console.log(dotYs);
     if (y < (dotYs?.[0] ?? 0)) {
       return 0;
     } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
@@ -531,24 +532,24 @@ export default function LessonPageContents(props: { lessonId: string }) {
   >([]);
   useEffect(() => {
     setExpansionChunkedContentIds(
-      contentsWithSide.reduce((acc, cur, i) => {
+      contentOrder.reduce((acc, cur, i) => {
         if (i > 0) {
-          if (expandedContentIds.includes(cur.contentId)) {
-            return [...acc, [cur.contentId]];
+          if (expandedContentIds.includes(cur)) {
+            return [...acc, [cur]];
           }
           const lastChunk = acc[acc.length - 1];
           const previousContentIsExpanded = expandedContentIds.includes(
             lastChunk?.[lastChunk.length - 1]
           );
           return previousContentIsExpanded
-            ? [...acc, [cur.contentId]]
-            : [...acc.slice(0, -1), [...acc[acc.length - 1], cur.contentId]];
+            ? [...acc, [cur]]
+            : [...acc.slice(0, -1), [...acc[acc.length - 1], cur]];
         } else {
-          return [[cur.contentId]];
+          return [[cur]];
         }
       }, [] as string[][])
     );
-  }, [contentsWithSide, expandedContentIds]);
+  }, [contentOrder, expandedContentIds]);
 
   return (
     <>

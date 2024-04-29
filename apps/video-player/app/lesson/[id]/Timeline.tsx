@@ -73,7 +73,14 @@ const Timeline = (props: {
   }, [props.contentsWithSide]);
   return (
     <Stack direction="row">
-      <Stack flex={1}>
+      <Stack
+        flex={1}
+        pt={
+          !props.contentsWithSide[0]?.left
+            ? `${RIGHT_COLUMN_Y_OFFSET}px`
+            : undefined
+        }
+      >
         {props.contents.length > 0 ? (
           <ContentCards
             contents={leftCards}
@@ -245,7 +252,14 @@ const Timeline = (props: {
           </Stack>
         )}
       </Stack>
-      <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
+      <Stack
+        flex={1}
+        pt={
+          props.contentsWithSide[0]?.left
+            ? `${RIGHT_COLUMN_Y_OFFSET}px`
+            : undefined
+        }
+      >
         <ContentCards
           contents={rightCards}
           videos={props.videos}
