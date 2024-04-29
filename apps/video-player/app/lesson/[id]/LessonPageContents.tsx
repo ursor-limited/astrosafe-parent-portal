@@ -48,10 +48,12 @@ import AddContentDialog from "./AddContentDialog";
 import { createPortal } from "react-dom";
 import HoverCard from "./HoverCard";
 import { cardClasses } from "@mui/material";
+import Timeline, {
+  CARD_SPACING,
+  DOT_CARD_Y,
+  RIGHT_COLUMN_Y_OFFSET,
+} from "./Timeline";
 
-const DOT_CARD_Y = 47;
-const CARD_SPACING = 120;
-const RIGHT_COLUMN_Y_OFFSET = 60;
 const CONTENT_PADDING_X = 24;
 
 export const fadeIn = keyframes`
@@ -239,14 +241,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [hoveringOnContentCard, setHoveringOnContentCard] =
     useState<boolean>(false);
-  const [hoveringContentIndex, setHoveringContentIndex] = useState<
-    number | undefined
-  >(undefined);
-  const [hoveringContentSide, setHoveringContentSide] = useState<
-    "left" | "right" | null
-  >(null);
-  const [hoveringAboveCenter, setHoveringAboveCenter] =
-    useState<boolean>(false);
+  // const [hoveringContentIndex, setHoveringContentIndex] = useState<
+  //   number | undefined
+  // >(undefined);
+  // const [hoveringContentSide, setHoveringContentSide] = useState<
+  //   "left" | "right" | null
+  // >(null);
+  // const [hoveringAboveCenter, setHoveringAboveCenter] =
+  //   useState<boolean>(false);
   const [contentInsertionIndex, setContentInsertionIndex] = useState<
     number | undefined
   >(undefined);
@@ -365,8 +367,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
     "back" | "share" | null
   >(null);
 
-  const [hovering, setHovering] = useState<boolean>(false);
-
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
     () =>
@@ -472,15 +472,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [handleMouseMove]);
-  // onMouseMove={(event) => {
-  //   !addContentPopoverOpen &&
-  //     !worksheetDialogOpen &&
-  //     !videoDialogOpen &&
-  //     !imageDialogOpen &&
-  //     !linkDialogOpen &&
-  //     !textDialogOpen &&
-  //     setMouseY(event.pageY);
-  // }}
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
@@ -529,6 +520,32 @@ export default function LessonPageContents(props: { lessonId: string }) {
     navigator.clipboard.writeText(window.location.href);
     notificationCtx.success("Copied URL to clipboard.");
   };
+
+  const [expandedContentIds, setExpandedContentIds] = useState<string[]>([]);
+
+  const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
+    string[][]
+  >([]);
+  useEffect(() => {
+    setExpansionChunkedContentIds(
+      contentsWithSide.reduce((acc, cur, i) => {
+        if (i > 0) {
+          if (expandedContentIds.includes(cur.contentId)) {
+            return [...acc, [cur.contentId]];
+          }
+          const lastChunk = acc[acc.length - 1];
+          const previousContentIsExpanded = expandedContentIds.includes(
+            lastChunk?.[lastChunk.length - 1]
+          );
+          return previousContentIsExpanded
+            ? [...acc, [cur.contentId]]
+            : [...acc.slice(0, -1), [...acc[acc.length - 1], cur.contentId]];
+        } else {
+          return [[cur.contentId]];
+        }
+      }, [] as string[][])
+    );
+  }, [contentsWithSide, expandedContentIds]);
 
   return (
     <>
@@ -594,7 +611,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">
-                {!userDetails?.user?.id ||
+                {userDetails?.user?.id &&
                 userDetails?.user?.id !== lesson?.creatorId ? (
                   <UrsorButton
                     variant="secondary"
@@ -607,6 +624,22 @@ export default function LessonPageContents(props: { lessonId: string }) {
                     Create your own
                   </UrsorButton>
                 ) : null}
+                {/* {userDetails?.user?.id &&
+                userDetails?.user?.id !== lesson?.creatorId ? (
+                  <UrsorButton
+                    variant="secondary"
+                    backgroundColor="rgb(255,255,255)"
+                    endIcon={PencilIcon}
+                    onClick={() =>
+                      ApiController.duplicateLesson(
+                        props.lessonId,
+                        userDetails.user!.id
+                      ).then((id) => router.push(`/lesson/${id}`))
+                    }
+                  >
+                    Make a copy
+                  </UrsorButton>
+                ) : null} */}
                 <UrsorButton
                   dark
                   variant="tertiary"
@@ -804,262 +837,34 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   />
                 </Stack>
               </Stack>
-
-              <Stack direction="row">
-                <Stack flex={1}>
-                  {contents.length > 0 ? (
-                    <ContentCards
-                      contents={contentsWithSide
-                        .filter((c) => c.left)
-                        .map((c) => ({ contentId: c.contentId, type: c.type }))}
-                      videos={videos}
-                      links={links}
-                      texts={texts}
-                      images={images}
-                      worksheets={worksheets}
-                      lessonId={props.lessonId}
-                      setVideoEditingDialogId={setVideoEditingDialogId}
-                      setLinkEditingDialogId={setLinkEditingDialogId}
-                      setTextEditingDialogId={setTextEditingDialogId}
-                      setImageEditingDialogId={setImageEditingDialogId}
-                      setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                      updateCallback={loadLesson}
-                      dragStartCallback={setDraggedContentId}
-                      draggedContentId={
-                        draggedContentId ? draggedContentId : undefined
-                      }
-                      columnWidth={singleContentsColumnWidth}
-                      wrapper={(card, i) => (
-                        <Stack //@ts-ignore
-                          key={card?.props?.id}
-                          position="relative"
-                          onMouseEnter={() => {
-                            setHoveringContentSide("left");
-                            setHoveringContentIndex(i);
-                          }}
-                          onMouseMove={(event) => {
-                            setHoveringContentSide("left");
-                            setHoveringContentIndex(i);
-                            //@ts-ignore
-                            const rect = event?.target?.getBoundingClientRect();
-                            setHoveringAboveCenter(
-                              event.pageY < rect.height / 2 + rect.top
-                            );
-                          }}
-                          pb={`${CARD_SPACING}px`}
-                          sx={{
-                            opacity:
-                              //@ts-ignore
-                              draggedContentId === card?.props?.id ? 0 : 1,
-                            pointerEvents:
-                              //@ts-ignore
-                              draggedContentId === card?.props?.id
-                                ? "none"
-                                : undefined,
-                          }}
-                        >
-                          <Stack
-                            width="96%"
-                            onMouseEnter={() => {
-                              setHoveringOnContentCard(true);
-                            }}
-                            onMouseLeave={() => {
-                              setHoveringOnContentCard(false);
-                            }}
-                            alignItems="flex-end"
-                          >
-                            {card}
-                          </Stack>
-                          <Stack
-                            // @ts-ignore
-                            id={`${card?.props?.id}dot`}
-                            bgcolor={PALETTE.secondary.purple[1]}
-                            height="16px"
-                            width="16px"
-                            borderRadius="100%"
-                            position="absolute"
-                            right="-8px"
-                            top={`${DOT_CARD_Y}px`}
-                            zIndex={2}
-                          />
-                        </Stack>
-                      )}
-                    />
-                  ) : (
-                    <Stack position="relative">
-                      <UrsorFadeIn delay={1000} duration={800}>
-                        <Stack
-                          key="starter"
-                          width="94%"
-                          onMouseEnter={() => {
-                            setHovering(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHovering(false);
-                          }}
-                          onClick={() => setStarterAddContentPopoverOpen(true)}
-                        >
-                          <Stack
-                            height="230px"
-                            border={`2px solid ${
-                              hovering
-                                ? PALETTE.secondary.purple[2]
-                                : PALETTE.secondary.grey[3]
-                            }`}
-                            borderRadius="12px"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{
-                              transition: "0.2s",
-                              cursor: "pointer",
-                              svg: {
-                                path: {
-                                  transition: "0.2s",
-                                  fill: hovering
-                                    ? PALETTE.secondary.purple[2]
-                                    : PALETTE.secondary.grey[3],
-                                },
-                              },
-                            }}
-                          >
-                            <Stack
-                              sx={{
-                                transform: "translateY(5px)",
-                                filter: `grayscale(${hovering ? 0 : 100}%)`,
-                                opacity: hovering ? 1 : 0.5,
-                                transition: "0.2s",
-                              }}
-                            >
-                              <Image
-                                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
-                                height={170}
-                                width={170}
-                                alt="graph illustration"
-                              />
-                            </Stack>
-
-                            <Stack
-                              direction="row"
-                              spacing="7px"
-                              justifyContent="center"
-                              alignItems="center"
-                              sx={{
-                                transform: "translateY(-20px)",
-                              }}
-                            >
-                              <PlusIcon height="24px" width="24px" />
-                              <Typography
-                                color={
-                                  hovering
-                                    ? PALETTE.secondary.purple[2]
-                                    : PALETTE.secondary.grey[3]
-                                }
-                                sx={{
-                                  transition: "0.2s",
-                                }}
-                                bold
-                                variant="large"
-                              >
-                                Add
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                        </Stack>
-                      </UrsorFadeIn>
-                      <Stack
-                        position="absolute"
-                        top={`${DOT_CARD_Y}px`}
-                        right="-8px"
-                      >
-                        <Stack
-                          // @ts-ignore
-                          id="starterdot"
-                          bgcolor={PALETTE.secondary.purple[1]}
-                          height="16px"
-                          width="16px"
-                          borderRadius="100%"
-                        />
-                      </Stack>
-                    </Stack>
-                  )}
-                </Stack>
-                <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
-                  <ContentCards
-                    contents={contentsWithSide
-                      .filter((c) => !c.left)
-                      .map((c) => ({ contentId: c.contentId, type: c.type }))}
-                    videos={videos}
-                    links={links}
-                    texts={texts}
-                    images={images}
-                    worksheets={worksheets}
-                    lessonId={props.lessonId}
-                    setVideoEditingDialogId={setVideoEditingDialogId}
-                    setLinkEditingDialogId={setLinkEditingDialogId}
-                    setTextEditingDialogId={setTextEditingDialogId}
-                    setImageEditingDialogId={setImageEditingDialogId}
-                    setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                    updateCallback={loadLesson}
-                    dragStartCallback={setDraggedContentId}
-                    columnWidth={singleContentsColumnWidth}
-                    wrapper={(card, i) => (
-                      <Stack //@ts-ignore
-                        key={card?.props?.id}
-                        position="relative"
-                        onMouseEnter={() => {
-                          setHoveringContentSide("right");
-                          setHoveringContentIndex(i);
-                        }}
-                        onMouseMove={(event) => {
-                          setHoveringContentSide("right");
-                          setHoveringContentIndex(i);
-                          //@ts-ignore
-                          const rect = event?.target?.getBoundingClientRect();
-                          setHoveringAboveCenter(
-                            event.pageY < rect.height / 2 + rect.top
-                          );
-                        }}
-                        pb={`${CARD_SPACING}px`}
-                        sx={{
-                          opacity:
-                            //@ts-ignore
-                            draggedContentId === card?.props?.id ? 0 : 1,
-                          pointerEvents:
-                            //@ts-ignore
-                            draggedContentId === card?.props?.id
-                              ? "none"
-                              : undefined,
-                        }}
-                        alignItems="flex-end"
-                      >
-                        <Stack
-                          // @ts-ignore
-                          id={`${card?.props?.id}dot`}
-                          bgcolor={PALETTE.secondary.purple[1]}
-                          height="16px"
-                          width="16px"
-                          borderRadius="100%"
-                          position="absolute"
-                          left="-8px"
-                          top={`${DOT_CARD_Y}px`}
-                          zIndex={2}
-                        />
-                        <Stack
-                          width="96%"
-                          onMouseEnter={() => {
-                            setHoveringOnContentCard(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHoveringOnContentCard(false);
-                          }}
-                        >
-                          {card}
-                        </Stack>
-                      </Stack>
-                    )}
-                  />
-                </Stack>
-              </Stack>
+              <Timeline
+                contents={contents}
+                contentsWithSide={contentsWithSide}
+                videos={videos}
+                images={images}
+                links={links}
+                worksheets={worksheets}
+                texts={texts}
+                lessonId={props.lessonId}
+                loadLesson={loadLesson}
+                singleContentsColumnWidth={singleContentsColumnWidth}
+                setDraggedContentId={setDraggedContentId}
+                setStarterAddContentPopoverOpen={() =>
+                  setStarterAddContentPopoverOpen(true)
+                }
+                setVideoEditingDialogId={setVideoEditingDialogId}
+                setImageEditingDialogId={setImageEditingDialogId}
+                setWorksheetEditingDialogId={setWorksheetEditingDialogId}
+                setTextEditingDialogId={setTextEditingDialogId}
+                setLinkEditingDialogId={setLinkEditingDialogId}
+                expansionCallback={(id) => {
+                  expandedContentIds.includes(id)
+                    ? setExpandedContentIds(
+                        expandedContentIds.filter((cid) => cid !== id)
+                      )
+                    : setExpandedContentIds([...expandedContentIds, id]);
+                }}
+              />
             </Stack>
           </Stack>
         </PageCard>

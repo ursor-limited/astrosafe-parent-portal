@@ -20,6 +20,8 @@ const TimelineImageCard = (
     onDragStart?: () => void;
     columnWidth: number;
     dragging?: boolean;
+    expanded?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -37,6 +39,7 @@ const TimelineImageCard = (
   const [aspectRatio, setAspectRatio] = useState(2);
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
+
   return (
     <>
       <TimelineCard
@@ -52,6 +55,9 @@ const TimelineImageCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={WIDTH_RATIO * props.columnWidth}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
       >
         <Stack
           ref={setRef}

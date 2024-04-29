@@ -25,6 +25,8 @@ const TimelineLinkCard = (
     onDragStart?: () => void;
     dragging?: boolean;
     columnWidth: number;
+    expanded?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -55,6 +57,9 @@ const TimelineLinkCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={WIDTH_RATIO * props.columnWidth}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
       >
         <Link
           href={`https://${getPrefixRemovedUrl(props.url)}`}

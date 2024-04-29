@@ -27,6 +27,8 @@ const TimelineVideoCard = (
     onDragStart?: () => void;
     dragging?: boolean;
     columnWidth: number;
+    expanded?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -58,6 +60,9 @@ const TimelineVideoCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={props.columnWidth}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
       >
         <Stack
           flex={1}
