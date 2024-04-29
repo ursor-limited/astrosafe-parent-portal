@@ -117,22 +117,24 @@ const TimelineCard = (props: {
                 direction="row"
                 spacing="8px"
               >
-                <Stack
-                  height="32px"
-                  width="32px"
-                  bgcolor="rgb(255,255,255)"
-                  borderRadius="100%"
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                    cursor: "pointer",
-                  }}
-                  onClick={props.expansionCallback}
-                >
-                  <ArrowBothIcon height="18px" width="18px" />
-                </Stack>
+                {props.expansionCallback ? (
+                  <Stack
+                    height="32px"
+                    width="32px"
+                    bgcolor="rgb(255,255,255)"
+                    borderRadius="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={props.expansionCallback}
+                  >
+                    <ArrowBothIcon height="18px" width="18px" />
+                  </Stack>
+                ) : null}
                 <Stack
                   height="32px"
                   width="32px"

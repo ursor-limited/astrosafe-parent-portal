@@ -68,12 +68,13 @@ const TimelineLinkCard = (
           rel="nofollow"
           style={{
             textDecoration: "none",
+            flex: 1,
           }}
         >
           <Stack
             alignItems="center"
             justifyContent="center"
-            height="350px"
+            height={props.expanded ? "100%" : "350px"}
             width="100%"
             overflow="hidden"
             position="relative"

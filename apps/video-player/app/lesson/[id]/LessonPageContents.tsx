@@ -55,6 +55,7 @@ import Timeline, {
 } from "./Timeline";
 
 const CONTENT_PADDING_X = 24;
+const EXPANDED_CARD_DOT_Y = 16;
 
 export const fadeIn = keyframes`
 from {
@@ -382,7 +383,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
     if (!lesson || !draggedContentId) return;
     const draggedContentIdIndex = contentOrder.indexOf(draggedContentId);
     const newIndex = getContentMovingIndex(
-      mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
+      expandedContentIds.includes(draggedContentId)
+        ? mouseY - draggedElementTopMouseYSeparation - 2 * EXPANDED_CARD_DOT_Y
+        : mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
       draggedContentIdIndex
     );
     if (newIndex !== draggedContentIdIndex) {
@@ -522,8 +525,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   };
 
   const [expandedContentIds, setExpandedContentIds] = useState<string[]>([]);
-
-  console.log(expandedContentIds, "0");
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
@@ -723,7 +724,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   right={0}
                   marginLeft="auto"
                   marginRight="auto"
-                  top={mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y}
+                  top={
+                    expandedContentIds.includes(draggedContentId)
+                      ? mouseY -
+                        draggedElementTopMouseYSeparation -
+                        2 * EXPANDED_CARD_DOT_Y
+                      : mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y
+                  }
                   zIndex={2}
                 />
               ) : (
@@ -834,7 +841,26 @@ export default function LessonPageContents(props: { lessonId: string }) {
                       (c) => c.contentId === chunk[0]
                     );
                     return expandedContent ? (
-                      <Stack key={`${i}expanded`} zIndex={3}>
+                      <Stack
+                        key={`${i}expanded`}
+                        zIndex={3}
+                        alignItems="center"
+                        spacing={`${EXPANDED_CARD_DOT_Y}px`}
+                        sx={{
+                          opacity: draggedContentId === chunk[0] ? 0 : 1,
+                          transition: "0.2s",
+                        }}
+                      >
+                        <Stack
+                          // @ts-ignore
+                          id={`${chunk[0]}dot`}
+                          bgcolor={PALETTE.secondary.purple[1]}
+                          height="16px"
+                          width="16px"
+                          borderRadius="100%"
+                          top={`${DOT_CARD_Y}px`}
+                          zIndex={2}
+                        />
                         <ContentCards
                           contents={[expandedContent]}
                           expanded
@@ -849,6 +875,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           draggedContentId={
                             draggedContentId ? draggedContentId : undefined
                           }
+                          dragStartCallback={(id) => setDraggedContentId(id)}
                           setVideoEditingDialogId={setVideoEditingDialogId}
                           setImageEditingDialogId={setImageEditingDialogId}
                           setWorksheetEditingDialogId={

@@ -95,7 +95,6 @@ const TimelineWorksheetCard = (
         width={WIDTH_RATIO * props.columnWidth}
         creatorId={props.creatorId}
         expanded={props.expanded}
-        expansionCallback={props.expansionCallback}
       >
         <Stack
           ref={setRef}
