@@ -58,6 +58,7 @@ const TimelineImageCard = (
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
+        useExpandedHeight
       >
         <Stack
           ref={setRef}
@@ -65,7 +66,10 @@ const TimelineImageCard = (
           justifyContent="center"
           p="12px"
           height={
-            ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) / aspectRatio
+            props.expanded
+              ? "100%"
+              : ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) /
+                aspectRatio
           }
           width="100%"
           overflow="hidden"

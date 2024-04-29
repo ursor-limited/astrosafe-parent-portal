@@ -60,6 +60,7 @@ const TimelineLinkCard = (
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
+        useExpandedHeight
       >
         <Link
           href={`https://${getPrefixRemovedUrl(props.url)}`}

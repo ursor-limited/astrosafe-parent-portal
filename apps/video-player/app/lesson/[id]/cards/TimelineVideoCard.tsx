@@ -63,9 +63,11 @@ const TimelineVideoCard = (
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
+        useExpandedHeight
       >
         <Stack
           flex={1}
+          height={props.expanded ? "100%" : undefined}
           spacing="8px"
           sx={{
             "&:hover": { opacity: 0.6 },
@@ -81,7 +83,7 @@ const TimelineVideoCard = (
           }
         >
           <Stack
-            height="331px"
+            height={props.expanded ? "100%" : "331px"}
             width="100%"
             sx={{
               backgroundImage: `url(${props.thumbnailUrl})`,

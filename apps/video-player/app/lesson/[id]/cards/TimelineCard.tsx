@@ -12,6 +12,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
+const EXPANDED_HEIGHT = 821;
 
 const TimelineCard = (props: {
   id: string;
@@ -28,6 +29,7 @@ const TimelineCard = (props: {
   width: number;
   expanded?: boolean;
   expansionCallback?: () => void;
+  useExpandedHeight?: boolean;
   creatorId: string;
   children: React.ReactNode;
 }) => {
@@ -74,6 +76,9 @@ const TimelineCard = (props: {
           : undefined,
       }}
       width={props.expanded ? "100%" : props.width}
+      height={
+        props.useExpandedHeight && props.expanded ? EXPANDED_HEIGHT : undefined
+      }
     >
       <Stack
         flex={1}
@@ -174,12 +179,16 @@ const TimelineCard = (props: {
           </Stack>
         ) : null}
 
-        <Stack borderRadius="8px" overflow="hidden">
+        <Stack
+          borderRadius="8px"
+          overflow="hidden"
+          flex={props.expanded ? 1 : undefined}
+        >
           {props.children}
         </Stack>
         {props.title || props.description ? (
           <Stack
-            flex={1}
+            flex={props.expanded ? undefined : 1}
             justifyContent="space-between"
             px="4px"
             pt="11px"
