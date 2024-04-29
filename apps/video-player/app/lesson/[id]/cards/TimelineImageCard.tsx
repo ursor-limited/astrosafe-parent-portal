@@ -52,6 +52,7 @@ const TimelineImageCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={WIDTH_RATIO * props.columnWidth}
+        creatorId={props.creatorId}
       >
         <Stack
           ref={setRef}

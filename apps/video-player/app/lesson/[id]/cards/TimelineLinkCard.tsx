@@ -55,6 +55,7 @@ const TimelineLinkCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={WIDTH_RATIO * props.columnWidth}
+        creatorId={props.creatorId}
       >
         <Link
           href={`https://${getPrefixRemovedUrl(props.url)}`}

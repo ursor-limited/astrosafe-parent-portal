@@ -99,6 +99,11 @@ class ApiController {
   static async deleteLesson(id: string) {
     return dellete(`lesson/${id}`);
   }
+  static async duplicateLesson(id: any, userId: string) {
+    return post("lesson/dupli/cate", { id, userId }).then((response: any) =>
+      response.json()
+    );
+  }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }

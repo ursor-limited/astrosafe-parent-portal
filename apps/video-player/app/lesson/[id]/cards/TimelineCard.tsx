@@ -26,6 +26,7 @@ const TimelineCard = (props: {
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
   width: number;
+  creatorId: string;
   children: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
@@ -72,8 +73,12 @@ const TimelineCard = (props: {
       }}
       width={props.width}
     >
-      <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
-        {userDetails ? (
+      <Stack
+        flex={1}
+        p="8px"
+        pt={userDetails && userDetails.id === props.creatorId ? 0 : undefined}
+      >
+        {userDetails && userDetails.id === props.creatorId ? (
           <Stack direction="row" width="100%" height="48px">
             <Stack
               width="100%"
