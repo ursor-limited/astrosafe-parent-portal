@@ -119,7 +119,7 @@ const TimelineVideoCard = (
           >
             {!props.noPlayer && provider && playerHeight ? (
               <Player
-                playerId={`player-${props.url}`}
+                playerId={`player-${props.id}`}
                 url={props.url}
                 provider={provider}
                 width={playerWidth}
