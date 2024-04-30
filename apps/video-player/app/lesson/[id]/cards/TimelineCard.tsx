@@ -32,6 +32,7 @@ const TimelineCard = (props: {
   useExpandedHeight?: boolean;
   creatorId: string;
   children: React.ReactNode;
+  leftElement?: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
@@ -87,6 +88,14 @@ const TimelineCard = (props: {
       >
         {userDetails && userDetails.id === props.creatorId ? (
           <Stack direction="row" width="100%" height="48px">
+            <Stack
+              position="relative"
+              width={0}
+              overflow="visible"
+              justifyContent="center"
+            >
+              {props.leftElement}
+            </Stack>
             <Stack
               width="100%"
               alignItems="center"

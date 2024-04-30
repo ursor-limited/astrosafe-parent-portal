@@ -2,14 +2,16 @@ import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController, { IVideo } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import { PALETTE } from "ui";
-import Play from "@/images/play.svg";
+import Player from "@/app/components/player";
+import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
+import { UrsorButton } from "ui";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
@@ -28,6 +30,7 @@ const TimelineVideoCard = (
     dragging?: boolean;
     columnWidth: number;
     expanded?: boolean;
+    noPlayer?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -44,6 +47,20 @@ const TimelineVideoCard = (
       .then(() => notificationCtx.success("Duplicated Video."));
 
   const router = useRouter();
+
+  const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
+  const [playerWidth, setPlayerWidth] = useState<number>(0);
+  useEffect(() => {
+    setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
+  }, [sizeRef?.getBoundingClientRect().width]);
+
+  const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
+    undefined
+  );
+  useEffect(
+    () => zetProvider(props.url.includes("vimeo") ? "vimeo" : "youtube"),
+    [props.url]
+  );
 
   return (
     <>
@@ -64,57 +81,46 @@ const TimelineVideoCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        leftElement={
+          <UrsorButton
+            dark
+            size="small"
+            endIcon={ArrowUpRight}
+            onClick={() =>
+              router.push(
+                `/video/${props.id}${
+                  props.lessonId ? `?lesson=${props.lessonId}` : ""
+                }`
+              )
+            }
+          >
+            View page
+          </UrsorButton>
+        }
       >
         <Stack
           flex={1}
           height={props.expanded ? "100%" : undefined}
           spacing="8px"
-          sx={{
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            cursor: "pointer",
-          }}
-          onClick={() =>
-            router.push(
-              `/video/${props.id}${
-                props.lessonId ? `?lesson=${props.lessonId}` : ""
-              }`
-            )
-          }
         >
           <Stack
-            height={props.expanded ? "100%" : "331px"}
             width="100%"
-            sx={{
-              backgroundImage: `url(${props.thumbnailUrl})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-            }}
-            borderRadius="10px 10px 0 0"
-            bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
-            position="relative"
+            height={playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+            ref={setSizeRef}
           >
-            {!props.thumbnailUrl ? (
-              <Stack flex={1} justifyContent="center" alignItems="center">
-                <Image
-                  src={PLACEHOLDER_THUMBNAIL}
-                  width={200}
-                  height={100}
-                  alt="Intro square"
-                />
-              </Stack>
+            {!props.noPlayer && provider ? (
+              <Player
+                playerId={`player-${props.url}`}
+                url={props.url}
+                provider={provider}
+                width={playerWidth}
+                height={playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+                startTime={props.startTime}
+                endTime={props.endTime}
+                noKitemark
+                borderRadius="8px"
+              />
             ) : null}
-            <Stack
-              flex={1}
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
-              }}
-            >
-              <Play width="40px" height="40px" />
-            </Stack>
           </Stack>
         </Stack>
       </TimelineCard>

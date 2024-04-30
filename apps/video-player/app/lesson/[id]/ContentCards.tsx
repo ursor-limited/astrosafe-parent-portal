@@ -42,6 +42,7 @@ const ContentCards = (props: {
   expansionCallback?: (id: string) => void;
   draggedContentId?: string;
   expanded?: boolean;
+  noPlayer?: boolean;
 }) => {
   return (
     <>
@@ -67,6 +68,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noPlayer={props.noPlayer}
               />
             ) : null;
           } else if (c.type === "link") {

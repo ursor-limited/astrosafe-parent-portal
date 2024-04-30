@@ -186,13 +186,13 @@ function MobileVideoPageContents(props: {
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">
           <Player
+            playerId="player"
             url={video.url}
             provider={provider}
             width={videoWidth}
             height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
             setDuration={(d) => d && setDuration(d)}
             noKitemark={videoWidth < VIDEO_WIDTH}
-            top="120px"
             playingCallback={(p) => setPlaying(p)}
           />
         </Stack>
