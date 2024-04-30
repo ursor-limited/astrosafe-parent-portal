@@ -12,6 +12,7 @@ import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
 import { UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import { useUserContext } from "@/app/components/UserContext";
 
 const PLACEHOLDER_THUMBNAIL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
@@ -48,6 +49,8 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
+  const userDetails = useUserContext();
+
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
@@ -57,6 +60,7 @@ const TimelineVideoCard = (
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
+    userDetails.user, // needed to make sure that the height is taken after the card's header is rendered.
   ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
