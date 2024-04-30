@@ -530,11 +530,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
   useEffect(() => {
     setExpandedContentIds(lesson?.expandedContentIds || []);
   }, [lesson?.expandedContentIds]);
-  useEffect(() => {
-    lesson &&
-      expandedContentIds.join() !== lesson.expandedContentIds.join() &&
-      ApiController.updateLesson(props.lessonId, { expandedContentIds });
-  }, [lesson, expandedContentIds]);
+  // useEffect(() => {
+  //   lesson &&
+  //     expandedContentIds &&
+  //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
+  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
+  // }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
@@ -902,13 +903,16 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           setTextEditingDialogId={setTextEditingDialogId}
                           setLinkEditingDialogId={setLinkEditingDialogId}
                           updateCallback={loadLesson}
-                          expansionCallback={() =>
-                            setExpandedContentIds(
+                          expansionCallback={() => {
+                            const newExpandedContentIds =
                               expandedContentIds.filter(
                                 (cid) => cid !== chunk[0]
-                              )
-                            )
-                          }
+                              );
+                            setExpandedContentIds(newExpandedContentIds);
+                            ApiController.updateLesson(props.lessonId, {
+                              expandedContentIds: newExpandedContentIds,
+                            });
+                          }}
                         />
                       </Stack>
                     ) : null;
@@ -942,14 +946,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         setTextEditingDialogId={setTextEditingDialogId}
                         setLinkEditingDialogId={setLinkEditingDialogId}
                         expansionCallback={(id) => {
-                          expandedContentIds.includes(id)
-                            ? setExpandedContentIds(
-                                expandedContentIds.filter((cid) => cid !== id)
-                              )
-                            : setExpandedContentIds([
-                                ...expandedContentIds,
-                                id,
-                              ]);
+                          const newExpandedContentIds =
+                            expandedContentIds.includes(id)
+                              ? expandedContentIds.filter((cid) => cid !== id)
+                              : [...expandedContentIds, id];
+                          setExpandedContentIds(newExpandedContentIds);
+                          ApiController.updateLesson(props.lessonId, {
+                            expandedContentIds: newExpandedContentIds,
+                          });
                         }}
                       />
                     );
