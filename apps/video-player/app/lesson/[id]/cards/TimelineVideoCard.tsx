@@ -28,7 +28,7 @@ const TimelineVideoCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
     expanded?: boolean;
     noPlayer?: boolean;
     expansionCallback?: () => void;
@@ -118,17 +118,19 @@ const TimelineVideoCard = (
             ref={setSizeRef}
           >
             {!props.noPlayer && provider && playerHeight ? (
-              <Player
-                playerId={`player-${props.id}`}
-                url={props.url}
-                provider={provider}
-                width={playerWidth}
-                height={playerHeight}
-                startTime={props.startTime}
-                endTime={props.endTime}
-                noKitemark
-                borderRadius="8px"
-              />
+              <Stack height={props.noPlayer ? 0 : undefined}>
+                <Player
+                  playerId={`player-${props.id}`}
+                  url={props.url}
+                  provider={provider}
+                  width={playerWidth}
+                  height={playerHeight}
+                  startTime={props.startTime}
+                  endTime={props.endTime}
+                  noKitemark
+                  borderRadius="8px"
+                />
+              </Stack>
             ) : null}
           </Stack>
         </Stack>

@@ -297,81 +297,85 @@ const VideoCreationDialog = (props: {
               />
             </Captioned>
           </Stack>
-          {!isMobile ? (
-            <Stack width={VIDEO_WIDTH} spacing="6px" position="relative">
-              {showForbiddenVideoView ? (
-                <Stack
-                  flex={1}
-                  position="absolute"
-                  bgcolor="rgba(0,0,0,0.5)"
-                  top="20px"
-                  left={0}
-                  zIndex={5}
-                  height="220px"
-                  justifyContent="center"
-                  alignItems="center"
-                  px="40px"
-                >
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Unfortunately, this video is not available to be embedded in
-                    3rd party platforms.
-                  </Typography>
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Please try another video.
-                  </Typography>
-                </Stack>
-              ) : null}
-              {provider ? (
-                <Player
-                  playerId="creation"
-                  url={url}
-                  provider={provider}
-                  width={Math.min(playerWidth, VIDEO_WIDTH)}
-                  height={
-                    Math.min(playerWidth, VIDEO_WIDTH) *
-                    (VIDEO_HEIGHT / VIDEO_WIDTH)
-                  }
-                  setDuration={(d) => {
-                    d && setDuration(d);
-                  }}
-                  startTime={range?.[0] ?? 0}
-                  endTime={range?.[1] ?? 10}
-                  noKitemark
-                  playingCallback={(p) => setPlaying(p)}
-                  smallPlayIcon
-                  noBackdrop
-                />
-              ) : null}
-              <TimeRange
-                range={range}
-                duration={duration}
-                setRange={setRange}
-                originalUrl={originalUrl}
-              />
-              <UrsorButton
-                onClick={() => {
-                  props.video ? submitUpdate() : submitCreation();
-                }}
-                disabled={!url}
-                dark
-                variant="tertiary"
-                endIcon={props.video ? PencilIcon : RocketIcon}
-                width="100%"
+          <Stack
+            width={isMobile ? 0 : VIDEO_WIDTH} // need to do this instead of setting to null order to get the duration
+            height={isMobile ? 0 : undefined}
+            overflow={isMobile ? "hidden" : undefined}
+            spacing="6px"
+            position="relative"
+          >
+            {showForbiddenVideoView ? (
+              <Stack
+                flex={1}
+                position="absolute"
+                bgcolor="rgba(0,0,0,0.5)"
+                top="20px"
+                left={0}
+                zIndex={5}
+                height="220px"
+                justifyContent="center"
+                alignItems="center"
+                px="40px"
               >
-                {props.video ? "Update" : "Add"}
-              </UrsorButton>
-            </Stack>
-          ) : null}
+                <Typography
+                  color="rgb(255,255,255)"
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  Unfortunately, this video is not available to be embedded in
+                  3rd party platforms.
+                </Typography>
+                <Typography
+                  color="rgb(255,255,255)"
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  Please try another video.
+                </Typography>
+              </Stack>
+            ) : null}
+            {provider ? (
+              <Player
+                playerId="creation"
+                url={url}
+                provider={provider}
+                width={Math.min(playerWidth, VIDEO_WIDTH)}
+                height={
+                  Math.min(playerWidth, VIDEO_WIDTH) *
+                  (VIDEO_HEIGHT / VIDEO_WIDTH)
+                }
+                setDuration={(d) => {
+                  d && setDuration(d);
+                }}
+                startTime={range?.[0] ?? 0}
+                endTime={range?.[1] ?? 10}
+                noKitemark
+                playingCallback={(p) => setPlaying(p)}
+                smallPlayIcon
+                noBackdrop
+              />
+            ) : null}
+            <TimeRange
+              range={range}
+              duration={duration}
+              setRange={setRange}
+              originalUrl={originalUrl}
+            />
+            <UrsorButton
+              onClick={() => {
+                props.video ? submitUpdate() : submitCreation();
+              }}
+              disabled={!url}
+              dark
+              variant="tertiary"
+              endIcon={props.video ? PencilIcon : RocketIcon}
+              width="100%"
+            >
+              {props.video ? "Update" : "Add"}
+            </UrsorButton>
+          </Stack>
           {isMobile ? (
             <UrsorButton
               onClick={() => {

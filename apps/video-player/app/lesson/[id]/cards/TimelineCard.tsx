@@ -26,7 +26,7 @@ const TimelineCard = (props: {
   editingCallback?: () => void;
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
-  width: number;
+  width?: number;
   expanded?: boolean;
   expansionCallback?: () => void;
   useExpandedHeight?: boolean;
@@ -76,7 +76,7 @@ const TimelineCard = (props: {
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
       }}
-      width={props.expanded ? "100%" : props.width}
+      width={props.expanded ? "100%" : props.width || "100%"}
       height={
         props.useExpandedHeight && props.expanded ? EXPANDED_HEIGHT : undefined
       }
@@ -87,7 +87,12 @@ const TimelineCard = (props: {
         pt={userDetails && userDetails.id === props.creatorId ? 0 : undefined}
       >
         {userDetails && userDetails.id === props.creatorId ? (
-          <Stack direction="row" width="100%" height="48px">
+          <Stack
+            direction="row"
+            width="100%"
+            height="48px"
+            justifyContent="space-between"
+          >
             <Stack
               position="relative"
               width={0}
@@ -96,23 +101,25 @@ const TimelineCard = (props: {
             >
               {props.leftElement}
             </Stack>
-            <Stack
-              width="100%"
-              alignItems="center"
-              justifyContent="center"
-              sx={{
-                cursor: props.dragging ? "grabbing" : "grab",
-                svg: {
-                  transform: "rotate(90deg)",
-                },
-              }}
-              onMouseDown={(e) => {
-                props.onDragStart?.();
-                e.preventDefault();
-              }}
-            >
-              <GrabberIcon width="20px" height="20px" />
-            </Stack>
+            {props.onDragStart ? (
+              <Stack
+                width="100%"
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  cursor: props.dragging ? "grabbing" : "grab",
+                  svg: {
+                    transform: "rotate(90deg)",
+                  },
+                }}
+                onMouseDown={(e) => {
+                  props.onDragStart?.();
+                  e.preventDefault();
+                }}
+              >
+                <GrabberIcon width="20px" height="20px" />
+              </Stack>
+            ) : null}
 
             <Stack
               position="relative"

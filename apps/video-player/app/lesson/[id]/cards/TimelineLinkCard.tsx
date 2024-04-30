@@ -24,8 +24,9 @@ const TimelineLinkCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
     expanded?: boolean;
+    mobile?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -56,7 +57,7 @@ const TimelineLinkCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        width={WIDTH_RATIO * props.columnWidth}
+        width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
@@ -74,7 +75,7 @@ const TimelineLinkCard = (
           <Stack
             alignItems="center"
             justifyContent="center"
-            height={props.expanded ? "100%" : "350px"}
+            height={props.expanded ? "100%" : props.mobile ? "300px" : "350px"}
             width="100%"
             overflow="hidden"
             position="relative"
