@@ -40,6 +40,7 @@ import TimelineImageCard from "./cards/TimelineImageCard";
 import TimelineLinkCard from "./cards/TimelineLinkCard";
 import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
+import TimelineVideoCard from "./cards/TimelineVideoCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -297,14 +298,15 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                   if (c.type === "video") {
                     const video = videos?.find((v) => v.id === c.contentId);
                     return video ? (
-                      <LessonVideoCard
+                      <TimelineVideoCard
                         key={video.id}
                         {...video}
+                        lessonId={props.lessonId}
                         editingCallback={() =>
                           setVideoEditingDialogId(video.id)
                         }
                         deletionCallback={loadLesson}
-                        lessonId={props.lessonId}
+                        duplicationCallback={loadLesson}
                       />
                     ) : null;
                   } else if (c.type === "link") {
