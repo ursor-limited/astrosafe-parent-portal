@@ -564,7 +564,6 @@ function CreationPageContents(props: { details: IVideo }) {
                   }
                   setDuration={(d) => d && setDuration(d)}
                   noKitemark={playerWidth < VIDEO_WIDTH}
-                  top="120px"
                   setFullscreen={setFullscreen}
                   playingCallback={(p) => setPlaying(p)}
                   mobile={mobile}

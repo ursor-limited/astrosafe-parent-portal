@@ -25,8 +25,7 @@ const Player = (props: {
   provider: "youtube" | "vimeo";
   width: number;
   height: number;
-  top: string;
-  setDuration: (duration: number) => void;
+  setDuration?: (duration: number) => void;
   startTime?: number;
   endTime?: number;
   showUrlBar?: boolean;
@@ -36,6 +35,7 @@ const Player = (props: {
   mobile?: boolean;
   smallPlayIcon?: boolean;
   noBackdrop?: boolean;
+  borderRadius?: string;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -172,9 +172,9 @@ const Player = (props: {
     if (!url) return;
     url.includes("vimeo")
       ? player?.getDuration?.().then?.((d: number) => {
-          props.setDuration(d);
+          props.setDuration?.(d);
         })
-      : props.setDuration(player?.getDuration());
+      : props.setDuration?.(player?.getDuration());
   }, [player?.getDuration, url, player?.origin]);
 
   const removePreviousScript = (id: string) => {
@@ -301,7 +301,7 @@ const Player = (props: {
         width={fullScreen ? videoWidth || "100vw" : `${props.width}px`}
         height={fullScreen ? videoHeight || "100vh" : `${props.height}px`}
         boxShadow={!playing ? "0 0 65px rgba(255,255,255,0.2)" : undefined}
-        borderRadius={fullScreen ? 0 : BORDER_RADIUS}
+        borderRadius={props.borderRadius || (fullScreen ? 0 : BORDER_RADIUS)}
         overflow="hidden"
         position="relative"
         sx={{
@@ -339,7 +339,9 @@ const Player = (props: {
         <Stack
           position="absolute"
           top={0}
-          borderRadius={fullScreen ? undefined : BORDER_RADIUS}
+          borderRadius={
+            fullScreen ? undefined : props.borderRadius || BORDER_RADIUS
+          }
           width="100%"
           height="100%"
           bgcolor={`rgba(0,0,0,${overlayHovering ? 0.6 : 0.72})`}

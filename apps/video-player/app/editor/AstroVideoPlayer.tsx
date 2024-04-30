@@ -121,7 +121,6 @@ const AstroVideoPlayer = (props: {
           height={VIDEO_HEIGHT}
           setDuration={(d) => null}
           // noKitemark={playerWidth < VIDEO_WIDTH}
-          top="120px"
           //setFullscreen={setFullscreen}
           playingCallback={(p) => setPlaying(p)}
           // mobile={mobile}
