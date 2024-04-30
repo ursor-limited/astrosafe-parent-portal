@@ -396,7 +396,7 @@ const Player = (props: {
             opacity: overlayHovering && playing ? 1 : 0,
             transition: !overlayHovering || !playing ? "0.2s" : 0,
             transitionDelay: !overlayHovering || !playing ? "0.3s" : 0,
-            backdropFilter: "blur(30px)",
+            //backdropFilter: "blur(30px)",
             //transitionDelay: "500ms",
             //transitionTimingFunction: "ease-out",
             svg: {
