@@ -14,31 +14,6 @@ import { UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import { useUserContext } from "@/app/components/UserContext";
 
-const TimelineVideoCardViewPageButton = (props: {
-  videoId: string;
-  lessonId: string;
-  loadedCallback: () => void;
-}) => {
-  const router = useRouter();
-  useEffect(props.loadedCallback, []);
-  return (
-    <UrsorButton
-      dark
-      size="small"
-      endIcon={ArrowUpRight}
-      onClick={() =>
-        router.push(
-          `/video/${props.videoId}${
-            props.lessonId ? `?lesson=${props.lessonId}` : ""
-          }`
-        )
-      }
-    >
-      View page
-    </UrsorButton>
-  );
-};
-
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
@@ -77,9 +52,12 @@ const TimelineVideoCard = (
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
-  useEffect(() => {
+  const setDimensions = () => {
     setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
     setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
+  };
+  useEffect(() => {
+    setTimeout(setDimensions, 1000);
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
@@ -114,11 +92,20 @@ const TimelineVideoCard = (
         expansionCallback={props.expansionCallback}
         useExpandedHeight
         leftElement={
-          <TimelineVideoCardViewPageButton
-            videoId={props.id}
-            lessonId={props.lessonId}
-            loadedCallback={() => setHeaderLoaded(true)}
-          />
+          <UrsorButton
+            dark
+            size="small"
+            endIcon={ArrowUpRight}
+            onClick={() =>
+              router.push(
+                `/video/${props.id}${
+                  props.lessonId ? `?lesson=${props.lessonId}` : ""
+                }`
+              )
+            }
+          >
+            View page
+          </UrsorButton>
         }
       >
         <Stack
