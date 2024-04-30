@@ -379,20 +379,20 @@ class ApiController {
       response.json()
     );
   }
-  static async duplicateImage(id: string, lessonId: string) {
-    return post(`image/dupli/cate`, { id, lessonId });
+  static async duplicateImage(id: string, lessonId: string, userId?: string) {
+    return post(`image/dupli/cate`, { id, lessonId, userId });
   }
-  static async duplicateLink(id: string, lessonId: string) {
-    return post(`link/dupli/cate`, { id, lessonId });
+  static async duplicateLink(id: string, lessonId: string, userId?: string) {
+    return post(`link/dupli/cate`, { id, lessonId, userId });
   }
-  static async duplicateVideo(id: string, lessonId: string) {
-    return post(`video/dupli/cate`, { id, lessonId });
+  static async duplicateVideo(id: string, lessonId: string, userId?: string) {
+    return post(`video/dupli/cate`, { id, lessonId, userId });
   }
-  static async duplicateWorksheet(id: string, lessonId: string) {
-    return post(`canvas/dupli/cate`, { id, lessonId });
+  static async duplicateWorksheet(id: string, lessonId: string, userId?: string) {
+    return post(`canvas/dupli/cate`, { id, lessonId, userId });
   }
-  static async duplicateText(id: string, lessonId: string) {
-    return post(`text/dupli/cate`, { id, lessonId });
+  static async duplicateText(id: string, lessonId: string, userId?: string) {
+    return post(`text/dupli/cate`, { id, lessonId, userId });
   }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());
