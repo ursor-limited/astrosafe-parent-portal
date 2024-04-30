@@ -527,6 +527,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
   };
 
   const [expandedContentIds, setExpandedContentIds] = useState<string[]>([]);
+  useEffect(() => {
+    setExpandedContentIds(lesson?.expandedContentIds || []);
+  }, [lesson?.expandedContentIds]);
+  useEffect(() => {
+    lesson &&
+      expandedContentIds.join() !== lesson.expandedContentIds.join() &&
+      ApiController.updateLesson(props.lessonId, { expandedContentIds });
+  }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
