@@ -14,6 +14,8 @@ const Button: FC<ButtonProps> = ({ onClick, sortingDirection, children }) => {
     arrowIcon = '▲';
   } else if (sortingDirection === 'desc') {
     arrowIcon = '▼';
+  } else {
+    arrowIcon = ' ';
   }
 
   return (

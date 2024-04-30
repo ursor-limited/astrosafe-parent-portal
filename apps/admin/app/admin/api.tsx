@@ -80,6 +80,20 @@ class ApiController {
     //@ts-ignore
     return get(`lesson/user/${id}`).then((response: any) => response.json());
   }
+
+  static async getTotalVideoCounts() {
+    return post(`video/getTotalVideoCounts`, {}).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getCreatedAtDict() {
+    return post(`video/getCreatedAtDict`, {}).then((response: any) =>
+      response.json()
+    );
+  }
+
+  
 }
 
 export default ApiController;
