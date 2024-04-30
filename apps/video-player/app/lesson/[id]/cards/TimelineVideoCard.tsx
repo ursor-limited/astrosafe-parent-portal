@@ -49,7 +49,7 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
-  const userDetails = useUserContext();
+  //const userDetails = useUserContext();
 
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
@@ -60,7 +60,7 @@ const TimelineVideoCard = (
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
-    userDetails.user, // needed to make sure that the height is taken after the card's header is rendered.
+    //userDetails.user, // needed to make sure that the height is taken after the card's header is rendered.
   ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -108,36 +108,30 @@ const TimelineVideoCard = (
         }
       >
         <Stack
-          flex={1}
-          height={props.expanded ? "100%" : undefined}
-          spacing="8px"
+          width="100%"
+          flex={props.expanded ? 1 : undefined}
+          height={
+            props.expanded
+              ? undefined
+              : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+          }
+          ref={setSizeRef}
         >
-          <Stack
-            width="100%"
-            flex={props.expanded ? 1 : undefined}
-            height={
-              props.expanded
-                ? undefined
-                : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
-            }
-            ref={setSizeRef}
-          >
-            {!props.noPlayer && provider && playerHeight ? (
-              <Stack height={props.noPlayer ? 0 : undefined}>
-                <Player
-                  playerId={`player-${props.id}`}
-                  url={props.url}
-                  provider={provider}
-                  width={playerWidth}
-                  height={playerHeight}
-                  startTime={props.startTime}
-                  endTime={props.endTime}
-                  noKitemark
-                  borderRadius="8px"
-                />
-              </Stack>
-            ) : null}
-          </Stack>
+          {!props.noPlayer && provider && playerHeight ? (
+            <Stack height={props.noPlayer ? 0 : undefined}>
+              <Player
+                playerId={`player-${props.id}`}
+                url={props.url}
+                provider={provider}
+                width={playerWidth}
+                height={playerHeight}
+                startTime={props.startTime}
+                endTime={props.endTime}
+                noKitemark
+                borderRadius="8px"
+              />
+            </Stack>
+          ) : null}
         </Stack>
       </TimelineCard>
       {deletionDialogOpen ? (
