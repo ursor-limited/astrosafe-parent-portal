@@ -551,6 +551,7 @@ function CreationPageContents(props: { details: IVideo }) {
                   }}
                 />
                 <Player
+                  playerId="player"
                   url={url}
                   provider={provider}
                   width={

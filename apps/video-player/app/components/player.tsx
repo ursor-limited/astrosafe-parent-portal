@@ -19,6 +19,7 @@ const BORDER_RADIUS = "14px";
 export const PADDING_TOP = "120px";
 
 const Player = (props: {
+  playerId: string;
   url: string;
   playingCallback?: (playing: boolean) => void;
   provider: "youtube" | "vimeo";
@@ -87,7 +88,7 @@ const Player = (props: {
 
   const onYoutubeReady = () => {
     //@ts-ignore
-    new window.YT.Player("player", {
+    new window.YT.Player(props.playerId, {
       // height: "390",
       // width: "640",
       //videoId,
@@ -106,7 +107,7 @@ const Player = (props: {
       window.YT.ready(onYoutubeReady);
     } else {
       //@ts-ignore
-      const playah = new Vimeo.Player("player");
+      const playah = new Vimeo.Player(props.playerId);
       playah.on("pause", () => setPlaying(false));
       playah.on("play", () => setPlaying(true));
       setPlayer(playah);
@@ -176,19 +177,16 @@ const Player = (props: {
       : props.setDuration(player?.getDuration());
   }, [player?.getDuration, url, player?.origin]);
 
-  const removePreviousScript = () => {
-    const scripts = document.getElementsByTagName("script");
-    const previousScript = [...scripts].find(
-      (s) => s.src.includes("youtube") || s.src.includes("vimeo")
-    );
+  const removePreviousScript = (id: string) => {
+    const previousScript = document.getElementById(id);
     previousScript?.parentNode?.removeChild(previousScript);
   };
 
   useEffect(() => {
     if (!url || !document) return;
-    removePreviousScript();
+    removePreviousScript(url);
     var tag = document.createElement("script");
-    //tag.id = url;
+    tag.id = url;
     tag.src = url?.includes("youtube")
       ? "https://www.youtube.com/iframe_api"
       : "https://player.vimeo.com/api/player.js";
@@ -313,7 +311,7 @@ const Player = (props: {
         <iframe
           onMouseEnter={() => setOverlayHovering(true)}
           onMouseLeave={() => setOverlayHovering(false)}
-          id="player"
+          id={props.playerId}
           title="Player"
           width={fullScreen ? "100%" : props.width}
           height={fullScreen ? "100%" : props.height}

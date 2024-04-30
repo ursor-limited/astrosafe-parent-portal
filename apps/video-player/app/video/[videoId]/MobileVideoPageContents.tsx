@@ -186,6 +186,7 @@ function MobileVideoPageContents(props: {
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">
           <Player
+            playerId="player"
             url={video.url}
             provider={provider}
             width={videoWidth}

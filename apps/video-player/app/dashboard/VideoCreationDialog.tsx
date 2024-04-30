@@ -41,7 +41,7 @@ const VideoCreationDialog = (props: {
   creationCallback?: (videoId: string) => void;
   editingCallback?: () => void;
   video?: IVideo;
-  noPlayer?: boolean;
+  //noPlayer?: boolean;
 }) => {
   const router = useRouter();
   const [url, setUrl] = useState<string>("");
@@ -231,8 +231,8 @@ const VideoCreationDialog = (props: {
         //   disabled: !url,
         // }}
         onCloseCallback={props.closeCallback}
-        width={props.noPlayer ? "560px" : "926px"}
-        maxWidth={props.noPlayer ? "560px" : "926px"}
+        width="926px"
+        maxWidth="926px"
         noPadding
         dynamicHeight
         paddingTop={isMobile ? "0px" : "52px"}
@@ -241,7 +241,7 @@ const VideoCreationDialog = (props: {
       >
         <Stack
           flex={1}
-          direction={isMobile || props.noPlayer ? "column" : "row"}
+          direction={isMobile ? "column" : "row"}
           spacing="40px"
           width={isMobile ? "100%" : undefined}
           overflow="hidden"
@@ -249,11 +249,7 @@ const VideoCreationDialog = (props: {
           py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
-          <Stack
-            spacing="20px"
-            flex={1}
-            width={isMobile ? undefined : props.noPlayer ? "480px" : "358px"}
-          >
+          <Stack spacing="20px" flex={1} width={isMobile ? undefined : "358px"}>
             <Captioned text="Video URL">
               <Stack
                 sx={{
@@ -342,8 +338,9 @@ const VideoCreationDialog = (props: {
                   </Typography>
                 </Stack>
               ) : null}
-              {provider && !props.noPlayer ? (
+              {provider ? (
                 <Player
+                  playerId="creation"
                   url={url}
                   provider={provider}
                   width={Math.min(playerWidth, VIDEO_WIDTH)}
@@ -363,7 +360,7 @@ const VideoCreationDialog = (props: {
                   noBackdrop
                 />
               ) : null}
-              {!props.noPlayer ? (
+              {/* {!props.noPlayer ? (
                 <>
                   <TimeRange
                     range={range}
@@ -384,10 +381,10 @@ const VideoCreationDialog = (props: {
                     {props.video ? "Update" : "Add"}
                   </UrsorButton>
                 </>
-              ) : null}
+              ) : null} */}
             </Stack>
           ) : null}
-          {isMobile || props.noPlayer ? (
+          {isMobile ? (
             <UrsorButton
               onClick={() => {
                 props.video ? submitUpdate() : submitCreation();
