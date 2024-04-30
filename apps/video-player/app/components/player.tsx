@@ -325,7 +325,6 @@ const Player = (props: {
           width="100%"
           height="100%"
           sx={{
-            //opacity: youtubePauseOverlay ? 1 : 0,
             pointerEvents:
               youtubePauseOverlay || mouseIsOutsideWindow ? undefined : "none",
           }}
@@ -378,6 +377,9 @@ const Player = (props: {
           </Stack>
         </Stack>
         <Stack
+          onClick={() =>
+            props.provider === "vimeo" ? player?.pause() : player?.pauseVideo()
+          }
           position="absolute"
           top={0}
           right={0}

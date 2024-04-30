@@ -50,9 +50,14 @@ const TimelineVideoCard = (
 
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
+  const [playerHeight, setPlayerHeight] = useState<number>(0);
   useEffect(() => {
     setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
-  }, [sizeRef?.getBoundingClientRect().width]);
+    setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
+  }, [
+    sizeRef?.getBoundingClientRect().width,
+    sizeRef?.getBoundingClientRect().height,
+  ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -105,16 +110,20 @@ const TimelineVideoCard = (
         >
           <Stack
             width="100%"
-            height={playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+            height={
+              props.expanded
+                ? "100%"
+                : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+            }
             ref={setSizeRef}
           >
-            {!props.noPlayer && provider ? (
+            {!props.noPlayer && provider && playerHeight ? (
               <Player
                 playerId={`player-${props.url}`}
                 url={props.url}
                 provider={provider}
                 width={playerWidth}
-                height={playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+                height={playerHeight}
                 startTime={props.startTime}
                 endTime={props.endTime}
                 noKitemark
