@@ -14,8 +14,30 @@ import { UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import { useUserContext } from "@/app/components/UserContext";
 
-const PLACEHOLDER_THUMBNAIL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
+const TimelineVideoCardViewPageButton = (props: {
+  videoId: string;
+  lessonId: string;
+  loadedCallback: () => void;
+}) => {
+  const router = useRouter();
+  useEffect(props.loadedCallback, []);
+  return (
+    <UrsorButton
+      dark
+      size="small"
+      endIcon={ArrowUpRight}
+      onClick={() =>
+        router.push(
+          `/video/${props.videoId}${
+            props.lessonId ? `?lesson=${props.lessonId}` : ""
+          }`
+        )
+      }
+    >
+      View page
+    </UrsorButton>
+  );
+};
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -51,6 +73,7 @@ const TimelineVideoCard = (
 
   //const userDetails = useUserContext();
 
+  const [headerLoaded, setHeaderLoaded] = useState<boolean>(false);
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
@@ -60,7 +83,7 @@ const TimelineVideoCard = (
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
-    //userDetails.user, // needed to make sure that the height is taken after the card's header is rendered.
+    headerLoaded, // needed to make sure that the height is taken after the card's header is rendered.
   ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
@@ -91,20 +114,11 @@ const TimelineVideoCard = (
         expansionCallback={props.expansionCallback}
         useExpandedHeight
         leftElement={
-          <UrsorButton
-            dark
-            size="small"
-            endIcon={ArrowUpRight}
-            onClick={() =>
-              router.push(
-                `/video/${props.id}${
-                  props.lessonId ? `?lesson=${props.lessonId}` : ""
-                }`
-              )
-            }
-          >
-            View page
-          </UrsorButton>
+          <TimelineVideoCardViewPageButton
+            videoId={props.id}
+            lessonId={props.lessonId}
+            loadedCallback={() => setHeaderLoaded(true)}
+          />
         }
       >
         <Stack
