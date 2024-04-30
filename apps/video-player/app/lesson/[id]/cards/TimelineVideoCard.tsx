@@ -110,9 +110,10 @@ const TimelineVideoCard = (
         >
           <Stack
             width="100%"
+            flex={props.expanded ? 1 : undefined}
             height={
               props.expanded
-                ? "100%"
+                ? undefined
                 : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
             }
             ref={setSizeRef}
