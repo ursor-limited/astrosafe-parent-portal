@@ -230,10 +230,23 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
     typeOfContentDialogToOpenUponLandingInNewLesson,
   ]);
 
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notificationCtx.success("Copied URL to clipboard.");
+  };
+
+  const [lessonNamingDialogSkipTo, setLessonNamingDialogSkipTo] = useState<
+    "back" | "share" | null
+  >(null);
+
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
-    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
-    [lesson?.title]
+    () =>
+      setNeedToTitle(
+        lesson?.title === DEFAULT_LESSON_TITLE &&
+          lessonNamingDialogSkipTo !== "share"
+      ),
+    [lesson?.title, lessonNamingDialogSkipTo]
   );
 
   return (
@@ -251,6 +264,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           backCallback={
             needToTitle
               ? () => {
+                  setLessonNamingDialogSkipTo("back");
                   setEditingDialogOpen(true);
                   notificationCtx.success(
                     "Please add a title to your Lesson before leaving."
@@ -260,6 +274,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           }
           copyCallback={() => {
             if (needToTitle) {
+              setLessonNamingDialogSkipTo("share");
               setEditingDialogOpen(true);
               notificationCtx.success(
                 "Please add a title to your Lesson before sharing it."
@@ -415,6 +430,13 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setEditingDialogOpen(false)}
         lesson={lesson}
         updateCallback={reloadLessonDetails}
+        skipCallback={
+          lessonNamingDialogSkipTo
+            ? lessonNamingDialogSkipTo === "back"
+              ? () => router.push("/dashboard")
+              : () => copyUrl()
+            : undefined
+        }
       />
       <DeletionDialog
         open={deletionDialogOpen}
