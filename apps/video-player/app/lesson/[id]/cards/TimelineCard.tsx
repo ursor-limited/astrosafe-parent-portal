@@ -12,7 +12,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
-const EXPANDED_HEIGHT = 821;
+const EXPANDED_HEIGHT = 700;
 
 const TimelineCard = (props: {
   id: string;
