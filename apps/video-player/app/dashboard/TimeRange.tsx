@@ -2,7 +2,9 @@ import { Stack } from "@mui/system";
 import { PALETTE } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+
+const DOT_SIZE = 14;
 
 const TimeRange = (props: {
   originalUrl?: string;
@@ -11,6 +13,18 @@ const TimeRange = (props: {
   currentTime: number;
   duration: number;
 }) => {
+  const [mouseX, setMouseX] = useState<number>(0);
+
+  const handleMouseMove = useCallback((event: any) => {
+    setMouseX(event.pageX);
+  }, []);
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [handleMouseMove]);
+
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
   useEffect(
@@ -24,7 +38,47 @@ const TimeRange = (props: {
     [lineWidth, props.currentTime, props.duration]
   );
 
-  console.log(currentTimeDotX, "gg", lineWidth, props.currentTime, "99999");
+  const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
+  const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
+
+  const [startLineX, setStartLineX] = useState<number>(0);
+  const [endLineX, setEndLineX] = useState<number>(0);
+  useEffect(() => {
+    const lineLeftY = lineRef?.getBoundingClientRect?.().left ?? 0;
+    if (draggingStartLine) {
+      setStartLineX(Math.min(endLineX, Math.max(0, mouseX - lineLeftY)));
+    } else {
+      setStartLineX(lineWidth * ((props.range?.[0] ?? 0) / props.duration));
+    }
+    if (draggingEndLine) {
+      setEndLineX(
+        Math.min(lineWidth, Math.max(startLineX, mouseX - lineLeftY))
+      );
+    } else {
+      setEndLineX(lineWidth * ((props.range?.[1] ?? 0) / props.duration));
+    }
+  }, [
+    mouseX,
+    lineWidth,
+    props.range,
+    props.duration,
+    draggingStartLine,
+    draggingEndLine,
+  ]);
+
+  console.log(draggingStartLine);
+
+  const handleDraggingEnd = useCallback(() => {
+    setDraggingStartLine(false);
+    setDraggingEndLine(false);
+    console.log(startLineX);
+  }, []);
+  useEffect(() => {
+    window.addEventListener("mouseup", handleDraggingEnd);
+    return () => {
+      window.removeEventListener("mouseup", handleDraggingEnd);
+    };
+  }, [handleDraggingEnd]);
 
   return (
     <Stack
@@ -36,7 +90,6 @@ const TimeRange = (props: {
     >
       <Stack
         direction="row"
-        // spacing={mobile ? "20px" : "44px"}
         spacing={"20px"}
         justifyContent="center"
         width="100%"
@@ -77,18 +130,62 @@ const TimeRange = (props: {
               background: "linear-gradient(90deg,#F279C5,#FD9B41)",
             }}
           />
-          <Stack
-            position="absolute"
-            left={currentTimeDotX}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-            width="14px"
-            height="14px"
-            bgcolor={PALETTE.secondary.grey[4]}
-            borderRadius="100%"
-          />
+          <Stack width={0}>
+            <Stack
+              position="absolute"
+              sx={{
+                transform: "translateX(-50%)",
+              }}
+              left={currentTimeDotX}
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+              width={`${DOT_SIZE}px`}
+              height={`${DOT_SIZE}px`}
+              bgcolor={PALETTE.secondary.grey[4]}
+              borderRadius="100%"
+            />
+          </Stack>
+          <Stack width={0}>
+            <Stack
+              position="absolute"
+              height="20px"
+              width="4px"
+              bgcolor={PALETTE.secondary.blue[2]}
+              borderRadius="2px"
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+              sx={{
+                transform: "translateX(-50%)",
+                cursor: draggingStartLine ? "grabbing" : "grab",
+              }}
+              left={startLineX}
+              onMouseDown={(e) => {
+                setDraggingStartLine(true);
+                e.preventDefault();
+              }}
+            />
+            <Stack
+              position="absolute"
+              height="20px"
+              width="4px"
+              bgcolor={PALETTE.secondary.blue[2]}
+              borderRadius="2px"
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+              sx={{
+                transform: "translateX(-50%)",
+                cursor: draggingEndLine ? "grabbing" : "grab",
+              }}
+              left={endLineX}
+              onMouseDown={() => setDraggingEndLine(true)}
+            />
+          </Stack>
           {/* <Slider
           min={0}
           max={props.duration}
