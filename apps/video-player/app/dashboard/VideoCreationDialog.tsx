@@ -1,6 +1,7 @@
 import { Stack } from "@mui/system";
-import RocketIcon from "@/images/icons/RocketIcon.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import CommentIcon from "@/images/icons/CommentIcon.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useContext, useEffect, useState } from "react";
@@ -24,8 +25,68 @@ import { IVideo } from "./AstroContentColumns";
 import NotificationContext from "../components/NotificationContext";
 import TimeRange from "./TimeRange";
 
-export const VIDEO_WIDTH = 437; //390;
-export const VIDEO_HEIGHT = 246;
+export const VIDEO_WIDTH = 778; //390;
+export const VIDEO_HEIGHT = 428;
+
+const VideoCreationDialogTabButton = (props: {
+  text: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  selected: boolean;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      height="42px"
+      direction="row"
+      spacing="8px"
+      alignItems="center"
+      justifyContent="center"
+      paddingX="16px"
+      borderRadius="8px"
+      bgcolor={PALETTE.secondary.grey[1]}
+      sx={{
+        cursor: "pointer",
+        // outline: `2px solid ${
+        //   hovering ? PALETTE.secondary.purple[2] : "transparent"
+        // }`,
+        transition: "0.2s",
+        svg: {
+          path: {
+            fill: props.selected
+              ? PALETTE.secondary.purple[2]
+              : hovering
+              ? PALETTE.secondary.purple[1]
+              : PALETTE.secondary.grey[4],
+          },
+        },
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+    >
+      <props.icon height="20px" width="20px" />
+      <Typography
+        bold
+        variant="medium"
+        color={
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : PALETTE.secondary.grey[4]
+        }
+        sx={{
+          transition: "0.2s",
+        }}
+      >
+        {props.text}
+      </Typography>
+    </Stack>
+  );
+};
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
@@ -203,193 +264,203 @@ const VideoCreationDialog = (props: {
 
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
+  const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
+    "details"
+  );
+
   return (
     <>
       <UrsorDialog
-        supertitle={
-          isMobile
-            ? undefined
-            : props.video
-            ? "Edit Safe Video Link"
-            : "Add a Safe Video Link to your Lesson"
-        }
         open={props.open}
-        // button={{
-        //   text: "Create",
-        //   callback: () => {
-        //     // !userDetails.user ? setSignupPromptDialogOpen(true) : submit();
-        //     submit();
-        //   },
-        //   icon: RocketIcon,
-        //   disabled: !url,
-        // }}
         onCloseCallback={props.closeCallback}
-        width="926px"
-        maxWidth="926px"
+        width="1308px"
+        maxWidth="1308px"
         noPadding
         dynamicHeight
-        paddingTop={isMobile ? "0px" : "52px"}
-        paddingX={isMobile ? undefined : "32px"}
+        paddingY={isMobile ? "0px" : "40px"}
+        paddingX={isMobile ? undefined : "40px"}
         noCloseButton={isMobile}
       >
-        <Stack
-          flex={1}
-          direction={isMobile ? "column" : "row"}
-          spacing="40px"
-          width={isMobile ? "100%" : undefined}
-          overflow="hidden"
-          px={isMobile ? "20px" : "40px"}
-          py={isMobile ? "20px" : "40px"}
-          boxSizing="border-box"
-        >
-          <Stack spacing="20px" flex={1} width={isMobile ? undefined : "358px"}>
-            <Captioned text="Video URL">
-              <Stack
-                sx={{
-                  opacity: props.video ? 0.5 : 1,
-                  pointerEvents: props.video ? "none" : undefined,
-                }}
-              >
+        <Stack width="100%" spacing="24px">
+          <Stack direction="row" spacing="12px">
+            <Stack onClick={() => setSelectedTab("details")}>
+              <VideoCreationDialogTabButton
+                text="Video details"
+                icon={PencilIcon}
+                selected={selectedTab === "details"}
+              />
+            </Stack>
+            <Stack onClick={() => setSelectedTab("comments")}>
+              <VideoCreationDialogTabButton
+                text="Comments"
+                icon={CommentIcon}
+                selected={selectedTab === "comments"}
+              />
+            </Stack>
+          </Stack>
+          <Stack
+            flex={1}
+            direction={isMobile ? "column" : "row"}
+            spacing="40px"
+            width="100%"
+            overflow="hidden"
+            // px={isMobile ? "20px" : "40px"}
+            // py={isMobile ? "20px" : "40px"}
+            boxSizing="border-box"
+          >
+            <Stack spacing="18px" flex={1} width="100%">
+              <Captioned text="Video URL">
+                <Stack
+                  sx={{
+                    opacity: props.video ? 0.5 : 1,
+                    pointerEvents: props.video ? "none" : undefined,
+                  }}
+                >
+                  <UrsorInputField
+                    value={originalUrl}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setOriginalUrl(event.target.value)
+                    }
+                    placeholder="Youtube or Vimeo"
+                    width="100%"
+                    leftAlign
+                    boldValue
+                    autoFocus={!props.video}
+                  />
+                </Stack>
+              </Captioned>
+
+              <Stack height="20px" justifyContent="center" width="100%">
+                <Stack
+                  width="100%"
+                  height="2px"
+                  bgcolor={PALETTE.secondary.grey[2]}
+                />
+              </Stack>
+
+              <Captioned text="Title">
                 <UrsorInputField
-                  value={originalUrl}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setOriginalUrl(event.target.value)
-                  }
-                  placeholder="Youtube or Vimeo"
+                  value={title}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setTitle(event.target.value);
+                    setEditedTitle(true);
+                  }}
+                  placeholder="Title"
                   width="100%"
                   leftAlign
                   boldValue
-                  autoFocus={!props.video}
+                  autoFocus={!!props.video}
                 />
-              </Stack>
-            </Captioned>
-
+              </Captioned>
+              <Captioned text="Description">
+                <UrsorTextField
+                  value={description}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setDescription(event.target.value)
+                  }
+                  placeholder="Optional"
+                  width="100%"
+                  height={isMobile ? "60px" : "356px"}
+                  boldValue
+                />
+              </Captioned>
+            </Stack>
             <Stack
-              height="2px"
-              width="100%"
-              bgcolor={PALETTE.secondary.grey[2]}
-            />
-
-            <Captioned text="Title">
-              <UrsorInputField
-                value={title}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setTitle(event.target.value);
-                  setEditedTitle(true);
-                }}
-                placeholder="Title"
-                width="100%"
-                leftAlign
-                boldValue
-                autoFocus={!!props.video}
-              />
-            </Captioned>
-            <Captioned text="Description">
-              <UrsorTextField
-                value={description}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(event.target.value)
-                }
-                placeholder="Optional"
-                width="100%"
-                height={isMobile ? "60px" : props.video ? "100px" : "179px"}
-                boldValue
-              />
-            </Captioned>
-          </Stack>
-          <Stack
-            width={isMobile ? 0 : VIDEO_WIDTH} // need to do this instead of setting to null order to get the duration
-            height={isMobile ? 0 : undefined}
-            overflow={isMobile ? "hidden" : undefined}
-            spacing="6px"
-            position="relative"
-          >
-            {showForbiddenVideoView ? (
-              <Stack
-                flex={1}
-                position="absolute"
-                bgcolor="rgba(0,0,0,0.5)"
-                top="20px"
-                left={0}
-                zIndex={5}
-                height="220px"
-                justifyContent="center"
-                alignItems="center"
-                px="40px"
-              >
-                <Typography
-                  color="rgb(255,255,255)"
-                  sx={{
-                    textAlign: "center",
-                  }}
+              width={isMobile ? 0 : VIDEO_WIDTH}
+              height={isMobile ? 0 : undefined}
+              overflow={isMobile ? "hidden" : undefined}
+              spacing="6px"
+              position="relative"
+            >
+              {showForbiddenVideoView ? (
+                <Stack
+                  flex={1}
+                  position="absolute"
+                  bgcolor="rgba(0,0,0,0.5)"
+                  top="20px"
+                  left={0}
+                  zIndex={5}
+                  height="220px"
+                  justifyContent="center"
+                  alignItems="center"
+                  px="40px"
                 >
-                  Unfortunately, this video is not available to be embedded in
-                  3rd party platforms.
-                </Typography>
-                <Typography
-                  color="rgb(255,255,255)"
-                  sx={{
-                    textAlign: "center",
+                  <Typography
+                    color="rgb(255,255,255)"
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Unfortunately, this video is not available to be embedded in
+                    3rd party platforms.
+                  </Typography>
+                  <Typography
+                    color="rgb(255,255,255)"
+                    sx={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Please try another video.
+                  </Typography>
+                </Stack>
+              ) : null}
+              {provider ? (
+                <Player
+                  playerId="creation"
+                  url={url}
+                  provider={provider}
+                  width={Math.min(playerWidth, VIDEO_WIDTH)}
+                  height={
+                    Math.min(playerWidth, VIDEO_WIDTH) *
+                    (VIDEO_HEIGHT / VIDEO_WIDTH)
+                  }
+                  setDuration={(d) => {
+                    d && setDuration(d);
                   }}
-                >
-                  Please try another video.
-                </Typography>
-              </Stack>
-            ) : null}
-            {provider ? (
-              <Player
-                playerId="creation"
-                url={url}
-                provider={provider}
-                width={Math.min(playerWidth, VIDEO_WIDTH)}
-                height={
-                  Math.min(playerWidth, VIDEO_WIDTH) *
-                  (VIDEO_HEIGHT / VIDEO_WIDTH)
-                }
-                setDuration={(d) => {
-                  d && setDuration(d);
-                }}
-                startTime={range?.[0] ?? 0}
-                endTime={range?.[1] ?? 10}
-                noKitemark
-                playingCallback={(p) => setPlaying(p)}
-                smallPlayIcon
-                noBackdrop
-              />
-            ) : null}
-            <TimeRange
+                  startTime={range?.[0] ?? 0}
+                  endTime={range?.[1] ?? 10}
+                  noKitemark
+                  playingCallback={(p) => setPlaying(p)}
+                  smallPlayIcon
+                  noBackdrop
+                />
+              ) : null}
+              {/* <TimeRange
               range={range}
               duration={duration}
               setRange={setRange}
               originalUrl={originalUrl}
-            />
-            <UrsorButton
-              onClick={() => {
-                props.video ? submitUpdate() : submitCreation();
-              }}
-              disabled={!url}
-              dark
-              variant="tertiary"
-              endIcon={props.video ? PencilIcon : RocketIcon}
-              width="100%"
-            >
-              {props.video ? "Update" : "Add"}
-            </UrsorButton>
+            /> */}
+              <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
+                <UrsorButton
+                  onClick={() => {
+                    props.video ? submitUpdate() : submitCreation();
+                  }}
+                  disabled={!url}
+                  dark
+                  variant="tertiary"
+                  endIcon={props.video ? PencilIcon : ChevronRightIcon}
+                  width="264px"
+                >
+                  Next
+                </UrsorButton>
+              </Stack>
+            </Stack>
+            {isMobile ? (
+              <UrsorButton
+                onClick={() => {
+                  props.video ? submitUpdate() : submitCreation();
+                }}
+                disabled={!url}
+                dark
+                variant="tertiary"
+                endIcon={props.video ? PencilIcon : ChevronRightIcon}
+                width="100%"
+              >
+                Next
+              </UrsorButton>
+            ) : null}
           </Stack>
-          {isMobile ? (
-            <UrsorButton
-              onClick={() => {
-                props.video ? submitUpdate() : submitCreation();
-              }}
-              disabled={!url}
-              dark
-              variant="tertiary"
-              endIcon={props.video ? PencilIcon : RocketIcon}
-              width="100%"
-            >
-              {props.video ? "Update" : "Add"}
-            </UrsorButton>
-          ) : null}
         </Stack>
       </UrsorDialog>
       <VideoSignupPromptDialog
