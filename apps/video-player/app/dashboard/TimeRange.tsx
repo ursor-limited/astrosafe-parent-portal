@@ -1,17 +1,32 @@
 import { Stack } from "@mui/system";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { PALETTE } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
-import { Slider } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const TimeRange = (props: {
   originalUrl?: string;
   setRange: (range: [number, number] | undefined) => void;
   range?: [number, number];
-  duration?: number;
-}) => (
-  <Captioned text="Start and end time">
+  currentTime: number;
+  duration: number;
+}) => {
+  const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
+  const [lineWidth, setLineWidth] = useState<number>(0);
+  useEffect(
+    () => setLineWidth(lineRef?.getBoundingClientRect?.().width ?? 0),
+    [lineRef?.getBoundingClientRect?.().width]
+  );
+
+  const [currentTimeDotX, setCurrentTimeDotX] = useState<number>(0);
+  useEffect(
+    () => setCurrentTimeDotX(lineWidth * (props.currentTime / props.duration)),
+    [lineWidth, props.currentTime, props.duration]
+  );
+
+  console.log(currentTimeDotX, "gg", lineWidth, props.currentTime, "99999");
+
+  return (
     <Stack
       bgcolor={PALETTE.secondary.grey[1]}
       borderRadius="8px"
@@ -25,28 +40,6 @@ const TimeRange = (props: {
         spacing={"20px"}
         justifyContent="center"
         width="100%"
-        sx={{
-          pointerEvents: !props.originalUrl ? "none" : undefined,
-          opacity: props.originalUrl ? 1 : 0.5,
-          ".MuiSlider-root": {
-            color: "transparent !important",
-          },
-          ".MuiSlider-rail": {
-            opacity: 0.4,
-            background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-          },
-          ".MuiSlider-track": {
-            background: "linear-gradient(90deg,#F279C5,#FD9B41)",
-          },
-          ".MuiSlider-thumb": {
-            "&:nth-of-type(3)": {
-              background: "#F279C5",
-            },
-            "&:nth-of-type(4)": {
-              background: "#FD9B41",
-            },
-          },
-        }}
       >
         <DurationLabel
           value={props.range?.[0] ?? 0}
@@ -71,7 +64,32 @@ const TimeRange = (props: {
             )
           }
         />
-        <Slider
+        <Stack position="relative" width="100%" height="42px" ref={setLineRef}>
+          <Stack
+            position="absolute"
+            height="4px"
+            width="100%"
+            top={0}
+            bottom={0}
+            marginTop="auto"
+            marginBottom="auto"
+            sx={{
+              background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+            }}
+          />
+          <Stack
+            position="absolute"
+            left={currentTimeDotX}
+            top={0}
+            bottom={0}
+            marginTop="auto"
+            marginBottom="auto"
+            width="14px"
+            height="14px"
+            bgcolor={PALETTE.secondary.grey[4]}
+            borderRadius="100%"
+          />
+          {/* <Slider
           min={0}
           max={props.duration}
           valueLabelDisplay="off"
@@ -80,7 +98,8 @@ const TimeRange = (props: {
           onChange={(event: Event, newValue: number | number[]) => {
             props.setRange(newValue as [number, number]);
           }}
-        />
+        /> */}
+        </Stack>
         <DurationLabel
           value={props.range?.[1] ?? 0}
           incrementCallback={() =>
@@ -106,7 +125,7 @@ const TimeRange = (props: {
         />
       </Stack>
     </Stack>
-  </Captioned>
-);
+  );
+};
 
 export default TimeRange;

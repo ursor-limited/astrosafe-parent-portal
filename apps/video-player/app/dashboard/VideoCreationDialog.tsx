@@ -18,6 +18,7 @@ import { IVideo } from "./AstroContentColumns";
 import NotificationContext from "../components/NotificationContext";
 import TimeRange from "./TimeRange";
 import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
+import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
 export const VIDEO_WIDTH = 778; //390;
 export const VIDEO_HEIGHT = 428;
@@ -115,7 +116,9 @@ const VideoCreationDialog = (props: {
 
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
-  const [originalUrl, setOriginalUrl] = useState<string>("");
+  const [originalUrl, setOriginalUrl] = useState<string>(
+    "https://www.youtube.com/watch?v=nNJVYCJemUk&t=1389s"
+  );
   useEffect(
     () => props.video && setOriginalUrl(props.video.url),
     [props.video?.id]
@@ -172,19 +175,6 @@ const VideoCreationDialog = (props: {
   }, [props.video?.id]);
 
   const { width } = useWindowSize();
-
-  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
-    null
-  );
-
-  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
-  useEffect(
-    () =>
-      setPlayerWidth(
-        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
-      ),
-    [playerWidthRef, width]
-  );
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -248,7 +238,7 @@ const VideoCreationDialog = (props: {
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
   const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
-    "details"
+    "comments"
   );
 
   return (
@@ -281,26 +271,43 @@ const VideoCreationDialog = (props: {
               />
             </Stack>
           </Stack>
-          <VideoDialogDetailsTab
-            url={url}
-            originalUrl={originalUrl}
-            setOriginalUrl={setOriginalUrl}
-            video={props.video}
-            title={title}
-            setTitle={setTitle}
-            setEditedTitle={() => setEditedTitle(true)}
-            description={description}
-            setDescription={setDescription}
-            mainButtonCallback={() => {
-              props.video ? submitUpdate() : submitCreation();
-            }}
-            showForbiddenVideoView={showForbiddenVideoView}
-            provider={provider}
-            playerWidth={playerWidth}
-            setDuration={setDuration}
-            range={range}
-            setThumbnailUrl={setThumbnailUrl}
-          />
+          {selectedTab === "details" ? (
+            <VideoDialogDetailsTab
+              url={url}
+              originalUrl={originalUrl}
+              setOriginalUrl={setOriginalUrl}
+              video={props.video}
+              title={title}
+              setTitle={setTitle}
+              setEditedTitle={() => setEditedTitle(true)}
+              description={description}
+              setDescription={setDescription}
+              mainButtonCallback={() => {
+                props.video ? submitUpdate() : submitCreation();
+              }}
+              showForbiddenVideoView={showForbiddenVideoView}
+              provider={provider}
+              setDuration={setDuration}
+              range={range}
+              setThumbnailUrl={setThumbnailUrl}
+            />
+          ) : (
+            <VideoDialogCommentsTab
+              url={url}
+              originalUrl={originalUrl}
+              setOriginalUrl={setOriginalUrl}
+              video={props.video}
+              mainButtonCallback={() => {
+                props.video ? submitUpdate() : submitCreation();
+              }}
+              provider={provider}
+              duration={duration}
+              setDuration={setDuration}
+              range={range}
+              setRange={setRange}
+              setThumbnailUrl={setThumbnailUrl}
+            />
+          )}
         </Stack>
       </UrsorDialog>
       <VideoSignupPromptDialog

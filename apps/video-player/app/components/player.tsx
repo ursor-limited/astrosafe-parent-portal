@@ -27,6 +27,7 @@ const Player = (props: {
   height: number;
   setDuration?: (duration: number) => void;
   startTime?: number;
+  setCurrentTime?: (time: number) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -143,6 +144,7 @@ const Player = (props: {
   );
 
   const [currentTime, setCurrentTime] = useState<number>(0);
+  useEffect(() => props.setCurrentTime?.(currentTime), [currentTime]);
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
     const interval = setInterval(

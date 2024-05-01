@@ -29,7 +29,6 @@ const VideoDialogDetailsTab = (props: {
   mainButtonCallback: () => void;
   showForbiddenVideoView: boolean;
   provider?: "youtube" | "vimeo";
-  playerWidth: number;
   setDuration: (duration: number) => void;
   range?: [number, number];
   setThumbnailUrl: (url: string) => void;
@@ -46,6 +45,20 @@ const VideoDialogDetailsTab = (props: {
         props.setThumbnailUrl(result.thumbnailUrl);
       });
   }, [props.url]);
+
+  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
+    null
+  );
+
+  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
+  useEffect(
+    () =>
+      setPlayerWidth(
+        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+      ),
+    [playerWidthRef?.getBoundingClientRect().width]
+  );
+
   return (
     <Stack
       flex={1}
@@ -158,10 +171,9 @@ const VideoDialogDetailsTab = (props: {
             playerId="creation"
             url={props.url}
             provider={props.provider}
-            width={Math.min(props.playerWidth, VIDEO_WIDTH)}
+            width={Math.min(playerWidth, VIDEO_WIDTH)}
             height={
-              Math.min(props.playerWidth, VIDEO_WIDTH) *
-              (VIDEO_HEIGHT / VIDEO_WIDTH)
+              Math.min(playerWidth, VIDEO_WIDTH) * (VIDEO_HEIGHT / VIDEO_WIDTH)
             }
             setDuration={(d) => {
               d && props.setDuration(d);
@@ -174,12 +186,6 @@ const VideoDialogDetailsTab = (props: {
             noBackdrop
           />
         ) : null}
-        {/* <TimeRange
-  range={range}
-  duration={duration}
-  setRange={setRange}
-  originalUrl={originalUrl}
-/> */}
         <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
           <UrsorButton
             onClick={props.mainButtonCallback}
