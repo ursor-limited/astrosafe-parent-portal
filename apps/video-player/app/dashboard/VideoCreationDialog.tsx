@@ -1,18 +1,11 @@
 import { Stack } from "@mui/system";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import CommentIcon from "@/images/icons/CommentIcon.svg";
+import MultipleCommentsIcon from "@/images/icons/MultipleCommentsIcon.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useContext, useEffect, useState } from "react";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import {
-  PALETTE,
-  Typography,
-  UrsorButton,
-  UrsorInputField,
-  UrsorTextField,
-} from "ui";
+import { PALETTE, Typography } from "ui";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
 import ApiController from "../api";
@@ -24,6 +17,7 @@ import { isMobile } from "react-device-detect";
 import { IVideo } from "./AstroContentColumns";
 import NotificationContext from "../components/NotificationContext";
 import TimeRange from "./TimeRange";
+import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 
 export const VIDEO_WIDTH = 778; //390;
 export const VIDEO_HEIGHT = 428;
@@ -49,9 +43,10 @@ const VideoCreationDialogTabButton = (props: {
         // outline: `2px solid ${
         //   hovering ? PALETTE.secondary.purple[2] : "transparent"
         // }`,
-        transition: "0.2s",
+
         svg: {
           path: {
+            transition: "0.2s",
             fill: props.selected
               ? PALETTE.secondary.purple[2]
               : hovering
@@ -158,18 +153,6 @@ const VideoCreationDialog = (props: {
       })
       .catch(() => setShowInvalidUrlView(true));
   }, [originalUrl]);
-
-  const [playing, setPlaying] = useState<boolean>(false);
-  useEffect(() => {
-    setPlaying(false);
-    provider === "youtube" &&
-      ApiController.getYoutubeVideoDetails(url.split("/").slice(-1)[0]).then(
-        (result) => {
-          //setDescription(result.description);
-          setThumbnailUrl(result.thumbnailUrl);
-        }
-      );
-  }, [url]);
 
   const [duration, setDuration] = useState<number | undefined>(10);
   const [range, setRange] = useState<[number, number] | undefined>(undefined);
@@ -293,174 +276,31 @@ const VideoCreationDialog = (props: {
             <Stack onClick={() => setSelectedTab("comments")}>
               <VideoCreationDialogTabButton
                 text="Comments"
-                icon={CommentIcon}
+                icon={MultipleCommentsIcon}
                 selected={selectedTab === "comments"}
               />
             </Stack>
           </Stack>
-          <Stack
-            flex={1}
-            direction={isMobile ? "column" : "row"}
-            spacing="40px"
-            width="100%"
-            overflow="hidden"
-            // px={isMobile ? "20px" : "40px"}
-            // py={isMobile ? "20px" : "40px"}
-            boxSizing="border-box"
-          >
-            <Stack spacing="18px" flex={1} width="100%">
-              <Captioned text="Video URL">
-                <Stack
-                  sx={{
-                    opacity: props.video ? 0.5 : 1,
-                    pointerEvents: props.video ? "none" : undefined,
-                  }}
-                >
-                  <UrsorInputField
-                    value={originalUrl}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      setOriginalUrl(event.target.value)
-                    }
-                    placeholder="Youtube or Vimeo"
-                    width="100%"
-                    leftAlign
-                    boldValue
-                    autoFocus={!props.video}
-                  />
-                </Stack>
-              </Captioned>
-
-              <Stack height="20px" justifyContent="center" width="100%">
-                <Stack
-                  width="100%"
-                  height="2px"
-                  bgcolor={PALETTE.secondary.grey[2]}
-                />
-              </Stack>
-
-              <Captioned text="Title">
-                <UrsorInputField
-                  value={title}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    setTitle(event.target.value);
-                    setEditedTitle(true);
-                  }}
-                  placeholder="Title"
-                  width="100%"
-                  leftAlign
-                  boldValue
-                  autoFocus={!!props.video}
-                />
-              </Captioned>
-              <Captioned text="Description">
-                <UrsorTextField
-                  value={description}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setDescription(event.target.value)
-                  }
-                  placeholder="Optional"
-                  width="100%"
-                  height={isMobile ? "60px" : "356px"}
-                  boldValue
-                />
-              </Captioned>
-            </Stack>
-            <Stack
-              width={isMobile ? 0 : VIDEO_WIDTH}
-              height={isMobile ? 0 : undefined}
-              overflow={isMobile ? "hidden" : undefined}
-              spacing="6px"
-              position="relative"
-            >
-              {showForbiddenVideoView ? (
-                <Stack
-                  flex={1}
-                  position="absolute"
-                  bgcolor="rgba(0,0,0,0.5)"
-                  top="20px"
-                  left={0}
-                  zIndex={5}
-                  height="220px"
-                  justifyContent="center"
-                  alignItems="center"
-                  px="40px"
-                >
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Unfortunately, this video is not available to be embedded in
-                    3rd party platforms.
-                  </Typography>
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Please try another video.
-                  </Typography>
-                </Stack>
-              ) : null}
-              {provider ? (
-                <Player
-                  playerId="creation"
-                  url={url}
-                  provider={provider}
-                  width={Math.min(playerWidth, VIDEO_WIDTH)}
-                  height={
-                    Math.min(playerWidth, VIDEO_WIDTH) *
-                    (VIDEO_HEIGHT / VIDEO_WIDTH)
-                  }
-                  setDuration={(d) => {
-                    d && setDuration(d);
-                  }}
-                  startTime={range?.[0] ?? 0}
-                  endTime={range?.[1] ?? 10}
-                  noKitemark
-                  playingCallback={(p) => setPlaying(p)}
-                  smallPlayIcon
-                  noBackdrop
-                />
-              ) : null}
-              {/* <TimeRange
-              range={range}
-              duration={duration}
-              setRange={setRange}
-              originalUrl={originalUrl}
-            /> */}
-              <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
-                <UrsorButton
-                  onClick={() => {
-                    props.video ? submitUpdate() : submitCreation();
-                  }}
-                  disabled={!url}
-                  dark
-                  variant="tertiary"
-                  endIcon={props.video ? PencilIcon : ChevronRightIcon}
-                  width="264px"
-                >
-                  Next
-                </UrsorButton>
-              </Stack>
-            </Stack>
-            {isMobile ? (
-              <UrsorButton
-                onClick={() => {
-                  props.video ? submitUpdate() : submitCreation();
-                }}
-                disabled={!url}
-                dark
-                variant="tertiary"
-                endIcon={props.video ? PencilIcon : ChevronRightIcon}
-                width="100%"
-              >
-                Next
-              </UrsorButton>
-            ) : null}
-          </Stack>
+          <VideoDialogDetailsTab
+            url={url}
+            originalUrl={originalUrl}
+            setOriginalUrl={setOriginalUrl}
+            video={props.video}
+            title={title}
+            setTitle={setTitle}
+            setEditedTitle={() => setEditedTitle(true)}
+            description={description}
+            setDescription={setDescription}
+            mainButtonCallback={() => {
+              props.video ? submitUpdate() : submitCreation();
+            }}
+            showForbiddenVideoView={showForbiddenVideoView}
+            provider={provider}
+            playerWidth={playerWidth}
+            setDuration={setDuration}
+            range={range}
+            setThumbnailUrl={setThumbnailUrl}
+          />
         </Stack>
       </UrsorDialog>
       <VideoSignupPromptDialog
