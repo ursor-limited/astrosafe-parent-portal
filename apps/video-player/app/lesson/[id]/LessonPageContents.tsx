@@ -1164,7 +1164,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             userDetails.user!.id
           ).then((l) => {
             router.push("/dashboard");
-            notificationCtx.success(`Made a copy of ${lesson?.title}`);
+            notificationCtx.success("Made a copy of Lesson");
           })
         }
       />
