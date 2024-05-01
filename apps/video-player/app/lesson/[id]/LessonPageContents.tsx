@@ -639,7 +639,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         : router.push("/dashboard")
                     }
                   >
-                    Create your own
+                    Create my own
                   </UrsorButton>
                 ) : null}
                 <UrsorButton
@@ -974,7 +974,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         title={lesson?.title ?? ""}
       />
       <VideoCreationDialog
-        open={videoDialogOpen}
+        open={true}
         closeCallback={() => {
           setVideoDialogOpen(false);
           setContentInsertionIndex(undefined);
