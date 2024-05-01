@@ -2,17 +2,17 @@ import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController, { IVideo } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import { PALETTE } from "ui";
-import Play from "@/images/play.svg";
-
-const PLACEHOLDER_THUMBNAIL =
-  "https://ursorassets.s3.eu-west-1.amazonaws.com/Safetubelogo2.png";
+import Player from "@/app/components/player";
+import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
+import { UrsorButton } from "ui";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import { useUserContext } from "@/app/components/UserContext";
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -26,7 +26,10 @@ const TimelineVideoCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
+    expanded?: boolean;
+    noPlayer?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -43,6 +46,32 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
+  //const userDetails = useUserContext();
+
+  const [headerLoaded, setHeaderLoaded] = useState<boolean>(false);
+  const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
+  const [playerWidth, setPlayerWidth] = useState<number>(0);
+  const [playerHeight, setPlayerHeight] = useState<number>(0);
+  const setDimensions = () => {
+    setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
+    setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
+  };
+  useEffect(() => {
+    setTimeout(setDimensions, 1000); // gives time for the card's header to load
+  }, [
+    sizeRef?.getBoundingClientRect().width,
+    sizeRef?.getBoundingClientRect().height,
+    headerLoaded, // needed to make sure that the height is taken after the card's header is rendered.
+  ]);
+
+  const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
+    undefined
+  );
+  useEffect(
+    () => zetProvider(props.url.includes("vimeo") ? "vimeo" : "youtube"),
+    [props.url]
+  );
+
   return (
     <>
       <TimelineCard
@@ -58,57 +87,52 @@ const TimelineVideoCard = (
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         width={props.columnWidth}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
+        useExpandedHeight
+        leftElement={
+          <UrsorButton
+            dark
+            size="small"
+            endIcon={ArrowUpRight}
+            onClick={() =>
+              router.push(
+                `/video/${props.id}${
+                  props.lessonId ? `?lesson=${props.lessonId}` : ""
+                }`
+              )
+            }
+          >
+            View page
+          </UrsorButton>
+        }
       >
         <Stack
-          flex={1}
-          spacing="8px"
-          sx={{
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-            cursor: "pointer",
-          }}
-          onClick={() =>
-            router.push(
-              `/video/${props.id}${
-                props.lessonId ? `?lesson=${props.lessonId}` : ""
-              }`
-            )
+          width="100%"
+          flex={props.expanded ? 1 : undefined}
+          height={
+            props.expanded
+              ? undefined
+              : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
           }
+          ref={setSizeRef}
         >
-          <Stack
-            height="331px"
-            width="100%"
-            sx={{
-              backgroundImage: `url(${props.thumbnailUrl})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-            }}
-            borderRadius="10px 10px 0 0"
-            bgcolor={!props.thumbnailUrl ? PALETTE.primary.navy : undefined}
-            position="relative"
-          >
-            {!props.thumbnailUrl ? (
-              <Stack flex={1} justifyContent="center" alignItems="center">
-                <Image
-                  src={PLACEHOLDER_THUMBNAIL}
-                  width={200}
-                  height={100}
-                  alt="Intro square"
-                />
-              </Stack>
-            ) : null}
-            <Stack
-              flex={1}
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
-              }}
-            >
-              <Play width="40px" height="40px" />
+          {!props.noPlayer && provider && playerHeight ? (
+            <Stack height={props.noPlayer ? 0 : undefined}>
+              <Player
+                playerId={`player-${props.id}`}
+                url={props.url}
+                provider={provider}
+                width={playerWidth}
+                height={playerHeight}
+                startTime={props.startTime}
+                endTime={props.endTime}
+                noKitemark
+                borderRadius="8px"
+              />
             </Stack>
-          </Stack>
+          ) : null}
         </Stack>
       </TimelineCard>
       {deletionDialogOpen ? (

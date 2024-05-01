@@ -39,7 +39,10 @@ const ContentCards = (props: {
   updateCallback: () => void;
   setHeight?: (id: string, height: number) => void;
   dragStartCallback?: (id: string) => void;
+  expansionCallback?: (id: string) => void;
   draggedContentId?: string;
+  expanded?: boolean;
+  noPlayer?: boolean;
 }) => {
   return (
     <>
@@ -63,6 +66,9 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noPlayer={props.noPlayer}
               />
             ) : null;
           } else if (c.type === "link") {
@@ -81,6 +87,8 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
           } else if (c.type === "text") {
@@ -101,6 +109,8 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
           } else if (c.type === "image") {
@@ -119,6 +129,8 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
           } else if (c.type === "worksheet") {
@@ -141,6 +153,8 @@ const ContentCards = (props: {
                 onDragStart={() => props.dragStartCallback?.(c.contentId)}
                 dragging={props.draggedContentId === c.contentId}
                 columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
               />
             ) : null;
           }

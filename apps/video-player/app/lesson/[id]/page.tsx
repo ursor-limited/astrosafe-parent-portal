@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ApiController, { IVideo } from "@/app/api";
-import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
@@ -21,28 +20,10 @@ export interface ILesson {
   }[];
   contentOrder: string[];
   imageUrls?: string[];
+  expandedContentIds: string[];
   createdAt: string;
   updatedAt: string;
 }
-
-const DUMMY_CONTENTS: ILesson["contents"] = [
-  {
-    type: "video",
-    contentId: "65f5f42bd8210303bcf22dea",
-  },
-  {
-    type: "link",
-    contentId: "BOO",
-  },
-  {
-    type: "worksheet",
-    contentId: "65f80360d8210303bcf22e32",
-  },
-  {
-    type: "video",
-    contentId: "65f5f6bdd8210303bcf22dfb",
-  },
-];
 
 export const dynamicParams = true;
 
@@ -59,11 +40,8 @@ export async function generateMetadata({
 }
 
 async function LessonPage({ params }: { params: { id: string } }) {
-  //const { width } = useWindowSize();
-  // const [isMobile, setIsMobile] = useState<boolean>(false);
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  //useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
   return (
     <AuthWrapper>
       <UserProvider>

@@ -12,26 +12,20 @@ import {
   UrsorInputField,
   UrsorTextField,
 } from "ui";
-import { Slider } from "@mui/material";
-import DurationLabel from "../editor/duration-label";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
 import ApiController from "../api";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
-import SignupPromptDialog from "./SignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
-import TimeRange from "./TimeRange";
 import { IVideo } from "./AstroContentColumns";
 import NotificationContext from "../components/NotificationContext";
-import ForbiddenVideoView from "../tools/safetube/create/ForbiddenVideoView";
+import TimeRange from "./TimeRange";
 
-const PLACEHOLDER_DURATION = 4000;
-
-const VIDEO_WIDTH = 450; //390;
-const VIDEO_HEIGHT = 246;
+export const VIDEO_WIDTH = 437; //390;
+export const VIDEO_HEIGHT = 246;
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
@@ -41,7 +35,6 @@ const VideoCreationDialog = (props: {
   creationCallback?: (videoId: string) => void;
   editingCallback?: () => void;
   video?: IVideo;
-  noPlayer?: boolean;
 }) => {
   const router = useRouter();
   const [url, setUrl] = useState<string>("");
@@ -231,8 +224,8 @@ const VideoCreationDialog = (props: {
         //   disabled: !url,
         // }}
         onCloseCallback={props.closeCallback}
-        width={props.noPlayer ? "560px" : "926px"}
-        maxWidth={props.noPlayer ? "560px" : "926px"}
+        width="926px"
+        maxWidth="926px"
         noPadding
         dynamicHeight
         paddingTop={isMobile ? "0px" : "52px"}
@@ -241,7 +234,7 @@ const VideoCreationDialog = (props: {
       >
         <Stack
           flex={1}
-          direction={isMobile || props.noPlayer ? "column" : "row"}
+          direction={isMobile ? "column" : "row"}
           spacing="40px"
           width={isMobile ? "100%" : undefined}
           overflow="hidden"
@@ -249,11 +242,7 @@ const VideoCreationDialog = (props: {
           py={isMobile ? "20px" : "40px"}
           boxSizing="border-box"
         >
-          <Stack
-            spacing="20px"
-            flex={1}
-            width={isMobile ? undefined : props.noPlayer ? "480px" : "358px"}
-          >
+          <Stack spacing="20px" flex={1} width={isMobile ? undefined : "358px"}>
             <Captioned text="Video URL">
               <Stack
                 sx={{
@@ -308,86 +297,86 @@ const VideoCreationDialog = (props: {
               />
             </Captioned>
           </Stack>
-          {!isMobile ? (
-            <Stack width={VIDEO_WIDTH} spacing="6px" position="relative">
-              {showForbiddenVideoView ? (
-                <Stack
-                  flex={1}
-                  position="absolute"
-                  bgcolor="rgba(0,0,0,0.5)"
-                  top="20px"
-                  left={0}
-                  zIndex={5}
-                  height="220px"
-                  justifyContent="center"
-                  alignItems="center"
-                  px="40px"
-                >
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Unfortunately, this video is not available to be embedded in
-                    3rd party platforms.
-                  </Typography>
-                  <Typography
-                    color="rgb(255,255,255)"
-                    sx={{
-                      textAlign: "center",
-                    }}
-                  >
-                    Please try another video.
-                  </Typography>
-                </Stack>
-              ) : null}
-              {provider && !props.noPlayer ? (
-                <Player
-                  url={url}
-                  provider={provider}
-                  width={Math.min(playerWidth, VIDEO_WIDTH)}
-                  height={
-                    Math.min(playerWidth, VIDEO_WIDTH) *
-                    (VIDEO_HEIGHT / VIDEO_WIDTH)
-                  }
-                  setDuration={(d) => {
-                    d && setDuration(d);
+          <Stack
+            width={isMobile ? 0 : VIDEO_WIDTH} // need to do this instead of setting to null order to get the duration
+            height={isMobile ? 0 : undefined}
+            overflow={isMobile ? "hidden" : undefined}
+            spacing="6px"
+            position="relative"
+          >
+            {showForbiddenVideoView ? (
+              <Stack
+                flex={1}
+                position="absolute"
+                bgcolor="rgba(0,0,0,0.5)"
+                top="20px"
+                left={0}
+                zIndex={5}
+                height="220px"
+                justifyContent="center"
+                alignItems="center"
+                px="40px"
+              >
+                <Typography
+                  color="rgb(255,255,255)"
+                  sx={{
+                    textAlign: "center",
                   }}
-                  startTime={range?.[0] ?? 0}
-                  endTime={range?.[1] ?? 10}
-                  noKitemark
-                  top="120px"
-                  playingCallback={(p) => setPlaying(p)}
-                  smallPlayIcon
-                  noBackdrop
-                />
-              ) : null}
-              {!props.noPlayer ? (
-                <>
-                  <TimeRange
-                    range={range}
-                    duration={duration}
-                    setRange={setRange}
-                    originalUrl={originalUrl}
-                  />
-                  <UrsorButton
-                    onClick={() => {
-                      props.video ? submitUpdate() : submitCreation();
-                    }}
-                    disabled={!url}
-                    dark
-                    variant="tertiary"
-                    endIcon={props.video ? PencilIcon : RocketIcon}
-                    width="100%"
-                  >
-                    {props.video ? "Update" : "Add"}
-                  </UrsorButton>
-                </>
-              ) : null}
-            </Stack>
-          ) : null}
-          {isMobile || props.noPlayer ? (
+                >
+                  Unfortunately, this video is not available to be embedded in
+                  3rd party platforms.
+                </Typography>
+                <Typography
+                  color="rgb(255,255,255)"
+                  sx={{
+                    textAlign: "center",
+                  }}
+                >
+                  Please try another video.
+                </Typography>
+              </Stack>
+            ) : null}
+            {provider ? (
+              <Player
+                playerId="creation"
+                url={url}
+                provider={provider}
+                width={Math.min(playerWidth, VIDEO_WIDTH)}
+                height={
+                  Math.min(playerWidth, VIDEO_WIDTH) *
+                  (VIDEO_HEIGHT / VIDEO_WIDTH)
+                }
+                setDuration={(d) => {
+                  d && setDuration(d);
+                }}
+                startTime={range?.[0] ?? 0}
+                endTime={range?.[1] ?? 10}
+                noKitemark
+                playingCallback={(p) => setPlaying(p)}
+                smallPlayIcon
+                noBackdrop
+              />
+            ) : null}
+            <TimeRange
+              range={range}
+              duration={duration}
+              setRange={setRange}
+              originalUrl={originalUrl}
+            />
+            <UrsorButton
+              onClick={() => {
+                props.video ? submitUpdate() : submitCreation();
+              }}
+              disabled={!url}
+              dark
+              variant="tertiary"
+              endIcon={props.video ? PencilIcon : RocketIcon}
+              width="100%"
+            >
+              {props.video ? "Update" : "Add"}
+            </UrsorButton>
+          </Stack>
+          {isMobile ? (
             <UrsorButton
               onClick={() => {
                 props.video ? submitUpdate() : submitCreation();

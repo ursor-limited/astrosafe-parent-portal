@@ -5,13 +5,14 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import ArrowBothIcon from "@/images/icons/ArrowBothIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
-import DynamicContainer from "@/app/components/DynamicContainer";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
+const EXPANDED_HEIGHT = 700;
 
 const TimelineCard = (props: {
   id: string;
@@ -25,8 +26,13 @@ const TimelineCard = (props: {
   editingCallback?: () => void;
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
-  width: number;
+  width?: number;
+  expanded?: boolean;
+  expansionCallback?: () => void;
+  useExpandedHeight?: boolean;
+  creatorId: string;
   children: React.ReactNode;
+  leftElement?: React.ReactNode;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
@@ -70,28 +76,50 @@ const TimelineCard = (props: {
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
       }}
-      width={props.width}
+      width={props.expanded ? "100%" : props.width || "100%"}
+      height={
+        props.useExpandedHeight && props.expanded ? EXPANDED_HEIGHT : undefined
+      }
     >
-      <Stack flex={1} p="8px" pt={userDetails ? 0 : undefined}>
-        {userDetails ? (
-          <Stack direction="row" width="100%" height="48px">
+      <Stack
+        flex={1}
+        p="8px"
+        pt={userDetails && userDetails.id === props.creatorId ? 0 : undefined}
+      >
+        {userDetails && userDetails.id === props.creatorId ? (
+          <Stack
+            direction="row"
+            width="100%"
+            height="48px"
+            justifyContent="space-between"
+          >
             <Stack
-              width="100%"
-              alignItems="center"
+              position="relative"
+              width={0}
+              overflow="visible"
               justifyContent="center"
-              sx={{
-                cursor: props.dragging ? "grabbing" : "grab",
-                svg: {
-                  transform: "rotate(90deg)",
-                },
-              }}
-              onMouseDown={(e) => {
-                props.onDragStart?.();
-                //e.preventDefault();
-              }}
             >
-              <GrabberIcon width="20px" height="20px" />
+              {props.leftElement}
             </Stack>
+            {props.onDragStart ? (
+              <Stack
+                width="100%"
+                alignItems="center"
+                justifyContent="center"
+                sx={{
+                  cursor: props.dragging ? "grabbing" : "grab",
+                  svg: {
+                    transform: "rotate(90deg)",
+                  },
+                }}
+                onMouseDown={(e) => {
+                  props.onDragStart?.();
+                  e.preventDefault();
+                }}
+              >
+                <GrabberIcon width="20px" height="20px" />
+              </Stack>
+            ) : null}
 
             <Stack
               position="relative"
@@ -105,10 +133,27 @@ const TimelineCard = (props: {
                 direction="row"
                 spacing="8px"
               >
+                {props.expansionCallback ? (
+                  <Stack
+                    height="32px"
+                    width="32px"
+                    bgcolor="rgb(255,255,255)"
+                    borderRadius="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={props.expansionCallback}
+                  >
+                    <ArrowBothIcon height="18px" width="18px" />
+                  </Stack>
+                ) : null}
                 <Stack
                   height="32px"
                   width="32px"
-                  //border={`2px solid ${PALETTE.primary.navy}`}
                   bgcolor="rgb(255,255,255)"
                   borderRadius="100%"
                   justifyContent="center"
@@ -152,12 +197,16 @@ const TimelineCard = (props: {
           </Stack>
         ) : null}
 
-        <Stack borderRadius="8px" overflow="hidden">
+        <Stack
+          borderRadius="8px"
+          overflow="hidden"
+          flex={props.expanded ? 1 : undefined}
+        >
           {props.children}
         </Stack>
         {props.title || props.description ? (
           <Stack
-            flex={1}
+            flex={props.expanded ? undefined : 1}
             justifyContent="space-between"
             px="4px"
             pt="11px"

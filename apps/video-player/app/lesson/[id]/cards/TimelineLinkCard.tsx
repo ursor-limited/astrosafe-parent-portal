@@ -24,7 +24,10 @@ const TimelineLinkCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
+    expanded?: boolean;
+    mobile?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -54,7 +57,11 @@ const TimelineLinkCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        width={WIDTH_RATIO * props.columnWidth}
+        width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
+        useExpandedHeight
       >
         <Link
           href={`https://${getPrefixRemovedUrl(props.url)}`}
@@ -62,12 +69,13 @@ const TimelineLinkCard = (
           rel="nofollow"
           style={{
             textDecoration: "none",
+            flex: 1,
           }}
         >
           <Stack
             alignItems="center"
             justifyContent="center"
-            height="350px"
+            height={props.expanded ? "100%" : props.mobile ? "300px" : "350px"}
             width="100%"
             overflow="hidden"
             position="relative"

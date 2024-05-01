@@ -18,8 +18,11 @@ const TimelineImageCard = (
     deletionCallback?: () => void;
     duplicationCallback?: () => void;
     onDragStart?: () => void;
-    columnWidth: number;
+    columnWidth?: number;
     dragging?: boolean;
+    expanded?: boolean;
+    mobile?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -37,6 +40,7 @@ const TimelineImageCard = (
   const [aspectRatio, setAspectRatio] = useState(2);
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
+
   return (
     <>
       <TimelineCard
@@ -51,7 +55,11 @@ const TimelineImageCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        width={WIDTH_RATIO * props.columnWidth}
+        width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
+        useExpandedHeight
       >
         <Stack
           ref={setRef}
@@ -59,7 +67,10 @@ const TimelineImageCard = (
           justifyContent="center"
           p="12px"
           height={
-            ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) / aspectRatio
+            props.expanded
+              ? "100%"
+              : ((ref?.getBoundingClientRect?.()?.width ?? 0) - 24) /
+                aspectRatio
           }
           width="100%"
           overflow="hidden"

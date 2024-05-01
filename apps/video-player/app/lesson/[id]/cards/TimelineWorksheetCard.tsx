@@ -39,7 +39,9 @@ const TimelineWorksheetCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
+    expanded?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -90,7 +92,9 @@ const TimelineWorksheetCard = (
         //editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
-        width={WIDTH_RATIO * props.columnWidth}
+        width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
       >
         <Stack
           ref={setRef}

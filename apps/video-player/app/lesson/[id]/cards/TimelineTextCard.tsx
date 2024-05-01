@@ -37,7 +37,9 @@ const TimelineTextCard = (
     duplicationCallback?: () => void;
     onDragStart?: () => void;
     dragging?: boolean;
-    columnWidth: number;
+    columnWidth?: number;
+    expanded?: boolean;
+    expansionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -75,7 +77,10 @@ const TimelineTextCard = (
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
         duplicationCallback={submitDuplication}
-        width={WIDTH_RATIO * props.columnWidth}
+        width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
+        creatorId={props.creatorId}
+        expanded={props.expanded}
+        expansionCallback={props.expansionCallback}
       >
         <Stack
           sx={{

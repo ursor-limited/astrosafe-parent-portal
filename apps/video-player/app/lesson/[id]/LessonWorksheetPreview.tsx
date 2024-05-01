@@ -3,16 +3,10 @@ import {
   INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
-import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
-import NumberBondWorksheet from "@/app/worksheet/[id]/NumberBondWorksheet";
 import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
 import { Stack, alpha } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
-import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
