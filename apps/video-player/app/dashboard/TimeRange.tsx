@@ -12,6 +12,7 @@ const TimeRange = (props: {
   range?: [number, number];
   currentTime: number;
   duration: number;
+  setCurrentTime: (time: number) => void;
 }) => {
   const [mouseX, setMouseX] = useState<number>(0);
 
@@ -46,7 +47,6 @@ const TimeRange = (props: {
           Math.max(0, mouseX - lineLeftX - DOT_SIZE / 2)
         )
       );
-      // Math.min(endLineX, Math.max(0, mouseX - lineLeftX))
     } else {
       setCurrentTimeDotX(
         ((lineWidth - DOT_SIZE) * props.currentTime) / props.duration
@@ -88,18 +88,28 @@ const TimeRange = (props: {
   ]);
 
   const handleDraggingEnd = useCallback(() => {
+    console.log("fgooog");
+    if (draggingDot) {
+      props.setCurrentTime(
+        (props.duration * currentTimeDotX) / (lineWidth - DOT_SIZE)
+      );
+    }
+    setDraggingDot(false);
     setDraggingStartLine(false);
     setDraggingEndLine(false);
-    setDraggingDot(false);
-  }, []);
+  }, [
+    draggingDot,
+    props.duration,
+    currentTimeDotX,
+    lineWidth,
+    props.setCurrentTime,
+  ]);
   useEffect(() => {
     window.addEventListener("mouseup", handleDraggingEnd);
     return () => {
       window.removeEventListener("mouseup", handleDraggingEnd);
     };
   }, [handleDraggingEnd]);
-
-  console.log(currentTimeDotX, "--=-=");
 
   return (
     <Stack

@@ -46,7 +46,10 @@ const VideoDialogCommentsTab = (props: {
   );
 
   const [currentTime, setCurrentTime] = useState<number>(0);
-  console.log(currentTime, "---");
+
+  const [currentTimeSetter, setCurrentTimeSetter] = useState<
+    undefined | ((time: number) => void)
+  >();
 
   return (
     <Stack
@@ -83,6 +86,7 @@ const VideoDialogCommentsTab = (props: {
             smallPlayIcon
             noBackdrop
             setCurrentTime={setCurrentTime}
+            setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
           />
         ) : null}
         {props.duration ? (
@@ -92,6 +96,7 @@ const VideoDialogCommentsTab = (props: {
             setRange={props.setRange}
             originalUrl={props.originalUrl}
             currentTime={currentTime}
+            setCurrentTime={(time) => currentTimeSetter?.(time)}
           />
         ) : null}
       </Stack>
