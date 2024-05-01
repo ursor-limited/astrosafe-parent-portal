@@ -54,6 +54,7 @@ import Timeline, {
   RIGHT_COLUMN_Y_OFFSET,
 } from "./Timeline";
 import InitialAddContentButton from "./InitialAddContentButton";
+import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -561,6 +562,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
     );
   }, [contentOrder, expandedContentIds]);
 
+  const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       {draggedElement
@@ -625,32 +628,18 @@ export default function LessonPageContents(props: { lessonId: string }) {
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">
-                {!userDetails?.user?.id ? (
-                  <UrsorButton
-                    variant="secondary"
-                    backgroundColor="rgb(255,255,255)"
-                    endIcon={PencilIcon}
-                    onClick={() => {
-                      router.push("/dashboard");
-                    }}
-                  >
-                    Create your own
-                  </UrsorButton>
-                ) : null}
-                {userDetails?.user?.id &&
-                userDetails?.user?.id !== lesson?.creatorId ? (
+                {userDetails?.user?.id !== lesson?.creatorId ? (
                   <UrsorButton
                     variant="secondary"
                     backgroundColor="rgb(255,255,255)"
                     endIcon={PencilIcon}
                     onClick={() =>
-                      ApiController.duplicateLesson(
-                        props.lessonId,
-                        userDetails.user!.id
-                      ).then((l) => router.push(`/lesson/${l.id}`))
+                      userDetails?.user?.id
+                        ? setMakeCopyDialogOpen(true)
+                        : router.push("/dashboard")
                     }
                   >
-                    Make a copy
+                    Create your own
                   </UrsorButton>
                 ) : null}
                 <UrsorButton
@@ -1165,6 +1154,19 @@ export default function LessonPageContents(props: { lessonId: string }) {
         setOpen={setStarterAddContentPopoverOpen}
         callback={(type) => contentCallbacks[type]()}
         premiumCallback={() => setUpgradeDialogOpen(true)}
+      />
+      <MakeCopyDialog
+        open={makeCopyDialogOpen}
+        closeCallback={() => setMakeCopyDialogOpen(false)}
+        callback={() =>
+          ApiController.duplicateLesson(
+            props.lessonId,
+            userDetails.user!.id
+          ).then((l) => {
+            router.push("/dashboard");
+            notificationCtx.success(`Made a copy of ${lesson?.title}`);
+          })
+        }
       />
     </>
   );
