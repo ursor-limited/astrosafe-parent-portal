@@ -140,7 +140,7 @@ const Player = (props: {
             // }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
             // props.startTime
             // ? `${props.url}#t=${props.startTime}`
-            //:
+            // :
             props.url
       ),
     [
@@ -161,7 +161,6 @@ const Player = (props: {
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
     const interval = setInterval(() => {
-      console.log(url, "90909hh", player?.getCurrentTime?.());
       url?.includes("vimeo")
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
         : setCurrentTime(player.getCurrentTime());
