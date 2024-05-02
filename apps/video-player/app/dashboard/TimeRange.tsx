@@ -3,6 +3,8 @@ import { PALETTE } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
+import { IVideoComment } from "../api";
+import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
 
 const DOT_SIZE = 14;
 
@@ -12,6 +14,7 @@ const TimeRange = (props: {
   range?: [number, number];
   currentTime: number;
   duration: number;
+  comments: IVideoComment[];
   setCurrentTime: (time: number) => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -283,6 +286,33 @@ const TimeRange = (props: {
                   e.preventDefault();
                 }}
               />
+              {props.comments.map((c) => (
+                <Stack
+                  key={c.id}
+                  position="absolute"
+                  top="2px"
+                  sx={{
+                    transition: "0.2s",
+                    transformOrigin: "bottom",
+                    cursor: "pointer",
+                    "&:hover": {
+                      opacity: 0.7,
+                      transform: "translateX(-50%) scale(1.3)",
+                      transition: "0.2s",
+                    },
+                    transform: "translateX(-50%)",
+                  }}
+                  //left={c.time / props.duration}
+                  left={`calc(${startLineX}px + ${
+                    (100 * c.time) / props.duration
+                  }%)`}
+                  // height="8px"
+                  // width="8px"
+                  // bgcolor={PALETTE.secondary.purple[2]}
+                >
+                  <VideoCommentMarker height="12px" width="12px" />
+                </Stack>
+              ))}
             </Stack>
           </Stack>
           <Stack width={0}>

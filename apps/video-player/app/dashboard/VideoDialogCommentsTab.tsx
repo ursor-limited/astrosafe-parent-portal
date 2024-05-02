@@ -18,7 +18,8 @@ import Player from "../components/player";
 import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
 import ApiController, { IVideoComment } from "../api";
-import { uniqueId } from "lodash";
+import _, { uniqueId } from "lodash";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 
 const VideoDialogTimestamp = (props: { value: number }) => (
   <Stack
@@ -28,9 +29,9 @@ const VideoDialogTimestamp = (props: { value: number }) => (
   >
     <LocationIcon height="18px" width="18px" />
     <Typography color={PALETTE.secondary.grey[3]} variant="small" bold>
-      {`${Math.round(props.value / 60)
+      {`${Math.floor(props.value / 60)
         .toString()
-        .padStart(2, "0")}:${Math.round(props.value % 60)
+        .padStart(2, "0")}:${Math.floor(props.value % 60)
         .toString()
         .padStart(2, "0")}`}
     </Typography>
@@ -187,6 +188,7 @@ const VideoDialogCommentsTab = (props: {
             originalUrl={props.originalUrl}
             currentTime={currentTime}
             setCurrentTime={(time) => currentTimeSetter?.(time)}
+            comments={comments}
           />
         ) : null}
       </Stack>
@@ -235,15 +237,21 @@ const VideoDialogCommentsTab = (props: {
             borderTop={`2px solid ${PALETTE.secondary.grey[2]}`}
             pt="12px"
           >
-            {comments.map((c) => (
-              <VideoCommentCard
-                key={c.id}
-                {...c}
-                deletionCallback={() =>
-                  setComments(comments.filter((comment) => comment.id !== c.id))
-                }
-              />
-            ))}
+            {
+              //_.sortBy(comments, (c) => c.time).map((c) => (
+              _.reverse(comments.slice()).map((c) => (
+                <UrsorFadeIn key={c.id} duration={800}>
+                  <VideoCommentCard
+                    {...c}
+                    deletionCallback={() =>
+                      setComments(
+                        comments.filter((comment) => comment.id !== c.id)
+                      )
+                    }
+                  />
+                </UrsorFadeIn>
+              ))
+            }
           </Stack>
         </Stack>
         <UrsorButton
