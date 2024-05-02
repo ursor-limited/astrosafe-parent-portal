@@ -40,6 +40,30 @@ const TimeRange = (props: {
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
 
+  const [startLineX, setStartLineX] = useState<number>(0);
+  const [endLineX, setEndLineX] = useState<number>(0);
+
+  const [startLineDraggingX, setStartLineDraggingX] = useState<number>(0);
+  const [endLineDraggingX, setEndLineDraggingX] = useState<number>(0);
+
+  useEffect(() => {
+    if (draggingEndLine) {
+      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
+      setEndLineDraggingX(
+        Math.min(lineWidth, Math.max(startLineX, mouseX - lineLeftX))
+      );
+    }
+  }, [draggingEndLine, mouseX]);
+
+  useEffect(() => {
+    if (draggingStartLine) {
+      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
+      setStartLineDraggingX(
+        Math.min(endLineX, Math.max(0, mouseX - lineLeftX))
+      );
+    }
+  }, [draggingStartLine, mouseX]);
+
   const [currentTimeDotXRatio, setCurrentTimeDotXRatio] = useState<number>(0);
   useEffect(() => {
     if (draggingDot) {
@@ -68,45 +92,18 @@ const TimeRange = (props: {
               )
             )
           : 0
-
-        // ((lineWidth - DOT_SIZE) * currentTime) / props.duration
-
-        //(lineWidth * currentTime) / props.duration
       );
     }
   }, [
     lineWidth,
-    currentTimeDotXRatio,
     mouseX,
     currentTime,
     props.duration,
     draggingDot,
     lineRef,
+    endLineX,
+    startLineX,
   ]);
-
-  const [startLineX, setStartLineX] = useState<number>(0);
-  const [endLineX, setEndLineX] = useState<number>(0);
-
-  const [startLineDraggingX, setStartLineDraggingX] = useState<number>(0);
-  const [endLineDraggingX, setEndLineDraggingX] = useState<number>(0);
-
-  useEffect(() => {
-    if (draggingEndLine) {
-      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setEndLineDraggingX(
-        Math.min(lineWidth, Math.max(startLineX, mouseX - lineLeftX))
-      );
-    }
-  }, [draggingEndLine, mouseX]);
-
-  useEffect(() => {
-    if (draggingStartLine) {
-      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setStartLineDraggingX(
-        Math.min(endLineX, Math.max(0, mouseX - lineLeftX))
-      );
-    }
-  }, [draggingStartLine, mouseX]);
 
   useEffect(() => {
     setStartLineX(lineWidth * ((props.range?.[0] ?? 0) / props.duration));
@@ -207,8 +204,30 @@ const TimeRange = (props: {
             marginTop="auto"
             marginBottom="auto"
             sx={{
-              background: "linear-gradient(90deg,#F279C5,#FD9B41)",
+              background:
+                draggingEndLine || draggingStartLine
+                  ? PALETTE.secondary.grey[3]
+                  : "linear-gradient(90deg,#F279C5,#FD9B41)",
             }}
+          />
+          <Stack
+            position="absolute"
+            bgcolor={PALETTE.secondary.grey[3]}
+            height="4px"
+            width={
+              (1 - currentTimeDotXRatio) *
+              ((draggingEndLine ? endLineDraggingX : endLineX) - startLineX)
+            }
+            left={
+              currentTimeDotXRatio *
+                ((draggingEndLine ? endLineDraggingX : endLineX) -
+                  (draggingStartLine ? startLineDraggingX : startLineX)) +
+              (draggingStartLine ? startLineDraggingX : startLineX)
+            }
+            top={0}
+            bottom={0}
+            marginTop="auto"
+            marginBottom="auto"
           />
           <Stack
             position="absolute"
@@ -234,20 +253,6 @@ const TimeRange = (props: {
             // sx={{
             //   opacity: draggingEndLine ? 0.4 : 1
             // }}
-          />
-          <Stack
-            position="absolute"
-            bgcolor={PALETTE.secondary.grey[3]}
-            height="4px"
-            width={
-              (1 - currentTimeDotXRatio) *
-              ((draggingEndLine ? endLineDraggingX : endLineX) - startLineX)
-            }
-            left={currentTimeDotXRatio * (endLineX - startLineX) + startLineX}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
           />
           <Stack
             position="absolute"
