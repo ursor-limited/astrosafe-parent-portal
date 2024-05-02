@@ -43,26 +43,21 @@ const TimeRange = (props: {
   const [startLineX, setStartLineX] = useState<number>(0);
   const [endLineX, setEndLineX] = useState<number>(0);
 
-  const [startLineDraggingX, setStartLineDraggingX] = useState<number>(0);
-  const [endLineDraggingX, setEndLineDraggingX] = useState<number>(0);
-
   useEffect(() => {
     if (draggingEndLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setEndLineDraggingX(
+      setEndLineX(
         Math.min(lineWidth, Math.max(startLineX, mouseX - lineLeftX))
       );
     }
-  }, [draggingEndLine, mouseX]);
+  }, [draggingEndLine, mouseX, startLineX]);
 
   useEffect(() => {
     if (draggingStartLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setStartLineDraggingX(
-        Math.min(endLineX, Math.max(0, mouseX - lineLeftX))
-      );
+      setStartLineX(Math.min(endLineX, Math.max(0, mouseX - lineLeftX)));
     }
-  }, [draggingStartLine, mouseX]);
+  }, [draggingStartLine, mouseX, endLineX]);
 
   const [currentTimeDotXRatio, setCurrentTimeDotXRatio] = useState<number>(0);
   useEffect(() => {
@@ -103,6 +98,7 @@ const TimeRange = (props: {
     lineRef,
     endLineX,
     startLineX,
+    props.range,
   ]);
 
   useEffect(() => {
@@ -124,18 +120,16 @@ const TimeRange = (props: {
     } else if (draggingStartLine) {
       props.range &&
         props.setRange([
-          Math.round((props.duration * startLineDraggingX) / lineWidth),
+          Math.round((props.duration * startLineX) / lineWidth),
           props.range[1],
         ]);
-      setStartLineX(startLineDraggingX);
       setDraggingStartLine(false);
     } else if (draggingEndLine) {
       props.range &&
         props.setRange([
           props.range[0],
-          Math.round((props.duration * endLineDraggingX) / lineWidth),
+          Math.round((props.duration * endLineX) / lineWidth),
         ]);
-      setEndLineX(endLineDraggingX);
       setDraggingEndLine(false);
     }
   }, [
@@ -204,26 +198,25 @@ const TimeRange = (props: {
             marginTop="auto"
             marginBottom="auto"
             sx={{
+              transition: "0.2s",
               background:
                 draggingEndLine || draggingStartLine
-                  ? PALETTE.secondary.grey[3]
+                  ? "#c2d5ff"
                   : "linear-gradient(90deg,#F279C5,#FD9B41)",
             }}
           />
           <Stack
             position="absolute"
-            bgcolor={PALETTE.secondary.grey[3]}
+            sx={{
+              transition: "0.2s",
+              background:
+                draggingEndLine || draggingStartLine
+                  ? "#c2d5ff"
+                  : PALETTE.secondary.grey[3],
+            }}
             height="4px"
-            width={
-              (1 - currentTimeDotXRatio) *
-              ((draggingEndLine ? endLineDraggingX : endLineX) - startLineX)
-            }
-            left={
-              currentTimeDotXRatio *
-                ((draggingEndLine ? endLineDraggingX : endLineX) -
-                  (draggingStartLine ? startLineDraggingX : startLineX)) +
-              (draggingStartLine ? startLineDraggingX : startLineX)
-            }
+            width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}
+            left={currentTimeDotXRatio * (endLineX - startLineX) + startLineX}
             top={0}
             bottom={0}
             marginTop="auto"
@@ -233,7 +226,7 @@ const TimeRange = (props: {
             position="absolute"
             bgcolor={PALETTE.secondary.grey[2]}
             height="4px"
-            width={draggingStartLine ? startLineDraggingX : startLineX}
+            width={startLineX}
             left={0}
             top={0}
             bottom={0}
@@ -244,8 +237,8 @@ const TimeRange = (props: {
             position="absolute"
             bgcolor={PALETTE.secondary.grey[2]}
             height="4px"
-            width={lineWidth - (draggingEndLine ? endLineDraggingX : endLineX)}
-            left={draggingEndLine ? endLineDraggingX : endLineX}
+            width={lineWidth - endLineX}
+            left={endLineX}
             top={0}
             bottom={0}
             marginTop="auto"
@@ -275,6 +268,8 @@ const TimeRange = (props: {
                 sx={{
                   transform: "translateX(-50%)",
                   cursor: draggingDot ? "grabbing" : "grab",
+                  opacity: draggingEndLine || draggingStartLine ? 0 : 1,
+                  transition: "0.2s",
                 }}
                 left={`calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`}
                 top={0}
@@ -307,7 +302,7 @@ const TimeRange = (props: {
                 transform: "translateX(-50%)",
                 cursor: draggingStartLine ? "grabbing" : "grab",
               }}
-              left={draggingStartLine ? startLineDraggingX : startLineX}
+              left={startLineX}
               onMouseDown={(e) => {
                 setDraggingStartLine(true);
                 e.preventDefault();
@@ -327,7 +322,7 @@ const TimeRange = (props: {
                 transform: "translateX(-50%)",
                 cursor: draggingEndLine ? "grabbing" : "grab",
               }}
-              left={draggingEndLine ? endLineDraggingX : endLineX}
+              left={endLineX}
               onMouseDown={(e) => {
                 setDraggingEndLine(true);
                 e.preventDefault();
