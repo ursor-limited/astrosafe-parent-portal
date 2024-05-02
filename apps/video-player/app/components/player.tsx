@@ -77,7 +77,7 @@ const Player = (props: {
     );
     if (status !== "PLAYING") {
       setYoutubePauseOverlay(true);
-      status === "ENDED" && setEnded(true);
+      //status === "ENDED" && setEnded(true);
     } else {
       setTimeout(() => setYoutubePauseOverlay(false), 500);
     }
@@ -151,6 +151,7 @@ const Player = (props: {
 
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => props.setCurrentTime?.(currentTime), [currentTime]);
+
   useEffect(() => {
     console.log(props.endTime, currentTime);
     player &&
@@ -158,6 +159,7 @@ const Player = (props: {
       currentTime > props.endTime &&
       (url?.includes("vimeo") ? player?.pause() : player?.pauseVideo());
   }, [currentTime, props.endTime]);
+
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
     const interval = setInterval(() => {
@@ -167,10 +169,11 @@ const Player = (props: {
     }, 500);
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [player, playing, url]);
+
   useEffect(() => {
     if (
-      (playing && props.endTime && currentTime > props.endTime) ||
-      (playing && props.startTime && currentTime < props.startTime)
+      (props.endTime && currentTime >= props.endTime) ||
+      (props.startTime && currentTime < props.startTime)
     ) {
       url?.includes("vimeo")
         ? player?.setCurrentTime(props.startTime ?? 0)
@@ -178,16 +181,21 @@ const Player = (props: {
       url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
       setEnded(true);
+    } else {
+      setEnded(false);
     }
-  }, [props.endTime, currentTime, props.startTime, player]);
+  }, [props.endTime, currentTime, props.startTime]);
+
+  console.log(props.startTime, currentTime, "--vvvv");
 
   useEffect(
     () =>
-      props.setCurrentTimeSetter?.((time: number) =>
+      props.setCurrentTimeSetter?.((time: number) => {
+        setCurrentTime(time);
         url?.includes("vimeo")
           ? player?.setCurrentTime(time ?? 0)
-          : player?.seekTo(time ?? 0)
-      ),
+          : player?.seekTo(time ?? 0);
+      }),
     [url, player]
   );
 

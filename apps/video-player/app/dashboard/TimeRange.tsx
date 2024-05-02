@@ -44,10 +44,6 @@ const TimeRange = (props: {
   useEffect(() => {
     if (draggingDot) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      console.log(
-        mouseX - startLineX - DOT_SIZE,
-        endLineX - startLineX - DOT_SIZE
-      );
       setCurrentTimeDotXRatio(
         props.range
           ? Math.min(
@@ -63,7 +59,14 @@ const TimeRange = (props: {
     } else {
       setCurrentTimeDotXRatio(
         props.range
-          ? (currentTime - props.range[0]) / (props.range[1] - props.range[0])
+          ? Math.min(
+              1,
+              Math.max(
+                0,
+                (currentTime - props.range[0]) /
+                  (props.range[1] - props.range[0])
+              )
+            )
           : 0
 
         // ((lineWidth - DOT_SIZE) * currentTime) / props.duration
@@ -227,16 +230,8 @@ const TimeRange = (props: {
             position="absolute"
             bgcolor={PALETTE.secondary.grey[3]}
             height="4px"
-            width={
-              props.range
-                ? (1 - currentTimeDotXRatio) * (props.range[1] - props.range[0])
-                : 0
-            }
-            left={
-              props.range
-                ? currentTimeDotXRatio * (props.range[1] - props.range[0])
-                : 0
-            }
+            width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}
+            left={currentTimeDotXRatio * (endLineX - startLineX) + startLineX}
             top={0}
             bottom={0}
             marginTop="auto"
@@ -264,7 +259,7 @@ const TimeRange = (props: {
                   transform: "translateX(-50%)",
                   cursor: draggingDot ? "grabbing" : "grab",
                 }}
-                left={`${100 * currentTimeDotXRatio}%`}
+                left={`calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`}
                 top={0}
                 bottom={0}
                 marginTop="auto"
@@ -322,16 +317,6 @@ const TimeRange = (props: {
               }}
             />
           </Stack>
-          {/* <Slider
-          min={0}
-          max={props.duration}
-          valueLabelDisplay="off"
-          getAriaLabel={() => "Temperature range"}
-          value={props.range}
-          onChange={(event: Event, newValue: number | number[]) => {
-            props.setRange(newValue as [number, number]);
-          }}
-        /> */}
         </Stack>
         <DurationLabel
           value={props.range?.[1] ?? 0}
