@@ -210,9 +210,7 @@ const TimeRange = (props: {
             sx={{
               transition: "0.2s",
               background:
-                draggingEndLine || draggingStartLine
-                  ? "#c2d5ff"
-                  : PALETTE.secondary.grey[3],
+                draggingEndLine || draggingStartLine ? "#c2d5ff" : "#c9c9c9",
             }}
             height="4px"
             width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}

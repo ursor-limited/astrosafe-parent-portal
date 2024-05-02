@@ -186,8 +186,6 @@ const Player = (props: {
     }
   }, [props.endTime, currentTime, props.startTime]);
 
-  console.log(props.startTime, currentTime, "--vvvv");
-
   useEffect(
     () =>
       props.setCurrentTimeSetter?.((time: number) => {
