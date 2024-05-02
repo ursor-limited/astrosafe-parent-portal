@@ -117,7 +117,7 @@ const VideoCreationDialog = (props: {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const [originalUrl, setOriginalUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=nNJVYCJemUk&t=1389s"
+    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
   );
   useEffect(
     () => props.video && setOriginalUrl(props.video.url),
