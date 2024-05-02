@@ -102,7 +102,7 @@ const TimeRange = (props: {
     } else if (draggingStartLine) {
       props.range &&
         props.setRange([
-          (props.duration * startLineX) / lineWidth,
+          Math.round((props.duration * startLineX) / lineWidth),
           props.range[1],
         ]);
       setDraggingStartLine(false);
@@ -110,7 +110,7 @@ const TimeRange = (props: {
       props.range &&
         props.setRange([
           props.range[0],
-          (props.duration * endLineX) / lineWidth,
+          Math.round((props.duration * endLineX) / lineWidth),
         ]);
       setDraggingEndLine(false);
     }
