@@ -14,8 +14,15 @@ export interface IVideo {
   thumbnailUrl?: string;
   startTime?: number;
   endTime?: number;
+  comments: IVideoComment[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IVideoComment {
+  id: string;
+  value: string;
+  time: number;
 }
 
 const BACKEND_URLS = {
@@ -388,7 +395,11 @@ class ApiController {
   static async duplicateVideo(id: string, lessonId: string, userId?: string) {
     return post(`video/dupli/cate`, { id, lessonId, userId });
   }
-  static async duplicateWorksheet(id: string, lessonId: string, userId?: string) {
+  static async duplicateWorksheet(
+    id: string,
+    lessonId: string,
+    userId?: string
+  ) {
     return post(`canvas/dupli/cate`, { id, lessonId, userId });
   }
   static async duplicateText(id: string, lessonId: string, userId?: string) {
@@ -404,6 +415,11 @@ class ApiController {
   }
   static async deleteText(id: string) {
     return dellete(`text/${id}`).then((response: any) => response);
+  }
+  static async createVideoComment(id: string, time: number, value: string) {
+    return post("video/comment/create", { id, value, time }).then(
+      (response: any) => response.json()
+    );
   }
 }
 

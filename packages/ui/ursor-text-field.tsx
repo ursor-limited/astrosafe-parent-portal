@@ -28,6 +28,7 @@ export interface UrsorTextFieldProps {
   onKeyPress?: () => void;
   placeholder?: string;
   endIcon?: JSX.Element;
+  white?: boolean;
 }
 
 export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
@@ -62,7 +63,9 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         width: props.width,
         borderRadius: "8px",
         outline: props.outline,
-        background: props.backgroundColor ?? PALETTE.secondary.grey[1],
+        background: props.white
+          ? "rgb(255,255,255)"
+          : props.backgroundColor ?? PALETTE.secondary.grey[1],
         backdropFilter: props.backgroundBlur,
 
         "& fieldset": { border: "none" },

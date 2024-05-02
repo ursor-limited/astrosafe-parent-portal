@@ -20,8 +20,8 @@ import TimeRange from "./TimeRange";
 import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
-export const VIDEO_WIDTH = 778; //390;
-export const VIDEO_HEIGHT = 428;
+export const VIDEO_WIDTH = 940; //390;
+export const VIDEO_HEIGHT = 522;
 
 const VideoCreationDialogTabButton = (props: {
   text: string;
