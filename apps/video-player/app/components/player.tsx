@@ -217,6 +217,9 @@ const Player = (props: {
   }, [url, document]);
 
   const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
+  useEffect(() => {
+    playing && setHasBegunPlaying(true);
+  }, [playing]);
 
   useEffect(() => {
     props.setCurrentTimeSetter?.((time: number) => {
@@ -236,7 +239,7 @@ const Player = (props: {
   }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
-    setHasBegunPlaying(true);
+    //setHasBegunPlaying(true);
     setEnded(false);
     if (
       url?.includes("youtube") &&
@@ -244,6 +247,7 @@ const Player = (props: {
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
+      console.log("foo-0-0-0-0-");
       player?.playVideo();
       //setPlaying(true);
     } else if (url?.includes("vimeo")) {
