@@ -15,6 +15,8 @@ const TimeRange = (props: {
   currentTime: number;
   duration: number;
   comments: IVideoComment[];
+  selectedComment?: string;
+  setSelectedComment: (id: string) => void;
   setCurrentTime: (time: number) => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -291,16 +293,21 @@ const TimeRange = (props: {
                   key={c.id}
                   position="absolute"
                   top="2px"
+                  onClick={() => props.setSelectedComment(c.id)}
                   sx={{
                     transition: "0.2s",
                     transformOrigin: "bottom",
                     cursor: "pointer",
                     "&:hover": {
-                      opacity: 0.7,
+                      //opacity: 0.7,
                       transform: "translateX(-50%) scale(1.3)",
                       transition: "0.2s",
                     },
                     transform: "translateX(-50%)",
+                    opacity:
+                      props.selectedComment && props.selectedComment !== c.id
+                        ? 0.5
+                        : 1,
                   }}
                   //left={c.time / props.duration}
                   left={`calc(${startLineX}px + ${

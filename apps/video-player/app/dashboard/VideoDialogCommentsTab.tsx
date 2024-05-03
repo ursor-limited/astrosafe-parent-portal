@@ -217,6 +217,12 @@ const VideoDialogCommentsTab = (props: {
             currentTime={currentTime}
             setCurrentTime={(time) => currentTimeSetter?.(time)}
             comments={comments}
+            selectedComment={selectedComment}
+            setSelectedComment={(id) => {
+              setSelectedComment(id);
+              const time = comments.find((c) => c.id === id)?.time;
+              time && currentTimeSetter?.(time);
+            }}
           />
         ) : null}
       </Stack>
@@ -232,7 +238,12 @@ const VideoDialogCommentsTab = (props: {
           maxHeight={`${VIDEO_HEIGHT}px`}
           overflow="hidden"
         >
-          <Stack onClick={() => playingSetter?.(false)}>
+          <Stack
+            onClick={() => {
+              playingSetter?.(false);
+              setSelectedComment(undefined);
+            }}
+          >
             <UrsorTextField
               value={comment}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -277,7 +288,10 @@ const VideoDialogCommentsTab = (props: {
                       transition: "0.2s",
                       cursor: "pointer",
                     }}
-                    onClick={() => setSelectedComment(c.id)}
+                    onClick={() => {
+                      setSelectedComment(c.id);
+                      currentTimeSetter?.(c.time);
+                    }}
                   >
                     <VideoCommentCard
                       {...c}
