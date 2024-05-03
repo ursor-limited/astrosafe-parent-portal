@@ -973,21 +973,23 @@ export default function LessonPageContents(props: { lessonId: string }) {
         category="playlist"
         title={lesson?.title ?? ""}
       />
-      <VideoCreationDialog
-        open={true}
-        closeCallback={() => {
-          setVideoDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(id) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "video",
-            id
-          ).then(loadLesson);
-        }}
-      />
+      {videoDialogOpen ? (
+        <VideoCreationDialog
+          open={videoDialogOpen}
+          closeCallback={() => {
+            setVideoDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(id) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "video",
+              id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={true}

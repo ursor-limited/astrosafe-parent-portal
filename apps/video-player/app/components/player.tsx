@@ -39,6 +39,7 @@ const Player = (props: {
   smallPlayIcon?: boolean;
   noBackdrop?: boolean;
   borderRadius?: string;
+  noUrlStartTime?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -128,11 +129,12 @@ const Player = (props: {
     () =>
       setUrl(
         props.url?.includes("youtube")
-          ? `${
-              props.url
-            }?enablejsapi=1&cc_load_policy=1&modestbranding=1&${VIDEO_DISABLINGS.map(
-              (d) => `${d}=0`
-            ).join("&")}`
+          ? `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              // don't use nocookie, as it forces the youtube logo in there
+              !props.noUrlStartTime && props.startTime
+                ? `start=${props.startTime}&`
+                : ""
+            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
           : // `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
             //   // don't use nocookie, as it forces the youtube logo in there
             //   props.startTime ? `start=${props.startTime}&` : ""
@@ -181,7 +183,7 @@ const Player = (props: {
         : player?.seekTo(props.startTime ?? 0);
       url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
-      setEnded(true);
+      setEnded(!!(props.endTime && currentTime >= props.endTime));
     } else {
       setEnded(false);
     }

@@ -172,6 +172,8 @@ const VideoDialogCommentsTab = (props: {
   range?: [number, number];
   setRange: (range?: [number, number]) => void;
   setThumbnailUrl: (url: string) => void;
+  comments: IVideoComment[];
+  setComments: (comments: IVideoComment[]) => void;
   // setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -201,12 +203,15 @@ const VideoDialogCommentsTab = (props: {
 
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<IVideoComment[]>([]);
+  useEffect(() => setComments(props.comments), [props.comments]);
 
   const addComment = () => {
-    setComments([
+    const newComments = [
       ...comments,
       { id: uniqueId(), value: comment, time: currentTime },
-    ]);
+    ];
+    setComments(newComments);
+    props.setComments(newComments);
     setComment("");
   };
 
@@ -266,6 +271,7 @@ const VideoDialogCommentsTab = (props: {
             playingCallback={setPlaying}
             smallPlayIcon
             noBackdrop
+            noUrlStartTime
             setCurrentTime={setCurrentTime}
             setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
             setPlayingSetter={(f) => setPlayingSetter(() => f)}
@@ -358,25 +364,26 @@ const VideoDialogCommentsTab = (props: {
                     onClick={() => {
                       setSelectedComment(c.id);
                       currentTimeSetter?.(c.time);
+                      playingSetter?.(false);
                     }}
                   >
                     <VideoCommentCard
                       {...c}
-                      deletionCallback={() =>
-                        setComments(
-                          comments.filter((comment) => comment.id !== c.id)
-                        )
-                      }
+                      deletionCallback={() => {
+                        const newComments = comments.filter(
+                          (comment) => comment.id !== c.id
+                        );
+                        setComments(newComments);
+                        props.setComments(newComments);
+                      }}
                       selected={selectedComment === c.id}
-                      saveCallback={(value) =>
-                        setComments(
-                          comments.map((comment) =>
-                            comment.id === c.id
-                              ? { ...comment, value }
-                              : comment
-                          )
-                        )
-                      }
+                      saveCallback={(value) => {
+                        const newComments = comments.map((comment) =>
+                          comment.id === c.id ? { ...comment, value } : comment
+                        );
+                        setComments(newComments);
+                        props.setComments(newComments);
+                      }}
                     />
                   </Stack>
                 </UrsorFadeIn>
