@@ -1,20 +1,164 @@
 import { Stack } from "@mui/system";
 import { isMobile } from "react-device-detect";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import {
-  PALETTE,
-  Typography,
-  UrsorButton,
-  UrsorInputField,
-  UrsorTextField,
-} from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
 import { IVideo } from "./AstroContentColumns";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import X from "@/images/icons/X.svg";
+import LocationIcon from "@/images/icons/LocationIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
+import { IVideoComment } from "../api";
+import _, { uniqueId } from "lodash";
+import UrsorFadeIn from "../components/UrsorFadeIn";
+
+const VideoDialogTimestamp = (props: { value: number }) => (
+  <Stack
+    direction="row"
+    spacing="4px"
+    sx={{ svg: { path: { fill: PALETTE.secondary.grey[3] } } }}
+  >
+    <LocationIcon height="18px" width="18px" />
+    <Typography color={PALETTE.secondary.grey[3]} variant="small" bold>
+      {`${Math.floor(props.value / 60)
+        .toString()
+        .padStart(2, "0")}:${Math.floor(props.value % 60)
+        .toString()
+        .padStart(2, "0")}`}
+    </Typography>
+  </Stack>
+);
+
+const VideoCommentCard = (props: {
+  value: string;
+  time: number;
+  deletionCallback: () => void;
+  saveCallback: (newValue: string) => void;
+  selected: boolean;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [editing, setEditing] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
+  useEffect(() => setValue(props.value), [props.value]);
+  useEffect(() => {
+    !props.selected && setEditing(false);
+  }, [props.selected]);
+  return (
+    <Stack
+      p="12px"
+      pb="6px"
+      minHeight="107px"
+      boxSizing="border-box"
+      justifyContent="space-between"
+      bgcolor="rgb(255,255,255)"
+      borderRadius="8px"
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      sx={{
+        transition: "0.2s",
+        border: `2px solid ${
+          // eslint-disable-next-line no-nested-ternary -- idiotic rule
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : "transparent"
+        }`,
+      }}
+      spacing="6px"
+    >
+      {editing ? (
+        <UrsorTextField
+          value={value}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(event.target.value)
+          }
+          placeholder="Write a comment"
+          width="100%"
+          height="110px"
+          boldValue
+          noBorder
+        />
+      ) : (
+        <Typography variant="small" maxLines={2}>
+          {props.value}
+        </Typography>
+      )}
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <VideoDialogTimestamp value={props.time} />
+        <Stack direction="row" spacing="8px">
+          <Stack
+            height="30px"
+            width="30px"
+            bgcolor={PALETTE.secondary.grey[1]}
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              cursor: "pointer",
+              svg: {
+                path: {
+                  fill: PALETTE.primary.navy,
+                },
+              },
+            }}
+            onClick={() => {
+              if (editing) {
+                setEditing(false);
+                props.saveCallback(value);
+              } else {
+                setEditing(true);
+              }
+            }}
+          >
+            {editing ? (
+              <CheckIcon height="16px" width="16px" />
+            ) : (
+              <PencilIcon height="16px" width="16px" />
+            )}
+          </Stack>
+          <Stack
+            height="30px"
+            width="30px"
+            bgcolor={PALETTE.secondary.grey[1]}
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              cursor: "pointer",
+              svg: {
+                path: {
+                  fill: editing ? PALETTE.primary.navy : PALETTE.system.red,
+                },
+              },
+            }}
+            onClick={() =>
+              editing ? setEditing(false) : props.deletionCallback()
+            }
+          >
+            {editing ? (
+              <X height="16px" width="16px" />
+            ) : (
+              <TrashcanIcon height="16px" width="16px" />
+            )}
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
 
 const VideoDialogCommentsTab = (props: {
   url: string;
@@ -28,6 +172,8 @@ const VideoDialogCommentsTab = (props: {
   range?: [number, number];
   setRange: (range?: [number, number]) => void;
   setThumbnailUrl: (url: string) => void;
+  comments: IVideoComment[];
+  setComments: (comments: IVideoComment[]) => void;
   // setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -51,11 +197,50 @@ const VideoDialogCommentsTab = (props: {
     undefined | ((time: number) => void)
   >();
 
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
+  const [comment, setComment] = useState<string>("");
+  const [comments, setComments] = useState<IVideoComment[]>([]);
+  useEffect(() => setComments(props.comments), [props.comments]);
+
+  const addComment = () => {
+    const newComments = [
+      ...comments,
+      { id: uniqueId(), value: comment, time: currentTime },
+    ];
+    setComments(newComments);
+    props.setComments(newComments);
+    setComment("");
+  };
+
+  const handleUserKeyPress = useCallback(
+    (event: any) => {
+      if (event.code === "Return") {
+        !!comment && addComment();
+      }
+    },
+    [!!comment]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleUserKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
+  }, [handleUserKeyPress]);
+
+  const [selectedComment, setSelectedComment] = useState<string | undefined>();
+  useEffect(() => {
+    playing && setSelectedComment(undefined);
+  }, [playing]);
+
   return (
     <Stack
       flex={1}
       direction={isMobile ? "column" : "row"}
-      spacing="40px"
+      spacing="24px"
       width="100%"
       overflow="hidden"
       boxSizing="border-box"
@@ -66,6 +251,7 @@ const VideoDialogCommentsTab = (props: {
         overflow={isMobile ? "hidden" : undefined}
         spacing="6px"
         position="relative"
+        justifyContent="space-between"
       >
         {props.provider ? (
           <Player
@@ -85,8 +271,10 @@ const VideoDialogCommentsTab = (props: {
             playingCallback={setPlaying}
             smallPlayIcon
             noBackdrop
+            noUrlStartTime
             setCurrentTime={setCurrentTime}
             setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+            setPlayingSetter={(f) => setPlayingSetter(() => f)}
           />
         ) : null}
         {props.duration ? (
@@ -97,17 +285,119 @@ const VideoDialogCommentsTab = (props: {
             originalUrl={props.originalUrl}
             currentTime={currentTime}
             setCurrentTime={(time) => currentTimeSetter?.(time)}
+            comments={comments}
+            selectedComment={selectedComment}
+            setSelectedComment={(id) => {
+              setSelectedComment(id);
+              if (id) {
+                const time = comments.find((c) => c.id === id)?.time;
+                _.isNumber(time) && currentTimeSetter?.(time);
+                playingSetter?.(false);
+              }
+            }}
           />
         ) : null}
       </Stack>
-      <Stack flex={1} height="100%" alignItems="flex-end">
+      <Stack flex={1} spacing="24px">
+        <Stack
+          p="12px"
+          boxSizing="border-box"
+          bgcolor={PALETTE.secondary.grey[1]}
+          borderRadius="12px"
+          flex={1}
+          spacing="8px"
+          minHeight={`${VIDEO_HEIGHT}px`}
+          maxHeight={`${VIDEO_HEIGHT}px`}
+          overflow="hidden"
+        >
+          <Stack
+            onClick={() => {
+              playingSetter?.(false);
+              setSelectedComment(undefined);
+            }}
+          >
+            <UrsorTextField
+              value={comment}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setComment(event.target.value)
+              }
+              placeholder="Write a comment"
+              width="100%"
+              height="106px"
+              boldValue
+              white
+            />
+          </Stack>
+          <Stack
+            direction="row"
+            width="100%"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <VideoDialogTimestamp value={currentTime} />
+            <UrsorButton
+              dark
+              variant="tertiary"
+              size="small"
+              onClick={addComment}
+            >
+              Add
+            </UrsorButton>
+          </Stack>
+          <Stack
+            spacing="12px"
+            overflow="scroll"
+            borderTop={`2px solid ${PALETTE.secondary.grey[2]}`}
+            pt="12px"
+          >
+            {
+              //_.sortBy(comments, (c) => c.time).map((c) => (
+              _.reverse(comments.slice()).map((c) => (
+                <UrsorFadeIn key={c.id} duration={800}>
+                  <Stack
+                    id={c.id}
+                    sx={{
+                      // "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setSelectedComment(c.id);
+                      currentTimeSetter?.(c.time);
+                      playingSetter?.(false);
+                    }}
+                  >
+                    <VideoCommentCard
+                      {...c}
+                      deletionCallback={() => {
+                        const newComments = comments.filter(
+                          (comment) => comment.id !== c.id
+                        );
+                        setComments(newComments);
+                        props.setComments(newComments);
+                      }}
+                      selected={selectedComment === c.id}
+                      saveCallback={(value) => {
+                        const newComments = comments.map((comment) =>
+                          comment.id === c.id ? { ...comment, value } : comment
+                        );
+                        setComments(newComments);
+                        props.setComments(newComments);
+                      }}
+                    />
+                  </Stack>
+                </UrsorFadeIn>
+              ))
+            }
+          </Stack>
+        </Stack>
         <UrsorButton
           onClick={props.mainButtonCallback}
           disabled={!props.url}
           dark
           variant="tertiary"
           endIcon={props.video ? PencilIcon : ChevronRightIcon}
-          width="264px"
+          width="100%"
         >
           Publish
         </UrsorButton>

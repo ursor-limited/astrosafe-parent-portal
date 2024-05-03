@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
-import ApiController from "../api";
+import ApiController, { IVideoComment } from "../api";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
@@ -20,8 +20,8 @@ import TimeRange from "./TimeRange";
 import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
-export const VIDEO_WIDTH = 778; //390;
-export const VIDEO_HEIGHT = 428;
+export const VIDEO_WIDTH = 940; //390;
+export const VIDEO_HEIGHT = 522;
 
 const VideoCreationDialogTabButton = (props: {
   text: string;
@@ -116,9 +116,7 @@ const VideoCreationDialog = (props: {
 
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
-  const [originalUrl, setOriginalUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
-  );
+  const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
     () => props.video && setOriginalUrl(props.video.url),
     [props.video?.id]
@@ -196,6 +194,7 @@ const VideoCreationDialog = (props: {
       startTime: range?.[0],
       endTime: range?.[1],
       creatorId: userDetails.user?.id,
+      comments,
     }).then(async (v) => {
       setLoading(false);
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
@@ -207,6 +206,9 @@ const VideoCreationDialog = (props: {
       setDescription("");
       setUrl("");
       setOriginalUrl("");
+      setSelectedTab("details");
+      setComments([]);
+      setRange(undefined);
       props.closeCallback();
       notificationCtx.success("Created Safe Video Link");
     });
@@ -238,8 +240,10 @@ const VideoCreationDialog = (props: {
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
   const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
-    "comments"
+    "details"
   );
+
+  const [comments, setComments] = useState<IVideoComment[]>([]);
 
   return (
     <>
@@ -263,7 +267,13 @@ const VideoCreationDialog = (props: {
                 selected={selectedTab === "details"}
               />
             </Stack>
-            <Stack onClick={() => setSelectedTab("comments")}>
+            <Stack
+              onClick={() => setSelectedTab("comments")}
+              sx={{
+                opacity: !url ? 0.5 : 1,
+                pointerEvents: url ? undefined : "none",
+              }}
+            >
               <VideoCreationDialogTabButton
                 text="Comments"
                 icon={MultipleCommentsIcon}
@@ -282,9 +292,7 @@ const VideoCreationDialog = (props: {
               setEditedTitle={() => setEditedTitle(true)}
               description={description}
               setDescription={setDescription}
-              mainButtonCallback={() => {
-                props.video ? submitUpdate() : submitCreation();
-              }}
+              mainButtonCallback={() => setSelectedTab("comments")}
               showForbiddenVideoView={showForbiddenVideoView}
               provider={provider}
               setDuration={setDuration}
@@ -306,6 +314,8 @@ const VideoCreationDialog = (props: {
               range={range}
               setRange={setRange}
               setThumbnailUrl={setThumbnailUrl}
+              comments={comments}
+              setComments={setComments}
             />
           )}
         </Stack>

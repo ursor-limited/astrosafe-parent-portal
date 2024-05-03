@@ -122,7 +122,7 @@ const VideoDialogDetailsTab = (props: {
             }
             placeholder="Optional"
             width="100%"
-            height={isMobile ? "60px" : "356px"}
+            height={isMobile ? "60px" : "334px"}
             boldValue
           />
         </Captioned>
@@ -184,6 +184,7 @@ const VideoDialogDetailsTab = (props: {
             playingCallback={setPlaying}
             smallPlayIcon
             noBackdrop
+            noUrlStartTime
           />
         ) : null}
         <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">

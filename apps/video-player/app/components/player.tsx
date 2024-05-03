@@ -29,6 +29,7 @@ const Player = (props: {
   startTime?: number;
   setCurrentTime?: (time: number) => void;
   setCurrentTimeSetter?: (f: (time: number) => void) => void;
+  setPlayingSetter?: (f: (playing: boolean) => void) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -38,6 +39,7 @@ const Player = (props: {
   smallPlayIcon?: boolean;
   noBackdrop?: boolean;
   borderRadius?: string;
+  noUrlStartTime?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -127,11 +129,12 @@ const Player = (props: {
     () =>
       setUrl(
         props.url?.includes("youtube")
-          ? `${
-              props.url
-            }?enablejsapi=1&cc_load_policy=1&modestbranding=1&${VIDEO_DISABLINGS.map(
-              (d) => `${d}=0`
-            ).join("&")}`
+          ? `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              // don't use nocookie, as it forces the youtube logo in there
+              !props.noUrlStartTime && props.startTime
+                ? `start=${props.startTime}&`
+                : ""
+            }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
           : // `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
             //   // don't use nocookie, as it forces the youtube logo in there
             //   props.startTime ? `start=${props.startTime}&` : ""
@@ -180,24 +183,27 @@ const Player = (props: {
         : player?.seekTo(props.startTime ?? 0);
       url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
-      setEnded(true);
+      setEnded(!!(props.endTime && currentTime >= props.endTime));
     } else {
       setEnded(false);
     }
   }, [props.endTime, currentTime, props.startTime]);
 
-  console.log(props.startTime, currentTime, "--vvvv");
-
-  useEffect(
-    () =>
-      props.setCurrentTimeSetter?.((time: number) => {
-        setCurrentTime(time);
-        url?.includes("vimeo")
-          ? player?.setCurrentTime(time ?? 0)
-          : player?.seekTo(time ?? 0);
-      }),
-    [url, player]
-  );
+  useEffect(() => {
+    props.setCurrentTimeSetter?.((time: number) => {
+      setCurrentTime(time);
+      url?.includes("vimeo")
+        ? player?.setCurrentTime(time ?? 0)
+        : player?.seekTo(time ?? 0);
+    });
+    props.setPlayingSetter?.((p: boolean) => {
+      if (!p) {
+        url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
+      } else {
+        resume();
+      }
+    });
+  }, [url, player]);
 
   useEffect(() => {
     if (!url) return;

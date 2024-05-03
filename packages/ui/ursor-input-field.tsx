@@ -86,14 +86,17 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
 
   return (
     <Input
-      disableUnderline
+      // eslint-disable-next-line jsx-a11y/no-autofocus -- boo
+      autoFocus={props.autoFocus}
       endAdornment={
         props.endIcon ? (
           <InputAdornment position="end" sx={{ pr: "11px" }}>
             {props.endIcon}
           </InputAdornment>
         ) : null
-      } //@ts-expect-error -- idiotic issue, fix later
+      }
+      disableUnderline
+      //@ts-expect-error -- boo
       inputProps={inputProps}
       onBlur={() => {
         setActive(false);
@@ -114,7 +117,6 @@ export function UrsorInputField(props: UrsorInputFieldProps): JSX.Element {
       onMouseLeave={() => {
         setHovering(false);
       }}
-      autoFocus={props.autoFocus}
       placeholder={props.placeholder} //@ts-expect-error -- boo
       sx={customSx}
       value={props.value}
