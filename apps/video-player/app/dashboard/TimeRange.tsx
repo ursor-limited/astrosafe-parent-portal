@@ -292,6 +292,25 @@ const TimeRange = (props: {
                   e.preventDefault();
                 }}
               />
+            </Stack>
+          </Stack>
+          <Stack
+            position="absolute"
+            left={0}
+            top={0}
+            height="33%"
+            alignItems="center"
+            width="100%"
+          >
+            <Stack
+              flex={1}
+              position="relative"
+              width={`calc(100% - ${DOT_SIZE}px)`}
+              sx={{
+                transition: "0.2s",
+                opacity: draggingEndLine || draggingStartLine ? 0 : 1,
+              }}
+            >
               {props.comments.map((c) => (
                 <Stack
                   key={c.id}
@@ -299,25 +318,27 @@ const TimeRange = (props: {
                   top="2px"
                   onClick={() => props.setSelectedComment(c.id)}
                   sx={{
-                    transition: "0.2s",
-                    transformOrigin: "bottom",
                     cursor: "pointer",
-                    "&:hover": {
-                      //opacity: 0.7,
-                      transform: "translateX(-50%) scale(1.3)",
-                      transition: "0.2s",
-                    },
                     transform: "translateX(-50%)",
                     opacity:
                       props.selectedComment && props.selectedComment !== c.id
                         ? 0.5
                         : 1,
                   }}
-                  left={`calc(${startLineX}px + ${
-                    (100 * c.time) / props.duration
-                  }%)`}
+                  left={((lineWidth - DOT_SIZE) * c.time) / props.duration}
                 >
-                  <VideoCommentMarker height="12px" width="12px" />
+                  <Stack
+                    sx={{
+                      "&:hover": {
+                        //opacity: 0.7,
+                        transform: "scale(1.3) translateY(-3px)",
+                        transition: "0.2s",
+                        transformOrigin: "center",
+                      },
+                    }}
+                  >
+                    <VideoCommentMarker height="12px" width="12px" />
+                  </Stack>
                 </Stack>
               ))}
             </Stack>
