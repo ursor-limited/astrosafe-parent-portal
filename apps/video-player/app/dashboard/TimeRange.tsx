@@ -306,10 +306,6 @@ const TimeRange = (props: {
               flex={1}
               position="relative"
               width={`calc(100% - ${DOT_SIZE}px)`}
-              sx={{
-                transition: "0.2s",
-                opacity: draggingEndLine || draggingStartLine ? 0 : 1,
-              }}
             >
               {props.comments.map((c) => (
                 <Stack
