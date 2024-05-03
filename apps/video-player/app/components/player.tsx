@@ -189,22 +189,6 @@ const Player = (props: {
   }, [props.endTime, currentTime, props.startTime]);
 
   useEffect(() => {
-    props.setCurrentTimeSetter?.((time: number) => {
-      setCurrentTime(time);
-      url?.includes("vimeo")
-        ? player?.setCurrentTime(time ?? 0)
-        : player?.seekTo(time ?? 0);
-    });
-    props.setPlayingSetter?.((p: boolean) => {
-      if (!p) {
-        url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
-      } else {
-        resume();
-      }
-    });
-  }, [url, player]);
-
-  useEffect(() => {
     if (!url) return;
     url.includes("vimeo")
       ? player?.getDuration?.().then?.((d: number) => {
@@ -233,6 +217,23 @@ const Player = (props: {
   }, [url, document]);
 
   const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
+
+  useEffect(() => {
+    props.setCurrentTimeSetter?.((time: number) => {
+      setCurrentTime(time);
+      url?.includes("vimeo")
+        ? player?.setCurrentTime(time ?? 0)
+        : player?.seekTo(time ?? 0);
+    });
+    props.setPlayingSetter?.((p: boolean) => {
+      if (!p && !hasBegunPlaying) return;
+      if (!p) {
+        url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
+      } else {
+        resume();
+      }
+    });
+  }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
     setHasBegunPlaying(true);

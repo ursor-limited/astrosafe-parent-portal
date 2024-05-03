@@ -235,6 +235,8 @@ const VideoDialogCommentsTab = (props: {
     playing && setSelectedComment(undefined);
   }, [playing]);
 
+  console.log(comments);
+
   return (
     <Stack
       flex={1}
