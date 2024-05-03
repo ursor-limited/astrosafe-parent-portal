@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import { isMobile } from "react-device-detect";
 import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
-import { IVideo } from "./AstroContentColumns";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import X from "@/images/icons/X.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
@@ -12,7 +11,7 @@ import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
-import { IVideoComment } from "../api";
+import { IVideo, IVideoComment } from "../api";
 import _, { uniqueId } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 
