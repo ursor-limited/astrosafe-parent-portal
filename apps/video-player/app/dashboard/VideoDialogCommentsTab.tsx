@@ -1,13 +1,6 @@
 import { Stack } from "@mui/system";
 import { isMobile } from "react-device-detect";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import {
-  PALETTE,
-  Typography,
-  UrsorButton,
-  UrsorInputField,
-  UrsorTextField,
-} from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
 import { IVideo } from "./AstroContentColumns";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
@@ -17,7 +10,7 @@ import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
-import ApiController, { IVideoComment } from "../api";
+import { IVideoComment } from "../api";
 import _, { uniqueId } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 
@@ -42,46 +35,67 @@ const VideoCommentCard = (props: {
   value: string;
   time: number;
   deletionCallback: () => void;
-}) => (
-  <Stack
-    p="12px"
-    pb="6px"
-    height="107px"
-    minHeight="107px"
-    boxSizing="border-box"
-    justifyContent="space-between"
-    bgcolor="rgb(255,255,255)"
-    borderRadius="8px"
-  >
-    <Typography variant="small" maxLines={2}>
-      {props.value}
-    </Typography>
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
-      <VideoDialogTimestamp value={props.time} />
-      <Stack
-        height="30px"
-        width="30px"
-        bgcolor={PALETTE.secondary.grey[1]}
-        borderRadius="100%"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          "&:hover": { opacity: 0.7 },
-          transition: "0.2s",
-          cursor: "pointer",
-          svg: {
-            path: {
-              fill: PALETTE.system.red,
+  selected: boolean;
+}) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      p="12px"
+      pb="6px"
+      height="107px"
+      minHeight="107px"
+      boxSizing="border-box"
+      justifyContent="space-between"
+      bgcolor="rgb(255,255,255)"
+      borderRadius="8px"
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      sx={{
+        transition: "0.2s",
+        border: `2px solid ${
+          // eslint-disable-next-line no-nested-ternary -- idiotic rule
+          props.selected
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : "transparent"
+        }`,
+      }}
+    >
+      <Typography variant="small" maxLines={2}>
+        {props.value}
+      </Typography>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <VideoDialogTimestamp value={props.time} />
+        <Stack
+          height="30px"
+          width="30px"
+          bgcolor={PALETTE.secondary.grey[1]}
+          borderRadius="100%"
+          justifyContent="center"
+          alignItems="center"
+          sx={{
+            "&:hover": { opacity: 0.7 },
+            transition: "0.2s",
+            cursor: "pointer",
+            svg: {
+              path: {
+                fill: PALETTE.system.red,
+              },
             },
-          },
-        }}
-        onClick={props.deletionCallback}
-      >
-        <TrashcanIcon height="16px" width="16px" />
+          }}
+          onClick={props.deletionCallback}
+        >
+          <TrashcanIcon height="16px" width="16px" />
+        </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 const VideoDialogCommentsTab = (props: {
   url: string;
@@ -148,6 +162,11 @@ const VideoDialogCommentsTab = (props: {
       window.removeEventListener("keydown", handleUserKeyPress);
     };
   }, [handleUserKeyPress]);
+
+  const [selectedComment, setSelectedComment] = useState<string | undefined>();
+  useEffect(() => {
+    playing && setSelectedComment(undefined);
+  }, [playing]);
 
   return (
     <Stack
@@ -252,14 +271,24 @@ const VideoDialogCommentsTab = (props: {
               //_.sortBy(comments, (c) => c.time).map((c) => (
               _.reverse(comments.slice()).map((c) => (
                 <UrsorFadeIn key={c.id} duration={800}>
-                  <VideoCommentCard
-                    {...c}
-                    deletionCallback={() =>
-                      setComments(
-                        comments.filter((comment) => comment.id !== c.id)
-                      )
-                    }
-                  />
+                  <Stack
+                    sx={{
+                      // "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setSelectedComment(c.id)}
+                  >
+                    <VideoCommentCard
+                      {...c}
+                      deletionCallback={() =>
+                        setComments(
+                          comments.filter((comment) => comment.id !== c.id)
+                        )
+                      }
+                      selected={selectedComment === c.id}
+                    />
+                  </Stack>
                 </UrsorFadeIn>
               ))
             }
