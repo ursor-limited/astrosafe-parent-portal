@@ -339,6 +339,7 @@ const VideoDialogCommentsTab = (props: {
               variant="tertiary"
               size="small"
               onClick={addComment}
+              disabled={!comment}
             >
               Add
             </UrsorButton>
@@ -375,7 +376,7 @@ const VideoDialogCommentsTab = (props: {
                         setComments(newComments);
                         props.setComments(newComments);
                       }}
-                      selected={selectedComment === c.id}
+                      selected={!!selectedComment && selectedComment === c.id}
                       saveCallback={(value) => {
                         const newComments = comments.map((comment) =>
                           comment.id === c.id ? { ...comment, value } : comment
@@ -398,7 +399,7 @@ const VideoDialogCommentsTab = (props: {
           endIcon={props.video ? PencilIcon : ChevronRightIcon}
           width="100%"
         >
-          Publish
+          {props.video ? "Update" : "Publish"}
         </UrsorButton>
       </Stack>
     </Stack>

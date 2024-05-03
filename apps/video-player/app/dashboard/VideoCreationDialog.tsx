@@ -219,10 +219,9 @@ const VideoCreationDialog = (props: {
       ApiController.updateVideo(props.video.id, {
         title,
         description,
-        url,
-        thumbnailUrl,
         startTime: range?.[0],
         endTime: range?.[1],
+        comments,
       }).then(async (v) => {
         setLoading(false);
         props.editingCallback?.();
@@ -243,6 +242,9 @@ const VideoCreationDialog = (props: {
   );
 
   const [comments, setComments] = useState<IVideoComment[]>([]);
+  useEffect(() => {
+    props.video?.comments && setComments(props.video.comments);
+  }, [props.video?.comments]);
 
   return (
     <>
