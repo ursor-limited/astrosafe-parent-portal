@@ -118,6 +118,10 @@ const VideoDialogCommentsTab = (props: {
     undefined | ((time: number) => void)
   >();
 
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<IVideoComment[]>([]);
 
@@ -129,11 +133,14 @@ const VideoDialogCommentsTab = (props: {
     setComment("");
   };
 
-  const handleUserKeyPress = useCallback((event: any) => {
-    if (event.code === "Return") {
-      addComment();
-    }
-  }, []);
+  const handleUserKeyPress = useCallback(
+    (event: any) => {
+      if (event.code === "Return") {
+        !!comment && addComment();
+      }
+    },
+    [!!comment]
+  );
 
   useEffect(() => {
     window.addEventListener("keydown", handleUserKeyPress);
@@ -157,6 +164,7 @@ const VideoDialogCommentsTab = (props: {
         overflow={isMobile ? "hidden" : undefined}
         spacing="6px"
         position="relative"
+        justifyContent="space-between"
       >
         {props.provider ? (
           <Player
@@ -178,6 +186,7 @@ const VideoDialogCommentsTab = (props: {
             noBackdrop
             setCurrentTime={setCurrentTime}
             setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+            setPlayingSetter={(f) => setPlayingSetter(() => f)}
           />
         ) : null}
         {props.duration ? (
@@ -204,17 +213,19 @@ const VideoDialogCommentsTab = (props: {
           maxHeight={`${VIDEO_HEIGHT}px`}
           overflow="hidden"
         >
-          <UrsorTextField
-            value={comment}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setComment(event.target.value)
-            }
-            placeholder="Write a comment"
-            width="100%"
-            height="106px"
-            boldValue
-            white
-          />
+          <Stack onClick={() => playingSetter?.(false)}>
+            <UrsorTextField
+              value={comment}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setComment(event.target.value)
+              }
+              placeholder="Write a comment"
+              width="100%"
+              height="106px"
+              boldValue
+              white
+            />
+          </Stack>
           <Stack
             direction="row"
             width="100%"

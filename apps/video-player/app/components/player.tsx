@@ -29,6 +29,7 @@ const Player = (props: {
   startTime?: number;
   setCurrentTime?: (time: number) => void;
   setCurrentTimeSetter?: (f: (time: number) => void) => void;
+  setPlayingSetter?: (f: (playing: boolean) => void) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -186,16 +187,21 @@ const Player = (props: {
     }
   }, [props.endTime, currentTime, props.startTime]);
 
-  useEffect(
-    () =>
-      props.setCurrentTimeSetter?.((time: number) => {
-        setCurrentTime(time);
-        url?.includes("vimeo")
-          ? player?.setCurrentTime(time ?? 0)
-          : player?.seekTo(time ?? 0);
-      }),
-    [url, player]
-  );
+  useEffect(() => {
+    props.setCurrentTimeSetter?.((time: number) => {
+      setCurrentTime(time);
+      url?.includes("vimeo")
+        ? player?.setCurrentTime(time ?? 0)
+        : player?.seekTo(time ?? 0);
+    });
+    props.setPlayingSetter?.((p: boolean) => {
+      if (!p) {
+        url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
+      } else {
+        resume();
+      }
+    });
+  }, [url, player]);
 
   useEffect(() => {
     if (!url) return;
