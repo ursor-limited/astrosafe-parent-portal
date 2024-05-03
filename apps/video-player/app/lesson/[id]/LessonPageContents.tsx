@@ -503,7 +503,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
           (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
             ?.top ?? 0) + document.body.scrollTop
       ) ?? [];
-    console.log(dotYs);
     if (y < (dotYs?.[0] ?? 0)) {
       return 0;
     } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {

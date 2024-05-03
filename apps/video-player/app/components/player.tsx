@@ -156,7 +156,6 @@ const Player = (props: {
   useEffect(() => props.setCurrentTime?.(currentTime), [currentTime]);
 
   useEffect(() => {
-    console.log(props.endTime, currentTime);
     player &&
       props.endTime &&
       currentTime > props.endTime &&
