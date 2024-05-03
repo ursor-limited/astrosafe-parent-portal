@@ -1,4 +1,7 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- idiotic rule */
+import { useState } from "react";
 import { TextField } from "@mui/material";
 import { PALETTE } from "./palette";
 import { FONT_SIZES, LINE_HEIGHTS } from "./typography";
@@ -32,6 +35,8 @@ export interface UrsorTextFieldProps {
 }
 
 export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
+  const [hovering, setHovering] = useState<boolean>(false);
+  const [active, setActive] = useState(false);
   return (
     <TextField
       inputProps={{
@@ -49,8 +54,20 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         },
       }}
       multiline
-      onBlur={props.onBlur}
+      onBlur={() => {
+        setActive(false);
+        props.onBlur?.();
+      }}
       onChange={props.onChange}
+      onFocus={() => {
+        setActive(true);
+      }}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
       onKeyPress={props.onKeyPress}
       placeholder={props.placeholder}
       rows={N_ROWS}
@@ -67,8 +84,16 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
           ? "rgb(255,255,255)"
           : props.backgroundColor ?? PALETTE.secondary.grey[1],
         backdropFilter: props.backgroundBlur,
-
         "& fieldset": { border: "none" },
+        transition: "0.2s",
+        border: `2px solid ${
+          // eslint-disable-next-line no-nested-ternary -- idiotic rule
+          active
+            ? PALETTE.secondary.purple[2]
+            : hovering
+            ? PALETTE.secondary.purple[1]
+            : "transparent"
+        }`,
       }}
       value={props.value}
     />
