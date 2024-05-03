@@ -87,12 +87,27 @@ class ApiController {
     );
   }
 
-  static async getCreatedAtDict() {
+  static async getVideoCreatedAtDict() {
     return post(`video/getCreatedAtDict`, {}).then((response: any) =>
       response.json()
     );
   }
 
+
+  static async getTotalLessonCounts() {
+    return post(`lesson/getTotalLessonCounts`, {}).then((response: any) =>
+      response.json()
+    );
+  };
+  
+  static async getLessonCreatedAtDict() {
+    return post(`lesson/getCreatedAtDict`, {}).then((response: any) =>
+      response.json()
+    );
+  }
+
+
+  
   
 }
 

@@ -79,7 +79,6 @@ const countNonZeroValues = (array: IUser[], field: sortFilerTypes) => {
 
 const addCreationCountsToUserList = (firstList: IUser[], secondList: ICreatedDatesDict[] ) => {
 
-
   // Get an array of creatorIds from the keys of secondList
   const creatorIds = Object.keys(secondList) as string[];
 
@@ -108,8 +107,6 @@ const addCreationCountsToUserList = (firstList: IUser[], secondList: ICreatedDat
   return updatedFirstList;
 }
 
-
-
 export default function UserListPage() {
   const [userList, setUserList] = useState<IUser[] | null>(null);
   const [sortedUserList, setSortedUserList] = useState<IUser[] | null>(null);
@@ -120,17 +117,7 @@ export default function UserListPage() {
 
   // create functions to get these summary statistics cheaply
   const [videoCountDict, setVideoCountDict] = useState<IMetrics | null>(null);
-
-  // const [totalVideosLast28, setTotalVideosLast28] = useState<number | null>(null);
-  // const [totalVideosLast14, setTotalVideosLast14] = useState<number | null>(null);
-  // const [totalVideosLast7, setTotalVideosLast7] = useState<number | null>(null);
-  // const [totalVideosLast1, setTotalVideosLast1] = useState<number | null>(null);
-
-  const [totalLessons, setTotalLessons] = useState<number | null>(null);
-  const [totalLessonsLast28, setTotalLessonsLast28] = useState<number | null>(null);
-  const [totalLessonsLast14, setTotalLessonsLast14] = useState<number | null>(null);
-  const [totalLessonsLast7, setTotalLessonsLast7] = useState<number | null>(null);
-  const [totalLessonsLast1, setTotalLessonsLast1] = useState<number | null>(null);
+  const [lessonCountDict, setLessonCountDict] = useState<IMetrics | null>(null);
 
   const [aau, setAau] = useState<number | null>(null);
   const [mau, setMau] = useState<number | null>(null);
@@ -153,7 +140,6 @@ export default function UserListPage() {
   };
 
   useEffect(() => {
-    console.log("API CALLED")
   
     ApiController.listAllUsers().then((usrLst) => {
       setUserList(usrLst)      
@@ -164,10 +150,16 @@ export default function UserListPage() {
     setVideoCountDict(vCntDct)
       }
     )
-    ApiController.getCreatedAtDict().then((crtdDict) => {
+
+  ApiController.getTotalLessonCounts().then((lCntDct) =>{
+    setLessonCountDict(lCntDct)
+      }
+    )
+    ApiController.getLessonCreatedAtDict().then((crtdDict) => {
       setCreatedAtDict(crtdDict)
       }
     )
+  
 
   }, []);
 
@@ -175,11 +167,11 @@ export default function UserListPage() {
   useEffect(() => {
     if (sortedUserList){
       const srtedUsrLst = [...sortedUserList].sort((a, b) => {
-        if (typeof a[sortField] === 'string' && typeof b[sortField] === 'string') {
+        if (typeof (a[sortField] ?? "0") === 'string' && typeof (b[sortField] ?? "0") === 'string') {
           return sortBy === 'asc' 
           ? (a[sortField ?? "createdAt"] as string ?? "0").localeCompare(b[sortField ?? "createdAt"] as string ?? "0")
           : (b[sortField ?? "createdAt"] as string ?? "0").localeCompare(a[sortField ?? "createdAt"] as string ?? "0");
-        } else if  (typeof a[sortField] === 'number' && typeof b[sortField] === 'number') {
+        } else if  (typeof (a[sortField] ?? 0) === 'number' && typeof (b[sortField] ?? 0) === 'number') {
           if (sortBy === 'asc') {
             return (a[sortField] as number ?? 0) - (b[sortField] as number ?? 0);
           } else if (sortBy === 'desc') {
@@ -193,32 +185,26 @@ export default function UserListPage() {
       });
       setSortedUserList(srtedUsrLst)  
     }
-  }, [sortBy]);
+  }, [sortBy, sortField]);
 
 
   useEffect(() => {
-    console.log("setting sortedUser after API")
-    console.log("triggered 1")
     if (userList && createdAtDict) {
-      console.log("triggered 2")
-      var tmpUserList = addCreationCountsToUserList(userList, createdAtDict)
-      console.log(tmpUserList)
-      
+      var tmpUserList = addCreationCountsToUserList(userList, createdAtDict)      
       tmpUserList = tmpUserList?.map(user => ({
         ...user,
         activityalldays: getActivityInLastNDays(user.useDates, 9999),
-        activity1days: getActivityInLastNDays(user.useDates, 1),
-        activity7days: getActivityInLastNDays(user.useDates, 7),
-        activity14days: getActivityInLastNDays(user.useDates, 14),
-        activity28days: getActivityInLastNDays(user.useDates, 28),
+        activity1days: getActivityInLastNDays(user.useDates, 2),
+        activity7days: getActivityInLastNDays(user.useDates, 8),
+        activity14days: getActivityInLastNDays(user.useDates, 15),
+        activity28days: getActivityInLastNDays(user.useDates, 29),
         createdalldays: getActivityInLastNDays(user.creationDates ?? [], 9999),
-        created1days: getActivityInLastNDays(user.creationDates ?? [], 1),
-        created7days: getActivityInLastNDays(user.creationDates ?? [], 7),
-        created14days: getActivityInLastNDays(user.creationDates ?? [], 14),
-        created28days: getActivityInLastNDays(user.creationDates ?? [], 28),
+        created1days: getActivityInLastNDays(user.creationDates ?? [], 2),
+        created7days: getActivityInLastNDays(user.creationDates ?? [], 8),
+        created14days: getActivityInLastNDays(user.creationDates ?? [], 15),
+        created28days: getActivityInLastNDays(user.creationDates ?? [], 29),
       }));
       if (tmpUserList) {
-        // setUserList(tmpUserList)
         setSortedUserList(tmpUserList)
         const tmpAau = countNonZeroValues(tmpUserList, "activityalldays")
         const tmpMau = countNonZeroValues(tmpUserList, "activity28days")
@@ -247,20 +233,30 @@ export default function UserListPage() {
       WAU: {wau} |
       DAU: {dau}
     </h3>
+
     <h3>
-    Total videos: {videoCountDict?.allTime ? videoCountDict.allTime : 0} |
-    videos 28D: {videoCountDict?.twentyeightDaysAgo ? videoCountDict.twentyeightDaysAgo : 0} |
-    videos 14D: {videoCountDict?.forteenDaysAgo ? videoCountDict.forteenDaysAgo : 0} |
-    videos 7D: {videoCountDict?.sevenDaysAgo ? videoCountDict.sevenDaysAgo : 0} |
-    videos 1D: {videoCountDict?.oneDayAgo ? videoCountDict.oneDayAgo : 0} 
+    <b>Lessons:</b> Total: {lessonCountDict?.allTime ? lessonCountDict.allTime : 0} |
+    28D: {lessonCountDict?.twentyeightDaysAgo ? lessonCountDict.twentyeightDaysAgo : 0} |
+    14D: {lessonCountDict?.forteenDaysAgo ? lessonCountDict.forteenDaysAgo : 0} |
+    7D: {lessonCountDict?.sevenDaysAgo ? lessonCountDict.sevenDaysAgo : 0} |
+    1D: {lessonCountDict?.oneDayAgo ? lessonCountDict.oneDayAgo : 0} 
     </h3>
 
+    <h3>
+    <b>videos:</b> Total: {videoCountDict?.allTime ? videoCountDict.allTime : 0} |
+    28D: {videoCountDict?.twentyeightDaysAgo ? videoCountDict.twentyeightDaysAgo : 0} |
+    14D: {videoCountDict?.forteenDaysAgo ? videoCountDict.forteenDaysAgo : 0} |
+    7D: {videoCountDict?.sevenDaysAgo ? videoCountDict.sevenDaysAgo : 0} |
+    1D: {videoCountDict?.oneDayAgo ? videoCountDict.oneDayAgo : 0} 
+    </h3>
+
+    
 <table className={styles.table} >
       <thead>
       <tr>
           <th colSpan={colSpanNumber4}></th>
           <th colSpan={colSpanNumber5}>active days</th>
-          <th colSpan={colSpanNumber5}>created days</th>
+          <th colSpan={colSpanNumber5}>lesson created days</th>
           <th></th>
         </tr>
     <tr>
@@ -268,7 +264,7 @@ export default function UserListPage() {
     <td>{<Button onClick={() => sortActivity("auth0Id")} sortingDirection={(sortField === 'auth0Id') ? sortBy : null}>Email</Button>}</td>
     <td>{<Button onClick={() => sortActivity("createdAt")} sortingDirection={(sortField === 'createdAt') ? sortBy : null}>Created At</Button>}</td>
     <td>{<Button onClick={() => sortActivity("subscriptionDate")} sortingDirection={(sortField === 'subscriptionDate') ? sortBy : null}>Subscribed</Button>}</td>
-    <td>{<Button onClick={() => sortActivity("totalCreated")} sortingDirection={(sortField === 'totalCreated') ? sortBy : null}>Tot. Crtd.</Button>}</td>
+    <td>{<Button onClick={() => sortActivity("totalCreated")} sortingDirection={(sortField === 'totalCreated') ? sortBy : null}>Tot. Lsns.</Button>}</td>
     <td>{<Button onClick={() => sortActivity("activityalldays")} sortingDirection={(sortField === 'activityalldays') ? sortBy : null}>All</Button>}</td>
     <td>{<Button onClick={() => sortActivity("activity28days")} sortingDirection={(sortField === 'activity28days') ? sortBy : null}>28D</Button>}</td>
     <td>{<Button onClick={() => sortActivity("activity14days")} sortingDirection={(sortField === 'activity14days') ? sortBy : null}>14D</Button>}</td>
