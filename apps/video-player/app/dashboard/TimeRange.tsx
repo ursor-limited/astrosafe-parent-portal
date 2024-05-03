@@ -16,7 +16,7 @@ const TimeRange = (props: {
   duration: number;
   comments: IVideoComment[];
   selectedComment?: string;
-  setSelectedComment: (id: string) => void;
+  setSelectedComment: (id?: string) => void;
   setCurrentTime: (time: number) => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -265,13 +265,16 @@ const TimeRange = (props: {
               flex={1}
               position="relative"
               width={`calc(100% - ${DOT_SIZE}px)`}
+              sx={{
+                transition: "0.2s",
+                opacity: draggingEndLine || draggingStartLine ? 0 : 1,
+              }}
             >
               <Stack
                 position="absolute"
                 sx={{
                   transform: "translateX(-50%)",
                   cursor: draggingDot ? "grabbing" : "grab",
-                  opacity: draggingEndLine || draggingStartLine ? 0 : 1,
                   transition: "0.2s",
                 }}
                 left={`calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`}
@@ -285,6 +288,7 @@ const TimeRange = (props: {
                 borderRadius="100%"
                 onMouseDown={(e) => {
                   setDraggingDot(true);
+                  props.setSelectedComment(undefined);
                   e.preventDefault();
                 }}
               />
@@ -309,13 +313,9 @@ const TimeRange = (props: {
                         ? 0.5
                         : 1,
                   }}
-                  //left={c.time / props.duration}
                   left={`calc(${startLineX}px + ${
                     (100 * c.time) / props.duration
                   }%)`}
-                  // height="8px"
-                  // width="8px"
-                  // bgcolor={PALETTE.secondary.purple[2]}
                 >
                   <VideoCommentMarker height="12px" width="12px" />
                 </Stack>

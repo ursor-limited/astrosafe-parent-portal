@@ -3,8 +3,10 @@ import { isMobile } from "react-device-detect";
 import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
 import { IVideo } from "./AstroContentColumns";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import X from "@/images/icons/X.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
@@ -35,14 +37,20 @@ const VideoCommentCard = (props: {
   value: string;
   time: number;
   deletionCallback: () => void;
+  saveCallback: (newValue: string) => void;
   selected: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
+  const [editing, setEditing] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
+  useEffect(() => setValue(props.value), [props.value]);
+  useEffect(() => {
+    !props.selected && setEditing(false);
+  }, [props.selected]);
   return (
     <Stack
       p="12px"
       pb="6px"
-      height="107px"
       minHeight="107px"
       boxSizing="border-box"
       justifyContent="space-between"
@@ -65,32 +73,87 @@ const VideoCommentCard = (props: {
             : "transparent"
         }`,
       }}
+      spacing="6px"
     >
-      <Typography variant="small" maxLines={2}>
-        {props.value}
-      </Typography>
+      {editing ? (
+        <UrsorTextField
+          value={value}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(event.target.value)
+          }
+          placeholder="Write a comment"
+          width="100%"
+          height="110px"
+          boldValue
+          noBorder
+        />
+      ) : (
+        <Typography variant="small" maxLines={2}>
+          {props.value}
+        </Typography>
+      )}
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <VideoDialogTimestamp value={props.time} />
-        <Stack
-          height="30px"
-          width="30px"
-          bgcolor={PALETTE.secondary.grey[1]}
-          borderRadius="100%"
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            "&:hover": { opacity: 0.7 },
-            transition: "0.2s",
-            cursor: "pointer",
-            svg: {
-              path: {
-                fill: PALETTE.system.red,
+        <Stack direction="row" spacing="8px">
+          <Stack
+            height="30px"
+            width="30px"
+            bgcolor={PALETTE.secondary.grey[1]}
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              cursor: "pointer",
+              svg: {
+                path: {
+                  fill: PALETTE.primary.navy,
+                },
               },
-            },
-          }}
-          onClick={props.deletionCallback}
-        >
-          <TrashcanIcon height="16px" width="16px" />
+            }}
+            onClick={() => {
+              if (editing) {
+                setEditing(false);
+                props.saveCallback(value);
+              } else {
+                setEditing(true);
+              }
+            }}
+          >
+            {editing ? (
+              <CheckIcon height="16px" width="16px" />
+            ) : (
+              <PencilIcon height="16px" width="16px" />
+            )}
+          </Stack>
+          <Stack
+            height="30px"
+            width="30px"
+            bgcolor={PALETTE.secondary.grey[1]}
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+              cursor: "pointer",
+              svg: {
+                path: {
+                  fill: editing ? PALETTE.primary.navy : PALETTE.system.red,
+                },
+              },
+            }}
+            onClick={() =>
+              editing ? setEditing(false) : props.deletionCallback()
+            }
+          >
+            {editing ? (
+              <X height="16px" width="16px" />
+            ) : (
+              <TrashcanIcon height="16px" width="16px" />
+            )}
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
@@ -220,8 +283,11 @@ const VideoDialogCommentsTab = (props: {
             selectedComment={selectedComment}
             setSelectedComment={(id) => {
               setSelectedComment(id);
-              const time = comments.find((c) => c.id === id)?.time;
-              time && currentTimeSetter?.(time);
+              if (id) {
+                const time = comments.find((c) => c.id === id)?.time;
+                _.isNumber(time) && currentTimeSetter?.(time);
+                playingSetter?.(false);
+              }
             }}
           />
         ) : null}
@@ -301,6 +367,15 @@ const VideoDialogCommentsTab = (props: {
                         )
                       }
                       selected={selectedComment === c.id}
+                      saveCallback={(value) =>
+                        setComments(
+                          comments.map((comment) =>
+                            comment.id === c.id
+                              ? { ...comment, value }
+                              : comment
+                          )
+                        )
+                      }
                     />
                   </Stack>
                 </UrsorFadeIn>

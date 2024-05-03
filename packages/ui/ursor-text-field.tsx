@@ -32,6 +32,7 @@ export interface UrsorTextFieldProps {
   placeholder?: string;
   endIcon?: JSX.Element;
   white?: boolean;
+  noBorder?: boolean;
 }
 
 export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
@@ -86,14 +87,16 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
         backdropFilter: props.backgroundBlur,
         "& fieldset": { border: "none" },
         transition: "0.2s",
-        border: `2px solid ${
-          // eslint-disable-next-line no-nested-ternary -- idiotic rule
-          active
-            ? PALETTE.secondary.purple[2]
-            : hovering
-            ? PALETTE.secondary.purple[1]
-            : "transparent"
-        }`,
+        border: !props.noBorder
+          ? `2px solid ${
+              // eslint-disable-next-line no-nested-ternary -- idiotic rule
+              active
+                ? PALETTE.secondary.purple[2]
+                : hovering
+                ? PALETTE.secondary.purple[1]
+                : "transparent"
+            }`
+          : undefined,
       }}
       value={props.value}
     />
