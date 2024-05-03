@@ -7,24 +7,12 @@ import { PALETTE, Typography } from "ui";
 import useColumnWidth from "./useColumnWidth";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
+import { IVideo } from "../api";
 
 export const GRID_SPACING = "12px";
 const PADDING = "0px";
 
 export type ContentCard = "video" | "worksheet";
-
-export interface IVideo {
-  id: string;
-  creatorId: string;
-  url: string;
-  title: string;
-  description?: string;
-  thumbnailUrl?: string;
-  startTime?: number;
-  endTime?: number;
-  createdAt: string;
-  updatedAt: string;
-}
 
 export interface IAstroContentColumnsProps {
   title: string;

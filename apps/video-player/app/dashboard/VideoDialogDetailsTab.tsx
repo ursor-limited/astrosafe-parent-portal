@@ -8,13 +8,12 @@ import {
   UrsorInputField,
   UrsorTextField,
 } from "ui";
-import { IVideo } from "./AstroContentColumns";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useEffect, useState } from "react";
-import ApiController from "../api";
+import ApiController, { IVideo } from "../api";
 
 const VideoDialogDetailsTab = (props: {
   url: string;
