@@ -316,7 +316,12 @@ const TimeRange = (props: {
                   key={c.id}
                   position="absolute"
                   top="2px"
-                  onClick={() => props.setSelectedComment(c.id)}
+                  onClick={() => {
+                    props.setSelectedComment(c.id);
+                    document
+                      .getElementById(c.id)
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
                   sx={{
                     cursor: "pointer",
                     transform: "translateX(-50%)",

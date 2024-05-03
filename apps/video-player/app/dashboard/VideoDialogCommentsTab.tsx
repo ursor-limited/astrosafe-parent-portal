@@ -349,6 +349,7 @@ const VideoDialogCommentsTab = (props: {
               _.reverse(comments.slice()).map((c) => (
                 <UrsorFadeIn key={c.id} duration={800}>
                   <Stack
+                    id={c.id}
                     sx={{
                       // "&:hover": { opacity: 0.7 },
                       transition: "0.2s",
