@@ -33,11 +33,11 @@ const VideoDialogTimestamp = (props: { value: number }) => (
   </Stack>
 );
 
-const VideoCommentCard = (props: {
+export const VideoCommentCard = (props: {
   value: string;
   time: number;
-  deletionCallback: () => void;
-  saveCallback: (newValue: string) => void;
+  deletionCallback?: () => void;
+  saveCallback?: (newValue: string) => void;
   selected: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
@@ -94,67 +94,69 @@ const VideoCommentCard = (props: {
       )}
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <VideoDialogTimestamp value={props.time} />
-        <Stack direction="row" spacing="8px">
-          <Stack
-            height="30px"
-            width="30px"
-            bgcolor={PALETTE.secondary.grey[1]}
-            borderRadius="100%"
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              cursor: "pointer",
-              svg: {
-                path: {
-                  fill: PALETTE.primary.navy,
+        {props.deletionCallback || props.saveCallback ? (
+          <Stack direction="row" spacing="8px">
+            <Stack
+              height="30px"
+              width="30px"
+              bgcolor={PALETTE.secondary.grey[1]}
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                cursor: "pointer",
+                svg: {
+                  path: {
+                    fill: PALETTE.primary.navy,
+                  },
                 },
-              },
-            }}
-            onClick={() => {
-              if (editing) {
-                setEditing(false);
-                props.saveCallback(value);
-              } else {
-                setEditing(true);
+              }}
+              onClick={() => {
+                if (editing) {
+                  setEditing(false);
+                  props.saveCallback?.(value);
+                } else {
+                  setEditing(true);
+                }
+              }}
+            >
+              {editing ? (
+                <CheckIcon height="16px" width="16px" />
+              ) : (
+                <PencilIcon height="16px" width="16px" />
+              )}
+            </Stack>
+            <Stack
+              height="30px"
+              width="30px"
+              bgcolor={PALETTE.secondary.grey[1]}
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                cursor: "pointer",
+                svg: {
+                  path: {
+                    fill: editing ? PALETTE.primary.navy : PALETTE.system.red,
+                  },
+                },
+              }}
+              onClick={() =>
+                editing ? setEditing(false) : props.deletionCallback?.()
               }
-            }}
-          >
-            {editing ? (
-              <CheckIcon height="16px" width="16px" />
-            ) : (
-              <PencilIcon height="16px" width="16px" />
-            )}
+            >
+              {editing ? (
+                <X height="16px" width="16px" />
+              ) : (
+                <TrashcanIcon height="16px" width="16px" />
+              )}
+            </Stack>
           </Stack>
-          <Stack
-            height="30px"
-            width="30px"
-            bgcolor={PALETTE.secondary.grey[1]}
-            borderRadius="100%"
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              cursor: "pointer",
-              svg: {
-                path: {
-                  fill: editing ? PALETTE.primary.navy : PALETTE.system.red,
-                },
-              },
-            }}
-            onClick={() =>
-              editing ? setEditing(false) : props.deletionCallback()
-            }
-          >
-            {editing ? (
-              <X height="16px" width="16px" />
-            ) : (
-              <TrashcanIcon height="16px" width="16px" />
-            )}
-          </Stack>
-        </Stack>
+        ) : null}
       </Stack>
     </Stack>
   );
@@ -205,6 +207,8 @@ const VideoDialogCommentsTab = (props: {
       playingSetter(true); // have to set it playing so that the annoying auto-resume can be let loose before the user clicks anything
     }
   }, [playingSetter]);
+
+  const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<IVideoComment[]>([]);
@@ -284,6 +288,7 @@ const VideoDialogCommentsTab = (props: {
               noBackdrop
               noUrlStartTime
               setCurrentTime={setCurrentTime}
+              setMuteSetter={(f) => setMuteSetter(() => f)}
               setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
               setPlayingSetter={(f) => setPlayingSetter(() => f)}
             />
@@ -306,6 +311,9 @@ const VideoDialogCommentsTab = (props: {
                   playingSetter?.(false);
                 }
               }}
+              playing={playing}
+              playingCallback={() => playingSetter?.(!playing)}
+              muteCallback={() => muteSetter?.()}
             />
           ) : null}
         </Stack>

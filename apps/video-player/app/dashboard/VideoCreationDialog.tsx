@@ -93,7 +93,9 @@ const VideoCreationDialog = (props: {
   video?: IVideo;
 }) => {
   const router = useRouter();
-  const [url, setUrl] = useState<string>("");
+  const [url, setUrl] = useState<string>(
+    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
+  );
   useEffect(() => {
     props.video?.url && setUrl(props.video.url);
   }, [props.video?.url]);

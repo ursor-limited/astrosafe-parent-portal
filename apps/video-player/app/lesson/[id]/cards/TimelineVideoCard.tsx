@@ -1,21 +1,115 @@
 import { Stack, alpha } from "@mui/system";
-import Image from "next/image";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useEffect, useState } from "react";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
-import { UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
-import { useUserContext } from "@/app/components/UserContext";
+import CommentIcon from "@/images/icons/CommentIcon.svg";
+import TimeRange from "@/app/dashboard/TimeRange";
+import _ from "lodash";
+import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import UrsorPopover from "@/app/components/UrsorPopover";
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
+
+const TimelineCardCommentsButton = (props: {
+  comments: IVideoComment[];
+  selectedCommentId?: string;
+  callback: (id: string) => void;
+}) => {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <UrsorPopover
+      open={open}
+      closeCallback={() => setOpen(false)}
+      placement="right"
+      zIndex={9999}
+      noPadding
+      content={
+        <Stack
+          width="264px"
+          justifyContent="space-between"
+          p="12px"
+          spacing="12px"
+          overflow="scroll"
+          bgcolor={PALETTE.secondary.grey[1]}
+          borderRadius="12px"
+          maxHeight="460px"
+        >
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[3]}
+          >{`${props.comments.length} Comments`}</Typography>
+          {props.comments.map((c) => (
+            <UrsorFadeIn key={c.id} duration={800}>
+              <Stack
+                id={c.id}
+                sx={{
+                  transition: "0.2s",
+                  cursor: "pointer",
+                }}
+                onClick={() => props.callback(c.id)}
+              >
+                <VideoCommentCard
+                  {...c}
+                  selected={props.selectedCommentId === c.id}
+                />
+              </Stack>
+            </UrsorFadeIn>
+          ))}
+        </Stack>
+      }
+    >
+      <Stack
+        height="32px"
+        width="32px"
+        bgcolor="rgb(255,255,255)"
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+          cursor: "pointer",
+        }}
+        onClick={() => setOpen(true)}
+      >
+        <CommentIcon height="18px" width="18px" />
+      </Stack>
+    </UrsorPopover>
+  );
+};
+
+const TimelineVideoCardCommentDisplayCard = (props: IVideoComment) => (
+  <Stack
+    width="618px"
+    borderRadius="12px"
+    bgcolor="rgb(255,255,255)"
+    p="10px"
+    boxSizing="border-box"
+    spacing="8px"
+  >
+    <Typography variant="h5" bold>
+      {props.value}
+    </Typography>
+    <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
+      {`${Math.floor(props.time / 60)
+        .toString()
+        .padStart(2, "0")}:${Math.floor(props.time % 60)
+        .toString()
+        .padStart(2, "0")}`}
+    </Typography>
+  </Stack>
+);
 
 const TimelineVideoCard = (
   props: IVideo & {
@@ -72,6 +166,46 @@ const TimelineVideoCard = (
     [props.url]
   );
 
+  const [duration, setDuration] = useState<number | undefined>(10);
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
+
+  useEffect(() => {
+    if (_.isNumber(props?.startTime) && props.endTime) {
+      setRange([props?.startTime, props.endTime]);
+      setDuration(props.endTime - props.startTime);
+    }
+  }, []);
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const [currentTimeSetter, setCurrentTimeSetter] = useState<
+    undefined | ((time: number) => void)
+  >();
+
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
+  const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
+
+  const [selectedComment, setSelectedComment] = useState<string | undefined>();
+  useEffect(() => {
+    playing && setSelectedComment(undefined);
+  }, [playing]);
+
+  const [currentComment, setCurrentComment] = useState<
+    IVideoComment | undefined
+  >();
+  const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
+  useEffect(
+    () => setSortedComments(_.reverse(_.sortBy(props.comments, (c) => c.time))),
+    [props.comments]
+  );
+  useEffect(() => {
+    setCurrentComment(sortedComments.find((c) => c.time <= currentTime));
+  }, [currentTime, sortedComments]);
+
   return (
     <>
       <TimelineCard
@@ -91,6 +225,22 @@ const TimelineVideoCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        comments={sortedComments}
+        extraButton={
+          props.comments ? (
+            <TimelineCardCommentsButton
+              comments={props.comments}
+              selectedCommentId={selectedComment}
+              callback={(id) => {
+                setSelectedComment(id);
+                const newCurrentTime = sortedComments.find((c) => c.id === id)
+                  ?.time;
+                newCurrentTime && currentTimeSetter?.(newCurrentTime);
+                playingSetter?.(false);
+              }}
+            />
+          ) : undefined
+        }
         leftElement={
           <UrsorButton
             dark
@@ -108,28 +258,79 @@ const TimelineVideoCard = (
           </UrsorButton>
         }
       >
-        <Stack
-          width="100%"
-          flex={props.expanded ? 1 : undefined}
-          height={
-            props.expanded
-              ? undefined
-              : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
-          }
-          ref={setSizeRef}
-        >
-          {!props.noPlayer && provider && playerHeight ? (
-            <Stack height={props.noPlayer ? 0 : undefined}>
-              <Player
-                playerId={`player-${props.id}`}
-                url={props.url}
-                provider={provider}
-                width={playerWidth}
-                height={playerHeight}
-                startTime={props.startTime}
-                endTime={props.endTime}
-                noKitemark
-                borderRadius="8px"
+        <Stack spacing="8px" flex={1}>
+          <Stack flex={1} position="relative">
+            <Stack
+              width="100%"
+              flex={props.expanded ? 1 : undefined}
+              height={
+                props.expanded
+                  ? undefined
+                  : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+              }
+              ref={setSizeRef}
+            >
+              {!props.noPlayer && provider && playerHeight ? (
+                <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
+                  <Player
+                    playerId={`player-${props.id}`}
+                    url={props.url}
+                    provider={provider}
+                    width={playerWidth}
+                    height={playerHeight}
+                    startTime={props.startTime}
+                    endTime={props.endTime}
+                    borderRadius="8px"
+                    setDuration={(d) => {
+                      d && setDuration(d);
+                    }}
+                    playingCallback={setPlaying}
+                    setCurrentTime={setCurrentTime}
+                    setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                    setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                    setMuteSetter={(f) => setMuteSetter(() => f)}
+                  />
+                </Stack>
+              ) : null}
+            </Stack>
+            {currentComment ? (
+              <Stack
+                position="absolute"
+                bottom="16px"
+                left={0}
+                right={0}
+                marginLeft="auto"
+                marginRight="auto"
+                alignItems="center"
+              >
+                <TimelineVideoCardCommentDisplayCard {...currentComment} />
+              </Stack>
+            ) : null}
+          </Stack>
+          {duration ? (
+            <Stack
+              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              pb="6px"
+            >
+              <TimeRange
+                range={range}
+                duration={duration}
+                originalUrl={props.url}
+                currentTime={currentTime}
+                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                comments={props.comments}
+                selectedComment={selectedComment}
+                setSelectedComment={(id) => {
+                  setSelectedComment(id);
+                  if (id) {
+                    const time = props.comments.find((c) => c.id === id)?.time;
+                    _.isNumber(time) && currentTimeSetter?.(time);
+                    playingSetter?.(false);
+                  }
+                }}
+                playing={playing}
+                playingCallback={() => playingSetter?.(!playing)}
+                muteCallback={() => muteSetter?.()}
               />
             </Stack>
           ) : null}

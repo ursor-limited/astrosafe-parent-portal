@@ -30,6 +30,7 @@ const Player = (props: {
   setCurrentTime?: (time: number) => void;
   setCurrentTimeSetter?: (f: (time: number) => void) => void;
   setPlayingSetter?: (f: (playing: boolean) => void) => void;
+  setMuteSetter?: (f: () => void) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -40,6 +41,7 @@ const Player = (props: {
   noBackdrop?: boolean;
   borderRadius?: string;
   noUrlStartTime?: boolean;
+  autoPlay?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -236,10 +238,16 @@ const Player = (props: {
         resume();
       }
     });
+    props.setMuteSetter?.(() => {
+      if (props.provider === "youtube") {
+        player?.isMuted() ? player?.unMute() : player?.mute();
+      } else {
+        player?.setVolume(player?.getVolume() ? 0 : 1);
+      }
+    });
   }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
-    //setHasBegunPlaying(true);
     setEnded(false);
     if (
       url?.includes("youtube") &&
@@ -247,7 +255,6 @@ const Player = (props: {
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
-      console.log("foo-0-0-0-0-");
       player?.playVideo();
       //setPlaying(true);
     } else if (url?.includes("vimeo")) {

@@ -1,16 +1,19 @@
-import { Stack, alpha } from "@mui/system";
+import { Stack } from "@mui/system";
 import { PALETTE } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { IVideoComment } from "../api";
 import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
+import PlayIcon from "@/images/icons/PlayIcon.svg";
+import MuteIcon from "@/images/icons/UnmuteIcon.svg";
+import Star from "@/images/Star.svg";
 
 const DOT_SIZE = 14;
 
 const TimeRange = (props: {
   originalUrl?: string;
-  setRange: (range: [number, number] | undefined) => void;
+  setRange?: (range: [number, number] | undefined) => void;
   range?: [number, number];
   currentTime: number;
   duration: number;
@@ -18,6 +21,9 @@ const TimeRange = (props: {
   selectedComment?: string;
   setSelectedComment: (id?: string) => void;
   setCurrentTime: (time: number) => void;
+  playing: boolean;
+  playingCallback: () => void;
+  muteCallback: () => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -122,14 +128,14 @@ const TimeRange = (props: {
           currentTimeDotXRatio * (props.range[1] - props.range[0])
       );
       setDraggingDot(false);
-    } else if (draggingStartLine) {
+    } else if (draggingStartLine && props.setRange) {
       props.range &&
         props.setRange([
           Math.round((props.duration * startLineX) / lineWidth),
           props.range[1],
         ]);
       setDraggingStartLine(false);
-    } else if (draggingEndLine) {
+    } else if (draggingEndLine && props.setRange) {
       props.range &&
         props.setRange([
           props.range[0],
@@ -148,6 +154,7 @@ const TimeRange = (props: {
     lineWidth,
     props.setCurrentTime,
     props.range,
+    props.setRange,
   ]);
   useEffect(() => {
     window.addEventListener("mouseup", handleDraggingEnd);
@@ -157,259 +164,324 @@ const TimeRange = (props: {
   }, [handleDraggingEnd]);
 
   return (
-    <Stack
-      bgcolor={PALETTE.secondary.grey[1]}
-      borderRadius="8px"
-      height="40px"
-      justifyContent="center"
-      px="10px"
-    >
+    <Stack direction="row" spacing="12px" width="100%">
       <Stack
-        direction="row"
-        spacing={"20px"}
+        bgcolor={PALETTE.secondary.grey[1]}
+        height="40px"
+        width="40px"
+        borderRadius="100%"
         justifyContent="center"
-        width="100%"
+        alignItems="center"
+        onClick={props.playingCallback}
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+        }}
       >
-        <DurationLabel
-          value={props.range?.[0] ?? 0}
-          incrementCallback={() =>
-            props.setRange(
-              props.duration &&
-                props.range &&
-                _.isNumber(props.range?.[0]) &&
-                _.isNumber(props.range?.[1])
-                ? [Math.min(props.duration, props.range[0] + 1), props.range[1]]
-                : undefined
-            )
-          }
-          decrementCallback={() =>
-            props.setRange(
-              props.duration &&
-                props.range &&
-                _.isNumber(props.range?.[0]) &&
-                _.isNumber(props.range?.[1])
-                ? [Math.max(0, props.range[0] - 1), props.range[1]]
-                : undefined
-            )
-          }
-        />
-        <Stack position="relative" width="100%" height="42px" ref={setLineRef}>
+        {props.playing ? (
+          <Star width="20px" height="20px" />
+        ) : (
+          <PlayIcon width="20px" height="20px" />
+        )}
+      </Stack>
+      <Stack
+        bgcolor={PALETTE.secondary.grey[1]}
+        borderRadius="8px"
+        height="40px"
+        justifyContent="center"
+        px="10px"
+        flex={1}
+      >
+        <Stack
+          direction="row"
+          spacing={"20px"}
+          justifyContent="center"
+          width="100%"
+        >
+          {props.setRange ? (
+            <DurationLabel
+              value={props.range?.[0] ?? 0}
+              incrementCallback={() =>
+                props.setRange!(
+                  props.duration &&
+                    props.range &&
+                    _.isNumber(props.range?.[0]) &&
+                    _.isNumber(props.range?.[1])
+                    ? [
+                        Math.min(props.duration, props.range[0] + 1),
+                        props.range[1],
+                      ]
+                    : undefined
+                )
+              }
+              decrementCallback={() =>
+                props.setRange!(
+                  props.duration &&
+                    props.range &&
+                    _.isNumber(props.range?.[0]) &&
+                    _.isNumber(props.range?.[1])
+                    ? [Math.max(0, props.range[0] - 1), props.range[1]]
+                    : undefined
+                )
+              }
+            />
+          ) : null}
           <Stack
-            position="absolute"
-            height="4px"
+            position="relative"
             width="100%"
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-            sx={{
-              transition: "0.2s",
-              background:
-                draggingEndLine || draggingStartLine
-                  ? "#c2d5ff"
-                  : "linear-gradient(90deg,#F279C5,#FD9B41)",
-            }}
-          />
-          <Stack
-            position="absolute"
-            sx={{
-              transition: "0.2s",
-              background:
-                draggingEndLine || draggingStartLine ? "#c2d5ff" : "#c9c9c9",
-            }}
-            height="4px"
-            width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}
-            left={currentTimeDotXRatio * (endLineX - startLineX) + startLineX}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-          />
-          <Stack
-            position="absolute"
-            bgcolor={PALETTE.secondary.grey[2]}
-            height="4px"
-            width={startLineX}
-            left={0}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-          />
-          <Stack
-            position="absolute"
-            bgcolor={PALETTE.secondary.grey[2]}
-            height="4px"
-            width={lineWidth - endLineX}
-            left={endLineX}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-            // sx={{
-            //   opacity: draggingEndLine ? 0.4 : 1
-            // }}
-          />
-          <Stack
-            position="absolute"
-            left={0}
-            top={0}
-            bottom={0}
-            marginTop="auto"
-            marginBottom="auto"
-            height="100%"
-            width={endLineX - startLineX}
-            alignItems="center"
+            height="42px"
+            ref={setLineRef}
           >
             <Stack
-              flex={1}
-              position="relative"
-              width={`calc(100% - ${DOT_SIZE}px)`}
+              position="absolute"
+              height="4px"
+              width="100%"
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
               sx={{
                 transition: "0.2s",
-                opacity: draggingEndLine || draggingStartLine ? 0 : 1,
+                background:
+                  draggingEndLine || draggingStartLine
+                    ? "#c2d5ff"
+                    : "linear-gradient(90deg,#F279C5,#FD9B41)",
               }}
+            />
+            <Stack
+              position="absolute"
+              sx={{
+                transition: "0.2s",
+                background:
+                  draggingEndLine || draggingStartLine ? "#c2d5ff" : "#c9c9c9",
+              }}
+              height="4px"
+              width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}
+              left={currentTimeDotXRatio * (endLineX - startLineX) + startLineX}
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+            />
+            <Stack
+              position="absolute"
+              bgcolor={PALETTE.secondary.grey[2]}
+              height="4px"
+              width={startLineX}
+              left={0}
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+            />
+            <Stack
+              position="absolute"
+              bgcolor={PALETTE.secondary.grey[2]}
+              height="4px"
+              width={lineWidth - endLineX}
+              left={endLineX}
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+              // sx={{
+              //   opacity: draggingEndLine ? 0.4 : 1
+              // }}
+            />
+            <Stack
+              position="absolute"
+              left={0}
+              top={0}
+              bottom={0}
+              marginTop="auto"
+              marginBottom="auto"
+              height="100%"
+              width={endLineX - startLineX}
+              alignItems="center"
             >
               <Stack
-                position="absolute"
+                flex={1}
+                position="relative"
+                width={`calc(100% - ${DOT_SIZE}px)`}
                 sx={{
-                  transform: "translateX(-50%)",
-                  cursor: draggingDot ? "grabbing" : "grab",
                   transition: "0.2s",
+                  opacity: draggingEndLine || draggingStartLine ? 0 : 1,
                 }}
-                left={`calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`}
+              >
+                <Stack
+                  position="absolute"
+                  sx={{
+                    transform: "translateX(-50%)",
+                    cursor: draggingDot ? "grabbing" : "grab",
+                    transition: "0.2s",
+                  }}
+                  left={`calc(${startLineX}px + ${
+                    100 * currentTimeDotXRatio
+                  }%)`}
+                  top={0}
+                  bottom={0}
+                  marginTop="auto"
+                  marginBottom="auto"
+                  width={`${DOT_SIZE}px`}
+                  height={`${DOT_SIZE}px`}
+                  bgcolor={PALETTE.secondary.grey[4]}
+                  borderRadius="100%"
+                  onMouseDown={(e) => {
+                    setDraggingDot(true);
+                    props.setSelectedComment(undefined);
+                    e.preventDefault();
+                  }}
+                />
+              </Stack>
+            </Stack>
+            <Stack
+              position="absolute"
+              left={0}
+              top={0}
+              height="33%"
+              alignItems="center"
+              width="100%"
+            >
+              <Stack
+                flex={1}
+                position="relative"
+                width={`calc(100% - ${DOT_SIZE}px)`}
+              >
+                {props.comments.map((c) => (
+                  <Stack
+                    key={c.id}
+                    position="absolute"
+                    top="2px"
+                    onClick={() => {
+                      props.setSelectedComment(c.id);
+                      document.getElementById(c.id)?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                    sx={{
+                      cursor: "pointer",
+                      transform: "translateX(-50%)",
+                      opacity:
+                        props.selectedComment && props.selectedComment !== c.id
+                          ? 0.5
+                          : 1,
+                    }}
+                    left={((lineWidth - DOT_SIZE) * c.time) / props.duration}
+                  >
+                    <Stack
+                      sx={{
+                        "&:hover": {
+                          //opacity: 0.7,
+                          transform: "scale(1.3) translateY(-3px)",
+                          transition: "0.2s",
+                          transformOrigin: "center",
+                        },
+                      }}
+                    >
+                      <VideoCommentMarker height="12px" width="12px" />
+                    </Stack>
+                  </Stack>
+                ))}
+              </Stack>
+            </Stack>
+            <Stack width={0}>
+              <Stack
+                position="absolute"
+                height="20px"
+                width="4px"
+                bgcolor={PALETTE.secondary.blue[2]}
+                borderRadius="2px"
                 top={0}
                 bottom={0}
                 marginTop="auto"
                 marginBottom="auto"
-                width={`${DOT_SIZE}px`}
-                height={`${DOT_SIZE}px`}
-                bgcolor={PALETTE.secondary.grey[4]}
-                borderRadius="100%"
+                sx={{
+                  transform: "translateX(-50%)",
+                  cursor: props.setRange
+                    ? draggingStartLine
+                      ? "grabbing"
+                      : "grab"
+                    : undefined,
+                }}
+                left={startLineX}
                 onMouseDown={(e) => {
-                  setDraggingDot(true);
-                  props.setSelectedComment(undefined);
+                  setDraggingStartLine(true);
+                  e.preventDefault();
+                }}
+              />
+              <Stack
+                position="absolute"
+                height="20px"
+                width="4px"
+                bgcolor={PALETTE.secondary.blue[2]}
+                borderRadius="2px"
+                top={0}
+                bottom={0}
+                marginTop="auto"
+                marginBottom="auto"
+                sx={{
+                  transform: "translateX(-50%)",
+                  cursor: props.setRange
+                    ? draggingEndLine
+                      ? "grabbing"
+                      : "grab"
+                    : undefined,
+                }}
+                left={endLineX}
+                onMouseDown={(e) => {
+                  setDraggingEndLine(true);
                   e.preventDefault();
                 }}
               />
             </Stack>
           </Stack>
-          <Stack
-            position="absolute"
-            left={0}
-            top={0}
-            height="33%"
-            alignItems="center"
-            width="100%"
-          >
-            <Stack
-              flex={1}
-              position="relative"
-              width={`calc(100% - ${DOT_SIZE}px)`}
-            >
-              {props.comments.map((c) => (
-                <Stack
-                  key={c.id}
-                  position="absolute"
-                  top="2px"
-                  onClick={() => {
-                    props.setSelectedComment(c.id);
-                    document
-                      .getElementById(c.id)
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }}
-                  sx={{
-                    cursor: "pointer",
-                    transform: "translateX(-50%)",
-                    opacity:
-                      props.selectedComment && props.selectedComment !== c.id
-                        ? 0.5
-                        : 1,
-                  }}
-                  left={((lineWidth - DOT_SIZE) * c.time) / props.duration}
-                >
-                  <Stack
-                    sx={{
-                      "&:hover": {
-                        //opacity: 0.7,
-                        transform: "scale(1.3) translateY(-3px)",
-                        transition: "0.2s",
-                        transformOrigin: "center",
-                      },
-                    }}
-                  >
-                    <VideoCommentMarker height="12px" width="12px" />
-                  </Stack>
-                </Stack>
-              ))}
-            </Stack>
-          </Stack>
-          <Stack width={0}>
-            <Stack
-              position="absolute"
-              height="20px"
-              width="4px"
-              bgcolor={PALETTE.secondary.blue[2]}
-              borderRadius="2px"
-              top={0}
-              bottom={0}
-              marginTop="auto"
-              marginBottom="auto"
-              sx={{
-                transform: "translateX(-50%)",
-                cursor: draggingStartLine ? "grabbing" : "grab",
-              }}
-              left={startLineX}
-              onMouseDown={(e) => {
-                setDraggingStartLine(true);
-                e.preventDefault();
-              }}
+          {props.setRange ? (
+            <DurationLabel
+              value={props.range?.[1] ?? 0}
+              incrementCallback={() =>
+                props.setRange!(
+                  props.duration &&
+                    props.range &&
+                    _.isNumber(props.range?.[0]) &&
+                    _.isNumber(props.range?.[1])
+                    ? [
+                        props.range[0],
+                        Math.min(props.duration, props.range[1] + 1),
+                      ]
+                    : undefined
+                )
+              }
+              decrementCallback={() =>
+                props.setRange!(
+                  props.duration &&
+                    props.range &&
+                    _.isNumber(props.range?.[0]) &&
+                    _.isNumber(props.range?.[1])
+                    ? [props.range[0], Math.max(0, props.range[1] - 1)]
+                    : undefined
+                )
+              }
             />
-            <Stack
-              position="absolute"
-              height="20px"
-              width="4px"
-              bgcolor={PALETTE.secondary.blue[2]}
-              borderRadius="2px"
-              top={0}
-              bottom={0}
-              marginTop="auto"
-              marginBottom="auto"
-              sx={{
-                transform: "translateX(-50%)",
-                cursor: draggingEndLine ? "grabbing" : "grab",
-              }}
-              left={endLineX}
-              onMouseDown={(e) => {
-                setDraggingEndLine(true);
-                e.preventDefault();
-              }}
-            />
-          </Stack>
+          ) : null}
         </Stack>
-        <DurationLabel
-          value={props.range?.[1] ?? 0}
-          incrementCallback={() =>
-            props.setRange(
-              props.duration &&
-                props.range &&
-                _.isNumber(props.range?.[0]) &&
-                _.isNumber(props.range?.[1])
-                ? [props.range[0], Math.min(props.duration, props.range[1] + 1)]
-                : undefined
-            )
-          }
-          decrementCallback={() =>
-            props.setRange(
-              props.duration &&
-                props.range &&
-                _.isNumber(props.range?.[0]) &&
-                _.isNumber(props.range?.[1])
-                ? [props.range[0], Math.max(0, props.range[1] - 1)]
-                : undefined
-            )
-          }
-        />
+      </Stack>
+      <Stack
+        bgcolor={PALETTE.secondary.grey[1]}
+        height="40px"
+        width="40px"
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        onClick={props.muteCallback}
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+        }}
+      >
+        <MuteIcon width="20px" height="20px" />
       </Stack>
     </Stack>
   );
