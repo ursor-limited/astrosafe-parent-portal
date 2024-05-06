@@ -125,12 +125,12 @@ const TimelineVideoCard = (
   >();
   const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
   useEffect(
-    () => setSortedComments(_.sortBy(props.comments, (c) => c.time)),
+    () => setSortedComments(_.reverse(_.sortBy(props.comments, (c) => c.time))),
     [props.comments]
   );
   useEffect(() => {
-    setCurrentComment(props.comments.find((c) => c.time >= currentTime));
-  }, [currentTime, props.comments]);
+    setCurrentComment(sortedComments.find((c) => c.time <= currentTime));
+  }, [currentTime, sortedComments]);
 
   return (
     <>
