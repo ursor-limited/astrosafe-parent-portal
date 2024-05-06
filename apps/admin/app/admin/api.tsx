@@ -12,7 +12,7 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS['development']}/${route}`
+    `${BACKEND_URLS[NEXT_PUBLIC_VERCEL_ENV]}/${route}`
   );
 
 const post = (route: string, body: any) =>
