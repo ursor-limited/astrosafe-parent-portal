@@ -13,6 +13,8 @@ import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
 import { UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import { useUserContext } from "@/app/components/UserContext";
+import TimeRange from "@/app/dashboard/TimeRange";
+import _ from "lodash";
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -72,6 +74,32 @@ const TimelineVideoCard = (
     [props.url]
   );
 
+  const [duration, setDuration] = useState<number | undefined>(10);
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
+
+  useEffect(() => {
+    if (_.isNumber(props?.startTime) && props.endTime) {
+      setRange([props?.startTime, props.endTime]);
+      setDuration(props.endTime - props.startTime);
+    }
+  }, []);
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const [currentTimeSetter, setCurrentTimeSetter] = useState<
+    undefined | ((time: number) => void)
+  >();
+
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
+  const [selectedComment, setSelectedComment] = useState<string | undefined>();
+  useEffect(() => {
+    playing && setSelectedComment(undefined);
+  }, [playing]);
+
   return (
     <>
       <TimelineCard
@@ -108,32 +136,59 @@ const TimelineVideoCard = (
           </UrsorButton>
         }
       >
-        <Stack
-          width="100%"
-          flex={props.expanded ? 1 : undefined}
-          height={
-            props.expanded
-              ? undefined
-              : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
-          }
-          ref={setSizeRef}
-        >
-          {!props.noPlayer && provider && playerHeight ? (
-            <Stack height={props.noPlayer ? 0 : undefined}>
-              <Player
-                playerId={`player-${props.id}`}
-                url={props.url}
-                provider={provider}
-                width={playerWidth}
-                height={playerHeight}
-                startTime={props.startTime}
-                endTime={props.endTime}
-                noKitemark
-                borderRadius="8px"
-              />
-            </Stack>
-          ) : null}
+        <Stack flex={1}>
+          <Stack
+            width="100%"
+            flex={props.expanded ? 1 : undefined}
+            height={
+              props.expanded
+                ? undefined
+                : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+            }
+            ref={setSizeRef}
+          >
+            {!props.noPlayer && provider && playerHeight ? (
+              <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
+                <Player
+                  playerId={`player-${props.id}`}
+                  url={props.url}
+                  provider={provider}
+                  width={playerWidth}
+                  height={playerHeight}
+                  startTime={props.startTime}
+                  endTime={props.endTime}
+                  borderRadius="8px"
+                  setDuration={(d) => {
+                    d && setDuration(d);
+                  }}
+                  playingCallback={setPlaying}
+                  setCurrentTime={setCurrentTime}
+                  setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                  setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                />
+              </Stack>
+            ) : null}
+          </Stack>
         </Stack>
+        {props.expanded && duration ? (
+          <TimeRange
+            range={range}
+            duration={duration}
+            originalUrl={props.url}
+            currentTime={currentTime}
+            setCurrentTime={(time) => currentTimeSetter?.(time)}
+            comments={props.comments}
+            selectedComment={selectedComment}
+            setSelectedComment={(id) => {
+              setSelectedComment(id);
+              if (id) {
+                const time = props.comments.find((c) => c.id === id)?.time;
+                _.isNumber(time) && currentTimeSetter?.(time);
+                playingSetter?.(false);
+              }
+            }}
+          />
+        ) : null}
       </TimelineCard>
       {deletionDialogOpen ? (
         <DeletionDialog

@@ -40,6 +40,7 @@ const Player = (props: {
   noBackdrop?: boolean;
   borderRadius?: string;
   noUrlStartTime?: boolean;
+  autoPlay?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
@@ -247,7 +248,6 @@ const Player = (props: {
         player?.playerInfo.playerState === 0 || // 0 is the ended
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
-      console.log("foo-0-0-0-0-");
       player?.playVideo();
       //setPlaying(true);
     } else if (url?.includes("vimeo")) {
