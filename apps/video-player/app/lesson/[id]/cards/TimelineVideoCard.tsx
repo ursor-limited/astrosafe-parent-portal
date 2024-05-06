@@ -227,7 +227,7 @@ const TimelineVideoCard = (
         useExpandedHeight
         comments={sortedComments}
         extraButton={
-          props.comments ? (
+          !props.noPlayer && props.comments ? (
             <TimelineCardCommentsButton
               comments={props.comments}
               selectedCommentId={selectedComment}

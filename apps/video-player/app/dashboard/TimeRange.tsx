@@ -7,7 +7,7 @@ import { IVideoComment } from "../api";
 import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
 import MuteIcon from "@/images/icons/UnmuteIcon.svg";
-import Star from "@/images/Star.svg";
+import LocationIcon from "@/images/icons/LocationIcon.svg";
 
 const DOT_SIZE = 14;
 
@@ -180,7 +180,7 @@ const TimeRange = (props: {
         }}
       >
         {props.playing ? (
-          <Star width="20px" height="20px" />
+          <LocationIcon width="20px" height="20px" />
         ) : (
           <PlayIcon width="20px" height="20px" />
         )}
