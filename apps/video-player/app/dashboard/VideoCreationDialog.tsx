@@ -20,6 +20,7 @@ import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
 export const VIDEO_WIDTH = 940; //390;
+//export const VIMEO_VIDEO_WIDTH = 970; //390;
 export const VIDEO_HEIGHT = 522;
 
 const VideoCreationDialogTabButton = (props: {
@@ -126,6 +127,8 @@ const VideoCreationDialog = (props: {
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
   );
+
+  console.log(provider, "9090b");
 
   useEffect(
     () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),

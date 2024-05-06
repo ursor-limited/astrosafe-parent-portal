@@ -272,11 +272,16 @@ const VideoDialogCommentsTab = (props: {
               playerId="creation"
               url={props.url}
               provider={props.provider}
-              width={Math.min(playerWidth, VIDEO_WIDTH)}
-              height={
-                Math.min(playerWidth, VIDEO_WIDTH) *
-                (VIDEO_HEIGHT / VIDEO_WIDTH)
+              // width={Math.min(playerWidth, VIDEO_WIDTH)}
+              // height={
+              //   Math.min(playerWidth, VIDEO_WIDTH) *
+              //   (VIDEO_HEIGHT / VIDEO_WIDTH)
+              // }
+              width={
+                // props.provider === "youtube" ? VIDEO_WIDTH : VIMEO_VIDEO_WIDTH
+                VIDEO_WIDTH
               }
+              height={VIDEO_HEIGHT}
               setDuration={(d) => {
                 d && props.setDuration(d);
               }}

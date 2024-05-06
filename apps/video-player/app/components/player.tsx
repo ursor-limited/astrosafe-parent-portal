@@ -242,7 +242,7 @@ const Player = (props: {
       if (props.provider === "youtube") {
         player?.isMuted() ? player?.unMute() : player?.mute();
       } else {
-        player?.setVolume(player?.getVolume() ? 0 : 1);
+        player?.getVolume().then((v: number) => player?.setVolume(v ? 0 : 1));
       }
     });
   }, [url, player, hasBegunPlaying]);
