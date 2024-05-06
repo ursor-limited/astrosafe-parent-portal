@@ -348,7 +348,7 @@ const TimeRange = (props: {
                 position="relative"
                 width={`calc(100% - ${DOT_SIZE}px)`}
               >
-                {props.comments.map((c) => (
+                {props.comments?.map((c) => (
                   <Stack
                     key={c.id}
                     position="absolute"
