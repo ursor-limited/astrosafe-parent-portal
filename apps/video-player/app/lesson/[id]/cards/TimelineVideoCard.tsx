@@ -11,13 +11,85 @@ import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import CommentIcon from "@/images/icons/CommentIcon.svg";
 import TimeRange from "@/app/dashboard/TimeRange";
 import _ from "lodash";
+import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import UrsorPopover from "@/app/components/UrsorPopover";
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const TimelineVideoCardCommentCard = (props: IVideoComment) => (
+const TimelineCardCommentsButton = (props: {
+  comments: IVideoComment[];
+  selectedCommentId?: string;
+  callback: (id: string) => void;
+}) => {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <UrsorPopover
+      open={open}
+      closeCallback={() => setOpen(false)}
+      placement="right"
+      zIndex={9999}
+      noPadding
+      content={
+        <Stack
+          width="264px"
+          justifyContent="space-between"
+          p="12px"
+          spacing="12px"
+          overflow="scroll"
+          bgcolor={PALETTE.secondary.grey[1]}
+          borderRadius="12px"
+          maxHeight="460px"
+        >
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[3]}
+          >{`${props.comments.length} Comments`}</Typography>
+          {props.comments.map((c) => (
+            <UrsorFadeIn key={c.id} duration={800}>
+              <Stack
+                id={c.id}
+                sx={{
+                  transition: "0.2s",
+                  cursor: "pointer",
+                }}
+                onClick={() => props.callback(c.id)}
+              >
+                <VideoCommentCard
+                  {...c}
+                  selected={props.selectedCommentId === c.id}
+                />
+              </Stack>
+            </UrsorFadeIn>
+          ))}
+        </Stack>
+      }
+    >
+      <Stack
+        height="32px"
+        width="32px"
+        bgcolor="rgb(255,255,255)"
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+          cursor: "pointer",
+        }}
+        onClick={() => setOpen(true)}
+      >
+        <CommentIcon height="18px" width="18px" />
+      </Stack>
+    </UrsorPopover>
+  );
+};
+
+const TimelineVideoCardCommentDisplayCard = (props: IVideoComment) => (
   <Stack
     width="618px"
     borderRadius="12px"
@@ -151,6 +223,22 @@ const TimelineVideoCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        comments={sortedComments}
+        extraButton={
+          props.comments ? (
+            <TimelineCardCommentsButton
+              comments={props.comments}
+              selectedCommentId={selectedComment}
+              callback={(id) => {
+                setSelectedComment(id);
+                const newCurrentTime = sortedComments.find((c) => c.id === id)
+                  ?.time;
+                newCurrentTime && currentTimeSetter?.(newCurrentTime);
+                playingSetter?.(false);
+              }}
+            />
+          ) : undefined
+        }
         leftElement={
           <UrsorButton
             dark
@@ -212,7 +300,7 @@ const TimelineVideoCard = (
                 marginRight="auto"
                 alignItems="center"
               >
-                <TimelineVideoCardCommentCard {...currentComment} />
+                <TimelineVideoCardCommentDisplayCard {...currentComment} />
               </Stack>
             ) : null}
           </Stack>
