@@ -1,23 +1,43 @@
 import { Stack, alpha } from "@mui/system";
-import Image from "next/image";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useEffect, useState } from "react";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
-import { UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
-import { useUserContext } from "@/app/components/UserContext";
 import TimeRange from "@/app/dashboard/TimeRange";
 import _ from "lodash";
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
+
+const TimelineVideoCardCommentCard = (props: IVideoComment) => (
+  <Stack
+    width="618px"
+    borderRadius="12px"
+    bgcolor="rgb(255,255,255)"
+    p="10px"
+    boxSizing="border-box"
+    spacing="8px"
+  >
+    <Typography variant="h5" bold>
+      {props.value}
+    </Typography>
+    <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
+      {`${Math.floor(props.time / 60)
+        .toString()
+        .padStart(2, "0")}:${Math.floor(props.time % 60)
+        .toString()
+        .padStart(2, "0")}`}
+    </Typography>
+  </Stack>
+);
 
 const TimelineVideoCard = (
   props: IVideo & {
@@ -100,6 +120,18 @@ const TimelineVideoCard = (
     playing && setSelectedComment(undefined);
   }, [playing]);
 
+  const [currentComment, setCurrentComment] = useState<
+    IVideoComment | undefined
+  >();
+  const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
+  useEffect(
+    () => setSortedComments(_.sortBy(props.comments, (c) => c.time)),
+    [props.comments]
+  );
+  useEffect(() => {
+    setCurrentComment(props.comments.find((c) => c.time >= currentTime));
+  }, [currentTime, props.comments]);
+
   return (
     <>
       <TimelineCard
@@ -136,59 +168,79 @@ const TimelineVideoCard = (
           </UrsorButton>
         }
       >
-        <Stack flex={1}>
-          <Stack
-            width="100%"
-            flex={props.expanded ? 1 : undefined}
-            height={
-              props.expanded
-                ? undefined
-                : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
-            }
-            ref={setSizeRef}
-          >
-            {!props.noPlayer && provider && playerHeight ? (
-              <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
-                <Player
-                  playerId={`player-${props.id}`}
-                  url={props.url}
-                  provider={provider}
-                  width={playerWidth}
-                  height={playerHeight}
-                  startTime={props.startTime}
-                  endTime={props.endTime}
-                  borderRadius="8px"
-                  setDuration={(d) => {
-                    d && setDuration(d);
-                  }}
-                  playingCallback={setPlaying}
-                  setCurrentTime={setCurrentTime}
-                  setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
-                  setPlayingSetter={(f) => setPlayingSetter(() => f)}
-                />
+        <Stack spacing="8px" flex={1}>
+          <Stack flex={1} position="relative">
+            <Stack
+              width="100%"
+              flex={props.expanded ? 1 : undefined}
+              height={
+                props.expanded
+                  ? undefined
+                  : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+              }
+              ref={setSizeRef}
+            >
+              {!props.noPlayer && provider && playerHeight ? (
+                <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
+                  <Player
+                    playerId={`player-${props.id}`}
+                    url={props.url}
+                    provider={provider}
+                    width={playerWidth}
+                    height={playerHeight}
+                    startTime={props.startTime}
+                    endTime={props.endTime}
+                    borderRadius="8px"
+                    setDuration={(d) => {
+                      d && setDuration(d);
+                    }}
+                    playingCallback={setPlaying}
+                    setCurrentTime={setCurrentTime}
+                    setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                    setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                  />
+                </Stack>
+              ) : null}
+            </Stack>
+            {currentComment ? (
+              <Stack
+                position="absolute"
+                bottom="16px"
+                left={0}
+                right={0}
+                marginLeft="auto"
+                marginRight="auto"
+                alignItems="center"
+              >
+                <TimelineVideoCardCommentCard {...currentComment} />
               </Stack>
             ) : null}
           </Stack>
+          {props.expanded && duration ? (
+            <Stack
+              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              pb="6px"
+            >
+              <TimeRange
+                range={range}
+                duration={duration}
+                originalUrl={props.url}
+                currentTime={currentTime}
+                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                comments={props.comments}
+                selectedComment={selectedComment}
+                setSelectedComment={(id) => {
+                  setSelectedComment(id);
+                  if (id) {
+                    const time = props.comments.find((c) => c.id === id)?.time;
+                    _.isNumber(time) && currentTimeSetter?.(time);
+                    playingSetter?.(false);
+                  }
+                }}
+              />
+            </Stack>
+          ) : null}
         </Stack>
-        {props.expanded && duration ? (
-          <TimeRange
-            range={range}
-            duration={duration}
-            originalUrl={props.url}
-            currentTime={currentTime}
-            setCurrentTime={(time) => currentTimeSetter?.(time)}
-            comments={props.comments}
-            selectedComment={selectedComment}
-            setSelectedComment={(id) => {
-              setSelectedComment(id);
-              if (id) {
-                const time = props.comments.find((c) => c.id === id)?.time;
-                _.isNumber(time) && currentTimeSetter?.(time);
-                playingSetter?.(false);
-              }
-            }}
-          />
-        ) : null}
       </TimelineCard>
       {deletionDialogOpen ? (
         <DeletionDialog
