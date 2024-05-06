@@ -30,6 +30,7 @@ const Player = (props: {
   setCurrentTime?: (time: number) => void;
   setCurrentTimeSetter?: (f: (time: number) => void) => void;
   setPlayingSetter?: (f: (playing: boolean) => void) => void;
+  setMuteSetter?: (f: () => void) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -237,10 +238,16 @@ const Player = (props: {
         resume();
       }
     });
+    props.setMuteSetter?.(() => {
+      if (props.provider === "youtube") {
+        player?.isMuted() ? player?.unMute() : player?.mute();
+      } else {
+        player?.setVolume(player?.getVolume() ? 0 : 1);
+      }
+    });
   }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
-    //setHasBegunPlaying(true);
     setEnded(false);
     if (
       url?.includes("youtube") &&

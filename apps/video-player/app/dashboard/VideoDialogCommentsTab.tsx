@@ -208,6 +208,8 @@ const VideoDialogCommentsTab = (props: {
     }
   }, [playingSetter]);
 
+  const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
+
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<IVideoComment[]>([]);
   useEffect(() => setComments(props.comments), [props.comments]);
@@ -286,6 +288,7 @@ const VideoDialogCommentsTab = (props: {
               noBackdrop
               noUrlStartTime
               setCurrentTime={setCurrentTime}
+              setMuteSetter={(f) => setMuteSetter(() => f)}
               setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
               setPlayingSetter={(f) => setPlayingSetter(() => f)}
             />
@@ -310,6 +313,7 @@ const VideoDialogCommentsTab = (props: {
               }}
               playing={playing}
               playingCallback={() => playingSetter?.(!playing)}
+              muteCallback={() => muteSetter?.()}
             />
           ) : null}
         </Stack>

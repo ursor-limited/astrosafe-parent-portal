@@ -1,4 +1,4 @@
-import { Stack, alpha } from "@mui/system";
+import { Stack } from "@mui/system";
 import { PALETTE } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IVideoComment } from "../api";
 import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
+import MuteIcon from "@/images/icons/UnmuteIcon.svg";
 import Star from "@/images/Star.svg";
 
 const DOT_SIZE = 14;
@@ -22,6 +23,7 @@ const TimeRange = (props: {
   setCurrentTime: (time: number) => void;
   playing: boolean;
   playingCallback: () => void;
+  muteCallback: () => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -464,6 +466,22 @@ const TimeRange = (props: {
             />
           ) : null}
         </Stack>
+      </Stack>
+      <Stack
+        bgcolor={PALETTE.secondary.grey[1]}
+        height="40px"
+        width="40px"
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        onClick={props.muteCallback}
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+        }}
+      >
+        <MuteIcon width="20px" height="20px" />
       </Stack>
     </Stack>
   );
