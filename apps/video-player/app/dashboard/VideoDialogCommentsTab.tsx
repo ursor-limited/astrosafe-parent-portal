@@ -308,6 +308,8 @@ const VideoDialogCommentsTab = (props: {
                   playingSetter?.(false);
                 }
               }}
+              playing={playing}
+              playingCallback={() => playingSetter?.(!playing)}
             />
           ) : null}
         </Stack>

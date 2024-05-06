@@ -325,6 +325,8 @@ const TimelineVideoCard = (
                     playingSetter?.(false);
                   }
                 }}
+                playing={playing}
+                playingCallback={() => playingSetter?.(!playing)}
               />
             </Stack>
           ) : null}
