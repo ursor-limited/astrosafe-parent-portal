@@ -7,11 +7,7 @@ import LocationIcon from "@/images/icons/LocationIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import {
-  VIDEO_HEIGHT,
-  VIDEO_WIDTH,
-  VIMEO_VIDEO_WIDTH,
-} from "./VideoCreationDialog";
+import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
@@ -282,7 +278,8 @@ const VideoDialogCommentsTab = (props: {
               //   (VIDEO_HEIGHT / VIDEO_WIDTH)
               // }
               width={
-                props.provider === "youtube" ? VIDEO_WIDTH : VIMEO_VIDEO_WIDTH
+                // props.provider === "youtube" ? VIDEO_WIDTH : VIMEO_VIDEO_WIDTH
+                VIDEO_WIDTH
               }
               height={VIDEO_HEIGHT}
               setDuration={(d) => {
