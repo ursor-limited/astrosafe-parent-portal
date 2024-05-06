@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
-import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
-import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import Image from "next/image";

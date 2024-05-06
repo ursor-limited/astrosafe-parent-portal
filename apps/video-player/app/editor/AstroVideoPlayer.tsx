@@ -114,13 +114,13 @@ const AstroVideoPlayer = (props: {
       />
       {provider && url ? (
         <Player
+          playerId="player"
           url={url}
           provider={provider}
           width={VIDEO_WIDTH}
           height={VIDEO_HEIGHT}
           setDuration={(d) => null}
           // noKitemark={playerWidth < VIDEO_WIDTH}
-          top="120px"
           //setFullscreen={setFullscreen}
           playingCallback={(p) => setPlaying(p)}
           // mobile={mobile}

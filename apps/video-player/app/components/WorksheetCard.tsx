@@ -41,12 +41,9 @@ const WorksheetCard = (
         bgcolor={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         borderRadius="12px"
         boxSizing="border-box"
-        //border={`4px solid rgb(255,255,255)`}
         overflow="hidden"
         boxShadow="0 0 12px rgba(0,0,0,0.06)"
         sx={{
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
           cursor: "pointer",
           outline: orangeBorderOn
             ? `3px solid ${PALETTE.system.orange}`
@@ -60,11 +57,11 @@ const WorksheetCard = (
             size="32px"
             iconSize="16px"
             actions={[
-              {
-                text: "Edit",
-                kallback: props.editingCallback,
-                icon: PencilIcon,
-              },
+              // {
+              //   text: "Edit",
+              //   kallback: props.editingCallback,
+              //   icon: PencilIcon,
+              // },
               {
                 text: "Delete",
                 kallback: () => setDeletionDialogOpen(true),
@@ -77,6 +74,10 @@ const WorksheetCard = (
         <Stack
           spacing="7px"
           onClick={() => router.push(`/worksheet/${props.id}`)}
+          sx={{
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
         >
           <Stack
             height="201px"

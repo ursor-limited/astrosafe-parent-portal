@@ -1,7 +1,13 @@
 "use client";
 
 import { Stack, alpha, keyframes } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import React, {
+  createElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
@@ -39,10 +45,19 @@ import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
 import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
+import { createPortal } from "react-dom";
+import HoverCard from "./HoverCard";
+import { cardClasses } from "@mui/material";
+import Timeline, {
+  CARD_SPACING,
+  DOT_CARD_Y,
+  RIGHT_COLUMN_Y_OFFSET,
+} from "./Timeline";
+import InitialAddContentButton from "./InitialAddContentButton";
+import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 
-const DOT_CARD_Y = 40;
-const CARD_SPACING = 100;
-const RIGHT_COLUMN_Y_OFFSET = 60;
+const CONTENT_PADDING_X = 24;
+const EXPANDED_CARD_DOT_Y = 16;
 
 export const fadeIn = keyframes`
 from {
@@ -108,6 +123,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [contentOrder, setContentOrder] = useState<string[]>([]);
+  useEffect(() => {
+    setContentOrder(lesson?.contentOrder || []);
+  }, [lesson]);
+
   const [contents, setContents] = useState<
     {
       type: AstroLessonContent;
@@ -119,13 +139,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
       setContents(
         lesson
           ? _.compact([
-              ...lesson.contentOrder.map((contentId) =>
+              ...contentOrder.map((contentId) =>
                 lesson.contents.find((c) => c.contentId === contentId)
               ),
             ])
           : []
       ),
-    [lesson?.contents, lesson?.contentOrder]
+    [lesson?.contents, contentOrder]
   );
 
   const [contentsWithCardHeight, setContentsWithCardHeight] = useState<
@@ -150,7 +170,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     var rightHeightSum = RIGHT_COLUMN_Y_OFFSET;
     setContentsWithSide(
       _.compact(
-        lesson.contentOrder.map((contentId, i) => {
+        contentOrder.map((contentId, i) => {
           const content = contentsWithCardHeight.find(
             (co) => co.contentId === contentId
           );
@@ -224,14 +244,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
 
   const [hoveringOnContentCard, setHoveringOnContentCard] =
     useState<boolean>(false);
-  const [hoveringContentIndex, setHoveringContentIndex] = useState<
-    number | undefined
-  >(undefined);
-  const [hoveringContentSide, setHoveringContentSide] = useState<
-    "left" | "right" | null
-  >(null);
-  const [hoveringAboveCenter, setHoveringAboveCenter] =
-    useState<boolean>(false);
+  // const [hoveringContentIndex, setHoveringContentIndex] = useState<
+  //   number | undefined
+  // >(undefined);
+  // const [hoveringContentSide, setHoveringContentSide] = useState<
+  //   "left" | "right" | null
+  // >(null);
+  // const [hoveringAboveCenter, setHoveringAboveCenter] =
+  //   useState<boolean>(false);
   const [contentInsertionIndex, setContentInsertionIndex] = useState<
     number | undefined
   >(undefined);
@@ -346,16 +366,233 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
 
-  const [hovering, setHovering] = useState<boolean>(false);
+  const [lessonNamingDialogSkipTo, setLessonNamingDialogSkipTo] = useState<
+    "back" | "share" | null
+  >(null);
 
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
-    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
-    [lesson?.title]
+    () =>
+      setNeedToTitle(
+        lesson?.title === DEFAULT_LESSON_TITLE &&
+          lessonNamingDialogSkipTo !== "share"
+      ),
+    [lesson?.title, lessonNamingDialogSkipTo]
   );
+
+  const [draggedContentId, setDraggedContentId] = useState<string | null>(null);
+  const reorder = useCallback(() => {
+    if (!lesson || !draggedContentId) return;
+    const draggedContentIdIndex = contentOrder.indexOf(draggedContentId);
+    const newIndex = getContentMovingIndex(
+      expandedContentIds.includes(draggedContentId)
+        ? mouseY - draggedElementTopMouseYSeparation - 2 * EXPANDED_CARD_DOT_Y
+        : mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y,
+      draggedContentIdIndex
+    );
+    if (newIndex !== draggedContentIdIndex) {
+      //const orderWithout = contentOrder.filter((id) => id !== draggedContentId);
+      const newOrder = [
+        ...contentOrder
+          .slice(0, newIndex)
+          .filter((id) => id !== draggedContentId),
+        draggedContentId,
+        ...contentOrder.slice(newIndex).filter((id) => id !== draggedContentId),
+      ];
+      //const newOrderWithoutOldId =  draggedContentIdIndex < newIndex ? [...newOrder.slice(0,draggedContentId)]
+      ApiController.updateLesson(props.lessonId, {
+        contentOrder: newOrder,
+      });
+      setContentOrder(newOrder);
+    }
+  }, [lesson, draggedContentId, mouseY]);
+
+  const handleDraggingEnd = useCallback(() => {
+    reorder();
+    setDraggedContentId(null);
+  }, [reorder]);
+  useEffect(() => {
+    window.addEventListener("mouseup", handleDraggingEnd);
+    return () => {
+      window.removeEventListener("mouseup", handleDraggingEnd);
+    };
+  }, [handleDraggingEnd]);
+
+  const [draggedElement, setDraggedElement] = useState<HTMLElement | null>(
+    null
+  );
+  const [draggedElementWidth, setDraggedElementWidth] = useState<number>(0);
+  const [
+    draggedElementTopMouseYSeparation,
+    setDraggedElementTopMouseYSeparation,
+  ] = useState<number>(0);
+  const [draggedElementX, setDraggedElementX] = useState<number>(0);
+  useEffect(() => {
+    if (draggedContentId) {
+      const el = document.getElementById(draggedContentId);
+      setDraggedElement(el);
+      setDraggedElementWidth(el?.getBoundingClientRect?.()?.width ?? 0);
+      setDraggedElementX(el?.getBoundingClientRect?.()?.left ?? 0);
+      setDraggedElementTopMouseYSeparation(
+        mouseY - (el?.getBoundingClientRect?.()?.top ?? 0)
+      );
+    } else {
+      setDraggedElement(null);
+    }
+  }, [draggedContentId]);
+
+  const [singleContentsColumnWidth, setSingleContentsColumnWidth] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setSingleContentsColumnWidth(
+        (contentsColumnRef?.getBoundingClientRect?.()?.width ?? 0) / 2 -
+          CONTENT_PADDING_X * 2
+      ),
+    [contentsColumnRef?.getBoundingClientRect?.()?.width]
+  );
+
+  const handleMouseMove = useCallback(
+    (event: any) => {
+      !addContentPopoverOpen &&
+        !worksheetDialogOpen &&
+        !videoDialogOpen &&
+        !imageDialogOpen &&
+        !linkDialogOpen &&
+        !textDialogOpen &&
+        setMouseY(event.pageY);
+    },
+    [
+      addContentPopoverOpen,
+      worksheetDialogOpen,
+      videoDialogOpen,
+      imageDialogOpen,
+      linkDialogOpen,
+      textDialogOpen,
+    ]
+  );
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [handleMouseMove]);
+
+  const getContentInsertionIndex = (y: number) => {
+    const dotYs =
+      contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce((a, b) => (b <= y && a < b ? b : a), 0);
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      return closestNumberIndex + (y < closestY ? 0 : 1);
+    }
+  };
+
+  const getContentMovingIndex = (y: number, currentIndex: number) => {
+    const dotYs =
+      contentOrder.map(
+        (id) =>
+          (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
+            ?.top ?? 0) + document.body.scrollTop
+      ) ?? [];
+    if (y < (dotYs?.[0] ?? 0)) {
+      return 0;
+    } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
+      return contents.length;
+    } else {
+      const closestY = dotYs?.reduce(
+        (a, b) => (Math.abs(y - a) < Math.abs(y - b) ? a : b),
+        dotYs[0]
+      );
+      const closestNumberIndex = dotYs?.indexOf(closestY);
+      if (closestNumberIndex === currentIndex) {
+        return currentIndex;
+      } else {
+        return Math.max(0, closestNumberIndex + (y < closestY ? 0 : 1));
+      }
+    }
+  };
+
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notificationCtx.success("Copied URL to clipboard.");
+  };
+
+  const [expandedContentIds, setExpandedContentIds] = useState<string[]>([]);
+  useEffect(() => {
+    setExpandedContentIds(lesson?.expandedContentIds || []);
+  }, [lesson?.expandedContentIds]);
+  // useEffect(() => {
+  //   lesson &&
+  //     expandedContentIds &&
+  //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
+  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
+  // }, [lesson, expandedContentIds]);
+
+  const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
+    string[][]
+  >([]);
+  useEffect(() => {
+    setExpansionChunkedContentIds(
+      contentOrder.reduce((acc, cur, i) => {
+        if (i > 0) {
+          if (expandedContentIds.includes(cur)) {
+            return [...acc, [cur]];
+          }
+          const lastChunk = acc[acc.length - 1];
+          const previousContentIsExpanded = expandedContentIds.includes(
+            lastChunk?.[lastChunk.length - 1]
+          );
+          return previousContentIsExpanded
+            ? [...acc, [cur]]
+            : [...acc.slice(0, -1), [...acc[acc.length - 1], cur]];
+        } else {
+          return [[cur]];
+        }
+      }, [] as string[][])
+    );
+  }, [contentOrder, expandedContentIds]);
+
+  const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
 
   return (
     <>
+      {draggedElement
+        ? createPortal(
+            <HoverCard
+              y={
+                mouseY -
+                draggedElementTopMouseYSeparation -
+                (contentsColumnRef?.getBoundingClientRect?.()?.top ?? 0)
+              }
+              x={
+                draggedElementX -
+                (contentsColumnRef?.getBoundingClientRect?.()?.left ?? 0)
+                // (contentsColumnRef?.getBoundingClientRect?.()?.[
+                //   contentsWithSide.find((c) => c.contentId === draggedContentId)
+                //     ?.left
+                //     ? "left"
+                //     : "right"
+                // ] ?? 0)
+              }
+              left={
+                contentsWithSide.find((c) => c.contentId === draggedContentId)
+                  ?.left
+              }
+              element={draggedElement}
+              width={draggedElementWidth}
+            />,
+            contentsColumnRef ?? document.body
+          )
+        : null}
       <Stack
         ref={setPageRef}
         px="20px"
@@ -367,7 +604,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             : undefined
         }
         sx={{
-          transition: "1s",
+          pointerEvents: draggedContentId ? "none" : undefined,
         }}
       >
         <Stack height="40px" minHeight="40px" />
@@ -379,6 +616,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           backCallback={
             needToTitle
               ? () => {
+                  setLessonNamingDialogSkipTo("back");
                   setEditingDialogOpen(true);
                   notificationCtx.success(
                     "Please add a title to your Lesson before leaving."
@@ -388,66 +626,60 @@ export default function LessonPageContents(props: { lessonId: string }) {
           }
           rightStuff={
             <Stack direction="row" spacing="12px">
-              <Stack
-                sx={{
-                  opacity:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === lesson?.creatorId
-                      ? 1
-                      : 0,
-                  pointerEvents:
-                    userDetails?.user?.id &&
-                    userDetails?.user?.id === lesson?.creatorId
-                      ? undefined
-                      : "none",
-                  transition: "0.2s",
-                }}
-                direction="row"
-                spacing="12px"
-              >
-                {/* <AddContentButton
-                  open={headerAddContentPopoverOpen}
-                  setOpen={setHeaderAddContentPopoverOpen}
-                  callback={(type) => contentCallbacks[type]()}
-                  premiumCallback={() => setUpgradeDialogOpen(true)}
-                  standardStyle
-                /> */}
+              <Stack direction="row" spacing="12px">
+                {userDetails?.user?.id !== lesson?.creatorId ? (
+                  <UrsorButton
+                    variant="secondary"
+                    backgroundColor="rgb(255,255,255)"
+                    endIcon={PencilIcon}
+                    onClick={() =>
+                      userDetails?.user?.id
+                        ? setMakeCopyDialogOpen(true)
+                        : router.push("/dashboard")
+                    }
+                  >
+                    Create my own
+                  </UrsorButton>
+                ) : null}
                 <UrsorButton
                   dark
                   variant="tertiary"
                   endIcon={ShareIcon}
                   onClick={() => {
                     if (needToTitle) {
+                      setLessonNamingDialogSkipTo("share");
                       setEditingDialogOpen(true);
                       notificationCtx.success(
                         "Please add a title to your Lesson before sharing it."
                       );
                     } else {
-                      navigator.clipboard.writeText(window.location.href);
-                      notificationCtx.success("Copied URL to clipboard.");
+                      copyUrl();
                     }
                   }}
                 >
                   Share link
                 </UrsorButton>
-                <UrsorActionButton
-                  size="43px"
-                  iconSize="17px"
-                  border
-                  actions={[
-                    // {
-                    //   text: "Edit",
-                    //   kallback: () => setEditingDialogOpen(true),
-                    //   icon: PencilIcon,
-                    // },
-                    {
-                      text: "Delete",
-                      kallback: () => setDeletionDialogOpen(true),
-                      icon: TrashcanIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
+                {userDetails?.user?.id &&
+                userDetails?.user?.id === lesson?.creatorId ? (
+                  <UrsorActionButton
+                    size="43px"
+                    iconSize="17px"
+                    border
+                    actions={[
+                      // {
+                      //   text: "Edit",
+                      //   kallback: () => setEditingDialogOpen(true),
+                      //   icon: PencilIcon,
+                      // },
+                      {
+                        text: "Delete",
+                        kallback: () => setDeletionDialogOpen(true),
+                        icon: TrashcanIcon,
+                        color: PALETTE.system.red,
+                      },
+                    ]}
+                  />
+                ) : null}
               </Stack>
             </Stack>
           }
@@ -478,85 +710,71 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   top: event?.deltaY + pageRef.scrollTop,
                 });
               }}
-              onMouseMove={(event) => {
-                !addContentPopoverOpen &&
-                  !worksheetDialogOpen &&
-                  !videoDialogOpen &&
-                  !imageDialogOpen &&
-                  !linkDialogOpen &&
-                  !textDialogOpen &&
-                  setMouseY(event.pageY);
-              }}
-              onMouseEnter={() => {
-                setHoveringOnContentCard(false);
-              }}
-              onMouseLeave={() => {
-                setHoveringOnContentCard(true);
-              }}
             >
-              <Stack
-                position="absolute"
-                top={addButtonY}
-                left={0}
-                right={0}
-                marginLeft="auto"
-                marginRight="auto"
-                onClick={() => {
-                  setStaticAddButtonY(mouseY);
-                  if (addContentPopoverOpen) return;
-                  const dotYs =
-                    lesson?.contentOrder.map(
-                      (id) =>
-                        (document
-                          .getElementById(`${id}dot`)
-                          ?.getBoundingClientRect?.()?.top ?? 0) +
-                        document.body.scrollTop
-                    ) ?? [];
-                  if (mouseY < (dotYs?.[0] ?? 0)) {
-                    setContentInsertionIndex(0);
-                  } else if (mouseY > (dotYs?.[dotYs.length - 1] ?? 0)) {
-                    setContentInsertionIndex(contents.length);
-                  } else {
-                    const closestY = dotYs?.reduce(
-                      (a, b) => (b <= mouseY && a < b ? b : a),
-                      0
-                    );
-                    const closestNumberIndex = dotYs?.indexOf(closestY);
-                    setContentInsertionIndex(
-                      closestNumberIndex + (mouseY < closestY ? 0 : 1)
-                    );
-                  }
-                }}
-                alignItems="center"
-                zIndex={8}
-              >
+              {draggedContentId ? (
                 <Stack
-                  sx={{
-                    opacity:
-                      contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
-                    transition: "0.2s",
+                  bgcolor={PALETTE.secondary.purple[1]}
+                  height="16px"
+                  width="16px"
+                  borderRadius="100%"
+                  position="absolute"
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  top={
+                    expandedContentIds.includes(draggedContentId)
+                      ? mouseY -
+                        draggedElementTopMouseYSeparation -
+                        2 * EXPANDED_CARD_DOT_Y
+                      : mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y
+                  }
+                  zIndex={2}
+                />
+              ) : (
+                <Stack
+                  position="absolute"
+                  top={addButtonY}
+                  left={0}
+                  right={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  onClick={() => {
+                    setStaticAddButtonY(mouseY);
+                    if (addContentPopoverOpen) return;
+                    setContentInsertionIndex(getContentInsertionIndex(mouseY));
                   }}
+                  alignItems="center"
+                  zIndex={8}
                 >
-                  <AddContentButton
-                    open={addContentPopoverOpen}
-                    setOpen={setAddContentPopoverOpen}
-                    callback={(type) => contentCallbacks[type]()}
-                    premiumCallback={() => {
-                      setUpgradeDialogOpen(true);
-                      setStaticAddButtonY(null);
-                      setAddContentPopoverOpen(false);
+                  <Stack
+                    sx={{
+                      opacity:
+                        contents.length === 0 || !hoveringOnContentCard ? 1 : 0,
+                      transition: "0.2s",
                     }}
-                    clickOutsideCloseCallback={() =>
-                      setContentInsertionIndex(undefined)
-                    }
-                  />
+                  >
+                    <AddContentButton
+                      open={addContentPopoverOpen}
+                      setOpen={setAddContentPopoverOpen}
+                      callback={(type) => contentCallbacks[type]()}
+                      premiumCallback={() => {
+                        setUpgradeDialogOpen(true);
+                        setStaticAddButtonY(null);
+                        setAddContentPopoverOpen(false);
+                      }}
+                      clickOutsideCloseCallback={() =>
+                        setContentInsertionIndex(undefined)
+                      }
+                    />
+                  </Stack>
                 </Stack>
-              </Stack>
+              )}
             </Stack>
           ) : null}
           <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
             <Stack
-              px="24px"
+              px={`${CONTENT_PADDING_X}px`}
               ref={setContentsColumnRef}
               position="relative"
               pb="48px"
@@ -611,221 +829,124 @@ export default function LessonPageContents(props: { lessonId: string }) {
                   />
                 </Stack>
               </Stack>
-
-              <Stack direction="row">
-                <Stack flex={1}>
-                  {contents.length > 0 ? (
-                    <ContentCards
-                      contents={contentsWithSide
-                        .filter((c) => c.left)
-                        .map((c) => ({ contentId: c.contentId, type: c.type }))}
-                      videos={videos}
-                      links={links}
-                      texts={texts}
-                      images={images}
-                      worksheets={worksheets}
-                      lessonId={props.lessonId}
-                      setVideoEditingDialogId={setVideoEditingDialogId}
-                      setLinkEditingDialogId={setLinkEditingDialogId}
-                      setTextEditingDialogId={setTextEditingDialogId}
-                      setImageEditingDialogId={setImageEditingDialogId}
-                      setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                      updateCallback={loadLesson}
-                      wrapper={(card, i) => (
-                        <Stack
-                          position="relative"
-                          onMouseEnter={() => {
-                            setHoveringContentSide("left");
-                            setHoveringContentIndex(i);
-                          }}
-                          onMouseMove={(event) => {
-                            setHoveringContentSide("left");
-                            setHoveringContentIndex(i);
-                            //@ts-ignore
-                            const rect = event?.target?.getBoundingClientRect();
-                            setHoveringAboveCenter(
-                              event.pageY < rect.height / 2 + rect.top
-                            );
-                          }}
-                          pb={`${CARD_SPACING}px`}
-                        >
-                          <Stack
-                            width="96%"
-                            onMouseEnter={() => {
-                              setHoveringOnContentCard(true);
-                            }}
-                            onMouseLeave={() => {
-                              setHoveringOnContentCard(false);
-                            }}
-                          >
-                            {card}
-                          </Stack>
-                          <Stack
-                            // @ts-ignore
-                            id={`${card?.props?.id}dot`}
-                            bgcolor={PALETTE.secondary.purple[1]}
-                            height="16px"
-                            width="16px"
-                            borderRadius="100%"
-                            position="absolute"
-                            right="-8px"
-                            top={`${DOT_CARD_Y}px`}
-                            zIndex={2}
-                          />
-                        </Stack>
-                      )}
+              <Stack spacing="50px" pb="70px">
+                {contents.length === 0 ? (
+                  <Stack width="50%">
+                    <InitialAddContentButton
+                      setStarterAddContentPopoverOpen={() =>
+                        setStarterAddContentPopoverOpen(true)
+                      }
                     />
-                  ) : (
-                    <Stack position="relative">
-                      <UrsorFadeIn delay={1000} duration={800}>
-                        <Stack
-                          key="starter"
-                          width="94%"
-                          onMouseEnter={() => {
-                            setHovering(true);
-                          }}
-                          onMouseLeave={() => {
-                            setHovering(false);
-                          }}
-                          onClick={() => setStarterAddContentPopoverOpen(true)}
-                        >
-                          <Stack
-                            height="230px"
-                            border={`2px solid ${
-                              hovering
-                                ? PALETTE.secondary.purple[2]
-                                : PALETTE.secondary.grey[3]
-                            }`}
-                            borderRadius="12px"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{
-                              transition: "0.2s",
-                              cursor: "pointer",
-                              svg: {
-                                path: {
-                                  transition: "0.2s",
-                                  fill: hovering
-                                    ? PALETTE.secondary.purple[2]
-                                    : PALETTE.secondary.grey[3],
-                                },
-                              },
-                            }}
-                          >
-                            <Stack
-                              sx={{
-                                transform: "translateY(5px)",
-                                filter: `grayscale(${hovering ? 0 : 100}%)`,
-                                opacity: hovering ? 1 : 0.5,
-                                transition: "0.2s",
-                              }}
-                            >
-                              <Image
-                                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Untitled_Artwork+21+1.png"
-                                height={170}
-                                width={170}
-                                alt="graph illustration"
-                              />
-                            </Stack>
-
-                            <Stack
-                              direction="row"
-                              spacing="7px"
-                              justifyContent="center"
-                              alignItems="center"
-                              sx={{
-                                transform: "translateY(-20px)",
-                              }}
-                            >
-                              <PlusIcon height="24px" width="24px" />
-                              <Typography
-                                color={
-                                  hovering
-                                    ? PALETTE.secondary.purple[2]
-                                    : PALETTE.secondary.grey[3]
-                                }
-                                sx={{
-                                  transition: "0.2s",
-                                }}
-                                bold
-                                variant="large"
-                              >
-                                Add
-                              </Typography>
-                            </Stack>
-                          </Stack>
-                        </Stack>
-                      </UrsorFadeIn>
+                  </Stack>
+                ) : null}
+                {expansionChunkedContentIds.map((chunk, i) => {
+                  if (
+                    chunk.length === 1 &&
+                    expandedContentIds.includes(chunk[0])
+                  ) {
+                    const expandedContent = contents.find(
+                      (c) => c.contentId === chunk[0]
+                    );
+                    return expandedContent ? (
                       <Stack
-                        position="absolute"
-                        top={`${DOT_CARD_Y}px`}
-                        right="-8px"
+                        key={`${i}expanded`}
+                        zIndex={3}
+                        alignItems="center"
+                        spacing={`${EXPANDED_CARD_DOT_Y}px`}
+                        sx={{
+                          opacity: draggedContentId === chunk[0] ? 0 : 1,
+                          transition: "0.2s",
+                        }}
                       >
                         <Stack
                           // @ts-ignore
-                          id="starterdot"
+                          id={`${chunk[0]}dot`}
                           bgcolor={PALETTE.secondary.purple[1]}
                           height="16px"
                           width="16px"
                           borderRadius="100%"
-                        />
-                      </Stack>
-                    </Stack>
-                  )}
-                </Stack>
-                <Stack flex={1} pt={`${RIGHT_COLUMN_Y_OFFSET}px`}>
-                  <ContentCards
-                    contents={contentsWithSide
-                      .filter((c) => !c.left)
-                      .map((c) => ({ contentId: c.contentId, type: c.type }))}
-                    videos={videos}
-                    links={links}
-                    texts={texts}
-                    images={images}
-                    worksheets={worksheets}
-                    lessonId={props.lessonId}
-                    setVideoEditingDialogId={setVideoEditingDialogId}
-                    setLinkEditingDialogId={setLinkEditingDialogId}
-                    setTextEditingDialogId={setTextEditingDialogId}
-                    setImageEditingDialogId={setImageEditingDialogId}
-                    setWorksheetEditingDialogId={setWorksheetEditingDialogId}
-                    updateCallback={loadLesson}
-                    wrapper={(card, i) => (
-                      <Stack
-                        position="relative"
-                        onMouseEnter={() => {
-                          setHoveringContentSide("right");
-                          setHoveringContentIndex(i);
-                        }}
-                        onMouseMove={(event) => {
-                          setHoveringContentSide("right");
-                          setHoveringContentIndex(i);
-                          //@ts-ignore
-                          const rect = event?.target?.getBoundingClientRect();
-                          setHoveringAboveCenter(
-                            event.pageY < rect.height / 2 + rect.top
-                          );
-                        }}
-                        pb={`${CARD_SPACING}px`}
-                        alignItems="flex-end"
-                      >
-                        <Stack
-                          // @ts-ignore
-                          id={`${card?.props?.id}dot`}
-                          bgcolor={PALETTE.secondary.purple[1]}
-                          height="16px"
-                          width="16px"
-                          borderRadius="100%"
-                          position="absolute"
-                          left="-8px"
                           top={`${DOT_CARD_Y}px`}
                           zIndex={2}
                         />
-                        <Stack width="96%">{card}</Stack>
+                        <ContentCards
+                          contents={[expandedContent]}
+                          expanded
+                          videos={videos}
+                          images={images}
+                          links={links}
+                          worksheets={worksheets}
+                          texts={texts}
+                          lessonId={props.lessonId}
+                          columnWidth={singleContentsColumnWidth}
+                          //  setDraggedContentId={setDraggedContentId}
+                          draggedContentId={
+                            draggedContentId ? draggedContentId : undefined
+                          }
+                          dragStartCallback={(id) => setDraggedContentId(id)}
+                          setVideoEditingDialogId={setVideoEditingDialogId}
+                          setImageEditingDialogId={setImageEditingDialogId}
+                          setWorksheetEditingDialogId={
+                            setWorksheetEditingDialogId
+                          }
+                          setTextEditingDialogId={setTextEditingDialogId}
+                          setLinkEditingDialogId={setLinkEditingDialogId}
+                          updateCallback={loadLesson}
+                          expansionCallback={() => {
+                            const newExpandedContentIds =
+                              expandedContentIds.filter(
+                                (cid) => cid !== chunk[0]
+                              );
+                            setExpandedContentIds(newExpandedContentIds);
+                            ApiController.updateLesson(props.lessonId, {
+                              expandedContentIds: newExpandedContentIds,
+                            });
+                          }}
+                        />
                       </Stack>
-                    )}
-                  />
-                </Stack>
+                    ) : null;
+                  } else {
+                    return (
+                      <Timeline
+                        key={`${i}columns`}
+                        contents={contents.filter((c) =>
+                          chunk.includes(c.contentId)
+                        )}
+                        contentsWithSide={contentsWithSide.filter((c) =>
+                          chunk.includes(c.contentId)
+                        )}
+                        videos={videos}
+                        images={images}
+                        links={links}
+                        worksheets={worksheets}
+                        texts={texts}
+                        lessonId={props.lessonId}
+                        loadLesson={loadLesson}
+                        singleContentsColumnWidth={singleContentsColumnWidth}
+                        setDraggedContentId={setDraggedContentId}
+                        draggedContentId={
+                          draggedContentId ? draggedContentId : undefined
+                        }
+                        setVideoEditingDialogId={setVideoEditingDialogId}
+                        setImageEditingDialogId={setImageEditingDialogId}
+                        setWorksheetEditingDialogId={
+                          setWorksheetEditingDialogId
+                        }
+                        setTextEditingDialogId={setTextEditingDialogId}
+                        setLinkEditingDialogId={setLinkEditingDialogId}
+                        expansionCallback={(id) => {
+                          const newExpandedContentIds =
+                            expandedContentIds.includes(id)
+                              ? expandedContentIds.filter((cid) => cid !== id)
+                              : [...expandedContentIds, id];
+                          setExpandedContentIds(newExpandedContentIds);
+                          ApiController.updateLesson(props.lessonId, {
+                            expandedContentIds: newExpandedContentIds,
+                          });
+                        }}
+                      />
+                    );
+                  }
+                })}
               </Stack>
             </Stack>
           </Stack>
@@ -836,6 +957,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setEditingDialogOpen(false)}
         lesson={lesson}
         updateCallback={reloadLessonDetails}
+        skipCallback={
+          lessonNamingDialogSkipTo
+            ? lessonNamingDialogSkipTo === "back"
+              ? () => router.push("/dashboard")
+              : () => copyUrl()
+            : undefined
+        }
       />
       <DeletionDialog
         open={deletionDialogOpen}
@@ -844,21 +972,23 @@ export default function LessonPageContents(props: { lessonId: string }) {
         category="playlist"
         title={lesson?.title ?? ""}
       />
-      <VideoCreationDialog
-        open={videoDialogOpen}
-        closeCallback={() => {
-          setVideoDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(id) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "video",
-            id
-          ).then(loadLesson);
-        }}
-      />
+      {videoDialogOpen ? (
+        <VideoCreationDialog
+          open={videoDialogOpen}
+          closeCallback={() => {
+            setVideoDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(id) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "video",
+              id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={true}
@@ -991,6 +1121,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           images={images}
           worksheets={worksheets}
           lessonId={props.lessonId}
+          columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setLinkEditingDialogId={setLinkEditingDialogId}
           setTextEditingDialogId={setTextEditingDialogId}
@@ -1016,6 +1147,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
             }
           }}
           updateCallback={loadLesson}
+          noPlayer
         />
       </Stack>
       <AddContentDialog
@@ -1023,6 +1155,19 @@ export default function LessonPageContents(props: { lessonId: string }) {
         setOpen={setStarterAddContentPopoverOpen}
         callback={(type) => contentCallbacks[type]()}
         premiumCallback={() => setUpgradeDialogOpen(true)}
+      />
+      <MakeCopyDialog
+        open={makeCopyDialogOpen}
+        closeCallback={() => setMakeCopyDialogOpen(false)}
+        callback={() =>
+          ApiController.duplicateLesson(
+            props.lessonId,
+            userDetails.user!.id
+          ).then((l) => {
+            router.push("/dashboard");
+            notificationCtx.success("Made a copy of Lesson");
+          })
+        }
       />
     </>
   );

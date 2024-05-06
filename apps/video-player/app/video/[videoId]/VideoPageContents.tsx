@@ -269,6 +269,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
           <Stack px="24px" flex={1}>
             <Stack flex={1} pt="30px" ref={setSizeRef}>
               <Player
+                playerId="player"
                 url={details.url}
                 provider={provider}
                 width={videoWidth}
@@ -277,7 +278,6 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 startTime={details.startTime}
                 endTime={details.endTime}
                 noKitemark={videoWidth < VIDEO_WIDTH}
-                top="120px"
                 playingCallback={(p) => setPlaying(p)}
               />
             </Stack>
@@ -301,7 +301,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
             )
           }
           video={details}
-          noPlayer
+          // noPlayer
         />
       ) : null}
     </>

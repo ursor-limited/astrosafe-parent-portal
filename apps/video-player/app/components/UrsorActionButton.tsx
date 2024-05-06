@@ -64,7 +64,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           setOpen(true);
           props.buttonClickCallback?.();
         }}
-        boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.06)" : undefined}
+        boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.08)" : undefined}
       >
         <MoreIcon
           height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}

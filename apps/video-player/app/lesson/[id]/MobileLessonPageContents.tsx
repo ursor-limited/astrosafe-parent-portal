@@ -3,17 +3,9 @@
 import { Stack } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import _ from "lodash";
-import { useReactToPrint } from "react-to-print";
-import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import Pencil from "@/images/icons/Pencil.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
 import ApiController, { IVideo } from "@/app/api";
@@ -44,6 +36,11 @@ import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { useLocalStorage } from "usehooks-ts";
+import TimelineImageCard from "./cards/TimelineImageCard";
+import TimelineLinkCard from "./cards/TimelineLinkCard";
+import TimelineTextCard from "./cards/TimelineTextCard";
+import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
+import TimelineVideoCard from "./cards/TimelineVideoCard";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -233,10 +230,23 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
     typeOfContentDialogToOpenUponLandingInNewLesson,
   ]);
 
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notificationCtx.success("Copied URL to clipboard.");
+  };
+
+  const [lessonNamingDialogSkipTo, setLessonNamingDialogSkipTo] = useState<
+    "back" | "share" | null
+  >(null);
+
   const [needToTitle, setNeedToTitle] = useState<boolean>(false);
   useEffect(
-    () => setNeedToTitle(lesson?.title === DEFAULT_LESSON_TITLE),
-    [lesson?.title]
+    () =>
+      setNeedToTitle(
+        lesson?.title === DEFAULT_LESSON_TITLE &&
+          lessonNamingDialogSkipTo !== "share"
+      ),
+    [lesson?.title, lessonNamingDialogSkipTo]
   );
 
   return (
@@ -254,6 +264,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           backCallback={
             needToTitle
               ? () => {
+                  setLessonNamingDialogSkipTo("back");
                   setEditingDialogOpen(true);
                   notificationCtx.success(
                     "Please add a title to your Lesson before leaving."
@@ -263,6 +274,7 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
           }
           copyCallback={() => {
             if (needToTitle) {
+              setLessonNamingDialogSkipTo("share");
               setEditingDialogOpen(true);
               notificationCtx.success(
                 "Please add a title to your Lesson before sharing it."
@@ -301,48 +313,55 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                   if (c.type === "video") {
                     const video = videos?.find((v) => v.id === c.contentId);
                     return video ? (
-                      <LessonVideoCard
+                      <TimelineVideoCard
                         key={video.id}
                         {...video}
+                        lessonId={props.lessonId}
                         editingCallback={() =>
                           setVideoEditingDialogId(video.id)
                         }
                         deletionCallback={loadLesson}
-                        lessonId={props.lessonId}
+                        duplicationCallback={loadLesson}
                       />
                     ) : null;
                   } else if (c.type === "link") {
                     const link = links?.find((v) => v.id === c.contentId);
                     return link ? (
-                      <LinkCard
+                      <TimelineLinkCard
                         key={link.id}
                         {...link}
-                        editCallback={() => setLinkEditingDialogId(link.id)}
-                        deleteCallback={loadLesson}
-                        noFooter
+                        lessonId={props.lessonId}
+                        editingCallback={() => setLinkEditingDialogId(link.id)}
+                        deletionCallback={loadLesson}
+                        duplicationCallback={loadLesson}
+                        mobile
                       />
                     ) : null;
                   } else if (c.type === "text") {
                     const text = texts?.find((t) => t.id === c.contentId);
                     return text ? (
-                      <TextCard
+                      <TimelineTextCard
                         key={text.id}
                         {...text}
-                        editCallback={() => setTextEditingDialogId(text.id)}
-                        deleteCallback={loadLesson}
+                        lessonId={props.lessonId}
+                        editingCallback={() => setTextEditingDialogId(text.id)}
+                        deletionCallback={loadLesson}
+                        duplicationCallback={loadLesson}
                       />
                     ) : null;
                   } else if (c.type === "image") {
                     const image = images?.find((i) => i.id === c.contentId);
                     return image ? (
-                      <ImageCard
+                      <TimelineImageCard
                         key={image.id}
                         {...image}
+                        lessonId={props.lessonId}
                         editingCallback={() =>
                           setImageEditingDialogId(image.id)
                         }
                         deletionCallback={loadLesson}
-                        noFooter
+                        duplicationCallback={loadLesson}
+                        mobile
                       />
                     ) : null;
                   } else if (c.type === "worksheet") {
@@ -350,15 +369,15 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                       (w) => w.id === c.contentId
                     );
                     return worksheet ? (
-                      <LessonWorksheetPreview
+                      <TimelineWorksheetCard
                         key={worksheet.id}
-                        worksheet={worksheet}
+                        {...worksheet}
                         lessonId={props.lessonId}
                         editingCallback={() =>
                           setWorksheetEditingDialogId(worksheet.id)
                         }
                         deletionCallback={loadLesson}
-                        mobile
+                        duplicationCallback={loadLesson}
                       />
                     ) : null;
                   }
@@ -411,6 +430,13 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setEditingDialogOpen(false)}
         lesson={lesson}
         updateCallback={reloadLessonDetails}
+        skipCallback={
+          lessonNamingDialogSkipTo
+            ? lessonNamingDialogSkipTo === "back"
+              ? () => router.push("/dashboard")
+              : () => copyUrl()
+            : undefined
+        }
       />
       <DeletionDialog
         open={deletionDialogOpen}

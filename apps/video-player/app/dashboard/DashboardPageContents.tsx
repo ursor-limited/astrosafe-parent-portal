@@ -14,9 +14,8 @@ import RepoIcon from "@/images/icons/RepoIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
-import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useRef, useState } from "react";
-import ApiController from "../api";
+import ApiController, { IVideo } from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
@@ -416,14 +415,24 @@ export const ToolButton = (props: {
           zIndex={999}
         >
           {props.infoImageUrl ? (
-            <Stack height="134px" width="254px" borderRadius="4px">
-              <Image
+            <Stack height="134px" width="100%" borderRadius="4px">
+              {/* <Image
                 src={props.infoImageUrl}
-                // style={{ objectFit: "cover" }}
-                // fill
-                height={134}
-                width={254}
+                style={{ objectFit: "cover" }}
+                fill
                 alt="info popover image"
+              /> */}
+              <Stack
+                width="100%"
+                height="100%"
+                sx={{
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  backgroundImage: `url(${props.infoImageUrl})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  boxSizing: "border-box",
+                }}
+                position="relative"
               />
             </Stack>
           ) : null}
@@ -831,7 +840,10 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (userDetails.user?.id && freeVideoIds.length > 0) {
       ApiController.claimVideos(userDetails.user.id, freeVideoIds).then(() =>
-        setTimeout(loadVideos, 400)
+        setTimeout(() => {
+          loadWorksheets();
+          loadLessons();
+        }, 400)
       );
       setFreeVideoIds([]);
     }
@@ -1189,10 +1201,10 @@ export default function DashboardPageContents() {
               <SortButton
                 selected={selectedSort}
                 callback={(id) => setSelectedSort(id)}
-                types={["abc", "updatedAt"]}
+                types={["updatedAt", "abc"]}
                 displayNames={{
-                  abc: "Alphabetical",
                   updatedAt: "Most recent",
+                  abc: "Alphabetical",
                 }}
                 width="204px"
               />

@@ -7,10 +7,6 @@ import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
 import PageCard from "@/app/components/PageCard";
@@ -186,13 +182,13 @@ function MobileVideoPageContents(props: {
       >
         <Stack ref={setSizeRef} alignItems="center" height="100%">
           <Player
+            playerId="player"
             url={video.url}
             provider={provider}
             width={videoWidth}
             height={videoWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
             setDuration={(d) => d && setDuration(d)}
             noKitemark={videoWidth < VIDEO_WIDTH}
-            top="120px"
             playingCallback={(p) => setPlaying(p)}
           />
         </Stack>

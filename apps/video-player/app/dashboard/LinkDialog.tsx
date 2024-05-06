@@ -127,7 +127,7 @@ export const getPlaceholderImageUrl = (n: number) =>
 
 export interface ILink {
   id: string;
-  creatorId?: string;
+  creatorId: string;
   title: string;
   description?: string;
   url: string;
@@ -663,20 +663,6 @@ export default function LinkDialog(props: ILinkDialogProps) {
                 />
               </Captioned>
             ) : null}
-            {/* <Captioned text="Title">
-              <UrsorInputField
-                value={title}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setTitle(event.target.value.slice(0, MAX_CHARACTERS));
-                  setUsingTypedTitle(true);
-                }}
-                placeholder="Type in your title"
-                width="100%"
-                leftAlign
-                boldValue
-                height="44px"
-              />
-            </Captioned> */}
           </Stack>
           <Stack
             justifyContent="space-between"

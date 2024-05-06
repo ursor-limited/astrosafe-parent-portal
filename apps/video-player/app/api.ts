@@ -14,8 +14,15 @@ export interface IVideo {
   thumbnailUrl?: string;
   startTime?: number;
   endTime?: number;
+  comments: IVideoComment[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IVideoComment {
+  id: string;
+  value: string;
+  time: number;
 }
 
 const BACKEND_URLS = {
@@ -34,14 +41,14 @@ const get = (route: string) =>
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`
   );
 
-const post = (route: string, body: any) =>
+const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : undefined,
       cache: "no-store",
     }
   );
@@ -98,6 +105,11 @@ class ApiController {
   }
   static async deleteLesson(id: string) {
     return dellete(`lesson/${id}`);
+  }
+  static async duplicateLesson(id: any, userId: string) {
+    return post("lesson/dupli/cate", { id, userId }).then((response: any) =>
+      response.json()
+    );
   }
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
@@ -374,6 +386,25 @@ class ApiController {
       response.json()
     );
   }
+  static async duplicateImage(id: string, lessonId: string, userId?: string) {
+    return post(`image/dupli/cate`, { id, lessonId, userId });
+  }
+  static async duplicateLink(id: string, lessonId: string, userId?: string) {
+    return post(`link/dupli/cate`, { id, lessonId, userId });
+  }
+  static async duplicateVideo(id: string, lessonId: string, userId?: string) {
+    return post(`video/dupli/cate`, { id, lessonId, userId });
+  }
+  static async duplicateWorksheet(
+    id: string,
+    lessonId: string,
+    userId?: string
+  ) {
+    return post(`canvas/dupli/cate`, { id, lessonId, userId });
+  }
+  static async duplicateText(id: string, lessonId: string, userId?: string) {
+    return post(`text/dupli/cate`, { id, lessonId, userId });
+  }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());
   }
@@ -384,6 +415,11 @@ class ApiController {
   }
   static async deleteText(id: string) {
     return dellete(`text/${id}`).then((response: any) => response);
+  }
+  static async createVideoComment(id: string, time: number, value: string) {
+    return post("video/comment/create", { id, value, time }).then(
+      (response: any) => response.json()
+    );
   }
 }
 

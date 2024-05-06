@@ -3,16 +3,10 @@ import {
   INumberBondWorksheetSettings,
   IWorksheet,
 } from "@/app/components/WorksheetGenerator";
-import { CircularButton } from "@/app/video/[videoId]/VideoPageContents";
-import EquationWorksheet from "@/app/worksheet/[id]/EquationWorksheet";
-import NumberBondWorksheet from "@/app/worksheet/[id]/NumberBondWorksheet";
 import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
 import { Stack, alpha } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
-import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
@@ -113,86 +107,7 @@ const LessonWorksheetPreview = (props: {
             ]}
           />
         </Stack>
-        <Stack
-          position="relative"
-          height={`${worksheetPageHeight}px`}
-          borderRadius="8px"
-          overflow="hidden"
-          //ref={setWorksheetPageRef}
-        >
-          <Stack
-            sx={{
-              transform: `scale(${(0.2643 * worksheetPageWidth) / A4_WIDTH})`,
-              transformOrigin: "top left",
-            }}
-            position="absolute"
-            top={0}
-            left={0}
-          >
-            {props.worksheet.worksheetComponent === "equation" ? (
-              <EquationWorksheet
-                title={props.worksheet.title}
-                description={props.worksheet.description}
-                orientation={props.worksheet.settings.orientation}
-                topic={
-                  (props.worksheet.settings as IEquationWorksheetSettings).topic
-                }
-                pairs={props.worksheet.values}
-                pageIndex={pageIndex}
-              />
-            ) : (
-              <NumberBondWorksheet
-                title={props.worksheet.title}
-                description={props.worksheet.description}
-                orientation={props.worksheet.settings.orientation}
-                sum={
-                  (props.worksheet.settings as INumberBondWorksheetSettings).sum
-                }
-                empty={
-                  (props.worksheet.settings as INumberBondWorksheetSettings)
-                    .empty
-                }
-                leftNumbers={props.worksheet.values}
-                pageIndex={pageIndex}
-              />
-            )}
-          </Stack>
-          {nPages > 1 ? (
-            <Stack
-              direction="row"
-              spacing="10px"
-              position="absolute"
-              top={`${worksheetPageHeight - 64}px`}
-              right="20px"
-              zIndex={2}
-            >
-              <Stack
-                sx={{
-                  opacity: pageIndex === 0 ? 0.4 : 1,
-                  pointerEvents: pageIndex === 0 ? "none" : undefined,
-                }}
-              >
-                <CircularButton
-                  icon={ChevronLeft}
-                  color={PALETTE.secondary.pink[3]}
-                  onClick={() => setPageIndex(pageIndex - 1)}
-                />
-              </Stack>
-              <Stack
-                sx={{
-                  opacity: pageIndex >= nPages - 1 ? 0.4 : 1,
-                  pointerEvents: pageIndex >= nPages - 1 ? "none" : undefined,
-                }}
-              >
-                <CircularButton
-                  icon={ChevronRight}
-                  color={PALETTE.secondary.pink[3]}
-                  onClick={() => setPageIndex(pageIndex + 1)}
-                />
-              </Stack>
-            </Stack>
-          ) : null}
-        </Stack>
+
         <Stack py="6px">
           <Stack flex={1} justifyContent="space-between" px="4px">
             <Typography

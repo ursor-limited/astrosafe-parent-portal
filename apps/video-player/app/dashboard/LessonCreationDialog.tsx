@@ -3,7 +3,6 @@ import { Stack } from "@mui/system";
 import { UrsorInputField, UrsorTextField } from "ui";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useContext, useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
 import ApiController from "../api";
 import { useRouter } from "next/navigation";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -17,6 +16,7 @@ const LessonCreationDialog = (props: {
   closeCallback: () => void;
   lesson?: ILesson;
   updateCallback?: () => void;
+  skipCallback?: () => void;
 }) => {
   const [title, setTitle] = useState<string>("");
   useEffect(() => {
@@ -59,13 +59,23 @@ const LessonCreationDialog = (props: {
       onCloseCallback={props.closeCallback}
       dynamicHeight
       width={"488px"}
-      //noPadding={isMobile}
       button={{
         text: props.lesson?.title ? "Update" : "Create",
         callback: () => (props.lesson?.id ? submitUpdate() : submitCreation()),
         disabled: !title,
         icon: PencilIcon,
       }}
+      secondaryButton={
+        props.skipCallback
+          ? {
+              text: "Name later",
+              callback: () => {
+                props.skipCallback!();
+                props.closeCallback();
+              },
+            }
+          : undefined
+      }
     >
       <Stack spacing="20px" width="100%">
         <Captioned text="Title">
