@@ -307,7 +307,7 @@ const TimelineVideoCard = (
               </Stack>
             ) : null}
           </Stack>
-          {props.expanded && duration ? (
+          {duration ? (
             <Stack
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
               pb="6px"
