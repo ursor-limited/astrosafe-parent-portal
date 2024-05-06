@@ -127,6 +127,8 @@ const VideoCreationDialog = (props: {
     undefined
   );
 
+  console.log(provider, "9090b");
+
   useEffect(
     () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
     [originalUrl]
