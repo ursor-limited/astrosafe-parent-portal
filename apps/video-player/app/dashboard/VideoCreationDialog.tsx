@@ -20,6 +20,7 @@ import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
 export const VIDEO_WIDTH = 940; //390;
+export const VIMEO_VIDEO_WIDTH = 950; //390;
 export const VIDEO_HEIGHT = 522;
 
 const VideoCreationDialogTabButton = (props: {

@@ -127,21 +127,20 @@ const VideoDialogDetailsTab = (props: {
         </Captioned>
       </Stack>
       <Stack
-        width={isMobile ? 0 : VIDEO_WIDTH}
-        height={isMobile ? 0 : undefined}
+        width={`${isMobile ? 0 : VIDEO_WIDTH}px`}
+        height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
         overflow={isMobile ? "hidden" : undefined}
-        spacing="6px"
         position="relative"
       >
         {props.showForbiddenVideoView ? (
           <Stack
-            flex={1}
+            width="100%"
+            height="100%"
             position="absolute"
             bgcolor="rgba(0,0,0,0.5)"
-            top="20px"
+            borderRadius="12px"
             left={0}
             zIndex={5}
-            height="220px"
             justifyContent="center"
             alignItems="center"
             px="40px"
