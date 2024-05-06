@@ -48,8 +48,8 @@ const TimelineCardCommentsButton = (props: {
           <Typography
             bold
             color={PALETTE.secondary.grey[3]}
-          >{`${props.comments.length} Comments`}</Typography>
-          {props.comments.map((c) => (
+          >{`${props.comments?.length} Comments`}</Typography>
+          {props.comments?.map((c) => (
             <UrsorFadeIn key={c.id} duration={800}>
               <Stack
                 id={c.id}
