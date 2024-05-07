@@ -103,10 +103,13 @@ const TimelineVideoCardCommentDisplayCard = (
     p="10px"
     boxSizing="border-box"
     spacing="8px"
+    maxHeight="260px"
   >
-    <Typography variant={isMobile ? "medium" : "h5"} bold>
-      {props.value}
-    </Typography>
+    <Stack flex={1} overflow="hidden">
+      <Typography variant={isMobile ? "medium" : "h5"} bold>
+        {props.value}
+      </Typography>
+    </Stack>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
       <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
         {`${Math.floor(props.time / 60)
