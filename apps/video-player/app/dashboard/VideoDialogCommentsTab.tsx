@@ -279,7 +279,7 @@ const VideoDialogCommentsTab = (props: {
               // }
               width={
                 // props.provider === "youtube" ? VIDEO_WIDTH : VIMEO_VIDEO_WIDTH
-                VIDEO_WIDTH
+                props.provider === "youtube" ? VIDEO_WIDTH : VIDEO_WIDTH - 10
               }
               height={VIDEO_HEIGHT}
               setDuration={(d) => {

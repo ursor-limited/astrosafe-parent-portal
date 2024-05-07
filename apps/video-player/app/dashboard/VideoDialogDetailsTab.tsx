@@ -128,14 +128,14 @@ const VideoDialogDetailsTab = (props: {
       </Stack>
       <Stack
         width={`${isMobile ? 0 : VIDEO_WIDTH}px`}
-        height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
+        //height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
         overflow={isMobile ? "hidden" : undefined}
         position="relative"
       >
         {props.showForbiddenVideoView ? (
           <Stack
-            width="100%"
-            height="100%"
+            width="91%"
+            height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
             position="absolute"
             bgcolor="rgba(0,0,0,0.5)"
             borderRadius="12px"
@@ -169,7 +169,10 @@ const VideoDialogDetailsTab = (props: {
             playerId="creation"
             url={props.url}
             provider={props.provider}
-            width={Math.min(playerWidth, VIDEO_WIDTH)}
+            width={
+              Math.min(playerWidth, VIDEO_WIDTH) -
+              (props.provider === "youtube" ? 0 : 10)
+            }
             height={
               Math.min(playerWidth, VIDEO_WIDTH) * (VIDEO_HEIGHT / VIDEO_WIDTH)
             }
