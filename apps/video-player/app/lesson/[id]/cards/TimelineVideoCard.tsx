@@ -20,7 +20,7 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import { isMobile } from "react-device-detect";
 
-const COMMENT_PAUSE_THRESHOLD = 1;
+export const COMMENT_PAUSE_THRESHOLD = 1;
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -93,7 +93,7 @@ const TimelineCardCommentsButton = (props: {
   );
 };
 
-const TimelineVideoCardCommentDisplayCard = (
+export const TimelineVideoCardCommentDisplayCard = (
   props: IVideoComment & { resumeCallback: () => void }
 ) => (
   <Stack
@@ -103,10 +103,13 @@ const TimelineVideoCardCommentDisplayCard = (
     p="10px"
     boxSizing="border-box"
     spacing="8px"
+    maxHeight="260px"
   >
-    <Typography variant={isMobile ? "medium" : "h5"} bold>
-      {props.value}
-    </Typography>
+    <Stack flex={1} overflow="hidden">
+      <Typography variant={isMobile ? "medium" : "h5"} bold>
+        {props.value}
+      </Typography>
+    </Stack>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
       <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
         {`${Math.floor(props.time / 60)
@@ -222,7 +225,6 @@ const TimelineVideoCard = (
     [props.comments]
   );
   useEffect(() => {
-    if (draggingOnTimeLine) return;
     const newCurrentComment = sortedComments.find(
       (c) =>
         currentTime - c.time > 0 &&
@@ -238,8 +240,6 @@ const TimelineVideoCard = (
       playingSetter?.(false);
     }
   }, [currentTime]);
-
-  const [draggingOnTimeLine, setDraggingOnTimeLine] = useState<boolean>(false);
 
   return (
     <>
@@ -374,7 +374,6 @@ const TimelineVideoCard = (
                 playing={playing}
                 playingCallback={() => playingSetter?.(!playing)}
                 muteCallback={() => muteSetter?.()}
-                //setDragging={(d) => setDraggingOnTimeLine(d)}
               />
             </Stack>
           ) : null}
