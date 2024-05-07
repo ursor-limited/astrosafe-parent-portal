@@ -43,6 +43,7 @@ const ContentCards = (props: {
   draggedContentId?: string;
   expanded?: boolean;
   noPlayer?: boolean;
+  noButtons?: boolean; // the buttons would be clickable in the column of invisible contents
 }) => {
   return (
     <>
@@ -69,6 +70,7 @@ const ContentCards = (props: {
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
                 noPlayer={props.noPlayer}
+                noButtons
               />
             ) : null;
           } else if (c.type === "link") {
@@ -89,6 +91,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noButtons
               />
             ) : null;
           } else if (c.type === "text") {
@@ -111,6 +114,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noButtons
               />
             ) : null;
           } else if (c.type === "image") {
@@ -131,6 +135,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noButtons
               />
             ) : null;
           } else if (c.type === "worksheet") {
@@ -155,6 +160,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noButtons
               />
             ) : null;
           }

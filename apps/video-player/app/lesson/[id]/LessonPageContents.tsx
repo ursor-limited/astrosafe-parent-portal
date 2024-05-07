@@ -1148,6 +1148,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           }}
           updateCallback={loadLesson}
           noPlayer
+          noButtons
         />
       </Stack>
       <AddContentDialog
