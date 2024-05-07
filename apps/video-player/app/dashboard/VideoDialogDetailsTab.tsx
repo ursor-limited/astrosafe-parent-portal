@@ -164,30 +164,30 @@ const VideoDialogDetailsTab = (props: {
             </Typography>
           </Stack>
         ) : null}
-        {props.provider ? (
-          <Player
-            playerId="creation"
-            url={props.url}
-            provider={props.provider}
-            width={
-              Math.min(playerWidth, VIDEO_WIDTH) -
-              (props.provider === "youtube" ? 0 : 10)
-            }
-            height={
-              Math.min(playerWidth, VIDEO_WIDTH) * (VIDEO_HEIGHT / VIDEO_WIDTH)
-            }
-            setDuration={(d) => {
-              d && props.setDuration(d);
-            }}
-            startTime={props.range?.[0] ?? 0}
-            endTime={props.range?.[1] ?? 10}
-            noKitemark
-            playingCallback={setPlaying}
-            smallPlayIcon
-            noBackdrop
-            noUrlStartTime
-          />
-        ) : null}
+
+        <Player
+          playerId="creation"
+          url={props.url}
+          provider={props.provider}
+          width={
+            Math.min(playerWidth, VIDEO_WIDTH) -
+            (props.provider === "youtube" ? 0 : 10)
+          }
+          height={
+            Math.min(playerWidth, VIDEO_WIDTH) * (VIDEO_HEIGHT / VIDEO_WIDTH)
+          }
+          setDuration={(d) => {
+            d && props.setDuration(d);
+          }}
+          startTime={props.range?.[0] ?? 0}
+          endTime={props.range?.[1] ?? 10}
+          noKitemark
+          playingCallback={setPlaying}
+          smallPlayIcon
+          noBackdrop
+          noUrlStartTime
+        />
+
         <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
           <UrsorButton
             onClick={props.mainButtonCallback}

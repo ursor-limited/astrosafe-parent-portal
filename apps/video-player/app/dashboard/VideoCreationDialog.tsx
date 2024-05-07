@@ -95,9 +95,7 @@ const VideoCreationDialog = (props: {
   video?: IVideo;
 }) => {
   const router = useRouter();
-  const [url, setUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
-  );
+  const [url, setUrl] = useState<string>("");
   useEffect(() => {
     props.video?.url && setUrl(props.video.url);
   }, [props.video?.url]);
@@ -129,12 +127,10 @@ const VideoCreationDialog = (props: {
     undefined
   );
 
-  console.log(provider, "9090b");
-
-  useEffect(
-    () => zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube"),
-    [originalUrl]
-  );
+  useEffect(() => {
+    originalUrl &&
+      zetProvider(originalUrl.includes("vimeo") ? "vimeo" : "youtube");
+  }, [originalUrl]);
   useEffect(() => {
     fetch(
       `https://noembed.com/embed?url=${encodeURIComponent(

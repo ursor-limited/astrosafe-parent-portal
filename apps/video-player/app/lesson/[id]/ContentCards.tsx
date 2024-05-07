@@ -70,7 +70,7 @@ const ContentCards = (props: {
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
                 noPlayer={props.noPlayer}
-                noButtons
+                noButtons={props.noButtons}
               />
             ) : null;
           } else if (c.type === "link") {
@@ -91,7 +91,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
-                noButtons
+                noButtons={props.noButtons}
               />
             ) : null;
           } else if (c.type === "text") {
@@ -114,7 +114,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
-                noButtons
+                noButtons={props.noButtons}
               />
             ) : null;
           } else if (c.type === "image") {
@@ -135,7 +135,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
-                noButtons
+                noButtons={props.noButtons}
               />
             ) : null;
           } else if (c.type === "worksheet") {
@@ -160,7 +160,7 @@ const ContentCards = (props: {
                 columnWidth={props.columnWidth}
                 expanded={props.expanded}
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
-                noButtons
+                noButtons={props.noButtons}
               />
             ) : null;
           }
