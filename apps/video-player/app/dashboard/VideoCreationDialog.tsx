@@ -19,7 +19,7 @@ import TimeRange from "./TimeRange";
 import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 
-export const VIDEO_WIDTH = 940; //390;
+export const VIDEO_WIDTH = 880; //390;
 //export const VIMEO_VIDEO_WIDTH = 970; //390;
 export const VIDEO_HEIGHT = 522;
 
