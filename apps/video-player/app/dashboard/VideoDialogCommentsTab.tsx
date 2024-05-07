@@ -340,7 +340,13 @@ const VideoDialogCommentsTab = (props: {
             ) : null}
           </Stack>
         </Stack>
-        <Stack flex={1} spacing="24px" width="318px" minWidth="318px">
+        <Stack
+          flex={1}
+          justifyContent="space-between"
+          spacing="24px"
+          width="318px"
+          minWidth="318px"
+        >
           <Stack
             p="12px"
             boxSizing="border-box"
@@ -348,7 +354,7 @@ const VideoDialogCommentsTab = (props: {
             borderRadius="12px"
             flex={1}
             spacing="8px"
-            minHeight={`${VIDEO_HEIGHT}px`}
+            // minHeight={`${VIDEO_HEIGHT}px`}
             maxHeight={`${VIDEO_HEIGHT}px`}
             overflow="hidden"
           >
@@ -430,7 +436,7 @@ const VideoDialogCommentsTab = (props: {
               }
             </Stack>
           </Stack>
-          <Stack flex={1} justifyContent="flex-end">
+          <Stack justifyContent="flex-end">
             <UrsorButton
               onClick={props.mainButtonCallback}
               disabled={!props.url}
