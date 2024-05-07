@@ -172,11 +172,9 @@ const TimelineVideoCard = (
   useEffect(() => {
     if (_.isNumber(props?.startTime) && props.endTime) {
       setRange([props?.startTime, props.endTime]);
-      setDuration(props.endTime - props.startTime);
+      //setDuration(props.endTime - props.startTime);
     }
   }, [props.startTime, props.endTime]);
-
-  console.log(duration, range);
 
   const [currentTime, setCurrentTime] = useState<number>(0);
 

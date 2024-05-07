@@ -47,8 +47,6 @@ const TimeRange = (props: {
     [lineRef?.getBoundingClientRect?.().width]
   );
 
-  console.log(lineWidth, "www");
-
   const [draggingDot, setDraggingDot] = useState<boolean>(false);
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
@@ -119,6 +117,8 @@ const TimeRange = (props: {
     setEndLineX(lineWidth * ((props.range?.[1] ?? 0) / props.duration));
   }, [lineWidth, props.range, props.duration]);
 
+  console.log("bbb", props.duration);
+
   const handleDraggingEnd = useCallback(() => {
     if (draggingDot && props.range) {
       props.setCurrentTime(
@@ -164,20 +164,6 @@ const TimeRange = (props: {
       window.removeEventListener("mouseup", handleDraggingEnd);
     };
   }, [handleDraggingEnd]);
-
-  console.log(
-    lineWidth,
-    endLineX,
-    lineWidth - endLineX,
-    Math.max(0, lineWidth - endLineX),
-    "nnnn"
-  );
-
-  const [endGreyLineWidth, setEndGreyLineWidth] = useState<number>(0);
-  useEffect(
-    () => setEndGreyLineWidth(Math.max(0, lineWidth - endLineX)),
-    [lineWidth, endLineX]
-  );
 
   return (
     <Stack direction="row" spacing="12px" width="100%">
