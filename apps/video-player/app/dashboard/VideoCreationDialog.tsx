@@ -240,7 +240,7 @@ const VideoCreationDialog = (props: {
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
   const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
-    "details"
+    "comments"
   );
 
   const [comments, setComments] = useState<IVideoComment[]>([]);
@@ -256,12 +256,12 @@ const VideoCreationDialog = (props: {
         width="1308px"
         maxWidth="1308px"
         noPadding
-        dynamicHeight
+        height="780px"
         paddingY={isMobile ? "0px" : "40px"}
         paddingX={isMobile ? undefined : "40px"}
         noCloseButton={isMobile}
       >
-        <Stack width="100%" spacing="24px">
+        <Stack width="100%" flex={1} spacing="24px" overflow="hidden">
           <Stack direction="row" spacing="12px">
             <Stack onClick={() => setSelectedTab("details")}>
               <VideoCreationDialogTabButton
