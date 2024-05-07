@@ -613,17 +613,17 @@ export default function LessonPageContents(props: { lessonId: string }) {
           description={lesson?.description ?? ""}
           createdAt={lesson?.createdAt ?? undefined}
           noBottomPadding
-          backCallback={
-            needToTitle
-              ? () => {
-                  setLessonNamingDialogSkipTo("back");
-                  setEditingDialogOpen(true);
-                  notificationCtx.success(
-                    "Please add a title to your Lesson before leaving."
-                  );
-                }
-              : undefined
-          }
+          // backCallback={
+          //   needToTitle
+          //     ? () => {
+          //         //setLessonNamingDialogSkipTo("back");
+          //         //setEditingDialogOpen(true);
+          //         notificationCtx.success(
+          //           "Please add a title to your Lesson before leaving."
+          //         );
+          //       }
+          //     : undefined
+          // }
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">

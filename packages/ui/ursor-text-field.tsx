@@ -74,10 +74,16 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
       rows={N_ROWS}
       sx={{
         ".MuiInputBase-root": {
-          paddingTop: "9px",
-          paddingBottom: "9px",
+          paddingTop: "3px",
+          paddingBottom: "3px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
           fontFamily: "inherit",
         },
+        "::-webkit-scrollbar": {
+          display: "block !important",
+        },
+        overflow: "hidden",
         width: props.width,
         height: props.height,
         borderRadius: "8px",

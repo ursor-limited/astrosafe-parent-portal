@@ -83,7 +83,7 @@ export const VideoCommentCard = (props: {
           }
           placeholder="Write a comment"
           width="100%"
-          height="110px"
+          height="111px"
           boldValue
           noBorder
         />
@@ -213,6 +213,12 @@ const VideoDialogCommentsTab = (props: {
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<IVideoComment[]>([]);
   useEffect(() => setComments(props.comments), [props.comments]);
+
+  const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
+  useEffect(
+    () => setSortedComments(_.sortBy(comments, (c) => c.time)),
+    [comments]
+  );
 
   const addComment = () => {
     const newComments = [
@@ -401,7 +407,7 @@ const VideoDialogCommentsTab = (props: {
             >
               {
                 //_.sortBy(comments, (c) => c.time).map((c) => (
-                _.reverse(comments.slice()).map((c) => (
+                sortedComments.map((c) => (
                   <UrsorFadeIn key={c.id} duration={800}>
                     <Stack
                       id={c.id}
