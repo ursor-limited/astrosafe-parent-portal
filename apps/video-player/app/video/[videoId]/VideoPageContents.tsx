@@ -364,11 +364,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
             ) : null}
           </Stack>
           {duration && !isMobile ? (
-            <Stack
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
-              pb="6px"
-              px="24px"
-            >
+            <Stack px="24px">
               <TimeRange
                 range={range}
                 duration={duration}
