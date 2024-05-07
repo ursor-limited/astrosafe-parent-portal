@@ -249,80 +249,98 @@ const VideoDialogCommentsTab = (props: {
     string | undefined
   >();
 
+  const [playerContainerRef, setPlayerContainerRef] =
+    useState<HTMLElement | null>(null);
+
+  const [playerContainerWidth, setPlayerContainerWidth] =
+    useState<number>(VIDEO_WIDTH);
+  const [playerContainerHeight, setPlayerContainerHeight] =
+    useState<number>(VIDEO_HEIGHT);
+  useEffect(() => {
+    setPlayerContainerWidth(
+      playerContainerRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+    );
+    setPlayerContainerHeight(
+      playerContainerRef?.getBoundingClientRect().height ?? VIDEO_HEIGHT
+    );
+  }, [
+    playerContainerRef?.getBoundingClientRect().width,
+    playerContainerRef?.getBoundingClientRect().height,
+  ]);
+
   return (
     <>
       <Stack
-        flex={1}
         direction={isMobile ? "column" : "row"}
         spacing="24px"
         width="100%"
+        flex={1}
         overflow="hidden"
         boxSizing="border-box"
       >
-        <Stack
-          width={isMobile ? 0 : VIDEO_WIDTH}
-          height={isMobile ? 0 : undefined}
-          overflow={isMobile ? "hidden" : undefined}
-          spacing="6px"
-          position="relative"
-          justifyContent="space-between"
-        >
-          {props.provider ? (
-            <Player
-              playerId="creation"
-              url={props.url}
-              provider={props.provider}
-              // width={Math.min(playerWidth, VIDEO_WIDTH)}
-              // height={
-              //   Math.min(playerWidth, VIDEO_WIDTH) *
-              //   (VIDEO_HEIGHT / VIDEO_WIDTH)
-              // }
-              width={
-                // props.provider === "youtube" ? VIDEO_WIDTH : VIMEO_VIDEO_WIDTH
-                props.provider === "youtube" ? VIDEO_WIDTH : VIDEO_WIDTH - 10
-              }
-              height={VIDEO_HEIGHT}
-              setDuration={(d) => {
-                d && props.setDuration(d);
-              }}
-              startTime={props.range?.[0] ?? 0}
-              endTime={props.range?.[1] ?? 10}
-              noKitemark
-              playingCallback={setPlaying}
-              smallPlayIcon
-              noBackdrop
-              noUrlStartTime
-              setCurrentTime={setCurrentTime}
-              setMuteSetter={(f) => setMuteSetter(() => f)}
-              setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
-              setPlayingSetter={(f) => setPlayingSetter(() => f)}
-            />
-          ) : null}
-          {props.duration ? (
-            <TimeRange
-              range={props.range}
-              duration={props.duration}
-              setRange={props.setRange}
-              originalUrl={props.originalUrl}
-              currentTime={currentTime}
-              setCurrentTime={(time) => currentTimeSetter?.(time)}
-              comments={comments}
-              selectedComment={selectedComment}
-              setSelectedComment={(id) => {
-                setSelectedComment(id);
-                if (id) {
-                  const time = comments.find((c) => c.id === id)?.time;
-                  _.isNumber(time) && currentTimeSetter?.(time);
-                  playingSetter?.(false);
-                }
-              }}
-              playing={playing}
-              playingCallback={() => playingSetter?.(!playing)}
-              muteCallback={() => muteSetter?.()}
-            />
-          ) : null}
+        <Stack spacing="12px" width="100%" height="100%">
+          <Stack
+            ref={setPlayerContainerRef}
+            width="100%"
+            height="100%"
+            position="relative"
+          >
+            <Stack position="absolute" top={0} left={0}>
+              <Player
+                playerId="creation"
+                url={props.url}
+                provider={props.provider}
+                // width={Math.min(playerWidth, VIDEO_WIDTH)}
+                // height={
+                //   Math.min(playerWidth, VIDEO_WIDTH) *
+                //   (VIDEO_HEIGHT / VIDEO_WIDTH)
+                // }
+                width={Math.min(VIDEO_WIDTH, playerContainerWidth)}
+                height={Math.min(VIDEO_HEIGHT, playerContainerHeight)}
+                setDuration={(d) => {
+                  d && props.setDuration(d);
+                }}
+                startTime={props.range?.[0] ?? 0}
+                endTime={props.range?.[1] ?? 10}
+                noKitemark
+                playingCallback={setPlaying}
+                smallPlayIcon
+                noBackdrop
+                noUrlStartTime
+                setCurrentTime={setCurrentTime}
+                setMuteSetter={(f) => setMuteSetter(() => f)}
+                setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                setPlayingSetter={(f) => setPlayingSetter(() => f)}
+              />
+            </Stack>
+          </Stack>
+          <Stack maxWidth={`${playerContainerWidth}px`}>
+            {props.duration ? (
+              <TimeRange
+                range={props.range}
+                duration={props.duration}
+                setRange={props.setRange}
+                originalUrl={props.originalUrl}
+                currentTime={currentTime}
+                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                comments={comments}
+                selectedComment={selectedComment}
+                setSelectedComment={(id) => {
+                  setSelectedComment(id);
+                  if (id) {
+                    const time = comments.find((c) => c.id === id)?.time;
+                    _.isNumber(time) && currentTimeSetter?.(time);
+                    playingSetter?.(false);
+                  }
+                }}
+                playing={playing}
+                playingCallback={() => playingSetter?.(!playing)}
+                muteCallback={() => muteSetter?.()}
+              />
+            ) : null}
+          </Stack>
         </Stack>
-        <Stack flex={1} spacing="24px">
+        <Stack flex={1} spacing="24px" width="318px" minWidth="318px">
           <Stack
             p="12px"
             boxSizing="border-box"
@@ -412,16 +430,18 @@ const VideoDialogCommentsTab = (props: {
               }
             </Stack>
           </Stack>
-          <UrsorButton
-            onClick={props.mainButtonCallback}
-            disabled={!props.url}
-            dark
-            variant="tertiary"
-            endIcon={props.video ? PencilIcon : ChevronRightIcon}
-            width="100%"
-          >
-            {props.video ? "Update" : "Publish"}
-          </UrsorButton>
+          <Stack flex={1} justifyContent="flex-end">
+            <UrsorButton
+              onClick={props.mainButtonCallback}
+              disabled={!props.url}
+              dark
+              variant="tertiary"
+              endIcon={props.video ? PencilIcon : ChevronRightIcon}
+              width="100%"
+            >
+              {props.video ? "Update" : "Publish"}
+            </UrsorButton>
+          </Stack>
         </Stack>
       </Stack>
       <DeletionDialog

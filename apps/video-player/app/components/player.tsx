@@ -22,7 +22,7 @@ const Player = (props: {
   playerId: string;
   url: string;
   playingCallback?: (playing: boolean) => void;
-  provider: "youtube" | "vimeo";
+  provider?: "youtube" | "vimeo";
   width: number;
   height: number;
   setDuration?: (duration: number) => void;
@@ -190,6 +190,8 @@ const Player = (props: {
     }
   }, [props.endTime, currentTime, props.startTime]);
 
+  console.log("aaaa", props.provider);
+
   useEffect(() => {
     if (!url) return;
     url.includes("vimeo")
@@ -356,17 +358,19 @@ const Player = (props: {
           cursor: "pointer",
         }}
       >
-        <iframe
-          onMouseEnter={() => setOverlayHovering(true)}
-          onMouseLeave={() => setOverlayHovering(false)}
-          id={props.playerId}
-          title="Player"
-          width={fullScreen ? "100%" : props.width}
-          height={fullScreen ? "100%" : props.height}
-          src={url}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
-          frameBorder={0}
-        />
+        {props.provider && props.url ? (
+          <iframe
+            onMouseEnter={() => setOverlayHovering(true)}
+            onMouseLeave={() => setOverlayHovering(false)}
+            id={props.playerId}
+            title="Player"
+            width={fullScreen ? "100%" : props.width}
+            height={fullScreen ? "100%" : props.height}
+            src={url}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
+            frameBorder={0}
+          />
+        ) : null}
         <Stack
           position="absolute"
           top={0}

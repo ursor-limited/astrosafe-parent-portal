@@ -206,7 +206,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     string | undefined
   >(undefined);
 
-  const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(false);
+  const [videoDialogOpen, setVideoDialogOpen] = useState<boolean>(true);
   const [videoEditingDialogId, setVideoEditingDialogId] = useState<
     string | undefined
   >(undefined);
@@ -1148,6 +1148,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           }}
           updateCallback={loadLesson}
           noPlayer
+          noButtons
         />
       </Stack>
       <AddContentDialog

@@ -24,6 +24,7 @@ const TimeRange = (props: {
   playing: boolean;
   playingCallback: () => void;
   muteCallback: () => void;
+  //setDragging?: (d: boolean) => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -50,6 +51,10 @@ const TimeRange = (props: {
   const [draggingDot, setDraggingDot] = useState<boolean>(false);
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   props.setDragging?.(draggingDot || draggingEndLine || draggingStartLine);
+  // }, [draggingDot, draggingEndLine, draggingStartLine]);
 
   const [startLineX, setStartLineX] = useState<number>(0);
   const [endLineX, setEndLineX] = useState<number>(0);
@@ -116,8 +121,6 @@ const TimeRange = (props: {
     setStartLineX(lineWidth * ((props.range?.[0] ?? 0) / props.duration));
     setEndLineX(lineWidth * ((props.range?.[1] ?? 0) / props.duration));
   }, [lineWidth, props.range, props.duration]);
-
-  console.log("bbb", props.duration);
 
   const handleDraggingEnd = useCallback(() => {
     if (draggingDot && props.range) {

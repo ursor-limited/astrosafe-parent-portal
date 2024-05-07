@@ -12,11 +12,15 @@ import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import CommentIcon from "@/images/icons/CommentIcon.svg";
+import PlayIcon from "@/images/icons/PlayIcon.svg";
 import TimeRange from "@/app/dashboard/TimeRange";
 import _ from "lodash";
 import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
+import { isMobile } from "react-device-detect";
+
+const COMMENT_PAUSE_THRESHOLD = 1;
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -89,25 +93,38 @@ const TimelineCardCommentsButton = (props: {
   );
 };
 
-const TimelineVideoCardCommentDisplayCard = (props: IVideoComment) => (
+const TimelineVideoCardCommentDisplayCard = (
+  props: IVideoComment & { resumeCallback: () => void }
+) => (
   <Stack
-    width="518px"
+    width={isMobile ? "300px" : "518px"}
     borderRadius="12px"
     bgcolor="rgb(255,255,255)"
     p="10px"
     boxSizing="border-box"
     spacing="8px"
   >
-    <Typography variant="h5" bold>
+    <Typography variant={isMobile ? "medium" : "h5"} bold>
       {props.value}
     </Typography>
-    <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
-      {`${Math.floor(props.time / 60)
-        .toString()
-        .padStart(2, "0")}:${Math.floor(props.time % 60)
-        .toString()
-        .padStart(2, "0")}`}
-    </Typography>
+    <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
+      <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
+        {`${Math.floor(props.time / 60)
+          .toString()
+          .padStart(2, "0")}:${Math.floor(props.time % 60)
+          .toString()
+          .padStart(2, "0")}`}
+      </Typography>
+      <UrsorButton
+        size="small"
+        variant="tertiary"
+        dark
+        endIcon={PlayIcon}
+        onClick={props.resumeCallback}
+      >
+        Resume
+      </UrsorButton>
+    </Stack>
   </Stack>
 );
 
@@ -123,6 +140,7 @@ const TimelineVideoCard = (
     columnWidth?: number;
     expanded?: boolean;
     noPlayer?: boolean;
+    noButtons?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -189,13 +207,15 @@ const TimelineVideoCard = (
 
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
-  const [selectedComment, setSelectedComment] = useState<string | undefined>();
-  useEffect(() => {
-    playing && setSelectedComment(undefined);
-  }, [playing]);
-
   const [currentComment, setCurrentComment] = useState<
     IVideoComment | undefined
+  >();
+  useEffect(() => setCurrentComment(props.comments[0]), [props.comments]);
+  useEffect(() => {
+    playing && setCurrentComment(undefined);
+  }, [playing]);
+  const [resumedFromCommentId, setResumedFromCommentId] = useState<
+    string | undefined
   >();
   const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
   useEffect(
@@ -203,8 +223,24 @@ const TimelineVideoCard = (
     [props.comments]
   );
   useEffect(() => {
-    setCurrentComment(sortedComments.find((c) => c.time <= currentTime));
-  }, [currentTime, sortedComments]);
+    if (draggingOnTimeLine) return;
+    const newCurrentComment = sortedComments.find(
+      (c) =>
+        currentTime - c.time > 0 &&
+        currentTime - c.time < COMMENT_PAUSE_THRESHOLD
+    );
+    if (
+      resumedFromCommentId !== newCurrentComment?.id &&
+      newCurrentComment &&
+      newCurrentComment?.id !== currentComment?.id
+    ) {
+      setCurrentComment(newCurrentComment);
+      setResumedFromCommentId(newCurrentComment.id);
+      playingSetter?.(false);
+    }
+  }, [currentTime]);
+
+  const [draggingOnTimeLine, setDraggingOnTimeLine] = useState<boolean>(false);
 
   return (
     <>
@@ -226,13 +262,14 @@ const TimelineVideoCard = (
         expansionCallback={props.expansionCallback}
         useExpandedHeight
         comments={sortedComments}
+        noButtons={props.noButtons}
         extraButton={
           !props.noPlayer && props.comments ? (
             <TimelineCardCommentsButton
               comments={props.comments}
-              selectedCommentId={selectedComment}
+              selectedCommentId={currentComment?.id}
               callback={(id) => {
-                setSelectedComment(id);
+                setCurrentComment(props.comments.find((c) => c.id === id));
                 const newCurrentTime = sortedComments.find((c) => c.id === id)
                   ?.time;
                 newCurrentTime && currentTimeSetter?.(newCurrentTime);
@@ -303,11 +340,17 @@ const TimelineVideoCard = (
                 marginRight="auto"
                 alignItems="center"
               >
-                <TimelineVideoCardCommentDisplayCard {...currentComment} />
+                <TimelineVideoCardCommentDisplayCard
+                  {...currentComment}
+                  resumeCallback={() => {
+                    playingSetter?.(true);
+                    setCurrentComment(undefined);
+                  }}
+                />
               </Stack>
             ) : null}
           </Stack>
-          {duration ? (
+          {duration && !isMobile ? (
             <Stack
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
               pb="6px"
@@ -319,9 +362,10 @@ const TimelineVideoCard = (
                 currentTime={currentTime}
                 setCurrentTime={(time) => currentTimeSetter?.(time)}
                 comments={props.comments}
-                selectedComment={selectedComment}
+                selectedComment={currentComment?.id}
                 setSelectedComment={(id) => {
-                  setSelectedComment(id);
+                  setCurrentComment(props.comments.find((c) => c.id === id));
+                  setResumedFromCommentId(id);
                   if (id) {
                     const time = props.comments.find((c) => c.id === id)?.time;
                     _.isNumber(time) && currentTimeSetter?.(time);
@@ -331,6 +375,7 @@ const TimelineVideoCard = (
                 playing={playing}
                 playingCallback={() => playingSetter?.(!playing)}
                 muteCallback={() => muteSetter?.()}
+                //setDragging={(d) => setDraggingOnTimeLine(d)}
               />
             </Stack>
           ) : null}

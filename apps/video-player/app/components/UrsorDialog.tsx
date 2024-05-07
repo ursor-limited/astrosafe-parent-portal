@@ -133,9 +133,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         style: {
           width: props.width || WIDTH,
           maxWidth: props.maxWidth || WIDTH,
-          maxHeight: props.dynamicHeight ? undefined : HEIGHT,
-          //minHeight: props.height || HEIGHT,
-          height: props.dynamicHeight ? undefined : "100%",
+          // maxHeight: props.dynamicHeight ? undefined : props.height || HEIGHT,
+          height: props.dynamicHeight ? undefined : props.height || "100%",
           borderRadius: BORDER_RADIUS,
           margin: "20px",
         },

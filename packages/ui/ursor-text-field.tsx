@@ -79,6 +79,7 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
           fontFamily: "inherit",
         },
         width: props.width,
+        height: props.height,
         borderRadius: "8px",
         outline: props.outline,
         background: props.white

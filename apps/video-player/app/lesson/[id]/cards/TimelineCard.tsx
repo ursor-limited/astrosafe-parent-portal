@@ -40,6 +40,7 @@ const TimelineCard = (props: {
   leftElement?: React.ReactNode;
   comments?: IVideoComment[];
   extraButton?: React.ReactNode;
+  noButtons?: boolean;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
@@ -158,48 +159,52 @@ const TimelineCard = (props: {
                     <ArrowBothIcon height="18px" width="18px" />
                   </Stack>
                 ) : null}
-                <Stack
-                  height="32px"
-                  width="32px"
-                  bgcolor="rgb(255,255,255)"
-                  borderRadius="100%"
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                    cursor: "pointer",
-                  }}
-                  onClick={props.duplicationCallback}
-                >
-                  <DuplicateIcon height="22px" width="22px" />
-                </Stack>
+                {!props.noButtons ? (
+                  <Stack
+                    height="32px"
+                    width="32px"
+                    bgcolor="rgb(255,255,255)"
+                    borderRadius="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={props.duplicationCallback}
+                  >
+                    <DuplicateIcon height="22px" width="22px" />
+                  </Stack>
+                ) : null}
                 {props.extraButton}
-                <UrsorActionButton
-                  size="32px"
-                  iconSize="16px"
-                  actions={[
-                    ...(props.editingCallback
-                      ? [
-                          {
-                            text: "Edit",
-                            kallback: () => props.editingCallback?.(),
-                            icon: PencilIcon,
-                          },
-                        ]
-                      : []),
-                    ...(props.deletionCallback
-                      ? [
-                          {
-                            text: "Delete",
-                            kallback: () => props.deletionCallback?.(),
-                            icon: TrashcanIcon,
-                            color: PALETTE.system.red,
-                          },
-                        ]
-                      : []),
-                  ]}
-                />
+                {!props.noButtons ? (
+                  <UrsorActionButton
+                    size="32px"
+                    iconSize="16px"
+                    actions={[
+                      ...(props.editingCallback
+                        ? [
+                            {
+                              text: "Edit",
+                              kallback: () => props.editingCallback?.(),
+                              icon: PencilIcon,
+                            },
+                          ]
+                        : []),
+                      ...(props.deletionCallback
+                        ? [
+                            {
+                              text: "Delete",
+                              kallback: () => props.deletionCallback?.(),
+                              icon: TrashcanIcon,
+                              color: PALETTE.system.red,
+                            },
+                          ]
+                        : []),
+                    ]}
+                  />
+                ) : null}
               </Stack>
             </Stack>
           </Stack>
