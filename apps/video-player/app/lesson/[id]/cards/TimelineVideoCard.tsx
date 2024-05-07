@@ -210,7 +210,6 @@ const TimelineVideoCard = (
   const [currentComment, setCurrentComment] = useState<
     IVideoComment | undefined
   >();
-  useEffect(() => setCurrentComment(props.comments[0]), [props.comments]);
   useEffect(() => {
     playing && setCurrentComment(undefined);
   }, [playing]);
