@@ -174,7 +174,9 @@ const TimelineVideoCard = (
       setRange([props?.startTime, props.endTime]);
       setDuration(props.endTime - props.startTime);
     }
-  }, []);
+  }, [props.startTime, props.endTime]);
+
+  console.log(duration, range);
 
   const [currentTime, setCurrentTime] = useState<number>(0);
 
