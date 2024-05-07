@@ -170,7 +170,7 @@ const Player = (props: {
       url?.includes("vimeo")
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
         : setCurrentTime(player.getCurrentTime());
-    }, 500);
+    }, 200);
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [player, playing, url]);
 
