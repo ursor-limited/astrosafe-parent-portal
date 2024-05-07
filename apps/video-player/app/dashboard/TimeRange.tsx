@@ -117,8 +117,6 @@ const TimeRange = (props: {
     setEndLineX(lineWidth * ((props.range?.[1] ?? 0) / props.duration));
   }, [lineWidth, props.range, props.duration]);
 
-  console.log("bbb", props.duration);
-
   const handleDraggingEnd = useCallback(() => {
     if (draggingDot && props.range) {
       props.setCurrentTime(

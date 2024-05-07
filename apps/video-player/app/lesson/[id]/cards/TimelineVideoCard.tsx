@@ -203,7 +203,11 @@ const TimelineVideoCard = (
     [props.comments]
   );
   useEffect(() => {
-    setCurrentComment(sortedComments.find((c) => c.time <= currentTime));
+    const newCurrentComment = sortedComments.find((c) => c.time <= currentTime);
+    if (newCurrentComment?.id !== currentComment?.id) {
+      setCurrentComment(sortedComments.find((c) => c.time <= currentTime));
+      playingSetter?.(false);
+    }
   }, [currentTime, sortedComments]);
 
   return (
