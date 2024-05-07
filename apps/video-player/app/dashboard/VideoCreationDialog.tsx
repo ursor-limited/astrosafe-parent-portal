@@ -241,7 +241,7 @@ const VideoCreationDialog = (props: {
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
   const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
-    "comments"
+    "details"
   );
 
   const [comments, setComments] = useState<IVideoComment[]>([]);
