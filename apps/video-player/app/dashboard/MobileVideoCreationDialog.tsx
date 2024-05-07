@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import MultipleCommentsIcon from "@/images/icons/MultipleCommentsIcon.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "../components/UrsorDialog";
 import { useContext, useEffect, useState } from "react";
@@ -21,8 +20,6 @@ import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
 import NotificationContext from "../components/NotificationContext";
-import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
-import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
 import { extractUrl } from "./VideoCreationDialog";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 
@@ -38,9 +35,7 @@ const MobileVideoCreationDialog = (props: {
   video?: IVideo;
 }) => {
   const router = useRouter();
-  const [url, setUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
-  );
+  const [url, setUrl] = useState<string>("");
   useEffect(() => {
     props.video?.url && setUrl(props.video.url);
   }, [props.video?.url]);
@@ -208,6 +203,25 @@ const MobileVideoCreationDialog = (props: {
 
   const [playing, setPlaying] = useState<boolean>(false);
 
+  const [playerContainerRef, setPlayerContainerRef] =
+    useState<HTMLElement | null>(null);
+
+  const [playerContainerWidth, setPlayerContainerWidth] =
+    useState<number>(VIDEO_WIDTH);
+  const [playerContainerHeight, setPlayerContainerHeight] =
+    useState<number>(VIDEO_HEIGHT);
+  useEffect(() => {
+    setPlayerContainerWidth(
+      playerContainerRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
+    );
+    setPlayerContainerHeight(
+      playerContainerRef?.getBoundingClientRect().height ?? VIDEO_HEIGHT
+    );
+  }, [
+    playerContainerRef?.getBoundingClientRect().width,
+    playerContainerRef?.getBoundingClientRect().height,
+  ]);
+
   return (
     <>
       <UrsorDialog
@@ -221,7 +235,7 @@ const MobileVideoCreationDialog = (props: {
         paddingX={isMobile ? undefined : "40px"}
         noCloseButton={isMobile}
       >
-        <Stack width="100%" spacing="24px">
+        <Stack width="100%" spacing="24px" p="12px" boxSizing="border-box">
           <Stack
             flex={1}
             direction={isMobile ? "column" : "row"}
@@ -260,6 +274,35 @@ const MobileVideoCreationDialog = (props: {
                   height="2px"
                   bgcolor={PALETTE.secondary.grey[2]}
                 />
+              </Stack>
+
+              <Stack
+                ref={setPlayerContainerRef}
+                width="100%"
+                height={playerContainerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
+                position="relative"
+              >
+                <Stack position="absolute" top={0} left={0}>
+                  <Player
+                    playerId="creation"
+                    url={url}
+                    provider={provider}
+                    width={
+                      playerContainerWidth - (provider === "youtube" ? 0 : 10)
+                    }
+                    height={playerContainerHeight}
+                    setDuration={(d) => {
+                      d && setDuration(d);
+                    }}
+                    startTime={range?.[0] ?? 0}
+                    endTime={range?.[1] ?? 10}
+                    noKitemark
+                    playingCallback={setPlaying}
+                    smallPlayIcon
+                    noBackdrop
+                    noUrlStartTime
+                  />
+                </Stack>
               </Stack>
 
               <Captioned text="Title">
@@ -328,25 +371,6 @@ const MobileVideoCreationDialog = (props: {
                   </Typography>
                 </Stack>
               ) : null}
-              {provider ? (
-                <Player
-                  playerId="creation"
-                  url={url}
-                  provider={provider}
-                  width={playerWidth - (provider === "youtube" ? 0 : 10)}
-                  height={playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)}
-                  setDuration={(d) => {
-                    d && setDuration(d);
-                  }}
-                  startTime={range?.[0] ?? 0}
-                  endTime={range?.[1] ?? 10}
-                  noKitemark
-                  playingCallback={setPlaying}
-                  smallPlayIcon
-                  noBackdrop
-                  noUrlStartTime
-                />
-              ) : null}
               <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
                 <UrsorButton
                   onClick={() =>
@@ -355,10 +379,10 @@ const MobileVideoCreationDialog = (props: {
                   disabled={!url}
                   dark
                   variant="tertiary"
-                  endIcon={props.video ? PencilIcon : ChevronRightIcon}
-                  width="264px"
+                  endIcon={PencilIcon}
+                  width="100%"
                 >
-                  Next
+                  Publish
                 </UrsorButton>
               </Stack>
             </Stack>

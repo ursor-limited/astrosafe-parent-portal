@@ -18,6 +18,7 @@ import NotificationContext from "../components/NotificationContext";
 import TimeRange from "./TimeRange";
 import VideoDialogDetailsTab from "./VideoDialogDetailsTab";
 import VideoDialogCommentsTab from "./VideoDialogCommentsTab";
+import MobileVideoCreationDialog from "./MobileVideoCreationDialog";
 
 export const VIDEO_WIDTH = 880; //390;
 //export const VIMEO_VIDEO_WIDTH = 970; //390;
@@ -250,84 +251,87 @@ const VideoCreationDialog = (props: {
 
   return (
     <>
-      <UrsorDialog
-        open={props.open}
-        onCloseCallback={props.closeCallback}
-        width="1308px"
-        maxWidth="1308px"
-        noPadding
-        height="780px"
-        paddingY={isMobile ? "0px" : "40px"}
-        paddingX={isMobile ? undefined : "40px"}
-        noCloseButton={isMobile}
-      >
-        <Stack width="100%" flex={1} spacing="24px" overflow="hidden">
-          <Stack direction="row" spacing="12px">
-            <Stack onClick={() => setSelectedTab("details")}>
-              <VideoCreationDialogTabButton
-                text="Video details"
-                icon={PencilIcon}
-                selected={selectedTab === "details"}
-              />
+      {isMobile ? (
+        <MobileVideoCreationDialog {...props} />
+      ) : (
+        <UrsorDialog
+          open={props.open}
+          onCloseCallback={props.closeCallback}
+          width="1308px"
+          maxWidth="1308px"
+          noPadding
+          height="780px"
+          paddingY={isMobile ? "0px" : "40px"}
+          paddingX={isMobile ? undefined : "40px"}
+          noCloseButton={isMobile}
+        >
+          <Stack width="100%" flex={1} spacing="24px" overflow="hidden">
+            <Stack direction="row" spacing="12px">
+              <Stack onClick={() => setSelectedTab("details")}>
+                <VideoCreationDialogTabButton
+                  text="Video details"
+                  icon={PencilIcon}
+                  selected={selectedTab === "details"}
+                />
+              </Stack>
+              <Stack
+                onClick={() => setSelectedTab("comments")}
+                sx={{
+                  opacity: !url ? 0.5 : 1,
+                  pointerEvents: url ? undefined : "none",
+                }}
+              >
+                <VideoCreationDialogTabButton
+                  text="Comments"
+                  icon={MultipleCommentsIcon}
+                  selected={selectedTab === "comments"}
+                />
+              </Stack>
             </Stack>
-            <Stack
-              onClick={() => setSelectedTab("comments")}
-              sx={{
-                opacity: !url ? 0.5 : 1,
-                pointerEvents: url ? undefined : "none",
-              }}
-            >
-              <VideoCreationDialogTabButton
-                text="Comments"
-                icon={MultipleCommentsIcon}
-                selected={selectedTab === "comments"}
+            {selectedTab === "details" ? (
+              <VideoDialogDetailsTab
+                url={url}
+                originalUrl={originalUrl}
+                setOriginalUrl={setOriginalUrl}
+                video={props.video}
+                title={title}
+                setTitle={setTitle}
+                setEditedTitle={() => setEditedTitle(true)}
+                description={description}
+                setDescription={setDescription}
+                mainButtonCallback={() => setSelectedTab("comments")}
+                showForbiddenVideoView={showForbiddenVideoView}
+                provider={provider}
+                setDuration={setDuration}
+                range={range}
+                setThumbnailUrl={setThumbnailUrl}
               />
-            </Stack>
+            ) : (
+              <VideoDialogCommentsTab
+                url={url}
+                originalUrl={originalUrl}
+                setOriginalUrl={setOriginalUrl}
+                video={props.video}
+                mainButtonCallback={() => {
+                  props.video ? submitUpdate() : submitCreation();
+                }}
+                provider={provider}
+                duration={duration}
+                setDuration={setDuration}
+                range={range}
+                setRange={setRange}
+                setThumbnailUrl={setThumbnailUrl}
+                comments={comments}
+                setComments={setComments}
+              />
+            )}
           </Stack>
-          {selectedTab === "details" ? (
-            <VideoDialogDetailsTab
-              url={url}
-              originalUrl={originalUrl}
-              setOriginalUrl={setOriginalUrl}
-              video={props.video}
-              title={title}
-              setTitle={setTitle}
-              setEditedTitle={() => setEditedTitle(true)}
-              description={description}
-              setDescription={setDescription}
-              mainButtonCallback={() => setSelectedTab("comments")}
-              showForbiddenVideoView={showForbiddenVideoView}
-              provider={provider}
-              setDuration={setDuration}
-              range={range}
-              setThumbnailUrl={setThumbnailUrl}
-            />
-          ) : (
-            <VideoDialogCommentsTab
-              url={url}
-              originalUrl={originalUrl}
-              setOriginalUrl={setOriginalUrl}
-              video={props.video}
-              mainButtonCallback={() => {
-                props.video ? submitUpdate() : submitCreation();
-              }}
-              provider={provider}
-              duration={duration}
-              setDuration={setDuration}
-              range={range}
-              setRange={setRange}
-              setThumbnailUrl={setThumbnailUrl}
-              comments={comments}
-              setComments={setComments}
-            />
-          )}
-        </Stack>
-      </UrsorDialog>
+        </UrsorDialog>
+      )}
       <VideoSignupPromptDialog
         open={signupPromptDialogOpen}
         closeCallback={() => setSignupPromptDialogOpen(false)}
         createCallback={submitCreation}
-        //signinCallback={() => setLandInDashboardAfterCreation(true)}
         mobile={false}
       />
     </>

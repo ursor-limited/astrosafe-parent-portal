@@ -18,6 +18,7 @@ import _ from "lodash";
 import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
+import { isMobile } from "react-device-detect";
 
 const COMMENT_PAUSE_THRESHOLD = 1;
 
@@ -96,14 +97,14 @@ const TimelineVideoCardCommentDisplayCard = (
   props: IVideoComment & { resumeCallback: () => void }
 ) => (
   <Stack
-    width="518px"
+    width={isMobile ? "300px" : "518px"}
     borderRadius="12px"
     bgcolor="rgb(255,255,255)"
     p="10px"
     boxSizing="border-box"
     spacing="8px"
   >
-    <Typography variant="h5" bold>
+    <Typography variant={isMobile ? "medium" : "h5"} bold>
       {props.value}
     </Typography>
     <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
@@ -209,6 +210,7 @@ const TimelineVideoCard = (
   const [currentComment, setCurrentComment] = useState<
     IVideoComment | undefined
   >();
+  useEffect(() => setCurrentComment(props.comments[0]), [props.comments]);
   useEffect(() => {
     playing && setCurrentComment(undefined);
   }, [playing]);
@@ -348,7 +350,7 @@ const TimelineVideoCard = (
               </Stack>
             ) : null}
           </Stack>
-          {duration ? (
+          {duration && !isMobile ? (
             <Stack
               borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
               pb="6px"
