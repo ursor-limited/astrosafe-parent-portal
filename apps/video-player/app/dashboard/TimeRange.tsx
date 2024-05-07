@@ -47,6 +47,8 @@ const TimeRange = (props: {
     [lineRef?.getBoundingClientRect?.().width]
   );
 
+  console.log(lineWidth, "www");
+
   const [draggingDot, setDraggingDot] = useState<boolean>(false);
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
@@ -163,6 +165,20 @@ const TimeRange = (props: {
     };
   }, [handleDraggingEnd]);
 
+  console.log(
+    lineWidth,
+    endLineX,
+    lineWidth - endLineX,
+    Math.max(0, lineWidth - endLineX),
+    "nnnn"
+  );
+
+  const [endGreyLineWidth, setEndGreyLineWidth] = useState<number>(0);
+  useEffect(
+    () => setEndGreyLineWidth(Math.max(0, lineWidth - endLineX)),
+    [lineWidth, endLineX]
+  );
+
   return (
     <Stack direction="row" spacing="12px" width="100%">
       <Stack
@@ -268,7 +284,7 @@ const TimeRange = (props: {
               position="absolute"
               bgcolor={PALETTE.secondary.grey[2]}
               height="4px"
-              width={startLineX}
+              width={`${startLineX}px`}
               left={0}
               top={0}
               bottom={0}
@@ -279,15 +295,12 @@ const TimeRange = (props: {
               position="absolute"
               bgcolor={PALETTE.secondary.grey[2]}
               height="4px"
-              width={lineWidth - endLineX}
+              width={`${Math.max(0, lineWidth - endLineX)}px`}
               left={endLineX}
               top={0}
               bottom={0}
               marginTop="auto"
               marginBottom="auto"
-              // sx={{
-              //   opacity: draggingEndLine ? 0.4 : 1
-              // }}
             />
             <Stack
               position="absolute"

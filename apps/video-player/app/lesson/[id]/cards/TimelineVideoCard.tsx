@@ -91,7 +91,7 @@ const TimelineCardCommentsButton = (props: {
 
 const TimelineVideoCardCommentDisplayCard = (props: IVideoComment) => (
   <Stack
-    width="618px"
+    width="518px"
     borderRadius="12px"
     bgcolor="rgb(255,255,255)"
     p="10px"
