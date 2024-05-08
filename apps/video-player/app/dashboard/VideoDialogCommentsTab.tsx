@@ -180,19 +180,6 @@ const VideoDialogCommentsTab = (props: {
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
 
-  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
-    null
-  );
-
-  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
-  useEffect(
-    () =>
-      setPlayerWidth(
-        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
-      ),
-    [playerWidthRef?.getBoundingClientRect().width]
-  );
-
   const [currentTime, setCurrentTime] = useState<number>(0);
 
   const [currentTimeSetter, setCurrentTimeSetter] = useState<
@@ -321,7 +308,7 @@ const VideoDialogCommentsTab = (props: {
               />
             </Stack>
           </Stack>
-          <Stack maxWidth={`${playerContainerWidth}px`}>
+          <Stack pt="15px" maxWidth={`${playerContainerWidth}px`}>
             {props.duration ? (
               <TimeRange
                 range={props.range}
@@ -365,7 +352,7 @@ const VideoDialogCommentsTab = (props: {
             borderRadius="12px"
             flex={1}
             spacing="8px"
-            // minHeight={`${VIDEO_HEIGHT}px`}
+            height={`${playerContainerHeight}px`}
             maxHeight={`${VIDEO_HEIGHT}px`}
             overflow="hidden"
           >

@@ -299,7 +299,9 @@ const VideoCreationDialog = (props: {
                 setEditedTitle={() => setEditedTitle(true)}
                 description={description}
                 setDescription={setDescription}
-                mainButtonCallback={() => setSelectedTab("comments")}
+                mainButtonCallback={() => {
+                  setSelectedTab("comments");
+                }}
                 showForbiddenVideoView={showForbiddenVideoView}
                 provider={provider}
                 setDuration={setDuration}
