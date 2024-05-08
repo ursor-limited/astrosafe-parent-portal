@@ -576,9 +576,15 @@ importers:
       react-to-print:
         specifier: ^2.15.1
         version: 2.15.1(react-dom@18.2.0)(react@18.2.0)
+      react-tsparticles:
+        specifier: ^2.12.2
+        version: 2.12.2(react@18.2.0)
       sharp:
         specifier: ^0.32.6
         version: 0.32.6
+      tsparticles:
+        specifier: ^2.0.6
+        version: 2.0.6
       ui:
         specifier: workspace:*
         version: link:../../packages/ui
