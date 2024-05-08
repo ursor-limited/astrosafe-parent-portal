@@ -6,7 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { IVideoComment } from "../api";
 import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
-import MuteIcon from "@/images/icons/UnmuteIcon.svg";
+import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
+import MuteIcon from "@/images/icons/MuteIcon.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
 
 const DOT_SIZE = 14;
@@ -23,6 +24,7 @@ const TimeRange = (props: {
   setCurrentTime: (time: number) => void;
   playing: boolean;
   playingCallback: () => void;
+  muted: boolean;
   muteCallback: () => void;
   //setDragging?: (d: boolean) => void;
 }) => {
@@ -481,9 +483,15 @@ const TimeRange = (props: {
           cursor: "pointer",
           "&:hover": { opacity: 0.7 },
           transition: "0.2s",
+          opacity: props.playing ? 1 : 0.4,
+          pointerEvents: props.playing ? undefined : "none",
         }}
       >
-        <MuteIcon width="20px" height="20px" />
+        {props.muted || !props.playing ? (
+          <UnmuteIcon width="20px" height="20px" />
+        ) : (
+          <MuteIcon width="20px" height="20px" />
+        )}
       </Stack>
     </Stack>
   );

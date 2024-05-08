@@ -209,6 +209,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
     undefined | ((playing: boolean) => void)
   >();
 
+  const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
   const [currentComment, setCurrentComment] = useState<
@@ -387,7 +388,11 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 }}
                 playing={playing}
                 playingCallback={() => playingSetter?.(!playing)}
-                muteCallback={() => muteSetter?.()}
+                muted={muted}
+                muteCallback={() => {
+                  setMuted(true);
+                  muteSetter?.();
+                }}
               />
             </Stack>
           ) : null}
