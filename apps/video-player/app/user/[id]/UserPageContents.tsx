@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 
-const PAGE_SIZE = 30;
+const PAGE_SIZE = 24;
 
 export default function UserPageContents(props: {
   lessons: ILesson[];
@@ -70,12 +70,18 @@ export default function UserPageContents(props: {
 
   return (
     <>
-      <Header mobile={isMobile} />
-      <Stack px="20px" pt="40px" overflow="scroll" onScroll={onScroll} flex={1}>
+      <Stack
+        px="20px"
+        overflow="scroll"
+        onScroll={onScroll}
+        ref={scrollableRef}
+        flex={1}
+      >
+        <Header mobile={isMobile} />
         <Stack height="40px" minHeight="40px" />
         <PageCard
           title={props.creatorName}
-          description="Explore a collection of Lessons for kids, curated for your learning."
+          description="Explore a collection of Lessons for kids, containing Videos and Worksheets, curated for your learning."
           noBottomPadding
           noBackButton
           maxWidth="1260px"
