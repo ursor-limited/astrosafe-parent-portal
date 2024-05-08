@@ -8,7 +8,7 @@ import VideoCommentMarker from "@/images/VideoCommentMarker.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
 import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
 import MuteIcon from "@/images/icons/MuteIcon.svg";
-import LocationIcon from "@/images/icons/LocationIcon.svg";
+import PauseIcon from "@/images/icons/PauseIcon.svg";
 
 const DOT_SIZE = 14;
 
@@ -187,7 +187,7 @@ const TimeRange = (props: {
         }}
       >
         {props.playing ? (
-          <LocationIcon width="20px" height="20px" />
+          <PauseIcon width="20px" height="20px" />
         ) : (
           <PlayIcon width="20px" height="20px" />
         )}
