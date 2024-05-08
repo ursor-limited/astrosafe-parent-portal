@@ -118,9 +118,7 @@ const VideoCreationDialog = (props: {
 
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
-  const [originalUrl, setOriginalUrl] = useState<string>(
-    "https://www.youtube.com/watch?v=gPmpG7uBV3s"
-  );
+  const [originalUrl, setOriginalUrl] = useState<string>("");
   useEffect(
     () => props.video && setOriginalUrl(props.video.url),
     [props.video?.id]
@@ -243,7 +241,7 @@ const VideoCreationDialog = (props: {
   const [editedTitle, setEditedTitle] = useState<boolean>(false);
 
   const [selectedTab, setSelectedTab] = useState<"details" | "comments">(
-    "comments"
+    "details"
   );
 
   const [comments, setComments] = useState<IVideoComment[]>([]);

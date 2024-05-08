@@ -9,6 +9,7 @@ import PlayIcon from "@/images/icons/PlayIcon.svg";
 import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
 import MuteIcon from "@/images/icons/MuteIcon.svg";
 import PauseIcon from "@/images/icons/PauseIcon.svg";
+import { TimelineCardCommentsButton } from "../lesson/[id]/cards/TimelineVideoCard";
 
 const DOT_SIZE = 14;
 
@@ -28,6 +29,8 @@ const TimeRange = (props: {
   muteCallback: () => void;
   greyLines?: boolean;
   hideExternalComments?: boolean;
+  commentsButton?: boolean;
+  shortCommentsList?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -170,6 +173,24 @@ const TimeRange = (props: {
       window.removeEventListener("mouseup", handleDraggingEnd);
     };
   }, [handleDraggingEnd]);
+
+  const [filteredSortedComments, setFilteredSortedComments] = useState<
+    IVideoComment[]
+  >([]);
+  useEffect(() => {
+    props.comments &&
+      props.range &&
+      setFilteredSortedComments(
+        _.sortBy(
+          props.comments.filter(
+            (c) =>
+              !props.hideExternalComments ||
+              (c.time >= props.range![0] && c.time <= props.range![1])
+          ),
+          (c) => c.time
+        )
+      );
+  }, [props.comments, props.range]);
 
   return (
     <Stack direction="row" spacing="12px" width="100%">
@@ -353,54 +374,42 @@ const TimeRange = (props: {
                 position="relative"
                 width={`calc(100% - ${DOT_SIZE}px)`}
               >
-                {props.range
-                  ? props.comments
-                      ?.filter(
-                        (c) =>
-                          !props.hideExternalComments ||
-                          (c.time >= props.range![0] &&
-                            c.time <= props.range![1])
-                      )
-                      ?.map((c) => (
-                        <Stack
-                          key={c.id}
-                          position="absolute"
-                          top="2px"
-                          onClick={() => {
-                            props.setSelectedComment(c.id);
-                            document.getElementById(c.id)?.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            });
-                          }}
-                          sx={{
-                            cursor: "pointer",
-                            transform: "translateX(-50%)",
-                            opacity:
-                              props.selectedComment &&
-                              props.selectedComment !== c.id
-                                ? 0.5
-                                : 1,
-                          }}
-                          left={
-                            ((lineWidth - DOT_SIZE) * c.time) / props.duration
-                          }
-                        >
-                          <Stack
-                            sx={{
-                              "&:hover": {
-                                //opacity: 0.7,
-                                transform: "scale(1.3) translateY(-3px)",
-                                transition: "0.2s",
-                                transformOrigin: "center",
-                              },
-                            }}
-                          >
-                            <VideoCommentMarker height="12px" width="12px" />
-                          </Stack>
-                        </Stack>
-                      ))
-                  : null}
+                {filteredSortedComments.map((c) => (
+                  <Stack
+                    key={c.id}
+                    position="absolute"
+                    top="2px"
+                    onClick={() => {
+                      props.setSelectedComment(c.id);
+                      document.getElementById(c.id)?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }}
+                    sx={{
+                      cursor: "pointer",
+                      transform: "translateX(-50%)",
+                      opacity:
+                        props.selectedComment && props.selectedComment !== c.id
+                          ? 0.5
+                          : 1,
+                    }}
+                    left={((lineWidth - DOT_SIZE) * c.time) / props.duration}
+                  >
+                    <Stack
+                      sx={{
+                        "&:hover": {
+                          //opacity: 0.7,
+                          transform: "scale(1.3) translateY(-3px)",
+                          transition: "0.2s",
+                          transformOrigin: "center",
+                        },
+                      }}
+                    >
+                      <VideoCommentMarker height="12px" width="12px" />
+                    </Stack>
+                  </Stack>
+                ))}
               </Stack>
             </Stack>
             <Stack width={0}>
@@ -492,27 +501,39 @@ const TimeRange = (props: {
           ) : null}
         </Stack>
       </Stack>
-      <Stack
-        bgcolor={PALETTE.secondary.grey[1]}
-        height="40px"
-        width="40px"
-        borderRadius="100%"
-        justifyContent="center"
-        alignItems="center"
-        onClick={props.muteCallback}
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.7 },
-          transition: "0.2s",
-          opacity: props.playing ? 1 : 0.4,
-          pointerEvents: props.playing ? undefined : "none",
-        }}
-      >
-        {props.muted || !props.playing ? (
-          <UnmuteIcon width="20px" height="20px" />
-        ) : (
-          <MuteIcon width="20px" height="20px" />
-        )}
+      <Stack direction="row">
+        <Stack
+          bgcolor={PALETTE.secondary.grey[1]}
+          height="40px"
+          width="40px"
+          borderRadius="100%"
+          justifyContent="center"
+          alignItems="center"
+          onClick={props.muteCallback}
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.7 },
+            transition: "0.2s",
+            opacity: props.playing ? 1 : 0.4,
+            pointerEvents: props.playing ? undefined : "none",
+          }}
+        >
+          {props.muted || !props.playing ? (
+            <UnmuteIcon width="20px" height="20px" />
+          ) : (
+            <MuteIcon width="20px" height="20px" />
+          )}
+        </Stack>
+        {props.commentsButton &&
+        filteredSortedComments &&
+        filteredSortedComments.length > 0 ? (
+          <TimelineCardCommentsButton
+            comments={filteredSortedComments}
+            selectedCommentId={props.selectedComment}
+            callback={props.setSelectedComment}
+            shortList={props.shortCommentsList}
+          />
+        ) : undefined}
       </Stack>
     </Stack>
   );
