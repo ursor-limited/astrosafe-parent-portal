@@ -530,12 +530,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   useEffect(() => {
     setExpandedContentIds(lesson?.expandedContentIds || []);
   }, [lesson?.expandedContentIds]);
-  // useEffect(() => {
-  //   lesson &&
-  //     expandedContentIds &&
-  //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
-  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
-  // }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
@@ -986,6 +980,10 @@ export default function LessonPageContents(props: { lessonId: string }) {
               "video",
               id
             ).then(loadLesson);
+            setExpandedContentIds([...expandedContentIds, id]);
+            ApiController.updateLesson(props.lessonId, {
+              expandedContentIds: [...expandedContentIds, id],
+            });
           }}
         />
       ) : null}
