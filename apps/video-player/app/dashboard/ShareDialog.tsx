@@ -72,6 +72,7 @@ const ShareDialog = (props: {
                   "Copied your Dashboard's shareable URL."
                 );
                 props.closeCallback();
+                userDetails.refresh();
               })
             }
             endIcon={PencilIcon}
