@@ -9,7 +9,7 @@ import {
   LESSON_GRID_SPACING,
   SearchInput,
 } from "@/app/dashboard/DashboardPageContents";
-import { SIDEBAR_X_MARGIN } from "@/app/dashboard/PageLayout";
+import Star from "@/images/Star.svg";
 import useColumnWidth from "@/app/dashboard/useColumnWidth";
 import { ILesson } from "@/app/lesson/[id]/page";
 import { Stack } from "@mui/system";
@@ -17,6 +17,7 @@ import _ from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
+import { PALETTE, Typography, UrsorButton } from "ui";
 
 const PAGE_SIZE = 24;
 
@@ -140,6 +141,43 @@ export default function UserPageContents(props: {
                   ))}
                 </Stack>
               ))}
+            </Stack>
+          </Stack>
+          <Stack px="24px" pb="60px">
+            <Stack
+              height="518px"
+              borderRadius="20px"
+              direction="row"
+              bgcolor={PALETTE.primary.navy}
+            >
+              <Stack
+                width="50%"
+                px="40px"
+                boxSizing="border-box"
+                spacing="30px"
+                justifyContent="center"
+              >
+                <Typography variant="h2" color={PALETTE.font.light}>
+                  Anyone can create digital lessons. Get started for free!
+                </Typography>
+                <Stack alignItems="center" width="206px" spacing="4px">
+                  <UrsorButton
+                    dark
+                    variant="tertiary"
+                    onClick={() => router.push("/dashboard")}
+                    endIcon={Star}
+                    iconSize={16}
+                    iconSpin
+                    iconColor="rgba(255,255,255,0.7)"
+                    size="large"
+                  >
+                    Start for free
+                  </UrsorButton>
+                  <Typography variant="small" color="rgba(255,255,255,0.75)">
+                    No payment required
+                  </Typography>
+                </Stack>
+              </Stack>
             </Stack>
           </Stack>
         </PageCard>
