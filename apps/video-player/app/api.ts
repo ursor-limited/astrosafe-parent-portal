@@ -152,6 +152,12 @@ class ApiController {
       (response: any) => response.json()
     );
   }
+  // static async getUserById(id: string) {
+  //   //@ts-ignore
+  //   return get(`video/getUserById/${id}`).then((response: any) =>
+  //     response.json()
+  //   );
+  // }
   static async getUserImages(id: string) {
     //@ts-ignore
     return get(`image/user/${id}`).then((response: any) => response.json());
