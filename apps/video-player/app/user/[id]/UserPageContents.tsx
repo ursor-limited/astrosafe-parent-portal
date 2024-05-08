@@ -22,7 +22,7 @@ const PAGE_SIZE = 24;
 
 export default function UserPageContents(props: {
   lessons: ILesson[];
-  creatorName: string;
+  title: string;
 }) {
   const router = useRouter();
 
@@ -80,7 +80,7 @@ export default function UserPageContents(props: {
         <Header mobile={isMobile} />
         <Stack height="40px" minHeight="40px" />
         <PageCard
-          title={props.creatorName}
+          title={props.title}
           description="Explore a collection of Lessons for kids, containing Videos and Worksheets, curated for your learning."
           noBottomPadding
           noBackButton

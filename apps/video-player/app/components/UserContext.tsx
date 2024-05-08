@@ -16,6 +16,7 @@ export interface ISafeTubeUser {
   createdAt: string;
   freeTrialStart?: string;
   creations: number;
+  externalDashboardTitle?: string;
 }
 
 export interface IUserContext {

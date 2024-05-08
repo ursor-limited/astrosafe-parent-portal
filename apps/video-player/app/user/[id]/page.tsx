@@ -16,11 +16,10 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  //const details = (await ApiController.getUserById(params.id)) as ISafeTubeUser;
+  const details = (await ApiController.getUserById(params.id)) as ISafeTubeUser;
   return {
-    title: "Bobby Boy's Lessons",
-    description:
-      "Have a look at all the sweet stuff that Bobby Boy has made for you!",
+    title: details.externalDashboardTitle,
+    description: details.externalDashboardTitle,
   };
 }
 
@@ -32,12 +31,17 @@ async function TeacherPage({ params }: { params: { id: string } }) {
     _.reverse(l.slice())
   )) as ILesson[];
 
+  const title = ((await ApiController.getUserById(params.id)) as ISafeTubeUser)
+    .externalDashboardTitle;
+
+  console.log(await ApiController.getUserById(params.id));
+
   return (
     <AuthWrapper>
       <UserProvider>
         {isMobile ? null : (
           // <MobileLessonPageContents lessonId={params.id} />
-          <UserPageContents lessons={lessons} creatorName="Bobby Boy" />
+          <UserPageContents lessons={lessons} title={title ?? "Lesson"} />
         )}
       </UserProvider>
     </AuthWrapper>
