@@ -26,6 +26,7 @@ const TimeRange = (props: {
   playingCallback: () => void;
   muted: boolean;
   muteCallback: () => void;
+  greyLines?: boolean;
   //setDragging?: (d: boolean) => void;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -395,7 +396,11 @@ const TimeRange = (props: {
                 position="absolute"
                 height="20px"
                 width="4px"
-                bgcolor={PALETTE.secondary.blue[2]}
+                bgcolor={
+                  props.greyLines
+                    ? PALETTE.secondary.grey[3]
+                    : PALETTE.secondary.blue[2]
+                }
                 borderRadius="2px"
                 top={0}
                 bottom={0}
@@ -419,7 +424,11 @@ const TimeRange = (props: {
                 position="absolute"
                 height="20px"
                 width="4px"
-                bgcolor={PALETTE.secondary.blue[2]}
+                bgcolor={
+                  props.greyLines
+                    ? PALETTE.secondary.grey[3]
+                    : PALETTE.secondary.blue[2]
+                }
                 borderRadius="2px"
                 top={0}
                 bottom={0}

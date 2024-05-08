@@ -380,6 +380,7 @@ const TimelineVideoCard = (
                   setMuted(true);
                   muteSetter?.();
                 }}
+                greyLines
               />
             </Stack>
           ) : null}
