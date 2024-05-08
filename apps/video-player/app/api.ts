@@ -152,6 +152,12 @@ class ApiController {
       (response: any) => response.json()
     );
   }
+  static async getUserById(id: string) {
+    //@ts-ignore
+    return get(`video/getUserById/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
   static async getUserImages(id: string) {
     //@ts-ignore
     return get(`image/user/${id}`).then((response: any) => response.json());
@@ -420,6 +426,11 @@ class ApiController {
     return post("video/comment/create", { id, value, time }).then(
       (response: any) => response.json()
     );
+  }
+  static async setExternalDashboardTitle(id: string, title: string) {
+    return patch(`video/user/${id}/externalDashboardTitle`, {
+      title,
+    }).then((response: any) => response.json());
   }
 }
 

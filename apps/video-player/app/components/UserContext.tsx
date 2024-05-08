@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import ApiController from "../api";
-import mixpanel from "mixpanel-browser";
 import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 
@@ -17,6 +16,7 @@ export interface ISafeTubeUser {
   createdAt: string;
   freeTrialStart?: string;
   creations: number;
+  externalDashboardTitle?: string;
 }
 
 export interface IUserContext {

@@ -10,7 +10,7 @@ import ImageIcon from "@/images/icons/ImageIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import RepoIcon from "@/images/icons/RepoIcon.svg";
+import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -57,6 +57,7 @@ import TextCreationDialog, { IText } from "../components/TextDialog";
 import TextCard from "../components/TextCard";
 import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
 import Image from "next/image";
+import ShareDialog from "./ShareDialog";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -989,6 +990,8 @@ export default function DashboardPageContents() {
 
   const [alreadySubmitting, setAlreadySubmitting] = useState<boolean>(false);
 
+  const [shareDialogOpen, setShareDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -1066,7 +1069,17 @@ export default function DashboardPageContents() {
           </Stack>
         }
         buttonRowExtraElementRight={
-          userDetails.user ? <ProfileButton light /> : undefined
+          <Stack direction="row" spacing="12px">
+            <UrsorButton
+              variant="secondary"
+              backgroundColor="rgb(255,255,255)"
+              endIcon={ShareIcon}
+              onClick={() => setShareDialogOpen(true)}
+            >
+              Share with Students
+            </UrsorButton>
+            {userDetails.user ? <ProfileButton light /> : undefined}
+          </Stack>
         }
         buttonsDelay={3000}
       >
@@ -1469,6 +1482,12 @@ export default function DashboardPageContents() {
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
         callback={() => setUpgradeDialogOpen(true)}
       />
+      {shareDialogOpen ? (
+        <ShareDialog
+          open={true}
+          closeCallback={() => setShareDialogOpen(false)}
+        />
+      ) : null}
     </>
   );
 }

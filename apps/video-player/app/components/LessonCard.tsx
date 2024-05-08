@@ -28,8 +28,8 @@ export const spin = keyframes`
 const LessonCard = (
   props: ILesson & {
     clickCallback: () => void;
-    editingCallback: () => void;
-    deletionCallback: () => void;
+    editingCallback?: () => void;
+    deletionCallback?: () => void;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -106,25 +106,27 @@ const LessonCard = (
           boxShadow="0 0 12px rgba(0,0,0,0.06)"
           zIndex={0}
         />
-        <Stack position="absolute" top="11px" right="11px" zIndex={2}>
-          <UrsorActionButton
-            size="32px"
-            iconSize="16px"
-            actions={[
-              {
-                text: "Edit",
-                kallback: props.editingCallback,
-                icon: PencilIcon,
-              },
-              {
-                text: "Delete",
-                kallback: () => setDeletionDialogOpen(true),
-                icon: TrashcanIcon,
-                color: PALETTE.system.red,
-              },
-            ]}
-          />
-        </Stack>
+        {props.editingCallback && props.deletionCallback ? (
+          <Stack position="absolute" top="11px" right="11px" zIndex={2}>
+            <UrsorActionButton
+              size="32px"
+              iconSize="16px"
+              actions={[
+                {
+                  text: "Edit",
+                  kallback: () => props.editingCallback?.(),
+                  icon: PencilIcon,
+                },
+                {
+                  text: "Delete",
+                  kallback: () => setDeletionDialogOpen(true),
+                  icon: TrashcanIcon,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          </Stack>
+        ) : null}
         <Stack
           borderRadius="12px"
           border={`4px solid rgb(255,255,255)`}
