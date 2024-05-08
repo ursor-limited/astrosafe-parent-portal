@@ -84,6 +84,7 @@ export default function UserPageContents(props: {
           description="Explore a collection of Lessons for kids, containing Videos and Worksheets, curated for your learning."
           noBottomPadding
           noBackButton
+          width="100%"
           maxWidth="1260px"
           grey
           rightStuff={

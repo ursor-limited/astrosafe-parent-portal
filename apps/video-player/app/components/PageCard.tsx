@@ -34,12 +34,13 @@ const PageCard = (props: {
       spacing="100px"
       minHeight={props.minHeight}
       height={props.fullHeight ? "100%" : undefined}
+      width="100%"
       flex={1}
     >
       <Stack
         position="relative"
         width={props.width || "1335px"}
-        maxWidth={props.maxWidth || "calc(100%)"}
+        maxWidth={props.maxWidth}
         flex={1}
         minHeight="fit-content"
         //pb="24px"
