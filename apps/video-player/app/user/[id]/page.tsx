@@ -37,7 +37,7 @@ async function TeacherPage({ params }: { params: { id: string } }) {
       <UserProvider>
         {isMobile ? null : (
           // <MobileLessonPageContents lessonId={params.id} />
-          <UserPageContents lessons={[]} creatorName="Bobby Boy" />
+          <UserPageContents lessons={lessons} creatorName="Bobby Boy" />
         )}
       </UserProvider>
     </AuthWrapper>
