@@ -27,7 +27,7 @@ const TimeRange = (props: {
   muted: boolean;
   muteCallback: () => void;
   greyLines?: boolean;
-  //setDragging?: (d: boolean) => void;
+  hideExternalComments?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -353,42 +353,54 @@ const TimeRange = (props: {
                 position="relative"
                 width={`calc(100% - ${DOT_SIZE}px)`}
               >
-                {props.comments?.map((c) => (
-                  <Stack
-                    key={c.id}
-                    position="absolute"
-                    top="2px"
-                    onClick={() => {
-                      props.setSelectedComment(c.id);
-                      document.getElementById(c.id)?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
-                    }}
-                    sx={{
-                      cursor: "pointer",
-                      transform: "translateX(-50%)",
-                      opacity:
-                        props.selectedComment && props.selectedComment !== c.id
-                          ? 0.5
-                          : 1,
-                    }}
-                    left={((lineWidth - DOT_SIZE) * c.time) / props.duration}
-                  >
-                    <Stack
-                      sx={{
-                        "&:hover": {
-                          //opacity: 0.7,
-                          transform: "scale(1.3) translateY(-3px)",
-                          transition: "0.2s",
-                          transformOrigin: "center",
-                        },
-                      }}
-                    >
-                      <VideoCommentMarker height="12px" width="12px" />
-                    </Stack>
-                  </Stack>
-                ))}
+                {props.range
+                  ? props.comments
+                      ?.filter(
+                        (c) =>
+                          !props.hideExternalComments ||
+                          (c.time >= props.range![0] &&
+                            c.time <= props.range![1])
+                      )
+                      ?.map((c) => (
+                        <Stack
+                          key={c.id}
+                          position="absolute"
+                          top="2px"
+                          onClick={() => {
+                            props.setSelectedComment(c.id);
+                            document.getElementById(c.id)?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }}
+                          sx={{
+                            cursor: "pointer",
+                            transform: "translateX(-50%)",
+                            opacity:
+                              props.selectedComment &&
+                              props.selectedComment !== c.id
+                                ? 0.5
+                                : 1,
+                          }}
+                          left={
+                            ((lineWidth - DOT_SIZE) * c.time) / props.duration
+                          }
+                        >
+                          <Stack
+                            sx={{
+                              "&:hover": {
+                                //opacity: 0.7,
+                                transform: "scale(1.3) translateY(-3px)",
+                                transition: "0.2s",
+                                transformOrigin: "center",
+                              },
+                            }}
+                          >
+                            <VideoCommentMarker height="12px" width="12px" />
+                          </Stack>
+                        </Stack>
+                      ))
+                  : null}
               </Stack>
             </Stack>
             <Stack width={0}>

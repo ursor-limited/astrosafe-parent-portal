@@ -381,6 +381,7 @@ const TimelineVideoCard = (
                   muteSetter?.();
                 }}
                 greyLines
+                hideExternalComments
               />
             </Stack>
           ) : null}
