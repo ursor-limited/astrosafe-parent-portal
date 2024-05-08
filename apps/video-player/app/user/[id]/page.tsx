@@ -34,8 +34,6 @@ async function TeacherPage({ params }: { params: { id: string } }) {
   const title = ((await ApiController.getUserById(params.id)) as ISafeTubeUser)
     .externalDashboardTitle;
 
-  console.log(await ApiController.getUserById(params.id));
-
   return (
     <AuthWrapper>
       <UserProvider>
