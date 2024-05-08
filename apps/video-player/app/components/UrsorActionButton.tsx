@@ -60,7 +60,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }
         boxSizing="border-box"
         onClick={() => {
-          setOpen(true);
+          setOpen(!open);
           props.buttonClickCallback?.();
         }}
         boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.08)" : undefined}
