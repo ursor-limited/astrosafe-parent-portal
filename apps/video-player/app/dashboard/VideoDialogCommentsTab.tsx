@@ -356,6 +356,12 @@ const VideoDialogCommentsTab = (props: {
             maxHeight={`${VIDEO_HEIGHT}px`}
             overflow="hidden"
           >
+            <Stack pb="12px">
+              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
+                .comments?.length} Comment${
+                props.comments?.length === 1 ? "" : "s"
+              }`}</Typography>
+            </Stack>
             <Stack
               onClick={() => {
                 playingSetter?.(false);
