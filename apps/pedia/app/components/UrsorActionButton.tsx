@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import React, { useState } from "react";
 import ActionPopup, { IActionPopupItem } from "./ActionPopup";
-import MoreIcon from "@/images/icons/MoreIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { PALETTE } from "ui";
 
 const DEFAULT_SIZE = "12px";
@@ -54,7 +54,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           props.buttonClickCallback?.();
         }}
       >
-        <MoreIcon
+        <PencilIcon
           height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
           width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
         />
