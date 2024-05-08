@@ -96,6 +96,11 @@ class ApiController {
       response.json()
     );
   }
+  static async updateLessonUrl(id: string, newUrl: string) {
+    return patch(`updateLessonUrl/${id}`, {newUrl}).then((response: any) =>
+      response.json()
+    );
+  }
   static async deleteLesson(id: string) {
     return dellete(`lesson/${id}`);
   }

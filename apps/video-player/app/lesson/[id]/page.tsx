@@ -48,7 +48,7 @@ async function LessonPage({ params }: { params: { id: string } }) {
   // we will have 2 new fields on each lesson: canonicalUrl, nonCanonicalUrlList, 
   // the canonical url will be the one we serve, the nonCanonicalUrlList will be a list of all previous urls that have existed for the page
 
-  // on the backend 
+  // on the backend  - DONE
   // we need to check the canonicalUrlId to see if it exists (this will happen in 95%+ cases)
   // if this is empty we then check nonCanonicalUrlList field across all to see if it exists, if it does, return and serve the canonical
   // always include the id in the nonCanonicalUrlList of 
@@ -58,7 +58,7 @@ async function LessonPage({ params }: { params: { id: string } }) {
   // DONE url is structured by removing punctuation, trim the whitespace on each side, replacing any whitespace with a -, and limit it to 50 chars 
   // DONE then add a - at the end and the last 6 digits of the id at the end
   // DONE if it's called untitled-lesson just use the full id instead 
-  // if there's a duplicate (which there really shouldn't be we can just add another random set of digits to the end)
+  // DONE if there's a duplicate (which there really shouldn't be we can just add another random set of digits to the end)
 
 
   // frontend: 
