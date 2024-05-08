@@ -208,6 +208,7 @@ const TimelineVideoCard = (
     undefined | ((playing: boolean) => void)
   >();
 
+  const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
   const [currentComment, setCurrentComment] = useState<
@@ -324,6 +325,7 @@ const TimelineVideoCard = (
                     setCurrentTime={setCurrentTime}
                     setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
                     setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                    mutedCallback={setMuted}
                     setMuteSetter={(f) => setMuteSetter(() => f)}
                   />
                 </Stack>
@@ -373,7 +375,11 @@ const TimelineVideoCard = (
                 }}
                 playing={playing}
                 playingCallback={() => playingSetter?.(!playing)}
-                muteCallback={() => muteSetter?.()}
+                muted={muted}
+                muteCallback={() => {
+                  setMuted(true);
+                  muteSetter?.();
+                }}
               />
             </Stack>
           ) : null}

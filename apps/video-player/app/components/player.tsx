@@ -22,6 +22,7 @@ const Player = (props: {
   playerId: string;
   url: string;
   playingCallback?: (playing: boolean) => void;
+  mutedCallback?: (muted: boolean) => void;
   provider?: "youtube" | "vimeo";
   width: number;
   height: number;
@@ -45,11 +46,15 @@ const Player = (props: {
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
+
   const [playing, setPlaying] = useState<boolean>(false);
   useEffect(
     () => props.playingCallback?.(playing),
     [playing, props.playingCallback]
   );
+  const [muted, setMuted] = useState<boolean>(false);
+  useEffect(() => props.mutedCallback?.(muted), [muted, props.mutedCallback]);
+
   useEffect(() => {
     (playing || overlayHovering) &&
       props.mobile &&
@@ -173,6 +178,16 @@ const Player = (props: {
     }, 200);
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [player, playing, url]);
+
+  useEffect(() => {
+    if (!player || !url) return;
+    const interval = setInterval(() => {
+      setMuted(
+        props.provider === "youtube" ? player?.isMuted() : !player?.getVolume()
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [player, url]);
 
   useEffect(() => {
     if (

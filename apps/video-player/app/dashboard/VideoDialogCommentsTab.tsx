@@ -208,6 +208,7 @@ const VideoDialogCommentsTab = (props: {
     }
   }, [playingSetter]);
 
+  const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
   const [comment, setComment] = useState<string>("");
@@ -341,7 +342,11 @@ const VideoDialogCommentsTab = (props: {
                 }}
                 playing={playing}
                 playingCallback={() => playingSetter?.(!playing)}
-                muteCallback={() => muteSetter?.()}
+                muted={muted}
+                muteCallback={() => {
+                  setMuted(true);
+                  muteSetter?.();
+                }}
               />
             ) : null}
           </Stack>
