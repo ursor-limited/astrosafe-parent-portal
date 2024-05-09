@@ -30,7 +30,7 @@ export const VIDEO_HEIGHT = 522;
 const MobileVideoCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  creationCallback?: (videoId: string) => void;
+  creationCallback?: (videoId: string, title: string) => void;
   editingCallback?: () => void;
   video?: IVideo;
 }) => {
@@ -141,7 +141,7 @@ const MobileVideoCreationDialog = (props: {
       setFreeVideoCreationCount(freeVideoCreationCount + 1);
       !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
-        ? props.creationCallback(v.id)
+        ? props.creationCallback(v.id, v.title)
         : router.push(`/video/${v.id}`);
       setTitle("");
       setDescription("");

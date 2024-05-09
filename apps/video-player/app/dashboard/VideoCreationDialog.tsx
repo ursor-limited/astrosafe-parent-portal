@@ -91,7 +91,7 @@ export const extractUrl = (html: string) =>
 const VideoCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  creationCallback?: (videoId: string) => void;
+  creationCallback?: (videoId: string, title: string) => void;
   editingCallback?: () => void;
   video?: IVideo;
 }) => {
@@ -210,7 +210,7 @@ const VideoCreationDialog = (props: {
       // setFreeVideoCreationCount(freeVideoCreationCount + 1);
       // !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
-        ? props.creationCallback(v.id)
+        ? props.creationCallback(v.id, v.title)
         : router.push(`/video/${v.id}`);
       clear();
       notificationCtx.success("Created Safe Video Link");
