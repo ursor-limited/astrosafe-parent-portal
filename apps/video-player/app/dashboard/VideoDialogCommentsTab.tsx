@@ -16,6 +16,13 @@ import _, { uniqueId } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DeletionDialog from "../components/DeletionDialog";
 
+export const getFormattedTime = (value: number) =>
+  `${Math.floor(value / 60)
+    .toString()
+    .padStart(2, "0")}:${Math.floor(value % 60)
+    .toString()
+    .padStart(2, "0")}`;
+
 const VideoDialogTimestamp = (props: { value: number }) => (
   <Stack
     direction="row"
@@ -24,11 +31,7 @@ const VideoDialogTimestamp = (props: { value: number }) => (
   >
     <LocationIcon height="18px" width="18px" />
     <Typography color={PALETTE.secondary.grey[3]} variant="small" bold>
-      {`${Math.floor(props.value / 60)
-        .toString()
-        .padStart(2, "0")}:${Math.floor(props.value % 60)
-        .toString()
-        .padStart(2, "0")}`}
+      {getFormattedTime(props.value)}
     </Typography>
   </Stack>
 );

@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { PALETTE } from "ui";
+import { PALETTE, Typography } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
 import { useCallback, useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
 import MuteIcon from "@/images/icons/MuteIcon.svg";
 import PauseIcon from "@/images/icons/PauseIcon.svg";
 import { TimelineCardCommentsButton } from "../lesson/[id]/cards/TimelineVideoCard";
+import { getFormattedTime } from "./VideoDialogCommentsTab";
 
 const DOT_SIZE = 14;
 
@@ -68,16 +69,21 @@ const TimeRange = (props: {
   useEffect(() => {
     if (draggingEndLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setEndLineX(
-        Math.min(lineWidth, Math.max(startLineX, mouseX - lineLeftX))
+      const newEndLineX = Math.min(
+        lineWidth,
+        Math.max(startLineX, mouseX - lineLeftX)
       );
+      setEndLineX(newEndLineX);
+      setCurrentTime((props.duration * newEndLineX) / lineWidth);
     }
   }, [draggingEndLine, mouseX, startLineX]);
 
   useEffect(() => {
     if (draggingStartLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      setStartLineX(Math.min(endLineX, Math.max(0, mouseX - lineLeftX)));
+      const newStartLineX = Math.min(endLineX, Math.max(0, mouseX - lineLeftX));
+      setStartLineX(newStartLineX);
+      setCurrentTime((props.duration * newStartLineX) / lineWidth);
     }
   }, [draggingStartLine, mouseX, endLineX]);
 
@@ -140,18 +146,14 @@ const TimeRange = (props: {
       );
       setDraggingDot(false);
     } else if (draggingStartLine && props.setRange) {
-      props.range &&
-        props.setRange([
-          Math.round((props.duration * startLineX) / lineWidth),
-          props.range[1],
-        ]);
+      const newTime = Math.round((props.duration * startLineX) / lineWidth);
+      props.range && props.setRange([newTime, props.range[1]]);
+      props.setCurrentTime(newTime);
       setDraggingStartLine(false);
     } else if (draggingEndLine && props.setRange) {
-      props.range &&
-        props.setRange([
-          props.range[0],
-          Math.round((props.duration * endLineX) / lineWidth),
-        ]);
+      const newTime = Math.round((props.duration * endLineX) / lineWidth);
+      props.range && props.setRange([props.range[0], newTime]);
+      props.setCurrentTime(newTime);
       setDraggingEndLine(false);
     }
   }, [
@@ -193,7 +195,7 @@ const TimeRange = (props: {
   }, [props.comments, props.range]);
 
   return (
-    <Stack direction="row" spacing="12px" width="100%">
+    <Stack direction="row" width="100%">
       <Stack
         bgcolor={PALETTE.secondary.grey[1]}
         height="40px"
@@ -228,34 +230,16 @@ const TimeRange = (props: {
           justifyContent="center"
           width="100%"
         >
-          {props.setRange ? (
-            <DurationLabel
-              value={props.range?.[0] ?? 0}
-              incrementCallback={() =>
-                props.setRange!(
-                  props.duration &&
-                    props.range &&
-                    _.isNumber(props.range?.[0]) &&
-                    _.isNumber(props.range?.[1])
-                    ? [
-                        Math.min(props.duration, props.range[0] + 1),
-                        props.range[1],
-                      ]
-                    : undefined
-                )
-              }
-              decrementCallback={() =>
-                props.setRange!(
-                  props.duration &&
-                    props.range &&
-                    _.isNumber(props.range?.[0]) &&
-                    _.isNumber(props.range?.[1])
-                    ? [Math.max(0, props.range[0] - 1), props.range[1]]
-                    : undefined
-                )
-              }
-            />
-          ) : null}
+          <Stack justifyContent="center" alignItems="center" width="60px">
+            <Typography variant="small" bold color={PALETTE.secondary.grey[5]}>
+              {getFormattedTime(
+                draggingDot && props.range
+                  ? props.range[0] +
+                      currentTimeDotXRatio * (props.range[1] - props.range[0])
+                  : currentTime
+              )}
+            </Typography>
+          </Stack>
           <Stack
             position="relative"
             width="100%"
@@ -332,7 +316,7 @@ const TimeRange = (props: {
                 width={`calc(100% - ${DOT_SIZE}px)`}
                 sx={{
                   transition: "0.2s",
-                  opacity: draggingEndLine || draggingStartLine ? 0 : 1,
+                  //opacity: draggingEndLine || draggingStartLine ? 0 : 1,
                 }}
               >
                 <Stack
@@ -342,9 +326,13 @@ const TimeRange = (props: {
                     cursor: draggingDot ? "grabbing" : "grab",
                     transition: "0.2s",
                   }}
-                  left={`calc(${startLineX}px + ${
-                    100 * currentTimeDotXRatio
-                  }%)`}
+                  left={
+                    draggingEndLine
+                      ? endLineX - DOT_SIZE
+                      : draggingStartLine
+                      ? startLineX
+                      : `calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`
+                  }
                   top={0}
                   bottom={0}
                   marginTop="auto"
@@ -471,34 +459,6 @@ const TimeRange = (props: {
               />
             </Stack>
           </Stack>
-          {props.setRange ? (
-            <DurationLabel
-              value={props.range?.[1] ?? 0}
-              incrementCallback={() =>
-                props.setRange!(
-                  props.duration &&
-                    props.range &&
-                    _.isNumber(props.range?.[0]) &&
-                    _.isNumber(props.range?.[1])
-                    ? [
-                        props.range[0],
-                        Math.min(props.duration, props.range[1] + 1),
-                      ]
-                    : undefined
-                )
-              }
-              decrementCallback={() =>
-                props.setRange!(
-                  props.duration &&
-                    props.range &&
-                    _.isNumber(props.range?.[0]) &&
-                    _.isNumber(props.range?.[1])
-                    ? [props.range[0], Math.max(0, props.range[1] - 1)]
-                    : undefined
-                )
-              }
-            />
-          ) : null}
         </Stack>
       </Stack>
       <Stack direction="row">
