@@ -12,7 +12,7 @@ import { useWindowSize } from "usehooks-ts";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
-const VIDEO_DISABLINGS = ["fs", "rel"];
+const VIDEO_DISABLINGS = ["fs", "rel", "controls"];
 
 const BORDER_RADIUS = "14px";
 
