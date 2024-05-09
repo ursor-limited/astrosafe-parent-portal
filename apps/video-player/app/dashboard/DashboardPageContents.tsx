@@ -979,7 +979,6 @@ export default function DashboardPageContents() {
   const createLessonAndRedirect = (openContentDialog?: boolean) =>
     ApiController.createLesson({
       title: DEFAULT_LESSON_TITLE,
-      description: "A description for your lesson goes here!",
       creatorId: userDetails.user?.id,
     }).then((lesson) => {
       openContentDialog && setOpenContentDialogInLessonId(lesson.id);
