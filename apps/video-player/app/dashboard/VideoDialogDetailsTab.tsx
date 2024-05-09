@@ -157,6 +157,7 @@ const VideoDialogDetailsTab = (props: {
             width="100%"
             height="100%"
             boldValue
+            flex
           />
         </Captioned>
       </Stack>
