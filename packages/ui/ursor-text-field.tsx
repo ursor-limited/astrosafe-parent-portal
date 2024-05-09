@@ -34,6 +34,7 @@ export interface UrsorTextFieldProps {
   endIcon?: JSX.Element;
   white?: boolean;
   noBorder?: boolean;
+  flex?: boolean;
 }
 
 export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
@@ -46,6 +47,7 @@ export function UrsorTextField(props: UrsorTextFieldProps): JSX.Element {
           paddingY: "4px",
         },
       }}
+      flex={props.flex ? 1 : undefined}
     >
       <TextField
         inputProps={{
