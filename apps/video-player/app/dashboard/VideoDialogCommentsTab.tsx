@@ -449,7 +449,7 @@ const VideoDialogCommentsTab = (props: {
               endIcon={props.video ? PencilIcon : ChevronRightIcon}
               width="100%"
             >
-              {props.video ? "Update" : "Publish"}
+              Add comments
             </UrsorButton>
           </Stack>
         </Stack>
