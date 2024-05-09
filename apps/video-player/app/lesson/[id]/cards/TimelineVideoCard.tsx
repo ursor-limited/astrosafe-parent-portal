@@ -25,9 +25,10 @@ export const COMMENT_PAUSE_THRESHOLD = 1;
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
-const TimelineCardCommentsButton = (props: {
+export const TimelineCardCommentsButton = (props: {
   comments: IVideoComment[];
   selectedCommentId?: string;
+  shortList?: boolean;
   callback: (id: string) => void;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -38,6 +39,8 @@ const TimelineCardCommentsButton = (props: {
       placement="right"
       zIndex={9999}
       noPadding
+      top
+      maxHeight={props.shortList ? "312px" : "460px"}
       content={
         <Stack
           width="264px"
@@ -47,12 +50,11 @@ const TimelineCardCommentsButton = (props: {
           overflow="scroll"
           bgcolor={PALETTE.secondary.grey[1]}
           borderRadius="12px"
-          maxHeight="460px"
         >
-          <Typography
-            bold
-            color={PALETTE.secondary.grey[3]}
-          >{`${props.comments?.length} Comments`}</Typography>
+          <Typography bold color={PALETTE.secondary.grey[3]}>{`${props.comments
+            ?.length} Comment${
+            props.comments?.length === 1 ? "" : "s"
+          }`}</Typography>
           {props.comments?.map((c) => (
             <UrsorFadeIn key={c.id} duration={800}>
               <Stack
@@ -74,9 +76,8 @@ const TimelineCardCommentsButton = (props: {
       }
     >
       <Stack
-        height="32px"
-        width="32px"
-        bgcolor="rgb(255,255,255)"
+        height="40px"
+        width="40px"
         borderRadius="100%"
         justifyContent="center"
         alignItems="center"
@@ -263,21 +264,6 @@ const TimelineVideoCard = (
         useExpandedHeight
         comments={sortedComments}
         noButtons={props.noButtons}
-        extraButton={
-          !props.noPlayer && props.comments ? (
-            <TimelineCardCommentsButton
-              comments={props.comments}
-              selectedCommentId={currentComment?.id}
-              callback={(id) => {
-                setCurrentComment(props.comments.find((c) => c.id === id));
-                const newCurrentTime = sortedComments.find((c) => c.id === id)
-                  ?.time;
-                newCurrentTime && currentTimeSetter?.(newCurrentTime);
-                playingSetter?.(false);
-              }}
-            />
-          ) : undefined
-        }
         leftElement={
           <UrsorButton
             dark
@@ -380,6 +366,11 @@ const TimelineVideoCard = (
                   setMuted(true);
                   muteSetter?.();
                 }}
+                greyLines
+                hideExternalComments
+                commentsButton
+                shortCommentsList={!props.expanded}
+                noSpacing
               />
             </Stack>
           ) : null}

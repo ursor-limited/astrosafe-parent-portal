@@ -26,6 +26,7 @@ const VideoDialogDetailsTab = (props: {
   setDescription: (description: string) => void;
   setEditedTitle: () => void;
   mainButtonCallback: () => void;
+  mainButtonText: string;
   showForbiddenVideoView: boolean;
   provider?: "youtube" | "vimeo";
   setDuration: (duration: number) => void;
@@ -101,7 +102,7 @@ const VideoDialogDetailsTab = (props: {
       overflow="hidden"
       boxSizing="border-box"
     >
-      <Stack spacing="18px" flex={1} maxWidth="308px" height="100%">
+      <Stack spacing="18px" flex={1} maxWidth="308px" maxHeight={playerHeight}>
         <Captioned text="Video URL" noFlex>
           <Stack
             sx={{
@@ -229,9 +230,9 @@ const VideoDialogDetailsTab = (props: {
             dark
             variant="tertiary"
             endIcon={props.video ? PencilIcon : ChevronRightIcon}
-            width="264px"
+            width="318px"
           >
-            Next
+            {props.mainButtonText}
           </UrsorButton>
         </Stack>
       </Stack>

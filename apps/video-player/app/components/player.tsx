@@ -432,13 +432,13 @@ const Player = (props: {
           >
             {ended ? (
               <Sync
-                width={props.smallPlayIcon ? 60 : 114}
-                height={props.smallPlayIcon ? 60 : 114}
+                width={props.smallPlayIcon ? 60 : 70}
+                height={props.smallPlayIcon ? 60 : 70}
               />
             ) : (
               <Play
-                width={props.smallPlayIcon ? 60 : 114}
-                height={props.smallPlayIcon ? 60 : 114}
+                width={props.smallPlayIcon ? 60 : 70}
+                height={props.smallPlayIcon ? 60 : 70}
               />
             )}
           </Stack>

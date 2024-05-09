@@ -37,6 +37,7 @@ export interface IUrsorPopoverProps {
   noBackdrop?: boolean;
   disabled?: boolean;
   zIndex?: number;
+  alwaysOnTop?: boolean;
   children: React.ReactNode; // the button
 }
 
@@ -50,12 +51,13 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     React.useState<HTMLElement | null>(null);
   const [popperElement, setPopperElement] = React.useState(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement:
-      props.placement === "left"
-        ? "bottom-start"
-        : props.placement === "right"
-        ? "bottom-end"
-        : "bottom", ///props.leftAlign ? "bottom-start" : "bottom",
+    placement: props.alwaysOnTop
+      ? "top-end"
+      : props.placement === "left"
+      ? "bottom-start"
+      : props.placement === "right"
+      ? "bottom-end"
+      : "bottom", ///props.leftAlign ? "bottom-start" : "bottom",
     modifiers: [{ name: "flip", enabled: !props.disableOverflowFlip }],
   });
 

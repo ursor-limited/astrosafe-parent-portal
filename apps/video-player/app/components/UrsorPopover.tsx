@@ -57,6 +57,7 @@ export interface IUrsorPopoverProps {
   zIndex?: number;
   margin?: string;
   flip?: boolean;
+  top?: boolean;
   children: React.ReactNode; // the button
 }
 
@@ -73,10 +74,10 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement:
       props.placement === "left" || props.buttonWidth
-        ? "bottom-start"
+        ? `${props.top ? "top" : "bottom"}-start`
         : props.placement === "right"
-        ? "bottom-end"
-        : "bottom", ///props.leftAlign ? "bottom-start" : "bottom",
+        ? `${props.top ? "top" : "bottom"}-end`
+        : `${props.top ? "top" : "bottom"}`,
     modifiers: [{ name: "flip", enabled: props.flip }],
   });
 
@@ -233,18 +234,6 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       overflow="scroll"
                     >
                       {props.content}
-                    </Box>
-                  ) : null}
-                  {isFlipped ? (
-                    <Box
-                      sx={{
-                        opacity: props.noFloatButton ? 0 : 1,
-                        pointerEvents: props.clickableFloatedButton
-                          ? undefined
-                          : "none",
-                      }}
-                    >
-                      {props.children}
                     </Box>
                   ) : null}
                 </Stack>

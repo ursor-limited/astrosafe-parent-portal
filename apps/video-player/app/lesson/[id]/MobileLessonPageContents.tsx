@@ -452,14 +452,18 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
             setVideoDialogOpen(false);
             setContentInsertionIndex(undefined);
           }}
-          creationCallback={(id) => {
+          creationCallback={(id, title) => {
             ApiController.addToLesson(
               props.lessonId,
               contentInsertionIndex ?? 0,
               "video",
               id
-            ).then((response) =>
-              updateLesson(response.lesson, response.actualContents)
+            ).then(() =>
+              lesson?.contents.length === 0
+                ? ApiController.updateLesson(props.lessonId, { title }).then(
+                    loadLesson
+                  )
+                : loadLesson()
             );
           }}
         />

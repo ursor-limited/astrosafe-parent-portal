@@ -91,25 +91,29 @@ export const extractUrl = (html: string) =>
 const VideoCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  creationCallback?: (videoId: string) => void;
+  creationCallback?: (videoId: string, title: string) => void;
   editingCallback?: () => void;
   video?: IVideo;
 }) => {
   const router = useRouter();
+
+  const [video, setVideo] = useState<IVideo | undefined>();
+  useEffect(() => setVideo(props.video), [props.video]);
+
   const [url, setUrl] = useState<string>("");
   useEffect(() => {
-    props.video?.url && setUrl(props.video.url);
-  }, [props.video?.url]);
+    video?.url && setUrl(video.url);
+  }, [video?.url]);
 
   const [title, setTitle] = useState<string>("");
   useEffect(() => {
-    props.video?.title && setTitle(props.video.title);
-  }, [props.video?.title]);
+    video?.title && setTitle(video.title);
+  }, [video?.title]);
 
   const [description, setDescription] = useState<string>("");
   useEffect(() => {
-    props.video?.description && setDescription(props.video.description);
-  }, [props.video?.description]);
+    video?.description && setDescription(video.description);
+  }, [video?.description]);
 
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
@@ -119,10 +123,7 @@ const VideoCreationDialog = (props: {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const [originalUrl, setOriginalUrl] = useState<string>("");
-  useEffect(
-    () => props.video && setOriginalUrl(props.video.url),
-    [props.video?.id]
-  );
+  useEffect(() => video && setOriginalUrl(video.url), [video?.id]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -160,19 +161,15 @@ const VideoCreationDialog = (props: {
   const [duration, setDuration] = useState<number | undefined>(10);
   const [range, setRange] = useState<[number, number] | undefined>(undefined);
   useEffect(() => {
-    !props.video && duration && setRange([0, duration]);
+    !video && duration && setRange([0, duration]);
   }, [Math.floor((duration ?? 0) / 3)]);
 
   useEffect(() => {
-    if (
-      props.video &&
-      _.isNumber(props.video?.startTime) &&
-      props.video.endTime
-    ) {
-      setRange([props.video?.startTime, props.video.endTime]);
-      setDuration(props.video.endTime - props.video.startTime);
+    if (video && _.isNumber(video?.startTime) && video.endTime) {
+      setRange([video?.startTime, video.endTime]);
+      setDuration(video.endTime - video.startTime);
     }
-  }, [props.video?.id]);
+  }, [video?.id]);
 
   const { width } = useWindowSize();
 
@@ -185,10 +182,20 @@ const VideoCreationDialog = (props: {
     []
   );
 
+  const clear = () => {
+    setTitle("");
+    setDescription("");
+    setUrl("");
+    setOriginalUrl("");
+    setSelectedTab("details");
+    setComments([]);
+    setRange(undefined);
+  };
+
   const notificationCtx = useContext(NotificationContext);
   const submitCreation = () => {
     setLoading(true);
-    ApiController.createVideo({
+    return ApiController.createVideo({
       title,
       description,
       url,
@@ -199,27 +206,22 @@ const VideoCreationDialog = (props: {
       comments,
     }).then(async (v) => {
       setLoading(false);
-      setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
+      setVideo(v);
+      // setFreeVideoCreationCount(freeVideoCreationCount + 1);
+      // !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
-        ? props.creationCallback(v.id)
+        ? props.creationCallback(v.id, v.title)
         : router.push(`/video/${v.id}`);
-      setTitle("");
-      setDescription("");
-      setUrl("");
-      setOriginalUrl("");
-      setSelectedTab("details");
-      setComments([]);
-      setRange(undefined);
-      props.closeCallback();
+      clear();
       notificationCtx.success("Created Safe Video Link");
     });
   };
 
   const submitUpdate = () => {
     setLoading(true);
-    props.video?.id &&
-      ApiController.updateVideo(props.video.id, {
+    return (
+      video &&
+      ApiController.updateVideo(video.id, {
         title,
         description,
         startTime: range?.[0],
@@ -228,9 +230,10 @@ const VideoCreationDialog = (props: {
       }).then(async (v) => {
         setLoading(false);
         props.editingCallback?.();
-        props.closeCallback();
+        // props.closeCallback();
         notificationCtx.success("Video updated.");
-      });
+      })
+    );
   };
 
   const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
@@ -246,8 +249,8 @@ const VideoCreationDialog = (props: {
 
   const [comments, setComments] = useState<IVideoComment[]>([]);
   useEffect(() => {
-    props.video?.comments && setComments(props.video.comments);
-  }, [props.video?.comments]);
+    video?.comments && setComments(video.comments);
+  }, [video?.comments]);
 
   return (
     <>
@@ -275,14 +278,19 @@ const VideoCreationDialog = (props: {
                 />
               </Stack>
               <Stack
-                onClick={() => setSelectedTab("comments")}
+                onClick={() => {
+                  setSelectedTab("comments"); // sumit creation here
+                  video
+                    ? submitUpdate()
+                    : submitCreation().then(() => setSelectedTab("comments"));
+                }}
                 sx={{
                   opacity: !url ? 0.5 : 1,
                   pointerEvents: url ? undefined : "none",
                 }}
               >
                 <VideoCreationDialogTabButton
-                  text="Comments"
+                  text="Add Comments"
                   icon={MultipleCommentsIcon}
                   selected={selectedTab === "comments"}
                 />
@@ -293,13 +301,19 @@ const VideoCreationDialog = (props: {
                 url={url}
                 originalUrl={originalUrl}
                 setOriginalUrl={setOriginalUrl}
-                video={props.video}
+                video={video}
                 title={title}
                 setTitle={setTitle}
                 setEditedTitle={() => setEditedTitle(true)}
                 description={description}
                 setDescription={setDescription}
-                mainButtonCallback={() => setSelectedTab("comments")}
+                mainButtonCallback={() => {
+                  setSelectedTab("comments"); // sumit creation here
+                  video
+                    ? submitUpdate()
+                    : submitCreation().then(() => setSelectedTab("comments"));
+                }}
+                mainButtonText={props.video ? "Update" : "Publish"}
                 showForbiddenVideoView={showForbiddenVideoView}
                 provider={provider}
                 setDuration={setDuration}
@@ -311,10 +325,11 @@ const VideoCreationDialog = (props: {
                 url={url}
                 originalUrl={originalUrl}
                 setOriginalUrl={setOriginalUrl}
-                video={props.video}
-                mainButtonCallback={() => {
-                  props.video ? submitUpdate() : submitCreation();
-                }}
+                video={video}
+                mainButtonCallback={() =>
+                  submitUpdate()?.then(props.closeCallback)
+                }
+                mainButtonText={props.video ? "Update" : "Publish"}
                 provider={provider}
                 duration={duration}
                 setDuration={setDuration}

@@ -530,12 +530,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   useEffect(() => {
     setExpandedContentIds(lesson?.expandedContentIds || []);
   }, [lesson?.expandedContentIds]);
-  // useEffect(() => {
-  //   lesson &&
-  //     expandedContentIds &&
-  //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
-  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
-  // }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
@@ -979,13 +973,23 @@ export default function LessonPageContents(props: { lessonId: string }) {
             setVideoDialogOpen(false);
             setContentInsertionIndex(undefined);
           }}
-          creationCallback={(id) => {
+          creationCallback={(id, title) => {
             ApiController.addToLesson(
               props.lessonId,
               contentInsertionIndex ?? 0,
               "video",
               id
-            ).then(loadLesson);
+            ).then(() =>
+              lesson?.contents.length === 0
+                ? ApiController.updateLesson(props.lessonId, { title }).then(
+                    loadLesson
+                  )
+                : loadLesson()
+            );
+            setExpandedContentIds([...expandedContentIds, id]);
+            ApiController.updateLesson(props.lessonId, {
+              expandedContentIds: [...expandedContentIds, id],
+            });
           }}
         />
       ) : null}

@@ -16,6 +16,13 @@ import _, { uniqueId } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DeletionDialog from "../components/DeletionDialog";
 
+export const getFormattedTime = (value: number) =>
+  `${Math.floor(value / 60)
+    .toString()
+    .padStart(2, "0")}:${Math.floor(value % 60)
+    .toString()
+    .padStart(2, "0")}`;
+
 const VideoDialogTimestamp = (props: { value: number }) => (
   <Stack
     direction="row"
@@ -24,11 +31,7 @@ const VideoDialogTimestamp = (props: { value: number }) => (
   >
     <LocationIcon height="18px" width="18px" />
     <Typography color={PALETTE.secondary.grey[3]} variant="small" bold>
-      {`${Math.floor(props.value / 60)
-        .toString()
-        .padStart(2, "0")}:${Math.floor(props.value % 60)
-        .toString()
-        .padStart(2, "0")}`}
+      {getFormattedTime(props.value)}
     </Typography>
   </Stack>
 );
@@ -168,6 +171,7 @@ const VideoDialogCommentsTab = (props: {
   setOriginalUrl: (url: string) => void;
   video?: IVideo;
   mainButtonCallback: () => void;
+  mainButtonText: string;
   provider?: "youtube" | "vimeo";
   duration?: number;
   setDuration: (duration: number) => void;
@@ -176,22 +180,10 @@ const VideoDialogCommentsTab = (props: {
   setThumbnailUrl: (url: string) => void;
   comments: IVideoComment[];
   setComments: (comments: IVideoComment[]) => void;
+
   // setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
-
-  const [playerWidthRef, setPlayerWidthRef] = useState<HTMLElement | null>(
-    null
-  );
-
-  const [playerWidth, setPlayerWidth] = useState<number>(VIDEO_WIDTH);
-  useEffect(
-    () =>
-      setPlayerWidth(
-        playerWidthRef?.getBoundingClientRect().width ?? VIDEO_WIDTH
-      ),
-    [playerWidthRef?.getBoundingClientRect().width]
-  );
 
   const [currentTime, setCurrentTime] = useState<number>(0);
 
@@ -321,7 +313,7 @@ const VideoDialogCommentsTab = (props: {
               />
             </Stack>
           </Stack>
-          <Stack maxWidth={`${playerContainerWidth}px`}>
+          <Stack pt="15px" maxWidth={`${playerContainerWidth}px`}>
             {props.duration ? (
               <TimeRange
                 range={props.range}
@@ -365,10 +357,16 @@ const VideoDialogCommentsTab = (props: {
             borderRadius="12px"
             flex={1}
             spacing="8px"
-            // minHeight={`${VIDEO_HEIGHT}px`}
+            height={`${playerContainerHeight}px`}
             maxHeight={`${VIDEO_HEIGHT}px`}
             overflow="hidden"
           >
+            <Stack pb="12px">
+              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
+                .comments?.length} Comment${
+                props.comments?.length === 1 ? "" : "s"
+              }`}</Typography>
+            </Stack>
             <Stack
               onClick={() => {
                 playingSetter?.(false);
@@ -456,7 +454,7 @@ const VideoDialogCommentsTab = (props: {
               endIcon={props.video ? PencilIcon : ChevronRightIcon}
               width="100%"
             >
-              {props.video ? "Update" : "Publish"}
+              {props.mainButtonText}
             </UrsorButton>
           </Stack>
         </Stack>
