@@ -604,7 +604,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
         <Stack height="40px" minHeight="40px" />
         <PageCard
           title={lesson?.title ?? ""}
-          description={lesson?.description ?? ""}
+          description={
+            userDetails?.user && userDetails.user.id === lesson?.creatorId
+              ? lesson?.description ||
+                "A description for your lesson goes here!"
+              : lesson?.description
+          }
           createdAt={lesson?.createdAt ?? undefined}
           noBottomPadding
           // backCallback={
