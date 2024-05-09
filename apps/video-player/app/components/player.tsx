@@ -177,7 +177,7 @@ const Player = (props: {
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
         : setCurrentTime(() => {
             const foo = player.getCurrentTime();
-            console.log(foo, "dddds");
+            console.log(foo, player, props.playerId, "dddds");
             return foo;
           });
     }, 200);

@@ -204,7 +204,7 @@ const VideoDialogDetailsTab = (props: {
         >
           <Stack position="absolute" top={0} left={0}>
             <Player
-              playerId="creation"
+              playerId={`creation-details`}
               url={props.url}
               provider={props.provider}
               width={Math.min(VIDEO_WIDTH, playerContainerWidth)}

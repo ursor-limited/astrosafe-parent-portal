@@ -286,7 +286,7 @@ const VideoDialogCommentsTab = (props: {
           >
             <Stack position="absolute" top={0} left={0}>
               <Player
-                playerId="creation"
+                playerId={`creation-comments`}
                 url={props.url}
                 provider={props.provider}
                 // width={Math.min(playerWidth, VIDEO_WIDTH)}
@@ -310,6 +310,7 @@ const VideoDialogCommentsTab = (props: {
                 setMuteSetter={(f) => setMuteSetter(() => f)}
                 setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
                 setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                mutedCallback={setMuted}
               />
             </Stack>
           </Stack>

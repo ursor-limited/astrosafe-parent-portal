@@ -36,8 +36,10 @@ const TimeRange = (props: {
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
-    props.currentTime !== 0 && setCurrentTime(props.currentTime); // using props.currentTime !== 0 to prevent the Player's setting the time just after setting it after dragging the start line, as the value tends to be stale
+    setCurrentTime(props.currentTime); // using props.currentTime !== 0 to prevent the Player's setting the time just after setting it after dragging the start line, as the value tends to be stale
   }, [props.currentTime]);
+
+  !props.greyLines && console.log(currentTime, "aas", props.greyLines);
 
   // const [externalTimeSettingPaused, setExternalTimeSettingPaused] =
   //   useState<boolean>(false); // need to prevent the Player's setting the time just after setting it after dragging, as the value tends to be stale
@@ -68,6 +70,8 @@ const TimeRange = (props: {
   const [draggingDot, setDraggingDot] = useState<boolean>(false);
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
+
+  !props.greyLines && console.log(draggingEndLine, "FUCK");
 
   // useEffect(() => {
   //   props.setDragging?.(draggingDot || draggingEndLine || draggingStartLine);
@@ -253,9 +257,13 @@ const TimeRange = (props: {
           <Stack justifyContent="center" alignItems="center" width="60px">
             <Typography variant="small" bold color={PALETTE.secondary.grey[5]}>
               {getFormattedTime(
-                draggingDot && props.range
+                draggingDot && !!props.range
                   ? props.range[0] +
                       currentTimeDotXRatio * (props.range[1] - props.range[0])
+                  : draggingStartLine
+                  ? props.duration * (startLineX / lineWidth)
+                  : draggingEndLine
+                  ? props.duration * (endLineX / lineWidth)
                   : currentTime
               )}
             </Typography>
