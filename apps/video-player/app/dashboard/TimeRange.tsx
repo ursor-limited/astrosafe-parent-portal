@@ -421,6 +421,7 @@ const TimeRange = (props: {
                 marginTop="auto"
                 marginBottom="auto"
                 sx={{
+                  pointerEvents: props.setRange ? undefined : "none",
                   transform: "translateX(-50%)",
                   cursor: props.setRange
                     ? draggingStartLine
@@ -449,6 +450,7 @@ const TimeRange = (props: {
                 marginTop="auto"
                 marginBottom="auto"
                 sx={{
+                  pointerEvents: props.setRange ? undefined : "none",
                   transform: "translateX(-50%)",
                   cursor: props.setRange
                     ? draggingEndLine
