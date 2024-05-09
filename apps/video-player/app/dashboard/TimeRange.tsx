@@ -195,6 +195,9 @@ const TimeRange = (props: {
       );
   }, [props.comments, props.range]);
 
+  const [muted, setMuted] = useState<boolean>(false);
+  useEffect(() => setMuted(props.muted), [props.muted]);
+
   return (
     <Stack
       direction="row"
@@ -476,19 +479,22 @@ const TimeRange = (props: {
           borderRadius="100%"
           justifyContent="center"
           alignItems="center"
-          onClick={props.muteCallback}
+          onClick={() => {
+            props.muteCallback?.();
+            setMuted(!muted);
+          }}
           sx={{
             cursor: "pointer",
             "&:hover": { opacity: 0.7 },
             transition: "0.2s",
-            opacity: props.playing ? 1 : 0.4,
-            pointerEvents: props.playing ? undefined : "none",
+            // opacity: props.playing ? 1 : 0.4,
+            // pointerEvents: props.playing ? undefined : "none",
           }}
         >
-          {props.muted || !props.playing ? (
-            <UnmuteIcon width="20px" height="20px" />
-          ) : (
+          {muted ? (
             <MuteIcon width="20px" height="20px" />
+          ) : (
+            <UnmuteIcon width="20px" height="20px" />
           )}
         </Stack>
         {props.commentsButton &&

@@ -996,6 +996,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
               expandedContentIds: [...expandedContentIds, id],
             });
           }}
+          editingCallback={loadLesson}
         />
       ) : null}
       {videoEditingDialogId ? (
