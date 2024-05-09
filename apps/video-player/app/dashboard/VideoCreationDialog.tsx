@@ -313,6 +313,7 @@ const VideoCreationDialog = (props: {
                     ? submitUpdate()
                     : submitCreation().then(() => setSelectedTab("comments"));
                 }}
+                mainButtonText={props.video ? "Update" : "Publish"}
                 showForbiddenVideoView={showForbiddenVideoView}
                 provider={provider}
                 setDuration={setDuration}
@@ -328,6 +329,7 @@ const VideoCreationDialog = (props: {
                 mainButtonCallback={() =>
                   submitUpdate()?.then(props.closeCallback)
                 }
+                mainButtonText={props.video ? "Update" : "Publish"}
                 provider={provider}
                 duration={duration}
                 setDuration={setDuration}

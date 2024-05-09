@@ -26,6 +26,7 @@ const VideoDialogDetailsTab = (props: {
   setDescription: (description: string) => void;
   setEditedTitle: () => void;
   mainButtonCallback: () => void;
+  mainButtonText: string;
   showForbiddenVideoView: boolean;
   provider?: "youtube" | "vimeo";
   setDuration: (duration: number) => void;
@@ -231,7 +232,7 @@ const VideoDialogDetailsTab = (props: {
             endIcon={props.video ? PencilIcon : ChevronRightIcon}
             width="318px"
           >
-            {props.video ? "Update" : "Publish"}
+            {props.mainButtonText}
           </UrsorButton>
         </Stack>
       </Stack>

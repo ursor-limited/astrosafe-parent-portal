@@ -32,6 +32,7 @@ const TimeRange = (props: {
   hideExternalComments?: boolean;
   commentsButton?: boolean;
   shortCommentsList?: boolean;
+  noSpacing?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
@@ -195,7 +196,11 @@ const TimeRange = (props: {
   }, [props.comments, props.range]);
 
   return (
-    <Stack direction="row" width="100%">
+    <Stack
+      direction="row"
+      width="100%"
+      spacing={props.noSpacing ? undefined : "12px"}
+    >
       <Stack
         bgcolor={PALETTE.secondary.grey[1]}
         height="40px"

@@ -370,6 +370,7 @@ const TimelineVideoCard = (
                 hideExternalComments
                 commentsButton
                 shortCommentsList={!props.expanded}
+                noSpacing
               />
             </Stack>
           ) : null}

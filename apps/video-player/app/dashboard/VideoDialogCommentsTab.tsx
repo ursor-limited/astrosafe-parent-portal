@@ -171,6 +171,7 @@ const VideoDialogCommentsTab = (props: {
   setOriginalUrl: (url: string) => void;
   video?: IVideo;
   mainButtonCallback: () => void;
+  mainButtonText: string;
   provider?: "youtube" | "vimeo";
   duration?: number;
   setDuration: (duration: number) => void;
@@ -179,6 +180,7 @@ const VideoDialogCommentsTab = (props: {
   setThumbnailUrl: (url: string) => void;
   comments: IVideoComment[];
   setComments: (comments: IVideoComment[]) => void;
+
   // setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -452,7 +454,7 @@ const VideoDialogCommentsTab = (props: {
               endIcon={props.video ? PencilIcon : ChevronRightIcon}
               width="100%"
             >
-              Add comments
+              {props.mainButtonText}
             </UrsorButton>
           </Stack>
         </Stack>
