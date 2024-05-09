@@ -8,6 +8,7 @@ import ApiController from "../api";
 import { useUserContext } from "../components/UserContext";
 import { useContext, useEffect, useState } from "react";
 import NotificationContext from "../components/NotificationContext";
+import { useRouter } from "next/navigation";
 
 export const SCREENSHOT_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/foo!.png";
@@ -32,6 +33,8 @@ const ShareDialog = (props: {
   );
 
   const notificationCtx = useContext(NotificationContext);
+
+  const router = useRouter();
 
   return (
     <UrsorDialog
@@ -63,16 +66,16 @@ const ShareDialog = (props: {
                 userDetails.user.id,
                 title
               ).then(() => {
-                navigator.clipboard.writeText(
-                  `${
-                    window.location.href.split("/dashboard")[0]
-                  }/user/${userDetails.user?.id}`
-                );
-                notificationCtx.success(
-                  "Copied your Dashboard's shareable URL."
-                );
-                props.closeCallback();
-                userDetails?.refresh?.();
+                // navigator.clipboard.writeText(
+                //   `${
+                //     window.location.href.split("/dashboard")[0]
+                //   }/user/${userDetails.user?.id}`
+                // );
+                // notificationCtx.success(
+                //   "Copied your Dashboard's shareable URL."
+                // );
+                router.push(`/user/${userDetails.user?.id}`);
+                // userDetails?.refresh?.(`/user/${userDetails.user?.id}`);
               })
             }
             endIcon={PencilIcon}
