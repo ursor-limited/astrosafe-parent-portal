@@ -123,7 +123,7 @@ const VideoCreationDialog = (props: {
   const [showInvalidUrlView, setShowInvalidUrlView] = useState<boolean>(false);
 
   const [originalUrl, setOriginalUrl] = useState<string>("");
-  useEffect(() => video && setOriginalUrl(video.url), [video?.id]);
+  useEffect(() => video && setOriginalUrl(video.url), [video?.url]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -175,13 +175,6 @@ const VideoCreationDialog = (props: {
 
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [freeVideoCreationCount, setFreeVideoCreationCount] =
-    useLocalStorage<number>("freeVideoCreationCount", 0);
-  const [freeVideoIds, setFreeVideoIds] = useLocalStorage<string[]>(
-    "freeVideoIds",
-    []
-  );
-
   const clear = () => {
     setTitle("");
     setDescription("");
@@ -212,7 +205,7 @@ const VideoCreationDialog = (props: {
       props.creationCallback
         ? props.creationCallback(v.id, v.title)
         : router.push(`/video/${v.id}`);
-      clear();
+      // clear();
       notificationCtx.success("Created Safe Video Link");
     });
   };
