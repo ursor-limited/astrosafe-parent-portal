@@ -17,12 +17,14 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import UserPageFooter from "./UserPageFooter";
+import { useUserContext } from "@/app/components/UserContext";
 
 const PAGE_SIZE = 24;
 
 export default function UserPageContents(props: {
   lessons: ILesson[];
   title: string;
+  userId: string;
 }) {
   const router = useRouter();
 
@@ -68,6 +70,8 @@ export default function UserPageContents(props: {
     );
   }, [nColumns, filteredLessons, latestPageIndex]);
 
+  const userDetails = useUserContext().user;
+
   return (
     <>
       <Stack
@@ -83,9 +87,16 @@ export default function UserPageContents(props: {
           title={props.title}
           description="Explore a collection of Lessons for kids, containing Videos and Worksheets, curated for your learning."
           noBottomPadding
-          noBackButton
           width="100%"
           maxWidth="1260px"
+          backRoute={
+            userDetails?.id === props.userId ? "/dashboard" : undefined
+          }
+          backText={
+            userDetails?.id === props.userId
+              ? "Back to my Dashboard"
+              : undefined
+          }
           grey
           rightStuff={
             <SearchInput

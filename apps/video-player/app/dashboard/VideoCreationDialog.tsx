@@ -171,23 +171,18 @@ const VideoCreationDialog = (props: {
     }
   }, [video?.id]);
 
-  const { width } = useWindowSize();
-
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const clear = () => {
-    setTitle("");
-    setDescription("");
-    setUrl("");
-    setOriginalUrl("");
-    setSelectedTab("details");
-    setComments([]);
-    setRange(undefined);
-  };
+  // const clear = () => {
+  //   setTitle("");
+  //   setDescription("");
+  //   setUrl("");
+  //   setOriginalUrl("");
+  //   setSelectedTab("details");
+  //   setComments([]);
+  //   setRange(undefined);
+  // };
 
   const notificationCtx = useContext(NotificationContext);
   const submitCreation = () => {
-    setLoading(true);
     return ApiController.createVideo({
       title,
       description,
@@ -198,10 +193,7 @@ const VideoCreationDialog = (props: {
       creatorId: userDetails.user?.id,
       comments,
     }).then(async (v) => {
-      setLoading(false);
       setVideo(v);
-      // setFreeVideoCreationCount(freeVideoCreationCount + 1);
-      // !userDetails.user && setFreeVideoIds([...freeVideoIds, v.id]);
       props.creationCallback
         ? props.creationCallback(v.id, v.title)
         : router.push(`/video/${v.id}`);
@@ -211,7 +203,6 @@ const VideoCreationDialog = (props: {
   };
 
   const submitUpdate = () => {
-    setLoading(true);
     return (
       video &&
       ApiController.updateVideo(video.id, {
@@ -221,9 +212,7 @@ const VideoCreationDialog = (props: {
         endTime: range?.[1],
         comments,
       }).then(async (v) => {
-        setLoading(false);
         props.editingCallback?.();
-        // props.closeCallback();
         notificationCtx.success("Video updated.");
       })
     );

@@ -17,6 +17,7 @@ export interface IUrsorActionButtonProps {
   fontColor?: string;
   shadow?: boolean;
   border?: boolean;
+  notClickable?: boolean;
   buttonClickCallback?: () => void;
 }
 
@@ -60,6 +61,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }
         boxSizing="border-box"
         onClick={() => {
+          if (props.notClickable) return;
           setOpen(!open);
           props.buttonClickCallback?.();
         }}

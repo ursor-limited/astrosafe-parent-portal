@@ -15,6 +15,7 @@ import DeletionDialog from "./DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "../dashboard/LinkDialog";
 import _ from "lodash";
 import useOrangeBorder from "./useOrangeBorder";
+import { useRouter } from "next/navigation";
 
 export const spin = keyframes`
   from {
@@ -57,6 +58,8 @@ const LessonCard = (
   const [hovering, setHovering] = useState<boolean>(false);
 
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
+
+  const router = useRouter();
 
   return (
     <>
@@ -107,10 +110,17 @@ const LessonCard = (
           zIndex={0}
         />
         {props.editingCallback && props.deletionCallback ? (
-          <Stack position="absolute" top="11px" right="11px" zIndex={2}>
+          <Stack
+            position="absolute"
+            top="11px"
+            right="11px"
+            zIndex={2}
+            onClick={() => router.push(`/lesson/${props.id}`)}
+          >
             <UrsorActionButton
               size="32px"
               iconSize="16px"
+              notClickable
               actions={[
                 {
                   text: "Edit",
