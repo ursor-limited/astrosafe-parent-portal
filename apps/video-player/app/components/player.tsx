@@ -80,11 +80,12 @@ const Player = (props: {
     const status = //@ts-ignore
       videoStatuses.find((status) => status[1] === event.data)[0];
     status === "PLAYING" && setPlaying(true);
-    setTimeout(
-      () => event.target.getPlayerState?.() === 2 && setPlaying(false),
-      500 // prevent pausing if this is a seek instead of an actual pause
-    );
+    // setTimeout(
+    //   () => event.target.getPlayerState?.() === 2 && setPlaying(false),
+    //   500 // prevent pausing if this is a seek instead of an actual pause
+    // );
     if (status !== "PLAYING") {
+      setPlaying(false);
       setYoutubePauseOverlay(true);
       //status === "ENDED" && setEnded(true);
     } else {
@@ -174,7 +175,11 @@ const Player = (props: {
     const interval = setInterval(() => {
       url?.includes("vimeo")
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
-        : setCurrentTime(player.getCurrentTime());
+        : setCurrentTime(() => {
+            const foo = player.getCurrentTime();
+            console.log(foo, "dddds");
+            return foo;
+          });
     }, 200);
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [player, playing, url]);
@@ -204,8 +209,6 @@ const Player = (props: {
       setEnded(false);
     }
   }, [props.endTime, currentTime, props.startTime]);
-
-  console.log("aaaa", props.provider);
 
   useEffect(() => {
     if (!url) return;
@@ -273,7 +276,6 @@ const Player = (props: {
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
-      //setPlaying(true);
     } else if (url?.includes("vimeo")) {
       player?.play();
     }

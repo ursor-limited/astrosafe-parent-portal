@@ -35,7 +35,16 @@ const TimeRange = (props: {
   noSpacing?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
-  useEffect(() => setCurrentTime(props.currentTime), [props.currentTime]);
+  useEffect(() => {
+    props.currentTime !== 0 && setCurrentTime(props.currentTime); // using props.currentTime !== 0 to prevent the Player's setting the time just after setting it after dragging the start line, as the value tends to be stale
+  }, [props.currentTime]);
+
+  // const [externalTimeSettingPaused, setExternalTimeSettingPaused] =
+  //   useState<boolean>(false); // need to prevent the Player's setting the time just after setting it after dragging, as the value tends to be stale
+  // useEffect(() => {
+  //   externalTimeSettingPaused &&
+  //     setTimeout(() => setExternalTimeSettingPaused(false), 500);
+  // }, [externalTimeSettingPaused]);
 
   const [mouseX, setMouseX] = useState<number>(0);
 
@@ -75,7 +84,7 @@ const TimeRange = (props: {
         Math.max(startLineX, mouseX - lineLeftX)
       );
       setEndLineX(newEndLineX);
-      setCurrentTime((props.duration * newEndLineX) / lineWidth);
+      //setCurrentTime((props.duration * newEndLineX) / lineWidth);
     }
   }, [draggingEndLine, mouseX, startLineX]);
 
@@ -84,7 +93,7 @@ const TimeRange = (props: {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newStartLineX = Math.min(endLineX, Math.max(0, mouseX - lineLeftX));
       setStartLineX(newStartLineX);
-      setCurrentTime((props.duration * newStartLineX) / lineWidth);
+      //setCurrentTime((props.duration * newStartLineX) / lineWidth);
     }
   }, [draggingStartLine, mouseX, endLineX]);
 
@@ -150,11 +159,13 @@ const TimeRange = (props: {
       const newTime = Math.round((props.duration * startLineX) / lineWidth);
       props.range && props.setRange([newTime, props.range[1]]);
       props.setCurrentTime(newTime);
+      setCurrentTime(newTime);
       setDraggingStartLine(false);
     } else if (draggingEndLine && props.setRange) {
       const newTime = Math.round((props.duration * endLineX) / lineWidth);
       props.range && props.setRange([props.range[0], newTime]);
       props.setCurrentTime(newTime);
+      setCurrentTime(newTime);
       setDraggingEndLine(false);
     }
   }, [
@@ -170,6 +181,7 @@ const TimeRange = (props: {
     props.range,
     props.setRange,
   ]);
+
   useEffect(() => {
     window.addEventListener("mouseup", handleDraggingEnd);
     return () => {

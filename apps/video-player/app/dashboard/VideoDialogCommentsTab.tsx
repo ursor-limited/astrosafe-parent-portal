@@ -321,7 +321,9 @@ const VideoDialogCommentsTab = (props: {
                 setRange={props.setRange}
                 originalUrl={props.originalUrl}
                 currentTime={currentTime}
-                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                setCurrentTime={(time) => {
+                  currentTimeSetter?.(time);
+                }}
                 comments={comments}
                 selectedComment={selectedComment}
                 setSelectedComment={(id) => {
@@ -358,7 +360,7 @@ const VideoDialogCommentsTab = (props: {
             flex={1}
             spacing="8px"
             height={`${playerContainerHeight}px`}
-            maxHeight={`${VIDEO_HEIGHT}px`}
+            maxHeight={`${playerContainerHeight}px`}
             overflow="hidden"
           >
             <Stack pb="12px">
