@@ -176,7 +176,6 @@ const Player = (props: {
         ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
         : setCurrentTime(() => {
             const foo = player.getCurrentTime();
-            console.log(foo, player, props.playerId, "dddds");
             return foo;
           });
     }, 200);
@@ -207,7 +206,7 @@ const Player = (props: {
     } else {
       setEnded(false);
     }
-  }, [props.endTime, currentTime, props.startTime]);
+  }, [currentTime]);
 
   useEffect(() => {
     if (!url) return;

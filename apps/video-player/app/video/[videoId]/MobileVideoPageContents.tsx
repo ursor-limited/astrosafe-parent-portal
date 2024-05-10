@@ -20,6 +20,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { ILesson } from "@/app/lesson/[id]/page";
+import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -191,6 +192,9 @@ function MobileVideoPageContents(props: {
             noKitemark={videoWidth < VIDEO_WIDTH}
             playingCallback={(p) => setPlaying(p)}
           />
+        </Stack>
+        <Stack minHeight="100vh" justifyContent="center">
+          <MobileExternalPageFooter />
         </Stack>
       </MobilePageCard>
       {editingDialogOpen ? (

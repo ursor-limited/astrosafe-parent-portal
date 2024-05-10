@@ -1,7 +1,7 @@
 import { Stack, alpha } from "@mui/system";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
@@ -21,6 +21,19 @@ import UrsorPopover from "@/app/components/UrsorPopover";
 import { isMobile } from "react-device-detect";
 
 export const COMMENT_PAUSE_THRESHOLD = 1;
+
+function useClientRect() {
+  const [rect, setRect] = useState<DOMRect | null>(null);
+  const ref = useCallback((node: HTMLElement) => {
+    if (!node) return;
+    const resizeObserver = new ResizeObserver(() => {
+      setRect(node.getBoundingClientRect?.());
+      // Do what you want to do when the size of the element changes
+    });
+    resizeObserver.observe(node);
+  }, []);
+  return [rect, ref];
+}
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
@@ -162,23 +175,39 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
-  //const userDetails = useUserContext();
-
-  const [headerLoaded, setHeaderLoaded] = useState<boolean>(false);
-  const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
+  //const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
-  const setDimensions = () => {
-    setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
-    setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
-  };
+
+  const [playerContainerRect, playerContainerRef] = useClientRect();
   useEffect(() => {
-    setTimeout(setDimensions, 1000); // gives time for the card's header to load
-  }, [
-    sizeRef?.getBoundingClientRect().width,
-    sizeRef?.getBoundingClientRect().height,
-    headerLoaded, // needed to make sure that the height is taken after the card's header is rendered.
-  ]);
+    setPlayerHeight((playerContainerRect as DOMRect)?.height ?? 0);
+    setPlayerWidth((playerContainerRect as DOMRect)?.width ?? 0);
+  }, [playerContainerRect]);
+
+  // const setDimensions = () => {
+  //   setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
+  //   setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
+  // };
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     setDimensions();
+  //     setTimeout(setDimensions, 1500);
+  //   } else {
+  //     setTimeout(setDimensions, 1000); // gives time for the card's header to load
+  //   }
+  // }, [
+  //   sizeRef?.getBoundingClientRect?.()?.width,
+  //   sizeRef?.getBoundingClientRect?.()?.height,
+  //   isMobile,
+  // ]);
+
+  // const sizeRef = useCallback((node: HTMLElement | null) => {
+  //   if (node) {
+  //     setPlayerWidth(node?.getBoundingClientRect?.()?.width ?? 0);
+  //     setPlayerHeight(node?.getBoundingClientRect?.()?.height ?? 0);
+  //   }
+  // }, []);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -212,36 +241,67 @@ const TimelineVideoCard = (
   const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
+  const [commentGroups, setCommentGroups] = useState<IVideoComment[][]>([]);
+  useEffect(
+    () =>
+      setCommentGroups(
+        Object.values(
+          _.groupBy(
+            _.sortBy(props.comments, (c) => c.time),
+            (c) => c.time
+          )
+        )
+      ),
+    [props.comments]
+  );
+
+  const [currentCommentIndex, setCurrentCommentIndex] = useState<number>(0);
+  const [currentCommentGroup, setCurrentCommentGroup] = useState<
+    IVideoComment[]
+  >([]);
   const [currentComment, setCurrentComment] = useState<
     IVideoComment | undefined
   >();
+  useEffect(
+    () => setCurrentComment(currentCommentGroup?.[currentCommentIndex]),
+    [currentCommentIndex, currentCommentGroup]
+  );
+
   useEffect(() => {
     playing && setCurrentComment(undefined);
   }, [playing]);
-  const [resumedFromCommentId, setResumedFromCommentId] = useState<
-    string | undefined
+  const [resumedFromCommentGroup, setResumedFromCommentGroup] = useState<
+    number | undefined
   >();
   const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
   useEffect(
     () => setSortedComments(_.reverse(_.sortBy(props.comments, (c) => c.time))),
     [props.comments]
   );
+
   useEffect(() => {
-    const newCurrentComment = sortedComments.find(
-      (c) =>
-        currentTime - c.time > 0 &&
-        currentTime - c.time < COMMENT_PAUSE_THRESHOLD
+    if (currentCommentGroup.length > 1) return;
+    const newCurrentCommentGroup = commentGroups.find(
+      (cg) =>
+        currentTime - cg[0].time > 0 &&
+        currentTime - cg[0].time < COMMENT_PAUSE_THRESHOLD
     );
     if (
-      resumedFromCommentId !== newCurrentComment?.id &&
-      newCurrentComment &&
-      newCurrentComment?.id !== currentComment?.id
+      newCurrentCommentGroup &&
+      resumedFromCommentGroup !== newCurrentCommentGroup[0]?.time
     ) {
-      setCurrentComment(newCurrentComment);
-      setResumedFromCommentId(newCurrentComment.id);
+      console.log(
+        "55aaaa",
+        resumedFromCommentGroup,
+        newCurrentCommentGroup,
+        newCurrentCommentGroup[0]?.time
+      );
+      setCurrentCommentGroup(newCurrentCommentGroup);
+      setCurrentCommentIndex(0);
+      setResumedFromCommentGroup(newCurrentCommentGroup[0].time);
       playingSetter?.(false);
     }
-  }, [currentTime]);
+  }, [currentTime, commentGroups]);
 
   return (
     <>
@@ -291,7 +351,7 @@ const TimelineVideoCard = (
                   ? undefined
                   : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
               }
-              ref={setSizeRef}
+              ref={playerContainerRef as (node: HTMLElement | null) => void}
             >
               {!props.noPlayer && provider && playerHeight ? (
                 <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
@@ -330,8 +390,12 @@ const TimelineVideoCard = (
                 <TimelineVideoCardCommentDisplayCard
                   {...currentComment}
                   resumeCallback={() => {
-                    playingSetter?.(true);
-                    setCurrentComment(undefined);
+                    if (currentCommentIndex < currentCommentGroup.length - 1) {
+                      setCurrentCommentIndex((prev) => prev + 1);
+                    } else {
+                      playingSetter?.(true);
+                      setCurrentComment(undefined);
+                    }
                   }}
                 />
               </Stack>
@@ -351,10 +415,18 @@ const TimelineVideoCard = (
                 comments={props.comments}
                 selectedComment={currentComment?.id}
                 setSelectedComment={(id) => {
-                  setCurrentComment(props.comments.find((c) => c.id === id));
-                  setResumedFromCommentId(id);
+                  const currentComment = props.comments.find(
+                    (c) => c.id === id
+                  );
+                  setCurrentCommentGroup(
+                    props.comments.filter(
+                      (c) => c.time === currentComment?.time
+                    )
+                  );
+                  setCurrentCommentIndex(0);
+                  setResumedFromCommentGroup(currentCommentGroup[0]?.time);
                   if (id) {
-                    const time = props.comments.find((c) => c.id === id)?.time;
+                    const time = currentComment?.time;
                     _.isNumber(time) && currentTimeSetter?.(time);
                     playingSetter?.(false);
                   }

@@ -13,6 +13,7 @@ import { TimelineCardCommentsButton } from "../lesson/[id]/cards/TimelineVideoCa
 import { getFormattedTime } from "./VideoDialogCommentsTab";
 
 const DOT_SIZE = 14;
+const MIN_RANGE = 5;
 
 const TimeRange = (props: {
   originalUrl?: string;
@@ -38,8 +39,6 @@ const TimeRange = (props: {
   useEffect(() => {
     setCurrentTime(props.currentTime); // using props.currentTime !== 0 to prevent the Player's setting the time just after setting it after dragging the start line, as the value tends to be stale
   }, [props.currentTime]);
-
-  !props.greyLines && console.log(currentTime, "aas", props.greyLines);
 
   // const [externalTimeSettingPaused, setExternalTimeSettingPaused] =
   //   useState<boolean>(false); // need to prevent the Player's setting the time just after setting it after dragging, as the value tends to be stale
@@ -71,12 +70,6 @@ const TimeRange = (props: {
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
 
-  !props.greyLines && console.log(draggingEndLine, "FUCK");
-
-  // useEffect(() => {
-  //   props.setDragging?.(draggingDot || draggingEndLine || draggingStartLine);
-  // }, [draggingDot, draggingEndLine, draggingStartLine]);
-
   const [startLineX, setStartLineX] = useState<number>(0);
   const [endLineX, setEndLineX] = useState<number>(0);
 
@@ -85,7 +78,10 @@ const TimeRange = (props: {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newEndLineX = Math.min(
         lineWidth,
-        Math.max(startLineX, mouseX - lineLeftX)
+        Math.max(
+          startLineX + MIN_RANGE * (lineWidth / props.duration),
+          mouseX - lineLeftX
+        )
       );
       setEndLineX(newEndLineX);
       //setCurrentTime((props.duration * newEndLineX) / lineWidth);
@@ -95,7 +91,10 @@ const TimeRange = (props: {
   useEffect(() => {
     if (draggingStartLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
-      const newStartLineX = Math.min(endLineX, Math.max(0, mouseX - lineLeftX));
+      const newStartLineX = Math.min(
+        endLineX - MIN_RANGE * (lineWidth / props.duration),
+        Math.max(0, mouseX - lineLeftX)
+      );
       setStartLineX(newStartLineX);
       //setCurrentTime((props.duration * newStartLineX) / lineWidth);
     }
@@ -204,7 +203,7 @@ const TimeRange = (props: {
           props.comments.filter(
             (c) =>
               !props.hideExternalComments ||
-              (c.time >= props.range![0] && c.time <= props.range![1])
+              (c.time >= props.range![0] - 1 && c.time <= props.range![1] + 1)
           ),
           (c) => c.time
         )

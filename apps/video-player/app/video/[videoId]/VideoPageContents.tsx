@@ -26,6 +26,8 @@ import {
 } from "@/app/lesson/[id]/cards/TimelineVideoCard";
 import TimeRange from "@/app/dashboard/TimeRange";
 import { isMobile } from "react-device-detect";
+import ExternalPageFooter from "@/app/components/ExternalPageFooter";
+import { Header } from "@/app/components/header2";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -250,7 +252,12 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
     <>
       <Stack
         px="20px"
-        pt="40px"
+        pt={
+          userDetails?.user?.id &&
+          userDetails.user.id === props.details?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === details?.creatorId
@@ -262,13 +269,25 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
         }}
         flex={1}
       >
+        {!userDetails?.user?.id ||
+        userDetails.user.id !== props.details?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           title={details.title}
           description={details.description}
           createdAt={details.createdAt}
+          width="100%"
+          maxWidth="1260px"
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
+          noBottomPadding={
+            !userDetails?.user?.id || userDetails.user.id !== details?.creatorId
           }
           rightStuff={
             <Stack
@@ -394,6 +413,12 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                   muteSetter?.();
                 }}
               />
+            </Stack>
+          ) : null}
+          {!userDetails?.user?.id ||
+          userDetails.user.id !== details?.creatorId ? (
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
             </Stack>
           ) : null}
         </PageCard>

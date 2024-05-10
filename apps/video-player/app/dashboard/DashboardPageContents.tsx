@@ -1073,7 +1073,11 @@ export default function DashboardPageContents() {
               variant="secondary"
               backgroundColor="rgb(255,255,255)"
               endIcon={ShareIcon}
-              onClick={() => setShareDialogOpen(true)}
+              onClick={() => {
+                userDetails.user?.externalDashboardTitle
+                  ? router.push(`/user/${userDetails.user.id}`)
+                  : setShareDialogOpen(true);
+              }}
             >
               Share with Students
             </UrsorButton>

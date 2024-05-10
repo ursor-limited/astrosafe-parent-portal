@@ -16,8 +16,9 @@ import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import UserPageFooter from "./UserPageFooter";
+import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
+import ExternalPageFooter from "../../components/ExternalPageFooter";
 
 const PAGE_SIZE = 24;
 
@@ -155,8 +156,8 @@ export default function UserPageContents(props: {
           </Stack>
           {latestPageIndex ===
           Math.floor(filteredLessons.length / PAGE_SIZE) ? (
-            <Stack px="24px" pb="60px">
-              <UserPageFooter />
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
             </Stack>
           ) : null}
         </PageCard>

@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { isMobile } from "react-device-detect";
 import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import RocketIcon from "@/images/icons/RocketIcon.svg";
 import X from "@/images/icons/X.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -180,8 +180,7 @@ const VideoDialogCommentsTab = (props: {
   setThumbnailUrl: (url: string) => void;
   comments: IVideoComment[];
   setComments: (comments: IVideoComment[]) => void;
-
-  // setPlaying?: (playing: boolean) => void;
+  pencilInsteadOfRocket?: boolean;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
 
@@ -364,12 +363,6 @@ const VideoDialogCommentsTab = (props: {
             maxHeight={`${playerContainerHeight}px`}
             overflow="hidden"
           >
-            <Stack pb="12px">
-              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
-                .comments?.length} Comment${
-                props.comments?.length === 1 ? "" : "s"
-              }`}</Typography>
-            </Stack>
             <Stack
               onClick={() => {
                 playingSetter?.(false);
@@ -383,7 +376,7 @@ const VideoDialogCommentsTab = (props: {
                 }
                 placeholder="Write a comment"
                 width="100%"
-                height="106px"
+                height="70px"
                 boldValue
                 white
               />
@@ -406,11 +399,15 @@ const VideoDialogCommentsTab = (props: {
               </UrsorButton>
             </Stack>
             <Stack
-              spacing="12px"
-              overflow="scroll"
+              pt="9px"
               borderTop={`2px solid ${PALETTE.secondary.grey[2]}`}
-              pt="12px"
             >
+              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
+                .comments?.length} Comment${
+                props.comments?.length === 1 ? "" : "s"
+              }`}</Typography>
+            </Stack>
+            <Stack spacing="12px" overflow="scroll">
               {
                 //_.sortBy(comments, (c) => c.time).map((c) => (
                 sortedComments.map((c) => (
@@ -426,6 +423,10 @@ const VideoDialogCommentsTab = (props: {
                         setSelectedComment(c.id);
                         currentTimeSetter?.(c.time);
                         playingSetter?.(false);
+                        document.getElementById(c.id)?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
                       }}
                     >
                       <VideoCommentCard
@@ -454,7 +455,7 @@ const VideoDialogCommentsTab = (props: {
               disabled={!props.url}
               dark
               variant="tertiary"
-              endIcon={props.video ? PencilIcon : ChevronRightIcon}
+              endIcon={props.pencilInsteadOfRocket ? PencilIcon : RocketIcon}
               width="100%"
             >
               {props.mainButtonText}
