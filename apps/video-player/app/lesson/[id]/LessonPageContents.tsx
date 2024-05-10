@@ -56,6 +56,7 @@ import Timeline, {
 import InitialAddContentButton from "./InitialAddContentButton";
 import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
+import { Header } from "@/app/components/header2";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -593,6 +594,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
       <Stack
         ref={setPageRef}
         px="20px"
+        pt={
+          userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         flex={1}
         bgcolor={
@@ -604,7 +610,12 @@ export default function LessonPageContents(props: { lessonId: string }) {
           pointerEvents: draggedContentId ? "none" : undefined,
         }}
       >
-        <Stack height="40px" minHeight="40px" />
+        {!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           title={lesson?.title ?? ""}
           description={
@@ -614,6 +625,16 @@ export default function LessonPageContents(props: { lessonId: string }) {
               : lesson?.description
           }
           createdAt={lesson?.createdAt ?? undefined}
+          width={
+            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
+              ? "100%"
+              : undefined
+          }
+          maxWidth={
+            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
+              ? "1260px"
+              : undefined
+          }
           noBottomPadding
           // backCallback={
           //   needToTitle

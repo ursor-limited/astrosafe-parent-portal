@@ -269,8 +269,13 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
         }}
         flex={1}
       >
-        <Header />
-        <Stack height="40px" minHeight="40px" />
+        {!userDetails?.user?.id ||
+        userDetails.user.id !== props.details?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           title={details.title}
           description={details.description}
