@@ -20,7 +20,8 @@ async function FeaturedLessonsPage() {
   const details: IAstroLandingPage = {
     ...featured,
   };
-  return <FeaturedLessonsPageContents {...details} />;
+  return <></>;
+  // return <FeaturedLessonsPageContents {...details} />;
 }
 
 export default FeaturedLessonsPage;
