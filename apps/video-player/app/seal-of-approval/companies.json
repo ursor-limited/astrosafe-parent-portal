@@ -3467,5 +3467,30 @@
       "ogimage": "thumbnail_291.png",
       "heroImage": "astroseal_291.png",
       "internalpath": "robo-wunderkind"
+    },
+    {
+      "publisher": "The Curiosity Box",
+      "companyName": "The Curiosity Box",
+      "productType": "Physical",
+      "productCategory": "Education",
+      "audience": "5-13+",
+      "description": "The Curiosity Box is a subscription that delivers 4 limited-edition boxes per year of the world’s best science toys. We ship our new creations exclusively to members every few months. Once a box sells out it is never made again. We deliver a premium mix of new inventions and classic science toys that demonstrate everything from angular momentum to optical illusions. Each product has a custom video lesson delivered by Vsauce only available in our app.",
+      "url": "https://www.curiositybox.com/",
+      "ogimage": "thumbnail_292.png",
+      "heroImage": "astroseal_292.png",
+      "internalpath": "the-curiosity-box"
+    },
+    {
+      "publisher": "MEL Science",
+      "companyName": "MEL Science",
+      "productType": "Physical",
+      "productCategory": "Education",
+      "audience": "5-13+",
+      "description": "MEL Science is an educational subscription that offers 100+ hands-on projects delivered monthly and 50+ digital experiences available anytime.",
+      "url": "https://melscience.com/",
+      "ogimage": "thumbnail_293.png",
+      "heroImage": "astroseal_293.png",
+      "internalpath": "mel-science"
     }
+
   ]
