@@ -40,8 +40,6 @@ const TimeRange = (props: {
     setCurrentTime(props.currentTime); // using props.currentTime !== 0 to prevent the Player's setting the time just after setting it after dragging the start line, as the value tends to be stale
   }, [props.currentTime]);
 
-  !props.greyLines && console.log(currentTime, "aas", props.greyLines);
-
   // const [externalTimeSettingPaused, setExternalTimeSettingPaused] =
   //   useState<boolean>(false); // need to prevent the Player's setting the time just after setting it after dragging, as the value tends to be stale
   // useEffect(() => {
@@ -80,7 +78,10 @@ const TimeRange = (props: {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newEndLineX = Math.min(
         lineWidth,
-        Math.max(startLineX + MIN_RANGE, mouseX - lineLeftX)
+        Math.max(
+          startLineX + MIN_RANGE * (props.duration / lineWidth),
+          mouseX - lineLeftX
+        )
       );
       setEndLineX(newEndLineX);
       //setCurrentTime((props.duration * newEndLineX) / lineWidth);
@@ -91,7 +92,7 @@ const TimeRange = (props: {
     if (draggingStartLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newStartLineX = Math.min(
-        endLineX - MIN_RANGE,
+        endLineX - MIN_RANGE * (props.duration / lineWidth),
         Math.max(0, mouseX - lineLeftX)
       );
       setStartLineX(newStartLineX);
