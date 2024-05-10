@@ -424,6 +424,10 @@ const VideoDialogCommentsTab = (props: {
                         setSelectedComment(c.id);
                         currentTimeSetter?.(c.time);
                         playingSetter?.(false);
+                        document.getElementById(c.id)?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
                       }}
                     >
                       <VideoCommentCard
