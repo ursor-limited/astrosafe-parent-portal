@@ -79,7 +79,7 @@ const TimeRange = (props: {
       const newEndLineX = Math.min(
         lineWidth,
         Math.max(
-          startLineX + MIN_RANGE * (props.duration / lineWidth),
+          startLineX + MIN_RANGE * (lineWidth / props.duration),
           mouseX - lineLeftX
         )
       );
@@ -92,7 +92,7 @@ const TimeRange = (props: {
     if (draggingStartLine) {
       const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newStartLineX = Math.min(
-        endLineX - MIN_RANGE * (props.duration / lineWidth),
+        endLineX - MIN_RANGE * (lineWidth / props.duration),
         Math.max(0, mouseX - lineLeftX)
       );
       setStartLineX(newStartLineX);
