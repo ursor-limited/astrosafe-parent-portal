@@ -16,6 +16,7 @@ export const SCREENSHOT_URL =
 const ShareDialog = (props: {
   open: boolean;
   closeCallback: () => void;
+  callback?: (newTitle: string) => void;
   mobile?: boolean;
 }) => {
   const { user } = useAuth0();
@@ -31,8 +32,6 @@ const ShareDialog = (props: {
       ),
     [user?.given_name, userDetails.user?.externalDashboardTitle]
   );
-
-  const notificationCtx = useContext(NotificationContext);
 
   const router = useRouter();
 
@@ -65,18 +64,11 @@ const ShareDialog = (props: {
               ApiController.setExternalDashboardTitle(
                 userDetails.user.id,
                 title
-              ).then(() => {
-                // navigator.clipboard.writeText(
-                //   `${
-                //     window.location.href.split("/dashboard")[0]
-                //   }/user/${userDetails.user?.id}`
-                // );
-                // notificationCtx.success(
-                //   "Copied your Dashboard's shareable URL."
-                // );
-                router.push(`/user/${userDetails.user?.id}`);
-                // userDetails?.refresh?.(`/user/${userDetails.user?.id}`);
-              })
+              ).then(
+                () =>
+                  props.callback?.(title) ||
+                  router.push(`/user/${userDetails.user?.id}`)
+              )
             }
             endIcon={PencilIcon}
           >
