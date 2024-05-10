@@ -180,8 +180,6 @@ const TimelineVideoCard = (
     sizeRef?.getBoundingClientRect().height,
   ]);
 
-  console.log(playerWidth, "aaaa", playerHeight);
-
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
   );
