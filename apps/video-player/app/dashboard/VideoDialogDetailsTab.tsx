@@ -8,7 +8,7 @@ import {
   UrsorInputField,
   UrsorTextField,
 } from "ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import RocketIcon from "@/images/icons/RocketIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
@@ -24,7 +24,7 @@ const VideoDialogDetailsTab = (props: {
   setTitle: (title: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  setEditedTitle: () => void;
+  setEditedTitle: (edited: boolean) => void;
   mainButtonCallback: () => void;
   mainButtonText: string;
   showForbiddenVideoView: boolean;
@@ -32,6 +32,7 @@ const VideoDialogDetailsTab = (props: {
   setDuration: (duration: number) => void;
   range?: [number, number];
   setThumbnailUrl: (url: string) => void;
+  pencilInsteadOfRocket?: boolean;
   //setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -137,7 +138,7 @@ const VideoDialogDetailsTab = (props: {
             value={props.title}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.setTitle(event.target.value);
-              props.setEditedTitle();
+              props.setEditedTitle(!!event.target.value);
             }}
             placeholder="Title"
             width="100%"
@@ -230,7 +231,7 @@ const VideoDialogDetailsTab = (props: {
             disabled={!props.url}
             dark
             variant="tertiary"
-            endIcon={props.video ? PencilIcon : ChevronRightIcon}
+            endIcon={props.pencilInsteadOfRocket ? PencilIcon : RocketIcon}
             width="318px"
           >
             {props.mainButtonText}

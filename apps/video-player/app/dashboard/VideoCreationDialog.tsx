@@ -308,7 +308,7 @@ const VideoCreationDialog = (props: {
                 video={video}
                 title={title}
                 setTitle={setTitle}
-                setEditedTitle={() => setEditedTitle(true)}
+                setEditedTitle={setEditedTitle}
                 description={description}
                 setDescription={setDescription}
                 mainButtonCallback={() => {
@@ -323,6 +323,7 @@ const VideoCreationDialog = (props: {
                 setDuration={setDuration}
                 range={range}
                 setThumbnailUrl={setThumbnailUrl}
+                pencilInsteadOfRocket={!!props.video}
               />
             ) : (
               <VideoDialogCommentsTab
@@ -342,6 +343,7 @@ const VideoCreationDialog = (props: {
                 setThumbnailUrl={setThumbnailUrl}
                 comments={comments}
                 setComments={setComments}
+                pencilInsteadOfRocket={!!props.video}
               />
             )}
           </Stack>

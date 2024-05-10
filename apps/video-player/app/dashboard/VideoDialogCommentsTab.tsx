@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { isMobile } from "react-device-detect";
 import { PALETTE, Typography, UrsorButton, UrsorTextField } from "ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import RocketIcon from "@/images/icons/RocketIcon.svg";
 import X from "@/images/icons/X.svg";
 import LocationIcon from "@/images/icons/LocationIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -180,8 +180,7 @@ const VideoDialogCommentsTab = (props: {
   setThumbnailUrl: (url: string) => void;
   comments: IVideoComment[];
   setComments: (comments: IVideoComment[]) => void;
-
-  // setPlaying?: (playing: boolean) => void;
+  pencilInsteadOfRocket?: boolean;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
 
@@ -377,7 +376,7 @@ const VideoDialogCommentsTab = (props: {
                 }
                 placeholder="Write a comment"
                 width="100%"
-                height="106px"
+                height="70px"
                 boldValue
                 white
               />
@@ -456,7 +455,7 @@ const VideoDialogCommentsTab = (props: {
               disabled={!props.url}
               dark
               variant="tertiary"
-              endIcon={props.video ? PencilIcon : ChevronRightIcon}
+              endIcon={props.pencilInsteadOfRocket ? PencilIcon : RocketIcon}
               width="100%"
             >
               {props.mainButtonText}
