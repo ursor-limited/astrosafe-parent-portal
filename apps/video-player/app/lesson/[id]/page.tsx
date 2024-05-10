@@ -41,7 +41,7 @@ export async function generateMetadata({
   };
 }
 
-async function LessonPage({ params }: { params: { id: string } }) {
+async function LessonPage({ params }: { params: { url: string } }) {
 
 
   // Model  - DONE
@@ -77,9 +77,9 @@ async function LessonPage({ params }: { params: { id: string } }) {
     <AuthWrapper>
       <UserProvider>
         {isMobile ? (
-          <MobileLessonPageContents lessonId={params.id} />
+          <MobileLessonPageContents url={params.url} />
         ) : (
-          <LessonPageContents lessonId={params.id} />
+          <LessonPageContents url={params.url} />
         )}
       </UserProvider>
     </AuthWrapper>

@@ -70,7 +70,7 @@ to {
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
-export default function LessonPageContents(props: { lessonId: string }) {
+export default function LessonPageContents(props: { url: string }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
   const [links, setLinks] = useState<ILink[]>([]);
@@ -79,7 +79,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
 
   const loadLesson = () =>
-    ApiController.getLessonWithContents(props.lessonId).then(
+    ApiController.getLessonFromUrlWithContents(props.url).then(
       (response: any) => {
         if (!response) return;
         setStaticAddButtonY(null);
@@ -103,11 +103,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
     );
 
   const reloadLessonDetails = () =>
-    ApiController.getLesson(props.lessonId).then((l) => setLesson(l));
+    ApiController.getLessonFromUrl(props.url).then((l) => setLesson(l));
 
   useEffect(() => {
-    props.lessonId && loadLesson();
-  }, [props.lessonId]);
+    props.url && loadLesson();
+  }, [props.url]);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
@@ -283,7 +283,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 
   useEffect(() => {
-    if (openContentDialogInLessonId === props.lessonId) {
+    if (openContentDialogInLessonId === lesson?.id) {
       setTimeout(() => {
         if (typeOfContentDialogToOpenUponLandingInNewLesson === "video") {
           setVideoDialogOpen(true);
@@ -400,7 +400,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         ...contentOrder.slice(newIndex).filter((id) => id !== draggedContentId),
       ];
       //const newOrderWithoutOldId =  draggedContentIdIndex < newIndex ? [...newOrder.slice(0,draggedContentId)]
-      ApiController.updateLesson(props.lessonId, {
+      ApiController.updateLesson(lesson?.id, {
         contentOrder: newOrder,
       });
       setContentOrder(newOrder);
@@ -535,7 +535,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
   //   lesson &&
   //     expandedContentIds &&
   //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
-  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
+  //     ApiController.updateLesson(lesson?.id, { expandedContentIds });
   // }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
@@ -877,7 +877,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                           links={links}
                           worksheets={worksheets}
                           texts={texts}
-                          lessonId={props.lessonId}
+                          lessonId={lesson?.id ?? ""}
                           columnWidth={singleContentsColumnWidth}
                           //  setDraggedContentId={setDraggedContentId}
                           draggedContentId={
@@ -898,7 +898,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
                                 (cid) => cid !== chunk[0]
                               );
                             setExpandedContentIds(newExpandedContentIds);
-                            ApiController.updateLesson(props.lessonId, {
+                            lesson &&
+                            ApiController.updateLesson(lesson.id, {
                               expandedContentIds: newExpandedContentIds,
                             });
                           }}
@@ -920,7 +921,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         links={links}
                         worksheets={worksheets}
                         texts={texts}
-                        lessonId={props.lessonId}
+                        lessonId={lesson?.id ?? ""}
                         loadLesson={loadLesson}
                         singleContentsColumnWidth={singleContentsColumnWidth}
                         setDraggedContentId={setDraggedContentId}
@@ -940,7 +941,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                               ? expandedContentIds.filter((cid) => cid !== id)
                               : [...expandedContentIds, id];
                           setExpandedContentIds(newExpandedContentIds);
-                          ApiController.updateLesson(props.lessonId, {
+                          lesson && ApiController.updateLesson(lesson.id, {
                             expandedContentIds: newExpandedContentIds,
                           });
                         }}
@@ -980,8 +981,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(id) => {
+          lesson && 
           ApiController.addToLesson(
-            props.lessonId,
+            lesson.id,
             contentInsertionIndex ?? 0,
             "video",
             id
@@ -1003,8 +1005,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(id) => {
+          lesson && 
           ApiController.addToLesson(
-            props.lessonId,
+            lesson.id,
             contentInsertionIndex ?? 0,
             "worksheet",
             id
@@ -1026,8 +1029,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
           setContentInsertionIndex(undefined);
         }}
         creationCallback={(link) => {
+          lesson && 
           ApiController.addToLesson(
-            props.lessonId,
+            lesson.id,
             contentInsertionIndex ?? 0,
             "link",
             link.id
@@ -1050,8 +1054,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             setContentInsertionIndex(undefined);
           }}
           creationCallback={(text) => {
+            lesson && 
             ApiController.addToLesson(
-              props.lessonId,
+              lesson.id,
               contentInsertionIndex ?? 0,
               "text",
               text.id
@@ -1075,8 +1080,9 @@ export default function LessonPageContents(props: { lessonId: string }) {
             setContentInsertionIndex(undefined);
           }}
           creationCallback={(link) => {
+            lesson && 
             ApiController.addToLesson(
-              props.lessonId,
+              lesson.id,
               contentInsertionIndex ?? 0,
               "image",
               link.id
@@ -1119,7 +1125,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           texts={texts}
           images={images}
           worksheets={worksheets}
-          lessonId={props.lessonId}
+          lessonId={lesson?.id ?? ""}
           columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setLinkEditingDialogId={setLinkEditingDialogId}
@@ -1160,7 +1166,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
         closeCallback={() => setMakeCopyDialogOpen(false)}
         callback={() =>
           ApiController.duplicateLesson(
-            props.lessonId,
+            lesson?.id,
             userDetails.user!.id
           ).then((l) => {
             router.push("/dashboard");

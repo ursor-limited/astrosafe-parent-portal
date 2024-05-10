@@ -117,6 +117,16 @@ class ApiController {
       response.json()
     );
   }
+  static async getLessonFromUrl(url: string) {
+    return get(`lesson/getLessonFromUrl`).then((response: any) => response.json());
+  }
+
+  static async getLessonFromUrlWithContents(url: string) {
+    return post(`lesson/getLessonFromUrlWithContents`, {url}).then((response: any) =>
+      response.json()
+    );
+  }
+  
   static async getUserLessons(id: string) {
     //@ts-ignore
     return get(`lesson/user/${id}`).then((response: any) => response.json());
