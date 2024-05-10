@@ -55,6 +55,7 @@ import Timeline, {
 } from "./Timeline";
 import InitialAddContentButton from "./InitialAddContentButton";
 import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
+import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -472,6 +473,8 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
   useEffect(() => {
+    if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+      return;
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -949,6 +952,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
               </Stack>
             </Stack>
           </Stack>
+          {lesson &&
+          (!userDetails?.user?.id ||
+            userDetails?.user?.id !== lesson?.creatorId) ? (
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
+            </Stack>
+          ) : null}
         </PageCard>
       </Stack>
       <LessonCreationDialog

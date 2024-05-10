@@ -71,12 +71,6 @@ const TimeRange = (props: {
   const [draggingStartLine, setDraggingStartLine] = useState<boolean>(false);
   const [draggingEndLine, setDraggingEndLine] = useState<boolean>(false);
 
-  !props.greyLines && console.log(draggingEndLine, "FUCK");
-
-  // useEffect(() => {
-  //   props.setDragging?.(draggingDot || draggingEndLine || draggingStartLine);
-  // }, [draggingDot, draggingEndLine, draggingStartLine]);
-
   const [startLineX, setStartLineX] = useState<number>(0);
   const [endLineX, setEndLineX] = useState<number>(0);
 
