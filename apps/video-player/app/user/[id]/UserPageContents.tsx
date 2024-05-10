@@ -14,11 +14,13 @@ import { ILesson } from "@/app/lesson/[id]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
 import ExternalPageFooter from "../../components/ExternalPageFooter";
+import ShareDialog from "@/app/dashboard/ShareDialog";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const PAGE_SIZE = 24;
 
@@ -73,6 +75,13 @@ export default function UserPageContents(props: {
 
   const userDetails = useUserContext().user;
 
+  const [shareDialogOpen, setShareDialogOpen] = useState<boolean>(false);
+
+  const notificationCtx = useContext(NotificationContext);
+
+  const [title, setTitle] = useState<string>("");
+  useEffect(() => setTitle(props.title), [props.title]);
+
   return (
     <>
       <Stack
@@ -85,7 +94,7 @@ export default function UserPageContents(props: {
         <Header mobile={isMobile} />
         <Stack height="40px" minHeight="40px" />
         <PageCard
-          title={props.title}
+          title={title}
           description="Explore a collection of Lessons for kids, containing Videos and Worksheets, curated for your learning."
           noBottomPadding
           width="100%"
@@ -99,6 +108,9 @@ export default function UserPageContents(props: {
               : undefined
           }
           grey
+          editingCallback={() => setShareDialogOpen(true)}
+          editingEnabled
+          noDescriptionEditing
           rightStuff={
             <SearchInput
               value={searchValue ?? ""}
@@ -162,6 +174,18 @@ export default function UserPageContents(props: {
           ) : null}
         </PageCard>
       </Stack>
+      {shareDialogOpen ? (
+        <ShareDialog
+          open={true}
+          callback={(t) => {
+            setShareDialogOpen(false);
+            notificationCtx.success("Copied your shareable URL to Clipboard.");
+            navigator.clipboard.writeText(window.location.href);
+            setTitle(t);
+          }}
+          closeCallback={() => setShareDialogOpen(false)}
+        />
+      ) : null}
     </>
   );
 }
