@@ -114,6 +114,9 @@ class ApiController {
   static async getLesson(id: string) {
     return get(`lesson/${id}`).then((response: any) => response.json());
   }
+  static async getFeaturedLessons() {
+    return get(`lesson/feat/ured`).then((response: any) => response.json());
+  }
   static async getLessonWithContents(id: string) {
     return get(`lesson/${id}/withContents`).then((response: any) =>
       response.json()

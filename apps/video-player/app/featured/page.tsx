@@ -2,6 +2,7 @@ import React from "react";
 import featured from "./featured.json";
 import { Metadata } from "next";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
+import FeaturedLessonsPageContents from "./FeaturedLessonsPageContents";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
 
@@ -20,8 +21,7 @@ async function FeaturedLessonsPage() {
   const details: IAstroLandingPage = {
     ...featured,
   };
-  return <></>;
-  // return <FeaturedLessonsPageContents {...details} />;
+  return <FeaturedLessonsPageContents {...details} />;
 }
 
 export default FeaturedLessonsPage;
