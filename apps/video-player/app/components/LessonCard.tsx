@@ -31,6 +31,7 @@ const LessonCard = (
     clickCallback: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    strongShadow?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -88,7 +89,11 @@ const LessonCard = (
             transform: `rotate(-${hovering ? 6 : 2.6}deg) translateY(-7px)`,
             transition: "0.4s",
           }}
-          boxShadow="0 0 12px rgba(0,0,0,0.06)"
+          boxShadow={
+            props.strongShadow
+              ? "0 0 20px rgba(0,0,0,0.08)"
+              : "0 0 12px rgba(0,0,0,0.06)"
+          }
           zIndex={0}
         />
         <Stack
@@ -106,7 +111,11 @@ const LessonCard = (
             transform: `rotate(${hovering ? 5 : 1.4}deg) translateY(-7px)`,
             transition: "0.4s",
           }}
-          boxShadow="0 0 12px rgba(0,0,0,0.06)"
+          boxShadow={
+            props.strongShadow
+              ? "0 0 20px rgba(0,0,0,0.08)"
+              : "0 0 12px rgba(0,0,0,0.06)"
+          }
           zIndex={0}
         />
         {props.editingCallback && props.deletionCallback ? (
@@ -149,7 +158,11 @@ const LessonCard = (
           }}
           bgcolor="rgb(255,255,255)"
           width="100%"
-          boxShadow="0 0 12px rgba(0,0,0,0.06)"
+          boxShadow={
+            props.strongShadow
+              ? "0 0 20px rgba(0,0,0,0.08)"
+              : "0 0 12px rgba(0,0,0,0.06)"
+          }
           position="relative"
           pb="6px"
         >

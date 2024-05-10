@@ -98,6 +98,7 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                             clickCallback={() =>
                               router.push(`/lesson/${lesson.id}`)
                             }
+                            strongShadow
                           />
                         </UrsorFadeIn>
                       </Stack>
