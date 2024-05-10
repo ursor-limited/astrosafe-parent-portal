@@ -162,11 +162,11 @@ const VideoDialogDetailsTab = (props: {
           />
         </Captioned>
       </Stack>
-      <Stack position="relative" spacing="18px" flex={1}>
+      <Stack position="relative" flex={1}>
         {props.showForbiddenVideoView ? (
           <Stack
             width="91%"
-            height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
+            height={`${isMobile ? 0 : playerHeight}px`}
             position="absolute"
             bgcolor="rgba(0,0,0,0.5)"
             borderRadius="12px"
@@ -225,7 +225,12 @@ const VideoDialogDetailsTab = (props: {
           </Stack>
         </Stack>
 
-        <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
+        <Stack
+          flex={1}
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          pt="16px"
+        >
           <UrsorButton
             onClick={props.mainButtonCallback}
             disabled={!props.url}
