@@ -8,6 +8,8 @@ import { headers } from "next/headers";
 import _ from "lodash";
 import UserPageContents from "./UserPageContents";
 import { ILesson } from "@/app/lesson/[id]/page";
+import MobileLessonPageContents from "@/app/lesson/[id]/MobileLessonPageContents";
+import MobileUserPageContents from "./MobileUserPageContents";
 
 export const dynamicParams = true;
 
@@ -37,8 +39,13 @@ async function TeacherPage({ params }: { params: { id: string } }) {
   return (
     <AuthWrapper>
       <UserProvider>
-        {isMobile ? null : (
-          // <MobileLessonPageContents lessonId={params.id} />
+        {isMobile ? (
+          <MobileUserPageContents
+            lessons={lessons}
+            title={title ?? "Lesson"}
+            userId={params.id}
+          />
+        ) : (
           <UserPageContents
             lessons={lessons}
             title={title ?? "Lesson"}

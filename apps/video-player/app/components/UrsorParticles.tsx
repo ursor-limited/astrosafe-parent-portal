@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-export default function UrsorParticles() {
+export default function UrsorParticles(props: { number?: number }) {
   const particlesInit = useCallback(async (engine: any) => {
     // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
     // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
@@ -18,7 +18,7 @@ export default function UrsorParticles() {
         fullScreen: { enable: false },
         particles: {
           number: {
-            value: 13,
+            value: props.number || 13,
             density: {
               enable: true,
               value_area: 120,
