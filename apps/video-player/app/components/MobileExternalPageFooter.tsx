@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import Star from "@/images/Star.svg";
 
-const MobileUserPageFooter = () => {
+const MobileExternalPageFooter = () => {
   const router = useRouter();
   return (
     <Stack
@@ -90,4 +90,4 @@ const MobileUserPageFooter = () => {
   );
 };
 
-export default MobileUserPageFooter;
+export default MobileExternalPageFooter;

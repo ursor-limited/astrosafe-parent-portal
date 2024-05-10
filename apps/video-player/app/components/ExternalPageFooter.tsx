@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import Star from "@/images/Star.svg";
 
-const UserPageFooter = () => {
+const ExternalPageFooter = () => {
   const router = useRouter();
   return (
     <Stack
@@ -29,7 +29,7 @@ const UserPageFooter = () => {
           },
         }}
       >
-        <UrsorParticles />
+        <UrsorParticles number={22} />
       </Stack>
       <Stack
         width="50%"
@@ -85,4 +85,4 @@ const UserPageFooter = () => {
   );
 };
 
-export default UserPageFooter;
+export default ExternalPageFooter;

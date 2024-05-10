@@ -16,11 +16,11 @@ import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import UserPageFooter from "./UserPageFooter";
+import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { PALETTE } from "ui";
-import MobileUserPageFooter from "./MobileUserPageFooter";
+import MobileExternalPageFooter from "./MobileExternalPageFooter";
 
 const PAGE_SIZE = 8;
 
@@ -105,7 +105,7 @@ export default function MobileUserPageContents(props: {
           </Stack>
         ) : null}
         <Stack height="100vh" justifyContent="center">
-          <MobileUserPageFooter />
+          <MobileExternalPageFooter />
         </Stack>
       </MobilePageCard>
     </>
