@@ -178,6 +178,7 @@ const TimelineVideoCard = (
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
+    isMobile,
   ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
