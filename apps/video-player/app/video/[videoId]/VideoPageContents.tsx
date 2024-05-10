@@ -253,7 +253,8 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
       <Stack
         px="20px"
         pt={
-          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
+          userDetails?.user?.id &&
+          userDetails.user.id === props.details?.creatorId
             ? "40px"
             : undefined
         }
