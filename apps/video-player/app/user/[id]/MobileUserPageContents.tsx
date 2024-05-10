@@ -20,7 +20,7 @@ import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { PALETTE } from "ui";
-import MobileExternalPageFooter from "./MobileExternalPageFooter";
+import MobileExternalPageFooter from "../../components/MobileExternalPageFooter";
 
 const PAGE_SIZE = 8;
 

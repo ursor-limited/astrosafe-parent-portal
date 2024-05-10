@@ -252,6 +252,11 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
     <>
       <Stack
         px="20px"
+        pt={
+          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === details?.creatorId

@@ -650,6 +650,11 @@ export default function WorksheetPageContents(props: {
 
       <Stack
         px="20px"
+        pt={
+          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
@@ -662,8 +667,13 @@ export default function WorksheetPageContents(props: {
         flex={1}
         height="100%"
       >
-        <Header />
-        <Stack height="40px" minHeight="40px" />
+        {!userDetails?.user?.id ||
+        userDetails.user.id !== worksheet?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           //title={worksheet.title}
           //createdAt={worksheet.createdAt}
