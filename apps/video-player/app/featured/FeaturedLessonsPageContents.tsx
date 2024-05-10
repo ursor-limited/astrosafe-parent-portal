@@ -24,39 +24,39 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const [lessons, setLessons] = useState<ILessons[]>([]);
+  // const [lessons, setLessons] = useState<ILessons[]>([]);
 
-  const listRef = useRef(null);
+  // const listRef = useRef(null);
 
-  const scrollIntoView = () =>
-    //@ts-ignore
-    listRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // const scrollIntoView = () =>
+  //   //@ts-ignore
+  //   listRef?.current?.scrollIntoView({ behavior: "smooth" });
 
-  const [explanationDialogOpen, setExplanationDialogOpen] =
-    useState<boolean>(false);
+  // const [explanationDialogOpen, setExplanationDialogOpen] =
+  //   useState<boolean>(false);
 
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
+  // const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
-  const [columns, setColumns] = useState<ILesson[][]>([]);
+  // const [columns, setColumns] = useState<ILesson[][]>([]);
 
-  useEffect(() => {
-    const pageLimitedCards = lessons.slice(
-      0,
-      (latestPageIndex + 1) * PAGE_SIZE
-    );
-    const chunked = _.chunk(pageLimitedCards, nColumns);
-    setColumns(
-      [...Array(nColumns).keys()].map((i) =>
-        _.compact(chunked.map((chunk) => chunk[i]))
-      )
-    );
-  }, [nColumns, filteredLessons, latestPageIndex]);
+  // useEffect(() => {
+  //   const pageLimitedCards = lessons.slice(
+  //     0,
+  //     (latestPageIndex + 1) * PAGE_SIZE
+  //   );
+  //   const chunked = _.chunk(pageLimitedCards, nColumns);
+  //   setColumns(
+  //     [...Array(nColumns).keys()].map((i) =>
+  //       _.compact(chunked.map((chunk) => chunk[i]))
+  //     )
+  //   );
+  // }, [nColumns, filteredLessons, latestPageIndex]);
 
-  const userDetails = useUserContext().user;
+  // const userDetails = useUserContext().user;
 
   return (
     <>
-      <AstroLandingPage
+      {/* <AstroLandingPage
         fainterSpaceGlow
         title={[props.heading]}
         subtitle={props.subHeading}
@@ -156,7 +156,7 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
         open={explanationDialogOpen}
         closeCallback={() => setExplanationDialogOpen(false)}
         mobile={isMobile}
-      />
+      /> */}
     </>
   );
 }
