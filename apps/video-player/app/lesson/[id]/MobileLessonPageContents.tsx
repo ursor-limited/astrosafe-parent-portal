@@ -41,6 +41,7 @@ import TimelineLinkCard from "./cards/TimelineLinkCard";
 import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
 import TimelineVideoCard from "./cards/TimelineVideoCard";
+import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -422,6 +423,9 @@ export default function MobileLessonPageContents(props: { lessonId: string }) {
                   </UrsorFadeIn>
                 ))}
             </Stack>
+          </Stack>
+          <Stack height="100vh" justifyContent="center">
+            <MobileExternalPageFooter />
           </Stack>
         </MobilePageCard>
       ) : null}
