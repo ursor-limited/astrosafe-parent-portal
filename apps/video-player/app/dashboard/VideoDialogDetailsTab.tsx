@@ -8,7 +8,7 @@ import {
   UrsorInputField,
   UrsorTextField,
 } from "ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import RocketIcon from "@/images/icons/RocketIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
@@ -24,7 +24,7 @@ const VideoDialogDetailsTab = (props: {
   setTitle: (title: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  setEditedTitle: () => void;
+  setEditedTitle: (edited: boolean) => void;
   mainButtonCallback: () => void;
   mainButtonText: string;
   showForbiddenVideoView: boolean;
@@ -32,6 +32,7 @@ const VideoDialogDetailsTab = (props: {
   setDuration: (duration: number) => void;
   range?: [number, number];
   setThumbnailUrl: (url: string) => void;
+  pencilInsteadOfRocket?: boolean;
   //setPlaying?: (playing: boolean) => void;
 }) => {
   const [playing, setPlaying] = useState<boolean>(false);
@@ -137,7 +138,7 @@ const VideoDialogDetailsTab = (props: {
             value={props.title}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.setTitle(event.target.value);
-              props.setEditedTitle();
+              props.setEditedTitle(!!event.target.value);
             }}
             placeholder="Title"
             width="100%"
@@ -161,11 +162,11 @@ const VideoDialogDetailsTab = (props: {
           />
         </Captioned>
       </Stack>
-      <Stack position="relative" spacing="18px" flex={1}>
+      <Stack position="relative" flex={1}>
         {props.showForbiddenVideoView ? (
           <Stack
             width="91%"
-            height={`${isMobile ? 0 : VIDEO_HEIGHT}px`}
+            height={`${isMobile ? 0 : playerHeight}px`}
             position="absolute"
             bgcolor="rgba(0,0,0,0.5)"
             borderRadius="12px"
@@ -224,13 +225,18 @@ const VideoDialogDetailsTab = (props: {
           </Stack>
         </Stack>
 
-        <Stack flex={1} justifyContent="flex-end" alignItems="flex-end">
+        <Stack
+          flex={1}
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          pt="16px"
+        >
           <UrsorButton
             onClick={props.mainButtonCallback}
             disabled={!props.url}
             dark
             variant="tertiary"
-            endIcon={props.video ? PencilIcon : ChevronRightIcon}
+            endIcon={props.pencilInsteadOfRocket ? PencilIcon : RocketIcon}
             width="318px"
           >
             {props.mainButtonText}

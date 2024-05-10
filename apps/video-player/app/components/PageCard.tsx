@@ -19,6 +19,7 @@ const PageCard = (props: {
   maxWidth?: string;
   editingCallback?: () => void;
   editingEnabled?: boolean;
+  noDescriptionEditing?: boolean;
   noBottomPadding?: boolean;
   fullHeight?: boolean;
   noBackButton?: boolean;
@@ -188,7 +189,7 @@ const PageCard = (props: {
                   alignItems="center"
                 >
                   <Typography htmlTag="h2">{props.description}</Typography>
-                  {props.editingEnabled ? (
+                  {props.editingEnabled && !props.noDescriptionEditing ? (
                     <Stack
                       sx={{
                         cursor: "pointer",

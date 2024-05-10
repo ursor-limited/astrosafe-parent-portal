@@ -203,7 +203,7 @@ const TimeRange = (props: {
           props.comments.filter(
             (c) =>
               !props.hideExternalComments ||
-              (c.time >= props.range![0] && c.time <= props.range![1])
+              (c.time >= props.range![0] - 1 && c.time <= props.range![1] + 1)
           ),
           (c) => c.time
         )
