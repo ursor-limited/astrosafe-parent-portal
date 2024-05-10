@@ -85,7 +85,7 @@ const TimelineCard = (props: {
           : undefined,
       }}
       width={props.expanded ? "100%" : props.width || "100%"}
-      height={
+      minHeight={
         props.useExpandedHeight && props.expanded ? EXPANDED_HEIGHT : undefined
       }
     >
