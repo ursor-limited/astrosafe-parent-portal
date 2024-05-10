@@ -23,6 +23,7 @@ import { useUserContext } from "../components/UserContext";
 import LessonCard from "../components/LessonCard";
 import ApiController from "../api";
 import ExternalPageFooter from "../components/ExternalPageFooter";
+import Link from "next/link";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -95,13 +96,21 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                       {column.map((lesson, j) => (
                         <Stack key={lesson.id} spacing="26px">
                           <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
-                            <LessonCard
-                              {...lesson}
-                              clickCallback={() =>
-                                router.push(`/lesson/${lesson.id}`)
-                              }
-                              strongShadow
-                            />
+                            <Link
+                              href={`/lesson/${lesson.id}`}
+                              alt={lesson.title}
+                              style={{
+                                textDecoration: "none",
+                              }}
+                            >
+                              <LessonCard
+                                {...lesson}
+                                // clickCallback={() =>
+                                //   router.push(`/lesson/${lesson.id}`)
+                                // }
+                                strongShadow
+                              />
+                            </Link>
                           </UrsorFadeIn>
                         </Stack>
                       ))}

@@ -28,7 +28,7 @@ export const spin = keyframes`
 
 const LessonCard = (
   props: ILesson & {
-    clickCallback: () => void;
+    clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
     strongShadow?: boolean;
