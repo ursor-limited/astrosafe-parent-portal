@@ -24,7 +24,7 @@ const VideoDialogDetailsTab = (props: {
   setTitle: (title: string) => void;
   description: string;
   setDescription: (description: string) => void;
-  setEditedTitle: () => void;
+  setEditedTitle: (edited: boolean) => void;
   mainButtonCallback: () => void;
   mainButtonText: string;
   showForbiddenVideoView: boolean;
@@ -138,7 +138,7 @@ const VideoDialogDetailsTab = (props: {
             value={props.title}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               props.setTitle(event.target.value);
-              props.setEditedTitle();
+              props.setEditedTitle(!!event.target.value);
             }}
             placeholder="Title"
             width="100%"

@@ -241,36 +241,67 @@ const TimelineVideoCard = (
   const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
 
+  const [commentGroups, setCommentGroups] = useState<IVideoComment[][]>([]);
+  useEffect(
+    () =>
+      setCommentGroups(
+        Object.values(
+          _.groupBy(
+            _.sortBy(props.comments, (c) => c.time),
+            (c) => c.time
+          )
+        )
+      ),
+    [props.comments]
+  );
+
+  const [currentCommentIndex, setCurrentCommentIndex] = useState<number>(0);
+  const [currentCommentGroup, setCurrentCommentGroup] = useState<
+    IVideoComment[]
+  >([]);
   const [currentComment, setCurrentComment] = useState<
     IVideoComment | undefined
   >();
+  useEffect(
+    () => setCurrentComment(currentCommentGroup?.[currentCommentIndex]),
+    [currentCommentIndex, currentCommentGroup]
+  );
+
   useEffect(() => {
     playing && setCurrentComment(undefined);
   }, [playing]);
-  const [resumedFromCommentId, setResumedFromCommentId] = useState<
-    string | undefined
+  const [resumedFromCommentGroup, setResumedFromCommentGroup] = useState<
+    number | undefined
   >();
   const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
   useEffect(
     () => setSortedComments(_.reverse(_.sortBy(props.comments, (c) => c.time))),
     [props.comments]
   );
+
   useEffect(() => {
-    const newCurrentComment = sortedComments.find(
-      (c) =>
-        currentTime - c.time > 0 &&
-        currentTime - c.time < COMMENT_PAUSE_THRESHOLD
+    if (currentCommentGroup.length > 1) return;
+    const newCurrentCommentGroup = commentGroups.find(
+      (cg) =>
+        currentTime - cg[0].time > 0 &&
+        currentTime - cg[0].time < COMMENT_PAUSE_THRESHOLD
     );
     if (
-      resumedFromCommentId !== newCurrentComment?.id &&
-      newCurrentComment &&
-      newCurrentComment?.id !== currentComment?.id
+      newCurrentCommentGroup &&
+      resumedFromCommentGroup !== newCurrentCommentGroup[0]?.time
     ) {
-      setCurrentComment(newCurrentComment);
-      setResumedFromCommentId(newCurrentComment.id);
+      console.log(
+        "55aaaa",
+        resumedFromCommentGroup,
+        newCurrentCommentGroup,
+        newCurrentCommentGroup[0]?.time
+      );
+      setCurrentCommentGroup(newCurrentCommentGroup);
+      setCurrentCommentIndex(0);
+      setResumedFromCommentGroup(newCurrentCommentGroup[0].time);
       playingSetter?.(false);
     }
-  }, [currentTime]);
+  }, [currentTime, commentGroups]);
 
   return (
     <>
@@ -359,8 +390,12 @@ const TimelineVideoCard = (
                 <TimelineVideoCardCommentDisplayCard
                   {...currentComment}
                   resumeCallback={() => {
-                    playingSetter?.(true);
-                    setCurrentComment(undefined);
+                    if (currentCommentIndex < currentCommentGroup.length - 1) {
+                      setCurrentCommentIndex((prev) => prev + 1);
+                    } else {
+                      playingSetter?.(true);
+                      setCurrentComment(undefined);
+                    }
                   }}
                 />
               </Stack>
@@ -380,10 +415,18 @@ const TimelineVideoCard = (
                 comments={props.comments}
                 selectedComment={currentComment?.id}
                 setSelectedComment={(id) => {
-                  setCurrentComment(props.comments.find((c) => c.id === id));
-                  setResumedFromCommentId(id);
+                  const currentComment = props.comments.find(
+                    (c) => c.id === id
+                  );
+                  setCurrentCommentGroup(
+                    props.comments.filter(
+                      (c) => c.time === currentComment?.time
+                    )
+                  );
+                  setCurrentCommentIndex(0);
+                  setResumedFromCommentGroup(currentCommentGroup[0]?.time);
                   if (id) {
-                    const time = props.comments.find((c) => c.id === id)?.time;
+                    const time = currentComment?.time;
                     _.isNumber(time) && currentTimeSetter?.(time);
                     playingSetter?.(false);
                   }
