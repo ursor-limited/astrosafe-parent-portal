@@ -176,8 +176,9 @@ const TimelineVideoCard = (
       setTimeout(setDimensions, 1000); // gives time for the card's header to load
     }
   }, [
-    sizeRef?.getBoundingClientRect().width,
-    sizeRef?.getBoundingClientRect().height,
+    sizeRef?.getBoundingClientRect?.()?.width,
+    sizeRef?.getBoundingClientRect?.()?.height,
+    isMobile,
   ]);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
