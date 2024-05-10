@@ -201,7 +201,8 @@
         "url": "https://kidzovo.com/",
         "ogimage": "thumbnail_16.png",
         "heroImage": "astroseal_16.jpg",
-        "internalpath": "kidzovo-mobile-app"
+        "internalpath": "kidzovo-mobile-app",
+        "showUrl": true
     },
     {
         "companyName": "Dr. Panda Apps",

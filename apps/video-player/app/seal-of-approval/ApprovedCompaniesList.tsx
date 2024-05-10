@@ -69,6 +69,7 @@ export interface IApprovedCompany {
   url: string;
   ogimage?: string;
   heroImage?: string;
+  showUrl?: boolean;
 }
 
 const PageChevrons = (props: {
