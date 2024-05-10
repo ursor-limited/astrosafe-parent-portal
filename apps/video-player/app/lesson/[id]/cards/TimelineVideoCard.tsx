@@ -172,6 +172,7 @@ const TimelineVideoCard = (
   useEffect(() => {
     if (isMobile) {
       setDimensions();
+      setTimeout(setDimensions, 1500);
     } else {
       setTimeout(setDimensions, 1000); // gives time for the card's header to load
     }
