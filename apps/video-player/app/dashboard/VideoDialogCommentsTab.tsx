@@ -376,7 +376,7 @@ const VideoDialogCommentsTab = (props: {
                 }
                 placeholder="Write a comment"
                 width="100%"
-                height="106px"
+                height="70px"
                 boldValue
                 white
               />
