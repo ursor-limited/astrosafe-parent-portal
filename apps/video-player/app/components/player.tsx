@@ -98,8 +98,6 @@ const Player = (props: {
   //   [playing, provider]
   // );
 
-  console.log(playing, "LOOL");
-
   const onYoutubeReady = () => {
     //@ts-ignore
     new window.YT.Player(props.playerId, {

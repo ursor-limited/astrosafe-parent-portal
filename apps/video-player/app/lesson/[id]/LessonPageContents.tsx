@@ -480,7 +480,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, userDetails.user?.id, lesson]);
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
