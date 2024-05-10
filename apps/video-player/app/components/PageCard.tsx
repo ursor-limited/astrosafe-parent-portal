@@ -7,7 +7,7 @@ import { getFormattedDate } from "./VideoCard";
 import { useUserContext } from "./UserContext";
 
 const PageCard = (props: {
-  rightStuff: React.ReactNode;
+  rightStuff?: React.ReactNode;
   title?: string;
   description?: string;
   createdAt?: string;
@@ -16,10 +16,13 @@ const PageCard = (props: {
   backCallback?: () => void;
   backText?: string;
   width?: string;
+  maxWidth?: string;
   editingCallback?: () => void;
   editingEnabled?: boolean;
   noBottomPadding?: boolean;
   fullHeight?: boolean;
+  noBackButton?: boolean;
+  grey?: boolean;
   children: React.ReactNode;
 }) => {
   const router = useRouter();
@@ -31,17 +34,18 @@ const PageCard = (props: {
       spacing="100px"
       minHeight={props.minHeight}
       height={props.fullHeight ? "100%" : undefined}
+      width="100%"
       flex={1}
     >
       <Stack
         position="relative"
         width={props.width || "1335px"}
-        maxWidth="calc(100%)"
+        maxWidth={props.maxWidth}
         flex={1}
         minHeight="fit-content"
         //pb="24px"
         borderRadius="16px 16px 0 0"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={props.grey ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"}
         spacing="26px"
         boxShadow="0 0 56px rgba(0,0,0,0.055)"
       >
@@ -52,7 +56,7 @@ const PageCard = (props: {
             pt="24px"
             justifyContent="space-between"
           >
-            {userDetails ? (
+            {userDetails && !props.noBackButton ? (
               <Stack
                 direction="row"
                 alignItems="center"

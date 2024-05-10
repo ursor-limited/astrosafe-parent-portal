@@ -55,6 +55,8 @@ import Timeline, {
 } from "./Timeline";
 import InitialAddContentButton from "./InitialAddContentButton";
 import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
+import ExternalPageFooter from "@/app/components/ExternalPageFooter";
+import { Header } from "@/app/components/header2";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -472,11 +474,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
     ]
   );
   useEffect(() => {
+    if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+      return;
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, userDetails.user?.id, lesson]);
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
@@ -503,7 +507,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
           (document.getElementById(`${id}dot`)?.getBoundingClientRect?.()
             ?.top ?? 0) + document.body.scrollTop
       ) ?? [];
-    console.log(dotYs);
     if (y < (dotYs?.[0] ?? 0)) {
       return 0;
     } else if (y > (dotYs?.[dotYs.length - 1] ?? 0)) {
@@ -531,12 +534,6 @@ export default function LessonPageContents(props: { lessonId: string }) {
   useEffect(() => {
     setExpandedContentIds(lesson?.expandedContentIds || []);
   }, [lesson?.expandedContentIds]);
-  // useEffect(() => {
-  //   lesson &&
-  //     expandedContentIds &&
-  //     expandedContentIds.join() !== lesson.expandedContentIds.join() &&
-  //     ApiController.updateLesson(props.lessonId, { expandedContentIds });
-  // }, [lesson, expandedContentIds]);
 
   const [expansionChunkedContentIds, setExpansionChunkedContentIds] = useState<
     string[][]
@@ -597,6 +594,11 @@ export default function LessonPageContents(props: { lessonId: string }) {
       <Stack
         ref={setPageRef}
         px="20px"
+        pt={
+          userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         flex={1}
         bgcolor={
@@ -608,23 +610,43 @@ export default function LessonPageContents(props: { lessonId: string }) {
           pointerEvents: draggedContentId ? "none" : undefined,
         }}
       >
-        <Stack height="40px" minHeight="40px" />
+        {!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           title={lesson?.title ?? ""}
-          description={lesson?.description ?? ""}
+          description={
+            userDetails?.user && userDetails.user.id === lesson?.creatorId
+              ? lesson?.description ||
+                "A description for your lesson goes here!"
+              : lesson?.description
+          }
           createdAt={lesson?.createdAt ?? undefined}
-          noBottomPadding
-          backCallback={
-            needToTitle
-              ? () => {
-                  setLessonNamingDialogSkipTo("back");
-                  setEditingDialogOpen(true);
-                  notificationCtx.success(
-                    "Please add a title to your Lesson before leaving."
-                  );
-                }
+          width={
+            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
+              ? "100%"
               : undefined
           }
+          maxWidth={
+            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
+              ? "1260px"
+              : undefined
+          }
+          noBottomPadding
+          // backCallback={
+          //   needToTitle
+          //     ? () => {
+          //         //setLessonNamingDialogSkipTo("back");
+          //         //setEditingDialogOpen(true);
+          //         notificationCtx.success(
+          //           "Please add a title to your Lesson before leaving."
+          //         );
+          //       }
+          //     : undefined
+          // }
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">
@@ -639,7 +661,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
                         : router.push("/dashboard")
                     }
                   >
-                    Create your own
+                    Create my own
                   </UrsorButton>
                 ) : null}
                 <UrsorButton
@@ -951,6 +973,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
               </Stack>
             </Stack>
           </Stack>
+          {lesson &&
+          (!userDetails?.user?.id ||
+            userDetails?.user?.id !== lesson?.creatorId) ? (
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
+            </Stack>
+          ) : null}
         </PageCard>
       </Stack>
       <LessonCreationDialog
@@ -973,21 +1002,34 @@ export default function LessonPageContents(props: { lessonId: string }) {
         category="playlist"
         title={lesson?.title ?? ""}
       />
-      <VideoCreationDialog
-        open={videoDialogOpen}
-        closeCallback={() => {
-          setVideoDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(id) => {
-          ApiController.addToLesson(
-            props.lessonId,
-            contentInsertionIndex ?? 0,
-            "video",
-            id
-          ).then(loadLesson);
-        }}
-      />
+      {videoDialogOpen ? (
+        <VideoCreationDialog
+          open={videoDialogOpen}
+          closeCallback={() => {
+            setVideoDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(id, title) => {
+            ApiController.addToLesson(
+              props.lessonId,
+              contentInsertionIndex ?? 0,
+              "video",
+              id
+            ).then(() =>
+              lesson?.contents.length === 0
+                ? ApiController.updateLesson(props.lessonId, { title }).then(
+                    loadLesson
+                  )
+                : loadLesson()
+            );
+            setExpandedContentIds([...expandedContentIds, id]);
+            ApiController.updateLesson(props.lessonId, {
+              expandedContentIds: [...expandedContentIds, id],
+            });
+          }}
+          editingCallback={loadLesson}
+        />
+      ) : null}
       {videoEditingDialogId ? (
         <VideoCreationDialog
           open={true}
@@ -1147,6 +1189,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
           }}
           updateCallback={loadLesson}
           noPlayer
+          noButtons
         />
       </Stack>
       <AddContentDialog

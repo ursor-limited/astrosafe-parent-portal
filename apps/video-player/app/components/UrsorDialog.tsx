@@ -59,6 +59,7 @@ export interface IUrsorDialogProps {
   noPadding?: boolean;
   noBackdrop?: boolean;
   paddingX?: string;
+  paddingY?: string;
   paddingTop?: string;
   longFadeIn?: boolean;
   bunchedUpContent?: boolean;
@@ -132,9 +133,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         style: {
           width: props.width || WIDTH,
           maxWidth: props.maxWidth || WIDTH,
-          maxHeight: props.dynamicHeight ? undefined : HEIGHT,
-          //minHeight: props.height || HEIGHT,
-          height: props.dynamicHeight ? undefined : "100%",
+          maxHeight: "100%",
+          height: props.dynamicHeight ? undefined : props.height || HEIGHT,
           borderRadius: BORDER_RADIUS,
           margin: "20px",
         },
@@ -154,6 +154,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         position="relative"
         p={props.noPadding ? undefined : PADDING}
         px={props.paddingX}
+        py={props.paddingY}
         pt={props.paddingTop}
         borderRadius="25px"
         overflow={props.scrollable ? "scroll" : "hidden"}
@@ -210,7 +211,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
-          overflow={props.noOverflowHidden ? undefined : "scroll"}
+          //overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
           {props.subtitle ||
           props.title ||

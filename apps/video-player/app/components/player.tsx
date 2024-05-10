@@ -12,7 +12,7 @@ import { useWindowSize } from "usehooks-ts";
 
 const BEZIER = "cubic-bezier(.18,3.03,.35,-0.38)";
 
-const VIDEO_DISABLINGS = ["fs", "rel"];
+const VIDEO_DISABLINGS = ["fs", "rel", "controls"];
 
 const BORDER_RADIUS = "14px";
 
@@ -22,11 +22,16 @@ const Player = (props: {
   playerId: string;
   url: string;
   playingCallback?: (playing: boolean) => void;
-  provider: "youtube" | "vimeo";
+  mutedCallback?: (muted: boolean) => void;
+  provider?: "youtube" | "vimeo";
   width: number;
   height: number;
   setDuration?: (duration: number) => void;
   startTime?: number;
+  setCurrentTime?: (time: number) => void;
+  setCurrentTimeSetter?: (f: (time: number) => void) => void;
+  setPlayingSetter?: (f: (playing: boolean) => void) => void;
+  setMuteSetter?: (f: () => void) => void;
   endTime?: number;
   showUrlBar?: boolean;
   setFullscreen?: (fs: boolean) => void;
@@ -36,14 +41,20 @@ const Player = (props: {
   smallPlayIcon?: boolean;
   noBackdrop?: boolean;
   borderRadius?: string;
+  noUrlStartTime?: boolean;
+  autoPlay?: boolean;
 }) => {
   const [overlayHovering, setOverlayHovering] = useState<boolean>(false);
   const [starHovering, setStarHovering] = useState<boolean>(false);
+
   const [playing, setPlaying] = useState<boolean>(false);
   useEffect(
     () => props.playingCallback?.(playing),
     [playing, props.playingCallback]
   );
+  const [muted, setMuted] = useState<boolean>(false);
+  useEffect(() => props.mutedCallback?.(muted), [muted, props.mutedCallback]);
+
   useEffect(() => {
     (playing || overlayHovering) &&
       props.mobile &&
@@ -69,13 +80,14 @@ const Player = (props: {
     const status = //@ts-ignore
       videoStatuses.find((status) => status[1] === event.data)[0];
     status === "PLAYING" && setPlaying(true);
-    setTimeout(
-      () => event.target.getPlayerState?.() === 2 && setPlaying(false),
-      500 // prevent pausing if this is a seek instead of an actual pause
-    );
+    // setTimeout(
+    //   () => event.target.getPlayerState?.() === 2 && setPlaying(false),
+    //   500 // prevent pausing if this is a seek instead of an actual pause
+    // );
     if (status !== "PLAYING") {
+      setPlaying(false);
       setYoutubePauseOverlay(true);
-      status === "ENDED" && setEnded(true);
+      //status === "ENDED" && setEnded(true);
     } else {
       setTimeout(() => setYoutubePauseOverlay(false), 500);
     }
@@ -125,48 +137,76 @@ const Player = (props: {
     () =>
       setUrl(
         props.url?.includes("youtube")
-          ? // ? `${props.url.replace(
-            //     "youtube.com"
-            //     "youtube-nocookie.com"
-            //   )}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-            `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
-              // don't use nocookie, as it forces the youtube logo in there
-              props.startTime ? `start=${props.startTime}&` : ""
-            }${
-              props.endTime ? `end=${props.endTime}&` : ""
+          ? `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+              !props.noUrlStartTime && props.startTime
+                ? `start=${props.startTime}&`
+                : ""
             }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
-          : props.startTime
-          ? `${props.url}#t=${props.startTime}`
-          : props.url
+          : // `${props.url}?enablejsapi=1&cc_load_policy=1&modestbranding=1&${
+            //   // don't use nocookie, as it forces the youtube logo in there
+            //   props.startTime ? `start=${props.startTime}&` : ""
+            // }${
+            //   props.endTime ? `end=${props.endTime}&` : ""
+            // }${VIDEO_DISABLINGS.map((d) => `${d}=0`).join("&")}`
+            // props.startTime
+            // ? `${props.url}#t=${props.startTime}`
+            // :
+            props.url
       ),
-    [props.endTime, props.startTime, props.url]
+    [
+      //props.endTime, props.startTime,
+      props.url,
+    ]
   );
 
   const [currentTime, setCurrentTime] = useState<number>(0);
+  useEffect(() => props.setCurrentTime?.(currentTime), [currentTime]);
+
+  useEffect(() => {
+    player &&
+      props.endTime &&
+      currentTime > props.endTime &&
+      (url?.includes("vimeo") ? player?.pause() : player?.pauseVideo());
+  }, [currentTime, props.endTime]);
+
   useEffect(() => {
     if (!player?.getCurrentTime || !playing) return;
-    const interval = setInterval(
-      () =>
-        url?.includes("vimeo")
-          ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
-          : setCurrentTime(player.getCurrentTime()),
-      500
-    );
+    const interval = setInterval(() => {
+      url?.includes("vimeo")
+        ? player.getCurrentTime().then((time: number) => setCurrentTime(time))
+        : setCurrentTime(() => {
+            const foo = player.getCurrentTime();
+            return foo;
+          });
+    }, 200);
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [player, playing, url]);
+
+  useEffect(() => {
+    if (!player || !url) return;
+    const interval = setInterval(() => {
+      setMuted(
+        props.provider === "youtube" ? player?.isMuted() : !player?.getVolume()
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [player, url]);
+
   useEffect(() => {
     if (
-      (playing && props.endTime && currentTime > props.endTime) ||
-      (playing && props.startTime && currentTime < props.startTime)
+      (props.endTime && currentTime >= props.endTime) ||
+      (props.startTime && currentTime < props.startTime)
     ) {
       url?.includes("vimeo")
         ? player?.setCurrentTime(props.startTime ?? 0)
         : player?.seekTo(props.startTime ?? 0);
       url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
       setPlaying(false);
-      setEnded(true);
+      setEnded(!!(props.endTime && currentTime >= props.endTime));
+    } else {
+      setEnded(false);
     }
-  }, [props.endTime, currentTime, props.startTime, player]);
+  }, [currentTime]);
 
   useEffect(() => {
     if (!url) return;
@@ -197,9 +237,35 @@ const Player = (props: {
   }, [url, document]);
 
   const [hasBegunPlaying, setHasBegunPlaying] = useState<boolean>(false);
+  useEffect(() => {
+    playing && setHasBegunPlaying(true);
+  }, [playing]);
+
+  useEffect(() => {
+    props.setCurrentTimeSetter?.((time: number) => {
+      setCurrentTime(time);
+      url?.includes("vimeo")
+        ? player?.setCurrentTime(time ?? 0)
+        : player?.seekTo(time ?? 0);
+    });
+    props.setPlayingSetter?.((p: boolean) => {
+      if (!p && !hasBegunPlaying) return;
+      if (!p) {
+        url?.includes("vimeo") ? player?.pause() : player?.pauseVideo();
+      } else {
+        resume();
+      }
+    });
+    props.setMuteSetter?.(() => {
+      if (props.provider === "youtube") {
+        player?.isMuted() ? player?.unMute() : player?.mute();
+      } else {
+        player?.getVolume().then((v: number) => player?.setVolume(v ? 0 : 1));
+      }
+    });
+  }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
-    setHasBegunPlaying(true);
     setEnded(false);
     if (
       url?.includes("youtube") &&
@@ -208,7 +274,6 @@ const Player = (props: {
         player?.playerInfo.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
-      //setPlaying(true);
     } else if (url?.includes("vimeo")) {
       player?.play();
     }
@@ -308,17 +373,19 @@ const Player = (props: {
           cursor: "pointer",
         }}
       >
-        <iframe
-          onMouseEnter={() => setOverlayHovering(true)}
-          onMouseLeave={() => setOverlayHovering(false)}
-          id={props.playerId}
-          title="Player"
-          width={fullScreen ? "100%" : props.width}
-          height={fullScreen ? "100%" : props.height}
-          src={url}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
-          frameBorder={0}
-        />
+        {props.provider && props.url ? (
+          <iframe
+            onMouseEnter={() => setOverlayHovering(true)}
+            onMouseLeave={() => setOverlayHovering(false)}
+            id={props.playerId}
+            title="Player"
+            width={fullScreen ? "100%" : props.width}
+            height={fullScreen ? "100%" : props.height}
+            src={url}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share;"
+            frameBorder={0}
+          />
+        ) : null}
         <Stack
           position="absolute"
           top={0}
@@ -365,13 +432,13 @@ const Player = (props: {
           >
             {ended ? (
               <Sync
-                width={props.smallPlayIcon ? 60 : 114}
-                height={props.smallPlayIcon ? 60 : 114}
+                width={props.smallPlayIcon ? 60 : 70}
+                height={props.smallPlayIcon ? 60 : 70}
               />
             ) : (
               <Play
-                width={props.smallPlayIcon ? 60 : 114}
-                height={props.smallPlayIcon ? 60 : 114}
+                width={props.smallPlayIcon ? 60 : 70}
+                height={props.smallPlayIcon ? 60 : 70}
               />
             )}
           </Stack>

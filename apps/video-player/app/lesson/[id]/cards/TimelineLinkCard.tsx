@@ -27,6 +27,7 @@ const TimelineLinkCard = (
     columnWidth?: number;
     expanded?: boolean;
     mobile?: boolean;
+    noButtons?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -62,6 +63,7 @@ const TimelineLinkCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        noButtons={props.noButtons}
       >
         <Link
           href={`https://${getPrefixRemovedUrl(props.url)}`}

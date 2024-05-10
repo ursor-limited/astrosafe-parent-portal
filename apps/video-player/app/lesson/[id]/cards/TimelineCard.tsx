@@ -6,10 +6,15 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import ArrowBothIcon from "@/images/icons/ArrowBothIcon.svg";
+import CommentIcon from "@/images/icons/CommentIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
+import { IVideoComment } from "@/app/api";
+import UrsorPopover from "@/app/components/UrsorPopover";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
 const EXPANDED_HEIGHT = 700;
@@ -33,6 +38,9 @@ const TimelineCard = (props: {
   creatorId: string;
   children: React.ReactNode;
   leftElement?: React.ReactNode;
+  comments?: IVideoComment[];
+  extraButton?: React.ReactNode;
+  noButtons?: boolean;
 }) => {
   const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
@@ -151,47 +159,52 @@ const TimelineCard = (props: {
                     <ArrowBothIcon height="18px" width="18px" />
                   </Stack>
                 ) : null}
-                <Stack
-                  height="32px"
-                  width="32px"
-                  bgcolor="rgb(255,255,255)"
-                  borderRadius="100%"
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{
-                    "&:hover": { opacity: 0.7 },
-                    transition: "0.2s",
-                    cursor: "pointer",
-                  }}
-                  onClick={props.duplicationCallback}
-                >
-                  <DuplicateIcon height="22px" width="22px" />
-                </Stack>
-                <UrsorActionButton
-                  size="32px"
-                  iconSize="16px"
-                  actions={[
-                    ...(props.editingCallback
-                      ? [
-                          {
-                            text: "Edit",
-                            kallback: () => props.editingCallback?.(),
-                            icon: PencilIcon,
-                          },
-                        ]
-                      : []),
-                    ...(props.deletionCallback
-                      ? [
-                          {
-                            text: "Delete",
-                            kallback: () => props.deletionCallback?.(),
-                            icon: TrashcanIcon,
-                            color: PALETTE.system.red,
-                          },
-                        ]
-                      : []),
-                  ]}
-                />
+                {!props.noButtons ? (
+                  <Stack
+                    height="32px"
+                    width="32px"
+                    bgcolor="rgb(255,255,255)"
+                    borderRadius="100%"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                      cursor: "pointer",
+                    }}
+                    onClick={props.duplicationCallback}
+                  >
+                    <DuplicateIcon height="22px" width="22px" />
+                  </Stack>
+                ) : null}
+                {props.extraButton}
+                {!props.noButtons ? (
+                  <UrsorActionButton
+                    size="32px"
+                    iconSize="16px"
+                    actions={[
+                      ...(props.editingCallback
+                        ? [
+                            {
+                              text: "Edit",
+                              kallback: () => props.editingCallback?.(),
+                              icon: PencilIcon,
+                            },
+                          ]
+                        : []),
+                      ...(props.deletionCallback
+                        ? [
+                            {
+                              text: "Delete",
+                              kallback: () => props.deletionCallback?.(),
+                              icon: TrashcanIcon,
+                              color: PALETTE.system.red,
+                            },
+                          ]
+                        : []),
+                    ]}
+                  />
+                ) : null}
               </Stack>
             </Stack>
           </Stack>

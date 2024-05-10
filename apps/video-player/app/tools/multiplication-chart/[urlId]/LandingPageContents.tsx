@@ -220,6 +220,7 @@ export const Captioned = (props: {
     callback: () => void;
   };
   noFlex?: boolean;
+  height?: string;
   children: React.ReactNode;
 }) => (
   <Stack
@@ -230,6 +231,7 @@ export const Captioned = (props: {
       pointerEvents: props.disabled ? "none" : undefined,
     }}
     position="relative"
+    height={props.height}
   >
     <Stack direction="row" justifyContent="space-between">
       {props.text ? (

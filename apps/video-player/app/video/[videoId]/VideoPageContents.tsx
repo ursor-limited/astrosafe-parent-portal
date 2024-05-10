@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
@@ -10,18 +10,24 @@ import { useAuth0 } from "@auth0/auth0-react";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
 import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
-import { Header } from "@/app/components/header2";
-import dayjs from "dayjs";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
+import _ from "lodash";
+import {
+  COMMENT_PAUSE_THRESHOLD,
+  TimelineVideoCardCommentDisplayCard,
+} from "@/app/lesson/[id]/cards/TimelineVideoCard";
+import TimeRange from "@/app/dashboard/TimeRange";
+import { isMobile } from "react-device-detect";
+import ExternalPageFooter from "@/app/components/ExternalPageFooter";
+import { Header } from "@/app/components/header2";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -187,11 +193,71 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
 
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
+
+  useEffect(() => {
+    if (_.isNumber(props.details.startTime) && props.details.endTime) {
+      setRange([props.details.startTime, props.details.endTime]);
+    }
+  }, [props.details.startTime, props.details.endTime]);
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const [currentTimeSetter, setCurrentTimeSetter] = useState<
+    undefined | ((time: number) => void)
+  >();
+
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
+  const [muted, setMuted] = useState<boolean>(false);
+  const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
+
+  const [currentComment, setCurrentComment] = useState<
+    IVideoComment | undefined
+  >();
+  useEffect(() => {
+    playing && setCurrentComment(undefined);
+  }, [playing]);
+  const [resumedFromCommentId, setResumedFromCommentId] = useState<
+    string | undefined
+  >();
+  const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
+  useEffect(
+    () =>
+      setSortedComments(
+        _.reverse(_.sortBy(props.details.comments, (c) => c.time))
+      ),
+    [props.details.comments]
+  );
+  useEffect(() => {
+    const newCurrentComment = sortedComments.find(
+      (c) =>
+        currentTime - c.time > 0 &&
+        currentTime - c.time < COMMENT_PAUSE_THRESHOLD
+    );
+    if (
+      resumedFromCommentId !== newCurrentComment?.id &&
+      newCurrentComment &&
+      newCurrentComment?.id !== currentComment?.id
+    ) {
+      setCurrentComment(newCurrentComment);
+      setResumedFromCommentId(newCurrentComment.id);
+      playingSetter?.(false);
+    }
+  }, [currentTime]);
+
   return details && provider ? (
     <>
       <Stack
         px="20px"
-        pt="40px"
+        pt={
+          userDetails?.user?.id &&
+          userDetails.user.id === props.details?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === details?.creatorId
@@ -203,13 +269,25 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
         }}
         flex={1}
       >
+        {!userDetails?.user?.id ||
+        userDetails.user.id !== props.details?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           title={details.title}
           description={details.description}
           createdAt={details.createdAt}
+          width="100%"
+          maxWidth="1260px"
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
+          noBottomPadding={
+            !userDetails?.user?.id || userDetails.user.id !== details?.creatorId
           }
           rightStuff={
             <Stack
@@ -266,7 +344,7 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
             userDetails.user.id === props.details.creatorId
           }
         >
-          <Stack px="24px" flex={1}>
+          <Stack px="24px" flex={1} position="relative">
             <Stack flex={1} pt="30px" ref={setSizeRef}>
               <Player
                 playerId="player"
@@ -278,10 +356,71 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
                 startTime={details.startTime}
                 endTime={details.endTime}
                 noKitemark={videoWidth < VIDEO_WIDTH}
-                playingCallback={(p) => setPlaying(p)}
+                playingCallback={setPlaying}
+                setCurrentTime={setCurrentTime}
+                setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                setMuteSetter={(f) => setMuteSetter(() => f)}
               />
             </Stack>
+            {currentComment ? (
+              <Stack
+                position="absolute"
+                bottom="16px"
+                left={0}
+                right={0}
+                marginLeft="auto"
+                marginRight="auto"
+                alignItems="center"
+              >
+                <TimelineVideoCardCommentDisplayCard
+                  {...currentComment}
+                  resumeCallback={() => {
+                    playingSetter?.(true);
+                    setCurrentComment(undefined);
+                  }}
+                />
+              </Stack>
+            ) : null}
           </Stack>
+          {duration && !isMobile ? (
+            <Stack px="24px">
+              <TimeRange
+                range={range}
+                duration={duration}
+                originalUrl={props.details.url}
+                currentTime={currentTime}
+                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                comments={props.details.comments}
+                selectedComment={currentComment?.id}
+                setSelectedComment={(id) => {
+                  setCurrentComment(
+                    props.details.comments.find((c) => c.id === id)
+                  );
+                  setResumedFromCommentId(id);
+                  if (id) {
+                    const time = props.details.comments.find((c) => c.id === id)
+                      ?.time;
+                    _.isNumber(time) && currentTimeSetter?.(time);
+                    playingSetter?.(false);
+                  }
+                }}
+                playing={playing}
+                playingCallback={() => playingSetter?.(!playing)}
+                muted={muted}
+                muteCallback={() => {
+                  setMuted(true);
+                  muteSetter?.();
+                }}
+              />
+            </Stack>
+          ) : null}
+          {!userDetails?.user?.id ||
+          userDetails.user.id !== details?.creatorId ? (
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
+            </Stack>
+          ) : null}
         </PageCard>
       </Stack>
       <DeletionDialog

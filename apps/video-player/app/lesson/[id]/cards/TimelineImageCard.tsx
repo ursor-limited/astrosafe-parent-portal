@@ -23,6 +23,7 @@ const TimelineImageCard = (
     expanded?: boolean;
     mobile?: boolean;
     expansionCallback?: () => void;
+    noButtons?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -60,6 +61,7 @@ const TimelineImageCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        noButtons={props.noButtons}
       >
         <Stack
           ref={setRef}

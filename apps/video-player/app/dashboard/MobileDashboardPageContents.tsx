@@ -5,9 +5,8 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import { IVideo } from "./AstroContentColumns";
 import { useContext, useEffect, useState } from "react";
-import ApiController from "../api";
+import ApiController, { IVideo } from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
@@ -499,7 +498,6 @@ export default function MobileDashboardPageContents() {
   const createLessonAndRedirect = (openContentDialog?: boolean) =>
     ApiController.createLesson({
       title: DEFAULT_LESSON_TITLE,
-      description: "A description for your lesson goes here!",
       creatorId: userDetails.user?.id,
     }).then((lesson) => {
       openContentDialog && setOpenContentDialogInLessonId(lesson.id);

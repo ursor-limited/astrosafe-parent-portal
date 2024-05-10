@@ -1,21 +1,149 @@
 import { Stack, alpha } from "@mui/system";
-import Image from "next/image";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { useContext, useEffect, useState } from "react";
-import ApiController, { IVideo } from "@/app/api";
+import { useCallback, useContext, useEffect, useState } from "react";
+import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
-import { UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
-import { useUserContext } from "@/app/components/UserContext";
+import CommentIcon from "@/images/icons/CommentIcon.svg";
+import PlayIcon from "@/images/icons/PlayIcon.svg";
+import TimeRange from "@/app/dashboard/TimeRange";
+import _ from "lodash";
+import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import UrsorPopover from "@/app/components/UrsorPopover";
+import { isMobile } from "react-device-detect";
+
+export const COMMENT_PAUSE_THRESHOLD = 1;
+
+function useClientRect() {
+  const [rect, setRect] = useState<DOMRect | null>(null);
+  const ref = useCallback((node: HTMLElement) => {
+    if (!node) return;
+    const resizeObserver = new ResizeObserver(() => {
+      setRect(node.getBoundingClientRect?.());
+      // Do what you want to do when the size of the element changes
+    });
+    resizeObserver.observe(node);
+  }, []);
+  return [rect, ref];
+}
 
 export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
+
+export const TimelineCardCommentsButton = (props: {
+  comments: IVideoComment[];
+  selectedCommentId?: string;
+  shortList?: boolean;
+  callback: (id: string) => void;
+}) => {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <UrsorPopover
+      open={open}
+      closeCallback={() => setOpen(false)}
+      placement="right"
+      zIndex={9999}
+      noPadding
+      top
+      maxHeight={props.shortList ? "312px" : "460px"}
+      content={
+        <Stack
+          width="264px"
+          justifyContent="space-between"
+          p="12px"
+          spacing="12px"
+          overflow="scroll"
+          bgcolor={PALETTE.secondary.grey[1]}
+          borderRadius="12px"
+        >
+          <Typography bold color={PALETTE.secondary.grey[3]}>{`${props.comments
+            ?.length} Comment${
+            props.comments?.length === 1 ? "" : "s"
+          }`}</Typography>
+          {props.comments?.map((c) => (
+            <UrsorFadeIn key={c.id} duration={800}>
+              <Stack
+                id={c.id}
+                sx={{
+                  transition: "0.2s",
+                  cursor: "pointer",
+                }}
+                onClick={() => props.callback(c.id)}
+              >
+                <VideoCommentCard
+                  {...c}
+                  selected={props.selectedCommentId === c.id}
+                />
+              </Stack>
+            </UrsorFadeIn>
+          ))}
+        </Stack>
+      }
+    >
+      <Stack
+        height="40px"
+        width="40px"
+        borderRadius="100%"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          "&:hover": { opacity: 0.7 },
+          transition: "0.2s",
+          cursor: "pointer",
+        }}
+        onClick={() => setOpen(true)}
+      >
+        <CommentIcon height="18px" width="18px" />
+      </Stack>
+    </UrsorPopover>
+  );
+};
+
+export const TimelineVideoCardCommentDisplayCard = (
+  props: IVideoComment & { resumeCallback: () => void }
+) => (
+  <Stack
+    width={isMobile ? "300px" : "518px"}
+    borderRadius="12px"
+    bgcolor="rgb(255,255,255)"
+    p="10px"
+    boxSizing="border-box"
+    spacing="8px"
+    maxHeight="260px"
+  >
+    <Stack flex={1} overflow="hidden">
+      <Typography variant={isMobile ? "medium" : "h5"} bold>
+        {props.value}
+      </Typography>
+    </Stack>
+    <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
+      <Typography bold variant="small" color={PALETTE.secondary.grey[3]}>
+        {`${Math.floor(props.time / 60)
+          .toString()
+          .padStart(2, "0")}:${Math.floor(props.time % 60)
+          .toString()
+          .padStart(2, "0")}`}
+      </Typography>
+      <UrsorButton
+        size="small"
+        variant="tertiary"
+        dark
+        endIcon={PlayIcon}
+        onClick={props.resumeCallback}
+      >
+        Resume
+      </UrsorButton>
+    </Stack>
+  </Stack>
+);
 
 const TimelineVideoCard = (
   props: IVideo & {
@@ -29,6 +157,7 @@ const TimelineVideoCard = (
     columnWidth?: number;
     expanded?: boolean;
     noPlayer?: boolean;
+    noButtons?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -46,23 +175,39 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
-  //const userDetails = useUserContext();
-
-  const [headerLoaded, setHeaderLoaded] = useState<boolean>(false);
-  const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
+  //const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
-  const setDimensions = () => {
-    setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
-    setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
-  };
+
+  const [playerContainerRect, playerContainerRef] = useClientRect();
   useEffect(() => {
-    setTimeout(setDimensions, 1000); // gives time for the card's header to load
-  }, [
-    sizeRef?.getBoundingClientRect().width,
-    sizeRef?.getBoundingClientRect().height,
-    headerLoaded, // needed to make sure that the height is taken after the card's header is rendered.
-  ]);
+    setPlayerHeight((playerContainerRect as DOMRect)?.height ?? 0);
+    setPlayerWidth((playerContainerRect as DOMRect)?.width ?? 0);
+  }, [playerContainerRect]);
+
+  // const setDimensions = () => {
+  //   setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
+  //   setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
+  // };
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     setDimensions();
+  //     setTimeout(setDimensions, 1500);
+  //   } else {
+  //     setTimeout(setDimensions, 1000); // gives time for the card's header to load
+  //   }
+  // }, [
+  //   sizeRef?.getBoundingClientRect?.()?.width,
+  //   sizeRef?.getBoundingClientRect?.()?.height,
+  //   isMobile,
+  // ]);
+
+  // const sizeRef = useCallback((node: HTMLElement | null) => {
+  //   if (node) {
+  //     setPlayerWidth(node?.getBoundingClientRect?.()?.width ?? 0);
+  //     setPlayerHeight(node?.getBoundingClientRect?.()?.height ?? 0);
+  //   }
+  // }, []);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -71,6 +216,61 @@ const TimelineVideoCard = (
     () => zetProvider(props.url.includes("vimeo") ? "vimeo" : "youtube"),
     [props.url]
   );
+
+  const [duration, setDuration] = useState<number | undefined>(10);
+  const [range, setRange] = useState<[number, number] | undefined>(undefined);
+
+  useEffect(() => {
+    if (_.isNumber(props?.startTime) && props.endTime) {
+      setRange([props?.startTime, props.endTime]);
+      //setDuration(props.endTime - props.startTime);
+    }
+  }, [props.startTime, props.endTime]);
+
+  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const [currentTimeSetter, setCurrentTimeSetter] = useState<
+    undefined | ((time: number) => void)
+  >();
+
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [playingSetter, setPlayingSetter] = useState<
+    undefined | ((playing: boolean) => void)
+  >();
+
+  const [muted, setMuted] = useState<boolean>(false);
+  const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
+
+  const [currentComment, setCurrentComment] = useState<
+    IVideoComment | undefined
+  >();
+  useEffect(() => {
+    playing && setCurrentComment(undefined);
+  }, [playing]);
+  const [resumedFromCommentId, setResumedFromCommentId] = useState<
+    string | undefined
+  >();
+  const [sortedComments, setSortedComments] = useState<IVideoComment[]>([]);
+  useEffect(
+    () => setSortedComments(_.reverse(_.sortBy(props.comments, (c) => c.time))),
+    [props.comments]
+  );
+  useEffect(() => {
+    const newCurrentComment = sortedComments.find(
+      (c) =>
+        currentTime - c.time > 0 &&
+        currentTime - c.time < COMMENT_PAUSE_THRESHOLD
+    );
+    if (
+      resumedFromCommentId !== newCurrentComment?.id &&
+      newCurrentComment &&
+      newCurrentComment?.id !== currentComment?.id
+    ) {
+      setCurrentComment(newCurrentComment);
+      setResumedFromCommentId(newCurrentComment.id);
+      playingSetter?.(false);
+    }
+  }, [currentTime]);
 
   return (
     <>
@@ -91,6 +291,8 @@ const TimelineVideoCard = (
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
         useExpandedHeight
+        comments={sortedComments}
+        noButtons={props.noButtons}
         leftElement={
           <UrsorButton
             dark
@@ -108,28 +310,96 @@ const TimelineVideoCard = (
           </UrsorButton>
         }
       >
-        <Stack
-          width="100%"
-          flex={props.expanded ? 1 : undefined}
-          height={
-            props.expanded
-              ? undefined
-              : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
-          }
-          ref={setSizeRef}
-        >
-          {!props.noPlayer && provider && playerHeight ? (
-            <Stack height={props.noPlayer ? 0 : undefined}>
-              <Player
-                playerId={`player-${props.id}`}
-                url={props.url}
-                provider={provider}
-                width={playerWidth}
-                height={playerHeight}
-                startTime={props.startTime}
-                endTime={props.endTime}
-                noKitemark
-                borderRadius="8px"
+        <Stack spacing="8px" flex={1}>
+          <Stack flex={1} position="relative">
+            <Stack
+              width="100%"
+              flex={props.expanded ? 1 : undefined}
+              height={
+                props.expanded
+                  ? undefined
+                  : playerWidth * (VIDEO_HEIGHT / VIDEO_WIDTH)
+              }
+              ref={playerContainerRef as (node: HTMLElement | null) => void}
+            >
+              {!props.noPlayer && provider && playerHeight ? (
+                <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
+                  <Player
+                    playerId={`player-${props.id}`}
+                    url={props.url}
+                    provider={provider}
+                    width={playerWidth}
+                    height={playerHeight}
+                    startTime={props.startTime}
+                    endTime={props.endTime}
+                    borderRadius="8px"
+                    setDuration={(d) => {
+                      d && setDuration(d);
+                    }}
+                    playingCallback={setPlaying}
+                    setCurrentTime={setCurrentTime}
+                    setCurrentTimeSetter={(f) => setCurrentTimeSetter(() => f)}
+                    setPlayingSetter={(f) => setPlayingSetter(() => f)}
+                    mutedCallback={setMuted}
+                    setMuteSetter={(f) => setMuteSetter(() => f)}
+                  />
+                </Stack>
+              ) : null}
+            </Stack>
+            {currentComment ? (
+              <Stack
+                position="absolute"
+                bottom="16px"
+                left={0}
+                right={0}
+                marginLeft="auto"
+                marginRight="auto"
+                alignItems="center"
+              >
+                <TimelineVideoCardCommentDisplayCard
+                  {...currentComment}
+                  resumeCallback={() => {
+                    playingSetter?.(true);
+                    setCurrentComment(undefined);
+                  }}
+                />
+              </Stack>
+            ) : null}
+          </Stack>
+          {duration && !isMobile ? (
+            <Stack
+              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
+              pb="6px"
+            >
+              <TimeRange
+                range={range}
+                duration={duration}
+                originalUrl={props.url}
+                currentTime={currentTime}
+                setCurrentTime={(time) => currentTimeSetter?.(time)}
+                comments={props.comments}
+                selectedComment={currentComment?.id}
+                setSelectedComment={(id) => {
+                  setCurrentComment(props.comments.find((c) => c.id === id));
+                  setResumedFromCommentId(id);
+                  if (id) {
+                    const time = props.comments.find((c) => c.id === id)?.time;
+                    _.isNumber(time) && currentTimeSetter?.(time);
+                    playingSetter?.(false);
+                  }
+                }}
+                playing={playing}
+                playingCallback={() => playingSetter?.(!playing)}
+                muted={muted}
+                muteCallback={() => {
+                  setMuted(true);
+                  muteSetter?.();
+                }}
+                greyLines
+                hideExternalComments
+                commentsButton
+                shortCommentsList={!props.expanded}
+                noSpacing
               />
             </Stack>
           ) : null}
