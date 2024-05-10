@@ -162,9 +162,6 @@ const TimelineVideoCard = (
 
   const router = useRouter();
 
-  //const userDetails = useUserContext();
-
-  const [headerLoaded, setHeaderLoaded] = useState<boolean>(false);
   const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
@@ -173,12 +170,17 @@ const TimelineVideoCard = (
     setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
   };
   useEffect(() => {
-    setTimeout(setDimensions, 1000); // gives time for the card's header to load
+    if (isMobile) {
+      setDimensions();
+    } else {
+      setTimeout(setDimensions, 1000); // gives time for the card's header to load
+    }
   }, [
     sizeRef?.getBoundingClientRect().width,
     sizeRef?.getBoundingClientRect().height,
-    headerLoaded, // needed to make sure that the height is taken after the card's header is rendered.
   ]);
+
+  console.log(playerWidth, "aaaa", playerHeight);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined

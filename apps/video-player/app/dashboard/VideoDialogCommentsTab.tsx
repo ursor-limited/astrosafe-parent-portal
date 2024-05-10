@@ -364,12 +364,6 @@ const VideoDialogCommentsTab = (props: {
             maxHeight={`${playerContainerHeight}px`}
             overflow="hidden"
           >
-            <Stack pb="12px">
-              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
-                .comments?.length} Comment${
-                props.comments?.length === 1 ? "" : "s"
-              }`}</Typography>
-            </Stack>
             <Stack
               onClick={() => {
                 playingSetter?.(false);
@@ -406,11 +400,15 @@ const VideoDialogCommentsTab = (props: {
               </UrsorButton>
             </Stack>
             <Stack
-              spacing="12px"
-              overflow="scroll"
+              pt="9px"
               borderTop={`2px solid ${PALETTE.secondary.grey[2]}`}
-              pt="12px"
             >
+              <Typography bold color={PALETTE.secondary.grey[3]}>{`${props
+                .comments?.length} Comment${
+                props.comments?.length === 1 ? "" : "s"
+              }`}</Typography>
+            </Stack>
+            <Stack spacing="12px" overflow="scroll">
               {
                 //_.sortBy(comments, (c) => c.time).map((c) => (
                 sortedComments.map((c) => (
@@ -426,6 +424,10 @@ const VideoDialogCommentsTab = (props: {
                         setSelectedComment(c.id);
                         currentTimeSetter?.(c.time);
                         playingSetter?.(false);
+                        document.getElementById(c.id)?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "start",
+                        });
                       }}
                     >
                       <VideoCommentCard

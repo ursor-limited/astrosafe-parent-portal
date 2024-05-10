@@ -16,7 +16,7 @@ import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import UserPageFooter from "./UserPageFooter";
+import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
 
 const PAGE_SIZE = 24;

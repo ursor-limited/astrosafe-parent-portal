@@ -28,6 +28,7 @@ const VideoCreationDialogTabButton = (props: {
   text: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   selected: boolean;
+  new?: boolean;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
@@ -63,7 +64,25 @@ const VideoCreationDialogTabButton = (props: {
       onMouseLeave={() => {
         setHovering(false);
       }}
+      position="relative"
     >
+      {props.new ? (
+        <Stack
+          position="absolute"
+          right="-10px"
+          top="-8px"
+          height="18px"
+          borderRadius="9px"
+          bgcolor={PALETTE.system.orange}
+          justifyContent="center"
+          alignItems="center"
+          px="12px"
+        >
+          <Typography variant="tiny" bold color="rgb(255,255,255)">
+            New
+          </Typography>
+        </Stack>
+      ) : null}
       <props.icon height="20px" width="20px" />
       <Typography
         bold
@@ -240,6 +259,7 @@ const VideoCreationDialog = (props: {
         <MobileVideoCreationDialog {...props} />
       ) : (
         <UrsorDialog
+          supertitle="Create a Safe Video Link"
           open={props.open}
           onCloseCallback={props.closeCallback}
           width="1308px"
@@ -249,12 +269,13 @@ const VideoCreationDialog = (props: {
           paddingY={isMobile ? "0px" : "40px"}
           paddingX={isMobile ? undefined : "40px"}
           noCloseButton={isMobile}
+          noOverflowHidden
         >
-          <Stack width="100%" flex={1} spacing="24px" overflow="hidden">
+          <Stack width="100%" flex={1} spacing="24px">
             <Stack direction="row" spacing="12px">
               <Stack onClick={() => setSelectedTab("details")}>
                 <VideoCreationDialogTabButton
-                  text="Video details"
+                  text="Edit details"
                   icon={PencilIcon}
                   selected={selectedTab === "details"}
                 />
@@ -275,6 +296,7 @@ const VideoCreationDialog = (props: {
                   text="Add Comments"
                   icon={MultipleCommentsIcon}
                   selected={selectedTab === "comments"}
+                  new
                 />
               </Stack>
             </Stack>

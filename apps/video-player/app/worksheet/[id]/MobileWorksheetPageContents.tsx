@@ -33,6 +33,7 @@ import NumberBondWorksheet, {
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { ILesson } from "@/app/lesson/[id]/page";
+import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export default function MobileWorksheetPageContents(props: {
   details: IWorksheet;
@@ -359,6 +360,9 @@ export default function MobileWorksheetPageContents(props: {
               </Stack>
             </Stack>
           ))}
+        </Stack>
+        <Stack minHeight="100vh" justifyContent="center">
+          <MobileExternalPageFooter />
         </Stack>
       </MobilePageCard>
       <DeletionDialog
