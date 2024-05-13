@@ -105,7 +105,11 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     );
 
   const reloadLessonDetails = () =>
-    ApiController.getLesson(props.subdirectory).then((l) => setLesson(l));
+    ApiController.getLessonFromUrl(props.subdirectory).then((l) =>
+      setLesson(l)
+    );
+
+  console.log(lesson);
 
   useEffect(() => {
     props.subdirectory && loadLesson();

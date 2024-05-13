@@ -32,9 +32,11 @@ export const dynamicParams = true;
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { subdirectory: string };
 }): Promise<Metadata> {
-  const details = (await ApiController.getLesson(params.id)) as ILesson;
+  const details = (await ApiController.getLessonFromUrl(
+    params.subdirectory
+  )) as ILesson;
   return {
     title: details.title,
     description: "Create math worksheets with Astro Worksheet Generator.",
