@@ -6,6 +6,7 @@ import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useEffect, useState } from "react";
 import { SecondaryColor } from "ui/palette";
 import _ from "lodash";
+import Link from "next/link";
 
 export const SECONDARY_COLOR_ORDER: SecondaryColor[] = [
   "purple",
@@ -40,7 +41,6 @@ export const ApprovedCompanyCard = (
       <Stack
         borderRadius="12px"
         p={props.mobile ? "14px" : "20px"}
-        height={props.mobile ? "141px" : "165px"}
         boxSizing="border-box"
         direction="row"
         spacing="20px"
@@ -149,6 +149,25 @@ export const ApprovedCompanyCard = (
                 {props.audience}
               </Typography>
             </Stack>
+            {props.showUrl ? (
+              <Stack direction="row" spacing="10px">
+                <Typography
+                  sx={{ whiteSpace: "nowrap" }}
+                  variant={props.mobile ? "tiny" : "small"}
+                  bold
+                >
+                  URL:
+                </Typography>
+                <Link href={props.url}>
+                  <Typography
+                    maxLines={1}
+                    variant={props.mobile ? "tiny" : "small"}
+                  >
+                    {props.url}
+                  </Typography>
+                </Link>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         {!props.mobile ? (

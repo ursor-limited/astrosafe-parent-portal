@@ -43,14 +43,14 @@ import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import TrialExpirationDialog from "./TrialExpirationDialog";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import LessonCreationDialog from "./LessonCreationDialog";
-import { ILesson } from "../lesson/[id]/page";
+import { ILesson } from "../lesson/[subdirectory]/page";
 import { isMobile } from "react-device-detect";
 import LessonCard from "../components/LessonCard";
 import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
 import LinkDialog, { ILink } from "./LinkDialog";
 import TextCreationDialog, { IText } from "../components/TextDialog";
 import ImageDialog, { IImage } from "./ImageDialog";
-import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
+import { cleanTextValueIntoInnerHTML } from "../lesson/[subdirectory]/MobileLessonPageContents";
 import TextCard from "../components/TextCard";
 import LinkCard from "../components/LinkCard";
 import ImageCard from "../components/ImageCard";
@@ -740,7 +740,9 @@ export default function MobileDashboardPageContents() {
                 <LessonCard
                   {...(card.details as ILesson)}
                   clickCallback={() =>
-                    router.push(`/lesson/${card.details.id}`)
+                    router.push(
+                      `/lesson/${(card.details as ILesson).canonicalUrl}`
+                    )
                   }
                   editingCallback={() =>
                     setLessonEditingDialogId(card.details.id)
@@ -859,6 +861,7 @@ export default function MobileDashboardPageContents() {
           setTrialExpirationDialogOpen(false);
           setUpgradeDialogOpen(true);
         }}
+        mobile
       />
       {!userDetails.user?.subscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (

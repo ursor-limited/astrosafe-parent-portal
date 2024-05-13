@@ -318,7 +318,7 @@ const UpgradeDialog = (props: {
       /> */}
       <Stack
         direction={props.mobile ? "column" : "row"}
-        spacing={props.mobile ? "12px" : "32px"}
+        spacing="32px"
         width="100%"
         pt="20px"
       >

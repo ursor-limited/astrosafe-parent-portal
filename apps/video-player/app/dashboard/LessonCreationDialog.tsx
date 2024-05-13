@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
-import { ILesson } from "../lesson/[id]/page";
+import { ILesson } from "../lesson/[subdirectory]/page";
 import { useLocalStorage } from "usehooks-ts";
 
 const LessonCreationDialog = (props: {
@@ -19,13 +19,23 @@ const LessonCreationDialog = (props: {
   skipCallback?: () => void;
 }) => {
   const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [canonicalUrl, setCanonicalUrl] = useState<string>("");
+  const [nonCanonicalUrlList, setNonCanonicalUrlList] = useState<string[]>([]);
   useEffect(() => {
     props.lesson?.title && setTitle(props.lesson.title);
   }, [props.lesson?.title]);
-  const [description, setDescription] = useState<string>("");
   useEffect(() => {
     props.lesson?.description && setDescription(props.lesson.description);
   }, [props.lesson?.description]);
+  useEffect(() => {
+    props.lesson?.canonicalUrl && setCanonicalUrl(props.lesson.canonicalUrl);
+  }, [props.lesson?.canonicalUrl]);
+  useEffect(() => {
+    props.lesson?.nonCanonicalUrlList &&
+      setNonCanonicalUrlList(props.lesson.nonCanonicalUrlList);
+  }, [props.lesson?.nonCanonicalUrlList]);
+
   const router = useRouter();
   const userId = useUserContext().user?.id;
   const notificationCtx = useContext(NotificationContext);
@@ -33,24 +43,30 @@ const LessonCreationDialog = (props: {
   const [openContentDialogInLessonId, setOpenContentDialogInLessonId] =
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 
-  const submitCreation = () =>
+  const submitCreation = () => {
     ApiController.createLesson({
       title,
       description,
       creatorId: userId,
     }).then((lesson) => {
       setOpenContentDialogInLessonId(lesson.id);
-      router.push(`/lesson/${lesson.id}`);
+      router.push(`/lesson/${lesson.canonicalUrl}`);
     });
-  const submitUpdate = () =>
+  };
+
+  const submitUpdate = () => {
     props.lesson?.id &&
-    ApiController.updateLesson(props.lesson.id, {
-      title,
-      description,
-    })
-      .then(props.updateCallback)
-      .then(props.closeCallback)
-      .then(() => notificationCtx.success("Lesson updated."));
+      ApiController.updateLesson(props.lesson.id, {
+        title,
+        description,
+      })
+        .then((result) =>
+          router.push(`/lesson/${result?.canonicalUrl || props.lesson?.id}`)
+        )
+        .then(props.updateCallback)
+        .then(props.closeCallback)
+        .then(() => notificationCtx.success("Lesson updated."));
+  };
 
   return (
     <UrsorDialog
