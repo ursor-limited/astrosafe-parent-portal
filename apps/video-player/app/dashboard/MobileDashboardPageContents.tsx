@@ -859,6 +859,7 @@ export default function MobileDashboardPageContents() {
           setTrialExpirationDialogOpen(false);
           setUpgradeDialogOpen(true);
         }}
+        mobile
       />
       {!userDetails.user?.subscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (

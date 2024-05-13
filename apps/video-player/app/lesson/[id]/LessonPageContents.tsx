@@ -473,14 +473,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
       textDialogOpen,
     ]
   );
-  useEffect(() => {
-    if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
-      return;
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [handleMouseMove, userDetails.user?.id, lesson]);
+  // useEffect(() => {
+  //   if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+  //     return;
+  //   window.addEventListener("mousemove", handleMouseMove);
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, [handleMouseMove, userDetails.user?.id, lesson]);
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
@@ -625,28 +625,13 @@ export default function LessonPageContents(props: { lessonId: string }) {
               : lesson?.description
           }
           createdAt={lesson?.createdAt ?? undefined}
-          width={
-            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
-              ? "100%"
-              : undefined
-          }
+          width={"100%"}
           maxWidth={
             !userDetails?.user || userDetails.user.id !== lesson?.creatorId
               ? "1260px"
               : undefined
           }
           noBottomPadding
-          // backCallback={
-          //   needToTitle
-          //     ? () => {
-          //         //setLessonNamingDialogSkipTo("back");
-          //         //setEditingDialogOpen(true);
-          //         notificationCtx.success(
-          //           "Please add a title to your Lesson before leaving."
-          //         );
-          //       }
-          //     : undefined
-          // }
           rightStuff={
             <Stack direction="row" spacing="12px">
               <Stack direction="row" spacing="12px">
