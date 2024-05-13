@@ -7,8 +7,8 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import _ from "lodash";
 import UserPageContents from "./UserPageContents";
-import { ILesson } from "@/app/lesson/[id]/page";
-import MobileLessonPageContents from "@/app/lesson/[id]/MobileLessonPageContents";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import MobileLessonPageContents from "@/app/lesson/[subdirectory]/MobileLessonPageContents";
 import MobileUserPageContents from "./MobileUserPageContents";
 
 export const dynamicParams = true;

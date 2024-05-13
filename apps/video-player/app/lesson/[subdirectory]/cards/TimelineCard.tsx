@@ -6,15 +6,11 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import ArrowBothIcon from "@/images/icons/ArrowBothIcon.svg";
-import CommentIcon from "@/images/icons/CommentIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useUserContext } from "@/app/components/UserContext";
 import { IVideoComment } from "@/app/api";
-import UrsorPopover from "@/app/components/UrsorPopover";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 
 const COLLAPSE_HEIGHT_THRESHOLD = 80;
 const EXPANDED_HEIGHT = 700;
@@ -75,11 +71,8 @@ const TimelineCard = (props: {
       id={props.id}
       ref={setRef}
       borderRadius="12px"
-      //boxShadow="0 0 20px rgba(0,0,0,0.08)"
       bgcolor={PALETTE.secondary.grey[1]}
-      //overflow="hidden"
       sx={{
-        //pointerEvents: props.dragging ? "none" : undefined,
         outline: orangeBorderOn
           ? `3px solid ${PALETTE.system.orange}`
           : undefined,
@@ -122,7 +115,7 @@ const TimelineCard = (props: {
                 }}
                 onMouseDown={(e) => {
                   props.onDragStart?.();
-                  e.preventDefault();
+                  //e.preventDefault();
                 }}
               >
                 <GrabberIcon width="20px" height="20px" />

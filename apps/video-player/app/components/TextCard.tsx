@@ -13,7 +13,7 @@ import { IText } from "./TextDialog";
 import "react-quill/dist/quill.core.css";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 import useOrangeBorder from "./useOrangeBorder";
-import { TextPreview } from "../lesson/[id]/cards/TimelineTextCard";
+import { TextPreview } from "../lesson/[subdirectory]/cards/TimelineTextCard";
 
 const TextCard = (
   props: IText & {

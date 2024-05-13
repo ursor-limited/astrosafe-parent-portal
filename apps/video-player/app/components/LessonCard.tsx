@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
-import { ILesson } from "../lesson/[id]/page";
+import { ILesson } from "../lesson/[subdirectory]/page";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";

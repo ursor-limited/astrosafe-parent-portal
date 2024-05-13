@@ -10,7 +10,7 @@ import {
   SearchInput,
 } from "@/app/dashboard/DashboardPageContents";
 import useColumnWidth from "@/app/dashboard/useColumnWidth";
-import { ILesson } from "@/app/lesson/[id]/page";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";

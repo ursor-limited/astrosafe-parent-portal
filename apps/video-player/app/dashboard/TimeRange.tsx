@@ -1,4 +1,4 @@
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import DurationLabel from "../video/[videoId]/duration-label";
 import _ from "lodash";
@@ -9,8 +9,17 @@ import PlayIcon from "@/images/icons/PlayIcon.svg";
 import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
 import MuteIcon from "@/images/icons/MuteIcon.svg";
 import PauseIcon from "@/images/icons/PauseIcon.svg";
-import { TimelineCardCommentsButton } from "../lesson/[id]/cards/TimelineVideoCard";
+import { TimelineCardCommentsButton } from "../lesson/[subdirectory]/cards/TimelineVideoCard";
 import { getFormattedTime } from "./VideoDialogCommentsTab";
+
+export const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
 
 const DOT_SIZE = 14;
 const MIN_RANGE = 5;
@@ -292,9 +301,13 @@ const TimeRange = (props: {
             <Stack
               position="absolute"
               sx={{
+                opacity: 0,
                 transition: "0.2s",
                 background:
                   draggingEndLine || draggingStartLine ? "#c2d5ff" : "#c9c9c9",
+                animation: `${fadeIn} 2s ease-in-out`,
+                animationFillMode: "forwards",
+                animationDelay: "1s",
               }}
               height="4px"
               width={(1 - currentTimeDotXRatio) * (endLineX - startLineX)}
@@ -343,7 +356,6 @@ const TimeRange = (props: {
                 width={`calc(100% - ${DOT_SIZE}px)`}
                 sx={{
                   transition: "0.2s",
-                  //opacity: draggingEndLine || draggingStartLine ? 0 : 1,
                 }}
               >
                 <Stack

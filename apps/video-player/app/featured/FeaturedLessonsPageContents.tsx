@@ -17,7 +17,7 @@ import {
   GRID_SPACING,
   LESSON_GRID_SPACING,
 } from "../dashboard/DashboardPageContents";
-import { ILesson } from "../lesson/[id]/page";
+import { ILesson } from "../lesson/[subdirectory]/page";
 import useColumnWidth from "../dashboard/useColumnWidth";
 import { useUserContext } from "../components/UserContext";
 import LessonCard from "../components/LessonCard";

@@ -39,7 +39,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { ILesson } from "@/app/lesson/[id]/page";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import { getFormattedDate } from "@/app/components/VideoCard";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";

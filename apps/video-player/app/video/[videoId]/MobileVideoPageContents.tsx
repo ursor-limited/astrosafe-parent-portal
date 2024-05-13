@@ -19,7 +19,7 @@ import { CircularButton } from "./VideoPageContents";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
-import { ILesson } from "@/app/lesson/[id]/page";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;

@@ -158,9 +158,6 @@ export default function IndividualSealLandingPageContents(
               <Typography color={PALETTE.secondary.grey[5]}>
                 {props.description}
               </Typography>
-              {props.showUrl ? <Typography color={PALETTE.secondary.grey[5]}>
-                {props.url}
-              </Typography> : <></>}
             </Stack>
           </Stack>,
           <LandingPageViewport
