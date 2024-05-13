@@ -1,7 +1,7 @@
 import React from "react";
 import featured from "./featured.json";
 import { Metadata } from "next";
-import { IAstroLandingPage } from "../../tools/multiplication-chart/[urlId]/LandingPageContents";
+import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import FeaturedLessonsPageContents from "./FeaturedLessonsPageContents";
 
 export const dynamic = "force-static"; // for SEO, as explained in https://github.com/vercel/next.js/discussions/57644#discussioncomment-8638432
