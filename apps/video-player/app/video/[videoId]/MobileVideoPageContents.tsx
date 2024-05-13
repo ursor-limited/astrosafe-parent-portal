@@ -7,10 +7,6 @@ import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
 import { useAuth0 } from "@auth0/auth0-react";
-import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import NotificationContext from "@/app/components/NotificationContext";
 import mixpanel from "mixpanel-browser";
 import PageCard from "@/app/components/PageCard";
@@ -24,6 +20,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
 import { ILesson } from "@/app/lesson/[id]/page";
+import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -195,6 +192,9 @@ function MobileVideoPageContents(props: {
             noKitemark={videoWidth < VIDEO_WIDTH}
             playingCallback={(p) => setPlaying(p)}
           />
+        </Stack>
+        <Stack minHeight="100vh" justifyContent="center">
+          <MobileExternalPageFooter />
         </Stack>
       </MobilePageCard>
       {editingDialogOpen ? (

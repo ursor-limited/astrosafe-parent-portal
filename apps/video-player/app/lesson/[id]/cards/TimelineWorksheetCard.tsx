@@ -42,6 +42,7 @@ const TimelineWorksheetCard = (
     columnWidth?: number;
     expanded?: boolean;
     expansionCallback?: () => void;
+    noButtons?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -95,6 +96,7 @@ const TimelineWorksheetCard = (
         width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
         creatorId={props.creatorId}
         expanded={props.expanded}
+        noButtons={props.noButtons}
       >
         <Stack
           ref={setRef}

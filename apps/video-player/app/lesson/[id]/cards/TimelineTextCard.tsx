@@ -39,6 +39,7 @@ const TimelineTextCard = (
     dragging?: boolean;
     columnWidth?: number;
     expanded?: boolean;
+    noButtons?: boolean;
     expansionCallback?: () => void;
   }
 ) => {
@@ -81,6 +82,7 @@ const TimelineTextCard = (
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
+        noButtons={props.noButtons}
       >
         <Stack
           sx={{

@@ -1,5 +1,4 @@
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";

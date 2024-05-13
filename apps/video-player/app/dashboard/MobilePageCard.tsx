@@ -29,6 +29,9 @@ const MobilePageCard = (props: {
   deletionCallback?: () => void;
   backCallback?: () => void;
   backText?: string;
+  backRoute?: string;
+  backgroundColor?: string;
+  cardBackgroundColor?: string;
 }) => {
   const router = useRouter();
   const userDetails = useUserContext();
@@ -41,16 +44,17 @@ const MobilePageCard = (props: {
       overflow="scroll"
       flex={1}
       bgcolor={
-        userDetails?.user?.id &&
+        props.backgroundColor ||
+        (userDetails?.user?.id &&
         props?.creatorId &&
         userDetails.user.id === props.creatorId
           ? PALETTE.secondary.grey[1]
-          : undefined
+          : undefined)
       }
     >
       <Stack
         spacing="12px"
-        bgcolor="rgb(255,255,255)"
+        bgcolor={props.cardBackgroundColor || "rgb(255,255,255)"}
         borderRadius="16px 16px 0 0"
         p="12px"
         pb="24px"
@@ -73,19 +77,23 @@ const MobilePageCard = (props: {
               props.backCallback ||
               (() =>
                 router.push(
-                  props.lessonId
-                    ? `/lesson/${props.lessonId}`
-                    : userDetails
-                    ? "/dashboard"
-                    : "/"
+                  props.backRoute ||
+                    (props.lessonId
+                      ? `/lesson/${props.lessonId}`
+                      : userDetails
+                      ? "/dashboard"
+                      : "/")
                 ))
             }
           >
             <ChevronLeft width="20px" height="20px" />
             <Typography>{props.backText || "Back to Dashboard"}</Typography>
           </Stack>
+
           <Stack direction="row" spacing="8px">
-            {userDetails?.user?.id &&
+            {props.editingCallback &&
+            props.deletionCallback &&
+            userDetails?.user?.id &&
             userDetails?.user?.id === props.creatorId ? (
               <UrsorActionButton
                 size="32px"

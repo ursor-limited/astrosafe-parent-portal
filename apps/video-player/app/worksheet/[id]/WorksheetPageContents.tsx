@@ -42,6 +42,8 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[id]/page";
 import { getFormattedDate } from "@/app/components/VideoCard";
 import AstroSwitch from "@/app/components/AstroSwitch";
+import ExternalPageFooter from "@/app/components/ExternalPageFooter";
+import { Header } from "@/app/components/header2";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -648,7 +650,11 @@ export default function WorksheetPageContents(props: {
 
       <Stack
         px="20px"
-        pt="40px"
+        pt={
+          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
+            ? "40px"
+            : undefined
+        }
         overflow="scroll"
         bgcolor={
           userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
@@ -661,12 +667,25 @@ export default function WorksheetPageContents(props: {
         flex={1}
         height="100%"
       >
+        {!userDetails?.user?.id ||
+        userDetails.user.id !== worksheet?.creatorId ? (
+          <>
+            <Header />
+            <Stack height="40px" minHeight="40px" />
+          </>
+        ) : null}
         <PageCard
           //title={worksheet.title}
           //createdAt={worksheet.createdAt}
           backRoute={props.lessonId ? `/lesson/${props.lessonId}` : undefined}
+          width="100%"
+          maxWidth="1260px"
           backText={
             props.lessonId ? `Back to ${lesson?.title || "Lesson"}` : undefined
+          }
+          noBottomPadding={
+            !userDetails?.user?.id ||
+            userDetails.user.id !== props.details?.creatorId
           }
           rightStuff={
             <Stack
@@ -970,6 +989,12 @@ export default function WorksheetPageContents(props: {
               </Stack>
             </Stack>
           </Stack>
+          {!userDetails?.user?.id ||
+          userDetails.user.id !== props.details.creatorId ? (
+            <Stack px="24px" height="100vh" justifyContent="center">
+              <ExternalPageFooter />
+            </Stack>
+          ) : null}
         </PageCard>
       </Stack>
       <DeletionDialog

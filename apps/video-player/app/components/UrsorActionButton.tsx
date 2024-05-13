@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import React, { useState } from "react";
 import ActionPopup, { IActionPopupItem } from "./ActionPopup";
-import MoreIcon from "@/images/icons/MoreIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { PALETTE } from "ui";
 
 const DEFAULT_SIZE = "12px";
@@ -17,6 +17,7 @@ export interface IUrsorActionButtonProps {
   fontColor?: string;
   shadow?: boolean;
   border?: boolean;
+  notClickable?: boolean;
   buttonClickCallback?: () => void;
 }
 
@@ -42,7 +43,6 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           },
           transition: "0.2s",
           svg: {
-            transform: "rotate(90deg)",
             path: {
               fill:
                 props.fontColor ||
@@ -61,12 +61,13 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }
         boxSizing="border-box"
         onClick={() => {
-          setOpen(true);
+          if (props.notClickable) return;
+          setOpen(!open);
           props.buttonClickCallback?.();
         }}
         boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.08)" : undefined}
       >
-        <MoreIcon
+        <PencilIcon
           height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
           width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
         />

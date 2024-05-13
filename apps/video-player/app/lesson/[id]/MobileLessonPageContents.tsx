@@ -41,6 +41,7 @@ import TimelineLinkCard from "./cards/TimelineLinkCard";
 import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
 import TimelineVideoCard from "./cards/TimelineVideoCard";
+import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -423,6 +424,9 @@ export default function MobileLessonPageContents(props: { url: string }) {
                 ))}
             </Stack>
           </Stack>
+          <Stack height="100vh" justifyContent="center">
+            <MobileExternalPageFooter />
+          </Stack>
         </MobilePageCard>
       ) : null}
       <LessonCreationDialog
@@ -452,14 +456,18 @@ export default function MobileLessonPageContents(props: { url: string }) {
             setVideoDialogOpen(false);
             setContentInsertionIndex(undefined);
           }}
-          creationCallback={(id) => {
+          creationCallback={(id, title) => {
             lesson && ApiController.addToLesson(
               lesson.id,
               contentInsertionIndex ?? 0,
               "video",
               id
-            ).then((response) =>
-              updateLesson(response.lesson, response.actualContents)
+            ).then(() =>
+              lesson?.contents.length === 0
+                ? ApiController.updateLesson(props.lessonId, { title }).then(
+                    loadLesson
+                  )
+                : loadLesson()
             );
           }}
         />
