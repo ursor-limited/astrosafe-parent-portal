@@ -290,12 +290,6 @@ const TimelineVideoCard = (
       newCurrentCommentGroup &&
       resumedFromCommentGroup !== newCurrentCommentGroup[0]?.time
     ) {
-      console.log(
-        "55aaaa",
-        resumedFromCommentGroup,
-        newCurrentCommentGroup,
-        newCurrentCommentGroup[0]?.time
-      );
       setCurrentCommentGroup(newCurrentCommentGroup);
       setCurrentCommentIndex(0);
       setResumedFromCommentGroup(newCurrentCommentGroup[0].time);
