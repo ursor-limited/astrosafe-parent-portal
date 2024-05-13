@@ -606,9 +606,9 @@ export default function LessonPageContents(props: { subdirectory: string }) {
             ? PALETTE.secondary.grey[1]
             : undefined
         }
-        sx={{
-          pointerEvents: draggedContentId ? "none" : undefined,
-        }}
+        // sx={{
+        //   pointerEvents: draggedContentId ? "none" : undefined,
+        // }}
       >
         {!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId ? (
           <>
@@ -886,7 +886,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                           texts={texts}
                           lessonId={props.subdirectory}
                           columnWidth={singleContentsColumnWidth}
-                          //  setDraggedContentId={setDraggedContentId}
                           draggedContentId={
                             draggedContentId ? draggedContentId : undefined
                           }
