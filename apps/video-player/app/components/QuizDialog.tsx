@@ -95,6 +95,7 @@ const QuizDialog = (props: {
                 <Stack spacing="6px">
                   {questions.map((q) => (
                     <Stack
+                      key={q.id}
                       height="72px"
                       borderRadius="8px"
                       p="8px"
