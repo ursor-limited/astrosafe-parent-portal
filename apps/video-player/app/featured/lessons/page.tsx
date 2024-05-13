@@ -1,5 +1,5 @@
 import React from "react";
-import featured from "../featured.json";
+import featured from "./featured.json";
 import { Metadata } from "next";
 import { IAstroLandingPage } from "../../tools/multiplication-chart/[urlId]/LandingPageContents";
 import FeaturedLessonsPageContents from "./FeaturedLessonsPageContents";
