@@ -98,7 +98,6 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                           <UrsorFadeIn delay={j * 190 + i * 190} duration={900}>
                             <Link
                               href={`/lesson/${lesson.id}`}
-                              alt={lesson.title}
                               style={{
                                 textDecoration: "none",
                               }}

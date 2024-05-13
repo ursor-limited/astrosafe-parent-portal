@@ -625,11 +625,7 @@ export default function LessonPageContents(props: { lessonId: string }) {
               : lesson?.description
           }
           createdAt={lesson?.createdAt ?? undefined}
-          width={
-            !userDetails?.user || userDetails.user.id !== lesson?.creatorId
-              ? "100%"
-              : undefined
-          }
+          width={"100%"}
           maxWidth={
             !userDetails?.user || userDetails.user.id !== lesson?.creatorId
               ? "1260px"
