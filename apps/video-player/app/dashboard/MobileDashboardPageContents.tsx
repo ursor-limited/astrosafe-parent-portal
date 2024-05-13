@@ -740,7 +740,9 @@ export default function MobileDashboardPageContents() {
                 <LessonCard
                   {...(card.details as ILesson)}
                   clickCallback={() =>
-                    router.push(`/lesson/${card.details.id}`)
+                    router.push(
+                      `/lesson/${(card.details as ILesson).canonicalUrl}`
+                    )
                   }
                   editingCallback={() =>
                     setLessonEditingDialogId(card.details.id)

@@ -60,6 +60,9 @@ const LessonCreationDialog = (props: {
         title,
         description,
       })
+        .then((result) =>
+          router.push(`/lesson/${result?.canonicalUrl || props.lesson?.id}`)
+        )
         .then(props.updateCallback)
         .then(props.closeCallback)
         .then(() => notificationCtx.success("Lesson updated."));

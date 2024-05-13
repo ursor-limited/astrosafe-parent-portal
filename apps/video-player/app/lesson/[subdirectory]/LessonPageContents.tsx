@@ -109,8 +109,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
       setLesson(l)
     );
 
-  console.log(lesson);
-
   useEffect(() => {
     props.subdirectory && loadLesson();
   }, [props.subdirectory]);
