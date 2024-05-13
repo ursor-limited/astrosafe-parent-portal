@@ -9,7 +9,7 @@ import PlayIcon from "@/images/icons/PlayIcon.svg";
 import UnmuteIcon from "@/images/icons/UnmuteIcon.svg";
 import MuteIcon from "@/images/icons/MuteIcon.svg";
 import PauseIcon from "@/images/icons/PauseIcon.svg";
-import { TimelineCardCommentsButton } from "../lesson/[id]/cards/TimelineVideoCard";
+import { TimelineCardCommentsButton } from "../lesson/[subdirectory]/cards/TimelineVideoCard";
 import { getFormattedTime } from "./VideoDialogCommentsTab";
 
 const DOT_SIZE = 14;

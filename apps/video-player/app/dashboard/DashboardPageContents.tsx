@@ -42,7 +42,7 @@ import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
-import { ILesson } from "../lesson/[id]/page";
+import { ILesson } from "../lesson/[subdirectory]/page";
 import LinkDialog, { ILink, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
@@ -55,7 +55,7 @@ import ImageCard from "../components/ImageCard";
 import LinkCard from "../components/LinkCard";
 import TextCreationDialog, { IText } from "../components/TextDialog";
 import TextCard from "../components/TextCard";
-import { cleanTextValueIntoInnerHTML } from "../lesson/[id]/MobileLessonPageContents";
+import { cleanTextValueIntoInnerHTML } from "../lesson/[subdirectory]/MobileLessonPageContents";
 import Image from "next/image";
 import ShareDialog from "./ShareDialog";
 
@@ -1319,10 +1319,16 @@ export default function DashboardPageContents() {
                             <LessonCard
                               {...(item.details as ILesson)}
                               clickCallback={() =>
-                                router.push(`/lesson/${item.details.id}`)
+                                router.push(
+                                  `/lesson/${
+                                    (item.details as ILesson).canonicalUrl
+                                  }`
+                                )
                               }
                               editingCallback={() =>
-                                setLessonEditingDialogId(item.details.id)
+                                setLessonEditingDialogId(
+                                  (item.details as ILesson).canonicalUrl
+                                )
                               }
                               deletionCallback={loadLessons}
                             />

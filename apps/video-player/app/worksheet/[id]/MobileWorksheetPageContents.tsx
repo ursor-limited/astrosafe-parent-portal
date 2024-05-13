@@ -32,7 +32,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import MobilePageCard from "@/app/dashboard/MobilePageCard";
-import { ILesson } from "@/app/lesson/[id]/page";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export default function MobileWorksheetPageContents(props: {

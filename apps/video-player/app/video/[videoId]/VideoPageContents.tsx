@@ -18,12 +18,12 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { ILesson } from "@/app/lesson/[id]/page";
+import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import _ from "lodash";
 import {
   COMMENT_PAUSE_THRESHOLD,
   TimelineVideoCardCommentDisplayCard,
-} from "@/app/lesson/[id]/cards/TimelineVideoCard";
+} from "@/app/lesson/[subdirectory]/cards/TimelineVideoCard";
 import TimeRange from "@/app/dashboard/TimeRange";
 import { isMobile } from "react-device-detect";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";

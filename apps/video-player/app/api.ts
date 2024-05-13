@@ -3,7 +3,7 @@ import {
   INumberBondWorksheetSettings,
   WorksheetTopic,
 } from "./components/WorksheetGenerator";
-import { AstroLessonContent } from "./lesson/[id]/LessonPageContents";
+import { AstroLessonContent } from "./lesson/[subdirectory]/LessonPageContents";
 
 export interface IVideo {
   id: string;
@@ -104,7 +104,7 @@ class ApiController {
     );
   }
   static async updateLessonUrl(id: string, newUrl: string) {
-    return patch(`updateLessonUrl/${id}`, {newUrl}).then((response: any) =>
+    return patch(`lesson/updateLessonUrl/${id}`, {newUrl}).then((response: any) =>
       response.json()
     );
   }
