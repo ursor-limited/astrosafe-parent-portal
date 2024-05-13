@@ -38,7 +38,7 @@ const QuizDialog = (props: {
 
   const [questions, setQuestions] = useState<IQuizQuestion[]>([
     {
-      id: "booo",
+      id: "boo!o",
       value: "",
       type: "multipleChoice",
     },
