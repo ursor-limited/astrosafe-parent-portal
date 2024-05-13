@@ -849,8 +849,7 @@ export default function MobileDashboardPageContents() {
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
       <TrialExpirationDialog
-        // open={trialExpirationDialogOpen}
-        open={true}
+        open={trialExpirationDialogOpen}
         closeCallback={() => setTrialExpirationDialogOpen(false)}
         openQuestionnaireCallback={() => {
           //setQuestionnaireDialogOpen(true);

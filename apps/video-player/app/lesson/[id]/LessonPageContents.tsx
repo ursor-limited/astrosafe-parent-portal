@@ -473,14 +473,14 @@ export default function LessonPageContents(props: { lessonId: string }) {
       textDialogOpen,
     ]
   );
-  useEffect(() => {
-    if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
-      return;
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [handleMouseMove, userDetails.user?.id, lesson]);
+  // useEffect(() => {
+  //   if (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+  //     return;
+  //   window.addEventListener("mousemove", handleMouseMove);
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, [handleMouseMove, userDetails.user?.id, lesson]);
 
   const getContentInsertionIndex = (y: number) => {
     const dotYs =
