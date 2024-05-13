@@ -849,7 +849,8 @@ export default function MobileDashboardPageContents() {
         closeCallback={() => setUpgradeDialogOpen(false)}
       />
       <TrialExpirationDialog
-        open={trialExpirationDialogOpen}
+        // open={trialExpirationDialogOpen}
+        open={true}
         closeCallback={() => setTrialExpirationDialogOpen(false)}
         openQuestionnaireCallback={() => {
           //setQuestionnaireDialogOpen(true);
@@ -859,6 +860,7 @@ export default function MobileDashboardPageContents() {
           setTrialExpirationDialogOpen(false);
           setUpgradeDialogOpen(true);
         }}
+        mobile
       />
       {!userDetails.user?.subscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
