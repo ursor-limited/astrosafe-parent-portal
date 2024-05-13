@@ -216,7 +216,7 @@ export default function MobileLessonPageContents(props: {
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 
   useEffect(() => {
-    if (openContentDialogInLessonId === lesson?.id ?? "") {
+    if (openContentDialogInLessonId === props.subdirectory) {
       setTimeout(() => {
         if (typeOfContentDialogToOpenUponLandingInNewLesson === "video") {
           setVideoDialogOpen(true);

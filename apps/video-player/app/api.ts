@@ -104,8 +104,8 @@ class ApiController {
     );
   }
   static async updateLessonUrl(id: string, newUrl: string) {
-    return patch(`lesson/updateLessonUrl/${id}`, {newUrl}).then((response: any) =>
-      response.json()
+    return patch(`lesson/updateLessonUrl/${id}`, { newUrl }).then(
+      (response: any) => response.json()
     );
   }
   static async deleteLesson(id: string) {
@@ -128,15 +128,17 @@ class ApiController {
     );
   }
   static async getLessonFromUrl(url: string) {
-    return get(`lesson/getLessonFromUrl`).then((response: any) => response.json());
-  }
-
-  static async getLessonFromUrlWithContents(url: string) {
-    return post(`lesson/getLessonFromUrlWithContents`, {url}).then((response: any) =>
+    return post(`lesson/from/url`, { url }).then((response: any) =>
       response.json()
     );
   }
-  
+
+  static async getLessonFromUrlWithContents(url: string) {
+    return post(`lesson/getLessonFromUrlWithContents`, { url }).then(
+      (response: any) => response.json()
+    );
+  }
+
   static async getUserLessons(id: string) {
     //@ts-ignore
     return get(`lesson/user/${id}`).then((response: any) => response.json());
@@ -450,6 +452,9 @@ class ApiController {
       title,
     }).then((response: any) => response.json());
   }
+  // static async migrate() {
+  //   return get(`lesson/migrate/xxx`).then((response: any) => response.json());
+  // }
 }
 
 export default ApiController;

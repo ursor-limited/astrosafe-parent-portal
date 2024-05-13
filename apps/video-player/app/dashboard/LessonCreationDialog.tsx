@@ -11,30 +11,6 @@ import NotificationContext from "../components/NotificationContext";
 import { ILesson } from "../lesson/[subdirectory]/page";
 import { useLocalStorage } from "usehooks-ts";
 
-function createUrlFromTitle(title: string, idString: string) {
-  // Check if the title includes 'untitled lesson'
-  if (title.trim().toLowerCase().includes("untitled lesson")) {
-    return idString;
-  }
-
-  // Remove punctuation from the title
-  title = title.toLowerCase();
-  title = title.replace(/[^\w\s]/g, "");
-  // Remove leading and trailing whitespace
-  title = title.trim();
-  // Reduce whitespace between words to a single dash
-  title = title.replace(/\s+/g, "-");
-  // Limit the title to 8 words
-  const titleWords = title.split("-").slice(0, 8);
-  title = titleWords.join("-");
-  // Take the last 6 characters of the id string
-  const idSuffix = idString.slice(-6);
-  // Append idSuffix to the title with a dash
-  title += `-${idSuffix}`;
-
-  return title;
-}
-
 const LessonCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
@@ -68,7 +44,6 @@ const LessonCreationDialog = (props: {
     useLocalStorage<string | null>("openContentDialogInLessonId", null);
 
   const submitCreation = () => {
-    const newUrl = createUrlFromTitle(title, props.lesson?.id ?? "000000");
     ApiController.createLesson({
       title,
       description,
@@ -80,18 +55,14 @@ const LessonCreationDialog = (props: {
   };
 
   const submitUpdate = () => {
-    const newUrl = createUrlFromTitle(title, props.lesson?.id ?? "000000");
-
     props.lesson?.id &&
       ApiController.updateLesson(props.lesson.id, {
         title,
         description,
       })
-        .then(() => {
-          if (props.lesson!.canonicalUrl != newUrl) {
-            return ApiController.updateLessonUrl(props.lesson!.id, newUrl);
-          }
-        })
+        .then((result) =>
+          router.push(`/lesson/${result?.canonicalUrl || props.lesson?.id}`)
+        )
         .then(props.updateCallback)
         .then(props.closeCallback)
         .then(() => notificationCtx.success("Lesson updated."));

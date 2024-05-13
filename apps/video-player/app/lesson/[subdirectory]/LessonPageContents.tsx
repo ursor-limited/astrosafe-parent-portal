@@ -57,6 +57,7 @@ import InitialAddContentButton from "./InitialAddContentButton";
 import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
+import QuizDialog from "@/app/components/QuizDialog";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -105,7 +106,9 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     );
 
   const reloadLessonDetails = () =>
-    ApiController.getLesson(props.subdirectory).then((l) => setLesson(l));
+    ApiController.getLessonFromUrl(props.subdirectory).then((l) =>
+      setLesson(l)
+    );
 
   useEffect(() => {
     props.subdirectory && loadLesson();
@@ -561,6 +564,8 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
 
+  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       {draggedElement
@@ -654,6 +659,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                   variant="tertiary"
                   endIcon={ShareIcon}
                   onClick={() => {
+                    //ApiController.migrate();
                     if (needToTitle) {
                       setLessonNamingDialogSkipTo("share");
                       setEditingDialogOpen(true);
@@ -1194,6 +1200,10 @@ export default function LessonPageContents(props: { subdirectory: string }) {
             notificationCtx.success("Made a copy of Lesson");
           })
         }
+      />
+      <QuizDialog
+        open={quizDialogOpen}
+        closeCallback={() => setQuizDialogOpen(false)}
       />
     </>
   );
