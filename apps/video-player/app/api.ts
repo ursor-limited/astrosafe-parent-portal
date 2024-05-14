@@ -456,9 +456,9 @@ class ApiController {
     userId: string,
     location: "dashboard" | "lesson"
   ) {
-    return patch(`video/${userId}/switchOffTutorialVideo`, { location }).then(
-      (response: any) => response.json()
-    );
+    return patch(`video/user/${userId}/switchOffTutorialVideo`, {
+      location,
+    }).then((response: any) => response.json());
   }
 }
 

@@ -11,7 +11,6 @@ import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
-import PlayIcon from "@/images/icons/PlayIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -60,6 +59,7 @@ import { cleanTextValueIntoInnerHTML } from "../lesson/[subdirectory]/MobileLess
 import Image from "next/image";
 import ShareDialog from "./ShareDialog";
 import { fadeIn } from "./TimeRange";
+import TutorialVideoBar from "../components/TutorialVideoBar";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -993,11 +993,20 @@ export default function DashboardPageContents() {
 
   const [shareDialogOpen, setShareDialogOpen] = useState<boolean>(false);
 
+  const [showTutorialVideoButton, setShowTutorialVideoButton] =
+    useState<boolean>(false);
   const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setShowTutorialVideoButton(
+        !userDetails.user?.switchedOffDashboardTutorialVideo
+      ),
+    [userDetails.user?.switchedOffDashboardTutorialVideo]
+  );
 
   return (
     <>
-      {showTutorialVideo
+      {showTutorialVideo && userDetails.user?.id
         ? createPortal(
             <Stack
               top={0}
@@ -1140,60 +1149,24 @@ export default function DashboardPageContents() {
         }
         buttonsDelay={3000}
       >
-        <UrsorFadeIn duration={600}>
-          <Stack
-            borderRadius="12px"
-            spacing="20px"
-            direction="row"
-            bgcolor={PALETTE.secondary.orange[1]}
-            p="8px"
-            ml={`${SIDEBAR_X_MARGIN}px`}
-            mb="24px"
-            position="relative"
-          >
-            <Stack borderRadius="8px">
-              <Image
-                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320808.png"
-                alt="intro video"
-                width={158}
-                height={109}
+        {showTutorialVideoButton ? (
+          <UrsorFadeIn duration={600}>
+            <Stack ml={`${SIDEBAR_X_MARGIN}px`}>
+              <TutorialVideoBar
+                title="Get started with AstroSafe!"
+                subtitle="Learn about AstroSafe in less than 5 minutes."
+                callback={() => setShowTutorialVideo(true)}
+                xCallback={() => {
+                  setShowTutorialVideoButton(false);
+                  ApiController.switchOffTutorialVideo(
+                    userDetails.user!.id,
+                    "dashboard"
+                  );
+                }}
               />
             </Stack>
-            <Stack spacing="8px" justifyContent="center">
-              <Typography bold variant="medium">
-                Get started with AstroSafe!
-              </Typography>
-              <Typography
-                variant="small"
-                bold
-                color={PALETTE.secondary.grey[4]}
-              >
-                Learn about AstroSafe in less than 3 minutes.
-              </Typography>
-              <UrsorButton
-                size="small"
-                variant="secondary"
-                backgroundColor="transparent"
-                endIcon={PlayIcon}
-                onClick={() => setShowTutorialVideo(true)}
-              >
-                Watch tutorial
-              </UrsorButton>
-            </Stack>
-            <Stack
-              right="12px"
-              top="12px"
-              position="absolute"
-              sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
-              }}
-            >
-              <X height="20px" width="20px" />
-            </Stack>
-          </Stack>
-        </UrsorFadeIn>
+          </UrsorFadeIn>
+        ) : null}
 
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>

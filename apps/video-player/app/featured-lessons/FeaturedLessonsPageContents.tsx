@@ -25,8 +25,10 @@ import ApiController from "../api";
 import ExternalPageFooter from "../components/ExternalPageFooter";
 import Link from "next/link";
 import MobileExternalPageFooter from "../components/MobileExternalPageFooter";
+import { MOBILE_WINDOW_WIDTH_THRESHOLD } from "../editor/EditorPageContents";
 
-export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
+const TWO_COLUMNS_THRESHOLD_WINDOW_WIDTH = 1020;
+const SINGLE_COLUMN_THRESHOLD_WINDOW_WIDTH = 780;
 
 export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
   const { width } = useWindowSize();
@@ -38,17 +40,23 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
     ApiController.getFeaturedLessons().then((l) => setLessons(l));
   }, []);
 
-  //const listRef = useRef(null);
-
-  // const scrollIntoView = () =>
-  //   //@ts-ignore
-  //   listRef?.current?.scrollIntoView({ behavior: "smooth" });
-
-  //const { nColumns, setColumnsContainerRef } = useColumnWidth();
-
   const [columns, setColumns] = useState<ILesson[][]>([]);
   const [nColumns, setNColumns] = useState<number>(1);
-  useEffect(() => setNColumns(isMobile ? 1 : 3), [isMobile]);
+  useEffect(
+    () =>
+      setNColumns(
+        isMobile
+          ? 1
+          : width < SINGLE_COLUMN_THRESHOLD_WINDOW_WIDTH
+          ? 1
+          : width < TWO_COLUMNS_THRESHOLD_WINDOW_WIDTH
+          ? 2
+          : 3
+      ),
+    [isMobile, width]
+  );
+
+  console.log(nColumns, "0ss8s8su");
 
   useEffect(() => {
     const chunked = _.chunk(lessons, nColumns);
@@ -57,11 +65,7 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [lessons]);
-
-  const userDetails = useUserContext().user;
-
-  const router = useRouter();
+  }, [lessons, nColumns]);
 
   return (
     <>
@@ -85,7 +89,8 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                 flex={1}
                 //ref={setColumnsContainerRef}
                 overflow="hidden"
-                width={isMobile ? undefined : "1030px"}
+                maxWidth="1030px"
+                //width={isMobile || nColumns < 3 ? undefined : "1030px"}
               >
                 <Stack
                   flex={1}
