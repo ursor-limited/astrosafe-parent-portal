@@ -158,7 +158,7 @@ export default function UserPageContents(props: {
                         <LessonCard
                           {...lesson}
                           clickCallback={() =>
-                            router.push(`/lesson/${lesson.id}`)
+                            router.push(`/lesson/${lesson.canonicalUrl}`)
                           }
                         />
                       </UrsorFadeIn>
