@@ -82,11 +82,11 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const router = useRouter();
 
-  useEffect(() => {
-    lesson?.canonicalUrl &&
-      window.location.href.split("/")?.slice(-1)?.[0] === props.subdirectory &&
-      router.push(`/lesson/${lesson?.canonicalUrl}`);
-  }, [props.subdirectory, lesson?.canonicalUrl]);
+  // useEffect(() => {
+  //   lesson?.canonicalUrl &&
+  //     window.location.href.split("/")?.slice(-1)?.[0] === props.subdirectory &&
+  //     router.push(`/lesson/${lesson?.canonicalUrl}`);
+  // }, [props.subdirectory, lesson?.canonicalUrl]);
 
   const loadLesson = () =>
     ApiController.getLessonFromUrlWithContents(props.subdirectory).then(
