@@ -318,22 +318,6 @@ const TimelineVideoCard = (
         useExpandedHeight
         comments={sortedComments}
         noButtons={props.noButtons}
-        leftElement={
-          <UrsorButton
-            dark
-            size="small"
-            endIcon={ArrowUpRight}
-            onClick={() =>
-              router.push(
-                `/video/${props.id}${
-                  props.lessonId ? `?lesson=${props.lessonId}` : ""
-                }`
-              )
-            }
-          >
-            View page
-          </UrsorButton>
-        }
       >
         <Stack spacing="8px" flex={1}>
           <Stack flex={1} position="relative">

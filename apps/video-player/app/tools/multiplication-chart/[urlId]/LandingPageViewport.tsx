@@ -19,7 +19,11 @@ export default function LandingPageViewport(props: {
       position="relative"
       px="20px"
     >
-      <Stack spacing="10px" maxWidth="816px" alignItems="center">
+      <Stack
+        spacing={props.mobile ? "3px" : "10px"}
+        maxWidth="816px"
+        alignItems="center"
+      >
         <Stack spacing="6px" alignItems="center">
           <Typography
             variant={props.mobile ? "normal" : "large"}

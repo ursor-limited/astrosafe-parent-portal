@@ -24,6 +24,7 @@ import LessonCard from "../components/LessonCard";
 import ApiController from "../api";
 import ExternalPageFooter from "../components/ExternalPageFooter";
 import Link from "next/link";
+import MobileExternalPageFooter from "../components/MobileExternalPageFooter";
 
 export const MOBILE_WINDOW_WIDTH_THRESHOLD = 680;
 
@@ -46,11 +47,13 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
   //const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   const [columns, setColumns] = useState<ILesson[][]>([]);
+  const [nColumns, setNColumns] = useState<number>(1);
+  useEffect(() => setNColumns(isMobile ? 1 : 3), [isMobile]);
 
   useEffect(() => {
-    const chunked = _.chunk(lessons, 3);
+    const chunked = _.chunk(lessons, nColumns);
     setColumns(
-      [...Array(3).keys()].map((i) =>
+      [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
@@ -82,14 +85,14 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                 flex={1}
                 //ref={setColumnsContainerRef}
                 overflow="hidden"
-                width="1030px"
+                width={isMobile ? undefined : "1030px"}
               >
                 <Stack
                   flex={1}
                   pb="110px"
                   direction="row"
                   spacing="24px"
-                  px={`24px`}
+                  px={isMobile ? 0 : `24px`}
                 >
                   {columns.map((column, i) => (
                     <Stack key={i} flex={1} spacing="40px">
@@ -117,13 +120,13 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
                   ))}
                 </Stack>
               </Stack>
-              <ExternalPageFooter />
+              {isMobile ? <MobileExternalPageFooter /> : <ExternalPageFooter />}
             </>
           </LandingPageViewport>,
         ]}
       >
         <Stack width="100%" alignItems="center" spacing="32px">
-          <Stack position="relative" height={isMobile ? "80px" : "270px"}>
+          <Stack position="relative" height={isMobile ? "105px" : "270px"}>
             <Stack
               position="absolute"
               top={0}
@@ -132,7 +135,7 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
               <Image
                 src="https://ursorassets.s3.eu-west-1.amazonaws.com/Landing+Image02.png"
                 width={isMobile ? 380 : 1053}
-                height={isMobile ? 138 : 466}
+                height={isMobile ? 170 : 466}
                 alt="AstroSafe featured lessons"
                 priority
               />
