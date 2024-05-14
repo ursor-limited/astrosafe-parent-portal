@@ -2,7 +2,7 @@
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   preview:
-    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/dev-safeplay-backend",
+    "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
   production:
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
 };
