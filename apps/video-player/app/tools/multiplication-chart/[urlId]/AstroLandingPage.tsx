@@ -20,6 +20,7 @@ export default function AstroLandingPage(props: {
   subtitle: string;
   viewports: React.ReactNode;
   faqs?: {
+    title?: string;
     cards: {
       question: string;
       answer: string;
@@ -122,7 +123,10 @@ export default function AstroLandingPage(props: {
           {props.faqs ? (
             <Stack>
               <LandingPageFAQSection
-                title="Learn more about Astro Worksheet Generator"
+                title={
+                  props.faqs.title ||
+                  "Learn more about Astro Worksheet Generator"
+                }
                 faqs={props.faqs.cards}
                 mobile={props.mobile}
               />

@@ -152,6 +152,7 @@ export interface IAstroLandingPage {
     buttonUrl: string;
   };
   faqs?: {
+    title?: string;
     cards: {
       question: string;
       answer: string;

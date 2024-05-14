@@ -311,24 +311,6 @@ const ApprovedCompaniesList = (props: {
               leftAlignPopover
             />
           </Captioned>
-          {/* <Stack
-            sx={{
-              opacity:
-                selectedAudience || selectedCategory || selectedType ? 1 : 0,
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-              transform: props.mobile ? undefined : "translateY(34.5px)",
-            }}
-            onClick={() => {
-              setSelectedAudience(null);
-              setSelectedCategory(null);
-              setSelectedType(null);
-            }}
-            alignItems={props.mobile ? "center" : undefined}
-          >
-            <X height="24px" width="24px" />
-          </Stack> */}
           <Stack
             height="100%"
             width="2px"

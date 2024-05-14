@@ -58,6 +58,8 @@ import TextCard from "../components/TextCard";
 import { cleanTextValueIntoInnerHTML } from "../lesson/[subdirectory]/MobileLessonPageContents";
 import Image from "next/image";
 import ShareDialog from "./ShareDialog";
+import { fadeIn } from "./TimeRange";
+import TutorialVideoBar from "../components/TutorialVideoBar";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -991,8 +993,83 @@ export default function DashboardPageContents() {
 
   const [shareDialogOpen, setShareDialogOpen] = useState<boolean>(false);
 
+  const [showTutorialVideoButton, setShowTutorialVideoButton] =
+    useState<boolean>(false);
+  const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setShowTutorialVideoButton(
+        !userDetails.user?.switchedOffDashboardTutorialVideo
+      ),
+    [userDetails.user?.switchedOffDashboardTutorialVideo]
+  );
+
   return (
     <>
+      {showTutorialVideo && userDetails.user?.id
+        ? createPortal(
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              zIndex={9999}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                opacity: 0,
+                animation: `${fadeIn} 0.5s ease-in`,
+                animationFillMode: "forwards",
+                backdropFilter: "blur(3px)",
+              }}
+            >
+              <Stack
+                width="100%"
+                height="100%"
+                bgcolor="rgba(0,0,0,0.5)"
+                position="absolute"
+                zIndex={-1}
+                onClick={() => setShowTutorialVideo(false)}
+              >
+                <Stack flex={1} position="relative">
+                  <Stack
+                    position="absolute"
+                    top="20px"
+                    right="20px"
+                    borderRadius="100%"
+                    //bgcolor="rgb(255,255,255)"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      cursor: "pointer",
+                      svg: {
+                        path: {
+                          fill: "rgba(255,255,255,0.85)",
+                        },
+                      },
+                    }}
+                  >
+                    <X height="32px" width="32px" />
+                  </Stack>
+                </Stack>
+              </Stack>
+              <iframe
+                src="https://www.loom.com/embed/3d5aa3b00a7f4eec863c36f1acd354aa?sid=7f1c98fc-7c0a-4451-a9ba-12573b7a927d" //@ts-ignore
+                frameborder="0"
+                webkitallowfullscreen
+                mozallowfullscreen
+                allowfullscreen
+                height={710}
+                width={1235}
+                style={{
+                  borderRadius: "16px",
+                }}
+              />
+            </Stack>,
+            document.body
+          )
+        : null}
       <PageLayout
         ref={scrollableRef}
         onScroll={onScroll}
@@ -1072,6 +1149,25 @@ export default function DashboardPageContents() {
         }
         buttonsDelay={3000}
       >
+        {showTutorialVideoButton ? (
+          <UrsorFadeIn duration={600}>
+            <Stack ml={`${SIDEBAR_X_MARGIN}px`}>
+              <TutorialVideoBar
+                title="Get started with AstroSafe!"
+                subtitle="Learn about AstroSafe in less than 5 minutes."
+                callback={() => setShowTutorialVideo(true)}
+                xCallback={() => {
+                  setShowTutorialVideoButton(false);
+                  ApiController.switchOffTutorialVideo(
+                    userDetails.user!.id,
+                    "dashboard"
+                  );
+                }}
+              />
+            </Stack>
+          </UrsorFadeIn>
+        ) : null}
+
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
             <ToolButton

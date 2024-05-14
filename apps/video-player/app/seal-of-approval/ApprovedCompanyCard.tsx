@@ -50,7 +50,6 @@ export const ApprovedCompanyCard = (
         <div
           style={{
             width: props.mobile ? "126px" : "192px",
-            height: "100%",
             position: "relative",
             borderRadius: "8px",
             overflow: "hidden",
