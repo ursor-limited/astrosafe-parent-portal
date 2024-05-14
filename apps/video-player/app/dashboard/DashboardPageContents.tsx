@@ -11,6 +11,7 @@ import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
+import PlayIcon from "@/images/icons/PlayIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -58,6 +59,7 @@ import TextCard from "../components/TextCard";
 import { cleanTextValueIntoInnerHTML } from "../lesson/[subdirectory]/MobileLessonPageContents";
 import Image from "next/image";
 import ShareDialog from "./ShareDialog";
+import { fadeIn } from "./TimeRange";
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
@@ -991,8 +993,74 @@ export default function DashboardPageContents() {
 
   const [shareDialogOpen, setShareDialogOpen] = useState<boolean>(false);
 
+  const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
+
   return (
     <>
+      {showTutorialVideo
+        ? createPortal(
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              zIndex={9999}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                opacity: 0,
+                animation: `${fadeIn} 0.5s ease-in`,
+                animationFillMode: "forwards",
+                backdropFilter: "blur(3px)",
+              }}
+            >
+              <Stack
+                width="100%"
+                height="100%"
+                bgcolor="rgba(0,0,0,0.5)"
+                position="absolute"
+                zIndex={-1}
+                onClick={() => setShowTutorialVideo(false)}
+              >
+                <Stack flex={1} position="relative">
+                  <Stack
+                    position="absolute"
+                    top="20px"
+                    right="20px"
+                    borderRadius="100%"
+                    //bgcolor="rgb(255,255,255)"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      cursor: "pointer",
+                      svg: {
+                        path: {
+                          fill: "rgba(255,255,255,0.85)",
+                        },
+                      },
+                    }}
+                  >
+                    <X height="32px" width="32px" />
+                  </Stack>
+                </Stack>
+              </Stack>
+              <iframe
+                src="https://www.loom.com/embed/3d5aa3b00a7f4eec863c36f1acd354aa?sid=7f1c98fc-7c0a-4451-a9ba-12573b7a927d" //@ts-ignore
+                frameborder="0"
+                webkitallowfullscreen
+                mozallowfullscreen
+                allowfullscreen
+                height={710}
+                width={1235}
+                style={{
+                  borderRadius: "16px",
+                }}
+              />
+            </Stack>,
+            document.body
+          )
+        : null}
       <PageLayout
         ref={scrollableRef}
         onScroll={onScroll}
@@ -1072,6 +1140,41 @@ export default function DashboardPageContents() {
         }
         buttonsDelay={3000}
       >
+        <Stack
+          borderRadius="12px"
+          spacing="20px"
+          direction="row"
+          bgcolor={PALETTE.secondary.orange[1]}
+          p="8px"
+          ml={`${SIDEBAR_X_MARGIN}px`}
+          mb="24px"
+        >
+          <Stack borderRadius="8px">
+            <Image
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320808.png"
+              alt="intro video"
+              width={158}
+              height={109}
+            />
+          </Stack>
+          <Stack spacing="8px" justifyContent="center">
+            <Typography bold variant="medium">
+              Get started with AstroSafe!
+            </Typography>
+            <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
+              Learn about AstroSafe in less than 3 minutes.
+            </Typography>
+            <UrsorButton
+              size="small"
+              variant="secondary"
+              endIcon={PlayIcon}
+              onClick={() => setShowTutorialVideo(true)}
+            >
+              Watch tutorial
+            </UrsorButton>
+          </Stack>
+        </Stack>
+
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
             <ToolButton
