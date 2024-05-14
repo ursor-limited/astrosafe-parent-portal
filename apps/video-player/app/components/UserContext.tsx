@@ -17,6 +17,8 @@ export interface ISafeTubeUser {
   freeTrialStart?: string;
   creations: number;
   externalDashboardTitle?: string;
+  switchedOffDashboardTutorialVideo?: boolean;
+  switchedOffLessonTutorialVideo?: boolean;
 }
 
 export interface IUserContext {

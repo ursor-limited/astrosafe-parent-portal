@@ -452,9 +452,14 @@ class ApiController {
       title,
     }).then((response: any) => response.json());
   }
-  // static async migrate() {
-  //   return get(`lesson/migrate/xxx`).then((response: any) => response.json());
-  // }
+  static async switchOffTutorialVideo(
+    userId: string,
+    location: "dashboard" | "lesson"
+  ) {
+    return patch(`video/user/${userId}/switchOffTutorialVideo`, {
+      location,
+    }).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

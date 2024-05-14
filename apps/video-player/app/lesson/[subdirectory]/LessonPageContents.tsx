@@ -14,7 +14,7 @@ import { IWorksheet } from "@/app/components/WorksheetGenerator";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import X from "@/images/icons/X.svg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
@@ -33,7 +33,6 @@ import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
 import { ILesson } from "./page";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
@@ -43,11 +42,9 @@ import "react-quill/dist/quill.snow.css";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import ContentCards from "./ContentCards";
 import TextCreationDialog from "@/app/components/TextDialog";
-import Image from "next/image";
 import AddContentDialog from "./AddContentDialog";
 import { createPortal } from "react-dom";
 import HoverCard from "./HoverCard";
-import { cardClasses } from "@mui/material";
 import Timeline, {
   CARD_SPACING,
   DOT_CARD_Y,
@@ -59,6 +56,7 @@ import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
 import QuizDialog from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
+import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -566,8 +564,84 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(false);
 
+  const [showTutorialVideoButton, setShowTutorialVideoButton] =
+    useState<boolean>(false);
+  const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setShowTutorialVideoButton(
+        !userDetails.user?.switchedOffLessonTutorialVideo &&
+          !!lesson?.contents.some((c) => c.type === "video")
+      ),
+    [userDetails.user?.switchedOffLessonTutorialVideo, lesson?.contents]
+  );
+
   return (
     <>
+      {showTutorialVideo && userDetails.user?.id
+        ? createPortal(
+            <Stack
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              position="absolute"
+              zIndex={9999}
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                opacity: 0,
+                animation: `${fadeIn} 0.5s ease-in`,
+                animationFillMode: "forwards",
+                backdropFilter: "blur(3px)",
+              }}
+            >
+              <Stack
+                width="100%"
+                height="100%"
+                bgcolor="rgba(0,0,0,0.5)"
+                position="absolute"
+                zIndex={-1}
+                onClick={() => setShowTutorialVideo(false)}
+              >
+                <Stack flex={1} position="relative">
+                  <Stack
+                    position="absolute"
+                    top="20px"
+                    right="20px"
+                    borderRadius="100%"
+                    //bgcolor="rgb(255,255,255)"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{
+                      cursor: "pointer",
+                      svg: {
+                        path: {
+                          fill: "rgba(255,255,255,0.85)",
+                        },
+                      },
+                    }}
+                  >
+                    <X height="32px" width="32px" />
+                  </Stack>
+                </Stack>
+              </Stack>
+              <iframe
+                src="https://www.loom.com/embed/5195cbec554c4afd9dd8ec4c1a2dc896?sid=75f828c8-fdff-4995-94f4-02eec1f9127b" //@ts-ignore
+                frameborder="0"
+                webkitallowfullscreen
+                mozallowfullscreen
+                allowfullscreen
+                height={710}
+                width={1235}
+                style={{
+                  borderRadius: "16px",
+                }}
+              />
+            </Stack>,
+            document.body
+          )
+        : null}
       {draggedElement
         ? createPortal(
             <HoverCard
@@ -721,6 +795,22 @@ export default function LessonPageContents(props: { subdirectory: string }) {
             !!userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
           }
         >
+          {showTutorialVideoButton ? (
+            <Stack px="24px" mb="24px">
+              <TutorialVideoBar
+                title="Make your video magical!"
+                subtitle="Take 3 minutes to learn how to turn your video into a lesson."
+                callback={() => setShowTutorialVideo(true)}
+                xCallback={() => {
+                  setShowTutorialVideoButton(false);
+                  ApiController.switchOffTutorialVideo(
+                    userDetails.user!.id,
+                    "lesson"
+                  );
+                }}
+              />
+            </Stack>
+          ) : null}
           {contents.length > 0 &&
           !!userDetails?.user?.id &&
           userDetails.user.id === lesson?.creatorId ? (
