@@ -1140,40 +1140,60 @@ export default function DashboardPageContents() {
         }
         buttonsDelay={3000}
       >
-        <Stack
-          borderRadius="12px"
-          spacing="20px"
-          direction="row"
-          bgcolor={PALETTE.secondary.orange[1]}
-          p="8px"
-          ml={`${SIDEBAR_X_MARGIN}px`}
-          mb="24px"
-        >
-          <Stack borderRadius="8px">
-            <Image
-              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320808.png"
-              alt="intro video"
-              width={158}
-              height={109}
-            />
-          </Stack>
-          <Stack spacing="8px" justifyContent="center">
-            <Typography bold variant="medium">
-              Get started with AstroSafe!
-            </Typography>
-            <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
-              Learn about AstroSafe in less than 3 minutes.
-            </Typography>
-            <UrsorButton
-              size="small"
-              variant="secondary"
-              endIcon={PlayIcon}
-              onClick={() => setShowTutorialVideo(true)}
+        <UrsorFadeIn duration={600}>
+          <Stack
+            borderRadius="12px"
+            spacing="20px"
+            direction="row"
+            bgcolor={PALETTE.secondary.orange[1]}
+            p="8px"
+            ml={`${SIDEBAR_X_MARGIN}px`}
+            mb="24px"
+            position="relative"
+          >
+            <Stack borderRadius="8px">
+              <Image
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320808.png"
+                alt="intro video"
+                width={158}
+                height={109}
+              />
+            </Stack>
+            <Stack spacing="8px" justifyContent="center">
+              <Typography bold variant="medium">
+                Get started with AstroSafe!
+              </Typography>
+              <Typography
+                variant="small"
+                bold
+                color={PALETTE.secondary.grey[4]}
+              >
+                Learn about AstroSafe in less than 3 minutes.
+              </Typography>
+              <UrsorButton
+                size="small"
+                variant="secondary"
+                backgroundColor="transparent"
+                endIcon={PlayIcon}
+                onClick={() => setShowTutorialVideo(true)}
+              >
+                Watch tutorial
+              </UrsorButton>
+            </Stack>
+            <Stack
+              right="12px"
+              top="12px"
+              position="absolute"
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.7 },
+              }}
             >
-              Watch tutorial
-            </UrsorButton>
+              <X height="20px" width="20px" />
+            </Stack>
           </Stack>
-        </Stack>
+        </UrsorFadeIn>
 
         <UrsorFadeIn duration={700}>
           <Stack direction="row" spacing="24px" pl={`${SIDEBAR_X_MARGIN}px`}>
