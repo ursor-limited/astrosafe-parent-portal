@@ -570,9 +570,10 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   useEffect(
     () =>
       setShowTutorialVideoButton(
-        !userDetails.user?.switchedOffDashboardTutorialVideo
+        !userDetails.user?.switchedOffLessonTutorialVideo &&
+          !!lesson?.contents.some((c) => c.type === "video")
       ),
-    [userDetails.user?.switchedOffDashboardTutorialVideo]
+    [userDetails.user?.switchedOffLessonTutorialVideo, lesson?.contents]
   );
 
   return (

@@ -5,21 +5,11 @@ import _ from "lodash";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useWindowSize } from "usehooks-ts";
-import { useRouter } from "next/navigation";
 import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import AstroLandingPage from "../tools/multiplication-chart/[urlId]/AstroLandingPage";
 import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPageViewport";
-import { UrsorButton } from "ui";
-import { VisualLinkCardsSubtler } from "../components/landing/VisualLinkCardsSubtler";
-import ValueProposition from "../tools/multiplication-chart/[urlId]/ValueProposition";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import {
-  GRID_SPACING,
-  LESSON_GRID_SPACING,
-} from "../dashboard/DashboardPageContents";
 import { ILesson } from "../lesson/[subdirectory]/page";
-import useColumnWidth from "../dashboard/useColumnWidth";
-import { useUserContext } from "../components/UserContext";
 import LessonCard from "../components/LessonCard";
 import ApiController from "../api";
 import ExternalPageFooter from "../components/ExternalPageFooter";
@@ -55,8 +45,6 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
       ),
     [isMobile, width]
   );
-
-  console.log(nColumns, "0ss8s8su");
 
   useEffect(() => {
     const chunked = _.chunk(lessons, nColumns);
