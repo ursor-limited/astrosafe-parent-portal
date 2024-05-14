@@ -44,6 +44,7 @@ import { getFormattedDate } from "@/app/components/VideoCard";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
+import { fadeIn } from "@/app/components/UrsorDialog";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -651,18 +652,23 @@ export default function WorksheetPageContents(props: {
       <Stack
         px="20px"
         pt={
-          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
+          userDetails?.user?.id &&
+          userDetails.user.id === props.details?.creatorId
             ? "40px"
             : undefined
         }
         overflow="scroll"
         bgcolor={
-          userDetails?.user?.id && userDetails.user.id === worksheet?.creatorId
-            ? PALETTE.secondary.grey[1]
+          !userDetails?.user?.id ||
+          userDetails.user.id !== props.details?.creatorId
+            ? PALETTE.primary.navy
             : undefined
         }
         sx={{
-          transition: "1s",
+          opacity: 0,
+          animation: `${fadeIn} 0.2s ease-in`,
+          animationFillMode: "forwards",
+          animationDelay: "2s",
         }}
         flex={1}
         height="100%"

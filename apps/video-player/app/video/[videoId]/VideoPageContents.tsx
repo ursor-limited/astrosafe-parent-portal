@@ -28,6 +28,7 @@ import TimeRange from "@/app/dashboard/TimeRange";
 import { isMobile } from "react-device-detect";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
+import { fadeIn } from "@/app/components/UrsorDialog";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
 export const HIDE_LOGO_PLAYER_WIDTH_THRESHOLD = 500;
@@ -260,12 +261,16 @@ function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
         }
         overflow="scroll"
         bgcolor={
-          userDetails?.user?.id && userDetails.user.id === details?.creatorId
-            ? PALETTE.secondary.grey[1]
+          !userDetails?.user?.id ||
+          userDetails.user.id !== props.details?.creatorId
+            ? PALETTE.primary.navy
             : undefined
         }
         sx={{
-          transition: "1s",
+          opacity: 0,
+          animation: `${fadeIn} 0.2s ease-in`,
+          animationFillMode: "forwards",
+          animationDelay: "2s",
         }}
         flex={1}
       >

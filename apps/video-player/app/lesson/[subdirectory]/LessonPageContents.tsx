@@ -58,6 +58,7 @@ import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
 import QuizDialog from "@/app/components/QuizDialog";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -80,6 +81,14 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    lesson?.canonicalUrl &&
+      window.location.href.split("/")?.slice(-1)?.[0] === props.subdirectory &&
+      router.push(`/lesson/${lesson?.canonicalUrl}`);
+  }, [props.subdirectory, lesson?.canonicalUrl]);
 
   const loadLesson = () =>
     ApiController.getLessonFromUrlWithContents(props.subdirectory).then(
@@ -116,8 +125,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
-  const router = useRouter();
-
   const submitDeletion = () =>
     lesson?.id &&
     ApiController.deleteLesson(lesson.id)
@@ -125,6 +132,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
       .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
 
   const userDetails = useUserContext();
+  const { isLoading } = useAuth0();
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -249,14 +257,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [hoveringOnContentCard, setHoveringOnContentCard] =
     useState<boolean>(false);
-  // const [hoveringContentIndex, setHoveringContentIndex] = useState<
-  //   number | undefined
-  // >(undefined);
-  // const [hoveringContentSide, setHoveringContentSide] = useState<
-  //   "left" | "right" | null
-  // >(null);
-  // const [hoveringAboveCenter, setHoveringAboveCenter] =
-  //   useState<boolean>(false);
   const [contentInsertionIndex, setContentInsertionIndex] = useState<
     number | undefined
   >(undefined);
@@ -600,24 +600,43 @@ export default function LessonPageContents(props: { subdirectory: string }) {
         ref={setPageRef}
         px="20px"
         pt={
-          userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
-            ? "40px"
-            : undefined
+          !isLoading &&
+          (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+            ? undefined
+            : "40px"
         }
         overflow="scroll"
         flex={1}
         bgcolor={
-          userDetails?.user?.id && userDetails.user.id === lesson?.creatorId
-            ? PALETTE.secondary.grey[1]
+          !isLoading &&
+          (!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId)
+            ? PALETTE.primary.navy
             : undefined
         }
+        sx={{
+          opacity: 0,
+          animation: `${fadeIn} 0.2s ease-in`,
+          animationFillMode: "forwards",
+          animationDelay: "2s",
+        }}
         // sx={{
         //   pointerEvents: draggedContentId ? "none" : undefined,
         // }}
       >
         {!userDetails?.user?.id || userDetails.user.id !== lesson?.creatorId ? (
           <>
-            <Header />
+            <Stack
+              sx={
+                {
+                  // opacity: 0,
+                  // animation: `${fadeIn} 0.2s ease-in`,
+                  // animationFillMode: "forwards",
+                  // animationDelay: "2s",
+                }
+              }
+            >
+              <Header />
+            </Stack>
             <Stack height="40px" minHeight="40px" />
           </>
         ) : null}
@@ -992,7 +1011,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
         category="playlist"
         title={lesson?.title ?? ""}
       />
-      {videoDialogOpen ? (
+      {videoDialogOpen && lesson ? (
         <VideoCreationDialog
           open={videoDialogOpen}
           closeCallback={() => {
@@ -1001,7 +1020,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           }}
           creationCallback={(id, title) => {
             ApiController.addToLesson(
-              props.subdirectory,
+              lesson.id,
               contentInsertionIndex ?? 0,
               "video",
               id
@@ -1028,21 +1047,23 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           video={videos.find((v) => v.id === videoEditingDialogId)}
         />
       ) : null}
-      <WorksheetCreationDialog
-        open={worksheetDialogOpen}
-        closeCallback={() => {
-          setWorksheetDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(id) => {
-          ApiController.addToLesson(
-            props.subdirectory,
-            contentInsertionIndex ?? 0,
-            "worksheet",
-            id
-          ).then(loadLesson);
-        }}
-      />
+      {lesson ? (
+        <WorksheetCreationDialog
+          open={worksheetDialogOpen}
+          closeCallback={() => {
+            setWorksheetDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(id) => {
+            ApiController.addToLesson(
+              lesson.id,
+              contentInsertionIndex ?? 0,
+              "worksheet",
+              id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {worksheetEditingDialogId ? (
         <WorksheetCreationDialog
           open={true}
@@ -1051,21 +1072,23 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           worksheet={worksheets.find((w) => w.id === worksheetEditingDialogId)}
         />
       ) : null}
-      <LinkDialog
-        open={linkDialogOpen}
-        closeCallback={() => {
-          setLinkDialogOpen(false);
-          setContentInsertionIndex(undefined);
-        }}
-        creationCallback={(link) => {
-          ApiController.addToLesson(
-            props.subdirectory,
-            contentInsertionIndex ?? 0,
-            "link",
-            link.id
-          ).then(loadLesson);
-        }}
-      />
+      {lesson ? (
+        <LinkDialog
+          open={linkDialogOpen}
+          closeCallback={() => {
+            setLinkDialogOpen(false);
+            setContentInsertionIndex(undefined);
+          }}
+          creationCallback={(link) => {
+            ApiController.addToLesson(
+              lesson.id,
+              contentInsertionIndex ?? 0,
+              "link",
+              link.id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       {linkEditingDialogId ? (
         <LinkDialog
           open={true}
@@ -1074,7 +1097,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           link={links.find((l) => l.id === linkEditingDialogId)}
         />
       ) : null}
-      {textDialogOpen ? (
+      {textDialogOpen && lesson ? (
         <TextDialog
           open={true}
           closeCallback={() => {
@@ -1083,7 +1106,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           }}
           creationCallback={(text) => {
             ApiController.addToLesson(
-              props.subdirectory,
+              lesson.id,
               contentInsertionIndex ?? 0,
               "text",
               text.id
@@ -1099,7 +1122,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           text={texts.find((t) => t.id === textEditingDialogId)}
         />
       ) : null}
-      {imageDialogOpen ? (
+      {imageDialogOpen && lesson ? (
         <ImageDialog
           open={imageDialogOpen}
           closeCallback={() => {
@@ -1108,7 +1131,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           }}
           creationCallback={(link) => {
             ApiController.addToLesson(
-              props.subdirectory,
+              lesson.id,
               contentInsertionIndex ?? 0,
               "image",
               link.id
