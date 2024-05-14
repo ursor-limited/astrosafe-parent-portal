@@ -10,8 +10,7 @@ module.exports = withSvgr({
       "https://www.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://dev.astrosafe.co",
-      "https://astro-monorepo-canvas.vercel.app",
-      "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
+      "https://admin.astrosafe.co",
       "ursorassets.s3.eu-west-1.amazonaws.com",
       "ursorimagespublic.s3.us-east-1.amazonaws.com",
       "i.ytimg.com",
@@ -22,7 +21,7 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://www.astrosafe.co"
+      ? "https://admin.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,
