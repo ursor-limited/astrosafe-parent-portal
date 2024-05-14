@@ -1018,6 +1018,9 @@ export default function DashboardPageContents() {
               }
             : null
         }
+        buttonRowExtraElementRight={
+          userDetails.user ? <ProfileButton light /> : undefined
+        }
         buttonRowExtraElement={
           <Stack direction="row" spacing="12px" alignItems="center">
             {!userDetails.user?.subscribed ||
@@ -1065,23 +1068,6 @@ export default function DashboardPageContents() {
                 )}
               </>
             ) : undefined}
-          </Stack>
-        }
-        buttonRowExtraElementRight={
-          <Stack direction="row" spacing="12px">
-            <UrsorButton
-              variant="secondary"
-              backgroundColor="rgb(255,255,255)"
-              endIcon={ShareIcon}
-              onClick={() => {
-                userDetails.user?.externalDashboardTitle
-                  ? router.push(`/user/${userDetails.user.id}`)
-                  : setShareDialogOpen(true);
-              }}
-            >
-              Share with Students
-            </UrsorButton>
-            {userDetails.user ? <ProfileButton light /> : undefined}
           </Stack>
         }
         buttonsDelay={3000}
@@ -1172,63 +1158,82 @@ export default function DashboardPageContents() {
             spacing="12px"
           >
             <Stack direction="row" spacing="12px">
-              <DashboardPageBinaryContentFilterSelection
+              {/* <DashboardPageBinaryContentFilterSelection
                 selected={selectedBinaryFilter}
                 callback={(s) => setSelectedBinaryFilter(s)}
-              />
-
-              <Stack
+              /> */}
+              {/* <Stack
                 sx={{
                   opacity: selectedBinaryFilter === "all" ? 1 : 0,
                   transition: "0.2s",
                 }}
+              > */}
+              {/* <SortButton
+                selected={selectedMultipleFilter}
+                callback={(id) => setSelectedMultipleFilter(id)}
+                types={["all", "video", "worksheet", "image", "link"]}
+                displayNames={{
+                  all: "All",
+                  video: "Video",
+                  worksheet: "Worksheet",
+                  image: "Image",
+                  link: "Link",
+                  //text: "Text",
+                }}
+                text="Type"
+                disabled={selectedBinaryFilter !== "all"}
+              /> */}
+              {/* </Stack> */}
+              <Stack
+                direction="row"
+                alignItems="space-between"
+                justifyContent="center"
               >
-                <SortButton
-                  selected={selectedMultipleFilter}
-                  callback={(id) => setSelectedMultipleFilter(id)}
-                  types={["all", "video", "worksheet", "image", "link"]}
-                  displayNames={{
-                    all: "All",
-                    video: "Video",
-                    worksheet: "Worksheet",
-                    image: "Image",
-                    link: "Link",
-                    //text: "Text",
-                  }}
-                  text="Type"
-                  disabled={selectedBinaryFilter !== "all"}
-                />
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  alignItems="center"
+                  width="fit-content"
+                >
+                  <SearchInput
+                    value={searchValue ?? ""}
+                    callback={(value: string) => {
+                      setSearchValue(value);
+                    }}
+                    clearCallback={() => setSearchValue(undefined)}
+                    shadow
+                  />
+                  <SortButton
+                    selected={selectedSort}
+                    callback={(id) => setSelectedSort(id)}
+                    types={["updatedAt", "abc"]}
+                    displayNames={{
+                      updatedAt: "Most recent",
+                      abc: "Alphabetical",
+                    }}
+                    width="204px"
+                  />
+                </Stack>
               </Stack>
             </Stack>
-            <Stack
-              direction="row"
-              spacing="12px"
-              alignItems="center"
-              width="fit-content"
+            <UrsorButton
+              dark
+              variant="tertiary"
+              size="small"
+              endIcon={ShareIcon}
+              iconSize={14}
+              onClick={() => {
+                userDetails.user?.externalDashboardTitle
+                  ? router.push(`/user/${userDetails.user.id}`)
+                  : setShareDialogOpen(true);
+              }}
             >
-              <SearchInput
-                value={searchValue ?? ""}
-                callback={(value: string) => {
-                  setSearchValue(value);
-                }}
-                clearCallback={() => setSearchValue(undefined)}
-                shadow
-              />
-              <SortButton
-                selected={selectedSort}
-                callback={(id) => setSelectedSort(id)}
-                types={["updatedAt", "abc"]}
-                displayNames={{
-                  updatedAt: "Most recent",
-                  abc: "Alphabetical",
-                }}
-                width="204px"
-              />
-            </Stack>
+              Share with Students
+            </UrsorButton>
           </Stack>
         </UrsorFadeIn>
         <Stack
-          pt="24px"
+          pt="32px"
           flex={1}
           ref={setColumnsContainerRef}
           overflow="hidden"

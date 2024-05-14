@@ -1,10 +1,19 @@
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useRouter } from "next/navigation";
 import { getFormattedDate } from "./VideoCard";
 import { useUserContext } from "./UserContext";
+
+export const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
 
 const PageCard = (props: {
   rightStuff?: React.ReactNode;

@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ zIndex: 999999999999 }}>
-      <meta name="theme-color" content={PALETTE.primary.navy} />
+      <meta name="theme-color" content={PALETTE.secondary.grey[1]} />
       <body
         className={rubik.className}
         style={{
@@ -38,7 +38,7 @@ export default function RootLayout({
           overflow="hidden"
           width="100vw"
           position="relative"
-          bgcolor={PALETTE.primary.navy}
+          bgcolor={PALETTE.secondary.grey[1]}
         >
           {/* <Stack
             position="absolute"
