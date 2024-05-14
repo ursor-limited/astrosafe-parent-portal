@@ -23,6 +23,6 @@ module.exports = withSvgr({
     process.env.VERCEL_ENV === "production"
       ? "https://admin.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
-      ? "https://dev.astrosafe.co"
+      ? "https://admin.astrosafe.co"
       : undefined,
 });
