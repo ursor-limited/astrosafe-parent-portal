@@ -21,6 +21,7 @@ import { useUserContext } from "@/app/components/UserContext";
 import ExternalPageFooter from "../../components/ExternalPageFooter";
 import ShareDialog from "@/app/dashboard/ShareDialog";
 import NotificationContext from "@/app/components/NotificationContext";
+import { PALETTE } from "ui";
 
 const PAGE_SIZE = 24;
 
@@ -90,6 +91,7 @@ export default function UserPageContents(props: {
         onScroll={onScroll}
         ref={scrollableRef}
         flex={1}
+        bgcolor={PALETTE.primary.navy}
       >
         <Header mobile={isMobile} />
         <Stack height="40px" minHeight="40px" />

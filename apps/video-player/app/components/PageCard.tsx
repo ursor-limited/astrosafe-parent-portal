@@ -46,12 +46,6 @@ const PageCard = (props: {
       height={props.fullHeight ? "100%" : undefined}
       width="100%"
       flex={1}
-      // sx={{
-      //   opacity: 0,
-      //   animation: `${fadeIn} 0.3s ease-in`,
-      //   animationFillMode: "forwards",
-      //   animationDelay: "2s",
-      // }}
     >
       <Stack
         position="relative"
