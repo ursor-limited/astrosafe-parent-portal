@@ -7,6 +7,7 @@ import { useContext, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 const WIDTH_RATIO = 0.86;
 
@@ -42,6 +43,8 @@ const TimelineImageCard = (
 
   const [ref, setRef] = useState<HTMLElement | null>(null);
 
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <TimelineCard
@@ -55,6 +58,7 @@ const TimelineImageCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        copyAndMoveCallback={() => setCopyDialogOpen(true)}
         duplicationCallback={submitDuplication}
         width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
         creatorId={props.creatorId}
@@ -96,6 +100,14 @@ const TimelineImageCard = (
           deletionCallback={submitDeletion}
           category="Image"
           title={props.title}
+        />
+      ) : null}
+      {copyDialogOpen && props.id ? (
+        <CopyAndMoveDialog
+          id={props.id}
+          title={props.title}
+          open={copyDialogOpen}
+          closeCallback={() => setCopyDialogOpen(false)}
         />
       ) : null}
     </>

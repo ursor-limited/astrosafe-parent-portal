@@ -184,7 +184,7 @@ export const SearchInput = (props: {
   return (
     <Stack
       height={props.height || "28px"}
-      width={props.fullWidth ? undefined : "160px"}
+      width={props.fullWidth ? "100%" : "160px"}
       direction="row"
       borderRadius="8px"
       alignItems="center"

@@ -21,6 +21,7 @@ import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
 import { PALETTE } from "ui";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
 import { useRouter } from "next/navigation";
+import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;
@@ -79,6 +80,8 @@ const TimelineWorksheetCard = (
 
   const router = useRouter();
 
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <TimelineCard
@@ -90,7 +93,7 @@ const TimelineWorksheetCard = (
         onDragStart={props.onDragStart}
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
-        //editingCallback={props.editingCallback}
+        copyAndMoveCallback={() => setCopyDialogOpen(true)}
         duplicationCallback={submitDuplication}
         color={alpha(CONTENT_BRANDING.worksheet.color, 0.12)}
         width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
@@ -189,6 +192,14 @@ const TimelineWorksheetCard = (
           deletionCallback={submitDeletion}
           category="Worksheet"
           title={props.title}
+        />
+      ) : null}
+      {copyDialogOpen && props.id ? (
+        <CopyAndMoveDialog
+          id={props.id}
+          title={props.title}
+          open={copyDialogOpen}
+          closeCallback={() => setCopyDialogOpen(false)}
         />
       ) : null}
     </>
