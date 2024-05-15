@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dialog } from "@mui/material";
 import { Stack } from "@mui/system";
 import {
@@ -13,6 +13,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "@/app/components/UserContext";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export default function CopyAndMoveDialog(props: {
   id: string;
@@ -46,6 +47,8 @@ export default function CopyAndMoveDialog(props: {
   >();
 
   const router = useRouter();
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <Dialog
@@ -144,9 +147,10 @@ export default function CopyAndMoveDialog(props: {
                         props.id,
                         lesson.id,
                         userDetails.id
-                      ).then(() =>
-                        router.push(`/lesson/${lesson.canonicalUrl}`)
-                      )
+                      ).then(() => {
+                        notificationCtx.success("Copied and moved Content");
+                        router.push(`/lesson/${lesson.canonicalUrl}`);
+                      })
                     }
                   >
                     Move

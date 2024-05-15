@@ -785,11 +785,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                         icon: TrashcanIcon,
                         color: PALETTE.system.red,
                       },
-                      {
-                        text: "Copy to",
-                        kallback: () => setCopyDialogOpen(true),
-                        icon: ClippyIcon,
-                      },
                     ]}
                   />
                 ) : null}
