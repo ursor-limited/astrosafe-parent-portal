@@ -786,7 +786,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                         color: PALETTE.system.red,
                       },
                       {
-                        text: "Copy & move",
+                        text: "Copy to",
                         kallback: () => setCopyDialogOpen(true),
                         icon: ClippyIcon,
                       },

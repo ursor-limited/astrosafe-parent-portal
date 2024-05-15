@@ -76,8 +76,8 @@ export default function CopyAndMoveDialog(props: {
         boxSizing="border-box"
         overflow="hidden"
       >
-        <Typography bold variant="large">
-          {`Copy and move ${props.title}`}
+        <Typography bold variant="large" sx={{ textAlign: "center" }}>
+          {`Copy and move${props.title ? " " + props.title : ""}`}
         </Typography>
         <Stack spacing="12px" alignItems="center" width="100%">
           <SearchInput
@@ -128,26 +128,35 @@ export default function CopyAndMoveDialog(props: {
                     {lesson.title}
                   </Typography>
                 </Stack>
-                <UrsorButton
-                  dark
-                  variant="tertiary"
-                  size="small"
-                  onClick={() =>
-                    userDetails?.id &&
-                    ApiController.copyAndMoveContent(
-                      props.id,
-                      lesson.id,
-                      userDetails.id
-                    ).then(() => router.push(`/lesson/${lesson.canonicalUrl}`))
-                  }
+                <Stack
+                  sx={{
+                    opacity: hoveringLessonId === lesson.id ? 1 : 0,
+                    transition: "0.2s",
+                  }}
                 >
-                  Move
-                </UrsorButton>
+                  <UrsorButton
+                    dark
+                    variant="tertiary"
+                    size="small"
+                    onClick={() =>
+                      userDetails?.id &&
+                      ApiController.copyAndMoveContent(
+                        props.id,
+                        lesson.id,
+                        userDetails.id
+                      ).then(() =>
+                        router.push(`/lesson/${lesson.canonicalUrl}`)
+                      )
+                    }
+                  >
+                    Move
+                  </UrsorButton>
+                </Stack>
               </Stack>
             ))}
           </Stack>
         </Stack>
-        <Stack height="50px" width="100%">
+        {/* <Stack height="50px" width="100%">
           <UrsorButton
             variant="secondary"
             backgroundColor="transparent"
@@ -156,7 +165,7 @@ export default function CopyAndMoveDialog(props: {
           >
             New Lesson
           </UrsorButton>
-        </Stack>
+        </Stack> */}
       </Stack>
     </Dialog>
   );

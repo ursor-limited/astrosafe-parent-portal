@@ -190,7 +190,7 @@ const TimelineCard = (props: {
                       ...(props.copyAndMoveCallback
                         ? [
                             {
-                              text: "Copy & move",
+                              text: "Copy to",
                               kallback: () => props.copyAndMoveCallback?.(),
                               icon: VersionsIcon,
                             },
