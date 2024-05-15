@@ -460,6 +460,17 @@ class ApiController {
       location,
     }).then((response: any) => response.json());
   }
+  static async copyAndMoveContent(
+    id: string,
+    lessonId: string,
+    userId: string
+  ) {
+    return post(`video/copyAnd/moveContent`, {
+      id,
+      lessonId,
+      userId,
+    }).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;

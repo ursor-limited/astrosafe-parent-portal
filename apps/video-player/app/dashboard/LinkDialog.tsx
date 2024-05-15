@@ -674,11 +674,11 @@ export default function LinkDialog(props: ILinkDialogProps) {
               height={isMobile ? undefined : CARD_HEIGHT}
               minHeight={isMobile ? undefined : CARD_HEIGHT}
               borderRadius="12px"
-              bgcolor="#fff4ec"
+              bgcolor={PALETTE.secondary.grey[1]}
               sx={{
                 transition: "0.2s",
               }}
-              border={`4px solid #fff4ec`}
+              border={`4px solid ${PALETTE.secondary.grey[1]}`}
               overflow="hidden"
               position="relative"
             >
@@ -697,26 +697,10 @@ export default function LinkDialog(props: ILinkDialogProps) {
                   }}
                   justifyContent="center"
                   alignItems="center"
-                  bgcolor="rgba(255,255,255,0.2)"
+                  bgcolor="rgba(255,255,255,0.35)"
                 />
               </LessonImageUploader>
               <Stack px="4px" py="8px" flex={1} justifyContent="space-between">
-                {/* <InputTypography //@ts-ignore
-                value={title}
-                variant="large"
-                bold
-                color={
-                  shouldBeLightText(color)
-                    ? PALETTE.font.light
-                    : PALETTE.font.dark
-                }
-                boldPlaceholder
-                placeholder={`${props.platform ? "Platform" : "Link"} title`}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
-                }
-              /> */}
-
                 <Typography
                   color={PALETTE.secondary.grey[5]}
                   variant="medium"
@@ -725,7 +709,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
                 >
                   {title}
                 </Typography>
-                <Stack
+                {/* <Stack
                   direction="row"
                   justifyContent="space-between"
                   sx={{
@@ -739,8 +723,7 @@ export default function LinkDialog(props: ILinkDialogProps) {
                   <Typography color={PALETTE.secondary.grey[5]} variant="small">
                     {getFormattedDate(new Date().toISOString())}
                   </Typography>
-                  <LinkIcon height="20px" width="20px" />
-                </Stack>
+                </Stack> */}
               </Stack>
               <Stack
                 position="absolute"

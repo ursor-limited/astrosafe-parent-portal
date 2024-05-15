@@ -12,6 +12,7 @@ import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import { PALETTE } from "ui";
 import Link from "next/link";
+import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 const WIDTH_RATIO = 0.65;
 
@@ -43,7 +44,8 @@ const TimelineLinkCard = (
       .then(props.duplicationCallback)
       .then(() => notificationCtx.success("Duplicated Link."));
 
-  const router = useRouter();
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <TimelineCard
@@ -57,6 +59,7 @@ const TimelineLinkCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        copyAndMoveCallback={() => setCopyDialogOpen(true)}
         duplicationCallback={submitDuplication}
         width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
         creatorId={props.creatorId}
@@ -127,6 +130,14 @@ const TimelineLinkCard = (
           deletionCallback={submitDeletion}
           category="Image"
           title={props.title}
+        />
+      ) : null}
+      {copyDialogOpen && props.id ? (
+        <CopyAndMoveDialog
+          id={props.id}
+          title={props.title}
+          open={copyDialogOpen}
+          closeCallback={() => setCopyDialogOpen(false)}
         />
       ) : null}
     </>

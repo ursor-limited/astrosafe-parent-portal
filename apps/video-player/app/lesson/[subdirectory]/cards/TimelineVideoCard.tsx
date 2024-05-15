@@ -19,6 +19,7 @@ import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import { isMobile } from "react-device-detect";
+import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 export const COMMENT_PAUSE_THRESHOLD = 1;
 
@@ -297,6 +298,8 @@ const TimelineVideoCard = (
     }
   }, [currentTime, commentGroups]);
 
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <TimelineCard
@@ -310,6 +313,7 @@ const TimelineVideoCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        copyAndMoveCallback={() => setCopyDialogOpen(true)}
         duplicationCallback={submitDuplication}
         width={props.columnWidth}
         creatorId={props.creatorId}
@@ -432,6 +436,14 @@ const TimelineVideoCard = (
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
           category="Video"
+        />
+      ) : null}
+      {copyDialogOpen && props.id ? (
+        <CopyAndMoveDialog
+          id={props.id}
+          title={props.title}
+          open={copyDialogOpen}
+          closeCallback={() => setCopyDialogOpen(false)}
         />
       ) : null}
     </>

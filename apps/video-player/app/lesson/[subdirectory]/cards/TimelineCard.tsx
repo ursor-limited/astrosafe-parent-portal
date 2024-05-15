@@ -6,6 +6,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import ArrowBothIcon from "@/images/icons/ArrowBothIcon.svg";
+import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import { useEffect, useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
@@ -27,6 +28,7 @@ const TimelineCard = (props: {
   editingCallback?: () => void;
   deletionCallback?: () => void;
   duplicationCallback?: () => void;
+  copyAndMoveCallback?: () => void;
   width?: number;
   expanded?: boolean;
   expansionCallback?: () => void;
@@ -182,6 +184,15 @@ const TimelineCard = (props: {
                               text: "Edit",
                               kallback: () => props.editingCallback?.(),
                               icon: PencilIcon,
+                            },
+                          ]
+                        : []),
+                      ...(props.copyAndMoveCallback
+                        ? [
+                            {
+                              text: "Copy to",
+                              kallback: () => props.copyAndMoveCallback?.(),
+                              icon: VersionsIcon,
                             },
                           ]
                         : []),
