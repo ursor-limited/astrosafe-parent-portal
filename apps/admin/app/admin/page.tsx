@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
-import ApiController from "./api";
-import UserListPage from "./UserListPage"
-
+import React from "react";
+import AuthWrapper from "./components/AuthWrapper";
+import AdminPage from "./AdminPage";
 async function Page() {
-
-  return <UserListPage />;
+  return (
+    <AuthWrapper>
+      <AdminPage />
+    </AuthWrapper>
+  );
 }
 
 export default Page;

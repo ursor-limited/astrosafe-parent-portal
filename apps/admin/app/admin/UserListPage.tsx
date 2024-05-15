@@ -295,7 +295,12 @@ export default function UserListPage() {
       <td>{item.created14days}</td>
       <td>{item.created7days}</td>
       <td>{item.created1days}</td>
-      <td>{<a href={`http://localhost:3000/admin/${item.id}`}>Go to profile</a>}</td>
+      <td>{<a href={
+process.env.NEXT_PUBLIC_VERCEL_ENV == "development" ? 
+`http://localhost:3000/admin/${item.id}` : 
+`https://admin.astrosafe.co/admin/${item.id}` }>
+  Go to profile
+  </a>}</td>
     </tr>
   ))}
      </tbody>
