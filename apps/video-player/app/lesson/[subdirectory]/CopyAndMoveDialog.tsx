@@ -95,6 +95,7 @@ export default function CopyAndMoveDialog(props: {
           <Stack width="100%">
             {searchResults.map((lesson) => (
               <Stack
+                key={lesson.id}
                 height="42px"
                 justifyContent="space-between"
                 alignItems="center"
