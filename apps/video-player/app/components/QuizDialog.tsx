@@ -1,18 +1,74 @@
 import { Stack } from "@mui/system";
-import GrabberIcon from "@/images/icons/GrabberIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { useRouter } from "next/navigation";
 import UrsorDialog from "./UrsorDialog";
 import { useState } from "react";
-import { PALETTE, Typography, UrsorInputField, UrsorTextField } from "ui";
+import {
+  PALETTE,
+  Typography,
+  UrsorButton,
+  UrsorInputField,
+  UrsorTextField,
+} from "ui";
 import { IVideo } from "../api";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
 import MobileVideoCreationDialog from "../dashboard/MobileVideoCreationDialog";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelectList from "./UrsorSelectList";
+import UrsorSelect from "./UrsorSelect";
 
 export const quizQuestionTypes = ["multipleChoice"] as const;
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
+
+export const QUESTION_TYPE_DISPLAY_NAMES: Record<QuizQuestionType, string> = {
+  multipleChoice: "Multiple choice",
+};
+
+const QuizDialogQuestionCard = (
+  props: IQuizQuestion & {
+    i: number;
+    setValue: (value: string) => void;
+    setType: (type: string) => void;
+  }
+) => (
+  <Stack
+    bgcolor={PALETTE.secondary.grey[1]}
+    borderRadius="12px"
+    p="12px"
+    boxSizing="border-box"
+    spacing="8px"
+    width="100%"
+  >
+    <Typography variant="small" color={PALETTE.secondary.grey[4]}>{`Question ${
+      props.i + 1
+    }`}</Typography>
+    <UrsorInputField
+      value={props.value}
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+        props.setValue(event.target.value)
+      }
+      placeholder="Question"
+      width="100%"
+      backgroundColor="rgb(255,255,255)"
+      leftAlign
+      boldValue
+      height="44px"
+    />
+    <UrsorSelect
+      items={quizQuestionTypes.map((qqt) => ({
+        id: qqt,
+        value: QUESTION_TYPE_DISPLAY_NAMES[qqt],
+      }))}
+      selected={[props.type]}
+      callback={props.setType}
+      fieldWidth="100%"
+      white
+      zIndex={999999999}
+      leftAlignPopover
+    />
+  </Stack>
+);
 
 export interface IQuizQuestion {
   id: string;
@@ -35,6 +91,8 @@ const QuizDialog = (props: {
   const router = useRouter();
 
   const [title, setTitle] = useState<string>("");
+
+  const [description, setDescription] = useState<string>("");
 
   const [questions, setQuestions] = useState<IQuizQuestion[]>([
     {
@@ -59,31 +117,55 @@ const QuizDialog = (props: {
       ) : (
         <UrsorDialog
           open={props.open}
-          onCloseCallback={props.closeCallback}
           width="930px"
           maxWidth="930px"
           noPadding
           height="552px"
           paddingY={isMobile ? "0px" : "40px"}
           paddingX={isMobile ? undefined : "40px"}
-          noCloseButton={isMobile}
+          noCloseButton
           noOverflowHidden
         >
-          <Stack direction="row" spacing="24px">
-            <Stack width="312px" spacing="20px">
-              <Captioned text="Title">
-                <UrsorInputField
-                  value={title}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setTitle(event.target.value)
-                  }
-                  placeholder="Title"
-                  width="100%"
-                  leftAlign
-                  boldValue
-                />
-              </Captioned>
-              <Stack
+          <Stack width="100%" height="100%" spacing="24px">
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              width="100%"
+            >
+              <Typography variant="h4">Create Quiz</Typography>
+              <UrsorButton dark variant="tertiary" endIcon={PencilIcon}>
+                Create
+              </UrsorButton>
+            </Stack>
+            <Stack direction="row" spacing="24px">
+              <Stack width="312px" spacing="20px">
+                <Captioned text="Title">
+                  <UrsorInputField
+                    value={title}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setTitle(event.target.value)
+                    }
+                    placeholder="Title"
+                    width="100%"
+                    leftAlign
+                    boldValue
+                  />
+                </Captioned>
+                <Captioned text="Description" height="100%">
+                  <UrsorTextField
+                    value={description}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      setDescription(event.target.value)
+                    }
+                    placeholder="Optional"
+                    width="100%"
+                    height="172px"
+                    boldValue
+                    flex
+                  />
+                </Captioned>
+                {/* <Stack
                 width="100%"
                 bgcolor={PALETTE.secondary.grey[1]}
                 borderRadius="12px"
@@ -124,54 +206,31 @@ const QuizDialog = (props: {
                     </Stack>
                   ))}
                 </Stack>
+              </Stack> */}
+              </Stack>
+              <Stack spacing="12px" flex={1}>
+                {questions.map((q, i) => (
+                  <QuizDialogQuestionCard
+                    {...q}
+                    i={i}
+                    setValue={(value: string) =>
+                      questions.map((question) =>
+                        q.id === question.id ? { ...q, value } : question
+                      )
+                    }
+                    setType={(questionType: string) =>
+                      setQuestions(
+                        questions.map((question) =>
+                          q.id === question.id
+                            ? { ...q, questionType }
+                            : question
+                        )
+                      )
+                    }
+                  />
+                ))}
               </Stack>
             </Stack>
-            {selectedQuestion ? (
-              <Stack
-                bgcolor={PALETTE.secondary.grey[1]}
-                borderRadius="12px"
-                p="12px"
-                boxSizing="border-box"
-                spacing="8px"
-              >
-                <Typography color={PALETTE.secondary.grey[4]}>{`Question ${
-                  selectedQuestion
-                    ? questions.map((q) => q.id).indexOf(selectedQuestion.id)
-                    : 1
-                }`}</Typography>
-
-                <UrsorSelectList
-                  items={quizQuestionTypes.map((qqt) => ({
-                    id: qqt,
-                    value: "Multiplication (x)",
-                  }))}
-                  selected={[selectedQuestion.type]}
-                  callback={(qqt: string) =>
-                    setQuestions(
-                      questions.map((q) =>
-                        q.id === selectedQuestion.id
-                          ? { ...q, questionType: qqt }
-                          : q
-                      )
-                    )
-                  }
-                />
-                <UrsorInputField
-                  value={selectedQuestion.value}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    questions.map((q) =>
-                      q.id === selectedQuestion.id
-                        ? { ...q, value: event.target.value }
-                        : q
-                    )
-                  }
-                  placeholder="Question"
-                  width="100%"
-                  height="44px"
-                  boldValue
-                />
-              </Stack>
-            ) : null}
           </Stack>
         </UrsorDialog>
       )}

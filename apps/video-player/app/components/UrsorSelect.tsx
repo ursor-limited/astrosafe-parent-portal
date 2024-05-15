@@ -24,7 +24,7 @@ export interface IUrsorSelectProps {
   leftAlign?: boolean;
   leftAlignPopover?: boolean;
   keepOpenOnSelect?: boolean;
-  width: number | string;
+  width?: number | string;
   fieldWidth?: string;
   white?: boolean;
   callback: (id: string) => void;
@@ -153,7 +153,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         clickableFloatedButton
         noPadding
         placement={props.leftAlignPopover ? "left" : undefined}
-        width={props.width}
+        width={props.width ?? "100%"}
         fieldWidth={props.fieldWidth}
         noFloatButton
         disabled={props.disabled}
@@ -163,30 +163,28 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           sx={{ cursor: "pointer" }}
           position="relative"
           width="100%"
-          //onClick={() => setOpen(true)}
+          height="44px"
           direction="row"
           bgcolor={props.white ? "rgb(255,255,255)" : PALETTE.secondary.grey[1]}
           borderRadius="8px"
+          pl="12px"
+          boxSizing="border-box"
+          alignItems="center"
+          //onClick={() => setOpen(true)}
         >
-          <Stack
-            width="100%"
-            //sx={{ pointerEvents: "none" }}
-            onClick={() => setOpen(true)}
-          >
-            <Stack sx={{ pointerEvents: "none" }}>
-              <UrsorInputField
-                value={getDisplayValue()}
-                placeholder={props.placeholder}
-                width="100%"
-                leftAlign
-                // backgroundColor={props.white ? "rgb(255,255,255)" : undefined}
-              />
-            </Stack>
+          <Stack width="100%" onClick={() => setOpen(true)}>
+            <Typography
+              color={
+                getDisplayValue()
+                  ? PALETTE.font.dark
+                  : PALETTE.secondary.grey[3]
+              }
+            >
+              {getDisplayValue()}
+            </Typography>
           </Stack>
 
           <Stack
-            //position="absolute"
-            //right={0}
             height="100%"
             width="35px"
             justifyContent="center"

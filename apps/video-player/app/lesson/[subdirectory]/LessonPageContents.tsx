@@ -563,7 +563,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
 
-  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(false);
+  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(true);
 
   const [showTutorialVideoButton, setShowTutorialVideoButton] =
     useState<boolean>(false);
