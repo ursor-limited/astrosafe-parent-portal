@@ -1,4 +1,3 @@
-
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   preview:
@@ -68,11 +67,8 @@ const dellete = (route: string) =>
 // });
 
 class ApiController {
- 
   static async listAllUsers() {
-    return post(`video/listUsers`, {}).then((response: any) =>
-      response.json()
-    );
+    return post(`video/listUsers`, {}).then((response: any) => response.json());
   }
 
   static async getUserLessons(id: string) {
@@ -92,22 +88,23 @@ class ApiController {
     );
   }
 
-
   static async getTotalLessonCounts() {
     return post(`lesson/getTotalLessonCounts`, {}).then((response: any) =>
       response.json()
     );
-  };
-  
+  }
+
   static async getLessonCreatedAtDict() {
     return post(`lesson/getCreatedAtDict`, {}).then((response: any) =>
       response.json()
     );
   }
 
-
-  
-  
+  static async verifyAdminUser(email: string) {
+    return post(`lesson/verifyAdminUser`, { email }).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;
