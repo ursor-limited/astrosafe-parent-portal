@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ApiController from "./api";
 
 const AdminPage = () => {
-  const { user, loginWithRedirect } = useAuth0();
+  const { user, loginWithRedirect, logout } = useAuth0();
 
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   useEffect(() => {
@@ -29,9 +29,15 @@ const AdminPage = () => {
         flexDirection: "column",
       }}
     >
-      <button onClick={() => loginWithRedirect()} type="submit">
-        Enter magical realm
-      </button>
+      {!user ? (
+        <button onClick={() => loginWithRedirect()} type="submit">
+          Enter magical realm
+        </button>
+      ) : (
+        <button onClick={() => logout()} type="submit">
+          Log out
+        </button>
+      )}
       {user && !authenticated ? (
         <div style={{ color: "red", paddingTop: "20px" }}>
           Ask Joe to add you to our admins list.
