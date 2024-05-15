@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import { IText } from "@/app/components/TextDialog";
 import { PALETTE } from "ui";
+import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 const WIDTH_RATIO = 0.94;
 
@@ -66,6 +67,8 @@ const TimelineTextCard = (
     textRef.current?.appendChild(quillValue);
   }, [props.value]);
 
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <TimelineCard
@@ -77,6 +80,7 @@ const TimelineTextCard = (
         dragging={props.dragging}
         deletionCallback={() => setDeletionDialogOpen(true)}
         editingCallback={props.editingCallback}
+        copyAndMoveCallback={() => setCopyDialogOpen(true)}
         duplicationCallback={submitDuplication}
         width={props.columnWidth ? WIDTH_RATIO * props.columnWidth : undefined}
         creatorId={props.creatorId}
@@ -109,6 +113,13 @@ const TimelineTextCard = (
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={submitDeletion}
           category="Text"
+        />
+      ) : null}
+      {copyDialogOpen && props.id ? (
+        <CopyAndMoveDialog
+          id={props.id}
+          open={copyDialogOpen}
+          closeCallback={() => setCopyDialogOpen(false)}
         />
       ) : null}
     </>

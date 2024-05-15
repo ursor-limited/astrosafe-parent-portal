@@ -11,6 +11,7 @@ import React, {
 import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
+import ClippyIcon from "@/images/icons/ClippyIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -57,6 +58,7 @@ import { Header } from "@/app/components/header2";
 import QuizDialog from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
+import CopyAndMoveDialog from "./CopyAndMoveDialog";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;
@@ -128,6 +130,8 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     ApiController.deleteLesson(lesson.id)
       .then(() => router.push("/dashboard"))
       .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
+
+  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(true);
 
   const userDetails = useUserContext();
   const { isLoading } = useAuth0();
@@ -330,9 +334,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   useEffect(() => {
     !_.isNumber(contentInsertionIndex) && setStaticAddButtonY(null);
   }, [contentInsertionIndex]);
-  // useEffect(() => {
-  //   upgradeDialogOpen && setStaticAddButtonY(null);
-  // }, [upgradeDialogOpen]);
 
   const [contentColumnWidth, setContentColumnWidth] = useState<number>(0);
   useEffect(
@@ -723,7 +724,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
               : lesson?.description
           }
           createdAt={lesson?.createdAt ?? undefined}
-          width={"100%"}
+          width="100%"
           maxWidth={
             !userDetails?.user || userDetails.user.id !== lesson?.creatorId
               ? "1260px"
@@ -783,6 +784,11 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                         kallback: () => setDeletionDialogOpen(true),
                         icon: TrashcanIcon,
                         color: PALETTE.system.red,
+                      },
+                      {
+                        text: "Copy & move",
+                        kallback: () => setCopyDialogOpen(true),
+                        icon: ClippyIcon,
                       },
                     ]}
                   />
