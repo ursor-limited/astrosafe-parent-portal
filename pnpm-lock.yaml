@@ -62,6 +62,9 @@ importers:
       axios-retry:
         specifier: ^3.8.1
         version: 3.8.1
+      cookie:
+        specifier: ^0.6.0
+        version: 0.6.0
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -138,6 +141,9 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
     devDependencies:
+      '@types/cookie':
+        specifier: ^0.6.0
+        version: 0.6.0
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -3533,6 +3539,10 @@ packages:
     resolution: {integrity: sha512-BwR5KP3Es/CSht0xqBcUXS3qCAUVXwpRKsV2+arxeb65atasuXG9LykC9Ab10Cw3s2raH92ZqOeILaQbsB2ACg==}
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: true
+
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
@@ -4826,6 +4836,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+    engines: {node: '>= 0.6'}
+    dev: false
+
   /core-js-compat@3.33.2:
     resolution: {integrity: sha512-axfo+wxFVxnqf8RvxTzoAlzW4gRoacrHeoFlc9n0x50+7BEyZL/Rt3hicaED1/CEd7I6tPCPVUYcJwCMO5XUYw==}
     dependencies:
@@ -5680,7 +5695,7 @@ packages:
       eslint-plugin-import: 2.28.1(@typescript-eslint/parser@6.5.0)(eslint-import-resolver-typescript@3.6.0)(eslint@8.48.0)
       fast-glob: 3.3.1
       get-tsconfig: 4.5.0
-      is-core-module: 2.13.0
+      is-core-module: 2.12.0
       is-glob: 4.0.3
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
@@ -5703,7 +5718,7 @@ packages:
       eslint-plugin-import: 2.28.1(eslint@8.56.0)
       fast-glob: 3.3.1
       get-tsconfig: 4.5.0
-      is-core-module: 2.13.0
+      is-core-module: 2.12.0
       is-glob: 4.0.3
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
