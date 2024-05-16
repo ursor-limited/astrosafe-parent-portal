@@ -267,11 +267,12 @@ const Player = (props: {
 
   const resume = () => {
     setEnded(false);
+    console.log(player, "))");
     if (
       url?.includes("youtube") &&
-      (player?.playerInfo.playerState === 2 ||
-        player?.playerInfo.playerState === 0 || // 0 is the ended
-        player?.playerInfo.playerState === 5) // 5 is the non-yet-started
+      (player?.v.playerState === 2 ||
+        player?.v.playerState === 0 || // 0 is the ended
+        player?.v.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
     } else if (url?.includes("vimeo")) {
