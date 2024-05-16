@@ -1,6 +1,7 @@
 import { Stack } from "@mui/system";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
@@ -19,7 +20,6 @@ import _ from "lodash";
 import { isMobile } from "react-device-detect";
 import MobileVideoCreationDialog from "../dashboard/MobileVideoCreationDialog";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
-import UrsorSelectList from "./UrsorSelectList";
 import UrsorSelect from "./UrsorSelect";
 import { Dialog } from "@mui/material";
 import DynamicContainer from "./DynamicContainer";
@@ -31,13 +31,46 @@ export const QUESTION_TYPE_DISPLAY_NAMES: Record<QuizQuestionType, string> = {
   multipleChoice: "Multiple choice",
 };
 
+const CircularPlusButton = (props: { onClick: () => void }) => {
+  const [hovering, setHovering] = useState<boolean>(false);
+  return (
+    <Stack
+      onClick={props.onClick}
+      onMouseEnter={() => {
+        setHovering(true);
+      }}
+      onMouseLeave={() => {
+        setHovering(false);
+      }}
+      height="26px"
+      width="26px"
+      borderRadius="100%"
+      border={`2px solid ${PALETTE.secondary.purple[hovering ? 3 : 2]}`}
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        cursor: "pointer",
+        svg: {
+          path: {
+            fill: PALETTE.secondary.purple[hovering ? 3 : 2],
+          },
+        },
+      }}
+    >
+      <PlusIcon height="20px" width="20px" />
+    </Stack>
+  );
+};
+
 const QuizDialogQuestionCard = (
   props: IQuizQuestion & {
     i: number;
+    correct?: string;
     setValue: (value: string) => void;
     setType: (type: string) => void;
     setOption: (id: string, value: string) => void;
     addOption: () => void;
+    setCorrect: (id: string) => void;
   }
 ) => (
   <DynamicContainer duration={500} fullWidth>
@@ -78,20 +111,43 @@ const QuizDialogQuestionCard = (
         zIndex={999999999}
         leftAlignPopover
       />
+      <Stack height="2px" width="100%" bgcolor={PALETTE.secondary.grey[2]} />
       <Stack spacing="8px">
         {props.options?.map((o) => (
-          <Stack direction="row">
+          <Stack key={o.id} direction="row">
             <UrsorInputField
               value={props.value}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 props.setOption(o.id, event.target.value)
               }
-              placeholder="Question"
+              placeholder="Option"
               width="100%"
               backgroundColor="rgb(255,255,255)"
               leftAlign
               boldValue
               height="44px"
+              endIcon={
+                props.correct === o.id ? (
+                  <Stack sx={{ svg: { path: { fill: PALETTE.system.green } } }}>
+                    <CheckCircleIcon height="18px" width="18px" />
+                  </Stack>
+                ) : (
+                  <Stack
+                    onClick={() => props.setCorrect(o.id)}
+                    height="14px"
+                    width="14px"
+                    border={`2px solid ${PALETTE.secondary.grey[4]}`}
+                    borderRadius="100%"
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": {
+                        opacity: 0.6,
+                        transition: "0.2s",
+                      },
+                    }}
+                  />
+                )
+              }
             />
           </Stack>
         ))}
@@ -127,6 +183,7 @@ export interface IQuizQuestion {
   type: QuizQuestionType;
   value: string;
   options?: IQuizQuestionOption[];
+  correctOption: string;
 }
 
 export interface IQuizQuestionOption {
@@ -139,12 +196,16 @@ export interface IQuiz {
   questions: IQuizQuestion[];
 }
 
-const getNewQuestion: () => IQuizQuestion = () => ({
-  id: _.uniqueId(),
-  value: "",
-  type: "multipleChoice",
-  options: [getNewOption(), getNewOption()],
-});
+const getNewQuestion: () => IQuizQuestion = () => {
+  const options = [getNewOption(), getNewOption()];
+  return {
+    id: _.uniqueId(),
+    value: "",
+    type: "multipleChoice",
+    options,
+    correctOption: options[0].id,
+  };
+};
 
 const getNewOption: () => IQuizQuestionOption = () => ({
   id: _.uniqueId(),
@@ -166,8 +227,6 @@ const QuizDialog = (props: {
   useEffect(() => {
     questions.length === 0 && setQuestions([getNewQuestion()]);
   }, [questions]);
-
-  console.log(questions, "99kk");
 
   return (
     <>
@@ -306,11 +365,24 @@ const QuizDialog = (props: {
                   <Stack spacing="12px">
                     {questions.map((q, i) => (
                       <QuizDialogQuestionCard
+                        key={q.id}
                         {...q}
                         i={i}
+                        correct={q.correctOption}
+                        setCorrect={(correctOption) =>
+                          setQuestions(
+                            questions.map((question) =>
+                              q.id === question.id
+                                ? { ...q, correctOption }
+                                : question
+                            )
+                          )
+                        }
                         setValue={(value: string) =>
-                          questions.map((question) =>
-                            q.id === question.id ? { ...q, value } : question
+                          setQuestions(
+                            questions.map((question) =>
+                              q.id === question.id ? { ...q, value } : question
+                            )
                           )
                         }
                         setType={(questionType: string) =>
@@ -353,6 +425,13 @@ const QuizDialog = (props: {
                         }
                       />
                     ))}
+                    <Stack alignItems="center">
+                      <CircularPlusButton
+                        onClick={() =>
+                          setQuestions([...questions, getNewQuestion()])
+                        }
+                      />
+                    </Stack>
                   </Stack>
                 </Stack>
               </Stack>
