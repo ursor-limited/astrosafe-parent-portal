@@ -148,6 +148,14 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     infoButtonPosition: 136,
     info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
   },
+  quiz: {
+    title: "Quiz",
+    description: "Add some well-crafted quizzes.",
+    color: PALETTE.secondary.purple[3],
+    icon: ChecklistIcon,
+    infoButtonPosition: 136,
+    info: "Boo.",
+  },
 };
 
 export const GRID_SPACING = "20px";
@@ -157,6 +165,7 @@ export const LESSON_GRID_SPACING = "34px";
 export type AstroContent =
   | "video"
   | "worksheet"
+  | "quiz"
   | "lesson"
   | "link"
   | "image"

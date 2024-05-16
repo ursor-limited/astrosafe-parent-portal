@@ -117,7 +117,7 @@ const QuizDialogQuestionCard = (
         {props.options?.map((o) => (
           <Stack key={o.id} direction="row">
             <UrsorInputField
-              value={props.value}
+              value={o.value}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 props.setOption(o.id, event.target.value)
               }
@@ -195,8 +195,11 @@ export interface IQuizQuestionOption {
 export interface IQuiz {
   id: string;
   title: string;
+  description?: string;
   questions: IQuizQuestion[];
   creatorId: string;
+  updatedAt: string;
+  createdAt: string;
 }
 
 const getNewQuestion: () => IQuizQuestion = () => {
@@ -245,7 +248,7 @@ const QuizDialog = (props: {
       description
     ).then((newQuiz) => {
       props.closeCallback();
-      props.creationCallback?.(newQuiz.id);
+      props.creationCallback?.(newQuiz);
     });
 
   return (

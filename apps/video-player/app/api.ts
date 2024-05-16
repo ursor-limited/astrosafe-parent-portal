@@ -432,6 +432,9 @@ class ApiController {
   static async duplicateText(id: string, lessonId: string, userId?: string) {
     return post(`text/dupli/cate`, { id, lessonId, userId });
   }
+  static async duplicateQuiz(id: string, lessonId: string, userId?: string) {
+    return post(`quiz/dupli/cate`, { id, lessonId, userId });
+  }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());
   }
@@ -489,6 +492,9 @@ class ApiController {
       creatorId,
       questions,
     }).then((response: any) => response.json());
+  }
+  static async deleteQuiz(id: string) {
+    return dellete(`quiz/${id}`);
   }
 }
 

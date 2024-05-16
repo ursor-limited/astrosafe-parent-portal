@@ -55,7 +55,7 @@ import InitialAddContentButton from "./InitialAddContentButton";
 import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
-import QuizDialog from "@/app/components/QuizDialog";
+import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 import CopyAndMoveDialog from "./CopyAndMoveDialog";
@@ -81,14 +81,9 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
 
   const router = useRouter();
-
-  // useEffect(() => {
-  //   lesson?.canonicalUrl &&
-  //     window.location.href.split("/")?.slice(-1)?.[0] === props.subdirectory &&
-  //     router.push(`/lesson/${lesson?.canonicalUrl}`);
-  // }, [props.subdirectory, lesson?.canonicalUrl]);
 
   const loadLesson = () =>
     ApiController.getLessonFromUrlWithContents(props.subdirectory).then(
@@ -104,6 +99,8 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           setLinks(response.actualContents.links);
         response?.actualContents?.images &&
           setImages(response.actualContents.images);
+        response?.actualContents?.quizzes &&
+          setQuizzes(response.actualContents.quizzes);
         response?.actualContents?.texts &&
           setTexts(
             response.actualContents.texts.map((t: any) => ({
@@ -130,8 +127,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     ApiController.deleteLesson(lesson.id)
       .then(() => router.push("/dashboard"))
       .then(() => notificationCtx.negativeSuccess("Deleted Lesson."));
-
-  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(true);
 
   const userDetails = useUserContext();
   const { isLoading } = useAuth0();
@@ -241,14 +236,22 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     string | undefined
   >(undefined);
 
+  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(false);
+  const [quizEditingDialogId, setQuizEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const contentCallbacks: Record<AstroContent, () => void> = {
     worksheet: () => setWorksheetDialogOpen(true),
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
     image: () => setImageDialogOpen(true),
     text: () => setTextDialogOpen(true),
+    quiz: () => setQuizDialogOpen(true),
     lesson: () => null,
   };
+
+  console.log(quizzes);
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
@@ -281,7 +284,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | null>(
+  ] = useLocalStorage<"video" | "worksheet" | "quiz" | null>(
     "typeOfContentDialogToOpenUponLandingInNewLesson",
     null
   );
@@ -299,6 +302,11 @@ export default function LessonPageContents(props: { subdirectory: string }) {
         }
         if (typeOfContentDialogToOpenUponLandingInNewLesson === "worksheet") {
           setWorksheetDialogOpen(true);
+          setOpenContentDialogInLessonId(null);
+          setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
+        }
+        if (typeOfContentDialogToOpenUponLandingInNewLesson === "quiz") {
+          setQuizDialogOpen(true);
           setOpenContentDialogInLessonId(null);
           setTypeOfContentDialogToOpenUponLandingInNewLesson(null);
         }
@@ -464,6 +472,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
         !imageDialogOpen &&
         !linkDialogOpen &&
         !textDialogOpen &&
+        !quizDialogOpen &&
         setMouseY(event.pageY);
     },
     [
@@ -473,6 +482,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
       imageDialogOpen,
       linkDialogOpen,
       textDialogOpen,
+      quizDialogOpen,
     ]
   );
   useEffect(() => {
@@ -562,8 +572,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   }, [contentOrder, expandedContentIds]);
 
   const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
-
-  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(true);
 
   const [showTutorialVideoButton, setShowTutorialVideoButton] =
     useState<boolean>(false);
@@ -999,6 +1007,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                           images={images}
                           links={links}
                           worksheets={worksheets}
+                          quizzes={quizzes}
                           texts={texts}
                           lessonId={props.subdirectory}
                           columnWidth={singleContentsColumnWidth}
@@ -1011,6 +1020,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                           setWorksheetEditingDialogId={
                             setWorksheetEditingDialogId
                           }
+                          setQuizEditingDialogId={setQuizEditingDialogId}
                           setTextEditingDialogId={setTextEditingDialogId}
                           setLinkEditingDialogId={setLinkEditingDialogId}
                           updateCallback={loadLesson}
@@ -1041,6 +1051,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                         images={images}
                         links={links}
                         worksheets={worksheets}
+                        quizzes={quizzes}
                         texts={texts}
                         lessonId={props.subdirectory}
                         loadLesson={loadLesson}
@@ -1054,6 +1065,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                         setWorksheetEditingDialogId={
                           setWorksheetEditingDialogId
                         }
+                        setQuizEditingDialogId={setQuizEditingDialogId}
                         setTextEditingDialogId={setTextEditingDialogId}
                         setLinkEditingDialogId={setLinkEditingDialogId}
                         expansionCallback={(id) => {
@@ -1279,6 +1291,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           texts={texts}
           images={images}
           worksheets={worksheets}
+          quizzes={quizzes}
           lessonId={props.subdirectory}
           columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
@@ -1286,6 +1299,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           setTextEditingDialogId={setTextEditingDialogId}
           setImageEditingDialogId={setImageEditingDialogId}
           setWorksheetEditingDialogId={setWorksheetEditingDialogId}
+          setQuizEditingDialogId={setQuizEditingDialogId}
           setHeight={(id, height) => {
             const content = contents.find((c) => c.contentId === id);
             if (!content) return;

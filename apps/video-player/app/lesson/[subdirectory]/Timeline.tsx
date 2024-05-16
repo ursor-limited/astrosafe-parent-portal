@@ -11,6 +11,7 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useEffect, useState } from "react";
+import { IQuiz } from "@/app/components/QuizDialog";
 
 export const DOT_CARD_Y = 47;
 export const CARD_SPACING = 120;
@@ -31,6 +32,7 @@ const Timeline = (props: {
   texts: IText[];
   images: IImage[];
   worksheets: IWorksheet[];
+  quizzes: IQuiz[];
   lessonId: string;
   expansionCallback: (id: string) => void;
   setVideoEditingDialogId: (id: string) => void;
@@ -38,14 +40,12 @@ const Timeline = (props: {
   setTextEditingDialogId: (id: string) => void;
   setImageEditingDialogId: (id: string) => void;
   setWorksheetEditingDialogId: (id: string) => void;
+  setQuizEditingDialogId: (id: string) => void;
   loadLesson: () => void;
   setDraggedContentId: (id: string) => void;
   draggedContentId?: string;
   singleContentsColumnWidth: number;
-  //   hovering: boolean;
-  //   setHovering: (on: boolean) => void;
 }) => {
-  const [hovering, setHovering] = useState<boolean>(false);
   const [rightCards, setRightCards] = useState<
     {
       type: AstroLessonContent;
@@ -88,12 +88,14 @@ const Timeline = (props: {
             texts={props.texts}
             images={props.images}
             worksheets={props.worksheets}
+            quizzes={props.quizzes}
             lessonId={props.lessonId}
             setVideoEditingDialogId={props.setVideoEditingDialogId}
             setLinkEditingDialogId={props.setLinkEditingDialogId}
             setTextEditingDialogId={props.setTextEditingDialogId}
             setImageEditingDialogId={props.setImageEditingDialogId}
             setWorksheetEditingDialogId={props.setWorksheetEditingDialogId}
+            setQuizEditingDialogId={props.setQuizEditingDialogId}
             updateCallback={props.loadLesson}
             dragStartCallback={props.setDraggedContentId}
             draggedContentId={
@@ -174,12 +176,14 @@ const Timeline = (props: {
           texts={props.texts}
           images={props.images}
           worksheets={props.worksheets}
+          quizzes={props.quizzes}
           lessonId={props.lessonId}
           setVideoEditingDialogId={props.setVideoEditingDialogId}
           setLinkEditingDialogId={props.setLinkEditingDialogId}
           setTextEditingDialogId={props.setTextEditingDialogId}
           setImageEditingDialogId={props.setImageEditingDialogId}
           setWorksheetEditingDialogId={props.setWorksheetEditingDialogId}
+          setQuizEditingDialogId={props.setQuizEditingDialogId}
           updateCallback={props.loadLesson}
           dragStartCallback={props.setDraggedContentId}
           columnWidth={props.singleContentsColumnWidth}
