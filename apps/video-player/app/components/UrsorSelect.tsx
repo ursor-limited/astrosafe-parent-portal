@@ -174,6 +174,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
         >
           <Stack width="100%" onClick={() => setOpen(true)}>
             <Typography
+              bold
               color={
                 getDisplayValue()
                   ? PALETTE.font.dark
