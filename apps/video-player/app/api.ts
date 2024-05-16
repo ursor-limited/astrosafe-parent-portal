@@ -1,3 +1,4 @@
+import { QuizQuestionType } from "./components/QuizDialog";
 import {
   EquationOrientation,
   INumberBondWorksheetSettings,
@@ -469,6 +470,24 @@ class ApiController {
       id,
       lessonId,
       userId,
+    }).then((response: any) => response.json());
+  }
+  static async createQuiz(
+    title: string,
+    creatorId: string,
+    questions: {
+      type: QuizQuestionType;
+      value: string;
+      options: string[];
+      correctOption?: number;
+    }[],
+    description?: string
+  ) {
+    return post("quiz", {
+      title,
+      description,
+      creatorId,
+      questions,
     }).then((response: any) => response.json());
   }
 }

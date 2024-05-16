@@ -15,7 +15,7 @@ import {
   UrsorInputField,
   UrsorTextField,
 } from "ui";
-import { IVideo } from "../api";
+import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
 import MobileVideoCreationDialog from "../dashboard/MobileVideoCreationDialog";
@@ -23,6 +23,7 @@ import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageCont
 import UrsorSelect from "./UrsorSelect";
 import { Dialog } from "@mui/material";
 import DynamicContainer from "./DynamicContainer";
+import { useUserContext } from "./UserContext";
 
 export const quizQuestionTypes = ["multipleChoice"] as const;
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
@@ -192,8 +193,10 @@ export interface IQuizQuestionOption {
 }
 
 export interface IQuiz {
+  id: string;
   title: string;
   questions: IQuizQuestion[];
+  creatorId: string;
 }
 
 const getNewQuestion: () => IQuizQuestion = () => {
@@ -215,7 +218,7 @@ const getNewOption: () => IQuizQuestionOption = () => ({
 const QuizDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  creationCallback?: (videoId: string, title: string) => void;
+  creationCallback?: (quiz: IQuiz) => void;
   editingCallback?: () => void;
   video?: IVideo;
 }) => {
@@ -228,11 +231,27 @@ const QuizDialog = (props: {
     questions.length === 0 && setQuestions([getNewQuestion()]);
   }, [questions]);
 
+  const userDetails = useUserContext().user;
+
+  const submitCreation = () =>
+    ApiController.createQuiz(
+      title,
+      userDetails?.id ?? "",
+      questions.map((q) => ({
+        ..._.omit(q, "id"),
+        options: q.options?.map((o) => o.value) || [],
+        correctOption: q.options?.map((o) => o.id)?.indexOf(q.correctOption),
+      })),
+      description
+    ).then((newQuiz) => {
+      props.closeCallback();
+      props.creationCallback?.(newQuiz.id);
+    });
+
   return (
     <>
-      {isMobile ? (
-        <MobileVideoCreationDialog {...props} />
-      ) : (
+      {isMobile ? null : (
+        // <MobileVideoCreationDialog {...props} />
         // <UrsorDialog
         //   open={props.open}
         //   width="930px"
@@ -270,7 +289,12 @@ const QuizDialog = (props: {
               width="100%"
             >
               <Typography variant="h4">Create Quiz</Typography>
-              <UrsorButton dark variant="tertiary" endIcon={PencilIcon}>
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={PencilIcon}
+                onClick={submitCreation}
+              >
                 Create
               </UrsorButton>
             </Stack>

@@ -1238,6 +1238,20 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           image={images.find((i) => i.id === imageEditingDialogId)}
         />
       ) : null}
+      {quizDialogOpen && lesson ? (
+        <QuizDialog
+          open={true}
+          closeCallback={() => setQuizDialogOpen(false)}
+          creationCallback={(quiz) => {
+            ApiController.addToLesson(
+              lesson.id,
+              contentInsertionIndex ?? 0,
+              "quiz",
+              quiz.id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
@@ -1314,10 +1328,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
             notificationCtx.success("Made a copy of Lesson");
           })
         }
-      />
-      <QuizDialog
-        open={quizDialogOpen}
-        closeCallback={() => setQuizDialogOpen(false)}
       />
     </>
   );
