@@ -55,7 +55,8 @@ const initQuill = async () => {
   if (Quill) {
     // Add sizes to whitelist and register them
     const Size = Quill.import("formats/size");
-    Size.whitelist = ["extra-small", "small", "medium", "large", "huge"];
+    Size.whitelist = ["small", "medium", "large"];
+    Size.blacklist = ["huge"];
     Quill.register(Size, true);
 
     // Add fonts to whitelist and register them
@@ -102,7 +103,6 @@ export const TextEditorToolbar = (props: { id: string }) => {
           {/* <option value="normal">Normal</option> */}
           <option value="medium">Medium</option>
           <option value="large">Large</option>
-          <option value="huge">Huge</option>
         </select>
         {/* <select className="ql-header" defaultValue="3">
         <option value="1">Heading</option>

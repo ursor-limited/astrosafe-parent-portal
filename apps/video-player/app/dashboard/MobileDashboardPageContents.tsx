@@ -607,7 +607,7 @@ export default function MobileDashboardPageContents() {
               "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
             }
           />
-          <ToolButton
+          {/* <ToolButton
             title={"Create Quiz"}
             description="Awesome multichoice quiz."
             color={CONTENT_BRANDING.quiz.color}
@@ -625,7 +625,7 @@ export default function MobileDashboardPageContents() {
             info={CONTENT_BRANDING.quiz.info}
             infoImageUrl={CONTENT_BRANDING.quiz.infoImageUrl}
             popoverTitle={CONTENT_BRANDING.quiz.title}
-          />
+          /> */}
           <ToolButton
             mobile
             title="Create math worksheet"

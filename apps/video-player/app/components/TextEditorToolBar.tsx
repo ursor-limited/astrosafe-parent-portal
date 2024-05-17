@@ -22,6 +22,7 @@ export const getModules = (id: string) => ({
     //   redo: redoChange,
     // },
   },
+  //size: ["small", "large", "huge"],
   //   history: {
   //     delay: 500,
   //     maxStack: 100,
