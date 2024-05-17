@@ -422,7 +422,7 @@ const TimelineVideoCard = (
                 }}
                 greyLines
                 hideExternalComments
-                commentsButton
+                commentsButton={!props.noButtons}
                 shortCommentsList={!props.expanded}
                 noSpacing
               />
