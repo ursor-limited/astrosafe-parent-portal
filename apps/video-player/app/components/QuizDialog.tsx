@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
@@ -72,7 +73,9 @@ const QuizDialogQuestionCard = (
     setType: (type: string) => void;
     setOption: (id: string, value: string) => void;
     addOption: () => void;
+    deleteOption: (id: string) => void;
     setCorrect: (id: string) => void;
+    deleteQuestion: () => void;
   }
 ) => (
   <DynamicContainer duration={500} fullWidth>
@@ -85,10 +88,23 @@ const QuizDialogQuestionCard = (
       spacing="8px"
       width="100%"
     >
-      <Typography
-        variant="small"
-        color={PALETTE.secondary.grey[4]}
-      >{`Question ${props.i + 1}`}</Typography>
+      <Stack direction="row" justifyContent="space-between">
+        <Typography
+          variant="small"
+          color={PALETTE.secondary.grey[4]}
+        >{`Question ${props.i + 1}`}</Typography>
+        <Stack
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+            svg: { path: { fill: PALETTE.system.red } },
+          }}
+          onClick={props.deleteQuestion}
+        >
+          <TrashcanIcon width="16px" height="16px" />
+        </Stack>
+      </Stack>
       <UrsorInputField
         value={props.value}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -116,7 +132,7 @@ const QuizDialogQuestionCard = (
       <Stack height="2px" width="100%" bgcolor={PALETTE.secondary.grey[2]} />
       <Stack spacing="8px">
         {props.options?.map((o) => (
-          <Stack key={o.id} direction="row">
+          <Stack key={o.id} direction="row" spacing="8px" alignItems="center">
             <UrsorInputField
               value={o.value}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -151,6 +167,23 @@ const QuizDialogQuestionCard = (
                 )
               }
             />
+
+            <Stack
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+                svg: { path: { fill: PALETTE.system.red } },
+                opacity: props.options && props.options.length > 1 ? 1 : 0.4,
+                pointerEvents:
+                  props.options && props.options.length > 1
+                    ? undefined
+                    : "none",
+              }}
+              onClick={() => props.deleteOption(o.id)}
+            >
+              <TrashcanIcon width="16px" height="16px" />
+            </Stack>
           </Stack>
         ))}
       </Stack>
@@ -435,6 +468,13 @@ const QuizDialog = (props: {
                         key={q.id}
                         {...q}
                         i={i}
+                        deleteQuestion={() =>
+                          setQuestions(
+                            questions.filter(
+                              (question: IQuizQuestion) => question.id !== q.id
+                            )
+                          )
+                        }
                         correct={q.correctOption}
                         setCorrect={(correctOption) =>
                           setQuestions(
@@ -485,6 +525,20 @@ const QuizDialog = (props: {
                                       ...(q.options || []),
                                       getNewOption(),
                                     ],
+                                  }
+                                : question
+                            )
+                          )
+                        }
+                        deleteOption={(id) =>
+                          setQuestions(
+                            questions.map((question) =>
+                              q.id === question.id
+                                ? {
+                                    ...q,
+                                    options: q.options?.filter(
+                                      (o) => o.id !== id
+                                    ),
                                   }
                                 : question
                             )
