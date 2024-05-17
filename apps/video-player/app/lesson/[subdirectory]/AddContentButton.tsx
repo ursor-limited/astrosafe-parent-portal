@@ -125,7 +125,7 @@ export default function AddContentButton(props: {
     "text",
     "video",
     "worksheet",
-    "quiz",
+    ...(props.mobile ? [] : ["quiz" as AstroContent]),
   ];
 
   const onBasicMode = useOnBasicMode();
