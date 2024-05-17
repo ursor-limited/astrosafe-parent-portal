@@ -1,8 +1,9 @@
 import { Stack } from "@mui/system";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import DottedCircleIcon from "@/images/icons/DottedCircleIcon.svg";
+import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
 import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
@@ -19,19 +20,28 @@ import {
 import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
-import MobileVideoCreationDialog from "../dashboard/MobileVideoCreationDialog";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelect from "./UrsorSelect";
 import { Dialog } from "@mui/material";
 import DynamicContainer from "./DynamicContainer";
 import { useUserContext } from "./UserContext";
 import NotificationContext from "./NotificationContext";
+import MultipleChoiceIcon from "./MultipleChoiceIcon";
 
-export const quizQuestionTypes = ["multipleChoice"] as const;
+export const quizQuestionTypes = ["multipleChoice", "checkbox"] as const;
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
 
 export const QUESTION_TYPE_DISPLAY_NAMES: Record<QuizQuestionType, string> = {
   multipleChoice: "Multiple choice",
+  checkbox: "Checkbox",
+};
+
+export const QUESTION_TYPE_ICONS: Record<
+  QuizQuestionType,
+  React.FC<React.SVGProps<SVGSVGElement>>
+> = {
+  multipleChoice: DottedCircleIcon,
+  checkbox: CheckboxIcon,
 };
 
 const CircularPlusButton = (props: { onClick: () => void }) => {
@@ -68,13 +78,13 @@ const CircularPlusButton = (props: { onClick: () => void }) => {
 const QuizDialogQuestionCard = (
   props: IQuizQuestion & {
     i: number;
-    correct?: string;
+    correct?: string[];
     setValue: (value: string) => void;
-    setType: (type: string) => void;
+    setType: (type: QuizQuestionType) => void;
     setOption: (id: string, value: string) => void;
     addOption: () => void;
     deleteOption: (id: string) => void;
-    setCorrect: (id: string) => void;
+    flipCorrect: (id: string) => void;
     deleteQuestion: () => void;
   }
 ) => (
@@ -123,7 +133,7 @@ const QuizDialogQuestionCard = (
           value: QUESTION_TYPE_DISPLAY_NAMES[qqt],
         }))}
         selected={[props.type]}
-        callback={props.setType}
+        callback={(type) => props.setType(type as QuizQuestionType)}
         fieldWidth="100%"
         white
         zIndex={999999999}
@@ -145,26 +155,12 @@ const QuizDialogQuestionCard = (
               boldValue
               height="44px"
               endIcon={
-                props.correct === o.id ? (
-                  <Stack sx={{ svg: { path: { fill: PALETTE.system.green } } }}>
-                    <CheckCircleIcon height="18px" width="18px" />
-                  </Stack>
-                ) : (
-                  <Stack
-                    onClick={() => props.setCorrect(o.id)}
-                    height="14px"
-                    width="14px"
-                    border={`2px solid ${PALETTE.secondary.grey[3]}`}
-                    borderRadius="100%"
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": {
-                        opacity: 0.6,
-                        transition: "0.2s",
-                      },
-                    }}
-                  />
-                )
+                <MultipleChoiceIcon
+                  onClick={() => props.flipCorrect(o.id)}
+                  state={props.correct?.includes(o.id) ? "correct" : null}
+                  type={props.type}
+                  selected={!!props.correct?.includes(o.id)}
+                />
               }
             />
 
@@ -218,7 +214,7 @@ export interface IQuizQuestion {
   type: QuizQuestionType;
   value?: string;
   options?: IQuizQuestionOption[];
-  correctOption: string;
+  correctOptions: string[];
 }
 
 export interface IQuizQuestionOption {
@@ -243,7 +239,7 @@ const getNewQuestion: () => IQuizQuestion = () => {
     value: "",
     type: "multipleChoice",
     options,
-    correctOption: options[0].id,
+    correctOptions: [options[0].id],
   };
 };
 
@@ -291,7 +287,9 @@ const QuizDialog = (props: {
       questions.map((q) => ({
         ..._.omit(q, "id"),
         options: q.options?.map((o) => o.value) || [],
-        correctOption: q.options?.map((o) => o.id)?.indexOf(q.correctOption),
+        correctOptions: q.correctOptions.map(
+          (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
+        ),
       })),
       description
     ).then((newQuiz) => {
@@ -307,7 +305,9 @@ const QuizDialog = (props: {
       questions: questions.map((q) => ({
         ..._.omit(q, "id"),
         options: q.options?.map((o) => o.value) || [],
-        correctOption: q.options?.map((o) => o.id)?.indexOf(q.correctOption),
+        correctOptions: q.correctOptions.map(
+          (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
+        ),
       })),
     })
       .then(() => {
@@ -475,16 +475,42 @@ const QuizDialog = (props: {
                             )
                           )
                         }
-                        correct={q.correctOption}
-                        setCorrect={(correctOption) =>
-                          setQuestions(
-                            questions.map((question) =>
-                              q.id === question.id
-                                ? { ...q, correctOption }
-                                : question
-                            )
-                          )
-                        }
+                        correct={q.correctOptions}
+                        flipCorrect={(optionId) => {
+                          if (q.type === "multipleChoice") {
+                            setQuestions(
+                              questions.map((question) =>
+                                q.id === question.id
+                                  ? {
+                                      ...q,
+                                      correctOptions: q.correctOptions.includes(
+                                        optionId
+                                      )
+                                        ? q.correctOptions
+                                        : [optionId],
+                                    }
+                                  : question
+                              )
+                            );
+                          } else {
+                            setQuestions(
+                              questions.map((question) =>
+                                q.id === question.id
+                                  ? {
+                                      ...q,
+                                      correctOptions: q.correctOptions.includes(
+                                        optionId
+                                      )
+                                        ? q.correctOptions.filter(
+                                            (co) => co !== optionId
+                                          )
+                                        : [...q.correctOptions, optionId],
+                                    }
+                                  : question
+                              )
+                            );
+                          }
+                        }}
                         setValue={(value: string) =>
                           setQuestions(
                             questions.map((question) =>
@@ -492,15 +518,19 @@ const QuizDialog = (props: {
                             )
                           )
                         }
-                        setType={(questionType: string) =>
+                        setType={(type: QuizQuestionType) => {
                           setQuestions(
                             questions.map((question) =>
                               q.id === question.id
-                                ? { ...q, questionType }
+                                ? {
+                                    ...q,
+                                    type,
+                                    correctOptions: q.correctOptions.slice(-1),
+                                  }
                                 : question
                             )
-                          )
-                        }
+                          );
+                        }}
                         setOption={(id, value) =>
                           setQuestions(
                             questions.map((question) =>
@@ -538,6 +568,9 @@ const QuizDialog = (props: {
                                     ...q,
                                     options: q.options?.filter(
                                       (o) => o.id !== id
+                                    ),
+                                    correctOptions: q.correctOptions?.filter(
+                                      (co) => co !== id
                                     ),
                                   }
                                 : question
