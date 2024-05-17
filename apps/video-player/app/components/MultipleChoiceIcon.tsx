@@ -19,6 +19,8 @@ const MultipleChoiceIcon = (props: {
         ? PALETTE.system.green
         : props.state === "wrong"
         ? PALETTE.system.red
+        : props.selected
+        ? PALETTE.secondary.purple[2]
         : PALETTE.secondary.grey[props.darker ? 4 : 3]
     }`}
     borderRadius={props.type === "multipleChoice" ? "100%" : "15%"}
@@ -42,6 +44,8 @@ const MultipleChoiceIcon = (props: {
                 ? PALETTE.system.green
                 : props.state === "wrong"
                 ? PALETTE.system.red
+                : props.selected
+                ? PALETTE.secondary.purple[2]
                 : PALETTE.secondary.grey[props.darker ? 4 : 3],
           },
         },
@@ -57,6 +61,8 @@ const MultipleChoiceIcon = (props: {
               ? PALETTE.system.green
               : props.state === "wrong"
               ? PALETTE.system.red
+              : props.selected
+              ? PALETTE.secondary.purple[2]
               : PALETTE.secondary.grey[props.darker ? 4 : 3]
           }
         />
