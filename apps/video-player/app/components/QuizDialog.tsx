@@ -223,7 +223,7 @@ const QuizDialog = (props: {
   closeCallback: () => void;
   creationCallback?: (quiz: IQuiz) => void;
   editingCallback?: () => void;
-  video?: IVideo;
+  quiz?: IQuiz;
 }) => {
   const [title, setTitle] = useState<string>("");
 
@@ -233,6 +233,18 @@ const QuizDialog = (props: {
   useEffect(() => {
     questions.length === 0 && setQuestions([getNewQuestion()]);
   }, [questions]);
+
+  useEffect(() => {
+    props.quiz?.title && setTitle(props.quiz?.title);
+  }, [props.quiz?.title]);
+
+  useEffect(() => {
+    props.quiz?.description && setDescription(props.quiz?.description);
+  }, [props.quiz?.description]);
+
+  useEffect(() => {
+    props.quiz?.questions && setQuestions(props.quiz?.questions);
+  }, [props.quiz?.questions]);
 
   const userDetails = useUserContext().user;
 

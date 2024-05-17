@@ -1264,6 +1264,14 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           }}
         />
       ) : null}
+      {quizEditingDialogId ? (
+        <QuizDialog
+          open={true}
+          closeCallback={() => setQuizEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          quiz={quizzes.find((q) => q.id === quizEditingDialogId)}
+        />
+      ) : null}
       <NoCreationsLeftDialog
         open={noCreationsLeftDialogOpen}
         closeCallback={() => setNoCreationsLeftDialogOpen(false)}
