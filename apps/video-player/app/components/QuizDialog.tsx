@@ -569,6 +569,9 @@ const QuizDialog = (props: {
                                     options: q.options?.filter(
                                       (o) => o.id !== id
                                     ),
+                                    correctOptions: q.correctOptions?.filter(
+                                      (co) => co !== id
+                                    ),
                                   }
                                 : question
                             )

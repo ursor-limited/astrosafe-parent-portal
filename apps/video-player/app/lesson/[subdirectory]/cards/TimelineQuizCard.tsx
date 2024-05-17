@@ -175,56 +175,58 @@ const TimelineQuizCard = (
               <Stack spacing="12px">
                 <Typography bold>{selectedQuestion?.value}</Typography>
                 <Stack boxSizing="border-box">
-                  {selectedQuestion?.options?.map((o, i) => (
-                    <Stack
-                      key={o.id}
-                      height="36px"
-                      direction="row"
-                      spacing="12px"
-                      alignItems="center"
-                      onClick={() => {
-                        setCurrentAnswer(
-                          selectedQuestion.type === "multipleChoice"
-                            ? [o.id]
-                            : currentAnswer.includes(o.id)
-                            ? currentAnswer.filter((a) => a !== o.id)
-                            : [...currentAnswer, o.id]
-                        );
-                      }}
-                      onMouseEnter={() => {
-                        setHoveringRowIndex(i);
-                      }}
-                      onMouseLeave={() => {
-                        setHoveringRowIndex(undefined);
-                      }}
-                      bgcolor={
-                        hoveringRowIndex === i
-                          ? PALETTE.secondary.grey[1]
-                          : undefined
-                      }
-                      sx={{
-                        transition: "0.2s",
-                        cursor: "pointer",
-                        pointerEvents: submitted ? "none" : undefined,
-                      }}
-                      px="8px"
-                    >
-                      <MultipleChoiceIcon
-                        state={
-                          !submitted
-                            ? null
-                            : selectedQuestion.correctOptions?.includes(o.id)
-                            ? "correct"
-                            : currentAnswer.includes(o.id) &&
-                              !selectedQuestion.correctOptions?.includes(o.id)
-                            ? "wrong"
-                            : null
+                  {selectedQuestion?.options
+                    ?.filter((o) => o.value)
+                    ?.map((o, i) => (
+                      <Stack
+                        key={o.id}
+                        height="36px"
+                        direction="row"
+                        spacing="12px"
+                        alignItems="center"
+                        onClick={() => {
+                          setCurrentAnswer(
+                            selectedQuestion.type === "multipleChoice"
+                              ? [o.id]
+                              : currentAnswer.includes(o.id)
+                              ? currentAnswer.filter((a) => a !== o.id)
+                              : [...currentAnswer, o.id]
+                          );
+                        }}
+                        onMouseEnter={() => {
+                          setHoveringRowIndex(i);
+                        }}
+                        onMouseLeave={() => {
+                          setHoveringRowIndex(undefined);
+                        }}
+                        bgcolor={
+                          hoveringRowIndex === i
+                            ? PALETTE.secondary.grey[1]
+                            : undefined
                         }
-                        type={selectedQuestion.type}
-                        selected={currentAnswer.includes(o.id)}
-                        darker={hoveringRowIndex === i}
-                      />
-                      {/* <Stack
+                        sx={{
+                          transition: "0.2s",
+                          cursor: "pointer",
+                          pointerEvents: submitted ? "none" : undefined,
+                        }}
+                        px="8px"
+                      >
+                        <MultipleChoiceIcon
+                          state={
+                            !submitted
+                              ? null
+                              : selectedQuestion.correctOptions?.includes(o.id)
+                              ? "correct"
+                              : currentAnswer.includes(o.id) &&
+                                !selectedQuestion.correctOptions?.includes(o.id)
+                              ? "wrong"
+                              : null
+                          }
+                          type={selectedQuestion.type}
+                          selected={currentAnswer.includes(o.id)}
+                          darker={hoveringRowIndex === i}
+                        />
+                        {/* <Stack
                         height="14px"
                         width="14px"
                         border={`2px solid ${
@@ -263,29 +265,29 @@ const TimelineQuizCard = (
                           }
                         />
                       </Stack> */}
-                      <Typography
-                        bold
-                        color={
-                          !submitted
-                            ? PALETTE.secondary.grey[
-                                hoveringRowIndex === i ? 5 : 4
-                              ]
-                            : currentAnswer.includes(o.id)
-                            ? selectedQuestion.correctOptions.includes(o.id)
+                        <Typography
+                          bold
+                          color={
+                            !submitted
+                              ? PALETTE.secondary.grey[
+                                  hoveringRowIndex === i ? 5 : 4
+                                ]
+                              : currentAnswer.includes(o.id)
+                              ? selectedQuestion.correctOptions.includes(o.id)
+                                ? PALETTE.system.green
+                                : PALETTE.system.red
+                              : currentAnswer &&
+                                selectedQuestion.correctOptions.includes(o.id)
                               ? PALETTE.system.green
-                              : PALETTE.system.red
-                            : currentAnswer &&
-                              selectedQuestion.correctOptions.includes(o.id)
-                            ? PALETTE.system.green
-                            : PALETTE.secondary.grey[
-                                hoveringRowIndex === i ? 5 : 4
-                              ]
-                        }
-                      >
-                        {o.value}
-                      </Typography>
-                    </Stack>
-                  ))}
+                              : PALETTE.secondary.grey[
+                                  hoveringRowIndex === i ? 5 : 4
+                                ]
+                          }
+                        >
+                          {o.value}
+                        </Typography>
+                      </Stack>
+                    ))}
                 </Stack>
               </Stack>
             )}
