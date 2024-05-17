@@ -29,6 +29,7 @@ async function fetchAndRenameSitemap(sitemapUrl: string): Promise<ISitemap[]> {
         urlArray.push({ url: url.replace(/proxy\./g, "www.") });
       }
     }
+    urlArray.push({ url: "https://www.astrosafe.co/featured-lessons" });
     urlArray.push({ url: "https://www.astrosafe.co/seal-of-approval" });
     urlArray.push({
       url: "https://www.astrosafe.co/tools/math-worksheet-generator",
