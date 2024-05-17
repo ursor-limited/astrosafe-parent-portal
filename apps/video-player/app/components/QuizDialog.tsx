@@ -28,12 +28,15 @@ import { useUserContext } from "./UserContext";
 import NotificationContext from "./NotificationContext";
 import MultipleChoiceIcon from "./MultipleChoiceIcon";
 
-export const quizQuestionTypes = ["multipleChoice", "checkbox"] as const;
+export const quizQuestionTypes = [
+  "multipleChoice",
+  "trueMaltipleChoice",
+] as const;
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
 
 export const QUESTION_TYPE_DISPLAY_NAMES: Record<QuizQuestionType, string> = {
-  multipleChoice: "Multiple choice",
-  checkbox: "Checkbox",
+  multipleChoice: "Single choice",
+  trueMaltipleChoice: "Multiple choice",
 };
 
 export const QUESTION_TYPE_ICONS: Record<
@@ -41,7 +44,7 @@ export const QUESTION_TYPE_ICONS: Record<
   React.FC<React.SVGProps<SVGSVGElement>>
 > = {
   multipleChoice: DottedCircleIcon,
-  checkbox: CheckboxIcon,
+  trueMaltipleChoice: CheckboxIcon,
 };
 
 const CircularPlusButton = (props: { onClick: () => void }) => {
