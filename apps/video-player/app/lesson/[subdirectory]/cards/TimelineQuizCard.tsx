@@ -141,7 +141,6 @@ const TimelineQuizCard = (
         creatorId={props.creatorId}
         expanded={props.expanded}
         expansionCallback={props.expansionCallback}
-        useExpandedHeight
         noButtons={props.noButtons}
       >
         <DynamicContainer duration={600} fullWidth>

@@ -7,7 +7,7 @@ import UrsorDialog, {
   BORDER_RADIUS,
   DEFAULT_FADEIN_DURATION,
 } from "./UrsorDialog";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   PALETTE,
   Typography,
@@ -169,7 +169,7 @@ const QuizDialogQuestionCard = (
             },
           },
         }}
-        onClick={props.addOption}
+        onClick={() => props.addOption()}
       >
         <Typography bold color={PALETTE.secondary.grey[3]}>
           Add another
@@ -282,6 +282,11 @@ const QuizDialog = (props: {
         props.closeCallback();
       })
       .then(() => notificationCtx.success("Updated Quiz"));
+
+  const [listEndRef, setListEndRef] = useState<HTMLElement | null>(null);
+  const scrollToBottom = useCallback(() => {
+    listEndRef?.scrollIntoView({ behavior: "smooth" });
+  }, [listEndRef]);
 
   return (
     <>
@@ -415,9 +420,10 @@ const QuizDialog = (props: {
                     dark
                     variant="tertiary"
                     endIcon={PlusIcon}
-                    onClick={() =>
-                      setQuestions([...questions, getNewQuestion()])
-                    }
+                    onClick={() => {
+                      setQuestions([...questions, getNewQuestion()]);
+                      setTimeout(() => scrollToBottom(), 300);
+                    }}
                   >
                     Add
                   </UrsorButton>
@@ -486,7 +492,7 @@ const QuizDialog = (props: {
                         }
                       />
                     ))}
-                    <Stack alignItems="center">
+                    <Stack alignItems="center" ref={setListEndRef}>
                       <CircularPlusButton
                         onClick={() =>
                           setQuestions([...questions, getNewQuestion()])
