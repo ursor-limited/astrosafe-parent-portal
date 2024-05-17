@@ -13,7 +13,7 @@ const MultipleChoiceIcon = (props: {
   <Stack
     onClick={props.onClick}
     height={props.type === "multipleChoice" ? "14px" : "12px"}
-    width={props.type === "multipleChoice" ? "14px" : "12px"}
+    minWidth={props.type === "multipleChoice" ? "14px" : "12px"}
     border={`1.8px solid ${
       props.state === "correct"
         ? PALETTE.system.green
