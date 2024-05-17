@@ -9,6 +9,12 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import MobileDashboardPageContents from "./MobileDashboardPageContents";
 import ApiController from "../api";
+import Hotjar from '@hotjar/browser';
+
+const siteId = 4981389;
+const hotjarVersion = 6;
+
+Hotjar.init(siteId, hotjarVersion);
 
 const AuthWrapper = dynamic(
   () => import("../components/AuthWrapper"),
