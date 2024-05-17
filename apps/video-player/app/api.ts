@@ -480,7 +480,7 @@ class ApiController {
     creatorId: string,
     questions: {
       type: QuizQuestionType;
-      value: string;
+      value?: string;
       options: string[];
       correctOption?: number;
     }[],

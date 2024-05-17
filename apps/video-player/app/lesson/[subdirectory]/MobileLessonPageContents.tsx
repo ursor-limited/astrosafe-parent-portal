@@ -42,7 +42,7 @@ import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
 import TimelineVideoCard from "./cards/TimelineVideoCard";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
-import QuizDialog from "@/app/components/QuizDialog";
+import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -58,6 +58,7 @@ export default function MobileLessonPageContents(props: {
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
 
   const loadLesson = () =>
     ApiController.getLessonFromUrlWithContents(props.subdirectory).then(
@@ -72,6 +73,8 @@ export default function MobileLessonPageContents(props: {
           setLinks(response.actualContents.links);
         response?.actualContents?.images &&
           setImages(response.actualContents.images);
+        response?.actualContents?.quizzes &&
+          setQuizzes(response.actualContents.quizzes);
         response?.actualContents?.texts &&
           setTexts(
             response.actualContents.texts.map((t: any) => ({
@@ -589,6 +592,14 @@ export default function MobileLessonPageContents(props: {
               quiz.id
             ).then(loadLesson);
           }}
+        />
+      ) : null}
+      {quizEditingDialogId ? (
+        <QuizDialog
+          open={true}
+          closeCallback={() => setQuizEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          quiz={quizzes.find((q) => q.id === quizEditingDialogId)}
         />
       ) : null}
       {imageDialogOpen ? (

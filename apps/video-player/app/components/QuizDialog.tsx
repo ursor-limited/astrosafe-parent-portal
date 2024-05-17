@@ -216,7 +216,7 @@ const QuizDialogQuestionCard = (
 export interface IQuizQuestion {
   id: string;
   type: QuizQuestionType;
-  value: string;
+  value?: string;
   options?: IQuizQuestionOption[];
   correctOption: string;
 }
@@ -228,7 +228,7 @@ export interface IQuizQuestionOption {
 
 export interface IQuiz {
   id: string;
-  title: string;
+  title?: string;
   description?: string;
   questions: IQuizQuestion[];
   creatorId: string;
@@ -548,9 +548,10 @@ const QuizDialog = (props: {
                     ))}
                     <Stack alignItems="center" ref={setListEndRef}>
                       <CircularPlusButton
-                        onClick={() =>
-                          setQuestions([...questions, getNewQuestion()])
-                        }
+                        onClick={() => {
+                          setTimeout(() => scrollToBottom(), 300);
+                          setQuestions([...questions, getNewQuestion()]);
+                        }}
                       />
                     </Stack>
                   </Stack>

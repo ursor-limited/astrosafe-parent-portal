@@ -5,6 +5,7 @@ import PageLayout, { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "./PageLayout";
 import ChecklistIcon from "@/images/icons/ChecklistIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import QuestionIcon from "@/images/icons/QuestionIcon.svg";
 import { useContext, useEffect, useState } from "react";
 import ApiController, { IVideo } from "../api";
 import _, { over } from "lodash";
@@ -21,8 +22,6 @@ import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import { useLocalStorage } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
-import dayjs from "dayjs";
-import { TRIAL_DAYS } from "../account/AccountPageContents";
 import {
   AstroContent,
   AstroContentSort,
@@ -487,7 +486,7 @@ export default function MobileDashboardPageContents() {
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | "link" | "image" | null>(
+  ] = useLocalStorage<"video" | "worksheet" | "quiz" | "link" | "image" | null>(
     "typeOfContentDialogToOpenUponLandingInNewLesson",
     null
   );
@@ -607,6 +606,25 @@ export default function MobileDashboardPageContents() {
             info={
               "Copy and paste any YouTube or Vimeo URL to generate a safe and shareable video link. Reduce ads, remove distracting content, and increase focus with our SafeTube player."
             }
+          />
+          <ToolButton
+            title={"Create Quiz"}
+            description="Awesome multichoice quiz."
+            color={CONTENT_BRANDING.quiz.color}
+            icon={QuestionIcon}
+            onClick={() => {
+              if (onBasicMode) {
+                setUpgradeDialogOpen(true);
+              } else if (!alreadySubmitting) {
+                setAlreadySubmitting(true);
+                setTypeOfContentDialogToOpenUponLandingInNewLesson("quiz");
+                createLessonAndRedirect(true);
+              }
+            }}
+            infoButtonPosition={300}
+            info={CONTENT_BRANDING.quiz.info}
+            infoImageUrl={CONTENT_BRANDING.quiz.infoImageUrl}
+            popoverTitle={CONTENT_BRANDING.quiz.title}
           />
           <ToolButton
             mobile
