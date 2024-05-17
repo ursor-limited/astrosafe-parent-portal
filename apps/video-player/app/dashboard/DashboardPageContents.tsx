@@ -11,6 +11,7 @@ import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
+import QuestionIcon from "@/images/icons/QuestionIcon.svg";
 import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -148,6 +149,14 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     infoButtonPosition: 136,
     info: "Don't you dare try adding naughty copy. We do not tolerate even a hint of violence, drugs, sexuality, or bad poetry.",
   },
+  quiz: {
+    title: "Quiz",
+    description: "Add some well-crafted quizzes.",
+    color: PALETTE.secondary.purple[3],
+    icon: QuestionIcon,
+    infoButtonPosition: 136,
+    info: "Test your students by creating multiple interactive multiple choice quizzes for your lessons!",
+  },
 };
 
 export const GRID_SPACING = "20px";
@@ -157,6 +166,7 @@ export const LESSON_GRID_SPACING = "34px";
 export type AstroContent =
   | "video"
   | "worksheet"
+  | "quiz"
   | "lesson"
   | "link"
   | "image"
@@ -954,7 +964,7 @@ export default function DashboardPageContents() {
   const [
     typeOfContentDialogToOpenUponLandingInNewLesson,
     setTypeOfContentDialogToOpenUponLandingInNewLesson,
-  ] = useLocalStorage<"video" | "worksheet" | "link" | "image" | null>(
+  ] = useLocalStorage<"video" | "worksheet" | "quiz" | "link" | "image" | null>(
     "typeOfContentDialogToOpenUponLandingInNewLesson",
     null
   );
@@ -1208,6 +1218,25 @@ export default function DashboardPageContents() {
               popoverTitle={CONTENT_BRANDING.video.title}
             />
             <ToolButton
+              title={shortenedToolNameInButton ? "Quiz" : "Create Quiz"}
+              description="Awesome multichoice quiz."
+              color={CONTENT_BRANDING.quiz.color}
+              icon={QuestionIcon}
+              onClick={() => {
+                if (onBasicMode) {
+                  setUpgradeDialogOpen(true);
+                } else if (!alreadySubmitting) {
+                  setAlreadySubmitting(true);
+                  setTypeOfContentDialogToOpenUponLandingInNewLesson("quiz");
+                  createLessonAndRedirect(true);
+                }
+              }}
+              infoButtonPosition={300}
+              info={CONTENT_BRANDING.quiz.info}
+              infoImageUrl={CONTENT_BRANDING.quiz.infoImageUrl}
+              popoverTitle={CONTENT_BRANDING.quiz.title}
+            />
+            <ToolButton
               title={
                 shortenedToolNameInButton
                   ? "Worksheet"
@@ -1398,16 +1427,7 @@ export default function DashboardPageContents() {
                               }
                               deletionCallback={loadImages}
                             />
-                          ) : // : item.type === "text" ? (
-                          //   <TextCard
-                          //     {...(item.details as IText)}
-                          //     editCallback={() =>
-                          //       setTextEditingDialogId(item.details.id)
-                          //     }
-                          //     deleteCallback={loadTexts}
-                          //   />
-                          // )
-                          item.type === "link" ? (
+                          ) : item.type === "link" ? (
                             <LinkCard
                               {...(item.details as ILink)}
                               editCallback={() =>

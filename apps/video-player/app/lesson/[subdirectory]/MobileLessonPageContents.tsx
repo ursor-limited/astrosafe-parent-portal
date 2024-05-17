@@ -42,6 +42,7 @@ import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
 import TimelineVideoCard from "./cards/TimelineVideoCard";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
+import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
@@ -57,6 +58,7 @@ export default function MobileLessonPageContents(props: {
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
+  const [quizzes, setQuizzes] = useState<IQuiz[]>([]);
 
   const loadLesson = () =>
     ApiController.getLessonFromUrlWithContents(props.subdirectory).then(
@@ -71,6 +73,8 @@ export default function MobileLessonPageContents(props: {
           setLinks(response.actualContents.links);
         response?.actualContents?.images &&
           setImages(response.actualContents.images);
+        response?.actualContents?.quizzes &&
+          setQuizzes(response.actualContents.quizzes);
         response?.actualContents?.texts &&
           setTexts(
             response.actualContents.texts.map((t: any) => ({
@@ -178,12 +182,19 @@ export default function MobileLessonPageContents(props: {
   const [imageEditingDialogId, setImageEditingDialogId] = useState<
     string | undefined
   >(undefined);
+
+  const [quizDialogOpen, setQuizDialogOpen] = useState<boolean>(true);
+  const [quizEditingDialogId, setQuizEditingDialogId] = useState<
+    string | undefined
+  >(undefined);
+
   const contentCallbacks: Record<AstroContent, () => void> = {
     worksheet: () => setWorksheetDialogOpen(true),
     video: () => setVideoDialogOpen(true),
     link: () => setLinkDialogOpen(true),
     image: () => setImageDialogOpen(true),
     text: () => setTextDialogOpen(true),
+    quiz: () => setQuizDialogOpen(true),
     lesson: () => null,
   };
 
@@ -567,6 +578,28 @@ export default function MobileLessonPageContents(props: {
           updateCallback={loadLesson}
           text={texts.find((t) => t.id === textEditingDialogId)}
           mobile
+        />
+      ) : null}
+      {quizDialogOpen && lesson ? (
+        <QuizDialog
+          open={true}
+          closeCallback={() => setQuizDialogOpen(false)}
+          creationCallback={(quiz) => {
+            ApiController.addToLesson(
+              lesson.id,
+              contentInsertionIndex ?? 0,
+              "quiz",
+              quiz.id
+            ).then(loadLesson);
+          }}
+        />
+      ) : null}
+      {quizEditingDialogId ? (
+        <QuizDialog
+          open={true}
+          closeCallback={() => setQuizEditingDialogId(undefined)}
+          editingCallback={loadLesson}
+          quiz={quizzes.find((q) => q.id === quizEditingDialogId)}
         />
       ) : null}
       {imageDialogOpen ? (

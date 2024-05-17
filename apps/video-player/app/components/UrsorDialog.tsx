@@ -211,7 +211,6 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
-          //overflow={props.noOverflowHidden ? undefined : "scroll"}
         >
           {props.subtitle ||
           props.title ||
