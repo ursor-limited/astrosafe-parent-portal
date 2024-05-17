@@ -16,7 +16,7 @@ import { useUserContext } from "@/app/components/UserContext";
 import { useEffect, useState } from "react";
 import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
 
-export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet"];
+export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet", "quiz"];
 
 const AddContentDialog = (props: {
   open: boolean;
@@ -30,6 +30,7 @@ const AddContentDialog = (props: {
     "text",
     "video",
     "worksheet",
+    "quiz",
   ];
   const userDetails = useUserContext().user;
   const [premiumLock, setPremiumLock] = useState<boolean>(false);

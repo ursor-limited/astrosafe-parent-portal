@@ -125,6 +125,7 @@ export default function AddContentButton(props: {
     "text",
     "video",
     "worksheet",
+    "quiz",
   ];
 
   const onBasicMode = useOnBasicMode();
@@ -135,7 +136,6 @@ export default function AddContentButton(props: {
     <>
       <UrsorPopover
         open={props.open}
-        // width={props.mobile ? "calc(100% - 38px)" : undefined}
         content={
           <Stack
             p="16px"

@@ -1,3 +1,4 @@
+import { IQuiz, QuizQuestionType } from "./components/QuizDialog";
 import {
   EquationOrientation,
   INumberBondWorksheetSettings,
@@ -431,6 +432,9 @@ class ApiController {
   static async duplicateText(id: string, lessonId: string, userId?: string) {
     return post(`text/dupli/cate`, { id, lessonId, userId });
   }
+  static async duplicateQuiz(id: string, lessonId: string, userId?: string) {
+    return post(`quiz/dupli/cate`, { id, lessonId, userId });
+  }
   static async createText(details: any) {
     return post("text", details).then((response: any) => response.json());
   }
@@ -470,6 +474,32 @@ class ApiController {
       lessonId,
       userId,
     }).then((response: any) => response.json());
+  }
+  static async createQuiz(
+    title: string,
+    creatorId: string,
+    questions: {
+      type: QuizQuestionType;
+      value?: string;
+      options: string[];
+      correctOption?: number;
+    }[],
+    description?: string
+  ) {
+    return post("quiz", {
+      title,
+      description,
+      creatorId,
+      questions,
+    }).then((response: any) => response.json());
+  }
+  static async updateQuiz(id: string, details: any) {
+    return patch(`quiz/${id}`, details).then((response: any) =>
+      response.json()
+    );
+  }
+  static async deleteQuiz(id: string) {
+    return dellete(`quiz/${id}`);
   }
 }
 

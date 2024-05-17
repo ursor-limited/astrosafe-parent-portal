@@ -17,6 +17,8 @@ import TimelineWorksheetCard from "./cards/TimelineWorksheetCard";
 import TimelineLinkCard from "./cards/TimelineLinkCard";
 import TimelineTextCard from "./cards/TimelineTextCard";
 import TimelineVideoCard from "./cards/TimelineVideoCard";
+import { IQuiz } from "@/app/components/QuizDialog";
+import TimelineQuizCard from "./cards/TimelineQuizCard";
 
 const ContentCards = (props: {
   videos: IVideo[];
@@ -24,6 +26,7 @@ const ContentCards = (props: {
   texts: IText[];
   images: IImage[];
   worksheets: IWorksheet[];
+  quizzes: IQuiz[];
   contents: {
     type: AstroLessonContent;
     contentId: string;
@@ -36,6 +39,7 @@ const ContentCards = (props: {
   setTextEditingDialogId: (id: string) => void;
   setImageEditingDialogId: (id: string) => void;
   setWorksheetEditingDialogId: (id: string) => void;
+  setQuizEditingDialogId: (id: string) => void;
   updateCallback: () => void;
   setHeight?: (id: string, height: number) => void;
   dragStartCallback?: (id: string) => void;
@@ -149,6 +153,29 @@ const ContentCards = (props: {
                 key={c.contentId}
                 editingCallback={() =>
                   props.setWorksheetEditingDialogId(c.contentId)
+                }
+                deletionCallback={props.updateCallback}
+                duplicationCallback={props.updateCallback}
+                setHeight={(height) => {
+                  props.setHeight?.(c.contentId, height);
+                }}
+                onDragStart={() => props.dragStartCallback?.(c.contentId)}
+                dragging={props.draggedContentId === c.contentId}
+                columnWidth={props.columnWidth}
+                expanded={props.expanded}
+                expansionCallback={() => props.expansionCallback?.(c.contentId)}
+                noButtons={props.noButtons}
+              />
+            ) : null;
+          } else if (c.type === "quiz") {
+            const quiz = props.quizzes?.find((q) => q.id === c.contentId);
+            return quiz ? (
+              <TimelineQuizCard
+                {...quiz}
+                lessonId={props.lessonId}
+                key={c.contentId}
+                editingCallback={() =>
+                  props.setQuizEditingDialogId(c.contentId)
                 }
                 deletionCallback={props.updateCallback}
                 duplicationCallback={props.updateCallback}
