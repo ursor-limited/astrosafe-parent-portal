@@ -3,6 +3,7 @@
 /* from https://medium.com/@mircea.calugaru/react-quill-editor-with-full-toolbar-options-and-custom-buttons-undo-redo-176d79f8d375 */
 
 import React, { useEffect } from "react";
+import "./TextEditorToolBar.css";
 
 // // Undo and redo functions for Custom Toolbar
 // function undoChange() {
@@ -17,12 +18,13 @@ export const getModules = (id: string) => ({
   clipboard: { matchVisual: false }, // needed to prevent space being inserted above lists
   toolbar: {
     container: `#${id}`,
+    size: ["small", "medium", "large"],
     // handlers: {
     //   undo: undoChange,
     //   redo: redoChange,
     // },
   },
-  //size: ["small", "large", "huge"],
+  //size: ["small", "medium", "large"],
   //   history: {
   //     delay: 500,
   //     maxStack: 100,
@@ -57,7 +59,7 @@ const initQuill = async () => {
   if (Quill) {
     // Add sizes to whitelist and register them
     const Size = Quill.import("formats/size");
-    Size.whitelist = ["extra-small", "small", "medium", "large", "huge"];
+    Size.whitelist = ["small", "medium", "large"];
     Quill.register(Size, true);
 
     // Add fonts to whitelist and register them
@@ -102,7 +104,6 @@ export const TextEditorToolbar = (props: { id: string }) => {
           {/* <option value="normal">Normal</option> */}
           <option value="medium">Medium</option>
           <option value="large">Large</option>
-          <option value="huge">Huge</option>
         </select>
         {/* <select className="ql-header" defaultValue="3">
         <option value="1">Heading</option>

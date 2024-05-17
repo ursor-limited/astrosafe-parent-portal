@@ -100,7 +100,17 @@ const TextCreationDialog = (props: {
           p={props.mobile ? "16px" : undefined}
           boxSizing="border-box"
         >
-          <Stack width="100%" flex={1}>
+          <Stack
+            width="100%"
+            flex={1}
+            sx={{
+              ".ql-editor": {
+                ".ql-size-large": { fontSize: "20px" },
+                fontSize: "16px",
+                ".ql-size-small": { fontSize: "14px" },
+              },
+            }}
+          >
             <TextEditorToolbar id={quillId} />
             {quillId ? (
               <AstroText

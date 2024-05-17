@@ -98,6 +98,9 @@ const TimelineTextCard = (
             },
             ".ql-editor": {
               padding: "3px",
+              ".ql-size-large": { fontSize: "20px" },
+              ".ql-size-medium": { fontSize: "16px" },
+              ".ql-size-small": { fontSize: "14px" },
             },
             overflowWrap: "anywhere",
             color: PALETTE.font.dark,
