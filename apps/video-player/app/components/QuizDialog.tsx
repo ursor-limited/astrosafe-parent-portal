@@ -28,6 +28,8 @@ import { useUserContext } from "./UserContext";
 import NotificationContext from "./NotificationContext";
 import MultipleChoiceIcon from "./MultipleChoiceIcon";
 
+const MAX_QUESTIONS = 4;
+
 export const quizQuestionTypes = [
   "multipleChoice",
   "trueMaltipleChoice",
@@ -186,28 +188,30 @@ const QuizDialogQuestionCard = (
           </Stack>
         ))}
       </Stack>
-      <Stack
-        direction="row"
-        spacing="8px"
-        height="44px"
-        alignItems="center"
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.7 },
-          transition: "0.2s",
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[3],
+      {props.options && props.options?.length < MAX_QUESTIONS ? (
+        <Stack
+          direction="row"
+          spacing="8px"
+          height="44px"
+          alignItems="center"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.7 },
+            transition: "0.2s",
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[3],
+              },
             },
-          },
-        }}
-        onClick={() => props.addOption()}
-      >
-        <Typography bold color={PALETTE.secondary.grey[3]}>
-          Add another
-        </Typography>
-        <PlusIcon size="16px" height="16px" />
-      </Stack>
+          }}
+          onClick={() => props.addOption()}
+        >
+          <Typography bold color={PALETTE.secondary.grey[3]}>
+            Add another
+          </Typography>
+          <PlusIcon size="16px" height="16px" />
+        </Stack>
+      ) : null}
     </Stack>
   </DynamicContainer>
 );
@@ -460,6 +464,7 @@ const QuizDialog = (props: {
                       setQuestions([...questions, getNewQuestion()]);
                       setTimeout(() => scrollToBottom(), 300);
                     }}
+                    disabled={questions.length === MAX_QUESTIONS}
                   >
                     Add
                   </UrsorButton>
