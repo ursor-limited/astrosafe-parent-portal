@@ -1,4 +1,4 @@
-import { QuizQuestionType } from "./components/QuizDialog";
+import { IQuiz, QuizQuestionType } from "./components/QuizDialog";
 import {
   EquationOrientation,
   INumberBondWorksheetSettings,
@@ -492,6 +492,11 @@ class ApiController {
       creatorId,
       questions,
     }).then((response: any) => response.json());
+  }
+  static async updateQuiz(id: string, details: any) {
+    return patch(`quiz/${id}`, details).then((response: any) =>
+      response.json()
+    );
   }
   static async deleteQuiz(id: string) {
     return dellete(`quiz/${id}`);

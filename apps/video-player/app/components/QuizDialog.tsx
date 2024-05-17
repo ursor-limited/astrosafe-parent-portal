@@ -7,7 +7,7 @@ import UrsorDialog, {
   BORDER_RADIUS,
   DEFAULT_FADEIN_DURATION,
 } from "./UrsorDialog";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   PALETTE,
   Typography,
@@ -24,6 +24,7 @@ import UrsorSelect from "./UrsorSelect";
 import { Dialog } from "@mui/material";
 import DynamicContainer from "./DynamicContainer";
 import { useUserContext } from "./UserContext";
+import NotificationContext from "./NotificationContext";
 
 export const quizQuestionTypes = ["multipleChoice"] as const;
 export type QuizQuestionType = (typeof quizQuestionTypes)[number];
@@ -137,7 +138,7 @@ const QuizDialogQuestionCard = (
                     onClick={() => props.setCorrect(o.id)}
                     height="14px"
                     width="14px"
-                    border={`2px solid ${PALETTE.secondary.grey[4]}`}
+                    border={`2px solid ${PALETTE.secondary.grey[3]}`}
                     borderRadius="100%"
                     sx={{
                       cursor: "pointer",
@@ -248,6 +249,8 @@ const QuizDialog = (props: {
 
   const userDetails = useUserContext().user;
 
+  const notificationCtx = useContext(NotificationContext);
+
   const submitCreation = () =>
     ApiController.createQuiz(
       title,
@@ -262,6 +265,23 @@ const QuizDialog = (props: {
       props.closeCallback();
       props.creationCallback?.(newQuiz);
     });
+
+  const submitUpdate = () =>
+    props.quiz?.id &&
+    ApiController.updateQuiz(props.quiz?.id, {
+      title,
+      description,
+      questions: questions.map((q) => ({
+        ..._.omit(q, "id"),
+        options: q.options?.map((o) => o.value) || [],
+        correctOption: q.options?.map((o) => o.id)?.indexOf(q.correctOption),
+      })),
+    })
+      .then(() => {
+        props.editingCallback?.();
+        props.closeCallback();
+      })
+      .then(() => notificationCtx.success("Updated Quiz"));
 
   return (
     <>
@@ -303,14 +323,16 @@ const QuizDialog = (props: {
               justifyContent="space-between"
               width="100%"
             >
-              <Typography variant="h4">Create Quiz</Typography>
+              <Typography variant="h4">
+                {props.quiz ? "Edit Quiz" : "Create Quiz"}
+              </Typography>
               <UrsorButton
                 dark
                 variant="tertiary"
                 endIcon={PencilIcon}
-                onClick={submitCreation}
+                onClick={() => (props.quiz ? submitUpdate : submitCreation)()}
               >
-                Create
+                {props.quiz ? "Update" : "Create"}
               </UrsorButton>
             </Stack>
             <Stack direction="row" spacing="24px" overflow="hidden">

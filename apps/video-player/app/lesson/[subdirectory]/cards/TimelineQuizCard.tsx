@@ -107,12 +107,14 @@ const TimelineQuizCard = (
     [selectedQuestionIndex]
   );
 
-  const [answers, setAnswers] = useState<
-    { questionId: string; optionId: string }[]
-  >([]);
-
   const [score, setScore] = useState<number>(0);
   const [currentAnswer, setCurrentAnswer] = useState<string | undefined>();
+  useEffect(() => {
+    setScore(0);
+    setCurrentAnswer(undefined);
+    setSelectedQuestionIndex(0);
+    setSelectedQuestion(props.questions[0]);
+  }, [props.questions]);
 
   const [hoveringRowIndex, setHoveringRowIndex] = useState<
     number | undefined
