@@ -283,6 +283,7 @@ const TimelineQuizCard = (
                                   hoveringRowIndex === i ? 5 : 4
                                 ]
                           }
+                          noWrap
                         >
                           {o.value}
                         </Typography>
