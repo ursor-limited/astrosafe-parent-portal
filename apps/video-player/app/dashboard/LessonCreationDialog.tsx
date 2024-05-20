@@ -113,7 +113,6 @@ const LessonCreationDialog = (props: {
               setDescription(event.target.value)
             }
             placeholder="Description"
-            width="100%"
             height="90px"
             boldValue
           />
