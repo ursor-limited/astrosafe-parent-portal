@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/material";
-import IntroScreenshot from "../../images/IntroScreenshot.png";
 import Wave from "../../images/Wave.png";
-import ChromeDeviceIllustration from "../../images/ChromeDeviceIllustration.png";
-import WonderingIllustration from "../../images/WonderingIllustration.svg";
-import iPadIllustration from "../../images/iPadIllustration.png";
-import AppsRow from "../../images/AppsRow.png";
-import ChromeCornerIllustration from "../../images/ChromeCornerIllustration.png";
 import _ from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import BrowserApiController, { IDevice, ISchool } from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import StepDialog, { IDialogStepDetails } from "../components/StepDialog";
+import WonderingIllustration from "@/images/WonderingIllustration.png";
+import Image from "next/image";
+import Link from "next/link";
 
 const PULSE_AMPLITUDE = "12px";
 const EXTENSION_URL =
@@ -51,10 +48,9 @@ export const AddDeviceDialogContent = (props: { device?: IDevice }) => (
           height="109px"
           width="179px"
           src={
-            (props.device.type === "chrome"
-              ? ChromeDeviceIllustration
-              : iPadIllustration
-            ).src
+            props.device.type === "chrome"
+              ? "https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustration.png"
+              : "https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustration.png"
           }
         />
         <Typography variant="medium" bold>
@@ -63,10 +59,11 @@ export const AddDeviceDialogContent = (props: { device?: IDevice }) => (
       </Stack>
     ) : (
       <>
-        <img
-          height="132px"
-          width="170px"
-          src={WonderingIllustration.src}
+        <Image
+          height={132}
+          width={170}
+          src={WonderingIllustration}
+          alt="Wondering illustration"
           style={{ opacity: 0.3 }}
         />
         <Typography variant="medium" bold color={PALETTE.secondary.grey[3]}>
@@ -119,7 +116,7 @@ export const DeviceSelectionStepContent = (props: {
           <img
             height="140px"
             width="230px"
-            src={ChromeDeviceIllustration.src}
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustration.png"
           />
         }
       />
@@ -127,7 +124,13 @@ export const DeviceSelectionStepContent = (props: {
     <Stack onClick={() => props.callback("ipad")}>
       <DeviceButton
         text="I'm installing on an iPad Device"
-        image={<img height="144px" width="230px" src={iPadIllustration.src} />}
+        image={
+          <img
+            height="144px"
+            width="230px"
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustration.png"
+          />
+        }
       />
     </Stack>
   </Stack>
@@ -178,15 +181,9 @@ export const DeviceInstructionsStepContent = (props: {
       pt="60px"
       position="absolute"
     >
-      {/* <Wave width="100%" /> */}
-      <img
-        //height="58px"
-        width="100%"
-        //style={{ position: "absolute", left: "-12px", bottom: "-12px" }}
-        src={Wave.src}
-      />
+      <Image src={Wave.src} fill alt="Wave" />
     </Stack>
-    <a
+    <Link
       target="_blank"
       href={props.type === "chrome" ? EXTENSION_URL : APP_STORE_URL}
     >
@@ -210,7 +207,7 @@ export const DeviceInstructionsStepContent = (props: {
           </UrsorButton>
         </InstructionCard>
       </Stack>
-    </a>
+    </Link>
     <Stack
       position="absolute"
       top="305px"
@@ -237,15 +234,21 @@ export const DeviceInstructionsStepContent = (props: {
       >
         {props.type === "chrome" ? (
           <Stack height="46px" width="217px" position="relative">
-            <img
-              height="58px"
-              width="217px"
+            <Image
+              height={58}
+              width={217}
               style={{ position: "absolute", left: "-12px", bottom: "-12px" }}
-              src={ChromeCornerIllustration.src}
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeCornerIllustration.png"
+              alt="chrome corner"
             />
           </Stack>
         ) : (
-          <img height="49px" width="169px" src={AppsRow.src} />
+          <Image
+            height={49}
+            width={169}
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/AppsRow.png"
+            alt="apps row"
+          />
         )}
       </InstructionCard>
     </Stack>
@@ -322,7 +325,13 @@ export default function AddDeviceTutorialDialog(
       width="100%"
       height="19vh"
     >
-      <img height="380px" width="auto" src={IntroScreenshot.src} />
+      <img
+        height="380px"
+        width="auto"
+        src={
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/IntroScreenshot.png"
+        }
+      />
     </Stack>
   );
 

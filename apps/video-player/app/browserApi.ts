@@ -57,6 +57,7 @@ const get = (route: string) =>
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`
   );
 
+//@ts-ignore
 const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
@@ -91,15 +92,15 @@ const dellete = (route: string) =>
 
 class BrowserApiController {
   static async getSchool(id: string) {
-    return get(`/schools/${id}`).then((response: any) => response.json());
+    return get(`schools/${id}`).then((response: any) => response.json());
   }
   static async checkTeacherExists(email: string) {
-    return post("/teachers/checkTeacherExists", { email }).then(
+    return post("teachers/checkTeacherExists", { email }).then(
       (response: any) => response.json()
     );
   }
   static async getLatestBrowsingStates(schoolId: string) {
-    return get(`/schools/${schoolId}/latestBrowsingStates`).then(
+    return get(`schools/${schoolId}/latestBrowsingStates`).then(
       (response: any) => response.json()
     );
   }
@@ -108,36 +109,36 @@ class BrowserApiController {
     deviceIds: string[],
     endTime: string
   ) {
-    return patch(`/schools/${schoolId}/startLock`, {
+    return patch(`schools/${schoolId}/startLock`, {
       deviceIds,
       endTime,
     }).then((response: any) => response.json());
   }
   static async endLock(schoolId: string) {
-    return patch(`/schools/${schoolId}/endLock`, {}).then((response: any) =>
+    return patch(`schools/${schoolId}/endLock`, {}).then((response: any) =>
       response.json()
     );
   }
   static async approveApprovalRequest(requestId: string, reviewerId: string) {
-    return post(`/schools/approvalRequests/${requestId}/approve`, {
+    return post(`schools/approvalRequests/${requestId}/approve`, {
       reviewerId,
     }).then((response: any) => response.json());
   }
 
   static async denyApprovalRequest(requestId: string, reviewerId: string) {
-    return post(`/schools/approvalRequests/${requestId}/deny`, {
+    return post(`schools/approvalRequests/${requestId}/deny`, {
       reviewerId,
     }).then((response: any) => response.json());
   }
 
   static async approveDevice(deviceId: string, reviewerId: string) {
-    return post(`/schools/devices/${deviceId}/approve`, {
+    return post(`schools/devices/${deviceId}/approve`, {
       reviewerId,
     }).then((response: any) => response.json());
   }
 
   static async rejectDevice(deviceId: string, reviewerId: string) {
-    return post(`/schools/devices/${deviceId}/reject`, {
+    return post(`schools/devices/${deviceId}/reject`, {
       reviewerId,
     }).then((response: any) => response.json());
   }

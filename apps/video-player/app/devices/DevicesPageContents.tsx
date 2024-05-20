@@ -2,7 +2,6 @@
 
 import { Stack } from "@mui/system";
 import React, { useContext, useEffect, useState } from "react";
-import GraphIllustration from "../images/GraphIllustration.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import dayjs from "dayjs";
 import NotificationContext from "../components/NotificationContext";
@@ -12,10 +11,10 @@ import X from "@/images/icons/X.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import BrowserApiController, { IDevice, ISchool } from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
-import PageLayout from "../dashboard/PageLayout";
+import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DynamicCardGrid from "../components/DynamicCardGrid";
-import DeviceCard from "./components/DeviceCard";
+import DeviceCard from "./DeviceCard";
 import _ from "lodash";
 import { createPortal } from "react-dom";
 import UrsorLoading from "../components/UrsorLoading";
@@ -65,7 +64,11 @@ export const EmptyStateIllustration = (props: {
   >
     <Stack position="relative">
       <Stack sx={{ opacity: 0.3 }}>
-        <img height="207px" width="217px" src={GraphIllustration} />
+        <img
+          height="207px"
+          width="217px"
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/graphIllustration.png"
+        />
       </Stack>
       <Stack width="100%" alignItems="center" position="absolute" top="170px">
         <Typography
@@ -309,7 +312,14 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
             </UrsorFadeIn>
           </Stack>
         ) : null}
-        <Stack overflow="scroll" flex={1} pb="141px" spacing="30px">
+        <Stack
+          overflow="scroll"
+          flex={1}
+          pb="141px"
+          spacing="30px"
+          pl={`${SIDEBAR_X_MARGIN}px`}
+          pt="30px"
+        >
           {pendingDeviceIds.length > 0 ? (
             <Stack>
               <UrsorFadeIn duration={800}>

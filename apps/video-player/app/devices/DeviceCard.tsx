@@ -1,33 +1,55 @@
 import React, { useState } from "react";
 import { Box, Stack } from "@mui/system";
-import { ReactComponent as TrashcanIcon } from "../../../images/icons/TrashcanIcon.svg";
-import { ReactComponent as PencilIcon } from "../../../images/icons/PencilIcon.svg";
-import { ReactComponent as ClockIcon } from "../../../images/icons/Clock.svg";
-import { ReactComponent as LinkIcon } from "../../../images/icons/LinkIcon.svg";
-import { ReactComponent as ListUnorderedIcon } from "../../../images/icons/ListUnorderedIcon.svg";
-import { ReactComponent as CheckBoxIcon } from "../../../images/icons/CheckBoxIcon.svg";
-import { ReactComponent as EmptyCheckboxIcon } from "../../../images/icons/EmptyCheckboxIcon.svg";
-import Typography from "../../../components/Typography";
-import ChromeDeviceIllustration from "../../../images/ChromeDeviceIllustration.png";
-import iPadIllustration from "../../../images/iPadIllustration.png";
-import UrsorActionButton from "../../../components/UrsorActionButton";
-import { useOverallDialogContext } from "../../../contexts/DialogContext";
-import NotificationContext from "../../../contexts/NotificationContext";
-import { IActionPopupItem } from "../../../components/ActionPopup";
-import { PALETTE } from "../../../palette";
-import ApiController from "../../../controllers/ApiController";
-import UrsorButton from "../../../components/buttons/UrsorButton";
-import { IDevice } from "../../AdminPage/AdminPage";
-import { useUserContext } from "../../../contexts/UserContext";
-import DeviceEditingDialog from "../../DeviceDialog/DeviceEditingDialog";
-import { useUserDataContext } from "../../../contexts/UserDataContext";
-import DeviceRemovalDialog from "../../DeviceDialog/DeviceRemovalDialog";
-import { getPrefixRemovedUrl } from "../../LibraryPage/components/LinkCard";
-import { getLastOnlineText } from "../../DeviceDialog/DeviceDialog";
-import ContentAgeModeIcon from "../../BrowserPage/ContentAgeModeIcon";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import ClockIcon from "@/images/icons/ClockIcon.svg";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
+import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import CheckBoxIcon from "@/images/icons/CheckBoxIcon.svg";
+import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
+import { PALETTE, Typography, UrsorButton } from "ui";
+import BrowserApiController, { IDevice } from "@/app/browserApi";
+import NotificationContext from "@/app/components/NotificationContext";
+import { IActionPopupItem } from "../components/ActionPopup";
+import { useBrowserUserContext } from "../components/BrowserUserContext";
+import ContentAgeModeIcon from "./ContentAgeModeIcon";
+import UrsorActionButton from "../components/UrsorActionButton";
+import { getPrefixRemovedUrl } from "../components/LinkCard";
+import dayjs from "dayjs";
 
 export const getCardBorder = (new_: boolean) =>
   `${new_ ? 3 : 0}px solid ${PALETTE.secondary.orange[3]}`;
+
+export const getTimeSpentText = (minutes: number) =>
+  minutes > 0
+    ? minutes == 1
+      ? `1 minute`
+      : `${minutes} minutes`
+    : "a few seconds";
+
+const WIDTH = "1184px";
+const HEIGHT = "726px";
+const PIN_IMAGE_SIZE = "42px";
+const LEFT_SECTION_WIDTH = "315px";
+
+export const getLastOnlineText = (lastOnline?: string) => {
+  if (!lastOnline) {
+    return "Never active yet";
+  } else {
+    const days = dayjs().diff(dayjs(lastOnline), "days");
+    if (days > 0) {
+      return days === 1 ? "Yesterday" : `${days} days ago`;
+    } else {
+      const hours = dayjs().diff(dayjs(lastOnline), "hours");
+      if (hours > 0) {
+        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
+      } else {
+        const minutes = dayjs().diff(dayjs(lastOnline), "minutes");
+        return minutes <= 1 ? "Now" : `${minutes} minutes ago`;
+      }
+    }
+  }
+};
 
 const PADDING = "12px";
 
@@ -67,9 +89,7 @@ export interface IDeviceCardProps {
 
 export default function DeviceCard(props: IDeviceCardProps) {
   const notificationCtx = React.useContext(NotificationContext);
-  const dialogCtx = useOverallDialogContext();
-  const userCtx = useUserContext();
-  const dataCtx = useUserDataContext();
+  const userCtx = useBrowserUserContext();
 
   const [editingDialogOpen, setEditingDialogOpen] = useState<boolean>(false);
   const [removalDialogOpen, setRemovalDialogOpen] = useState<boolean>(false);
@@ -81,12 +101,12 @@ export default function DeviceCard(props: IDeviceCardProps) {
     {
       text: "View",
       icon: ListUnorderedIcon,
-      kallback: () =>
-        dialogCtx.setDeviceDialogProps({
-          open: true,
-          closeCallback: () => null,
-          deviceId: props.device.id,
-        }),
+      kallback: () => null,
+      // dialogCtx.setDeviceDialogProps({
+      //   open: true,
+      //   closeCallback: () => null,
+      //   deviceId: props.device.id,
+      // }),
     },
     {
       icon: PencilIcon,
@@ -132,12 +152,13 @@ export default function DeviceCard(props: IDeviceCardProps) {
           "&:hover": { opacity: 0.6 },
           transition: "0.2s",
         }}
-        onClick={() =>
-          dialogCtx.setDeviceDialogProps({
-            open: true,
-            closeCallback: () => null,
-            deviceId: props.device.id,
-          })
+        onClick={
+          () => null
+          // dialogCtx.setDeviceDialogProps({
+          //   open: true,
+          //   closeCallback: () => null,
+          //   deviceId: props.device.id,
+          // })
         }
       >
         <Stack direction="row" height="100%" width="100%">
@@ -156,13 +177,25 @@ export default function DeviceCard(props: IDeviceCardProps) {
             position="relative"
           >
             {props.device.type === "chrome" ? (
-              <img height="auto" width="46px" src={ChromeDeviceIllustration} />
+              <img
+                height="auto"
+                width="46px"
+                src={
+                  "https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustration.png"
+                }
+              />
             ) : (
-              <img height="auto" width="36px" src={iPadIllustration} />
+              <img
+                height="auto"
+                width="36px"
+                src={
+                  "https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustration.png"
+                }
+              />
             )}
             <Stack position="absolute" bottom="-5px" right="-5px">
               <ContentAgeModeIcon
-                size="14px"
+                size={14}
                 mode={props.device.contentAgeMode}
               />
             </Stack>
@@ -321,9 +354,9 @@ export default function DeviceCard(props: IDeviceCardProps) {
             size="tiny"
             backgroundColor={PALETTE.secondary.green[4]}
             onClick={() =>
-              ApiController.approveDevice(
+              BrowserApiController.approveDevice(
                 props.device.id,
-                userCtx.userDetails?.id
+                userCtx.userDetails?.id ?? ""
               )
                 .then(props.updateCallback)
                 .then(() => notificationCtx.success("Approved Device"))
@@ -334,11 +367,11 @@ export default function DeviceCard(props: IDeviceCardProps) {
           <UrsorButton
             size="tiny"
             backgroundColor="transparent"
-            variant="transparentRed"
+            // variant="transparentRed"
             onClick={() =>
-              ApiController.rejectDevice(
+              BrowserApiController.rejectDevice(
                 props.device.id,
-                userCtx.userDetails?.id
+                userCtx.userDetails?.id ?? ""
               )
                 .then(props.updateCallback)
                 .then(() => notificationCtx.negativeSuccess("Rejected Device"))
@@ -348,7 +381,7 @@ export default function DeviceCard(props: IDeviceCardProps) {
           </UrsorButton>
         </Stack>
       )}
-      <DeviceEditingDialog
+      {/* <DeviceEditingDialog
         open={editingDialogOpen}
         onCloseCallback={() => setEditingDialogOpen(false)}
         device={props.device}
@@ -363,7 +396,7 @@ export default function DeviceCard(props: IDeviceCardProps) {
         open={removalDialogOpen}
         onCloseCallback={() => setRemovalDialogOpen(false)}
         device={props.device}
-      />
+      /> */}
     </Stack>
   );
 }

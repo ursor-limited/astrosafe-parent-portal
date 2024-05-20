@@ -1,6 +1,9 @@
+"use client";
+
 import React, { useContext, createContext, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import BrowserApiController from "../browserApi";
+import { useAuth0 } from "@auth0/auth0-react";
 // import mixpanel from "mixpanel-browser";
 
 export interface ITeacher {
@@ -37,7 +40,6 @@ export type TeacherUpdate = Partial<
 export interface IUserContext {
   userDetails: ITeacher | undefined;
   googleId: string | undefined;
-  setUsername: (username: string) => void;
   // setAuthConnectionType: (type: "email" | "social") => void;
   setGoogleId: (id: string) => void;
   load: (newUsername?: string) => void;
@@ -48,8 +50,6 @@ export interface IUserContext {
 const UserContext = createContext<IUserContext>({
   userDetails: undefined,
   googleId: undefined,
-  setUsername: () => null,
-  // setAuthConnectionType: () => null,
   setGoogleId: () => null,
   load: () => null,
   clear: () => null,
@@ -77,30 +77,24 @@ const BrowserUserProvider = (props: IBrowserUserProviderProps) => {
     "googleId",
     undefined
   );
-  const [username, setUsername] = useLocalStorage<string | undefined>(
-    "username",
-    undefined
-  );
 
-  const load = (newUsername?: string) => {
-    (username || newUsername) && //@ts-ignore
-      BrowserApiController.checkTeacherExists(username || newUsername).then(
-        (ud) => {
-          setUserDetails(ud);
-        }
-      );
+  const { user } = useAuth0();
+
+  const load = () => {
+    BrowserApiController.checkTeacherExists(user?.email ?? "").then((ud) => {
+      setUserDetails(ud);
+    });
   };
 
-  // useEffect(() => {
-  //   userDetails?.id && mixpanel.identify(userDetails.id);
-  // }, [userDetails?.id]);
+  useEffect(() => {
+    user?.email && load();
+  }, [user?.email]);
 
   return (
     <UserContext.Provider
       value={{
         userDetails,
         googleId,
-        setUsername,
         // setAuthConnectionType,
         setGoogleId,
         load,

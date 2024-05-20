@@ -1,14 +1,14 @@
 import React from "react";
 import AuthWrapper from "../components/AuthWrapper";
-import { UserProvider } from "../components/UserContext";
 import DevicesPageContents from "./DevicesPageContents";
+import { BrowserUserProvider } from "../components/BrowserUserContext";
 
 async function DevicesPage() {
   return (
     <AuthWrapper>
-      <UserProvider>
+      <BrowserUserProvider>
         <DevicesPageContents />
-      </UserProvider>
+      </BrowserUserProvider>
     </AuthWrapper>
   );
 }
