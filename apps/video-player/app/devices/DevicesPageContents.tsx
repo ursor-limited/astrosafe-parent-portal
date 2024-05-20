@@ -20,6 +20,7 @@ import { createPortal } from "react-dom";
 import UrsorLoading from "../components/UrsorLoading";
 import AddDeviceDialog from "./AddDeviceDialog";
 import LockDialog from "./LockDialog";
+import DeviceDialog from "./DeviceDialog/DeviceDialog";
 
 export interface IBrowsingState {
   deviceId: string;
@@ -235,6 +236,8 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [school?.lock?.endTime]);
 
+  const [deviceDialogId, setDeviceDialogId] = useState<string | undefined>();
+
   return (
     <>
       <PageLayout
@@ -253,6 +256,7 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
           icon: LockIcon,
           disabled: lockingModeOn,
         }}
+        scrollable
         description="All of the devices connected to your school are displayed here. Click ‘Connect device’ to add more!"
       >
         {lockingModeOn ? (
@@ -352,6 +356,9 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
                               //dataCtx.refreshDevicesAndSessions();
                               loadSchool();
                             }}
+                            openDeviceDialogCallback={() =>
+                              setDeviceDialogId(d.id)
+                            }
                           />
                         </UrsorFadeIn>
                       </Stack>
@@ -405,6 +412,9 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
                                 d.id
                               )}
                               locked={school?.lock?.devices.includes(d.id)}
+                              openDeviceDialogCallback={() =>
+                                setDeviceDialogId(d.id)
+                              }
                             />
                           </UrsorFadeIn>
                         </Stack>
@@ -461,6 +471,9 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
                                 d.id
                               )}
                               locked={school?.lock?.devices.includes(d.id)}
+                              openDeviceDialogCallback={() =>
+                                setDeviceDialogId(d.id)
+                              }
                             />
                           </UrsorFadeIn>
                         </Stack>
@@ -510,6 +523,14 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         open={addDeviceTutorialDialogOpen}
         closeCallback={() => setAddDeviceTutorialDialogOpen(false)}
       /> */}
+      {deviceDialogId ? (
+        <DeviceDialog
+          open={true}
+          closeCallback={() => setDeviceDialogId(undefined)}
+          deviceId={deviceDialogId}
+          updateCallback={loadSchool}
+        />
+      ) : null}
       <AddDeviceDialog
         open={addDeviceDialogOpen}
         closeCallback={() => setAddDeviceDialogOpen(false)}

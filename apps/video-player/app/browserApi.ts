@@ -142,6 +142,38 @@ class BrowserApiController {
       reviewerId,
     }).then((response: any) => response.json());
   }
+
+  static async updateDeviceName(deviceId: string, name: string) {
+    return patch(`schools/devices/${deviceId}/name`, { name }).then(
+      (response: any) => response.json()
+    );
+  }
+
+  static async updateDeviceAge(deviceId: string, mode: ContentAgeMode) {
+    return (
+      patch(`schools/devices/${deviceId}/contentAgeMode`, { mode }).then(
+        (response: any) => response.json()
+      )
+    )
+  }
+
+  static async getTeachersInSchool(schoolId: string) {
+    return get("schools/" + schoolId + "/teachers").then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getHistoryForDevice(deviceId: string) {
+    return get(`schools/devices/${deviceId}/history`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getLatestBrowsingState(deviceId: string) {
+    return get(`schools/${deviceId}/browsingState`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default BrowserApiController;

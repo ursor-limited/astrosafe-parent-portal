@@ -16,6 +16,8 @@ import ContentAgeModeIcon from "./ContentAgeModeIcon";
 import UrsorActionButton from "../components/UrsorActionButton";
 import { getPrefixRemovedUrl } from "../components/LinkCard";
 import dayjs from "dayjs";
+import DeviceEditingDialog from "./DeviceDialog/DeviceEditingDialog";
+import DeviceRemovalDialog from "./DeviceDialog/DeviceRemovalDialog";
 
 export const getCardBorder = (new_: boolean) =>
   `${new_ ? 3 : 0}px solid ${PALETTE.secondary.orange[3]}`;
@@ -85,6 +87,7 @@ export interface IDeviceCardProps {
   pending?: boolean;
   url?: string;
   updateCallback: () => void;
+  openDeviceDialogCallback: () => void;
 }
 
 export default function DeviceCard(props: IDeviceCardProps) {
@@ -101,7 +104,7 @@ export default function DeviceCard(props: IDeviceCardProps) {
     {
       text: "View",
       icon: ListUnorderedIcon,
-      kallback: () => null,
+      kallback: props.openDeviceDialogCallback,
       // dialogCtx.setDeviceDialogProps({
       //   open: true,
       //   closeCallback: () => null,
@@ -381,13 +384,13 @@ export default function DeviceCard(props: IDeviceCardProps) {
           </UrsorButton>
         </Stack>
       )}
-      {/* <DeviceEditingDialog
+      <DeviceEditingDialog
         open={editingDialogOpen}
         onCloseCallback={() => setEditingDialogOpen(false)}
         device={props.device}
         submitCallback={(name) => {
-          ApiController.updateDeviceName(props.device.id, name)
-            .then(dataCtx.refreshDevicesAndSessions)
+          BrowserApiController.updateDeviceName(props.device.id, name)
+            .then(props.updateCallback)
             .then(() => notificationCtx.success("Name changed"));
           setEditingDialogOpen(false);
         }}
@@ -395,8 +398,9 @@ export default function DeviceCard(props: IDeviceCardProps) {
       <DeviceRemovalDialog
         open={removalDialogOpen}
         onCloseCallback={() => setRemovalDialogOpen(false)}
+        updateCallback={props.updateCallback}
         device={props.device}
-      /> */}
+      />
     </Stack>
   );
 }
