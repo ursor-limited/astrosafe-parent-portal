@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import { Dialog, Stack } from "@mui/material";
 import CalendarIcon from "@/images/icons/CalendarIcon.svg";
@@ -28,10 +30,16 @@ import { BACKDROP_STYLE, BORDER_RADIUS } from "@/app/components/UrsorDialog";
 import { getLastOnlineText, getTimeSpentText } from "../DeviceCard";
 import DetailsSection from "./DetailsSection";
 import DeviceDialogHistoryTab from "./DeviceDialogHistoryTab";
-import UrsorLoading from "@/app/components/UrsorLoading";
 import DeviceEditingDialog from "./DeviceEditingDialog";
 import DeviceRemovalDialog from "./DeviceRemovalDialog";
 import ContentAgeInfoDialog from "../ContentAgeInfoDialog";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const UrsorLoading = dynamic(
+  () => import("../../components/UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const DATE_FORMAT = "MM/DD/YYYY";
 export const TIME_FORMAT = "hh:mm A";
@@ -83,6 +91,7 @@ const ContentAgeModeSelectionButton = (props: {
       placement="left"
       noFloatButton
       width="100%"
+      zIndex={9999}
     >
       <Stack
         width="100%"
@@ -99,6 +108,8 @@ const ContentAgeModeSelectionButton = (props: {
         }}
         direction="row"
         justifyContent="space-between"
+        alignItems="center"
+        spacing="8px"
       >
         <Stack direction="row" spacing="8px" alignItems="center">
           <ContentAgeModeIcon mode={props.selectedMode} size={16} />
@@ -176,13 +187,13 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
 
   const [device, setDevice] = useState<IDevice | undefined>(undefined);
   const loadDevice = () =>
-    BrowserApiController.getSchool(userCtx.userDetails?.id ?? "").then(
+    BrowserApiController.getSchool(userCtx.userDetails?.schoolId ?? "").then(
       (school) =>
         setDevice(school.devices?.find((d: IDevice) => d.id === props.deviceId))
     );
   useEffect(() => {
     loadDevice();
-  }, [props.deviceId]);
+  }, [userCtx.userDetails?.id]);
 
   const loadHistory = () =>
     BrowserApiController.getHistoryForDevice(props.deviceId)
@@ -289,8 +300,6 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
               bgcolor={PALETTE.secondary.grey[1]}
               borderRadius="12px"
               alignItems="center"
-              minHeight="100%"
-              height="fit-content"
               width={LEFT_SECTION_WIDTH}
               minWidth={LEFT_SECTION_WIDTH}
               justifyContent="space-between"
@@ -299,20 +308,22 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
             >
               <Stack alignItems="center" spacing="13px">
                 {device.type === "chrome" ? (
-                  <img
-                    height="140px"
-                    width="230px"
+                  <Image
+                    height={140}
+                    width={230}
                     src={
                       "https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustration.png"
                     }
+                    alt="chrome"
                   />
                 ) : (
-                  <img
-                    height="140px"
-                    width="230px"
+                  <Image
+                    height={140}
+                    width={230}
                     src={
                       "https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustration.png"
                     }
+                    alt="ipad"
                   />
                 )}
                 <Typography variant="h5">{device.name}</Typography>
@@ -362,14 +373,17 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
                 <UrsorButton
                   size="small"
                   backgroundColor="transparent"
+                  borderColor={PALETTE.system.red}
+                  fontColor={PALETTE.system.red}
+                  hoverOpacity={0.7}
                   // variant="nippon"
                   onClick={() => setRemovalDialogOpen(true)}
                 >
                   Remove
                 </UrsorButton>
               </Stack>
-              <Stack spacing="16px" px="40px" width="100%">
-                <Stack height="1px" width="100%" bgcolor="#EBEBEB" />
+              <Stack spacing="16px" px="40px" width="73%">
+                <Stack height="1px" bgcolor="#EBEBEB" />
                 <Stack spacing="12px">
                   <DetailsSection
                     title="Content age"

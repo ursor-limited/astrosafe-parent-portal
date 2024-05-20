@@ -27,12 +27,7 @@ export interface IDetailsSectionProps {
 
 export default function DetailsSection(props: IDetailsSectionProps) {
   return (
-    <Stack
-      direction="row"
-      spacing="16px"
-      sx={{ transform: "translateX(-5px)" }}
-      width="100%"
-    >
+    <Stack direction="row" spacing="16px" width="100%">
       <Stack
         height={props.iconSize ?? "20px"}
         width={props.iconSize ?? "20px"}

@@ -17,10 +17,15 @@ import DynamicCardGrid from "../components/DynamicCardGrid";
 import DeviceCard from "./DeviceCard";
 import _ from "lodash";
 import { createPortal } from "react-dom";
-import UrsorLoading from "../components/UrsorLoading";
 import AddDeviceDialog from "./AddDeviceDialog";
 import LockDialog from "./LockDialog";
 import DeviceDialog from "./DeviceDialog/DeviceDialog";
+import dynamic from "next/dynamic";
+
+const UrsorLoading = dynamic(
+  () => import("../components/UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export interface IBrowsingState {
   deviceId: string;

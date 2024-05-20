@@ -11,7 +11,6 @@ export async function middleware(request: NextRequest) {
       lessonUrlId
     )) as ILesson;
     if (lessonUrlId !== lesson.canonicalUrl) {
-      //console.log(lesson.canonicalUrl);
       return NextResponse.redirect(`${origin}/lesson/${lesson.canonicalUrl}`);
     }
   }
