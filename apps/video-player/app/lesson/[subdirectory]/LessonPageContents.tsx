@@ -11,7 +11,7 @@ import React, {
 import _, { isNumber } from "lodash";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
-import ClippyIcon from "@/images/icons/ClippyIcon.svg";
+import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ShareIcon from "@/images/icons/ShareIcon2.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
@@ -250,8 +250,6 @@ export default function LessonPageContents(props: { subdirectory: string }) {
     quiz: () => setQuizDialogOpen(true),
     lesson: () => null,
   };
-
-  console.log(quizzes);
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
@@ -784,11 +782,11 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                     iconSize="17px"
                     border
                     actions={[
-                      // {
-                      //   text: "Edit",
-                      //   kallback: () => setEditingDialogOpen(true),
-                      //   icon: PencilIcon,
-                      // },
+                      {
+                        text: "Duplicate",
+                        kallback: () => setMakeCopyDialogOpen(true),
+                        icon: VersionsIcon,
+                      },
                       {
                         text: "Delete",
                         kallback: () => setDeletionDialogOpen(true),
