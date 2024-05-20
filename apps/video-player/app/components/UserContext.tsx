@@ -6,6 +6,10 @@ import React, { useContext, createContext, useState, useEffect } from "react";
 import ApiController from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
+import Hotjar from "@hotjar/browser";
+
+const siteId = 4981389;
+const hotjarVersion = 6;
 
 export interface ISafeTubeUser {
   id: string;
@@ -136,6 +140,10 @@ const UserProvider = (props: IUserProviderProps) => {
   ]);
 
   const notificationCtx = useContext(NotificationContext);
+
+  useEffect(() => {
+    Hotjar.init(siteId, hotjarVersion);
+  }, []);
 
   return (
     <UserContext.Provider

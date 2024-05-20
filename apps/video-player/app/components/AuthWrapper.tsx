@@ -3,15 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import Hotjar from "@hotjar/browser";
-
-const siteId = 4981389;
-const hotjarVersion = 6;
-
 export default function AuthWrapper(props: { children: React.ReactNode }) {
-  useEffect(() => {
-    Hotjar.init(siteId, hotjarVersion);
-  }, []);
   return (
     <Auth0Provider
       domain={process.env.NEXT_PUBLIC_REACT_APP_AUTH0_DOMAIN as string}
