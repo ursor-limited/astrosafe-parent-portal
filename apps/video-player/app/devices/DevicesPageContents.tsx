@@ -539,6 +539,9 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
       <AddDeviceDialog
         open={addDeviceDialogOpen}
         closeCallback={() => setAddDeviceDialogOpen(false)}
+        updateCallback={() => {
+          loadSchool();
+        }}
         limitReached={reachedDeviceLimit}
       />
       {/* <GCSync /> */}

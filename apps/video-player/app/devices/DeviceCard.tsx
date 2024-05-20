@@ -356,6 +356,7 @@ export default function DeviceCard(props: IDeviceCardProps) {
           <UrsorButton
             size="tiny"
             backgroundColor={PALETTE.secondary.green[4]}
+            hoverOpacity={0.7}
             onClick={() =>
               BrowserApiController.approveDevice(
                 props.device.id,
@@ -370,7 +371,9 @@ export default function DeviceCard(props: IDeviceCardProps) {
           <UrsorButton
             size="tiny"
             backgroundColor="transparent"
-            // variant="transparentRed"
+            borderColor={PALETTE.system.red}
+            fontColor={PALETTE.system.red}
+            hoverOpacity={0.7}
             onClick={() =>
               BrowserApiController.rejectDevice(
                 props.device.id,

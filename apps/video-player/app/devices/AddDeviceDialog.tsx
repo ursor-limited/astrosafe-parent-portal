@@ -15,6 +15,7 @@ import { PALETTE, Typography } from "ui";
 export interface IAddDeviceDialogProps {
   open: boolean;
   closeCallback: () => void;
+  updateCallback: () => void;
   limitReached?: boolean;
 }
 
@@ -79,12 +80,14 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
         props.limitReached
           ? [
               <Typography
+                key="foo"
                 color={props.limitReached ? PALETTE.system.red : undefined}
                 bold
               >
-                Your School's Device limit has been reached.
+                Your School&#39;s Device limit has been reached.
               </Typography>,
               <Typography
+                key="zoo"
                 color={props.limitReached ? PALETTE.system.red : undefined}
               >
                 Please contact hello@astrosafe.co to upgrade your plan.
@@ -104,7 +107,7 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
               ]
           : [
               "In one of the student Apps, click",
-              <Typography variant="medium" bold>
+              <Typography key="buu" variant="medium" bold>
                 Connect to school
               </Typography>,
               "and enter the join code above.",
@@ -122,7 +125,7 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
                   device?.id,
                   userCtx.userDetails?.id ?? ""
                 )
-                  .then(loadSchool)
+                  .then(props.updateCallback)
                   .then(() => notificationCtx.success("Approved Device"));
               },
             }
@@ -134,6 +137,8 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
               callback: () => {
                 setShowInstructions(!showInstructions);
                 showInstructions && setDeviceType(undefined);
+                props.updateCallback();
+                props.closeCallback();
               },
             }
       }
@@ -147,7 +152,8 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
                   device?.id,
                   userCtx.userDetails?.id ?? ""
                 )
-                  .then(loadSchool)
+                  .then(props.updateCallback)
+                  .then(props.closeCallback)
                   .then(() =>
                     notificationCtx.negativeSuccess("Rejected Device")
                   );
