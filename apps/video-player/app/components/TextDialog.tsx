@@ -109,7 +109,6 @@ const TextCreationDialog = (props: {
                 fontSize: "16px",
                 ".ql-size-small": { fontSize: "14px" },
                 strong: { fontWeight: 500 },
-                fontFamily: "Rubik",
               },
             }}
           >

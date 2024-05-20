@@ -19,6 +19,16 @@ export const getModules = (id: string) => ({
   toolbar: {
     container: `#${id}`,
     size: ["small", "medium", "large"],
+    color: [
+      "#7B61FF",
+      "#00ff00",
+      "#0000ff",
+      "#ffff00",
+      "#ff00ff",
+      "#00ffff",
+      "#000000",
+      "#ffffff",
+    ],
     // handlers: {
     //   undo: undoChange,
     //   redo: redoChange,
@@ -62,17 +72,30 @@ const initQuill = async () => {
     Size.whitelist = ["small", "medium", "large"];
     Quill.register(Size, true);
 
+    // const Color = Quill.import("formats/color");
+    // Color.whitelist = [
+    //   "#7B61FF",
+    //   "#00ff00",
+    //   "#0000ff",
+    //   "#ffff00",
+    //   "#ff00ff",
+    //   "#00ffff",
+    //   "#000000",
+    //   "#ffffff",
+    // ];
+    // Quill.register(Color, true);
+
     // Add fonts to whitelist and register them
-    const Font = Quill.import("formats/font");
-    Font.whitelist = [
-      "arial",
-      "comic-sans",
-      "courier-new",
-      "georgia",
-      "helvetica",
-      "lucida",
-    ];
-    Quill.register(Font, true);
+    // const Font = Quill.import("formats/font");
+    // Font.whitelist = [
+    //   "arial",
+    //   "comic-sans",
+    //   "courier-new",
+    //   "georgia",
+    //   "helvetica",
+    //   "lucida",
+    // ];
+    //Quill.register(Font, true);
   }
 };
 
