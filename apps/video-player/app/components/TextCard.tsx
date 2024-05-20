@@ -11,6 +11,7 @@ import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import { IText } from "./TextDialog";
 import "react-quill/dist/quill.core.css";
+import "./TextEditorToolBar.css";
 import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
 import useOrangeBorder from "./useOrangeBorder";
 import { TextPreview } from "../lesson/[subdirectory]/cards/TimelineTextCard";
@@ -93,6 +94,9 @@ const TextCard = (
             },
             ".ql-editor": {
               padding: "3px",
+              ".ql-size-large": { fontSize: "20px !important" },
+              ".ql-size-medium": { fontSize: "16px !important" },
+              ".ql-size-small": { fontSize: "14px !important" },
             },
           }}
           px="4px"

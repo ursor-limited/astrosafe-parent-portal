@@ -1,0 +1,14 @@
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before {
+    content: 'Small';
+    font-size: 14px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
+    content: 'Normal';
+    font-size: 16px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="20px"]::before {
+    content: 'Large';
+    font-size: 20px !important;
+}
