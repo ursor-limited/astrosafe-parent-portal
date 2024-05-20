@@ -101,6 +101,7 @@ const TimelineTextCard = (
               ".ql-size-large": { fontSize: "20px" },
               ".ql-size-medium": { fontSize: "16px" },
               ".ql-size-small": { fontSize: "14px" },
+              strong: { fontWeight: 500 },
             },
             overflowWrap: "anywhere",
             color: PALETTE.font.dark,
