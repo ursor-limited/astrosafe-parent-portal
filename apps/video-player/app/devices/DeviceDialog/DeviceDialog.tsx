@@ -231,9 +231,9 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
   >(undefined);
 
   const loadBrowsingState = () =>
-    BrowserApiController.getLatestBrowsingState(props.deviceId).then((bs) =>
+    BrowserApiController.getLatestBrowsingState(props.deviceId).then((result) =>
       setLatestBrowsingState(
-        bs //bs.find((item: IBrowsingState) => item.deviceId === props.deviceId)
+        result?.browsingState //bs.find((item: IBrowsingState) => item.deviceId === props.deviceId)
       )
     );
 

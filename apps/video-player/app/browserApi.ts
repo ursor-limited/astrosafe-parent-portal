@@ -99,11 +99,6 @@ class BrowserApiController {
       (response: any) => response.json()
     );
   }
-  static async getLatestBrowsingStates(schoolId: string) {
-    return get(`schools/${schoolId}/latestBrowsingStates`).then(
-      (response: any) => response.json()
-    );
-  }
   static async startLock(
     schoolId: string,
     deviceIds: string[],
@@ -150,11 +145,9 @@ class BrowserApiController {
   }
 
   static async updateDeviceAge(deviceId: string, mode: ContentAgeMode) {
-    return (
-      patch(`schools/devices/${deviceId}/contentAgeMode`, { mode }).then(
-        (response: any) => response.json()
-      )
-    )
+    return patch(`schools/devices/${deviceId}/contentAgeMode`, { mode }).then(
+      (response: any) => response.json()
+    );
   }
 
   static async getTeachersInSchool(schoolId: string) {
@@ -170,8 +163,16 @@ class BrowserApiController {
   }
 
   static async getLatestBrowsingState(deviceId: string) {
-    return get(`schools/${deviceId}/browsingState`).then((response: any) =>
-      response.json()
+    return get(`schools/${deviceId}/browsingState`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getLatestBrowsingStates(schoolId: string) {
+    return get(`schools/${schoolId}/latestBrowsingStates`).then(
+      (response: any) => {
+        return response.json();
+      }
     );
   }
 }
