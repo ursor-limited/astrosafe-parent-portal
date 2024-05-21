@@ -24,10 +24,10 @@ import UrlInput from "../components/UrlInput";
 import { ImageButton } from "@/app/dashboard/LinkDialog";
 import InvalidUrlDialog from "./InvalidUrlDialog";
 import DomainWarningDialog from "./DomainWarningDialog";
-import LessonImageUploader from "../components/LessonImageUploader";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import isValidDomain from "is-valid-domain";
 import { IBrowserLink } from "../DomainLinksDialog";
+import LessonImageUploader from "@/app/dashboard/LessonImageUploader";
 
 const MAX_CHARACTERS = 25;
 
