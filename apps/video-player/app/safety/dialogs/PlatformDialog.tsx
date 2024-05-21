@@ -535,18 +535,9 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
               borderRadius="8px"
             />
             <Stack p={CARD_PADDING} pb={0} height="100%">
-              <InputTypography //@ts-ignore
-                value={title}
-                variant="large"
-                bold
-                center
-                boldPlaceholder
-                placeholder={`App title`}
-                placeholderColor={PALETTE.secondary.grey[3]}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
-                }
-              />
+              <Typography bold variant="large">
+                {title}
+              </Typography>
             </Stack>
             <Stack
               position="absolute"
