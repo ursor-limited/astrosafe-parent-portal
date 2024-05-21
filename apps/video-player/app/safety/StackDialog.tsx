@@ -134,7 +134,7 @@ export default function StackDialog(props: IStackDialogProps) {
       .then((channels) => setChannels(channels))
       .catch((error) => notificationCtx.error(error.message));
   useEffect(() => {
-    loadChannels();
+    userDetails?.schoolId && loadChannels();
   }, [userDetails?.schoolId]);
 
   const [userChannels, setUserChannels] = useState<IChannel[]>([]);
@@ -143,7 +143,7 @@ export default function StackDialog(props: IStackDialogProps) {
       setUserChannels(
         channels?.filter((c) => c.creatorId === userDetails?.id) || []
       ),
-    [channels]
+    [channels, userDetails?.id]
   );
 
   const [backgroundColors, setBackgroundColors] = useState<
@@ -218,13 +218,16 @@ export default function StackDialog(props: IStackDialogProps) {
             </DialogSection>
             <DialogSection title="Channel">
               <UrsorSelect
-                items={userChannels.map((c) => ({
-                  id: c.id,
-                  value: c.title,
-                }))}
+                items={
+                  channels?.map((c) => ({
+                    id: c.id,
+                    value: c.title,
+                  })) || []
+                }
                 selected={channelId ? [channelId] : []}
                 callback={(id) => setChannelId(id)}
                 width="100%"
+                fieldWidth="100%"
                 placeholder="Select Channel"
                 leftAlign
                 listButtons={[

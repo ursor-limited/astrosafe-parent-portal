@@ -32,6 +32,7 @@ import DomainWarningDialog from "./dialogs/DomainWarningDialog";
 import StackDialog from "./StackDialog";
 import ChannelDialog from "./ChannelDialog";
 import _ from "lodash";
+import { ImageButton } from "../dashboard/LinkDialog";
 // import mixpanel from "mixpanel-browser";
 
 const BUTTON_ICON_SIZE = "16px";
@@ -61,62 +62,6 @@ export const CharactersIndicator = (props: { n: number; max: number }) => (
     </Typography>
   </Stack>
 );
-
-export const ImageButton = (props: {
-  padding: number;
-  usingPlaceholderImage: boolean;
-  noRemoval?: boolean;
-  uploadCallback: () => void;
-  randomizeCallback: () => void;
-  leftAlign?: boolean;
-}) => {
-  const [open, setOpen] = useState<boolean>(false);
-  return (
-    <ActionPopup
-      open={open}
-      items={[
-        {
-          text: "Upload image",
-          icon: PlusIcon,
-          kallback: props.uploadCallback,
-        },
-        ...(!props.noRemoval
-          ? [
-              {
-                text: props.usingPlaceholderImage
-                  ? "Randomize pattern"
-                  : "Remove",
-                icon: props.usingPlaceholderImage ? SyncIcon : TrashcanIcon,
-                kallback: props.randomizeCallback,
-              },
-            ]
-          : []),
-      ]}
-      closeCallback={() => setOpen(false)}
-      placement={props.leftAlign ? "left" : "right"}
-    >
-      <Stack
-        borderRadius="100%"
-        bgcolor={PALETTE.primary.offWhite}
-        boxShadow="0 0 20px rgba(0,0,0,0.08)"
-        height="32px"
-        width="32px"
-        justifyContent="center"
-        alignItems="center"
-        sx={{
-          "&:hover": {
-            opacity: 0.7,
-          },
-          transition: "0.2s",
-          cursor: "pointer",
-        }}
-        onClick={() => setOpen(true)}
-      >
-        <ImageIcon width={BUTTON_ICON_SIZE} height={BUTTON_ICON_SIZE} />
-      </Stack>
-    </ActionPopup>
-  );
-};
 
 export const getPlaceholderImageUrl = (n: number) =>
   `${PLACEHOLDER_IMAGE_URL_COMMON_SECTION}${n.toString().padStart(3, "0")}.png`;
@@ -225,6 +170,7 @@ export const PaletteButton = (props: {
         open={open}
         closeCallback={() => setOpen(false)}
         placement="right"
+        zIndex={9999}
         content={
           <Stack
             spacing="16px"
@@ -290,6 +236,7 @@ export function DialogSection(props: {
     <Stack
       p="12px"
       width="100%"
+      boxSizing="border-box"
       spacing="4px"
       borderRadius={DEFAULT_CORNER_RADIUS}
       border={`1px solid ${PALETTE.secondary.grey[2]}`}
@@ -550,7 +497,7 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
   });
 
   const submitUpdate = () =>
-    ApiController.updateLink(props.link?.id ?? "", getUpdateDetails())
+    BrowserApiController.updateLink(props.link?.id ?? "", getUpdateDetails())
       .then(props.updateCallback)
       .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
       .catch((error) => notificationCtx.error(error.message));
@@ -753,7 +700,8 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
                     setChannelId(id);
                     setStackId(undefined);
                   }}
-                  width="233px"
+                  width="244px"
+                  fieldWidth="100%"
                   placeholder="Select Channel"
                   leftAlign
                   listButtons={[
@@ -763,6 +711,7 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
                       callback: () => setChannelCreationDialogOpen(true), //props.newChannelCallback?.(),
                     },
                   ]}
+                  zIndex={9999}
                 />
                 <UrsorSelect
                   items={(stacks || [])
@@ -778,22 +727,28 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
                       (stacks || []).find((s) => s.id === id)?.channelId
                     );
                   }}
-                  width="233px"
+                  width="244px"
+                  fieldWidth="100%"
                   placeholder="Select Stack"
                   leftAlign
                   listButtons={[
-                    {
-                      title: "No Stack",
-                      icon: X,
-                      callback: () => setStackId(undefined),
-                      color: PALETTE.secondary.grey[3],
-                    },
+                    ...(stackId
+                      ? [
+                          {
+                            title: "No Stack",
+                            icon: X,
+                            callback: () => setStackId(undefined),
+                            color: PALETTE.secondary.grey[3],
+                          },
+                        ]
+                      : []),
                     {
                       title: "New Stack",
                       icon: PlusIcon,
                       callback: () => setStackCreationDialogOpen(true), //props.newStackCallback?.(),
                     },
                   ]}
+                  zIndex={9999}
                 />
               </Stack>
             </DialogSection>
@@ -917,7 +872,6 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
               position="absolute"
               right="10px"
               top="10px"
-              zIndex={2}
               direction="row"
               spacing="7px"
             >
@@ -955,6 +909,7 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
           newChannelCallback={() => setChannelCreationDialogOpen(true)}
           completionCallback={(id) => {
             props.updateCallback?.();
+            loadStacks();
             setStackId(id);
           }}
           open={true}

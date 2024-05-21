@@ -79,24 +79,32 @@ export default function DeviceFiltersDialog(props: IDeviceFiltersDialogProps) {
         const deviceType = school?.devices?.find((d) => d.id === id)?.type;
         return (
           <Stack
-            width="20px"
-            minWidth="20px"
+            width="22px"
+            minWidth="22px"
             height="20px"
             bgcolor={PALETTE.secondary.grey[2]}
             borderRadius="3px"
             justifyContent="center"
             alignItems="center"
           >
-            <Image
-              //width={deviceType === "chrome" ? "84%" : "74%"}
-              width={deviceType === "chrome" ? 120 : 100}
-              src={
-                deviceType === "chrome"
-                  ? "https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustration.png"
-                  : "https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustration.png"
-              }
-              alt="device illustration"
-            />
+            <div
+              style={{
+                width: deviceType === "chrome" ? "100%" : "86%",
+                height: "100%",
+                position: "relative",
+              }}
+            >
+              <Image
+                fill
+                style={{ objectFit: "contain" }}
+                src={
+                  deviceType === "chrome"
+                    ? "https://ursorassets.s3.eu-west-1.amazonaws.com/ChromeDeviceIllustrationSmall.png"
+                    : "https://ursorassets.s3.eu-west-1.amazonaws.com/iPadIllustrationSmall.png"
+                }
+                alt="device illustration"
+              />
+            </div>
           </Stack>
         );
       },
@@ -137,9 +145,9 @@ export default function DeviceFiltersDialog(props: IDeviceFiltersDialogProps) {
             DEFAULT_CONTENT_AGE_MODE
           }
           callback={(mode) =>
-            BrowserApiController.updateDeviceAge(id, mode).then(
-              props.updateCallback
-            )
+            BrowserApiController.updateDeviceAge(id, mode)
+              .then(props.updateCallback)
+              .then(loadSchool)
           }
         />
       ),

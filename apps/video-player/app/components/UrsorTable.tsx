@@ -642,6 +642,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                         key="endButton"
                         sx={{
                           width: 0,
+                          fontFamily: "unset",
                         }}
                       >
                         {props.getEndButton(row.id)}

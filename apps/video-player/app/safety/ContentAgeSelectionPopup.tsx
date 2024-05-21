@@ -21,6 +21,7 @@ export default function ContentAgeSelectionPopup(
   return (
     <UrsorPopover
       open={open}
+      zIndex={9999}
       content={
         <UrsorSelectList
           selected={[props.contentAgeMode]}

@@ -84,7 +84,7 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           >
             {lb.title}
           </Typography>
-          <lb.icon height="12px" width="12px" />
+          <lb.icon height="14px" width="14px" />
         </Stack>
       ))}
       {props.items.map((item) => (
@@ -172,7 +172,12 @@ export default function UrsorSelect(props: IUrsorSelectProps) {
           alignItems="center"
           //onClick={() => setOpen(true)}
         >
-          <Stack width="100%" onClick={() => setOpen(true)}>
+          <Stack
+            height="100%"
+            width="100%"
+            justifyContent="center"
+            onClick={() => setOpen(true)}
+          >
             <Typography
               bold
               color={

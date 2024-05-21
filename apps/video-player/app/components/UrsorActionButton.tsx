@@ -31,6 +31,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
       items={props.actions}
       closeCallback={() => setOpen(false)}
       placement="right"
+      zIndex={9999}
     >
       <Stack
         height={props.size ?? "40px"}
