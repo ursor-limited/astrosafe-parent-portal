@@ -579,10 +579,12 @@ export default function LessonPageContents(props: { subdirectory: string }) {
   useEffect(
     () =>
       setShowTutorialVideoButton(
-        !userDetails.user?.switchedOffLessonTutorialVideo &&
+        !!userDetails.user &&
+          userDetails.user.id === lesson?.creatorId &&
+          !userDetails.user?.switchedOffLessonTutorialVideo &&
           !!lesson?.contents.some((c) => c.type === "video")
       ),
-    [userDetails.user?.switchedOffLessonTutorialVideo, lesson?.contents]
+    [userDetails.user, lesson?.contents]
   );
 
   return (
