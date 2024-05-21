@@ -10,7 +10,6 @@ import dayjs from "dayjs";
 import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import CommentIcon from "@/images/icons/CommentIcon.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
 import TimeRange from "@/app/dashboard/TimeRange";
@@ -174,9 +173,6 @@ const TimelineVideoCard = (
       .then(props.duplicationCallback)
       .then(() => notificationCtx.success("Duplicated Video."));
 
-  const router = useRouter();
-
-  //const [sizeRef, setSizeRef] = useState<HTMLElement | null>(null);
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
 
@@ -185,30 +181,6 @@ const TimelineVideoCard = (
     setPlayerHeight((playerContainerRect as DOMRect)?.height ?? 0);
     setPlayerWidth((playerContainerRect as DOMRect)?.width ?? 0);
   }, [playerContainerRect]);
-
-  // const setDimensions = () => {
-  //   setPlayerWidth(sizeRef?.getBoundingClientRect?.()?.width ?? 0);
-  //   setPlayerHeight(sizeRef?.getBoundingClientRect?.()?.height ?? 0);
-  // };
-  // useEffect(() => {
-  //   if (isMobile) {
-  //     setDimensions();
-  //     setTimeout(setDimensions, 1500);
-  //   } else {
-  //     setTimeout(setDimensions, 1000); // gives time for the card's header to load
-  //   }
-  // }, [
-  //   sizeRef?.getBoundingClientRect?.()?.width,
-  //   sizeRef?.getBoundingClientRect?.()?.height,
-  //   isMobile,
-  // ]);
-
-  // const sizeRef = useCallback((node: HTMLElement | null) => {
-  //   if (node) {
-  //     setPlayerWidth(node?.getBoundingClientRect?.()?.width ?? 0);
-  //     setPlayerHeight(node?.getBoundingClientRect?.()?.height ?? 0);
-  //   }
-  // }, []);
 
   const [provider, zetProvider] = useState<"youtube" | "vimeo" | undefined>(
     undefined
@@ -224,7 +196,6 @@ const TimelineVideoCard = (
   useEffect(() => {
     if (_.isNumber(props?.startTime) && props.endTime) {
       setRange([props?.startTime, props.endTime]);
-      //setDuration(props.endTime - props.startTime);
     }
   }, [props.startTime, props.endTime]);
 
