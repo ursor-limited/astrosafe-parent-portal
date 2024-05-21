@@ -1,35 +1,33 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import NotificationContext from "../../../contexts/NotificationContext";
-import UrsorDialog from "../../../components/UrsorDialog";
-import ApiController from "../../../controllers/ApiController";
-import { Box, Stack } from "@mui/system";
-import LessonImageUploader from "../components/LessonImageUploader";
-import { useUserContext } from "../../../contexts/UserContext";
-import { PALETTE, SecondaryColor } from "../../../palette";
-import Typography from "../../../components/Typography";
+import { useBrowserUserContext } from "@/app/components/BrowserUserContext";
+import NotificationContext from "@/app/components/NotificationContext";
 import UrsorPopover, {
   DEFAULT_CORNER_RADIUS,
-} from "../../../components/UrsorPopover";
-import InvalidUrlDialog from "./InvalidUrlDialog";
-import isValidDomain from "is-valid-domain";
-import DomainWarningDialog from "./DomainWarningDialog";
-import InputTypography from "../components/InputTypography";
-import _ from "lodash";
-import UrlInput from "../components/UrlInput";
-import UrsorToggle from "../../../components/UrsorToggle";
-import UrsorInputField from "../../../components/inputs/UrsorInputField";
-import {
-  CharactersIndicator,
-  DialogSection,
-  ILink,
-  ImageButton,
-  getPlaceholderImageUrl,
-} from "./LinkDialog";
-import { getPrefixRemovedUrl } from "../../LibraryPage/components/LinkCard";
+} from "@/app/components/UrsorPopover";
+import { Stack } from "@mui/system";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { PALETTE, Typography, UrsorInputField } from "ui";
+import { SecondaryColor } from "ui/palette";
 import {
   IPlatform,
   PLACEHOLDER_IMAGE_URL_COMMON_SECTION,
 } from "../components/PlatformCard";
+import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
+import {
+  CharactersIndicator,
+  DialogSection,
+  getPlaceholderImageUrl,
+} from "../BrowserLinkDialog";
+import ApiController from "@/app/api";
+import BrowserApiController from "@/app/browserApi";
+import UrsorToggle from "@/app/components/UrsorToggle";
+import UrlInput from "../components/UrlInput";
+import { ImageButton } from "@/app/dashboard/LinkDialog";
+import InvalidUrlDialog from "./InvalidUrlDialog";
+import DomainWarningDialog from "./DomainWarningDialog";
+import LessonImageUploader from "../components/LessonImageUploader";
+import UrsorDialog from "@/app/components/UrsorDialog";
+import isValidDomain from "is-valid-domain";
+import { IBrowserLink } from "../DomainLinksDialog";
 
 const MAX_CHARACTERS = 25;
 
@@ -85,7 +83,7 @@ export const shouldBeLightText = (color: string) =>
   getRelativeLuminance(hexToRgb(color)) < LIGHT_TEXT_THRESHOLD;
 
 export type LinkCreation = Partial<
-  Pick<ILink, "title" | "url" | "accessibleUrl" | "imageUrl" | "color">
+  Pick<IBrowserLink, "title" | "url" | "accessibleUrl" | "imageUrl" | "color">
 >;
 
 export interface IPlatformDialogProps {
@@ -119,7 +117,7 @@ const ColorSelectionCircle = (props: { color: string; selected: boolean }) => (
       overflow="visible"
       sx={{ opacity: props.selected ? 1 : 0, transition: "0.2s" }}
     >
-      <Box
+      <Stack
         position="absolute"
         sx={{
           transform: "translate(-50%, -50%)",
@@ -154,14 +152,17 @@ export const PaletteButton = (props: {
             {SECONDARY_COLOR_ORDER.map((colorName) => (
               <Stack key={colorName} spacing="16px">
                 {[...Array(4).keys()].map((i) => {
-                  const c = PALETTE.secondary[colorName][i + 2].toUpperCase();
+                  const c =
+                    PALETTE.secondary[colorName as SecondaryColor][
+                      i + 2
+                    ].toUpperCase();
                   return (
-                    <Box key={i} onClick={() => props.callback(c)}>
+                    <Stack key={i} onClick={() => props.callback(c)}>
                       <ColorSelectionCircle
                         color={c}
                         selected={props.selected === c}
                       />
-                    </Box>
+                    </Stack>
                   );
                 })}
               </Stack>
@@ -218,7 +219,7 @@ function LinkDialogSection(props: {
 }
 
 export default function PlatformDialog(props: IPlatformDialogProps) {
-  const userDetails = useUserContext().userDetails;
+  const userDetails = useBrowserUserContext().userDetails;
   const notificationCtx = useContext(NotificationContext);
 
   const [title, setTitle] = useState<string>("");
@@ -342,7 +343,7 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
 
   const autoFill = useCallback(
     (fullUrl: string) =>
-      ApiController.isBlocked(fullUrl).then(async (isBlocked) => {
+      ApiController.isBlocked(fullUrl).then(async (isBlocked: boolean) => {
         if (!isBlocked) {
           const result = await ApiController.getURLImagePreview(fullUrl);
 
@@ -379,7 +380,7 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
     "approved" | "blocked" | undefined
   >(undefined);
   const setLatestUrlStatus = () =>
-    ApiController.isBlocked(url).then((isBlocked) => {
+    ApiController.isBlocked(url).then((isBlocked: boolean) => {
       setUrlStatus(isBlocked ? "blocked" : "approved");
     });
 
@@ -392,7 +393,7 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
   };
 
   const submitCreation = async () =>
-    ApiController.createPlatform({
+    BrowserApiController.createPlatform({
       ...getCreationDetails(),
       schoolId: userDetails?.schoolId,
       creatorId: userDetails!.id!,
@@ -413,7 +414,10 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
   });
 
   const submitUpdate = () =>
-    ApiController.updatePlatform(props.platform?.id, getCreationDetails())
+    BrowserApiController.updatePlatform(
+      props.platform?.id ?? "",
+      getCreationDetails()
+    )
       .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
       .catch((error) => notificationCtx.error(error.message));
 
