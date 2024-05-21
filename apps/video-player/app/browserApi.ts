@@ -213,11 +213,9 @@ class BrowserApiController {
   }
 
   static async getApprovalRequestsInSchool(schoolId: string) {
-    return get(`schools/${schoolId}/approvalRequests`).then(
-      (response: any) => {
-        return response.json();
-      }
-    );
+    return get(`schools/${schoolId}/approvalRequests`).then((response: any) => {
+      return response.json();
+    });
   }
 
   static async getDomainLinks(schoolId: string, domain: string) {
@@ -324,8 +322,14 @@ class BrowserApiController {
     });
   }
 
-  static async updatePlatform(platformId:string, update:any) {
+  static async updatePlatform(platformId: string, update: any) {
     return patch(`platform/${platformId}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async createPlatform(details: any) {
+    return post(`platform`, details).then((response: any) => {
       return response.json();
     });
   }
