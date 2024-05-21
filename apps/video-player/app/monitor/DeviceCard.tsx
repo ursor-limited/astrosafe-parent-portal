@@ -155,14 +155,7 @@ export default function DeviceCard(props: IDeviceCardProps) {
           "&:hover": { opacity: 0.6 },
           transition: "0.2s",
         }}
-        onClick={
-          () => null
-          // dialogCtx.setDeviceDialogProps({
-          //   open: true,
-          //   closeCallback: () => null,
-          //   deviceId: props.device.id,
-          // })
-        }
+        onClick={props.openDeviceDialogCallback}
       >
         <Stack direction="row" height="100%" width="100%">
           <Stack

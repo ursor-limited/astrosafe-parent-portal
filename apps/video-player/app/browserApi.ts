@@ -35,11 +35,28 @@ export interface IDevice {
   contentAgeMode: ContentAgeMode;
 }
 
-export interface ISession {
+export interface IChannel {
   id: string;
-  name: string;
-  students: string[];
-  joinCode: string;
+  creatorId?: string;
+  schoolId: string;
+  title: string;
+  nLinks: number;
+  nStacks: number;
+  starter?: boolean;
+  color: string;
+}
+
+export interface IStack {
+  id: string;
+  creatorId?: string;
+  schoolId: string;
+  channelId: string;
+  title: string;
+  description?: string;
+  imageUrls: string[];
+  backgroundColors: string[];
+  createdAt: string;
+  nLinks: number;
 }
 
 const BACKEND_URLS = {
@@ -174,6 +191,143 @@ class BrowserApiController {
         return response.json();
       }
     );
+  }
+
+  static async getDomainsWithLinks(
+    id: string,
+    page: number,
+    sortColumn: string,
+    sortDirection: "asc" | "desc",
+    searchValue: string
+  ) {
+    return get(
+      `schools/${id}/domainsWithLinks?${new URLSearchParams({
+        page: page.toString(),
+        sortColumn,
+        sortDirection,
+        searchValue,
+      })}`
+    ).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getApprovalRequestsInSchool(schoolId: string) {
+    return get(`schools/${schoolId}/approvalRequests`).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async getDomainLinks(schoolId: string, domain: string) {
+    return get(`schools/${schoolId}/domainLinks?domain=${domain}`).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async deleteDomain(schoolId: string, domainId: string) {
+    return dellete(`schools/${schoolId}/domains/${domainId}`).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async deleteLink(id: string) {
+    return dellete(`links/${id}`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async deleteStack(id: string) {
+    return dellete(`stacks/${id}`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async deletePlatform(id: string) {
+    return dellete(`platform/${id}`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getLinksInSchool(schoolId: string) {
+    return get(`schools/${schoolId}/links`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getStacksInSchool(schoolId: string) {
+    return get(`schools/${schoolId}/stacks`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getChannelsInSchool(schoolId: string) {
+    return get(`schools/${schoolId}/channels`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updateLink(id: string, update: any) {
+    return patch(`links/${id}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updateChannel(id: string, update: any) {
+    return patch(`channel/${id}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updateStack(id: string, update: any) {
+    return patch(`stack/${id}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async createLink(details: any) {
+    return post(`links`, details).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async unStackifyLink(id: string) {
+    return post(`links/${id}/unStackify`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async createStack(details: any) {
+    return post("stacks", details).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async createChannel(
+    title: string,
+    color: string,
+    schoolId: string,
+    creatorId: string
+  ) {
+    return post("channels", {
+      title,
+      color,
+      schoolId,
+      creatorId,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updatePlatform(platformId:string, update:any) {
+    return patch(`platform/${platformId}`, update).then((response: any) => {
+      return response.json();
+    });
   }
 }
 

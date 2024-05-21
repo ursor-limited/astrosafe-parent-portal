@@ -6,10 +6,8 @@ import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
+import LockIcon from "@/images/icons/LockIcon.svg";
 import { useRouter } from "next/navigation";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useUserContext } from "../components/UserContext";
-import BrowserDialog from "./BrowserDialog";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -61,7 +59,8 @@ export type SideBarItemId =
   | "monitor"
   | "devices"
   | "library"
-  | "plugins";
+  | "plugins"
+  | "safety";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -184,6 +183,13 @@ export default function Sidebar(props: ISidebarProps) {
       title: "Monitor",
       callback: () => router.push("/monitor"),
     },
+    {
+      id: "safety",
+      //tourId: "devices-button",
+      icon: LockIcon,
+      title: "Safety",
+      callback: () => router.push("/safety"),
+    },
   ];
 
   const bottomItems: ISidebarItem[] = [
@@ -220,9 +226,6 @@ export default function Sidebar(props: ISidebarProps) {
   const [ref, { width, height }] = useElementSize();
   const small = !!height && height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
   const noText = !!height && height < NO_TEXT_HEIGHT_THRESHOLD;
-
-  const [browserDialogOpen, setBrowserDialogOpen] =
-    React.useState<boolean>(false);
 
   return (
     <>
