@@ -226,11 +226,11 @@ const UrsorTableBodyCell = (props: {
           ? "23%"
           : props.columnName === "accessLevel"
           ? "40px"
-          : // : props.columnName === "nLinks"
-            // ? "120px"
-
-            undefined
+          : undefined
       }
+      sx={{
+        fontFamily: "unset",
+      }}
     >
       <Stack
         flex={1}
@@ -449,6 +449,7 @@ export default function UrsorTable<T extends Record<string, any>>(
                 0.5
               )}, ${alpha(PALETTE.secondary.grey[1], 0)})`,
           width: fitBodyContent ? 0 : "auto",
+          fontFamily: "unset",
         }}
         // onMouseEnter={() => setHovering(true)}
         // onMouseLeave={() => setHovering(false)}
@@ -510,8 +511,7 @@ export default function UrsorTable<T extends Record<string, any>>(
   return (
     <TableContainer
       sx={{
-        width: "100%",
-        //overflow: "hidden",
+        width: "unset",
         zIndex: 0, // needed to prevent the sticky header from being on top of dialogs
         border: BORDER,
         borderRadius: "12px",
@@ -627,6 +627,8 @@ export default function UrsorTable<T extends Record<string, any>>(
                         {/* needed to align this in Safari */}
                         <Stack alignItems="flex-end">
                           <UrsorActionButton
+                            background="transparent"
+                            iconSize="16px"
                             size="16px"
                             actions={props.getActionButtonItems(row.id)}
                           />

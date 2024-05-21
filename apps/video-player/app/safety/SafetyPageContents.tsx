@@ -22,8 +22,6 @@ import SearchIcon from "@/images/icons/SearchIcon.svg";
 import NotificationContext from "../components/NotificationContext";
 import BrowserApiController from "../browserApi";
 import DomainLinksDialog, { IBrowserLink } from "./DomainLinksDialog";
-import UrsorLoading from "../components/UrsorLoading";
-import DynamicallyLoadedPortal from "../components/DynamicallyLoadedPortal";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
@@ -32,11 +30,23 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { DEFAULT_FADEIN_DURATION } from "../components/UrsorDialog";
 import UrlPopover from "./components/UrlPopover";
 import dayjs from "dayjs";
-import PageLayout from "../dashboard/PageLayout";
+import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
 import DeviceFiltersDialog from "./DeviceFiltersDialog";
 import LinkDeletionDialog from "./LinkDeletionDialog";
 import BrowserLinkDialog from "./BrowserLinkDialog";
 import Image from "next/image";
+import { SearchInput } from "../dashboard/DashboardPageContents";
+import dynamic from "next/dynamic";
+
+const DynamicallyLoadedPortal = dynamic(
+  () => import("../components/DynamicallyLoadedPortal"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
+const UrsorLoading = dynamic(
+  () => import("../components/UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export interface IFilterDomain {
   id: string;
@@ -55,95 +65,6 @@ const FILTERED_PLACEHOLDER = "No Domains found with this search value.";
 const PAGE_SIZE = 20;
 
 export const APPROVAL_LIST_MAX_DEFAULT_VISIBLE = 3;
-
-export const SearchInput = (props: {
-  value: string;
-  callback: (value: string) => void;
-  clearCallback: () => void;
-}) => {
-  const [active, setActive] = useState(false);
-  const [hovering, setHovering] = useState(false);
-  return (
-    <Stack
-      height="28px"
-      width="180px"
-      direction="row"
-      borderRadius="8px"
-      alignItems="center"
-      bgcolor="rgb(255,255,255)"
-      px="10px"
-      spacing="8px"
-      sx={{
-        svg: {
-          path: {
-            fill: PALETTE.secondary.grey[4],
-          },
-        },
-        transition: "0.2s",
-      }}
-      border={`${active || hovering ? 2 : 0}px solid ${
-        PALETTE.secondary.purple[active ? 2 : 1]
-      }`}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-    >
-      <SearchIcon width="20px" height="20px" />
-      {/* <InputTypography //@ts-ignore
-      value={props.value}
-      placeholder={"Search"}
-      onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-        props.callback(event.target.value);
-      }}
-      color={PALETTE.secondary.grey[4]}
-      placeholderColor={PALETTE.secondary.grey[4]}
-      fontSize="small"
-      boldPlaceholder
-    /> */}
-      <Input
-        style={{
-          fontFamily: "Rubik",
-          textAlign: "left",
-          textOverflow: "ellipsis",
-          fontSize: FONT_SIZES["small"],
-          color: PALETTE.font.dark,
-          fontWeight: BOLD_FONT_WEIGHT,
-          lineHeight: "100%",
-          transition: "0.2s",
-        }}
-        value={props.value}
-        disableUnderline
-        sx={{
-          // width: width ?? DEFAULT_WIDTH,
-          // height: props.height ?? HEIGHT,
-          // minHeight: props.height ?? HEIGHT,
-          // borderRadius: BORDER_RADIUS,
-          background: "rgb(255,255,255)",
-          input: {
-            padding: "0 !important",
-          },
-        }}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-          props.callback(event.target.value);
-        }}
-        placeholder="Search"
-        onBlur={() => setActive(false)}
-        onFocus={() => setActive(true)}
-      />
-
-      <Stack
-        sx={{
-          cursor: "pointer",
-          "&:hover": { opacity: 0.6 },
-          transition: "0.2s",
-          opacity: props.value ? 1 : 0,
-        }}
-        onClick={props.clearCallback}
-      >
-        <X width="16px" height="16px" />
-      </Stack>
-    </Stack>
-  );
-};
 
 export interface IFilterPageLinksTabProps {
   links: ILink[];
@@ -189,7 +110,7 @@ export const ApprovalList = (props: {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <Stack spacing="10px">
-      <DynamicContainer duration={800}>
+      <DynamicContainer duration={800} fullWidth>
         <Stack
           bgcolor={PALETTE.secondary.orange[1]}
           borderRadius="10px"
@@ -209,7 +130,6 @@ export const ApprovalList = (props: {
                 height="48px"
                 alignItems="center"
                 px="16px"
-                width="100%"
                 justifyContent="space-between"
                 spacing="10px"
                 borderBottom={`1px solid ${PALETTE.secondary.orange[2]}`}
@@ -218,7 +138,6 @@ export const ApprovalList = (props: {
                 <Stack direction="row" spacing="6px">
                   <UrsorButton
                     size="small"
-                    //backgroundColor={PALETTE.secondary.green[4]}
                     onClick={() => props.approveCallback(ar.id)}
                   >
                     Approve
@@ -320,9 +239,7 @@ const PageChevrons = (props: {
   </Stack>
 );
 
-export interface ILinksPageProps {}
-
-export default function LinksPage(props: ILinksPageProps) {
+export default function SafetyPage() {
   const notificationCtx = useContext(NotificationContext);
   const userDetails = useBrowserUserContext().userDetails;
 
@@ -539,47 +456,59 @@ export default function LinksPage(props: ILinksPageProps) {
           icon: PlusIcon,
         }}
       >
-        <Stack
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          maxHeight="74px"
-          minHeight="74px"
-          px="24px"
-          flex={1}
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Stack spacing="2px">
-            <Typography bold>Select Content Age</Typography>
-            <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-              Choose the appropriate level of access to make sure that each
-              Student has the right experience!
-            </Typography>
-          </Stack>
-          <UrsorButton
-            size="small"
-            variant="secondary"
-            onClick={() => setDeviceFiltersDialogOpen(true)}
+        <UrsorFadeIn duration={500} delay={800}>
+          <Stack
+            bgcolor="rgb(255,255,255)"
+            borderRadius="12px"
+            maxHeight="74px"
+            minHeight="74px"
+            px="24px"
+            flex={1}
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            ml={`${SIDEBAR_X_MARGIN}px`}
+            mt="30px"
           >
-            Manage
-          </UrsorButton>
-        </Stack>
-        <Stack pt="11px" spacing="3px" overflow="hidden">
-          <Stack direction="row" justifyContent="space-between" pb="8px">
-            <div />
-            <SearchInput
-              value={searchValue}
-              callback={(value: string) => {
-                setSearchValue(value);
-                setPageIndex(0);
-              }}
-              clearCallback={() => setSearchValue("")}
-            />
+            <Stack spacing="2px">
+              <Typography bold>Select Content Age</Typography>
+              <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+                Choose the appropriate level of access to make sure that each
+                Student has the right experience!
+              </Typography>
+            </Stack>
+            <UrsorButton
+              size="small"
+              variant="secondary"
+              onClick={() => setDeviceFiltersDialogOpen(true)}
+            >
+              Manage
+            </UrsorButton>
           </Stack>
+        </UrsorFadeIn>
+        <Stack
+          pt="11px"
+          spacing="3px"
+          overflow="hidden"
+          ml={`${SIDEBAR_X_MARGIN}px`}
+        >
+          <UrsorFadeIn duration={500} delay={1100}>
+            <Stack direction="row" justifyContent="space-between" pb="8px">
+              <div />
+              <SearchInput
+                value={searchValue}
+                callback={(value: string) => {
+                  setSearchValue(value);
+                  setPageIndex(0);
+                }}
+                clearCallback={() => setSearchValue("")}
+              />
+            </Stack>
+          </UrsorFadeIn>
           <Stack overflow="scroll" flex={1}>
             {approvalRequests.length > 0 ? (
               <Stack pb="26px">
+                {/* <UrsorFadeIn duration={500} delay={600}> */}
                 <ApprovalList
                   requests={approvalRequests.map((r) => ({
                     id: r.id,
@@ -782,6 +711,7 @@ export default function LinksPage(props: ILinksPageProps) {
           </Stack>
         </Stack>
       </PageLayout>
+
       {loading ? (
         <DynamicallyLoadedPortal>
           <Stack
@@ -795,10 +725,13 @@ export default function LinksPage(props: ILinksPageProps) {
               pointerEvents: "none",
             }}
           >
-            <UrsorLoading />
+            <UrsorFadeIn delay={500} duration={500}>
+              <UrsorLoading />
+            </UrsorFadeIn>
           </Stack>
         </DynamicallyLoadedPortal>
       ) : null}
+
       {selectedDomain ? (
         <DomainLinksDialog
           domain={selectedDomain}

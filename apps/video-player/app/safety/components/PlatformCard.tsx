@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Box, Stack } from "@mui/system";
-import Typography from "../../../components/Typography";
-import { PALETTE } from "../../../palette";
-import { ReactComponent as LinkIcon } from "../../../images/icons/LinkIcon.svg";
-import { ReactComponent as PencilIcon } from "../../../images/icons/PencilIcon.svg";
-import { ReactComponent as TrashcanIcon } from "../../../images/icons/TrashcanIcon.svg";
-import UrsorToggle from "../../../components/UrsorToggle";
-import ApiController from "../../../controllers/ApiController";
-import UrsorActionButton from "../../../components/UrsorActionButton";
-import NotificationContext from "../../../contexts/NotificationContext";
-import {
-  getAbsoluteUrl,
-  getPrefixRemovedUrl,
-} from "../../LibraryPage/components/LinkCard";
-import { getMaxLinesStyle } from "../../../components/DetailsSection";
+import LinkIcon from "@/images/icons/LinkIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import NotificationContext from "@/app/components/NotificationContext";
+import { PALETTE, Typography } from "ui";
+import { getMaxLinesStyle } from "ui/typography";
+import { getAbsoluteUrl } from "@/app/api";
+import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
+import UrsorToggle from "@/app/components/UrsorToggle";
+import BrowserApiController from "@/app/browserApi";
 
 const PADDING = "10px";
 export const MIN_WIDTH = "175px";
@@ -177,7 +174,7 @@ const PlatformCard = (props: IPlatformCardProps) => {
                 small
                 checked={props.platform.installed}
                 callback={() =>
-                  ApiController.updatePlatform(props.platform.id, {
+                  BrowserApiController.updatePlatform(props.platform.id, {
                     installed: !props.platform.installed,
                   }).then(props.updateCallback)
                 }

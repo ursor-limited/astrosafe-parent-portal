@@ -600,20 +600,20 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
 
   const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
   const loadChannels = () =>
-    BrowserApiController.getChannelsInSchool(userDetails!.schoolId)
+    BrowserApiController.getChannelsInSchool(userDetails?.schoolId ?? "")
       .then((channels) => setChannels(channels))
       .catch((error) => notificationCtx.error(error.message));
   useEffect(() => {
-    loadChannels();
+    userDetails?.schoolId && loadChannels();
   }, [userDetails?.schoolId]);
 
   const [stacks, setStacks] = useState<IStack[] | undefined>(undefined);
   const loadStacks = () =>
-    BrowserApiController.getStacksInSchool(userDetails!.schoolId)
+    BrowserApiController.getStacksInSchool(userDetails?.schoolId ?? "")
       .then((s) => setStacks(s))
       .catch((error) => notificationCtx.error(error.message));
   useEffect(() => {
-    loadStacks();
+    userDetails?.schoolId && loadStacks();
   }, [userDetails?.schoolId]);
 
   return (

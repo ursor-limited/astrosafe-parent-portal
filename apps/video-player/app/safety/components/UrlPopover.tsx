@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Box, Stack, keyframes } from "@mui/system";
 import { createPortal } from "react-dom";
 import { usePopper } from "react-popper";
-import { ReactComponent as LinkExternalIcon } from "../../../images/icons/LinkExternalIcon.svg";
-import Typography from "../../../components/Typography";
-import { PALETTE } from "../../../palette";
-import { getAbsoluteUrl } from "../../LibraryPage/components/LinkCard";
+import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
+import { PALETTE, Typography } from "ui";
+import { getAbsoluteUrl } from "@/app/api";
+import DynamicallyLoadedPortal from "@/app/components/DynamicallyLoadedPortal";
 
 export const fadeIn = keyframes`
 from {
@@ -74,73 +74,70 @@ export default function UrlPopover(props: IUrlPopoverProps) {
         <Typography>{props.url}</Typography>
       </Box>
 
-      {hovering || fadingOut
-        ? createPortal(
-            <>
-              <Box
-                ref={setPopperElement}
-                style={styles.popper}
-                {...attributes.popper}
-                //zIndex={zIndices.POPUP + 1}
-                //height={0}
-                sx={{
-                  animation: `${hovering ? fadeIn : fadeOut} 0.3s ease-out`,
-                  animationFillMode: "forwards",
-                  cursor: "pointer",
+      {hovering || fadingOut ? (
+        <DynamicallyLoadedPortal>
+          <>
+            <Box
+              ref={setPopperElement}
+              style={styles.popper}
+              {...attributes.popper}
+              //zIndex={zIndices.POPUP + 1}
+              //height={0}
+              sx={{
+                animation: `${hovering ? fadeIn : fadeOut} 0.3s ease-out`,
+                animationFillMode: "forwards",
+                cursor: "pointer",
+              }}
+            >
+              <a
+                target="_blank"
+                href={getAbsoluteUrl(props.url)}
+                style={{
+                  textDecoration: "none",
+                  width: "100%",
                 }}
               >
-                <a
-                  target="_blank"
-                  href={getAbsoluteUrl(props.url)}
-                  style={{
-                    textDecoration: "none",
-                    width: "100%",
+                <Stack
+                  height="36px"
+                  px="12px"
+                  bgcolor={"rgb(255,255,255)"}
+                  borderRadius="12px"
+                  direction="row"
+                  spacing="8px"
+                  alignItems="center"
+                  boxSizing="border-box"
+                  sx={{
+                    svg: {
+                      path: {
+                        transition: "0.2s",
+                        fill: PALETTE.secondary.blue[hoveringOnContent ? 4 : 3],
+                      },
+                    },
+                  }}
+                  onMouseEnter={() => {
+                    setHovering(true);
+                    setHoveringOnContent(true);
+                  }}
+                  onMouseLeave={() => {
+                    setHovering(false);
+                    setHoveringOnContent(false);
                   }}
                 >
-                  <Stack
-                    height="36px"
-                    px="12px"
-                    bgcolor={"rgb(255,255,255)"}
-                    borderRadius="12px"
-                    direction="row"
-                    spacing="8px"
-                    alignItems="center"
-                    boxSizing="border-box"
+                  <LinkExternalIcon height="16px" width="16px" />
+                  <Typography
+                    color={PALETTE.secondary.blue[hoveringOnContent ? 4 : 3]}
                     sx={{
-                      svg: {
-                        path: {
-                          transition: "0.2s",
-                          fill: PALETTE.secondary.blue[
-                            hoveringOnContent ? 4 : 3
-                          ],
-                        },
-                      },
-                    }}
-                    onMouseEnter={() => {
-                      setHovering(true);
-                      setHoveringOnContent(true);
-                    }}
-                    onMouseLeave={() => {
-                      setHovering(false);
-                      setHoveringOnContent(false);
+                      transition: "0.2s",
                     }}
                   >
-                    <LinkExternalIcon height="16px" width="16px" />
-                    <Typography
-                      color={PALETTE.secondary.blue[hoveringOnContent ? 4 : 3]}
-                      sx={{
-                        transition: "0.2s",
-                      }}
-                    >
-                      {props.url}
-                    </Typography>
-                  </Stack>
-                </a>
-              </Box>
-            </>,
-            document.body
-          )
-        : null}
+                    {props.url}
+                  </Typography>
+                </Stack>
+              </a>
+            </Box>
+          </>
+        </DynamicallyLoadedPortal>
+      ) : null}
     </>
   );
 }

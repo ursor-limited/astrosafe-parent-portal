@@ -1,21 +1,16 @@
+"use client";
+
 import React, { useContext } from "react";
-import PageLayout from "../../components/PageLayout";
-import { ReactComponent as PlusIcon } from "../../images/icons/PlusIcon.svg";
-import { Box, Stack } from "@mui/system";
-import NotificationContext from "../../contexts/NotificationContext";
-import ApiController from "../../controllers/ApiController";
-import _ from "lodash";
-import { PALETTE } from "../../palette";
-import { useOverallDialogContext } from "../../contexts/DialogContext";
-import Typography from "../../components/Typography";
-import DynamicCardGrid from "../../components/DynamicCardGrid";
-import PlatformCard, {
-  MIN_WIDTH as MIN_CARD_WIDTH,
-} from "./components/PlatformCard";
-import UrsorFadeIn from "../../components/UrsorFadeIn";
-import { createPortal } from "react-dom";
-import UrsorLoading from "../../components/spinners/UrsorLoading";
-import { useUserDataContext } from "../../contexts/UserDataContext";
+import DynamicallyLoadedPortal from "../components/DynamicallyLoadedPortal";
+import PageLayout from "../dashboard/PageLayout";
+import NotificationContext from "../components/NotificationContext";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { Stack } from "@mui/system";
+import UrsorFadeIn from "../components/UrsorFadeIn";
+import PlatformCard from "./components/PlatformCard";
+import UrsorLoading from "../components/UrsorLoading";
+import { PALETTE, Typography } from "ui";
+import DynamicCardGrid from "../components/DynamicCardGrid";
 
 export const CARD_SEPARATION = "28px";
 
@@ -36,8 +31,6 @@ export interface IAppsPageProps {}
 
 export default function AppsPage(props: IAppsPageProps) {
   const notificationCtx = useContext(NotificationContext);
-  const dialogCtx = useOverallDialogContext();
-  const dataCtx = useUserDataContext();
   return (
     <>
       <PageLayout
@@ -95,44 +88,42 @@ export default function AppsPage(props: IAppsPageProps) {
             </DynamicCardGrid>
           </Stack>
         </Stack>
-        {!dataCtx.apps
-          ? createPortal(
-              <Stack
-                position="absolute"
-                top={0}
-                width="100vw"
-                height="100vh"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  pointerEvents: "none",
-                }}
-              >
-                <UrsorLoading />
-              </Stack>,
-              document.body
-            )
-          : null}
-        {dataCtx.apps && dataCtx.apps.length === 0
-          ? createPortal(
-              <Stack
-                position="absolute"
-                top={0}
-                width="100vw"
-                height="100vh"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  pointerEvents: "none",
-                }}
-              >
-                <Typography bold color={PALETTE.secondary.grey[3]}>
-                  No Apps added yet.
-                </Typography>
-              </Stack>,
-              document.body
-            )
-          : null}
+        {!dataCtx.apps ? (
+          <DynamicallyLoadedPortal>
+            <Stack
+              position="absolute"
+              top={0}
+              width="100vw"
+              height="100vh"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                pointerEvents: "none",
+              }}
+            >
+              <UrsorLoading />
+            </Stack>
+          </DynamicallyLoadedPortal>
+        ) : null}
+        {dataCtx.apps && dataCtx.apps.length === 0 ? (
+          <DynamicallyLoadedPortal>
+            <Stack
+              position="absolute"
+              top={0}
+              width="100vw"
+              height="100vh"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                pointerEvents: "none",
+              }}
+            >
+              <Typography bold color={PALETTE.secondary.grey[3]}>
+                No Apps added yet.
+              </Typography>
+            </Stack>
+          </DynamicallyLoadedPortal>
+        ) : null}
       </PageLayout>
     </>
   );

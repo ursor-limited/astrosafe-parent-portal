@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stack } from "@mui/system";
-import ChevronDown from "../../images/icon/ChevronDown.svg";
+import ChevronDown from "@/images/icons/ChevronDown.svg";
 import { ContentAgeMode, IDevice } from "../browserApi";
 import UrsorPopover from "../components/UrsorPopover";
 import UrsorSelectList from "../components/UrsorSelectList";
