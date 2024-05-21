@@ -289,13 +289,7 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
         }}
       >
         {device ? (
-          <Stack
-            direction="row"
-            spacing="31px"
-            p="24px"
-            height="100%"
-            width="100%"
-          >
+          <Stack direction="row" spacing="31px" p="24px" height="100%">
             <Stack
               bgcolor={PALETTE.secondary.grey[1]}
               borderRadius="12px"
@@ -519,6 +513,7 @@ export default function DeviceDialog(props: IDeviceDialogProps) {
           submitCallback={(name) => {
             BrowserApiController.updateDeviceName(props.deviceId, name)
               .then(loadDevice)
+              .then(props.updateCallback)
               .then(() => notificationCtx.success("Name changed"));
             setEditingDialogOpen(false);
           }}

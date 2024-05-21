@@ -124,7 +124,7 @@ const LessonCard = (
             top="11px"
             right="11px"
             zIndex={2}
-            onClick={() => router.push(`/lesson/${props.id}`)}
+            onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
