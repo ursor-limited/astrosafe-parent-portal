@@ -158,8 +158,8 @@ export default function ContentAgeInfoDialog(
             </Typography>
           </Stack>
           <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-            Turn off the AstroSafe filter and use your School's filter. Expand
-            search results with DuckDuckGo.
+            Turn off the AstroSafe filter and use your School&apos;s filter.
+            Expand search results with DuckDuckGo.
           </Typography>
         </Stack>
       </Stack>
