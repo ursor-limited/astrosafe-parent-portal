@@ -370,7 +370,7 @@ const TimeRange = (props: {
                       ? endLineX - DOT_SIZE
                       : draggingStartLine
                       ? startLineX
-                      : `calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`
+                      : `${100 * currentTimeDotXRatio}%` //`calc(${startLineX}px + ${100 * currentTimeDotXRatio}%)`
                   }
                   top={0}
                   bottom={0}
