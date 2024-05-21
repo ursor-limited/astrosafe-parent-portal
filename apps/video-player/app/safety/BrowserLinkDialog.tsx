@@ -828,21 +828,6 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
               />
             </LessonImageUploader>
             <Stack px="4px" py="8px" flex={1} justifyContent="space-between">
-              {/* <InputTypography //@ts-ignore
-                value={title}
-                variant="large"
-                bold
-                color={
-                  shouldBeLightText(color)
-                    ? PALETTE.font.light
-                    : PALETTE.font.dark
-                }
-                boldPlaceholder
-                placeholder={`${props.platform ? "Platform" : "Link"} title`}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
-                }
-              /> */}
               <Typography
                 bold
                 variant="medium"
