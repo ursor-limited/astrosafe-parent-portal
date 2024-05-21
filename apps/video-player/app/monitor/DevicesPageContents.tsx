@@ -27,6 +27,11 @@ const UrsorLoading = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
+const DynamicallyLoadedPortal = dynamic(
+  () => import("../components/DynamicallyLoadedPortal"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
 export interface IBrowsingState {
   deviceId: string;
   studentId?: string;
@@ -492,31 +497,29 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         </Stack>
       </PageLayout>
 
-      {!school?.devices
-        ? createPortal(
-            <Stack
-              position="absolute"
-              top={0}
-              width="100vw"
-              height="100vh"
-              justifyContent="center"
-              alignItems="center"
-              sx={{
-                pointerEvents: "none",
-              }}
-            >
-              <UrsorLoading />
-            </Stack>,
-            document.body
-          )
-        : null}
+      {!school?.devices ? (
+        <DynamicallyLoadedPortal>
+          <Stack
+            position="absolute"
+            top={0}
+            width="100vw"
+            height="100vh"
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              pointerEvents: "none",
+            }}
+          >
+            <UrsorLoading />
+          </Stack>
+        </DynamicallyLoadedPortal>
+      ) : null}
 
-      {school?.devices?.length === 0
-        ? createPortal(
-            <EmptyStateIllustration>No Devices yet.</EmptyStateIllustration>,
-            document.body
-          )
-        : null}
+      {school?.devices?.length === 0 ? (
+        <DynamicallyLoadedPortal>
+          <EmptyStateIllustration>No Devices yet.</EmptyStateIllustration>{" "}
+        </DynamicallyLoadedPortal>
+      ) : null}
       {/* {selectedSessionForViewing ? (
         <SessionCodeDialog
           open={sessionCodeDialogOpen}
