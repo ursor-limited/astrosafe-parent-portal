@@ -249,7 +249,6 @@ const HistoryDayList = (props: {
           sx={{
             display: collapsed ? "hidden" : "visible",
           }}
-          width="100%"
         >
           {/* <Typography bold color={PALETTE.secondary.grey[4]}>
   {`Session 1`}
