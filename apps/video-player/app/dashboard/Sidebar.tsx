@@ -5,6 +5,7 @@ import { Stack, keyframes } from "@mui/system";
 import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import { useRouter } from "next/navigation";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
@@ -175,24 +176,14 @@ const SidebarItem = (props: {
 
 export default function Sidebar(props: ISidebarProps) {
   const router = useRouter();
-  const userCtx = useUserContext();
-  const { logout } = useAuth0();
-  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const topItems: ISidebarItem[] = [
     {
-      id: "home",
-      tourId: "home-button",
-      icon: VersionsIcon,
-      title: "Lessons",
-      callback: () => router.push("/dashboard"),
+      id: "monitor",
+      //tourId: "devices-button",
+      icon: DesktopIcon,
+      title: "Monitor",
+      callback: () => router.push("/monitor"),
     },
-    // {
-    //   id: "browser",
-    //   //tourId: "devices-button",
-    //   icon: GlobeIcon,
-    //   title: "Browser",
-    //   callback: () => setBrowserDialogOpen(true),
-    // },
   ];
 
   const bottomItems: ISidebarItem[] = [
@@ -246,14 +237,28 @@ export default function Sidebar(props: ISidebarProps) {
         id="my-first-step"
       >
         <Stack spacing={small ? "16px" : "24px"} alignItems="center">
+          {getList(
+            [
+              {
+                id: "home",
+                tourId: "home-button",
+                icon: VersionsIcon,
+                title: "Create",
+                callback: () => router.push("/dashboard"),
+              },
+            ],
+            small,
+            noText
+          )}
+          <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} />
           {getList(topItems, small, noText)}
         </Stack>
         {getList(bottomItems, small, noText)}
       </Stack>
-      <BrowserDialog
+      {/* <BrowserDialog
         open={browserDialogOpen}
         closeCallback={() => setBrowserDialogOpen(false)}
-      />
+      /> */}
     </>
   );
 }

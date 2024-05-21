@@ -9,14 +9,16 @@ import { PALETTE, Typography } from "ui";
 
 const ILLUST_SIZE = "14px";
 
-export interface IStepperOverlayProps {
+export interface IContentAgeInfoDialogProps {
   open: boolean;
   closeCallback: () => void;
   title: string;
   body: string;
 }
 
-export default function ContentAgeInfoDialog(props: IStepperOverlayProps) {
+export default function ContentAgeInfoDialog(
+  props: IContentAgeInfoDialogProps
+) {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <Dialog

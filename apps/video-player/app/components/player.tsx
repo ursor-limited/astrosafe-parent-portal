@@ -267,7 +267,6 @@ const Player = (props: {
 
   const resume = () => {
     setEnded(false);
-    console.log(player, "))");
     if (
       url?.includes("youtube") &&
       (player?.v.playerState === 2 ||

@@ -220,10 +220,6 @@ const ApprovedCompaniesList = (props: {
   pageChangeCallback: () => void;
 }) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
-  // const [companies, setCompanies] = useState<IApprovedCompany[]>([]);
-  // //@ts-ignore
-  // useEffect(() => setCompanies(companyDetails), [companyDetails]);
-  // console.log(_.uniq(companies.flatMap((c) => c.targetAudience.split(", "))));
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedType, setSelectedType] = useState<string | null>(null);
