@@ -5,7 +5,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
-import CheckBoxIcon from "@/images/icons/CheckBoxIcon.svg";
+import CheckBoxIcon from "@/images/icons/CheckboxIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import BrowserApiController, { IDevice } from "@/app/browserApi";
