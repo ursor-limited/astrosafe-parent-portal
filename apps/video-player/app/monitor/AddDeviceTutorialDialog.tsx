@@ -60,7 +60,7 @@ export const AddDeviceDialogContent = (props: { device?: IDevice }) => (
     ) : (
       <>
         <Image
-          height={132}
+          height={170}
           width={170}
           src={WonderingIllustration}
           alt="Wondering illustration"
@@ -396,7 +396,7 @@ export default function AddDeviceTutorialDialog(
         : "",
       subtitle: [
         "In one of the student Apps, click",
-        <Typography variant="medium" bold>
+        <Typography key="buu" variant="medium" bold>
           Connect to school
         </Typography>,
         "and enter the join code above.",

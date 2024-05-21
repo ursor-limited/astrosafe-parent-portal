@@ -247,7 +247,7 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
     <>
       <PageLayout
         title="Devices"
-        selectedSidebarItemId="devices"
+        selectedSidebarItemId="monitor"
         secondaryButton={{
           text: "Add Device",
           callback: () => setAddDeviceDialogOpen(true),

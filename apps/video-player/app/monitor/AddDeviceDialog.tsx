@@ -47,7 +47,7 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
   }, []);
 
   useEffect(
-    () => school && setDevice(school.devices.find((d) => !d.connected)),
+    () => school && setDevice(school.devices?.find((d) => !d.connected)),
     [school?.devices]
   );
 
@@ -138,7 +138,7 @@ export default function AddDeviceDialog(props: IAddDeviceDialogProps) {
                 setShowInstructions(!showInstructions);
                 showInstructions && setDeviceType(undefined);
                 props.updateCallback();
-                props.closeCallback();
+                //props.closeCallback();
               },
             }
       }
