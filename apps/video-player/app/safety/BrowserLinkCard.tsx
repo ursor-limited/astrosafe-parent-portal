@@ -160,7 +160,7 @@ const BrowserLinkCard = (props: {
             top="217px"
             right="13px"
             sx={{
-              opacity: hovering ? 1 : 0,
+              //opacity: hovering ? 1 : 0,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
@@ -171,6 +171,7 @@ const BrowserLinkCard = (props: {
               actions={actions}
               large
               light={lightText}
+              background="transparent"
             />
           </Stack>
         ) : null}

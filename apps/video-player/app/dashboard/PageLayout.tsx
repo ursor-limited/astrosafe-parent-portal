@@ -50,6 +50,7 @@ export interface IPageLayoutProps {
   disableConnectionBar?: boolean;
   buttonsDelay?: number;
   onScroll?: () => void;
+  fullHeight?: string;
   children: React.ReactNode;
 }
 
@@ -239,6 +240,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               justifyContent: "center",
             }}
             width={props.bodyWidth ?? "100%"}
+            height={props.fullHeight ? "100%" : undefined}
           >
             {props.children}
           </Stack>

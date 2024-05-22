@@ -5,12 +5,12 @@ import { useBrowserUserContext } from "../components/BrowserUserContext";
 import NotificationContext from "../components/NotificationContext";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import { Stack } from "@mui/system";
+import { PALETTE, Typography, UrsorButton } from "ui";
+import BrowserApiController, { IChannel } from "../browserApi";
 import {
   BACKDROP_STYLE,
   DEFAULT_FADEIN_DURATION,
 } from "../components/UrsorDialog";
-import { PALETTE, Typography, UrsorButton } from "ui";
-import BrowserApiController, { IChannel } from "../browserApi";
 
 const WIDTH = "550px";
 

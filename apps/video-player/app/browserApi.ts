@@ -227,11 +227,11 @@ class BrowserApiController {
   }
 
   static async deleteDomain(schoolId: string, domainId: string) {
-    return dellete(`schools/${schoolId}/domains/${domainId}`)
+    return dellete(`schools/${schoolId}/domains/${domainId}`);
   }
 
   static async deleteLink(id: string) {
-    return dellete(`links/${id}`)
+    return dellete(`links/${id}`);
   }
 
   static async deleteStack(id: string) {
@@ -241,7 +241,7 @@ class BrowserApiController {
   }
 
   static async deletePlatform(id: string) {
-    return dellete(`platform/${id}`)
+    return dellete(`platform/${id}`);
   }
 
   static async getLinksInSchool(schoolId: string) {
@@ -393,11 +393,33 @@ class BrowserApiController {
   }
 
   static async getAppsInSchool(schoolId: string) {
-    return get(`schools/${schoolId}/platforms`).then(
-      (response: any) => {
-        return response.json();
-      }
-    );
+    return get(`schools/${schoolId}/platforms`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async duplicateChannel(id: string) {
+    return post(`channels/${id}/duplicate`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async deleteChannel(id: string) {
+    return dellete(`channels/${id}`);
+  }
+
+  static async duplicateLink(id: string, creatorId: string) {
+    return post(`/links/${id}/duplicate`, {
+      creatorId,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async duplicateStack(id: string) {
+    return post(`/stacks/${id}/duplicate`).then((response: any) => {
+      return response.json();
+    });
   }
 }
 
