@@ -235,9 +235,7 @@ class BrowserApiController {
   }
 
   static async deleteLink(id: string) {
-    return dellete(`links/${id}`).then((response: any) => {
-      return response.json();
-    });
+    return dellete(`links/${id}`)
   }
 
   static async deleteStack(id: string) {

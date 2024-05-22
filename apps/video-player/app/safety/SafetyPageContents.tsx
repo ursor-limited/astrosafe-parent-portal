@@ -453,6 +453,7 @@ export default function SafetyPage() {
           // }),
           icon: PlusIcon,
         }}
+        scrollable
       >
         <UrsorFadeIn duration={500} delay={800}>
           <Stack
@@ -586,7 +587,7 @@ export default function SafetyPage() {
                   <UrsorFadeIn duration={DEFAULT_FADEIN_DURATION}>
                     <UrsorTable
                       columns={TABLE_COLUMNS}
-                      rows={rows}
+                      rows={[...rows, ...rows]}
                       defaultSortedByColumn="creationDate"
                       defaultSortedAscending
                       selectedSort={sortedColumn}

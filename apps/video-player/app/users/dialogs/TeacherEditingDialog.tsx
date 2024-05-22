@@ -105,6 +105,7 @@ export default function TeacherEditingDialog(
             }
             value={realName}
             placeholder={"Real name"}
+            width="400px"
           />
           <UrsorInputField
             onChange={(change: React.ChangeEvent<HTMLInputElement>) =>
