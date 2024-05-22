@@ -5,7 +5,12 @@ import { usePopper } from "react-popper";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { PALETTE, Typography } from "ui";
 import { getAbsoluteUrl } from "@/app/api";
-import DynamicallyLoadedPortal from "@/app/components/DynamicallyLoadedPortal";
+import dynamic from "next/dynamic";
+
+const DynamicallyLoadedPortal = dynamic(
+  () => import("../../components/DynamicallyLoadedPortal"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const fadeIn = keyframes`
 from {

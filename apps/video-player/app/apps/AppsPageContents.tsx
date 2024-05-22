@@ -10,10 +10,15 @@ import PlatformCard, { IPlatform } from "../safety/components/PlatformCard";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import PlatformDialog from "./PlatformDialog";
 import { PALETTE, Typography } from "ui";
-import DynamicallyLoadedPortal from "../components/DynamicallyLoadedPortal";
 import BrowserApiController from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import UrsorLoading from "../components/UrsorLoading";
+import dynamic from "next/dynamic";
+
+const DynamicallyLoadedPortal = dynamic(
+  () => import("../components/DynamicallyLoadedPortal"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export const CARD_SEPARATION = "28px";
 export const MIN_CARD_WIDTH = "175px";
