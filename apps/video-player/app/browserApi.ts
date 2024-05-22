@@ -379,7 +379,7 @@ class BrowserApiController {
     teacherId: string,
     reviewerId: string
   ) {
-    return post(`/teachers/${teacherId}/approveJoiningRequest`, {
+    return post(`teachers/${teacherId}/approveJoiningRequest`, {
       reviewerId,
     }).then((response: any) => {
       return response.json();
@@ -387,7 +387,15 @@ class BrowserApiController {
   }
 
   static async replyToInvitation(teacherId: string, accept: boolean) {
-    return post(`/teachers/${teacherId}/replyToInvitation`, { accept }).then(
+    return post(`teachers/${teacherId}/replyToInvitation`, { accept }).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async getAppsInSchool(schoolId: string) {
+    return get(`schools/${schoolId}/platforms`).then(
       (response: any) => {
         return response.json();
       }
