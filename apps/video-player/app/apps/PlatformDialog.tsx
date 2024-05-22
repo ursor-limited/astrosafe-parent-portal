@@ -435,7 +435,7 @@ export default function PlatformDialog(props: IPlatformDialogProps) {
     (props.platform ? submitUpdate() : submitCreation())
       .then(props.closeCallback)
       .then(imageUploadCallback)
-      .then(props.platform ? props.creationCallback : props.updateCallback)
+      .then(!props.platform ? props.creationCallback : props.updateCallback)
       .catch((error) => {
         notificationCtx.negativeSuccess(error.message);
         setDisplayUrlInvalidity(true);
