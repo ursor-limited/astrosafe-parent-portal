@@ -92,7 +92,7 @@ export default function UsersPageContents() {
         title={"People"}
         description="These are all people who can add Links to the private Browser and who can monitor Devices."
         bodyWidth="100%"
-        selectedSidebarItemId="people"
+        selectedSidebarItemId="users"
         button={{
           text: "Invite Teacher",
           callback: () => setTeacherInvitationDialogOpen(true),
