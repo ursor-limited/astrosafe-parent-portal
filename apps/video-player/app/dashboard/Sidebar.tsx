@@ -253,8 +253,8 @@ export default function Sidebar(props: ISidebarProps) {
             small,
             noText
           )}
-          {/* <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} /> */}
-          {/* {getList(topItems, small, noText)} */}
+          <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} />
+          {getList(topItems, small, noText)}
         </Stack>
         {getList(bottomItems, small, noText)}
       </Stack>
