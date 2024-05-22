@@ -227,11 +227,7 @@ class BrowserApiController {
   }
 
   static async deleteDomain(schoolId: string, domainId: string) {
-    return dellete(`schools/${schoolId}/domains/${domainId}`).then(
-      (response: any) => {
-        return response.json();
-      }
-    );
+    return dellete(`schools/${schoolId}/domains/${domainId}`)
   }
 
   static async deleteLink(id: string) {
