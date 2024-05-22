@@ -333,6 +333,72 @@ class BrowserApiController {
       return response.json();
     });
   }
+
+  static async createTemporarySchool(schoolName: string, teacherId: string) {
+    return post(`schools/temporarySchool`, { schoolName, teacherId }).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async changeSchool(teacherId: string, schoolId: string) {
+    return post(`teachers/${teacherId}/changeSchool`, {
+      schoolId,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updateTeacher(teacherId: string, update: any) {
+    return patch(`teachers/${teacherId}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getTeacherApprovalRequests(schoolId: string) {
+    return get(`schools/${schoolId}/teachers/approvalRequests`).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async inviteTeacher(email: string, inviterId: string) {
+    return post(`teachers/invite`, {
+      email,
+      inviterId,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async cancelTeacherJoiningRequest(teacherId: string) {
+    return post(`teachers/${teacherId}/denyJoiningRequest`).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
+
+  static async approveTeacherJoiningRequest(
+    teacherId: string,
+    reviewerId: string
+  ) {
+    return post(`/teachers/${teacherId}/approveJoiningRequest`, {
+      reviewerId,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async replyToInvitation(teacherId: string, accept: boolean) {
+    return post(`/teachers/${teacherId}/replyToInvitation`, { accept }).then(
+      (response: any) => {
+        return response.json();
+      }
+    );
+  }
 }
 
 export default BrowserApiController;

@@ -16,7 +16,6 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 import DeviceCard from "./DeviceCard";
 import _ from "lodash";
-import { createPortal } from "react-dom";
 import AddDeviceDialog from "./AddDeviceDialog";
 import LockDialog from "./LockDialog";
 import DeviceDialog from "./DeviceDialog/DeviceDialog";

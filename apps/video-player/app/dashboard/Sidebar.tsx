@@ -7,6 +7,7 @@ import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import { useRouter } from "next/navigation";
 
 export const WIDTH = "106px";
@@ -60,7 +61,8 @@ export type SideBarItemId =
   | "devices"
   | "library"
   | "plugins"
-  | "safety";
+  | "safety"
+  | "users";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -189,6 +191,13 @@ export default function Sidebar(props: ISidebarProps) {
       icon: LockIcon,
       title: "Safety",
       callback: () => router.push("/safety"),
+    },
+    {
+      id: "users",
+      //tourId: "devices-button",
+      icon: PeopleIcon,
+      title: "Users",
+      callback: () => router.push("/users"),
     },
   ];
 

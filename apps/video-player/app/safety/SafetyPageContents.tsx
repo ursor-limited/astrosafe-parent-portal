@@ -17,8 +17,6 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import DotFillIcon from "@/images/icons/DotFillIcon.svg";
 import DotHalfIcon from "@/images/icons/DotHalfIcon.svg";
-import X from "@/images/icons/X.svg";
-import SearchIcon from "@/images/icons/SearchIcon.svg";
 import NotificationContext from "../components/NotificationContext";
 import BrowserApiController from "../browserApi";
 import DomainLinksDialog, { IBrowserLink } from "./DomainLinksDialog";
