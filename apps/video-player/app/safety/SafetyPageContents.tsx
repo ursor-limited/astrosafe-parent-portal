@@ -17,8 +17,6 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import DotFillIcon from "@/images/icons/DotFillIcon.svg";
 import DotHalfIcon from "@/images/icons/DotHalfIcon.svg";
-import X from "@/images/icons/X.svg";
-import SearchIcon from "@/images/icons/SearchIcon.svg";
 import NotificationContext from "../components/NotificationContext";
 import BrowserApiController from "../browserApi";
 import DomainLinksDialog, { IBrowserLink } from "./DomainLinksDialog";
@@ -455,6 +453,7 @@ export default function SafetyPage() {
           // }),
           icon: PlusIcon,
         }}
+        scrollable
       >
         <UrsorFadeIn duration={500} delay={800}>
           <Stack
@@ -588,7 +587,7 @@ export default function SafetyPage() {
                   <UrsorFadeIn duration={DEFAULT_FADEIN_DURATION}>
                     <UrsorTable
                       columns={TABLE_COLUMNS}
-                      rows={rows}
+                      rows={[...rows, ...rows]}
                       defaultSortedByColumn="creationDate"
                       defaultSortedAscending
                       selectedSort={sortedColumn}

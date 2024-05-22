@@ -59,7 +59,7 @@ export default function LinkDeletionDialog(props: ILinkDeletionDialogProps) {
           {} as Record<string, IBrowserLink[]>
         )
     );
-  }, [props.links]);
+  }, [props.links, teachers]);
 
   const [linkDialogOpen, setLinkDialogOpen] = useState<boolean>(false);
 
@@ -277,6 +277,7 @@ export default function LinkDeletionDialog(props: ILinkDeletionDialogProps) {
                   }}
                   backgroundColor={PALETTE.system.red}
                   disabled={deletionPhrase !== "delete"}
+                  width="100%"
                 >
                   Do it
                 </UrsorButton>
@@ -290,6 +291,7 @@ export default function LinkDeletionDialog(props: ILinkDeletionDialogProps) {
                   opacity: deletionPhrase === "delete" ? 1 : 0,
                   transition: "0.5s",
                 }}
+                alignItems="center"
               >
                 <Typography
                   variant="small"
