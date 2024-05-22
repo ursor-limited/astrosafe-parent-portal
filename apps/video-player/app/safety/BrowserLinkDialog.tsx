@@ -28,7 +28,7 @@ import UrsorSelect from "../components/UrsorSelect";
 import LessonImageUploader from "../dashboard/LessonImageUploader";
 import dayjs from "dayjs";
 import InvalidUrlDialog from "../dashboard/InvalidUrlDialog";
-import DomainWarningDialog from "./dialogs/DomainWarningDialog";
+import DomainWarningDialog from "./DomainWarningDialog";
 import StackDialog from "./StackDialog";
 import ChannelDialog from "./ChannelDialog";
 import _ from "lodash";
