@@ -587,7 +587,7 @@ export default function SafetyPage() {
                   <UrsorFadeIn duration={DEFAULT_FADEIN_DURATION}>
                     <UrsorTable
                       columns={TABLE_COLUMNS}
-                      rows={[...rows, ...rows]}
+                      rows={rows}
                       defaultSortedByColumn="creationDate"
                       defaultSortedAscending
                       selectedSort={sortedColumn}
@@ -774,7 +774,10 @@ export default function SafetyPage() {
       <BrowserLinkDialog
         open={linkDialogOpen}
         closeCallback={() => setLinkDialogOpen(false)}
-        updateCallback={loadApprovalRequests}
+        updateCallback={() => {
+          loadApprovalRequests();
+          loadDomainsWithLinks();
+        }}
       />
       {approvedLinkId ? (
         <BrowserLinkDialog
