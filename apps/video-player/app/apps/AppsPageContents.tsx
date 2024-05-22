@@ -12,8 +12,12 @@ import PlatformDialog from "./PlatformDialog";
 import { PALETTE, Typography } from "ui";
 import BrowserApiController from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
-import UrsorLoading from "../components/UrsorLoading";
 import dynamic from "next/dynamic";
+
+const UrsorLoading = dynamic(
+  () => import("../components/UrsorLoading"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("../components/DynamicallyLoadedPortal"),
@@ -33,10 +37,12 @@ export default function AppsPageContents(props: IAppsPageProps) {
   const userDetails = useBrowserUserContext().userDetails;
 
   const [apps, setApps] = useState<IPlatform[] | undefined>(undefined);
-  const loadApps = () =>
-    BrowserApiController.getAppsInSchool(userDetails?.schoolId ?? "")
-      .then((apps) => setApps(apps))
-      .catch((error) => notificationCtx.error(error.message));
+  const loadApps = () => {
+    console.log(userDetails?.schoolId, "____+_");
+    BrowserApiController.getAppsInSchool(userDetails?.schoolId ?? "").then(
+      (apps) => setApps(apps)
+    );
+  };
   useEffect(() => {
     userDetails?.schoolId && loadApps();
   }, [userDetails?.schoolId]);
@@ -141,7 +147,6 @@ export default function AppsPageContents(props: IAppsPageProps) {
           </DynamicallyLoadedPortal>
         ) : null}
       </PageLayout>
-
       <PlatformDialog
         open={appDialogOpen}
         closeCallback={() => setAppDialogOpen(false)}

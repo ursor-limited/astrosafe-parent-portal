@@ -241,9 +241,7 @@ class BrowserApiController {
   }
 
   static async deletePlatform(id: string) {
-    return dellete(`platform/${id}`).then((response: any) => {
-      return response.json();
-    });
+    return dellete(`platform/${id}`)
   }
 
   static async getLinksInSchool(schoolId: string) {
