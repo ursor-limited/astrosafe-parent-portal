@@ -20,6 +20,7 @@ export default function NewActivityTag(props: INewActivityTagProps) {
       bgcolor={PALETTE.system.orange}
       py="7px"
       px="11px"
+      boxSizing="border-box"
     >
       <Box
         borderRadius="100%"
