@@ -244,7 +244,7 @@ const ChannelCard = (props: {
         <Stack
           justifyContent="center"
           sx={{
-            opacity: hovering ? 1 : 0,
+            // opacity: hovering ? 1 : 0,
             transition: "0.2s",
           }}
         >
@@ -254,6 +254,7 @@ const ChannelCard = (props: {
             large
             buttonClickCallback={() => setHovering(false)}
             light={props.selected}
+            background="transparent"
           />
         </Stack>
       </Stack>
@@ -284,9 +285,7 @@ const ChannelsColumn = (props: {
   //editCallback: (id: string) => void;
 }) => {
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
-  const [editingDialogOpen, setEditingDialogOpen] = useState<
-    string | undefined
-  >();
+  const [editingDialogId, setEditingDialogId] = useState<string | undefined>();
   return (
     <>
       <Stack spacing="12px" width="285px" minWidth="285px" overflow="hidden">
@@ -343,7 +342,7 @@ const ChannelsColumn = (props: {
                     // 0
                   }
                   callback={() => props.selectionCallback(c.id)}
-                  editCallback={() => setEditingDialogOpen(c.id)}
+                  editCallback={() => setEditingDialogId(c.id)}
                   deleteCallback={() => props.deleteCallback(c.id)}
                   hideCreator={props.my}
                 />
@@ -364,12 +363,12 @@ const ChannelsColumn = (props: {
           }}
         />
       ) : null}
-      {editingDialogOpen ? (
+      {editingDialogId ? (
         <ChannelDialog
-          channel={props.channels.find((c) => c.id === editingDialogOpen)}
+          channel={props.channels.find((c) => c.id === editingDialogId)}
           open={true}
           closeCallback={() => {
-            setCreationDialogOpen(false);
+            setEditingDialogId(undefined);
           }}
           updateCallback={props.updateCallback}
         />

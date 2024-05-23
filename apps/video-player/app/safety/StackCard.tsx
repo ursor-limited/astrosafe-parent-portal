@@ -264,7 +264,7 @@ const StackCard = (props: {
             right="10px"
             top="166px"
             sx={{
-              opacity: !props.stack || hovering ? 1 : 0,
+              //opacity: !props.stack || hovering ? 1 : 0,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",

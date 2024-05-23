@@ -70,7 +70,9 @@ const LessonCreationDialog = (props: {
 
   return (
     <UrsorDialog
-      supertitle={props.lesson?.title ? "Edit your Lesson" : "Name your Lesson"}
+      supertitle={
+        props.lesson?.title ? "Edit your Channel" : "Name your Channel"
+      }
       open={props.open}
       onCloseCallback={props.closeCallback}
       dynamicHeight

@@ -72,7 +72,7 @@ export default function AddDialog(props: IAddDialogProps) {
             <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
               Add Content
             </Typography>
-            <Typography>Add a Lesson, Stack or Link.</Typography>
+            <Typography>Add a Channel, Stack or Link.</Typography>
           </Stack>
           <Stack
             px="20px"

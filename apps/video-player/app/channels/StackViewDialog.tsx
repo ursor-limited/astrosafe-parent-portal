@@ -147,7 +147,6 @@ export default function StackViewDialog(props: IStackViewDialogProps) {
       >
         <Stack
           flex={1}
-          width="100%"
           borderRadius="16px 16px 0 0"
           bgcolor={PALETTE.secondary.grey[1]}
           p={GRID_SPACING}
