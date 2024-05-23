@@ -7,8 +7,9 @@ import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
-import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
+import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import { useRouter } from "next/navigation";
 
 export const WIDTH = "106px";
@@ -63,7 +64,8 @@ export type SideBarItemId =
   | "library"
   | "plugins"
   | "safety"
-  | "users";
+  | "users"
+  | "channels";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -185,6 +187,13 @@ export default function Sidebar(props: ISidebarProps) {
       icon: DesktopIcon,
       title: "Monitor",
       callback: () => router.push("/monitor"),
+    },
+    {
+      id: "channels",
+      //tourId: "devices-button",
+      icon: ListUnorderedIcon,
+      title: "Channels",
+      callback: () => router.push("/channels"),
     },
     {
       id: "safety",

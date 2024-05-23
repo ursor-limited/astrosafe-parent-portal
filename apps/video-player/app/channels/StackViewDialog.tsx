@@ -81,7 +81,7 @@ export default function StackViewDialog(props: IStackViewDialogProps) {
       icon: ClippyIcon,
       kallback: () =>
         BrowserApiController.duplicateStack(stack?.id ?? "")
-          .then(props.editCallback)
+          .then(props.updateCallback)
           .then(() => notificationCtx.success("Stack duplicated")),
     },
     // {
