@@ -138,9 +138,11 @@ export default function MovingDialog(props: IMovingDialogProps) {
             </Stack>
           ))}
         </Stack>
-        <UrsorButton onClick={props.closeCallback} variant="secondary">
-          Go back
-        </UrsorButton>
+        <Stack width="100%" alignItems="center">
+          <UrsorButton onClick={props.closeCallback} variant="secondary">
+            Go back
+          </UrsorButton>
+        </Stack>
       </Stack>
     </Dialog>
   );

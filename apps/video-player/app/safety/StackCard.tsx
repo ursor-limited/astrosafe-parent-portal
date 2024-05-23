@@ -34,6 +34,7 @@ const StackCard = (props: {
   backgroundColors?: IStack["backgroundColors"];
   clickCallback?: () => void;
   editCallback?: () => void;
+  updateCallback?: () => void;
   duplicateCallback?: () => void;
   shadow?: boolean;
   noPointerEvents?: boolean;
@@ -286,7 +287,7 @@ const StackCard = (props: {
         title={props.stack?.title ?? ""}
         id={props.stack?.id ?? ""}
         category="stack"
-        updateCallback={() => props.editCallback?.()}
+        updateCallback={() => props.updateCallback?.()}
       />
       <DeletionDialog
         open={deletionDialogOpen}
@@ -294,7 +295,7 @@ const StackCard = (props: {
         category="Stack"
         deletionCallback={() =>
           BrowserApiController.deleteStack(props.stack?.id ?? "")
-            .then(props.editCallback)
+            .then(props.updateCallback)
             .then(() => notificationCtx.negativeSuccess("Stack deleted"))
         }
       />

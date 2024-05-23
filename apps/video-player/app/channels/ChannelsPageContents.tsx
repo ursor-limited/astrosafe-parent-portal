@@ -14,7 +14,6 @@ import BrowserApiController, { IStack } from "../browserApi";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
 import UrsorActionButton from "../components/UrsorActionButton";
-import DeletionDialog from "./DeletionDialog";
 import {
   ITeacher,
   useBrowserUserContext,
@@ -36,6 +35,7 @@ import LinkViewDialog from "./LinkViewDialog";
 import Image from "next/image";
 import useColumnWidth from "../dashboard/useColumnWidth";
 import StackDialog from "../safety/StackDialog";
+import DeletionDialog from "../components/DeletionDialog";
 
 export const GRID_SPACING = "20px";
 
@@ -58,6 +58,7 @@ const ChannelCard = (props: {
   callback: () => void;
   editCallback: () => void;
   deleteCallback: () => void;
+  updateCallback: () => void;
   hideCreator?: boolean;
 }) => {
   const notificationCtx = useContext(NotificationContext);
@@ -87,7 +88,7 @@ const ChannelCard = (props: {
       icon: ClippyIcon,
       kallback: () =>
         BrowserApiController.duplicateChannel(props.channel.id)
-          .then(props.editCallback)
+          .then(props.updateCallback)
           .then(() => notificationCtx.success("Channel duplicated")),
     },
     {
@@ -264,7 +265,7 @@ const ChannelCard = (props: {
           closeCallback={() => setDeletionDialogOpen(false)}
           deletionCallback={() =>
             BrowserApiController.deleteChannel(props.channel.id)
-              .then(props.deleteCallback)
+              .then(props.updateCallback)
               .then(() => notificationCtx.negativeSuccess("Channel deleted"))
           }
           category="Channel"
@@ -343,6 +344,7 @@ const ChannelsColumn = (props: {
                   }
                   callback={() => props.selectionCallback(c.id)}
                   editCallback={() => setEditingDialogId(c.id)}
+                  updateCallback={props.updateCallback}
                   deleteCallback={() => props.deleteCallback(c.id)}
                   hideCreator={props.my}
                 />
@@ -566,7 +568,11 @@ export default function LibraryPage() {
                     channels.filter((c) => c.id !== id)[0].id
                   );
               }}
-              updateCallback={loadChannels}
+              updateCallback={() => {
+                loadChannels();
+                loadStacks();
+                loadLinks();
+              }}
             />
           </Stack>
           <Stack width="40px" height="100%" alignItems="center">
@@ -637,9 +643,14 @@ export default function LibraryPage() {
                                 clickCallback={() =>
                                   setLinkViewingDialogId(item.details.id)
                                 }
-                                updateCallback={() =>
+                                editCallback={() =>
                                   setLinkEditingDialogId(item.details.id)
                                 }
+                                updateCallback={() => {
+                                  loadLinks();
+                                  loadStacks();
+                                  loadChannels();
+                                }}
                                 duplicateCallback={() =>
                                   duplicateLink(item.details.id)
                                 }
@@ -666,6 +677,11 @@ export default function LibraryPage() {
                                       )
                                     )
                                 }
+                                updateCallback={() => {
+                                  loadLinks();
+                                  loadStacks();
+                                  loadChannels();
+                                }}
                               />
                             )}
                           </UrsorFadeIn>
@@ -692,6 +708,7 @@ export default function LibraryPage() {
             setSelectedChannelId(link.channelId);
             setStackViewingDialogId(link.stackId);
           }}
+          updateCallback={loadLinks}
           // newChannelCallback={() =>
           //   dialogCtx.setChannelDialogProps({
           //     completionCallback: (id) => {
@@ -734,6 +751,11 @@ export default function LibraryPage() {
             setStackViewingDialogId(id);
             setSelectedChannelId(channelId);
           }}
+          updateCallback={() => {
+            loadLinks();
+            loadChannels();
+            loadStacks();
+          }}
           open={true}
           closeCallback={() => {
             setStackCreationDialogOpen(false);
@@ -768,7 +790,10 @@ export default function LibraryPage() {
           }}
           editCallback={() => setStackEditingDialogId(stackViewingDialogId)}
           openLinkCallback={(id) => setLinkViewingDialogId(id)}
-          editLinkCallback={(id) => setLinkEditingDialogId(id)}
+          editLinkCallback={(id) => {
+            setLinkEditingDialogId(id);
+          }}
+          updateCallback={loadLinks}
         />
       ) : null}
       <ChannelDialog

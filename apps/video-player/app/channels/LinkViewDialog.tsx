@@ -63,7 +63,7 @@ export default function LinkViewDialog(props: ILinkViewDialogProps) {
           maxWidth: WIDTH,
           height: MIN_HEIGHT,
           minHeight: MIN_HEIGHT,
-          borderRadius: BORDER_RADIUS,
+          borderRadius: "24px",
         },
       }}
       sx={{
@@ -80,13 +80,13 @@ export default function LinkViewDialog(props: ILinkViewDialogProps) {
         alignItems="center"
       >
         <Stack
-          width={CARD_WIDTH}
-          minWidth={CARD_WIDTH}
+          width={"270px"}
+          minWidth={"270px"}
           sx={{
             pointerEvents: "none",
           }}
         >
-          <BrowserLinkCard link={link} />
+          <BrowserLinkCard link={link} noActionButton />
         </Stack>
         <Stack width="404px" flex={1} height="100%">
           <Stack flex={1} justifyContent="space-between">
@@ -194,7 +194,14 @@ export default function LinkViewDialog(props: ILinkViewDialogProps) {
                 </UrsorButton>
               </div>
               <div>
-                <a target="_blank" href={link.url}>
+                <a
+                  target="_blank"
+                  href={link.url}
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  rel="noreferrer"
+                >
                   <UrsorButton onClick={() => null} endIcon={ArrowUpRightIcon}>
                     Visit site
                   </UrsorButton>

@@ -23,9 +23,9 @@ import useColumnWidth from "../dashboard/useColumnWidth";
 import FixedBottomDialog from "../components/FixedBottomDialog";
 import _ from "lodash";
 import UrsorActionButton from "../components/UrsorActionButton";
-import DeletionDialog from "./DeletionDialog";
 import dayjs from "dayjs";
 import Image from "next/image";
+import DeletionDialog from "../components/DeletionDialog";
 
 const WIDTH = "85%";
 
@@ -36,6 +36,7 @@ export interface IStackViewDialogProps {
   editCallback: () => void;
   openLinkCallback: (id: string) => void;
   editLinkCallback: (id: string) => void;
+  updateCallback: () => void;
   stack?: IStack;
   links: IBrowserLink[];
 }
@@ -304,14 +305,19 @@ export default function StackViewDialog(props: IStackViewDialogProps) {
                           clickCallback={() => {
                             props.openLinkCallback(item.details.id);
                           }}
-                          updateCallback={() => {
-                            props.editLinkCallback(item.details.id);
+                          editCallback={() => {
+                            props.updateCallback();
+                            //props.editLinkCallback(item.details.id);
                           }}
                           duplicateCallback={() => {
                             BrowserApiController.duplicateLink(
                               item.details.id,
                               userCtx.userDetails?.id ?? ""
-                            ).then(props.editCallback);
+                            )
+                              .then(props.updateCallback)
+                              .then(() =>
+                                notificationCtx.success("Stack duplicated")
+                              );
                           }}
                         />
                       </UrsorFadeIn>
@@ -323,29 +329,13 @@ export default function StackViewDialog(props: IStackViewDialogProps) {
           )}
         </Stack>
       </FixedBottomDialog>
-      {/* <LinkDialog
-        channelId={selectedChannelId}
-        stackId={selectedStackId}
-        newChannelCallback={() =>
-          dialogCtx.setChannelDialogProps({
-            completionCallback: (id) => {
-              setSelectedChannelId(id);
-            },
-            open: true,
-            closeCallback: () => null,
-          })
-        }
-        newStackCallback={() => setStackDialogOpen(true)}
-        open={linkDialogOpen}
-        closeCallback={() => setLinkDialogOpen(false)}
-      /> */}
       <DeletionDialog
         open={deletionDialogOpen}
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={() =>
           BrowserApiController.deleteStack(stack?.id ?? "")
             .then(props.closeCallback)
-            .then(props.editCallback)
+            .then(props.updateCallback)
             .then(() => notificationCtx.negativeSuccess("Stack deleted"))
         }
         category="Stack"

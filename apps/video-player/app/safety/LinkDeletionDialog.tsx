@@ -151,7 +151,7 @@ export default function LinkDeletionDialog(props: ILinkDeletionDialogProps) {
                 <BrowserLinkCard
                   link={props.links[0]}
                   noActionButton={true}
-                  updateCallback={props.updateCallback}
+                  editCallback={props.updateCallback}
                 />
               </Stack>
             </Stack>

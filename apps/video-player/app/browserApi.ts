@@ -235,9 +235,7 @@ class BrowserApiController {
   }
 
   static async deleteStack(id: string) {
-    return dellete(`stacks/${id}`).then((response: any) => {
-      return response.json();
-    });
+    return dellete(`stacks/${id}`);
   }
 
   static async deletePlatform(id: string) {
@@ -275,7 +273,7 @@ class BrowserApiController {
   }
 
   static async updateStack(id: string, update: any) {
-    return patch(`stack/${id}`, update).then((response: any) => {
+    return patch(`stacks/${id}`, update).then((response: any) => {
       return response.json();
     });
   }
@@ -409,7 +407,7 @@ class BrowserApiController {
   }
 
   static async duplicateLink(id: string, creatorId: string) {
-    return post(`/links/${id}/duplicate`, {
+    return post(`links/${id}/duplicate`, {
       creatorId,
     }).then((response: any) => {
       return response.json();
@@ -417,7 +415,7 @@ class BrowserApiController {
   }
 
   static async duplicateStack(id: string) {
-    return post(`/stacks/${id}/duplicate`).then((response: any) => {
+    return post(`stacks/${id}/duplicate`).then((response: any) => {
       return response.json();
     });
   }
