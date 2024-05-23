@@ -23,7 +23,6 @@ const PADDING = "20px";
 const SECTION_SPACING = "10px";
 const TITLE_CONTENT_SPACING = "6px";
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
-export const TRIAL_DAYS = 14;
 
 export interface IAccountPageProps {}
 

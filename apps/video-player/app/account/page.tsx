@@ -6,6 +6,7 @@ import AccountPageContents from "../account/AccountPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import MobileAccountPageContents from "./MobileAccountPageContents";
+import { BrowserUserProvider } from "../components/BrowserUserContext";
 
 async function AccountPage({
   params,
@@ -18,9 +19,9 @@ async function AccountPage({
     ?.isMobile;
   return (
     <AuthWrapper>
-      <UserProvider>
+      <BrowserUserProvider>
         {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
-      </UserProvider>
+      </BrowserUserProvider>
     </AuthWrapper>
   );
 }

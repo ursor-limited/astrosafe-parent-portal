@@ -9,7 +9,10 @@ import JoiningCodeInput from "./JoiningCodeInput";
 import { ButtonVariant } from "ui/ursor-button";
 import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
-import { useBrowserUserContext } from "../components/BrowserUserContext";
+import {
+  ITeacher,
+  useBrowserUserContext,
+} from "../components/BrowserUserContext";
 import { useAuth0 } from "@auth0/auth0-react";
 import PageLayout, {
   SIDEBAR_X_MARGIN,
@@ -17,9 +20,10 @@ import PageLayout, {
 } from "../dashboard/PageLayout";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
-import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
+import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
-import { DEFAULT_DEVICE_LIMIT } from "../monitor/DevicesPageContents";
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
 const SECTION_SPACING = "10px";
@@ -33,6 +37,11 @@ export interface IAccountPageProps {}
 export const AccountPageSection = (props: {
   title: string;
   button?: { variant: ButtonVariant; text: string; callback: () => void };
+  secondaryButton?: {
+    variant: ButtonVariant;
+    text: string;
+    callback: () => void;
+  };
   children: React.ReactNode;
   flex?: boolean;
   yFlex?: boolean;
@@ -57,15 +66,26 @@ export const AccountPageSection = (props: {
         <Typography variant="large" bold>
           {props.title}
         </Typography>
-        {props.button ? (
-          <UrsorButton
-            onClick={props.button.callback}
-            variant={props.button.variant}
-            size="small"
-          >
-            {props.button.text}
-          </UrsorButton>
-        ) : null}
+        <Stack direction="row" spacing="12px">
+          {props.secondaryButton ? (
+            <UrsorButton
+              onClick={props.secondaryButton.callback}
+              variant={props.secondaryButton.variant}
+              size="small"
+            >
+              {props.secondaryButton.text}
+            </UrsorButton>
+          ) : null}
+          {props.button ? (
+            <UrsorButton
+              onClick={props.button.callback}
+              variant={props.button.variant}
+              size="small"
+            >
+              {props.button.text}
+            </UrsorButton>
+          ) : null}
+        </Stack>
       </Stack>
       {props.children}
     </Stack>
@@ -428,6 +448,19 @@ export default function AccountPage(props: IAccountPageProps) {
   const [email, setEmail] = useState<string>("");
 
   const [school, setSchool] = useState<ISchool | undefined>(undefined);
+  const loadSchool = () => {
+    userCtx.userDetails?.schoolId &&
+      BrowserApiController.getSchool(userCtx.userDetails?.schoolId).then(
+        (school) => {
+          setSchool(school);
+        }
+      );
+  };
+  useEffect(() => {
+    userCtx.userDetails?.schoolId && loadSchool();
+  }, [userCtx.userDetails?.schoolId]);
+
+  console.log(userCtx.userDetails);
 
   const [inputedCode, setInputedCode] = useState<string>("");
   const [inputActive, setInputActive] = useState<boolean>(false);
@@ -442,19 +475,6 @@ export default function AccountPage(props: IAccountPageProps) {
       setEmail(userCtx.userDetails.email);
     }
   }, [userCtx.userDetails]);
-
-  const loadSchool = (id?: string) =>
-    BrowserApiController.getSchool(id || userCtx.userDetails?.schoolId || "")
-      .then((school) => {
-        setSchool(school);
-      })
-      .catch((error) => notificationCtx.error(error.message));
-
-  useEffect(() => {
-    if (userCtx.userDetails) {
-      loadSchool();
-    }
-  }, [userCtx.userDetails?.id, userCtx.userDetails?.schoolId]);
 
   // const [
   //   showPasswordChangeFlowTriggeredInfo,
@@ -571,6 +591,17 @@ export default function AccountPage(props: IAccountPageProps) {
     })
       .then(() => notificationCtx.success("Updated Account"))
       .then(() => userCtx.load(userCtx.userDetails?.email));
+
+  const router = useRouter();
+
+  const [teachers, setTeachers] = useState<ITeacher[]>([]);
+  const loadTeachers = () =>
+    BrowserApiController.getTeachersInSchool(
+      userCtx?.userDetails?.schoolId ?? ""
+    ).then((t) => setTeachers(t));
+  useEffect(() => {
+    loadTeachers();
+  }, []);
 
   return (
     <>
@@ -720,37 +751,58 @@ export default function AccountPage(props: IAccountPageProps) {
             <AccountPageSection
               title="Plan"
               button={{
-                variant: "primary",
-                text: "Contact Sales",
-                callback: () => window.open("mailto:hello@astrosafe.co"),
+                variant: "secondary",
+                text: "Manage users",
+                callback: () => router.push("/users"),
+              }}
+              secondaryButton={{
+                variant: "secondary",
+                text: "Manage plan",
+                callback: () =>
+                  router.push(
+                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                  ),
               }}
               fadeInDelay={200}
             >
               {school ? (
-                <>
-                  <Stack spacing="8px" width="100%">
+                <Stack direction="row">
+                  {/* <Stack spacing="8px" width="100%">
                     <Typography>Your Astro plan</Typography>
                     <Typography variant="h3">{`${
                       school?.deviceLimit || DEFAULT_DEVICE_LIMIT
                     } Device${
                       school?.deviceLimit === 1 ? "" : "s"
                     }`}</Typography>
+                  </Stack> */}
+
+                  <Stack spacing="2px" width="100%">
+                    <Typography variant="small">Seats</Typography>
+                    <Typography
+                      variant="h5"
+                      color={PALETTE.secondary.grey[3]}
+                    >{`${teachers.length} of 5`}</Typography>
                   </Stack>
-                  <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
-                    <Typography>Seats used</Typography>
-                    <Typography variant="h3">{`${school?.devices.filter(
-                      (d) => d.connected !== "denied"
-                    ).length}`}</Typography>
+                  <Stack spacing="2px" width="100%">
+                    <Typography variant="small">Devices</Typography>
+                    <Typography
+                      variant="h5"
+                      color={PALETTE.secondary.grey[3]}
+                    >{`${school?.devices.filter((d) => d.connected !== "denied")
+                      .length} of ${school.deviceLimit}`}</Typography>
                   </Stack>
                   {school?.expirationDate ? (
-                    <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
+                    <Stack width="100%" spacing="4px">
                       <Typography>Expires on</Typography>
-                      <Typography variant="h3">
+                      <Typography
+                        variant="h5"
+                        color={PALETTE.secondary.grey[3]}
+                      >
                         {dayjs(school.expirationDate).format("Do MMMM YYYY")}
                       </Typography>
                     </Stack>
                   ) : null}
-                </>
+                </Stack>
               ) : null}
             </AccountPageSection>
           </Stack>
