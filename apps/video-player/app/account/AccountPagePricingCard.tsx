@@ -1,12 +1,12 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import CheckIcon from "@/images/icons/CheckIcon.svg";
+import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 
 const AccountPagePricingCard = (props: {
   title: string;
-  subtitle: string;
-  buttonText: string;
+  //subtitle: string;
+  // buttonText: string;
   price: number;
   currency: string;
   unit: string;
@@ -21,14 +21,17 @@ const AccountPagePricingCard = (props: {
   <Stack
     flex={1}
     bgcolor={
-      props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
+      PALETTE.secondary.grey[1]
+      //props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
     }
-    p="28px"
-    boxSizing="border-box"
-    alignItems="center"
-    borderRadius="20px"
+    p="16px"
+    //alignItems="center"
+    borderRadius="12px"
     border={props.border ? `4px solid ${PALETTE.system.orange}` : undefined}
     position="relative"
+    height="264px"
+    boxSizing="border-box"
+    justifyContent="space-between"
   >
     {props.notif ? (
       <Stack
@@ -46,29 +49,46 @@ const AccountPagePricingCard = (props: {
         </Typography>
       </Stack>
     ) : null}
-    <Stack spacing="2px">
-      <Stack spacing="20px" justifyContent="center" alignItems="center">
-        <Stack spacing="4px" alignItems="center">
+    <Stack spacing="8px" width="100%">
+      <Stack
+        spacing="8px"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+      >
+        {/* <Stack spacing="4px" alignItems="center"> */}
+        <Stack
+          width="100%"
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Typography
-            variant="h4"
-            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
+          //variant="h4"
+          //color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
           >
             {props.title}
           </Typography>
-          <Typography
+          <UrsorButton
+            size="small"
+            dark
+            variant="tertiary"
+            endIcon={VerifiedIcon}
+            iconSize={16}
+          >
+            Upgrade
+          </UrsorButton>
+        </Stack>
+        {/* <Typography
             variant="tiny"
             bold
             color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
           >
             {props.subtitle}
-          </Typography>
-        </Stack>
-        <Stack direction="row" alignItems="center" spacing="3px">
-          <Typography
-            variant="small"
-            bold
-            color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
-          >
+          </Typography> */}
+        {/* </Stack> */}
+        <Stack width="100%" direction="row" alignItems="center" spacing="3px">
+          <Typography bold color={PALETTE.secondary.grey[3]}>
             {props.currency}
           </Typography>
           <Typography
@@ -77,16 +97,13 @@ const AccountPagePricingCard = (props: {
           >
             {props.price}
           </Typography>
-          <Typography
-            variant="small"
-            bold
-            color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
-          >
+          <Typography bold color={PALETTE.secondary.grey[3]}>
             {`/ ${props.unit}`}
           </Typography>
         </Stack>
       </Stack>
-      <Stack alignItems="center" width="100%" pb="20px">
+
+      <Stack alignItems="center" width="100%">
         <Typography
           variant="tiny"
           bold
@@ -97,7 +114,7 @@ const AccountPagePricingCard = (props: {
       </Stack>
     </Stack>
 
-    <Stack
+    {/* <Stack
       justifyContent="flex-end"
       sx={
         props.dark
@@ -119,19 +136,20 @@ const AccountPagePricingCard = (props: {
           {props.buttonText}
         </UrsorButton>
       </Stack>
-    </Stack>
-    <Stack spacing="8px" pt="18px">
+    </Stack> */}
+    <Stack spacing="8px">
       {props.items.map((item, i) => (
-        <Stack key={i} direction="row" spacing="6px">
+        <Stack key={i} direction="row" spacing="7px" alignItems="center">
           <Stack
-            borderRadius="100%"
-            height="18px"
-            width="18px"
-            alignItems="center"
-            justifyContent="center"
-            bgcolor="rgb(255,255,255)"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.system.green,
+                },
+              },
+            }}
           >
-            <CheckIcon width="12px" height="12px" />
+            <CheckCircleIcon width="18px" height="18px" />
           </Stack>
           <Typography
             variant="small"

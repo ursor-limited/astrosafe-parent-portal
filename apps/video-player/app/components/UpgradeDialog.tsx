@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
 
-const DETAILS = {
+export const DETAILS = {
   USD: {
     currencySymbol: "$",
     monthly: 12.99,
@@ -38,7 +38,7 @@ const DETAILS = {
   },
 };
 
-const LOCALE_CURRENCIES = {
+export const LOCALE_CURRENCIES = {
   US: "USD",
   GB: "GBP",
   CA: "CAD",

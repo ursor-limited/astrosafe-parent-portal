@@ -23,6 +23,12 @@ import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
+import AccountPagePricingCard from "./AccountPagePricingCard";
+import {
+  DETAILS,
+  LOCALE_CURRENCIES,
+  getPaymentUrl,
+} from "../components/UpgradeDialog";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -602,6 +608,33 @@ export default function AccountPage(props: IAccountPageProps) {
   useEffect(() => {
     loadTeachers();
   }, []);
+  const [locale, setLocale] = useState<string>("US");
+
+  const getIp = async () => {
+    // Connect ipapi.co with fetch()
+    const response = await fetch("https://ipapi.co/json/").then(
+      async (response) => {
+        const data = await response.json();
+        console.log(data);
+        // Set the IP address to the constant `ip`
+        data.country_code && setLocale(data.country_code);
+      }
+    );
+  };
+
+  // Run `getIP` function above just once when the page is rendered
+  useEffect(() => {
+    getIp();
+  }, []);
+
+  const [localeDetails, setLocaleDetails] = useState<any>();
+  useEffect(
+    //@ts-ignore
+    () => setLocaleDetails(DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"]),
+    [locale]
+  );
+
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
 
   return (
     <>
@@ -747,7 +780,7 @@ export default function AccountPage(props: IAccountPageProps) {
               )}
             </Stack>
           </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1} height="165px">
+          <Stack spacing={SECTION_SPACING} flex={1}>
             <AccountPageSection
               title="Plan"
               button={{
@@ -766,8 +799,9 @@ export default function AccountPage(props: IAccountPageProps) {
               fadeInDelay={200}
             >
               {school ? (
-                <Stack direction="row">
-                  {/* <Stack spacing="8px" width="100%">
+                <Stack spacing="24px">
+                  <Stack direction="row">
+                    {/* <Stack spacing="8px" width="100%">
                     <Typography>Your Astro plan</Typography>
                     <Typography variant="h3">{`${
                       school?.deviceLimit || DEFAULT_DEVICE_LIMIT
@@ -776,32 +810,60 @@ export default function AccountPage(props: IAccountPageProps) {
                     }`}</Typography>
                   </Stack> */}
 
-                  <Stack spacing="2px" width="100%">
-                    <Typography variant="small">Seats</Typography>
-                    <Typography
-                      variant="h5"
-                      color={PALETTE.secondary.grey[3]}
-                    >{`${teachers.length} of 5`}</Typography>
-                  </Stack>
-                  <Stack spacing="2px" width="100%">
-                    <Typography variant="small">Devices</Typography>
-                    <Typography
-                      variant="h5"
-                      color={PALETTE.secondary.grey[3]}
-                    >{`${school?.devices.filter((d) => d.connected !== "denied")
-                      .length} of ${school.deviceLimit}`}</Typography>
-                  </Stack>
-                  {school?.expirationDate ? (
-                    <Stack width="100%" spacing="4px">
-                      <Typography>Expires on</Typography>
+                    <Stack spacing="2px" width="100%">
+                      <Typography variant="small">Seats</Typography>
                       <Typography
                         variant="h5"
                         color={PALETTE.secondary.grey[3]}
-                      >
-                        {dayjs(school.expirationDate).format("Do MMMM YYYY")}
-                      </Typography>
+                      >{`${teachers.length} of 5`}</Typography>
                     </Stack>
-                  ) : null}
+                    <Stack spacing="2px" width="100%">
+                      <Typography variant="small">Devices</Typography>
+                      <Typography
+                        variant="h5"
+                        color={PALETTE.secondary.grey[3]}
+                      >{`${school?.devices.filter(
+                        (d) => d.connected !== "denied"
+                      ).length} of ${school.deviceLimit}`}</Typography>
+                    </Stack>
+                    {school?.expirationDate ? (
+                      <Stack width="100%" spacing="4px">
+                        <Typography>Expires on</Typography>
+                        <Typography
+                          variant="h5"
+                          color={PALETTE.secondary.grey[3]}
+                        >
+                          {dayjs(school.expirationDate).format("Do MMMM YYYY")}
+                        </Typography>
+                      </Stack>
+                    ) : null}
+                  </Stack>
+                  <Stack direction="row" spacing="12px">
+                    <AccountPagePricingCard
+                      title="Teacher"
+                      price={localeDetails.monthly}
+                      currency={localeDetails.currencySymbol}
+                      unit={frequency === "monthly" ? "month" : "year"}
+                      tinyText={
+                        frequency === "annual"
+                          ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                          : undefined
+                      }
+                      items={[
+                        "1 teacher/adult account",
+                        "5 devices monitored",
+                        "Unlimited worksheets or videos",
+                        "All functionality available",
+                      ]}
+                      callback={() =>
+                        router.push(
+                          email ? getPaymentUrl(email, frequency) : ""
+                        )
+                      }
+                    />
+                    <Stack flex={1} />
+                    <Stack flex={1} />
+                  </Stack>
                 </Stack>
               ) : null}
             </AccountPageSection>
