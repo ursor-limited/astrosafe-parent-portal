@@ -12,6 +12,7 @@ export interface ISchool {
   lock?: ILock;
   joinCode: string;
   teacherCode: string;
+  ownerId: string;
   deviceLimit?: number;
   expirationDate?: string;
   free?: boolean;

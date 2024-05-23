@@ -167,9 +167,9 @@ class ApiController {
       response.json()
     );
   }
-  static async getUser(auth0Id: string, auth0UserId: string) {
+  static async getUser(auth0Id: string, auth0UserId?: string, updateLatestDate?: boolean) {
     //@ts-ignore
-    return post(`video/getUser`, { auth0Id, auth0UserId }).then(
+    return post(`video/getUser`, { auth0Id, auth0UserId, updateLatestDate }).then(
       (response: any) => response.json()
     );
   }

@@ -32,8 +32,9 @@ import {
 } from "../components/UpgradeDialog";
 import UrsorToggle from "../components/UrsorToggle";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import { useUserContext } from "../components/UserContext";
+import { ISafeTubeUser, useUserContext } from "../components/UserContext";
 import { getPrefixRemovedUrl } from "../components/LinkCard";
+import ApiController from "../api";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -664,12 +665,30 @@ export default function AccountPage(props: IAccountPageProps) {
 
   const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
 
-  console.log(
-    Math.min(
-      30,
-      dayjs().diff(safetubeUserDetails.subscriptionDate, "days") % 30
-    )
-  );
+  const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
+    ISafeTubeUser | undefined
+  >();
+  useEffect(() => {
+    ApiController.getUser(
+      teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
+    ).then((user) => setSafetubeSchoolOwner(user));
+  }, [school?.ownerId, teachers]);
+
+  const [renewalDate, setRenewalDate] = useState<string | undefined>();
+  useEffect(() => {
+    safetubeSchoolOwner &&
+      setRenewalDate(
+        dayjs(safetubeSchoolOwner.subscriptionDate)
+          .add(
+            Math.ceil(
+              dayjs().diff(safetubeSchoolOwner.subscriptionDate, "days") / 30
+            ) * 30,
+
+            "days"
+          )
+          .format("Do MMMM YYYY")
+      );
+  }, [safetubeSchoolOwner, teachers]);
 
   return (
     <>
@@ -861,21 +880,22 @@ export default function AccountPage(props: IAccountPageProps) {
                               variant="h5"
                               color={PALETTE.secondary.grey[3]}
                             >
-                              {dayjs(safetubeUserDetails.subscriptionDate)
-                                .add(
-                                  Math.ceil(
-                                    dayjs().diff(
-                                      safetubeUserDetails.subscriptionDate,
-                                      "days"
-                                    ) / 30
-                                  ) * 30,
-
-                                  "days"
-                                )
-                                .format("Do MMMM YYYY")}
+                              {renewalDate}
                             </Typography>
                           </Stack>
                         ) : null}
+                        <Stack spacing="2px" width="17%">
+                          <Typography variant="small">Owner</Typography>
+                          <Typography
+                            variant="h5"
+                            color={PALETTE.secondary.grey[3]}
+                          >
+                            {school.ownerId === userCtx.userDetails?.id
+                              ? "You"
+                              : teachers.find((t) => t.id === school.ownerId)
+                                  ?.teacherName}
+                          </Typography>
+                        </Stack>
                       </Stack>
                       <Stack justifyContent="flex-end">
                         <Stack

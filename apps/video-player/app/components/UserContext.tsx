@@ -77,7 +77,7 @@ const UserProvider = (props: IUserProviderProps) => {
   const loadUser = () => {
     if (user?.email && user?.sub) {
       setLoading(true);
-      ApiController.getUser(user.email, user.sub)
+      ApiController.getUser(user.email, user.sub, true)
         .then((u) =>
           u
             ? setSafeTubeUser(u)
