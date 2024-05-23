@@ -9,6 +9,7 @@ import JoiningCodeInput from "./JoiningCodeInput";
 import { ButtonVariant } from "ui/ursor-button";
 import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
+import MailIcon from "@/images/icons/MailIcon.svg";
 import {
   ITeacher,
   useBrowserUserContext,
@@ -30,6 +31,7 @@ import {
   getPaymentUrl,
 } from "../components/UpgradeDialog";
 import UrsorToggle from "../components/UrsorToggle";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -779,7 +781,7 @@ export default function AccountPage(props: IAccountPageProps) {
               )}
             </Stack>
           </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1}>
+          <Stack spacing={SECTION_SPACING} flex={1} minHeight="439px">
             <AccountPageSection
               title="Plan"
               button={{
@@ -796,95 +798,165 @@ export default function AccountPage(props: IAccountPageProps) {
                   ),
               }}
               fadeInDelay={200}
+              flex
             >
               {school ? (
-                <Stack spacing="24px">
-                  <Stack direction="row" justifyContent="space-between">
-                    <Stack direction="row" width="100%">
-                      <Stack spacing="2px" width="17%">
-                        <Typography variant="small">Seats</Typography>
-                        <Typography
-                          variant="h5"
-                          color={PALETTE.secondary.grey[3]}
-                        >{`${teachers.length} of 5`}</Typography>
-                      </Stack>
-                      <Stack spacing="2px" width="17%">
-                        <Typography variant="small">Devices</Typography>
-                        <Typography
-                          variant="h5"
-                          color={PALETTE.secondary.grey[3]}
-                        >{`${school?.devices.filter(
-                          (d) => d.connected !== "denied"
-                        ).length} of ${school.deviceLimit}`}</Typography>
-                      </Stack>
-                      {school?.expirationDate ? (
-                        <Stack width="25%" spacing="4px">
-                          <Typography variant="small">Expires on</Typography>
+                <UrsorFadeIn duration={800}>
+                  <Stack spacing="24px">
+                    <Stack direction="row" justifyContent="space-between">
+                      <Stack direction="row" width="100%">
+                        <Stack spacing="2px" width="17%">
+                          <Typography variant="small">Seats</Typography>
                           <Typography
                             variant="h5"
                             color={PALETTE.secondary.grey[3]}
+                          >{`${teachers.length} of 5`}</Typography>
+                        </Stack>
+                        <Stack spacing="2px" width="17%">
+                          <Typography variant="small">Devices</Typography>
+                          <Typography
+                            variant="h5"
+                            color={PALETTE.secondary.grey[3]}
+                          >{`${school?.devices.filter(
+                            (d) => d.connected !== "denied"
+                          ).length} of ${school.deviceLimit}`}</Typography>
+                        </Stack>
+                        {school?.expirationDate ? (
+                          <Stack width="25%" spacing="4px">
+                            <Typography variant="small">Expires on</Typography>
+                            <Typography
+                              variant="h5"
+                              color={PALETTE.secondary.grey[3]}
+                            >
+                              {dayjs(school.expirationDate).format(
+                                "Do MMMM YYYY"
+                              )}
+                            </Typography>
+                          </Stack>
+                        ) : null}
+                      </Stack>
+                      <Stack justifyContent="flex-end">
+                        <Stack
+                          direction="row"
+                          spacing="12px"
+                          alignItems="center"
+                          height="26px"
+                        >
+                          <Typography
+                            variant="small"
+                            color={PALETTE.secondary.grey[4]}
                           >
-                            {dayjs(school.expirationDate).format(
-                              "Do MMMM YYYY"
-                            )}
+                            Monthly
+                          </Typography>
+                          <UrsorToggle
+                            checked={frequency === "annual"}
+                            callback={() =>
+                              setFrequency(
+                                frequency === "annual" ? "monthly" : "annual"
+                              )
+                            }
+                          />
+                          <Typography
+                            variant="small"
+                            color={PALETTE.secondary.grey[4]}
+                          >
+                            Annual
                           </Typography>
                         </Stack>
-                      ) : null}
+                      </Stack>
                     </Stack>
-                    <Stack direction="row" spacing="12px" alignItems="center">
-                      <Typography
-                        variant="small"
-                        color={PALETTE.secondary.grey[4]}
-                      >
-                        Monthly
-                      </Typography>
-                      <UrsorToggle
-                        checked={frequency === "annual"}
+                    <Stack direction="row" spacing="12px">
+                      <AccountPagePricingCard
+                        title="Teacher"
+                        price={
+                          frequency === "monthly"
+                            ? localeDetails.monthly
+                            : localeDetails.annual
+                        }
+                        currency={localeDetails.currencySymbol}
+                        unit={frequency === "monthly" ? "month" : "year"}
+                        tinyText={
+                          frequency === "annual"
+                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                            : undefined
+                        }
+                        items={[
+                          "1 teacher/adult account",
+                          "5 devices monitored",
+                          "Unlimited worksheets or videos",
+                          "All functionality available",
+                        ]}
                         callback={() =>
-                          setFrequency(
-                            frequency === "annual" ? "monthly" : "annual"
+                          router.push(
+                            email ? getPaymentUrl(email, frequency) : ""
                           )
                         }
                       />
-                      <Typography
-                        variant="small"
-                        color={PALETTE.secondary.grey[4]}
-                      >
-                        Annual
-                      </Typography>
+                      <AccountPagePricingCard
+                        title="Classroom"
+                        price={
+                          frequency === "monthly"
+                            ? localeDetails.monthly
+                            : localeDetails.annual
+                        }
+                        currency={localeDetails.currencySymbol}
+                        unit={frequency === "monthly" ? "month" : "year"}
+                        tinyText={
+                          frequency === "annual"
+                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                            : undefined
+                        }
+                        items={[
+                          "5 teacher/adult accounts",
+                          "10 devices monitored",
+                          "Unlimited worksheets or videos",
+                          "All functionality available",
+                        ]}
+                        callback={() =>
+                          router.push(
+                            email ? getPaymentUrl(email, frequency) : ""
+                          )
+                        }
+                      />
+                      <AccountPagePricingCard
+                        title="Custom"
+                        price={
+                          frequency === "monthly"
+                            ? localeDetails.monthly
+                            : localeDetails.annual
+                        }
+                        currency={localeDetails.currencySymbol}
+                        unit={frequency === "monthly" ? "month" : "year"}
+                        tinyText={
+                          frequency === "annual"
+                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                            : undefined
+                        }
+                        text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
+                        callback={() =>
+                          router.push(
+                            email ? getPaymentUrl(email, frequency) : ""
+                          )
+                        }
+                        button={
+                          <UrsorButton
+                            size="small"
+                            dark
+                            variant="tertiary"
+                            endIcon={MailIcon}
+                            iconSize={16}
+                            onClick={() =>
+                              (window.location.href =
+                                "mailto:hello@astrosafe.co")
+                            }
+                          >
+                            Contact Sales
+                          </UrsorButton>
+                        }
+                      />
                     </Stack>
                   </Stack>
-                  <Stack direction="row" spacing="12px">
-                    <AccountPagePricingCard
-                      title="Teacher"
-                      price={
-                        frequency === "monthly"
-                          ? localeDetails.monthly
-                          : localeDetails.annual
-                      }
-                      currency={localeDetails.currencySymbol}
-                      unit={frequency === "monthly" ? "month" : "year"}
-                      tinyText={
-                        frequency === "annual"
-                          ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                          : undefined
-                      }
-                      items={[
-                        "1 teacher/adult account",
-                        "5 devices monitored",
-                        "Unlimited worksheets or videos",
-                        "All functionality available",
-                      ]}
-                      callback={() =>
-                        router.push(
-                          email ? getPaymentUrl(email, frequency) : ""
-                        )
-                      }
-                    />
-                    <Stack flex={1} />
-                    <Stack flex={1} />
-                  </Stack>
-                </Stack>
+                </UrsorFadeIn>
               ) : null}
             </AccountPageSection>
           </Stack>

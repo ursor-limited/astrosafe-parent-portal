@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import React from "react";
 
 const AccountPagePricingCard = (props: {
   title: string;
@@ -10,12 +11,13 @@ const AccountPagePricingCard = (props: {
   price: number;
   currency: string;
   unit: string;
-  items: string[];
+  items?: string[];
+  text?: string;
   dark?: boolean;
   tinyText?: string;
   border?: boolean;
   notif?: string;
-  noButtonIcon?: boolean;
+  button?: React.ReactNode;
   callback: () => void;
 }) => (
   <Stack
@@ -69,15 +71,18 @@ const AccountPagePricingCard = (props: {
           >
             {props.title}
           </Typography>
-          <UrsorButton
-            size="small"
-            dark
-            variant="tertiary"
-            endIcon={VerifiedIcon}
-            iconSize={16}
-          >
-            Upgrade
-          </UrsorButton>
+          {props.button || (
+            <UrsorButton
+              size="small"
+              dark
+              variant="tertiary"
+              endIcon={VerifiedIcon}
+              iconSize={16}
+              onClick={props.callback}
+            >
+              Upgrade
+            </UrsorButton>
+          )}
         </Stack>
         {/* <Typography
             variant="tiny"
@@ -110,53 +115,36 @@ const AccountPagePricingCard = (props: {
         {props.tinyText}
       </Typography>
     </Stack>
-
-    {/* <Stack
-      justifyContent="flex-end"
-      sx={
-        props.dark
-          ? {
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-            }
-          : undefined
-      }
-      onClick={props.callback}
-    >
-      <Stack sx={{ pointerEvents: props.dark ? "none" : undefined }}>
-        <UrsorButton
-          dark
-          variant={props.dark ? "primary" : "tertiary"}
-          endIcon={props.noButtonIcon ? undefined : VerifiedIcon}
-        >
-          {props.buttonText}
-        </UrsorButton>
-      </Stack>
-    </Stack> */}
-    <Stack spacing="8px">
-      {props.items.map((item, i) => (
-        <Stack key={i} direction="row" spacing="7px" alignItems="center">
-          <Stack
-            sx={{
-              svg: {
-                path: {
-                  fill: PALETTE.system.green,
+    {props.items ? (
+      <Stack spacing="8px">
+        {props.items.map((item, i) => (
+          <Stack key={i} direction="row" spacing="7px" alignItems="center">
+            <Stack
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.system.green,
+                  },
                 },
-              },
-            }}
-          >
-            <CheckCircleIcon width="18px" height="18px" />
+              }}
+            >
+              <CheckCircleIcon width="18px" height="18px" />
+            </Stack>
+            <Typography
+              variant="small"
+              color={props.dark ? PALETTE.secondary.grey[1] : undefined}
+            >
+              {item}
+            </Typography>
           </Stack>
-          <Typography
-            variant="small"
-            color={props.dark ? PALETTE.secondary.grey[1] : undefined}
-          >
-            {item}
-          </Typography>
-        </Stack>
-      ))}
-    </Stack>
+        ))}
+      </Stack>
+    ) : null}
+    {props.text ? (
+      <Stack flex={1} pt="38px">
+        <Typography variant="small">{props.text}</Typography>
+      </Stack>
+    ) : null}
   </Stack>
 );
 
