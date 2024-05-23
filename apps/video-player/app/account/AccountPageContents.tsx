@@ -44,6 +44,39 @@ const TITLE_CONTENT_SPACING = "6px";
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
 const FAILURE_DURATION = 2000;
 
+const PRODUCT_DETAILS: {
+  monthlyId: string;
+  annualId: string;
+  items: string[];
+  title: string;
+  mortarBoardsN: number;
+}[] = [
+  {
+    monthlyId: "prod_PlWBwIW0GJwQND",
+    annualId: "foo",
+    items: [
+      "1 teacher/adult account",
+      "5 devices monitored",
+      "Unlimited worksheets or videos",
+      "All functionality available",
+    ],
+    title: "Teacher",
+    mortarBoardsN: 1,
+  },
+  {
+    monthlyId: "coo",
+    annualId: "zoo",
+    items: [
+      "5 teacher/adult accounts",
+      "10 devices monitored",
+      "Unlimited worksheets or videos",
+      "All functionality available",
+    ],
+    title: "Classroom",
+    mortarBoardsN: 2,
+  },
+];
+
 export interface IAccountPageProps {}
 
 const AccountPageSchoolDetailsSection = (props: {
@@ -839,14 +872,19 @@ export default function AccountPage(props: IAccountPageProps) {
                 text: "Manage users",
                 callback: () => router.push("/users"),
               }}
-              secondaryButton={{
-                variant: "secondary",
-                text: "Manage plan",
-                callback: () =>
-                  router.push(
-                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
-                  ),
-              }}
+              secondaryButton={
+                safetubeSchoolOwner?.id === userCtx.userDetails?.id
+                  ? {
+                      variant: "secondary",
+                      text: "Manage plan",
+                      callback: () =>
+                        router.push(
+                          process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ??
+                            ""
+                        ),
+                    }
+                  : undefined
+              }
               fadeInDelay={200}
               flex
             >
@@ -873,9 +911,7 @@ export default function AccountPage(props: IAccountPageProps) {
                         </Stack>
                         {safetubeUserDetails?.subscriptionDate ? (
                           <Stack width="25%" spacing="4px">
-                            <Typography variant="small">
-                              Renewal date
-                            </Typography>
+                            <Typography variant="small">Renewal</Typography>
                             <Typography
                               variant="h5"
                               color={PALETTE.secondary.grey[3]}
@@ -897,128 +933,106 @@ export default function AccountPage(props: IAccountPageProps) {
                           </Typography>
                         </Stack>
                       </Stack>
-                      <Stack justifyContent="flex-end">
-                        <Stack
-                          direction="row"
-                          spacing="12px"
-                          alignItems="center"
-                          height="26px"
-                        >
-                          <Typography
-                            variant="small"
-                            color={PALETTE.secondary.grey[4]}
+                      {safetubeSchoolOwner.id === userCtx.userDetails.id ? (
+                        <Stack justifyContent="flex-end">
+                          <Stack
+                            direction="row"
+                            spacing="12px"
+                            alignItems="center"
+                            height="26px"
                           >
-                            Monthly
-                          </Typography>
-                          <UrsorToggle
-                            checked={frequency === "annual"}
-                            callback={() =>
-                              setFrequency(
-                                frequency === "annual" ? "monthly" : "annual"
-                              )
-                            }
-                          />
-                          <Typography
-                            variant="small"
-                            color={PALETTE.secondary.grey[4]}
-                          >
-                            Annual
-                          </Typography>
+                            <Typography
+                              variant="small"
+                              color={PALETTE.secondary.grey[4]}
+                            >
+                              Monthly
+                            </Typography>
+                            <UrsorToggle
+                              checked={frequency === "annual"}
+                              callback={() =>
+                                setFrequency(
+                                  frequency === "annual" ? "monthly" : "annual"
+                                )
+                              }
+                            />
+                            <Typography
+                              variant="small"
+                              color={PALETTE.secondary.grey[4]}
+                            >
+                              Annual
+                            </Typography>
+                          </Stack>
                         </Stack>
-                      </Stack>
+                      ) : (
+                        <Stack />
+                      )}
                     </Stack>
                     <Stack direction="row" spacing="12px">
-                      <AccountPagePricingCard
-                        title="Teacher"
-                        price={
-                          frequency === "monthly"
-                            ? localeDetails.monthly
-                            : localeDetails.annual
-                        }
-                        currency={localeDetails.currencySymbol}
-                        unit={frequency === "monthly" ? "month" : "year"}
-                        tinyText={
-                          frequency === "annual"
-                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                            : undefined
-                        }
-                        items={[
-                          "1 teacher/adult account",
-                          "5 devices monitored",
-                          "Unlimited worksheets or videos",
-                          "All functionality available",
-                        ]}
-                        callback={() =>
-                          router.push(
-                            email ? getPaymentUrl(email, frequency) : ""
-                          )
-                        }
-                        mortarBoardsN={1}
-                      />
-                      <AccountPagePricingCard
-                        title="Classroom"
-                        price={
-                          frequency === "monthly"
-                            ? localeDetails.monthly
-                            : localeDetails.annual
-                        }
-                        currency={localeDetails.currencySymbol}
-                        unit={frequency === "monthly" ? "month" : "year"}
-                        tinyText={
-                          frequency === "annual"
-                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                            : undefined
-                        }
-                        items={[
-                          "5 teacher/adult accounts",
-                          "10 devices monitored",
-                          "Unlimited worksheets or videos",
-                          "All functionality available",
-                        ]}
-                        callback={() =>
-                          router.push(
-                            email ? getPaymentUrl(email, frequency) : ""
-                          )
-                        }
-                        mortarBoardsN={2}
-                      />
-                      <AccountPagePricingCard
-                        title="Custom"
-                        price={
-                          frequency === "monthly"
-                            ? localeDetails.monthly
-                            : localeDetails.annual
-                        }
-                        currency={localeDetails.currencySymbol}
-                        unit={frequency === "monthly" ? "month" : "year"}
-                        tinyText={
-                          frequency === "annual"
-                            ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                            : undefined
-                        }
-                        text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
-                        callback={() =>
-                          router.push(
-                            email ? getPaymentUrl(email, frequency) : ""
-                          )
-                        }
-                        button={
-                          <UrsorButton
-                            size="small"
-                            dark
-                            variant="tertiary"
-                            endIcon={MailIcon}
-                            iconSize={16}
-                            onClick={() =>
-                              (window.location.href =
-                                "mailto:hello@astrosafe.co")
+                      {[
+                        ...PRODUCT_DETAILS.map((pd) => (
+                          <AccountPagePricingCard
+                            key={pd.annualId}
+                            title={pd.title}
+                            price={
+                              frequency === "monthly"
+                                ? localeDetails.monthly
+                                : localeDetails.annual
                             }
-                          >
-                            Contact Sales
-                          </UrsorButton>
-                        }
-                        mortarBoardsN={3}
-                      />
+                            currency={localeDetails.currencySymbol}
+                            unit={frequency === "monthly" ? "month" : "year"}
+                            tinyText={
+                              frequency === "annual"
+                                ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                                : undefined
+                            }
+                            items={pd.items}
+                            callback={() =>
+                              router.push(
+                                email ? getPaymentUrl(email, frequency) : ""
+                              )
+                            }
+                            mortarBoardsN={pd.mortarBoardsN}
+                          />
+                        )),
+                        <AccountPagePricingCard
+                          key="custom"
+                          title="Custom"
+                          price={
+                            frequency === "monthly"
+                              ? localeDetails.monthly
+                              : localeDetails.annual
+                          }
+                          currency={localeDetails.currencySymbol}
+                          unit={frequency === "monthly" ? "month" : "year"}
+                          tinyText={
+                            frequency === "annual"
+                              ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
+                              : undefined
+                          }
+                          text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
+                          callback={() =>
+                            router.push(
+                              email ? getPaymentUrl(email, frequency) : ""
+                            )
+                          }
+                          button={
+                            <UrsorButton
+                              size="small"
+                              dark
+                              variant="tertiary"
+                              endIcon={MailIcon}
+                              iconSize={16}
+                              onClick={() =>
+                                (window.location.href =
+                                  "mailto:hello@astrosafe.co")
+                              }
+                            >
+                              Contact Sales
+                            </UrsorButton>
+                          }
+                          mortarBoardsN={3}
+                        />,
+                      ]}
                     </Stack>
                   </Stack>
                 </UrsorFadeIn>
@@ -1029,7 +1043,7 @@ export default function AccountPage(props: IAccountPageProps) {
             <AccountPageSection
               title="Feedback"
               button={{
-                variant: "primary",
+                variant: "tertiary",
                 text: "Send",
                 callback: () => window.open("mailto:hello@astrosafe.co"),
               }}
