@@ -82,7 +82,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
         ) : null}
         <Stack
           sx={{
-            height: "100%",
+            height: props.scrollable ? undefined : "100%",
             width: "100%",
           }}
           overflow={props.scrollable ? "scroll" : "hidden"}
