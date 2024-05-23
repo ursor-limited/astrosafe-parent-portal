@@ -103,17 +103,45 @@ const AccountPageSchoolDetailsSection = (props: {
       .then(() => notificationCtx.success("Updated School"))
       .then(props.updateCallback);
 
+  const [editingOn, setEditingOn] = useState<boolean>(false);
+
+  const [notYetCreatedSchool, setNotYetCreatedSchool] =
+    useState<boolean>(false);
+  useEffect(() => {
+    if (Object.values(props.school).every((x) => !x)) {
+      setNotYetCreatedSchool(true);
+      setEditingOn(true);
+    }
+  }, []);
+
   return (
     <AccountPageSection
       title={`Connected to ${props.school.name}`}
       yFlex
       fadeInDelay={SCHOOL_SECTION_FADEIN_DELAY}
+      button={
+        editingOn
+          ? {
+              variant: "tertiary",
+              text: notYetCreatedSchool ? "Create" : "Save",
+              callback: () => {
+                submitSchoolUpdate();
+                setEditingOn(false);
+                props.updateCallback();
+              },
+            }
+          : {
+              variant: "secondary",
+              text: "Edit",
+              callback: () => setEditingOn(true),
+            }
+      }
     >
       <Stack direction="row" spacing="14px">
         <Stack spacing={TITLE_CONTENT_SPACING} flex={1}>
           <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
             <Typography>School name</Typography>
-            {props.static ? (
+            {!editingOn ? (
               <Stack pb="12px">
                 <Typography bold>{name}</Typography>
               </Stack>
@@ -131,7 +159,7 @@ const AccountPageSchoolDetailsSection = (props: {
           </Stack>
           <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
             <Typography>Website</Typography>
-            {props.static ? (
+            {!editingOn ? (
               <Stack
                 pb="12px"
                 sx={{
@@ -166,7 +194,7 @@ const AccountPageSchoolDetailsSection = (props: {
           </Stack>
           <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
             <Typography>Contact email</Typography>
-            {props.static ? (
+            {!editingOn ? (
               <Stack pb="12px">
                 <Typography bold>{email}</Typography>
               </Stack>
@@ -187,7 +215,7 @@ const AccountPageSchoolDetailsSection = (props: {
           <Stack spacing={TITLE_CONTENT_SPACING}>
             <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
               <Typography>Address</Typography>
-              {props.static ? (
+              {!editingOn ? (
                 <Stack pb="12px">
                   <Typography bold>{address}</Typography>
                 </Stack>
@@ -205,7 +233,7 @@ const AccountPageSchoolDetailsSection = (props: {
             </Stack>
             <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
               <Typography>Zip / postcode</Typography>
-              {props.static ? (
+              {!editingOn ? (
                 <Stack pb="12px">
                   <Typography bold>{postcode}</Typography>
                 </Stack>
@@ -223,7 +251,7 @@ const AccountPageSchoolDetailsSection = (props: {
             </Stack>
             <Stack spacing={TITLE_CONTENT_SPACING} width="100%">
               <Typography>Country</Typography>
-              {props.static ? (
+              {!editingOn ? (
                 <Stack pb="12px">
                   <Typography bold>{country}</Typography>
                 </Stack>
@@ -242,7 +270,7 @@ const AccountPageSchoolDetailsSection = (props: {
           </Stack>
         </Stack>
       </Stack>
-      <Stack
+      {/* <Stack
         flex={1}
         direction="row"
         alignItems="flex-end"
@@ -254,7 +282,7 @@ const AccountPageSchoolDetailsSection = (props: {
         <UrsorButton size="small" onClick={submitSchoolUpdate}>
           Save
         </UrsorButton>
-      </Stack>
+      </Stack> */}
     </AccountPageSection>
   );
 };
@@ -306,6 +334,7 @@ export const AccountPageSection = (props: {
               onClick={props.button.callback}
               variant={props.button.variant}
               size="small"
+              dark={props.button.variant === "tertiary"}
             >
               {props.button.text}
             </UrsorButton>
@@ -479,6 +508,8 @@ export default function AccountPage(props: IAccountPageProps) {
 
   const safetubeUserDetails = useUserContext().user;
 
+  console.log(safetubeUserDetails, "LOL");
+
   // const [
   //   showPasswordChangeFlowTriggeredInfo,
   //   setShowPasswordChangeFlowTriggeredInfo,
@@ -633,6 +664,13 @@ export default function AccountPage(props: IAccountPageProps) {
 
   const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
 
+  console.log(
+    Math.min(
+      30,
+      dayjs().diff(safetubeUserDetails.subscriptionDate, "days") % 30
+    )
+  );
+
   return (
     <>
       <PageLayout
@@ -736,7 +774,7 @@ export default function AccountPage(props: IAccountPageProps) {
                   </Stack>
                 </Stack>
               </Stack>
-              <Stack
+              {/* <Stack
                 flex={1}
                 direction="row"
                 alignItems="flex-end"
@@ -748,28 +786,12 @@ export default function AccountPage(props: IAccountPageProps) {
                 <UrsorButton size="small" onClick={submitUpdate}>
                   Save
                 </UrsorButton>
-              </Stack>
+              </Stack> */}
             </AccountPageSection>
             <Stack flex={1}>
               {school && safetubeUserDetails?.subscribed ? (
                 <AccountPageSchoolDetailsSection
                   school={school}
-                  // leaveCallback={() =>
-                  //   userCtx.userDetails?.teacherName &&
-                  //   kickOutOfSchool(
-                  //     userCtx.userDetails.teacherName,
-                  //     userCtx.userDetails.id
-                  //   )
-                  //     .then(() =>
-                  //       Bro.cancelTeacherJoiningRequest(
-                  //         userCtx.userDetails?.id
-                  //       )
-                  //     )
-                  //     .then(() => userCtx.load(userCtx.userDetails?.email))
-                  //     .then(() =>
-                  //       notificationCtx.success("You've left your School.")
-                  //     )
-                  // }
                   static={!userCtx.userDetails?.isAdmin}
                   updateCallback={loadSchool}
                 />
@@ -830,16 +852,27 @@ export default function AccountPage(props: IAccountPageProps) {
                             (d) => d.connected !== "denied"
                           ).length} of ${school.deviceLimit}`}</Typography>
                         </Stack>
-                        {school?.expirationDate ? (
+                        {safetubeUserDetails?.subscriptionDate ? (
                           <Stack width="25%" spacing="4px">
-                            <Typography variant="small">Expires on</Typography>
+                            <Typography variant="small">
+                              Renewal date
+                            </Typography>
                             <Typography
                               variant="h5"
                               color={PALETTE.secondary.grey[3]}
                             >
-                              {dayjs(school.expirationDate).format(
-                                "Do MMMM YYYY"
-                              )}
+                              {dayjs(safetubeUserDetails.subscriptionDate)
+                                .add(
+                                  Math.ceil(
+                                    dayjs().diff(
+                                      safetubeUserDetails.subscriptionDate,
+                                      "days"
+                                    ) / 30
+                                  ) * 30,
+
+                                  "days"
+                                )
+                                .format("Do MMMM YYYY")}
                             </Typography>
                           </Stack>
                         ) : null}

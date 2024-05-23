@@ -15,6 +15,8 @@ export interface ISafeTubeUser {
   auth0Id: string;
   subscribed: boolean;
   subscriptionDeletionDate?: number;
+  subscriptionDate?: string;
+  subscriptionProductId?: string;
   paymentFailed?: boolean;
   createdAt: string;
   freeTrialStart?: string;

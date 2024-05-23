@@ -20,7 +20,9 @@ async function AccountPage({
   return (
     <AuthWrapper>
       <BrowserUserProvider>
-        {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
+        <UserProvider>
+          {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
+        </UserProvider>
       </BrowserUserProvider>
     </AuthWrapper>
   );
