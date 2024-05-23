@@ -793,7 +793,11 @@ export default function LibraryPage() {
           editLinkCallback={(id) => {
             setLinkEditingDialogId(id);
           }}
-          updateCallback={loadLinks}
+          updateCallback={() => {
+            loadLinks();
+            loadStacks();
+            loadChannels();
+          }}
         />
       ) : null}
       <ChannelDialog
