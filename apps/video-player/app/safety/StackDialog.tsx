@@ -229,7 +229,7 @@ export default function StackDialog(props: IStackDialogProps) {
                 width="100%"
                 fieldWidth="100%"
                 placeholder="Select Channel"
-                leftAlign
+                leftAlignPopover
                 listButtons={[
                   {
                     title: "New Channel",
@@ -237,6 +237,7 @@ export default function StackDialog(props: IStackDialogProps) {
                     callback: () => props.newChannelCallback?.(),
                   },
                 ]}
+                zIndex={9999}
               />
             </DialogSection>
           </Stack>
@@ -249,6 +250,7 @@ export default function StackDialog(props: IStackDialogProps) {
               noPointerEvents
               backgroundColors={backgroundColors}
               editCallback={props.updateCallback}
+              updateCallback={props.updateCallback}
             />
           </Stack>
         </Stack>

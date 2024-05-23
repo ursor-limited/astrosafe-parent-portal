@@ -19,6 +19,7 @@ import MovingDialog from "./MovingDialog";
 const BrowserLinkCard = (props: {
   link: IBrowserLink;
   clickCallback?: () => void;
+  editCallback?: () => void;
   updateCallback?: () => void;
   duplicateCallback?: () => void;
   noActionButton?: boolean;
@@ -160,7 +161,7 @@ const BrowserLinkCard = (props: {
             top="217px"
             right="13px"
             sx={{
-              opacity: hovering ? 1 : 0,
+              //opacity: hovering ? 1 : 0,
               cursor: "pointer",
               "&:hover": { opacity: 0.6 },
               transition: "0.2s",
@@ -171,6 +172,7 @@ const BrowserLinkCard = (props: {
               actions={actions}
               large
               light={lightText}
+              background="transparent"
             />
           </Stack>
         ) : null}
@@ -180,7 +182,7 @@ const BrowserLinkCard = (props: {
         closeCallback={() => setDeletionDialogOpen(false)}
         deletionCallback={() =>
           BrowserApiController.deleteLink(props.link.id)
-            .then(props.updateCallback)
+            .then(props.editCallback)
             .then(() => notificationCtx.negativeSuccess("Link deleted"))
         }
         category="Link"
@@ -198,7 +200,7 @@ const BrowserLinkCard = (props: {
         <BrowserLinkDialog
           open={true}
           closeCallback={() => setEditDialogOpen(false)}
-          updateCallback={props.updateCallback}
+          updateCallback={props.editCallback}
           link={props.link}
         />
       ) : null}

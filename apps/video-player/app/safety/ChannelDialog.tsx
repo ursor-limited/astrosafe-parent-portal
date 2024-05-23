@@ -74,21 +74,25 @@ export default function ChannelDialog(props: IChannelDialogProps) {
   return (
     <UrsorDialog
       open={props.open}
-      title={props.channel ? "Edit Lesson" : "Add a Lesson to your Library"}
+      title={props.channel ? "Edit Channel" : "Add a Channel to your Library"}
       subtitle={[
-        props.channel ? "Edit your Lesson" : "Choose a color and a name.",
+        props.channel ? "Edit your Channel" : "Choose a color and a name.",
       ]}
-      supertitle={props.channel ? "Update Lesson" : "Add a Lesson"}
+      supertitle={props.channel ? "Update Channel" : "Add a Channel"}
       button={{
         text: props.channel ? "Complete" : "Add",
         disabled: !title,
         callback: props.channel ? submitUpdate : submitCreation,
       }}
       onCloseCallback={props.closeCallback}
-      backButtonCallback={() => {
-        props.closeCallback();
-        props.backCallback?.();
-      }}
+      backButtonCallback={
+        props.backCallback
+          ? () => {
+              props.closeCallback();
+              props.backCallback?.();
+            }
+          : undefined
+      }
     >
       <Stack width="60%" height="90px" direction="row" spacing="16px">
         <Stack width="14%">

@@ -30,6 +30,7 @@ export default function RootLayout({
         className={rubik.className}
         style={{
           margin: 0,
+          overflow: "hidden",
         }}
       >
         <Stack
