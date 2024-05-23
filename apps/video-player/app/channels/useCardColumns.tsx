@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { IStack, useUserDataContext } from "../../contexts/UserDataContext";
-import { ILink } from "../BrowserPage/dialogs/LinkDialog";
 import { AstroContent } from "./ChannelsPageContents";
 import _ from "lodash";
+import { IStack } from "../browserApi";
+import { IBrowserLink } from "../safety/DomainLinksDialog";
 
 const useCardColumns: (
   nColumns: number,
-  links?: ILink[],
+  links?: IBrowserLink[],
   stacks?: IStack[]
 ) => {
   type: AstroContent;
-  details: ILink | IStack;
+  details: IBrowserLink | IStack;
 }[][] = (nColumns, links, stacks) => {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: ILink | IStack;
+      details: IBrowserLink | IStack;
     }[][]
   >([]);
 
