@@ -15,11 +15,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import dayjs from "dayjs";
-import {
-  AccountPagePlanSection,
-  AccountPageSection,
-} from "./AccountPageContents";
 import { useRouter } from "next/navigation";
+import { AccountPageSection } from "./AccountPageContents";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";
@@ -187,11 +184,11 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
             </AccountPageSection>
           </Stack>
 
-          <AccountPagePlanSection
+          {/* <AccountPagePlanSection
             remainingDays={
               TRIAL_DAYS - dayjs().diff(userCtx.user?.createdAt, "days")
             }
-          />
+          /> */}
           <AccountPageSection title="Boring bits" flex fadeInDelay={1100}>
             <Stack spacing="6px">
               <a

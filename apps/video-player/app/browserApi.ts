@@ -419,6 +419,26 @@ class BrowserApiController {
       return response.json();
     });
   }
+
+  static async verifyTeacherCode(teacherCode: string) {
+    return post(`schools/verifyTeacherCode`, {
+      teacherCode,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getTeacher(teacherId: string) {
+    return get("teachers/" + teacherId).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async unFreeifySchool(id: string) {
+    return post(`schools/${id}/unFreeify`).then((response: any) => {
+      return response.json();
+    });
+  }
 }
 
 export default BrowserApiController;
