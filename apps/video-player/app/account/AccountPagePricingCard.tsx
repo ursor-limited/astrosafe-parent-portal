@@ -103,15 +103,12 @@ const AccountPagePricingCard = (props: {
         </Stack>
       </Stack>
 
-      <Stack alignItems="center" width="100%">
-        <Typography
-          variant="tiny"
-          bold
-          color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
-        >
-          {props.tinyText}
-        </Typography>
-      </Stack>
+      <Typography
+        variant="small"
+        color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+      >
+        {props.tinyText}
+      </Typography>
     </Stack>
 
     {/* <Stack

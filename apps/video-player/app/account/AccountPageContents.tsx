@@ -29,6 +29,7 @@ import {
   LOCALE_CURRENCIES,
   getPaymentUrl,
 } from "../components/UpgradeDialog";
+import UrsorToggle from "../components/UrsorToggle";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -466,8 +467,6 @@ export default function AccountPage(props: IAccountPageProps) {
     userCtx.userDetails?.schoolId && loadSchool();
   }, [userCtx.userDetails?.schoolId]);
 
-  console.log(userCtx.userDetails);
-
   const [inputedCode, setInputedCode] = useState<string>("");
   const [inputActive, setInputActive] = useState<boolean>(false);
 
@@ -800,48 +799,69 @@ export default function AccountPage(props: IAccountPageProps) {
             >
               {school ? (
                 <Stack spacing="24px">
-                  <Stack direction="row">
-                    {/* <Stack spacing="8px" width="100%">
-                    <Typography>Your Astro plan</Typography>
-                    <Typography variant="h3">{`${
-                      school?.deviceLimit || DEFAULT_DEVICE_LIMIT
-                    } Device${
-                      school?.deviceLimit === 1 ? "" : "s"
-                    }`}</Typography>
-                  </Stack> */}
-
-                    <Stack spacing="2px" width="100%">
-                      <Typography variant="small">Seats</Typography>
-                      <Typography
-                        variant="h5"
-                        color={PALETTE.secondary.grey[3]}
-                      >{`${teachers.length} of 5`}</Typography>
-                    </Stack>
-                    <Stack spacing="2px" width="100%">
-                      <Typography variant="small">Devices</Typography>
-                      <Typography
-                        variant="h5"
-                        color={PALETTE.secondary.grey[3]}
-                      >{`${school?.devices.filter(
-                        (d) => d.connected !== "denied"
-                      ).length} of ${school.deviceLimit}`}</Typography>
-                    </Stack>
-                    {school?.expirationDate ? (
-                      <Stack width="100%" spacing="4px">
-                        <Typography>Expires on</Typography>
+                  <Stack direction="row" justifyContent="space-between">
+                    <Stack direction="row" width="100%">
+                      <Stack spacing="2px" width="17%">
+                        <Typography variant="small">Seats</Typography>
                         <Typography
                           variant="h5"
                           color={PALETTE.secondary.grey[3]}
-                        >
-                          {dayjs(school.expirationDate).format("Do MMMM YYYY")}
-                        </Typography>
+                        >{`${teachers.length} of 5`}</Typography>
                       </Stack>
-                    ) : null}
+                      <Stack spacing="2px" width="17%">
+                        <Typography variant="small">Devices</Typography>
+                        <Typography
+                          variant="h5"
+                          color={PALETTE.secondary.grey[3]}
+                        >{`${school?.devices.filter(
+                          (d) => d.connected !== "denied"
+                        ).length} of ${school.deviceLimit}`}</Typography>
+                      </Stack>
+                      {school?.expirationDate ? (
+                        <Stack width="25%" spacing="4px">
+                          <Typography variant="small">Expires on</Typography>
+                          <Typography
+                            variant="h5"
+                            color={PALETTE.secondary.grey[3]}
+                          >
+                            {dayjs(school.expirationDate).format(
+                              "Do MMMM YYYY"
+                            )}
+                          </Typography>
+                        </Stack>
+                      ) : null}
+                    </Stack>
+                    <Stack direction="row" spacing="12px" alignItems="center">
+                      <Typography
+                        variant="small"
+                        color={PALETTE.secondary.grey[4]}
+                      >
+                        Monthly
+                      </Typography>
+                      <UrsorToggle
+                        checked={frequency === "annual"}
+                        callback={() =>
+                          setFrequency(
+                            frequency === "annual" ? "monthly" : "annual"
+                          )
+                        }
+                      />
+                      <Typography
+                        variant="small"
+                        color={PALETTE.secondary.grey[4]}
+                      >
+                        Annual
+                      </Typography>
+                    </Stack>
                   </Stack>
                   <Stack direction="row" spacing="12px">
                     <AccountPagePricingCard
                       title="Teacher"
-                      price={localeDetails.monthly}
+                      price={
+                        frequency === "monthly"
+                          ? localeDetails.monthly
+                          : localeDetails.annual
+                      }
                       currency={localeDetails.currencySymbol}
                       unit={frequency === "monthly" ? "month" : "year"}
                       tinyText={
