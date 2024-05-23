@@ -439,6 +439,12 @@ class BrowserApiController {
       return response.json();
     });
   }
+
+  static async updateSchool(id: string, update: any) {
+    return patch(`schools/${id}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
 }
 
 export default BrowserApiController;

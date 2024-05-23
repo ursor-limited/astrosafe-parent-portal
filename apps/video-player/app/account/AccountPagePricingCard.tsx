@@ -1,6 +1,7 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
+import MortarboardIcon from "@/images/icons/MortarboardIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import React from "react";
 
@@ -18,6 +19,7 @@ const AccountPagePricingCard = (props: {
   border?: boolean;
   notif?: string;
   button?: React.ReactNode;
+  mortarBoardsN: number;
   callback: () => void;
 }) => (
   <Stack
@@ -65,12 +67,30 @@ const AccountPagePricingCard = (props: {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography
-          //variant="h4"
-          //color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
+          <Stack
+            direction="row"
+            sx={{ svg: { path: { fill: PALETTE.secondary.grey[3] } } }}
+            alignItems="center"
+            spacing="12px"
           >
-            {props.title}
-          </Typography>
+            <Typography>{props.title}</Typography>
+            <Stack direction="row" alignItems="center" spacing="3px">
+              {props.mortarBoardsN === 1 ? (
+                <MortarboardIcon height="16px" width="16px" />
+              ) : props.mortarBoardsN === 2 ? (
+                <>
+                  <MortarboardIcon height="16px" width="16px" />
+                  <MortarboardIcon height="16px" width="16px" />
+                </>
+              ) : (
+                <>
+                  <MortarboardIcon height="16px" width="16px" />
+                  <MortarboardIcon height="16px" width="16px" />
+                  <MortarboardIcon height="16px" width="16px" />
+                </>
+              )}
+            </Stack>
+          </Stack>
           {props.button || (
             <UrsorButton
               size="small"

@@ -89,7 +89,7 @@ export default function UsersPageContents() {
     <>
       <PageLayout
         scrollable
-        title={"People"}
+        title={"Users"}
         description="These are all people who can add Links to the private Browser and who can monitor Devices."
         bodyWidth="100%"
         selectedSidebarItemId="users"
