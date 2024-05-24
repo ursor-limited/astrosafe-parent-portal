@@ -128,12 +128,6 @@ const UserProvider = (props: IUserProviderProps) => {
     safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
   }, [safeTubeUser?.subscribed]);
 
-  console.log(schoolIsSubscribed, "fuck");
-
-  // const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
-  //   ISafeTubeUser | undefined
-  // >();
-
   useEffect(() => {
     !schoolIsSubscribed &&
       user?.email &&
