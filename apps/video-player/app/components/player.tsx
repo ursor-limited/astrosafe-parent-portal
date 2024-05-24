@@ -279,6 +279,8 @@ const Player = (props: {
     }
   };
 
+  console.log(player);
+
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
 

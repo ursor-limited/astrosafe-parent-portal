@@ -38,6 +38,7 @@ import { getPrefixRemovedUrl } from "../components/LinkCard";
 import ApiController from "../api";
 import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
 import AccountPageNotOwnFeaturesCard from "./AccountPageNotOwnFeaturesCard";
+import { useWindowSize } from "usehooks-ts";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -46,6 +47,8 @@ const TITLE_CONTENT_SPACING = "6px";
 
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
 const FAILURE_DURATION = 2000;
+
+const COLUMN_THRESHOLD_WINDOW_WIDTH = 1178;
 
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
@@ -804,6 +807,10 @@ export default function AccountPage(props: IAccountPageProps) {
     [safetubeSchoolOwner]
   );
 
+  const { width } = useWindowSize();
+  const [column, setColumn] = useState<boolean>(false);
+  useEffect(() => setColumn(width < COLUMN_THRESHOLD_WINDOW_WIDTH), [width]);
+
   return (
     <>
       <PageLayout
@@ -975,7 +982,11 @@ export default function AccountPage(props: IAccountPageProps) {
               )}
             </Stack>
           </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1} minHeight="420px">
+          <Stack
+            spacing={SECTION_SPACING}
+            flex={1}
+            minHeight={column ? undefined : "420px"}
+          >
             <AccountPageSection
               title="Plan"
               button={{
@@ -1003,15 +1014,15 @@ export default function AccountPage(props: IAccountPageProps) {
                 <UrsorFadeIn duration={800} fullHeight>
                   <Stack spacing="24px" height="100%">
                     <Stack direction="row" justifyContent="space-between">
-                      <Stack direction="row" width="100%">
-                        <Stack spacing="2px" width="17%">
+                      <Stack direction="row" width="100%" spacing="8%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Seats</Typography>
                           <Typography
                             variant="h5"
                             color={PALETTE.secondary.grey[3]}
                           >{`${teachers.length} of 5`}</Typography>
                         </Stack>
-                        <Stack spacing="2px" width="17%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Devices</Typography>
                           <Typography
                             variant="h5"
@@ -1021,7 +1032,7 @@ export default function AccountPage(props: IAccountPageProps) {
                           ).length} of ${school.deviceLimit}`}</Typography>
                         </Stack>
                         {safetubeSchoolOwner?.subscriptionDate ? (
-                          <Stack width="25%" spacing="4px">
+                          <Stack spacing="4px">
                             <Typography variant="small">Renewal</Typography>
                             <Typography
                               variant="h5"
@@ -1031,7 +1042,7 @@ export default function AccountPage(props: IAccountPageProps) {
                             </Typography>
                           </Stack>
                         ) : null}
-                        <Stack spacing="2px" width="17%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Owner</Typography>
                           <Typography
                             variant="h5"
@@ -1080,7 +1091,10 @@ export default function AccountPage(props: IAccountPageProps) {
                       )}
                     </Stack>
                     {safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
-                      <Stack direction="row" spacing="12px">
+                      <Stack
+                        direction={column ? "column" : "row"}
+                        spacing="12px"
+                      >
                         {[
                           ...PRODUCT_DETAILS.map((pd) => (
                             <AccountPagePricingCard

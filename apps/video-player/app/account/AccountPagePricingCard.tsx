@@ -36,7 +36,7 @@ const AccountPagePricingCard = (props: {
     //   props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
     // }
     position="relative"
-    height="264px"
+    //height="264px"
     boxSizing="border-box"
     justifyContent="space-between"
     sx={{
@@ -159,7 +159,7 @@ const AccountPagePricingCard = (props: {
       </Typography>
     </Stack>
     {props.items ? (
-      <Stack spacing="8px">
+      <Stack spacing="8px" pt="26px">
         {props.items.map((item, i) => (
           <Stack key={i} direction="row" spacing="7px" alignItems="center">
             <Stack
@@ -184,7 +184,7 @@ const AccountPagePricingCard = (props: {
       </Stack>
     ) : null}
     {props.text ? (
-      <Stack flex={1} pt="38px">
+      <Stack flex={1} pt="44px">
         <Typography variant="small">{props.text}</Typography>
       </Stack>
     ) : null}
