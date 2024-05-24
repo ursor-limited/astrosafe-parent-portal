@@ -447,11 +447,13 @@ const AccountPagePendingApprovalSection = (props: { schoolName: string }) => (
       <Typography variant="medium" bold>
         {`Waiting for a colleague in ${props.schoolName} to approve you as a Teacher.`}
       </Typography>
+
       <Image
         height={200}
         width={200}
         src={WonderingIllustration}
         alt="Empty state illustration"
+        style={{ opacity: 0.5 }}
       />
     </Stack>
   </AccountPageSection>
@@ -860,7 +862,16 @@ export default function AccountPage(props: IAccountPageProps) {
               </Stack>
             </AccountPageSection>
             <Stack flex={1}>
-              {school && safetubeUserDetails?.subscribed ? (
+              {school && pendingSchoolName ? (
+                <AccountPagePendingApprovalSection
+                  schoolName={pendingSchoolName}
+                />
+              ) : school && invitedSchoolName && inviterName ? (
+                <AccountPageInvitationSection
+                  schoolName={invitedSchoolName}
+                  inviterName={inviterName}
+                />
+              ) : school && safetubeUserDetails?.subscribed ? (
                 <AccountPageSchoolDetailsSection
                   school={school}
                   static={!userCtx.userDetails?.isAdmin}
