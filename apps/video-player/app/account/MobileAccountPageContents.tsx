@@ -114,7 +114,7 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
 
             "days"
           )
-          .format("Do MMMM YYYY")
+          .format("Do MMMM")
       );
   }, [safetubeSchoolOwner, teachers]);
 
@@ -254,56 +254,60 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
               fadeInDelay={700}
             >
               {school ? (
-                <Stack spacing="24px" height="100%">
-                  <Stack direction="row" justifyContent="space-between">
-                    <Stack spacing="3px" width="100%">
-                      <Stack spacing="10px" direction="row">
-                        <Typography variant="small">Seats</Typography>
-                        <Typography
-                          variant={"medium"}
-                          bold
-                          color={PALETTE.secondary.grey[3]}
-                        >{`${teachers.length} of 5`}</Typography>
+                <Stack spacing="8px" height="100%">
+                  <Stack spacing="40px">
+                    <Stack pt="12px" width="100%" spacing="24px">
+                      <Stack direction="row" width="100%">
+                        <Stack flex={1} alignItems="center">
+                          <Typography variant="small">Seats</Typography>
+                          <Typography
+                            variant={"medium"}
+                            bold
+                            color={PALETTE.secondary.grey[3]}
+                          >{`${teachers.length} of 5`}</Typography>
+                        </Stack>
+                        <Stack flex={1} alignItems="center">
+                          <Typography variant="small">Devices</Typography>
+                          <Typography
+                            variant={"medium"}
+                            bold
+                            color={PALETTE.secondary.grey[3]}
+                          >{`${school?.devices.filter(
+                            (d) => d.connected !== "denied"
+                          ).length} of ${school.deviceLimit}`}</Typography>
+                        </Stack>
                       </Stack>
-                      <Stack spacing="10px" direction="row">
-                        <Typography variant="small">Devices</Typography>
-                        <Typography
-                          variant={"medium"}
-                          bold
-                          color={PALETTE.secondary.grey[3]}
-                        >{`${school?.devices.filter(
-                          (d) => d.connected !== "denied"
-                        ).length} of ${school.deviceLimit}`}</Typography>
-                      </Stack>
-                      {safetubeSchoolOwner?.subscriptionDate ? (
-                        <Stack spacing="10px" direction="row">
-                          <Typography variant="small">Renewal</Typography>
+                      <Stack direction="row" width="100%">
+                        {safetubeSchoolOwner?.subscriptionDate ? (
+                          <Stack flex={1} alignItems="center">
+                            <Typography variant="small">Renewal</Typography>
+                            <Typography
+                              variant="medium"
+                              bold
+                              color={PALETTE.secondary.grey[3]}
+                            >
+                              {renewalDate}
+                            </Typography>
+                          </Stack>
+                        ) : null}
+                        <Stack flex={1} alignItems="center">
+                          <Typography variant="small">Owner</Typography>
                           <Typography
                             variant="medium"
                             bold
                             color={PALETTE.secondary.grey[3]}
                           >
-                            {renewalDate}
+                            {school.ownerId === userCtx.userDetails?.id
+                              ? "You"
+                              : teachers.find((t) => t.id === school.ownerId)
+                                  ?.teacherName}
                           </Typography>
                         </Stack>
-                      ) : null}
-                      <Stack spacing="10px" direction="row">
-                        <Typography variant="small">Owner</Typography>
-                        <Typography
-                          variant="medium"
-                          bold
-                          color={PALETTE.secondary.grey[3]}
-                        >
-                          {school.ownerId === userCtx.userDetails?.id
-                            ? "You"
-                            : teachers.find((t) => t.id === school.ownerId)
-                                ?.teacherName}
-                        </Typography>
                       </Stack>
                     </Stack>
                     {safetubeSchoolOwner &&
                     safetubeSchoolOwner.id === safetubeUserDetails?.id ? (
-                      <Stack justifyContent="flex-end">
+                      <Stack alignItems="flex-end">
                         <Stack
                           direction="row"
                           spacing="12px"
