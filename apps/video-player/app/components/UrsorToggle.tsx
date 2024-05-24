@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Switch } from "@mui/material";
 import { PALETTE } from "ui";
+import { boxShadow } from "html2canvas/dist/types/css/property-descriptors/box-shadow";
 
 export interface IUrsorToggle {
   checked: boolean;
@@ -42,6 +43,7 @@ export const getSwitchStyle = (small: boolean) => ({
       width: `${small ? SMALL_SWITCH_THUMB_SIZE : SWITCH_THUMB_SIZE}px`,
       height: `${small ? SMALL_SWITCH_THUMB_SIZE : SWITCH_THUMB_SIZE}px`,
       backgroundColor: PALETTE.primary.offWhite,
+      boxShadow: "none",
     },
     "& + .MuiSwitch-track": {
       opacity: 1,

@@ -2,10 +2,11 @@ import React from "react";
 import ApiController from "@/app/api";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
-import AccountPageContents from "./AccountPageContents";
+import AccountPageContents from "../account/AccountPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import MobileAccountPageContents from "./MobileAccountPageContents";
+import { BrowserUserProvider } from "../components/BrowserUserContext";
 
 async function AccountPage({
   params,
@@ -18,9 +19,11 @@ async function AccountPage({
     ?.isMobile;
   return (
     <AuthWrapper>
-      <UserProvider>
-        {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
-      </UserProvider>
+      <BrowserUserProvider>
+        <UserProvider>
+          {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
+        </UserProvider>
+      </BrowserUserProvider>
     </AuthWrapper>
   );
 }

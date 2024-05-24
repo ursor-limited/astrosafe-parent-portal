@@ -36,7 +36,6 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import dayjs from "dayjs";
-import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
@@ -49,8 +48,6 @@ import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
-import DashboardPageCreateButton from "./DashboardPageCreateButton";
-import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
 import ImageDialog, { IImage } from "./ImageDialog";
 import ImageCard from "../components/ImageCard";
 import LinkCard from "../components/LinkCard";
@@ -61,6 +58,8 @@ import Image from "next/image";
 import ShareDialog from "./ShareDialog";
 import { fadeIn } from "./TimeRange";
 import TutorialVideoBar from "../components/TutorialVideoBar";
+
+export const TRIAL_DAYS = 14;
 
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;

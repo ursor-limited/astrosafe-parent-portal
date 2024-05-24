@@ -15,18 +15,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import dayjs from "dayjs";
-import {
-  AccountPagePlanSection,
-  AccountPageSection,
-} from "./AccountPageContents";
 import { useRouter } from "next/navigation";
+import { AccountPageSection } from "./AccountPageContents";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";
 const SECTION_SPACING = "10px";
 const TITLE_CONTENT_SPACING = "6px";
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
-export const TRIAL_DAYS = 14;
 
 export interface IAccountPageProps {}
 
@@ -187,11 +183,11 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
             </AccountPageSection>
           </Stack>
 
-          <AccountPagePlanSection
+          {/* <AccountPagePlanSection
             remainingDays={
               TRIAL_DAYS - dayjs().diff(userCtx.user?.createdAt, "days")
             }
-          />
+          /> */}
           <AccountPageSection title="Boring bits" flex fadeInDelay={1100}>
             <Stack spacing="6px">
               <a

@@ -12,6 +12,7 @@ export interface ISchool {
   lock?: ILock;
   joinCode: string;
   teacherCode: string;
+  ownerId: string;
   deviceLimit?: number;
   expirationDate?: string;
   free?: boolean;
@@ -418,6 +419,42 @@ class BrowserApiController {
     return post(`stacks/${id}/duplicate`).then((response: any) => {
       return response.json();
     });
+  }
+
+  static async verifyTeacherCode(teacherCode: string) {
+    return post(`schools/verifyTeacherCode`, {
+      teacherCode,
+    }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async createTeacher(email: string, name: string) {
+    return post("teachers", { email, name }).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async getTeacher(teacherId: string) {
+    return get("teachers/" + teacherId).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async unFreeifySchool(id: string) {
+    return post(`schools/${id}/unFreeify`).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async updateSchool(id: string, update: any) {
+    return patch(`schools/${id}`, update).then((response: any) => {
+      return response.json();
+    });
+  }
+
+  static async deleteTeacher(teacherId: string) {
+    return dellete(`/teachers/${teacherId}`);
   }
 }
 

@@ -5,6 +5,7 @@ import { Stack, keyframes } from "@mui/system";
 import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import GearIcon from "@/images/icons/GearIcon.svg";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
@@ -219,12 +220,12 @@ export default function Sidebar(props: ISidebarProps) {
   ];
 
   const bottomItems: ISidebarItem[] = [
-    // {
-    //   id: "account",
-    //   icon: GearIcon,
-    //   title: "Account",
-    //   callback: () => router.push("/account"),
-    // },
+    {
+      id: "account",
+      icon: GearIcon,
+      title: "Account",
+      callback: () => router.push("/account"),
+    },
   ];
 
   const getList = (items: ISidebarItem[], small: boolean, noText: boolean) => (

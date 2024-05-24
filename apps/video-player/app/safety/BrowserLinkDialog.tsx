@@ -599,7 +599,11 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
               title="Put your URL or PDF link here"
               titleRighthandElement={
                 <Stack direction="row" spacing="12px" alignItems="center">
-                  <Typography variant="tiny" color={PALETTE.secondary.grey[3]}>
+                  <Typography
+                    variant="tiny"
+                    bold
+                    color={PALETTE.secondary.grey[3]}
+                  >
                     Full site
                   </Typography>
                   <UrsorToggle
@@ -609,7 +613,11 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
                       setSinglePageAccessible(!singlePageAccessible)
                     }
                   />
-                  <Typography variant="tiny" color={PALETTE.secondary.grey[3]}>
+                  <Typography
+                    variant="tiny"
+                    bold
+                    color={PALETTE.secondary.grey[3]}
+                  >
                     Single page
                   </Typography>
                 </Stack>
