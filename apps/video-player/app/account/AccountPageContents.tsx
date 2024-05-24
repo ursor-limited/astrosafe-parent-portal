@@ -971,7 +971,7 @@ export default function AccountPage(props: IAccountPageProps) {
                 callback: () => router.push("/users"),
               }}
               secondaryButton={
-                safetubeSchoolOwner?.id === userCtx.userDetails?.id
+                safetubeSchoolOwner?.id === safetubeUserDetails?.id
                   ? {
                       variant: "secondary",
                       text: "Manage plan",
