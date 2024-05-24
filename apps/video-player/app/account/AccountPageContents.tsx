@@ -47,7 +47,8 @@ const TITLE_CONTENT_SPACING = "6px";
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
 const FAILURE_DURATION = 2000;
 
-const COLUMN_THRESHOLD_WINDOW_WIDTH = 1178;
+const PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH = 1178;
+const TOP_ROW_COLUMN_THRESHOLD_WINDOW_WIDTH = 1363;
 
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
@@ -807,8 +808,19 @@ export default function AccountPage(props: IAccountPageProps) {
   );
 
   const { width } = useWindowSize();
-  const [column, setColumn] = useState<boolean>(false);
-  useEffect(() => setColumn(width < COLUMN_THRESHOLD_WINDOW_WIDTH), [width]);
+
+  const [topColumn, setTopColumnColumn] = useState<boolean>(false);
+  useEffect(
+    () => setTopColumnColumn(width < TOP_ROW_COLUMN_THRESHOLD_WINDOW_WIDTH),
+    [width]
+  );
+
+  const [pricingCardsColumn, setPricingCardsColumn] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setPricingCardsColumn(width < PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH),
+    [width]
+  );
 
   return (
     <>
@@ -853,7 +865,7 @@ export default function AccountPage(props: IAccountPageProps) {
             spacing={SECTION_SPACING}
             flex={1}
             minWidth="625px"
-            direction="row"
+            direction={topColumn ? "column" : "row"}
           >
             <AccountPageSection
               title="Profile"
@@ -1091,7 +1103,7 @@ export default function AccountPage(props: IAccountPageProps) {
                     </Stack>
                     {safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
                       <Stack
-                        direction={column ? "column" : "row"}
+                        direction={pricingCardsColumn ? "column" : "row"}
                         spacing="12px"
                       >
                         {[
