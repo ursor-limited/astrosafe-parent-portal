@@ -1013,6 +1013,8 @@ export default function DashboardPageContents() {
     [userDetails.user?.switchedOffDashboardTutorialVideo]
   );
 
+  const [gridSpaceRef, setGridSpaceRef] = useState<HTMLElement | null>(null);
+
   return (
     <>
       {showTutorialVideo && userDetails.user?.id
@@ -1280,6 +1282,7 @@ export default function DashboardPageContents() {
             direction={filterMultiRow ? "column" : "row"}
             justifyContent="space-between"
             spacing="12px"
+            ref={setGridSpaceRef}
           >
             <Stack direction="row" spacing="12px">
               {/* <DashboardPageBinaryContentFilterSelection
@@ -1540,32 +1543,38 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
-      {anyLoaded &&
+      {gridSpaceRef &&
+      anyLoaded &&
       !selectedContentType &&
       lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(
             <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
-            document.body
+            gridSpaceRef
           )
         : null}
-      {selectedContentType === "video" && videos.length === 0
-        ? createPortal(
-            <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
-            document.body
-          )
-        : null}
-      {selectedContentType === "lesson" && lessons.length === 0
+      {
+        //selectedContentType === "video" && videos.length === 0
+        true && gridSpaceRef
+          ? createPortal(
+              <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
+              gridSpaceRef
+            )
+          : null
+      }
+      {gridSpaceRef && selectedContentType === "lesson" && lessons.length === 0
         ? createPortal(
             <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
-            document.body
+            gridSpaceRef
           )
         : null}
-      {selectedContentType === "worksheet" && worksheets.length === 0
+      {gridSpaceRef &&
+      selectedContentType === "worksheet" &&
+      worksheets.length === 0
         ? createPortal(
             <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
-            document.body
+            gridSpaceRef
           )
         : null}
 
