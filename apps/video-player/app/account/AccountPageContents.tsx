@@ -9,7 +9,6 @@ import JoiningCodeInput from "./JoiningCodeInput";
 import { ButtonVariant } from "ui/ursor-button";
 import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
-import MailIcon from "@/images/icons/MailIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import {
   ITeacher,
@@ -985,7 +984,7 @@ export default function AccountPage(props: IAccountPageProps) {
           <Stack
             spacing={SECTION_SPACING}
             flex={1}
-            minHeight={column ? undefined : "420px"}
+            //minHeight={column ? undefined : "420px"}
           >
             <AccountPageSection
               title="Plan"
@@ -1141,7 +1140,9 @@ export default function AccountPage(props: IAccountPageProps) {
                                   email ? getPaymentUrl(email, frequency) : ""
                                 )
                               }
-                              mortarBoardsN={pd.mortarBoardsN}
+                              mortarBoardsN={
+                                width < 1300 ? undefined : pd.mortarBoardsN
+                              }
                               contactSales={customPlan}
                             />
                           )),
@@ -1162,7 +1163,7 @@ export default function AccountPage(props: IAccountPageProps) {
                                 email ? getPaymentUrl(email, frequency) : ""
                               )
                             }
-                            mortarBoardsN={3}
+                            mortarBoardsN={width < 1300 ? undefined : 3}
                             contactSales
                           />,
                         ]}

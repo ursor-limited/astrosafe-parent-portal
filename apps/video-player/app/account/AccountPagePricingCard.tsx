@@ -22,7 +22,7 @@ const AccountPagePricingCard = (props: {
   border?: boolean;
   notif?: string;
   button?: React.ReactNode;
-  mortarBoardsN: number;
+  mortarBoardsN?: number;
   contactSales?: boolean;
   callback: () => void;
 }) => (
@@ -82,22 +82,24 @@ const AccountPagePricingCard = (props: {
             spacing="12px"
           >
             <Typography>{props.title}</Typography>
-            <Stack direction="row" alignItems="center" spacing="3px">
-              {props.mortarBoardsN === 1 ? (
-                <MortarboardIcon height="16px" width="16px" />
-              ) : props.mortarBoardsN === 2 ? (
-                <>
+            {props.mortarBoardsN ? (
+              <Stack direction="row" alignItems="center" spacing="3px">
+                {props.mortarBoardsN === 1 ? (
                   <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                </>
-              ) : (
-                <>
-                  <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                </>
-              )}
-            </Stack>
+                ) : props.mortarBoardsN === 2 ? (
+                  <>
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                  </>
+                ) : (
+                  <>
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                  </>
+                )}
+              </Stack>
+            ) : null}
           </Stack>
           {props.button || (
             <UrsorButton
@@ -150,16 +152,17 @@ const AccountPagePricingCard = (props: {
           </Typography>
         </Stack>
       </Stack>
-
-      <Typography
-        variant="small"
-        color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
-      >
-        {props.tinyText}
-      </Typography>
+      <Stack height="30px">
+        <Typography
+          variant="small"
+          color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+        >
+          {props.tinyText}
+        </Typography>
+      </Stack>
     </Stack>
     {props.items ? (
-      <Stack spacing="8px" pt="26px">
+      <Stack spacing="8px">
         {props.items.map((item, i) => (
           <Stack key={i} direction="row" spacing="7px" alignItems="center">
             <Stack
