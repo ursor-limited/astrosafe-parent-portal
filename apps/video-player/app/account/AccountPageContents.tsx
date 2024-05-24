@@ -37,6 +37,7 @@ import { ISafeTubeUser, useUserContext } from "../components/UserContext";
 import { getPrefixRemovedUrl } from "../components/LinkCard";
 import ApiController from "../api";
 import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
+import AccountPageNotOwnFeaturesCard from "./AccountPageNotOwnFeaturesCard";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -46,16 +47,31 @@ const TITLE_CONTENT_SPACING = "6px";
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
 const FAILURE_DURATION = 2000;
 
-const PRODUCT_DETAILS: {
+export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
+export type AstroCurrency = (typeof astroCurrency)[number];
+
+const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
+  USD: "$",
+  GBP: "£",
+  CAD: "CA$",
+  EUR: "€",
+};
+
+interface IAstroProduct {
   monthlyId: string;
   annualId: string;
   items: string[];
   title: string;
   mortarBoardsN: number;
-}[] = [
+  prices: {
+    [locale in AstroCurrency]: number;
+  };
+}
+
+const PRODUCT_DETAILS: IAstroProduct[] = [
   {
-    monthlyId: "prod_PlWBwIW0GJwQND",
-    annualId: "foo",
+    monthlyId: "prod_PlC9OCbk8oBkWW",
+    annualId: "prod_PlWrHG8V57yjrn",
     items: [
       "1 teacher/adult account",
       "5 devices monitored",
@@ -64,10 +80,16 @@ const PRODUCT_DETAILS: {
     ],
     title: "Teacher",
     mortarBoardsN: 1,
+    prices: {
+      USD: 12.99,
+      GBP: 8.99,
+      CAD: 15.99,
+      EUR: 10.99,
+    },
   },
   {
-    monthlyId: "coo",
-    annualId: "zoo",
+    monthlyId: "prod_QAEYttD39HvFKz",
+    annualId: "prod_QAEaFpLDEJnlli",
     items: [
       "5 teacher/adult accounts",
       "10 devices monitored",
@@ -76,6 +98,12 @@ const PRODUCT_DETAILS: {
     ],
     title: "Classroom",
     mortarBoardsN: 2,
+    prices: {
+      USD: 59.99,
+      GBP: 39.99,
+      CAD: 74.99,
+      EUR: 49.99,
+    },
   },
 ];
 
@@ -704,7 +732,6 @@ export default function AccountPage(props: IAccountPageProps) {
     const response = await fetch("https://ipapi.co/json/").then(
       async (response) => {
         const data = await response.json();
-        console.log(data);
         // Set the IP address to the constant `ip`
         data.country_code && setLocale(data.country_code);
       }
@@ -716,12 +743,23 @@ export default function AccountPage(props: IAccountPageProps) {
     getIp();
   }, []);
 
-  const [localeDetails, setLocaleDetails] = useState<any>();
-  useEffect(
-    //@ts-ignore
-    () => setLocaleDetails(DETAILS[LOCALE_CURRENCIES[locale] ?? "USD"]),
-    [locale]
-  );
+  // const [productDetails, setProductDetails] = useState<
+  //   IAstroProduct | undefined
+  // >();
+  // useEffect(
+  //   //@ts-ignore
+  //   () => {
+  //     safetubeSchoolOwner?.subscriptionProductId &&
+  //       setProductDetails(
+  //         PRODUCT_DETAILS.find(
+  //           (pd) =>
+  //             pd.monthlyId === safetubeSchoolOwner.subscriptionProductId ||
+  //             pd.annualId === safetubeSchoolOwner.subscriptionProductId
+  //         )
+  //       );
+  //   },
+  //   [safetubeSchoolOwner?.subscriptionProductId]
+  // );
 
   const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
 
@@ -949,8 +987,8 @@ export default function AccountPage(props: IAccountPageProps) {
               flex
             >
               {school ? (
-                <UrsorFadeIn duration={800}>
-                  <Stack spacing="24px">
+                <UrsorFadeIn duration={800} fullHeight>
+                  <Stack spacing="24px" height="100%">
                     <Stack direction="row" justifyContent="space-between">
                       <Stack direction="row" width="100%">
                         <Stack spacing="2px" width="17%">
@@ -1028,73 +1066,96 @@ export default function AccountPage(props: IAccountPageProps) {
                         <Stack />
                       )}
                     </Stack>
-                    <Stack direction="row" spacing="12px">
-                      {[
-                        ...PRODUCT_DETAILS.map((pd) => (
+                    {safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
+                      <Stack direction="row" spacing="12px">
+                        {[
+                          ...PRODUCT_DETAILS.map((pd) => (
+                            <AccountPagePricingCard
+                              key={pd.annualId}
+                              title={pd.title}
+                              price={
+                                pd?.annualId ===
+                                safetubeSchoolOwner?.subscriptionProductId
+                                  ? 9 +
+                                    (pd?.prices[LOCALE_CURRENCIES[locale]] ??
+                                      0) *
+                                      10
+                                  : pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+                              }
+                              currency={
+                                CURRENCY_SYMBOLS[
+                                  LOCALE_CURRENCIES[locale as AstroCurrency]
+                                ]
+                              }
+                              unit={frequency === "monthly" ? "month" : "year"}
+                              tinyText={
+                                frequency === "annual"
+                                  ? `Billed as ${
+                                      CURRENCY_SYMBOLS[
+                                        LOCALE_CURRENCIES[locale]
+                                      ]
+                                    }${
+                                      pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+                                    } / month`
+                                  : undefined
+                              }
+                              items={pd.items}
+                              callback={() =>
+                                router.push(
+                                  email ? getPaymentUrl(email, frequency) : ""
+                                )
+                              }
+                              mortarBoardsN={pd.mortarBoardsN}
+                            />
+                          )),
                           <AccountPagePricingCard
-                            key={pd.annualId}
-                            title={pd.title}
-                            price={
-                              frequency === "monthly"
-                                ? localeDetails.monthly
-                                : localeDetails.annual
+                            key="custom"
+                            title="Custom"
+                            price="POA"
+                            currency={
+                              CURRENCY_SYMBOLS[
+                                LOCALE_CURRENCIES[locale as AstroCurrency]
+                              ]
                             }
-                            currency={localeDetails.currencySymbol}
                             unit={frequency === "monthly" ? "month" : "year"}
-                            tinyText={
-                              frequency === "annual"
-                                ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                                : undefined
-                            }
-                            items={pd.items}
+                            text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
                             callback={() =>
                               router.push(
                                 email ? getPaymentUrl(email, frequency) : ""
                               )
                             }
-                            mortarBoardsN={pd.mortarBoardsN}
-                          />
-                        )),
-                        <AccountPagePricingCard
-                          key="custom"
-                          title="Custom"
-                          price={
-                            frequency === "monthly"
-                              ? localeDetails.monthly
-                              : localeDetails.annual
-                          }
-                          currency={localeDetails.currencySymbol}
-                          unit={frequency === "monthly" ? "month" : "year"}
-                          tinyText={
-                            frequency === "annual"
-                              ? `Billed as ${localeDetails.currencySymbol}${localeDetails.monthly} / month`
-                              : undefined
-                          }
-                          text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
-                          callback={() =>
-                            router.push(
-                              email ? getPaymentUrl(email, frequency) : ""
-                            )
-                          }
-                          button={
-                            <UrsorButton
-                              size="small"
-                              dark
-                              variant="tertiary"
-                              endIcon={MailIcon}
-                              iconSize={16}
-                              onClick={() =>
-                                (window.location.href =
-                                  "mailto:hello@astrosafe.co")
-                              }
-                            >
-                              Contact Sales
-                            </UrsorButton>
-                          }
-                          mortarBoardsN={3}
-                        />,
-                      ]}
-                    </Stack>
+                            button={
+                              <UrsorButton
+                                size="small"
+                                dark
+                                variant="tertiary"
+                                endIcon={MailIcon}
+                                iconSize={16}
+                                onClick={() =>
+                                  (window.location.href =
+                                    "mailto:hello@astrosafe.co")
+                                }
+                              >
+                                Contact Sales
+                              </UrsorButton>
+                            }
+                            mortarBoardsN={3}
+                          />,
+                        ]}
+                      </Stack>
+                    ) : (
+                      <AccountPageNotOwnFeaturesCard
+                        items={
+                          PRODUCT_DETAILS.find(
+                            (pd) =>
+                              pd.monthlyId ===
+                                safetubeSchoolOwner?.subscriptionProductId ||
+                              pd.annualId ===
+                                safetubeSchoolOwner?.subscriptionProductId
+                          )?.items ?? []
+                        }
+                      />
+                    )}
                   </Stack>
                 </UrsorFadeIn>
               ) : null}

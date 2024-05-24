@@ -10,6 +10,7 @@ import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
+import { AstroCurrency } from "../account/AccountPageContents";
 
 export const DETAILS = {
   USD: {
@@ -38,7 +39,7 @@ export const DETAILS = {
   },
 };
 
-export const LOCALE_CURRENCIES = {
+export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   US: "USD",
   GB: "GBP",
   CA: "CAD",

@@ -9,7 +9,7 @@ const AccountPagePricingCard = (props: {
   title: string;
   //subtitle: string;
   // buttonText: string;
-  price: number;
+  price: number | string;
   currency: string;
   unit: string;
   items?: string[];
