@@ -120,9 +120,11 @@ const Player = (props: {
     } else {
       //@ts-ignore
       const playah = new Vimeo.Player(props.playerId);
-      playah.on("pause", () => setPlaying(false));
-      playah.on("play", () => setPlaying(true));
-      setPlayer(playah);
+      if (playah) {
+        playah.on("pause", () => setPlaying(false));
+        playah.on("play", () => setPlaying(true));
+        setPlayer(playah);
+      }
     }
     setPlaying(false);
   }
@@ -269,17 +271,15 @@ const Player = (props: {
     setEnded(false);
     if (
       url?.includes("youtube") &&
-      ((player?.v || player?.playerInfo).playerState === 2 ||
-        (player?.v || player?.playerInfo).playerState === 0 || // 0 is the ended
-        (player?.v || player?.playerInfo).playerState === 5) // 5 is the non-yet-started
+      ((player?.v || player?.playerInfo)?.playerState === 2 ||
+        (player?.v || player?.playerInfo)?.playerState === 0 || // 0 is the ended
+        (player?.v || player?.playerInfo)?.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
     } else if (url?.includes("vimeo")) {
       player?.play();
     }
   };
-
-  console.log(player);
 
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   useEffect(() => props.setFullscreen?.(fullScreen), [fullScreen]);
