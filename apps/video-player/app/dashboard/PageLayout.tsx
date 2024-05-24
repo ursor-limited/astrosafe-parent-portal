@@ -7,8 +7,12 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useWindowSize } from "usehooks-ts";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import { createPortal } from "react-dom";
-// import mixpanel from "mixpanel-browser";
+import dynamic from "next/dynamic";
+
+const DynamicallyLoadedPortal = dynamic(
+  () => import("../components/DynamicallyLoadedPortal"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const PADDING_TOP = "51px";
 export const SIDEBAR_X_MARGIN = 48;
@@ -254,33 +258,32 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
             </Stack>
           </Stack>
         </Stack>
-        {props.maxWidth && width < props.maxWidth
-          ? createPortal(
-              <Stack
-                top={0}
-                left={0}
-                position="absolute"
-                width="100%"
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
-                sx={{
-                  backdropFilter: "blur(5px)",
-                }}
-                bgcolor="rgba(0,0,0,0.5)"
-                zIndex={9999}
-                spacing="3px"
-              >
-                <Typography bold color="rgba(255,255,255,0.93)">
-                  This screen is too narrow to have a proper Astro experience.
-                </Typography>
-                <Typography bold color="rgba(255,255,255,0.93)">
-                  Please switch to a wider screen.
-                </Typography>
-              </Stack>,
-              document.body
-            )
-          : null}
+        {props.maxWidth && width < props.maxWidth ? (
+          <DynamicallyLoadedPortal>
+            <Stack
+              top={0}
+              left={0}
+              position="absolute"
+              width="100%"
+              height="100%"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                backdropFilter: "blur(5px)",
+              }}
+              bgcolor="rgba(0,0,0,0.5)"
+              zIndex={9999}
+              spacing="3px"
+            >
+              <Typography bold color="rgba(255,255,255,0.93)">
+                This screen is too narrow to have a proper Astro experience.
+              </Typography>
+              <Typography bold color="rgba(255,255,255,0.93)">
+                Please switch to a wider screen.
+              </Typography>
+            </Stack>
+          </DynamicallyLoadedPortal>
+        ) : null}
       </>
     );
   }
