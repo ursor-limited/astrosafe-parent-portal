@@ -68,6 +68,8 @@ const POPOVER_MARGIN = 10;
 
 export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
 
+const NO_EMPTY_STATE_ILLUSTRATIONS_WINDOW_HEIGHT_THRESHOLD = 448;
+
 export const spin = keyframes`
 from {
   transform: rotate(0deg);
@@ -968,7 +970,18 @@ export default function DashboardPageContents() {
     null
   );
 
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
+
+  const [hideEmptyStateIllustrations, setHideEmptyStateIllustrations] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setHideEmptyStateIllustrations(
+        height < NO_EMPTY_STATE_ILLUSTRATIONS_WINDOW_HEIGHT_THRESHOLD
+      ),
+    [height]
+  );
+
   const [filterMultiRow, setFilterMultiRow] = useState<boolean>(false);
   useEffect(
     () => setFilterMultiRow(width < FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD),
@@ -1012,8 +1025,6 @@ export default function DashboardPageContents() {
       ),
     [userDetails.user?.switchedOffDashboardTutorialVideo]
   );
-
-  const [gridSpaceRef, setGridSpaceRef] = useState<HTMLElement | null>(null);
 
   return (
     <>
@@ -1282,7 +1293,6 @@ export default function DashboardPageContents() {
             direction={filterMultiRow ? "column" : "row"}
             justifyContent="space-between"
             spacing="12px"
-            ref={setGridSpaceRef}
           >
             <Stack direction="row" spacing="12px">
               {/* <DashboardPageBinaryContentFilterSelection
@@ -1543,38 +1553,47 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
-      {gridSpaceRef &&
+      {!hideEmptyStateIllustrations &&
       anyLoaded &&
       !selectedContentType &&
       lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
-            gridSpaceRef
+            <EmptyStateIllustration paddingTop={100}>
+              No content yet.
+            </EmptyStateIllustration>,
+            document.body
           )
         : null}
-      {
-        //selectedContentType === "video" && videos.length === 0
-        true && gridSpaceRef
-          ? createPortal(
-              <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
-              gridSpaceRef
-            )
-          : null
-      }
-      {gridSpaceRef && selectedContentType === "lesson" && lessons.length === 0
+      {selectedContentType === "video" &&
+      videos.length === 0 &&
+      !hideEmptyStateIllustrations
         ? createPortal(
-            <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
-            gridSpaceRef
+            <EmptyStateIllustration paddingTop={100}>
+              No videos yet.
+            </EmptyStateIllustration>,
+            document.body
           )
         : null}
-      {gridSpaceRef &&
+      {!hideEmptyStateIllustrations &&
+      selectedContentType === "lesson" &&
+      lessons.length === 0
+        ? createPortal(
+            <EmptyStateIllustration paddingTop={100}>
+              No lessons yet.
+            </EmptyStateIllustration>,
+            document.body
+          )
+        : null}
+      {!hideEmptyStateIllustrations &&
       selectedContentType === "worksheet" &&
       worksheets.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
-            gridSpaceRef
+            <EmptyStateIllustration paddingTop={100}>
+              No worksheets yet.
+            </EmptyStateIllustration>,
+            document.body
           )
         : null}
 
