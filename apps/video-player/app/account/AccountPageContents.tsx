@@ -10,6 +10,7 @@ import { ButtonVariant } from "ui/ursor-button";
 import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
 import MailIcon from "@/images/icons/MailIcon.svg";
+import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import {
   ITeacher,
   useBrowserUserContext,
@@ -25,7 +26,7 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import AccountPagePricingCard from "./AccountPagePricingCard";
-import {
+import UpgradeDialog, {
   DETAILS,
   LOCALE_CURRENCIES,
   getPaymentUrl,
@@ -495,6 +496,8 @@ const AccountPageInvitationSection = (props: {
         </Stack>
         <Stack direction="row" spacing="10px">
           <UrsorButton
+            dark
+            variant="tertiary"
             onClick={() =>
               submitReplyToInvitation(true).then(() =>
                 notificationCtx.success(`Joined ${props.schoolName}`)
@@ -516,6 +519,7 @@ const AccountPageInvitationSection = (props: {
           width={200}
           src={WonderingIllustration}
           alt="Empty state illustration"
+          style={{ opacity: 0.5 }}
         />
       </Stack>
     </AccountPageSection>
@@ -649,6 +653,7 @@ export default function AccountPage(props: IAccountPageProps) {
         userCtx.userDetails?.invitationPendingByInviterId
       ).then((teacher) => {
         setInviterName(teacher.teacherName);
+        console.log(teacher.teacherName, "aaaaaa lol");
         BrowserApiController.getSchool(teacher.schoolId).then((school) =>
           setInvitedSchoolName(school.name)
         );
@@ -746,6 +751,8 @@ export default function AccountPage(props: IAccountPageProps) {
       );
   }, [safetubeSchoolOwner, teachers]);
 
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -758,6 +765,24 @@ export default function AccountPage(props: IAccountPageProps) {
           callback: logOut,
           icon: LogOutIcon,
         }}
+        button={
+          !safetubeUserDetails?.subscribed
+            ? {
+                text: "Upgrade",
+                icon: VerifiedIcon,
+                callback: () => setUpgradeDialogOpen(true),
+              }
+            : safetubeUserDetails?.subscriptionDeletionDate
+            ? {
+                text: "Renew",
+                icon: VerifiedIcon,
+                callback: () =>
+                  router.push(
+                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                  ),
+              }
+            : null
+        }
         disableConnectionBar
       >
         <Stack
@@ -866,11 +891,11 @@ export default function AccountPage(props: IAccountPageProps) {
               </Stack>
             </AccountPageSection>
             <Stack flex={1}>
-              {school && pendingSchoolName ? (
+              {pendingSchoolName ? (
                 <AccountPagePendingApprovalSection
                   schoolName={pendingSchoolName}
                 />
-              ) : school && invitedSchoolName && inviterName ? (
+              ) : invitedSchoolName && inviterName ? (
                 <AccountPageInvitationSection
                   schoolName={invitedSchoolName}
                   inviterName={inviterName}
@@ -1146,6 +1171,10 @@ export default function AccountPage(props: IAccountPageProps) {
             userCtx.userDetails?.id ?? ""
           ).then(logOut);
         }}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
       />
     </>
   );
