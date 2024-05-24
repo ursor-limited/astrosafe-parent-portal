@@ -323,7 +323,11 @@ const AccountPageSchoolDetailsSection = (props: {
 
 export const AccountPageSection = (props: {
   title: string;
-  button?: { variant: ButtonVariant; text: string; callback: () => void };
+  button?: {
+    variant: ButtonVariant | "ghost";
+    text: string;
+    callback: () => void;
+  };
   secondaryButton?: {
     variant: ButtonVariant;
     text: string;
@@ -365,10 +369,11 @@ export const AccountPageSection = (props: {
           ) : null}
           {props.button ? (
             <UrsorButton
-              onClick={props.button.callback}
+              onClick={props.button.callback} //@ts-ignore
               variant={props.button.variant}
               size="small"
-              dark={props.button.variant === "tertiary"}
+              dark={props.button.variant === "tertiary"} //@ts-ignore
+              hoverOpacity={props.button.variant === "ghost" ? 0.7 : 1}
             >
               {props.button.text}
             </UrsorButton>
@@ -518,8 +523,21 @@ export default function AccountPage(props: IAccountPageProps) {
   const [showFailure, setShowFailure] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
+  useEffect(
+    () => setName(userCtx.userDetails?.realName ?? ""),
+    [userCtx.userDetails?.realName]
+  );
   const [teachingName, setTeachingName] = useState<string>("");
+  useEffect(
+    () => setTeachingName(userCtx.userDetails?.teacherName ?? ""),
+    [userCtx.userDetails?.teacherName]
+  );
+
   const [email, setEmail] = useState<string>("");
+  useEffect(
+    () => setEmail(userCtx.userDetails?.email ?? ""),
+    [userCtx.userDetails?.email]
+  );
 
   const [school, setSchool] = useState<ISchool | undefined>(undefined);
   const loadSchool = () => {
@@ -541,8 +559,6 @@ export default function AccountPage(props: IAccountPageProps) {
     useState<boolean>(false);
 
   const safetubeUserDetails = useUserContext().user;
-
-  console.log(safetubeUserDetails, "LOL");
 
   // const [
   //   showPasswordChangeFlowTriggeredInfo,
@@ -656,9 +672,8 @@ export default function AccountPage(props: IAccountPageProps) {
     BrowserApiController.updateTeacher(userCtx.userDetails?.id ?? "", {
       realName: name,
       teacherName: teachingName,
-    })
-      .then(() => notificationCtx.success("Updated Account"))
-      .then(() => userCtx.load(userCtx.userDetails?.email));
+    }).then(() => notificationCtx.success("Updated Account"));
+  //.then(() => userCtx.load(userCtx.userDetails?.email));
 
   const router = useRouter();
 
@@ -668,8 +683,8 @@ export default function AccountPage(props: IAccountPageProps) {
       userCtx?.userDetails?.schoolId ?? ""
     ).then((t) => setTeachers(t));
   useEffect(() => {
-    loadTeachers();
-  }, []);
+    userCtx?.userDetails?.schoolId && loadTeachers();
+  }, [userCtx?.userDetails?.schoolId]);
   const [locale, setLocale] = useState<string>("US");
 
   const getIp = async () => {
@@ -702,9 +717,10 @@ export default function AccountPage(props: IAccountPageProps) {
     ISafeTubeUser | undefined
   >();
   useEffect(() => {
-    ApiController.getUser(
-      teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
-    ).then((user) => setSafetubeSchoolOwner(user));
+    teachers &&
+      ApiController.getUser(
+        teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
+      ).then((user) => setSafetubeSchoolOwner(user));
   }, [school?.ownerId, teachers]);
 
   const [renewalDate, setRenewalDate] = useState<string | undefined>();
@@ -753,7 +769,7 @@ export default function AccountPage(props: IAccountPageProps) {
             <AccountPageSection
               title="Profile"
               button={{
-                variant: "secondary",
+                variant: "ghost",
                 text: "Delete account",
                 callback: () => setDeleteAccountDialogOpen(true),
               }}
@@ -826,19 +842,21 @@ export default function AccountPage(props: IAccountPageProps) {
                   </Stack>
                 </Stack>
               </Stack>
-              {/* <Stack
-                flex={1}
-                direction="row"
-                alignItems="flex-end"
-                sx={{
-                  opacity: saveButtonDisabled ? 0.4 : 1,
-                  pointerEvents: saveButtonDisabled ? "none" : undefined,
-                }}
-              >
-                <UrsorButton size="small" onClick={submitUpdate}>
-                  Save
-                </UrsorButton>
-              </Stack> */}
+              <Stack position="absolute" bottom={20} left={20}>
+                <Stack
+                  flex={1}
+                  direction="row"
+                  alignItems="flex-end"
+                  sx={{
+                    opacity: saveButtonDisabled ? 0.4 : 1,
+                    pointerEvents: saveButtonDisabled ? "none" : undefined,
+                  }}
+                >
+                  <UrsorButton size="small" onClick={submitUpdate}>
+                    Save
+                  </UrsorButton>
+                </Stack>
+              </Stack>
             </AccountPageSection>
             <Stack flex={1}>
               {school && safetubeUserDetails?.subscribed ? (
@@ -933,7 +951,8 @@ export default function AccountPage(props: IAccountPageProps) {
                           </Typography>
                         </Stack>
                       </Stack>
-                      {safetubeSchoolOwner.id === userCtx.userDetails.id ? (
+                      {safetubeSchoolOwner &&
+                      safetubeSchoolOwner.id === userCtx.userDetails?.id ? (
                         <Stack justifyContent="flex-end">
                           <Stack
                             direction="row"
@@ -1043,7 +1062,7 @@ export default function AccountPage(props: IAccountPageProps) {
             <AccountPageSection
               title="Feedback"
               button={{
-                variant: "tertiary",
+                variant: "secondary",
                 text: "Send",
                 callback: () => window.open("mailto:hello@astrosafe.co"),
               }}

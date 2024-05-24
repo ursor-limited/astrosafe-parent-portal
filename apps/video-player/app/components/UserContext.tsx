@@ -7,6 +7,7 @@ import ApiController from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 import Hotjar from "@hotjar/browser";
+import BrowserApiController from "../browserApi";
 
 const hotjarVersion = 6;
 
@@ -81,9 +82,14 @@ const UserProvider = (props: IUserProviderProps) => {
         .then((u) =>
           u
             ? setSafeTubeUser(u)
-            : ApiController.createUser(user.email!).then((u) =>
-                setSafeTubeUser(u)
-              )
+            : ApiController.createUser(user.email!)
+                .then((u) => setSafeTubeUser(u))
+                .then(() =>
+                  BrowserApiController.createTeacher(
+                    user.email!,
+                    user.name ?? ""
+                  )
+                )
         )
         .then(() => {
           setLoading(false);

@@ -429,6 +429,12 @@ class BrowserApiController {
     });
   }
 
+  static async createTeacher(email: string, name: string) {
+    return post("teachers", { email, name }).then((response: any) => {
+      return response.json();
+    });
+  }
+
   static async getTeacher(teacherId: string) {
     return get("teachers/" + teacherId).then((response: any) => {
       return response.json();
