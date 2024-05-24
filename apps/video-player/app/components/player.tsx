@@ -269,9 +269,9 @@ const Player = (props: {
     setEnded(false);
     if (
       url?.includes("youtube") &&
-      ((player?.v || player?.playerInfo).playerState === 2 ||
-        (player?.v || player?.playerInfo).playerState === 0 || // 0 is the ended
-        (player?.v || player?.playerInfo).playerState === 5) // 5 is the non-yet-started
+      ((player?.v || player?.playerInfo)?.playerState === 2 ||
+        (player?.v || player?.playerInfo)?.playerState === 0 || // 0 is the ended
+        (player?.v || player?.playerInfo)?.playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
     } else if (url?.includes("vimeo")) {
