@@ -962,7 +962,7 @@ export default function AccountPage(props: IAccountPageProps) {
               )}
             </Stack>
           </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1} minHeight="439px">
+          <Stack spacing={SECTION_SPACING} flex={1} minHeight="420px">
             <AccountPageSection
               title="Plan"
               button={{
@@ -971,7 +971,7 @@ export default function AccountPage(props: IAccountPageProps) {
                 callback: () => router.push("/users"),
               }}
               secondaryButton={
-                safetubeSchoolOwner?.id === userCtx.userDetails?.id
+                safetubeSchoolOwner?.id === safetubeUserDetails?.id
                   ? {
                       variant: "secondary",
                       text: "Manage plan",
@@ -1032,7 +1032,7 @@ export default function AccountPage(props: IAccountPageProps) {
                         </Stack>
                       </Stack>
                       {safetubeSchoolOwner &&
-                      safetubeSchoolOwner.id === userCtx.userDetails?.id ? (
+                      safetubeSchoolOwner.id === safetubeUserDetails?.id ? (
                         <Stack justifyContent="flex-end">
                           <Stack
                             direction="row"
@@ -1072,6 +1072,14 @@ export default function AccountPage(props: IAccountPageProps) {
                           ...PRODUCT_DETAILS.map((pd) => (
                             <AccountPagePricingCard
                               key={pd.annualId}
+                              selected={
+                                (frequency === "monthly" &&
+                                  pd?.monthlyId ===
+                                    safetubeSchoolOwner?.subscriptionProductId) ||
+                                (frequency === "annual" &&
+                                  pd?.annualId ===
+                                    safetubeSchoolOwner?.subscriptionProductId)
+                              }
                               title={pd.title}
                               price={
                                 pd?.annualId ===

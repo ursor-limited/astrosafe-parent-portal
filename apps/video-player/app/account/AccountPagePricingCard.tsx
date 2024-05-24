@@ -1,11 +1,13 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 import MortarboardIcon from "@/images/icons/MortarboardIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import React from "react";
 
 const AccountPagePricingCard = (props: {
+  selected?: boolean;
   title: string;
   //subtitle: string;
   // buttonText: string;
@@ -24,14 +26,13 @@ const AccountPagePricingCard = (props: {
 }) => (
   <Stack
     flex={1}
-    bgcolor={
-      PALETTE.secondary.grey[1]
-      //props.dark ? PALETTE.secondary.purple[2] : PALETTE.secondary.grey[1]
-    }
+    bgcolor={PALETTE.secondary.grey[props.selected ? 2 : 1]}
     p="16px"
     //alignItems="center"
     borderRadius="12px"
-    border={props.border ? `4px solid ${PALETTE.system.orange}` : undefined}
+    border={
+      props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
+    }
     position="relative"
     height="264px"
     boxSizing="border-box"
@@ -96,11 +97,12 @@ const AccountPagePricingCard = (props: {
               size="small"
               dark
               variant="tertiary"
-              endIcon={VerifiedIcon}
+              endIcon={props.selected ? CheckIcon : VerifiedIcon}
               iconSize={16}
               onClick={props.callback}
+              disabled={props.selected}
             >
-              Upgrade
+              {props.selected ? "Current" : "Upgrade"}
             </UrsorButton>
           )}
         </Stack>
