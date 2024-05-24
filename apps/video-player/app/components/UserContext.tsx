@@ -8,6 +8,7 @@ import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 import Hotjar from "@hotjar/browser";
 import BrowserApiController from "../browserApi";
+import { ITeacher } from "./BrowserUserContext";
 
 const hotjarVersion = 6;
 
@@ -33,6 +34,7 @@ export interface IUserContext {
   loading?: boolean;
   refresh?: () => void;
   clear?: () => void;
+  schoolIsSubscribed?: boolean;
 }
 
 const UserContext = createContext<IUserContext>({ loaded: false });
@@ -119,6 +121,40 @@ const UserProvider = (props: IUserProviderProps) => {
     }
   }, [safeTubeUser?.subscribed]);
 
+  ////// GETTING THE SUBSCRIPTION STATUS //////////////////////////////////////////////////////////////////
+
+  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  useEffect(() => {
+    safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
+  }, [safeTubeUser?.subscribed]);
+
+  console.log(schoolIsSubscribed, "fuck");
+
+  // const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
+  //   ISafeTubeUser | undefined
+  // >();
+
+  useEffect(() => {
+    !schoolIsSubscribed &&
+      user?.email &&
+      BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
+        //@ts-ignore
+        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+        //setBrowserUserDetails(ud);
+      );
+  }, [user?.email]);
+
+  // const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
+  //   ISafeTubeUser | undefined
+  // >();
+  // useEffect(() => {
+  //   BrowserApiController.getUser(
+  //     teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
+  //   ).then((user) => setSafetubeSchoolOwner(user));
+  // }, [school?.ownerId, teachers]);
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   const [
     subscriptionStatusChangePossible,
     setSubscriptionStatusChangePossible,
@@ -163,6 +199,7 @@ const UserProvider = (props: IUserProviderProps) => {
         loaded,
         clear: () => setSafeTubeUser(undefined),
         refresh: loadUser,
+        schoolIsSubscribed,
       }}
     >
       {props.children}

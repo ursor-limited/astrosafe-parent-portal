@@ -65,6 +65,7 @@ export default function AppsPageContents(props: IAppsPageProps) {
           // }),
           icon: PlusIcon,
         }}
+        scrollable
       >
         <Stack
           spacing="12px"

@@ -16,10 +16,10 @@ const MAX_LITE_MODE_ACTIONS = 3;
 // };
 
 export const useOnBasicMode = () => {
-  const userDetails = useUserContext().user;
+  const userCtx = useUserContext();
   return (
-    !userDetails?.subscribed &&
-    getTrialDaysLeft(userDetails?.freeTrialStart) <= 0
+    !userCtx.schoolIsSubscribed &&
+    getTrialDaysLeft(userCtx?.user?.freeTrialStart) <= 0
   );
 };
 

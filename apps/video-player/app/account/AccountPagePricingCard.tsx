@@ -152,7 +152,7 @@ const AccountPagePricingCard = (props: {
           </Typography>
         </Stack>
       </Stack>
-      <Stack height="30px">
+      <Stack minHeight="50px">
         <Typography
           variant="small"
           color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
@@ -187,7 +187,7 @@ const AccountPagePricingCard = (props: {
       </Stack>
     ) : null}
     {props.text ? (
-      <Stack flex={1} pt="44px">
+      <Stack flex={1}>
         <Typography variant="small">{props.text}</Typography>
       </Stack>
     ) : null}

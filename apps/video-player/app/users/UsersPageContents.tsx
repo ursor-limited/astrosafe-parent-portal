@@ -98,6 +98,7 @@ export default function UsersPageContents() {
           callback: () => setTeacherInvitationDialogOpen(true),
           icon: PersonIcon,
         }}
+        maxWidth={656}
       >
         <Stack spacing="12px" pl={`${SIDEBAR_X_MARGIN}px`}>
           <Stack direction="row" justifyContent="flex-end">
