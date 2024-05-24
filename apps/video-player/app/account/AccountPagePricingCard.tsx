@@ -4,6 +4,7 @@ import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import MortarboardIcon from "@/images/icons/MortarboardIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import MailIcon from "@/images/icons/MailIcon.svg";
 import React from "react";
 
 const AccountPagePricingCard = (props: {
@@ -22,6 +23,7 @@ const AccountPagePricingCard = (props: {
   notif?: string;
   button?: React.ReactNode;
   mortarBoardsN: number;
+  contactSales?: boolean;
   callback: () => void;
 }) => (
   <Stack
@@ -30,13 +32,18 @@ const AccountPagePricingCard = (props: {
     p="16px"
     //alignItems="center"
     borderRadius="12px"
-    border={
-      props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
-    }
+    // border={
+    //   props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
+    // }
     position="relative"
     height="264px"
     boxSizing="border-box"
     justifyContent="space-between"
+    sx={{
+      outline: props.selected
+        ? `2px solid ${PALETTE.secondary.purple[2]}`
+        : undefined,
+    }}
   >
     {props.notif ? (
       <Stack
@@ -97,12 +104,26 @@ const AccountPagePricingCard = (props: {
               size="small"
               dark
               variant="tertiary"
-              endIcon={props.selected ? CheckIcon : VerifiedIcon}
+              endIcon={
+                props.contactSales && !props.selected
+                  ? MailIcon
+                  : props.selected
+                  ? CheckIcon
+                  : VerifiedIcon
+              }
               iconSize={16}
-              onClick={props.callback}
+              onClick={
+                props.contactSales && !props.selected
+                  ? () => (window.location.href = "mailto:hello@astrosafe.co")
+                  : props.callback
+              }
               disabled={props.selected}
             >
-              {props.selected ? "Current" : "Upgrade"}
+              {props.contactSales && !props.selected
+                ? "Contact Sales"
+                : props.selected
+                ? "Current"
+                : "Upgrade"}
             </UrsorButton>
           )}
         </Stack>

@@ -14,6 +14,7 @@ export interface ISchool {
   teacherCode: string;
   ownerId: string;
   deviceLimit?: number;
+  teacherLimit: number;
   expirationDate?: string;
   free?: boolean;
 }

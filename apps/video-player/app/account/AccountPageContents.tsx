@@ -73,7 +73,7 @@ const PRODUCT_DETAILS: IAstroProduct[] = [
     monthlyId: "prod_PlC9OCbk8oBkWW",
     annualId: "prod_PlWrHG8V57yjrn",
     items: [
-      "1 teacher/adult account",
+      "1 teacher/adult accounts",
       "5 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
@@ -761,7 +761,7 @@ export default function AccountPage(props: IAccountPageProps) {
   //   [safetubeSchoolOwner?.subscriptionProductId]
   // );
 
-  const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
 
   const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
     ISafeTubeUser | undefined
@@ -790,6 +790,19 @@ export default function AccountPage(props: IAccountPageProps) {
   }, [safetubeSchoolOwner, teachers]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  const [customPlan, setCustomPlan] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setCustomPlan(
+        !!safetubeSchoolOwner?.subscribed &&
+          !!safetubeSchoolOwner?.subscriptionProductId &&
+          !PRODUCT_DETAILS.map((pd) => pd.annualId + pd.monthlyId)
+            .join("")
+            .includes(safetubeSchoolOwner?.subscriptionProductId)
+      ),
+    [safetubeSchoolOwner]
+  );
 
   return (
     <>
@@ -846,7 +859,7 @@ export default function AccountPage(props: IAccountPageProps) {
               fadeInDelay={200}
               flex
             >
-              <Stack direction="row" spacing="26px">
+              <Stack direction="row" spacing="26px" minWidth="400px">
                 <Stack>
                   <Stack
                     width="160px"
@@ -1115,10 +1128,12 @@ export default function AccountPage(props: IAccountPageProps) {
                                 )
                               }
                               mortarBoardsN={pd.mortarBoardsN}
+                              contactSales={customPlan}
                             />
                           )),
                           <AccountPagePricingCard
                             key="custom"
+                            selected={customPlan}
                             title="Custom"
                             price="POA"
                             currency={
@@ -1133,36 +1148,15 @@ export default function AccountPage(props: IAccountPageProps) {
                                 email ? getPaymentUrl(email, frequency) : ""
                               )
                             }
-                            button={
-                              <UrsorButton
-                                size="small"
-                                dark
-                                variant="tertiary"
-                                endIcon={MailIcon}
-                                iconSize={16}
-                                onClick={() =>
-                                  (window.location.href =
-                                    "mailto:hello@astrosafe.co")
-                                }
-                              >
-                                Contact Sales
-                              </UrsorButton>
-                            }
                             mortarBoardsN={3}
+                            contactSales
                           />,
                         ]}
                       </Stack>
                     ) : (
                       <AccountPageNotOwnFeaturesCard
-                        items={
-                          PRODUCT_DETAILS.find(
-                            (pd) =>
-                              pd.monthlyId ===
-                                safetubeSchoolOwner?.subscriptionProductId ||
-                              pd.annualId ===
-                                safetubeSchoolOwner?.subscriptionProductId
-                          )?.items ?? []
-                        }
+                        nSeats={school?.teacherLimit ?? 0}
+                        nDevices={school?.deviceLimit ?? 0}
                       />
                     )}
                   </Stack>
