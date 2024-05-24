@@ -38,6 +38,8 @@ import ApiController from "../api";
 import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
 import AccountPageNotOwnFeaturesCard from "./AccountPageNotOwnFeaturesCard";
 import { useWindowSize } from "usehooks-ts";
+import { isMobile } from "react-device-detect";
+import PricingCards, { AstroCurrency } from "./PricingCards";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -49,16 +51,7 @@ const FAILURE_DURATION = 2000;
 
 const PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH = 1178;
 const TOP_ROW_COLUMN_THRESHOLD_WINDOW_WIDTH = 1363;
-
-export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
-export type AstroCurrency = (typeof astroCurrency)[number];
-
-const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
-  USD: "$",
-  GBP: "£",
-  CAD: "CA$",
-  EUR: "€",
-};
+const PRICING_CARD_HEADER_THRESHOLD_WINDOW_WIDTH = 1300;
 
 interface IAstroProduct {
   monthlyId: string;
@@ -71,7 +64,7 @@ interface IAstroProduct {
   };
 }
 
-const PRODUCT_DETAILS: IAstroProduct[] = [
+export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
     monthlyId: "prod_PlC9OCbk8oBkWW",
     annualId: "prod_PlWrHG8V57yjrn",
@@ -728,41 +721,6 @@ export default function AccountPage(props: IAccountPageProps) {
   useEffect(() => {
     userCtx?.userDetails?.schoolId && loadTeachers();
   }, [userCtx?.userDetails?.schoolId]);
-  const [locale, setLocale] = useState<string>("US");
-
-  const getIp = async () => {
-    // Connect ipapi.co with fetch()
-    const response = await fetch("https://ipapi.co/json/").then(
-      async (response) => {
-        const data = await response.json();
-        // Set the IP address to the constant `ip`
-        data.country_code && setLocale(data.country_code);
-      }
-    );
-  };
-
-  // Run `getIP` function above just once when the page is rendered
-  useEffect(() => {
-    getIp();
-  }, []);
-
-  // const [productDetails, setProductDetails] = useState<
-  //   IAstroProduct | undefined
-  // >();
-  // useEffect(
-  //   //@ts-ignore
-  //   () => {
-  //     safetubeSchoolOwner?.subscriptionProductId &&
-  //       setProductDetails(
-  //         PRODUCT_DETAILS.find(
-  //           (pd) =>
-  //             pd.monthlyId === safetubeSchoolOwner.subscriptionProductId ||
-  //             pd.annualId === safetubeSchoolOwner.subscriptionProductId
-  //         )
-  //       );
-  //   },
-  //   [safetubeSchoolOwner?.subscriptionProductId]
-  // );
 
   const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
 
@@ -821,6 +779,26 @@ export default function AccountPage(props: IAccountPageProps) {
       setPricingCardsColumn(width < PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH),
     [width]
   );
+
+  const [pricingCardsHeaderSmallify, setPricingCardsHeaderSmallify] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setPricingCardsHeaderSmallify(
+        width < PRICING_CARD_HEADER_THRESHOLD_WINDOW_WIDTH
+      ),
+    [width]
+  );
+
+  //   const [hideSideBar, setHide] =
+  //   useState<boolean>(false);
+  // useEffect(
+  //   () =>
+  //     setPricingCardsHeaderSmallify(
+  //       width < PRICING_CARD_HEADER_THRESHOLD_WINDOW_WIDTH
+  //     ),
+  //   [width]
+  // );
 
   return (
     <>
@@ -1026,37 +1004,65 @@ export default function AccountPage(props: IAccountPageProps) {
                   <Stack spacing="24px" height="100%">
                     <Stack direction="row" justifyContent="space-between">
                       <Stack direction="row" width="100%" spacing="8%">
-                        <Stack spacing="2px">
+                        <Stack
+                          spacing={
+                            pricingCardsHeaderSmallify ? undefined : "2px"
+                          }
+                        >
                           <Typography variant="small">Seats</Typography>
                           <Typography
-                            variant="h5"
+                            variant={
+                              pricingCardsHeaderSmallify ? "medium" : "h5"
+                            }
+                            bold
                             color={PALETTE.secondary.grey[3]}
                           >{`${teachers.length} of 5`}</Typography>
                         </Stack>
-                        <Stack spacing="2px">
+                        <Stack
+                          spacing={
+                            pricingCardsHeaderSmallify ? undefined : "2px"
+                          }
+                        >
                           <Typography variant="small">Devices</Typography>
                           <Typography
-                            variant="h5"
+                            variant={
+                              pricingCardsHeaderSmallify ? "medium" : "h5"
+                            }
+                            bold
                             color={PALETTE.secondary.grey[3]}
                           >{`${school?.devices.filter(
                             (d) => d.connected !== "denied"
                           ).length} of ${school.deviceLimit}`}</Typography>
                         </Stack>
                         {safetubeSchoolOwner?.subscriptionDate ? (
-                          <Stack spacing="4px">
+                          <Stack
+                            spacing={
+                              pricingCardsHeaderSmallify ? undefined : "2px"
+                            }
+                          >
                             <Typography variant="small">Renewal</Typography>
                             <Typography
-                              variant="h5"
+                              variant={
+                                pricingCardsHeaderSmallify ? "medium" : "h5"
+                              }
+                              bold
                               color={PALETTE.secondary.grey[3]}
                             >
                               {renewalDate}
                             </Typography>
                           </Stack>
                         ) : null}
-                        <Stack spacing="2px">
+                        <Stack
+                          spacing={
+                            pricingCardsHeaderSmallify ? undefined : "2px"
+                          }
+                        >
                           <Typography variant="small">Owner</Typography>
                           <Typography
-                            variant="h5"
+                            variant={
+                              pricingCardsHeaderSmallify ? "medium" : "h5"
+                            }
+                            bold
                             color={PALETTE.secondary.grey[3]}
                           >
                             {school.ownerId === userCtx.userDetails?.id
@@ -1101,85 +1107,16 @@ export default function AccountPage(props: IAccountPageProps) {
                         <Stack />
                       )}
                     </Stack>
-                    {safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
-                      <Stack
-                        direction={pricingCardsColumn ? "column" : "row"}
-                        spacing="12px"
-                      >
-                        {[
-                          ...PRODUCT_DETAILS.map((pd) => (
-                            <AccountPagePricingCard
-                              key={pd.annualId}
-                              selected={
-                                (frequency === "monthly" &&
-                                  pd?.monthlyId ===
-                                    safetubeSchoolOwner?.subscriptionProductId) ||
-                                (frequency === "annual" &&
-                                  pd?.annualId ===
-                                    safetubeSchoolOwner?.subscriptionProductId)
-                              }
-                              title={pd.title}
-                              price={
-                                frequency === "annual"
-                                  ? (
-                                      (pd?.prices[LOCALE_CURRENCIES[locale]] ??
-                                        0) *
-                                        10 +
-                                      0.09
-                                    ).toFixed(2)
-                                  : pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
-                              }
-                              currency={
-                                CURRENCY_SYMBOLS[
-                                  LOCALE_CURRENCIES[locale as AstroCurrency]
-                                ]
-                              }
-                              unit={frequency === "monthly" ? "month" : "year"}
-                              tinyText={
-                                frequency === "annual"
-                                  ? `Billed as ${
-                                      CURRENCY_SYMBOLS[
-                                        LOCALE_CURRENCIES[locale]
-                                      ]
-                                    }${
-                                      pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
-                                    } / month`
-                                  : undefined
-                              }
-                              items={pd.items}
-                              callback={() =>
-                                router.push(
-                                  email ? getPaymentUrl(email, frequency) : ""
-                                )
-                              }
-                              mortarBoardsN={
-                                width < 1300 ? undefined : pd.mortarBoardsN
-                              }
-                              contactSales={customPlan}
-                            />
-                          )),
-                          <AccountPagePricingCard
-                            key="custom"
-                            selected={customPlan}
-                            title="Custom"
-                            price="POA"
-                            currency={
-                              CURRENCY_SYMBOLS[
-                                LOCALE_CURRENCIES[locale as AstroCurrency]
-                              ]
-                            }
-                            unit={frequency === "monthly" ? "month" : "year"}
-                            text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
-                            callback={() =>
-                              router.push(
-                                email ? getPaymentUrl(email, frequency) : ""
-                              )
-                            }
-                            mortarBoardsN={width < 1300 ? undefined : 3}
-                            contactSales
-                          />,
-                        ]}
-                      </Stack>
+                    {safetubeSchoolOwner?.subscriptionProductId &&
+                    safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
+                      <PricingCards
+                        column={pricingCardsColumn}
+                        frequency={frequency}
+                        productId={safetubeSchoolOwner?.subscriptionProductId}
+                        email={email}
+                        hideMortarBoards={width < 1300}
+                        customPlan={customPlan}
+                      />
                     ) : (
                       <AccountPageNotOwnFeaturesCard
                         nSeats={school?.teacherLimit ?? 0}

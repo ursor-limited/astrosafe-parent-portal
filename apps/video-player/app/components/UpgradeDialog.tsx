@@ -10,7 +10,7 @@ import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
-import { AstroCurrency } from "../account/AccountPageContents";
+import { AstroCurrency } from "../account/PricingCards";
 
 export const DETAILS = {
   USD: {

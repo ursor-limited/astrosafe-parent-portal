@@ -12,11 +12,20 @@ import PageLayout, {
 import HomeIcon from "@/images/icons/HomeIcon.svg";
 import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useUserContext } from "../components/UserContext";
+import { ISafeTubeUser, useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
-import { AccountPageSection } from "./AccountPageContents";
+import { AccountPageSection, PRODUCT_DETAILS } from "./AccountPageContents";
+import PricingCards from "./PricingCards";
+import ApiController from "../api";
+import BrowserApiController, { ISchool } from "../browserApi";
+import {
+  ITeacher,
+  useBrowserUserContext,
+} from "../components/BrowserUserContext";
+import UrsorToggle from "../components/UrsorToggle";
+import { useWindowSize } from "usehooks-ts";
 // import mixpanel from "mixpanel-browser";
 
 const PADDING = "20px";
@@ -48,15 +57,81 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
   const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] =
     useState<boolean>(false);
 
-  const userCtx = useUserContext();
-  userCtx;
+  const userCtx = useBrowserUserContext();
+  const safetubeUserDetails = useUserContext().user;
+
   const logOut = () => {
     //mixpanel.reset();
     localStorage.clear();
     logout();
   };
 
+  const [school, setSchool] = useState<ISchool | undefined>(undefined);
+  const loadSchool = () => {
+    userCtx.userDetails?.schoolId &&
+      BrowserApiController.getSchool(userCtx.userDetails?.schoolId).then(
+        (school) => {
+          setSchool(school);
+        }
+      );
+  };
+  useEffect(() => {
+    userCtx.userDetails?.schoolId && loadSchool();
+  }, [userCtx.userDetails?.schoolId]);
+
   const router = useRouter();
+
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
+
+  const [teachers, setTeachers] = useState<ITeacher[]>([]);
+  const loadTeachers = () =>
+    BrowserApiController.getTeachersInSchool(
+      userCtx?.userDetails?.schoolId ?? ""
+    ).then((t) => setTeachers(t));
+  useEffect(() => {
+    loadTeachers();
+  }, []);
+
+  const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
+    ISafeTubeUser | undefined
+  >();
+  useEffect(() => {
+    teachers &&
+      ApiController.getUser(
+        teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
+      ).then((user) => setSafetubeSchoolOwner(user));
+  }, [school?.ownerId, teachers]);
+
+  const [renewalDate, setRenewalDate] = useState<string | undefined>();
+  useEffect(() => {
+    safetubeSchoolOwner &&
+      setRenewalDate(
+        dayjs(safetubeSchoolOwner.subscriptionDate)
+          .add(
+            Math.ceil(
+              dayjs().diff(safetubeSchoolOwner.subscriptionDate, "days") / 30
+            ) * 30,
+
+            "days"
+          )
+          .format("Do MMMM YYYY")
+      );
+  }, [safetubeSchoolOwner, teachers]);
+
+  const [customPlan, setCustomPlan] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setCustomPlan(
+        !!safetubeSchoolOwner?.subscribed &&
+          !!safetubeSchoolOwner?.subscriptionProductId &&
+          !PRODUCT_DETAILS.map((pd) => pd.annualId + pd.monthlyId)
+            .join("")
+            .includes(safetubeSchoolOwner?.subscriptionProductId)
+      ),
+    [safetubeSchoolOwner]
+  );
+
+  const { width } = useWindowSize();
 
   return (
     <>
@@ -84,7 +159,7 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
           flex={1}
           pb={`calc(${SIDEBAR_Y_MARGIN} + 2px)`}
         >
-          <Stack spacing={SECTION_SPACING} flex={1}>
+          <Stack spacing={SECTION_SPACING}>
             <AccountPageSection
               title="Profile"
               // button={{
@@ -167,6 +242,112 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
               </Stack>
             </AccountPageSection>
             <AccountPageSection
+              title="Plan"
+              secondaryButton={{
+                variant: "secondary",
+                text: "Manage plan",
+                callback: () =>
+                  router.push(
+                    process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""
+                  ),
+              }}
+              fadeInDelay={700}
+            >
+              {school ? (
+                <Stack spacing="24px" height="100%">
+                  <Stack direction="row" justifyContent="space-between">
+                    <Stack spacing="3px" width="100%">
+                      <Stack spacing="10px" direction="row">
+                        <Typography variant="small">Seats</Typography>
+                        <Typography
+                          variant={"medium"}
+                          bold
+                          color={PALETTE.secondary.grey[3]}
+                        >{`${teachers.length} of 5`}</Typography>
+                      </Stack>
+                      <Stack spacing="10px" direction="row">
+                        <Typography variant="small">Devices</Typography>
+                        <Typography
+                          variant={"medium"}
+                          bold
+                          color={PALETTE.secondary.grey[3]}
+                        >{`${school?.devices.filter(
+                          (d) => d.connected !== "denied"
+                        ).length} of ${school.deviceLimit}`}</Typography>
+                      </Stack>
+                      {safetubeSchoolOwner?.subscriptionDate ? (
+                        <Stack spacing="10px" direction="row">
+                          <Typography variant="small">Renewal</Typography>
+                          <Typography
+                            variant="medium"
+                            bold
+                            color={PALETTE.secondary.grey[3]}
+                          >
+                            {renewalDate}
+                          </Typography>
+                        </Stack>
+                      ) : null}
+                      <Stack spacing="10px" direction="row">
+                        <Typography variant="small">Owner</Typography>
+                        <Typography
+                          variant="medium"
+                          bold
+                          color={PALETTE.secondary.grey[3]}
+                        >
+                          {school.ownerId === userCtx.userDetails?.id
+                            ? "You"
+                            : teachers.find((t) => t.id === school.ownerId)
+                                ?.teacherName}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                    {safetubeSchoolOwner &&
+                    safetubeSchoolOwner.id === safetubeUserDetails?.id ? (
+                      <Stack justifyContent="flex-end">
+                        <Stack
+                          direction="row"
+                          spacing="12px"
+                          alignItems="center"
+                          height="26px"
+                        >
+                          <Typography
+                            variant="small"
+                            color={PALETTE.secondary.grey[4]}
+                          >
+                            Monthly
+                          </Typography>
+                          <UrsorToggle
+                            checked={frequency === "annual"}
+                            callback={() =>
+                              setFrequency(
+                                frequency === "annual" ? "monthly" : "annual"
+                              )
+                            }
+                          />
+                          <Typography
+                            variant="small"
+                            color={PALETTE.secondary.grey[4]}
+                          >
+                            Annual
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    ) : (
+                      <Stack />
+                    )}
+                  </Stack>
+                  <PricingCards
+                    column
+                    frequency={frequency}
+                    productId={safetubeSchoolOwner?.subscriptionProductId ?? ""}
+                    email={email}
+                    hideMortarBoards={width < 1300}
+                    customPlan={customPlan}
+                  />
+                </Stack>
+              ) : null}
+            </AccountPageSection>
+            <AccountPageSection
               title="Feedback"
               button={{
                 variant: "primary",
@@ -182,13 +363,7 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
               </Typography>
             </AccountPageSection>
           </Stack>
-
-          {/* <AccountPagePlanSection
-            remainingDays={
-              TRIAL_DAYS - dayjs().diff(userCtx.user?.createdAt, "days")
-            }
-          /> */}
-          <AccountPageSection title="Boring bits" flex fadeInDelay={1100}>
+          <AccountPageSection title="Boring bits" fadeInDelay={1100}>
             <Stack spacing="6px">
               <a
                 target="_blank"
