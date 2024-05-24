@@ -6,6 +6,7 @@ import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import React from "react";
 
 const AccountPagePricingCard = (props: {
+  selected?: boolean;
   title: string;
   //subtitle: string;
   // buttonText: string;
