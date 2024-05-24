@@ -35,6 +35,7 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { ISafeTubeUser, useUserContext } from "../components/UserContext";
 import { getPrefixRemovedUrl } from "../components/LinkCard";
 import ApiController from "../api";
+import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -1120,16 +1121,16 @@ export default function AccountPage(props: IAccountPageProps) {
           </Stack>
         </Stack>
       </PageLayout>
-      {/* <DeleteAccountDialog
+      <DeleteAccountDialog
         open={deleteAccountDialogOpen}
         closeCallback={() => setDeleteAccountDialogOpen(false)}
         callback={() => {
-          BrowserApiController.deleteTeacher(userCtx.userDetails?.id).then(
-            logOut
-            //navigate(getAbsoluteUrl("astrosafe.co"))
-          );
+          ApiController.deleteUser(safetubeUserDetails?.id ?? "");
+          BrowserApiController.deleteTeacher(
+            userCtx.userDetails?.id ?? ""
+          ).then(logOut);
         }}
-      /> */}
+      />
     </>
   );
 }

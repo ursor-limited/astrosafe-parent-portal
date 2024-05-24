@@ -452,6 +452,10 @@ class BrowserApiController {
       return response.json();
     });
   }
+
+  static async deleteTeacher(teacherId: string) {
+    return dellete(`/teachers/${teacherId}`);
+  }
 }
 
 export default BrowserApiController;

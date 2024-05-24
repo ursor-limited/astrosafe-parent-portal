@@ -501,6 +501,9 @@ class ApiController {
   static async deleteQuiz(id: string) {
     return dellete(`quiz/${id}`);
   }
+  static async deleteUser(id: string) {
+    return dellete(`/video/${id}`);
+  }
 }
 
 export default ApiController;
