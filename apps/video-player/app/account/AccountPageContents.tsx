@@ -838,11 +838,11 @@ export default function AccountPage(props: IAccountPageProps) {
           >
             <AccountPageSection
               title="Profile"
-              button={{
-                variant: "ghost",
-                text: "Delete account",
-                callback: () => setDeleteAccountDialogOpen(true),
-              }}
+              // button={{
+              //   variant: "ghost",
+              //   text: "Delete account",
+              //   callback: () => setDeleteAccountDialogOpen(true),
+              // }}
               fadeInDelay={200}
               flex
             >
@@ -1082,12 +1082,13 @@ export default function AccountPage(props: IAccountPageProps) {
                               }
                               title={pd.title}
                               price={
-                                pd?.annualId ===
-                                safetubeSchoolOwner?.subscriptionProductId
-                                  ? 9 +
-                                    (pd?.prices[LOCALE_CURRENCIES[locale]] ??
-                                      0) *
-                                      10
+                                frequency === "annual"
+                                  ? (
+                                      (pd?.prices[LOCALE_CURRENCIES[locale]] ??
+                                        0) *
+                                        10 +
+                                      0.09
+                                    ).toFixed(2)
                                   : pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
                               }
                               currency={
@@ -1231,7 +1232,7 @@ export default function AccountPage(props: IAccountPageProps) {
           </Stack>
         </Stack>
       </PageLayout>
-      <DeleteAccountDialog
+      {/* <DeleteAccountDialog
         open={deleteAccountDialogOpen}
         closeCallback={() => setDeleteAccountDialogOpen(false)}
         callback={() => {
@@ -1240,7 +1241,7 @@ export default function AccountPage(props: IAccountPageProps) {
             userCtx.userDetails?.id ?? ""
           ).then(logOut);
         }}
-      />
+      /> */}
       <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
