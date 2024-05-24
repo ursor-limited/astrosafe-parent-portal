@@ -518,6 +518,7 @@ export default function LibraryPage() {
           callback: () => setAddDialogOpen(true),
           icon: PlusIcon,
         }}
+        maxWidth={834}
       >
         <Stack
           flex={1}

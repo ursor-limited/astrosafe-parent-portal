@@ -454,6 +454,7 @@ export default function SafetyPage() {
           icon: PlusIcon,
         }}
         scrollable
+        maxWidth={942}
       >
         <UrsorFadeIn duration={500} delay={800}>
           <Stack

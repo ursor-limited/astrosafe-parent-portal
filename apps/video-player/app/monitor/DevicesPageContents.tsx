@@ -267,6 +267,7 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         }}
         scrollable
         description="All of the devices connected to your school are displayed here. Click ‘Connect device’ to add more!"
+        maxWidth={772}
       >
         {lockingModeOn ? (
           <Stack
