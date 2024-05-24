@@ -4,7 +4,10 @@ import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import React from "react";
 import Image from "next/image";
 
-const AccountPageNotOwnFeaturesCard = (props: { items: string[] }) => (
+const AccountPageNotOwnFeaturesCard = (props: {
+  nDevices: number;
+  nSeats: number;
+}) => (
   <Stack
     flex={1}
     height="100%"
@@ -26,26 +29,30 @@ const AccountPageNotOwnFeaturesCard = (props: { items: string[] }) => (
       <Typography bold variant="medium">
         You have access to:
       </Typography>
-      {props.items ? (
-        <Stack spacing="14px">
-          {props.items.map((item, i) => (
-            <Stack key={i} direction="row" spacing="7px" alignItems="center">
-              <Stack
-                sx={{
-                  svg: {
-                    path: {
-                      fill: PALETTE.system.green,
-                    },
+
+      <Stack spacing="14px">
+        {[
+          `${props.nSeats} teacher/adult accounts`,
+          `${props.nDevices} devices monitored`,
+          "Unlimited worksheets or videos",
+          "All functionality available",
+        ].map((item, i) => (
+          <Stack key={i} direction="row" spacing="7px" alignItems="center">
+            <Stack
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.system.green,
                   },
-                }}
-              >
-                <CheckCircleIcon width="18px" height="18px" />
-              </Stack>
-              <Typography variant="small">{item}</Typography>
+                },
+              }}
+            >
+              <CheckCircleIcon width="18px" height="18px" />
             </Stack>
-          ))}
-        </Stack>
-      ) : null}
+            <Typography variant="small">{item}</Typography>
+          </Stack>
+        ))}
+      </Stack>
     </Stack>
   </Stack>
 );

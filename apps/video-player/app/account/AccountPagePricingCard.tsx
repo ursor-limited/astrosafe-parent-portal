@@ -4,6 +4,7 @@ import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import MortarboardIcon from "@/images/icons/MortarboardIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
+import MailIcon from "@/images/icons/MailIcon.svg";
 import React from "react";
 
 const AccountPagePricingCard = (props: {
@@ -21,7 +22,8 @@ const AccountPagePricingCard = (props: {
   border?: boolean;
   notif?: string;
   button?: React.ReactNode;
-  mortarBoardsN: number;
+  mortarBoardsN?: number;
+  contactSales?: boolean;
   callback: () => void;
 }) => (
   <Stack
@@ -30,13 +32,18 @@ const AccountPagePricingCard = (props: {
     p="16px"
     //alignItems="center"
     borderRadius="12px"
-    border={
-      props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
-    }
+    // border={
+    //   props.selected ? `2px solid ${PALETTE.secondary.purple[2]}` : undefined
+    // }
     position="relative"
-    height="264px"
+    //height="264px"
     boxSizing="border-box"
     justifyContent="space-between"
+    sx={{
+      outline: props.selected
+        ? `2px solid ${PALETTE.secondary.purple[2]}`
+        : undefined,
+    }}
   >
     {props.notif ? (
       <Stack
@@ -75,34 +82,50 @@ const AccountPagePricingCard = (props: {
             spacing="12px"
           >
             <Typography>{props.title}</Typography>
-            <Stack direction="row" alignItems="center" spacing="3px">
-              {props.mortarBoardsN === 1 ? (
-                <MortarboardIcon height="16px" width="16px" />
-              ) : props.mortarBoardsN === 2 ? (
-                <>
+            {props.mortarBoardsN ? (
+              <Stack direction="row" alignItems="center" spacing="3px">
+                {props.mortarBoardsN === 1 ? (
                   <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                </>
-              ) : (
-                <>
-                  <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                  <MortarboardIcon height="16px" width="16px" />
-                </>
-              )}
-            </Stack>
+                ) : props.mortarBoardsN === 2 ? (
+                  <>
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                  </>
+                ) : (
+                  <>
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                    <MortarboardIcon height="16px" width="16px" />
+                  </>
+                )}
+              </Stack>
+            ) : null}
           </Stack>
           {props.button || (
             <UrsorButton
               size="small"
               dark
               variant="tertiary"
-              endIcon={props.selected ? CheckIcon : VerifiedIcon}
+              endIcon={
+                props.contactSales && !props.selected
+                  ? MailIcon
+                  : props.selected
+                  ? CheckIcon
+                  : VerifiedIcon
+              }
               iconSize={16}
-              onClick={props.callback}
+              onClick={
+                props.contactSales && !props.selected
+                  ? () => (window.location.href = "mailto:hello@astrosafe.co")
+                  : props.callback
+              }
               disabled={props.selected}
             >
-              {props.selected ? "Current" : "Upgrade"}
+              {props.contactSales && !props.selected
+                ? "Contact Sales"
+                : props.selected
+                ? "Current"
+                : "Upgrade"}
             </UrsorButton>
           )}
         </Stack>
@@ -129,13 +152,14 @@ const AccountPagePricingCard = (props: {
           </Typography>
         </Stack>
       </Stack>
-
-      <Typography
-        variant="small"
-        color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
-      >
-        {props.tinyText}
-      </Typography>
+      <Stack height="30px">
+        <Typography
+          variant="small"
+          color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+        >
+          {props.tinyText}
+        </Typography>
+      </Stack>
     </Stack>
     {props.items ? (
       <Stack spacing="8px">
@@ -163,7 +187,7 @@ const AccountPagePricingCard = (props: {
       </Stack>
     ) : null}
     {props.text ? (
-      <Stack flex={1} pt="38px">
+      <Stack flex={1} pt="44px">
         <Typography variant="small">{props.text}</Typography>
       </Stack>
     ) : null}

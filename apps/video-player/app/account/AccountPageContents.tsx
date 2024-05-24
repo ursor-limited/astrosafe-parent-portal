@@ -9,7 +9,6 @@ import JoiningCodeInput from "./JoiningCodeInput";
 import { ButtonVariant } from "ui/ursor-button";
 import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
-import MailIcon from "@/images/icons/MailIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import {
   ITeacher,
@@ -38,6 +37,7 @@ import { getPrefixRemovedUrl } from "../components/LinkCard";
 import ApiController from "../api";
 import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
 import AccountPageNotOwnFeaturesCard from "./AccountPageNotOwnFeaturesCard";
+import { useWindowSize } from "usehooks-ts";
 dayjs.extend(advancedFormat);
 
 const PADDING = "20px";
@@ -46,6 +46,9 @@ const TITLE_CONTENT_SPACING = "6px";
 
 const SCHOOL_SECTION_FADEIN_DELAY = 600;
 const FAILURE_DURATION = 2000;
+
+const PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH = 1178;
+const TOP_ROW_COLUMN_THRESHOLD_WINDOW_WIDTH = 1363;
 
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
@@ -73,7 +76,7 @@ const PRODUCT_DETAILS: IAstroProduct[] = [
     monthlyId: "prod_PlC9OCbk8oBkWW",
     annualId: "prod_PlWrHG8V57yjrn",
     items: [
-      "1 teacher/adult account",
+      "1 teacher/adult accounts",
       "5 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
@@ -761,7 +764,7 @@ export default function AccountPage(props: IAccountPageProps) {
   //   [safetubeSchoolOwner?.subscriptionProductId]
   // );
 
-  const [frequency, setFrequency] = useState<"monthly" | "annual">("monthly");
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
 
   const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
     ISafeTubeUser | undefined
@@ -790,6 +793,34 @@ export default function AccountPage(props: IAccountPageProps) {
   }, [safetubeSchoolOwner, teachers]);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  const [customPlan, setCustomPlan] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setCustomPlan(
+        !!safetubeSchoolOwner?.subscribed &&
+          !!safetubeSchoolOwner?.subscriptionProductId &&
+          !PRODUCT_DETAILS.map((pd) => pd.annualId + pd.monthlyId)
+            .join("")
+            .includes(safetubeSchoolOwner?.subscriptionProductId)
+      ),
+    [safetubeSchoolOwner]
+  );
+
+  const { width } = useWindowSize();
+
+  const [topColumn, setTopColumnColumn] = useState<boolean>(false);
+  useEffect(
+    () => setTopColumnColumn(width < TOP_ROW_COLUMN_THRESHOLD_WINDOW_WIDTH),
+    [width]
+  );
+
+  const [pricingCardsColumn, setPricingCardsColumn] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setPricingCardsColumn(width < PRICING_CARD_COLUMN_THRESHOLD_WINDOW_WIDTH),
+    [width]
+  );
 
   return (
     <>
@@ -834,7 +865,7 @@ export default function AccountPage(props: IAccountPageProps) {
             spacing={SECTION_SPACING}
             flex={1}
             minWidth="625px"
-            direction="row"
+            direction={topColumn ? "column" : "row"}
           >
             <AccountPageSection
               title="Profile"
@@ -846,7 +877,7 @@ export default function AccountPage(props: IAccountPageProps) {
               fadeInDelay={200}
               flex
             >
-              <Stack direction="row" spacing="26px">
+              <Stack direction="row" spacing="26px" minWidth="400px">
                 <Stack>
                   <Stack
                     width="160px"
@@ -962,7 +993,11 @@ export default function AccountPage(props: IAccountPageProps) {
               )}
             </Stack>
           </Stack>
-          <Stack spacing={SECTION_SPACING} flex={1} minHeight="420px">
+          <Stack
+            spacing={SECTION_SPACING}
+            flex={1}
+            //minHeight={column ? undefined : "420px"}
+          >
             <AccountPageSection
               title="Plan"
               button={{
@@ -990,15 +1025,15 @@ export default function AccountPage(props: IAccountPageProps) {
                 <UrsorFadeIn duration={800} fullHeight>
                   <Stack spacing="24px" height="100%">
                     <Stack direction="row" justifyContent="space-between">
-                      <Stack direction="row" width="100%">
-                        <Stack spacing="2px" width="17%">
+                      <Stack direction="row" width="100%" spacing="8%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Seats</Typography>
                           <Typography
                             variant="h5"
                             color={PALETTE.secondary.grey[3]}
                           >{`${teachers.length} of 5`}</Typography>
                         </Stack>
-                        <Stack spacing="2px" width="17%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Devices</Typography>
                           <Typography
                             variant="h5"
@@ -1008,7 +1043,7 @@ export default function AccountPage(props: IAccountPageProps) {
                           ).length} of ${school.deviceLimit}`}</Typography>
                         </Stack>
                         {safetubeSchoolOwner?.subscriptionDate ? (
-                          <Stack width="25%" spacing="4px">
+                          <Stack spacing="4px">
                             <Typography variant="small">Renewal</Typography>
                             <Typography
                               variant="h5"
@@ -1018,7 +1053,7 @@ export default function AccountPage(props: IAccountPageProps) {
                             </Typography>
                           </Stack>
                         ) : null}
-                        <Stack spacing="2px" width="17%">
+                        <Stack spacing="2px">
                           <Typography variant="small">Owner</Typography>
                           <Typography
                             variant="h5"
@@ -1067,7 +1102,10 @@ export default function AccountPage(props: IAccountPageProps) {
                       )}
                     </Stack>
                     {safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
-                      <Stack direction="row" spacing="12px">
+                      <Stack
+                        direction={pricingCardsColumn ? "column" : "row"}
+                        spacing="12px"
+                      >
                         {[
                           ...PRODUCT_DETAILS.map((pd) => (
                             <AccountPagePricingCard
@@ -1114,11 +1152,15 @@ export default function AccountPage(props: IAccountPageProps) {
                                   email ? getPaymentUrl(email, frequency) : ""
                                 )
                               }
-                              mortarBoardsN={pd.mortarBoardsN}
+                              mortarBoardsN={
+                                width < 1300 ? undefined : pd.mortarBoardsN
+                              }
+                              contactSales={customPlan}
                             />
                           )),
                           <AccountPagePricingCard
                             key="custom"
+                            selected={customPlan}
                             title="Custom"
                             price="POA"
                             currency={
@@ -1133,36 +1175,15 @@ export default function AccountPage(props: IAccountPageProps) {
                                 email ? getPaymentUrl(email, frequency) : ""
                               )
                             }
-                            button={
-                              <UrsorButton
-                                size="small"
-                                dark
-                                variant="tertiary"
-                                endIcon={MailIcon}
-                                iconSize={16}
-                                onClick={() =>
-                                  (window.location.href =
-                                    "mailto:hello@astrosafe.co")
-                                }
-                              >
-                                Contact Sales
-                              </UrsorButton>
-                            }
-                            mortarBoardsN={3}
+                            mortarBoardsN={width < 1300 ? undefined : 3}
+                            contactSales
                           />,
                         ]}
                       </Stack>
                     ) : (
                       <AccountPageNotOwnFeaturesCard
-                        items={
-                          PRODUCT_DETAILS.find(
-                            (pd) =>
-                              pd.monthlyId ===
-                                safetubeSchoolOwner?.subscriptionProductId ||
-                              pd.annualId ===
-                                safetubeSchoolOwner?.subscriptionProductId
-                          )?.items ?? []
-                        }
+                        nSeats={school?.teacherLimit ?? 0}
+                        nDevices={school?.deviceLimit ?? 0}
                       />
                     )}
                   </Stack>
