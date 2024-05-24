@@ -82,8 +82,8 @@ export interface IAccountPageProps {}
 
 const AccountPageSchoolDetailsSection = (props: {
   school: ISchool;
-  //leaveCallback: () => void;
   static?: boolean;
+  noEdit?: boolean;
   updateCallback: () => void;
 }) => {
   const [name, setName] = useState<string | undefined>(undefined);
@@ -155,7 +155,9 @@ const AccountPageSchoolDetailsSection = (props: {
       yFlex
       fadeInDelay={SCHOOL_SECTION_FADEIN_DELAY}
       button={
-        editingOn
+        props.noEdit
+          ? undefined
+          : editingOn
           ? {
               variant: "tertiary",
               text: notYetCreatedSchool ? "Create" : "Save",
@@ -361,6 +363,7 @@ export const AccountPageSection = (props: {
         <Stack direction="row" spacing="12px">
           {props.secondaryButton ? (
             <UrsorButton
+              key="1"
               onClick={props.secondaryButton.callback}
               variant={props.secondaryButton.variant}
               size="small"
@@ -370,6 +373,7 @@ export const AccountPageSection = (props: {
           ) : null}
           {props.button ? (
             <UrsorButton
+              key="2"
               onClick={props.button.callback} //@ts-ignore
               variant={props.button.variant}
               size="small"
@@ -871,10 +875,11 @@ export default function AccountPage(props: IAccountPageProps) {
                   schoolName={invitedSchoolName}
                   inviterName={inviterName}
                 />
-              ) : school && safetubeUserDetails?.subscribed ? (
+              ) : school && safetubeSchoolOwner?.subscribed ? (
                 <AccountPageSchoolDetailsSection
                   school={school}
                   static={!userCtx.userDetails?.isAdmin}
+                  noEdit={safetubeSchoolOwner?.id !== safetubeUserDetails?.id}
                   updateCallback={loadSchool}
                 />
               ) : (
@@ -939,7 +944,7 @@ export default function AccountPage(props: IAccountPageProps) {
                             (d) => d.connected !== "denied"
                           ).length} of ${school.deviceLimit}`}</Typography>
                         </Stack>
-                        {safetubeUserDetails?.subscriptionDate ? (
+                        {safetubeSchoolOwner?.subscriptionDate ? (
                           <Stack width="25%" spacing="4px">
                             <Typography variant="small">Renewal</Typography>
                             <Typography
