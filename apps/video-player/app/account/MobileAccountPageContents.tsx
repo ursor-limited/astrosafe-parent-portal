@@ -111,7 +111,6 @@ export default function MobileAccountPageContents(props: IAccountPageProps) {
             Math.ceil(
               dayjs().diff(safetubeSchoolOwner.subscriptionDate, "days") / 30
             ) * 30,
-
             "days"
           )
           .format("Do MMMM")

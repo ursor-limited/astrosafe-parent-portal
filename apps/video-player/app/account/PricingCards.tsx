@@ -19,7 +19,7 @@ const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
 const PricingCards = (props: {
   column: boolean;
   frequency: "monthly" | "annual";
-  productId: string;
+  productId?: string;
   email: string;
   hideMortarBoards?: boolean;
   customPlan: boolean;

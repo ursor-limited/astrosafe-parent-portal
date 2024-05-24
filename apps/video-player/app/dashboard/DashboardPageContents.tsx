@@ -885,17 +885,17 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (
       !trialExpirationDialogAlreadySeen &&
-      !userDetails.user?.subscribed &&
+      !userDetails.schoolIsSubscribed &&
       userDetails.user?.freeTrialStart &&
       getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
     ) {
       setTrialExpirationDialogOpen(
-        !userDetails.user?.subscribed &&
+        !userDetails.schoolIsSubscribed &&
           getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
       );
       setTrialExpirationDialogAlreadySeen(true);
     }
-  }, [userDetails.user?.subscribed]);
+  }, [userDetails.schoolIsSubscribed]);
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
@@ -1100,13 +1100,13 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         button={
-          !userDetails.user?.subscribed
+          !userDetails.schoolIsSubscribed
             ? {
                 text: "Upgrade",
                 icon: VerifiedIcon,
                 callback: () => setUpgradeDialogOpen(true),
               }
-            : userDetails.user.subscriptionDeletionDate
+            : userDetails.user?.subscriptionDeletionDate
             ? {
                 text: "Renew",
                 icon: VerifiedIcon,
@@ -1122,8 +1122,8 @@ export default function DashboardPageContents() {
         }
         buttonRowExtraElement={
           <Stack direction="row" spacing="12px" alignItems="center">
-            {!userDetails.user?.subscribed ||
-            userDetails.user.subscriptionDeletionDate ? (
+            {!userDetails.schoolIsSubscribed ||
+            userDetails.user?.subscriptionDeletionDate ? (
               <>
                 {!userDetails.user?.subscriptionDeletionDate &&
                 getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (

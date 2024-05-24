@@ -790,16 +790,6 @@ export default function AccountPage(props: IAccountPageProps) {
     [width]
   );
 
-  //   const [hideSideBar, setHide] =
-  //   useState<boolean>(false);
-  // useEffect(
-  //   () =>
-  //     setPricingCardsHeaderSmallify(
-  //       width < PRICING_CARD_HEADER_THRESHOLD_WINDOW_WIDTH
-  //     ),
-  //   [width]
-  // );
-
   return (
     <>
       <PageLayout
@@ -1108,7 +1098,12 @@ export default function AccountPage(props: IAccountPageProps) {
                       )}
                     </Stack>
                     {safetubeSchoolOwner?.subscriptionProductId &&
-                    safetubeSchoolOwner?.id === safetubeUserDetails?.id ? (
+                    safetubeSchoolOwner?.id !== safetubeUserDetails?.id ? (
+                      <AccountPageNotOwnFeaturesCard
+                        nSeats={school?.teacherLimit ?? 0}
+                        nDevices={school?.deviceLimit ?? 0}
+                      />
+                    ) : (
                       <PricingCards
                         column={pricingCardsColumn}
                         frequency={frequency}
@@ -1116,11 +1111,6 @@ export default function AccountPage(props: IAccountPageProps) {
                         email={email}
                         hideMortarBoards={width < 1300}
                         customPlan={customPlan}
-                      />
-                    ) : (
-                      <AccountPageNotOwnFeaturesCard
-                        nSeats={school?.teacherLimit ?? 0}
-                        nDevices={school?.deviceLimit ?? 0}
                       />
                     )}
                   </Stack>

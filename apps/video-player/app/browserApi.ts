@@ -455,8 +455,14 @@ class BrowserApiController {
   }
 
   static async deleteTeacher(teacherId: string) {
-    return dellete(`/teachers/${teacherId}`);
+    return dellete(`teachers/${teacherId}`);
   }
+
+  static async getTeacherSchoolIsSubscribed(email: string) {
+    return post(`schools/schoolIsSubs/cribed`, { email });
+  }
+
+
 }
 
 export default BrowserApiController;
