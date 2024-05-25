@@ -1,8 +1,8 @@
-import { Rubik } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { PALETTE } from "ui";
 
-const rubik = Rubik({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: "variable",
 });
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" style={{ zIndex: 999999999999 }}>
       <meta name="theme-color" content={PALETTE.primary.navy} />
       <body
-        className={rubik.className}
+        className={dmSans.className}
         style={{
           margin: 0,
         }}

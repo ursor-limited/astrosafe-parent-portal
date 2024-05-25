@@ -5,11 +5,15 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    spacing: {
+      1: "4px",
+      xl: "32px",
+    },
     padding: {
-      lg: '12px'
+      lg: "12px",
     },
     borderRadius: {
-      xs: '4px'
+      xs: "4px",
     },
     colors: {
       transparent: "transparent",
@@ -20,9 +24,11 @@ module.exports = {
         white: "#FFFFFF",
         6: "#B6C6C6",
       },
-      components: {
-        fields: {
-          fieldBg: "#F0F1F1",
+      fields: {
+        bg: "#F0F1F1",
+        text: {
+          pressed: "#00474B",
+          placeholder: "rgba(0, 30, 32, 0.4)",
         },
       },
     },
