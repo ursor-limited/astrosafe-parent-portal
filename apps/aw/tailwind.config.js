@@ -7,10 +7,12 @@ module.exports = {
   theme: {
     spacing: {
       1: "4px",
+  
       xl: "32px",
     },
     padding: {
       lg: "12px",
+      "3xl": '24px',
     },
     borderRadius: {
       full: "100%",
@@ -19,7 +21,9 @@ module.exports = {
     colors: {
       transparent: "transparent",
       darkTeal: {
+        0: '#0E656B',
         2: "#001E20",
+        3: '#002C2F',
         5: "#00474B",
       },
       background: {
