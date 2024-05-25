@@ -9,6 +9,10 @@ module.exports = {
       background: {
         primary: "#F8F8F8",
       },
+      greyscale: {
+        white: "#FFFFFF",
+        6: "#B6C6C6",
+      },
     },
     extend: {},
   },
