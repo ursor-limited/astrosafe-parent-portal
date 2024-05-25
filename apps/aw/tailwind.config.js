@@ -13,10 +13,15 @@ module.exports = {
       lg: "12px",
     },
     borderRadius: {
+      full: "100%",
       xs: "4px",
     },
     colors: {
       transparent: "transparent",
+      darkTeal: {
+        2: "#001E20",
+        5: "#00474B",
+      },
       background: {
         primary: "#F8F8F8",
       },
@@ -29,6 +34,10 @@ module.exports = {
         text: {
           pressed: "#00474B",
           placeholder: "rgba(0, 30, 32, 0.4)",
+        },
+        checkbox: {
+          default: "#0E656B",
+          selected: "#E2B000",
         },
       },
     },
