@@ -59,6 +59,43 @@ const ITEMS: IAWFormItem[][] = [
     },
   ],
 ];
+
+type AWButtonVariant = "primary" | "secondary";
+
+export function AWButton(props: {
+  width: number;
+  variant?: AWButtonVariant;
+  children: React.ReactNode;
+  disabled?: boolean;
+}) {
+  return (
+    <div
+      style={{ width: props.width }}
+      className={`h-[48px] flex items-center justify-center rounded-xs ${
+        props.disabled ? "" : "border-[1px]"
+      } border-solid border-buttons-border ${
+        props.disabled
+          ? "bg-buttons-disabled-bg"
+          : props.variant === "secondary"
+          ? "bg-buttons-secondary-bg"
+          : "bg-buttons-primary-bg"
+      } ${props.disabled ? "" : "cursor-pointer"} duration-200`}
+    >
+      <div
+        className={`font-medium ${
+          props.disabled
+            ? "text-buttons-disabled-text"
+            : props.variant === "secondary"
+            ? "text-buttons-secondary-text"
+            : "text-buttons-primary-text"
+        } duration-200`}
+      >
+        {props.children}
+      </div>
+    </div>
+  );
+}
+
 export function AWMultiChoiceField(props: {
   value?: string;
   setValue: (newValue: string) => void;
@@ -73,13 +110,15 @@ export function AWMultiChoiceField(props: {
           onClick={() => props.setValue(o.id)}
         >
           <div
-            className={`h-[15px] w-[15px] flex items-center justify-center rounded-full border-fields-checkbox-${
-              props.value === o.id ? "selected" : "default"
+            className={`h-[15px] w-[15px] flex items-center justify-center rounded-full ${
+              props.value === o.id
+                ? "border-fields-checkbox-selected"
+                : "border-fields-checkbox-default"
             } border-[1.5px] border-solid duration-300`}
           >
             <div
-              className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 opacity-${
-                props.value === o.id ? 100 : 0
+              className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 ${
+                props.value === o.id ? "opacity-100" : "opacity-0"
               }`}
             />
           </div>
@@ -100,7 +139,7 @@ export function AWTextField(props: {
       <input
         className="w-full text-base/[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
         placeholder={props.placeholder}
-        value={props.value}
+        value={props.value ?? ""}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
           props.setValue(event.target.value)
         }
@@ -150,23 +189,38 @@ export default function FormPage() {
   );
   return (
     <div className="h-screen w-screen bg-background-primary flex justify-center items-center">
-      <div className="bg-greyscale-white w-[1050px] h-[706px] border-2 border-solid border-greyscale-6 flex justify-center items-center">
+      <div className="bg-greyscale-white w-[1050px] h-[706px] flex flex-col gap-xl border-2 border-solid border-greyscale-6 justify-center items-center">
         <div className="w-[600px] flex flex-col gap-xl">
-          {ITEMS[step].map((item, i) => (
-            <AWFormItem
-              key={item.id}
-              {...item}
-              i={i + 1}
-              value={answers.find((a) => a.id === item.id)?.value}
-              setValue={(newValue) =>
-                setAnswers((prev) =>
-                  prev.map((a) =>
-                    a.id === item.id ? { ...a, value: newValue } : a
+          <div className="w-full flex flex-col gap-xl">
+            {ITEMS[step].map((item, i) => (
+              <AWFormItem
+                key={item.id}
+                {...item}
+                i={i + 1}
+                value={answers.find((a) => a.id === item.id)?.value}
+                setValue={(newValue) =>
+                  setAnswers((prev) =>
+                    prev.map((a) =>
+                      a.id === item.id ? { ...a, value: newValue } : a
+                    )
                   )
-                )
-              }
-            />
-          ))}
+                }
+              />
+            ))}
+          </div>
+          <div className="w-full justify-center flex gap-[16px]">
+            <AWButton width={182} variant="secondary">
+              Save
+            </AWButton>
+            <AWButton
+              width={182}
+              disabled={ITEMS[step].some(
+                (item) => !answers.find((a) => a.id === item.id)?.value
+              )}
+            >
+              Next
+            </AWButton>
+          </div>
         </div>
       </div>
     </div>

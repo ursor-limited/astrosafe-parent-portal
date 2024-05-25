@@ -29,6 +29,15 @@ module.exports = {
         white: "#FFFFFF",
         6: "#B6C6C6",
       },
+      buttons: {
+        border: "#147C83",
+        primary: {
+          bg: "#147C83",
+          text: "#F8F8F8",
+        },
+        secondary: { bg: "transparent", text: "#147C83" },
+        disabled: { bg: "#EFF4F4", text: '#ACC6C5' }
+      },
       fields: {
         bg: "#F0F1F1",
         text: {
