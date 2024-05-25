@@ -64,7 +64,6 @@ export function AWMultiChoiceField(props: {
   setValue: (newValue: string) => void;
   options?: IAWMultiChoiceFieldOption[];
 }) {
-  console.log(props.value, props.options);
   return (
     <div className="h-[40px] w-full flex items-center gap-[45px]">
       {props.options?.map((o) => (
@@ -79,7 +78,7 @@ export function AWMultiChoiceField(props: {
             } border-[1.5px] border-solid duration-300`}
           >
             <div
-              className={`h-[8px] w-[8px] rounded-full bg-fields-checkbox-selected duration-300 opacity-${
+              className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 opacity-${
                 props.value === o.id ? 100 : 0
               }`}
             />
