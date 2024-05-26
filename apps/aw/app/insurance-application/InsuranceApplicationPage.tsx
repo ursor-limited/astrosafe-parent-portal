@@ -1,54 +1,21 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
-import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
-import { DM_Mono } from "next/font/google";
+import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import useOutsideClick from "@/components/useOutsideClick";
 import { AWDropdown } from "@/components/AWDropdown";
 import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
+import InsuranceApplicationForm, {
+  IAWFormInput,
+  IAWFormInputAnswer,
+  IAWFormSection,
+  IAWMultiChoiceFieldOption,
+} from "./InsuranceApplicationForm";
+import InsuranceApplicationIntro from "./InsuranceApplicationIntro";
+import { AWButton } from "@/components/AWButton";
 
 const FADEIN_DELAY = 66;
 
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: "500",
-});
-
-interface IAWFormSection {
-  id: string;
-  title: string;
-  inputs: IAWFormInput[];
-}
-
-type AWFormInput =
-  | "text"
-  | "textLong"
-  | "dropdown"
-  | "multiChoice"
-  | "phoneNumber";
-
-interface IAWFormInput {
-  id: string;
-  inputType: AWFormInput;
-  optional?: boolean;
-  title?: string;
-  placeholder?: string;
-  options?: IAWMultiChoiceFieldOption[];
-}
-
-export interface IAWMultiChoiceFieldOption {
-  id: string;
-  text: string;
-}
-
-interface IAWFormInputAnswer {
-  id: IAWFormInput["id"];
-  value?: string;
-}
-
-const STEPS: { title: string; sections: IAWFormSection[] }[] = [
+export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
   {
     title: "POLICY OWNER INFORMATION",
     sections: [
@@ -167,47 +134,6 @@ const STEPS: { title: string; sections: IAWFormSection[] }[] = [
     ],
   },
 ];
-
-type AWButtonVariant = "primary" | "secondary";
-
-export function AWButton(props: {
-  width: number;
-  variant?: AWButtonVariant;
-  children: React.ReactNode;
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <div
-      style={{
-        width: props.width,
-        pointerEvents: props.disabled ? "none" : undefined,
-      }}
-      className={`h-[48px] flex items-center justify-center rounded-xs ${
-        props.disabled ? "" : "border-[1px]"
-      } border-solid border-buttons-border ${
-        props.disabled
-          ? "bg-buttons-disabled-bg"
-          : props.variant === "secondary"
-          ? "bg-buttons-secondary-bg"
-          : "bg-buttons-primary-bg"
-      } ${props.disabled ? "" : "cursor-pointer"} duration-200`}
-      onClick={props.onClick}
-    >
-      <div
-        className={`font-medium ${
-          props.disabled
-            ? "text-buttons-disabled-text"
-            : props.variant === "secondary"
-            ? "text-buttons-secondary-text"
-            : "text-buttons-primary-text"
-        } duration-200`}
-      >
-        {props.children}
-      </div>
-    </div>
-  );
-}
 
 export function AWMultiChoiceField(props: {
   value?: string;
@@ -380,6 +306,8 @@ export default function InsuranceApplicationPage() {
     [answers, stepIndex]
   );
 
+  const [showForm, setShowForm] = useState<boolean>(false);
+
   return (
     <InsuranceApplicationDialog
       title={STEPS[stepIndex].title}
@@ -391,39 +319,35 @@ export default function InsuranceApplicationPage() {
         current: stepIndex,
       }}
     >
-      <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-        <div className="w-full flex flex-col gap-[32px]">
-          {STEPS[stepIndex].sections.map((section, i) => (
-            <AWFormSection
-              key={section.id}
-              {...section}
-              i={i + 1}
-              answers={answers}
-              setValue={(id, newValue) => {
-                console.log(id, newValue, "0-0-0-0-0", answers);
-                setAnswers((prev) =>
-                  prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
-                );
+      {showForm ? (
+        <InsuranceApplicationForm
+          stepIndex={stepIndex}
+          answers={answers}
+          setValue={(id, newValue) => {
+            setAnswers((prev) =>
+              prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
+            );
+          }}
+        >
+          <div className="w-full justify-center flex gap-[16px]">
+            <AWButton width={182} variant="secondary" onClick={commitAnswers}>
+              Save
+            </AWButton>
+            <AWButton
+              width={182}
+              disabled={!canProceed}
+              onClick={() => {
+                commitAnswers();
+                setStepIndex(stepIndex + 1);
               }}
-            />
-          ))}
-        </div>
-        <div className="w-full justify-center flex gap-[16px]">
-          <AWButton width={182} variant="secondary" onClick={commitAnswers}>
-            Save
-          </AWButton>
-          <AWButton
-            width={182}
-            disabled={!canProceed}
-            onClick={() => {
-              commitAnswers();
-              setStepIndex(stepIndex + 1);
-            }}
-          >
-            Next
-          </AWButton>
-        </div>
-      </div>
+            >
+              Next
+            </AWButton>
+          </div>
+        </InsuranceApplicationForm>
+      ) : (
+        <InsuranceApplicationIntro />
+      )}
     </InsuranceApplicationDialog>
   );
 }

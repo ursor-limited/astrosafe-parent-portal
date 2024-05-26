@@ -1,10 +1,10 @@
 "use client";
 
-import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/InsuranceApplicationPage";
 import { useEffect, useState } from "react";
 import useOutsideClick from "./useOutsideClick";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { createPortal } from "react-dom";
+import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/InsuranceApplicationForm";
 
 function AWDropdownList(props: {
   open: boolean;

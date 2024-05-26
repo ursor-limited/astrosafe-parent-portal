@@ -1,59 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";
-import { useLocalStorage } from "usehooks-ts";
-import { AWDropdown } from "@/components/AWDropdown";
-
-const FADEIN_DELAY = 66;
 
 const dmMono = DM_Mono({
   subsets: ["latin"],
   weight: "500",
 });
-
-type AWButtonVariant = "primary" | "secondary";
-
-export function AWButton(props: {
-  width: number;
-  variant?: AWButtonVariant;
-  children: React.ReactNode;
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <div
-      style={{
-        width: props.width,
-        pointerEvents: props.disabled ? "none" : undefined,
-      }}
-      className={`h-[48px] flex items-center justify-center rounded-xs ${
-        props.disabled ? "" : "border-[1px]"
-      } border-solid border-buttons-border ${
-        props.disabled
-          ? "bg-buttons-disabled-bg"
-          : props.variant === "secondary"
-          ? "bg-buttons-secondary-bg"
-          : "bg-buttons-primary-bg"
-      } ${props.disabled ? "" : "cursor-pointer"} duration-200`}
-      onClick={props.onClick}
-    >
-      <div
-        className={`font-medium ${
-          props.disabled
-            ? "text-buttons-disabled-text"
-            : props.variant === "secondary"
-            ? "text-buttons-secondary-text"
-            : "text-buttons-primary-text"
-        } duration-200`}
-      >
-        {props.children}
-      </div>
-    </div>
-  );
-}
 
 export default function InsuranceApplicationDialog(props: {
   title: string;
