@@ -1,7 +1,7 @@
 import React from "react";
 //import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import FormPage from "./FormPage";
+import InsuranceApplicationPage from "./InsuranceApplicationPage";
 
 async function AnchorWatch({
   params,
@@ -12,7 +12,7 @@ async function AnchorWatch({
 }) {
   // const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
   //   ?.isMobile;
-  return <FormPage />;
+  return <InsuranceApplicationPage />;
 }
 
 export default AnchorWatch;

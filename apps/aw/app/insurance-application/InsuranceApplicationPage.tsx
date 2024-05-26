@@ -7,6 +7,7 @@ import { DM_Mono } from "next/font/google";
 import { useLocalStorage } from "usehooks-ts";
 import useOutsideClick from "@/components/useOutsideClick";
 import { AWDropdown } from "@/components/AWDropdown";
+import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
 
 const FADEIN_DELAY = 66;
 
@@ -341,7 +342,7 @@ export function AWFormSection(
   );
 }
 
-export default function FormPage() {
+export default function InsuranceApplicationPage() {
   const [stepIndex, setStepIndex] = useState<number>(1);
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
   useEffect(
@@ -380,93 +381,49 @@ export default function FormPage() {
   );
 
   return (
-    <div className="h-screen w-screen bg-background-primary flex justify-center items-center">
-      <div
-        className="bg-greyscale-white w-[1050px] flex flex-col border-2 border-solid border-greyscale-6 justify-center items-center"
-        style={{
-          boxShadow: "0 0 33px rgba(0,0,0,0.09)",
-        }}
-      >
-        <div className="h-[48px] w-full flex items-center justify-between px-[14px]">
-          <div
-            className="cursor-pointer hover:opacity-60 duration-200"
-            onClick={() => setStepIndex(stepIndex - 1)}
-            style={{
-              opacity: stepIndex === 0 ? 0 : 1,
-              pointerEvents: stepIndex === 0 ? "none" : undefined,
-            }}
-          >
-            <ChevronLeftIcon height="20px" width="20px" />
-          </div>
-          <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
-            <div
-              className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
-              style={{
-                width: `${(100 * stepIndex) / (STEPS.length - 1)}%`,
-                transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
+    <InsuranceApplicationDialog
+      title={STEPS[stepIndex].title}
+      leftCallback={() => setStepIndex(stepIndex - 1)}
+      rightCallback={() => setStepIndex(stepIndex + 1)}
+      rightArrowFaded={!canProceed}
+      stepper={{
+        n: STEPS.length,
+        current: stepIndex,
+      }}
+    >
+      <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
+        <div className="w-full flex flex-col gap-[32px]">
+          {STEPS[stepIndex].sections.map((section, i) => (
+            <AWFormSection
+              key={section.id}
+              {...section}
+              i={i + 1}
+              answers={answers}
+              setValue={(id, newValue) => {
+                console.log(id, newValue, "0-0-0-0-0", answers);
+                setAnswers((prev) =>
+                  prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
+                );
               }}
             />
-            {[...Array(STEPS.length).keys()].map((i) => (
-              <div
-                key={i}
-                className={`h-[4px] w-[4px] rounded-full ${
-                  i < stepIndex ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
-                } z-10`}
-              />
-            ))}
-          </div>
-          <div
-            className="cursor-pointer hover:opacity-60 duration-200"
-            onClick={() => setStepIndex(stepIndex + 1)}
-            style={{
-              opacity: canProceed ? 1 : 0.35,
-              pointerEvents: !canProceed ? "none" : undefined,
+          ))}
+        </div>
+        <div className="w-full justify-center flex gap-[16px]">
+          <AWButton width={182} variant="secondary" onClick={commitAnswers}>
+            Save
+          </AWButton>
+          <AWButton
+            width={182}
+            disabled={!canProceed}
+            onClick={() => {
+              commitAnswers();
+              setStepIndex(stepIndex + 1);
             }}
           >
-            <ChevronRightIcon height="20px" width="20px" />
-          </div>
-        </div>
-        <div
-          className={`h-[50px] w-full box-border bg-[#F0F1F1] px-3xl flex items-center font-medium text-darkTeal-2 text-xl border-y-2 border-y-greyscale-6 ${dmMono.className}`}
-        >
-          {STEPS[stepIndex].title}
-        </div>
-        <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-          <div className="w-full flex flex-col gap-[32px]">
-            {STEPS[stepIndex].sections.map((section, i) => (
-              <AWFormSection
-                key={section.id}
-                {...section}
-                i={i + 1}
-                answers={answers}
-                setValue={(id, newValue) => {
-                  console.log(id, newValue, "0-0-0-0-0", answers);
-                  setAnswers((prev) =>
-                    prev.map((a) =>
-                      a.id === id ? { ...a, value: newValue } : a
-                    )
-                  );
-                }}
-              />
-            ))}
-          </div>
-          <div className="w-full justify-center flex gap-[16px]">
-            <AWButton width={182} variant="secondary" onClick={commitAnswers}>
-              Save
-            </AWButton>
-            <AWButton
-              width={182}
-              disabled={!canProceed}
-              onClick={() => {
-                commitAnswers();
-                setStepIndex(stepIndex + 1);
-              }}
-            >
-              Next
-            </AWButton>
-          </div>
+            Next
+          </AWButton>
         </div>
       </div>
-    </div>
+    </InsuranceApplicationDialog>
   );
 }

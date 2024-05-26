@@ -1,6 +1,6 @@
 "use client";
 
-import { IAWMultiChoiceFieldOption } from "@/app/form/FormPage";
+import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/InsuranceApplicationPage";
 import { useEffect, useState } from "react";
 import useOutsideClick from "./useOutsideClick";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
