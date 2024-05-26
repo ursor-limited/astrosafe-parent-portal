@@ -27,6 +27,14 @@ module.exports = {
           3: "#002C2F",
           5: "#00474B",
         },
+        lightTeal: {
+          0: "#0E656B",
+          1: "#147C83",
+          2: "#46ADB4",
+          3: "#86D3D9",
+          4: "#A9E8EC",
+          5: "#CCF1F1",
+        },
         background: {
           primary: "#F8F8F8",
         },

@@ -398,17 +398,26 @@ export default function FormPage() {
           >
             <ChevronLeftIcon height="20px" width="20px" />
           </div>
-          <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center">
+          <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
+            <div
+              className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
+              style={{
+                width: `${(100 * stepIndex) / (STEPS.length - 1)}%`,
+                transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
+              }}
+            />
             {[...Array(STEPS.length).keys()].map((i) => (
               <div
                 key={i}
-                className="h-[4px] w-[4px] rounded-full bg-darkTeal-0"
+                className={`h-[4px] w-[4px] rounded-full ${
+                  i < stepIndex ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
+                } z-10`}
               />
             ))}
           </div>
           <div
             className="cursor-pointer hover:opacity-60 duration-200"
-            onClick={() => setStepIndex(stepIndex - 1)}
+            onClick={() => setStepIndex(stepIndex + 1)}
             style={{
               opacity: canProceed ? 1 : 0.35,
               pointerEvents: !canProceed ? "none" : undefined,
