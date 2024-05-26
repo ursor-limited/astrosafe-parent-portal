@@ -5,64 +5,66 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    spacing: {
-      1: "4px",
-      xl: "16px",
-    },
-    padding: {
-      lg: "12px",
-      "3xl": '24px',
-    },
-    borderRadius: {
-      full: "100%",
-      xs: "4px",
-    },
-    colors: {
-      transparent: "transparent",
-      darkTeal: {
-        0: '#0E656B',
-        2: "#001E20",
-        3: '#002C2F',
-        5: "#00474B",
+    extend: {
+      spacing: {
+        1: "4px",
+        xl: "16px",
       },
-      background: {
-        primary: "#F8F8F8",
+      padding: {
+        lg: "12px",
+        "3xl": '24px',
       },
-      greyscale: {
-        white: "#FFFFFF",
-        6: "#B6C6C6",
+      borderRadius: {
+        full: "100%",
+        xs: "4px",
       },
-      buttons: {
-        border: "#147C83",
-        primary: {
-          bg: "#147C83",
-          text: "#F8F8F8",
+      colors: {
+        transparent: "transparent",
+        darkTeal: {
+          0: '#0E656B',
+          2: "#001E20",
+          3: '#002C2F',
+          5: "#00474B",
         },
-        secondary: { bg: "transparent", text: "#147C83" },
-        disabled: { bg: "#EFF4F4", text: '#ACC6C5' }
-      },
-      fields: {
-        bg: "#F0F1F1",
-        text: {
-          pressed: "#00474B",
-          placeholder: "rgba(0, 30, 32, 0.4)",
+        background: {
+          primary: "#F8F8F8",
         },
-        checkbox: {
-          default: "#0E656B",
-          selected: "#E2B000",
+        greyscale: {
+          white: "#FFFFFF",
+          6: "#B6C6C6",
+        },
+        buttons: {
+          border: "#147C83",
+          primary: {
+            bg: "#147C83",
+            text: "#F8F8F8",
+          },
+          secondary: { bg: "transparent", text: "#147C83" },
+          disabled: { bg: "#EFF4F4", text: '#ACC6C5' }
+        },
+        fields: {
+          bg: "#F0F1F1",
+          text: {
+            pressed: "#00474B",
+            filling: '#001E20',
+            placeholder: "rgba(0, 30, 32, 0.4)",
+          },
+          checkbox: {
+            default: "#0E656B",
+            selected: "#E2B000",
+          },
         },
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        }
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.8s ease-out forwards',
+      },
     },
-    keyframes: {
-      fadeIn: {
-        '0%': { opacity: 0 },
-        '100%': { opacity: 1 },
-      }
-    },
-    animation: {
-      fadeIn: 'fadeIn 0.8s ease-out forwards',
-    },
-    extend: {},
   },
   plugins: [],
 };

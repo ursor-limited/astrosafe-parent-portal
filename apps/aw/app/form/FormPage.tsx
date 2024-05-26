@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { DM_Mono } from "next/font/google";
 import { useLocalStorage } from "usehooks-ts";
+import useOutsideClick from "@/components/useOutsideClick";
 
 const FADEIN_DELAY = 66;
 
@@ -122,6 +124,42 @@ const STEPS: { title: string; sections: IAWFormSection[] }[] = [
             inputType: "textLong",
             placeholder: "List additional business names, separated by a comma",
             optional: true,
+          },
+        ],
+      },
+      {
+        id: "6652f5a9c7abf8317d06e9de",
+        title: "Registration type",
+        inputs: [
+          {
+            id: "6652f5de4ae33a26e12ca1c7",
+            inputType: "dropdown",
+            placeholder: "Choose a type",
+            options: [
+              {
+                id: "6653461b775dd263297ff525",
+                text: "Chicorita",
+              },
+              {
+                id: "665346543f251225d05f9c53",
+                text: "Cyndaquil",
+              },
+              {
+                id: "6653465f1409cd6fbed1b995",
+                text: "Totodile",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "665346a5e76e5f4fce9dbb7e",
+        title: "EIN or Tax ID Number (SSN if an individual)",
+        inputs: [
+          {
+            id: "665346cf1ec61b1354a74f9a",
+            inputType: "text",
+            placeholder: "Enter number here",
           },
         ],
       },
@@ -248,6 +286,57 @@ export function AWLongTextField(props: {
   );
 }
 
+export function AWDropdown(props: {
+  value?: string;
+  setValue: (newValue: string) => void;
+  placeholder?: string;
+  options?: IAWMultiChoiceFieldOption[];
+}) {
+  const [open, setOpen] = useState<boolean>(false);
+  const onOutsideClick = () => setOpen(false);
+  // useEffect(() => {
+  //   window.addEventListener("onclick", handleClick);
+  //   return () => {
+  //     window.removeEventListener("onclick", handleClick);
+  //   };
+  // }, [handleClick]);
+
+  const setRef = useOutsideClick(onOutsideClick);
+  return (
+    <div
+      ref={setRef}
+      className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative cursor-pointer"
+      onClick={() => setOpen(!open)}
+    >
+      <div
+        className="absolute z-10 py-[5px] left-0 bottom-0 flex flex-col border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
+        style={{
+          transform: `translateY(${open ? 100 : 0}%)`,
+        }}
+      >
+        {props.options?.map((o) => (
+          <div
+            key={o.id}
+            className="h-[34px] w-full px-[10px] flex items-center"
+          >
+            {o.text}
+          </div>
+        ))}
+      </div>
+      <div
+        className={`w-full text-base/[18px] ${
+          props.value
+            ? "text-fields-text-filling"
+            : "text-fields-text-placeholder"
+        }`}
+      >
+        {props.value || props.placeholder}
+      </div>
+      <ChevronDownIcon height="16px" width="16px" />
+    </div>
+  );
+}
+
 export function AWFormSection(
   props: IAWFormSection & {
     i: number;
@@ -287,6 +376,13 @@ export function AWFormSection(
                 value={props.answers?.find((a) => a.id === input.id)?.value}
                 setValue={(v) => props.setValue(input.id, v)}
                 options={input.options}
+              />
+            ) : input.inputType === "dropdown" ? (
+              <AWDropdown
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={(v) => props.setValue(input.id, v)}
+                options={input.options}
+                placeholder={input.placeholder}
               />
             ) : null}
           </div>
