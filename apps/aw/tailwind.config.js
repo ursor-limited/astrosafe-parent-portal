@@ -7,8 +7,7 @@ module.exports = {
   theme: {
     spacing: {
       1: "4px",
-  
-      xl: "32px",
+      xl: "16px",
     },
     padding: {
       lg: "12px",

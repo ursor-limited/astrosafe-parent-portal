@@ -10,12 +10,24 @@ const dmMono = DM_Mono({
   weight: "500",
 });
 
-type AWFormItemInput = "text" | "dropdown" | "multiChoice" | "phoneNumber";
-
-interface IAWFormItem {
+interface IAWFormSection {
   id: string;
   title: string;
-  inputType: AWFormItemInput;
+  inputs: IAWFormInput[];
+}
+
+type AWFormInput =
+  | "text"
+  | "textLong"
+  | "dropdown"
+  | "multiChoice"
+  | "phoneNumber";
+
+interface IAWFormInput {
+  id: string;
+  inputType: AWFormInput;
+  optional?: boolean;
+  title?: string;
   placeholder?: string;
   options?: IAWMultiChoiceFieldOption[];
 }
@@ -25,45 +37,88 @@ interface IAWMultiChoiceFieldOption {
   text: string;
 }
 
-interface IAWFormItemAnswer {
-  id: string;
+interface IAWFormInputAnswer {
+  id: IAWFormInput["id"];
   value?: string;
 }
 
-const STEPS: { title: string; items: IAWFormItem[] }[] = [
+const STEPS: { title: string; sections: IAWFormSection[] }[] = [
   {
     title: "POLICY OWNER INFORMATION",
-    items: [
+    sections: [
       {
         id: "6651d2bb1aaa5843d82bc607",
         title: "Full name",
-        inputType: "text",
-        placeholder: "Insert name here",
+        inputs: [
+          {
+            id: "6652e4a2214b3b8b436dc33d",
+            inputType: "text",
+            placeholder: "Insert name here",
+          },
+        ],
       },
       {
         id: "6651d2d30bc6c109d2a97aed",
         title: "Job title",
-        inputType: "text",
-        placeholder: "Insert title of role played in organization",
+        inputs: [
+          {
+            id: "6652e4c66385fa89ff2e7f0e",
+            inputType: "text",
+            placeholder: "Insert title of role played in organization",
+          },
+        ],
       },
       {
         id: "6651d2db9af2d8a25e707374",
         title: "Email",
-        inputType: "text",
-        placeholder: "Insert email address here",
+        inputs: [
+          {
+            id: "6652e4e30ea140b445d02a07",
+            inputType: "text",
+            placeholder: "Insert email address here",
+          },
+        ],
       },
       {
         id: "6651d885120e45915573a535",
         title: "Will you be a Key Holder in the vault?",
-        inputType: "multiChoice",
-        options: [
+        inputs: [
           {
-            id: "6651d8968dec75fc382930a1",
-            text: "Yes",
+            id: "6652e5168e3e3d860c9772e3",
+            inputType: "multiChoice",
+            options: [
+              {
+                id: "6651d8968dec75fc382930a1",
+                text: "Yes",
+              },
+              {
+                id: "6651d8c083bc0df3082153e3",
+                text: "No",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "BUSINESS SUMMARY",
+    sections: [
+      {
+        id: "6652e2c52226b1c9658f4560",
+        title: "Name of business entity",
+        inputs: [
+          {
+            id: "6652e53e8e43c301b281f5eb",
+            inputType: "text",
+            placeholder: "Name with which entity was incorporated",
           },
           {
-            id: "6651d8c083bc0df3082153e3",
-            text: "No",
+            id: "6652e5b3fe447585b209b0c9",
+            title: "Additional brand, trade names or DBAs",
+            inputType: "textLong",
+            placeholder: "List additional business names, separated by a comma",
+            optional: true,
           },
         ],
       },
@@ -164,43 +219,54 @@ export function AWTextField(props: {
   );
 }
 
-export function AWFormItem(
-  props: IAWFormItem & {
+export function AWFormSection(
+  props: IAWFormSection & {
     i: number;
-    value?: string;
+    answers?: IAWFormInputAnswer[];
     setValue: (newValue: string) => void;
   }
 ) {
   return (
     <div className="flex flex-col gap-1">
       <div className="text-lg font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
-      {props.inputType === "text" ? (
-        <AWTextField
-          value={props.value}
-          setValue={props.setValue}
-          placeholder={props.placeholder}
-        />
-      ) : props.inputType === "multiChoice" ? (
-        <AWMultiChoiceField
-          value={props.value}
-          setValue={props.setValue}
-          options={props.options}
-        />
-      ) : null}
+      <div className="flex flex-col gap-xl">
+        {props.inputs.map((input) => (
+          <div className="flex flex-col gap-1">
+            {input.title ? (
+              <div className="text-lg text-darkTeal-2">{input.title}</div>
+            ) : null}
+            {input.inputType === "text" ? (
+              <AWTextField
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={props.setValue}
+                placeholder={input.placeholder}
+              />
+            ) : input.inputType === "multiChoice" ? (
+              <AWMultiChoiceField
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={props.setValue}
+                options={input.options}
+              />
+            ) : null}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function FormPage() {
-  const [stepIndex, setStepIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<IAWFormItemAnswer[]>([]);
+  const [stepIndex, setStepIndex] = useState<number>(1);
+  const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
   useEffect(
     () =>
       setAnswers(
-        STEPS.map((s) => s.items)
+        STEPS.map((s) => s.sections)
           .flat()
-          .map((item) => ({
-            id: item.id,
+          .map((section) => section.inputs)
+          .flat()
+          .map((input) => ({
+            id: input.id,
           }))
       ),
     []
@@ -210,8 +276,8 @@ export default function FormPage() {
   useEffect(
     () =>
       setCanProceed(
-        STEPS[stepIndex].items.every(
-          (item) => !!answers.find((a) => a.id === item.id)?.value
+        STEPS[stepIndex].sections.every(
+          (section) => !!answers.find((a) => a.id === section.id)?.value
         )
       ),
     [answers, stepIndex]
@@ -220,7 +286,7 @@ export default function FormPage() {
   return (
     <div className="h-screen w-screen bg-background-primary flex justify-center items-center">
       <div
-        className="bg-greyscale-white w-[1050px] h-[706px] flex flex-col border-2 border-solid border-greyscale-6 justify-center items-center"
+        className="bg-greyscale-white w-[1050px] flex flex-col border-2 border-solid border-greyscale-6 justify-center items-center"
         style={{
           boxShadow: "0 0 33px rgba(0,0,0,0.09)",
         }}
@@ -257,18 +323,18 @@ export default function FormPage() {
         >
           {STEPS[stepIndex].title}
         </div>
-        <div className="w-[600px] h-full justify-center flex flex-col gap-xl">
-          <div className="w-full flex flex-col gap-xl">
-            {STEPS[stepIndex].items.map((item, i) => (
-              <AWFormItem
-                key={item.id}
-                {...item}
+        <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
+          <div className="w-full flex flex-col gap-[32px]">
+            {STEPS[stepIndex].sections.map((section, i) => (
+              <AWFormSection
+                key={section.id}
+                {...section}
                 i={i + 1}
-                value={answers.find((a) => a.id === item.id)?.value}
+                answers={answers}
                 setValue={(newValue) =>
                   setAnswers((prev) =>
                     prev.map((a) =>
-                      a.id === item.id ? { ...a, value: newValue } : a
+                      a.id === section.id ? { ...a, value: newValue } : a
                     )
                   )
                 }
