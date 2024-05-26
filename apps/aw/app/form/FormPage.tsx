@@ -1,9 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";
+import { useLocalStorage } from "usehooks-ts";
+
+const FADEIN_DELAY = 66;
 
 const dmMono = DM_Mono({
   subsets: ["latin"],
@@ -228,7 +231,7 @@ export function AWLongTextField(props: {
   placeholder?: string;
 }) {
   return (
-    <div className="h-[100px] w-full flex items-center px-lg bg-fields-bg rounded-xs py-[14px]">
+    <div className="h-[100px] w-full flex items-center pl-lg bg-fields-bg rounded-xs py-[14px]">
       <textarea
         className="w-full h-full text-base/[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
         placeholder={props.placeholder}
@@ -256,11 +259,14 @@ export function AWFormSection(
   }
 ) {
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      className="flex flex-col gap-1 opacity-0 animate-fadeIn"
+      style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
+    >
       <div className="text-lg font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
       <div className="flex flex-col gap-xl">
         {props.inputs.map((input) => (
-          <div className="flex flex-col gap-1">
+          <div key={input.id} className="flex flex-col gap-1">
             {input.title ? (
               <div className="text-lg text-darkTeal-2">{input.title}</div>
             ) : null}
@@ -291,7 +297,7 @@ export function AWFormSection(
 }
 
 export default function FormPage() {
-  const [stepIndex, setStepIndex] = useState<number>(1);
+  const [stepIndex, setStepIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
   useEffect(
     () =>
@@ -307,13 +313,20 @@ export default function FormPage() {
     []
   );
 
+  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+    IAWFormInputAnswer[]
+  >("committedAnswers", []);
+  useEffect(() => setAnswers(committedAnswers), [committedAnswers]);
+
+  const commitAnswers = () => setCommittedAnswers(answers);
+
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(
     () =>
       setCanProceed(
-        STEPS[stepIndex].sections.every(
-          (section) => !!answers.find((a) => a.id === section.id)?.value
-        )
+        STEPS[stepIndex].sections
+          .flatMap((s) => s.inputs)
+          .every((input) => answers.find((a) => a.id === input.id)?.value)
       ),
     [answers, stepIndex]
   );
@@ -338,8 +351,11 @@ export default function FormPage() {
             <ChevronLeftIcon height="20px" width="20px" />
           </div>
           <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center">
-            {[...Array(STEPS.length).keys()].map(() => (
-              <div className="h-[4px] w-[4px] rounded-full bg-darkTeal-0" />
+            {[...Array(STEPS.length).keys()].map((i) => (
+              <div
+                key={i}
+                className="h-[4px] w-[4px] rounded-full bg-darkTeal-0"
+              />
             ))}
           </div>
           <div
@@ -377,13 +393,16 @@ export default function FormPage() {
             ))}
           </div>
           <div className="w-full justify-center flex gap-[16px]">
-            <AWButton width={182} variant="secondary" onClick={() => null}>
+            <AWButton width={182} variant="secondary" onClick={commitAnswers}>
               Save
             </AWButton>
             <AWButton
               width={182}
               disabled={!canProceed}
-              onClick={() => setStepIndex(stepIndex + 1)}
+              onClick={() => {
+                commitAnswers();
+                setStepIndex(stepIndex + 1);
+              }}
             >
               Next
             </AWButton>
