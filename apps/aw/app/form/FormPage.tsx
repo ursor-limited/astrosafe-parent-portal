@@ -3,10 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
-import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { DM_Mono } from "next/font/google";
 import { useLocalStorage } from "usehooks-ts";
 import useOutsideClick from "@/components/useOutsideClick";
+import { AWDropdown } from "@/components/AWDropdown";
 
 const FADEIN_DELAY = 66;
 
@@ -37,7 +37,7 @@ interface IAWFormInput {
   options?: IAWMultiChoiceFieldOption[];
 }
 
-interface IAWMultiChoiceFieldOption {
+export interface IAWMultiChoiceFieldOption {
   id: string;
   text: string;
 }
@@ -286,81 +286,6 @@ export function AWLongTextField(props: {
   );
 }
 
-export function AWDropdown(props: {
-  value?: string;
-  setValue: (newValue: string) => void;
-  placeholder?: string;
-  options?: IAWMultiChoiceFieldOption[];
-}) {
-  const [open, setOpen] = useState<boolean>(false);
-  const onOutsideClick = () => setOpen(false);
-  // useEffect(() => {
-  //   window.addEventListener("onclick", handleClick);
-  //   return () => {
-  //     window.removeEventListener("onclick", handleClick);
-  //   };
-  // }, [handleClick]);
-
-  const setRef = useOutsideClick(onOutsideClick);
-
-  const [listRef, setListRef] = useState<HTMLElement | null>(null);
-  const [width, setWidth] = useState<number>(0);
-  const [height, setHeight] = useState<number>(0);
-  useEffect(() => {
-    console.log(listRef?.getBoundingClientRect());
-    setWidth(listRef?.getBoundingClientRect()?.width ?? 0);
-    setHeight(listRef?.getBoundingClientRect()?.height ?? 0);
-  }, [
-    listRef?.getBoundingClientRect()?.width,
-    listRef?.getBoundingClientRect()?.height,
-  ]);
-  return (
-    <div
-      ref={setRef}
-      className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative cursor-pointer"
-      onClick={() => setOpen(!open)}
-    >
-      <div
-        className="absolute z-100 overflow-hidden left-0 bottom-0 bg-blue"
-        style={{
-          height,
-          width,
-          transform: `translateY(100%)`,
-        }}
-      >
-        {/* <div className="h-full w-full"> */}
-        <div
-          className="w-fit py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
-          style={{
-            transform: `translateY(${open ? -100 : 0}%)`,
-          }}
-          ref={setListRef}
-        >
-          {props.options?.map((o) => (
-            <div
-              key={o.id}
-              className="h-[34px] w-full px-[10px] flex items-center text-darkTeal-2"
-            >
-              {o.text}
-            </div>
-          ))}
-          {/* </div> */}
-        </div>
-      </div>
-      <div
-        className={`w-full text-base/[18px] ${
-          props.value
-            ? "text-fields-text-filling"
-            : "text-fields-text-placeholder"
-        }`}
-      >
-        {props.value || props.placeholder}
-      </div>
-      <ChevronDownIcon height="16px" width="16px" />
-    </div>
-  );
-}
-
 export function AWFormSection(
   props: IAWFormSection & {
     i: number;
@@ -417,7 +342,7 @@ export function AWFormSection(
 }
 
 export default function FormPage() {
-  const [stepIndex, setStepIndex] = useState<number>(0);
+  const [stepIndex, setStepIndex] = useState<number>(1);
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
   useEffect(
     () =>
