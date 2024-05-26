@@ -9,6 +9,8 @@ import { createPortal } from "react-dom";
 function AWDropdownList(props: {
   open: boolean;
   options?: IAWMultiChoiceFieldOption[];
+  width?: number;
+  setValue: (id: string) => void;
 }) {
   const [listRef, setListRef] = useState<HTMLElement | null>(null);
   const [width, setWidth] = useState<number>(0);
@@ -20,12 +22,13 @@ function AWDropdownList(props: {
     listRef?.getBoundingClientRect()?.width,
     listRef?.getBoundingClientRect()?.height,
   ]);
+  const [hoveringRowId, setHoveringRowId] = useState<string | undefined>();
   return (
     <div
       className="overflow-hidden"
       style={{
         height,
-        width,
+        width: props.width || width,
         pointerEvents: props.open ? undefined : "none",
       }}
     >
@@ -40,7 +43,12 @@ function AWDropdownList(props: {
         {props.options?.map((o) => (
           <div
             key={o.id}
-            className="h-[34px] w-full px-[10px] flex items-center text-darkTeal-2"
+            className={`h-[34px] box-border w-full px-[10px] flex items-center ${
+              hoveringRowId === o.id ? "text-darkTeal-2" : "text-darkTeal-5"
+            } ${hoveringRowId === o.id ? "bg-greyscale-1" : ""} cursor-pointer`}
+            onMouseEnter={() => setHoveringRowId(o.id)}
+            onMouseLeave={() => setHoveringRowId(undefined)}
+            onClick={() => props.setValue(o.id)}
           >
             {o.text}
           </div>
@@ -89,7 +97,11 @@ export function AWDropdown(props: {
           className="absolute z-10 overflow-visible"
           style={{ left: listX, top: listY }}
         >
-          <AWDropdownList open={open} options={props.options} />
+          <AWDropdownList
+            open={open}
+            options={props.options}
+            setValue={props.setValue}
+          />
         </div>,
         document.body
       )}
@@ -105,7 +117,8 @@ export function AWDropdown(props: {
               : "text-fields-text-placeholder"
           }`}
         >
-          {props.value || props.placeholder}
+          {props.options?.find((o) => o.id === props.value)?.text ||
+            props.placeholder}
         </div>
         <ChevronDownIcon height="16px" width="16px" />
       </div>

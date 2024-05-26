@@ -12,7 +12,7 @@ module.exports = {
       },
       padding: {
         lg: "12px",
-        "3xl": '24px',
+        "3xl": "24px",
       },
       borderRadius: {
         full: "100%",
@@ -21,9 +21,10 @@ module.exports = {
       colors: {
         transparent: "transparent",
         darkTeal: {
-          0: '#0E656B',
+          0: "#0E656B",
+          1: "#001718",
           2: "#001E20",
-          3: '#002C2F',
+          3: "#002C2F",
           5: "#00474B",
         },
         background: {
@@ -31,7 +32,14 @@ module.exports = {
         },
         greyscale: {
           white: "#FFFFFF",
+          1: "#F8F8F8",
+          2: "#F0F1F1",
+          3: "#EAF4F4",
+          4: "#D8EAEA",
+          5: "#CCDDDD",
           6: "#B6C6C6",
+          7: "#ACC6C5",
+          black: "#000000",
         },
         buttons: {
           border: "#147C83",
@@ -40,13 +48,13 @@ module.exports = {
             text: "#F8F8F8",
           },
           secondary: { bg: "transparent", text: "#147C83" },
-          disabled: { bg: "#EFF4F4", text: '#ACC6C5' }
+          disabled: { bg: "#EFF4F4", text: "#ACC6C5" },
         },
         fields: {
           bg: "#F0F1F1",
           text: {
             pressed: "#00474B",
-            filling: '#001E20',
+            filling: "#001E20",
             placeholder: "rgba(0, 30, 32, 0.4)",
           },
           checkbox: {
@@ -57,12 +65,12 @@ module.exports = {
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        }
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
       },
       animation: {
-        fadeIn: 'fadeIn 0.8s ease-out forwards',
+        fadeIn: "fadeIn 0.8s ease-out forwards",
       },
     },
   },

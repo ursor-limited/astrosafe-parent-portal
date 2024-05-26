@@ -359,9 +359,12 @@ export default function FormPage() {
   );
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[]
-  >("committedAnswers", []);
-  useEffect(() => setAnswers(committedAnswers), [committedAnswers]);
+    IAWFormInputAnswer[] | undefined
+  >("committedAnswers", undefined);
+  useEffect(
+    () => committedAnswers && setAnswers(committedAnswers),
+    [committedAnswers]
+  );
 
   const commitAnswers = () => setCommittedAnswers(answers);
 
@@ -427,13 +430,14 @@ export default function FormPage() {
                 {...section}
                 i={i + 1}
                 answers={answers}
-                setValue={(id, newValue) =>
+                setValue={(id, newValue) => {
+                  console.log(id, newValue, "0-0-0-0-0", answers);
                   setAnswers((prev) =>
                     prev.map((a) =>
                       a.id === id ? { ...a, value: newValue } : a
                     )
-                  )
-                }
+                  );
+                }}
               />
             ))}
           </div>
