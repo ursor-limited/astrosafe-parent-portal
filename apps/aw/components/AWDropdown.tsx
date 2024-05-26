@@ -26,7 +26,6 @@ function AWDropdownList(props: {
       style={{
         height,
         width,
-        //transform: `translateY(100%)`,
         pointerEvents: props.open ? undefined : "none",
       }}
     >
@@ -34,7 +33,7 @@ function AWDropdownList(props: {
       <div
         className="w-fit py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
         style={{
-          transform: `translateY(${props.open ? -100 : 0}%)`,
+          transform: `translateY(${props.open ? 0 : -100}%)`,
         }}
         ref={setListRef}
       >
@@ -86,8 +85,11 @@ export function AWDropdown(props: {
   return (
     <div ref={setOutsideClickRef}>
       {createPortal(
-        <div className="absolute z-10" style={{ left: listX, top: listY }}>
-          <AWDropdownList open={open} />
+        <div
+          className="absolute z-10 overflow-visible"
+          style={{ left: listX, top: listY }}
+        >
+          <AWDropdownList open={open} options={props.options} />
         </div>,
         document.body
       )}
