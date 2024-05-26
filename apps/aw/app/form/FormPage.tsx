@@ -302,6 +302,18 @@ export function AWDropdown(props: {
   // }, [handleClick]);
 
   const setRef = useOutsideClick(onOutsideClick);
+
+  const [listRef, setListRef] = useState<HTMLElement | null>(null);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  useEffect(() => {
+    console.log(listRef?.getBoundingClientRect());
+    setWidth(listRef?.getBoundingClientRect()?.width ?? 0);
+    setHeight(listRef?.getBoundingClientRect()?.height ?? 0);
+  }, [
+    listRef?.getBoundingClientRect()?.width,
+    listRef?.getBoundingClientRect()?.height,
+  ]);
   return (
     <div
       ref={setRef}
@@ -309,19 +321,31 @@ export function AWDropdown(props: {
       onClick={() => setOpen(!open)}
     >
       <div
-        className="absolute z-10 py-[5px] left-0 bottom-0 flex flex-col border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
+        className="absolute z-100 overflow-hidden left-0 bottom-0 bg-blue"
         style={{
-          transform: `translateY(${open ? 100 : 0}%)`,
+          height,
+          width,
+          transform: `translateY(100%)`,
         }}
       >
-        {props.options?.map((o) => (
-          <div
-            key={o.id}
-            className="h-[34px] w-full px-[10px] flex items-center"
-          >
-            {o.text}
-          </div>
-        ))}
+        {/* <div className="h-full w-full"> */}
+        <div
+          className="w-fit py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
+          style={{
+            transform: `translateY(${open ? -100 : 0}%)`,
+          }}
+          ref={setListRef}
+        >
+          {props.options?.map((o) => (
+            <div
+              key={o.id}
+              className="h-[34px] w-full px-[10px] flex items-center text-darkTeal-2"
+            >
+              {o.text}
+            </div>
+          ))}
+          {/* </div> */}
+        </div>
       </div>
       <div
         className={`w-full text-base/[18px] ${
