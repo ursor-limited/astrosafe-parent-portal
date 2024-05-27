@@ -9,9 +9,10 @@ import InsuranceApplicationForm, {
   IAWFormInputAnswer,
   IAWFormSection,
   IAWMultiChoiceFieldOption,
-} from "./InsuranceApplicationForm";
-import InsuranceApplicationCheckpoints from "./InsuranceApplicationCheckpoints";
-import InsuranceApplicationTerms from "./InsuranceApplicationTerms";
+} from "./views/InsuranceApplicationForm";
+import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
+import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
+import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 
 const FADEIN_DELAY = 66;
 
@@ -278,13 +279,17 @@ export default function InsuranceApplicationPage() {
     [committedAnswers]
   );
 
-  const [termsDone, setTermsDone] = useState<boolean>(false);
+  const [glossaryDone, setGlossaryDone] = useState<boolean>(false);
+  const [TOSDone, setTOSDone] = useState<boolean>(false);
+
   const [checkPointsDone, setCheckpointsDone] = useState<boolean>(false);
 
   return formStarted ? (
     <InsuranceApplicationForm />
-  ) : !termsDone ? (
-    <InsuranceApplicationTerms nextCallback={() => setTermsDone(true)} />
+  ) : !glossaryDone ? (
+    <InsuranceApplicationGlossary nextCallback={() => setGlossaryDone(true)} />
+  ) : !TOSDone ? (
+    <InsuranceApplicationTermsOfService nextCallback={() => setTOSDone(true)} />
   ) : !checkPointsDone ? (
     <InsuranceApplicationCheckpoints
       startCallback={() => setCheckpointsDone(true)}

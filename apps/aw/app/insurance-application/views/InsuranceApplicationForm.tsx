@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
-import { AWFormSection, STEPS } from "./InsuranceApplicationPage";
+import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
+import { AWFormSection, STEPS } from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 

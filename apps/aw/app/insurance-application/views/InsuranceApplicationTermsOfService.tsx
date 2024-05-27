@@ -1,7 +1,7 @@
 import { AWButton } from "@/components/AWButton";
 import InsuranceApplicationDialog, {
   dmMono,
-} from "./InsuranceApplicationDialog";
+} from "../InsuranceApplicationDialog";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { useState } from "react";
 
@@ -161,7 +161,7 @@ const TOS: IAWTermsOfServiceSection[] = [
   },
 ];
 
-export default function InsuranceApplicationTerms(props: {
+export default function InsuranceApplicationTermsOfService(props: {
   nextCallback: () => void;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
@@ -171,8 +171,6 @@ export default function InsuranceApplicationTerms(props: {
       e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 20;
     reachedBottom && setScrolledToBottom(reachedBottom);
   };
-
-  console.log(scrolledToBottom, "99");
   return (
     <InsuranceApplicationDialog title="TERMS OF SERVICE">
       <div className="h-full w-full flex flex-col p-3xl gap-3xl">
