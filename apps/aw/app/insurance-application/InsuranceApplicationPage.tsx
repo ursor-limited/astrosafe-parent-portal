@@ -11,13 +11,12 @@ import InsuranceApplicationForm, {
   IAWMultiChoiceFieldOption,
 } from "./InsuranceApplicationForm";
 import InsuranceApplicationIntro from "./InsuranceApplicationIntro";
-import { AWButton } from "@/components/AWButton";
 
 const FADEIN_DELAY = 66;
 
 export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
   {
-    title: "POLICY OWNER INFORMATION",
+    title: "Policy owner information",
     sections: [
       {
         id: "6651d2bb1aaa5843d82bc607",
@@ -75,7 +74,7 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
     ],
   },
   {
-    title: "BUSINESS SUMMARY",
+    title: "Business summary",
     sections: [
       {
         id: "6652e2c52226b1c9658f4560",
@@ -269,85 +268,10 @@ export function AWFormSection(
 }
 
 export default function InsuranceApplicationPage() {
-  const [stepIndex, setStepIndex] = useState<number>(1);
-  const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
-  useEffect(
-    () =>
-      setAnswers(
-        STEPS.map((s) => s.sections)
-          .flat()
-          .map((section) => section.inputs)
-          .flat()
-          .map((input) => ({
-            id: input.id,
-          }))
-      ),
-    []
-  );
-
-  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[] | undefined
-  >("committedAnswers", undefined);
-  useEffect(
-    () => committedAnswers && setAnswers(committedAnswers),
-    [committedAnswers]
-  );
-
-  const commitAnswers = () => setCommittedAnswers(answers);
-
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-  useEffect(
-    () =>
-      setCanProceed(
-        STEPS[stepIndex].sections
-          .flatMap((s) => s.inputs)
-          .every((input) => answers.find((a) => a.id === input.id)?.value)
-      ),
-    [answers, stepIndex]
-  );
-
   const [showForm, setShowForm] = useState<boolean>(false);
-
-  return (
-    <InsuranceApplicationDialog
-      title={STEPS[stepIndex].title}
-      leftCallback={() => setStepIndex(stepIndex - 1)}
-      rightCallback={() => setStepIndex(stepIndex + 1)}
-      rightArrowFaded={!canProceed}
-      stepper={{
-        n: STEPS.length,
-        current: stepIndex,
-      }}
-    >
-      {showForm ? (
-        <InsuranceApplicationForm
-          stepIndex={stepIndex}
-          answers={answers}
-          setValue={(id, newValue) => {
-            setAnswers((prev) =>
-              prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
-            );
-          }}
-        >
-          <div className="w-full justify-center flex gap-[16px]">
-            <AWButton width={182} variant="secondary" onClick={commitAnswers}>
-              Save
-            </AWButton>
-            <AWButton
-              width={182}
-              disabled={!canProceed}
-              onClick={() => {
-                commitAnswers();
-                setStepIndex(stepIndex + 1);
-              }}
-            >
-              Next
-            </AWButton>
-          </div>
-        </InsuranceApplicationForm>
-      ) : (
-        <InsuranceApplicationIntro />
-      )}
-    </InsuranceApplicationDialog>
+  return showForm ? (
+    <InsuranceApplicationForm />
+  ) : (
+    <InsuranceApplicationIntro />
   );
 }

@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
+import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
 import { AWFormSection, STEPS } from "./InsuranceApplicationPage";
+import { AWButton } from "@/components/AWButton";
+import { useLocalStorage } from "usehooks-ts";
 
 export interface IAWFormSection {
   id: string;
@@ -32,29 +36,90 @@ export interface IAWFormInputAnswer {
   value?: string;
 }
 
-export default function InsuranceApplicationForm(props: {
-  stepIndex: number;
-  answers: IAWFormInputAnswer[];
-  setValue: (
-    id: IAWFormInput["id"],
-    newValue: IAWFormInputAnswer["value"]
-  ) => void;
-  children: React.ReactNode; // the buttons
-}) {
+export default function InsuranceApplicationForm() {
+  const [stepIndex, setStepIndex] = useState<number>(1);
+
+  const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
+  useEffect(
+    () =>
+      setAnswers(
+        STEPS.map((s) => s.sections)
+          .flat()
+          .map((section) => section.inputs)
+          .flat()
+          .map((input) => ({
+            id: input.id,
+          }))
+      ),
+    []
+  );
+
+  const setValue = (id: string, newValue?: string) => {
+    setAnswers((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
+    );
+  };
+
+  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+    IAWFormInputAnswer[] | undefined
+  >("committedAnswers", undefined);
+  useEffect(
+    () => committedAnswers && setAnswers(committedAnswers),
+    [committedAnswers]
+  );
+
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setCanProceed(
+        STEPS[stepIndex].sections
+          .flatMap((s) => s.inputs)
+          .every((input) => answers.find((a) => a.id === input.id)?.value)
+      ),
+    [answers, stepIndex]
+  );
+
+  const commitAnswers = () => setCommittedAnswers(answers);
+
   return (
-    <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-      <div className="w-full flex flex-col gap-[32px]">
-        {STEPS[props.stepIndex].sections.map((section, i) => (
-          <AWFormSection
-            key={section.id}
-            {...section}
-            i={i + 1}
-            answers={props.answers}
-            setValue={props.setValue}
-          />
-        ))}
+    <InsuranceApplicationDialog
+      title={STEPS[stepIndex].title}
+      leftCallback={() => setStepIndex(stepIndex - 1)}
+      rightCallback={() => setStepIndex(stepIndex + 1)}
+      rightArrowFaded={!canProceed}
+      stepper={{
+        n: STEPS.length,
+        current: stepIndex,
+      }}
+    >
+      <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
+        <div className="w-full flex flex-col gap-[32px]">
+          {STEPS[stepIndex].sections.map((section, i) => (
+            <AWFormSection
+              key={section.id}
+              {...section}
+              i={i + 1}
+              answers={answers}
+              setValue={setValue}
+            />
+          ))}
+        </div>
+        <div className="w-full justify-center flex gap-[16px]">
+          <AWButton width={182} variant="secondary" onClick={commitAnswers}>
+            Save
+          </AWButton>
+          <AWButton
+            width={182}
+            disabled={!canProceed}
+            onClick={() => {
+              commitAnswers();
+              setStepIndex(stepIndex + 1);
+            }}
+          >
+            Next
+          </AWButton>
+        </div>
       </div>
-      {props.children}
-    </div>
+    </InsuranceApplicationDialog>
   );
 }

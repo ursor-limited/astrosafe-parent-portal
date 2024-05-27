@@ -10,6 +10,7 @@ module.exports = {
       spacing: {
         1: "4px",
         xl: "16px",
+        "3xl": "24px",
       },
       padding: {
         lg: "12px",
