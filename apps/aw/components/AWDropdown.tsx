@@ -28,7 +28,7 @@ function AWDropdownList(props: {
       className="overflow-hidden"
       style={{
         height,
-        width: props.width || width,
+        //width: props.width || width,
         pointerEvents: props.open ? undefined : "none",
       }}
     >

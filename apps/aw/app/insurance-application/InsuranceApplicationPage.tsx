@@ -182,9 +182,54 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
           ],
         },
       },
+      {
+        id: "6654c8304f6d9bc2ccd4203c",
+        title: "Industry and business model",
+        inputs: [
+          {
+            id: "6654c84127bd5103ed3efee4",
+            title: "Industry sector",
+            inputType: "dropdown",
+            placeholder: "Choose a sector from the list",
+            options: [
+              {
+                id: "6654c88a854aae42481a4dc7",
+                text: "Family or Multi-family Office",
+              },
+              { id: "6654c894fa0a1762693072d9", text: "Hedge Fund or Similar" },
+              { id: "6654c8abaf6e245af0890bf8", text: "Miner" },
+              { id: "6654c8bd5dd55c40a86a0dfd", text: "Mining Pool" },
+              { id: "6654c8c904d08cccf38ce934", text: "Custodian" },
+              { id: "6654c8dccae4c5f9d16aef58", text: "Exchange" },
+              {
+                id: "6654c8e9d0635af167179bb1",
+                text: "Bitcoin Financial Services",
+              },
+              {
+                id: "6654c8f8ba6062bec8e4786c",
+                text: "Other Bitcoin Services",
+              },
+              {
+                id: "6654c917ad74d440c2746fa4",
+                text: "RIA or Investment Advisor",
+              },
+              {
+                id: "6654c9239d8187cbbcec2f77",
+                text: "Traditional Financial Services",
+              },
+              {
+                id: "6654c939d5ea057a13a901ed",
+                text: "Other",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 ];
+
+// Family or Multi-family Office, Hedge Fund or Similar, Miner, Mining Pool, Custodian, Exchange, Bitcoin Financial Services, Other Bitcoin Services, RIA or Investment Advisor, Traditional Financial Services, Other
 
 export function AWMultiChoiceField(props: {
   value?: string;
@@ -274,7 +319,6 @@ export function AWFormSection(
     ) => void;
   }
 ) {
-  console.log(props.answers);
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(
     () =>
