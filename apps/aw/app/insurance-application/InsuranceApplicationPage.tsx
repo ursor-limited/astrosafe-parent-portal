@@ -10,7 +10,8 @@ import InsuranceApplicationForm, {
   IAWFormSection,
   IAWMultiChoiceFieldOption,
 } from "./InsuranceApplicationForm";
-import InsuranceApplicationIntro from "./InsuranceApplicationIntro";
+import InsuranceApplicationCheckpoints from "./InsuranceApplicationCheckpoints";
+import InsuranceApplicationTerms from "./InsuranceApplicationTerms";
 
 const FADEIN_DELAY = 66;
 
@@ -268,10 +269,27 @@ export function AWFormSection(
 }
 
 export default function InsuranceApplicationPage() {
-  const [showForm, setShowForm] = useState<boolean>(false);
-  return showForm ? (
+  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+    IAWFormInputAnswer[] | undefined
+  >("committedAnswers", undefined);
+  const [formStarted, setFormStarted] = useState<boolean>(false);
+  useEffect(
+    () => setFormStarted(!!committedAnswers?.some((a) => a.value)),
+    [committedAnswers]
+  );
+
+  const [termsDone, setTermsDone] = useState<boolean>(false);
+  const [checkPointsDone, setCheckpointsDone] = useState<boolean>(false);
+
+  return formStarted ? (
     <InsuranceApplicationForm />
+  ) : !termsDone ? (
+    <InsuranceApplicationTerms nextCallback={() => setTermsDone(true)} />
+  ) : !checkPointsDone ? (
+    <InsuranceApplicationCheckpoints
+      startCallback={() => setCheckpointsDone(true)}
+    />
   ) : (
-    <InsuranceApplicationIntro startCallback={() => setShowForm(true)} />
+    <InsuranceApplicationForm />
   );
 }

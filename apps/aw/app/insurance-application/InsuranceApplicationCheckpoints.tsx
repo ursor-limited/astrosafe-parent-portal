@@ -8,7 +8,7 @@ import { IAWFormInputAnswer } from "./InsuranceApplicationForm";
 import { useEffect, useState } from "react";
 import VaultIllustration from "@/images/VaultIllustration.svg";
 
-export default function InsuranceApplicationIntro(props: {
+export default function InsuranceApplicationCheckpoints(props: {
   startCallback: () => void;
 }) {
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
@@ -38,7 +38,6 @@ export default function InsuranceApplicationIntro(props: {
     () => setStarted(!!committedAnswers?.some((a) => a.value)),
     [committedAnswers]
   );
-
   return (
     <InsuranceApplicationDialog
       title={started ? "RESUME APPLICATION" : "START APPLICATION"}

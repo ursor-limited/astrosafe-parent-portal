@@ -6,10 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontSize: { xl: ['20px', '24px'] },
+      fontSize: { lg: ["18px", "21.6px"], xl: ["20px", "24px"] },
       spacing: {
         1: "4px",
-        lg: '12px',
+        lg: "12px",
         xl: "16px",
         "3xl": "24px",
       },
@@ -37,6 +37,13 @@ module.exports = {
           3: "#86D3D9",
           4: "#A9E8EC",
           5: "#CCF1F1",
+        },
+        yellow: {
+          0: "#695200",
+          1: "#E2B000",
+          2: "#FFDB5D",
+          3: "#FFF8B8",
+          4: "#FFFCDE",
         },
         background: {
           primary: "#F8F8F8",
