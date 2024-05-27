@@ -165,6 +165,14 @@ export default function InsuranceApplicationTerms(props: {
   nextCallback: () => void;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
+  const [scrolledToBottom, setScrolledToBottom] = useState<boolean>(false);
+  const handleScroll = (e: any) => {
+    const reachedBottom =
+      e.target.scrollHeight - e.target.scrollTop < e.target.clientHeight + 20;
+    reachedBottom && setScrolledToBottom(reachedBottom);
+  };
+
+  console.log(scrolledToBottom, "99");
   return (
     <InsuranceApplicationDialog title="TERMS OF SERVICE">
       <div className="h-full w-full flex flex-col p-3xl gap-3xl">
@@ -172,7 +180,10 @@ export default function InsuranceApplicationTerms(props: {
           <div className="font-medium text-xl">
             Read through and acknowledge the Terms of Service below
           </div>
-          <div className="h-[650px] w-full border-2 border-solid border-greyscale-6 rounded-xs p-3xl text-darkTeal-5 text-lg overflow-scroll flex flex-col gap-[32px]">
+          <div
+            className="h-[650px] w-full border-2 border-solid border-greyscale-6 rounded-xs p-3xl text-darkTeal-5 text-lg overflow-scroll flex flex-col gap-[32px]"
+            onScroll={handleScroll}
+          >
             <div className="text-darkTeal-5 font-medium">
               Anchorwatch Terms of Service
             </div>
@@ -186,16 +197,18 @@ export default function InsuranceApplicationTerms(props: {
               services, features, products, content or applications offered by
               Anchorwatch (together with the Site and the Apps, the “Services”)
             </div>
-            {TOS.map((tosSection) => (
-              <div className="flex flex-col gap-lg">
+            {TOS.map((tosSection, i) => (
+              <div key={i} className="flex flex-col gap-lg">
                 {tosSection.title ? (
                   <div className="font-medium text-darkTeal-5">
                     {tosSection.title}
                   </div>
                 ) : null}
                 <div className="flex flex-col gap-lg px-[20px]">
-                  {tosSection.paragraphs.map((p) => (
-                    <div className="text-darkTeal-5">{p}</div>
+                  {tosSection.paragraphs.map((p, j) => (
+                    <div key={j} className="text-darkTeal-5">
+                      {p}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -203,7 +216,14 @@ export default function InsuranceApplicationTerms(props: {
           </div>
         </div>
 
-        <div className="flex items-center gap-[12px]">
+        <div
+          className="flex items-center gap-[12px]"
+          style={{
+            opacity: scrolledToBottom ? 1 : 0.35,
+            pointerEvents: scrolledToBottom ? undefined : "none",
+            transition: "0.2s",
+          }}
+        >
           <div
             className={`h-[24px] w-[24px] rounded-[4px] border-[1px] border-solid duration-200 ${
               checked ? "border-yellow-1" : "border-lightTeal-0"
@@ -222,7 +242,9 @@ export default function InsuranceApplicationTerms(props: {
         </div>
 
         <div className="flex flex-col gap-lg">
-          <AWButton onClick={props.nextCallback}>Start</AWButton>
+          <AWButton onClick={props.nextCallback} disabled={!checked}>
+            Next
+          </AWButton>
         </div>
       </div>
     </InsuranceApplicationDialog>
