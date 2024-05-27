@@ -6,6 +6,7 @@ import { STEPS } from "./InsuranceApplicationPage";
 import { useLocalStorage } from "usehooks-ts";
 import { IAWFormInputAnswer } from "./InsuranceApplicationForm";
 import { useEffect, useState } from "react";
+import VaultIllustration from "@/images/VaultIllustration.svg";
 
 export default function InsuranceApplicationIntro(props: {
   startCallback: () => void;
@@ -32,13 +33,23 @@ export default function InsuranceApplicationIntro(props: {
     );
   }, [committedAnswers]);
 
+  const [started, setStarted] = useState<boolean>(false);
+  useEffect(
+    () => setStarted(!!committedAnswers?.some((a) => a.value)),
+    [committedAnswers]
+  );
+
   return (
-    <InsuranceApplicationDialog title={"START APPLICATION"}>
+    <InsuranceApplicationDialog
+      title={started ? "RESUME APPLICATION" : "START APPLICATION"}
+    >
       <div className="h-full w-full flex">
-        <div className="flex flex-col p-3xl gap-[74px] h-full w-[525px] items-between">
+        <div className="flex flex-col p-3xl gap-[74px] h-full w-[525px] items-between border-r-2 border-r-greyscale-6">
           <div className="flex flex-col gap-3xl">
             <div className="font-medium text-xl">
-              The application intake form consists of the following sections.
+              {started
+                ? "Complete all the sections below to submit your application"
+                : "The application intake form consists of the following sections."}
             </div>
             <div className="flex flex-col">
               {STEPS.map((step, i) => (
@@ -77,7 +88,9 @@ export default function InsuranceApplicationIntro(props: {
             <AWButton onClick={props.startCallback}>Start</AWButton>
           </div>
         </div>
-        <div className="flex flex-1"></div>
+        <div className="flex flex-1 justify-center align-center">
+          <VaultIllustration />
+        </div>
       </div>
     </InsuranceApplicationDialog>
   );
