@@ -11,12 +11,17 @@ export default function InsuranceApplicationIntro(props: {}) {
             The application intake form consists of the following sections.
           </div>
           <div className="flex flex-col">
-            {STEPS.map((step) => (
-              <div className="flex gap-[10px] items-center">
-                <div className="h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7"></div>
-                <div className="text-xl underline underline-offset-2 decoration-1">
-                  {step.title}
+            {STEPS.map((step, i) => (
+              <div className="flex flex-col">
+                <div className="flex gap-[10px] items-center">
+                  <div className="h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7"></div>
+                  <div className="text-xl underline underline-offset-2 decoration-1">
+                    {step.title}
+                  </div>
                 </div>
+                {i < STEPS.length - 1 ? (
+                  <div className="w-[1px] h-[16px] ml-[5.3px] bg-darkTeal-5" />
+                ) : null}
               </div>
             ))}
           </div>
