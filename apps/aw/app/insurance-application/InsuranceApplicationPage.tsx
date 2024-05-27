@@ -274,10 +274,16 @@ export function AWFormSection(
     ) => void;
   }
 ) {
+  console.log(props.answers);
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(
-    () => setChecked(!!props.answers?.some((a) => a.value)),
-    [props.answers]
+    () =>
+      setChecked(
+        !!props.hiddenInputs?.inputs?.some(
+          (input) => props.answers?.find((a) => a.id === input.id)?.value
+        )
+      ),
+    [props.answers, props.hiddenInputs]
   );
   return (
     <div
@@ -288,98 +294,92 @@ export function AWFormSection(
     >
       <div className="text-lg font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
       <div className="flex flex-col gap-xl">
-        {[
-          ...props.inputs.map((input) => (
-            <div key={input.id} className="flex flex-col gap-1">
-              {input.title ? (
-                <div className="text-lg text-darkTeal-2">{input.title}</div>
-              ) : null}
-              {input.inputType === "text" ? (
-                <AWTextField
-                  value={props.answers?.find((a) => a.id === input.id)?.value}
-                  setValue={(v) => props.setValue(input.id, v)}
-                  placeholder={input.placeholder}
-                />
-              ) : input.inputType === "textLong" ? (
-                <AWLongTextField
-                  value={props.answers?.find((a) => a.id === input.id)?.value}
-                  setValue={(v) => props.setValue(input.id, v)}
-                  placeholder={input.placeholder}
-                />
-              ) : input.inputType === "multiChoice" ? (
-                <AWMultiChoiceField
-                  value={props.answers?.find((a) => a.id === input.id)?.value}
-                  setValue={(v) => props.setValue(input.id, v)}
-                  options={input.options}
-                />
-              ) : input.inputType === "dropdown" ? (
-                <AWDropdown
-                  value={props.answers?.find((a) => a.id === input.id)?.value}
-                  setValue={(v) => props.setValue(input.id, v)}
-                  options={input.options}
-                  placeholder={input.placeholder}
-                />
-              ) : null}
-            </div>
-          )),
-          ...(props.hiddenInputs
-            ? [
-                <div className="flex items-center gap-[12px]">
-                  <AWCheckbox
-                    checked={checked}
-                    callback={() => setChecked(!checked)}
-                  />
-                  <div className="text-lg font-medium text-darkTeal-2">
-                    {props.hiddenInputs.prompt}
-                  </div>
-                </div>,
-              ]
-            : []),
-          ...(props.hiddenInputs
-            ? props.hiddenInputs.inputs.map((input) => (
-                <div key={input.id} className="flex flex-col gap-1">
-                  {input.title ? (
-                    <div className="text-lg text-darkTeal-2">{input.title}</div>
-                  ) : null}
-                  {input.inputType === "text" ? (
-                    <AWTextField
-                      value={
-                        props.answers?.find((a) => a.id === input.id)?.value
-                      }
-                      setValue={(v) => props.setValue(input.id, v)}
-                      placeholder={input.placeholder}
-                    />
-                  ) : input.inputType === "textLong" ? (
-                    <AWLongTextField
-                      value={
-                        props.answers?.find((a) => a.id === input.id)?.value
-                      }
-                      setValue={(v) => props.setValue(input.id, v)}
-                      placeholder={input.placeholder}
-                    />
-                  ) : input.inputType === "multiChoice" ? (
-                    <AWMultiChoiceField
-                      value={
-                        props.answers?.find((a) => a.id === input.id)?.value
-                      }
-                      setValue={(v) => props.setValue(input.id, v)}
-                      options={input.options}
-                    />
-                  ) : input.inputType === "dropdown" ? (
-                    <AWDropdown
-                      value={
-                        props.answers?.find((a) => a.id === input.id)?.value
-                      }
-                      setValue={(v) => props.setValue(input.id, v)}
-                      options={input.options}
-                      placeholder={input.placeholder}
-                    />
-                  ) : null}
-                </div>
-              ))
-            : []),
-        ]}
+        {props.inputs.map((input) => (
+          <div key={input.id} className="flex flex-col gap-1">
+            {input.title ? (
+              <div className="text-lg text-darkTeal-2">{input.title}</div>
+            ) : null}
+            {input.inputType === "text" ? (
+              <AWTextField
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={(v) => props.setValue(input.id, v)}
+                placeholder={input.placeholder}
+              />
+            ) : input.inputType === "textLong" ? (
+              <AWLongTextField
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={(v) => props.setValue(input.id, v)}
+                placeholder={input.placeholder}
+              />
+            ) : input.inputType === "multiChoice" ? (
+              <AWMultiChoiceField
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={(v) => props.setValue(input.id, v)}
+                options={input.options}
+              />
+            ) : input.inputType === "dropdown" ? (
+              <AWDropdown
+                value={props.answers?.find((a) => a.id === input.id)?.value}
+                setValue={(v) => props.setValue(input.id, v)}
+                options={input.options}
+                placeholder={input.placeholder}
+              />
+            ) : null}
+          </div>
+        ))}
       </div>
+      {props.hiddenInputs ? (
+        <div className="flex items-center gap-[12px]">
+          <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
+          <div className="text-lg font-medium text-darkTeal-2">
+            {props.hiddenInputs.prompt}
+          </div>
+        </div>
+      ) : null}
+      {checked && props.hiddenInputs ? (
+        <div
+          className={`flex flex-col ${
+            props.hiddenInputs.inputs[0].title ? "gap-xl" : "gap-1"
+          } pt-lg`}
+        >
+          <div className="text-lg font-medium text-darkTeal-2">{`${props.i}b) ${props.hiddenInputs.title}`}</div>
+          <div className="flex flex-col gap-xl">
+            {props.hiddenInputs.inputs.map((input) => (
+              <div key={input.id} className="flex flex-col gap-1">
+                {input.title ? (
+                  <div className="text-lg text-darkTeal-2">{input.title}</div>
+                ) : null}
+                {input.inputType === "text" ? (
+                  <AWTextField
+                    value={props.answers?.find((a) => a.id === input.id)?.value}
+                    setValue={(v) => props.setValue(input.id, v)}
+                    placeholder={input.placeholder}
+                  />
+                ) : input.inputType === "textLong" ? (
+                  <AWLongTextField
+                    value={props.answers?.find((a) => a.id === input.id)?.value}
+                    setValue={(v) => props.setValue(input.id, v)}
+                    placeholder={input.placeholder}
+                  />
+                ) : input.inputType === "multiChoice" ? (
+                  <AWMultiChoiceField
+                    value={props.answers?.find((a) => a.id === input.id)?.value}
+                    setValue={(v) => props.setValue(input.id, v)}
+                    options={input.options}
+                  />
+                ) : input.inputType === "dropdown" ? (
+                  <AWDropdown
+                    value={props.answers?.find((a) => a.id === input.id)?.value}
+                    setValue={(v) => props.setValue(input.id, v)}
+                    options={input.options}
+                    placeholder={input.placeholder}
+                  />
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -50,7 +50,10 @@ export default function InsuranceApplicationForm() {
       setAnswers(
         STEPS.map((s) => s.sections)
           .flat()
-          .map((section) => section.inputs)
+          .map((section) => [
+            ...section.inputs,
+            ...(section.hiddenInputs?.inputs || []),
+          ])
           .flat()
           .map((input) => ({
             id: input.id,
