@@ -2,8 +2,8 @@ import { AWButton } from "@/components/AWButton";
 import InsuranceApplicationDialog, {
   dmMono,
 } from "../InsuranceApplicationDialog";
-import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { useState } from "react";
+import { AWCheckbox } from "@/components/AWCheckbox";
 
 interface IAWTermsOfServiceSection {
   title?: string;
@@ -222,18 +222,7 @@ export default function InsuranceApplicationTermsOfService(props: {
             transition: "0.2s",
           }}
         >
-          <div
-            className={`h-[24px] w-[24px] rounded-[4px] border-[1px] border-solid duration-200 ${
-              checked ? "border-yellow-1" : "border-lightTeal-0"
-            } flex justify-center items-center cursor-pointer hover:opacity-70`}
-            onClick={() => setChecked(!checked)}
-          >
-            <CheckIcon
-              height="15px"
-              width="15px"
-              style={{ opacity: checked ? 1 : 0, transition: "0.2s" }}
-            />
-          </div>
+          <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
           <div className="text-lg font-normal text-darkTeal-5">
             I agree to the terms of service
           </div>

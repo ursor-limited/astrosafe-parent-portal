@@ -8,6 +8,11 @@ export interface IAWFormSection {
   id: string;
   title: string;
   inputs: IAWFormInput[];
+  hiddenInputs?: {
+    prompt: string;
+    title: string;
+    inputs: IAWFormInput[];
+  };
 }
 
 type AWFormInput =

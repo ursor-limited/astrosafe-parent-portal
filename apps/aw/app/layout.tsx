@@ -20,12 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" style={{ zIndex: 999999999999 }}>
-      <meta name="theme-color" content={PALETTE.primary.navy} />
+      <meta name="theme-color" />
       <body
-        className={dmSans.className}
-        style={{
-          margin: 0,
-        }}
+        className={`bg-background-primary ${dmSans.className}`}
         id="headerComponent"
       >
         {children}

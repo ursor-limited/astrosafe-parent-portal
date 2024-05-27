@@ -14,6 +14,7 @@ import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpo
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
+import { AWCheckbox } from "@/components/AWCheckbox";
 
 const FADEIN_DELAY = 66;
 
@@ -133,6 +134,54 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
           },
         ],
       },
+      {
+        id: "6654b9148d3dfd8a05d588ab",
+        title: "Company address",
+        inputs: [
+          {
+            id: "6654b91846789fe0ff2334af",
+            title: "Street address",
+            inputType: "text",
+            placeholder: "Enter address here",
+          },
+          {
+            id: "6654b957c8216094b334a21b",
+            title: "City, State and Country",
+            inputType: "text",
+            placeholder: "Enter City, State and Country",
+          },
+          {
+            id: "6654b97671c74041398d0836",
+            title: "Zip or Postal code",
+            inputType: "text",
+            placeholder: "Enter Zip or Postal Code",
+          },
+        ],
+        hiddenInputs: {
+          prompt: "The business entity has an additional address",
+          title: "Company's business address",
+          inputs: [
+            {
+              id: "6654c26dc3f4e07fba23c413",
+              title: "Street address",
+              inputType: "text",
+              placeholder: "Enter address here",
+            },
+            {
+              id: "6654c271388067a29bb34f0a",
+              title: "City, State and Country",
+              inputType: "text",
+              placeholder: "Enter City, State and Country",
+            },
+            {
+              id: "6654c275eb925065849228c9",
+              title: "Zip or Postal code",
+              inputType: "text",
+              placeholder: "Enter Zip or Postal Code",
+            },
+          ],
+        },
+      },
     ],
   },
 ];
@@ -225,46 +274,111 @@ export function AWFormSection(
     ) => void;
   }
 ) {
+  const [checked, setChecked] = useState<boolean>(false);
+  useEffect(
+    () => setChecked(!!props.answers?.some((a) => a.value)),
+    [props.answers]
+  );
   return (
     <div
-      className="flex flex-col gap-1 opacity-0 animate-fadeIn"
+      className={`flex flex-col ${
+        props.inputs[0].title ? "gap-xl" : "gap-1"
+      } opacity-0 animate-fadeIn`}
       style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
     >
       <div className="text-lg font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
       <div className="flex flex-col gap-xl">
-        {props.inputs.map((input) => (
-          <div key={input.id} className="flex flex-col gap-1">
-            {input.title ? (
-              <div className="text-lg text-darkTeal-2">{input.title}</div>
-            ) : null}
-            {input.inputType === "text" ? (
-              <AWTextField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                placeholder={input.placeholder}
-              />
-            ) : input.inputType === "textLong" ? (
-              <AWLongTextField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                placeholder={input.placeholder}
-              />
-            ) : input.inputType === "multiChoice" ? (
-              <AWMultiChoiceField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                options={input.options}
-              />
-            ) : input.inputType === "dropdown" ? (
-              <AWDropdown
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                options={input.options}
-                placeholder={input.placeholder}
-              />
-            ) : null}
-          </div>
-        ))}
+        {[
+          ...props.inputs.map((input) => (
+            <div key={input.id} className="flex flex-col gap-1">
+              {input.title ? (
+                <div className="text-lg text-darkTeal-2">{input.title}</div>
+              ) : null}
+              {input.inputType === "text" ? (
+                <AWTextField
+                  value={props.answers?.find((a) => a.id === input.id)?.value}
+                  setValue={(v) => props.setValue(input.id, v)}
+                  placeholder={input.placeholder}
+                />
+              ) : input.inputType === "textLong" ? (
+                <AWLongTextField
+                  value={props.answers?.find((a) => a.id === input.id)?.value}
+                  setValue={(v) => props.setValue(input.id, v)}
+                  placeholder={input.placeholder}
+                />
+              ) : input.inputType === "multiChoice" ? (
+                <AWMultiChoiceField
+                  value={props.answers?.find((a) => a.id === input.id)?.value}
+                  setValue={(v) => props.setValue(input.id, v)}
+                  options={input.options}
+                />
+              ) : input.inputType === "dropdown" ? (
+                <AWDropdown
+                  value={props.answers?.find((a) => a.id === input.id)?.value}
+                  setValue={(v) => props.setValue(input.id, v)}
+                  options={input.options}
+                  placeholder={input.placeholder}
+                />
+              ) : null}
+            </div>
+          )),
+          ...(props.hiddenInputs
+            ? [
+                <div className="flex items-center gap-[12px]">
+                  <AWCheckbox
+                    checked={checked}
+                    callback={() => setChecked(!checked)}
+                  />
+                  <div className="text-lg font-medium text-darkTeal-2">
+                    {props.hiddenInputs.prompt}
+                  </div>
+                </div>,
+              ]
+            : []),
+          ...(props.hiddenInputs
+            ? props.hiddenInputs.inputs.map((input) => (
+                <div key={input.id} className="flex flex-col gap-1">
+                  {input.title ? (
+                    <div className="text-lg text-darkTeal-2">{input.title}</div>
+                  ) : null}
+                  {input.inputType === "text" ? (
+                    <AWTextField
+                      value={
+                        props.answers?.find((a) => a.id === input.id)?.value
+                      }
+                      setValue={(v) => props.setValue(input.id, v)}
+                      placeholder={input.placeholder}
+                    />
+                  ) : input.inputType === "textLong" ? (
+                    <AWLongTextField
+                      value={
+                        props.answers?.find((a) => a.id === input.id)?.value
+                      }
+                      setValue={(v) => props.setValue(input.id, v)}
+                      placeholder={input.placeholder}
+                    />
+                  ) : input.inputType === "multiChoice" ? (
+                    <AWMultiChoiceField
+                      value={
+                        props.answers?.find((a) => a.id === input.id)?.value
+                      }
+                      setValue={(v) => props.setValue(input.id, v)}
+                      options={input.options}
+                    />
+                  ) : input.inputType === "dropdown" ? (
+                    <AWDropdown
+                      value={
+                        props.answers?.find((a) => a.id === input.id)?.value
+                      }
+                      setValue={(v) => props.setValue(input.id, v)}
+                      options={input.options}
+                      placeholder={input.placeholder}
+                    />
+                  ) : null}
+                </div>
+              ))
+            : []),
+        ]}
       </div>
     </div>
   );
@@ -286,19 +400,29 @@ export default function InsuranceApplicationPage() {
 
   const [checkPointsDone, setCheckpointsDone] = useState<boolean>(false);
 
-  return formStarted ? (
-    <InsuranceApplicationForm />
-  ) : !welcomeDone ? (
-    <InsuranceApplicationWelcome nextCallback={() => setWelcomeDone(true)} />
-  ) : !glossaryDone ? (
-    <InsuranceApplicationGlossary nextCallback={() => setGlossaryDone(true)} />
-  ) : !TOSDone ? (
-    <InsuranceApplicationTermsOfService nextCallback={() => setTOSDone(true)} />
-  ) : !checkPointsDone ? (
-    <InsuranceApplicationCheckpoints
-      startCallback={() => setCheckpointsDone(true)}
-    />
-  ) : (
-    <InsuranceApplicationForm />
+  return (
+    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll">
+      {formStarted ? (
+        <InsuranceApplicationForm />
+      ) : !welcomeDone ? (
+        <InsuranceApplicationWelcome
+          nextCallback={() => setWelcomeDone(true)}
+        />
+      ) : !glossaryDone ? (
+        <InsuranceApplicationGlossary
+          nextCallback={() => setGlossaryDone(true)}
+        />
+      ) : !TOSDone ? (
+        <InsuranceApplicationTermsOfService
+          nextCallback={() => setTOSDone(true)}
+        />
+      ) : !checkPointsDone ? (
+        <InsuranceApplicationCheckpoints
+          startCallback={() => setCheckpointsDone(true)}
+        />
+      ) : (
+        <InsuranceApplicationForm />
+      )}
+    </div>
   );
 }
