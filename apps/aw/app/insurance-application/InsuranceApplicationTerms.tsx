@@ -5,9 +5,7 @@ import InsuranceApplicationDialog, {
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { useState } from "react";
 
-const TOS = `Anchorwatch Terms of Service
-
-Please read these Terms of Service for Anchorwatch, Inc. (“Anchorwatch”, “we”, “us” or “our”) (together with our privacy policy found at [insert link] (the “Privacy Policy”, and collectively the “Terms of Service” or “Terms”) fully and carefully before using www.anchorwatch.com (the “Site”), our mobile applications for iOS and Android (each, an “App”), and the services, features, products, content or applications offered by Anchorwatch (together with the Site and the Apps, the “Services”).
+const TOS = `Please read these Terms of Service for Anchorwatch, Inc. (“Anchorwatch”, “we”, “us” or “our”) (together with our privacy policy found at [insert link] (the “Privacy Policy”, and collectively the “Terms of Service” or “Terms”) fully and carefully before using www.anchorwatch.com (the “Site”), our mobile applications for iOS and Android (each, an “App”), and the services, features, products, content or applications offered by Anchorwatch (together with the Site and the Apps, the “Services”).
 
 1. Acceptance of Terms of Service
 These Terms of Service are a binding contract between you and Anchorwatch. By registering for and/or using the Services in any manner, including but not limited to visiting or browsing the Site or downloading one or both of the Apps, you agree to and accept these Terms of Service and all other rules, policies and procedures that may be published from time to time on the Site or such Apps by us, each of which is incorporated by reference and each of which may be updated from time to time.
@@ -160,7 +158,12 @@ export default function InsuranceApplicationTerms(props: {
           <div className="font-medium text-xl">
             Read through and acknowledge the Terms of Service below
           </div>
-          <div className="h-[650px] w-full border-2 border-solid border-greyscale-6 rounded-xs"></div>
+          <div className="h-[650px] w-full border-2 border-solid border-greyscale-6 rounded-xs p-3xl text-darkTeal-5 text-lg overflow-scroll flex flex-col gap-3xl">
+            <div className="text-darkTeal-5 font-medium">
+              Anchorwatch Terms of Service
+            </div>
+            {TOS}
+          </div>
         </div>
 
         <div className="flex items-center gap-[12px]">
