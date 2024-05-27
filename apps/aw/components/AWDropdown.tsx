@@ -95,7 +95,11 @@ export function AWDropdown(props: {
       {createPortal(
         <div
           className="absolute z-10 overflow-visible"
-          style={{ left: listX, top: listY }}
+          style={{
+            left: listX,
+            top: listY,
+            pointerEvents: open ? undefined : "none",
+          }}
         >
           <AWDropdownList
             open={open}

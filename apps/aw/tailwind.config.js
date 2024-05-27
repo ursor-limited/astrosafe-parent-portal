@@ -8,7 +8,6 @@ module.exports = {
     extend: {
       fontSize: { lg: ["18px", "21.6px"], xl: ["20px", "24px"] },
       spacing: {
-        1: "4px",
         lg: "12px",
         xl: "16px",
         "3xl": "24px",
@@ -24,7 +23,7 @@ module.exports = {
       colors: {
         transparent: "transparent",
         darkTeal: {
-          0: "#0E656B",
+          0: "#000F10",
           1: "#001718",
           2: "#001E20",
           3: "#002C2F",

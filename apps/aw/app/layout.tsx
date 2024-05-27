@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" style={{ zIndex: 999999999999 }}>
       <meta name="theme-color" />
       <body
-        className={`bg-background-primary ${dmSans.className}`}
+        className={`bg-background-primary overflow-hidden ${dmSans.className}`}
         id="headerComponent"
       >
         {children}

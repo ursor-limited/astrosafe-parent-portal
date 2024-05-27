@@ -223,6 +223,79 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
               },
             ],
           },
+          {
+            id: "6654ca486c1a5bba7ad34ad2",
+            title: "Primary business model",
+            inputType: "textLong",
+            placeholder:
+              "Describe the primary business model of the entity seeking insurance",
+          },
+          {
+            id: "6654caa262824d0fecf996d9",
+            title: "Additional revenue streams",
+            inputType: "textLong",
+            placeholder:
+              "Describe any additional revenue streams that account for at least 10% of the total business revenue",
+            optional: true,
+          },
+          {
+            id: "6654ca6e45f33d87561374e6",
+            title: "Number of employees",
+            inputType: "text",
+            placeholder: "Enter number here",
+          },
+        ],
+      },
+      {
+        id: "6654caef5ba58ff4e8861732",
+        title: "Does the entity hold any licenses issued by a regulatory body?",
+        inputs: [
+          {
+            id: "6654cb06b933bdbaa3f0ed75",
+            inputType: "multiChoice",
+            options: [
+              {
+                id: "6654cb1d8a8dcbe65bdf3fa7",
+                text: "Yes",
+              },
+              {
+                id: "6654cb2f221bbece1e0281b8",
+                text: "No",
+              },
+            ],
+          },
+          {
+            id: "6654cb6272a687f9559817a4",
+            inputType: "textLong",
+            title:
+              "If yes, name the regulatory authority and the licenses held by the entity and Key Holders. You will also need to upload them at the end of the application.",
+            placeholder: "List licenses and the issuing regulatory body",
+          },
+        ],
+      },
+      {
+        id: "6654cc7a0231be789748cbd1",
+        title:
+          "Does the prospective insured have audited financial statements and as available: 10Ks, prospectus and balance sheet and liabilities etc?",
+        inputs: [
+          {
+            id: "6654cc7682a7a40eb5ba90f1",
+            inputType: "multiChoice",
+            options: [
+              {
+                id: "6654cc81bf7346e9d335f97e",
+                text: "Yes",
+                explanation:
+                  "If yes, please upload audited financial statements and as available including 10Ks, prospectus and balance sheet, liabilities, pro forma etc in the upload section at the end of application.",
+              },
+              {
+                id: "6654cc842812b8faacf5c303",
+                text: "No",
+                explanation:
+                  "If no, please upload a statement of approximate net worth detailed by asset class in the upload section at the end of application.",
+              },
+            ],
+          },
         ],
       },
     ],
@@ -237,27 +310,37 @@ export function AWMultiChoiceField(props: {
   options?: IAWMultiChoiceFieldOption[];
 }) {
   return (
-    <div className="h-[40px] w-full flex items-center gap-[45px]">
+    <div
+      className={`${
+        props.options?.some((o) => o.explanation)
+          ? "pt-lg flex-col gap-xl"
+          : "h-[40px] gap-[45px]"
+      } w-full flex  items-center`}
+    >
       {props.options?.map((o) => (
-        <div
-          key={o.id}
-          className="flex items-center gap-[16px] cursor-pointer hover:opacity-60 duration-200"
-          onClick={() => props.setValue(o.id)}
-        >
+        <div key={o.id} className="flex flex-col gap-2">
           <div
-            className={`h-[15px] w-[15px] flex items-center justify-center rounded-full ${
-              props.value === o.id
-                ? "border-fields-checkbox-selected"
-                : "border-fields-checkbox-default"
-            } border-[1.5px] border-solid duration-300`}
+            className="flex items-center gap-[16px] cursor-pointer hover:opacity-60 duration-200"
+            onClick={() => props.setValue(o.id)}
           >
             <div
-              className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 ${
-                props.value === o.id ? "opacity-100" : "opacity-0"
-              }`}
-            />
+              className={`h-[15px] w-[15px] flex items-center justify-center rounded-full ${
+                props.value === o.id
+                  ? "border-fields-checkbox-selected"
+                  : "border-fields-checkbox-default"
+              } border-[1.5px] border-solid duration-300`}
+            >
+              <div
+                className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 ${
+                  props.value === o.id ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </div>
+            <div className="text-darkTeal-5 text-xl">{o.text}</div>
           </div>
-          <div className="text-darkTeal-5 text-xl">{o.text}</div>
+          {o.explanation ? (
+            <div className="text-darkTeal-0 text-lg">{o.explanation}</div>
+          ) : null}
         </div>
       ))}
     </div>
@@ -336,7 +419,7 @@ export function AWFormSection(
       } opacity-0 animate-fadeIn`}
       style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
     >
-      <div className="text-lg font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
+      <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
       <div className="flex flex-col gap-xl">
         {props.inputs.map((input) => (
           <div key={input.id} className="flex flex-col gap-1">
@@ -386,7 +469,7 @@ export function AWFormSection(
             props.hiddenInputs.inputs[0].title ? "gap-xl" : "gap-1"
           } pt-lg`}
         >
-          <div className="text-lg font-medium text-darkTeal-2">{`${props.i}b) ${props.hiddenInputs.title}`}</div>
+          <div className="text-xl font-medium text-darkTeal-2">{`${props.i}b) ${props.hiddenInputs.title}`}</div>
           <div className="flex flex-col gap-xl">
             {props.hiddenInputs.inputs.map((input) => (
               <div key={input.id} className="flex flex-col gap-1">

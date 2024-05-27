@@ -34,6 +34,7 @@ export interface IAWFormInput {
 export interface IAWMultiChoiceFieldOption {
   id: string;
   text: string;
+  explanation?: string;
 }
 
 export interface IAWFormInputAnswer {
