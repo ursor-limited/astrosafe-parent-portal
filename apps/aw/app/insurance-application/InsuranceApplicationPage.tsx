@@ -272,6 +272,6 @@ export default function InsuranceApplicationPage() {
   return showForm ? (
     <InsuranceApplicationForm />
   ) : (
-    <InsuranceApplicationIntro />
+    <InsuranceApplicationIntro startCallback={() => setShowForm(true)} />
   );
 }

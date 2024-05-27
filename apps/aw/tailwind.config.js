@@ -9,6 +9,7 @@ module.exports = {
       fontSize: { xl: ['20px', '24px'] },
       spacing: {
         1: "4px",
+        lg: '12px',
         xl: "16px",
         "3xl": "24px",
       },

@@ -4,9 +4,9 @@ import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";
 
-const dmMono = DM_Mono({
+export const dmMono = DM_Mono({
   subsets: ["latin"],
-  weight: "500",
+  weight: ["400", "500"],
 });
 
 export default function InsuranceApplicationDialog(props: {
