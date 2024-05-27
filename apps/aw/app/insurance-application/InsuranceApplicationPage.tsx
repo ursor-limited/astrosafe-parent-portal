@@ -7,6 +7,7 @@ import InsuranceApplicationForm, {
   IAWFormInput,
   IAWFormInputAnswer,
   IAWFormSection,
+  IAWFormSectionSubsection,
   IAWMultiChoiceFieldOption,
 } from "./views/InsuranceApplicationForm";
 import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
@@ -14,6 +15,7 @@ import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTerm
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
+import InsuranceApplicationFormInput from "./InsuranceApplicationFormInput";
 
 const FADEIN_DELAY = 66;
 
@@ -156,30 +158,33 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
             placeholder: "Enter Zip or Postal Code",
           },
         ],
-        hiddenInputs: {
-          prompt: "The business entity has an additional address",
-          title: "Company's business address",
-          inputs: [
-            {
-              id: "6654c26dc3f4e07fba23c413",
-              title: "Street address",
-              inputType: "text",
-              placeholder: "Enter address here",
-            },
-            {
-              id: "6654c271388067a29bb34f0a",
-              title: "City, State and Country",
-              inputType: "text",
-              placeholder: "Enter City, State and Country",
-            },
-            {
-              id: "6654c275eb925065849228c9",
-              title: "Zip or Postal code",
-              inputType: "text",
-              placeholder: "Enter Zip or Postal Code",
-            },
-          ],
-        },
+        subsections: [
+          {
+            revelationCheckboxPrompt:
+              "The business entity has an additional address",
+            title: "Company's business address",
+            inputs: [
+              {
+                id: "6654c26dc3f4e07fba23c413",
+                title: "Street address",
+                inputType: "text",
+                placeholder: "Enter address here",
+              },
+              {
+                id: "6654c271388067a29bb34f0a",
+                title: "City, State and Country",
+                inputType: "text",
+                placeholder: "Enter City, State and Country",
+              },
+              {
+                id: "6654c275eb925065849228c9",
+                title: "Zip or Postal code",
+                inputType: "text",
+                placeholder: "Enter Zip or Postal Code",
+              },
+            ],
+          },
+        ],
       },
       {
         id: "6654c8304f6d9bc2ccd4203c",
@@ -300,30 +305,64 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
       {
         id: "6654dee53dd280a07d699e1e",
         title: "Beneficiaries",
-        inputs: [
+        subsections: [
           {
-            id: "6654dee124c24611274eb195",
-            inputType: "text",
-            title: "Name of primary contact",
-            placeholder: "Enter full name of contact",
+            title: "Primary beneficiary details",
+            inputs: [
+              {
+                id: "6654dee124c24611274eb195",
+                inputType: "text",
+                title: "Name of primary contact",
+                placeholder: "Enter full name of contact",
+              },
+              {
+                id: "6654df034b94589494b1f6f3",
+                inputType: "text",
+                title: "Entity name (if applicable)",
+                placeholder: "Name with which entity was incorporated",
+              },
+              {
+                id: "6654dfb696f4be7b678d7b82",
+                inputType: "text",
+                title: "Relationship with name insured",
+                placeholder: "Enter relationship here",
+              },
+              {
+                id: "6654e01d4d4537731775de76",
+                inputType: "text",
+                title: "Email address",
+                placeholder: "Enter email address here",
+              },
+            ],
           },
           {
-            id: "6654df034b94589494b1f6f3",
-            inputType: "text",
-            title: "Entity name (if applicable)",
-            placeholder: "Name with which entity was incorporated",
-          },
-          {
-            id: "6654dfb696f4be7b678d7b82",
-            inputType: "text",
-            title: "Relationship with name insured",
-            placeholder: "Enter relationship here",
-          },
-          {
-            id: "6654e01d4d4537731775de76",
-            inputType: "text",
-            title: "Email address",
-            placeholder: "Enter email address here",
+            title: "Secondary beneficiary details",
+            inputs: [
+              {
+                id: "6654efff746ff44ce754c4b9",
+                inputType: "text",
+                title: "Name of secondary contact",
+                placeholder: "Enter full name of contact",
+              },
+              {
+                id: "6654f004e59414a2e3ca72f2",
+                inputType: "text",
+                title: "Entity name (if applicable)",
+                placeholder: "Name with which entity was incorporated",
+              },
+              {
+                id: "6654f00807716565788eb85a",
+                inputType: "text",
+                title: "Relationship with name insured",
+                placeholder: "Enter relationship here",
+              },
+              {
+                id: "6654f00cfcea79b7ce5aa11e",
+                inputType: "text",
+                title: "Email address",
+                placeholder: "Enter email address here",
+              },
+            ],
           },
         ],
       },
@@ -421,9 +460,10 @@ export function AWLongTextField(props: {
   );
 }
 
-export function AWFormSection(
-  props: IAWFormSection & {
+export function AWFormSectionSubsection(
+  props: IAWFormSectionSubsection & {
     i: number;
+    j: number;
     answers?: IAWFormInputAnswer[];
     setValue: (
       id: IAWFormInput["id"],
@@ -435,105 +475,89 @@ export function AWFormSection(
   useEffect(
     () =>
       setChecked(
-        !!props.hiddenInputs?.inputs?.some(
+        !!props.inputs?.some(
           (input) => props.answers?.find((a) => a.id === input.id)?.value
         )
       ),
-    [props.answers, props.hiddenInputs]
+    [props.answers, props.inputs]
   );
   return (
     <div
+      className={`flex flex-col gap-xl ${
+        props.revelationCheckboxPrompt ? "" : "px-[24px]"
+      }`}
+    >
+      {props.revelationCheckboxPrompt ? (
+        <div
+          className={`flex items-center gap-[12px] ${checked ? "pb-lg" : ""}`}
+        >
+          <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
+          <div className="text-lg font-medium text-darkTeal-2">
+            {props.revelationCheckboxPrompt}
+          </div>
+        </div>
+      ) : null}
+      {!props.revelationCheckboxPrompt || checked ? (
+        <>
+          <div className="text-xl font-medium text-darkTeal-2">{`${props.i}.${props.j}) ${props.title}`}</div>
+          <div className="flex flex-col gap-xl">
+            {props.inputs.map((input, index) => (
+              <InsuranceApplicationFormInput
+                key={index}
+                {...input}
+                setValue={props.setValue}
+                answers={props.answers}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+export function AWFormSection(
+  props: IAWFormSection & {
+    i: number;
+    answers?: IAWFormInputAnswer[];
+    setValue: (
+      id: IAWFormInput["id"],
+      newValue: IAWFormInputAnswer["value"]
+    ) => void;
+  }
+) {
+  return (
+    <div
       className={`flex flex-col ${
-        props.inputs[0].title ? "gap-xl" : "gap-1"
+        !props.inputs || props.inputs[0].title ? "gap-xl" : "gap-1"
       } opacity-0 animate-fadeIn`}
       style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
     >
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
-      <div className="flex flex-col gap-xl">
-        {props.inputs.map((input) => (
-          <div key={input.id} className="flex flex-col gap-1">
-            {input.title ? (
-              <div className="text-lg text-darkTeal-2">{input.title}</div>
-            ) : null}
-            {input.inputType === "text" ? (
-              <AWTextField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                placeholder={input.placeholder}
-              />
-            ) : input.inputType === "textLong" ? (
-              <AWLongTextField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                placeholder={input.placeholder}
-              />
-            ) : input.inputType === "multiChoice" ? (
-              <AWMultiChoiceField
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                options={input.options}
-              />
-            ) : input.inputType === "dropdown" ? (
-              <AWDropdown
-                value={props.answers?.find((a) => a.id === input.id)?.value}
-                setValue={(v) => props.setValue(input.id, v)}
-                options={input.options}
-                placeholder={input.placeholder}
-              />
-            ) : null}
-          </div>
-        ))}
-      </div>
-      {props.hiddenInputs ? (
-        <div className="flex items-center gap-[12px]">
-          <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
-          <div className="text-lg font-medium text-darkTeal-2">
-            {props.hiddenInputs.prompt}
-          </div>
+      {props.inputs ? (
+        <div className="flex flex-col gap-xl">
+          {props.inputs.map((input, index) => (
+            <InsuranceApplicationFormInput
+              key={index}
+              {...input}
+              setValue={props.setValue}
+              answers={props.answers}
+            />
+          ))}
         </div>
       ) : null}
-      {checked && props.hiddenInputs ? (
-        <div
-          className={`flex flex-col ${
-            props.hiddenInputs.inputs[0].title ? "gap-xl" : "gap-1"
-          } pt-lg`}
-        >
-          <div className="text-xl font-medium text-darkTeal-2">{`${props.i}b) ${props.hiddenInputs.title}`}</div>
-          <div className="flex flex-col gap-xl">
-            {props.hiddenInputs.inputs.map((input) => (
-              <div key={input.id} className="flex flex-col gap-1">
-                {input.title ? (
-                  <div className="text-lg text-darkTeal-2">{input.title}</div>
-                ) : null}
-                {input.inputType === "text" ? (
-                  <AWTextField
-                    value={props.answers?.find((a) => a.id === input.id)?.value}
-                    setValue={(v) => props.setValue(input.id, v)}
-                    placeholder={input.placeholder}
-                  />
-                ) : input.inputType === "textLong" ? (
-                  <AWLongTextField
-                    value={props.answers?.find((a) => a.id === input.id)?.value}
-                    setValue={(v) => props.setValue(input.id, v)}
-                    placeholder={input.placeholder}
-                  />
-                ) : input.inputType === "multiChoice" ? (
-                  <AWMultiChoiceField
-                    value={props.answers?.find((a) => a.id === input.id)?.value}
-                    setValue={(v) => props.setValue(input.id, v)}
-                    options={input.options}
-                  />
-                ) : input.inputType === "dropdown" ? (
-                  <AWDropdown
-                    value={props.answers?.find((a) => a.id === input.id)?.value}
-                    setValue={(v) => props.setValue(input.id, v)}
-                    options={input.options}
-                    placeholder={input.placeholder}
-                  />
-                ) : null}
-              </div>
-            ))}
-          </div>
+      {props.subsections ? (
+        <div className="flex flex-col gap-3xl">
+          {props.subsections.map((subsection, j) => (
+            <AWFormSectionSubsection
+              key={j}
+              {...subsection}
+              i={props.i}
+              j={j + 1}
+              answers={props.answers}
+              setValue={props.setValue}
+            />
+          ))}
         </div>
       ) : null}
     </div>

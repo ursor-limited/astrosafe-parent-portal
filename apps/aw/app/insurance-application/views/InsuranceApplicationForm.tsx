@@ -7,12 +7,14 @@ import { useLocalStorage } from "usehooks-ts";
 export interface IAWFormSection {
   id: string;
   title: string;
+  inputs?: IAWFormInput[];
+  subsections?: IAWFormSectionSubsection[];
+}
+
+export interface IAWFormSectionSubsection {
+  title: string;
   inputs: IAWFormInput[];
-  hiddenInputs?: {
-    prompt: string;
-    title: string;
-    inputs: IAWFormInput[];
-  };
+  revelationCheckboxPrompt?: string;
 }
 
 type AWFormInput =
@@ -52,8 +54,8 @@ export default function InsuranceApplicationForm() {
         STEPS.map((s) => s.sections)
           .flat()
           .map((section) => [
-            ...section.inputs,
-            ...(section.hiddenInputs?.inputs || []),
+            ...(section.inputs ?? []),
+            ...(section.subsections?.flatMap((ss) => ss.inputs) || []),
           ])
           .flat()
           .map((input) => ({
@@ -82,8 +84,14 @@ export default function InsuranceApplicationForm() {
     () =>
       setCanProceed(
         STEPS[stepIndex].sections
-          .flatMap((s) => s.inputs)
-          .every((input) => answers.find((a) => a.id === input.id)?.value)
+          .flatMap((s) => [
+            ...(s.inputs || []),
+            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+          ])
+          .every(
+            (input) =>
+              input.optional || answers.find((a) => a.id === input?.id)?.value
+          )
       ),
     [answers, stepIndex]
   );
@@ -102,7 +110,7 @@ export default function InsuranceApplicationForm() {
       }}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-        <div className="w-full flex flex-col gap-[32px]">
+        <div className="w-full flex flex-col gap-[46px]">
           {STEPS[stepIndex].sections.map((section, i) => (
             <AWFormSection
               key={section.id}

@@ -15,12 +15,13 @@ export default function InsuranceApplicationCheckpoints(props: {
   useEffect(() => {
     const firstNotCompleteStep = STEPS.find(
       (step) =>
-        !step.sections.every((section) =>
-          section.inputs.every(
-            (input) =>
-              input.optional ||
-              committedAnswers?.find((answer) => answer.id === input.id)
-          )
+        !step.sections.every(
+          (section) =>
+            section.inputs?.every(
+              (input) =>
+                input.optional ||
+                committedAnswers?.find((answer) => answer.id === input.id)
+            )
         )
     );
     setCurrentStepIndex(
