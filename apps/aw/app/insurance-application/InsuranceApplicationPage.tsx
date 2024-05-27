@@ -298,6 +298,36 @@ export const STEPS: { title: string; sections: IAWFormSection[] }[] = [
           },
         ],
       },
+      {
+        id: "6654dee53dd280a07d699e1e",
+        title: "Beneficiaries",
+        inputs: [
+          {
+            id: "6654dee124c24611274eb195",
+            inputType: "text",
+            title: "Name of primary contact",
+            placeholder: "Enter full name of contact",
+          },
+          {
+            id: "6654df034b94589494b1f6f3",
+            inputType: "text",
+            title: "Entity name (if applicable)",
+            placeholder: "Name with which entity was incorporated",
+          },
+          {
+            id: "6654dfb696f4be7b678d7b82",
+            inputType: "text",
+            title: "Relationship with name insured",
+            placeholder: "Enter relationship here",
+          },
+          {
+            id: "6654e01d4d4537731775de76",
+            inputType: "text",
+            title: "Email address",
+            placeholder: "Enter email address here",
+          },
+        ],
+      },
     ],
   },
 ];
