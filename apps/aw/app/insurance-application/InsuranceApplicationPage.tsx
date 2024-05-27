@@ -13,6 +13,7 @@ import InsuranceApplicationForm, {
 import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
+import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 
 const FADEIN_DELAY = 66;
 
@@ -279,6 +280,7 @@ export default function InsuranceApplicationPage() {
     [committedAnswers]
   );
 
+  const [welcomeDone, setWelcomeDone] = useState<boolean>(false);
   const [glossaryDone, setGlossaryDone] = useState<boolean>(false);
   const [TOSDone, setTOSDone] = useState<boolean>(false);
 
@@ -286,6 +288,8 @@ export default function InsuranceApplicationPage() {
 
   return formStarted ? (
     <InsuranceApplicationForm />
+  ) : !welcomeDone ? (
+    <InsuranceApplicationWelcome nextCallback={() => setWelcomeDone(true)} />
   ) : !glossaryDone ? (
     <InsuranceApplicationGlossary nextCallback={() => setGlossaryDone(true)} />
   ) : !TOSDone ? (
