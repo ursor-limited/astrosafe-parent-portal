@@ -35,7 +35,7 @@ export interface IAWFormInput {
   title?: string;
   placeholder?: string;
   options?: IAWMultiChoiceFieldOption[];
-  prefillInputId?: string;
+  prefill?: { step: AWInsuranceApplicationStep; inputId: IAWFormInput["id"] };
 }
 
 export interface IAWMultiChoiceFieldOption {
@@ -75,9 +75,12 @@ export default function InsuranceApplicationFormDialog(props: {
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[]
-  >(`${props.stepId}-committedAnswers`, []);
-  useEffect(() => setAnswers(committedAnswers), [committedAnswers]);
+    Partial<Record<AWInsuranceApplicationStep, IAWFormInputAnswer[]>>
+  >("committedAnswers", {});
+  useEffect(
+    () => setAnswers(committedAnswers[props.stepId] || []),
+    [committedAnswers, props.stepId]
+  );
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(
@@ -97,7 +100,36 @@ export default function InsuranceApplicationFormDialog(props: {
     [answers]
   );
 
-  const commitAnswers = () => setCommittedAnswers(answers);
+  const commitAnswers = () =>
+    setCommittedAnswers({ ...committedAnswers, [props.stepId]: answers });
+
+  const prefill = (section: IAWFormSection) =>
+    section.inputs?.forEach((input) => {
+      if (input.prefill) {
+        const newValue = committedAnswers[input.prefill.step]?.find(
+          (a) => a.inputId === input.prefill!.inputId
+        )?.value;
+        console.log(newValue, input.id, answers);
+        if (newValue && !answers.find((a) => a.inputId === input.id)?.value) {
+          setValue(input.id, newValue);
+        }
+      }
+    });
+
+  useEffect(
+    // prefill the prefillable fields that are not bound by a switch
+    () =>
+      answers &&
+      props.sections.forEach((section) => {
+        if (
+          !section.prefillInputPrompt &&
+          section.inputs?.some((input) => input.prefill)
+        ) {
+          prefill(section);
+        }
+      }),
+    [answers]
+  );
 
   return (
     <InsuranceApplicationDialog
@@ -120,6 +152,7 @@ export default function InsuranceApplicationFormDialog(props: {
               i={i + 1}
               answers={answers}
               setValue={setValue}
+              prefill={() => prefill(section)}
             />
           ))}
         </div>

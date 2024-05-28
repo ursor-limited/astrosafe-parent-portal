@@ -10,7 +10,10 @@ const SECTIONS: IAWFormSection[] = [
     inputs: [
       {
         id: "6655be2de0735e8450474863",
-        prefillInputId: "6651d2bb1aaa5843d82bc607",
+        prefill: {
+          step: "policyOwner",
+          inputId: "6652e4a2214b3b8b436dc33d",
+        },
         inputType: "text",
         placeholder: "Insert name here",
       },
@@ -88,35 +91,50 @@ const SECTIONS: IAWFormSection[] = [
     inputs: [
       {
         id: "66561d077be86edef7a7c569",
-        prefillInputId: "6655c0fe63a59eef74dfcd2f",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c0fe63a59eef74dfcd2f",
+        },
         title: "Address line 1",
         inputType: "text",
         placeholder: "Insert street address",
       },
       {
         id: "66561d1605b212a580f388eb",
-        prefillInputId: "6655c1595eb7619ecf4f664c",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c1595eb7619ecf4f664c",
+        },
         title: "Address line 2",
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
       {
         id: "66561d1b4c32d5191c3ae48d",
-        prefillInputId: "6655c171a4a4f8c8b3d6a26f",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c171a4a4f8c8b3d6a26f",
+        },
         title: "City",
         inputType: "text",
         placeholder: "Insert city",
       },
       {
         id: "66561d1f2bdd8d9d05725bb0",
-        prefillInputId: "6655c18ff69ad61442a6fa2b",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c18ff69ad61442a6fa2b",
+        },
         title: "State of province",
         inputType: "text",
         placeholder: "Insert state of province",
       },
       {
         id: "66561d25fb1f010c0bd6ace9",
-        prefillInputId: "6655c1b04f9526468edc17b0",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c1b04f9526468edc17b0",
+        },
         title: "Country",
         inputType: "dropdown",
         placeholder: "Choose your country",
@@ -124,7 +142,10 @@ const SECTIONS: IAWFormSection[] = [
       },
       {
         id: "66561d2a42becad2f5f4f9ed",
-        prefillInputId: "6655c1eb44e7da94b593e696",
+        prefill: {
+          step: "personalDetails",
+          inputId: "6655c1eb44e7da94b593e696",
+        },
         title: "ZIP code",
         inputType: "text",
         placeholder: "Enter postal code",

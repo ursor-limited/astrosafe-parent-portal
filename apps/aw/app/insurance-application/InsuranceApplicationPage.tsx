@@ -197,9 +197,13 @@ export function AWFormSection(
       id: IAWFormInput["id"],
       newValue: IAWFormInputAnswer["value"]
     ) => void;
+    prefill?: () => void;
   }
 ) {
-  const [prefill, setPrefill] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
+  useEffect(() => {
+    checked && props.prefill?.();
+  }, [checked]);
   return (
     <div
       className={`flex flex-col ${
@@ -210,7 +214,7 @@ export function AWFormSection(
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
       {props.prefillInputPrompt ? (
         <div className={`flex items-center gap-[12px]`}>
-          <AWCheckbox checked={prefill} callback={() => setPrefill(!prefill)} />
+          <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
           <div className="text-lg font-medium text-darkTeal-2">
             {props.prefillInputPrompt}
           </div>
@@ -224,6 +228,9 @@ export function AWFormSection(
               {...input}
               setValue={props.setValue}
               answers={props.answers}
+              disabled={
+                checked || (!props.prefillInputPrompt && !!input.prefill)
+              }
             />
           ))}
         </div>
