@@ -36,7 +36,6 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import DashboardSignupPromptDialog from "./DashboardSignupPromptDialog";
 import StepperOverlay from "./StepperOverlay";
 import dayjs from "dayjs";
-import { TRIAL_DAYS } from "../account/AccountPageContents";
 import { useRouter } from "next/navigation";
 import QuestionnaireDialog from "./QuestionnaireDialog";
 import TrialExpirationDialog from "./TrialExpirationDialog";
@@ -49,8 +48,6 @@ import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
 import PinkPurpleStar from "@/images/PinkPurpleStar.svg";
-import DashboardPageCreateButton from "./DashboardPageCreateButton";
-import DashboardPageBinaryContentFilterSelection from "./DashboardPageBinaryContentFilterSelection";
 import ImageDialog, { IImage } from "./ImageDialog";
 import ImageCard from "../components/ImageCard";
 import LinkCard from "../components/LinkCard";
@@ -62,12 +59,16 @@ import ShareDialog from "./ShareDialog";
 import { fadeIn } from "./TimeRange";
 import TutorialVideoBar from "../components/TutorialVideoBar";
 
+export const TRIAL_DAYS = 14;
+
 const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
 const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
 
 const POPOVER_MARGIN = 10;
 
 export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
+
+const NO_EMPTY_STATE_ILLUSTRATIONS_WINDOW_HEIGHT_THRESHOLD = 448;
 
 export const spin = keyframes`
 from {
@@ -884,17 +885,17 @@ export default function DashboardPageContents() {
   useEffect(() => {
     if (
       !trialExpirationDialogAlreadySeen &&
-      !userDetails.user?.subscribed &&
+      !userDetails.schoolIsSubscribed &&
       userDetails.user?.freeTrialStart &&
       getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
     ) {
       setTrialExpirationDialogOpen(
-        !userDetails.user?.subscribed &&
+        !userDetails.schoolIsSubscribed &&
           getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
       );
       setTrialExpirationDialogAlreadySeen(true);
     }
-  }, [userDetails.user?.subscribed]);
+  }, [userDetails.schoolIsSubscribed]);
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
@@ -969,7 +970,18 @@ export default function DashboardPageContents() {
     null
   );
 
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
+
+  const [hideEmptyStateIllustrations, setHideEmptyStateIllustrations] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setHideEmptyStateIllustrations(
+        height < NO_EMPTY_STATE_ILLUSTRATIONS_WINDOW_HEIGHT_THRESHOLD
+      ),
+    [height]
+  );
+
   const [filterMultiRow, setFilterMultiRow] = useState<boolean>(false);
   useEffect(
     () => setFilterMultiRow(width < FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD),
@@ -1006,13 +1018,12 @@ export default function DashboardPageContents() {
   const [showTutorialVideoButton, setShowTutorialVideoButton] =
     useState<boolean>(false);
   const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
-  useEffect(
-    () =>
+  useEffect(() => {
+    userDetails.loaded &&
       setShowTutorialVideoButton(
         !userDetails.user?.switchedOffDashboardTutorialVideo
-      ),
-    [userDetails.user?.switchedOffDashboardTutorialVideo]
-  );
+      );
+  }, [userDetails.user?.switchedOffDashboardTutorialVideo, userDetails.loaded]);
 
   return (
     <>
@@ -1088,13 +1099,13 @@ export default function DashboardPageContents() {
         selectedSidebarItemId="home"
         scrollable
         button={
-          !userDetails.user?.subscribed
+          !userDetails.schoolIsSubscribed
             ? {
                 text: "Upgrade",
                 icon: VerifiedIcon,
                 callback: () => setUpgradeDialogOpen(true),
               }
-            : userDetails.user.subscriptionDeletionDate
+            : userDetails.user?.subscriptionDeletionDate
             ? {
                 text: "Renew",
                 icon: VerifiedIcon,
@@ -1110,8 +1121,8 @@ export default function DashboardPageContents() {
         }
         buttonRowExtraElement={
           <Stack direction="row" spacing="12px" alignItems="center">
-            {!userDetails.user?.subscribed ||
-            userDetails.user.subscriptionDeletionDate ? (
+            {!userDetails.schoolIsSubscribed ||
+            userDetails.user?.subscriptionDeletionDate ? (
               <>
                 {!userDetails.user?.subscriptionDeletionDate &&
                 getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
@@ -1541,31 +1552,46 @@ export default function DashboardPageContents() {
             document.body
           )
         : null}
-      {anyLoaded &&
+      {!hideEmptyStateIllustrations &&
+      anyLoaded &&
       !selectedContentType &&
       lessons.length === 0 &&
       worksheets.length === 0 &&
       videos.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No content yet.</EmptyStateIllustration>,
+            <EmptyStateIllustration paddingTop={100}>
+              No content yet.
+            </EmptyStateIllustration>,
             document.body
           )
         : null}
-      {selectedContentType === "video" && videos.length === 0
+      {selectedContentType === "video" &&
+      videos.length === 0 &&
+      !hideEmptyStateIllustrations
         ? createPortal(
-            <EmptyStateIllustration>No videos yet.</EmptyStateIllustration>,
+            <EmptyStateIllustration paddingTop={100}>
+              No videos yet.
+            </EmptyStateIllustration>,
             document.body
           )
         : null}
-      {selectedContentType === "lesson" && lessons.length === 0
+      {!hideEmptyStateIllustrations &&
+      selectedContentType === "lesson" &&
+      lessons.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No lessons yet.</EmptyStateIllustration>,
+            <EmptyStateIllustration paddingTop={100}>
+              No lessons yet.
+            </EmptyStateIllustration>,
             document.body
           )
         : null}
-      {selectedContentType === "worksheet" && worksheets.length === 0
+      {!hideEmptyStateIllustrations &&
+      selectedContentType === "worksheet" &&
+      worksheets.length === 0
         ? createPortal(
-            <EmptyStateIllustration>No worksheets yet.</EmptyStateIllustration>,
+            <EmptyStateIllustration paddingTop={100}>
+              No worksheets yet.
+            </EmptyStateIllustration>,
             document.body
           )
         : null}

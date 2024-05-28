@@ -64,6 +64,7 @@ export default function ActionPopup(props: IActionPopupProps) {
       closeCallback={props.closeCallback}
       placement={props.placement}
       zIndex={props.zIndex}
+      flip
     >
       {props.children}
     </UrsorPopover>

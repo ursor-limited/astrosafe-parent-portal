@@ -85,8 +85,6 @@ exports.handler = async function (event) {
     console.log(`Event Type: ${eventType}`);
     console.log(jsonData);
 
-    console.log("BUUU", stripeEvent.data.object?.subscription_details);
-
     const subscriptionId = stripeEvent.data.object.id;
     const customerId = stripeEvent.data.object.customer;
     const priceId = stripeEvent.data.object.plan?.id;

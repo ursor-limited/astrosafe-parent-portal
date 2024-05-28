@@ -143,7 +143,7 @@ const ProfileButton = (props: { light?: boolean }) => {
               text="Dashboard"
             />
 
-            {userCtx.user?.subscribed ? (
+            {/* {userCtx.schoolIsSubscribed ? (
               <Link
                 target="_blank"
                 href={process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL ?? ""}
@@ -156,7 +156,7 @@ const ProfileButton = (props: { light?: boolean }) => {
                   callback={() =>
                     userCtx.user
                       ? setSubscriptionStatusChangePossible(
-                          !userCtx.user.subscribed
+                          !userCtx.schoolIsSubscribed
                             ? null
                             : userCtx.user.subscriptionDeletionDate
                             ? "renewed"
@@ -168,7 +168,7 @@ const ProfileButton = (props: { light?: boolean }) => {
                   text="Manage plan"
                 />
               </Link>
-            ) : null}
+            ) : null} */}
             <ProfilePopupButton
               callback={() => {
                 logout();

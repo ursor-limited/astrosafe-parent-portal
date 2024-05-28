@@ -5,10 +5,13 @@ import { Stack, keyframes } from "@mui/system";
 import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import GearIcon from "@/images/icons/GearIcon.svg";
+import DesktopIcon from "@/images/icons/DesktopIcon.svg";
+import LockIcon from "@/images/icons/LockIcon.svg";
+import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
+import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import { useRouter } from "next/navigation";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useUserContext } from "../components/UserContext";
-import BrowserDialog from "./BrowserDialog";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -60,7 +63,10 @@ export type SideBarItemId =
   | "monitor"
   | "devices"
   | "library"
-  | "plugins";
+  | "plugins"
+  | "safety"
+  | "users"
+  | "channels";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -175,33 +181,51 @@ const SidebarItem = (props: {
 
 export default function Sidebar(props: ISidebarProps) {
   const router = useRouter();
-  const userCtx = useUserContext();
-  const { logout } = useAuth0();
-  const [signedIn, setSignedIn] = useLocalStorage<boolean>("signedIn", false);
   const topItems: ISidebarItem[] = [
     {
-      id: "home",
-      tourId: "home-button",
-      icon: VersionsIcon,
-      title: "Lessons",
-      callback: () => router.push("/dashboard"),
+      id: "monitor",
+      //tourId: "devices-button",
+      icon: DesktopIcon,
+      title: "Monitor",
+      callback: () => router.push("/monitor"),
     },
-    // {
-    //   id: "browser",
-    //   //tourId: "devices-button",
-    //   icon: GlobeIcon,
-    //   title: "Browser",
-    //   callback: () => setBrowserDialogOpen(true),
-    // },
+    {
+      id: "channels",
+      //tourId: "devices-button",
+      icon: ListUnorderedIcon,
+      title: "Channels",
+      callback: () => router.push("/channels"),
+    },
+    {
+      id: "safety",
+      //tourId: "devices-button",
+      icon: LockIcon,
+      title: "Safety",
+      callback: () => router.push("/safety"),
+    },
+    {
+      id: "apps",
+      //tourId: "devices-button",
+      icon: EmptyCheckboxIcon,
+      title: "Apps",
+      callback: () => router.push("/apps"),
+    },
+    {
+      id: "users",
+      //tourId: "devices-button",
+      icon: PeopleIcon,
+      title: "Users",
+      callback: () => router.push("/users"),
+    },
   ];
 
   const bottomItems: ISidebarItem[] = [
-    // {
-    //   id: "account",
-    //   icon: GearIcon,
-    //   title: "Account",
-    //   callback: () => router.push("/account"),
-    // },
+    {
+      id: "account",
+      icon: GearIcon,
+      title: "Account",
+      callback: () => router.push("/account"),
+    },
   ];
 
   const getList = (items: ISidebarItem[], small: boolean, noText: boolean) => (
@@ -230,9 +254,6 @@ export default function Sidebar(props: ISidebarProps) {
   const small = !!height && height > 0 && height < SMALL_ICON_HEIGHT_THRESHOLD;
   const noText = !!height && height < NO_TEXT_HEIGHT_THRESHOLD;
 
-  const [browserDialogOpen, setBrowserDialogOpen] =
-    React.useState<boolean>(false);
-
   return (
     <>
       <Stack
@@ -246,14 +267,28 @@ export default function Sidebar(props: ISidebarProps) {
         id="my-first-step"
       >
         <Stack spacing={small ? "16px" : "24px"} alignItems="center">
+          {getList(
+            [
+              {
+                id: "home",
+                tourId: "home-button",
+                icon: VersionsIcon,
+                title: "Create",
+                callback: () => router.push("/dashboard"),
+              },
+            ],
+            small,
+            noText
+          )}
+          <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} />
           {getList(topItems, small, noText)}
         </Stack>
         {getList(bottomItems, small, noText)}
       </Stack>
-      <BrowserDialog
+      {/* <BrowserDialog
         open={browserDialogOpen}
         closeCallback={() => setBrowserDialogOpen(false)}
-      />
+      /> */}
     </>
   );
 }

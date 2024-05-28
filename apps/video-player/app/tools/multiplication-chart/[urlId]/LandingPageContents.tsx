@@ -173,6 +173,7 @@ const WorksheetGenerator = dynamic(
 );
 
 export const EmptyStateIllustration = (props: {
+  paddingTop?: number;
   children: React.ReactNode;
 }) => (
   <Stack
@@ -189,7 +190,7 @@ export const EmptyStateIllustration = (props: {
     zIndex={999}
   >
     <UrsorFadeIn delay={500} duration={800}>
-      <Stack position="relative" spacing="18px">
+      <Stack position="relative" spacing="18px" pt={`${props.paddingTop}px`}>
         <Stack sx={{ opacity: 0.3 }}>
           <Image
             height={207}
@@ -198,7 +199,12 @@ export const EmptyStateIllustration = (props: {
             alt="Empty state illustration"
           />
         </Stack>
-        <Stack width="100%" alignItems="center" position="absolute" top="170px">
+        <Stack
+          width="100%"
+          alignItems="center"
+          position="absolute"
+          top={`${170 + (props.paddingTop ?? 0)}px`}
+        >
           <Typography
             bold
             color={PALETTE.secondary.grey[3]}
