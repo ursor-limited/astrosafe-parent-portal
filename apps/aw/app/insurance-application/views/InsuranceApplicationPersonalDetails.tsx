@@ -1,14 +1,7 @@
-import { useEffect, useState } from "react";
-import InsuranceApplicationDialog from "../components/InsuranceApplicationDialog";
-import { AWFormSection } from "../InsuranceApplicationPage";
-import { AWButton } from "@/components/AWButton";
-import { useLocalStorage } from "usehooks-ts";
-import {
-  IAWFormInputAnswer,
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import InsuranceApplicationFormDialog, {
   IAWFormSection,
-} from "./InsuranceApplicationPolicyOwner";
-
-const STEP_ID = "6655c3db9ad76128d7b9fc3a";
+} from "../components/InsuranceApplicationFormDialog";
 
 const SECTIONS: IAWFormSection[] = [
   {
@@ -93,97 +86,15 @@ const SECTIONS: IAWFormSection[] = [
 export default function InsuranceApplicationPersonalDetails(props: {
   nextCallback: () => void;
 }) {
-  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[] | undefined
-  >("committedAnswers", undefined);
-  useEffect(
-    () => committedAnswers && setAnswers(committedAnswers),
-    [committedAnswers]
-  );
-
-  const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
-  useEffect(
-    () =>
-      setAnswers(
-        SECTIONS.map((section) => section.inputs)
-          .flat()
-          .map((input) => ({
-            inputId: input!.id,
-          }))
-      ),
-    []
-  );
-
-  const setValue = (id: string, newValue?: string) => {
-    setAnswers((prev) =>
-      prev.map((a) => (a.inputId === id ? { ...a, value: newValue } : a))
-    );
-  };
-
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-  useEffect(
-    () =>
-      setCanProceed(
-        SECTIONS.flatMap((s) => [
-          ...(s.inputs || []),
-          ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-        ]).every(
-          (input) =>
-            input.optional ||
-            answers.find((a) => a.inputId === input?.id)?.value
-        )
-      ),
-    [answers]
-  );
-
-  const commitAnswers = () =>
-    setCommittedAnswers(
-      committedAnswers?.find((step) => step.inputId === STEP_ID)
-        ? committedAnswers?.map((step) =>
-            step.inputId === STEP_ID ? { inputId: STEP_ID, answers } : step
-          )
-        : [...(committedAnswers ?? []), { inputId: STEP_ID, answers }]
-    );
-
   return (
-    <InsuranceApplicationDialog
+    <InsuranceApplicationFormDialog
+      stepId="personalDetails"
       title="COMPANY LEADER PERSONAL DETAILS"
-      // leftCallback={() => setStepIndex(stepIndex - 1)}
-      // rightCallback={() => setStepIndex(stepIndex + 1)}
-      rightArrowFaded={!canProceed}
-      stepper={{
-        n: 1,
-        current: 0,
-      }}
-    >
-      <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-        <div className="w-full flex flex-col gap-[46px]">
-          {SECTIONS.map((section, i) => (
-            <AWFormSection
-              key={section.id}
-              {...section}
-              i={i + 1}
-              answers={answers}
-              setValue={setValue}
-            />
-          ))}
-        </div>
-        <div className="w-full justify-center flex gap-[16px]">
-          <AWButton width={182} variant="secondary" onClick={commitAnswers}>
-            Save
-          </AWButton>
-          <AWButton
-            width={182}
-            disabled={!canProceed}
-            onClick={() => {
-              commitAnswers();
-              props.nextCallback();
-            }}
-          >
-            Next
-          </AWButton>
-        </div>
-      </div>
-    </InsuranceApplicationDialog>
+      sections={SECTIONS}
+      nextCallback={props.nextCallback}
+      progress={
+        (CHECKPOINT_STEPS.indexOf("leaders") - 0.5) / CHECKPOINT_STEPS.length
+      }
+    />
   );
 }

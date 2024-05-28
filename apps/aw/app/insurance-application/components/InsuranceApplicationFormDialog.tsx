@@ -53,7 +53,7 @@ export interface IAWFormStepAnswers {
   answers: IAWFormInputAnswer[];
 }
 
-export default function InsuranceApplicationForm(props: {
+export default function InsuranceApplicationFormDialog(props: {
   stepId: AWInsuranceApplicationStep;
   title: string;
   sections: IAWFormSection[];

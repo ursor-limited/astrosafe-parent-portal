@@ -1,10 +1,7 @@
-import {
-  CHECKPOINT_STEPS,
-  awInsuranceApplicationSteps,
-} from "../InsuranceApplicationPage";
-import InsuranceApplicationForm, {
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import InsuranceApplicationFormDialog, {
   IAWFormSection,
-} from "../components/InsuranceApplicationForm";
+} from "../components/InsuranceApplicationFormDialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -298,7 +295,7 @@ export default function InsuranceApplicationBusinessSummary(props: {
   nextCallback: () => void;
 }) {
   return (
-    <InsuranceApplicationForm
+    <InsuranceApplicationFormDialog
       stepId="businessSummary"
       title="BUSINESS SUMMARY"
       sections={SECTIONS}

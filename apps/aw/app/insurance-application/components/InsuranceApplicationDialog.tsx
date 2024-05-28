@@ -45,11 +45,13 @@ export default function InsuranceApplicationDialog(props: {
                 transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
               }}
             />
-            {[...Array(5)].map((i) => (
+            {[...Array(5).keys()].map((i) => (
               <div
                 key={i}
                 className={`h-[4px] w-[4px] rounded-full ${
-                  i / 5 < props.progress! ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
+                  (i + 1) / 5 < props.progress!
+                    ? "bg-[#E0E3E6]"
+                    : "bg-darkTeal-0"
                 } z-10`}
               />
             ))}

@@ -10,15 +10,16 @@ import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
 import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
 import InsuranceApplicationResponsibilities from "./views/InsuranceApplicationResponsibilities";
-import InsuranceApplicationForm, {
+import {
   IAWFormInput,
   IAWFormInputAnswer,
   IAWFormSection,
   IAWFormSectionSubsection,
   IAWMultiChoiceFieldOption,
-} from "./components/InsuranceApplicationForm";
+} from "./components/InsuranceApplicationFormDialog";
 import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
 import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
+import InsuranceApplicationPersonalDetails from "./views/InsuranceApplicationPersonalDetails";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -29,6 +30,8 @@ export const awInsuranceApplicationSteps = [
   "businessSummary",
   "identity",
   "responsibilities",
+  "leaders",
+  "personalDetails",
 ] as const;
 export type AWInsuranceApplicationStep =
   (typeof awInsuranceApplicationSteps)[number];
@@ -37,11 +40,10 @@ export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "policyOwner",
   "businessSummary",
   "identity",
+  "leaders",
 ];
 
 const FADEIN_DELAY = 66;
-
-// Family or Multi-family Office, Hedge Fund or Similar, Miner, Mining Pool, Custodian, Exchange, Bitcoin Financial Services, Other Bitcoin Services, RIA or Investment Advisor, Traditional Financial Services, Other
 
 export function AWMultiChoiceField(props: {
   value?: string;
@@ -249,12 +251,12 @@ export default function InsuranceApplicationPage() {
   const [glossaryDone, setGlossaryDone] = useState<boolean>(true);
   const [TOSDone, setTOSDone] = useState<boolean>(true);
   const [checkPointsDone, setCheckpointsDone] = useState<boolean>(true);
-  const [policyOwnerDone, setPolicyOwnerDone] = useState<boolean>(false);
-  const [businessSummaryDone, setBusinessSummaryDone] =
-    useState<boolean>(false);
+  const [policyOwnerDone, setPolicyOwnerDone] = useState<boolean>(true);
+  const [businessSummaryDone, setBusinessSummaryDone] = useState<boolean>(true);
   const [identityDone, setIdentityDone] = useState<boolean>(true);
   const [responsibilitiesDone, setResponsibilitiesDone] =
-    useState<boolean>(false);
+    useState<boolean>(true);
+  const [leaderDetailsDone, setLeaderDetailsDone] = useState<boolean>(false);
 
   return (
     <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll">
@@ -289,6 +291,10 @@ export default function InsuranceApplicationPage() {
       ) : !responsibilitiesDone ? (
         <InsuranceApplicationResponsibilities
           nextCallback={() => setResponsibilitiesDone(true)}
+        />
+      ) : !leaderDetailsDone ? (
+        <InsuranceApplicationPersonalDetails
+          nextCallback={() => setLeaderDetailsDone(true)}
         />
       ) : (
         <></>
