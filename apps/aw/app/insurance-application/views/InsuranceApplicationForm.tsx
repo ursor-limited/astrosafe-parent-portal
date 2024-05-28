@@ -108,10 +108,11 @@ export interface IAWFormStepAnswers {
 
 export default function InsuranceApplicationForm(props: {
   stepId: string;
+  sections: IAWFormSection[];
+  progress: number;
   nextCallback: () => void;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
-  useEffect(() => setAnswers(committedAnswers[props.stepId]), [props.stepId]);
 
   const setValue = (id: string, newValue?: string) => {
     setAnswers((prev) =>
@@ -120,53 +121,45 @@ export default function InsuranceApplicationForm(props: {
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    Record<string, IAWFormInputAnswer[]>
-  >("committedAnswers", {});
+    IAWFormInputAnswer[]
+  >(`${props.stepId}_committedAnswers`, []);
+  useEffect(() => setAnswers(committedAnswers), [committedAnswers]);
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(
     () =>
       setCanProceed(
-        true
-        // STEPS[stepIndex].sections
-        //   .flatMap((s) => [
-        //     ...(s.inputs || []),
-        //     ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-        //   ])
-        //   .every(
-        //     (input) =>
-        //       input.optional ||
-        //       answers.find((a) => a.inputId === input?.id)?.value
-        //   )
+        props.sections
+          .flatMap((s) => [
+            ...(s.inputs || []),
+            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+          ])
+          .every(
+            (input) =>
+              input.optional ||
+              answers.find((a) => a.inputId === input?.id)?.value
+          )
       ),
     [answers]
   );
 
-  const commitAnswers = () => {
-    const stepId = STEPS[stepIndex].id;
-    setCommittedAnswers(
-      committedAnswers?.find((step) => step.stepId === stepId)
-        ? committedAnswers?.map((step) =>
-            step.stepId === stepId ? { stepId: stepId, answers: answers } : step
-          )
-        : [...(committedAnswers ?? []), { stepId: stepId, answers: answers }]
-    );
-  };
+  const commitAnswers = () => setCommittedAnswers(answers);
 
   return (
     <InsuranceApplicationDialog
       title="POLICY OWNER INFORMATION"
-      leftCallback={() => setStepIndex(stepIndex - 1)}
-      rightCallback={() => setStepIndex(stepIndex + 1)}
+      // leftCallback={() => setStepIndex(stepIndex - 1)}
+      // rightCallback={() => setStepIndex(stepIndex + 1)}
       rightArrowFaded={!canProceed}
-      stepper={{
-        n: STEPS.length,
-        current: stepIndex,
-      }}
+      progress={props.progress}
+      // stepper={{
+      //   n: STEPS.length,
+      //   current: stepIndex,
+      // }}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className="w-full flex flex-col gap-[46px]">
-          {STEPS[stepIndex].sections.map((section, i) => (
+          {props.sections.map((section, i) => (
             <AWFormSection
               key={section.id}
               {...section}
@@ -185,7 +178,8 @@ export default function InsuranceApplicationForm(props: {
             disabled={!canProceed}
             onClick={() => {
               commitAnswers();
-              setStepIndex(stepIndex + 1);
+              //setStepIndex(stepIndex + 1);
+              props.nextCallback();
             }}
           >
             Next

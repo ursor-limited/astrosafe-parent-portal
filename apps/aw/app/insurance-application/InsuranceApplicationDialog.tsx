@@ -14,7 +14,7 @@ export default function InsuranceApplicationDialog(props: {
   leftCallback?: () => void;
   rightCallback?: () => void;
   rightArrowFaded?: boolean;
-  stepper?: { n: number; current: number };
+  progress: number;
   children: React.ReactNode;
 }) {
   return (
@@ -29,37 +29,30 @@ export default function InsuranceApplicationDialog(props: {
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.leftCallback}
           style={{
-            opacity:
-              !props.leftCallback || props.stepper?.current === 0 ? 0 : 1,
+            opacity: !props.leftCallback || props.progress === 0 ? 0 : 1,
             pointerEvents:
-              !props.leftCallback || props.stepper?.current === 0
-                ? "none"
-                : undefined,
+              !props.leftCallback || props.progress === 0 ? "none" : undefined,
           }}
         >
           <ChevronLeftIcon height="20px" width="20px" />
         </div>
-        {props.stepper ? (
-          <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
+        <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
+          <div
+            className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
+            style={{
+              width: `${100 * props.progress}%`,
+              transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
+            }}
+          />
+          {[...Array(5)].map((i) => (
             <div
-              className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
-              style={{
-                width: `${
-                  (100 * props.stepper.current) / (props.stepper.n - 1)
-                }%`,
-                transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
-              }}
+              key={i}
+              className={`h-[4px] w-[4px] rounded-full ${
+                i / 5 < props.progress ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
+              } z-10`}
             />
-            {[...Array(props.stepper.n).keys()].map((i) => (
-              <div
-                key={i}
-                className={`h-[4px] w-[4px] rounded-full ${
-                  i < props.stepper!.current ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
-                } z-10`}
-              />
-            ))}
-          </div>
-        ) : null}
+          ))}
+        </div>
         <div
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.rightCallback}
