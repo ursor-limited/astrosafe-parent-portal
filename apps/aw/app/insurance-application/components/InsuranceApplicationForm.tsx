@@ -65,7 +65,11 @@ export default function InsuranceApplicationForm(props: {
 
   const setValue = (id: string, newValue?: string) => {
     setAnswers((prev) =>
-      prev.map((a) => (a.inputId === id ? { ...a, value: newValue } : a))
+      answers.find((a) => a.inputId === id)
+        ? prev.map((a) =>
+            a.inputId === id ? { inputId: id, value: newValue } : a
+          )
+        : [...answers, { inputId: id, value: newValue }]
     );
   };
 
