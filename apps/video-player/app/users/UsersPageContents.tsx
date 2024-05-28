@@ -113,15 +113,7 @@ export default function UsersPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
-  //   const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
-  //   ISafeTubeUser | undefined
-  // >();
-  // useEffect(() => {
-  //   teachers &&
-  //     ApiController.getUser(
-  //       teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
-  //     ).then((user) => setSafetubeSchoolOwner(user));
-  // }, [school?.ownerId, teachers]);
+  console.log(school);
 
   return (
     <>
@@ -134,7 +126,11 @@ export default function UsersPageContents() {
         button={{
           text: "Invite Teacher",
           callback: () => {
-            if (schoolIsSubscribed) {
+            if (
+              schoolIsSubscribed &&
+              school?.teacherLimit &&
+              teachers.length < school.teacherLimit
+            ) {
               setTeacherInvitationDialogOpen(true);
             } else {
               setUpgradePromptDialogOpen(true);
