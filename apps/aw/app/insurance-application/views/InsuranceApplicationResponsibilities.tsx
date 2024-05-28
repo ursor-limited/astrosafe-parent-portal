@@ -1,5 +1,5 @@
 import { AWCheckbox } from "@/components/AWCheckbox";
-import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
+import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 import { useState } from "react";
 
 export default function InsuranceApplicationResponsibilities(props: {

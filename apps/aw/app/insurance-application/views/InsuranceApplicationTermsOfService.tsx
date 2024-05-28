@@ -1,7 +1,7 @@
 import { AWButton } from "@/components/AWButton";
 import InsuranceApplicationDialog, {
   dmMono,
-} from "../InsuranceApplicationDialog";
+} from "../components/InsuranceApplicationDialog";
 import { useState } from "react";
 import { AWCheckbox } from "@/components/AWCheckbox";
 

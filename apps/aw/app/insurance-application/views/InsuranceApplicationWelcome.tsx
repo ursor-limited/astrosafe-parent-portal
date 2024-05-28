@@ -1,4 +1,4 @@
-import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
+import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 export default function InsuranceApplicationWelcome(props: {
   nextCallback: () => void;

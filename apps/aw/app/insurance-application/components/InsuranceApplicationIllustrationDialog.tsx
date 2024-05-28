@@ -11,10 +11,11 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   buttonCallback: () => void;
   buttonDisabled?: boolean;
   infoText?: string;
+  progress?: number;
   children?: React.ReactNode;
 }) {
   return (
-    <InsuranceApplicationDialog title={props.title}>
+    <InsuranceApplicationDialog title={props.title} progress={props.progress}>
       <div className="h-full w-full flex">
         <div className="flex flex-col p-3xl gap-[74px] h-full w-[525px] items-between border-r-2 border-r-greyscale-6">
           <div className="flex flex-col gap-3xl">

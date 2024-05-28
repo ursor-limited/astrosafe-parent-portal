@@ -1,4 +1,5 @@
-import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
@@ -8,6 +9,9 @@ export default function InsuranceApplicationIdentity(props: {
       title="IDENTITY VERIFICATION"
       buttonCallback={props.nextCallback}
       infoText="Why we do this"
+      progress={
+        (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length
+      }
     >
       <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
         <div>

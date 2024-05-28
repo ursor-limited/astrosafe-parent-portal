@@ -3,11 +3,11 @@ import {
   AWLongTextField,
   AWMultiChoiceField,
   AWTextField,
-} from "./InsuranceApplicationPage";
+} from "../InsuranceApplicationPage";
 import {
   IAWFormInput,
   IAWFormInputAnswer,
-} from "./views/InsuranceApplicationForm___";
+} from "../views/InsuranceApplicationPolicyOwner";
 
 export default function InsuranceApplicationFormInput(
   props: IAWFormInput & {

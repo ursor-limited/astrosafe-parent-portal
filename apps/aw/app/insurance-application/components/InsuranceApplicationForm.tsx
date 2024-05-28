@@ -1,64 +1,11 @@
 import { useEffect, useState } from "react";
-import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
-import { AWFormSection } from "../InsuranceApplicationPage";
+import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
+import {
+  AWFormSection,
+  AWInsuranceApplicationStep,
+} from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
-
-export const SECTIONS: IAWFormSection[] = [
-  {
-    id: "6651d2bb1aaa5843d82bc607",
-    title: "Full name",
-    inputs: [
-      {
-        id: "6652e4a2214b3b8b436dc33d",
-        inputType: "text",
-        placeholder: "Insert name here",
-      },
-    ],
-  },
-  {
-    id: "6651d2d30bc6c109d2a97aed",
-    title: "Job title",
-    inputs: [
-      {
-        id: "6652e4c66385fa89ff2e7f0e",
-        inputType: "text",
-        placeholder: "Insert title of role played in organization",
-      },
-    ],
-  },
-  {
-    id: "6651d2db9af2d8a25e707374",
-    title: "Email",
-    inputs: [
-      {
-        id: "6652e4e30ea140b445d02a07",
-        inputType: "text",
-        placeholder: "Insert email address here",
-      },
-    ],
-  },
-  {
-    id: "6651d885120e45915573a535",
-    title: "Will you be a Key Holder in the vault?",
-    inputs: [
-      {
-        id: "6652e5168e3e3d860c9772e3",
-        inputType: "multiChoice",
-        options: [
-          {
-            id: "6651d8968dec75fc382930a1",
-            text: "Yes",
-          },
-          {
-            id: "6651d8c083bc0df3082153e3",
-            text: "No",
-          },
-        ],
-      },
-    ],
-  },
-];
 
 export interface IAWFormSection {
   id: string;
@@ -107,10 +54,12 @@ export interface IAWFormStepAnswers {
 }
 
 export default function InsuranceApplicationForm(props: {
-  stepId: string;
+  stepId: AWInsuranceApplicationStep;
+  title: string;
   sections: IAWFormSection[];
   progress: number;
   nextCallback: () => void;
+  //rightArrowFaded: boolean;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
 
@@ -122,7 +71,7 @@ export default function InsuranceApplicationForm(props: {
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
     IAWFormInputAnswer[]
-  >(`${props.stepId}_committedAnswers`, []);
+  >(`${props.stepId}-committedAnswers`, []);
   useEffect(() => setAnswers(committedAnswers), [committedAnswers]);
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
@@ -147,7 +96,7 @@ export default function InsuranceApplicationForm(props: {
 
   return (
     <InsuranceApplicationDialog
-      title="POLICY OWNER INFORMATION"
+      title={props.title}
       // leftCallback={() => setStepIndex(stepIndex - 1)}
       // rightCallback={() => setStepIndex(stepIndex + 1)}
       rightArrowFaded={!canProceed}

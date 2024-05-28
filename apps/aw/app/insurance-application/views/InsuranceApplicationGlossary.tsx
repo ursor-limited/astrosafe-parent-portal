@@ -1,5 +1,5 @@
 import { STEPS } from "../InsuranceApplicationPage";
-import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
+import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 const TERMS = [
   {

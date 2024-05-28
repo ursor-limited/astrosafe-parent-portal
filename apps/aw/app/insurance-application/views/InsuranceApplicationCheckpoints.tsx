@@ -1,9 +1,9 @@
-import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
+import InsuranceApplicationDialog from "../components/InsuranceApplicationDialog";
 import { STEPS } from "../InsuranceApplicationPage";
 import { useLocalStorage } from "usehooks-ts";
-import { IAWFormInputAnswer } from "./InsuranceApplicationForm___";
+import { IAWFormInputAnswer } from "./InsuranceApplicationPolicyOwner";
 import { useEffect, useState } from "react";
-import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
+import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 export default function InsuranceApplicationCheckpoints(props: {
   startCallback: () => void;

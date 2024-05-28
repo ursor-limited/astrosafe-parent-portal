@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
+import InsuranceApplicationDialog from "../components/InsuranceApplicationDialog";
 import { AWFormSection } from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 import {
   IAWFormInputAnswer,
   IAWFormSection,
-} from "./InsuranceApplicationForm___";
+} from "./InsuranceApplicationPolicyOwner";
 
 const STEP_ID = "6655c3db9ad76128d7b9fc3a";
 

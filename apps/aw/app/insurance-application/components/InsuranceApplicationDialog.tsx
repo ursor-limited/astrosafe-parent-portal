@@ -14,7 +14,7 @@ export default function InsuranceApplicationDialog(props: {
   leftCallback?: () => void;
   rightCallback?: () => void;
   rightArrowFaded?: boolean;
-  progress: number;
+  progress?: number;
   children: React.ReactNode;
 }) {
   return (
@@ -36,23 +36,25 @@ export default function InsuranceApplicationDialog(props: {
         >
           <ChevronLeftIcon height="20px" width="20px" />
         </div>
-        <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
-          <div
-            className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
-            style={{
-              width: `${100 * props.progress}%`,
-              transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
-            }}
-          />
-          {[...Array(5)].map((i) => (
+        {props.progress ? (
+          <div className="h-[8px] w-[600px] bg-[#E0E3E6] px-[2px] rounded-[4px] flex justify-between items-center relative">
             <div
-              key={i}
-              className={`h-[4px] w-[4px] rounded-full ${
-                i / 5 < props.progress ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
-              } z-10`}
+              className="absolute left-0 top-0 h-full rounded-[4px] bg-lightTeal-2"
+              style={{
+                width: `${100 * props.progress}%`,
+                transition: "0.79s cubic-bezier(.47,-0.04,.06,1.01)",
+              }}
             />
-          ))}
-        </div>
+            {[...Array(5)].map((i) => (
+              <div
+                key={i}
+                className={`h-[4px] w-[4px] rounded-full ${
+                  i / 5 < props.progress! ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
+                } z-10`}
+              />
+            ))}
+          </div>
+        ) : null}
         <div
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.rightCallback}

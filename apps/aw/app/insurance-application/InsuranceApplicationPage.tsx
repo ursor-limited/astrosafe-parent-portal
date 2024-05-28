@@ -2,22 +2,42 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { AWDropdown } from "@/components/AWDropdown";
+import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
+import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
+import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
+import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
+import { AWCheckbox } from "@/components/AWCheckbox";
+import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
+import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
+import InsuranceApplicationResponsibilities from "./views/InsuranceApplicationResponsibilities";
 import InsuranceApplicationForm, {
   IAWFormInput,
   IAWFormInputAnswer,
   IAWFormSection,
   IAWFormSectionSubsection,
   IAWMultiChoiceFieldOption,
-} from "./views/InsuranceApplicationForm___";
-import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
-import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
-import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
-import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
-import { AWCheckbox } from "@/components/AWCheckbox";
-import InsuranceApplicationFormInput from "./InsuranceApplicationFormInput";
-import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
-import InsuranceApplicationResponsibilities from "./views/InsuranceApplicationResponsibilities";
+} from "./components/InsuranceApplicationForm";
+import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
+import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
+
+export const awInsuranceApplicationSteps = [
+  "welcome",
+  "glossary",
+  "termsOfService",
+  "checkpoints",
+  "policyOwner",
+  "businessSummary",
+  "identity",
+  "responsibilities",
+] as const;
+export type AWInsuranceApplicationStep =
+  (typeof awInsuranceApplicationSteps)[number];
+
+export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
+  "policyOwner",
+  "businessSummary",
+  "identity",
+];
 
 const FADEIN_DELAY = 66;
 
@@ -216,20 +236,22 @@ export function AWFormSection(
 }
 
 export default function InsuranceApplicationPage() {
-  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+  const [firstFormStepAnswers, setFirstFormStepAnswers] = useLocalStorage<
     IAWFormInputAnswer[] | undefined
-  >("committedAnswers", undefined);
+  >("policyOwner-committedAnswers", undefined);
   const [formStarted, setFormStarted] = useState<boolean>(false);
   useEffect(
-    () => setFormStarted(!!committedAnswers?.some((a) => a.value)),
-    [committedAnswers]
+    () => setFormStarted(!!firstFormStepAnswers?.some((a) => a.value)),
+    [firstFormStepAnswers]
   );
 
   const [welcomeDone, setWelcomeDone] = useState<boolean>(true);
   const [glossaryDone, setGlossaryDone] = useState<boolean>(true);
   const [TOSDone, setTOSDone] = useState<boolean>(true);
   const [checkPointsDone, setCheckpointsDone] = useState<boolean>(true);
-  const [formDone, setFormDone] = useState<boolean>(true);
+  const [policyOwnerDone, setPolicyOwnerDone] = useState<boolean>(false);
+  const [businessSummaryDone, setBusinessSummaryDone] =
+    useState<boolean>(false);
   const [identityDone, setIdentityDone] = useState<boolean>(true);
   const [responsibilitiesDone, setResponsibilitiesDone] =
     useState<boolean>(false);
@@ -252,8 +274,14 @@ export default function InsuranceApplicationPage() {
         <InsuranceApplicationCheckpoints
           startCallback={() => setCheckpointsDone(true)}
         />
-      ) : !formDone ? (
-        <InsuranceApplicationForm nextCallback={() => setFormDone(true)} />
+      ) : !policyOwnerDone ? (
+        <InsuranceApplicationPolicyOwner
+          nextCallback={() => setPolicyOwnerDone(true)}
+        />
+      ) : !businessSummaryDone ? (
+        <InsuranceApplicationBusinessSummary
+          nextCallback={() => setBusinessSummaryDone(true)}
+        />
       ) : !identityDone ? (
         <InsuranceApplicationIdentity
           nextCallback={() => setIdentityDone(true)}
