@@ -77,6 +77,11 @@ const UserProvider = (props: IUserProviderProps) => {
     }
   }, [user?.email, isLoading, upgradedNotificationPending]);
 
+  useEffect(() => {
+    user?.email &&
+      BrowserApiController.checkTeacherExists(user?.email, user.name ?? "");
+  }, [user?.email]);
+
   const loadUser = () => {
     if (user?.email && user?.sub) {
       setLoading(true);
