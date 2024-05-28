@@ -113,8 +113,6 @@ export default function UsersPageContents() {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
-  console.log(school);
-
   return (
     <>
       <PageLayout
