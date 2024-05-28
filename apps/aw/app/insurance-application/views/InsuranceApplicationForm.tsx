@@ -1,8 +1,64 @@
 import { useEffect, useState } from "react";
 import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
-import { AWFormSection, STEPS } from "../InsuranceApplicationPage";
+import { AWFormSection } from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
+
+export const SECTIONS: IAWFormSection[] = [
+  {
+    id: "6651d2bb1aaa5843d82bc607",
+    title: "Full name",
+    inputs: [
+      {
+        id: "6652e4a2214b3b8b436dc33d",
+        inputType: "text",
+        placeholder: "Insert name here",
+      },
+    ],
+  },
+  {
+    id: "6651d2d30bc6c109d2a97aed",
+    title: "Job title",
+    inputs: [
+      {
+        id: "6652e4c66385fa89ff2e7f0e",
+        inputType: "text",
+        placeholder: "Insert title of role played in organization",
+      },
+    ],
+  },
+  {
+    id: "6651d2db9af2d8a25e707374",
+    title: "Email",
+    inputs: [
+      {
+        id: "6652e4e30ea140b445d02a07",
+        inputType: "text",
+        placeholder: "Insert email address here",
+      },
+    ],
+  },
+  {
+    id: "6651d885120e45915573a535",
+    title: "Will you be a Key Holder in the vault?",
+    inputs: [
+      {
+        id: "6652e5168e3e3d860c9772e3",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6651d8968dec75fc382930a1",
+            text: "Yes",
+          },
+          {
+            id: "6651d8c083bc0df3082153e3",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+];
 
 export interface IAWFormSection {
   id: string;
@@ -31,6 +87,7 @@ export interface IAWFormInput {
   title?: string;
   placeholder?: string;
   options?: IAWMultiChoiceFieldOption[];
+  prefillInputId?: string;
 }
 
 export interface IAWMultiChoiceFieldOption {
@@ -40,69 +97,65 @@ export interface IAWMultiChoiceFieldOption {
 }
 
 export interface IAWFormInputAnswer {
-  id: IAWFormInput["id"];
+  inputId: IAWFormInput["id"];
   value?: string;
 }
 
+export interface IAWFormStepAnswers {
+  stepId: string;
+  answers: IAWFormInputAnswer[];
+}
+
 export default function InsuranceApplicationForm(props: {
+  stepId: string;
   nextCallback: () => void;
 }) {
-  const [stepIndex, setStepIndex] = useState<number>(1);
-
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
-  useEffect(
-    () =>
-      setAnswers(
-        STEPS.map((s) => s.sections)
-          .flat()
-          .map((section) => [
-            ...(section.inputs ?? []),
-            ...(section.subsections?.flatMap((ss) => ss.inputs) || []),
-          ])
-          .flat()
-          .map((input) => ({
-            id: input.id,
-          }))
-      ),
-    []
-  );
+  useEffect(() => setAnswers(committedAnswers[props.stepId]), [props.stepId]);
 
   const setValue = (id: string, newValue?: string) => {
     setAnswers((prev) =>
-      prev.map((a) => (a.id === id ? { ...a, value: newValue } : a))
+      prev.map((a) => (a.inputId === id ? { ...a, value: newValue } : a))
     );
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[] | undefined
-  >("committedAnswers", undefined);
-  useEffect(
-    () => committedAnswers && setAnswers(committedAnswers),
-    [committedAnswers]
-  );
+    Record<string, IAWFormInputAnswer[]>
+  >("committedAnswers", {});
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(
     () =>
       setCanProceed(
-        STEPS[stepIndex].sections
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional || answers.find((a) => a.id === input?.id)?.value
-          )
+        true
+        // STEPS[stepIndex].sections
+        //   .flatMap((s) => [
+        //     ...(s.inputs || []),
+        //     ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+        //   ])
+        //   .every(
+        //     (input) =>
+        //       input.optional ||
+        //       answers.find((a) => a.inputId === input?.id)?.value
+        //   )
       ),
-    [answers, stepIndex]
+    [answers]
   );
 
-  const commitAnswers = () => setCommittedAnswers(answers);
+  const commitAnswers = () => {
+    const stepId = STEPS[stepIndex].id;
+    setCommittedAnswers(
+      committedAnswers?.find((step) => step.stepId === stepId)
+        ? committedAnswers?.map((step) =>
+            step.stepId === stepId ? { stepId: stepId, answers: answers } : step
+          )
+        : [...(committedAnswers ?? []), { stepId: stepId, answers: answers }]
+    );
+  };
 
   return (
     <InsuranceApplicationDialog
-      title={STEPS[stepIndex].title}
+      title="POLICY OWNER INFORMATION"
       leftCallback={() => setStepIndex(stepIndex - 1)}
       rightCallback={() => setStepIndex(stepIndex + 1)}
       rightArrowFaded={!canProceed}

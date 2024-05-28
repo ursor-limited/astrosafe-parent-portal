@@ -7,7 +7,7 @@ import {
 import {
   IAWFormInput,
   IAWFormInputAnswer,
-} from "./views/InsuranceApplicationForm";
+} from "./views/InsuranceApplicationForm___";
 
 export default function InsuranceApplicationFormInput(
   props: IAWFormInput & {
@@ -25,25 +25,25 @@ export default function InsuranceApplicationFormInput(
       ) : null}
       {props.inputType === "text" ? (
         <AWTextField
-          value={props.answers?.find((a) => a.id === props.id)?.value}
+          value={props.answers?.find((a) => a.inputId === props.id)?.value}
           setValue={(v) => props.setValue(props.id, v)}
           placeholder={props.placeholder}
         />
       ) : props.inputType === "textLong" ? (
         <AWLongTextField
-          value={props.answers?.find((a) => a.id === props.id)?.value}
+          value={props.answers?.find((a) => a.inputId === props.id)?.value}
           setValue={(v) => props.setValue(props.id, v)}
           placeholder={props.placeholder}
         />
       ) : props.inputType === "multiChoice" ? (
         <AWMultiChoiceField
-          value={props.answers?.find((a) => a.id === props.id)?.value}
+          value={props.answers?.find((a) => a.inputId === props.id)?.value}
           setValue={(v) => props.setValue(props.id, v)}
           options={props.options}
         />
       ) : props.inputType === "dropdown" ? (
         <AWDropdown
-          value={props.answers?.find((a) => a.id === props.id)?.value}
+          value={props.answers?.find((a) => a.inputId === props.id)?.value}
           setValue={(v) => props.setValue(props.id, v)}
           options={props.options}
           placeholder={props.placeholder}

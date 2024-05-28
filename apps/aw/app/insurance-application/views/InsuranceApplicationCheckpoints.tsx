@@ -1,7 +1,7 @@
 import InsuranceApplicationDialog from "../InsuranceApplicationDialog";
 import { STEPS } from "../InsuranceApplicationPage";
 import { useLocalStorage } from "usehooks-ts";
-import { IAWFormInputAnswer } from "./InsuranceApplicationForm";
+import { IAWFormInputAnswer } from "./InsuranceApplicationForm___";
 import { useEffect, useState } from "react";
 import InsuranceApplicationIllustrationDialog from "../InsuranceApplicationIllustrationDialog";
 
@@ -20,7 +20,7 @@ export default function InsuranceApplicationCheckpoints(props: {
             section.inputs?.every(
               (input) =>
                 input.optional ||
-                committedAnswers?.find((answer) => answer.id === input.id)
+                committedAnswers?.find((answer) => answer.inputId === input.id)
             )
         )
     );
