@@ -99,7 +99,8 @@ export default function UsersPageContents() {
   }, [safeTubeUser?.subscribed]);
 
   useEffect(() => {
-    !schoolIsSubscribed &&
+    safeTubeUser &&
+      !safeTubeUser?.subscribed &&
       user?.email &&
       BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
         //@ts-ignore
@@ -112,6 +113,8 @@ export default function UsersPageContents() {
     useState<boolean>(false);
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  console.log(schoolIsSubscribed, school?.teacherLimit);
 
   return (
     <>

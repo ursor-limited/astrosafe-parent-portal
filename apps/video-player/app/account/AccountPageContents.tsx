@@ -24,12 +24,7 @@ import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import AccountPagePricingCard from "./AccountPagePricingCard";
-import UpgradeDialog, {
-  DETAILS,
-  LOCALE_CURRENCIES,
-  getPaymentUrl,
-} from "../components/UpgradeDialog";
+import UpgradeDialog from "../components/UpgradeDialog";
 import UrsorToggle from "../components/UrsorToggle";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { ISafeTubeUser, useUserContext } from "../components/UserContext";
@@ -102,6 +97,21 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
     },
   },
 ];
+
+export const FrequencySwitch = (props: {
+  value: "monthly" | "annual";
+  callback: () => void;
+}) => (
+  <Stack direction="row" spacing="12px" alignItems="center" height="26px">
+    <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+      Monthly
+    </Typography>
+    <UrsorToggle checked={props.value === "annual"} callback={props.callback} />
+    <Typography variant="small" color={PALETTE.secondary.grey[4]}>
+      Annual
+    </Typography>
+  </Stack>
+);
 
 export interface IAccountPageProps {}
 
@@ -1014,7 +1024,7 @@ export default function AccountPage(props: IAccountPageProps) {
                             }
                             bold
                             color={PALETTE.secondary.grey[3]}
-                          >{`${teachers.length} of 5`}</Typography>
+                          >{`${teachers.length} of ${school.teacherLimit}`}</Typography>
                         </Stack>
                         <Stack
                           spacing={
@@ -1073,33 +1083,14 @@ export default function AccountPage(props: IAccountPageProps) {
                       {safetubeSchoolOwner &&
                       safetubeSchoolOwner.id === safetubeUserDetails?.id ? (
                         <Stack justifyContent="flex-end">
-                          <Stack
-                            direction="row"
-                            spacing="12px"
-                            alignItems="center"
-                            height="26px"
-                          >
-                            <Typography
-                              variant="small"
-                              color={PALETTE.secondary.grey[4]}
-                            >
-                              Monthly
-                            </Typography>
-                            <UrsorToggle
-                              checked={frequency === "annual"}
-                              callback={() =>
-                                setFrequency(
-                                  frequency === "annual" ? "monthly" : "annual"
-                                )
-                              }
-                            />
-                            <Typography
-                              variant="small"
-                              color={PALETTE.secondary.grey[4]}
-                            >
-                              Annual
-                            </Typography>
-                          </Stack>
+                          <FrequencySwitch
+                            value={frequency}
+                            callback={() =>
+                              setFrequency(
+                                frequency === "annual" ? "monthly" : "annual"
+                              )
+                            }
+                          />
                         </Stack>
                       ) : (
                         <Stack />

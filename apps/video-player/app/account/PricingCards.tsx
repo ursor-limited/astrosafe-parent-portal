@@ -67,13 +67,13 @@ const PricingCards = (props: {
               CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
             }
             unit={props.frequency === "monthly" ? "month" : "year"}
-            tinyText={
-              props.frequency === "annual"
-                ? `Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-                    pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
-                  } / month`
-                : undefined
-            }
+            // tinyText={
+            //   props.frequency === "annual"
+            //     ? `Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
+            //         pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+            //       } / month`
+            //     : undefined
+            // }
             items={pd.items}
             callback={() =>
               router.push(

@@ -134,12 +134,12 @@ const UserProvider = (props: IUserProviderProps) => {
   }, [safeTubeUser?.subscribed]);
 
   useEffect(() => {
-    !schoolIsSubscribed &&
+    safeTubeUser &&
+      !safeTubeUser?.subscribed &&
       user?.email &&
       BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
         //@ts-ignore
         (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
-        //setBrowserUserDetails(ud);
       );
   }, [user?.email]);
 

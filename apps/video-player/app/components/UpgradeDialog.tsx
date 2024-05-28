@@ -11,7 +11,10 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
 import { AstroCurrency, CURRENCY_SYMBOLS } from "../account/PricingCards";
-import { PRODUCT_DETAILS } from "../account/AccountPageContents";
+import {
+  FrequencySwitch,
+  PRODUCT_DETAILS,
+} from "../account/AccountPageContents";
 
 export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   US: "USD",
@@ -79,7 +82,7 @@ export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
 
 const PricingCard = (props: {
   title: string;
-  subtitle: string;
+  //subtitle: string;
   buttonText: string;
   price: string;
   currency: string;
@@ -129,13 +132,13 @@ const PricingCard = (props: {
           >
             {props.title}
           </Typography>
-          <Typography
+          {/* <Typography
             variant="tiny"
             bold
             color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
           >
             {props.subtitle}
-          </Typography>
+          </Typography> */}
         </Stack>
         <Stack direction="row" alignItems="center" spacing="3px">
           <Typography
@@ -248,6 +251,8 @@ const UpgradeDialog = (props: {
     getIp();
   }, []);
 
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
+
   return (
     <UrsorDialog
       supertitle="Upgrade"
@@ -288,13 +293,21 @@ const UpgradeDialog = (props: {
         pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
         publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
       /> */}
+      <Stack width="100%" alignItems="flex-end">
+        <FrequencySwitch
+          value={frequency}
+          callback={() =>
+            setFrequency(frequency === "annual" ? "monthly" : "annual")
+          }
+        />
+      </Stack>
       <Stack
         direction={props.mobile ? "column" : "row"}
         spacing="32px"
         width="100%"
         pt="20px"
       >
-        <PricingCard
+        {/* <PricingCard
           title="Basic"
           subtitle="Monthly"
           price="0"
@@ -307,51 +320,56 @@ const UpgradeDialog = (props: {
           buttonText="Stay free"
           noButtonIcon
           callback={props.closeCallback}
-        />
+        /> */}
         <PricingCard
-          dark
-          border
-          notif={`Best value! 48% off`}
           title="Teacher"
           buttonText="Go Premium"
-          subtitle="Monthly"
-          price={(
-            (PRODUCT_DETAILS[0].prices[LOCALE_CURRENCIES[locale]] ?? 0) * 10 +
-            0.09
-          ).toFixed(2)}
+          // subtitle="Monthly"
+          price={(frequency === "annual"
+            ? (
+                (PRODUCT_DETAILS[0]?.prices[LOCALE_CURRENCIES[locale]] ?? 0) *
+                  10 +
+                0.09
+              ).toFixed(2)
+            : PRODUCT_DETAILS[0]?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+          ).toString()}
           currency={
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
           }
-          unit="year"
-          tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-            PRODUCT_DETAILS[0].prices[LOCALE_CURRENCIES[locale]] ?? 0
-          } / month`}
+          unit={frequency === "monthly" ? "month" : "year"}
+          // tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
+          //   PRODUCT_DETAILS[0].prices[LOCALE_CURRENCIES[locale]] ?? 0
+          // } / month`}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, "annual") : "");
+            router.push(email ? getPaymentUrl(email, frequency) : "");
             setUpgradedNotificationPending(true);
           }}
         />
         <PricingCard
+          dark
+          border
           title="Classroom"
-          subtitle="Monthly"
+          // subtitle="Monthly"
           buttonText="Go Premium"
-          // price={DETAIL.monthly}
-          // currency={details.currencySymbol}
-          price={(
-            (PRODUCT_DETAILS[1].prices[LOCALE_CURRENCIES[locale]] ?? 0) * 10 +
-            0.09
-          ).toFixed(2)}
+          price={(frequency === "annual"
+            ? (
+                (PRODUCT_DETAILS[1]?.prices[LOCALE_CURRENCIES[locale]] ?? 0) *
+                  10 +
+                0.09
+              ).toFixed(2)
+            : PRODUCT_DETAILS[1]?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+          ).toString()}
           currency={
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
           }
-          unit="year"
-          tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-            PRODUCT_DETAILS[1].prices[LOCALE_CURRENCIES[locale]] ?? 0
-          } / month`}
+          unit={frequency === "monthly" ? "month" : "year"}
+          // tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
+          //   PRODUCT_DETAILS[1].prices[LOCALE_CURRENCIES[locale]] ?? 0
+          // } / month`}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, "monthly") : "");
+            router.push(email ? getPaymentUrl(email, frequency) : "");
             setUpgradedNotificationPending(true);
           }}
         />

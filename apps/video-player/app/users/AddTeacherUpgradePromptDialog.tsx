@@ -16,10 +16,10 @@ const AddTeacherUpgradePromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Upgrade"
-      title="Bro, got to upgrade if you wanna add any more fellas."
+      title="Please upgrade your account to invite more teachers"
       subtitle={[
-        "Upgrade to Premium to access",
-        "unlimited content creation & user additions.",
+        "Upgrade to allow more teachers to create unlimited content",
+        "and manage their digital classrooms.",
       ]}
       open={props.open}
       titleSize={props.mobile ? "h4" : "h3"}
