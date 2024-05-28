@@ -9,11 +9,26 @@ const BACKEND_URLS = {
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
 };
 
+const BROWSER_BACKEND_URLS = {
+  development: "http://localhost:8080",
+  preview:
+    "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
+  production: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+};
+
 const submitPaymentSucceeded = async (email) =>
   axios
     .patch(
       `${BACKEND_URLS[process.env.NODE_ENV]}/video/user/${email}/subscribe`
     )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
+
+const submitUpgradeSchool = async (email) =>
+  axios
+    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/school/upgrade`, {
+      email,
+    })
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
@@ -131,9 +146,11 @@ exports.handler = async function (event) {
               .retrieve(stripeEvent.data.object?.subscription)
               .then((s) => {
                 submitDetails(id, s?.items?.data?.[0].price?.product);
+                submitUpgradeSchool(customerEmail);
               })
           );
         await submitPaymentSucceeded(customerEmail);
+        //await submitUpgradeSchool(customerEmail)
         break;
       }
       case "invoice.payment_failed":
