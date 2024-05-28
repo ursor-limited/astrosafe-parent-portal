@@ -73,11 +73,19 @@ export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   VA: "EUR",
 };
 
-export const getPaymentUrl = (email: string, pricing: "monthly" | "annual") =>
+export const getPaymentUrl = (
+  email: string,
+  plan: "individual" | "department",
+  frequency: "monthly" | "annual"
+) =>
   `${
-    pricing === "monthly"
-      ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY
-      : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL
+    frequency === "monthly"
+      ? plan === "individual"
+        ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_INDIVIDUAL
+        : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_DEPARTMENT
+      : plan === "individual"
+      ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_INDIVIDUAL
+      : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_DEPARTMENT
   }?prefilled_email=${encodeURIComponent(email)}`;
 
 const PricingCard = (props: {
@@ -322,16 +330,13 @@ const UpgradeDialog = (props: {
           callback={props.closeCallback}
         /> */}
         <PricingCard
-          title="Teacher"
+          title="Individual"
           buttonText="Go Premium"
-          // subtitle="Monthly"
-          price={(frequency === "annual"
-            ? (
-                (PRODUCT_DETAILS[0]?.prices[LOCALE_CURRENCIES[locale]] ?? 0) *
-                  10 +
-                0.09
-              ).toFixed(2)
-            : PRODUCT_DETAILS[0]?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+          price={(
+            (frequency === "annual"
+              ? PRODUCT_DETAILS[0]?.annualPrices
+              : PRODUCT_DETAILS[0]?.monthlyPrices)[LOCALE_CURRENCIES[locale]] ??
+            0
           ).toString()}
           currency={
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
@@ -342,23 +347,23 @@ const UpgradeDialog = (props: {
           // } / month`}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, frequency) : "");
+            router.push(
+              email ? getPaymentUrl(email, "individual", frequency) : ""
+            );
             setUpgradedNotificationPending(true);
           }}
         />
         <PricingCard
           dark
           border
-          title="Classroom"
+          title="Department"
           // subtitle="Monthly"
           buttonText="Go Premium"
-          price={(frequency === "annual"
-            ? (
-                (PRODUCT_DETAILS[1]?.prices[LOCALE_CURRENCIES[locale]] ?? 0) *
-                  10 +
-                0.09
-              ).toFixed(2)
-            : PRODUCT_DETAILS[1]?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+          price={(
+            (frequency === "annual"
+              ? PRODUCT_DETAILS[1]?.annualPrices
+              : PRODUCT_DETAILS[1]?.monthlyPrices)[LOCALE_CURRENCIES[locale]] ??
+            0
           ).toString()}
           currency={
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
@@ -369,7 +374,9 @@ const UpgradeDialog = (props: {
           // } / month`}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, frequency) : "");
+            router.push(
+              email ? getPaymentUrl(email, "department", frequency) : ""
+            );
             setUpgradedNotificationPending(true);
           }}
         />
