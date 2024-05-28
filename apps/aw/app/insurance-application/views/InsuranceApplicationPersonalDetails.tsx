@@ -81,6 +81,62 @@ const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
+  {
+    id: "66561d001124a06d63bbd22b",
+    title: "Primary address of residence",
+    prefillInputPrompt: "Use same address as residence address above",
+    inputs: [
+      {
+        id: "66561d077be86edef7a7c569",
+        prefillInputId: "6655c0fe63a59eef74dfcd2f",
+        title: "Address line 1",
+        inputType: "text",
+        placeholder: "Insert street address",
+      },
+      {
+        id: "66561d1605b212a580f388eb",
+        prefillInputId: "6655c1595eb7619ecf4f664c",
+        title: "Address line 2",
+        inputType: "text",
+        placeholder: "Insert apartment or suite number",
+      },
+      {
+        id: "66561d1b4c32d5191c3ae48d",
+        prefillInputId: "6655c171a4a4f8c8b3d6a26f",
+        title: "City",
+        inputType: "text",
+        placeholder: "Insert city",
+      },
+      {
+        id: "66561d1f2bdd8d9d05725bb0",
+        prefillInputId: "6655c18ff69ad61442a6fa2b",
+        title: "State of province",
+        inputType: "text",
+        placeholder: "Insert state of province",
+      },
+      {
+        id: "66561d25fb1f010c0bd6ace9",
+        prefillInputId: "6655c1b04f9526468edc17b0",
+        title: "Country",
+        inputType: "dropdown",
+        placeholder: "Choose your country",
+        options: [],
+      },
+      {
+        id: "66561d2a42becad2f5f4f9ed",
+        prefillInputId: "6655c1eb44e7da94b593e696",
+        title: "ZIP code",
+        inputType: "text",
+        placeholder: "Enter postal code",
+      },
+      {
+        id: "66561d814e4d2b93ffab701d",
+        title: "Duration of stay",
+        inputType: "text",
+        placeholder: "Time at current residential address",
+      },
+    ],
+  },
 ];
 
 export default function InsuranceApplicationPersonalDetails(props: {

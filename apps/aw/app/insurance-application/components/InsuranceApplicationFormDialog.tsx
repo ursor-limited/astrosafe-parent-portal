@@ -12,6 +12,7 @@ export interface IAWFormSection {
   title: string;
   inputs?: IAWFormInput[];
   subsections?: IAWFormSectionSubsection[];
+  prefillInputPrompt?: string;
 }
 
 export interface IAWFormSectionSubsection {
