@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
 
-const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
+export const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
   USD: "$",
   GBP: "£",
   CAD: "CA$",

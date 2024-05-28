@@ -590,9 +590,6 @@ export default function AccountPage(props: IAccountPageProps) {
   const [inputedCode, setInputedCode] = useState<string>("");
   const [inputActive, setInputActive] = useState<boolean>(false);
 
-  const [deleteAccountDialogOpen, setDeleteAccountDialogOpen] =
-    useState<boolean>(false);
-
   const safetubeUserDetails = useUserContext().user;
 
   // const [
