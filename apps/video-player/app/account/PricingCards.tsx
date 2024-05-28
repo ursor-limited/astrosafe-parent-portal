@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
 
-const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
+export const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
   USD: "$",
   GBP: "£",
   CAD: "CA$",
@@ -67,13 +67,13 @@ const PricingCards = (props: {
               CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
             }
             unit={props.frequency === "monthly" ? "month" : "year"}
-            tinyText={
-              props.frequency === "annual"
-                ? `Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-                    pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
-                  } / month`
-                : undefined
-            }
+            // tinyText={
+            //   props.frequency === "annual"
+            //     ? `Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
+            //         pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+            //       } / month`
+            //     : undefined
+            // }
             items={pd.items}
             callback={() =>
               router.push(

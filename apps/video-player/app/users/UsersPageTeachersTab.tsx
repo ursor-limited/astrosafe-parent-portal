@@ -288,7 +288,7 @@ export default function UsersPageTeachersTab(
               <ApprovalList
                 requests={approvalRequests.map((r) => ({
                   id: r.id,
-                  value: r.name,
+                  value: r.email,
                 }))}
                 approveCallback={(id) =>
                   BrowserApiController.approveTeacherJoiningRequest(
@@ -302,7 +302,7 @@ export default function UsersPageTeachersTab(
                     .then(() =>
                       notificationCtx.success(
                         `${approvalRequests.find((r) => r.id === id)
-                          ?.name} has joined as a Teacher.`
+                          ?.email} has joined as a Teacher.`
                       )
                     )
                 }

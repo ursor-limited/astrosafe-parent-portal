@@ -11,6 +11,11 @@ import { Stack } from "@mui/system";
 import { SearchInput } from "../dashboard/DashboardPageContents";
 import TeacherInvitationDialog from "./dialogs/TeacherInvitationDialog";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
+import { ISafeTubeUser, useUserContext } from "../components/UserContext";
+import ApiController from "../api";
+import { useAuth0 } from "@auth0/auth0-react";
+import AddTeacherUpgradePromptDialog from "./AddTeacherUpgradePromptDialog";
+import UpgradeDialog from "../components/UpgradeDialog";
 
 export const getUsername = (name: string, allNames: string[]) => {
   const amount = allNames.filter(
@@ -85,6 +90,32 @@ export default function UsersPageContents() {
   const [teacherInvitationDialogOpen, setTeacherInvitationDialogOpen] =
     useState<boolean>(false);
 
+  const safeTubeUser = useUserContext().user;
+
+  const { user } = useAuth0();
+  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  useEffect(() => {
+    safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
+  }, [safeTubeUser?.subscribed]);
+
+  useEffect(() => {
+    safeTubeUser &&
+      !safeTubeUser?.subscribed &&
+      user?.email &&
+      BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
+        //@ts-ignore
+        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+        //setBrowserUserDetails(ud);
+      );
+  }, [user?.email]);
+
+  const [upgradePromptDialogOpen, setUpgradePromptDialogOpen] =
+    useState<boolean>(false);
+
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  console.log(schoolIsSubscribed, school?.teacherLimit);
+
   return (
     <>
       <PageLayout
@@ -95,7 +126,17 @@ export default function UsersPageContents() {
         selectedSidebarItemId="users"
         button={{
           text: "Invite Teacher",
-          callback: () => setTeacherInvitationDialogOpen(true),
+          callback: () => {
+            if (
+              schoolIsSubscribed &&
+              school?.teacherLimit &&
+              teachers.length < school.teacherLimit
+            ) {
+              setTeacherInvitationDialogOpen(true);
+            } else {
+              setUpgradePromptDialogOpen(true);
+            }
+          },
           icon: PersonIcon,
         }}
         maxWidth={656}
@@ -197,6 +238,20 @@ export default function UsersPageContents() {
           school={school}
         />
       ) : null}
+      <AddTeacherUpgradePromptDialog
+        open={upgradePromptDialogOpen}
+        closeCallback={() => setUpgradePromptDialogOpen(false)}
+        callback={() => {
+          setUpgradeDialogOpen(true);
+          setUpgradePromptDialogOpen(false);
+        }}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => {
+          setUpgradeDialogOpen(false);
+        }}
+      />
     </>
   );
 }
