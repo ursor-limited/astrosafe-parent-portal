@@ -129,12 +129,6 @@ const SECTIONS: IAWFormSection[] = [
         inputType: "text",
         placeholder: "Enter postal code",
       },
-      {
-        id: "66561d814e4d2b93ffab701d",
-        title: "Duration of stay",
-        inputType: "text",
-        placeholder: "Time at current residential address",
-      },
     ],
   },
 ];
