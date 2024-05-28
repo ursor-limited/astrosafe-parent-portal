@@ -722,8 +722,6 @@ export default function AccountPage(props: IAccountPageProps) {
     userCtx?.userDetails?.schoolId && loadTeachers();
   }, [userCtx?.userDetails?.schoolId]);
 
-  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
-
   const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
     ISafeTubeUser | undefined
   >();
@@ -733,6 +731,19 @@ export default function AccountPage(props: IAccountPageProps) {
         teachers.find((t) => t.id === school?.ownerId)?.email ?? ""
       ).then((user) => setSafetubeSchoolOwner(user));
   }, [school?.ownerId, teachers]);
+
+  const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
+  useEffect(
+    () =>
+      setFrequency(
+        PRODUCT_DETAILS.find(
+          (pd) => pd.monthlyId === safetubeSchoolOwner?.subscriptionProductId
+        )
+          ? "monthly"
+          : "annual"
+      ),
+    [safetubeSchoolOwner?.subscriptionProductId]
+  );
 
   const [renewalDate, setRenewalDate] = useState<string | undefined>();
   useEffect(() => {

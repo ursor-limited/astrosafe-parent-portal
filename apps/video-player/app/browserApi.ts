@@ -113,8 +113,8 @@ class BrowserApiController {
   static async getSchool(id: string) {
     return get(`schools/${id}`).then((response: any) => response.json());
   }
-  static async checkTeacherExists(email: string) {
-    return post("teachers/checkTeacherExists", { email }).then(
+  static async checkTeacherExists(email: string, name?: string) {
+    return post("teachers/checkTeacherExists", { email, name }).then(
       (response: any) => response.json()
     );
   }

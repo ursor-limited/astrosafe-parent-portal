@@ -20,6 +20,8 @@ import AddDeviceDialog from "./AddDeviceDialog";
 import LockDialog from "./LockDialog";
 import DeviceDialog from "./DeviceDialog/DeviceDialog";
 import dynamic from "next/dynamic";
+import DashboardSignupPromptDialog from "../dashboard/DashboardSignupPromptDialog";
+import { useUserContext } from "../components/UserContext";
 
 const UrsorLoading = dynamic(
   () => import("../components/UrsorLoading"),
@@ -246,6 +248,17 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
   }, [school?.lock?.endTime]);
 
   const [deviceDialogId, setDeviceDialogId] = useState<string | undefined>();
+
+  // const safetubeUserDetails = useUserContext();
+  // const [signupPromptDialogOpen, setSignupPromptDialogOpen] =
+  //   useState<boolean>(false);
+  // useEffect(() => {
+  //   setSignupPromptDialogOpen(
+  //     safetubeUserDetails?.loaded && !safetubeUserDetails.user?.id
+  //   );
+  // }, [safetubeUserDetails?.user?.id, safetubeUserDetails?.loaded]);
+
+  // console.log(safetubeUserDetails);
 
   return (
     <>
@@ -553,6 +566,10 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         closeCallback={() => setLockDialogOpen(false)}
         startCallback={(duration) => startLock(duration)}
       />
+      {/* <DashboardSignupPromptDialog
+        open={signupPromptDialogOpen}
+        closeCallback={() => setSignupPromptDialogOpen(false)}
+      /> */}
     </>
   );
 }
