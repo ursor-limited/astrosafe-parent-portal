@@ -16,6 +16,8 @@ import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./InsuranceApplicationFormInput";
+import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
+import InsuranceApplicationResponsibilities from "./views/InsuranceApplicationResponsibilities";
 
 const FADEIN_DELAY = 66;
 
@@ -574,17 +576,18 @@ export default function InsuranceApplicationPage() {
     [committedAnswers]
   );
 
-  const [welcomeDone, setWelcomeDone] = useState<boolean>(false);
-  const [glossaryDone, setGlossaryDone] = useState<boolean>(false);
-  const [TOSDone, setTOSDone] = useState<boolean>(false);
-
-  const [checkPointsDone, setCheckpointsDone] = useState<boolean>(false);
+  const [welcomeDone, setWelcomeDone] = useState<boolean>(true);
+  const [glossaryDone, setGlossaryDone] = useState<boolean>(true);
+  const [TOSDone, setTOSDone] = useState<boolean>(true);
+  const [checkPointsDone, setCheckpointsDone] = useState<boolean>(true);
+  const [formDone, setFormDone] = useState<boolean>(true);
+  const [identityDone, setIdentityDone] = useState<boolean>(true);
+  const [responsibilitiesDone, setResponsibilitiesDone] =
+    useState<boolean>(false);
 
   return (
     <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll">
-      {formStarted ? (
-        <InsuranceApplicationForm />
-      ) : !welcomeDone ? (
+      {!welcomeDone ? (
         <InsuranceApplicationWelcome
           nextCallback={() => setWelcomeDone(true)}
         />
@@ -600,8 +603,18 @@ export default function InsuranceApplicationPage() {
         <InsuranceApplicationCheckpoints
           startCallback={() => setCheckpointsDone(true)}
         />
+      ) : !formDone ? (
+        <InsuranceApplicationForm nextCallback={() => setFormDone(true)} />
+      ) : !identityDone ? (
+        <InsuranceApplicationIdentity
+          nextCallback={() => setIdentityDone(true)}
+        />
+      ) : !responsibilitiesDone ? (
+        <InsuranceApplicationResponsibilities
+          nextCallback={() => setResponsibilitiesDone(true)}
+        />
       ) : (
-        <InsuranceApplicationForm />
+        <></>
       )}
     </div>
   );

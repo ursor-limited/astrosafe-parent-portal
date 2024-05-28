@@ -44,7 +44,9 @@ export interface IAWFormInputAnswer {
   value?: string;
 }
 
-export default function InsuranceApplicationForm() {
+export default function InsuranceApplicationForm(props: {
+  nextCallback: () => void;
+}) {
   const [stepIndex, setStepIndex] = useState<number>(1);
 
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);

@@ -6,9 +6,10 @@ import VaultIllustration from "@/images/VaultIllustration.svg";
 
 export default function InsuranceApplicationIllustrationDialog(props: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   buttonText?: string;
   buttonCallback: () => void;
+  buttonDisabled?: boolean;
   infoText?: string;
   children?: React.ReactNode;
 }) {
@@ -17,9 +18,11 @@ export default function InsuranceApplicationIllustrationDialog(props: {
       <div className="h-full w-full flex">
         <div className="flex flex-col p-3xl gap-[74px] h-full w-[525px] items-between border-r-2 border-r-greyscale-6">
           <div className="flex flex-col gap-3xl">
-            <div className="font-medium text-xl text-darkTeal-2">
-              {props.subtitle}
-            </div>
+            {props.subtitle ? (
+              <div className="font-medium text-xl text-darkTeal-2">
+                {props.subtitle}
+              </div>
+            ) : null}
             {props.children}
           </div>
           <div className="flex flex-col gap-lg">
@@ -28,7 +31,10 @@ export default function InsuranceApplicationIllustrationDialog(props: {
                 {props.infoText}
               </div>
             ) : null}
-            <AWButton onClick={props.buttonCallback}>
+            <AWButton
+              onClick={props.buttonCallback}
+              disabled={props.buttonDisabled}
+            >
               {props.buttonText || "Next"}
             </AWButton>
           </div>
