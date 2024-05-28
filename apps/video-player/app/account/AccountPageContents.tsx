@@ -51,10 +51,14 @@ const PRICING_CARD_HEADER_THRESHOLD_WINDOW_WIDTH = 1300;
 interface IAstroProduct {
   monthlyId: string;
   annualId: string;
+  plan: "individual" | "department";
   items: string[];
   title: string;
   mortarBoardsN: number;
-  prices: {
+  monthlyPrices: {
+    [locale in AstroCurrency]: number;
+  };
+  annualPrices: {
     [locale in AstroCurrency]: number;
   };
 }
@@ -63,37 +67,51 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
     monthlyId: "prod_PlC9OCbk8oBkWW",
     annualId: "prod_PlWrHG8V57yjrn",
+    plan: "individual",
     items: [
       "1 teacher/adult accounts",
       "5 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
     ],
-    title: "Teacher",
+    title: "Individual",
     mortarBoardsN: 1,
-    prices: {
+    monthlyPrices: {
       USD: 12.99,
       GBP: 8.99,
       CAD: 15.99,
       EUR: 10.99,
     },
+    annualPrices: {
+      USD: 119.99,
+      GBP: 79.99,
+      CAD: 149.99,
+      EUR: 99.99,
+    },
   },
   {
     monthlyId: "prod_QAEYttD39HvFKz",
     annualId: "prod_QAEaFpLDEJnlli",
+    plan: "department",
     items: [
       "5 teacher/adult accounts",
       "10 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
     ],
-    title: "Classroom",
+    title: "Department",
     mortarBoardsN: 2,
-    prices: {
+    monthlyPrices: {
       USD: 59.99,
       GBP: 39.99,
       CAD: 74.99,
       EUR: 49.99,
+    },
+    annualPrices: {
+      USD: 599.99,
+      GBP: 399.99,
+      CAD: 749.99,
+      EUR: 499.99,
     },
   },
 ];
@@ -684,7 +702,6 @@ export default function AccountPage(props: IAccountPageProps) {
         userCtx.userDetails?.invitationPendingByInviterId
       ).then((teacher) => {
         setInviterName(teacher.teacherName);
-        console.log(teacher.teacherName, "aaaaaa lol");
         BrowserApiController.getSchool(teacher.schoolId).then((school) =>
           setInvitedSchoolName(school.name)
         );
@@ -807,6 +824,23 @@ export default function AccountPage(props: IAccountPageProps) {
       ),
     [width]
   );
+
+  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  useEffect(() => {
+    safetubeUserDetails?.subscribed && setSchoolIsSubscribed(true);
+  }, [safetubeUserDetails?.subscribed]);
+
+  useEffect(() => {
+    safetubeUserDetails &&
+      !safetubeUserDetails?.subscribed &&
+      userCtx?.userDetails?.email &&
+      BrowserApiController.getTeacherSchoolIsSubscribed(
+        userCtx?.userDetails?.email ?? ""
+      ).then(
+        //@ts-ignore
+        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+      );
+  }, [userCtx?.userDetails?.email]);
 
   return (
     <>
@@ -1024,7 +1058,9 @@ export default function AccountPage(props: IAccountPageProps) {
                             }
                             bold
                             color={PALETTE.secondary.grey[3]}
-                          >{`${teachers.length} of ${school.teacherLimit}`}</Typography>
+                          >{`${teachers.length} of ${
+                            schoolIsSubscribed ? school.teacherLimit : 1
+                          }`}</Typography>
                         </Stack>
                         <Stack
                           spacing={

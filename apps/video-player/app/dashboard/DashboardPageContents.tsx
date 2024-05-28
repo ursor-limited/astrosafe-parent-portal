@@ -1018,13 +1018,12 @@ export default function DashboardPageContents() {
   const [showTutorialVideoButton, setShowTutorialVideoButton] =
     useState<boolean>(false);
   const [showTutorialVideo, setShowTutorialVideo] = useState<boolean>(false);
-  useEffect(
-    () =>
+  useEffect(() => {
+    userDetails.loaded &&
       setShowTutorialVideoButton(
         !userDetails.user?.switchedOffDashboardTutorialVideo
-      ),
-    [userDetails.user?.switchedOffDashboardTutorialVideo]
-  );
+      );
+  }, [userDetails.user?.switchedOffDashboardTutorialVideo, userDetails.loaded]);
 
   return (
     <>

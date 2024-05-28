@@ -247,12 +247,12 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
               </Stack>
             </Stack>
             <Stack
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-              }}
+              // sx={{
+              //   display: "flex",
+              //   justifyContent: "center",
+              // }}
               width={props.bodyWidth ?? "100%"}
-              height={props.fullHeight ? "100%" : undefined}
+              height="100%" // cannot scroll without this
             >
               {props.children}
             </Stack>

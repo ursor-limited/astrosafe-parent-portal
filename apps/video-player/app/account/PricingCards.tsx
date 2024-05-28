@@ -56,12 +56,9 @@ const PricingCards = (props: {
             }
             title={pd.title}
             price={
-              props.frequency === "annual"
-                ? (
-                    (pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0) * 10 +
-                    0.09
-                  ).toFixed(2)
-                : pd?.prices[LOCALE_CURRENCIES[locale]] ?? 0
+              (props.frequency === "annual"
+                ? pd?.annualPrices
+                : pd?.monthlyPrices)[LOCALE_CURRENCIES[locale]] ?? 0
             }
             currency={
               CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
@@ -77,7 +74,13 @@ const PricingCards = (props: {
             items={pd.items}
             callback={() =>
               router.push(
-                props.email ? getPaymentUrl(props.email, props.frequency) : ""
+                props.email
+                  ? getPaymentUrl(
+                      props.email,
+                      pd?.plan || "individual",
+                      props.frequency
+                    )
+                  : ""
               )
             }
             mortarBoardsN={
@@ -96,11 +99,7 @@ const PricingCards = (props: {
           }
           unit={props.frequency === "monthly" ? "month" : "year"}
           text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
-          callback={() =>
-            router.push(
-              props.email ? getPaymentUrl(props.email, props.frequency) : ""
-            )
-          }
+          callback={() => (window.location.href = "mailto:hello@astrosafe.co")}
           mortarBoardsN={width < 1300 ? undefined : 3}
           contactSales
         />,
