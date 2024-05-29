@@ -137,11 +137,14 @@ const UserProvider = (props: IUserProviderProps) => {
     safeTubeUser &&
       !safeTubeUser?.subscribed &&
       user?.email &&
-      BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
+      BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? "").then(
         //@ts-ignore
-        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+        (response) =>
+          ApiController.getUser(response?.ownerEmail).then(
+            (owner: ISafeTubeUser) => setSchoolIsSubscribed(owner.subscribed)
+          )
       );
-  }, [user?.email]);
+  }, [user?.email, safeTubeUser]);
 
   // const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
   //   ISafeTubeUser | undefined

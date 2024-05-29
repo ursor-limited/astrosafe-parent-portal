@@ -16,7 +16,7 @@ const AddTeacherUpgradePromptDialog = (props: {
   return (
     <UrsorDialog
       supertitle="Upgrade"
-      title="Please upgrade your account to add more devices"
+      title="Upgrade your account to add more devices"
       subtitle={[
         "Upgrade to add more devices and to allow more teachers",
         "to create unlimited content.",

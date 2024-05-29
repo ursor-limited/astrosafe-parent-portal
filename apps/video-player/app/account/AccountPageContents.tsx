@@ -1142,7 +1142,7 @@ export default function AccountPage(props: IAccountPageProps) {
                         <Stack />
                       )}
                     </Stack>
-                    {safetubeSchoolOwner?.subscriptionProductId &&
+                    {safetubeSchoolOwner?.subscribed &&
                     safetubeSchoolOwner?.id !== safetubeUserDetails?.id ? (
                       <AccountPageNotOwnFeaturesCard
                         nSeats={school?.teacherLimit ?? 0}
