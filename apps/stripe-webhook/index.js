@@ -1,6 +1,23 @@
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const axios = require("axios");
 
+const PRODUCTION_PRODUCT_ID_PLANS = {
+  prod_PlC9OCbk8oBkWW: "individual",
+  prod_PlWrHG8V57yjrn: "individual",
+  prod_QAEYttD39HvFKz: "department",
+  prod_QAEaFpLDEJnlli: "department",
+};
+
+const DEVELOPMENT_PRODUCT_ID_PLANS = {
+  prod_QBufh97tFHY0PT: "individual",
+  prod_QBufZ1xT1eUOx8: "department",
+};
+
+const getPlan = (id) =>
+  process.env.NODE_ENV === "production"
+    ? PRODUCTION_PRODUCT_ID_PLANS[id]
+    : DEVELOPMENT_PRODUCT_ID_PLANS[id];
+
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   preview:
@@ -9,11 +26,27 @@ const BACKEND_URLS = {
     "https://tse16z5923.execute-api.eu-west-1.amazonaws.com/prod/safeplay-backend",
 };
 
+const BROWSER_BACKEND_URLS = {
+  development: "http://localhost:8080",
+  preview:
+    "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
+  production: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+};
+
 const submitPaymentSucceeded = async (email) =>
   axios
     .patch(
       `${BACKEND_URLS[process.env.NODE_ENV]}/video/user/${email}/subscribe`
     )
+    .then((x) => console.log(x.data))
+    .catch((error) => console.log(error));
+
+const submitUpgradeSchool = async (email, plan) =>
+  axios
+    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/schools/upgr/ade`, {
+      email,
+      plan,
+    })
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
@@ -85,9 +118,7 @@ exports.handler = async function (event) {
     console.log(`Event Type: ${eventType}`);
     console.log(jsonData);
 
-    const subscriptionId = stripeEvent.data.object.id;
     const customerId = stripeEvent.data.object.customer;
-    const priceId = stripeEvent.data.object.plan?.id;
 
     let customerEmail;
     customerEmail = stripeEvent.data.object["customer_details"]?.email;
@@ -130,7 +161,10 @@ exports.handler = async function (event) {
             stripe.subscriptions
               .retrieve(stripeEvent.data.object?.subscription)
               .then((s) => {
-                submitDetails(id, s?.items?.data?.[0].price?.product);
+                const productId = s?.items?.data?.[0].price?.product;
+                submitDetails(id, productId);
+                console.log("aaaa", getPlan(productId));
+                submitUpgradeSchool(customerEmail, getPlan(productId));
               })
           );
         await submitPaymentSucceeded(customerEmail);

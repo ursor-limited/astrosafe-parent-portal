@@ -90,24 +90,24 @@ export default function UsersPageContents() {
   const [teacherInvitationDialogOpen, setTeacherInvitationDialogOpen] =
     useState<boolean>(false);
 
-  const safeTubeUser = useUserContext().user;
+  const safeTubeUser = useUserContext();
 
   const { user } = useAuth0();
-  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
-  useEffect(() => {
-    safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
-  }, [safeTubeUser?.subscribed]);
+  // const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  // useEffect(() => {
+  //   safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
+  // }, [safeTubeUser?.subscribed]);
 
-  useEffect(() => {
-    safeTubeUser &&
-      !safeTubeUser?.subscribed &&
-      user?.email &&
-      BrowserApiController.getTeacherSchoolIsSubscribed(user?.email ?? "").then(
-        //@ts-ignore
-        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
-        //setBrowserUserDetails(ud);
-      );
-  }, [user?.email]);
+  // useEffect(() => {
+  //   safeTubeUser &&
+  //     !safeTubeUser?.subscribed &&
+  //     user?.email &&
+  //     BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? "").then(
+  //       //@ts-ignore
+  //       (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+  //       //setBrowserUserDetails(ud);
+  //     );
+  // }, [user?.email]);
 
   const [upgradePromptDialogOpen, setUpgradePromptDialogOpen] =
     useState<boolean>(false);
@@ -126,7 +126,7 @@ export default function UsersPageContents() {
           text: "Invite Teacher",
           callback: () => {
             if (
-              schoolIsSubscribed &&
+              safeTubeUser.schoolIsSubscribed &&
               school?.teacherLimit &&
               teachers.length < school.teacherLimit
             ) {

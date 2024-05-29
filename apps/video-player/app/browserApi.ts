@@ -458,8 +458,10 @@ class BrowserApiController {
     return dellete(`teachers/${teacherId}`);
   }
 
-  static async getTeacherSchoolIsSubscribed(email: string) {
-    return post(`schools/schoolIsSubs/cribed`, { email });
+  static async getUserSchoolOwnerEmail(email: string) {
+    return post(`schools/owner/email`, { email }).then((response: any) => {
+      return response.json();
+    });
   }
 
 

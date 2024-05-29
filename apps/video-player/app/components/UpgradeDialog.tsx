@@ -2,7 +2,7 @@
 
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
-import Image from "next/image";
+import MailIcon from "@/images/icons/MailIcon.svg";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorDialog from "./UrsorDialog";
@@ -95,12 +95,14 @@ const PricingCard = (props: {
   price: string;
   currency: string;
   unit: string;
-  items: string[];
+  items?: string[];
+  text?: string;
   dark?: boolean;
   tinyText?: string;
   border?: boolean;
   notif?: string;
   noButtonIcon?: boolean;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   callback: () => void;
 }) => (
   <Stack
@@ -199,34 +201,50 @@ const PricingCard = (props: {
         <UrsorButton
           dark
           variant={props.dark ? "primary" : "tertiary"}
-          endIcon={props.noButtonIcon ? undefined : VerifiedIcon}
+          endIcon={
+            props.icon || (props.noButtonIcon ? undefined : VerifiedIcon)
+          }
         >
           {props.buttonText}
         </UrsorButton>
       </Stack>
     </Stack>
-    <Stack spacing="8px" pt="18px">
-      {props.items.map((item, i) => (
-        <Stack key={i} direction="row" spacing="6px">
-          <Stack
-            borderRadius="100%"
-            height="18px"
-            width="18px"
-            alignItems="center"
-            justifyContent="center"
-            bgcolor="rgb(255,255,255)"
-          >
-            <CheckIcon width="12px" height="12px" />
+    {props.items ? (
+      <Stack spacing="8px" pt="18px">
+        {props.items.map((item, i) => (
+          <Stack key={i} direction="row" spacing="6px">
+            <Stack
+              borderRadius="100%"
+              height="18px"
+              width="18px"
+              alignItems="center"
+              justifyContent="center"
+              bgcolor="rgb(255,255,255)"
+            >
+              <CheckIcon width="12px" height="12px" />
+            </Stack>
+            <Typography
+              variant="small"
+              color={props.dark ? PALETTE.secondary.grey[1] : undefined}
+            >
+              {item}
+            </Typography>
           </Stack>
-          <Typography
-            variant="small"
-            color={props.dark ? PALETTE.secondary.grey[1] : undefined}
-          >
-            {item}
-          </Typography>
-        </Stack>
-      ))}
-    </Stack>
+        ))}
+      </Stack>
+    ) : null}
+    {props.text ? (
+      <Stack pt="22px">
+        <Typography
+          variant="small"
+          color={props.dark ? PALETTE.secondary.grey[1] : undefined}
+        >
+          Contact sales for custom pricing based on the number of teacher
+          accounts and devices you would like in your plan, and we&apos;ll make
+          it happen!!!
+        </Typography>
+      </Stack>
+    ) : null}
   </Stack>
 );
 
@@ -379,6 +397,19 @@ const UpgradeDialog = (props: {
             );
             setUpgradedNotificationPending(true);
           }}
+        />
+        <PricingCard
+          title="Custom"
+          // subtitle="Monthly"
+          buttonText="Contact Sales"
+          price="POA"
+          currency={
+            CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
+          }
+          unit={frequency === "monthly" ? "month" : "year"}
+          text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
+          callback={() => (window.location.href = "mailto:hello@astrosafe.co")}
+          icon={MailIcon}
         />
       </Stack>
       {/* <Stack flex={1} alignItems="center">
