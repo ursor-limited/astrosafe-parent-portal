@@ -106,8 +106,8 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
         : "prod_QBufZ1xT1eUOx8",
     plan: "department",
     items: [
-      "5 teacher/adult accounts",
-      "10 devices monitored",
+      "8 teacher/adult accounts",
+      "60 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
     ],
