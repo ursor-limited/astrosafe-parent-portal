@@ -10,6 +10,7 @@ import { useLocalStorage } from "usehooks-ts";
 export interface IAWFormSection {
   id: string;
   title: string;
+  description?: string;
   inputs?: IAWFormInput[];
   subsections?: IAWFormSectionSubsection[];
   prefillInputPrompt?: string;

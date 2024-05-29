@@ -198,7 +198,6 @@ export function AWFormSection(
       newValue: IAWFormInputAnswer["value"]
     ) => void;
     prefill?: () => void;
-    //commit?: () => void; // needed in order to prefill inputs that are in the same step as the ones they are bound to
   }
 ) {
   const [checked, setChecked] = useState<boolean>(false);
@@ -215,6 +214,7 @@ export function AWFormSection(
       style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
     >
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
+      <div className="text-lg text-darkTeal-2">{props.description}</div>
       {props.prefillInputPrompt ? (
         <div className={`flex items-center gap-[12px]`}>
           <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />

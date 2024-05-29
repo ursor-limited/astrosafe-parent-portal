@@ -86,7 +86,9 @@ const SECTIONS: IAWFormSection[] = [
   },
   {
     id: "66561d001124a06d63bbd22b",
-    title: "Primary address of residence",
+    title: "Mailing address",
+    description:
+      "Key Holders will receive their Signing Device in the mail. Please provide a mailing address.",
     prefillInputPrompt: "Use same address as residence address above",
     inputs: [
       {
@@ -149,6 +151,24 @@ const SECTIONS: IAWFormSection[] = [
         title: "ZIP code",
         inputType: "text",
         placeholder: "Enter postal code",
+      },
+    ],
+  },
+  {
+    id: "665738851df0c1e04588163f",
+    title: "Signing Device",
+    description: `Each Signing Device must be stored at a UNIQUE physical address:
+    Residence
+    Workplace premises
+    Safe Deposit box (e.g. a bank)
+    
+    If the Signing Devices is stored at a residence or workplace, it must be stored in a lockable safe.`,
+    inputs: [
+      {
+        id: "6657388a4c8c64cd846d1791",
+        title: "Provide the zip code of the chosen location",
+        inputType: "text",
+        placeholder: "Insert ZIP code",
       },
     ],
   },
