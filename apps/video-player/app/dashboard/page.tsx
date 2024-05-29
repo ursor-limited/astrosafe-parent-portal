@@ -10,6 +10,7 @@ import { headers } from "next/headers";
 import MobileDashboardPageContents from "./MobileDashboardPageContents";
 import ApiController from "../api";
 import Hotjar from "@hotjar/browser";
+import { BrowserUserProvider } from "../components/BrowserUserContext";
 
 const AuthWrapper = dynamic(
   () => import("../components/AuthWrapper"),
@@ -34,11 +35,13 @@ async function DashboardPage({
     <>
       <AuthWrapper>
         <UserProvider checkoutSessionId={searchParams.checkoutSessionId}>
+          {/* <BrowserUserProvider> */}
           {isMobile ? (
             <MobileDashboardPageContents />
           ) : (
             <DashboardPageContents />
           )}
+          {/* </BrowserUserProvider> */}
         </UserProvider>
       </AuthWrapper>
     </>
