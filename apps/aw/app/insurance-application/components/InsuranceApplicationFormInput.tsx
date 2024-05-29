@@ -1,4 +1,3 @@
-import { AWDropdown } from "@/components/AWDropdown";
 import {
   AWLongTextField,
   AWMultiChoiceField,
@@ -8,6 +7,12 @@ import {
   IAWFormInput,
   IAWFormInputAnswer,
 } from "./InsuranceApplicationFormDialog";
+import dynamic from "next/dynamic";
+
+const AWDropdown = dynamic(
+  () => import("@/components/AWDropdown"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export default function InsuranceApplicationFormInput(
   props: IAWFormInput & {

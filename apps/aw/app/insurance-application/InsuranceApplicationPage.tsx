@@ -198,11 +198,14 @@ export function AWFormSection(
       newValue: IAWFormInputAnswer["value"]
     ) => void;
     prefill?: () => void;
+    //commit?: () => void; // needed in order to prefill inputs that are in the same step as the ones they are bound to
   }
 ) {
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
-    checked && props.prefill?.();
+    if (checked) {
+      props.prefill?.();
+    }
   }, [checked]);
   return (
     <div

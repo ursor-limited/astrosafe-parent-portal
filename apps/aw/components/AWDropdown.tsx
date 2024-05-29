@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useOutsideClick from "./useOutsideClick";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { createPortal } from "react-dom";
-import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/views/InsuranceApplicationPolicyOwner";
+import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/components/InsuranceApplicationFormDialog";
 
 function AWDropdownList(props: {
   open: boolean;
@@ -59,7 +59,7 @@ function AWDropdownList(props: {
   );
 }
 
-export function AWDropdown(props: {
+export default function AWDropdown(props: {
   value?: string;
   setValue: (newValue: string) => void;
   placeholder?: string;

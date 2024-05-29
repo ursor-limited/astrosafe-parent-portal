@@ -65,9 +65,9 @@ const SECTIONS: IAWFormSection[] = [
       },
       {
         id: "6655c18ff69ad61442a6fa2b",
-        title: "State of province",
+        title: "State or province",
         inputType: "text",
-        placeholder: "Insert state of province",
+        placeholder: "Insert state or province",
       },
       {
         id: "6655c1b04f9526468edc17b0",
@@ -125,9 +125,9 @@ const SECTIONS: IAWFormSection[] = [
           step: "personalDetails",
           inputId: "6655c18ff69ad61442a6fa2b",
         },
-        title: "State of province",
+        title: "State or province",
         inputType: "text",
-        placeholder: "Insert state of province",
+        placeholder: "Insert state or province",
       },
       {
         id: "66561d25fb1f010c0bd6ace9",

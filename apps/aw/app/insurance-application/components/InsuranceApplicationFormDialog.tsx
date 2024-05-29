@@ -106,10 +106,11 @@ export default function InsuranceApplicationFormDialog(props: {
   const prefill = (section: IAWFormSection) =>
     section.inputs?.forEach((input) => {
       if (input.prefill) {
-        const newValue = committedAnswers[input.prefill.step]?.find(
-          (a) => a.inputId === input.prefill!.inputId
-        )?.value;
-        console.log(newValue, input.id, answers);
+        const newValue = (
+          input.prefill.step === props.stepId
+            ? answers
+            : committedAnswers[input.prefill.step]
+        )?.find((a) => a.inputId === input.prefill!.inputId)?.value;
         if (newValue && !answers.find((a) => a.inputId === input.id)?.value) {
           setValue(input.id, newValue);
         }
@@ -153,6 +154,7 @@ export default function InsuranceApplicationFormDialog(props: {
               answers={answers}
               setValue={setValue}
               prefill={() => prefill(section)}
+              //commit={commitAnswers}
             />
           ))}
         </div>
