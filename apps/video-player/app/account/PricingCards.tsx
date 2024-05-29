@@ -3,7 +3,7 @@ import AccountPagePricingCard from "./AccountPagePricingCard";
 import { PRODUCT_DETAILS } from "./AccountPageContents";
 import { LOCALE_CURRENCIES, getPaymentUrl } from "../components/UpgradeDialog";
 import { useRouter } from "next/navigation";
-import { useWindowSize } from "usehooks-ts";
+import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useEffect, useState } from "react";
 
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
@@ -43,6 +43,9 @@ const PricingCards = (props: {
     getIp();
   }, []);
 
+  const [upgradedNotificationPending, setUpgradedNotificationPending] =
+    useLocalStorage<boolean>("upgradedNotificationPending", false);
+
   return (
     <Stack direction={props.column ? "column" : "row"} spacing="12px">
       {[
@@ -72,7 +75,7 @@ const PricingCards = (props: {
             //     : undefined
             // }
             items={pd.items}
-            callback={() =>
+            callback={() => {
               router.push(
                 props.email
                   ? getPaymentUrl(
@@ -81,8 +84,9 @@ const PricingCards = (props: {
                       props.frequency
                     )
                   : ""
-              )
-            }
+              );
+              setUpgradedNotificationPending(true);
+            }}
             mortarBoardsN={
               props.hideMortarBoards ? undefined : pd.mortarBoardsN
             }
