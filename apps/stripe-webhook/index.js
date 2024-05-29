@@ -1,6 +1,23 @@
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const axios = require("axios");
 
+const PRODUCTION_PRODUCT_ID_PLANS = {
+  prod_PlC9OCbk8oBkWW: "individual",
+  prod_PlWrHG8V57yjrn: "individual",
+  prod_QAEYttD39HvFKz: "department",
+  prod_QAEaFpLDEJnlli: "department",
+};
+
+const DEVELOPMENT_PRODUCT_ID_PLANS = {
+  prod_QBufh97tFHY0PT: "individual",
+  prod_QBufZ1xT1eUOx8: "department",
+};
+
+const getPlan = (id) =>
+  process.env.NODE_ENV === "production"
+    ? PRODUCTION_PRODUCT_ID_PLANS[id]
+    : DEVELOPMENT_PRODUCT_ID_PLANS[id];
+
 const BACKEND_URLS = {
   development: "http://localhost:8081",
   preview:
@@ -24,10 +41,11 @@ const submitPaymentSucceeded = async (email) =>
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
 
-const submitUpgradeSchool = async (email) =>
+const submitUpgradeSchool = async (email, plan) =>
   axios
-    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/school/upgrade`, {
+    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/school/upgr/ade`, {
       email,
+      plan,
     })
     .then((x) => console.log(x.data))
     .catch((error) => console.log(error));
@@ -145,8 +163,9 @@ exports.handler = async function (event) {
             stripe.subscriptions
               .retrieve(stripeEvent.data.object?.subscription)
               .then((s) => {
-                submitDetails(id, s?.items?.data?.[0].price?.product);
-                submitUpgradeSchool(customerEmail);
+                const productId = s?.items?.data?.[0].price?.product;
+                submitDetails(id, productId);
+                submitUpgradeSchool(customerEmail, getPlan(productId));
               })
           );
         await submitPaymentSucceeded(customerEmail);
