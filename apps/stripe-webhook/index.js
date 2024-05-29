@@ -43,7 +43,7 @@ const submitPaymentSucceeded = async (email) =>
 
 const submitUpgradeSchool = async (email, plan) =>
   axios
-    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/school/upgr/ade`, {
+    .patch(`${BROWSER_BACKEND_URLS[process.env.NODE_ENV]}/schools/upgr/ade`, {
       email,
       plan,
     })
@@ -118,9 +118,7 @@ exports.handler = async function (event) {
     console.log(`Event Type: ${eventType}`);
     console.log(jsonData);
 
-    const subscriptionId = stripeEvent.data.object.id;
     const customerId = stripeEvent.data.object.customer;
-    const priceId = stripeEvent.data.object.plan?.id;
 
     let customerEmail;
     customerEmail = stripeEvent.data.object["customer_details"]?.email;
@@ -165,11 +163,11 @@ exports.handler = async function (event) {
               .then((s) => {
                 const productId = s?.items?.data?.[0].price?.product;
                 submitDetails(id, productId);
+                console.log("aaaa", getPlan(productId));
                 submitUpgradeSchool(customerEmail, getPlan(productId));
               })
           );
         await submitPaymentSucceeded(customerEmail);
-        //await submitUpgradeSchool(customerEmail)
         break;
       }
       case "invoice.payment_failed":
