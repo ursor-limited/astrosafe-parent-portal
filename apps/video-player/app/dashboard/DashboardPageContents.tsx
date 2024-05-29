@@ -1207,9 +1207,7 @@ export default function DashboardPageContents() {
             />
             <ToolButton
               title={
-                shortenedToolNameInButton
-                  ? "Safe video"
-                  : "Create Safe Video Link"
+                shortenedToolNameInButton ? "Video Link" : "Create Video Link"
               }
               description="Free of ads. Safe to share."
               color={CONTENT_BRANDING.video.color}
@@ -1247,7 +1245,7 @@ export default function DashboardPageContents() {
               infoImageUrl={CONTENT_BRANDING.quiz.infoImageUrl}
               popoverTitle={CONTENT_BRANDING.quiz.title}
             />
-            <ToolButton
+            {/* <ToolButton
               title={
                 shortenedToolNameInButton
                   ? "Worksheet"
@@ -1271,7 +1269,7 @@ export default function DashboardPageContents() {
               info={CONTENT_BRANDING.worksheet.info}
               infoImageUrl={CONTENT_BRANDING.worksheet.infoImageUrl}
               popoverTitle={CONTENT_BRANDING.worksheet.title}
-            />
+            /> */}
           </Stack>
         </UrsorFadeIn>
 
