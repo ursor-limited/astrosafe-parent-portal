@@ -3,7 +3,6 @@
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import MailIcon from "@/images/icons/MailIcon.svg";
-import Image from "next/image";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorDialog from "./UrsorDialog";
@@ -241,8 +240,8 @@ const PricingCard = (props: {
           color={props.dark ? PALETTE.secondary.grey[1] : undefined}
         >
           Contact sales for custom pricing based on the number of teacher
-          accounts and devices you would like in your plan, and we'll make it
-          happen!!!
+          accounts and devices you would like in your plan, and we&apos;ll make
+          it happen!!!
         </Typography>
       </Stack>
     ) : null}
