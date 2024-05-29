@@ -1,4 +1,4 @@
-import { STEPS } from "../InsuranceApplicationPage";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 const TERMS = [
@@ -24,7 +24,7 @@ export default function InsuranceApplicationGlossary(props: {
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
-      title="TERMS TO UNDERSTAND"
+      title={STEP_TITLES.glossary}
       subtitle="The application will refer to the following terms."
       buttonCallback={props.nextCallback}
     >

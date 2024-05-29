@@ -1,12 +1,13 @@
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
+import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 
 export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
-      title="IDENTITY VERIFICATION"
+      title={STEP_TITLES.identity}
       buttonCallback={props.nextCallback}
       infoText="Why we do this"
       progress={

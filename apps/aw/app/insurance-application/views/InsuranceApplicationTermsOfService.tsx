@@ -4,6 +4,7 @@ import InsuranceApplicationDialog, {
 } from "../components/InsuranceApplicationDialog";
 import { useState } from "react";
 import { AWCheckbox } from "@/components/AWCheckbox";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 
 interface IAWTermsOfServiceSection {
   title?: string;
@@ -172,7 +173,7 @@ export default function InsuranceApplicationTermsOfService(props: {
     reachedBottom && setScrolledToBottom(reachedBottom);
   };
   return (
-    <InsuranceApplicationDialog title="TERMS OF SERVICE">
+    <InsuranceApplicationDialog title={STEP_TITLES.termsOfService}>
       <div className="h-full w-full flex flex-col p-3xl gap-3xl">
         <div className="flex flex-col gap-lg">
           <div className="font-medium text-xl">

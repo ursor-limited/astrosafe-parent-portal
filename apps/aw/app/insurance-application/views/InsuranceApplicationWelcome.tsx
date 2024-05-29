@@ -1,3 +1,4 @@
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 
 export default function InsuranceApplicationWelcome(props: {
@@ -5,7 +6,7 @@ export default function InsuranceApplicationWelcome(props: {
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
-      title="WELCOME TO YOUR ANCHORWATCH INSURANCE APPLICATION"
+      title={STEP_TITLES.welcome}
       subtitle="To become an insured AnchorWatch customer, you'll complete the following steps."
       buttonCallback={props.nextCallback}
       infoText="Need help"

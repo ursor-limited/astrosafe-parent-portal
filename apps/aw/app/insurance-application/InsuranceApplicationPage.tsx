@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
+import InsuranceApplicationCheckpoints, {
+  CHECKPOINT_STEPS,
+} from "./views/InsuranceApplicationCheckpoints";
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
@@ -30,18 +32,23 @@ export const awInsuranceApplicationSteps = [
   "businessSummary",
   "identity",
   "responsibilities",
-  "leaders",
   "personalDetails",
 ] as const;
 export type AWInsuranceApplicationStep =
   (typeof awInsuranceApplicationSteps)[number];
 
-export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
-  "policyOwner",
-  "businessSummary",
-  "identity",
-  "leaders",
-];
+export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
+  welcome: "Welcome to your AnchorWatch Insurance Application",
+  glossary: "Terms to understand",
+  termsOfService: "Terms of Service",
+  checkpoints: "Start Application",
+  policyOwner: "Policy owner information",
+  businessSummary: "Business summary",
+  identity: "Identity verification",
+  responsibilities: "Your responsibilities as a Key Holder",
+  //leaders: "Company leaders details",
+  personalDetails: "Company leader personal details",
+};
 
 const FADEIN_DELAY = 66;
 
@@ -256,68 +263,56 @@ export function AWFormSection(
   );
 }
 
-export default function InsuranceApplicationPage() {
-  const [firstFormStepAnswers, setFirstFormStepAnswers] = useLocalStorage<
-    IAWFormInputAnswer[] | undefined
-  >("policyOwner-committedAnswers", undefined);
-  const [formStarted, setFormStarted] = useState<boolean>(false);
-  useEffect(
-    () => setFormStarted(!!firstFormStepAnswers?.some((a) => a.value)),
-    [firstFormStepAnswers]
-  );
+const STEP_COMPONENTS: Record<
+  AWInsuranceApplicationStep,
+  React.FC<{ nextCallback: () => void }>
+> = {
+  welcome: InsuranceApplicationWelcome,
+  glossary: InsuranceApplicationGlossary,
+  termsOfService: InsuranceApplicationTermsOfService,
+  checkpoints: InsuranceApplicationCheckpoints,
+  policyOwner: InsuranceApplicationPolicyOwner,
+  businessSummary: InsuranceApplicationBusinessSummary,
+  identity: InsuranceApplicationIdentity,
+  responsibilities: InsuranceApplicationResponsibilities,
+  personalDetails: InsuranceApplicationPersonalDetails,
+};
 
-  const [welcomeDone, setWelcomeDone] = useState<boolean>(true);
-  const [glossaryDone, setGlossaryDone] = useState<boolean>(true);
-  const [TOSDone, setTOSDone] = useState<boolean>(true);
-  const [checkPointsDone, setCheckpointsDone] = useState<boolean>(true);
-  const [policyOwnerDone, setPolicyOwnerDone] = useState<boolean>(true);
-  const [businessSummaryDone, setBusinessSummaryDone] = useState<boolean>(true);
-  const [identityDone, setIdentityDone] = useState<boolean>(true);
-  const [responsibilitiesDone, setResponsibilitiesDone] =
-    useState<boolean>(true);
-  const [leaderDetailsDone, setLeaderDetailsDone] = useState<boolean>(false);
+export default function InsuranceApplicationPage() {
+  const [stepCompletions, setStepCompletions] = useLocalStorage<
+    Partial<Record<AWInsuranceApplicationStep, boolean>>
+  >("stepCompletions", {});
+
+  const [currentStep, setCurrentStep] = useLocalStorage<
+    AWInsuranceApplicationStep | undefined
+  >("currentStep", undefined);
+  useEffect(() => {
+    stepCompletions[CHECKPOINT_STEPS[0]] && setCurrentStep("checkpoints"); // show the Checkpoints view, in the Resume state
+  }, [stepCompletions]);
+
+  const setStepComplete = (step: AWInsuranceApplicationStep) => {
+    setStepCompletions({ ...stepCompletions, [step]: true });
+    setCurrentStep(
+      awInsuranceApplicationSteps[awInsuranceApplicationSteps.indexOf(step) + 1]
+    );
+  };
+
+  const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
   return (
     <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll">
-      {!welcomeDone ? (
-        <InsuranceApplicationWelcome
-          nextCallback={() => setWelcomeDone(true)}
+      {currentStep && StepView ? (
+        <StepView
+          key={currentStep}
+          nextCallback={() => setStepComplete(currentStep)}
         />
-      ) : !glossaryDone ? (
-        <InsuranceApplicationGlossary
-          nextCallback={() => setGlossaryDone(true)}
-        />
-      ) : !TOSDone ? (
-        <InsuranceApplicationTermsOfService
-          nextCallback={() => setTOSDone(true)}
-        />
-      ) : !checkPointsDone ? (
-        <InsuranceApplicationCheckpoints
-          startCallback={() => setCheckpointsDone(true)}
-        />
-      ) : !policyOwnerDone ? (
-        <InsuranceApplicationPolicyOwner
-          nextCallback={() => setPolicyOwnerDone(true)}
-        />
-      ) : !businessSummaryDone ? (
-        <InsuranceApplicationBusinessSummary
-          nextCallback={() => setBusinessSummaryDone(true)}
-        />
-      ) : !identityDone ? (
-        <InsuranceApplicationIdentity
-          nextCallback={() => setIdentityDone(true)}
-        />
-      ) : !responsibilitiesDone ? (
-        <InsuranceApplicationResponsibilities
-          nextCallback={() => setResponsibilitiesDone(true)}
-        />
-      ) : !leaderDetailsDone ? (
-        <InsuranceApplicationPersonalDetails
-          nextCallback={() => setLeaderDetailsDone(true)}
-        />
-      ) : (
-        <></>
-      )}
+      ) : null}
+      {/* {awInsuranceApplicationSteps.map((step) => {
+        const StepView = STEP_COMPONENTS[step];
+        return (
+          <StepView key={step} nextCallback={() => setStepComplete(step)} />
+        );
+      })} */}
     </div>
   );
 }

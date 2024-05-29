@@ -1,6 +1,7 @@
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 import { useState } from "react";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
@@ -8,7 +9,7 @@ export default function InsuranceApplicationResponsibilities(props: {
   const [checked, setChecked] = useState<boolean>(false);
   return (
     <InsuranceApplicationIllustrationDialog
-      title="YOUR RESPONSIBILITIES AS KEY HOLDER"
+      title={STEP_TITLES.responsibilities}
       buttonCallback={props.nextCallback}
       infoText="Need help"
       buttonDisabled={!checked}

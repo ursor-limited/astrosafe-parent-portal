@@ -1,7 +1,8 @@
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
+import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -297,7 +298,7 @@ export default function InsuranceApplicationBusinessSummary(props: {
   return (
     <InsuranceApplicationFormDialog
       stepId="businessSummary"
-      title="BUSINESS SUMMARY"
+      title={STEP_TITLES.businessSummary}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={

@@ -1,40 +1,65 @@
-import InsuranceApplicationDialog from "../components/InsuranceApplicationDialog";
-import { STEPS } from "../InsuranceApplicationPage";
 import { useLocalStorage } from "usehooks-ts";
-import { IAWFormInputAnswer } from "./InsuranceApplicationPolicyOwner";
 import { useEffect, useState } from "react";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
+import {
+  AWInsuranceApplicationStep,
+  STEP_TITLES,
+} from "../InsuranceApplicationPage";
+import _ from "lodash";
+
+export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
+  "policyOwner",
+  "businessSummary",
+  "identity",
+  //"leaders",
+];
 
 export default function InsuranceApplicationCheckpoints(props: {
-  startCallback: () => void;
+  nextCallback: () => void;
 }) {
-  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    IAWFormInputAnswer[] | undefined
-  >("committedAnswers", undefined);
-  const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
-  useEffect(() => {
-    const firstNotCompleteStep = STEPS.find(
-      (step) =>
-        !step.sections.every(
-          (section) =>
-            section.inputs?.every(
-              (input) =>
-                input.optional ||
-                committedAnswers?.find((answer) => answer.inputId === input.id)
-            )
-        )
-    );
-    setCurrentStepIndex(
-      firstNotCompleteStep
-        ? Math.max(0, STEPS.indexOf(firstNotCompleteStep))
-        : STEPS.length - 1
-    );
-  }, [committedAnswers]);
+  // const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+  //   IAWFormInputAnswer[] | undefined
+  // >("committedAnswers", undefined);
+  const [stepCompletions, setStepCompletions] = useLocalStorage<
+    Partial<Record<AWInsuranceApplicationStep, boolean>>
+  >("stepCompletions", {});
+
+  const [currentStep, setCurrentStep] =
+    useLocalStorage<AWInsuranceApplicationStep>("currentStep", "welcome");
+
+  const [lastCompletedStepIndex, setLastCompletedStepIndex] =
+    useState<number>(0);
+  useEffect(
+    () =>
+      setLastCompletedStepIndex(
+        _.sum(CHECKPOINT_STEPS.map((cs) => !!stepCompletions[cs])) - 1
+      ),
+    [stepCompletions]
+  );
+  console.log(lastCompletedStepIndex);
+  // useEffect(() => {
+  //   const firstNotCompleteStep = STEPS.find(
+  //     (step) =>
+  //       !step.sections.every(
+  //         (section) =>
+  //           section.inputs?.every(
+  //             (input) =>
+  //               input.optional ||
+  //               committedAnswers?.find((answer) => answer.inputId === input.id)
+  //           )
+  //       )
+  //   );
+  //   setCurrentStepIndex(
+  //     firstNotCompleteStep
+  //       ? Math.max(0, STEPS.indexOf(firstNotCompleteStep))
+  //       : STEPS.length - 1
+  //   );
+  // }, [committedAnswers]);
 
   const [started, setStarted] = useState<boolean>(false);
   useEffect(
-    () => setStarted(!!committedAnswers?.some((a) => a.value)),
-    [committedAnswers]
+    () => setStarted(!!stepCompletions[CHECKPOINT_STEPS[0]]),
+    [stepCompletions]
   );
   return (
     <InsuranceApplicationIllustrationDialog
@@ -45,31 +70,40 @@ export default function InsuranceApplicationCheckpoints(props: {
           : "The application intake form consists of the following sections."
       }
       buttonText={started ? "Resume" : "Start"}
-      buttonCallback={props.startCallback}
+      buttonCallback={() =>
+        !started
+          ? props.nextCallback()
+          : setCurrentStep(CHECKPOINT_STEPS[lastCompletedStepIndex])
+      }
       infoText="You can come back anytime"
     >
       <div className="flex flex-col">
-        {STEPS.map((step, i) => (
+        {CHECKPOINT_STEPS.map((step, i) => (
           <div key={i} className="flex flex-col">
-            <div className="flex gap-[10px] items-center cursor-pointer hover:opacity-60 duration-200">
+            <div
+              className="flex gap-[10px] items-center cursor-pointer hover:opacity-60 duration-200"
+              onClick={() => setCurrentStep(step)}
+            >
               <div
                 className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7 ${
-                  currentStepIndex === i
+                  lastCompletedStepIndex === i + 1
                     ? "bg-darkTeal-5"
-                    : currentStepIndex > i
-                    ? "bg-greyscale-5"
-                    : ""
+                    : lastCompletedStepIndex < i + 1
+                    ? ""
+                    : "bg-lightTeal-2"
                 }`}
               />
               <div
                 className={`text-xl underline underline-offset-2 decoration-1 ${
-                  currentStepIndex > i ? "text-greyscale-6" : "text-darkTeal-3"
+                  lastCompletedStepIndex > i
+                    ? "text-greyscale-6"
+                    : "text-darkTeal-3"
                 }`}
               >
-                {step.title}
+                {STEP_TITLES[step]}
               </div>
             </div>
-            {i < STEPS.length - 1 ? (
+            {i < CHECKPOINT_STEPS.length - 1 ? (
               <div className="w-[1px] h-[16px] ml-[5.3px] bg-darkTeal-5" />
             ) : null}
           </div>

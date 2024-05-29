@@ -1,7 +1,8 @@
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationPage";
+import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
+import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -65,7 +66,7 @@ export default function InsuranceApplicationPolicyOwner(props: {
   return (
     <InsuranceApplicationFormDialog
       stepId="policyOwner"
-      title="POLICY OWNER INFORMATION"
+      title={STEP_TITLES.policyOwner}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={
