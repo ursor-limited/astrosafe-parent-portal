@@ -1116,9 +1116,9 @@ export default function DashboardPageContents() {
               }
             : null
         }
-        buttonRowExtraElementRight={
-          userDetails.user ? <ProfileButton light /> : undefined
-        }
+        // buttonRowExtraElementRight={
+        //   userDetails.user ? <ProfileButton light /> : undefined
+        // }
         buttonRowExtraElement={
           <Stack direction="row" spacing="12px" alignItems="center">
             {!userDetails.schoolIsSubscribed ||
