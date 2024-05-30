@@ -67,11 +67,11 @@ export default function InsuranceApplicationFormDialog(props: {
 
   const setValue = (id: string, newValue?: string) => {
     setAnswers((prev) =>
-      answers.find((a) => a.inputId === id)
+      prev.find((a) => a.inputId === id)
         ? prev.map((a) =>
             a.inputId === id ? { inputId: id, value: newValue } : a
           )
-        : [...answers, { inputId: id, value: newValue }]
+        : [...prev, { inputId: id, value: newValue }]
     );
   };
 

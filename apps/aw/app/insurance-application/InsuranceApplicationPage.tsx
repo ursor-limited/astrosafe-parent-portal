@@ -285,10 +285,10 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", undefined);
-  useEffect(() => {
-    stepCompletions[CHECKPOINT_STEPS[0]] && setCurrentStep("checkpoints"); // show the Checkpoints view, in the Resume state
-  }, [stepCompletions]);
+  >("currentStep", "welcome");
+  // useEffect(() => {
+  //   stepCompletions[CHECKPOINT_STEPS[0]] && setCurrentStep("checkpoints"); // show the Checkpoints view, in the Resume state
+  // }, [stepCompletions]);
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });

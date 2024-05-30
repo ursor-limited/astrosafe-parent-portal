@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { STEP_TITLES } from "../../InsuranceApplicationPage";
-import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
+import InsuranceApplicationPersonalDetails from "./InsuranceApplicationPersonalDetails";
+import InsuranceApplicationResponsibilities from "./InsuranceApplicationResponsibilities";
+import InsuranceApplicationIdentityIntro from "./InsuranceApplicationIdentityIntro";
 
 const awInsuranceApplicationIdentityStepViews = [
   "intro",
@@ -14,7 +14,7 @@ const awInsuranceApplicationIdentityStepViews = [
 export type AWInsuranceApplicationIdentityStepView =
   (typeof awInsuranceApplicationIdentityStepViews)[number];
 
-export const VIEW_IDENTITY_STEP_TITLES: Record<
+export const IDENTITY_STEP_TITLES: Record<
   AWInsuranceApplicationIdentityStepView,
   string
 > = {
@@ -26,15 +26,28 @@ export const VIEW_IDENTITY_STEP_TITLES: Record<
   status: "Identity verification status",
 };
 
+const IDENTITY_STEP_VIEW_COMPONENTS: Partial<
+  Record<
+    AWInsuranceApplicationIdentityStepView,
+    React.FC<{ nextCallback: () => void }>
+  >
+> = {
+  intro: InsuranceApplicationIdentityIntro,
+  responsibilities: InsuranceApplicationResponsibilities,
+  personalDetails: InsuranceApplicationPersonalDetails,
+};
+
 export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
 }) {
   const [currentView, setCurrentView] =
     useState<AWInsuranceApplicationIdentityStepView>("intro");
-  return (
-    <InsuranceApplicationIllustrationDialog
-      title={VIEW_IDENTITY_STEP_TITLES[currentView]}
-      buttonCallback={() =>
+
+  const View = currentView ? IDENTITY_STEP_VIEW_COMPONENTS[currentView] : null;
+
+  return View ? (
+    <View
+      nextCallback={() =>
         currentView === "status"
           ? props.nextCallback()
           : setCurrentView(
@@ -43,22 +56,36 @@ export default function InsuranceApplicationIdentity(props: {
               ]
             )
       }
-      infoText="Why we do this"
-      progress={
-        (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length
-      }
-    >
-      <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
-        <div>
-          Anchorwatch has sent all identified Company Leaders an email to accept
-          Terms of Service, complete identity verification and KYC/AML
-          compliance.
-        </div>
-        <div>
-          Note: The application can not be submitted until all Company Leaders
-          have provided their requested information
-        </div>
-      </div>
-    </InsuranceApplicationIllustrationDialog>
+    />
+  ) : (
+    <></>
   );
+  // <InsuranceApplicationIllustrationDialog
+  //   title={IDENTITY_STEP_TITLES[currentView]}
+  //   buttonCallback={() =>
+  //     currentView === "status"
+  //       ? props.nextCallback()
+  //       : setCurrentView(
+  //           awInsuranceApplicationIdentityStepViews[
+  //             awInsuranceApplicationIdentityStepViews.indexOf(currentView) + 1
+  //           ]
+  //         )
+  //   }
+  //   infoText="Why we do this"
+  //   progress={
+  //     (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length
+  //   }
+  // >
+  //   <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
+  //     <div>
+  //       Anchorwatch has sent all identified Company Leaders an email to accept
+  //       Terms of Service, complete identity verification and KYC/AML
+  //       compliance.
+  //     </div>
+  //     <div>
+  //       Note: The application can not be submitted until all Company Leaders
+  //       have provided their requested information
+  //     </div>
+  //   </div>
+  // </InsuranceApplicationIllustrationDialog>
 }

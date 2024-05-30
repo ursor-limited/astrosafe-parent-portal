@@ -2,7 +2,7 @@ import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
-import { VIEW_IDENTITY_STEP_TITLES } from "./InsuranceApplicationIdentity";
+import { IDENTITY_STEP_TITLES } from "./InsuranceApplicationIdentity";
 
 const SECTIONS: IAWFormSection[] = [
   {
@@ -75,7 +75,12 @@ const SECTIONS: IAWFormSection[] = [
         title: "Country",
         inputType: "dropdown",
         placeholder: "Choose your country",
-        options: [],
+        options: [
+          {
+            id: "buu",
+            text: "USA",
+          },
+        ],
       },
       {
         id: "6655c1eb44e7da94b593e696",
@@ -141,7 +146,12 @@ const SECTIONS: IAWFormSection[] = [
         title: "Country",
         inputType: "dropdown",
         placeholder: "Choose your country",
-        options: [],
+        options: [
+          {
+            id: "buu",
+            text: "USA",
+          },
+        ],
       },
       {
         id: "66561d2a42becad2f5f4f9ed",
@@ -181,7 +191,7 @@ export default function InsuranceApplicationPersonalDetails(props: {
   return (
     <InsuranceApplicationFormDialog
       stepId="identity"
-      title={VIEW_IDENTITY_STEP_TITLES.personalDetails}
+      title={IDENTITY_STEP_TITLES.personalDetails}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={
