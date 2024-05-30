@@ -156,6 +156,11 @@ class ApiController {
       response.json()
     );
   }
+  static async getStackLinks(stackId: string) {
+    return get(`stacks/${stackId}/links`).then((response: any) =>
+      response.json()
+    );
+  }
   // static async getGuestStacks() {
   //   return get(`schools/guest/gueststacks`).then((response: any) =>
   //     response.json()

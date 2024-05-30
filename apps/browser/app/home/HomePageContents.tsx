@@ -7,8 +7,8 @@ import { Stack } from "@mui/system";
 import { Typography } from "ui";
 import ChannelButton from "./ChannelButton";
 import useColumnWidth from "../components/useColumnWidth";
-import UrsorFadeIn from "../components/UrsorFadeIn";
-import BrowserLinkCard from "../components/BrowserLinkCard";
+import AstroContentColumns from "./AstroContentColumns";
+import _ from "lodash";
 
 export type AstroContent = "link" | "stack";
 
@@ -125,7 +125,14 @@ export default function HomePageContents() {
         ))}
       </Stack> */}
       <Stack flex={1} overflow="scroll">
-        <Stack flex={1} pb="20px" direction="row" spacing="12px">
+        <AstroContentColumns
+          title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
+          links={filteredLinks}
+          stacks={filteredStacks}
+          shareSelectedStackIdWithExtension
+          emptyStateText="No Links yet."
+        />
+        {/* <Stack flex={1} pb="20px" direction="row" spacing="12px">
           {cardColumns.map((column, i) => (
             <Stack key={i} flex={1} spacing="12px">
               {column.map((item, j) => (
@@ -153,18 +160,7 @@ export default function HomePageContents() {
                         clickCallback={() =>
                           setStackViewingDialogId(item.details.id)
                         }
-                        editCallback={() =>
-                          setStackEditingDialogId(item.details.id)
-                        }
-                        duplicateCallback={() =>
-                          BrowserApiController.duplicateStack(item.details.id)
-                            .then(loadLinks)
-                            .then(loadStacks)
-                            .then(loadChannels)
-                            .then(() =>
-                              notificationCtx.success("Stack duplicated")
-                            )
-                        }
+                       
                         updateCallback={() => {
                           loadLinks();
                           loadStacks();
@@ -177,7 +173,7 @@ export default function HomePageContents() {
               ))}
             </Stack>
           ))}
-        </Stack>
+        </Stack> */}
       </Stack>
     </Stack>
   );
