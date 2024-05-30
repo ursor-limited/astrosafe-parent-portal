@@ -1,7 +1,8 @@
-import { useState } from "react";
 import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
 import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
 import { IDENTITY_STEP_TITLES } from "./main";
+import QR from "@/images/QR.png";
+import Image from "next/image";
 
 export default function InsuranceApplicationIdentityKYC(props: {
   nextCallback: () => void;
@@ -10,10 +11,19 @@ export default function InsuranceApplicationIdentityKYC(props: {
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.kyc}
       subtitle="How to verify your identity?"
-      buttonCallback={props.nextCallback}
+      //buttonCallback={props.nextCallback}
       progress={CHECKPOINT_STEPS.indexOf("identity") / CHECKPOINT_STEPS.length}
+      illustration={
+        <Image
+          src={QR.src}
+          height={388}
+          width={388}
+          alt="qr code"
+          unoptimized
+        />
+      }
     >
-      <div className="flex flex-col gap-3xl text-lg text-darkTeal-5">
+      <div className="h-[347px] flex flex-col gap-3xl text-lg text-darkTeal-5">
         <div className="flex gap-lg text-lg text-darkTeal-5">
           <div className="min-w-[16px] flex justify-end">
             <div className="">1.</div>
@@ -40,6 +50,15 @@ export default function InsuranceApplicationIdentityKYC(props: {
           <div>
             Other company leaders will also receive an email with instructions
             to complete this KYC/AML identity verification
+          </div>
+        </div>
+        <div
+          className="w-full bg-darkTeal-5 items-center justify-center rounded-xs p-[24px] cursor-pointer hover:opacity-50 duration-200"
+          onClick={props.nextCallback}
+        >
+          <div className="text-sm text-yellow-2 text-center">
+            View the result of scanning the QR code by clicking this. Remember
+            to remove this for the production build!
           </div>
         </div>
       </div>

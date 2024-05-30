@@ -8,10 +8,11 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   title: string;
   subtitle?: string;
   buttonText?: string;
-  buttonCallback: () => void;
+  buttonCallback?: () => void;
   buttonDisabled?: boolean;
   infoText?: string;
   progress?: number;
+  illustration?: React.ReactNode;
   children?: React.ReactNode;
 }) {
   return (
@@ -32,16 +33,18 @@ export default function InsuranceApplicationIllustrationDialog(props: {
                 {props.infoText}
               </div>
             ) : null}
-            <AWButton
-              onClick={props.buttonCallback}
-              disabled={props.buttonDisabled}
-            >
-              {props.buttonText || "Next"}
-            </AWButton>
+            {props.buttonCallback ? (
+              <AWButton
+                onClick={props.buttonCallback}
+                disabled={props.buttonDisabled}
+              >
+                {props.buttonText || "Next"}
+              </AWButton>
+            ) : null}
           </div>
         </div>
         <div className="flex flex-1 justify-center items-center">
-          <VaultIllustration />
+          {props.illustration || <VaultIllustration />}
         </div>
       </div>
     </InsuranceApplicationDialog>
