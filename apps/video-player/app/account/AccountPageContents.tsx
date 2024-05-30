@@ -65,11 +65,17 @@ interface IAstroProduct {
 
 export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
-    monthlyId: "prod_PlC9OCbk8oBkWW",
-    annualId: "prod_PlWrHG8V57yjrn",
+    monthlyId:
+      process.env.VERCEL_ENV === "production"
+        ? "prod_PlC9OCbk8oBkWW"
+        : "prod_QBufh97tFHY0PT",
+    annualId:
+      process.env.VERCEL_ENV === "production"
+        ? "prod_PlWrHG8V57yjrn"
+        : "prod_QBufh97tFHY0PT",
     plan: "individual",
     items: [
-      "1 teacher/adult accounts",
+      "1 teacher/adult account",
       "5 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
@@ -90,12 +96,18 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
     },
   },
   {
-    monthlyId: "prod_QAEYttD39HvFKz",
-    annualId: "prod_QAEaFpLDEJnlli",
+    monthlyId:
+      process.env.VERCEL_ENV === "production"
+        ? "prod_QAEYttD39HvFKz"
+        : "prod_QBufZ1xT1eUOx8",
+    annualId:
+      process.env.VERCEL_ENV === "production"
+        ? "prod_QAEaFpLDEJnlli"
+        : "prod_QBufZ1xT1eUOx8",
     plan: "department",
     items: [
-      "5 teacher/adult accounts",
-      "10 devices monitored",
+      "8 teacher/adult accounts",
+      "60 devices monitored",
       "Unlimited worksheets or videos",
       "All functionality available",
     ],
@@ -825,22 +837,22 @@ export default function AccountPage(props: IAccountPageProps) {
     [width]
   );
 
-  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
-  useEffect(() => {
-    safetubeUserDetails?.subscribed && setSchoolIsSubscribed(true);
-  }, [safetubeUserDetails?.subscribed]);
+  // const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  // useEffect(() => {
+  //   safetubeUserDetails?.subscribed && setSchoolIsSubscribed(true);
+  // }, [safetubeUserDetails?.subscribed]);
 
-  useEffect(() => {
-    safetubeUserDetails &&
-      !safetubeUserDetails?.subscribed &&
-      userCtx?.userDetails?.email &&
-      BrowserApiController.getTeacherSchoolIsSubscribed(
-        userCtx?.userDetails?.email ?? ""
-      ).then(
-        //@ts-ignore
-        (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
-      );
-  }, [userCtx?.userDetails?.email]);
+  // useEffect(() => {
+  //   safetubeUserDetails &&
+  //     !safetubeUserDetails?.subscribed &&
+  //     userCtx?.userDetails?.email &&
+  //     BrowserApiController.getTeacherSchoolIsSubscribed(
+  //       userCtx?.userDetails?.email ?? ""
+  //     ).then(
+  //       //@ts-ignore
+  //       (response) => response?.isSubscribed && setSchoolIsSubscribed(true)
+  //     );
+  // }, [userCtx?.userDetails?.email]);
 
   return (
     <>
@@ -1058,9 +1070,7 @@ export default function AccountPage(props: IAccountPageProps) {
                             }
                             bold
                             color={PALETTE.secondary.grey[3]}
-                          >{`${teachers.length} of ${
-                            schoolIsSubscribed ? school.teacherLimit : 1
-                          }`}</Typography>
+                          >{`${teachers.length} of ${school.teacherLimit}`}</Typography>
                         </Stack>
                         <Stack
                           spacing={
@@ -1132,7 +1142,7 @@ export default function AccountPage(props: IAccountPageProps) {
                         <Stack />
                       )}
                     </Stack>
-                    {safetubeSchoolOwner?.subscriptionProductId &&
+                    {safetubeSchoolOwner?.subscribed &&
                     safetubeSchoolOwner?.id !== safetubeUserDetails?.id ? (
                       <AccountPageNotOwnFeaturesCard
                         nSeats={school?.teacherLimit ?? 0}

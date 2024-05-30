@@ -22,6 +22,8 @@ import DeviceDialog from "./DeviceDialog/DeviceDialog";
 import dynamic from "next/dynamic";
 import DashboardSignupPromptDialog from "../dashboard/DashboardSignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
+import AddTeacherUpgradePromptDialog from "./AddDeviceUpgradePromptDialog";
+import UpgradeDialog from "../components/UpgradeDialog";
 
 const UrsorLoading = dynamic(
   () => import("../components/UrsorLoading"),
@@ -260,6 +262,11 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
 
   // console.log(safetubeUserDetails);
 
+  const [upgradePromptDialogOpen, setUpgradePromptDialogOpen] =
+    useState<boolean>(false);
+
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -267,7 +274,13 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         selectedSidebarItemId="monitor"
         secondaryButton={{
           text: "Add Device",
-          callback: () => setAddDeviceDialogOpen(true),
+          callback: () => {
+            if (reachedDeviceLimit) {
+              setUpgradePromptDialogOpen(true);
+            } else {
+              setAddDeviceDialogOpen(true);
+            }
+          },
           icon: PlusIcon,
           tourId: "add-device-button",
           disabled: lockingModeOn,
@@ -566,10 +579,20 @@ export default function DevicesPageContents(props: IDevicesPageProps) {
         closeCallback={() => setLockDialogOpen(false)}
         startCallback={(duration) => startLock(duration)}
       />
-      {/* <DashboardSignupPromptDialog
-        open={signupPromptDialogOpen}
-        closeCallback={() => setSignupPromptDialogOpen(false)}
-      /> */}
+      <AddTeacherUpgradePromptDialog
+        open={upgradePromptDialogOpen}
+        closeCallback={() => setUpgradePromptDialogOpen(false)}
+        callback={() => {
+          setUpgradeDialogOpen(true);
+          setUpgradePromptDialogOpen(false);
+        }}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => {
+          setUpgradeDialogOpen(false);
+        }}
+      />
     </>
   );
 }
