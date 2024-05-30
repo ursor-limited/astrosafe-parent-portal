@@ -1,7 +1,11 @@
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
 import { useState } from "react";
-import { IDENTITY_STEP_TITLES } from "./main";
+import {
+  IDENTITY_STEP_TITLES,
+  awInsuranceApplicationIdentityStepViews,
+} from "./main";
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
@@ -13,6 +17,12 @@ export default function InsuranceApplicationResponsibilities(props: {
       buttonCallback={props.nextCallback}
       infoText="Need help"
       buttonDisabled={!checked}
+      progress={
+        (CHECKPOINT_STEPS.indexOf("identity") +
+          awInsuranceApplicationIdentityStepViews.indexOf("responsibilities") /
+            awInsuranceApplicationIdentityStepViews.length) /
+        CHECKPOINT_STEPS.length
+      }
     >
       <div className="flex flex-col gap-3xl">
         <div className="flex flex-col gap-lg">

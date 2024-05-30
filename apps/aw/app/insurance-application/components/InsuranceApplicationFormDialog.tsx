@@ -3,6 +3,7 @@ import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
 import {
   AWFormSection,
   AWInsuranceApplicationStep,
+  IAWFormSectionProps,
 } from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
@@ -13,6 +14,7 @@ export interface IAWFormSection {
   description?: string;
   inputs?: IAWFormInput[];
   subsections?: IAWFormSectionSubsection[];
+  custom?: boolean;
   prefillInputPrompt?: string;
 }
 
@@ -61,6 +63,7 @@ export default function InsuranceApplicationFormDialog(props: {
   sections: IAWFormSection[];
   progress: number;
   nextCallback: () => void;
+  customSections?: Record<IAWFormSection["id"], React.FC<IAWFormSectionProps>>;
   //rightArrowFaded: boolean;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
@@ -147,17 +150,29 @@ export default function InsuranceApplicationFormDialog(props: {
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className="w-full flex flex-col gap-[46px]">
-          {props.sections.map((section, i) => (
-            <AWFormSection
-              key={section.id}
-              {...section}
-              i={i + 1}
-              answers={answers}
-              setValue={setValue}
-              prefill={() => prefill(section)}
-              //commit={commitAnswers}
-            />
-          ))}
+          {props.sections.map((section, i) =>
+            section.custom ? (
+              <div key={section.id}>
+                {props.customSections?.[section.id]({
+                  ...section,
+                  i: i + 1,
+                  answers,
+                  setValue,
+                  prefill: () => prefill(section),
+                })}
+              </div>
+            ) : (
+              <AWFormSection
+                key={section.id}
+                {...section}
+                i={i + 1}
+                answers={answers}
+                setValue={setValue}
+                prefill={() => prefill(section)}
+                //commit={commitAnswers}
+              />
+            )
+          )}
         </div>
         <div className="w-full justify-center flex gap-[16px]">
           <AWButton width={182} variant="secondary" onClick={commitAnswers}>

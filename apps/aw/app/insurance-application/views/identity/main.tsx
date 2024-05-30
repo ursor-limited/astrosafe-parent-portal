@@ -6,7 +6,7 @@ import InsuranceApplicationIdentityKYC from "./kyc";
 import InsuranceApplicationIdentitySuccess from "./success";
 import InsuranceApplicationIdentityStatus from "./status";
 
-const awInsuranceApplicationIdentityStepViews = [
+export const awInsuranceApplicationIdentityStepViews = [
   "intro",
   "responsibilities",
   "personalDetails",
@@ -47,7 +47,7 @@ export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
 }) {
   const [currentView, setCurrentView] =
-    useState<AWInsuranceApplicationIdentityStepView>("status");
+    useState<AWInsuranceApplicationIdentityStepView>("intro");
 
   const View = currentView ? IDENTITY_STEP_VIEW_COMPONENTS[currentView] : null;
 

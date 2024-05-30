@@ -11,9 +11,7 @@ export default function InsuranceApplicationIdentityIntro(props: {
       title={IDENTITY_STEP_TITLES.intro}
       buttonCallback={props.nextCallback}
       infoText="Why we do this"
-      progress={
-        (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length
-      }
+      progress={CHECKPOINT_STEPS.indexOf("identity") / CHECKPOINT_STEPS.length}
     >
       <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
         <div>

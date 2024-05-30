@@ -11,6 +11,7 @@ export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "policyOwner",
   "businessSummary",
   "identity",
+  "insuranceNeeds",
   //"leaders",
 ];
 

@@ -2,16 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import InsuranceApplicationCheckpoints, {
-  CHECKPOINT_STEPS,
-} from "./views/InsuranceApplicationCheckpoints";
+import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
 import InsuranceApplicationIdentity from "./views/identity/main";
-import InsuranceApplicationResponsibilities from "./views/identity/responsibilities";
 import {
   IAWFormInput,
   IAWFormInputAnswer,
@@ -21,7 +18,7 @@ import {
 } from "./components/InsuranceApplicationFormDialog";
 import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
 import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
-import InsuranceApplicationPersonalDetails from "./views/identity/personalDetails";
+import InsuranceApplicationInsuranceNeeds from "./views/InsuranceApplicationInsuranceNeeds";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -31,6 +28,7 @@ export const awInsuranceApplicationSteps = [
   "policyOwner",
   "businessSummary",
   "identity",
+  "insuranceNeeds",
   // "responsibilities",
   // "personalDetails",
 ] as const;
@@ -45,6 +43,7 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   policyOwner: "Policy owner information",
   businessSummary: "Business summary",
   identity: "Identity verification",
+  insuranceNeeds: "Insurance needs & history",
   //responsibilities: "Your responsibilities as a Key Holder",
   //leaders: "Company leaders details",
   //personalDetails: "Company leader personal details",
@@ -62,8 +61,8 @@ export function AWMultiChoiceField(props: {
       className={`${
         props.options?.some((o) => o.explanation)
           ? "pt-lg flex-col gap-xl"
-          : "h-[40px] gap-[45px]"
-      } w-full flex  items-center`}
+          : " gap-x-[45px] gap-y-lg"
+      } w-full flex  items-center flex-wrap`}
     >
       {props.options?.map((o) => (
         <div key={o.id} className="flex flex-col gap-2">
@@ -196,17 +195,17 @@ export function AWFormSectionSubsection(
   );
 }
 
-export function AWFormSection(
-  props: IAWFormSection & {
-    i: number;
-    answers?: IAWFormInputAnswer[];
-    setValue: (
-      id: IAWFormInput["id"],
-      newValue: IAWFormInputAnswer["value"]
-    ) => void;
-    prefill?: () => void;
-  }
-) {
+export type IAWFormSectionProps = IAWFormSection & {
+  i: number;
+  answers?: IAWFormInputAnswer[];
+  setValue: (
+    id: IAWFormInput["id"],
+    newValue: IAWFormInputAnswer["value"]
+  ) => void;
+  prefill?: () => void;
+};
+
+export function AWFormSection(props: IAWFormSectionProps) {
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
     if (checked) {
@@ -274,6 +273,7 @@ const STEP_COMPONENTS: Record<
   policyOwner: InsuranceApplicationPolicyOwner,
   businessSummary: InsuranceApplicationBusinessSummary,
   identity: InsuranceApplicationIdentity,
+  insuranceNeeds: InsuranceApplicationInsuranceNeeds,
   // responsibilities: InsuranceApplicationResponsibilities,
   // personalDetails: InsuranceApplicationPersonalDetails,
 };
@@ -285,7 +285,7 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "welcome");
+  >("currentStep", "insuranceNeeds");
   // useEffect(() => {
   //   stepCompletions[CHECKPOINT_STEPS[0]] && setCurrentStep("checkpoints"); // show the Checkpoints view, in the Resume state
   // }, [stepCompletions]);

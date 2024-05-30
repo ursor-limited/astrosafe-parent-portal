@@ -1,6 +1,9 @@
 import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
 import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
-import { IDENTITY_STEP_TITLES } from "./main";
+import {
+  IDENTITY_STEP_TITLES,
+  awInsuranceApplicationIdentityStepViews,
+} from "./main";
 import IdentitySuccessIllustration from "@/images/IdentitySuccessIllustration.png";
 import Image from "next/image";
 
@@ -11,7 +14,12 @@ export default function InsuranceApplicationIdentitySuccess(props: {
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.success}
       buttonCallback={props.nextCallback}
-      progress={CHECKPOINT_STEPS.indexOf("identity") / CHECKPOINT_STEPS.length}
+      progress={
+        (CHECKPOINT_STEPS.indexOf("identity") +
+          awInsuranceApplicationIdentityStepViews.indexOf("success") /
+            awInsuranceApplicationIdentityStepViews.length) /
+        CHECKPOINT_STEPS.length
+      }
       illustration={
         <Image
           src={IdentitySuccessIllustration.src}
