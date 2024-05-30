@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { STEP_TITLES } from "../InsuranceApplicationPage";
-import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+import { STEP_TITLES } from "../../InsuranceApplicationPage";
+import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
 
 const awInsuranceApplicationIdentityStepViews = [
   "intro",
@@ -33,8 +33,16 @@ export default function InsuranceApplicationIdentity(props: {
     useState<AWInsuranceApplicationIdentityStepView>("intro");
   return (
     <InsuranceApplicationIllustrationDialog
-      title={STEP_TITLES.identity}
-      buttonCallback={props.nextCallback}
+      title={VIEW_IDENTITY_STEP_TITLES[currentView]}
+      buttonCallback={() =>
+        currentView === "status"
+          ? props.nextCallback()
+          : setCurrentView(
+              awInsuranceApplicationIdentityStepViews[
+                awInsuranceApplicationIdentityStepViews.indexOf(currentView) + 1
+              ]
+            )
+      }
       infoText="Why we do this"
       progress={
         (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length

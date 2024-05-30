@@ -10,7 +10,7 @@ import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
-import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
+import InsuranceApplicationIdentity from "./views/identity/InsuranceApplicationIdentity";
 import InsuranceApplicationResponsibilities from "./views/identity/InsuranceApplicationResponsibilities";
 import {
   IAWFormInput,
