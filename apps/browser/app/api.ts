@@ -139,6 +139,28 @@ class ApiController {
       response.json()
     );
   }
+
+  static async getStacks(deviceId: string) {
+    return get(`schools/devices/${deviceId}/stacks`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getLinks(deviceId: string) {
+    return get(`schools/devices/${deviceId}/links`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getGuestLinks() {
+    return get(`schools/guest/guestlinks`).then((response: any) =>
+      response.json()
+    );
+  }
+  // static async getGuestStacks() {
+  //   return get(`schools/guest/gueststacks`).then((response: any) =>
+  //     response.json()
+  //   );
+  // }
 }
 
 export default ApiController;
