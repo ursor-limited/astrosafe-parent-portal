@@ -252,7 +252,12 @@ function CreationPageContents(props: { details: IVideo }) {
     useState<boolean>(false);
 
   return (
-    <Stack width="100vw" height="100vh" overflow="scroll">
+    <Stack
+      width="100vw"
+      height="100vh"
+      overflow="scroll"
+      bgcolor={PALETTE.primary.navy}
+    >
       {!fullscreen ? (
         <Header
           signinCallback={() => setLandInDashboardAfterCreation(true)}
