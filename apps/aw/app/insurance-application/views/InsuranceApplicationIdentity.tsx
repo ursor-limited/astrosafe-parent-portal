@@ -1,10 +1,36 @@
+import { useState } from "react";
 import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
 import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 
+const awInsuranceApplicationIdentityStepViews = [
+  "intro",
+  "responsibilities",
+  "personalDetails",
+  "kyc",
+  "success",
+  "status",
+] as const;
+export type AWInsuranceApplicationIdentityStepView =
+  (typeof awInsuranceApplicationIdentityStepViews)[number];
+
+export const VIEW_IDENTITY_STEP_TITLES: Record<
+  AWInsuranceApplicationIdentityStepView,
+  string
+> = {
+  intro: "Identity verification",
+  responsibilities: "Your responsibilities as a Key Holder",
+  personalDetails: "Company leader personal details",
+  kyc: "Identity verification",
+  success: "Identity verified",
+  status: "Identity verification status",
+};
+
 export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
 }) {
+  const [currentView, setCurrentView] =
+    useState<AWInsuranceApplicationIdentityStepView>("intro");
   return (
     <InsuranceApplicationIllustrationDialog
       title={STEP_TITLES.identity}

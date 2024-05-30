@@ -1,8 +1,8 @@
-import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
-} from "../components/InsuranceApplicationFormDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+} from "../../components/InsuranceApplicationFormDialog";
+import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
+import { VIEW_IDENTITY_STEP_TITLES } from "../InsuranceApplicationIdentity";
 
 const SECTIONS: IAWFormSection[] = [
   {
@@ -95,7 +95,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d077be86edef7a7c569",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c0fe63a59eef74dfcd2f",
         },
         title: "Address line 1",
@@ -105,7 +105,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d1605b212a580f388eb",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
@@ -115,7 +115,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d1b4c32d5191c3ae48d",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c171a4a4f8c8b3d6a26f",
         },
         title: "City",
@@ -125,7 +125,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d1f2bdd8d9d05725bb0",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c18ff69ad61442a6fa2b",
         },
         title: "State or province",
@@ -135,7 +135,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d25fb1f010c0bd6ace9",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c1b04f9526468edc17b0",
         },
         title: "Country",
@@ -146,7 +146,7 @@ const SECTIONS: IAWFormSection[] = [
       {
         id: "66561d2a42becad2f5f4f9ed",
         prefill: {
-          step: "personalDetails",
+          step: "identity",
           inputId: "6655c1eb44e7da94b593e696",
         },
         title: "ZIP code",
@@ -180,13 +180,12 @@ export default function InsuranceApplicationPersonalDetails(props: {
 }) {
   return (
     <InsuranceApplicationFormDialog
-      stepId="personalDetails"
-      title={STEP_TITLES.personalDetails}
+      stepId="identity"
+      title={VIEW_IDENTITY_STEP_TITLES.personalDetails}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={
-        0.1
-        //(CHECKPOINT_STEPS.indexOf("leaders") - 0.5) / CHECKPOINT_STEPS.length
+        (CHECKPOINT_STEPS.indexOf("identity") - 0.5) / CHECKPOINT_STEPS.length
       }
     />
   );

@@ -11,7 +11,7 @@ import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
 import InsuranceApplicationIdentity from "./views/InsuranceApplicationIdentity";
-import InsuranceApplicationResponsibilities from "./views/InsuranceApplicationResponsibilities";
+import InsuranceApplicationResponsibilities from "./views/identity/InsuranceApplicationResponsibilities";
 import {
   IAWFormInput,
   IAWFormInputAnswer,
@@ -21,7 +21,7 @@ import {
 } from "./components/InsuranceApplicationFormDialog";
 import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
 import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
-import InsuranceApplicationPersonalDetails from "./views/InsuranceApplicationPersonalDetails";
+import InsuranceApplicationPersonalDetails from "./views/identity/InsuranceApplicationPersonalDetails";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -31,8 +31,8 @@ export const awInsuranceApplicationSteps = [
   "policyOwner",
   "businessSummary",
   "identity",
-  "responsibilities",
-  "personalDetails",
+  // "responsibilities",
+  // "personalDetails",
 ] as const;
 export type AWInsuranceApplicationStep =
   (typeof awInsuranceApplicationSteps)[number];
@@ -45,9 +45,9 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   policyOwner: "Policy owner information",
   businessSummary: "Business summary",
   identity: "Identity verification",
-  responsibilities: "Your responsibilities as a Key Holder",
+  //responsibilities: "Your responsibilities as a Key Holder",
   //leaders: "Company leaders details",
-  personalDetails: "Company leader personal details",
+  //personalDetails: "Company leader personal details",
 };
 
 const FADEIN_DELAY = 66;
@@ -274,8 +274,8 @@ const STEP_COMPONENTS: Record<
   policyOwner: InsuranceApplicationPolicyOwner,
   businessSummary: InsuranceApplicationBusinessSummary,
   identity: InsuranceApplicationIdentity,
-  responsibilities: InsuranceApplicationResponsibilities,
-  personalDetails: InsuranceApplicationPersonalDetails,
+  // responsibilities: InsuranceApplicationResponsibilities,
+  // personalDetails: InsuranceApplicationPersonalDetails,
 };
 
 export default function InsuranceApplicationPage() {
