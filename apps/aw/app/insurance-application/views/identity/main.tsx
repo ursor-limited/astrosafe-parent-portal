@@ -3,6 +3,8 @@ import InsuranceApplicationPersonalDetails from "./personalDetails";
 import InsuranceApplicationResponsibilities from "./responsibilities";
 import InsuranceApplicationIdentityIntro from "./intro";
 import InsuranceApplicationIdentityKYC from "./kyc";
+import InsuranceApplicationIdentitySuccess from "./success";
+import InsuranceApplicationIdentityStatus from "./status";
 
 const awInsuranceApplicationIdentityStepViews = [
   "intro",
@@ -37,13 +39,15 @@ const IDENTITY_STEP_VIEW_COMPONENTS: Partial<
   responsibilities: InsuranceApplicationResponsibilities,
   personalDetails: InsuranceApplicationPersonalDetails,
   kyc: InsuranceApplicationIdentityKYC,
+  success: InsuranceApplicationIdentitySuccess,
+  status: InsuranceApplicationIdentityStatus,
 };
 
 export default function InsuranceApplicationIdentity(props: {
   nextCallback: () => void;
 }) {
   const [currentView, setCurrentView] =
-    useState<AWInsuranceApplicationIdentityStepView>("kyc");
+    useState<AWInsuranceApplicationIdentityStepView>("status");
 
   const View = currentView ? IDENTITY_STEP_VIEW_COMPONENTS[currentView] : null;
 
