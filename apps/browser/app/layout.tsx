@@ -27,6 +27,8 @@ export default function RootLayout({
         className={rubik.className}
         style={{
           margin: 0,
+          height: "100vh",
+          width: "100vw",
           overflow: "hidden",
           background: PALETTE.secondary.grey[1],
         }}

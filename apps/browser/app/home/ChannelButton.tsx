@@ -6,7 +6,6 @@ const ChannelButton = (props: {
   title: IChannel["title"];
   color: IChannel["color"];
 }) => {
-  console.log(props.color);
   return (
     <Stack
       height="39px"
@@ -18,6 +17,11 @@ const ChannelButton = (props: {
       direction="row"
       alignItems="center"
       bgcolor="rgb(255,255,255)"
+      sx={{
+        cursor: "pointer",
+        "&:hover": { opacity: 0.6 },
+        transition: "0.2s",
+      }}
     >
       <Stack
         height="12px"

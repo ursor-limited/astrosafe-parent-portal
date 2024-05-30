@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ApiController, { IBrowserLink, IChannel, IStack } from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
 import ChannelButton from "./ChannelButton";
 import useColumnWidth from "../components/useColumnWidth";
 import AstroContentColumns from "./AstroContentColumns";
@@ -100,7 +100,13 @@ export default function HomePageContents() {
   }, [links, stacks, selectedChannelId, nColumns]);
 
   return (
-    <Stack spacing="20px" flex={1}>
+    <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
+      <Stack px={OVERALL_X_PADDING}>
+        <Typography variant="h5">Home</Typography>
+      </Stack>
+      <Stack px={OVERALL_X_PADDING}>
+        <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
+      </Stack>
       <Stack px={OVERALL_X_PADDING}>
         <Typography variant="h5">Channels</Typography>
       </Stack>
@@ -108,10 +114,12 @@ export default function HomePageContents() {
         direction="row"
         spacing="12px"
         px={OVERALL_X_PADDING}
-        overflow="scroll"
+        boxSizing="border-box"
       >
         {channels.map((c) => (
-          <ChannelButton key={c.id} title={c.title} color={c.color} />
+          <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
+            <ChannelButton key={c.id} title={c.title} color={c.color} />
+          </Stack>
         ))}
       </Stack>
       {/* <Stack
@@ -124,7 +132,7 @@ export default function HomePageContents() {
           <Stack key={c.id} title={c.title} color={c.color} />
         ))}
       </Stack> */}
-      <Stack flex={1} overflow="scroll">
+      <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
         <AstroContentColumns
           title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
           links={filteredLinks}

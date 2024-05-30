@@ -344,14 +344,15 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                   ]}
                 </Stack>
               ) : props.emptyStateText ? (
-                <Stack flex={1} justifyContent="center" alignItems="center">
-                  <UrsorFadeIn delay={1000} duration={1500}>
-                    <EmptyStateIllustration>
-                      {props.emptyStateText}
-                    </EmptyStateIllustration>
-                  </UrsorFadeIn>
-                </Stack>
-              ) : null
+                <></>
+              ) : // <Stack flex={1} justifyContent="center" alignItems="center">
+              //   <UrsorFadeIn delay={1000} duration={1500}>
+              //     <EmptyStateIllustration>
+              //       {props.emptyStateText}
+              //     </EmptyStateIllustration>
+              //   </UrsorFadeIn>
+              // </Stack>
+              null
             }
           </Stack>
         </Stack>
