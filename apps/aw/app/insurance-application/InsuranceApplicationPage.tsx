@@ -10,8 +10,8 @@ import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationFormInput from "./components/InsuranceApplicationFormInput";
-import InsuranceApplicationIdentity from "./views/identity/InsuranceApplicationIdentity";
-import InsuranceApplicationResponsibilities from "./views/identity/InsuranceApplicationResponsibilities";
+import InsuranceApplicationIdentity from "./views/identity/main";
+import InsuranceApplicationResponsibilities from "./views/identity/responsibilities";
 import {
   IAWFormInput,
   IAWFormInputAnswer,
@@ -21,7 +21,7 @@ import {
 } from "./components/InsuranceApplicationFormDialog";
 import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
 import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
-import InsuranceApplicationPersonalDetails from "./views/identity/InsuranceApplicationPersonalDetails";
+import InsuranceApplicationPersonalDetails from "./views/identity/personalDetails";
 
 export const awInsuranceApplicationSteps = [
   "welcome",

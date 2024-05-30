@@ -2,7 +2,7 @@ import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
-import { IDENTITY_STEP_TITLES } from "./InsuranceApplicationIdentity";
+import { IDENTITY_STEP_TITLES } from "./main";
 
 const SECTIONS: IAWFormSection[] = [
   {

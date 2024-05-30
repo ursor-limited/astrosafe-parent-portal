@@ -1,7 +1,7 @@
 import { AWCheckbox } from "@/components/AWCheckbox";
 import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
 import { useState } from "react";
-import { IDENTITY_STEP_TITLES } from "./InsuranceApplicationIdentity";
+import { IDENTITY_STEP_TITLES } from "./main";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
