@@ -6,9 +6,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
-import { ILink } from "@/app/dashboard/LinkDialog";
-import { useRouter } from "next/navigation";
-import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import { IText } from "@/app/components/TextDialog";
 import { PALETTE } from "ui";
 import CopyAndMoveDialog from "../CopyAndMoveDialog";
@@ -98,6 +95,10 @@ const TimelineTextCard = (
             },
             ".ql-editor": {
               padding: "3px",
+              ".ql-size-large": { fontSize: "20px" },
+              ".ql-size-medium": { fontSize: "16px" },
+              ".ql-size-small": { fontSize: "14px" },
+              strong: { fontWeight: 500 },
             },
             overflowWrap: "anywhere",
             color: PALETTE.font.dark,

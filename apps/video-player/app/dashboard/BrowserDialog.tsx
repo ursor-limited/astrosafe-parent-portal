@@ -2,9 +2,6 @@ import RocketIcon from "@/images/icons/RocketIcon.svg";
 import UrsorDialog from "../components/UrsorDialog";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Stack } from "@mui/system";
-
-const FREE_VIDEO_LIMIT = 3;
 
 const BrowserDialog = (props: { open: boolean; closeCallback: () => void }) => {
   const router = useRouter();

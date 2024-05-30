@@ -387,17 +387,17 @@ export default function MobileDashboardPageContents() {
   useEffect(() => {
     if (
       !trialExpirationDialogAlreadySeen &&
-      !userDetails.user?.subscribed &&
+      !userDetails.schoolIsSubscribed &&
       userDetails.user?.freeTrialStart &&
       getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
     ) {
       setTrialExpirationDialogOpen(
-        !userDetails.user?.subscribed &&
+        !userDetails.schoolIsSubscribed &&
           getTrialDaysLeft(userDetails.user.freeTrialStart) <= 0
       );
       setTrialExpirationDialogAlreadySeen(true);
     }
-  }, [userDetails.user?.subscribed]);
+  }, [userDetails.schoolIsSubscribed]);
 
   const [noCreationsLeftDialogOpen, setNoCreationsLeftDialogOpen] =
     useState<boolean>(false);
@@ -513,8 +513,8 @@ export default function MobileDashboardPageContents() {
     >
       <Stack direction="row" spacing="12px" justifyContent="flex-end" px="20px">
         <Stack direction="row" spacing="12px" alignItems="center">
-          {!userDetails.user?.subscribed ||
-          userDetails.user.subscriptionDeletionDate ? (
+          {!userDetails.schoolIsSubscribed ||
+          userDetails.user?.subscriptionDeletionDate ? (
             <>
               {getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
                 <Typography variant="medium" color={PALETTE.secondary.grey[4]}>
@@ -549,7 +549,7 @@ export default function MobileDashboardPageContents() {
             </>
           ) : undefined}
         </Stack>
-        {!userDetails.user?.subscribed ? (
+        {!userDetails.schoolIsSubscribed ? (
           <UrsorButton
             dark
             endIcon={VerifiedIcon}
@@ -881,7 +881,7 @@ export default function MobileDashboardPageContents() {
         }}
         mobile
       />
-      {!userDetails.user?.subscribed &&
+      {!userDetails.schoolIsSubscribed &&
       getTrialDaysLeft(userDetails.user?.freeTrialStart) <= 0 ? (
         <UrsorFadeIn duration={1000}>
           <LiteModeBar

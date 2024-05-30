@@ -16,6 +16,7 @@ import React, { useEffect } from "react";
 export const getModules = (id: string) => ({
   toolbar: {
     container: `#${id}`,
+    size: ["14px", "16px", "20px"],
     // handlers: {
     //   undo: undoChange,
     //   redo: redoChange,
@@ -55,8 +56,7 @@ const initQuill = async () => {
   if (Quill) {
     // Add sizes to whitelist and register them
     const Size = Quill.import("formats/size");
-    Size.whitelist = ["small", "medium", "large"];
-    Size.blacklist = ["huge"];
+    Size.whitelist = ["14px", "16px", "20px"];
     Quill.register(Size, true);
 
     // Add fonts to whitelist and register them
@@ -99,10 +99,10 @@ export const TextEditorToolbar = (props: { id: string }) => {
         <option value="lucida">Lucida</option>
       </select> */}
         <select className="ql-size" defaultValue="medium">
-          <option value="small">Small</option>
+          <option value="14px">Small</option>
           {/* <option value="normal">Normal</option> */}
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
+          <option value="16px">Medium</option>
+          <option value="20px">Large</option>
         </select>
         {/* <select className="ql-header" defaultValue="3">
         <option value="1">Heading</option>

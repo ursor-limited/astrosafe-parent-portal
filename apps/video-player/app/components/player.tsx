@@ -120,9 +120,11 @@ const Player = (props: {
     } else {
       //@ts-ignore
       const playah = new Vimeo.Player(props.playerId);
-      playah.on("pause", () => setPlaying(false));
-      playah.on("play", () => setPlaying(true));
-      setPlayer(playah);
+      if (playah) {
+        playah.on("pause", () => setPlaying(false));
+        playah.on("play", () => setPlaying(true));
+        setPlayer(playah);
+      }
     }
     setPlaying(false);
   }
