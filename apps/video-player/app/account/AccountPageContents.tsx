@@ -98,11 +98,11 @@ export const PRODUCT_DETAILS: IAstroProduct[] = [
   {
     monthlyId:
       process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-        ? "prod_QAEYttD39HvFKz"
+        ? "prod_QAEaFpLDEJnlli"
         : "prod_QBufZ1xT1eUOx8",
     annualId:
       process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-        ? "prod_QAEaFpLDEJnlli"
+        ? "prod_QAEYttD39HvFKz"
         : "prod_QBufZ1xT1eUOx8",
     plan: "department",
     items: [
