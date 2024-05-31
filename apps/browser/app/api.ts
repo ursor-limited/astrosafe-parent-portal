@@ -89,14 +89,14 @@ export const getAbsoluteUrl = (url: string) => `https://${url}`;
 const get = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`
   );
 
 //@ts-ignore
 const post = (route: string, body?: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -108,7 +108,7 @@ const post = (route: string, body?: any) =>
 const patch = (route: string, body: any) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -119,7 +119,7 @@ const patch = (route: string, body: any) =>
 const dellete = (route: string) =>
   fetch(
     //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
     {
       method: "DELETE",
     }

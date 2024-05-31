@@ -110,17 +110,22 @@ export default function HomePageContents() {
       <Stack px={OVERALL_X_PADDING}>
         <Typography variant="h5">Channels</Typography>
       </Stack>
-      <Stack
-        direction="row"
-        spacing="12px"
-        px={OVERALL_X_PADDING}
-        boxSizing="border-box"
-      >
-        {channels.map((c) => (
-          <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
-            <ChannelButton key={c.id} title={c.title} color={c.color} />
-          </Stack>
-        ))}
+      <Stack overflow="scroll">
+        <Stack
+          direction="row"
+          spacing="12px"
+          px={OVERALL_X_PADDING}
+          boxSizing="border-box"
+        >
+          {[
+            ...channels.map((c) => (
+              <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
+                <ChannelButton key={c.id} title={c.title} color={c.color} />
+              </Stack>
+            )),
+            <Stack key="padding" minWidth="8px" />,
+          ]}
+        </Stack>
       </Stack>
       {/* <Stack
         direction="row"

@@ -29,7 +29,9 @@ const ChannelButton = (props: {
         bgcolor={props.color || PALETTE.secondary.pink[2]}
         borderRadius="100%"
       />
-      <Typography bold>{props.title}</Typography>
+      <Typography bold noWrap>
+        {props.title}
+      </Typography>
     </Stack>
   );
 };
