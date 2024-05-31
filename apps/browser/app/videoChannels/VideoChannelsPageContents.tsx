@@ -22,6 +22,7 @@ import AstroContentColumns, {
   IBrowserContent,
 } from "../home/AstroContentColumns";
 import ConnectBar from "../components/ConnectBar";
+import Image from "next/image";
 
 export const OVERALL_X_PADDING = "20px";
 
@@ -147,43 +148,28 @@ export default function HomePageContents() {
       <Stack px={OVERALL_X_PADDING}>
         <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
       </Stack>
-      <Stack px={OVERALL_X_PADDING}>
+      <Stack px={OVERALL_X_PADDING} direction="row" spacing="12px">
+        <Stack
+          height="24px"
+          width="24px"
+          borderRadius="100%"
+          overflow="hidden"
+          alignItems="center"
+        >
+          <Image
+            src={
+              videoChannels.find((vc) => vc.id === selectedChannelId)
+                ?.profileImageUrl ?? ""
+            }
+            height={24}
+            width={24}
+            alt="video channel profile image"
+          />
+        </Stack>
         <Typography variant="h5">
           {videoChannels.find((vc) => vc.id === selectedChannelId)?.title}
         </Typography>
       </Stack>
-      {/* <Stack overflow="scroll">
-        <Stack
-          direction="row"
-          spacing="12px"
-          px={OVERALL_X_PADDING}
-          boxSizing="border-box"
-        >
-          {[
-            ...videoChannels.map((c) => (
-              <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
-                <ChannelButton
-                  key={c.id}
-                  title={c.title}
-                  color={c.color}
-                  selected={selectedChannelId === c.id}
-                />
-              </Stack>
-            )),
-            <Stack key="padding" minWidth="8px" />,
-          ]}
-        </Stack>
-      </Stack> */}
-      {/* <Stack
-        direction="row"
-        spacing="12px"
-        px={OVERALL_X_PADDING}
-        overflow="scroll"
-      >
-        {filteredStacks.map((c) => (
-          <Stack key={c.id} title={c.title} color={c.color} />
-        ))}
-      </Stack> */}
       <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
         <AstroContentColumns
           //title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
