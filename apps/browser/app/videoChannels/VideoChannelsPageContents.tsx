@@ -148,31 +148,33 @@ export default function HomePageContents() {
       <Stack px={OVERALL_X_PADDING}>
         <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
       </Stack>
-      <Stack px={OVERALL_X_PADDING} direction="row" spacing="12px">
-        <Stack
-          height="24px"
-          width="24px"
-          borderRadius="100%"
-          overflow="hidden"
-          alignItems="center"
-        >
-          <Image
-            src={
-              videoChannels.find((vc) => vc.id === selectedChannelId)
-                ?.profileImageUrl ?? ""
-            }
-            height={24}
-            width={24}
-            alt="video channel profile image"
-          />
+      {videoChannels.find((vc) => vc.id === selectedChannelId)
+        ?.profileImageUrl ? (
+        <Stack px={OVERALL_X_PADDING} direction="row" spacing="12px">
+          <Stack
+            height="24px"
+            width="24px"
+            borderRadius="100%"
+            overflow="hidden"
+            alignItems="center"
+          >
+            <Image
+              src={
+                videoChannels.find((vc) => vc.id === selectedChannelId)
+                  ?.profileImageUrl ?? ""
+              }
+              height={24}
+              width={24}
+              alt="video channel profile image"
+            />
+          </Stack>
+          <Typography variant="h5">
+            {videoChannels.find((vc) => vc.id === selectedChannelId)?.title}
+          </Typography>
         </Stack>
-        <Typography variant="h5">
-          {videoChannels.find((vc) => vc.id === selectedChannelId)?.title}
-        </Typography>
-      </Stack>
+      ) : null}
       <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
         <AstroContentColumns
-          //title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
           links={[]}
           stacks={[]}
           videos={filteredVideos}

@@ -4,6 +4,7 @@ import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import dayjs from "dayjs";
 import FavoriteStar from "./FavoriteStar";
+import PlayIcon from "@/images/icons/PlayIcon.svg";
 
 const LIGHT_TEXT_THRESHOLD = 215;
 
@@ -76,6 +77,7 @@ const VideoCard = (props: {
           transition: "0.2s",
           cursor: "pointer",
           "&:hover": { background: "rgba(255,255,255,0.2)" },
+          // background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
         }}
       />
       <Stack
@@ -102,9 +104,25 @@ const VideoCard = (props: {
             backgroundSize: "cover",
             backgroundPosition: "center",
             boxSizing: "border-box",
+            svg: {
+              path: {
+                fill: "rgb(255,255,255)",
+              },
+            },
           }}
           position="relative"
-        />
+        >
+          <Stack
+            sx={{
+              background: "radial-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0))",
+            }}
+            justifyContent="center"
+            alignItems="center"
+            flex={1}
+          >
+            <PlayIcon height="46px" width="46px" />
+          </Stack>
+        </Stack>
         <Stack
           px="4px"
           pb="4px"

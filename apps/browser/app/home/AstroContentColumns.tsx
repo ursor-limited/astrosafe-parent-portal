@@ -227,7 +227,9 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
     <>
       <Stack pb="64px" flex={1}>
         <Stack flex={1} spacing="15px">
-          <Typography variant="h5">{props.title}</Typography>
+          {props.title ? (
+            <Typography variant="h5">{props.title}</Typography>
+          ) : null}
           {props.description ? (
             <Stack pb="27px">
               <Typography>{props.description}</Typography>
