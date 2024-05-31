@@ -21,8 +21,9 @@ import AstroContentColumns, {
   BrowserContent,
   IBrowserContent,
 } from "../home/AstroContentColumns";
+import ConnectBar from "../components/ConnectBar";
 
-const OVERALL_X_PADDING = "20px";
+export const OVERALL_X_PADDING = "20px";
 
 const DUMMY_VIDEOS = [
   {
@@ -116,6 +117,9 @@ export default function HomePageContents() {
 
   return (
     <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
+      <Stack px={OVERALL_X_PADDING}>
+        <ConnectBar />
+      </Stack>
       <Stack px={OVERALL_X_PADDING}>
         <Typography variant="h5">Video Channels</Typography>
       </Stack>
