@@ -67,6 +67,18 @@ const VideoCard = (props: {
     <Stack position="relative" width="100%" minHeight="244px">
       <FavoriteStar id={props.video.id} type="video" />
       <Stack
+        width="100%"
+        height="100%"
+        position="absolute"
+        onClick={props.clickCallback}
+        zIndex={2}
+        sx={{
+          transition: "0.2s",
+          cursor: "pointer",
+          "&:hover": { background: "rgba(255,255,255,0.2)" },
+        }}
+      />
+      <Stack
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         overflow="hidden"
@@ -74,12 +86,11 @@ const VideoCard = (props: {
         boxSizing="border-box"
         flex={1}
         spacing="5px"
-        onClick={props.clickCallback}
-        sx={{
-          cursor: "pointer",
-          transition: "0.2s",
-          "&:hover": { opacity: 0.6 },
-        }}
+        // sx={{
+        //   cursor: "pointer",
+        //   transition: "0.2s",
+        //   "&:hover": { opacity: 0.6 },
+        // }}
       >
         <Stack
           width="100%"

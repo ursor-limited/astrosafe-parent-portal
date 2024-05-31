@@ -283,28 +283,17 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                                   <StackCard stack={item.details as IStack} />
                                 </Stack>
                               ) : item.type === "video" ? (
-                                <Stack
-                                  onClick={() =>
+                                <VideoCard
+                                  video={item.details as IVideo}
+                                  clickCallback={() => {
                                     window.open(
                                       getAbsoluteUrl(
                                         (item.details as IVideo).url
                                       ),
                                       "_blank"
-                                    )
-                                  }
-                                >
-                                  <VideoCard
-                                    video={item.details as IVideo}
-                                    clickCallback={() => {
-                                      window.open(
-                                        getAbsoluteUrl(
-                                          (item.details as IVideo).url
-                                        ),
-                                        "_blank"
-                                      );
-                                    }}
-                                  />
-                                </Stack>
+                                    );
+                                  }}
+                                />
                               ) : // ) : item.type === "searchResult" ? (
                               //   <Stack
                               //     sx={{
