@@ -6,13 +6,26 @@ import {
   STEP_TITLES,
 } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
-  IAWFormInputAnswer,
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+const AWDropdown = dynamic(
+  () => import("@/components/AWDropdown"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
+
+type AWCurrency = "btc" | "usd";
 
 export const SECTIONS: IAWFormSection[] = [
+  {
+    id: "6659fb2c1e89e6391892a41d",
+    title:
+      "Approximately how many Bitcoin (or equivalent value in USD)  does the prospective insured intend store in Trident Vault and insure?",
+    custom: true,
+  },
   {
     id: "6658d17dae46a105af0be6b1",
     title:
@@ -45,37 +58,142 @@ export const SECTIONS: IAWFormSection[] = [
     title: "Where is the Bitcoin currently being stored?",
     custom: true,
   },
-  // {
-  //   id: "6658d3d22db39fce622f4068",
-  //   title:
-  //     "Where is the Bitcoin currently being stored?",
-  //   inputs: [
-  //     {
-  //       id: "6658d3d5c960e3861f95b4f6",
-  //       inputType: "multiChoice",
-  //       options: [
-  //         {
-  //           id: "6658d4227d0db94a1da30949",
-  //           text: "Exchange/Custodian",
-  //         },
-  //         {
-  //           id: "6658d4256204a5bcc8c0f4c6",
-  //           text: "Self custody",
-  //         },
-  //         {
-  //           id: "6658d429c1b2ec4fb1b16257",
-  //           text: "Not purchased yet",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       id: '6658d43a7923801fefad55a7',
-  //       inputType: 'text'
-  //     }
-
-  //   ],
-  // },
+  {
+    id: "6659f73de79aab75c510fe7c",
+    title:
+      "Has the prospective insured been approved for other digital currency or cryptocurrency related insurance policies?",
+    inputs: [
+      {
+        id: "6659f756aed44c395f11380a",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6659f779361588594ffe8805",
+            text: "Yes",
+          },
+          {
+            id: "6659f77df188c43ef5e3ca28",
+            text: "No",
+          },
+        ],
+      },
+      {
+        id: "6659f78de8a344a5cef42375",
+        inputType: "textLong",
+        placeholder: "Name the policy and carrier",
+        title: "If yes, please list policies",
+      },
+    ],
+  },
+  {
+    id: "6659f7cc4329fe6d6ca7c203",
+    title:
+      "Does the prospective insured have active and current insurance policies?",
+    inputs: [
+      {
+        id: "6659f7d10a44908ffd529b4b",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6659f7d5cbc8f81da6ff87ad",
+            text: "Yes",
+          },
+          {
+            id: "6659f7d9776cab967a0618f6",
+            text: "No",
+          },
+        ],
+      },
+      {
+        id: "6659f7df20f54552fbde5ee2",
+        inputType: "textLong",
+        placeholder:
+          "Examples include D&O, E&O, Kidnap & Ransom, Business Interruption, General Liability, Crime Homeowners, Crime and others",
+        title:
+          "If yes, please list additional insurance policies and include the name of the insurer.",
+      },
+    ],
+  },
+  {
+    id: "6659fac7f923718b3c5829cb",
+    title:
+      "Has the prospective insured ever had insurance coverage terminated due to failure to comply with the policy?",
+    inputs: [
+      {
+        id: "6659facb023a86b3bf0b08ae",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6659facf120e9c073efb1592",
+            text: "Yes",
+          },
+          {
+            id: "6659fad4a496441d7a507cf1",
+            text: "No",
+          },
+        ],
+      },
+      {
+        id: "6659fad759c8d6f0b1235d78",
+        inputType: "textLong",
+        placeholder:
+          "Include amount involved, specific location ,the sequence of events and any relevant parties",
+        title: "If yes, please describe the circumstances in detail.",
+      },
+    ],
+  },
 ];
+
+const QUANTITY_INPUT_ID = "6659fe85f73131d69a55edd7";
+const BITCOIN_QUANTITY_UNIT_SEPARATOR = "_";
+
+const BitcoinQuantitySection = (props: IAWFormSectionProps) => {
+  const [amount, setAmount] = useState<string>("");
+  const [unit, setUnit] = useState<AWCurrency>("btc");
+  useEffect(() => {
+    const [a, u] = props.answers
+      ?.find((a) => a.inputId === QUANTITY_INPUT_ID)
+      ?.value?.split(BITCOIN_QUANTITY_UNIT_SEPARATOR) || ["", "btc"];
+    setAmount(a);
+    setUnit(u as AWCurrency);
+  }, [props.answers]);
+  useEffect(
+    () =>
+      props.setValue(
+        QUANTITY_INPUT_ID,
+        [amount, unit].join(BITCOIN_QUANTITY_UNIT_SEPARATOR)
+      ),
+    [amount, unit]
+  );
+  return (
+    <div className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}>
+      <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) Approximately how many Bitcoin (or equivalent value in USD)  does the prospective insured intend store in Trident Vault and insure?`}</div>
+      <div className="flex gap-lg">
+        <AWTextField
+          value={amount}
+          setValue={setAmount}
+          placeholder="Quantity"
+        />
+        <div className="w-[100px]">
+          <AWDropdown
+            value={unit}
+            setValue={(u) => setUnit(u as AWCurrency)}
+            options={[
+              {
+                id: "btc",
+                text: "BTC",
+              },
+              {
+                id: "usd",
+                text: "USD",
+              },
+            ]}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const BITCOIN_LOCATION_INPUT_ID = "6658da211e93da88afa9de7b";
 const EXCHANGE_CUSTODIAN_INPUT_ID = "6658dacf84e5fe3a6d37739e";
@@ -90,8 +208,6 @@ const ADDRESS_SEPARATOR = "__";
 const BitcoinStorageSection = (props: IAWFormSectionProps) => {
   const [addressesN, setAddressesN] = useState<number>(2);
   const [addresses, setAddresses] = useState<string[]>([]);
-
-  console.log(props.answers);
 
   useEffect(
     () => props.setValue(ADDRESSES_INPUT_ID, addresses.join(ADDRESS_SEPARATOR)),
@@ -178,6 +294,7 @@ export default function InsuranceApplicationInsuranceNeeds(props: {
       title={STEP_TITLES.insuranceNeeds}
       sections={SECTIONS}
       customSections={{
+        "6659fb2c1e89e6391892a41d": BitcoinQuantitySection,
         "6658d3d22db39fce622f4068": BitcoinStorageSection,
       }}
       nextCallback={props.nextCallback}
