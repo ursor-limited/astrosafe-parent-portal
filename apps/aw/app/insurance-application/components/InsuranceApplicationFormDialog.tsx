@@ -7,6 +7,7 @@ import {
 } from "../InsuranceApplicationPage";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
+import { IAWInfoLineProps } from "@/components/AWInfoLine";
 
 export interface IAWFormSection {
   id: string;
@@ -17,10 +18,7 @@ export interface IAWFormSection {
   subsections?: IAWFormSectionSubsection[];
   custom?: boolean;
   prefillInputPrompt?: string;
-  infos?: {
-    prompt: string;
-    content: string;
-  }[];
+  infos?: IAWInfoLineProps[];
 }
 
 export interface IAWFormSectionSubsection {

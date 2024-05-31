@@ -21,6 +21,7 @@ import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBus
 import InsuranceApplicationInsuranceNeeds from "./views/InsuranceApplicationInsuranceNeeds";
 import InsuranceApplicationGovernance from "./views/InsuranceApplicationGovernance";
 import InsuranceApplicationSpending from "./views/InsuranceApplicationSpending";
+import AWInfoLine from "@/components/AWInfoLine";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -229,6 +230,13 @@ export function AWFormSection(props: IAWFormSectionProps) {
       {props.description && !props.descriptionAtEnd ? (
         <div className="text-lg text-darkTeal-2">{props.description}</div>
       ) : null}
+      {props.infos ? (
+        <div className="flex flex-col gap-lg">
+          {props.infos.map((info, i) => (
+            <AWInfoLine key={i} {...info} />
+          ))}
+        </div>
+      ) : null}
       {props.prefillInputPrompt ? (
         <div className={`flex items-center gap-[12px]`}>
           <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
@@ -296,7 +304,7 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "welcome");
+  >("currentStep", "spending");
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });

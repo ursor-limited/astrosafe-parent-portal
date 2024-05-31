@@ -16,8 +16,8 @@ export interface IAWInfoLineProps {
 
 const AWInfoLine = (props: IAWInfoLineProps) => {
   const [open, setOpen] = useState<boolean>(false);
-  const onOutsideClick = () => setOpen(false);
-  const setOutsideClickRef = useOutsideClick(onOutsideClick);
+  //const onOutsideClick = () => setOpen(false);
+  //const setOutsideClickRef = useOutsideClick(onOutsideClick);
 
   const [listY, setListY] = useState<number>(0);
   const [listX, setListX] = useState<number>(0);
@@ -34,24 +34,23 @@ const AWInfoLine = (props: IAWInfoLineProps) => {
     iconPositionRef?.getBoundingClientRect()?.left,
   ]);
   return (
-    <div ref={setOutsideClickRef}>
+    <>
       {createPortal(
         <div
-          className="absolute z-10 overflow-visible"
+          className="absolute z-10 p-[10px] rounded border-[1px] bg-white border-solid border-darkTeal-5 text-darkTeal-5 text-sm max-w-[320px]"
           style={{
+            boxShadow: "0 0 50px rgba(0,0,0,0.12)",
             left: listX,
-            bottom: listY,
-            pointerEvents: "none",
+            top: listY,
             opacity: open ? 1 : 0,
-            transition: "0.2s",
+            pointerEvents: open ? undefined : "none",
+            transition: "0.3s",
+            transform: "translateY(-16px)",
           }}
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
         >
-          <div
-            className="p-[10px] rounded border-[1px] bg-white border-solid border-darkTeal-5 text-darkTeal-5 text-sm max-w-[320px]"
-            style={{ boxShadow: "0 0 50px rgba(0,0,0,0.12)" }}
-          >
-            {props.content}
-          </div>
+          {props.content}
         </div>,
         document.body
       )}
@@ -61,13 +60,13 @@ const AWInfoLine = (props: IAWInfoLineProps) => {
         </div>
         <div
           ref={setIconPositionRef}
-          onClick={() => setOpen(true)}
-          className="hover:opacity-60 cursor-pointer duration-200"
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
         >
           <InfoIcon />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
