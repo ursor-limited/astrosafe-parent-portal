@@ -12,6 +12,8 @@ export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "businessSummary",
   "identity",
   "insuranceNeeds",
+  "governance",
+  "spending",
   //"leaders",
 ];
 
@@ -37,25 +39,6 @@ export default function InsuranceApplicationCheckpoints(props: {
       ),
     [stepCompletions]
   );
-  console.log(lastCompletedStepIndex);
-  // useEffect(() => {
-  //   const firstNotCompleteStep = STEPS.find(
-  //     (step) =>
-  //       !step.sections.every(
-  //         (section) =>
-  //           section.inputs?.every(
-  //             (input) =>
-  //               input.optional ||
-  //               committedAnswers?.find((answer) => answer.inputId === input.id)
-  //           )
-  //       )
-  //   );
-  //   setCurrentStepIndex(
-  //     firstNotCompleteStep
-  //       ? Math.max(0, STEPS.indexOf(firstNotCompleteStep))
-  //       : STEPS.length - 1
-  //   );
-  // }, [committedAnswers]);
 
   const [started, setStarted] = useState<boolean>(false);
   useEffect(
@@ -76,7 +59,11 @@ export default function InsuranceApplicationCheckpoints(props: {
           ? props.nextCallback()
           : setCurrentStep(CHECKPOINT_STEPS[lastCompletedStepIndex])
       }
-      infoText="You can come back anytime"
+      info={{
+        prompt: "You can come back anytime",
+        content:
+          "We automatically save your progress. So you can leave and come back to this application as you wish.",
+      }}
     >
       <div className="flex flex-col">
         {CHECKPOINT_STEPS.map((step, i) => (

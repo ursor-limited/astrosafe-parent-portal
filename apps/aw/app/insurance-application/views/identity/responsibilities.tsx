@@ -15,7 +15,11 @@ export default function InsuranceApplicationResponsibilities(props: {
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.responsibilities}
       buttonCallback={props.nextCallback}
-      infoText="Need help"
+      info={{
+        prompt: "Need help",
+        content:
+          "If you need support at any point during the application process contact agent@anchorwatch.com",
+      }}
       buttonDisabled={!checked}
       progress={
         (CHECKPOINT_STEPS.indexOf("identity") +

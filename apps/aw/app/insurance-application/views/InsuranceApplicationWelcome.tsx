@@ -9,7 +9,11 @@ export default function InsuranceApplicationWelcome(props: {
       title={STEP_TITLES.welcome}
       subtitle="To become an insured AnchorWatch customer, you'll complete the following steps."
       buttonCallback={props.nextCallback}
-      infoText="Need help"
+      info={{
+        prompt: "Need help",
+        content:
+          "If you need support at any point during the application process contact agent@anchorwatch.com",
+      }}
     >
       <div className="flex flex-col gap-3xl px-2 pt-lg">
         <div className="flex gap-lg text-lg text-darkTeal-5">

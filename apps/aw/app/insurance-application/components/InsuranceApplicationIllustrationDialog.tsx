@@ -1,8 +1,7 @@
 import { AWButton } from "@/components/AWButton";
-import InsuranceApplicationDialog, {
-  dmMono,
-} from "./InsuranceApplicationDialog";
+import InsuranceApplicationDialog from "./InsuranceApplicationDialog";
 import VaultIllustration from "@/images/VaultIllustration.svg";
+import AWInfoLine, { IAWInfoLineProps } from "@/components/AWInfoLine";
 
 export default function InsuranceApplicationIllustrationDialog(props: {
   title: string;
@@ -10,7 +9,7 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   buttonText?: string;
   buttonCallback?: () => void;
   buttonDisabled?: boolean;
-  infoText?: string;
+  info?: IAWInfoLineProps;
   progress?: number;
   illustration?: React.ReactNode;
   children?: React.ReactNode;
@@ -28,11 +27,7 @@ export default function InsuranceApplicationIllustrationDialog(props: {
             {props.children}
           </div>
           <div className="flex flex-col gap-lg">
-            {props.infoText ? (
-              <div className={`text-lightTeal-0 text-sm ${dmMono.className}`}>
-                {props.infoText}
-              </div>
-            ) : null}
+            {props.info ? <AWInfoLine {...props.info} /> : null}
             {props.buttonCallback ? (
               <AWButton
                 onClick={props.buttonCallback}

@@ -19,6 +19,8 @@ import {
 import InsuranceApplicationPolicyOwner from "./views/InsuranceApplicationPolicyOwner";
 import InsuranceApplicationBusinessSummary from "./views/InsuranceApplicationBusinessSummary";
 import InsuranceApplicationInsuranceNeeds from "./views/InsuranceApplicationInsuranceNeeds";
+import InsuranceApplicationGovernance from "./views/InsuranceApplicationGovernance";
+import InsuranceApplicationSpending from "./views/InsuranceApplicationSpending";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -29,6 +31,8 @@ export const awInsuranceApplicationSteps = [
   "businessSummary",
   "identity",
   "insuranceNeeds",
+  "governance",
+  "spending",
   // "responsibilities",
   // "personalDetails",
 ] as const;
@@ -44,6 +48,8 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   businessSummary: "Business summary",
   identity: "Identity verification",
   insuranceNeeds: "Insurance needs & history",
+  governance: "Internal governance and controls",
+  spending: "Spending behavior",
   //responsibilities: "Your responsibilities as a Key Holder",
   //leaders: "Company leaders details",
   //personalDetails: "Company leader personal details",
@@ -215,12 +221,14 @@ export function AWFormSection(props: IAWFormSectionProps) {
   return (
     <div
       className={`flex flex-col ${
-        !props.inputs || props.inputs[0].title ? "gap-xl" : "gap-1"
+        !props.inputs || props.inputs[0].title ? "gap-xl" : "gap-lg"
       } opacity-0 animate-fadeIn`}
       style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
     >
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
-      <div className="text-lg text-darkTeal-2">{props.description}</div>
+      {props.description && !props.descriptionAtEnd ? (
+        <div className="text-lg text-darkTeal-2">{props.description}</div>
+      ) : null}
       {props.prefillInputPrompt ? (
         <div className={`flex items-center gap-[12px]`}>
           <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
@@ -258,6 +266,9 @@ export function AWFormSection(props: IAWFormSectionProps) {
           ))}
         </div>
       ) : null}
+      {props.description && props.descriptionAtEnd ? (
+        <div className="text-lg text-darkTeal-2">{props.description}</div>
+      ) : null}
     </div>
   );
 }
@@ -274,8 +285,8 @@ const STEP_COMPONENTS: Record<
   businessSummary: InsuranceApplicationBusinessSummary,
   identity: InsuranceApplicationIdentity,
   insuranceNeeds: InsuranceApplicationInsuranceNeeds,
-  // responsibilities: InsuranceApplicationResponsibilities,
-  // personalDetails: InsuranceApplicationPersonalDetails,
+  governance: InsuranceApplicationGovernance,
+  spending: InsuranceApplicationSpending,
 };
 
 export default function InsuranceApplicationPage() {
@@ -285,10 +296,7 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "insuranceNeeds");
-  // useEffect(() => {
-  //   stepCompletions[CHECKPOINT_STEPS[0]] && setCurrentStep("checkpoints"); // show the Checkpoints view, in the Resume state
-  // }, [stepCompletions]);
+  >("currentStep", "welcome");
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });

@@ -12,10 +12,15 @@ export interface IAWFormSection {
   id: string;
   title: string;
   description?: string;
+  descriptionAtEnd?: boolean;
   inputs?: IAWFormInput[];
   subsections?: IAWFormSectionSubsection[];
   custom?: boolean;
   prefillInputPrompt?: string;
+  infos?: {
+    prompt: string;
+    content: string;
+  }[];
 }
 
 export interface IAWFormSectionSubsection {

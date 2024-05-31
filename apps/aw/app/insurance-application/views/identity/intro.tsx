@@ -10,7 +10,11 @@ export default function InsuranceApplicationIdentityIntro(props: {
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.intro}
       buttonCallback={props.nextCallback}
-      infoText="Why we do this"
+      info={{
+        prompt: "Why we do this",
+        content:
+          "Information collected for Company Leaders is required for either regulatory compliance or insurance underwriting",
+      }}
       progress={CHECKPOINT_STEPS.indexOf("identity") / CHECKPOINT_STEPS.length}
     >
       <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
