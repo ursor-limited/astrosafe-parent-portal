@@ -51,6 +51,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a010df4c32d0d514909e5",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title:
           "If yes, please provide the topics covered, frequency of training and the process for tracking employee completion of the  training.",
@@ -81,6 +82,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a041d88de1163106563aa",
         inputType: "text",
+        optional: true,
         placeholder:
           "Insert type, like SOC 1 or SOC 2, type 1 or type 2, ISO, etc",
         title: "If yes,  which certifications has the entity completed?",
@@ -109,6 +111,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a04d280534eb3f03e4d68",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title:
           "If yes, which procedures were audited and what was the outcome of the review?",
@@ -137,6 +140,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a053e0c0ff948d34fa06e",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title: "If yes, describe the technology and procedures.",
       },
@@ -164,6 +168,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a0579ceeb3409221fe39a",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title:
           "If yes, how are third party vendors audited or assessed for their security practices?",
@@ -191,6 +196,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a05ac0660b8cc360316fb",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title:
           "If yes, please provide the topics covered, frequency of training and the process for tracking employee completion of the securty awareness training.",
@@ -219,6 +225,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a05f3a3dfd09c4add68f7",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title: "If yes, please summarize below.",
       },
@@ -246,12 +253,14 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a0644f41cd268009ae18c",
         inputType: "textLong",
+        optional: true,
         placeholder: "Insert details",
         title: "If yes, please summarize below.",
       },
       {
         id: "665a0661dfcaac17a5c44a1e",
         inputType: "text",
+        optional: true,
         placeholder: "Describe process to review and revoke unused access",
         title:
           "If yes, how frequently is access periodically reviewed and revoked when no longer needed?",
