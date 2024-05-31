@@ -13,7 +13,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ChannelButton from "./ChannelButton";
 import useColumnWidth from "../components/useColumnWidth";
-import AstroContentColumns from "./AstroContentColumns";
+import AstroContentColumns, { BrowserContent } from "./AstroContentColumns";
 import _ from "lodash";
 import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
@@ -27,6 +27,17 @@ export default function HomePageContents() {
     "deviceId",
     "659685e649ded4f6a4e28c53"
   );
+
+  const [favorites, setFavorites] = useLocalStorage<
+    {
+      contentId: string;
+      contentType: BrowserContent;
+    }[]
+  >("favorites", []);
+  useEffect(() => {
+    deviceId &&
+      ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
+  }, [deviceId]);
 
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [links, setLinks] = useState<IBrowserLink[]>([]);

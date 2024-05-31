@@ -3,6 +3,7 @@ import { IBrowserLink, IVideo } from "../api";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import dayjs from "dayjs";
+import FavoriteStar from "./FavoriteStar";
 
 const LIGHT_TEXT_THRESHOLD = 215;
 
@@ -64,6 +65,7 @@ const VideoCard = (props: {
   const agoText = getAgoText(props.video.createdAt);
   return (
     <Stack position="relative" width="100%" minHeight="244px">
+      <FavoriteStar id={props.video.id} type="video" />
       <Stack
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"

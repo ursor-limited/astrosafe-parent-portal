@@ -26,20 +26,20 @@ const OVERALL_X_PADDING = "20px";
 
 const DUMMY_VIDEOS = [
   {
-    id: "boo",
+    id: "6658dd53d54478910600b2ac",
     title: "Coolest kids",
     videoChannelId: "6659a32823838b9510e565e2",
     thumbnailUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
   },
   {
-    id: "coo",
+    id: "6659d2b1b66f5d5ee1349b01",
     title: "Star Wars",
     videoChannelId: "6659a32823838b9510e565e2",
     thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
   },
   {
-    id: "foo",
+    id: "6659d2b4b886df523356cb13",
     title: "Pokemon",
     videoChannelId: "6659a32823838b9510e565e2",
     thumbnailUrl:
@@ -50,8 +50,21 @@ const DUMMY_VIDEOS = [
 export default function HomePageContents() {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
-    "659685e649ded4f6a4e28c53"
+    undefined
   );
+
+  useEffect(() => setDeviceId("659685e649ded4f6a4e28c53"), []);
+
+  const [favorites, setFavorites] = useLocalStorage<
+    {
+      contentId: string;
+      contentType: BrowserContent;
+    }[]
+  >("favorites", []);
+  useEffect(() => {
+    deviceId &&
+      ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
+  }, [deviceId]);
 
   const [videoChannels, setVideoChannels] = useState<IVideoChannel[]>([]); //@ts-ignore
   const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
@@ -60,7 +73,6 @@ export default function HomePageContents() {
       ApiController.getVideoChannels(deviceId).then((vc) =>
         setVideoChannels(vc)
       );
-    //ApiController.getVideos(deviceId).then((v) => setVideos(v));
   }, [deviceId]);
 
   const [selectedChannelId, setSelectedChannelId] = useState<

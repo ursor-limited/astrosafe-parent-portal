@@ -1,3 +1,5 @@
+import { BrowserContent } from "./home/AstroContentColumns";
+
 export interface ISchool {
   id: string;
   name: string;
@@ -137,15 +139,19 @@ export const getPrefixRemovedUrl = (url: string) =>
 
 const get = (route: string) =>
   fetch(
-    //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`
+    `${
+      //@ts-ignore
+      BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"]
+    }/${route}`
   );
 
 //@ts-ignore
 const post = (route: string, body?: any) =>
   fetch(
-    //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
+    `${
+      //@ts-ignore
+      BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"]
+    }/${route}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -156,8 +162,10 @@ const post = (route: string, body?: any) =>
 
 const patch = (route: string, body: any) =>
   fetch(
-    //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
+    `${
+      //@ts-ignore
+      BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"]
+    }/${route}`,
     {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -167,8 +175,10 @@ const patch = (route: string, body: any) =>
 
 const dellete = (route: string) =>
   fetch(
-    //@ts-ignore
-    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || 'development']}/${route}`,
+    `${
+      //@ts-ignore
+      BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"]
+    }/${route}`,
     {
       method: "DELETE",
     }
@@ -216,8 +226,8 @@ class ApiController {
     );
   }
   static async getVideoChannels(deviceId: string) {
-    return get(`schools/devices/${deviceId}/videoChannels`).then((response: any) =>
-      response.json()
+    return get(`schools/devices/${deviceId}/videoChannels`).then(
+      (response: any) => response.json()
     );
   }
   static async getVideos(deviceId: string) {
@@ -231,11 +241,22 @@ class ApiController {
       response.json()
     );
   }
-  // static async getGuestStacks() {
-  //   return get(`schools/guest/gueststacks`).then((response: any) =>
-  //     response.json()
-  //   );
-  // }
+  static async switchFavorite(
+    deviceId: string,
+    contentId: string,
+    contentType: BrowserContent
+  ) {
+    return patch(`schools/devices/${deviceId}/favorite`, {
+      contentId,
+      contentType,
+    }).then((response: any) => response.json());
+  }
+
+  static async getDevice(deviceId: string) {
+    return get(`schools/devices/${deviceId}`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;
