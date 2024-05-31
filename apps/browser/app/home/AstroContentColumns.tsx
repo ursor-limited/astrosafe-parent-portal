@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { IBrowserLink, IStack, getAbsoluteUrl } from "../api";
+import { IBrowserLink, IStack, IVideo, getAbsoluteUrl } from "../api";
 import { PALETTE, Typography } from "ui";
 import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useEffect, useState } from "react";
@@ -9,10 +9,11 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import BrowserLinkCard from "../components/BrowserLinkCard";
 import StackCard from "../components/StackCard";
 import StackViewDialog from "../components/StackViewDialog";
+import VideoCard from "../components/VideoCard";
 
 export const GRID_SPACING = "12px";
 
-export type BrowserContentCard =
+export type BrowserContent =
   | "link"
   | "video"
   | "stack"
@@ -21,10 +22,11 @@ export type BrowserContentCard =
   | "pedia";
 
 export interface IAstroContentColumnsProps {
-  title: string;
+  title?: string;
   description?: string;
   links: IBrowserLink[];
   stacks: IStack[];
+  videos: IVideo[];
   // platforms: IPlatform[];
   // searchResults: ISearchResult[];
   // pediaCard?: IPediaMainCard;
@@ -36,9 +38,9 @@ export interface IAstroContentColumnsProps {
   emptyStateText?: string;
 }
 
-interface IBrowserContent {
-  type: BrowserContentCard;
-  details: IBrowserLink | IStack;
+export interface IBrowserContent {
+  type: BrowserContent;
+  details: IBrowserLink | IStack | IVideo;
 }
 
 export const EmptyStateIllustration = (props: {
@@ -85,15 +87,19 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
 
   useEffect(() => {
     const linkDetails = props.links.map((l) => ({
-      type: "link" as BrowserContentCard,
+      type: "link" as BrowserContent,
       details: l,
     }));
     const stackDetails = props.stacks
       .filter((s) => s.imageUrls.length > 0)
       .map((s) => ({
-        type: "stack" as BrowserContentCard,
+        type: "stack" as BrowserContent,
         details: s,
       }));
+    const videoDetails = props.videos.map((v) => ({
+      type: "video" as BrowserContent,
+      details: v,
+    }));
     // const platformDetails = props.platforms.map((p) => ({
     //   type: "platform" as BrowserContentCard,
     //   details: p,
@@ -112,7 +118,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
       //...(pediaCardDetails ? [pediaCardDetails] : []),
       ..._.reverse(
         _.sortBy(
-          [...linkDetails, ...stackDetails],
+          [...linkDetails, ...stackDetails, ...videoDetails],
           (c) => new Date(c.details.createdAt)
         ).slice()
       ),
@@ -154,6 +160,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
   }, [
     props.links,
     props.stacks,
+    props.videos,
     // props.platforms,
     // props.searchResults,
     // props.pediaCard,
@@ -231,6 +238,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
               // props.pediaCard ||
               (props.links?.length ?? 0) +
               (props.stacks?.length ?? 0) +
+              (props.videos?.length ?? 0) +
               // (props.platforms?.length ?? 0) +
               // (props.searchResults?.length ?? 0) >
               0 ? (
@@ -274,22 +282,30 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                                 >
                                   <StackCard stack={item.details as IStack} />
                                 </Stack>
-                              ) : // : item.type === "platform" ? (
-                              //   <Stack
-                              //     onClick={() =>
-                              //       window.open(
-                              //         getAbsoluteUrl(
-                              //           (item.details as IPlatform).url
-                              //         ),
-                              //         "_blank"
-                              //       )
-                              //     }
-                              //   >
-                              //     <PlatformCard
-                              //       platform={item.details as IPlatform}
-                              //     />
-                              //   </Stack>
-                              // ) : item.type === "searchResult" ? (
+                              ) : item.type === "video" ? (
+                                <Stack
+                                  onClick={() =>
+                                    window.open(
+                                      getAbsoluteUrl(
+                                        (item.details as IVideo).url
+                                      ),
+                                      "_blank"
+                                    )
+                                  }
+                                >
+                                  <VideoCard
+                                    video={item.details as IVideo}
+                                    clickCallback={() => {
+                                      window.open(
+                                        getAbsoluteUrl(
+                                          (item.details as IVideo).url
+                                        ),
+                                        "_blank"
+                                      );
+                                    }}
+                                  />
+                                </Stack>
+                              ) : // ) : item.type === "searchResult" ? (
                               //   <Stack
                               //     sx={{
                               //       "&:hover": { opacity: 0.7 },

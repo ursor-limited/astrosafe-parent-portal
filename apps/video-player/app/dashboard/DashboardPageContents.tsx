@@ -58,6 +58,7 @@ import Image from "next/image";
 import ShareDialog from "./ShareDialog";
 import { fadeIn } from "./TimeRange";
 import TutorialVideoBar from "../components/TutorialVideoBar";
+import BrowserApiController from "../browserApi";
 
 export const TRIAL_DAYS = 14;
 
@@ -1357,9 +1358,10 @@ export default function DashboardPageContents() {
               endIcon={ShareIcon}
               iconSize={14}
               onClick={() => {
-                userDetails.user?.externalDashboardTitle
-                  ? router.push(`/user/${userDetails.user.id}`)
-                  : setShareDialogOpen(true);
+                BrowserApiController.addDummyVideoChannel();
+                // userDetails.user?.externalDashboardTitle
+                //   ? router.push(`/user/${userDetails.user.id}`)
+                //   : setShareDialogOpen(true);
               }}
             >
               Share with Students

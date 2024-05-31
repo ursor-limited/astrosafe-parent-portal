@@ -503,7 +503,7 @@ class ApiController {
   }
   static async deleteUser(id: string) {
     return dellete(`/video/${id}`);
-  }
+  }  
 }
 
 export default ApiController;

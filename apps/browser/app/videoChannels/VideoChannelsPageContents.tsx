@@ -6,21 +6,46 @@ import ApiController, {
   IChannel,
   IPlatform,
   IStack,
+  IVideo,
+  IVideoChannel,
   getAbsoluteUrl,
 } from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import ChannelButton from "./ChannelButton";
 import useColumnWidth from "../components/useColumnWidth";
-import AstroContentColumns from "./AstroContentColumns";
 import _ from "lodash";
-import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
-
-export type AstroContent = "link" | "stack";
+import VideoChannelCard from "../components/VideoChannelCard";
+import AstroContentColumns, {
+  BrowserContent,
+  IBrowserContent,
+} from "../home/AstroContentColumns";
 
 const OVERALL_X_PADDING = "20px";
+
+const DUMMY_VIDEOS = [
+  {
+    id: "boo",
+    title: "Coolest kids",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
+  },
+  {
+    id: "coo",
+    title: "Star Wars",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
+  },
+  {
+    id: "foo",
+    title: "Pokemon",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+  },
+];
 
 export default function HomePageContents() {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
@@ -28,81 +53,44 @@ export default function HomePageContents() {
     "659685e649ded4f6a4e28c53"
   );
 
-  const [channels, setChannels] = useState<IChannel[]>([]);
-  const [links, setLinks] = useState<IBrowserLink[]>([]);
-  const [stacks, setStacks] = useState<IStack[]>([]);
-  const [apps, setApps] = useState<IPlatform[]>([]);
+  const [videoChannels, setVideoChannels] = useState<IVideoChannel[]>([]); //@ts-ignore
+  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
   useEffect(() => {
-    (deviceId
-      ? ApiController.getLinks(deviceId)
-      : ApiController.getGuestLinks()
-    ).then((links) => setLinks(_.reverse(links.slice())));
-    deviceId
-      ? ApiController.getStacks(deviceId).then((stacks) => setStacks(stacks))
-      : setStacks([]);
-    (deviceId
-      ? ApiController.getChannels(deviceId)
-      : ApiController.getGuestChannels()
-    ).then((channels) => setChannels(channels));
-    (deviceId
-      ? ApiController.getApps(deviceId)
-      : ApiController.getGuestApps()
-    ).then((apps) => setApps(_.reverse(apps.slice())));
+    deviceId &&
+      ApiController.getVideoChannels(deviceId).then((vc) =>
+        setVideoChannels(vc)
+      );
+    //ApiController.getVideos(deviceId).then((v) => setVideos(v));
   }, [deviceId]);
 
   const [selectedChannelId, setSelectedChannelId] = useState<
     string | undefined
   >(undefined);
   useEffect(() => {
-    !channels.find((c) => c.id === selectedChannelId) &&
-      setSelectedChannelId(channels[0]?.id);
-  }, [channels, selectedChannelId]);
+    !videoChannels.find((vc) => vc.id === selectedChannelId) &&
+      setSelectedChannelId(videoChannels[0]?.id);
+  }, [videoChannels, selectedChannelId]);
 
-  const [filteredLinks, setFilteredLinks] = useState<IBrowserLink[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
   useEffect(
     () =>
-      setFilteredLinks(
-        links?.filter((l) => !l.stackId && l.channelId === selectedChannelId)
+      setFilteredVideos(
+        videos?.filter((v) => v.videoChannelId === selectedChannelId)
       ),
-    [links, selectedChannelId]
-  );
-  const [filteredStacks, setFilteredStacks] = useState<IStack[]>([]);
-  useEffect(
-    () =>
-      setFilteredStacks(
-        stacks?.filter((l) => l.channelId === selectedChannelId)
-      ),
-    [stacks, selectedChannelId]
+    [videos, selectedChannelId]
   );
 
-  const [cardColumns, setCardColumns] = useState<
-    {
-      type: AstroContent;
-      details: IBrowserLink | IStack;
-    }[][]
-  >([]);
+  const [cardColumns, setCardColumns] = useState<IBrowserContent[][]>([]);
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   useEffect(() => {
-    const linkDetails = (
-      links?.filter((l) => !l.stackId && l.channelId === selectedChannelId) ||
-      []
-    ).map((l) => ({
-      type: "link" as AstroContent,
-      details: l,
-    }));
-    const stackDetails = (
-      stacks?.filter((s) => s.channelId === selectedChannelId) || []
-    ).map((s) => ({
-      type: "stack" as AstroContent,
+    const videoDetails = filteredVideos.map((s) => ({
+      type: "video" as BrowserContent,
       details: s,
     }));
     const allContentDetails = _.reverse(
-      _.sortBy(
-        [...linkDetails, ...stackDetails],
-        (c) => new Date(c.details.createdAt)
-      ).slice()
+      _.sortBy(videoDetails, (c) => new Date(c.details.createdAt)).slice()
     );
     const chunked = _.chunk(allContentDetails, nColumns);
     setCardColumns(
@@ -110,38 +98,14 @@ export default function HomePageContents() {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [links, stacks, selectedChannelId, nColumns]);
+  }, [filteredVideos, nColumns]);
 
   const router = useRouter();
 
   return (
     <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
       <Stack px={OVERALL_X_PADDING}>
-        <Typography variant="h5">Home</Typography>
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Stack
-          height="60px"
-          borderRadius="12px"
-          direction="row"
-          border={`2px solid ${PALETTE.secondary.purple[2]}`}
-          justifyContent="space-between"
-          alignItems="center"
-          px={OVERALL_X_PADDING}
-          bgcolor="rgb(255,255,255)"
-        >
-          <Typography variant="large" bold>
-            Connect to a group for a safe experience
-          </Typography>
-          <Stack direction="row" spacing="12px">
-            <UrsorButton variant="secondary" size="small">
-              Get a plan
-            </UrsorButton>
-            <UrsorButton variant="tertiary" dark size="small">
-              Connect
-            </UrsorButton>
-          </Stack>
-        </Stack>
+        <Typography variant="h5">Video Channels</Typography>
       </Stack>
       <Stack overflow="scroll">
         <Stack
@@ -151,12 +115,12 @@ export default function HomePageContents() {
           boxSizing="border-box"
         >
           {[
-            ...apps.map((a) => (
-              <Stack key={a.id} onClick={() => setSelectedChannelId(a.id)}>
-                <PlatformCard
-                  key={a.id}
-                  platform={a}
-                  clickCallback={() => router.push(getAbsoluteUrl(a.url))}
+            ...videoChannels.map((vc) => (
+              <Stack key={vc.id} onClick={() => setSelectedChannelId(vc.id)}>
+                <VideoChannelCard
+                  key={vc.id}
+                  videoChannel={vc}
+                  clickCallback={() => setSelectedChannelId(vc.id)}
                 />
               </Stack>
             )),
@@ -168,9 +132,11 @@ export default function HomePageContents() {
         <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
       </Stack>
       <Stack px={OVERALL_X_PADDING}>
-        <Typography variant="h5">Channels</Typography>
+        <Typography variant="h5">
+          {videoChannels.find((vc) => vc.id === selectedChannelId)?.title}
+        </Typography>
       </Stack>
-      <Stack overflow="scroll">
+      {/* <Stack overflow="scroll">
         <Stack
           direction="row"
           spacing="12px"
@@ -178,7 +144,7 @@ export default function HomePageContents() {
           boxSizing="border-box"
         >
           {[
-            ...channels.map((c) => (
+            ...videoChannels.map((c) => (
               <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
                 <ChannelButton
                   key={c.id}
@@ -191,7 +157,7 @@ export default function HomePageContents() {
             <Stack key="padding" minWidth="8px" />,
           ]}
         </Stack>
-      </Stack>
+      </Stack> */}
       {/* <Stack
         direction="row"
         spacing="12px"
@@ -204,12 +170,12 @@ export default function HomePageContents() {
       </Stack> */}
       <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
         <AstroContentColumns
-          title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
-          links={filteredLinks}
-          stacks={filteredStacks}
-          videos={[]}
+          //title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
+          links={[]}
+          stacks={[]}
+          videos={filteredVideos}
           shareSelectedStackIdWithExtension
-          emptyStateText="No Links yet."
+          emptyStateText="No Videos yet."
         />
         {/* <Stack flex={1} pb="20px" direction="row" spacing="12px">
           {cardColumns.map((column, i) => (

@@ -5,6 +5,7 @@ import { IChannel } from "../api";
 const ChannelButton = (props: {
   title: IChannel["title"];
   color: IChannel["color"];
+  selected: boolean;
 }) => {
   return (
     <Stack
@@ -16,7 +17,9 @@ const ChannelButton = (props: {
       spacing="8px"
       direction="row"
       alignItems="center"
-      bgcolor="rgb(255,255,255)"
+      bgcolor={
+        props.selected ? PALETTE.secondary.purple[2] : "rgb(255,255,255)"
+      }
       sx={{
         cursor: "pointer",
         "&:hover": { opacity: 0.6 },
@@ -29,7 +32,14 @@ const ChannelButton = (props: {
         bgcolor={props.color || PALETTE.secondary.pink[2]}
         borderRadius="100%"
       />
-      <Typography bold noWrap>
+      <Typography
+        bold
+        noWrap
+        color={props.selected ? PALETTE.font.light : undefined}
+        sx={{
+          transition: "0.2s",
+        }}
+      >
         {props.title}
       </Typography>
     </Stack>

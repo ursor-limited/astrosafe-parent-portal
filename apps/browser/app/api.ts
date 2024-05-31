@@ -89,6 +89,37 @@ export interface IPlatform {
   installed: boolean;
 }
 
+export interface IVideoChannel {
+  id: string;
+  creatorId?: string;
+  schoolId: string;
+  nativeId: string; // the youtube or vimeo id
+  title: string;
+  bannerImageUrl: string;
+  profileImageUrl: string;
+}
+
+export interface IVideo {
+  id: string;
+  creatorId: string;
+  videoChannelId: string;
+  url: string;
+  title: string;
+  description?: string;
+  thumbnailUrl?: string;
+  startTime?: number;
+  endTime?: number;
+  comments: IVideoComment[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IVideoComment {
+  id: string;
+  value: string;
+  time: number;
+}
+
 const BACKEND_URLS = {
   development: "http://localhost:8080",
   preview:
@@ -184,6 +215,17 @@ class ApiController {
       response.json()
     );
   }
+  static async getVideoChannels(deviceId: string) {
+    return get(`schools/devices/${deviceId}/videoChannels`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getVideos(deviceId: string) {
+    return get(`schools/devices/${deviceId}/videos`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async getStackLinks(stackId: string) {
     return get(`stacks/${stackId}/links`).then((response: any) =>
       response.json()
