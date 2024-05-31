@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ApiController, { IBrowserLink, IChannel, IStack } from "../api";
+import ApiController, {
+  IBrowserLink,
+  IChannel,
+  IPlatform,
+  IStack,
+  getAbsoluteUrl,
+} from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
@@ -9,6 +15,8 @@ import ChannelButton from "./ChannelButton";
 import useColumnWidth from "../components/useColumnWidth";
 import AstroContentColumns from "./AstroContentColumns";
 import _ from "lodash";
+import PlatformCard from "../components/PlatformCard";
+import { useRouter } from "next/navigation";
 
 export type AstroContent = "link" | "stack";
 
@@ -23,6 +31,7 @@ export default function HomePageContents() {
   const [channels, setChannels] = useState<IChannel[]>([]);
   const [links, setLinks] = useState<IBrowserLink[]>([]);
   const [stacks, setStacks] = useState<IStack[]>([]);
+  const [apps, setApps] = useState<IPlatform[]>([]);
   useEffect(() => {
     (deviceId
       ? ApiController.getLinks(deviceId)
@@ -35,6 +44,10 @@ export default function HomePageContents() {
       ? ApiController.getChannels(deviceId)
       : ApiController.getGuestChannels()
     ).then((channels) => setChannels(channels));
+    (deviceId
+      ? ApiController.getApps(deviceId)
+      : ApiController.getGuestApps()
+    ).then((apps) => setApps(_.reverse(apps.slice())));
   }, [deviceId]);
 
   const [selectedChannelId, setSelectedChannelId] = useState<
@@ -99,10 +112,33 @@ export default function HomePageContents() {
     );
   }, [links, stacks, selectedChannelId, nColumns]);
 
+  const router = useRouter();
+
   return (
     <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
       <Stack px={OVERALL_X_PADDING}>
         <Typography variant="h5">Home</Typography>
+      </Stack>
+      <Stack overflow="scroll">
+        <Stack
+          direction="row"
+          spacing="12px"
+          px={OVERALL_X_PADDING}
+          boxSizing="border-box"
+        >
+          {[
+            ...apps.map((a) => (
+              <Stack key={a.id} onClick={() => setSelectedChannelId(c.id)}>
+                <PlatformCard
+                  key={a.id}
+                  platform={a}
+                  clickCallback={() => router.push(getAbsoluteUrl(a.url))}
+                />
+              </Stack>
+            )),
+            <Stack key="padding" minWidth="8px" />,
+          ]}
+        </Stack>
       </Stack>
       <Stack px={OVERALL_X_PADDING}>
         <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />

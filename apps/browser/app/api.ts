@@ -77,6 +77,18 @@ export interface IBrowserLink {
   createdAt: string;
 }
 
+export interface IPlatform {
+  id: string;
+  title: string;
+  url: string;
+  accessibleUrl: string;
+  img: string;
+  yearGroups: number[];
+  schoolId: string;
+  creatorId: string;
+  installed: boolean;
+}
+
 const BACKEND_URLS = {
   development: "http://localhost:8080",
   preview:
@@ -85,6 +97,12 @@ const BACKEND_URLS = {
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;
+
+export const getPrefixRemovedUrl = (url: string) =>
+  url
+    .replace(/^(https\:\/\/)/, "")
+    .replace(/^(http\:\/\/)/, "")
+    .replace(/^(www\.)/, "");
 
 const get = (route: string) =>
   fetch(
@@ -153,6 +171,16 @@ class ApiController {
   }
   static async getGuestLinks() {
     return get(`schools/guest/guestlinks`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getApps(deviceId: string) {
+    return get(`schools/devices/${deviceId}/platforms`).then((response: any) =>
+      response.json()
+    );
+  }
+  static async getGuestApps() {
+    return get(`schools/guest/guestplatforms`).then((response: any) =>
       response.json()
     );
   }
