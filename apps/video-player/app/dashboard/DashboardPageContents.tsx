@@ -1366,12 +1366,7 @@ export default function DashboardPageContents() {
             </UrsorButton>
           </Stack>
         </UrsorFadeIn>
-        <Stack
-          pt="32px"
-          flex={1}
-          ref={setColumnsContainerRef}
-          overflow="hidden"
-        >
+        <Stack pt="32px" flex={1} ref={setColumnsContainerRef}>
           <Stack flex={1}>
             <Stack
               flex={1}
