@@ -304,7 +304,7 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "spending");
+  >("currentStep", "identity");
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });

@@ -1,3 +1,4 @@
+import { COUNTRIES_ALPHA2 } from "@/components/countries";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/InsuranceApplicationFormDialog";
@@ -6,6 +7,10 @@ import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
+
+const countriesOptions = Object.entries(COUNTRIES_ALPHA2).map(
+  ([alpha2, name]) => ({ id: alpha2, text: name })
+);
 
 const SECTIONS: IAWFormSection[] = [
   {
@@ -78,12 +83,7 @@ const SECTIONS: IAWFormSection[] = [
         title: "Country",
         inputType: "dropdown",
         placeholder: "Choose your country",
-        options: [
-          {
-            id: "buu",
-            text: "USA",
-          },
-        ],
+        options: countriesOptions,
       },
       {
         id: "6655c1eb44e7da94b593e696",
@@ -149,12 +149,7 @@ const SECTIONS: IAWFormSection[] = [
         title: "Country",
         inputType: "dropdown",
         placeholder: "Choose your country",
-        options: [
-          {
-            id: "buu",
-            text: "USA",
-          },
-        ],
+        options: countriesOptions,
       },
       {
         id: "66561d2a42becad2f5f4f9ed",
