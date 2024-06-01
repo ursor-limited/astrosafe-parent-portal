@@ -11,7 +11,7 @@ import { IAWInfoLineProps } from "@/components/AWInfoLine";
 
 export interface IAWFormSection {
   id: string;
-  title: string;
+  title?: string;
   description?: string;
   descriptionAtEnd?: boolean;
   inputs?: IAWFormInput[];

@@ -67,13 +67,6 @@ export default function AWDropdown(props: {
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const onOutsideClick = () => setOpen(false);
-  // useEffect(() => {
-  //   window.addEventListener("onclick", handleClick);
-  //   return () => {
-  //     window.removeEventListener("onclick", handleClick);
-  //   };
-  // }, [handleClick]);
-
   const setOutsideClickRef = useOutsideClick(onOutsideClick);
 
   const [listY, setListY] = useState<number>(0);

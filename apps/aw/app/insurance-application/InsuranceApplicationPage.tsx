@@ -22,6 +22,7 @@ import InsuranceApplicationInsuranceNeeds from "./views/InsuranceApplicationInsu
 import InsuranceApplicationGovernance from "./views/InsuranceApplicationGovernance";
 import InsuranceApplicationSpending from "./views/InsuranceApplicationSpending";
 import AWInfoLine from "@/components/AWInfoLine";
+import InsuranceApplicationWhitelist from "./views/InsuranceApplicationWhitelist";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -34,6 +35,7 @@ export const awInsuranceApplicationSteps = [
   "insuranceNeeds",
   "governance",
   "spending",
+  "whitelist",
   // "responsibilities",
   // "personalDetails",
 ] as const;
@@ -51,6 +53,7 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   insuranceNeeds: "Insurance needs & history",
   governance: "Internal governance and controls",
   spending: "Spending behavior",
+  whitelist: "Whitelist addresses",
   //responsibilities: "Your responsibilities as a Key Holder",
   //leaders: "Company leaders details",
   //personalDetails: "Company leader personal details",
@@ -295,6 +298,7 @@ const STEP_COMPONENTS: Record<
   insuranceNeeds: InsuranceApplicationInsuranceNeeds,
   governance: InsuranceApplicationGovernance,
   spending: InsuranceApplicationSpending,
+  whitelist: InsuranceApplicationWhitelist,
 };
 
 export default function InsuranceApplicationPage() {
@@ -304,7 +308,7 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "identity");
+  >("currentStep", "whitelist");
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
