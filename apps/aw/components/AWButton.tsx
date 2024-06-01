@@ -5,9 +5,13 @@ type AWButtonVariant = "primary" | "secondary";
 
 const DEFAULT_WIDTH = 182;
 
+const HEIGHT_REGULAR = 48;
+const HEIGHT_XS = 32;
+
 export function AWButton(props: {
   width?: number | string;
   variant?: AWButtonVariant;
+  size?: "regular" | "xs";
   children: React.ReactNode;
   disabled?: boolean;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -39,11 +43,12 @@ export function AWButton(props: {
     <div
       style={{
         width: props.width ?? DEFAULT_WIDTH,
+        height: props.size === "xs" ? HEIGHT_XS : HEIGHT_REGULAR,
         pointerEvents: props.disabled ? "none" : undefined,
       }}
-      className={`h-[48px] flex items-center justify-center rounded-xs gap-[10px] ${
-        props.disabled ? "" : "border-[1px]"
-      } border-solid ${
+      className={`flex items-center justify-center rounded-xs ${
+        props.icon ? "gap-[10px]" : ""
+      } ${props.disabled ? "" : "border-[1px]"} border-solid ${
         hovering
           ? props.variant === "secondary"
             ? "border-buttons-secondary-border_hover"
@@ -77,6 +82,8 @@ export function AWButton(props: {
     >
       <div
         className={`font-medium ${
+          props.size === "xs" ? "text-sm" : "text-regular"
+        } ${
           props.disabled
             ? "text-buttons-disabled-text"
             : props.variant === "secondary"

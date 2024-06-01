@@ -2,7 +2,7 @@ import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -142,9 +142,7 @@ export default function InsuranceApplicationSpending(props: {
       title={STEP_TITLES.spending}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
-      progress={
-        (CHECKPOINT_STEPS.indexOf("spending") - 1) / CHECKPOINT_STEPS.length
-      }
+      progress={CHECKPOINT_STEPS.indexOf("spending") / CHECKPOINT_STEPS.length}
     />
   );
 }

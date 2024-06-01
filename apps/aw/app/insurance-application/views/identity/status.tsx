@@ -1,25 +1,58 @@
-import { useEffect, useState } from "react";
 import InsuranceApplicationIllustrationDialog from "../../components/InsuranceApplicationIllustrationDialog";
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../../components/InsuranceApplicationCheckpointDialog";
 import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
 import CircleCheckIcon from "@/images/icons/CircleCheckIcon.svg";
 import HourglassIcon from "@/images/icons/HourglassIcon.svg";
+import { AWButton } from "@/components/AWButton";
+import { useState } from "react";
+
+export interface IAWIdentity {
+  name: string;
+  email: string;
+  status: "pending" | "done";
+}
 
 const IdentityStatusRow = (props: {
   name: string;
   resend: () => void;
-  done: boolean;
+  status: IAWIdentity["status"];
+  showButton: boolean;
 }) => (
   <div className="h-[37px] flex justify-between items-center">
     <div className="text-lg font-normal text-darkTeal-5">{props.name}</div>
-    <div>{props.done ? <CircleCheckIcon /> : <HourglassIcon />}</div>
+    <div className="flex gap-lg items-center">
+      {props.showButton ? (
+        <AWButton
+          size="xs"
+          onClick={props.resend}
+          variant="secondary"
+          width={91}
+        >
+          Resend
+        </AWButton>
+      ) : null}
+      <div>
+        {props.status === "done" ? <CircleCheckIcon /> : <HourglassIcon />}
+      </div>
+    </div>
   </div>
 );
 
-const DUMMY_NAMES = ["BUU goo", "Rob Hamilton", "Chris Boolean", "Gus Cool"];
+const DUMMY_PEOPLE = [
+  {
+    name: "Gooo Bool",
+    email: "",
+    status: "pending",
+  },
+  {
+    name: "Losh Boorf",
+    email: "",
+    status: "done",
+  },
+];
 
 export default function InsuranceApplicationIdentityStatus(props: {
   nextCallback: () => void;
@@ -31,6 +64,7 @@ export default function InsuranceApplicationIdentityStatus(props: {
   //       awInsuranceApplicationIdentityStepViews.length) /
   //     CHECKPOINT_STEPS.length;
   // }, []);
+  const [people, setPeople] = useState<IAWIdentity[]>([]);
   return (
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.status}
@@ -52,11 +86,15 @@ export default function InsuranceApplicationIdentityStatus(props: {
           completed identity verification.
         </div>
         <div className="flex flex-col gap-lg">
-          {DUMMY_NAMES.map((name, i) => (
+          {DUMMY_PEOPLE.map((p, i) => (
             <IdentityStatusRow
               key={i}
-              name={name}
-              done={i === 1}
+              name={p.name}
+              status={p.status as IAWIdentity["status"]}
+              showButton={
+                p.status === "pending" &&
+                DUMMY_PEOPLE.some((p) => p.status === "done")
+              }
               resend={() => null}
             />
           ))}

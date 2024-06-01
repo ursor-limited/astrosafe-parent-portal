@@ -6,7 +6,7 @@ import {
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
 import { useEffect, useState } from "react";
 import BitcoinIcon from "@/images/icons/BitcoinIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
@@ -159,9 +159,7 @@ export default function InsuranceApplicationWhitelist(props: {
       }}
       canProceed
       nextCallback={props.nextCallback}
-      progress={
-        (CHECKPOINT_STEPS.indexOf("whitelist") - 1) / CHECKPOINT_STEPS.length
-      }
+      progress={CHECKPOINT_STEPS.indexOf("whitelist") / CHECKPOINT_STEPS.length}
     />
   );
 }

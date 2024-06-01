@@ -9,7 +9,7 @@ import InsuranceApplicationFormDialog, {
   IAWFormInputAnswer,
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { AWButton } from "@/components/AWButton";
@@ -386,8 +386,7 @@ export default function InsuranceApplicationInsuranceNeeds(props: {
       }}
       nextCallback={props.nextCallback}
       progress={
-        (CHECKPOINT_STEPS.indexOf("insuranceNeeds") - 1) /
-        CHECKPOINT_STEPS.length
+        CHECKPOINT_STEPS.indexOf("insuranceNeeds") / CHECKPOINT_STEPS.length
       }
     />
   );

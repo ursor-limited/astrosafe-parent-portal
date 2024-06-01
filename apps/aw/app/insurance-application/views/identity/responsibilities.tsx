@@ -5,7 +5,7 @@ import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
-import { CHECKPOINT_STEPS } from "../InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../../components/InsuranceApplicationCheckpointDialog";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;

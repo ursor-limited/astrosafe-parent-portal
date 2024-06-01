@@ -1,11 +1,12 @@
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
-import InsuranceApplicationIllustrationDialog from "../components/InsuranceApplicationIllustrationDialog";
+import InsuranceApplicationIllustrationDialog from "./InsuranceApplicationIllustrationDialog";
 import {
   AWInsuranceApplicationStep,
   STEP_TITLES,
 } from "../InsuranceApplicationPage";
 import _ from "lodash";
+import { IAWInfoLineProps } from "@/components/AWInfoLine";
 
 export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "policyOwner",
@@ -14,15 +15,16 @@ export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "insuranceNeeds",
   "governance",
   "spending",
-  //"leaders",
+  "upload",
 ];
 
-export default function InsuranceApplicationCheckpoints(props: {
-  nextCallback: () => void;
+export default function InsuranceApplicationCheckpointDialog(props: {
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  info?: IAWInfoLineProps;
+  buttonCallback: () => void;
 }) {
-  // const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-  //   IAWFormInputAnswer[] | undefined
-  // >("committedAnswers", undefined);
   const [stepCompletions, setStepCompletions] = useLocalStorage<
     Partial<Record<AWInsuranceApplicationStep, boolean>>
   >("stepCompletions", {});
@@ -47,23 +49,11 @@ export default function InsuranceApplicationCheckpoints(props: {
   );
   return (
     <InsuranceApplicationIllustrationDialog
-      title={started ? "RESUME APPLICATION" : "START APPLICATION"}
-      subtitle={
-        started
-          ? "Complete all the sections below to submit your application"
-          : "The application intake form consists of the following sections."
-      }
-      buttonText={started ? "Resume" : "Start"}
-      buttonCallback={() =>
-        !started
-          ? props.nextCallback()
-          : setCurrentStep(CHECKPOINT_STEPS[lastCompletedStepIndex])
-      }
-      info={{
-        prompt: "You can come back anytime",
-        content:
-          "We automatically save your progress. So you can leave and come back to this application as you wish.",
-      }}
+      title={props.title}
+      subtitle={props.subtitle}
+      buttonText={props.buttonText}
+      buttonCallback={() => props.buttonCallback}
+      info={props.info}
     >
       <div className="flex flex-col">
         {CHECKPOINT_STEPS.map((step, i) => (
@@ -78,13 +68,13 @@ export default function InsuranceApplicationCheckpoints(props: {
                     ? "bg-darkTeal-5"
                     : lastCompletedStepIndex < i + 1
                     ? ""
-                    : "bg-lightTeal-2"
+                    : "bg-lightTeal-1"
                 }`}
               />
               <div
                 className={`text-xl underline underline-offset-2 decoration-1 ${
-                  lastCompletedStepIndex > i
-                    ? "text-greyscale-6"
+                  lastCompletedStepIndex > i + 1
+                    ? "text-buttons-secondary-text_hover"
                     : "text-darkTeal-3"
                 }`}
               >

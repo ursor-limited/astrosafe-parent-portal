@@ -66,32 +66,4 @@ export default function InsuranceApplicationIdentity(props: {
   ) : (
     <></>
   );
-  // <InsuranceApplicationIllustrationDialog
-  //   title={IDENTITY_STEP_TITLES[currentView]}
-  //   buttonCallback={() =>
-  //     currentView === "status"
-  //       ? props.nextCallback()
-  //       : setCurrentView(
-  //           awInsuranceApplicationIdentityStepViews[
-  //             awInsuranceApplicationIdentityStepViews.indexOf(currentView) + 1
-  //           ]
-  //         )
-  //   }
-  //   infoText="Why we do this"
-  //   progress={
-  //     (CHECKPOINT_STEPS.indexOf("identity") - 1) / CHECKPOINT_STEPS.length
-  //   }
-  // >
-  //   <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
-  //     <div>
-  //       Anchorwatch has sent all identified Company Leaders an email to accept
-  //       Terms of Service, complete identity verification and KYC/AML
-  //       compliance.
-  //     </div>
-  //     <div>
-  //       Note: The application can not be submitted until all Company Leaders
-  //       have provided their requested information
-  //     </div>
-  //   </div>
-  // </InsuranceApplicationIllustrationDialog>
 }

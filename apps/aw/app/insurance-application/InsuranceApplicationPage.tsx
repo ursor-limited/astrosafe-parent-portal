@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import InsuranceApplicationCheckpoints from "./views/InsuranceApplicationCheckpoints";
+import InsuranceApplicationCheckpoints from "./components/InsuranceApplicationCheckpointDialog";
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
@@ -23,12 +23,15 @@ import InsuranceApplicationGovernance from "./views/InsuranceApplicationGovernan
 import InsuranceApplicationSpending from "./views/InsuranceApplicationSpending";
 import AWInfoLine from "@/components/AWInfoLine";
 import InsuranceApplicationWhitelist from "./views/InsuranceApplicationWhitelist";
+import InsuranceApplicationUpload from "./views/InsuranceApplicationUpload";
+import InsuranceApplicationCheckpointsStart from "./views/checkpoints/start";
+import InsuranceApplicationCheckpointsSubmit from "./views/checkpoints/submit";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
   "glossary",
   "termsOfService",
-  "checkpoints",
+  "start",
   "policyOwner",
   "businessSummary",
   "identity",
@@ -36,8 +39,8 @@ export const awInsuranceApplicationSteps = [
   "governance",
   "spending",
   "whitelist",
-  // "responsibilities",
-  // "personalDetails",
+  "upload",
+  "submit",
 ] as const;
 export type AWInsuranceApplicationStep =
   (typeof awInsuranceApplicationSteps)[number];
@@ -46,7 +49,7 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   welcome: "Welcome to your AnchorWatch Insurance Application",
   glossary: "Terms to understand",
   termsOfService: "Terms of Service",
-  checkpoints: "Start Application",
+  start: "Start Application",
   policyOwner: "Policy owner information",
   businessSummary: "Business summary",
   identity: "Identity verification",
@@ -54,9 +57,8 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   governance: "Internal governance and controls",
   spending: "Spending behavior",
   whitelist: "Whitelist addresses",
-  //responsibilities: "Your responsibilities as a Key Holder",
-  //leaders: "Company leaders details",
-  //personalDetails: "Company leader personal details",
+  upload: "Upload files",
+  submit: "Submit Application",
 };
 
 const FADEIN_DELAY = 66;
@@ -291,7 +293,7 @@ const STEP_COMPONENTS: Record<
   welcome: InsuranceApplicationWelcome,
   glossary: InsuranceApplicationGlossary,
   termsOfService: InsuranceApplicationTermsOfService,
-  checkpoints: InsuranceApplicationCheckpoints,
+  start: InsuranceApplicationCheckpointsStart,
   policyOwner: InsuranceApplicationPolicyOwner,
   businessSummary: InsuranceApplicationBusinessSummary,
   identity: InsuranceApplicationIdentity,
@@ -299,6 +301,8 @@ const STEP_COMPONENTS: Record<
   governance: InsuranceApplicationGovernance,
   spending: InsuranceApplicationSpending,
   whitelist: InsuranceApplicationWhitelist,
+  upload: InsuranceApplicationUpload,
+  submit: InsuranceApplicationCheckpointsSubmit,
 };
 
 export default function InsuranceApplicationPage() {
@@ -308,10 +312,13 @@ export default function InsuranceApplicationPage() {
 
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationStep | undefined
-  >("currentStep", "insuranceNeeds");
+  >("currentStep", "submit");
 
   const setStepComplete = (step: AWInsuranceApplicationStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
+    // const isLast =
+    //   currentStep ===
+    //   awInsuranceApplicationSteps[awInsuranceApplicationSteps.length - 1];
     setCurrentStep(
       awInsuranceApplicationSteps[awInsuranceApplicationSteps.indexOf(step) + 1]
     );

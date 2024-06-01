@@ -2,7 +2,7 @@ import { STEP_TITLES } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
-import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
+import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -70,7 +70,7 @@ export default function InsuranceApplicationPolicyOwner(props: {
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={
-        (CHECKPOINT_STEPS.indexOf("policyOwner") - 1) / CHECKPOINT_STEPS.length
+        CHECKPOINT_STEPS.indexOf("policyOwner") / CHECKPOINT_STEPS.length
       }
     />
   );
