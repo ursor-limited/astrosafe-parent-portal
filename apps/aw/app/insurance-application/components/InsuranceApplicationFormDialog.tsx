@@ -52,7 +52,7 @@ export interface IAWMultiChoiceFieldOption {
 
 export interface IAWFormInputAnswer {
   inputId: IAWFormInput["id"];
-  value?: string;
+  value?: any;
 }
 
 export interface IAWFormStepAnswers {
@@ -67,6 +67,7 @@ export default function InsuranceApplicationFormDialog(props: {
   progress: number;
   nextCallback: () => void;
   customSections?: Record<IAWFormSection["id"], React.FC<IAWFormSectionProps>>;
+  canProceedFromCustomForm?: boolean;
   //rightArrowFaded: boolean;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
@@ -90,8 +91,8 @@ export default function InsuranceApplicationFormDialog(props: {
   );
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
-  useEffect(
-    () =>
+  useEffect(() => {
+    !props.customSections &&
       setCanProceed(
         props.sections
           .flatMap((s) => [
@@ -103,9 +104,11 @@ export default function InsuranceApplicationFormDialog(props: {
               input.optional ||
               answers.find((a) => a.inputId === input?.id)?.value
           )
-      ),
-    [answers]
-  );
+      );
+  }, [answers]);
+  useEffect(() => {
+    props.customSections && setCanProceed(!!props.canProceedFromCustomForm);
+  }, [props.canProceedFromCustomForm]);
 
   const commitAnswers = () =>
     setCommittedAnswers({ ...committedAnswers, [props.stepId]: answers });

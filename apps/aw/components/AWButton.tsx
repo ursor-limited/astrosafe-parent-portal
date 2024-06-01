@@ -3,10 +3,11 @@ type AWButtonVariant = "primary" | "secondary";
 const DEFAULT_WIDTH = 182;
 
 export function AWButton(props: {
-  width?: number;
+  width?: number | string;
   variant?: AWButtonVariant;
   children: React.ReactNode;
   disabled?: boolean;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   onClick: () => void;
 }) {
   return (
@@ -15,7 +16,7 @@ export function AWButton(props: {
         width: props.width ?? DEFAULT_WIDTH,
         pointerEvents: props.disabled ? "none" : undefined,
       }}
-      className={`h-[48px] flex items-center justify-center rounded-xs ${
+      className={`h-[48px] flex items-center justify-center rounded-xs gap-[10px] ${
         props.disabled ? "" : "border-[1px]"
       } border-solid border-buttons-border ${
         props.disabled
@@ -37,6 +38,7 @@ export function AWButton(props: {
       >
         {props.children}
       </div>
+      {props.icon ? <props.icon width="16px" height="16px" /> : null}
     </div>
   );
 }
