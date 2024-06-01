@@ -1,15 +1,21 @@
 import {
+  AWInsuranceApplicationStep,
   AWMultiChoiceField,
   AWTextField,
   IAWFormSectionProps,
   STEP_TITLES,
 } from "../InsuranceApplicationPage";
 import InsuranceApplicationFormDialog, {
+  IAWFormInputAnswer,
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { AWButton } from "@/components/AWButton";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import XIcon from "@/images/icons/XIcon.svg";
+import { useLocalStorage } from "usehooks-ts";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),
@@ -22,7 +28,7 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "6659fb2c1e89e6391892a41d",
     title:
-      "Approximately how many Bitcoin (or equivalent value in USD)  does the prospective insured intend store in Trident Vault and insure?",
+      "Approximately how many Bitcoin (or equivalent value in USD) does the prospective insured intend store in Trident Vault and insure?",
     custom: true,
   },
   {
@@ -47,6 +53,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6658d31fad53b64069c83b24",
         inputType: "text",
+        optional: true,
         title: "If no, who is the title holder of the Bitcoin?",
         placeholder: "Legal name",
       },
@@ -79,6 +86,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659f78de8a344a5cef42375",
         inputType: "textLong",
+        optional: true,
         placeholder: "Name the policy and carrier",
         title: "If yes, please list policies",
       },
@@ -106,6 +114,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659f7df20f54552fbde5ee2",
         inputType: "textLong",
+        optional: true,
         placeholder:
           "Examples include D&O, E&O, Kidnap & Ransom, Business Interruption, General Liability, Crime Homeowners, Crime and others",
         title:
@@ -135,8 +144,9 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659fad759c8d6f0b1235d78",
         inputType: "textLong",
+        optional: true,
         placeholder:
-          "Include amount involved, specific location ,the sequence of events and any relevant parties",
+          "Include amount involved, specific location, the sequence of events and any relevant parties",
         title: "If yes, please describe the circumstances in detail.",
       },
     ],
@@ -146,7 +156,9 @@ export const SECTIONS: IAWFormSection[] = [
 const QUANTITY_INPUT_ID = "6659fe85f73131d69a55edd7";
 const BITCOIN_QUANTITY_UNIT_SEPARATOR = "_";
 
-const BitcoinQuantitySection = (props: IAWFormSectionProps) => {
+const BitcoinQuantitySection = (
+  props: IAWFormSectionProps & { setDone: () => void }
+) => {
   const [amount, setAmount] = useState<string>("");
   const [unit, setUnit] = useState<AWCurrency>("btc");
   useEffect(() => {
@@ -164,6 +176,9 @@ const BitcoinQuantitySection = (props: IAWFormSectionProps) => {
       ),
     [amount, unit]
   );
+  useEffect(() => {
+    amount && props.setDone();
+  }, [amount]);
   return (
     <div className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}>
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) Approximately how many Bitcoin (or equivalent value in USD)  does the prospective insured intend store in Trident Vault and insure?`}</div>
@@ -202,16 +217,57 @@ const EXCHANGE_CUSTODIAN_OPTION_ID = "6658d9c760b6313b6af2becf";
 const SELF_CUSTODY_OPTION_ID = "6658d9e125c05ba09615c27e";
 const NOT_PURCHASED_OPTION_ID = "6658d9f4d74b500ca7fcadbd";
 
-const ADDRESS_SEPARATOR = "__";
+// const ADDRESS_SEPARATOR = "__";
 
-const BitcoinStorageSection = (props: IAWFormSectionProps) => {
-  const [addressesN, setAddressesN] = useState<number>(2);
+const BitcoinStorageSection = (
+  props: IAWFormSectionProps & { setDone: () => void }
+) => {
   const [addresses, setAddresses] = useState<string[]>([]);
+  const [modified, setModified] = useState<boolean>(false);
 
-  useEffect(
-    () => props.setValue(ADDRESSES_INPUT_ID, addresses.join(ADDRESS_SEPARATOR)),
-    [addresses]
-  );
+  useEffect(() => {
+    if (addresses.length === 0 || !modified) {
+      const addresses_ = props.answers?.find(
+        (a) => a.inputId === ADDRESSES_INPUT_ID
+      )?.value;
+      if (addresses_) {
+        setAddresses(addresses_);
+        setModified(true);
+      } else if (addresses.length === 0) {
+        addRow();
+      }
+    }
+  }, [props.answers]);
+
+  useEffect(() => {
+    modified && addresses && props.setValue(ADDRESSES_INPUT_ID, addresses);
+  }, [addresses]);
+
+  const addRow = () => setAddresses((prev) => [...prev, ""]);
+
+  useEffect(() => {
+    addresses.some((a) => !!a) && props.setDone();
+  }, [addresses]);
+
+  // const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+  //   Partial<Record<AWInsuranceApplicationStep, IAWFormInputAnswer[]>>
+  // >("committedAnswers", {});
+
+  // const [canProceed, setCanProceed] = useState<boolean>(false);
+  // useEffect(() => {
+  //   const sectionAnswers = committedAnswers["insuranceNeeds"];
+  //   sectionAnswers &&
+  //     setCanProceed(
+  //       SECTIONS.filter((s) => !s.custom)
+  //         .flatMap((s) => s.inputs)
+  //         .every(
+  //           (input) =>
+  //             input?.optional ||
+  //             sectionAnswers.find((a) => a.inputId === input?.id)?.value
+  //         )
+  //     );
+  // }, [committedAnswers]);
+
   return (
     <div
       className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}
@@ -257,26 +313,58 @@ const BitcoinStorageSection = (props: IAWFormSectionProps) => {
             />
           </div>
         ) : null}
-        {props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
+        {addresses &&
+        addresses.length > 0 &&
+        props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
           ?.value === SELF_CUSTODY_OPTION_ID ? (
-          <div className="flex flex-col gap-1">
-            <div className="text-lg text-darkTeal-2">
-              What are the Bitcoin addresses of where the Bitcoin are currently
-              stored?
+          <div className="flex flex-col gap-[12px]">
+            <div className="flex flex-col gap-1">
+              <div className="text-lg text-darkTeal-2">
+                What are the Bitcoin addresses of where the Bitcoin are
+                currently stored?
+              </div>
+              <div className="flex flex-col gap-lg">
+                {addresses.map((a, i) => (
+                  <div key={i} className="flex gap-lg relative">
+                    <AWTextField
+                      value={a}
+                      setValue={(a) =>
+                        setAddresses([
+                          ...addresses.slice(0, i),
+                          a,
+                          ...addresses.slice(i + 1),
+                        ])
+                      }
+                      placeholder={`Address ${i + 1}`}
+                    />
+                    {addresses.length > 1 ? (
+                      <div
+                        onClick={() =>
+                          setAddresses([
+                            ...addresses.slice(0, i),
+                            ...addresses.slice(i + 1),
+                          ])
+                        }
+                        className="absolute right-[-30px] bottom-[17px] hover:opacity-60 cursor-pointer duration-200"
+                      >
+                        <XIcon />
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col gap-lg">
-              {[...Array(addressesN).keys()].map((i) => (
-                <AWTextField
-                  key={i}
-                  value={addresses[i]}
-                  setValue={
-                    (v) => Object.assign([], addresses, { [i]: v })
-                    //props.setValue(EXCHANGE_CUSTODIAN_FUNDS_INPUT_ID, v)
-                  }
-                  placeholder={`Address ${i + 1}`}
-                />
-              ))}
-            </div>
+            <AWButton
+              onClick={() => {
+                addRow();
+                setModified(true);
+              }}
+              width="100%"
+              variant="secondary"
+              icon={PlusIcon}
+            >
+              Add another BTC address
+            </AWButton>
           </div>
         ) : null}
       </div>

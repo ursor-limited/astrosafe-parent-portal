@@ -78,11 +78,14 @@ const AddressesSection = (props: IAWFormSectionProps) => {
                 ...addresses.slice(i + 1),
               ])
             }
-            delete={() =>
-              setAddresses([
-                ...addresses.slice(0, i),
-                ...addresses.slice(i + 1),
-              ])
+            delete={
+              addresses.length > 1
+                ? () =>
+                    setAddresses([
+                      ...addresses.slice(0, i),
+                      ...addresses.slice(i + 1),
+                    ])
+                : undefined
             }
           />
         ))}
@@ -107,7 +110,7 @@ const WhitelistAddressRow = (props: {
   value: IWhitelistAddress;
   setNickname: (n: IWhitelistAddress["nickname"]) => void;
   setAddress: (a: IWhitelistAddress["address"]) => void;
-  delete: () => void;
+  delete?: () => void;
 }) => (
   <div className="flex flex-col gap-xl pt-[42px] animate-fadeIn">
     <div className="flex gap-xl items-center">
@@ -131,12 +134,14 @@ const WhitelistAddressRow = (props: {
           placeholder="Default Input Text"
         />
       </div>
-      <div
-        onClick={props.delete}
-        className="absolute right-[-30px] bottom-[17px] hover:opacity-60 cursor-pointer duration-200"
-      >
-        <XIcon />
-      </div>
+      {props.delete ? (
+        <div
+          onClick={props.delete}
+          className="absolute right-[-30px] bottom-[17px] hover:opacity-60 cursor-pointer duration-200"
+        >
+          <XIcon />
+        </div>
+      ) : null}
     </div>
   </div>
 );
@@ -152,7 +157,7 @@ export default function InsuranceApplicationWhitelist(props: {
       customSections={{
         "665acb83dd53c4b3be623eea": AddressesSection,
       }}
-      canProceedFromCustomForm
+      canProceed
       nextCallback={props.nextCallback}
       progress={
         (CHECKPOINT_STEPS.indexOf("whitelist") - 1) / CHECKPOINT_STEPS.length

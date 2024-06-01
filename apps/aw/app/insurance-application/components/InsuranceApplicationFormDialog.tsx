@@ -8,6 +8,7 @@ import {
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
+import _ from "lodash";
 
 export interface IAWFormSection {
   id: string;
@@ -66,8 +67,11 @@ export default function InsuranceApplicationFormDialog(props: {
   sections: IAWFormSection[];
   progress: number;
   nextCallback: () => void;
-  customSections?: Record<IAWFormSection["id"], React.FC<IAWFormSectionProps>>;
-  canProceedFromCustomForm?: boolean;
+  customSections?: Record<
+    IAWFormSection["id"],
+    React.FC<IAWFormSectionProps & { setDone: () => void }>
+  >;
+  canProceed?: boolean;
   //rightArrowFaded: boolean;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
@@ -90,11 +94,17 @@ export default function InsuranceApplicationFormDialog(props: {
     [committedAnswers, props.stepId]
   );
 
+  const [customSectionsDone, setCustomSectionsDone] = useState<
+    IAWFormSection["id"][]
+  >([]);
+
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(() => {
-    !props.customSections &&
-      setCanProceed(
+    setCanProceed(
+      customSectionsDone.length >=
+        props.sections.filter((s) => s.custom).length &&
         props.sections
+          .filter((s) => !s.custom)
           .flatMap((s) => [
             ...(s.inputs || []),
             ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
@@ -104,11 +114,12 @@ export default function InsuranceApplicationFormDialog(props: {
               input.optional ||
               answers.find((a) => a.inputId === input?.id)?.value
           )
-      );
-  }, [answers]);
-  useEffect(() => {
-    props.customSections && setCanProceed(!!props.canProceedFromCustomForm);
-  }, [props.canProceedFromCustomForm]);
+    );
+  }, [answers, customSectionsDone, props.sections]);
+
+  // useEffect(() => {
+  //   setCanProceed(!!props.canProceed);
+  // }, [props.canProceed]);
 
   const commitAnswers = () =>
     setCommittedAnswers({ ...committedAnswers, [props.stepId]: answers });
@@ -165,6 +176,10 @@ export default function InsuranceApplicationFormDialog(props: {
                   answers,
                   setValue,
                   prefill: () => prefill(section),
+                  setDone: () =>
+                    setCustomSectionsDone(
+                      _.uniq([...customSectionsDone, section.id])
+                    ),
                 })}
               </div>
             ) : (
