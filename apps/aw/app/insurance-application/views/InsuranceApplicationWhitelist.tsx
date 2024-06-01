@@ -10,6 +10,7 @@ import { CHECKPOINT_STEPS } from "./InsuranceApplicationCheckpoints";
 import { useEffect, useState } from "react";
 import BitcoinIcon from "@/images/icons/BitcoinIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import XIcon from "@/images/icons/XIcon.svg";
 import { AWButton } from "@/components/AWButton";
 
 interface IWhitelistAddress {
@@ -77,6 +78,12 @@ const AddressesSection = (props: IAWFormSectionProps) => {
                 ...addresses.slice(i + 1),
               ])
             }
+            delete={() =>
+              setAddresses([
+                ...addresses.slice(0, i),
+                ...addresses.slice(i + 1),
+              ])
+            }
           />
         ))}
       </div>
@@ -100,13 +107,14 @@ const WhitelistAddressRow = (props: {
   value: IWhitelistAddress;
   setNickname: (n: IWhitelistAddress["nickname"]) => void;
   setAddress: (a: IWhitelistAddress["address"]) => void;
+  delete: () => void;
 }) => (
   <div className="flex flex-col gap-xl pt-[42px] animate-fadeIn">
     <div className="flex gap-xl items-center">
       <BitcoinIcon />
       <div className="font-medium text-xl">{`Address ${props.i}`}</div>
     </div>
-    <div className="flex gap-lg">
+    <div className="flex gap-lg relative">
       <div className="flex flex-col gap-1 min-w-[200px]">
         <div className="text-lg text-darkTeal-2">Nickname</div>
         <AWTextField
@@ -122,6 +130,12 @@ const WhitelistAddressRow = (props: {
           setValue={props.setAddress}
           placeholder="Default Input Text"
         />
+      </div>
+      <div
+        onClick={props.delete}
+        className="absolute right-[-30px] bottom-[17px] hover:opacity-60 cursor-pointer duration-200"
+      >
+        <XIcon />
       </div>
     </div>
   </div>
