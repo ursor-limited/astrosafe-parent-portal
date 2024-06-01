@@ -6,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // buttons: {
+      //   secondary: {
+      //     hover
+      //   }
+      // }
       fontSize: { lg: ["18px", "21.6px"], xl: ["20px", "24px"] },
       spacing: {
         lg: "12px",
@@ -27,7 +32,7 @@ module.exports = {
           1: "#001718",
           2: "#001E20",
           3: "#002C2F",
-          4: '#003F42',
+          4: "#003F42",
           5: "#00474B",
         },
         lightTeal: {
@@ -63,9 +68,20 @@ module.exports = {
           border: "#147C83",
           primary: {
             bg: "#147C83",
+            bg_hover: "#46ADB4",
+            bg_pressed: "#0E656B",
+            border_hover: "#46ADB4",
             text: "#F8F8F8",
           },
-          secondary: { bg: "transparent", text: "#147C83" },
+          secondary: {
+            bg: "transparent",
+            bg_hover: "#A9E8EC",
+            bg_pressed: "#86D3D9",
+            border_hover: "#147C83",
+            text: "#147C83",
+            text_hover: "#147C83",
+            text_pressed: "#00474B",
+          },
           disabled: { bg: "#EFF4F4", text: "#ACC6C5" },
         },
         fields: {
