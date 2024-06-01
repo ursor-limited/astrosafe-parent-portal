@@ -1,6 +1,12 @@
 import _ from "lodash";
-import InsuranceApplicationCheckpointDialog from "../../components/InsuranceApplicationCheckpointDialog";
+//import InsuranceApplicationCheckpointDialog from "../../components/InsuranceApplicationCheckpointDialog";
 import { STEP_TITLES } from "../../InsuranceApplicationPage";
+import dynamic from "next/dynamic";
+
+const InsuranceApplicationCheckpointDialog = dynamic(
+  () => import("../../components/InsuranceApplicationCheckpointDialog"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export default function InsuranceApplicationCheckpointsStart(props: {
   nextCallback: () => void;

@@ -1,3 +1,5 @@
+"use client";
+
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
 import InsuranceApplicationIllustrationDialog from "./InsuranceApplicationIllustrationDialog";
@@ -32,19 +34,13 @@ export default function InsuranceApplicationCheckpointDialog(props: {
   const [currentStep, setCurrentStep] =
     useLocalStorage<AWInsuranceApplicationStep>("currentStep", "welcome");
 
-  const [lastCompletedStepIndex, setLastCompletedStepIndex] =
-    useState<number>(0);
+  const [firstNotCompletedStep, setFirstNotCompletedStep] =
+    useState<AWInsuranceApplicationStep>("welcome");
   useEffect(
     () =>
-      setLastCompletedStepIndex(
-        _.sum(CHECKPOINT_STEPS.map((cs) => !!stepCompletions[cs])) - 1
+      setFirstNotCompletedStep(
+        CHECKPOINT_STEPS.find((cs) => !stepCompletions[cs]) || "welcome"
       ),
-    [stepCompletions]
-  );
-
-  const [started, setStarted] = useState<boolean>(false);
-  useEffect(
-    () => setStarted(!!stepCompletions[CHECKPOINT_STEPS[0]]),
     [stepCompletions]
   );
   return (
@@ -52,40 +48,43 @@ export default function InsuranceApplicationCheckpointDialog(props: {
       title={props.title}
       subtitle={props.subtitle}
       buttonText={props.buttonText}
-      buttonCallback={() => props.buttonCallback}
+      buttonCallback={props.buttonCallback}
       info={props.info}
     >
       <div className="flex flex-col">
-        {CHECKPOINT_STEPS.map((step, i) => (
-          <div key={i} className="flex flex-col">
-            <div
-              className="flex gap-[10px] items-center cursor-pointer hover:opacity-60 duration-200"
-              onClick={() => setCurrentStep(step)}
-            >
+        {CHECKPOINT_STEPS.map((step, i) => {
+          const completed = stepCompletions[step];
+          return (
+            <div key={step} className="flex flex-col">
               <div
-                className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7 ${
-                  lastCompletedStepIndex === i + 1
-                    ? "bg-darkTeal-5"
-                    : lastCompletedStepIndex < i + 1
-                    ? ""
-                    : "bg-lightTeal-1"
-                }`}
-              />
-              <div
-                className={`text-xl underline underline-offset-2 decoration-1 ${
-                  lastCompletedStepIndex > i + 1
-                    ? "text-buttons-secondary-text_hover"
-                    : "text-darkTeal-3"
-                }`}
+                className="flex gap-[10px] items-center cursor-pointer hover:opacity-60 duration-200"
+                onClick={() => setCurrentStep(step)}
               >
-                {STEP_TITLES[step]}
+                <div
+                  className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7 ${
+                    completed
+                      ? "bg-lightTeal-1"
+                      : firstNotCompletedStep === step
+                      ? "bg-darkTeal-5"
+                      : ""
+                  }`}
+                />
+                <div
+                  className={`text-xl underline underline-offset-2 decoration-1 ${
+                    completed
+                      ? "text-buttons-secondary-text_hover"
+                      : "text-darkTeal-3"
+                  }`}
+                >
+                  {STEP_TITLES[step]}
+                </div>
               </div>
+              {i < CHECKPOINT_STEPS.length - 1 ? (
+                <div className="w-[1px] h-[16px] ml-[5.3px] bg-darkTeal-5" />
+              ) : null}
             </div>
-            {i < CHECKPOINT_STEPS.length - 1 ? (
-              <div className="w-[1px] h-[16px] ml-[5.3px] bg-darkTeal-5" />
-            ) : null}
-          </div>
-        ))}
+          );
+        })}
       </div>
     </InsuranceApplicationIllustrationDialog>
   );

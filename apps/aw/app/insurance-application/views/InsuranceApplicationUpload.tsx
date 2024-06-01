@@ -17,7 +17,6 @@ const BULLETPOINTS = [
 export default function InsuranceApplicationUpload(props: {
   nextCallback: () => void;
 }) {
-  console.log(CHECKPOINT_STEPS.indexOf("upload") / CHECKPOINT_STEPS.length);
   return (
     <InsuranceApplicationDialog
       title={STEP_TITLES.upload}
