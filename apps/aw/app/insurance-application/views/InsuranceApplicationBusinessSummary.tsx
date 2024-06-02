@@ -91,18 +91,21 @@ export const SECTIONS: IAWFormSection[] = [
           {
             id: "6654c26dc3f4e07fba23c413",
             title: "Street address",
+            optional: true,
             inputType: "text",
             placeholder: "Enter address here",
           },
           {
             id: "6654c271388067a29bb34f0a",
             title: "City, State and Country",
+            optional: true,
             inputType: "text",
             placeholder: "Enter City, State and Country",
           },
           {
             id: "6654c275eb925065849228c9",
             title: "Zip or Postal code",
+            optional: true,
             inputType: "text",
             placeholder: "Enter Zip or Postal Code",
           },
@@ -195,6 +198,7 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6654cb6272a687f9559817a4",
         inputType: "textLong",
+        optional: true,
         title:
           "If yes, name the regulatory authority and the licenses held by the entity and Key Holders. You will also need to upload them at the end of the application.",
         placeholder: "List licenses and the issuing regulatory body",

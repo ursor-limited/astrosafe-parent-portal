@@ -25,24 +25,12 @@ export default function InsuranceApplicationCheckpointDialog(props: {
   subtitle: string;
   buttonText: string;
   info?: IAWInfoLineProps;
+  firstNotCompletedStep?: AWInsuranceApplicationStep;
+  stepCompletions?: Partial<Record<AWInsuranceApplicationStep, boolean>>;
   buttonCallback: () => void;
 }) {
-  const [stepCompletions, setStepCompletions] = useLocalStorage<
-    Partial<Record<AWInsuranceApplicationStep, boolean>>
-  >("stepCompletions", {});
-
   const [currentStep, setCurrentStep] =
     useLocalStorage<AWInsuranceApplicationStep>("currentStep", "welcome");
-
-  const [firstNotCompletedStep, setFirstNotCompletedStep] =
-    useState<AWInsuranceApplicationStep>("welcome");
-  useEffect(
-    () =>
-      setFirstNotCompletedStep(
-        CHECKPOINT_STEPS.find((cs) => !stepCompletions[cs]) || "welcome"
-      ),
-    [stepCompletions]
-  );
   return (
     <InsuranceApplicationIllustrationDialog
       title={props.title}
@@ -53,7 +41,7 @@ export default function InsuranceApplicationCheckpointDialog(props: {
     >
       <div className="flex flex-col">
         {CHECKPOINT_STEPS.map((step, i) => {
-          const completed = stepCompletions[step];
+          const completed = props.stepCompletions?.[step];
           return (
             <div key={step} className="flex flex-col">
               <div
@@ -64,7 +52,7 @@ export default function InsuranceApplicationCheckpointDialog(props: {
                   className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7 ${
                     completed
                       ? "bg-lightTeal-1"
-                      : firstNotCompletedStep === step
+                      : props.firstNotCompletedStep === step
                       ? "bg-darkTeal-5"
                       : ""
                   }`}

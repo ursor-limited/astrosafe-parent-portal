@@ -17,6 +17,9 @@ const InsuranceApplicationCheckpointDialog = dynamic(
 export default function InsuranceApplicationCheckpointsSubmit(props: {
   nextCallback: () => void;
 }) {
+  const [currentStep, setCurrentStep] =
+    useLocalStorage<AWInsuranceApplicationStep>("currentStep", "welcome");
+
   const [allCompleted, setAllCompleted] = useState<boolean>(false);
   const [stepCompletions, setStepCompletions] = useLocalStorage<
     Partial<Record<AWInsuranceApplicationStep, boolean>>
@@ -27,16 +30,32 @@ export default function InsuranceApplicationCheckpointsSubmit(props: {
     [stepCompletions]
   );
 
+  const [firstNotCompletedStep, setFirstNotCompletedStep] =
+    useState<AWInsuranceApplicationStep>("welcome");
+  useEffect(
+    () =>
+      setFirstNotCompletedStep(
+        CHECKPOINT_STEPS.find((cs) => !stepCompletions[cs]) || "welcome"
+      ),
+    [stepCompletions]
+  );
+
   return (
     <InsuranceApplicationCheckpointDialog
       title={allCompleted ? STEP_TITLES.submit : "Resume application"}
+      firstNotCompletedStep={firstNotCompletedStep}
       subtitle={
         allCompleted
           ? "The application is ready to submit. Please proceed to the Underwriting & Concierge Fee"
           : "Complete the remaining sections to submit your application"
       }
+      stepCompletions={stepCompletions}
       buttonText={allCompleted ? "Proceed to payment" : "Resume"}
-      buttonCallback={props.nextCallback}
+      buttonCallback={() =>
+        allCompleted
+          ? props.nextCallback()
+          : setCurrentStep(firstNotCompletedStep)
+      }
     />
   );
 }
