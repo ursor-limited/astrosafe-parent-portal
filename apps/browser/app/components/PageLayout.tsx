@@ -6,11 +6,14 @@ export const OVERALL_X_PADDING = "20px";
 
 const PageLayout = (props: {
   sections: { title: string; contents: React.ReactNode }[];
+  mobile?: boolean;
 }) => (
   <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-    <Stack px={OVERALL_X_PADDING}>
-      <ConnectBar />
-    </Stack>
+    {!props.mobile ? (
+      <Stack px={OVERALL_X_PADDING}>
+        <ConnectBar />
+      </Stack>
+    ) : null}
     {props.sections.map((section, i) => (
       <>
         <Stack key={i} spacing="20px">

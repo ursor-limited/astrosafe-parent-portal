@@ -14,6 +14,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import HistoryIcon from "@/images/icons/HistoryIcon.svg";
 import DateJourneysCard from "./DateJourneysCard";
+import PageLayout from "../components/PageLayout";
 dayjs.extend(advancedFormat);
 
 export const getIsPast = (date: string | number) => dayjs(date) < dayjs();
@@ -194,23 +195,24 @@ export default function JourneyPageContents() {
     useState<{ datetime: string; journeys: IJourney[] }[]>(DUMMY_JOURNEYS);
 
   return (
-    <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-      <Stack px={OVERALL_X_PADDING}>
-        <ConnectBar />
-      </Stack>
-      <Stack px={OVERALL_X_PADDING} spacing="20px">
-        <Typography variant="h5">History</Typography>
-        <Stack spacing="10px">
-          {dateJourneys.map((dateGroup, i) => (
-            <UrsorFadeIn key={i} duration={800} delay={i * 120}>
-              <DateJourneysCard
-                date={dateGroup.datetime}
-                journeys={dateGroup.journeys}
-              />
-            </UrsorFadeIn>
-          ))}
-        </Stack>
-      </Stack>
-    </Stack>
+    <PageLayout
+      sections={[
+        {
+          title: "History",
+          contents: (
+            <Stack spacing="10px" px={OVERALL_X_PADDING}>
+              {dateJourneys.map((dateGroup, i) => (
+                <UrsorFadeIn key={i} duration={800} delay={i * 120}>
+                  <DateJourneysCard
+                    date={dateGroup.datetime}
+                    journeys={dateGroup.journeys}
+                  />
+                </UrsorFadeIn>
+              ))}
+            </Stack>
+          ),
+        },
+      ]}
+    />
   );
 }

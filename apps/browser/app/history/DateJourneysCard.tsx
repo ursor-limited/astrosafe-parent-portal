@@ -7,8 +7,17 @@ import { Typography } from "ui";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 dayjs.extend(advancedFormat);
 
-const DateJourneysCard = (props: { date: string; journeys: IJourney[] }) => (
-  <Stack p="20px" borderRadius="20px" bgcolor="rgb(255,255,255)" spacing="20px">
+const DateJourneysCard = (props: {
+  date: string;
+  journeys: IJourney[];
+  mobile?: boolean;
+}) => (
+  <Stack
+    p={props.mobile ? "12px" : "20px"}
+    borderRadius="20px"
+    bgcolor="rgb(255,255,255)"
+    spacing="20px"
+  >
     <Stack direction="row" spacing="8px" alignItems="center">
       <HistoryIcon width="20px" height="20px" />
       <Stack direction="row" spacing="5px">
@@ -27,7 +36,7 @@ const DateJourneysCard = (props: { date: string; journeys: IJourney[] }) => (
     </Stack>
 
     {props.journeys.map((journey, i) => (
-      <JourneyCard key={i} journey={journey} />
+      <JourneyCard key={i} journey={journey} mobile={props.mobile} />
     ))}
   </Stack>
 );
