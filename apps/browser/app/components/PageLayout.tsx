@@ -29,6 +29,7 @@ const PageLayout = (props: {
   );
   const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
   useEffect(() => {
+    deviceId && setLandingViewOpen(false);
     !deviceId && setTimeout(() => setLandingViewOpen(true), 1500);
   }, [deviceId]);
   return (
@@ -39,8 +40,8 @@ const PageLayout = (props: {
           <ConnectBar mobile={!!props.mobile} />
         </Stack>
         {props.sections.map((section, i) => (
-          <Stack key={i}>
-            <Stack key={i} spacing="20px">
+          <Stack key={i} spacing="20px">
+            <Stack spacing="20px">
               <Stack
                 px={OVERALL_X_PADDING}
                 spacing="12px"

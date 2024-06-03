@@ -246,19 +246,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
             ? !inputedDeviceName
             : inputedCode.length !== JOIN_CODE_LENGTH),
       }}
-      // secondaryButton={
-      //   instructionsViewOpen || schoolId
-      //     ? undefined
-      //     : {
-      //         text: "How do I get a Join Code?",
-      //         callback: () => setInstructionsViewOpen(true),
-      //         variant: "ghost",
-      //       }
-      // }
     >
-      {/* <Stack position='absolute'>
-
-      </Stack> */}
       {codeInputActive ? (
         <Box height={0} sx={{ opacity: 0, pointerEvents: "none" }}>
           <Input
@@ -346,10 +334,10 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
           <UrsorFadeIn duration={800} key="device-name">
             <UrsorInputField
               value={inputedDeviceName}
-              placeholder="Nintendo 64"
+              placeholder="Mickey's Mac"
               width="100%"
               height="74px"
-              fontSize="h4"
+              fontSize="28px"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setInputedDeviceName(event.target.value)
               }
