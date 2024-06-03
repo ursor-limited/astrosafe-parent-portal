@@ -257,6 +257,19 @@ class ApiController {
       response.json()
     );
   }
+
+  static async verifyJoinCode(joinCode: string) {
+    return post("/schools/verifySchool", {
+      joinCode,
+    }).then((response: any) => response.json());
+  }
+
+  static async addDeviceToSchool(schoolId: string, name: string) {
+    return post(`/schools/${schoolId}/addDevice`, {
+      name,
+      type: "chrome",
+    }).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;
