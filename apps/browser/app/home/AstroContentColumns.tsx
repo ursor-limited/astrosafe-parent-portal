@@ -36,6 +36,7 @@ export interface IAstroContentColumnsProps {
   // idealColumnWidth: number;
   shareSelectedStackIdWithExtension?: boolean;
   emptyStateText?: string;
+  nColumns?: number;
 }
 
 export interface IBrowserContent {
@@ -83,7 +84,13 @@ export const EmptyStateIllustration = (props: {
 const AstroContentColumns = (props: IAstroContentColumnsProps) => {
   const [cardColumns, setCardColumns] = useState<IBrowserContent[][]>([]);
 
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
+  const { nColumns: dynamicNCols, setColumnsContainerRef } = useColumnWidth();
+
+  const [nColumns, setNColumns] = useState<number>(1);
+  useEffect(
+    () => setNColumns(props.nColumns || dynamicNCols),
+    [props.nColumns, dynamicNCols]
+  );
 
   useEffect(() => {
     const linkDetails = props.links.map((l) => ({

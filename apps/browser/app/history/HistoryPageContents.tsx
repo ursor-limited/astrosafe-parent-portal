@@ -181,7 +181,7 @@ const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
 
 export const OVERALL_X_PADDING = "20px";
 
-export default function JourneyPageContents() {
+export default function JourneyPageContents(props: { mobile: boolean }) {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined
@@ -196,6 +196,7 @@ export default function JourneyPageContents() {
 
   return (
     <PageLayout
+      mobile={props.mobile}
       sections={[
         {
           title: "History",
@@ -206,6 +207,7 @@ export default function JourneyPageContents() {
                   <DateJourneysCard
                     date={dateGroup.datetime}
                     journeys={dateGroup.journeys}
+                    mobile={props.mobile}
                   />
                 </UrsorFadeIn>
               ))}

@@ -22,7 +22,7 @@ export type AstroContent = "link" | "stack";
 
 const OVERALL_X_PADDING = "20px";
 
-export default function HomePageContents(props: { mobile: string }) {
+export default function MobileHomePageContents() {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     "659685e649ded4f6a4e28c53"
@@ -197,7 +197,6 @@ export default function HomePageContents(props: { mobile: string }) {
                   videos={[]}
                   shareSelectedStackIdWithExtension
                   emptyStateText="No Links yet."
-                  nColumns={props.mobile ? 1 : undefined}
                 />
               </Stack>
             </>
