@@ -1,9 +1,9 @@
 import React from "react";
-import VideoChannelsPageContents from "./VideoChannelsPageContents";
+import VideoChannelsPageContents from "./HistoryPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 
-async function VideoChannelsPage({
+async function HistoryPage({
   params,
   searchParams,
 }: {
@@ -20,4 +20,4 @@ async function VideoChannelsPage({
   );
 }
 
-export default VideoChannelsPage;
+export default HistoryPage;
