@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import InsuranceApplicationCheckpoints from "./components/InsuranceApplicationCheckpointDialog";
 import InsuranceApplicationTermsOfService from "./views/InsuranceApplicationTermsOfService";
 import InsuranceApplicationGlossary from "./views/InsuranceApplicationGlossary";
 import InsuranceApplicationWelcome from "./views/InsuranceApplicationWelcome";
@@ -26,6 +25,7 @@ import InsuranceApplicationWhitelist from "./views/InsuranceApplicationWhitelist
 import InsuranceApplicationUpload from "./views/InsuranceApplicationUpload";
 import InsuranceApplicationCheckpointsStart from "./views/checkpoints/start";
 import InsuranceApplicationCheckpointsSubmit from "./views/checkpoints/submit";
+import InsuranceApplicationLeaders from "./views/InsuranceApplicationLeaders";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -34,6 +34,7 @@ export const awInsuranceApplicationSteps = [
   "start",
   "policyOwner",
   "businessSummary",
+  "leaders",
   "identity",
   "insuranceNeeds",
   "governance",
@@ -53,6 +54,7 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   policyOwner: "Policy owner information",
   businessSummary: "Business summary",
   identity: "Identity verification",
+  leaders: "Company leader details",
   insuranceNeeds: "Insurance needs & history",
   governance: "Internal governance and controls",
   spending: "Spending behavior",
@@ -296,6 +298,7 @@ const STEP_COMPONENTS: Record<
   start: InsuranceApplicationCheckpointsStart,
   policyOwner: InsuranceApplicationPolicyOwner,
   businessSummary: InsuranceApplicationBusinessSummary,
+  leaders: InsuranceApplicationLeaders,
   identity: InsuranceApplicationIdentity,
   insuranceNeeds: InsuranceApplicationInsuranceNeeds,
   governance: InsuranceApplicationGovernance,

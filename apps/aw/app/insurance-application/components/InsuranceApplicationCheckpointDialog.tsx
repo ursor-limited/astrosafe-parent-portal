@@ -13,6 +13,7 @@ import { IAWInfoLineProps } from "@/components/AWInfoLine";
 export const CHECKPOINT_STEPS: AWInsuranceApplicationStep[] = [
   "policyOwner",
   "businessSummary",
+  "leaders",
   "identity",
   "insuranceNeeds",
   "governance",

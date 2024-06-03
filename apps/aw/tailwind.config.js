@@ -16,6 +16,7 @@ module.exports = {
         lg: "12px",
         xl: "16px",
         "3xl": "24px",
+        "5xl": "32px",
         "8xl": "48px",
       },
       padding: {
