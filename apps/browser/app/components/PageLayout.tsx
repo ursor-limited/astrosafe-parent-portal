@@ -27,8 +27,10 @@ const PageLayout = (props: {
     "deviceId",
     undefined
   );
-  const [landingViewOpen, setLandingViewOpen] = useState<boolean>(true);
-  //useEffect(() => setLandingViewOpen(!deviceId), [deviceId]);
+  const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
+  //   useEffect(() => {
+  //     !deviceId && setTimeout(() => setLandingViewOpen(true), 1500);
+  //   }, [deviceId]);
   return (
     <>
       <Navbar selected={props.headerButtonId} />

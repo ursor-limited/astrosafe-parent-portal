@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import UrsorParticles from "./UrsorParticles";
+import { fadeIn } from "./NavbarSearchBar";
 
 const LandingViewCard = (props: {
   title: string;
@@ -68,6 +69,9 @@ const LandingView = () => (
     width="100vw"
     height="100vh"
     bgcolor={PALETTE.primary.navy}
+    sx={{
+      animation: `${fadeIn} 1000ms ease-out forwards`,
+    }}
   >
     <Stack
       position="absolute"

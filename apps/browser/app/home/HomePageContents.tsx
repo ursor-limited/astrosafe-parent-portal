@@ -17,6 +17,7 @@ import _ from "lodash";
 import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
 import PageLayout from "../components/PageLayout";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 
 export type AstroContent = "link" | "stack";
 
@@ -133,7 +134,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
         {
           title: "Home",
           contents: (
-            <Stack overflow="scroll">
+            <Stack overflow="scroll" height="162px">
               <Stack
                 direction="row"
                 spacing="12px"
@@ -141,16 +142,20 @@ export default function HomePageContents(props: { mobile: boolean }) {
                 boxSizing="border-box"
               >
                 {[
-                  ...apps.map((a) => (
+                  ...apps.map((a, i) => (
                     <Stack
                       key={a.id}
                       onClick={() => setSelectedChannelId(a.id)}
                     >
-                      <PlatformCard
-                        key={a.id}
-                        platform={a}
-                        clickCallback={() => router.push(getAbsoluteUrl(a.url))}
-                      />
+                      <UrsorFadeIn duration={1200} delay={i * 70}>
+                        <PlatformCard
+                          key={a.id}
+                          platform={a}
+                          clickCallback={() =>
+                            router.push(getAbsoluteUrl(a.url))
+                          }
+                        />
+                      </UrsorFadeIn>
                     </Stack>
                   )),
                   <Stack key="padding" minWidth="8px" />,
@@ -171,18 +176,21 @@ export default function HomePageContents(props: { mobile: boolean }) {
                   boxSizing="border-box"
                 >
                   {[
-                    ...channels.map((c) => (
-                      <Stack
+                    ...channels.map((c, i) => (
+                      <UrsorFadeIn
                         key={c.id}
-                        onClick={() => setSelectedChannelId(c.id)}
+                        duration={800}
+                        delay={700 + i * 90}
                       >
-                        <ChannelButton
-                          key={c.id}
-                          title={c.title}
-                          color={c.color}
-                          selected={selectedChannelId === c.id}
-                        />
-                      </Stack>
+                        <Stack onClick={() => setSelectedChannelId(c.id)}>
+                          <ChannelButton
+                            key={c.id}
+                            title={c.title}
+                            color={c.color}
+                            selected={selectedChannelId === c.id}
+                          />
+                        </Stack>{" "}
+                      </UrsorFadeIn>
                     )),
                     <Stack key="padding" minWidth="8px" />,
                   ]}
