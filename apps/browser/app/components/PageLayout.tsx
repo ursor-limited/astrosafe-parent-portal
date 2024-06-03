@@ -28,9 +28,9 @@ const PageLayout = (props: {
     undefined
   );
   const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
-  //   useEffect(() => {
-  //     !deviceId && setTimeout(() => setLandingViewOpen(true), 1500);
-  //   }, [deviceId]);
+  useEffect(() => {
+    !deviceId && setTimeout(() => setLandingViewOpen(true), 1500);
+  }, [deviceId]);
   return (
     <>
       <Navbar selected={props.headerButtonId} />
@@ -39,7 +39,7 @@ const PageLayout = (props: {
           <ConnectBar mobile={!!props.mobile} />
         </Stack>
         {props.sections.map((section, i) => (
-          <>
+          <Stack key={i}>
             <Stack key={i} spacing="20px">
               <Stack
                 px={OVERALL_X_PADDING}
@@ -61,7 +61,7 @@ const PageLayout = (props: {
                 />
               </Stack>
             ) : null}
-          </>
+          </Stack>
         ))}
       </Stack>
       {landingViewOpen ? (

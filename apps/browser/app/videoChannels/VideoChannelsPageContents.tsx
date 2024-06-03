@@ -55,7 +55,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
     undefined
   );
 
-  useEffect(() => setDeviceId("659685e649ded4f6a4e28c53"), []);
+  //useEffect(() => setDeviceId("659685e649ded4f6a4e28c53"), []);
 
   const [favorites, setFavorites] = useLocalStorage<
     {
@@ -154,7 +154,8 @@ export default function HomePageContents(props: { mobile: boolean }) {
           title:
             videoChannels.find((vc) => vc.id === selectedChannelId)?.title ??
             "",
-          titleImage: (
+          titleImage: videoChannels.find((vc) => vc.id === selectedChannelId)
+            ?.profileImageUrl ? (
             <Stack
               height="24px"
               width="24px"
@@ -172,7 +173,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
                 alt="video channel profile image"
               />
             </Stack>
-          ),
+          ) : null,
           contents: (
             <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
               <AstroContentColumns

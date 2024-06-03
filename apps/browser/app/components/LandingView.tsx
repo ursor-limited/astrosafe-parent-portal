@@ -72,6 +72,7 @@ const LandingView = () => (
     sx={{
       animation: `${fadeIn} 1000ms ease-out forwards`,
     }}
+    zIndex={999}
   >
     <Stack
       position="absolute"

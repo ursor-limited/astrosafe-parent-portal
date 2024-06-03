@@ -6,6 +6,7 @@ import { GRID_SPACING } from "../home/AstroContentColumns";
 import { useRouter } from "next/navigation";
 import { PALETTE } from "ui";
 import NavbarSearchBar from "./NavbarSearchBar";
+import { OVERALL_X_PADDING } from "./PageLayout";
 
 const BUTTON_SIZE = 52;
 const BUTTON_SPACING = "12px";
@@ -82,7 +83,7 @@ export default function Navbar(props: INavbarProps) {
       <Stack
         width="100%"
         py={`${PADDING}px`}
-        px={`calc(2*${GRID_SPACING})`}
+        px={OVERALL_X_PADDING}
         direction="row"
         alignItems="center"
         justifyContent="space-between"
