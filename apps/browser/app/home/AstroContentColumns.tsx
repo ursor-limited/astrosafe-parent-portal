@@ -36,7 +36,7 @@ export interface IAstroContentColumnsProps {
   // idealColumnWidth: number;
   shareSelectedStackIdWithExtension?: boolean;
   emptyStateText?: string;
-  nColumns?: number;
+  mobile?: boolean;
 }
 
 export interface IBrowserContent {
@@ -88,8 +88,8 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
 
   const [nColumns, setNColumns] = useState<number>(1);
   useEffect(
-    () => setNColumns(props.nColumns || dynamicNCols),
-    [props.nColumns, dynamicNCols]
+    () => setNColumns(props.mobile ? 1 : dynamicNCols),
+    [props.mobile, dynamicNCols]
   );
 
   useEffect(() => {
@@ -302,6 +302,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                                       "_blank"
                                     );
                                   }}
+                                  mobile={props.mobile}
                                 />
                               ) : // ) : item.type === "searchResult" ? (
                               //   <Stack

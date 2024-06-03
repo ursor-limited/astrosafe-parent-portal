@@ -32,6 +32,7 @@ export default function StackViewDialog(props: IStackViewDialogProps) {
           description={props.stack.description}
           links={links}
           stacks={[]}
+          videos={[]}
           emptyStateText="No Links yet."
         />
       </Stack>

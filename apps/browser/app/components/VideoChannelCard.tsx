@@ -13,6 +13,7 @@ export const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
 export interface IVideoChannelCardProps {
   videoChannel: IVideoChannel;
   clickCallback: () => void;
+  mobile?: boolean;
 }
 
 const VideoChannelCard = (props: IVideoChannelCardProps) => {

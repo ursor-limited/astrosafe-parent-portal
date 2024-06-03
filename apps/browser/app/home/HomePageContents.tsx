@@ -198,7 +198,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
                   videos={[]}
                   shareSelectedStackIdWithExtension
                   emptyStateText="No Links yet."
-                  nColumns={props.mobile ? 1 : undefined}
+                  mobile={props.mobile}
                 />
               </Stack>
             </>

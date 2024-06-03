@@ -1,7 +1,7 @@
 import React from "react";
-import VideoChannelsPageContents from "./VideoChannelsPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
+import VideoChannelsPageContents from "./VideoChannelsPageContents";
 
 async function VideoChannelsPage({
   params,
@@ -10,14 +10,9 @@ async function VideoChannelsPage({
   params: { videoId: string };
   searchParams: { share: string };
 }) {
-  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+  const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return isMobile ? (
-    <></>
-  ) : (
-    // <MobileVideoChannelsPageContents />
-    <VideoChannelsPageContents />
-  );
+  return <VideoChannelsPageContents mobile={mobile} />;
 }
 
 export default VideoChannelsPage;

@@ -62,6 +62,7 @@ const VideoCard = (props: {
   updateCallback?: () => void;
   duplicateCallback?: () => void;
   noActionButton?: boolean;
+  mobile?: boolean;
 }) => {
   const agoText = getAgoText(props.video.createdAt);
   return (
@@ -96,8 +97,8 @@ const VideoCard = (props: {
       >
         <Stack
           width="100%"
-          height="144px"
-          minHeight="144px"
+          height={props.mobile ? "180px" : "144px"}
+          minHeight={props.mobile ? "180px" : "144px"}
           sx={{
             backgroundColor: "rgba(255,255,255,0.15)",
             backgroundImage: `url(${props.video.thumbnailUrl})`,
@@ -137,9 +138,11 @@ const VideoCard = (props: {
             <Stack minWidth="25px" width="25px" />
           </Stack>
           <Stack direction="row" spacing="4px">
-            <Typography variant="small" color={alpha(PALETTE.font.dark, 0.7)}>
-              {agoText.value}
-            </Typography>
+            {agoText.value ? (
+              <Typography variant="small" color={alpha(PALETTE.font.dark, 0.7)}>
+                {agoText.value}
+              </Typography>
+            ) : null}
             <Typography variant="small" color={alpha(PALETTE.font.dark, 0.7)}>
               {agoText.text}
             </Typography>

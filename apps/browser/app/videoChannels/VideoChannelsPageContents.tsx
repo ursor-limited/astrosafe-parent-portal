@@ -48,7 +48,7 @@ const DUMMY_VIDEOS = [
   },
 ];
 
-export default function HomePageContents() {
+export default function HomePageContents(props: { mobile: boolean }) {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined
@@ -113,12 +113,10 @@ export default function HomePageContents() {
     );
   }, [filteredVideos, nColumns]);
 
-  const router = useRouter();
-
   return (
     <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
       <Stack px={OVERALL_X_PADDING}>
-        <ConnectBar />
+        <ConnectBar mobile={props.mobile} />
       </Stack>
       <Stack px={OVERALL_X_PADDING}>
         <Typography variant="h5">Video Channels</Typography>
@@ -179,6 +177,7 @@ export default function HomePageContents() {
           videos={filteredVideos}
           shareSelectedStackIdWithExtension
           emptyStateText="No Videos yet."
+          mobile={props.mobile}
         />
         {/* <Stack flex={1} pb="20px" direction="row" spacing="12px">
           {cardColumns.map((column, i) => (
