@@ -7,7 +7,11 @@ import ApiController from "../api";
 import { BrowserContent } from "../home/AstroContentColumns";
 import { useLocalStorage } from "usehooks-ts";
 
-const FavoriteStar = (props: { id: string; type: BrowserContent }) => {
+const FavoriteStar = (props: {
+  id: string;
+  type: BrowserContent;
+  black?: boolean;
+}) => {
   const [favorites, setFavorites] = useLocalStorage<
     {
       contentId: string;
@@ -35,12 +39,20 @@ const FavoriteStar = (props: { id: string; type: BrowserContent }) => {
         transition: "0.3s ease-out",
         "&:hover": {
           transform: "rotate(-23deg)",
-          svg: { path: { fill: PALETTE.secondary.purple[1] } },
+          svg: {
+            path: {
+              fill: props.black
+                ? PALETTE.secondary.grey[4]
+                : PALETTE.secondary.purple[1],
+            },
+          },
         },
         svg: {
           path: {
             fill: selected
-              ? PALETTE.secondary.purple[2]
+              ? props.black
+                ? "rgb(10,10,10)"
+                : PALETTE.secondary.purple[2]
               : PALETTE.secondary.grey[4],
             transition: "0.2s",
           },

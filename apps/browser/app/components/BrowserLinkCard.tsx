@@ -3,6 +3,7 @@ import { IBrowserLink } from "../api";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import dayjs from "dayjs";
+import FavoriteStar from "./FavoriteStar";
 
 const LIGHT_TEXT_THRESHOLD = 215;
 
@@ -69,6 +70,7 @@ const BrowserLinkCard = (props: {
   const agoText = getAgoText(props.link.createdAt);
   return (
     <Stack position="relative" width="100%" minHeight="313px">
+      <FavoriteStar id={props.link.id} type="link" black />
       <Stack
         bgcolor={props.link.color}
         borderRadius="12px"
