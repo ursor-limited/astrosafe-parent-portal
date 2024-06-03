@@ -23,7 +23,7 @@ import AstroContentColumns, {
 } from "../home/AstroContentColumns";
 import ConnectBar from "../components/ConnectBar";
 import Image from "next/image";
-import { OVERALL_X_PADDING } from "../components/PageLayout";
+import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
 
 const DUMMY_VIDEOS = [
   {
@@ -114,114 +114,76 @@ export default function HomePageContents(props: { mobile: boolean }) {
   }, [filteredVideos, nColumns]);
 
   return (
-    <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-      <Stack px={OVERALL_X_PADDING}>
-        <ConnectBar mobile={props.mobile} />
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Typography variant="h5">Video Channels</Typography>
-      </Stack>
-      <Stack overflow="scroll">
-        <Stack
-          direction="row"
-          spacing="12px"
-          px={OVERALL_X_PADDING}
-          boxSizing="border-box"
-        >
-          {[
-            ...videoChannels.map((vc) => (
-              <Stack key={vc.id} onClick={() => setSelectedChannelId(vc.id)}>
-                <VideoChannelCard
-                  key={vc.id}
-                  videoChannel={vc}
-                  clickCallback={() => setSelectedChannelId(vc.id)}
-                />
+    <PageLayout
+      mobile={props.mobile}
+      headerButtonId="videoChannels"
+      sections={[
+        {
+          title: "Video Channels",
+          contents: (
+            <Stack overflow="scroll">
+              <Stack
+                direction="row"
+                spacing="12px"
+                px={OVERALL_X_PADDING}
+                boxSizing="border-box"
+              >
+                {[
+                  ...videoChannels.map((vc) => (
+                    <Stack
+                      key={vc.id}
+                      onClick={() => setSelectedChannelId(vc.id)}
+                    >
+                      <VideoChannelCard
+                        key={vc.id}
+                        videoChannel={vc}
+                        clickCallback={() => setSelectedChannelId(vc.id)}
+                      />
+                    </Stack>
+                  )),
+                  <Stack key="padding" minWidth="8px" />,
+                ]}
               </Stack>
-            )),
-            <Stack key="padding" minWidth="8px" />,
-          ]}
-        </Stack>
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
-      </Stack>
-      {videoChannels.find((vc) => vc.id === selectedChannelId)
-        ?.profileImageUrl ? (
-        <Stack px={OVERALL_X_PADDING} direction="row" spacing="12px">
-          <Stack
-            height="24px"
-            width="24px"
-            borderRadius="100%"
-            overflow="hidden"
-            alignItems="center"
-          >
-            <Image
-              src={
-                videoChannels.find((vc) => vc.id === selectedChannelId)
-                  ?.profileImageUrl ?? ""
-              }
-              height={24}
-              width={24}
-              alt="video channel profile image"
-            />
-          </Stack>
-          <Typography variant="h5">
-            {videoChannels.find((vc) => vc.id === selectedChannelId)?.title}
-          </Typography>
-        </Stack>
-      ) : null}
-      <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
-        <AstroContentColumns
-          links={[]}
-          stacks={[]}
-          videos={filteredVideos}
-          shareSelectedStackIdWithExtension
-          emptyStateText="No Videos yet."
-          mobile={props.mobile}
-        />
-        {/* <Stack flex={1} pb="20px" direction="row" spacing="12px">
-          {cardColumns.map((column, i) => (
-            <Stack key={i} flex={1} spacing="12px">
-              {column.map((item, j) => (
-                <Stack key={item.details.id}>
-                  <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
-                    {item.type === "link" ? (
-                      <BrowserLinkCard
-                        link={item.details as IBrowserLink}
-                        clickCallback={() =>
-                          setLinkViewingDialogId(item.details.id)
-                        }
-                        editCallback={() =>
-                          setLinkEditingDialogId(item.details.id)
-                        }
-                        updateCallback={() => {
-                          loadLinks();
-                          loadStacks();
-                          loadChannels();
-                        }}
-                        duplicateCallback={() => duplicateLink(item.details.id)}
-                      />
-                    ) : (
-                      <StackCard
-                        stack={item.details as IStack}
-                        clickCallback={() =>
-                          setStackViewingDialogId(item.details.id)
-                        }
-                       
-                        updateCallback={() => {
-                          loadLinks();
-                          loadStacks();
-                          loadChannels();
-                        }}
-                      />
-                    )}
-                  </UrsorFadeIn>
-                </Stack>
-              ))}
             </Stack>
-          ))}
-        </Stack> */}
-      </Stack>
-    </Stack>
+          ),
+        },
+        {
+          title:
+            videoChannels.find((vc) => vc.id === selectedChannelId)?.title ??
+            "",
+          titleImage: (
+            <Stack
+              height="24px"
+              width="24px"
+              borderRadius="100%"
+              overflow="hidden"
+              alignItems="center"
+            >
+              <Image
+                src={
+                  videoChannels.find((vc) => vc.id === selectedChannelId)
+                    ?.profileImageUrl ?? ""
+                }
+                height={24}
+                width={24}
+                alt="video channel profile image"
+              />
+            </Stack>
+          ),
+          contents: (
+            <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
+              <AstroContentColumns
+                links={[]}
+                stacks={[]}
+                videos={filteredVideos}
+                shareSelectedStackIdWithExtension
+                emptyStateText="No Videos yet."
+                mobile={props.mobile}
+              />
+            </Stack>
+          ),
+        },
+      ]}
+    />
   );
 }

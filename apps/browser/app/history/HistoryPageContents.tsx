@@ -196,6 +196,7 @@ export default function JourneyPageContents(props: { mobile: boolean }) {
 
   return (
     <PageLayout
+      headerButtonId="history"
       mobile={props.mobile}
       sections={[
         {

@@ -127,6 +127,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
 
   return (
     <PageLayout
+      headerButtonId="home"
       mobile={props.mobile}
       sections={[
         {
