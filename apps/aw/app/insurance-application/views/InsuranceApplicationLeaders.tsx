@@ -18,6 +18,7 @@ import {
   IAWFormSection,
 } from "../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
+import DynamicContainer from "@/components/DynamicContainer";
 
 interface IAWCompanyLeader {
   name: string;
@@ -37,67 +38,92 @@ const LeaderRow = (
     title: string;
     update: (update: Partial<IAWCompanyLeader>) => void;
   }
-) => (
-  <div className="flex flex-col gap-5xl">
-    <div className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer">
-      <div className="flex items-center">
-        <PersonIcon />
-      </div>
-      <div className="w-full flex justify-between items-center">
-        <div className="font-medium text-xl">{props.title}</div>
-        <ChevronDownIcon />
-      </div>
-    </div>
-    <div className="flex flex-col gap-5xl pb-xl">
-      <div className={`flex flex-col gap-1`}>
-        <div className="text-xl font-medium text-darkTeal-2">Legal name</div>
-        <AWTextField
-          value={props.name}
-          setValue={(name) => props.update({ name })}
-          placeholder="Enter name here"
-        />
-      </div>
-      <div className={`flex flex-col gap-1`}>
-        <div className="text-xl font-medium text-darkTeal-2">Date of birth</div>
-        <AWTextField
-          value={props.birthday}
-          setValue={(birthday) => props.update({ birthday })}
-          placeholder="MM/DD/YYYY"
-        />
-      </div>
-      <div className={`flex flex-col gap-xl`}>
-        <div className="text-xl font-medium text-darkTeal-2">Email address</div>
-        <div className="text-xl text-darkTeal-2">
-          This email address will be used for important communications and for
-          Key Holders, access to the insured Trident Vault.
+) => {
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <DynamicContainer duration={500} fullWidth>
+      <div className="flex flex-col gap-5xl">
+        <div
+          className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer"
+          onClick={() => setOpen(!open)}
+        >
+          <div className="flex items-center">
+            <PersonIcon />
+          </div>
+          <div className="w-full flex justify-between items-center">
+            <div className="font-medium text-xl">{props.title}</div>
+            <div
+              style={{
+                transform: `rotate(${open ? 180 : 0}deg)`,
+                transition: "0.2s",
+              }}
+            >
+              <ChevronDownIcon />
+            </div>
+          </div>
         </div>
-        <AWTextField
-          value={props.email}
-          setValue={(email) => props.update({ email })}
-          placeholder="Enter address here"
-        />
+        {open ? (
+          <div className="flex flex-col gap-5xl pb-xl">
+            <div className={`flex flex-col gap-1`}>
+              <div className="text-xl font-medium text-darkTeal-2">
+                Legal name
+              </div>
+              <AWTextField
+                value={props.name}
+                setValue={(name) => props.update({ name })}
+                placeholder="Enter name here"
+              />
+            </div>
+            <div className={`flex flex-col gap-1`}>
+              <div className="text-xl font-medium text-darkTeal-2">
+                Date of birth
+              </div>
+              <AWTextField
+                value={props.birthday}
+                setValue={(birthday) => props.update({ birthday })}
+                placeholder="MM/DD/YYYY"
+              />
+            </div>
+            <div className={`flex flex-col gap-xl`}>
+              <div className="text-xl font-medium text-darkTeal-2">
+                Email address
+              </div>
+              <div className="text-xl text-darkTeal-2">
+                This email address will be used for important communications and
+                for Key Holders, access to the insured Trident Vault.
+              </div>
+              <AWTextField
+                value={props.email}
+                setValue={(email) => props.update({ email })}
+                placeholder="Enter address here"
+              />
+            </div>
+            <div className={`flex flex-col gap-1`}>
+              <div className="text-xl font-medium text-darkTeal-2">
+                Job title
+              </div>
+              <AWTextField
+                value={props.job}
+                setValue={(job) => props.update({ job })}
+                placeholder="Enter job title in organization"
+              />
+            </div>
+            <div className={`flex flex-col gap-1`}>
+              <div className="text-xl text-darkTeal-2">
+                What are the areas of responsibility for this job title
+              </div>
+              <AWTextField
+                value={props.email}
+                setValue={(email) => props.update({ email })}
+                placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
-      <div className={`flex flex-col gap-1`}>
-        <div className="text-xl font-medium text-darkTeal-2">Job title</div>
-        <AWTextField
-          value={props.job}
-          setValue={(job) => props.update({ job })}
-          placeholder="Enter job title in organization"
-        />
-      </div>
-      <div className={`flex flex-col gap-1`}>
-        <div className="text-xl text-darkTeal-2">
-          What are the areas of responsibility for this job title
-        </div>
-        <AWTextField
-          value={props.email}
-          setValue={(email) => props.update({ email })}
-          placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
-        />
-      </div>
-    </div>
-  </div>
-);
+    </DynamicContainer>
+  );
+};
 
 export default function InsuranceApplicationLeaders(props: {
   nextCallback: () => void;
