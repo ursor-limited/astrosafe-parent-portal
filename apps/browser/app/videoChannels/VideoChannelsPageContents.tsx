@@ -24,6 +24,7 @@ import AstroContentColumns, {
 import ConnectBar from "../components/ConnectBar";
 import Image from "next/image";
 import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 
 const DUMMY_VIDEOS = [
   {
@@ -129,16 +130,18 @@ export default function HomePageContents(props: { mobile: boolean }) {
                 boxSizing="border-box"
               >
                 {[
-                  ...videoChannels.map((vc) => (
+                  ...videoChannels.map((vc, i) => (
                     <Stack
                       key={vc.id}
                       onClick={() => setSelectedChannelId(vc.id)}
                     >
-                      <VideoChannelCard
-                        key={vc.id}
-                        videoChannel={vc}
-                        clickCallback={() => setSelectedChannelId(vc.id)}
-                      />
+                      <UrsorFadeIn duration={1200} delay={i * 70}>
+                        <VideoChannelCard
+                          key={vc.id}
+                          videoChannel={vc}
+                          clickCallback={() => setSelectedChannelId(vc.id)}
+                        />
+                      </UrsorFadeIn>
                     </Stack>
                   )),
                   <Stack key="padding" minWidth="8px" />,
