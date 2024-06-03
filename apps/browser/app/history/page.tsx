@@ -1,7 +1,8 @@
 import React from "react";
-import VideoChannelsPageContents from "./HistoryPageContents";
+import HistoryPageContents from "./HistoryPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
+import MobileHistoryPageContents from "./MobileHistoryPageContents";
 
 async function HistoryPage({
   params,
@@ -12,12 +13,7 @@ async function HistoryPage({
 }) {
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return isMobile ? (
-    <></>
-  ) : (
-    // <MobileVideoChannelsPageContents />
-    <VideoChannelsPageContents />
-  );
+  return isMobile ? <MobileHistoryPageContents /> : <HistoryPageContents />;
 }
 
 export default HistoryPage;

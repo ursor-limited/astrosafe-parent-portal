@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { OVERALL_X_PADDING } from "../videoChannels/VideoChannelsPageContents";
+import { OVERALL_X_PADDING } from "./PageLayout";
 
 const ConnectBar = () => (
   <Stack

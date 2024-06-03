@@ -14,92 +14,8 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import HistoryIcon from "@/images/icons/HistoryIcon.svg";
 import DateJourneysCard from "./DateJourneysCard";
+import { IJourney } from "./HistoryPageContents";
 dayjs.extend(advancedFormat);
-
-export const getIsPast = (date: string | number) => dayjs(date) < dayjs();
-
-export const getIsToday = (date: string | number) =>
-  dayjs(date) < dayjs().endOf("day") && dayjs(date) >= dayjs().startOf("day");
-
-export const getIsTomorrow = (date: string | number) =>
-  dayjs(date) < dayjs().add(1, "days").endOf("day") &&
-  dayjs(date) >= dayjs().add(1, "days").startOf("day");
-
-export const getIsYesterday = (date: string | number) =>
-  dayjs(date) < dayjs().subtract(1, "days").endOf("day") &&
-  dayjs(date) >= dayjs().subtract(1, "days").startOf("day");
-
-export interface IJourney {
-  datetime: string;
-  deviceId: string;
-  title: string;
-  urls: {
-    title: string;
-    favIconUrl?: string;
-    timestamp: string;
-    domain: string;
-  }[];
-}
-
-// const DUMMY_JOURNEYS = [
-//   {
-//     datetime: 1717398708,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make risotto",
-//     urls: [
-//       {
-//         title: "Boo",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "nintendo.com",
-//       },
-//       {
-//         title: "Hooooo boo",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-//   {
-//     datetime: 1717398708,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make chili con carne",
-//     urls: [
-//       {
-//         title: "Aeeeeee",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "boo.com",
-//       },
-//       {
-//         title: "Paaaaaah",
-//         timestamp: 1717431108,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-//   {
-//     datetime: 1717402065,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make chili con carne",
-//     urls: [
-//       {
-//         title: "Aeeeeee",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "boo.com",
-//       },
-//       {
-//         title: "Paaaaaah",
-//         timestamp: 1717431108,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-// ];
 
 const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
   {
@@ -180,7 +96,7 @@ const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
 
 export const OVERALL_X_PADDING = "20px";
 
-export default function JourneyPageContents() {
+export default function MobileHistoryPageContents() {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined

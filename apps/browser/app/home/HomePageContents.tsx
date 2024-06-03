@@ -18,6 +18,7 @@ import _ from "lodash";
 import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
 import ConnectBar from "../components/ConnectBar";
+import PageLayout from "../components/PageLayout";
 
 export type AstroContent = "link" | "stack";
 
@@ -127,124 +128,83 @@ export default function HomePageContents() {
   const router = useRouter();
 
   return (
-    <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-      <Stack px={OVERALL_X_PADDING}>
-        <ConnectBar />
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Typography variant="h5">Home</Typography>
-      </Stack>
-      <Stack overflow="scroll">
-        <Stack
-          direction="row"
-          spacing="12px"
-          px={OVERALL_X_PADDING}
-          boxSizing="border-box"
-        >
-          {[
-            ...apps.map((a) => (
-              <Stack key={a.id} onClick={() => setSelectedChannelId(a.id)}>
-                <PlatformCard
-                  key={a.id}
-                  platform={a}
-                  clickCallback={() => router.push(getAbsoluteUrl(a.url))}
-                />
-              </Stack>
-            )),
-            <Stack key="padding" minWidth="8px" />,
-          ]}
-        </Stack>
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Stack width="100%" height="2px" bgcolor={PALETTE.secondary.grey[2]} />
-      </Stack>
-      <Stack px={OVERALL_X_PADDING}>
-        <Typography variant="h5">Channels</Typography>
-      </Stack>
-      <Stack overflow="scroll">
-        <Stack
-          direction="row"
-          spacing="12px"
-          px={OVERALL_X_PADDING}
-          boxSizing="border-box"
-        >
-          {[
-            ...channels.map((c) => (
-              <Stack key={c.id} onClick={() => setSelectedChannelId(c.id)}>
-                <ChannelButton
-                  key={c.id}
-                  title={c.title}
-                  color={c.color}
-                  selected={selectedChannelId === c.id}
-                />
-              </Stack>
-            )),
-            <Stack key="padding" minWidth="8px" />,
-          ]}
-        </Stack>
-      </Stack>
-      {/* <Stack
-        direction="row"
-        spacing="12px"
-        px={OVERALL_X_PADDING}
-        overflow="scroll"
-      >
-        {filteredStacks.map((c) => (
-          <Stack key={c.id} title={c.title} color={c.color} />
-        ))}
-      </Stack> */}
-      <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
-        <AstroContentColumns
-          title={channels.find((c) => c.id === selectedChannelId)?.title ?? ""}
-          links={filteredLinks}
-          stacks={filteredStacks}
-          videos={[]}
-          shareSelectedStackIdWithExtension
-          emptyStateText="No Links yet."
-        />
-        {/* <Stack flex={1} pb="20px" direction="row" spacing="12px">
-          {cardColumns.map((column, i) => (
-            <Stack key={i} flex={1} spacing="12px">
-              {column.map((item, j) => (
-                <Stack key={item.details.id}>
-                  <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
-                    {item.type === "link" ? (
-                      <BrowserLinkCard
-                        link={item.details as IBrowserLink}
-                        clickCallback={() =>
-                          setLinkViewingDialogId(item.details.id)
-                        }
-                        editCallback={() =>
-                          setLinkEditingDialogId(item.details.id)
-                        }
-                        updateCallback={() => {
-                          loadLinks();
-                          loadStacks();
-                          loadChannels();
-                        }}
-                        duplicateCallback={() => duplicateLink(item.details.id)}
+    <PageLayout
+      sections={[
+        {
+          title: "Home",
+          contents: (
+            <Stack overflow="scroll">
+              <Stack
+                direction="row"
+                spacing="12px"
+                px={OVERALL_X_PADDING}
+                boxSizing="border-box"
+              >
+                {[
+                  ...apps.map((a) => (
+                    <Stack
+                      key={a.id}
+                      onClick={() => setSelectedChannelId(a.id)}
+                    >
+                      <PlatformCard
+                        key={a.id}
+                        platform={a}
+                        clickCallback={() => router.push(getAbsoluteUrl(a.url))}
                       />
-                    ) : (
-                      <StackCard
-                        stack={item.details as IStack}
-                        clickCallback={() =>
-                          setStackViewingDialogId(item.details.id)
-                        }
-                       
-                        updateCallback={() => {
-                          loadLinks();
-                          loadStacks();
-                          loadChannels();
-                        }}
-                      />
-                    )}
-                  </UrsorFadeIn>
-                </Stack>
-              ))}
+                    </Stack>
+                  )),
+                  <Stack key="padding" minWidth="8px" />,
+                ]}
+              </Stack>
             </Stack>
-          ))}
-        </Stack> */}
-      </Stack>
-    </Stack>
+          ),
+        },
+        {
+          title: "Channels",
+          contents: (
+            <>
+              <Stack overflow="scroll">
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  px={OVERALL_X_PADDING}
+                  boxSizing="border-box"
+                >
+                  {[
+                    ...channels.map((c) => (
+                      <Stack
+                        key={c.id}
+                        onClick={() => setSelectedChannelId(c.id)}
+                      >
+                        <ChannelButton
+                          key={c.id}
+                          title={c.title}
+                          color={c.color}
+                          selected={selectedChannelId === c.id}
+                        />
+                      </Stack>
+                    )),
+                    <Stack key="padding" minWidth="8px" />,
+                  ]}
+                </Stack>
+              </Stack>
+              <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
+                <AstroContentColumns
+                  title={
+                    channels.find((c) => c.id === selectedChannelId)?.title ??
+                    ""
+                  }
+                  links={filteredLinks}
+                  stacks={filteredStacks}
+                  videos={[]}
+                  shareSelectedStackIdWithExtension
+                  emptyStateText="No Links yet."
+                />
+              </Stack>
+            </>
+          ),
+        },
+      ]}
+    />
   );
 }

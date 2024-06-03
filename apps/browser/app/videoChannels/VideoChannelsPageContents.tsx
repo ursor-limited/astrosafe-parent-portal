@@ -23,8 +23,7 @@ import AstroContentColumns, {
 } from "../home/AstroContentColumns";
 import ConnectBar from "../components/ConnectBar";
 import Image from "next/image";
-
-export const OVERALL_X_PADDING = "20px";
+import { OVERALL_X_PADDING } from "../components/PageLayout";
 
 const DUMMY_VIDEOS = [
   {
