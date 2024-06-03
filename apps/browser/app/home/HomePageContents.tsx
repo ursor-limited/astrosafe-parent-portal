@@ -22,7 +22,7 @@ export type AstroContent = "link" | "stack";
 
 const OVERALL_X_PADDING = "20px";
 
-export default function HomePageContents(props: { mobile: string }) {
+export default function HomePageContents(props: { mobile: boolean }) {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     "659685e649ded4f6a4e28c53"
@@ -127,6 +127,7 @@ export default function HomePageContents(props: { mobile: string }) {
 
   return (
     <PageLayout
+      mobile={props.mobile}
       sections={[
         {
           title: "Home",

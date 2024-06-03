@@ -9,11 +9,9 @@ const PageLayout = (props: {
   mobile?: boolean;
 }) => (
   <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-    {!props.mobile ? (
-      <Stack px={OVERALL_X_PADDING}>
-        <ConnectBar />
-      </Stack>
-    ) : null}
+    <Stack px={OVERALL_X_PADDING}>
+      <ConnectBar mobile={!!props.mobile} />
+    </Stack>
     {props.sections.map((section, i) => (
       <>
         <Stack key={i} spacing="20px">
