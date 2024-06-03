@@ -27,6 +27,7 @@ export default function InsuranceApplicationCheckpointDialog(props: {
   info?: IAWInfoLineProps;
   firstNotCompletedStep?: AWInsuranceApplicationStep;
   stepCompletions?: Partial<Record<AWInsuranceApplicationStep, boolean>>;
+  highlightNotCompleted?: boolean;
   buttonCallback: () => void;
 }) {
   const [currentStep, setCurrentStep] =
@@ -49,9 +50,15 @@ export default function InsuranceApplicationCheckpointDialog(props: {
                 onClick={() => setCurrentStep(step)}
               >
                 <div
-                  className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid border-greyscale-7 ${
+                  className={`h-[12px] w-[12px] rounded-full border-[1px] border-solid ${
+                    !completed && props.highlightNotCompleted
+                      ? "border-system-orange-1"
+                      : "border-greyscale-7"
+                  } ${
                     completed
                       ? "bg-lightTeal-1"
+                      : props.highlightNotCompleted
+                      ? "bg-system-orange-5"
                       : props.firstNotCompletedStep === step
                       ? "bg-darkTeal-5"
                       : ""

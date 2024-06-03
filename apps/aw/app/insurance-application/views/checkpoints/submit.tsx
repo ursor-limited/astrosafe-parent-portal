@@ -56,6 +56,7 @@ export default function InsuranceApplicationCheckpointsSubmit(props: {
           ? props.nextCallback()
           : setCurrentStep(firstNotCompletedStep)
       }
+      highlightNotCompleted
     />
   );
 }
