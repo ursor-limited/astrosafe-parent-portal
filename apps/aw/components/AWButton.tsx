@@ -50,11 +50,13 @@ export function AWButton(props: {
       }}
       className={`flex items-center justify-center rounded-xs ${
         props.icon ? "gap-[10px]" : ""
-      } border-[1px] border-solid ${
+      } ${
+        !props.disabled || props.variant === "secondary" ? "border-[1px]" : ""
+      } border-solid ${
         props.disabled
           ? props.variant === "secondary"
             ? "border-buttons-disabled-text"
-            : "border-buttons-border"
+            : ""
           : hovering
           ? props.variant === "secondary"
             ? "border-buttons-secondary-border_hover"
@@ -62,9 +64,9 @@ export function AWButton(props: {
           : "border-buttons-border"
       } ${
         props.disabled
-          ? props.variant === "primary"
-            ? "bg-buttons-disabled-bg"
-            : ""
+          ? props.variant === "secondary"
+            ? ""
+            : "bg-buttons-disabled-bg"
           : props.variant === "secondary"
           ? hovering
             ? pressed

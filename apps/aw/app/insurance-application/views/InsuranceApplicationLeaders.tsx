@@ -139,6 +139,13 @@ export const SECTIONS: IAWFormSection[] = [
   },
 ];
 
+const BULLETPOINTS = [
+  "Executives: C-suite and executives independently responsible for financial, technical decisions, or digital assets.",
+  "Digital Asset Managers: An employee responsible for making decisions regarding digital assets.",
+  "25% or greater shareholder",
+  "Key Holder is anyone who will be responsible for signing Bitcoin transactions",
+];
+
 const LeaderRow = (props: {
   details: IAWCompanyLeader;
   title: string;
@@ -489,6 +496,29 @@ export default function InsuranceApplicationLeaders(props: {
       progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
+        <div className=" flex flex-col font-medium text-xl text-darkTeal-2 gap-[52px]">
+          <div className="flex flex-col gap-[8px]">
+            <div>
+              This section must be filled out for the entity’s management team,
+              including the following roles:
+            </div>
+            <div className="flex flex-col gap-[8px]">
+              {BULLETPOINTS.map((b, i) => (
+                <div key={i} className="flex gap-lg pl-[15px]">
+                  <div className="pt-[10px]">
+                    <div className="min-h-[6px] min-w-[6px] bg-darkTeal-5 rounded-full" />
+                  </div>
+                  <div>{b}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            All individuals listed in the company leaders section will receive
+            an email to input their application information and complete their
+            identity verification KYC/AML.
+          </div>
+        </div>
         <div className="w-full flex flex-col gap-5xl">
           <div className="w-full flex flex-col gap-xl">
             {leaders.map((l, i) => (
@@ -518,8 +548,11 @@ export default function InsuranceApplicationLeaders(props: {
           >
             Save and add another leader
           </AWButton>
-          <div className="w-full flex justify-center">
+          <div className="w-full h-[45px] flex items-center justify-center">
             <div className="h-[2px] w-[400px] bg-[#ACC6C5]" />
+          </div>
+          <div className="font-medium text-xl text-darkTeal-2">
+            Answer the following questions for the Company Leaders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
             {SECTIONS.map((section, i) => (
