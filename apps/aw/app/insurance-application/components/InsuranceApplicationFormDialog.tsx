@@ -19,6 +19,7 @@ export interface IAWFormSection {
   subsections?: IAWFormSectionSubsection[];
   custom?: boolean;
   prefillInputPrompt?: string;
+  disablePrefill?: boolean;
   infos?: IAWInfoLineProps[];
   noNumber?: boolean;
 }
@@ -43,7 +44,10 @@ export interface IAWFormInput {
   title?: string;
   placeholder?: string;
   options?: IAWMultiChoiceFieldOption[];
-  prefill?: { step: AWInsuranceApplicationStep; inputId: IAWFormInput["id"] };
+  prefill?: {
+    step: AWInsuranceApplicationStep;
+    inputId: IAWFormInput["id"];
+  };
 }
 
 export interface IAWMultiChoiceFieldOption {

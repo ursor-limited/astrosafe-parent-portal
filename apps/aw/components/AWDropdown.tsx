@@ -117,7 +117,7 @@ export default function AWDropdown(props: {
           {props.options?.find((o) => o.id === props.value)?.text ||
             props.placeholder}
         </div>
-        <ChevronDownIcon height="16px" width="16px" />
+        <ChevronDownIcon />
       </div>
     </div>
   );

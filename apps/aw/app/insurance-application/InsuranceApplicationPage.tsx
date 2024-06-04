@@ -270,9 +270,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
               {...input}
               setValue={props.setValue}
               answers={props.answers}
-              disabled={
-                checked || (!props.prefillInputPrompt && !!input.prefill)
-              }
+              disabled={checked && props.disablePrefill}
             />
           ))}
         </div>

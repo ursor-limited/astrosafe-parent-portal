@@ -7,6 +7,11 @@ import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
+import {
+  AWTextField,
+  IAWFormSectionProps,
+} from "../../InsuranceApplicationPage";
+import { useEffect } from "react";
 
 const countriesOptions = Object.entries(COUNTRIES_ALPHA2).map(
   ([alpha2, name]) => ({ id: alpha2, text: name })
@@ -99,6 +104,7 @@ const SECTIONS: IAWFormSection[] = [
     description:
       "Key Holders will receive their Signing Device in the mail. Please provide a mailing address.",
     prefillInputPrompt: "Use same address as residence address above",
+    disablePrefill: true,
     inputs: [
       {
         id: "66561d077be86edef7a7c569",
@@ -165,23 +171,69 @@ const SECTIONS: IAWFormSection[] = [
   },
   {
     id: "665738851df0c1e04588163f",
-    title: "Signing Device",
-    description: `Each Signing Device must be stored at a UNIQUE physical address:
-    Residence
-    Workplace premises
-    Safe Deposit box (e.g. a bank)
-    
-    If the Signing Devices is stored at a residence or workplace, it must be stored in a lockable safe.`,
-    inputs: [
-      {
-        id: "6657388a4c8c64cd846d1791",
-        title: "Provide the zip code of the chosen location",
-        inputType: "text",
-        placeholder: "Insert ZIP code",
-      },
-    ],
+    custom: true,
+    // description: `Each Signing Device must be stored at a UNIQUE physical address:
+    // Residence
+    // Workplace premises
+    // Safe Deposit box (e.g. a bank)
+
+    // If the Signing Devices is stored at a residence or workplace, it must be stored in a lockable safe.`,
+    // inputs: [
+    //   {
+    //     id: "6657388a4c8c64cd846d1791",
+    //     title: "Provide the zip code of the chosen location",
+    //     inputType: "text",
+    //     placeholder: "Insert ZIP code",
+    //   },
+    // ],
   },
 ];
+
+const SIGNING_DEVICE_INPUT_ID = "665f91c8d7ecc15c7d1c6258";
+
+const SigningDeviceSection = (
+  props: IAWFormSectionProps & { setDone: () => void }
+) => {
+  return (
+    <div className={`flex flex-col gap-xl opacity-0 animate-fadeIn text-xl`}>
+      <div className="font-medium text-darkTeal-2">{`${props.i}) Signing Device`}</div>
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-col gap-1">
+          Each Signing Device must be stored at a UNIQUE physical address:
+          <div className="flex flex-col gap-1">
+            {[
+              "Residence",
+              "Workplace premises",
+              "Safe Deposit box (e.g. a bank)",
+            ].map((b, i) => (
+              <div key={i} className="flex gap-lg pl-[15px]">
+                <div className="pt-[10px]">
+                  <div className="min-h-[6px] min-w-[6px] bg-darkTeal-5 rounded-full" />
+                </div>
+                <div>{b}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          If the Signing Devices is stored at a residence or workplace, it must
+          be stored in a lockable safe.
+        </div>
+      </div>
+      <div className="flex flex-col gap-1">
+        <div>Provide the zip code of the chosen location:</div>
+        <AWTextField
+          value={
+            props.answers?.find((a) => a.inputId === SIGNING_DEVICE_INPUT_ID)
+              ?.value
+          }
+          setValue={(zip) => props.setValue(SIGNING_DEVICE_INPUT_ID, zip)}
+          placeholder="Insert ZIP code"
+        />
+      </div>
+    </div>
+  );
+};
 
 export default function InsuranceApplicationPersonalDetails(props: {
   nextCallback: () => void;
@@ -192,6 +244,9 @@ export default function InsuranceApplicationPersonalDetails(props: {
       title={IDENTITY_STEP_TITLES.personalDetails}
       sections={SECTIONS}
       nextCallback={props.nextCallback}
+      customSections={{
+        "665738851df0c1e04588163f": SigningDeviceSection,
+      }}
       progress={
         (CHECKPOINT_STEPS.indexOf("identity") +
           awInsuranceApplicationIdentityStepViews.indexOf("personalDetails") /
