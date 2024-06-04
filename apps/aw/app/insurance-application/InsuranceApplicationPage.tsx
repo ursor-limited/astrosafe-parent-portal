@@ -26,6 +26,7 @@ import InsuranceApplicationUpload from "./views/InsuranceApplicationUpload";
 import InsuranceApplicationCheckpointsStart from "./views/checkpoints/start";
 import InsuranceApplicationCheckpointsSubmit from "./views/checkpoints/submit";
 import InsuranceApplicationLeaders from "./views/InsuranceApplicationLeaders";
+import _ from "lodash";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -155,7 +156,7 @@ export function AWLongTextField(props: {
 
 export function AWFormSectionSubsection(
   props: IAWFormSectionSubsection & {
-    i: number;
+    i?: number;
     j: number;
     answers?: IAWFormInputAnswer[];
     setValue: (
@@ -210,7 +211,7 @@ export function AWFormSectionSubsection(
 }
 
 export type IAWFormSectionProps = IAWFormSection & {
-  i: number;
+  i?: number;
   answers?: IAWFormInputAnswer[];
   setValue: (
     id: IAWFormInput["id"],
@@ -231,9 +232,18 @@ export function AWFormSection(props: IAWFormSectionProps) {
       className={`flex flex-col ${
         !props.inputs || props.inputs[0].title ? "gap-xl" : "gap-lg"
       } opacity-0 animate-fadeIn`}
-      style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
+      style={{
+        animationDelay:
+          _.isNumber(props.i) && !props.noNumber
+            ? `${props.i * FADEIN_DELAY}ms`
+            : undefined,
+      }}
     >
-      <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) ${props.title}`}</div>
+      <div className="text-xl font-medium text-darkTeal-2">
+        {_.isNumber(props.i) && !props.noNumber
+          ? `${props.i}) ${props.title}`
+          : props.title}
+      </div>
       {props.description && !props.descriptionAtEnd ? (
         <div className="text-lg text-darkTeal-2">{props.description}</div>
       ) : null}

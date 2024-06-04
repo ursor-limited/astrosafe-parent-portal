@@ -34,6 +34,105 @@ interface IAWCompanyLeader {
   };
 }
 
+export const SECTIONS: IAWFormSection[] = [
+  {
+    id: "665f42111472a5653be043fa",
+    title: "Has a Company Leader been involved in any criminal investigation?",
+    inputs: [
+      {
+        id: "665f4242a0f8b69084d560ac",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "665f4246be7e00eede11c7f9",
+            text: "Yes",
+          },
+          {
+            id: "665f424aa7eef6bceaa33bef",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "665f4263e6b91b846b78afb5",
+    title:
+      "Has a Company Leader been convicted of a felony or crime of dishonesty (including, but not limited to: theft, forgery, embezzlement, and fraud)?",
+    inputs: [
+      {
+        id: "665f4268bb98df27e4601ab4",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "665f426c8eb680b7e46ee61a",
+            text: "Yes",
+          },
+          {
+            id: "665f42701c708f7609ddcdf5",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "665f42ae5767755321871b05",
+    title:
+      "Has a Company Leader experienced losses greater than $10,000 related to access of private key material for Bitcoin, cryptocurrency, or other digital assets?",
+    inputs: [
+      {
+        id: "665f42b27163413ef8c5c771",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "665f42b8520100b245e9e7ab",
+            text: "Yes",
+          },
+          {
+            id: "665f42bc40987dee1788d101",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "665f4301ad072875140001b8",
+    title:
+      "Has a Company Leader experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
+    inputs: [
+      {
+        id: "665f430586bf43b7aecea5ac",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "665f430a2cfbeb1847db7031",
+            text: "Yes",
+          },
+          {
+            id: "665f430f2fbb82eae4f7435b",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "665f4301ad072875140001b8",
+    title:
+      "If you answered yes to any of the questions above, please provide a detailed description below",
+    noNumber: true,
+    inputs: [
+      {
+        id: "665f430586bf43b7aecea5ac",
+        inputType: "textLong",
+        placeholder: "Write your description here",
+      },
+    ],
+  },
+];
+
 const LeaderRow = (
   props: IAWCompanyLeader & {
     title: string;
@@ -274,6 +373,17 @@ export default function InsuranceApplicationLeaders(props: {
               ))}
             </div>
           </DynamicContainer>
+          <div className="w-full flex flex-col gap-[46px]">
+            {SECTIONS.map((section, i) => (
+              <AWFormSection
+                i={i + 1}
+                key={section.id}
+                {...section}
+                answers={answers}
+                setValue={setValue}
+              />
+            ))}
+          </div>
           <AWButton
             onClick={addLeader}
             icon={AddPersonIcon}

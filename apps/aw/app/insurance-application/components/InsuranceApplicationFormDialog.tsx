@@ -20,6 +20,7 @@ export interface IAWFormSection {
   custom?: boolean;
   prefillInputPrompt?: string;
   infos?: IAWInfoLineProps[];
+  noNumber?: boolean;
 }
 
 export interface IAWFormSectionSubsection {
