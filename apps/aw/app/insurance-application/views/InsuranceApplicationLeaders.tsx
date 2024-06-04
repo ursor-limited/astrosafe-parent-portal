@@ -3,6 +3,7 @@ import InsuranceApplicationDialog from "../components/InsuranceApplicationDialog
 import {
   AWFormSection,
   AWInsuranceApplicationStep,
+  AWLongTextField,
   AWTextField,
   IAWFormSectionProps,
   STEP_TITLES,
@@ -13,6 +14,7 @@ import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
+import XIcon from "@/images/icons/XIcon.svg";
 import _, { add } from "lodash";
 import {
   IAWFormInputAnswer,
@@ -20,6 +22,7 @@ import {
 } from "../components/InsuranceApplicationFormDialog";
 import { CHECKPOINT_STEPS } from "../components/InsuranceApplicationCheckpointDialog";
 import DynamicContainer from "@/components/DynamicContainer";
+import { AWCheckbox } from "@/components/AWCheckbox";
 
 interface IAWCompanyLeader {
   name: string;
@@ -33,6 +36,8 @@ interface IAWCompanyLeader {
     shareholder: boolean;
   };
 }
+
+const LEADER_DETAILS_AGGLOMERATED_INPUT_ID = "leaders";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -119,14 +124,15 @@ export const SECTIONS: IAWFormSection[] = [
     ],
   },
   {
-    id: "665f4301ad072875140001b8",
+    id: "665f4e4fcd81bc33290c2cd4",
     title:
       "If you answered yes to any of the questions above, please provide a detailed description below",
     noNumber: true,
     inputs: [
       {
-        id: "665f430586bf43b7aecea5ac",
+        id: "665f4e5369bc960c37e387ee",
         inputType: "textLong",
+        optional: true,
         placeholder: "Write your description here",
       },
     ],
@@ -137,11 +143,12 @@ const LeaderRow = (
   props: IAWCompanyLeader & {
     title: string;
     update: (update: Partial<IAWCompanyLeader>) => void;
+    delete?: () => void;
   }
 ) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <DynamicContainer duration={500} fullWidth>
+    <DynamicContainer duration={600} fullWidth>
       <div className="flex flex-col gap-5xl">
         <div
           className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer"
@@ -152,18 +159,79 @@ const LeaderRow = (
           </div>
           <div className="w-full flex justify-between items-center">
             <div className="font-medium text-xl">{props.title}</div>
-            <div
-              style={{
-                transform: `rotate(${open ? 180 : 0}deg)`,
-                transition: "0.2s",
-              }}
-            >
-              <ChevronDownIcon />
+            <div className="flex gap-xl items-center">
+              {props.delete ? (
+                <div
+                  onClick={props.delete}
+                  className="hover:opacity-60 cursor-pointer duration-200"
+                >
+                  <XIcon />
+                </div>
+              ) : null}
+              <div
+                style={{
+                  transform: `rotate(${open ? 180 : 0}deg)`,
+                  transition: "0.2s",
+                }}
+              >
+                <ChevronDownIcon />
+              </div>
             </div>
           </div>
         </div>
         {open ? (
           <div className="flex flex-col gap-5xl pb-xl">
+            <div className={`flex flex-col gap-lg`}>
+              <div className="text-xl font-medium text-darkTeal-2">
+                Which roles apply to this individual? (select all roles that
+                apply)
+              </div>
+              <div className={`flex flex-col gap-[12px]`}>
+                <div className={`flex items-center gap-[12px]`}>
+                  <AWCheckbox
+                    checked={props.roles?.executive}
+                    callback={() =>
+                      props.update({
+                        roles: {
+                          ...props.roles,
+                          executive: !props.roles?.executive,
+                        },
+                      })
+                    }
+                  />
+                  <div className="text-lg text-darkTeal-2">Executive</div>
+                </div>
+                <div className={`flex items-center gap-[12px]`}>
+                  <AWCheckbox
+                    checked={props.roles?.assMan}
+                    callback={() =>
+                      props.update({
+                        roles: { ...props.roles, assMan: !props.roles?.assMan },
+                      })
+                    }
+                  />
+                  <div className="text-lg text-darkTeal-2">
+                    Digital Asset Manager
+                  </div>
+                </div>
+                <div className={`flex items-center gap-[12px]`}>
+                  <AWCheckbox
+                    checked={props.roles?.shareholder}
+                    callback={() =>
+                      props.update({
+                        roles: {
+                          ...props.roles,
+                          shareholder: !props.roles?.shareholder,
+                        },
+                      })
+                    }
+                  />
+                  <div className="text-lg text-darkTeal-2">
+                    Shareholder with 25% or greater ownership
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className={`flex flex-col gap-1`}>
               <div className="text-xl font-medium text-darkTeal-2">
                 Legal name
@@ -212,9 +280,9 @@ const LeaderRow = (
               <div className="text-xl text-darkTeal-2">
                 What are the areas of responsibility for this job title
               </div>
-              <AWTextField
-                value={props.email}
-                setValue={(email) => props.update({ email })}
+              <AWLongTextField
+                value={props.areas}
+                setValue={(areas) => props.update({ areas })}
                 placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
               />
             </div>
@@ -252,31 +320,19 @@ export default function InsuranceApplicationLeaders(props: {
   //   IAWFormSection["id"][]
   // >([]);
 
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-  // useEffect(() => {
-  //   setCanProceed(
-  //     customSectionsDone.length >=
-  //       props.sections.filter((s) => s.custom).length &&
-  //       props.sections
-  //         .filter((s) => !s.custom)
-  //         .flatMap((s) => [
-  //           ...(s.inputs || []),
-  //           ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-  //         ])
-  //         .every(
-  //           (input) =>
-  //             input.optional ||
-  //             answers.find((a) => a.inputId === input?.id)?.value
-  //         )
-  //   );
-  // }, [answers, customSectionsDone, props.sections]);
-
   // useEffect(() => {
   //   setCanProceed(!!props.canProceed);
   // }, [props.canProceed]);
 
   const commitAnswers = () =>
-    setCommittedAnswers({ ...committedAnswers, leaders: answers });
+    setCommittedAnswers({
+      ...committedAnswers.leaders,
+      leaders: answers.map((a) =>
+        a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+          ? { inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID, value: leaders }
+          : a
+      ),
+    });
 
   const [leaders, setLeaders] = useState<IAWCompanyLeader[]>([
     {
@@ -316,6 +372,42 @@ export default function InsuranceApplicationLeaders(props: {
       },
     },
   ]);
+  useEffect(() => {
+    const leaders_ = answers?.find(
+      (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+    )?.value;
+    if (leaders_) {
+      setLeaders(leaders_);
+    }
+  }, [answers]);
+
+  const [leadersFilled, setLeadersFilled] = useState<boolean>(false);
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+  useEffect(() => {
+    const leadersDone = leaders.every((l) =>
+      Object.values(l).every((x) => !!x)
+    );
+    if (leadersDone) {
+      if (!leadersFilled) {
+        setLeadersFilled(true);
+        //commitAnswers();
+      }
+      setCanProceed(
+        SECTIONS.filter((s) => !s.custom)
+          .flatMap((s) => [
+            ...(s.inputs || []),
+            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+          ])
+          .every(
+            (input) =>
+              input.optional ||
+              answers.find((a) => a.inputId === input?.id)?.value
+          )
+      );
+    } else {
+      setLeadersFilled(false);
+    }
+  }, [answers, leaders]);
 
   const addLeader = () =>
     setLeaders((prev) => [
@@ -361,18 +453,37 @@ export default function InsuranceApplicationLeaders(props: {
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className="w-full flex flex-col gap-5xl">
-          <DynamicContainer duration={300} fullWidth>
-            <div className="w-full flex flex-col gap-xl">
-              {leaders.map((l, i) => (
-                <LeaderRow
-                  key={i}
-                  {...l}
-                  title={getRowTitle(i)}
-                  update={(update) => updateLeader(i, update)}
-                />
-              ))}
-            </div>
-          </DynamicContainer>
+          <div className="w-full flex flex-col gap-xl">
+            {leaders.map((l, i) => (
+              <LeaderRow
+                key={i}
+                {...l}
+                title={getRowTitle(i)}
+                update={(update) => updateLeader(i, update)}
+                delete={
+                  i > 2
+                    ? () =>
+                        setLeaders([
+                          ...leaders.slice(0, i),
+                          ...leaders.slice(i + 1),
+                        ])
+                    : undefined
+                }
+              />
+            ))}
+          </div>
+          <AWButton
+            onClick={addLeader}
+            icon={AddPersonIcon}
+            variant="secondary"
+            width="100%"
+            disabled={!leadersFilled}
+          >
+            Save and add another leader
+          </AWButton>
+          <div className="w-full flex justify-center">
+            <div className="h-[2px] w-[400px] bg-[#ACC6C5]" />
+          </div>
           <div className="w-full flex flex-col gap-[46px]">
             {SECTIONS.map((section, i) => (
               <AWFormSection
@@ -384,14 +495,6 @@ export default function InsuranceApplicationLeaders(props: {
               />
             ))}
           </div>
-          <AWButton
-            onClick={addLeader}
-            icon={AddPersonIcon}
-            variant="secondary"
-            width="100%"
-          >
-            Save and add another leader
-          </AWButton>
         </div>
         <div className="w-full justify-center flex gap-[16px]">
           <AWButton width={182} variant="secondary" onClick={commitAnswers}>
