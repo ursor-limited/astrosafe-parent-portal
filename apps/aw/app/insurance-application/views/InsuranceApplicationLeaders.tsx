@@ -139,14 +139,28 @@ export const SECTIONS: IAWFormSection[] = [
   },
 ];
 
-const LeaderRow = (
-  props: IAWCompanyLeader & {
-    title: string;
-    update: (update: Partial<IAWCompanyLeader>) => void;
-    delete?: () => void;
-  }
-) => {
+const LeaderRow = (props: {
+  details: IAWCompanyLeader;
+  title: string;
+  update: (update: Partial<IAWCompanyLeader>) => void;
+  delete?: () => void;
+}) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [status, setStatus] = useState<"complete" | "incomplete" | "empty">(
+    "empty"
+  );
+  useEffect(
+    () =>
+      props.details &&
+      setStatus(
+        Object.values(props.details).every((x) => !!x)
+          ? "complete"
+          : Object.values(props.details).some((x) => !!x)
+          ? "incomplete"
+          : "empty"
+      ),
+    [props.details]
+  );
   return (
     <DynamicContainer duration={600} fullWidth>
       <div className="flex flex-col gap-5xl">
@@ -159,8 +173,22 @@ const LeaderRow = (
               <PersonIcon />
             </div>
             <div className="font-medium text-xl">{props.title}</div>
-            <div className="h-[25px] flex px-[10px] rounded-xs bg-[#EDFDF4] text-system-green-3 text-sm font-medium items-center">
-              Complete
+            <div
+              className={`h-[25px] flex px-[10px] rounded-xs ${
+                status === "complete"
+                  ? "bg-[#EDFDF4]"
+                  : status === "incomplete"
+                  ? "bg-[#FEF4EC]"
+                  : "bg-[#E9EAEC]"
+              } ${
+                status === "complete"
+                  ? "text-system-green-3"
+                  : status === "incomplete"
+                  ? "text-[#FFC66D]"
+                  : "text-[#9c9c9c]"
+              } text-sm font-medium items-center`}
+            >
+              {_.capitalize(status)}
             </div>
           </div>
 
@@ -195,12 +223,12 @@ const LeaderRow = (
               <div className={`flex flex-col gap-[12px]`}>
                 <div className={`flex items-center gap-[12px]`}>
                   <AWCheckbox
-                    checked={props.roles?.executive}
+                    checked={props.details.roles?.executive}
                     callback={() =>
                       props.update({
                         roles: {
-                          ...props.roles,
-                          executive: !props.roles?.executive,
+                          ...props.details.roles,
+                          executive: !props.details.roles?.executive,
                         },
                       })
                     }
@@ -209,10 +237,13 @@ const LeaderRow = (
                 </div>
                 <div className={`flex items-center gap-[12px]`}>
                   <AWCheckbox
-                    checked={props.roles?.assMan}
+                    checked={props.details.roles?.assMan}
                     callback={() =>
                       props.update({
-                        roles: { ...props.roles, assMan: !props.roles?.assMan },
+                        roles: {
+                          ...props.details.roles,
+                          assMan: !props.details.roles?.assMan,
+                        },
                       })
                     }
                   />
@@ -222,12 +253,12 @@ const LeaderRow = (
                 </div>
                 <div className={`flex items-center gap-[12px]`}>
                   <AWCheckbox
-                    checked={props.roles?.shareholder}
+                    checked={props.details.roles?.shareholder}
                     callback={() =>
                       props.update({
                         roles: {
-                          ...props.roles,
-                          shareholder: !props.roles?.shareholder,
+                          ...props.details.roles,
+                          shareholder: !props.details.roles?.shareholder,
                         },
                       })
                     }
@@ -243,7 +274,7 @@ const LeaderRow = (
                 Legal name
               </div>
               <AWTextField
-                value={props.name}
+                value={props.details.name}
                 setValue={(name) => props.update({ name })}
                 placeholder="Enter name here"
               />
@@ -253,7 +284,7 @@ const LeaderRow = (
                 Date of birth
               </div>
               <AWTextField
-                value={props.birthday}
+                value={props.details.birthday}
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
               />
@@ -267,7 +298,7 @@ const LeaderRow = (
                 for Key Holders, access to the insured Trident Vault.
               </div>
               <AWTextField
-                value={props.email}
+                value={props.details.email}
                 setValue={(email) => props.update({ email })}
                 placeholder="Enter address here"
               />
@@ -277,7 +308,7 @@ const LeaderRow = (
                 Job title
               </div>
               <AWTextField
-                value={props.job}
+                value={props.details.job}
                 setValue={(job) => props.update({ job })}
                 placeholder="Enter job title in organization"
               />
@@ -287,7 +318,7 @@ const LeaderRow = (
                 What are the areas of responsibility for this job title
               </div>
               <AWLongTextField
-                value={props.areas}
+                value={props.details.areas}
                 setValue={(areas) => props.update({ areas })}
                 placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
               />
@@ -463,7 +494,7 @@ export default function InsuranceApplicationLeaders(props: {
             {leaders.map((l, i) => (
               <LeaderRow
                 key={i}
-                {...l}
+                details={l}
                 title={getRowTitle(i)}
                 update={(update) => updateLeader(i, update)}
                 delete={
