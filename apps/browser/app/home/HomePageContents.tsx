@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import PageLayout from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import StarFillIcon from "@/images/icons/StarFillIcon.svg";
+import TelescopeIcon from "@/images/icons/TelescopeIcon.svg";
 import { PALETTE } from "ui";
 
 export type AstroContent = "link" | "stack";
@@ -37,9 +38,19 @@ export default function HomePageContents(props: { mobile: boolean }) {
       contentType: BrowserContent;
     }[]
   >("favorites", []);
+  const [discoverLinks, setDiscoverLinks] = useState<IBrowserLink[]>([]);
+  //const [discoverStacks, setDiscoverStacks] = useState<IStack[]>([]);
+
   useEffect(() => {
-    deviceId &&
+    if (deviceId) {
       ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
+      ApiController.getDiscoverContents(deviceId).then((response) => {
+        if (response) {
+          setDiscoverLinks(response);
+          //setDiscoverStacks(response.links);
+        }
+      });
+    }
   }, [deviceId]);
 
   const [channels, setChannels] = useState<IChannel[]>([]);
@@ -67,35 +78,42 @@ export default function HomePageContents(props: { mobile: boolean }) {
   const [selectedChannelId, setSelectedChannelId] = useState<
     string | undefined
   >(undefined);
-  useEffect(() => {
-    !showFavorites &&
-      !channels.find((c) => c.id === selectedChannelId) &&
-      setSelectedChannelId(channels[0]?.id);
-  }, [channels, selectedChannelId]);
 
-  const [showFavorites, setShowFavorites] = useState<boolean>(true);
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const [showDiscover, setShowDiscover] = useState<boolean>(true);
 
   const [filteredLinks, setFilteredLinks] = useState<IBrowserLink[]>([]);
   useEffect(
     () =>
       setFilteredLinks(
-        links?.filter((l) =>
-          showFavorites
-            ? favorites.find((f) => f.contentId === l.id)
-            : !l.stackId && l.channelId === selectedChannelId
-        )
+        showDiscover
+          ? discoverLinks
+          : links?.filter((l) =>
+              showFavorites
+                ? favorites.find((f) => f.contentId === l.id)
+                : !l.stackId && l.channelId === selectedChannelId
+            )
       ),
-    [links, selectedChannelId, showFavorites, favorites]
+    [
+      links,
+      selectedChannelId,
+      showFavorites,
+      showDiscover,
+      discoverLinks,
+      favorites,
+    ]
   );
   const [filteredStacks, setFilteredStacks] = useState<IStack[]>([]);
   useEffect(
     () =>
       setFilteredStacks(
-        stacks?.filter((s) =>
-          showFavorites
-            ? favorites.find((f) => f.contentId === s.id)
-            : s.channelId === selectedChannelId
-        )
+        showDiscover
+          ? []
+          : stacks?.filter((s) =>
+              showFavorites
+                ? favorites.find((f) => f.contentId === s.id)
+                : s.channelId === selectedChannelId
+            )
       ),
     [stacks, selectedChannelId, showFavorites, favorites]
   );
@@ -112,7 +130,9 @@ export default function HomePageContents(props: { mobile: boolean }) {
   useEffect(() => {
     const linkDetails = (
       links?.filter((l) =>
-        showFavorites
+        showDiscover
+          ? discoverLinks
+          : showFavorites
           ? favorites.find((f) => f.contentId === l.id)
           : !l.stackId && l.channelId === selectedChannelId
       ) || []
@@ -196,11 +216,27 @@ export default function HomePageContents(props: { mobile: boolean }) {
                   boxSizing="border-box"
                 >
                   {[
-                    <UrsorFadeIn key="favorites" duration={800}>
+                    <UrsorFadeIn key="discover" duration={800} delay={700}>
+                      <Stack
+                        onClick={() => {
+                          setSelectedChannelId(undefined);
+                          setShowDiscover(true);
+                          setShowFavorites(false);
+                        }}
+                      >
+                        <ChannelButton
+                          title="AstroSafe Discover"
+                          icon={TelescopeIcon}
+                          selected={showDiscover}
+                        />
+                      </Stack>
+                    </UrsorFadeIn>,
+                    <UrsorFadeIn key="favorites" duration={800} delay={790}>
                       <Stack
                         onClick={() => {
                           setSelectedChannelId(undefined);
                           setShowFavorites(true);
+                          setShowDiscover(false);
                         }}
                       >
                         <ChannelButton
@@ -226,6 +262,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
                           onClick={() => {
                             setSelectedChannelId(c.id);
                             setShowFavorites(false);
+                            setShowDiscover(false);
                           }}
                         >
                           <ChannelButton
@@ -244,7 +281,9 @@ export default function HomePageContents(props: { mobile: boolean }) {
               <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
                 <AstroContentColumns
                   title={
-                    showFavorites
+                    showDiscover
+                      ? "AstroSafe Discover"
+                      : showFavorites
                       ? "Favorites"
                       : channels.find((c) => c.id === selectedChannelId)
                           ?.title ?? ""

@@ -270,6 +270,10 @@ class ApiController {
       type: "chrome",
     }).then((response: any) => response.json());
   }
+
+  static async getDiscoverContents(deviceId: string) {
+    return get(`schools/disc/over`).then((response: any) => response.json());
+  }
 }
 
 export default ApiController;
