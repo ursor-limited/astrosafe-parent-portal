@@ -2,7 +2,8 @@ import { Stack, alpha } from "@mui/system";
 import HomeIcon from "@/images/icons/HomeIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
-import { GRID_SPACING } from "../home/AstroContentColumns";
+import PlugIcon from "@/images/icons/PlugIcon.svg";
+import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import { useRouter } from "next/navigation";
 import { PALETTE } from "ui";
 import NavbarSearchBar from "./NavbarSearchBar";
@@ -138,7 +139,62 @@ export default function Navbar(props: INavbarProps) {
           navigate("/");
         }}
       /> */}
-        {!props.noSearch ? <NavbarSearchBar /> : null}
+        <Stack width="100%" px="15px">
+          <NavbarSearchBar />
+        </Stack>
+        <Stack direction="row" spacing="15px">
+          <Stack
+            height="52px"
+            width="52px"
+            borderRadius="100%"
+            overflow="hidden"
+            bgcolor={PALETTE.secondary.grey[1]}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7, transform: "scale(1.1)" },
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+          >
+            <ArrowLeftIcon width="26px" height="26px" />
+          </Stack>
+          <Stack
+            height="52px"
+            width="52px"
+            borderRadius="100%"
+            overflow="hidden"
+            bgcolor={PALETTE.secondary.grey[1]}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7, transform: "scale(1.1)" },
+              transition: "0.2s",
+              cursor: "pointer",
+              svg: {
+                transform: "rotate(180deg)",
+              },
+            }}
+          >
+            <ArrowLeftIcon width="26px" height="26px" />
+          </Stack>
+          <Stack
+            height="52px"
+            width="52px"
+            borderRadius="100%"
+            overflow="hidden"
+            bgcolor={PALETTE.secondary.purple[2]}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              "&:hover": { opacity: 0.7, transform: "scale(1.1)" },
+              transition: "0.2s",
+              cursor: "pointer",
+            }}
+          >
+            <PlugIcon width="26px" height="26px" />
+          </Stack>
+        </Stack>
       </Stack>
     </>
   );

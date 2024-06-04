@@ -18,6 +18,8 @@ import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
 import PageLayout from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
+import StarFillIcon from "@/images/icons/StarFillIcon.svg";
+import { PALETTE } from "ui";
 
 export type AstroContent = "link" | "stack";
 
@@ -66,25 +68,36 @@ export default function HomePageContents(props: { mobile: boolean }) {
     string | undefined
   >(undefined);
   useEffect(() => {
-    !channels.find((c) => c.id === selectedChannelId) &&
+    !showFavorites &&
+      !channels.find((c) => c.id === selectedChannelId) &&
       setSelectedChannelId(channels[0]?.id);
   }, [channels, selectedChannelId]);
+
+  const [showFavorites, setShowFavorites] = useState<boolean>(true);
 
   const [filteredLinks, setFilteredLinks] = useState<IBrowserLink[]>([]);
   useEffect(
     () =>
       setFilteredLinks(
-        links?.filter((l) => !l.stackId && l.channelId === selectedChannelId)
+        links?.filter((l) =>
+          showFavorites
+            ? favorites.find((f) => f.contentId === l.id)
+            : !l.stackId && l.channelId === selectedChannelId
+        )
       ),
-    [links, selectedChannelId]
+    [links, selectedChannelId, showFavorites, favorites]
   );
   const [filteredStacks, setFilteredStacks] = useState<IStack[]>([]);
   useEffect(
     () =>
       setFilteredStacks(
-        stacks?.filter((l) => l.channelId === selectedChannelId)
+        stacks?.filter((s) =>
+          showFavorites
+            ? favorites.find((f) => f.contentId === s.id)
+            : s.channelId === selectedChannelId
+        )
       ),
-    [stacks, selectedChannelId]
+    [stacks, selectedChannelId, showFavorites, favorites]
   );
 
   const [cardColumns, setCardColumns] = useState<
@@ -98,14 +111,21 @@ export default function HomePageContents(props: { mobile: boolean }) {
 
   useEffect(() => {
     const linkDetails = (
-      links?.filter((l) => !l.stackId && l.channelId === selectedChannelId) ||
-      []
+      links?.filter((l) =>
+        showFavorites
+          ? favorites.find((f) => f.contentId === l.id)
+          : !l.stackId && l.channelId === selectedChannelId
+      ) || []
     ).map((l) => ({
       type: "link" as AstroContent,
       details: l,
     }));
     const stackDetails = (
-      stacks?.filter((s) => s.channelId === selectedChannelId) || []
+      stacks?.filter((s) =>
+        showFavorites
+          ? favorites.find((f) => f.contentId === s.id)
+          : s.channelId === selectedChannelId
+      ) || []
     ).map((s) => ({
       type: "stack" as AstroContent,
       details: s,
@@ -176,20 +196,45 @@ export default function HomePageContents(props: { mobile: boolean }) {
                   boxSizing="border-box"
                 >
                   {[
+                    <UrsorFadeIn key="favorites" duration={800}>
+                      <Stack
+                        onClick={() => {
+                          setSelectedChannelId(undefined);
+                          setShowFavorites(true);
+                        }}
+                      >
+                        <ChannelButton
+                          title="My favorites"
+                          icon={StarFillIcon}
+                          selected={showFavorites}
+                        />
+                      </Stack>
+                    </UrsorFadeIn>,
+                    <Stack
+                      key="line"
+                      height="100%"
+                      minWidth="2px"
+                      bgcolor={PALETTE.secondary.grey[2]}
+                    />,
                     ...channels.map((c, i) => (
                       <UrsorFadeIn
                         key={c.id}
                         duration={800}
-                        delay={700 + i * 90}
+                        delay={700 + (i + 1) * 90}
                       >
-                        <Stack onClick={() => setSelectedChannelId(c.id)}>
+                        <Stack
+                          onClick={() => {
+                            setSelectedChannelId(c.id);
+                            setShowFavorites(false);
+                          }}
+                        >
                           <ChannelButton
                             key={c.id}
                             title={c.title}
                             color={c.color}
                             selected={selectedChannelId === c.id}
                           />
-                        </Stack>{" "}
+                        </Stack>
                       </UrsorFadeIn>
                     )),
                     <Stack key="padding" minWidth="8px" />,
@@ -199,8 +244,10 @@ export default function HomePageContents(props: { mobile: boolean }) {
               <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
                 <AstroContentColumns
                   title={
-                    channels.find((c) => c.id === selectedChannelId)?.title ??
-                    ""
+                    showFavorites
+                      ? "Favorites"
+                      : channels.find((c) => c.id === selectedChannelId)
+                          ?.title ?? ""
                   }
                   links={filteredLinks}
                   stacks={filteredStacks}

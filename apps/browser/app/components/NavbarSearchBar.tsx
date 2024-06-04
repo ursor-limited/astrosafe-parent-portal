@@ -170,7 +170,7 @@ export default function NavbarSearchBar() {
   const PADDING = 10;
   return (
     <Stack
-      width={WIDTH}
+      width="100%"
       height={`${BUTTON_SIZE}px`}
       bgcolor={PALETTE.secondary.grey[1]}
       borderRadius="26px"
