@@ -12,7 +12,8 @@ import { useLocalStorage } from "usehooks-ts";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
-import _ from "lodash";
+import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
+import _, { add } from "lodash";
 import {
   IAWFormInputAnswer,
   IAWFormSection,
@@ -260,17 +261,27 @@ export default function InsuranceApplicationLeaders(props: {
       progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
-        <div className="w-full flex flex-col gap-[46px]">
-          <div className="w-full flex flex-col gap-xl">
-            {leaders.map((l, i) => (
-              <LeaderRow
-                key={i}
-                {...l}
-                title={getRowTitle(i)}
-                update={(update) => updateLeader(i, update)}
-              />
-            ))}
-          </div>
+        <div className="w-full flex flex-col gap-5xl">
+          <DynamicContainer duration={300} fullWidth>
+            <div className="w-full flex flex-col gap-xl">
+              {leaders.map((l, i) => (
+                <LeaderRow
+                  key={i}
+                  {...l}
+                  title={getRowTitle(i)}
+                  update={(update) => updateLeader(i, update)}
+                />
+              ))}
+            </div>
+          </DynamicContainer>
+          <AWButton
+            onClick={addLeader}
+            icon={AddPersonIcon}
+            variant="secondary"
+            width="100%"
+          >
+            Save and add another leader
+          </AWButton>
         </div>
         <div className="w-full justify-center flex gap-[16px]">
           <AWButton width={182} variant="secondary" onClick={commitAnswers}>
