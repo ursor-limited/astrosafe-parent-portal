@@ -59,6 +59,11 @@ module.exports = {
             3: "#FFB038",
             5: "#FFC266",
           },
+          green: {
+            1: '#00B929',
+            2: '#13D83E',
+            3: '#43EB68'
+          }
         },
         background: {
           primary: "#F8F8F8",
@@ -88,6 +93,7 @@ module.exports = {
             bg_hover: "#A9E8EC",
             bg_pressed: "#86D3D9",
             border_hover: "#147C83",
+            // border_disabled: '#ACC6C5',
             text: "#147C83",
             text_hover: "#147C83",
             text_pressed: "#00474B",

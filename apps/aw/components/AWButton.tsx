@@ -25,7 +25,9 @@ export function AWButton(props: {
     () =>
       setIconColor(
         props.variant === "secondary"
-          ? pressed
+          ? props.disabled
+            ? "#ACC6C5"
+            : pressed
             ? "#00474B"
             : hovering
             ? "#147C83"
@@ -36,7 +38,7 @@ export function AWButton(props: {
           ? "#A9E8EC"
           : "#F8F8F8"
       ),
-    [hovering, pressed, props.variant]
+    [hovering, pressed, props.variant, props.disabled]
   );
 
   return (
@@ -48,15 +50,21 @@ export function AWButton(props: {
       }}
       className={`flex items-center justify-center rounded-xs ${
         props.icon ? "gap-[10px]" : ""
-      } ${props.disabled ? "" : "border-[1px]"} border-solid ${
-        hovering
+      } border-[1px] border-solid ${
+        props.disabled
+          ? props.variant === "secondary"
+            ? "border-buttons-disabled-text"
+            : "border-buttons-border"
+          : hovering
           ? props.variant === "secondary"
             ? "border-buttons-secondary-border_hover"
             : "border-buttons-primary-border_hover"
           : "border-buttons-border"
       } ${
         props.disabled
-          ? "bg-buttons-disabled-bg"
+          ? props.variant === "primary"
+            ? "bg-buttons-disabled-bg"
+            : ""
           : props.variant === "secondary"
           ? hovering
             ? pressed

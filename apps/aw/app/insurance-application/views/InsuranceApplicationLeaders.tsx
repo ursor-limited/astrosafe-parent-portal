@@ -154,11 +154,17 @@ const LeaderRow = (
           className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer"
           onClick={() => setOpen(!open)}
         >
-          <div className="flex items-center">
-            <PersonIcon />
-          </div>
-          <div className="w-full flex justify-between items-center">
+          <div className="w-full flex gap-xl">
+            <div className="flex items-center">
+              <PersonIcon />
+            </div>
             <div className="font-medium text-xl">{props.title}</div>
+            <div className="h-[25px] flex px-[10px] rounded-xs bg-[#EDFDF4] text-system-green-3 text-sm font-medium items-center">
+              Complete
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center">
             <div className="flex gap-xl items-center">
               {props.delete ? (
                 <div
