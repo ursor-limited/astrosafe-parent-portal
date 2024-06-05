@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useOutsideClick from "./useOutsideClick";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { createPortal } from "react-dom";
-import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/components/InsuranceApplicationFormDialog";
+import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/[flow]/components/form-dialog";
 
 function AWDropdownList(props: {
   open: boolean;
@@ -84,7 +84,7 @@ export default function AWDropdown(props: {
     listPositionRef?.getBoundingClientRect()?.left,
   ]);
   return (
-    <div ref={setOutsideClickRef}>
+    <div className="w-full" ref={setOutsideClickRef}>
       {createPortal(
         <div
           className="absolute z-10 overflow-visible"
