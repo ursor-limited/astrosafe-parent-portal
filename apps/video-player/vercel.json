@@ -17,6 +17,14 @@
         "destination": "https://proxy.astrosafe.co/tools/safetube"
     },
     {
+        "source": "/safe-browser-for-schools",
+        "destination": "https://proxy.astrosafe.co/safe-browser-for-schools"
+    },
+    {
+        "source": "/safe-browser-for-families",
+        "destination": "https://proxy.astrosafe.co/safe-browser-for-families"
+    },
+    {
         "source": "/pedia",
         "destination":  "https://astro-monorepo-pedia.vercel.app/pedia"
     },
