@@ -36,7 +36,11 @@ export const INVITED_FLOWS_STEP_TITLES: Record<
 
 const STEP_COMPONENTS: Record<
   AWInsuranceApplicationInvitedFlowStep,
-  React.FC<{ nextCallback: () => void; progress?: number }>
+  React.FC<{
+    nextCallback: () => void;
+    progress?: number;
+    flow?: AWInsuranceApplicationFlow;
+  }>
 > = {
   welcome: InsuranceApplicationWelcome,
   termsOfService: InsuranceApplicationTermsOfService,
@@ -60,9 +64,10 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
       {currentStep && StepView ? (
         <StepView
           progress={
-            awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) /
+            (awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1) /
             awInsuranceApplicationInvitedFlowSteps.length
           }
+          flow={props.flow}
           nextCallback={() =>
             setCurrentStep(
               awInsuranceApplicationInvitedFlowSteps[

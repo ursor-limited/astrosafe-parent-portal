@@ -1,7 +1,13 @@
 import { AWButton } from "@/components/AWButton";
 import InsuranceApplicationDialog from "./dialog";
 import VaultIllustration from "@/images/VaultIllustration.svg";
-import AWInfoLine, { IAWInfoLineProps } from "@/components/AWInfoLine";
+import { IAWInfoLineProps } from "@/components/AWInfoLine";
+import dynamic from "next/dynamic";
+
+const AWInfoLine = dynamic(
+  () => import("@/components/AWInfoLine"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export default function InsuranceApplicationIllustrationDialog(props: {
   title: string;

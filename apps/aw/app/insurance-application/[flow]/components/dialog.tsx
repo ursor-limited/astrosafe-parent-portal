@@ -49,7 +49,9 @@ export default function InsuranceApplicationDialog(props: {
               <div
                 key={i}
                 className={`h-[4px] w-[4px] rounded-full ${
-                  i / 4 < props.progress! ? "bg-[#E0E3E6]" : "bg-darkTeal-0"
+                  props.progress === 1 || i / 4 < props.progress!
+                    ? "bg-[#E0E3E6]"
+                    : "bg-darkTeal-0"
                 } z-10`}
               />
             ))}

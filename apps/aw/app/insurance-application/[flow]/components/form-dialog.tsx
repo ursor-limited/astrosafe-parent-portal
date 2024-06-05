@@ -69,7 +69,7 @@ export interface IAWFormStepAnswers {
 export default function InsuranceApplicationFormDialog(props: {
   stepId: AWInsuranceApplicationMainFlowStep;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   sections: IAWFormSection[];
   progress: number;
   nextCallback: () => void;

@@ -9,16 +9,18 @@ import Image from "next/image";
 
 export default function InsuranceApplicationIdentitySuccess(props: {
   nextCallback: () => void;
+  progress?: number;
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.success}
-      buttonCallback={props.nextCallback}
+      buttonCallback={props.progress === 1 ? undefined : props.nextCallback}
       progress={
+        props.progress ||
         (CHECKPOINT_STEPS.indexOf("identity") +
           awInsuranceApplicationIdentityStepViews.indexOf("success") /
             awInsuranceApplicationIdentityStepViews.length) /
-        CHECKPOINT_STEPS.length
+          CHECKPOINT_STEPS.length
       }
       illustration={
         <Image
@@ -32,7 +34,11 @@ export default function InsuranceApplicationIdentitySuccess(props: {
     >
       <div className="h-[347px] flex flex-col gap-3xl text-xl font-medium text-darkTeal-2">
         <div>Your identity was successfully verified.</div>
-        <div>Proceed to the next parts of the application now.</div>
+        <div>
+          {props.progress === 1
+            ? "You can now close the application."
+            : "Proceed to the next parts of the application now."}
+        </div>
       </div>
     </InsuranceApplicationIllustrationDialog>
   );

@@ -4,8 +4,13 @@ import {
   AWInsuranceApplicationMainFlowStep,
 } from "./mainFlow/controller";
 import { useLocalStorage } from "usehooks-ts";
-import AWDropdown from "@/components/AWDropdown";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const AWDropdown = dynamic(
+  () => import("@/components/AWDropdown"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const TestingBar = (props: { flow: AWInsuranceApplicationFlow }) => {
   const [currentStep, setCurrentStep] = useLocalStorage<

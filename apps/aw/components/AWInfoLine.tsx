@@ -1,6 +1,7 @@
+"use client";
+
 import { DM_Mono } from "next/font/google";
 import { useEffect, useState } from "react";
-import useOutsideClick from "./useOutsideClick";
 import { createPortal } from "react-dom";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 

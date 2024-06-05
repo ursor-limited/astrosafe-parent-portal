@@ -20,7 +20,6 @@ import InsuranceApplicationBusinessSummary from "./views/business-summary";
 import InsuranceApplicationInsuranceNeeds from "./views/insurance-needs";
 import InsuranceApplicationGovernance from "./views/governance";
 import InsuranceApplicationSpending from "./views/spending";
-import AWInfoLine from "@/components/AWInfoLine";
 import InsuranceApplicationWhitelist from "./views/whitelist";
 import InsuranceApplicationUpload from "./views/upload";
 import InsuranceApplicationCheckpointsStart from "./views/checkpoints/start";
@@ -29,6 +28,12 @@ import InsuranceApplicationLeaders from "./views/leaders";
 import _ from "lodash";
 import InsuranceApplicationPayment from "./views/payment";
 import TestingBar from "../TestingBar";
+import dynamic from "next/dynamic";
+
+const AWInfoLine = dynamic(
+  () => import("@/components/AWInfoLine"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 export type AWInsuranceApplicationFlow =
   | "main"
@@ -80,94 +85,6 @@ export const MAIN_FLOW_STEP_TITLES: Record<
 };
 
 const FADEIN_DELAY = 66;
-
-export function AWMultiChoiceField(props: {
-  value?: string;
-  setValue: (newValue: string) => void;
-  options?: IAWMultiChoiceFieldOption[];
-}) {
-  return (
-    <div
-      className={`${
-        props.options?.some((o) => o.explanation)
-          ? "pt-lg flex-col gap-xl"
-          : " gap-x-[45px] gap-y-lg"
-      } w-full flex  items-center flex-wrap`}
-    >
-      {props.options?.map((o) => (
-        <div key={o.id} className="flex flex-col gap-2">
-          <div
-            className="flex items-center gap-[16px] cursor-pointer hover:opacity-60 duration-200"
-            onClick={() => props.setValue(o.id)}
-          >
-            <div
-              className={`h-[15px] w-[15px] flex items-center justify-center rounded-full ${
-                props.value === o.id
-                  ? "border-fields-checkbox-selected"
-                  : "border-fields-checkbox-default"
-              } border-[1.5px] border-solid duration-300`}
-            >
-              <div
-                className={`h-[7px] w-[7px] rounded-full bg-fields-checkbox-selected duration-300 ${
-                  props.value === o.id ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            </div>
-            <div className="text-darkTeal-5 text-xl">{o.text}</div>
-          </div>
-          {o.explanation ? (
-            <div className="text-darkTeal-0 text-lg">{o.explanation}</div>
-          ) : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export function AWTextField(props: {
-  value?: string;
-  setValue: (newValue: string) => void;
-  placeholder?: string;
-}) {
-  return (
-    <div className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs">
-      <input
-        className="w-full text-base/[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
-        placeholder={props.placeholder}
-        value={props.value ?? ""}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          props.setValue(event.target.value)
-        }
-        style={{
-          outline: "none",
-        }}
-      />
-    </div>
-  );
-}
-
-export function AWLongTextField(props: {
-  value?: string;
-  setValue: (newValue: string) => void;
-  placeholder?: string;
-}) {
-  return (
-    <div className="h-[100px] w-full flex items-center pl-lg bg-fields-bg rounded-xs py-[14px]">
-      <textarea
-        className="w-full h-full text-base/[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
-        placeholder={props.placeholder}
-        value={props.value ?? ""}
-        onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-          props.setValue(event.target.value)
-        }
-        style={{
-          resize: "none",
-          outline: "none",
-        }}
-      />
-    </div>
-  );
-}
 
 export function AWFormSectionSubsection(
   props: IAWFormSectionSubsection & {

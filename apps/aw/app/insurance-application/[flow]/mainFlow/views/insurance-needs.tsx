@@ -1,7 +1,5 @@
 import {
   AWInsuranceApplicationMainFlowStep,
-  AWMultiChoiceField,
-  AWTextField,
   IAWFormSectionProps,
   MAIN_FLOW_STEP_TITLES,
 } from "../controller";
@@ -16,6 +14,8 @@ import { AWButton } from "@/components/AWButton";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import { useLocalStorage } from "usehooks-ts";
+import AWTextField from "@/components/AWTextField";
+import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),

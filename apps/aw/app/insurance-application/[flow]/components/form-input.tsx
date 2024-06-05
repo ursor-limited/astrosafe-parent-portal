@@ -1,10 +1,8 @@
-import {
-  AWLongTextField,
-  AWMultiChoiceField,
-  AWTextField,
-} from "../mainFlow/controller";
+import AWTextField from "@/components/AWTextField";
 import { IAWFormInput, IAWFormInputAnswer } from "./form-dialog";
 import dynamic from "next/dynamic";
+import AWLongTextField from "@/components/AWLongTextField";
+import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),

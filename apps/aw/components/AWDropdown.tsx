@@ -108,7 +108,7 @@ export default function AWDropdown(props: {
         onClick={() => setOpen(!open)}
       >
         <div
-          className={`w-full text-base/[18px] ${
+          className={`w-full text-[18px] ${
             props.value
               ? "text-fields-text-filling"
               : "text-fields-text-placeholder"
