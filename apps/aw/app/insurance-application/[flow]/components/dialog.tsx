@@ -1,5 +1,6 @@
 "use client";
 
+import DynamicContainer from "@/components/DynamicContainer";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";

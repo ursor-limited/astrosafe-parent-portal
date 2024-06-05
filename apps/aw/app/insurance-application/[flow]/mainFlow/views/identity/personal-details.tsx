@@ -549,7 +549,9 @@ export default function InsuranceApplicationPersonalDetails(props: {
       sections={FLOW_SECTIONS[props.flow || "main"]}
       nextCallback={props.nextCallback}
       customSections={
-        props.flow === "main" || props.flow === "shareholderKeyHolder"
+        !props.flow ||
+        props.flow === "main" ||
+        props.flow === "shareholderKeyHolder"
           ? {
               "665738851df0c1e04588163f": SigningDeviceSection,
             }

@@ -3,19 +3,15 @@ import InsuranceApplicationDialog from "../../components/dialog";
 import {
   AWFormSection,
   AWInsuranceApplicationMainFlowStep,
-  AWLongTextField,
-  AWTextField,
-  IAWFormSectionProps,
   MAIN_FLOW_STEP_TITLES,
 } from "../controller";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
-import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
-import _, { add } from "lodash";
+import _ from "lodash";
 import {
   IAWFormInputAnswer,
   IAWFormSection,
@@ -23,6 +19,8 @@ import {
 import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
 import { AWCheckbox } from "@/components/AWCheckbox";
+import AWTextField from "@/components/AWTextField";
+import AWLongTextField from "@/components/AWLongTextField";
 
 interface IAWCompanyLeader {
   name: string;

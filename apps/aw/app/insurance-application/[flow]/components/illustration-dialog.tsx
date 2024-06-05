@@ -3,6 +3,8 @@ import InsuranceApplicationDialog from "./dialog";
 import VaultIllustration from "@/images/VaultIllustration.svg";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import dynamic from "next/dynamic";
+import { useLottie } from "lottie-react";
+import VaultLottie from "@/images/VaultLottie.json";
 
 const AWInfoLine = dynamic(
   () => import("@/components/AWInfoLine"),
@@ -20,6 +22,11 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   illustration?: React.ReactNode;
   children?: React.ReactNode;
 }) {
+  const options = {
+    animationData: VaultLottie,
+    autoplay: true,
+  };
+  const { View: Lottie } = useLottie(options, { height: 360 });
   return (
     <InsuranceApplicationDialog title={props.title} progress={props.progress}>
       <div className="h-full w-full flex">
@@ -45,7 +52,7 @@ export default function InsuranceApplicationIllustrationDialog(props: {
           </div>
         </div>
         <div className="flex flex-1 justify-center items-center">
-          {props.illustration || <VaultIllustration />}
+          {props.illustration || Lottie}
         </div>
       </div>
     </InsuranceApplicationDialog>
