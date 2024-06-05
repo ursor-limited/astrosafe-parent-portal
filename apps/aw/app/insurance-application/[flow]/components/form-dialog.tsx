@@ -69,6 +69,7 @@ export interface IAWFormStepAnswers {
 export default function InsuranceApplicationFormDialog(props: {
   stepId: AWInsuranceApplicationMainFlowStep;
   title: string;
+  subtitle: string;
   sections: IAWFormSection[];
   progress: number;
   nextCallback: () => void;
@@ -171,6 +172,11 @@ export default function InsuranceApplicationFormDialog(props: {
       // }}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
+        {props.subtitle ? (
+          <div className="font-medium text-xl text-darkTeal-2 pb-xl">
+            {props.subtitle}
+          </div>
+        ) : null}
         <div className="w-full flex flex-col gap-[46px]">
           {props.sections.map((section, i) =>
             section.custom ? (

@@ -234,21 +234,24 @@ const SigningDeviceSection = (
 
 export default function InsuranceApplicationPersonalDetails(props: {
   nextCallback: () => void;
+  progress?: number;
 }) {
   return (
     <InsuranceApplicationFormDialog
       stepId="identity"
       title={IDENTITY_STEP_TITLES.personalDetails}
+      subtitle="As a company leader, please input your application information and proceed to identity verification KYC/AML."
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       customSections={{
         "665738851df0c1e04588163f": SigningDeviceSection,
       }}
       progress={
+        props.progress ||
         (CHECKPOINT_STEPS.indexOf("identity") +
           awInsuranceApplicationIdentityStepViews.indexOf("personalDetails") /
             awInsuranceApplicationIdentityStepViews.length) /
-        CHECKPOINT_STEPS.length
+          CHECKPOINT_STEPS.length
       }
     />
   );

@@ -9,6 +9,7 @@ import Image from "next/image";
 
 export default function InsuranceApplicationIdentityKYC(props: {
   nextCallback: () => void;
+  progress?: number;
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
@@ -16,10 +17,11 @@ export default function InsuranceApplicationIdentityKYC(props: {
       subtitle="How to verify your identity?"
       //buttonCallback={props.nextCallback}
       progress={
+        props.progress ||
         (CHECKPOINT_STEPS.indexOf("identity") +
           awInsuranceApplicationIdentityStepViews.indexOf("kyc") /
             awInsuranceApplicationIdentityStepViews.length) /
-        CHECKPOINT_STEPS.length
+          CHECKPOINT_STEPS.length
       }
       illustration={
         <Image

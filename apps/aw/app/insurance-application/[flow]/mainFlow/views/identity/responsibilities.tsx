@@ -9,6 +9,7 @@ import { CHECKPOINT_STEPS } from "../../../components/checkpoint-dialog";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
+  progress?: number;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
   return (
@@ -22,10 +23,11 @@ export default function InsuranceApplicationResponsibilities(props: {
       }}
       buttonDisabled={!checked}
       progress={
+        props.progress ||
         (CHECKPOINT_STEPS.indexOf("identity") +
           awInsuranceApplicationIdentityStepViews.indexOf("responsibilities") /
             awInsuranceApplicationIdentityStepViews.length) /
-        CHECKPOINT_STEPS.length
+          CHECKPOINT_STEPS.length
       }
     >
       <div className="flex flex-col gap-3xl">
