@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/system";
 import { useRef } from "react";
 import { useResizeObserver } from "./useResizeObserver";
 
@@ -14,7 +15,7 @@ export default function DynamicContainer(props: IDynamicContainerProps) {
   const rect = useResizeObserver(content);
 
   return (
-    <div
+    <Box
       style={{
         transition: `${props.duration}ms`,
         height: `${rect?.height}px`,
@@ -23,17 +24,17 @@ export default function DynamicContainer(props: IDynamicContainerProps) {
         overflowY: "hidden",
       }}
     >
-      <div
+      <Box
         ref={content}
         style={{
           width: props.fullWidth ? "100%" : "fit-content",
           maxWidth: props.fullWidth ? "100%" : "fit-content",
           height: "fit-content",
-          overflow: "visible",
         }}
+        overflow="visible"
       >
         {props.children}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
