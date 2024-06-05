@@ -1,10 +1,5 @@
-import {
-  AWInsuranceApplicationMainFlowStep,
-  IAWFormSectionProps,
-  MAIN_FLOW_STEP_TITLES,
-} from "../controller";
+import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
-  IAWFormInputAnswer,
   IAWFormSection,
 } from "../../components/form-dialog";
 import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
@@ -13,7 +8,6 @@ import dynamic from "next/dynamic";
 import { AWButton } from "@/components/AWButton";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
-import { useLocalStorage } from "usehooks-ts";
 import AWTextField from "@/components/AWTextField";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
@@ -217,8 +211,6 @@ const EXCHANGE_CUSTODIAN_OPTION_ID = "6658d9c760b6313b6af2becf";
 const SELF_CUSTODY_OPTION_ID = "6658d9e125c05ba09615c27e";
 const NOT_PURCHASED_OPTION_ID = "6658d9f4d74b500ca7fcadbd";
 
-// const ADDRESS_SEPARATOR = "__";
-
 const BitcoinStorageSection = (
   props: IAWFormSectionProps & { setDone: () => void }
 ) => {
@@ -245,33 +237,10 @@ const BitcoinStorageSection = (
 
   useEffect(() => {
     props.setDone();
-    //addresses.some((a) => !!a) && props.setDone();
   }, []);
 
-  // const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-  //   Partial<Record<AWInsuranceApplicationStep, IAWFormInputAnswer[]>>
-  // >("committedAnswers", {});
-
-  // const [canProceed, setCanProceed] = useState<boolean>(false);
-  // useEffect(() => {
-  //   const sectionAnswers = committedAnswers["insuranceNeeds"];
-  //   sectionAnswers &&
-  //     setCanProceed(
-  //       SECTIONS.filter((s) => !s.custom)
-  //         .flatMap((s) => s.inputs)
-  //         .every(
-  //           (input) =>
-  //             input?.optional ||
-  //             sectionAnswers.find((a) => a.inputId === input?.id)?.value
-  //         )
-  //     );
-  // }, [committedAnswers]);
-
   return (
-    <div
-      className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}
-      //style={{ animationDelay: `${props.i * FADEIN_DELAY}ms` }}
-    >
+    <div className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}>
       <div className="text-xl font-medium text-darkTeal-2">{`${props.i}) Where is the Bitcoin currently being stored?`}</div>
       <div className="flex flex-col gap-xl">
         <AWMultiChoiceField
