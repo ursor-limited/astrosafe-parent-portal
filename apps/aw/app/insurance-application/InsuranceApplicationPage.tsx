@@ -27,6 +27,9 @@ import InsuranceApplicationCheckpointsStart from "./views/checkpoints/start";
 import InsuranceApplicationCheckpointsSubmit from "./views/checkpoints/submit";
 import InsuranceApplicationLeaders from "./views/InsuranceApplicationLeaders";
 import _ from "lodash";
+import InsuranceApplicationPayment from "./views/InsuranceApplicationPayment";
+import { AWButton } from "@/components/AWButton";
+import TestingBar from "./TestingBar";
 
 export const awInsuranceApplicationSteps = [
   "welcome",
@@ -43,6 +46,7 @@ export const awInsuranceApplicationSteps = [
   "whitelist",
   "upload",
   "submit",
+  "payment",
 ] as const;
 export type AWInsuranceApplicationStep =
   (typeof awInsuranceApplicationSteps)[number];
@@ -62,6 +66,7 @@ export const STEP_TITLES: Record<AWInsuranceApplicationStep, string> = {
   whitelist: "Whitelist addresses",
   upload: "Upload files",
   submit: "Submit Application",
+  payment: "Underwriting and concierge fees payment",
 };
 
 const FADEIN_DELAY = 66;
@@ -314,6 +319,7 @@ const STEP_COMPONENTS: Record<
   whitelist: InsuranceApplicationWhitelist,
   upload: InsuranceApplicationUpload,
   submit: InsuranceApplicationCheckpointsSubmit,
+  payment: InsuranceApplicationPayment,
 };
 
 export default function InsuranceApplicationPage() {
@@ -338,7 +344,7 @@ export default function InsuranceApplicationPage() {
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
   return (
-    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll">
+    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative">
       {currentStep && StepView ? (
         <StepView
           key={currentStep}
@@ -351,6 +357,7 @@ export default function InsuranceApplicationPage() {
           <StepView key={step} nextCallback={() => setStepComplete(step)} />
         );
       })} */}
+      <TestingBar />
     </div>
   );
 }
