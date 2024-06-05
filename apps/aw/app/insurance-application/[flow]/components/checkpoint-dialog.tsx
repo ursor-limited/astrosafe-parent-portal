@@ -18,6 +18,7 @@ export const CHECKPOINT_STEPS: AWInsuranceApplicationMainFlowStep[] = [
   "insuranceNeeds",
   "governance",
   "spending",
+  "whitelist",
   "upload",
 ];
 

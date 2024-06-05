@@ -1,8 +1,4 @@
-import {
-  AWTextField,
-  IAWFormSectionProps,
-  MAIN_FLOW_STEP_TITLES,
-} from "../controller";
+import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
@@ -12,6 +8,7 @@ import BitcoinIcon from "@/images/icons/BitcoinIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import { AWButton } from "@/components/AWButton";
+import AWTextField from "@/components/AWTextField";
 
 interface IWhitelistAddress {
   nickname: string;
@@ -27,8 +24,12 @@ export const SECTIONS: IAWFormSection[] = [
 
 const INPUT_ID = "665ad25ea88f15e7f1c98af6";
 
-const AddressesSection = (props: IAWFormSectionProps) => {
-  const [addresses, setAddresses] = useState<IWhitelistAddress[]>([]);
+const AddressesSection = (
+  props: IAWFormSectionProps & { setDone: () => void }
+) => {
+  const [addresses, setAddresses] = useState<IWhitelistAddress[]>([
+    { nickname: "", address: "" },
+  ]);
   const [modified, setModified] = useState<boolean>(false);
 
   useEffect(() => {
@@ -38,14 +39,13 @@ const AddressesSection = (props: IAWFormSectionProps) => {
       if (addresses_) {
         setAddresses(addresses_);
         setModified(true);
-      } else {
-        addRow();
       }
     }
   }, [props.answers]);
 
   useEffect(() => {
     modified && addresses && props.setValue(INPUT_ID, addresses);
+    addresses.every((a) => a.address && a.nickname) && props.setDone();
   }, [addresses]);
 
   const addRow = () => {
@@ -58,7 +58,7 @@ const AddressesSection = (props: IAWFormSectionProps) => {
         <div>{`AnchorWatch enforces a cool down period of at least three days before sending to a new bitcoin address.`}</div>
         <div>{`You can add bitcoin addresses to your whitelist address book now, which will begin the cool down period. Additional addresses can be added after your policy begins.`}</div>
       </div>
-      <div className="flex flex-col gap-5xl">
+      <div className="flex flex-col gap-lg">
         {addresses?.map((address, i) => (
           <WhitelistAddressRow
             key={i}
@@ -152,7 +152,7 @@ export default function InsuranceApplicationWhitelist(props: {
   return (
     <InsuranceApplicationFormDialog
       stepId="whitelist"
-      title={MAIN_FLOW_STEP_TITLES.insuranceNeeds}
+      title={MAIN_FLOW_STEP_TITLES.whitelist}
       sections={SECTIONS}
       customSections={{
         "665acb83dd53c4b3be623eea": AddressesSection,

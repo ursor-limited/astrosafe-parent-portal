@@ -20,9 +20,8 @@ export default function InsuranceApplicationUpload(props: {
   return (
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.upload}
-      // leftCallback={() => setStepIndex(stepIndex - 1)}
-      // rightCallback={() => setStepIndex(stepIndex + 1)}
       progress={CHECKPOINT_STEPS.indexOf("upload") / CHECKPOINT_STEPS.length}
+      buttonCallback={() => null}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-8xl py-[64px]">
         <div className="flex flex-col gap-xl font-medium text-xl text-darkTeal-2">

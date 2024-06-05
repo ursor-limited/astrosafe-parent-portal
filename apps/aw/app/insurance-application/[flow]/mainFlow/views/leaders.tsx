@@ -22,7 +22,7 @@ import { AWCheckbox } from "@/components/AWCheckbox";
 import AWTextField from "@/components/AWTextField";
 import AWLongTextField from "@/components/AWLongTextField";
 
-interface IAWCompanyLeader {
+export interface IAWCompanyLeader {
   name: string;
   birthday: string;
   email: string;
@@ -35,7 +35,7 @@ interface IAWCompanyLeader {
   };
 }
 
-const LEADER_DETAILS_AGGLOMERATED_INPUT_ID = "leaders";
+export const LEADER_DETAILS_AGGLOMERATED_INPUT_ID = "leaders";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -158,9 +158,13 @@ const LeaderRow = (props: {
     () =>
       props.details &&
       setStatus(
-        Object.values(props.details).every((x) => !!x)
+        Object.values(props.details).every((x) =>
+          typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
+        )
           ? "complete"
-          : Object.values(props.details).some((x) => !!x)
+          : Object.values(props.details).some((x) =>
+              typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
+            )
           ? "incomplete"
           : "empty"
       ),
@@ -358,22 +362,24 @@ export default function InsuranceApplicationLeaders(props: {
     [committedAnswers]
   );
 
-  // const [customSectionsDone, setCustomSectionsDone] = useState<
-  //   IAWFormSection["id"][]
-  // >([]);
-
-  // useEffect(() => {
-  //   setCanProceed(!!props.canProceed);
-  // }, [props.canProceed]);
-
   const commitAnswers = () =>
     setCommittedAnswers({
       ...committedAnswers.leaders,
-      leaders: answers.map((a) =>
-        a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
-          ? { inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID, value: leaders }
-          : a
-      ),
+      leaders: answers.find(
+        (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+      )
+        ? answers.map((a) =>
+            a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+              ? {
+                  inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID,
+                  value: leaders,
+                }
+              : a
+          )
+        : [
+            ...answers,
+            { inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID, value: leaders },
+          ],
     });
 
   const [leaders, setLeaders] = useState<IAWCompanyLeader[]>([
@@ -462,14 +468,6 @@ export default function InsuranceApplicationLeaders(props: {
         areas: "",
       } as IAWCompanyLeader,
     ]);
-
-  // useEffect(() => {
-  //   if (leaders.length === 0) {
-  //     addLeader();
-  //     addLeader();
-  //     addLeader();
-  //   }
-  // }, []);
 
   const getRowTitle = (i: number) => {
     const name = leaders[i].name;

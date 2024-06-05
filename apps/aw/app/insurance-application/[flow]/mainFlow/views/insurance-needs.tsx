@@ -222,7 +222,7 @@ const NOT_PURCHASED_OPTION_ID = "6658d9f4d74b500ca7fcadbd";
 const BitcoinStorageSection = (
   props: IAWFormSectionProps & { setDone: () => void }
 ) => {
-  const [addresses, setAddresses] = useState<string[]>([]);
+  const [addresses, setAddresses] = useState<string[]>([""]);
   const [modified, setModified] = useState<boolean>(false);
 
   useEffect(() => {
@@ -233,8 +233,6 @@ const BitcoinStorageSection = (
       if (addresses_) {
         setAddresses(addresses_);
         setModified(true);
-      } else if (addresses.length === 0) {
-        addRow();
       }
     }
   }, [props.answers]);
@@ -246,8 +244,9 @@ const BitcoinStorageSection = (
   const addRow = () => setAddresses((prev) => [...prev, ""]);
 
   useEffect(() => {
-    addresses.some((a) => !!a) && props.setDone();
-  }, [addresses]);
+    props.setDone();
+    //addresses.some((a) => !!a) && props.setDone();
+  }, []);
 
   // const [committedAnswers, setCommittedAnswers] = useLocalStorage<
   //   Partial<Record<AWInsuranceApplicationStep, IAWFormInputAnswer[]>>

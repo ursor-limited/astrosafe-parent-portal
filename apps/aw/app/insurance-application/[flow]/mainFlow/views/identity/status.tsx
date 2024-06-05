@@ -7,13 +7,18 @@ import {
 import CircleCheckIcon from "@/images/icons/CircleCheckIcon.svg";
 import HourglassIcon from "@/images/icons/HourglassIcon.svg";
 import { AWButton } from "@/components/AWButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  IAWCompanyLeader,
+  LEADER_DETAILS_AGGLOMERATED_INPUT_ID,
+} from "../leaders";
+import { AWInsuranceApplicationMainFlowStep } from "../../controller";
+import { useLocalStorage } from "usehooks-ts";
+import { IAWFormInputAnswer } from "../../../components/form-dialog";
 
-export interface IAWIdentity {
-  name: string;
-  email: string;
+export type IAWIdentity = IAWCompanyLeader & {
   status: "pending" | "done";
-}
+};
 
 const IdentityStatusRow = (props: {
   name: string;
@@ -41,30 +46,25 @@ const IdentityStatusRow = (props: {
   </div>
 );
 
-const DUMMY_PEOPLE = [
-  {
-    name: "Gooo Bool",
-    email: "",
-    status: "pending",
-  },
-  {
-    name: "Losh Boorf",
-    email: "",
-    status: "done",
-  },
-];
-
 export default function InsuranceApplicationIdentityStatus(props: {
   nextCallback: () => void;
 }) {
-  // const [progress, setProgress] = useState<number>(0);
-  // useEffect(() => {
-  //   (CHECKPOINT_STEPS.indexOf("identity") +
-  //     awInsuranceApplicationIdentityStepViews.indexOf("status") /
-  //       awInsuranceApplicationIdentityStepViews.length) /
-  //     CHECKPOINT_STEPS.length;
-  // }, []);
-  const [people, setPeople] = useState<IAWIdentity[]>([]);
+  const [committedAnswers, setCommittedAnswers] = useLocalStorage<
+    Partial<Record<AWInsuranceApplicationMainFlowStep, IAWFormInputAnswer[]>>
+  >("committedAnswers", {});
+
+  const [leaders, setLeaders] = useState<IAWIdentity[]>([]);
+  useEffect(() => {
+    const leaders_ = committedAnswers?.leaders?.find(
+      (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+    )?.value as IAWCompanyLeader[];
+    const leadersWithHardcodedStatuses = leaders_?.map((l, i) => ({
+      ...l,
+      status: i === 2 ? "pending" : "done",
+    })) as IAWIdentity[];
+    setLeaders(leadersWithHardcodedStatuses || []);
+  }, [committedAnswers]);
+
   return (
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.status}
@@ -86,14 +86,14 @@ export default function InsuranceApplicationIdentityStatus(props: {
           completed identity verification.
         </div>
         <div className="flex flex-col gap-lg">
-          {DUMMY_PEOPLE.map((p, i) => (
+          {leaders.map((l, i) => (
             <IdentityStatusRow
               key={i}
-              name={p.name}
-              status={p.status as IAWIdentity["status"]}
+              name={l.name}
+              status={l.status as IAWIdentity["status"]}
               showButton={
-                p.status === "pending" &&
-                DUMMY_PEOPLE.some((p) => p.status === "done")
+                l.status === "pending" &&
+                leaders.some((l) => l.status === "done")
               }
               resend={() => null}
             />
