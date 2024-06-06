@@ -6,21 +6,13 @@ module.exports = withSvgr({
   transpilePackages: ["ui"],
   images: {
     domains: [
-      "https://www.astrosafe.co",
-      "https://www.astrosafe.co/_next/image",
-      "https://astrosafe.co",
-      "https://header.astrosafe.co",
-      "https://astro-monorepo-canvas.vercel.app",
-      "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
-      "ursorassets.s3.eu-west-1.amazonaws.com",
-      "i.ytimg.com",
-      "assets-global.website-files.com",
+      "https://astro-monorepo-aw.vercel.app",
     ],
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://header.astrosafe.co"
+      ? "https://astro-monorepo-aw.vercel.app"
       : process.env.VERCEL_ENV === "preview"
-      ? "https://header.astrosafe.co"
+      ? "https://astro-monorepo-aw.vercel.app"
       : undefined,
 });
