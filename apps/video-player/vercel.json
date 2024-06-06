@@ -25,6 +25,10 @@
         "destination": "https://proxy.astrosafe.co/safe-browser-for-families"
     },
     {
+        "source": "/safe-browser-for-enterprises",
+        "destination": "https://proxy.astrosafe.co/safe-browser-for-enterprises"
+    },
+    {
         "source": "/pedia",
         "destination":  "https://astro-monorepo-pedia.vercel.app/pedia"
     },
