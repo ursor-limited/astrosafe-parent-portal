@@ -28,13 +28,13 @@ function AWDropdownList(props: {
       className="overflow-hidden"
       style={{
         height,
-        //width: props.width || width,
+        width: props.width,
         pointerEvents: props.open ? undefined : "none",
       }}
     >
       {/* <div className="h-full w-full"> */}
       <div
-        className="w-fit py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
+        className="w-full py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
         style={{
           transform: `translateY(${props.open ? 0 : -100}%)`,
         }}
@@ -71,6 +71,7 @@ export default function AWDropdown(props: {
 
   const [listY, setListY] = useState<number>(0);
   const [listX, setListX] = useState<number>(0);
+  const [listWidth, setListWidth] = useState<number>(0);
 
   const [listPositionRef, setListPositionRef] = useState<HTMLElement | null>(
     null
@@ -79,9 +80,11 @@ export default function AWDropdown(props: {
   useEffect(() => {
     setListY(listPositionRef?.getBoundingClientRect()?.bottom ?? 0);
     setListX(listPositionRef?.getBoundingClientRect()?.left ?? 0);
+    setListWidth(listPositionRef?.getBoundingClientRect()?.width ?? 0);
   }, [
     listPositionRef?.getBoundingClientRect()?.bottom,
     listPositionRef?.getBoundingClientRect()?.left,
+    listPositionRef?.getBoundingClientRect()?.width,
   ]);
   return (
     <div className="w-full" ref={setOutsideClickRef}>
@@ -91,6 +94,7 @@ export default function AWDropdown(props: {
           style={{
             left: listX,
             top: listY,
+            width: listWidth,
             pointerEvents: open ? undefined : "none",
           }}
         >
@@ -98,6 +102,7 @@ export default function AWDropdown(props: {
             open={open}
             options={props.options}
             setValue={props.setValue}
+            width={listWidth}
           />
         </div>,
         document.body
