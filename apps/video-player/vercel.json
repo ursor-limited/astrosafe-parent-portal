@@ -29,6 +29,10 @@
         "destination": "https://proxy.astrosafe.co/safe-browser-for-enterprises"
     },
     {
+        "source": "/download",
+        "destination": "https://proxy.astrosafe.co/download"
+    },
+    {
         "source": "/pedia",
         "destination":  "https://astro-monorepo-pedia.vercel.app/pedia"
     },
@@ -103,10 +107,6 @@
     {
         "source": "/child-privacy-policy",
         "destination": "https://proxy.astrosafe.co/child-privacy-policy"
-    },
-    {
-        "source": "/tools/browser",
-        "destination": "https://proxy.astrosafe.co/tools/browser"
     },
     {
         "source": "/tools/kids-safe-search-engine",
