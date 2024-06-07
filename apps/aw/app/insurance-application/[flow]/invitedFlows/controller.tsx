@@ -9,7 +9,10 @@ import InsuranceApplicationResponsibilities from "../mainFlow/views/identity/res
 import InsuranceApplicationPersonalDetails from "../mainFlow/views/identity/personal-details";
 import InsuranceApplicationIdentityKYC from "../mainFlow/views/identity/kyc";
 import InsuranceApplicationIdentitySuccess from "../mainFlow/views/identity/success";
-import { AWInsuranceApplicationFlow } from "../mainFlow/controller";
+import {
+  AWInsuranceApplicationFlow,
+  SCROLLABLE_PAGE_ID,
+} from "../mainFlow/controller";
 
 export const awInsuranceApplicationInvitedFlowSteps = [
   "welcome",
@@ -60,7 +63,10 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
   return (
-    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative">
+    <div
+      id={SCROLLABLE_PAGE_ID}
+      className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+    >
       {currentStep && StepView ? (
         <StepView
           progress={

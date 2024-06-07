@@ -30,6 +30,8 @@ import InsuranceApplicationPayment from "./views/payment";
 import TestingBar from "../TestingBar";
 import dynamic from "next/dynamic";
 
+export const SCROLLABLE_PAGE_ID = "scrollable-page";
+
 const AWInfoLine = dynamic(
   () => import("@/components/AWInfoLine"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
@@ -273,8 +275,15 @@ export default function InsuranceApplicationMainFlowController() {
 
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
+  // const [scrollRerenderingForcer, setScrollRerenderingForcer] =
+  //   useState<boolean>(false);
+
   return (
-    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative">
+    <div
+      id={SCROLLABLE_PAGE_ID}
+      className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      //onScroll={() => setScrollRerenderingForcer((prev) => !prev)}
+    >
       {currentStep && StepView ? (
         <StepView
           key={currentStep}
