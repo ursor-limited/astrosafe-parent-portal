@@ -75,6 +75,10 @@ const TestingBar = (props: { flow: AWInsuranceApplicationFlow }) => {
                   id: "shareholderKeyHolder",
                   text: "25% SH Keyholder",
                 },
+                {
+                  id: "personal",
+                  text: "Personal",
+                },
               ]}
               placeholder="Flow"
             />

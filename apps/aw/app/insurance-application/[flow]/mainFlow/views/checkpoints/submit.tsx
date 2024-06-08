@@ -7,10 +7,10 @@ import {
 import dynamic from "next/dynamic";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
-import { CHECKPOINT_STEPS } from "../../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 
 const InsuranceApplicationCheckpointDialog = dynamic(
-  () => import("../../../components/checkpoint-dialog"),
+  () => import("./checkpoint-dialog"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 

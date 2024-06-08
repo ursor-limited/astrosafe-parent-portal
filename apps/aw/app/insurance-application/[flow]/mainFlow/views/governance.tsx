@@ -2,7 +2,7 @@ import { MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {

@@ -58,6 +58,11 @@ function AWDropdownList(props: {
                 onMouseEnter={() => setHoveringRowId(o.id)}
                 onMouseLeave={() => setHoveringRowId(undefined)}
                 onClick={() => props.setValue(o.id)}
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
               >
                 {o.text}
               </div>

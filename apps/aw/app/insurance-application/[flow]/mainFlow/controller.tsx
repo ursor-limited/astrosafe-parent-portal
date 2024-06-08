@@ -43,7 +43,8 @@ export type AWInsuranceApplicationFlow =
   | "digAssMan"
   | "shareholder"
   | "keyholder"
-  | "shareholderKeyHolder";
+  | "shareholderKeyHolder"
+  | "personal";
 
 export const awInsuranceApplicationMainFlowSteps = [
   "welcome",
@@ -248,9 +249,7 @@ const STEP_COMPONENTS: Record<
 };
 
 export default function InsuranceApplicationMainFlowController() {
-  const [flow, setFlow] = useLocalStorage<
-    AWInsuranceApplicationFlow | undefined
-  >("flow", "main");
+  useLocalStorage<AWInsuranceApplicationFlow | undefined>("flow", "main");
 
   const [stepCompletions, setStepCompletions] = useLocalStorage<
     Partial<Record<AWInsuranceApplicationMainFlowStep, boolean>>
@@ -271,14 +270,10 @@ export default function InsuranceApplicationMainFlowController() {
 
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
-  // const [scrollRerenderingForcer, setScrollRerenderingForcer] =
-  //   useState<boolean>(false);
-
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
-      //onScroll={() => setScrollRerenderingForcer((prev) => !prev)}
     >
       {currentStep && StepView ? (
         <StepView

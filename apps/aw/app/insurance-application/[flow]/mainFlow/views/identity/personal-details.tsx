@@ -2,7 +2,7 @@ import { COUNTRIES_ALPHA2 } from "@/components/countries";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
 import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
