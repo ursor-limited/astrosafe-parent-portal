@@ -38,26 +38,6 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
-  {
-    id: "6651d885120e45915573a535",
-    title: "Will you be a Key Holder in the vault?",
-    inputs: [
-      {
-        id: "6652e5168e3e3d860c9772e3",
-        inputType: "multiChoice",
-        options: [
-          {
-            id: "6651d8968dec75fc382930a1",
-            text: "Yes",
-          },
-          {
-            id: "6651d8c083bc0df3082153e3",
-            text: "No",
-          },
-        ],
-      },
-    ],
-  },
 ];
 
 export default function InsuranceApplicationPolicyOwner(props: {

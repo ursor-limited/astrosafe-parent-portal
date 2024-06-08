@@ -56,6 +56,7 @@ export const SECTIONS: IAWFormSection[] = [
         id: "665346cf1ec61b1354a74f9a",
         inputType: "text",
         placeholder: "Enter number here",
+        maxLength: 9,
       },
     ],
   },

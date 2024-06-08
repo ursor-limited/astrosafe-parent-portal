@@ -48,6 +48,7 @@ export interface IAWFormInput {
     step: AWInsuranceApplicationMainFlowStep;
     inputId: IAWFormInput["id"];
   };
+  maxLength?: number;
 }
 
 export interface IAWMultiChoiceFieldOption {
