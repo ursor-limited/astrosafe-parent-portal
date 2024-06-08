@@ -121,6 +121,50 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
+
+  {
+    id: "6664b312ffeda4742f2767ca",
+    title:
+      "Has a Company Leader ever experienced a kidnapping or threat of kidnapping of themselves or family members?",
+    inputs: [
+      {
+        id: "6664b31bcd61e2ddee41174d",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6664b320524e335af68b98f9",
+            text: "Yes",
+          },
+          {
+            id: "6664b324589ab67ade71c897",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "6664b3470dfcf1864a7f96b1",
+    title: "Does any Key Holder engage private security?",
+    inputs: [
+      {
+        id: "6664b34c853da138d6891b6a",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6664b3514c676f49c3823795",
+            text: "Yes",
+          },
+          {
+            id: "6664b355ddfd837bc112f10f",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+
   {
     id: "665f4e4fcd81bc33290c2cd4",
     title:
