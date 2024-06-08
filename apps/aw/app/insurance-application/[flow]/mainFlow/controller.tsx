@@ -110,11 +110,7 @@ export function AWFormSectionSubsection(
     [props.answers, props.inputs]
   );
   return (
-    <div
-      className={`flex flex-col gap-xl ${
-        props.revelationCheckboxPrompt ? "" : "px-[24px]"
-      }`}
-    >
+    <div className={`flex flex-col gap-xl`}>
       {props.revelationCheckboxPrompt ? (
         <div
           className={`flex items-center gap-[12px] ${checked ? "pb-lg" : ""}`}

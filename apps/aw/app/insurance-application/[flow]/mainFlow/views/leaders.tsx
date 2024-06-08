@@ -438,7 +438,6 @@ export default function InsuranceApplicationLeaders(props: {
     if (leadersDone) {
       if (!leadersFilled) {
         setLeadersFilled(true);
-        //commitAnswers();
       }
       setCanProceed(
         SECTIONS.filter((s) => !s.custom)
