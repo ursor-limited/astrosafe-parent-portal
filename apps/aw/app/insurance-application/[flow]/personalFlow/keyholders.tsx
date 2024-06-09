@@ -183,6 +183,7 @@ const BULLETPOINTS = [
 const KeyholderRow = (props: {
   details: IAWKeyholder;
   title: string;
+  zipsN: number;
   update: (update: Partial<IAWKeyholder>) => void;
   delete?: () => void;
 }) => {
@@ -260,12 +261,6 @@ const KeyholderRow = (props: {
         </div>
         {open ? (
           <div className="flex flex-col gap-5xl pb-xl">
-            <div className={`flex flex-col gap-lg`}>
-              <div className="text-xl font-medium text-darkTeal-2">
-                Which roles apply to this individual? (select all roles that
-                apply)
-              </div>
-            </div>
             <div className={`flex flex-col gap-1`}>
               <div className="text-xl font-medium text-darkTeal-2">
                 Legal name
@@ -340,23 +335,42 @@ const KeyholderRow = (props: {
                   it must be stored in a lockable safe.
                 </div>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-4">
                 <div>
                   Provide the zip code of the chosen location(s) for your
                   Signing Device(s).
                 </div>
-                {/* <AWTextField
-                  value={
-                    props.answers?.find(
-                      (a) => a.inputId === SIGNING_DEVICE_INPUT_ID
-                    )?.value
-                  }
-                  setValue={(zip) => {
-                    props.setValue(SIGNING_DEVICE_INPUT_ID, zip);
-                    zip && props.setDone();
-                  }}
-                  placeholder="Insert ZIP code"
-                /> */}
+                <div className="flex flex-col gap-4">
+                  {[...Array(props.zipsN).keys()].map((i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                      <div>{`ZIP code for Signing Device ${i + 1}`}</div>
+                      <div
+                        style={{
+                          opacity:
+                            i === 0 || props.details.zips[i - 1] ? 1 : 0.5,
+                          pointerEvents:
+                            i === 0 || props.details.zips[i - 1]
+                              ? undefined
+                              : "none",
+                        }}
+                      >
+                        <AWTextField
+                          value={props.details.zips[i]}
+                          setValue={(zip) => {
+                            props.update({
+                              zips: [
+                                ...props.details.zips.slice(0, i),
+                                zip,
+                                ...props.details.zips.slice(i + 1),
+                              ],
+                            });
+                          }}
+                          placeholder="Insert ZIP code"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -432,15 +446,18 @@ export default function InsuranceApplicationKeyholders(props: {
     }
   }, [answers]);
 
-  const [leadersFilled, setLeadersFilled] = useState<boolean>(false);
+  const [keyholdersFilled, setKeyholdersFilled] = useState<boolean>(false);
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(() => {
-    const leadersDone = keyholders.every((l) =>
-      Object.values(l).every((x) => !!x)
+    const keyholdersDone = keyholders.every(
+      (l, i) =>
+        Object.values(l).every((x) => !!x) &&
+        l.zips.every((zip) => !!zip) &&
+        l.zips.length >= getZipsN(i)
     );
-    if (leadersDone) {
-      if (!leadersFilled) {
-        setLeadersFilled(true);
+    if (keyholdersDone) {
+      if (!keyholdersFilled) {
+        setKeyholdersFilled(true);
       }
       setCanProceed(
         SECTIONS.filter((s) => !s.custom)
@@ -455,7 +472,8 @@ export default function InsuranceApplicationKeyholders(props: {
           )
       );
     } else {
-      setLeadersFilled(false);
+      setKeyholdersFilled(false);
+      setCanProceed(false);
     }
   }, [answers, keyholders]);
 
@@ -477,6 +495,15 @@ export default function InsuranceApplicationKeyholders(props: {
       { ...keyholders[i], ...update },
       ...keyholders.slice(i + 1),
     ]);
+
+  const getZipsN = (i: number) =>
+    keyholders.length === 1
+      ? 3
+      : keyholders.length === 2
+      ? i === 0
+        ? 2
+        : 1
+      : 1;
 
   return (
     <InsuranceApplicationDialog
@@ -515,34 +542,37 @@ export default function InsuranceApplicationKeyholders(props: {
             will control the Signing Device (have the device PIN code and
             participate in transactions to send bitcoin).
           </div>
-          <AWMultiChoiceField
-            value={keyholders.length.toString()}
-            setValue={(n_) => {
-              const n = parseInt(n_);
-              if (n < keyholders.length) {
-                setKeyholders(keyholders.slice(0, n));
-              } else if (n - keyholders.length === 1) {
-                addLeader();
-              } else if (n - keyholders.length === 2) {
-                addLeader();
-                addLeader();
-              }
-            }}
-            options={[
-              {
-                id: "1",
-                text: "1 (only you)",
-              },
-              {
-                id: "2",
-                text: "2",
-              },
-              {
-                id: "3",
-                text: "3",
-              },
-            ]}
-          />
+          <div className="flex flex-col gap-lg">
+            <div>How many Key Holders will be in your vault?</div>
+            <AWMultiChoiceField
+              value={keyholders.length.toString()}
+              setValue={(n_) => {
+                const n = parseInt(n_);
+                if (n < keyholders.length) {
+                  setKeyholders(keyholders.slice(0, n));
+                } else if (n - keyholders.length === 1) {
+                  addLeader();
+                } else if (n - keyholders.length === 2) {
+                  addLeader();
+                  addLeader();
+                }
+              }}
+              options={[
+                {
+                  id: "1",
+                  text: "1 (only you)",
+                },
+                {
+                  id: "2",
+                  text: "2",
+                },
+                {
+                  id: "3",
+                  text: "3",
+                },
+              ]}
+            />
+          </div>
         </div>
         <div className="w-full flex flex-col gap-5xl">
           <div className="w-full flex flex-col gap-xl">
@@ -550,6 +580,7 @@ export default function InsuranceApplicationKeyholders(props: {
               <KeyholderRow
                 key={i}
                 details={l}
+                zipsN={getZipsN(i)}
                 title={getRowTitle(i)}
                 update={(update) => updateKeyholder(i, update)}
                 delete={
@@ -564,15 +595,6 @@ export default function InsuranceApplicationKeyholders(props: {
               />
             ))}
           </div>
-          <AWButton
-            onClick={addLeader}
-            icon={AddPersonIcon}
-            variant="secondary"
-            width="100%"
-            disabled={!leadersFilled}
-          >
-            Save and add another leader
-          </AWButton>
           <div className="w-full h-[45px] flex items-center justify-center">
             <div className="h-[2px] w-[400px] bg-[#ACC6C5]" />
           </div>
