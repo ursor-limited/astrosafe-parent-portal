@@ -9,7 +9,6 @@ import InsuranceApplicationInsuranceNeeds from "../mainFlow/views/insurance-need
 import InsuranceApplicationSpending from "../mainFlow/views/spending";
 import InsuranceApplicationWhitelist from "../mainFlow/views/whitelist";
 import InsuranceApplicationUpload from "../mainFlow/views/upload";
-import InsuranceApplicationCheckpointsSubmit from "../mainFlow/views/checkpoints/submit";
 import _ from "lodash";
 import InsuranceApplicationPayment from "../mainFlow/views/payment";
 import TestingBar from "../TestingBar";
@@ -18,6 +17,8 @@ import { AWInsuranceApplicationFlow } from "../mainFlow/controller";
 import InsuranceApplicationPersonalCheckpointsStart from "./start";
 import InsuranceApplicationWelcome from "../mainFlow/views/welcome";
 import InsuranceApplicationKeyholders from "./keyholders";
+import { useEffect } from "react";
+import InsuranceApplicationCheckpointsPersonalSubmit from "./submit";
 
 export const SCROLLABLE_PAGE_ID = "scrollable-page";
 
@@ -78,11 +79,11 @@ const STEP_COMPONENTS: Record<
   spending: InsuranceApplicationSpending,
   whitelist: InsuranceApplicationWhitelist,
   upload: InsuranceApplicationUpload,
-  submit: InsuranceApplicationCheckpointsSubmit,
+  submit: InsuranceApplicationCheckpointsPersonalSubmit,
   payment: InsuranceApplicationPayment,
 };
 
-export default function InsuranceApplicationMainFlowController() {
+export default function InsuranceApplicationPersonalFlowController() {
   useLocalStorage<AWInsuranceApplicationFlow | undefined>("flow", "personal");
 
   const [stepCompletions, setStepCompletions] = useLocalStorage<
@@ -115,7 +116,7 @@ export default function InsuranceApplicationMainFlowController() {
           nextCallback={() => setStepComplete(currentStep)}
         />
       ) : null}
-      <TestingBar flow="main" />
+      <TestingBar flow="personal" />
     </div>
   );
 }

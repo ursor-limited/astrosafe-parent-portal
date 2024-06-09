@@ -30,7 +30,7 @@ const TestingBar = (props: { flow: AWInsuranceApplicationFlow }) => {
           >
             Clear data
           </AWButton>
-          {props.flow === "main" ? (
+          {props.flow === "main" || props.flow === "personal" ? (
             <AWButton
               size="xs"
               variant="secondary"
