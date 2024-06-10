@@ -54,43 +54,15 @@ export const SECTIONS: IAWFormSection[] = [
         options: [
           {
             id: "665a13181a5e6e37d6b5c0c0",
-            text: "0 - 10%",
+            text: "10% of vault",
           },
           {
             id: "665a131c5bbb5371668f7cd3",
-            text: "10 - 20%",
+            text: "25% of vault",
           },
           {
             id: "665a1344800d28409e60037a",
-            text: "20 - 30%",
-          },
-          {
-            id: "665a13529c577c4b70920bb8",
-            text: "30 - 40%",
-          },
-          {
-            id: "665a1369bc14f04320d32324",
-            text: "40 - 50%",
-          },
-          {
-            id: "665a137f83c2165fa4515709",
-            text: "50 - 60%",
-          },
-          {
-            id: "665a1389c3127108a99a58ea",
-            text: "60 - 70%",
-          },
-          {
-            id: "665a13917714bb52b0cb767f",
-            text: "70 - 80%",
-          },
-          {
-            id: "665a139f0076f3d7a99547bc",
-            text: "80 - 90%",
-          },
-          {
-            id: "665a13aa7e952072df597066",
-            text: "90 - 100%",
+            text: "50% of vault",
           },
         ],
       },
@@ -140,6 +112,7 @@ export default function InsuranceApplicationSpending(props: {
     <InsuranceApplicationFormDialog
       stepId="spending"
       title={MAIN_FLOW_STEP_TITLES.spending}
+      subtitle="The next several questions are regarding your intended spending behavior and will be used to configure your vault."
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={CHECKPOINT_STEPS.indexOf("spending") / CHECKPOINT_STEPS.length}

@@ -10,6 +10,7 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import AWTextField from "@/components/AWTextField";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
+import AWInfoLine from "@/components/AWInfoLine";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),
@@ -291,6 +292,10 @@ const BitcoinStorageSection = (
                 What are the Bitcoin addresses of where the Bitcoin are
                 currently stored?
               </div>
+              <AWInfoLine
+                prompt="Why we scan addresses"
+                content="AnchorWatch does not insure bitcoins that are associated with sanctioned entities. We scan bitcoin addresses to ensure compliance with state and federal laws."
+              />
               <div className="flex flex-col gap-lg">
                 {addresses.map((a, i) => (
                   <div key={i} className="flex gap-lg relative">
@@ -353,9 +358,7 @@ export default function InsuranceApplicationInsuranceNeeds(props: {
         "6658d3d22db39fce622f4068": BitcoinStorageSection,
       }}
       nextCallback={props.nextCallback}
-      progress={
-        CHECKPOINT_STEPS.indexOf("insuranceNeeds") / CHECKPOINT_STEPS.length
-      }
+      progress={0.48}
     />
   );
 }

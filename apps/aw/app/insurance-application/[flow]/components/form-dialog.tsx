@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import InsuranceApplicationDialog from "./dialog";
 import {
   AWFormSection,
+  AWInsuranceApplicationFlow,
   AWInsuranceApplicationMainFlowStep,
   IAWFormSectionProps,
 } from "../mainFlow/controller";
@@ -9,6 +10,7 @@ import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import _ from "lodash";
+import { AWInsuranceApplicationPersonalFlowStep } from "../personalFlow/controller";
 
 export interface IAWFormSection {
   id: string;
@@ -68,7 +70,9 @@ export interface IAWFormStepAnswers {
 }
 
 export default function InsuranceApplicationFormDialog(props: {
-  stepId: AWInsuranceApplicationMainFlowStep;
+  stepId:
+    | AWInsuranceApplicationMainFlowStep
+    | AWInsuranceApplicationPersonalFlowStep;
   title: string;
   subtitle?: string;
   sections: IAWFormSection[];
@@ -79,7 +83,6 @@ export default function InsuranceApplicationFormDialog(props: {
     React.FC<IAWFormSectionProps & { setDone: () => void }>
   >;
   canProceed?: boolean;
-  //rightArrowFaded: boolean;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
 
@@ -94,7 +97,13 @@ export default function InsuranceApplicationFormDialog(props: {
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    Partial<Record<AWInsuranceApplicationMainFlowStep, IAWFormInputAnswer[]>>
+    Partial<
+      Record<
+        | AWInsuranceApplicationMainFlowStep
+        | AWInsuranceApplicationPersonalFlowStep,
+        IAWFormInputAnswer[]
+      >
+    >
   >("committedAnswers", {});
   useEffect(
     () => setAnswers(committedAnswers[props.stepId] || []),

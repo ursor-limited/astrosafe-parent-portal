@@ -3,25 +3,21 @@ import InsuranceApplicationDialog from "../components/dialog";
 import {
   AWFormSection,
   AWInsuranceApplicationMainFlowStep,
-  MAIN_FLOW_STEP_TITLES,
 } from "../mainFlow/controller";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
-import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
 import { IAWFormInputAnswer, IAWFormSection } from "../components/form-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
-import { AWCheckbox } from "@/components/AWCheckbox";
 import AWTextField from "@/components/AWTextField";
-import AWLongTextField from "@/components/AWLongTextField";
 import { PERSONAL_FLOW_STEP_TITLES } from "./controller";
 import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
-interface IAWKeyholder {
+export interface IAWKeyholder {
   name: string;
   birthday: string;
   email: string;
@@ -459,12 +455,12 @@ export default function InsuranceApplicationKeyholders(props: {
   const [canProceed, setCanProceed] = useState<boolean>(false);
 
   useEffect(() => {
-    const keyholdersDone = keyholders.every((l, i) => {
-      // const
-      Object.values(l).every((x) => !!x) &&
+    const keyholdersDone = keyholders.every(
+      (l, i) =>
+        Object.values(l).every((x) => !!x) &&
         l.zips.every((zip) => !!zip) &&
-        l.zips.length >= getZipsN(i);
-    });
+        l.zips.length >= getZipsN(i)
+    );
     if (keyholdersDone) {
       if (!keyholdersFilled) {
         setKeyholdersFilled(true);

@@ -29,9 +29,12 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   const { View: Lottie } = useLottie(options, { height: 360 });
   return (
     <InsuranceApplicationDialog title={props.title} progress={props.progress}>
-      <div className="h-full w-full flex">
-        <div className="flex flex-col p-3xl gap-[74px] h-full w-[525px] items-between border-r-2 border-r-greyscale-6">
-          <div className="flex flex-col gap-3xl">
+      <div className="h-full  w-full flex" style={{ minHeight: "inherit" }}>
+        <div
+          className="h-full flex flex-col p-3xl gap-[74px] h-full w-[525px] justify-between border-r-2 border-r-greyscale-6"
+          style={{ minHeight: "inherit" }}
+        >
+          <div className="h-full flex flex-col gap-3xl">
             {props.subtitle ? (
               <div className="font-medium text-xl text-darkTeal-2">
                 {props.subtitle}

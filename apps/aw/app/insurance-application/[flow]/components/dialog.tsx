@@ -1,9 +1,10 @@
 "use client";
 
-import DynamicContainer from "@/components/DynamicContainer";
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";
+
+const CONTENTS_MIN_HEIGHT = 525;
 
 export const dmMono = DM_Mono({
   subsets: ["latin"],
@@ -81,7 +82,14 @@ export default function InsuranceApplicationDialog(props: {
       >
         {props.title.toUpperCase()}
       </div>
-      {props.children}
+      <div
+        className="w-full flex justify-center"
+        style={{
+          minHeight: CONTENTS_MIN_HEIGHT,
+        }}
+      >
+        {props.children}
+      </div>
     </div>
   );
 }

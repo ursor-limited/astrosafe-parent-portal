@@ -11,6 +11,7 @@ import {
 
 export const CHECKPOINT_STEPS: AWInsuranceApplicationPersonalFlowStep[] = [
   "policyOwner",
+  "beneficiary",
   "keyholders",
   "identity",
   "insuranceNeeds",

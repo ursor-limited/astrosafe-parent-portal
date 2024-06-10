@@ -3,12 +3,9 @@
 import { useLocalStorage } from "usehooks-ts";
 import InsuranceApplicationTermsOfService from "../mainFlow/views/terms-of-service";
 import InsuranceApplicationGlossary from "../mainFlow/views/glossary";
-import InsuranceApplicationIdentity from "../mainFlow/views/identity/main";
-import InsuranceApplicationPolicyOwner from "../mainFlow/views/policy-owner";
 import InsuranceApplicationInsuranceNeeds from "../mainFlow/views/insurance-needs";
 import InsuranceApplicationSpending from "../mainFlow/views/spending";
 import InsuranceApplicationWhitelist from "../mainFlow/views/whitelist";
-import InsuranceApplicationUpload from "../mainFlow/views/upload";
 import _ from "lodash";
 import InsuranceApplicationPayment from "../mainFlow/views/payment";
 import TestingBar from "../TestingBar";
@@ -19,6 +16,10 @@ import InsuranceApplicationWelcome from "../mainFlow/views/welcome";
 import InsuranceApplicationKeyholders from "./keyholders";
 import { useEffect } from "react";
 import InsuranceApplicationCheckpointsPersonalSubmit from "./submit";
+import InsuranceApplicationBeneficiary from "./beneficiary";
+import InsuranceApplicationIdentity from "./identity/main";
+import InsuranceApplicationPersonalUpload from "./upload";
+import InsuranceApplicationPersonalDetails from "../mainFlow/views/identity/personal-details";
 
 export const SCROLLABLE_PAGE_ID = "scrollable-page";
 
@@ -33,6 +34,7 @@ export const awInsuranceApplicationPersonalFlowSteps = [
   "termsOfService",
   "start",
   "policyOwner",
+  "beneficiary",
   "keyholders",
   "identity",
   "insuranceNeeds",
@@ -54,6 +56,7 @@ export const PERSONAL_FLOW_STEP_TITLES: Record<
   termsOfService: "Terms of Service",
   start: "Start Application",
   policyOwner: "Policy owner information",
+  beneficiary: "Beneficiary",
   identity: "Identity verification",
   keyholders: "Key holder details",
   insuranceNeeds: "Insurance needs & history",
@@ -66,19 +69,20 @@ export const PERSONAL_FLOW_STEP_TITLES: Record<
 
 const STEP_COMPONENTS: Record<
   AWInsuranceApplicationPersonalFlowStep,
-  React.FC<{ nextCallback: () => void }>
+  React.FC<{ nextCallback: () => void; flow?: AWInsuranceApplicationFlow }>
 > = {
   welcome: InsuranceApplicationWelcome,
   glossary: InsuranceApplicationGlossary,
   termsOfService: InsuranceApplicationTermsOfService,
   start: InsuranceApplicationPersonalCheckpointsStart,
-  policyOwner: InsuranceApplicationPolicyOwner,
+  policyOwner: InsuranceApplicationPersonalDetails,
+  beneficiary: InsuranceApplicationBeneficiary,
   keyholders: InsuranceApplicationKeyholders,
   identity: InsuranceApplicationIdentity,
   insuranceNeeds: InsuranceApplicationInsuranceNeeds,
   spending: InsuranceApplicationSpending,
   whitelist: InsuranceApplicationWhitelist,
-  upload: InsuranceApplicationUpload,
+  upload: InsuranceApplicationPersonalUpload,
   submit: InsuranceApplicationCheckpointsPersonalSubmit,
   payment: InsuranceApplicationPayment,
 };
@@ -113,6 +117,7 @@ export default function InsuranceApplicationPersonalFlowController() {
       {currentStep && StepView ? (
         <StepView
           key={currentStep}
+          flow="personal"
           nextCallback={() => setStepComplete(currentStep)}
         />
       ) : null}
