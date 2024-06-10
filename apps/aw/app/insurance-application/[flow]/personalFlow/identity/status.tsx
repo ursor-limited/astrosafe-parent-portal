@@ -15,36 +15,11 @@ import {
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
 import { CHECKPOINT_STEPS } from "../checkpoint-dialog";
+import { IdentityStatusRow } from "../../mainFlow/views/identity/status";
 
 export type IAWKeyholderIdentity = IAWKeyholder & {
   status: "pending" | "done";
 };
-
-const IdentityStatusRow = (props: {
-  name: string;
-  resend: () => void;
-  status: IAWKeyholderIdentity["status"];
-  showButton: boolean;
-}) => (
-  <div className="h-[37px] flex justify-between items-center">
-    <div className="text-lg font-normal text-darkTeal-5">{props.name}</div>
-    <div className="flex gap-lg items-center">
-      {props.showButton ? (
-        <AWButton
-          size="xs"
-          onClick={props.resend}
-          variant="secondary"
-          width={91}
-        >
-          Resend
-        </AWButton>
-      ) : null}
-      <div>
-        {props.status === "done" ? <CircleCheckIcon /> : <HourglassIcon />}
-      </div>
-    </div>
-  </div>
-);
 
 export default function InsuranceApplicationIdentityStatus(props: {
   nextCallback: () => void;
@@ -55,16 +30,16 @@ export default function InsuranceApplicationIdentityStatus(props: {
     >
   >("committedAnswers", {});
 
-  const [leaders, setLeaders] = useState<IAWKeyholderIdentity[]>([]);
+  const [keyholders, setKeyholders] = useState<IAWKeyholderIdentity[]>([]);
   useEffect(() => {
     const keyholders_ = committedAnswers?.keyholders?.find(
       (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
     )?.value as IAWKeyholder[];
-    const leadersWithHardcodedStatuses = keyholders_?.map((l, i) => ({
+    const keyholdersWithHardcodedStatuses = keyholders_?.map((l, i) => ({
       ...l,
-      status: i === 2 ? "pending" : "done",
+      status: i === 0 ? "pending" : "done",
     })) as IAWKeyholderIdentity[];
-    setLeaders(leadersWithHardcodedStatuses || []);
+    setKeyholders(keyholdersWithHardcodedStatuses || []);
   }, [committedAnswers]);
 
   return (
@@ -88,14 +63,14 @@ export default function InsuranceApplicationIdentityStatus(props: {
           completed identity verification.
         </div>
         <div className="flex flex-col gap-lg">
-          {leaders.map((l, i) => (
+          {keyholders.map((l, i) => (
             <IdentityStatusRow
               key={i}
               name={l.name}
               status={l.status as IAWKeyholderIdentity["status"]}
               showButton={
                 l.status === "pending" &&
-                leaders.some((l) => l.status === "done")
+                keyholders.some((l) => l.status === "done")
               }
               resend={() => null}
             />

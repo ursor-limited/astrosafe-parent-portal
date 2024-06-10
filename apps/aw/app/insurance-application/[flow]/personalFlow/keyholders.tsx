@@ -13,7 +13,10 @@ import _ from "lodash";
 import { IAWFormInputAnswer, IAWFormSection } from "../components/form-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
 import AWTextField from "@/components/AWTextField";
-import { PERSONAL_FLOW_STEP_TITLES } from "./controller";
+import {
+  AWInsuranceApplicationPersonalFlowStep,
+  PERSONAL_FLOW_STEP_TITLES,
+} from "./controller";
 import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
@@ -299,7 +302,7 @@ const KeyholderRow = (props: {
               <AWTextField
                 value={props.details.job}
                 setValue={(job) => props.update({ job })}
-                placeholder="Enter job title in organization"
+                placeholder="Enter profession"
               />
             </div>
             <div
@@ -401,17 +404,19 @@ export default function InsuranceApplicationKeyholders(props: {
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    Partial<Record<AWInsuranceApplicationMainFlowStep, IAWFormInputAnswer[]>>
+    Partial<
+      Record<AWInsuranceApplicationPersonalFlowStep, IAWFormInputAnswer[]>
+    >
   >("committedAnswers", {});
   useEffect(
-    () => setAnswers(committedAnswers["leaders"] || []),
+    () => setAnswers(committedAnswers["keyholders"] || []),
     [committedAnswers]
   );
 
   const commitAnswers = () =>
     setCommittedAnswers({
-      ...committedAnswers.leaders,
-      leaders: answers.find(
+      ...committedAnswers.keyholders,
+      keyholders: answers.find(
         (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
       )
         ? answers.map((a) =>
@@ -483,7 +488,7 @@ export default function InsuranceApplicationKeyholders(props: {
     }
   }, [answers, keyholders]);
 
-  const addLeader = () =>
+  const addKeyholder = () =>
     setKeyholders((prev) => [...prev, getEmptyKeyHolder()]);
 
   const getRowTitle = (i: number) => {
@@ -564,10 +569,10 @@ export default function InsuranceApplicationKeyholders(props: {
                 if (n < keyholders.length) {
                   setKeyholders(keyholders.slice(0, n));
                 } else if (n - keyholders.length === 1) {
-                  addLeader();
+                  addKeyholder();
                 } else if (n - keyholders.length === 2) {
-                  addLeader();
-                  addLeader();
+                  addKeyholder();
+                  addKeyholder();
                 }
               }}
               options={[
@@ -614,7 +619,7 @@ export default function InsuranceApplicationKeyholders(props: {
             <div className="h-[2px] w-[400px] bg-[#ACC6C5]" />
           </div>
           <div className="font-medium text-xl text-darkTeal-2">
-            Answer the following questions for the Company Leaders listed above.
+            Answer the following questions for the Key Holders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
             {SECTIONS.map((section, i) => (
