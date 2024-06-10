@@ -281,14 +281,14 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
                       height="100%"
                       alignItems="center"
                       direction="row"
-                      spacing={isMobile ? "4px" : "14px"}
+                      spacing={isMobile ? "3px" : "14px"}
                       onClick={() => setCodeInputActive(true)}
                     >
                       {indices.map((i) => (
                         <Stack
                           key={i}
-                          width={isMobile ? "31px" : "60px"}
-                          height={isMobile ? "39px" : "74px"}
+                          width={isMobile ? "38px" : "60px"}
+                          height={isMobile ? "48px" : "74px"}
                           bgcolor={PALETTE.secondary.grey[2]}
                           borderRadius="12px"
                           justifyContent="center"
@@ -307,7 +307,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
                             cursor: codeInputActive ? "default" : "pointer",
                           }}
                         >
-                          <Typography variant={isMobile ? "normal" : "h4"}>
+                          <Typography bold variant={isMobile ? "normal" : "h4"}>
                             {inputedCode.split("")[i] ?? ""}
                           </Typography>
                         </Stack>

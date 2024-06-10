@@ -6,6 +6,7 @@ import { fadeIn } from "./NavbarSearchBar";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { OVERALL_X_PADDING } from "./PageLayout";
+import SchoolJoiningDialog from "./SchoolJoiningDialog";
 
 const MobileLandingViewCard = (props: {
   title: string;
@@ -192,10 +193,10 @@ const MobileLandingView = () => {
           </Stack>
         </Stack>
       </Stack>
-      {/* <SchoolJoiningDialog
+      <SchoolJoiningDialog
         open={schoolJoiningDialogOpen}
         closeCallback={() => setSchoolJoiningDialogOpen(false)}
-      /> */}
+      />
     </>
   );
 };

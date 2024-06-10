@@ -35,9 +35,9 @@ const PageLayout = (props: {
   }, [deviceId]);
   return (
     <>
-      <Navbar selected={props.headerButtonId} />
+      {!props.mobile ? <Navbar selected={props.headerButtonId} /> : null}
       <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-        {!deviceId ? (
+        {!props.mobile && !deviceId ? (
           <Stack px={OVERALL_X_PADDING}>
             <ConnectBar mobile={!!props.mobile} />
           </Stack>
