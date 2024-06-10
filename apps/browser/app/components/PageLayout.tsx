@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import LandingView from "./LandingView";
 import dynamic from "next/dynamic";
+import MobileLandingView from "./MobileLandingView";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -69,7 +70,7 @@ const PageLayout = (props: {
       </Stack>
       {landingViewOpen ? (
         <DynamicallyLoadedPortal>
-          <LandingView />
+          {props.mobile ? <MobileLandingView /> : <LandingView />}
         </DynamicallyLoadedPortal>
       ) : null}
     </>

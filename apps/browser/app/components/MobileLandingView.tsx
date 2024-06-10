@@ -1,13 +1,13 @@
-import { Stack } from "@mui/system";
+import { Stack, textAlign } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CheckCircleIcon from "@/images/icons/CheckCircleIcon.svg";
 import UrsorParticles from "./UrsorParticles";
 import { fadeIn } from "./NavbarSearchBar";
-import SchoolJoiningDialog from "./SchoolJoiningDialog";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
+import { OVERALL_X_PADDING } from "./PageLayout";
 
-const LandingViewCard = (props: {
+const MobileLandingViewCard = (props: {
   title: string;
   items?: string[];
   text?: string;
@@ -19,18 +19,17 @@ const LandingViewCard = (props: {
   titleWidth: number;
 }) => (
   <Stack
-    width="321px"
     height="381px"
+    p="20px"
     borderRadius="12px"
     bgcolor={props.color}
-    p="20px"
     boxSizing="border-box"
     spacing="20px"
     justifyContent="space-between"
   >
     <Stack width="100%" alignItems="center" spacing="20px">
       <Stack width={props.titleWidth} spacing="20px">
-        <Typography variant="h5" sx={{ textAlign: "center" }}>
+        <Typography variant="medium" bold sx={{ textAlign: "center" }}>
           {props.title}
         </Typography>
       </Stack>
@@ -50,7 +49,7 @@ const LandingViewCard = (props: {
       </Stack>
     </Stack>
 
-    <Stack width="100%" spacing="12px" alignItems="center">
+    <Stack spacing="12px" alignItems="center">
       <Typography variant="small">{props.smallText}</Typography>
       <UrsorButton
         dark={!props.secondaryButton}
@@ -64,7 +63,7 @@ const LandingViewCard = (props: {
   </Stack>
 );
 
-const LandingView = () => {
+const MobileLandingView = () => {
   const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
     useState<boolean>(false);
   return (
@@ -97,21 +96,17 @@ const LandingView = () => {
           <UrsorParticles number={5} />
         </Stack>
         <Stack
-          width="100vw"
           height="100vh"
           justifyContent={isMobile ? undefined : "center"}
           alignItems="center"
           zIndex={3}
-          spacing="24px"
+          spacing="32px"
           overflow="scroll"
+          px={OVERALL_X_PADDING}
+          pt="60px"
         >
-          <Stack spacing="12px">
-            <Stack
-              direction="row"
-              spacing="8px"
-              width="100%"
-              justifyContent="center"
-            >
+          <Stack spacing="12px" justifyContent="center">
+            <Stack alignItems="center" width="100%">
               <Stack
                 sx={{
                   background:
@@ -121,7 +116,11 @@ const LandingView = () => {
                   "-webkit-background-clip": "text",
                 }}
               >
-                <Typography variant="h3" color={PALETTE.font.light}>
+                <Typography
+                  variant="h3"
+                  color={PALETTE.font.light}
+                  sx={{ textAlign: "center" }}
+                >
                   Welcome to
                 </Typography>
               </Stack>
@@ -136,71 +135,22 @@ const LandingView = () => {
                 <Typography variant="h3">AstroSafe</Typography>
               </Stack>
             </Stack>
-            <Stack width="100%" justifyContent="center">
-              <Typography variant="medium" color={PALETTE.font.light}>
-                The safe browser for kids age 5 to 18 that keeps them safe,
-              </Typography>
-              <Stack
-                direction="row"
-                spacing="8px"
-                width="100%"
-                justifyContent="center"
-              >
-                <Stack direction="row">
-                  <Stack
-                    sx={{
-                      background: "linear-gradient(180deg, #6596FF, #7B61FF)",
-                      "-webkit-text-fill-color": "transparent",
-                      backgroundClip: "text",
-                      "-webkit-background-clip": "text",
-                    }}
-                  >
-                    <Typography variant="medium">blocks adverts</Typography>
-                  </Stack>
-                  <Typography variant="medium" color={PALETTE.font.light}>
-                    ,
-                  </Typography>
-                </Stack>
-                <Stack direction="row">
-                  <Stack
-                    sx={{
-                      background: "linear-gradient(180deg, #F279C5, #FD9B41)",
-                      "-webkit-text-fill-color": "transparent",
-                      backgroundClip: "text",
-                      "-webkit-background-clip": "text",
-                    }}
-                  >
-                    <Typography variant="medium">social media</Typography>
-                  </Stack>
-                  <Typography variant="medium" color={PALETTE.font.light}>
-                    ,
-                  </Typography>
-                </Stack>
-                <Typography variant="medium" color={PALETTE.font.light}>
-                  and
-                </Typography>
-                <Stack direction="row">
-                  <Stack
-                    sx={{
-                      background: "linear-gradient(180deg, #0AE799, #1D62F6)",
-                      "-webkit-text-fill-color": "transparent",
-                      backgroundClip: "text",
-                      "-webkit-background-clip": "text",
-                    }}
-                  >
-                    <Typography variant="medium">
-                      doesn&apos;t track them
-                    </Typography>
-                  </Stack>
-                  <Typography variant="medium" color={PALETTE.font.light}>
-                    .
-                  </Typography>
-                </Stack>
-              </Stack>
-            </Stack>
+            <Typography
+              variant="small"
+              color={PALETTE.font.light}
+              sx={{ textAlign: "center" }}
+            >
+              The safe browser for kids age 5 to 18 that keeps them safe, blocks
+              adverts, social media, and doesn&apos;t track them.
+            </Typography>
           </Stack>
-          <Stack direction={isMobile ? "column" : "row"} spacing="32px">
-            <LandingViewCard
+          <Stack
+            direction={isMobile ? "column" : "row"}
+            spacing="16px"
+            width="100%"
+            pb="20px"
+          >
+            <MobileLandingViewCard
               title="Continue in guest mode"
               items={[
                 "Block adverts on all pages",
@@ -213,7 +163,7 @@ const LandingView = () => {
               color={PALETTE.secondary.orange[1]}
               titleWidth={192}
             />
-            <LandingViewCard
+            <MobileLandingViewCard
               title="Continue with a family or school plan"
               items={[
                 "Manage with a family plan",
@@ -229,7 +179,7 @@ const LandingView = () => {
               color="#E2DDFF"
               titleWidth={250}
             />
-            <LandingViewCard
+            <MobileLandingViewCard
               title="Don't have a family or school plan?"
               text="Follow this link and get one for secure browsing"
               buttonCallback={() => null}
@@ -250,4 +200,4 @@ const LandingView = () => {
   );
 };
 
-export default LandingView;
+export default MobileLandingView;

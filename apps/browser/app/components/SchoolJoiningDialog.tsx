@@ -8,6 +8,7 @@ import ApiController from "../api";
 import UrsorDialog from "./UrsorDialog";
 import UrsorFadeIn from "./UrsorFadeIn";
 import _ from "lodash";
+import { isMobile } from "react-device-detect";
 
 const JOIN_CODE_LENGTH = 6;
 const FAILURE_DURATION = 2000;
@@ -227,6 +228,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
               "They will find one in their Teacher account.",
             ]
       }
+      titleSize={isMobile ? "h4" : "h3"}
       supertitle="Connect to a School"
       open={true}
       onCloseCallback={props.closeCallback}
@@ -268,7 +270,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
             <UrsorFadeIn duration={800} fullHeight>
               <Stack
                 direction="row"
-                spacing="42px"
+                spacing={isMobile ? "16px" : "42px"}
                 height="100%"
                 alignItems="center"
               >
@@ -279,14 +281,14 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
                       height="100%"
                       alignItems="center"
                       direction="row"
-                      spacing="14px"
+                      spacing={isMobile ? "4px" : "14px"}
                       onClick={() => setCodeInputActive(true)}
                     >
                       {indices.map((i) => (
                         <Stack
                           key={i}
-                          width="60px"
-                          height="74px"
+                          width={isMobile ? "31px" : "60px"}
+                          height={isMobile ? "39px" : "74px"}
                           bgcolor={PALETTE.secondary.grey[2]}
                           borderRadius="12px"
                           justifyContent="center"
@@ -305,7 +307,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
                             cursor: codeInputActive ? "default" : "pointer",
                           }}
                         >
-                          <Typography variant="h4">
+                          <Typography variant={isMobile ? "normal" : "h4"}>
                             {inputedCode.split("")[i] ?? ""}
                           </Typography>
                         </Stack>
