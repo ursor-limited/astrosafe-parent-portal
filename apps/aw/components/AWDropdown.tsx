@@ -1,15 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useOutsideClick from "./useOutsideClick";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import { createPortal } from "react-dom";
 import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/[flow]/components/form-dialog";
+import { useWindowSize } from "usehooks-ts";
+import { SCROLLABLE_PAGE_ID } from "@/app/insurance-application/[flow]/mainFlow/controller";
+
+const WINDOW_BOTTOM_LIST_MARGIN = 16;
 
 function AWDropdownList(props: {
   open: boolean;
   options?: IAWMultiChoiceFieldOption[];
   width?: number;
+  maxHeight?: number;
   setValue: (id: string) => void;
 }) {
   const [listRef, setListRef] = useState<HTMLElement | null>(null);
@@ -22,38 +27,48 @@ function AWDropdownList(props: {
     listRef?.getBoundingClientRect()?.width,
     listRef?.getBoundingClientRect()?.height,
   ]);
+
   const [hoveringRowId, setHoveringRowId] = useState<string | undefined>();
   return (
     <div
       className="overflow-hidden"
       style={{
         height,
-        //width: props.width || width,
+        maxHeight: props.maxHeight,
+        width: props.width,
         pointerEvents: props.open ? undefined : "none",
       }}
     >
-      {/* <div className="h-full w-full"> */}
       <div
-        className="w-fit py-[5px] flex flex-col rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white duration-500"
+        className="h-full rounded-[4px] border-2 border-solid border-greyscale-6 bg-greyscale-white overflow-scroll overflow-x-scroll duration-500"
         style={{
           transform: `translateY(${props.open ? 0 : -100}%)`,
         }}
-        ref={setListRef}
       >
-        {props.options?.map((o) => (
-          <div
-            key={o.id}
-            className={`h-[34px] box-border w-full px-[10px] flex items-center ${
-              hoveringRowId === o.id ? "text-darkTeal-2" : "text-darkTeal-5"
-            } ${hoveringRowId === o.id ? "bg-greyscale-1" : ""} cursor-pointer`}
-            onMouseEnter={() => setHoveringRowId(o.id)}
-            onMouseLeave={() => setHoveringRowId(undefined)}
-            onClick={() => props.setValue(o.id)}
-          >
-            {o.text}
+        <div className="w-full py-[5px] flex flex-col" ref={setListRef}>
+          <div>
+            {props.options?.map((o) => (
+              <div
+                key={o.id}
+                className={`h-[34px] box-border w-full px-[10px] flex items-center ${
+                  hoveringRowId === o.id ? "text-darkTeal-2" : "text-darkTeal-5"
+                } ${
+                  hoveringRowId === o.id ? "bg-greyscale-1" : ""
+                } cursor-pointer`}
+                onMouseEnter={() => setHoveringRowId(o.id)}
+                onMouseLeave={() => setHoveringRowId(undefined)}
+                onClick={() => props.setValue(o.id)}
+                style={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {o.text}
+              </div>
+            ))}
           </div>
-        ))}
-        {/* </div> */}
+        </div>
       </div>
     </div>
   );
@@ -71,6 +86,7 @@ export default function AWDropdown(props: {
 
   const [listY, setListY] = useState<number>(0);
   const [listX, setListX] = useState<number>(0);
+  const [listWidth, setListWidth] = useState<number>(0);
 
   const [listPositionRef, setListPositionRef] = useState<HTMLElement | null>(
     null
@@ -79,10 +95,42 @@ export default function AWDropdown(props: {
   useEffect(() => {
     setListY(listPositionRef?.getBoundingClientRect()?.bottom ?? 0);
     setListX(listPositionRef?.getBoundingClientRect()?.left ?? 0);
+    setListWidth(listPositionRef?.getBoundingClientRect()?.width ?? 0);
   }, [
     listPositionRef?.getBoundingClientRect()?.bottom,
     listPositionRef?.getBoundingClientRect()?.left,
+    listPositionRef?.getBoundingClientRect()?.width,
   ]);
+
+  const handleScroll = useCallback(() => {
+    setListY(listPositionRef?.getBoundingClientRect()?.bottom ?? 0);
+  }, [listPositionRef]);
+
+  useEffect(() => {
+    if (open) {
+      document
+        .getElementById(SCROLLABLE_PAGE_ID)
+        ?.addEventListener("scroll", handleScroll);
+      return () => {
+        document
+          .getElementById(SCROLLABLE_PAGE_ID)
+          ?.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [open, handleScroll]);
+
+  const [listMaxHeight, setListMaxHeight] = useState<number>(0);
+
+  const { height } = useWindowSize();
+
+  useEffect(() => {
+    setListMaxHeight(
+      height -
+        (listPositionRef?.getBoundingClientRect()?.bottom ?? 0) -
+        WINDOW_BOTTOM_LIST_MARGIN
+    );
+  }, [listPositionRef?.getBoundingClientRect()?.bottom, height]);
+
   return (
     <div className="w-full" ref={setOutsideClickRef}>
       {createPortal(
@@ -91,6 +139,7 @@ export default function AWDropdown(props: {
           style={{
             left: listX,
             top: listY,
+            width: listWidth,
             pointerEvents: open ? undefined : "none",
           }}
         >
@@ -98,6 +147,8 @@ export default function AWDropdown(props: {
             open={open}
             options={props.options}
             setValue={props.setValue}
+            width={listWidth}
+            maxHeight={listMaxHeight}
           />
         </div>,
         document.body

@@ -2,6 +2,8 @@ export default function AWTextField(props: {
   value?: string;
   setValue: (newValue: string) => void;
   placeholder?: string;
+  maxLength?: number;
+  numeric?: boolean;
 }) {
   return (
     <div className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs">
@@ -9,9 +11,12 @@ export default function AWTextField(props: {
         className="w-full text-[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
         placeholder={props.placeholder}
         value={props.value ?? ""}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          props.setValue(event.target.value)
-        }
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          const value = props.maxLength
+            ? event.target.value.slice(0, props.maxLength)
+            : event.target.value;
+          props.setValue(props.numeric ? value.replace(/\D/g, "") : value);
+        }}
         style={{
           outline: "none",
         }}

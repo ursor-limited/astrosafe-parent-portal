@@ -35,6 +35,8 @@ export default function InsuranceApplicationFormInput(
             value={props.answers?.find((a) => a.inputId === props.id)?.value}
             setValue={(v) => props.setValue(props.id, v)}
             placeholder={props.placeholder}
+            maxLength={props.maxLength}
+            numeric={props.numeric}
           />
         ) : props.inputType === "textLong" ? (
           <AWLongTextField

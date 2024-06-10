@@ -1,19 +1,18 @@
 import _ from "lodash";
-//import InsuranceApplicationCheckpointDialog from "../../components/InsuranceApplicationCheckpointDialog";
-import { MAIN_FLOW_STEP_TITLES } from "../../controller";
 import dynamic from "next/dynamic";
+import { PERSONAL_FLOW_STEP_TITLES } from "./controller";
 
 const InsuranceApplicationCheckpointDialog = dynamic(
   () => import("./checkpoint-dialog"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-export default function InsuranceApplicationCheckpointsStart(props: {
+export default function InsuranceApplicationPersonalCheckpointsStart(props: {
   nextCallback: () => void;
 }) {
   return (
     <InsuranceApplicationCheckpointDialog
-      title={MAIN_FLOW_STEP_TITLES.start}
+      title={PERSONAL_FLOW_STEP_TITLES.start}
       subtitle="The application intake form consists of the following sections."
       buttonText="Start"
       buttonCallback={props.nextCallback}

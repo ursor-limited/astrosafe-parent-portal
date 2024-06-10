@@ -1,11 +1,11 @@
-import InsuranceApplicationIllustrationDialog from "../../../components/illustration-dialog";
-import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
+import InsuranceApplicationIllustrationDialog from "../../components/illustration-dialog";
+import IdentitySuccessIllustration from "@/images/IdentitySuccessIllustration.png";
+import Image from "next/image";
 import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
-import IdentitySuccessIllustration from "@/images/IdentitySuccessIllustration.png";
-import Image from "next/image";
+import { CHECKPOINT_STEPS } from "../checkpoint-dialog";
 
 export default function InsuranceApplicationIdentitySuccess(props: {
   nextCallback: () => void;

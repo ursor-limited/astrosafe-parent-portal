@@ -3,10 +3,11 @@ import _ from "lodash";
 import {
   AWInsuranceApplicationMainFlowStep,
   MAIN_FLOW_STEP_TITLES,
-} from "../../controller";
+} from "../mainFlow/controller";
 import dynamic from "next/dynamic";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
+import { AWInsuranceApplicationPersonalFlowStep } from "./controller";
 import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 
 const InsuranceApplicationCheckpointDialog = dynamic(
@@ -14,18 +15,18 @@ const InsuranceApplicationCheckpointDialog = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
-export default function InsuranceApplicationCheckpointsSubmit(props: {
+export default function InsuranceApplicationCheckpointsPersonalSubmit(props: {
   nextCallback: () => void;
 }) {
   const [currentStep, setCurrentStep] =
-    useLocalStorage<AWInsuranceApplicationMainFlowStep>(
+    useLocalStorage<AWInsuranceApplicationPersonalFlowStep>(
       "currentStep",
       "welcome"
     );
 
   const [allCompleted, setAllCompleted] = useState<boolean>(false);
   const [stepCompletions, setStepCompletions] = useLocalStorage<
-    Partial<Record<AWInsuranceApplicationMainFlowStep, boolean>>
+    Partial<Record<AWInsuranceApplicationPersonalFlowStep, boolean>>
   >("stepCompletions", {});
   useEffect(
     () =>
@@ -34,7 +35,7 @@ export default function InsuranceApplicationCheckpointsSubmit(props: {
   );
 
   const [firstNotCompletedStep, setFirstNotCompletedStep] =
-    useState<AWInsuranceApplicationMainFlowStep>("welcome");
+    useState<AWInsuranceApplicationPersonalFlowStep>("welcome");
   useEffect(
     () =>
       setFirstNotCompletedStep(

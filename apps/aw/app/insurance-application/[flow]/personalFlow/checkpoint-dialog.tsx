@@ -1,41 +1,39 @@
 "use client";
 
 import { useLocalStorage } from "usehooks-ts";
-import { useEffect, useState } from "react";
-import InsuranceApplicationIllustrationDialog from "./illustration-dialog";
-import {
-  AWInsuranceApplicationMainFlowStep,
-  MAIN_FLOW_STEP_TITLES,
-} from "../mainFlow/controller";
+import InsuranceApplicationIllustrationDialog from "../components/illustration-dialog";
 import _ from "lodash";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
+import {
+  AWInsuranceApplicationPersonalFlowStep,
+  PERSONAL_FLOW_STEP_TITLES,
+} from "./controller";
 
-export const CHECKPOINT_STEPS: AWInsuranceApplicationMainFlowStep[] = [
+export const CHECKPOINT_STEPS: AWInsuranceApplicationPersonalFlowStep[] = [
   "policyOwner",
-  "businessSummary",
-  "leaders",
+  "beneficiary",
+  "keyholders",
   "identity",
   "insuranceNeeds",
-  "governance",
   "spending",
   "whitelist",
   "upload",
 ];
 
-export default function InsuranceApplicationCheckpointDialog(props: {
+export default function InsuranceApplicationPersonalCheckpointDialog(props: {
   title: string;
   subtitle: string;
   buttonText: string;
   info?: IAWInfoLineProps;
-  firstNotCompletedStep?: AWInsuranceApplicationMainFlowStep;
+  firstNotCompletedStep?: AWInsuranceApplicationPersonalFlowStep;
   stepCompletions?: Partial<
-    Record<AWInsuranceApplicationMainFlowStep, boolean>
+    Record<AWInsuranceApplicationPersonalFlowStep, boolean>
   >;
   highlightNotCompleted?: boolean;
   buttonCallback: () => void;
 }) {
   const [currentStep, setCurrentStep] =
-    useLocalStorage<AWInsuranceApplicationMainFlowStep>(
+    useLocalStorage<AWInsuranceApplicationPersonalFlowStep>(
       "currentStep",
       "welcome"
     );
@@ -78,7 +76,7 @@ export default function InsuranceApplicationCheckpointDialog(props: {
                       : "text-darkTeal-3"
                   }`}
                 >
-                  {MAIN_FLOW_STEP_TITLES[step]}
+                  {PERSONAL_FLOW_STEP_TITLES[step]}
                 </div>
               </div>
               {i < CHECKPOINT_STEPS.length - 1 ? (

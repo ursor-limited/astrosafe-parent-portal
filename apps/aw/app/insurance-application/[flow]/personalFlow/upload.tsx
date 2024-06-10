@@ -1,20 +1,16 @@
-import InsuranceApplicationDialog from "../../components/dialog";
-import { MAIN_FLOW_STEP_TITLES } from "../controller";
+import InsuranceApplicationDialog from "../components/dialog";
 import { AWButton } from "@/components/AWButton";
 import _ from "lodash";
-import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import DocumentIcon from "@/images/icons/DocumentIcon.svg";
+import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
+import { MAIN_FLOW_STEP_TITLES } from "../mainFlow/controller";
 
 const BULLETPOINTS = [
-  "Licenses issued by regulatory body.",
-  "Audited financial statements: Form 10-K, prospectus, balance sheet, liabilities, or similar documents.",
-  "Business bank statement (must be a USD bank account in the name of your business with a U.S. bank, with the statement within past three months).",
-  "W9 Form (signed).",
-  "SOC 1, SOC 2 or similar certification.",
-  "Internal Compliance Documentation (Including but not limited to company standards or policies on business ethics and conflicts of interest).",
+  "Bank statement (USD bank account in the U.S. bank, with the statement within past three months).",
+  "Statement of Approximate Net Worth. Please provide the approximate collar value by Asset Class (Real estate, equities, cash, bonds, bitcoin, crypto, etc.).",
 ];
 
-export default function InsuranceApplicationUpload(props: {
+export default function InsuranceApplicationPersonalUpload(props: {
   nextCallback: () => void;
 }) {
   return (
@@ -24,11 +20,9 @@ export default function InsuranceApplicationUpload(props: {
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-8xl py-[64px]">
         <div className="flex flex-col gap-xl font-medium text-xl text-darkTeal-2">
-          <div>Upload the following documents to finish your application.</div>
           <div>
-            If the documents are available, they are considered mandatory. If
-            the company doesn&apos;t have audited financial documents, please
-            upload a Pro Forma and Balance Sheet listing assets in their place.
+            Upload the following documents to finish your application. If the
+            documents are available, they are considered mandatory.
           </div>
         </div>
         <div className="flex flex-col gap-xl text-xl text-darkTeal-2">

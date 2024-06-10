@@ -30,6 +30,8 @@ import InsuranceApplicationPayment from "./views/payment";
 import TestingBar from "../TestingBar";
 import dynamic from "next/dynamic";
 
+export const SCROLLABLE_PAGE_ID = "scrollable-page";
+
 const AWInfoLine = dynamic(
   () => import("@/components/AWInfoLine"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
@@ -41,7 +43,8 @@ export type AWInsuranceApplicationFlow =
   | "digAssMan"
   | "shareholder"
   | "keyholder"
-  | "shareholderKeyHolder";
+  | "shareholderKeyHolder"
+  | "personal";
 
 export const awInsuranceApplicationMainFlowSteps = [
   "welcome",
@@ -108,11 +111,7 @@ export function AWFormSectionSubsection(
     [props.answers, props.inputs]
   );
   return (
-    <div
-      className={`flex flex-col gap-xl ${
-        props.revelationCheckboxPrompt ? "" : "px-[24px]"
-      }`}
-    >
+    <div className={`flex flex-col gap-xl`}>
       {props.revelationCheckboxPrompt ? (
         <div
           className={`flex items-center gap-[12px] ${checked ? "pb-lg" : ""}`}
@@ -250,9 +249,7 @@ const STEP_COMPONENTS: Record<
 };
 
 export default function InsuranceApplicationMainFlowController() {
-  const [flow, setFlow] = useLocalStorage<
-    AWInsuranceApplicationFlow | undefined
-  >("flow", "main");
+  useLocalStorage<AWInsuranceApplicationFlow | undefined>("flow", "main");
 
   const [stepCompletions, setStepCompletions] = useLocalStorage<
     Partial<Record<AWInsuranceApplicationMainFlowStep, boolean>>
@@ -274,7 +271,10 @@ export default function InsuranceApplicationMainFlowController() {
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
   return (
-    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative">
+    <div
+      id={SCROLLABLE_PAGE_ID}
+      className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+    >
       {currentStep && StepView ? (
         <StepView
           key={currentStep}

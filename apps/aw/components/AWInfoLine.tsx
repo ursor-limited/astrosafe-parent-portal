@@ -5,11 +5,6 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import InfoIcon from "@/images/icons/InfoIcon.svg";
 
-export const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
-
 export interface IAWInfoLineProps {
   prompt: string;
   content: string;
@@ -56,9 +51,7 @@ const AWInfoLine = (props: IAWInfoLineProps) => {
         document.body
       )}
       <div className="flex gap-[8px] items-center">
-        <div className={`text-lightTeal-0 text-sm ${dmMono.className}`}>
-          {props.prompt}
-        </div>
+        <div className={`text-lightTeal-0 text-sm`}>{props.prompt}</div>
         <div
           ref={setIconPositionRef}
           onMouseEnter={() => setOpen(true)}

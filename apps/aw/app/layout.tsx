@@ -1,17 +1,10 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
-import { PALETTE } from "ui";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: "variable",
 });
-
-// export const metadata: Metadata = {
-//   title: "SafeTube - A Safe video player for teachers and schools",
-//   description:
-//     "The safe video player for classrooms to access youtube and vimeo videos safely. Students get access to distraction free video links.",
-// };
 
 export default function RootLayout({
   children,

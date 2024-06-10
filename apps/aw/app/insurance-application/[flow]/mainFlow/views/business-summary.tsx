@@ -2,7 +2,7 @@ import { MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -34,15 +34,19 @@ export const SECTIONS: IAWFormSection[] = [
         options: [
           {
             id: "6653461b775dd263297ff525",
-            text: "Chicorita",
+            text: "Sole proprietorship",
           },
           {
             id: "665346543f251225d05f9c53",
-            text: "Cyndaquil",
+            text: "Partnership",
           },
           {
             id: "6653465f1409cd6fbed1b995",
-            text: "Totodile",
+            text: "Corporation",
+          },
+          {
+            id: "6666bff0bfcd559b29e09911",
+            text: "S Corporation",
           },
         ],
       },
@@ -56,6 +60,7 @@ export const SECTIONS: IAWFormSection[] = [
         id: "665346cf1ec61b1354a74f9a",
         inputType: "text",
         placeholder: "Enter number here",
+        maxLength: 9,
       },
     ],
   },
@@ -170,6 +175,47 @@ export const SECTIONS: IAWFormSection[] = [
         optional: true,
       },
       {
+        id: "6664aea1158bfa6294b2928f",
+        title:
+          "What is the business' source of capital, if not primarily from revenue?",
+        inputType: "dropdown",
+        placeholder: "Choose a type",
+        options: [
+          {
+            id: "6664aeaab81ebd382adccc16",
+            text: "Bootstrapped",
+          },
+          {
+            id: "6664aed2c5bff264b4201215",
+            text: "Venture Backing",
+          },
+        ],
+      },
+      {
+        id: "6664af49e91a2c74fd382c6d",
+        title: "What is the entity ownership?",
+        inputType: "dropdown",
+        placeholder: "Choose a type",
+        options: [
+          {
+            id: "6664ae1073753f33fc9e7337",
+            text: "Single Private Owner",
+          },
+          {
+            id: "6664ae29159df8c296e4fb03",
+            text: "Multiple Private Owner",
+          },
+          {
+            id: "6664ae44e5d8464689cfdd11",
+            text: "Venture Backed",
+          },
+          {
+            id: "6664ae575338f2bc541992f0",
+            text: "Publicly Traded",
+          },
+        ],
+      },
+      {
         id: "6654ca6e45f33d87561374e6",
         title: "Number of employees",
         inputType: "text",
@@ -230,6 +276,63 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
+
+  {
+    id: "6664b0a805feae22b5ae6adc",
+    title: "Have the entity or its leaders ever filed for bankruptcy?",
+    inputs: [
+      {
+        id: "6664b0c75b0bd09a293f54a5",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6664b0cc83a22ae8b722ce2c",
+            text: "Yes",
+          },
+          {
+            id: "6664b0d2002fe35a519c0eb4",
+            text: "No",
+          },
+        ],
+      },
+      {
+        id: "6664b113d8abcd247065c75c",
+        inputType: "textLong",
+        optional: true,
+        placeholder: "If yes, please share details",
+      },
+    ],
+  },
+
+  {
+    id: "6664b162555030f35574ba67",
+    title:
+      "Does the entity engage in regular pen testing and/or cybersecurity audits by a third party firm?",
+    inputs: [
+      {
+        id: "6664b1687b24d86a6c1e7673",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: "6664b16df540e66af0750603",
+            text: "Yes",
+          },
+          {
+            id: "6664b171e771a0565c03d916",
+            text: "No",
+          },
+        ],
+      },
+      {
+        id: "6664b178a0829cf0b935120a",
+        inputType: "textLong",
+        optional: true,
+        placeholder:
+          "If yes, share the name of the auditor and the date of the most recent audit.",
+      },
+    ],
+  },
+
   {
     id: "6654dee53dd280a07d699e1e",
     title: "Beneficiaries",

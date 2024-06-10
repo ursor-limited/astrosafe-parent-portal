@@ -2,7 +2,7 @@ import { MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
 export const SECTIONS: IAWFormSection[] = [
   {
@@ -35,26 +35,6 @@ export const SECTIONS: IAWFormSection[] = [
         id: "6652e4e30ea140b445d02a07",
         inputType: "text",
         placeholder: "Insert email address here",
-      },
-    ],
-  },
-  {
-    id: "6651d885120e45915573a535",
-    title: "Will you be a Key Holder in the vault?",
-    inputs: [
-      {
-        id: "6652e5168e3e3d860c9772e3",
-        inputType: "multiChoice",
-        options: [
-          {
-            id: "6651d8968dec75fc382930a1",
-            text: "Yes",
-          },
-          {
-            id: "6651d8c083bc0df3082153e3",
-            text: "No",
-          },
-        ],
       },
     ],
   },

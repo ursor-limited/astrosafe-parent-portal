@@ -2,7 +2,7 @@ import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import { useEffect, useState } from "react";
 import BitcoinIcon from "@/images/icons/BitcoinIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
@@ -58,7 +58,7 @@ const AddressesSection = (
         <div>{`AnchorWatch enforces a cool down period of at least three days before sending to a new bitcoin address.`}</div>
         <div>{`You can add bitcoin addresses to your whitelist address book now, which will begin the cool down period. Additional addresses can be added after your policy begins.`}</div>
       </div>
-      <div className="flex flex-col gap-lg">
+      <div className="flex flex-col">
         {addresses?.map((address, i) => (
           <WhitelistAddressRow
             key={i}
@@ -124,6 +124,7 @@ const WhitelistAddressRow = (props: {
           value={props.value.nickname}
           setValue={props.setNickname}
           placeholder="Up to 15 characters"
+          maxLength={15}
         />
       </div>
       <div className="flex flex-col w-full gap-1">
@@ -131,7 +132,8 @@ const WhitelistAddressRow = (props: {
         <AWTextField
           value={props.value.address}
           setValue={props.setAddress}
-          placeholder="Default Input Text"
+          placeholder="Insert address here"
+          maxLength={62}
         />
       </div>
       {props.delete ? (

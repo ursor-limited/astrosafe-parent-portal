@@ -1,46 +1,39 @@
 import { useEffect, useState } from "react";
-import InsuranceApplicationDialog from "../../components/dialog";
+import InsuranceApplicationDialog from "../components/dialog";
 import {
   AWFormSection,
   AWInsuranceApplicationMainFlowStep,
-  MAIN_FLOW_STEP_TITLES,
-} from "../controller";
+} from "../mainFlow/controller";
 import { AWButton } from "@/components/AWButton";
 import { useLocalStorage } from "usehooks-ts";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
-import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
-import {
-  IAWFormInputAnswer,
-  IAWFormSection,
-} from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
+import { IAWFormInputAnswer, IAWFormSection } from "../components/form-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
-import { AWCheckbox } from "@/components/AWCheckbox";
 import AWTextField from "@/components/AWTextField";
-import AWLongTextField from "@/components/AWLongTextField";
+import {
+  AWInsuranceApplicationPersonalFlowStep,
+  PERSONAL_FLOW_STEP_TITLES,
+} from "./controller";
+import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
+import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 
-export interface IAWCompanyLeader {
+export interface IAWKeyholder {
   name: string;
   birthday: string;
   email: string;
   job: string;
-  areas: string;
-  roles: {
-    executive: boolean;
-    assMan: boolean;
-    shareholder: boolean;
-  };
+  zips: string[];
 }
 
-export const LEADER_DETAILS_AGGLOMERATED_INPUT_ID = "leaders";
+export const KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID = "keyholders";
 
 export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f42111472a5653be043fa",
-    title: "Has a Company Leader been involved in any criminal investigation?",
+    title: "Has a Key Holder been involved in any criminal investigation?",
     inputs: [
       {
         id: "665f4242a0f8b69084d560ac",
@@ -61,7 +54,7 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f4263e6b91b846b78afb5",
     title:
-      "Has a Company Leader been convicted of a felony or crime of dishonesty (including, but not limited to: theft, forgery, embezzlement, and fraud)?",
+      "Has a Key Holder been convicted of a felony or crime of dishonesty (including, but not limited to: theft, forgery, embezzlement, and fraud)?",
     inputs: [
       {
         id: "665f4268bb98df27e4601ab4",
@@ -82,7 +75,7 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f42ae5767755321871b05",
     title:
-      "Has a Company Leader experienced losses greater than $10,000 related to access of private key material for Bitcoin, cryptocurrency, or other digital assets?",
+      "Has a Key Holder experienced losses greater than $10,000 related to access of private key material for Bitcoin, cryptocurrency, or other digital assets?",
     inputs: [
       {
         id: "665f42b27163413ef8c5c771",
@@ -103,7 +96,7 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f4301ad072875140001b8",
     title:
-      "Has a Company Leader experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
+      "Has a Key Holder experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
     inputs: [
       {
         id: "665f430586bf43b7aecea5ac",
@@ -125,7 +118,7 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "6664b312ffeda4742f2767ca",
     title:
-      "Has a Company Leader ever experienced a kidnapping or threat of kidnapping of themselves or family members?",
+      "Has a Key Holder ever experienced a kidnapping or threat of kidnapping of themselves or family members?",
     inputs: [
       {
         id: "6664b31bcd61e2ddee41174d",
@@ -182,19 +175,19 @@ export const SECTIONS: IAWFormSection[] = [
 ];
 
 const BULLETPOINTS = [
-  "Executives: C-suite and executives independently responsible for financial, technical decisions, or digital assets.",
-  "Digital Asset Managers: An employee responsible for making decisions regarding digital assets.",
-  "25% or greater shareholder",
-  "Key Holder is anyone who will be responsible for signing Bitcoin transactions",
+  "Named Insured is the named insured on the insurance policy.",
+  "Key Holders are those who will hold a Signing Device and will be responsible for signing Bitcoin transaction",
 ];
 
-const LeaderRow = (props: {
-  details: IAWCompanyLeader;
+const KeyholderRow = (props: {
+  open: boolean;
+  switchOpen: () => void;
+  details: IAWKeyholder;
   title: string;
-  update: (update: Partial<IAWCompanyLeader>) => void;
+  zipsN: number;
+  update: (update: Partial<IAWKeyholder>) => void;
   delete?: () => void;
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<"complete" | "incomplete" | "empty">(
     "empty"
   );
@@ -219,7 +212,7 @@ const LeaderRow = (props: {
       <div className="flex flex-col gap-5xl">
         <div
           className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer"
-          onClick={() => setOpen(!open)}
+          onClick={props.switchOpen}
         >
           <div className="w-full flex gap-xl">
             <div className="flex items-center">
@@ -257,7 +250,7 @@ const LeaderRow = (props: {
               ) : null}
               <div
                 style={{
-                  transform: `rotate(${open ? 180 : 0}deg)`,
+                  transform: `rotate(${props.open ? 180 : 0}deg)`,
                   transition: "0.2s",
                 }}
               >
@@ -266,62 +259,8 @@ const LeaderRow = (props: {
             </div>
           </div>
         </div>
-        {open ? (
+        {props.open ? (
           <div className="flex flex-col gap-5xl pb-xl">
-            <div className={`flex flex-col gap-lg`}>
-              <div className="text-xl font-medium text-darkTeal-2">
-                Which roles apply to this individual? (select all roles that
-                apply)
-              </div>
-              <div className={`flex flex-col gap-[12px]`}>
-                <div className={`flex items-center gap-[12px]`}>
-                  <AWCheckbox
-                    checked={props.details.roles?.executive}
-                    callback={() =>
-                      props.update({
-                        roles: {
-                          ...props.details.roles,
-                          executive: !props.details.roles?.executive,
-                        },
-                      })
-                    }
-                  />
-                  <div className="text-lg text-darkTeal-2">Executive</div>
-                </div>
-                <div className={`flex items-center gap-[12px]`}>
-                  <AWCheckbox
-                    checked={props.details.roles?.assMan}
-                    callback={() =>
-                      props.update({
-                        roles: {
-                          ...props.details.roles,
-                          assMan: !props.details.roles?.assMan,
-                        },
-                      })
-                    }
-                  />
-                  <div className="text-lg text-darkTeal-2">
-                    Digital Asset Manager
-                  </div>
-                </div>
-                <div className={`flex items-center gap-[12px]`}>
-                  <AWCheckbox
-                    checked={props.details.roles?.shareholder}
-                    callback={() =>
-                      props.update({
-                        roles: {
-                          ...props.details.roles,
-                          shareholder: !props.details.roles?.shareholder,
-                        },
-                      })
-                    }
-                  />
-                  <div className="text-lg text-darkTeal-2">
-                    Shareholder with 25% or greater ownership
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className={`flex flex-col gap-1`}>
               <div className="text-xl font-medium text-darkTeal-2">
                 Legal name
@@ -360,23 +299,81 @@ const LeaderRow = (props: {
             </div>
             <div className={`flex flex-col gap-1`}>
               <div className="text-xl font-medium text-darkTeal-2">
-                Job title
+                Profession
               </div>
               <AWTextField
                 value={props.details.job}
                 setValue={(job) => props.update({ job })}
-                placeholder="Enter job title in organization"
+                placeholder="Enter profession"
               />
             </div>
-            <div className={`flex flex-col gap-1`}>
-              <div className="text-xl text-darkTeal-2">
-                What are the areas of responsibility for this job title
+            <div
+              className={`flex flex-col gap-xl opacity-0 animate-fadeIn text-xl`}
+            >
+              <div className="font-medium text-darkTeal-2">
+                Signing Device(s)
               </div>
-              <AWLongTextField
-                value={props.details.areas}
-                setValue={(areas) => props.update({ areas })}
-                placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
-              />
+              <div className="flex flex-col gap-xl">
+                <div className="flex flex-col gap-1">
+                  Each Signing Device must be stored at a UNIQUE physical
+                  address:
+                  <div className="flex flex-col gap-1">
+                    {[
+                      "Residence",
+                      "Workplace premises",
+                      "Safe Deposit box (e.g. a bank)",
+                    ].map((b, i) => (
+                      <div key={i} className="flex gap-lg pl-[15px]">
+                        <div className="pt-[10px]">
+                          <div className="min-h-[6px] min-w-[6px] bg-darkTeal-5 rounded-full" />
+                        </div>
+                        <div>{b}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  If the Signing Devices is stored at a residence or workplace,
+                  it must be stored in a lockable safe.
+                </div>
+              </div>
+              <div className="flex flex-col gap-4">
+                <div>
+                  Provide the zip code of the chosen location(s) for your
+                  Signing Device(s).
+                </div>
+                <div className="flex flex-col gap-4">
+                  {[...Array(props.zipsN).keys()].map((i) => (
+                    <div key={i} className="flex flex-col gap-1">
+                      <div>{`ZIP code for Signing Device ${i + 1}`}</div>
+                      <div
+                        style={{
+                          opacity:
+                            i === 0 || props.details.zips[i - 1] ? 1 : 0.5,
+                          pointerEvents:
+                            i === 0 || props.details.zips[i - 1]
+                              ? undefined
+                              : "none",
+                        }}
+                      >
+                        <AWTextField
+                          value={props.details.zips[i]}
+                          setValue={(zip) => {
+                            props.update({
+                              zips: [
+                                ...props.details.zips.slice(0, i),
+                                zip,
+                                ...props.details.zips.slice(i + 1),
+                              ],
+                            });
+                          }}
+                          placeholder="Insert ZIP code"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         ) : null}
@@ -385,7 +382,15 @@ const LeaderRow = (props: {
   );
 };
 
-export default function InsuranceApplicationLeaders(props: {
+const getEmptyKeyHolder: () => IAWKeyholder = () => ({
+  name: "",
+  birthday: "",
+  email: "",
+  job: "",
+  zips: [],
+});
+
+export default function InsuranceApplicationKeyholders(props: {
   nextCallback: () => void;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
@@ -401,89 +406,71 @@ export default function InsuranceApplicationLeaders(props: {
   };
 
   const [committedAnswers, setCommittedAnswers] = useLocalStorage<
-    Partial<Record<AWInsuranceApplicationMainFlowStep, IAWFormInputAnswer[]>>
+    Partial<
+      Record<AWInsuranceApplicationPersonalFlowStep, IAWFormInputAnswer[]>
+    >
   >("committedAnswers", {});
   useEffect(
-    () => setAnswers(committedAnswers["leaders"] || []),
+    () => setAnswers(committedAnswers["keyholders"] || []),
     [committedAnswers]
   );
 
   const commitAnswers = () =>
     setCommittedAnswers({
-      ...committedAnswers.leaders,
-      leaders: answers.find(
-        (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+      ...committedAnswers.keyholders,
+      keyholders: answers.find(
+        (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
       )
         ? answers.map((a) =>
-            a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+            a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
               ? {
-                  inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID,
-                  value: leaders,
+                  inputId: KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID,
+                  value: keyholders,
                 }
               : a
           )
         : [
             ...answers,
-            { inputId: LEADER_DETAILS_AGGLOMERATED_INPUT_ID, value: leaders },
+            {
+              inputId: KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID,
+              value: keyholders,
+            },
           ],
     });
 
-  const [leaders, setLeaders] = useState<IAWCompanyLeader[]>([
-    {
-      name: "",
-      birthday: "",
-      email: "",
-      job: "",
-      areas: "",
-      roles: {
-        executive: false,
-        assMan: false,
-        shareholder: false,
-      },
-    },
-    {
-      name: "",
-      birthday: "",
-      email: "",
-      job: "",
-      areas: "",
-      roles: {
-        executive: false,
-        assMan: false,
-        shareholder: false,
-      },
-    },
-    {
-      name: "",
-      birthday: "",
-      email: "",
-      job: "",
-      areas: "",
-      roles: {
-        executive: false,
-        assMan: false,
-        shareholder: false,
-      },
-    },
+  const [keyholders, setKeyholders] = useState<IAWKeyholder[]>([
+    getEmptyKeyHolder(),
   ]);
   useEffect(() => {
-    const leaders_ = answers?.find(
-      (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+    const keyholders_ = answers?.find(
+      (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
     )?.value;
-    if (leaders_) {
-      setLeaders(leaders_);
+    if (keyholders_) {
+      setKeyholders(keyholders_);
     }
   }, [answers]);
 
-  const [leadersFilled, setLeadersFilled] = useState<boolean>(false);
+  const [keyholderRowsOpen, setKeyholderRowsOpen] = useState<boolean[]>([
+    false,
+    false,
+    false,
+  ]); /// use this
+
+  // const [keyholdersDone, setKeyholdersDone] = useState<boolean[]>([])
+  // useEffect(() => upon change of keyholdes n, set or remove themv)
+  const [keyholdersFilled, setKeyholdersFilled] = useState<boolean>(false);
   const [canProceed, setCanProceed] = useState<boolean>(false);
+
   useEffect(() => {
-    const leadersDone = leaders.every((l) =>
-      Object.values(l).every((x) => !!x)
+    const keyholdersDone = keyholders.every(
+      (l, i) =>
+        Object.values(l).every((x) => !!x) &&
+        l.zips.every((zip) => !!zip) &&
+        l.zips.length >= getZipsN(i)
     );
-    if (leadersDone) {
-      if (!leadersFilled) {
-        setLeadersFilled(true);
+    if (keyholdersDone) {
+      if (!keyholdersFilled) {
+        setKeyholdersFilled(true);
       }
       setCanProceed(
         SECTIONS.filter((s) => !s.custom)
@@ -498,50 +485,62 @@ export default function InsuranceApplicationLeaders(props: {
           )
       );
     } else {
-      setLeadersFilled(false);
+      setKeyholdersFilled(false);
+      setCanProceed(false);
     }
-  }, [answers, leaders]);
+  }, [answers, keyholders]);
 
-  const addLeader = () =>
-    setLeaders((prev) => [
-      ...prev,
-      {
-        name: "",
-        birthday: "",
-        email: "",
-        job: "",
-        areas: "",
-      } as IAWCompanyLeader,
-    ]);
+  const addKeyholder = () =>
+    setKeyholders((prev) => [...prev, getEmptyKeyHolder()]);
 
   const getRowTitle = (i: number) => {
-    const name = leaders[i].name;
-    if (i < 3) {
-      return `Key Holder ${i + 1}${name ? ` (${name})` : ""}`;
+    const name = keyholders[i].name;
+    if (i === 0) {
+      return `Named Insured (${name || "You"})`;
     } else {
-      return `Leader ${i - 2}${name ? ` (${name})` : ""}`;
+      return `Key Holder ${i}${name ? ` (${name})` : ""}`;
     }
   };
 
-  const updateLeader = (i: number, update: Partial<IAWCompanyLeader>) =>
-    setLeaders([
-      ...leaders.slice(0, i),
-      { ...leaders[i], ...update },
-      ...leaders.slice(i + 1),
+  const updateKeyholder = (i: number, update: Partial<IAWKeyholder>) =>
+    setKeyholders([
+      ...keyholders.slice(0, i),
+      { ...keyholders[i], ...update },
+      ...keyholders.slice(i + 1),
     ]);
+
+  const switchRowOpen = (i: number) =>
+    setKeyholderRowsOpen([
+      ...keyholderRowsOpen.slice(0, i),
+      !keyholderRowsOpen[i],
+      ...keyholderRowsOpen.slice(i + 1),
+    ]);
+
+  const getZipsN = (i: number) =>
+    keyholders.length === 1
+      ? 3
+      : keyholders.length === 2
+      ? i === 0
+        ? 2
+        : 1
+      : 1;
 
   return (
     <InsuranceApplicationDialog
-      title={MAIN_FLOW_STEP_TITLES.leaders}
+      title={PERSONAL_FLOW_STEP_TITLES.keyholders}
       rightArrowFaded={!canProceed}
-      progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
+      progress={
+        CHECKPOINT_STEPS.indexOf("keyholders") / CHECKPOINT_STEPS.length
+      }
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className=" flex flex-col font-medium text-xl text-darkTeal-2 gap-[52px]">
           <div className="flex flex-col gap-[8px]">
             <div>
-              This section must be filled out for the entity’s management team,
-              including the following roles:
+              You have the option of adding additional Key Holders to your
+              vault, meaning they will both store a Signing Device and will
+              participate in signing transactions when requested by you. This
+              section must be filled out for all named Key Holders.
             </div>
             <div className="flex flex-col gap-[8px]">
               {BULLETPOINTS.map((b, i) => (
@@ -555,45 +554,74 @@ export default function InsuranceApplicationLeaders(props: {
             </div>
           </div>
           <div>
-            All individuals listed in the company leaders section will receive
-            an email to input their application information and complete their
-            identity verification KYC/AML.
+            All named Key Holders will receive an email directly from
+            AnchorWatch to complete required KYC/AML identity verification.
+          </div>
+          <div>
+            Only provide Key Holder information if that individual Key Holder
+            will control the Signing Device (have the device PIN code and
+            participate in transactions to send bitcoin).
+          </div>
+          <div className="flex flex-col gap-lg">
+            <div>How many Key Holders will be in your vault?</div>
+            <AWMultiChoiceField
+              value={keyholders.length.toString()}
+              setValue={(n_) => {
+                const n = parseInt(n_);
+                if (n < keyholders.length) {
+                  setKeyholders(keyholders.slice(0, n));
+                } else if (n - keyholders.length === 1) {
+                  addKeyholder();
+                } else if (n - keyholders.length === 2) {
+                  addKeyholder();
+                  addKeyholder();
+                }
+              }}
+              options={[
+                {
+                  id: "1",
+                  text: "1 (only you)",
+                },
+                {
+                  id: "2",
+                  text: "2",
+                },
+                {
+                  id: "3",
+                  text: "3",
+                },
+              ]}
+            />
           </div>
         </div>
         <div className="w-full flex flex-col gap-5xl">
           <div className="w-full flex flex-col gap-xl">
-            {leaders.map((l, i) => (
-              <LeaderRow
+            {keyholders.map((l, i) => (
+              <KeyholderRow
                 key={i}
+                open={keyholderRowsOpen[i]}
+                switchOpen={() => switchRowOpen(i)}
                 details={l}
+                zipsN={getZipsN(i)}
                 title={getRowTitle(i)}
-                update={(update) => updateLeader(i, update)}
+                update={(update) => updateKeyholder(i, update)}
                 delete={
                   i > 2
                     ? () =>
-                        setLeaders([
-                          ...leaders.slice(0, i),
-                          ...leaders.slice(i + 1),
+                        setKeyholders([
+                          ...keyholders.slice(0, i),
+                          ...keyholders.slice(i + 1),
                         ])
                     : undefined
                 }
               />
             ))}
           </div>
-          <AWButton
-            onClick={addLeader}
-            icon={AddPersonIcon}
-            variant="secondary"
-            width="100%"
-            disabled={!leadersFilled}
-          >
-            Save and add another leader
-          </AWButton>
           <div className="w-full h-[45px] flex items-center justify-center">
             <div className="h-[2px] w-[400px] bg-[#ACC6C5]" />
           </div>
           <div className="font-medium text-xl text-darkTeal-2">
-            Answer the following questions for the Company Leaders listed above.
+            Answer the following questions for the Key Holders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
             {SECTIONS.map((section, i) => (

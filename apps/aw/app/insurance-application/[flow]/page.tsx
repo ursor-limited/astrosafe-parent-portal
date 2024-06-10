@@ -3,6 +3,7 @@ import InsuranceApplicationMainFlowController, {
   AWInsuranceApplicationFlow,
 } from "./mainFlow/controller";
 import InsuranceApplicationInvitedFlowsController from "./invitedFlows/controller";
+import InsuranceApplicationPersonalFlowController from "./personalFlow/controller";
 
 async function AnchorWatch({
   params,
@@ -11,6 +12,8 @@ async function AnchorWatch({
 }) {
   return params.flow === "main" ? (
     <InsuranceApplicationMainFlowController />
+  ) : params.flow === "personal" ? (
+    <InsuranceApplicationPersonalFlowController />
   ) : (
     <InsuranceApplicationInvitedFlowsController flow={params.flow} />
   );

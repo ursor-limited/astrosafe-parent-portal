@@ -1,11 +1,11 @@
-import InsuranceApplicationIllustrationDialog from "../../../components/illustration-dialog";
-import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
+import QR from "@/images/QR.png";
+import Image from "next/image";
+import InsuranceApplicationIllustrationDialog from "../../components/illustration-dialog";
 import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
-import QR from "@/images/QR.png";
-import Image from "next/image";
+import { CHECKPOINT_STEPS } from "../checkpoint-dialog";
 
 export default function InsuranceApplicationIdentityKYC(props: {
   nextCallback: () => void;
