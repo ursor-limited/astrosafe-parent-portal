@@ -232,8 +232,11 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
       supertitle="Connect to a School"
       open={true}
       onCloseCallback={props.closeCallback}
-      backButtonCallback={() =>
-        !schoolId ? setInstructionsViewOpen(false) : undefined
+      noOverflowHidden={isMobile}
+      backButtonCallback={
+        isMobile
+          ? undefined
+          : () => (!schoolId ? setInstructionsViewOpen(false) : undefined)
       }
       button={{
         text: instructionsViewOpen ? "Got it!" : "Connect",
@@ -287,8 +290,8 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
                       {indices.map((i) => (
                         <Stack
                           key={i}
-                          width={isMobile ? "38px" : "60px"}
-                          height={isMobile ? "48px" : "74px"}
+                          width={isMobile ? "31px" : "60px"}
+                          height={isMobile ? "39px" : "74px"}
                           bgcolor={PALETTE.secondary.grey[2]}
                           borderRadius="12px"
                           justifyContent="center"
