@@ -180,14 +180,13 @@ const BULLETPOINTS = [
 ];
 
 const KeyholderRow = (props: {
-  open: boolean;
-  switchOpen: () => void;
   details: IAWKeyholder;
   title: string;
   zipsN: number;
   update: (update: Partial<IAWKeyholder>) => void;
   delete?: () => void;
 }) => {
+  const [open, setOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<"complete" | "incomplete" | "empty">(
     "empty"
   );
@@ -212,7 +211,7 @@ const KeyholderRow = (props: {
       <div className="flex flex-col gap-5xl">
         <div
           className="flex gap-xl item-center w-full p-[8px] hover:opacity-60 duration-200 cursor-pointer"
-          onClick={props.switchOpen}
+          onClick={() => setOpen(!open)}
         >
           <div className="w-full flex gap-xl">
             <div className="flex items-center">
@@ -250,7 +249,7 @@ const KeyholderRow = (props: {
               ) : null}
               <div
                 style={{
-                  transform: `rotate(${props.open ? 180 : 0}deg)`,
+                  transform: `rotate(${open ? 180 : 0}deg)`,
                   transition: "0.2s",
                 }}
               >
@@ -259,7 +258,7 @@ const KeyholderRow = (props: {
             </div>
           </div>
         </div>
-        {props.open ? (
+        {open ? (
           <div className="flex flex-col gap-5xl pb-xl">
             <div className={`flex flex-col gap-1`}>
               <div className="text-xl font-medium text-darkTeal-2">
@@ -279,7 +278,7 @@ const KeyholderRow = (props: {
                 value={props.details.birthday}
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
-                numeric
+                date
                 maxLength={8}
               />
             </div>
@@ -450,12 +449,6 @@ export default function InsuranceApplicationKeyholders(props: {
     }
   }, [answers]);
 
-  const [keyholderRowsOpen, setKeyholderRowsOpen] = useState<boolean[]>([
-    false,
-    false,
-    false,
-  ]); /// use this
-
   // const [keyholdersDone, setKeyholdersDone] = useState<boolean[]>([])
   // useEffect(() => upon change of keyholdes n, set or remove themv)
   const [keyholdersFilled, setKeyholdersFilled] = useState<boolean>(false);
@@ -507,13 +500,6 @@ export default function InsuranceApplicationKeyholders(props: {
       ...keyholders.slice(0, i),
       { ...keyholders[i], ...update },
       ...keyholders.slice(i + 1),
-    ]);
-
-  const switchRowOpen = (i: number) =>
-    setKeyholderRowsOpen([
-      ...keyholderRowsOpen.slice(0, i),
-      !keyholderRowsOpen[i],
-      ...keyholderRowsOpen.slice(i + 1),
     ]);
 
   const getZipsN = (i: number) =>
@@ -599,8 +585,6 @@ export default function InsuranceApplicationKeyholders(props: {
             {keyholders.map((l, i) => (
               <KeyholderRow
                 key={i}
-                open={keyholderRowsOpen[i]}
-                switchOpen={() => switchRowOpen(i)}
                 details={l}
                 zipsN={getZipsN(i)}
                 title={getRowTitle(i)}
