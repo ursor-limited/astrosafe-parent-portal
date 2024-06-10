@@ -52,19 +52,19 @@ export const PERSONAL_FLOW_STEP_TITLES: Record<
   string
 > = {
   welcome: "Welcome to your AnchorWatch Insurance Application",
-  glossary: "Terms to understand",
+  glossary: "Terms to Understand",
   termsOfService: "Terms of Service",
   start: "Start Application",
-  policyOwner: "Policy owner information",
-  beneficiary: "Beneficiary",
-  identity: "Identity verification",
-  keyholders: "Key holder details",
-  insuranceNeeds: "Insurance needs & history",
-  spending: "Spending behavior",
-  whitelist: "Whitelist addresses",
-  upload: "Upload files",
+  policyOwner: "Policy Owner Information",
+  beneficiary: "Beneficiary Information",
+  identity: "Identity Verification",
+  keyholders: "Key Holder Details",
+  insuranceNeeds: "Insurance Needs & History",
+  spending: "Spending Behavior",
+  whitelist: "Whitelist Addresses",
+  upload: "Upload Files",
   submit: "Submit Application",
-  payment: "Underwriting and concierge fees payment",
+  payment: "Underwriting and Concierge Fees Payment",
 };
 
 const STEP_COMPONENTS: Record<

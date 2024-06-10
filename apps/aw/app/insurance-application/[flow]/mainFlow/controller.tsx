@@ -71,20 +71,20 @@ export const MAIN_FLOW_STEP_TITLES: Record<
   string
 > = {
   welcome: "Welcome to your AnchorWatch Insurance Application",
-  glossary: "Terms to understand",
+  glossary: "Terms to Understand",
   termsOfService: "Terms of Service",
   start: "Start Application",
-  policyOwner: "Policy owner information",
-  businessSummary: "Business summary",
-  identity: "Identity verification",
-  leaders: "Company leader details",
-  insuranceNeeds: "Insurance needs & history",
-  governance: "Internal governance and controls",
-  spending: "Spending behavior",
-  whitelist: "Whitelist addresses",
-  upload: "Upload files",
+  policyOwner: "Policy Owner Information",
+  businessSummary: "Business Summary",
+  identity: "Identity Verification",
+  leaders: "Company Leader Details",
+  insuranceNeeds: "Insurance Needs & History",
+  governance: "Internal Governance and Controls",
+  spending: "Spending Behavior",
+  whitelist: "Whitelist Addresses",
+  upload: "Upload Files",
   submit: "Submit Application",
-  payment: "Underwriting and concierge fees payment",
+  payment: "Underwriting and Concierge Fees Payment",
 };
 
 const FADEIN_DELAY = 66;

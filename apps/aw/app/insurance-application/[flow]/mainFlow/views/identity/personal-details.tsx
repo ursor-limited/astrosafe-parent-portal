@@ -526,6 +526,39 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     ],
   },
   {
+    id: "6666d312ab5df41063ec2df7",
+    title: "Profession",
+    inputs: [
+      {
+        id: "6666d3176639e924e5c46ac5",
+        inputType: "text",
+        placeholder: "Insert your profession here",
+      },
+    ],
+  },
+  {
+    id: "6666d349dd1334878e26a78c",
+    title: "Cell phone number",
+    inputs: [
+      {
+        id: "6666d34c462f61a6575c85bf",
+        inputType: "text",
+        placeholder: "Enter your phone number here",
+      },
+    ],
+  },
+  {
+    id: "6666d35fc8f1599979af91ba",
+    title: "Email",
+    inputs: [
+      {
+        id: "6666d36213b43594dd02e69b",
+        inputType: "text",
+        placeholder: "Enter email address here",
+      },
+    ],
+  },
+  {
     id: "6655c0ea700a54316acc765d",
     title: "Primary address of residence",
     inputs: [
