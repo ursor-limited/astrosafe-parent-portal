@@ -136,8 +136,6 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
   const [showFailure, setShowFailure] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
-  //const [showDeviceNameView, setShowDeviceNameView] = useState<boolean>(false);
-
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined
