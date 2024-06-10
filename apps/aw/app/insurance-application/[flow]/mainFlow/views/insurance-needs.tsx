@@ -182,6 +182,7 @@ const BitcoinQuantitySection = (
           value={amount}
           setValue={setAmount}
           placeholder="Quantity"
+          numeric
         />
         <div className="w-[100px]">
           <AWDropdown
