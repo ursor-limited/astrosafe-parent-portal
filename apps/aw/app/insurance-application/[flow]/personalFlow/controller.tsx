@@ -58,11 +58,11 @@ export const PERSONAL_FLOW_STEP_TITLES: Record<
   policyOwner: "Policy Owner Information",
   beneficiary: "Beneficiary Information",
   identity: "Identity Verification",
-  keyholders: "Key Holder Details",
+  keyholders: "Key Holder & Details",
   insuranceNeeds: "Insurance Needs & History",
   spending: "Spending Behavior",
   whitelist: "Whitelist Addresses",
-  upload: "Upload Files",
+  upload: "Upload Documents",
   submit: "Submit Application",
   payment: "Underwriting and Concierge Fees Payment",
 };

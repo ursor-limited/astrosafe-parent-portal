@@ -340,7 +340,7 @@ const LeaderRow = (props: {
                 value={props.details.birthday}
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
-                numeric
+                date
                 maxLength={8}
               />
             </div>

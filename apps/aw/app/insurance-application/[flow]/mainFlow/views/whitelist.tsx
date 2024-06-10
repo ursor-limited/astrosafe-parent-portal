@@ -32,11 +32,14 @@ const AddressesSection = (
   ]);
   const [modified, setModified] = useState<boolean>(false);
 
+  console.log(addresses, "------");
+
   useEffect(() => {
     if (addresses.length === 0 || !modified) {
       const addresses_ = props.answers?.find((a) => a.inputId === INPUT_ID)
         ?.value;
       if (addresses_) {
+        console.log("aaaa", addresses_);
         setAddresses(addresses_);
         setModified(true);
       }
@@ -45,8 +48,11 @@ const AddressesSection = (
 
   useEffect(() => {
     modified && addresses && props.setValue(INPUT_ID, addresses);
-    addresses.every((a) => a.address && a.nickname) && props.setDone();
   }, [addresses]);
+
+  useEffect(() => {
+    props.setDone();
+  }, []);
 
   const addRow = () => {
     setAddresses((prev) => [...prev, { nickname: "", address: "" }]);
@@ -64,20 +70,22 @@ const AddressesSection = (
             key={i}
             i={i + 1}
             value={address}
-            setNickname={(n) =>
+            setNickname={(n) => {
+              setModified(true);
               setAddresses([
                 ...addresses.slice(0, i),
                 { nickname: n, address: address.address },
                 ...addresses.slice(i + 1),
-              ])
-            }
-            setAddress={(a) =>
+              ]);
+            }}
+            setAddress={(a) => {
+              setModified(true);
               setAddresses([
                 ...addresses.slice(0, i),
                 { nickname: address.nickname, address: a },
                 ...addresses.slice(i + 1),
-              ])
-            }
+              ]);
+            }}
             delete={
               addresses.length > 1
                 ? () =>
