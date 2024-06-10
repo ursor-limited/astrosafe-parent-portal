@@ -279,6 +279,8 @@ const KeyholderRow = (props: {
                 value={props.details.birthday}
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
+                numeric
+                maxLength={8}
               />
             </div>
             <div className={`flex flex-col gap-xl`}>

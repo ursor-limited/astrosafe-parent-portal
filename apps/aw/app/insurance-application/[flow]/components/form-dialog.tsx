@@ -51,6 +51,7 @@ export interface IAWFormInput {
     inputId: IAWFormInput["id"];
   };
   maxLength?: number;
+  numeric?: boolean;
 }
 
 export interface IAWMultiChoiceFieldOption {

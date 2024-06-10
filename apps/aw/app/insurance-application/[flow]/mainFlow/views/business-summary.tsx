@@ -34,15 +34,19 @@ export const SECTIONS: IAWFormSection[] = [
         options: [
           {
             id: "6653461b775dd263297ff525",
-            text: "Chicorita",
+            text: "Sole proprietorship",
           },
           {
             id: "665346543f251225d05f9c53",
-            text: "Cyndaquil",
+            text: "Partnership",
           },
           {
             id: "6653465f1409cd6fbed1b995",
-            text: "Totodile",
+            text: "Corporation",
+          },
+          {
+            id: "6666bff0bfcd559b29e09911",
+            text: "S Corporation",
           },
         ],
       },
