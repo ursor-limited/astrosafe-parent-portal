@@ -166,6 +166,16 @@ export default function HomePageContents(props: { mobile: boolean }) {
 
   const router = useRouter();
 
+  useEffect(() => {
+    console.log("NOOL", window);
+    window.postMessage(
+      {
+        getDeviceId: true,
+      },
+      "*"
+    );
+  }, []);
+
   return (
     <PageLayout
       headerButtonId="home"
