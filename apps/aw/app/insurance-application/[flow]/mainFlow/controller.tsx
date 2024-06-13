@@ -98,6 +98,7 @@ export function AWFormSectionSubsection(
       id: IAWFormInput["id"],
       newValue: IAWFormInputAnswer["value"]
     ) => void;
+    setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   }
 ) {
   const [checked, setChecked] = useState<boolean>(false);
@@ -131,6 +132,7 @@ export function AWFormSectionSubsection(
                 key={index}
                 {...input}
                 setValue={props.setValue}
+                setErroneous={props.setErroneous}
                 answers={props.answers}
               />
             ))}
@@ -148,6 +150,7 @@ export type IAWFormSectionProps = IAWFormSection & {
     id: IAWFormInput["id"],
     newValue: IAWFormInputAnswer["value"]
   ) => void;
+  setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   prefill?: () => void;
 };
 
@@ -200,6 +203,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
               key={index}
               {...input}
               setValue={props.setValue}
+              setErroneous={props.setErroneous}
               answers={props.answers}
               disabled={checked && props.disablePrefill}
             />
@@ -216,6 +220,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
               j={j + 1}
               answers={props.answers}
               setValue={props.setValue}
+              setErroneous={props.setErroneous}
             />
           ))}
         </div>

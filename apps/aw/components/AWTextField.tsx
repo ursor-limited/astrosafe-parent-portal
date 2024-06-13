@@ -1,6 +1,7 @@
 import { IAWFormInput } from "@/app/insurance-application/[flow]/components/form-dialog";
 import _, { values } from "lodash";
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 const getFormattedDate = (value: string) =>
   _.compact([value.slice(0, 2), value.slice(2, 4), value.slice(4)]).join("/");
@@ -8,8 +9,11 @@ const getFormattedDate = (value: string) =>
 export type AWTextFieldErrorFormat = "min" | "date";
 
 export default function AWTextField(props: {
+  //inputId?: string;
   value?: string;
   setValue: (newValue: string) => void;
+  //erroneous?: boolean;
+  setErroneous?: (e: boolean) => void;
   placeholder?: string;
   maxLength?: number;
   numeric?: boolean;
@@ -19,21 +23,51 @@ export default function AWTextField(props: {
   const [erroneousValue, setErroneousValue] = useState<boolean>(false);
 
   useEffect(() => {
-    erroneousValue && checkError();
+    if (props.value) {
+      validate();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (erroneousValue && props.value) {
+      validate();
+    }
   }, [props.value]);
 
-  const checkError = () => {
+  // const [erroneousValueInputIds, setErroneousValueInputIds] = useLocalStorage<
+  //   string[]
+  // >("erroneousValueInputIds", []);
+
+  // useEffect(() => {
+  //   props.inputId &&
+  //     erroneousValue &&
+  //     !isErroneous() &&
+  //     setErroneousValueInputIds(
+  //       erroneousValueInputIds.filter((id) => id !== props.inputId)
+  //     );
+  // }, [props.value, erroneousValue]);
+
+  const isErroneous = () => {
     if (!props.value) return false;
     if (props.error?.format === "min") {
-      setErroneousValue(
-        (props.value.length ?? 0) < (props.error.minLength ?? 0)
-      );
+      return (props.value.length ?? 0) < (props.error.minLength ?? 0);
     } else if (props.error?.format === "date") {
       const month = parseInt(props.value.slice(0, 2), 10);
       const day = parseInt(props.value.slice(2, 4), 10);
-      setErroneousValue(month > 12 || day > 31);
+      return month > 12 || day > 31 || props.value.length < 8;
     }
   };
+
+  const validate = () => {
+    if (isErroneous()) {
+      setErroneousValue(true);
+      props.setErroneous?.(true);
+    } else {
+      setErroneousValue(false);
+      props.setErroneous?.(false);
+    }
+  };
+
   return (
     <div
       className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative"
@@ -67,7 +101,7 @@ export default function AWTextField(props: {
         style={{
           outline: "none",
         }}
-        onBlur={() => props.value && props.error && checkError()}
+        onBlur={() => props.value && props.error && validate()}
       />
       {erroneousValue ? (
         <div className="absolute bottom-[-25px] left-0 text-fields-error">

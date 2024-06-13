@@ -10,7 +10,11 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
-import { IAWFormInputAnswer, IAWFormSection } from "../components/form-dialog";
+import {
+  IAWFormInput,
+  IAWFormInputAnswer,
+  IAWFormSection,
+} from "../components/form-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
 import AWTextField from "@/components/AWTextField";
 import {
@@ -24,6 +28,8 @@ import {
   PERSONAL_DETAILS_EMAIL_INPUT_ID,
   PERSONAL_DETAILS_NAME_INPUT_ID,
 } from "../mainFlow/views/identity/personal-details";
+
+const BIRTHDAY_INPUT_ID = "keyholders-birthday";
 
 export interface IAWKeyholder {
   name: string;
@@ -285,6 +291,10 @@ const KeyholderRow = (props: {
                 placeholder="MM/DD/YYYY"
                 date
                 maxLength={8}
+                error={{
+                  format: "date",
+                  message: "The date should be in the format 01/31/2024",
+                }}
               />
             </div>
             <div className={`flex flex-col gap-xl`}>
@@ -529,6 +539,17 @@ export default function InsuranceApplicationKeyholders(props: {
         : 1
       : 1;
 
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) =>
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+
   return (
     <InsuranceApplicationDialog
       title={PERSONAL_FLOW_STEP_TITLES.keyholders}
@@ -632,6 +653,7 @@ export default function InsuranceApplicationKeyholders(props: {
                 {...section}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
               />
             ))}
           </div>

@@ -176,6 +176,19 @@ export default function InsuranceApplicationFormDialog(props: {
     [answers]
   );
 
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) =>
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+
+  console.log(erroneousValueInputIds);
+
   return (
     <InsuranceApplicationDialog title={props.title} progress={props.progress}>
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
@@ -193,6 +206,7 @@ export default function InsuranceApplicationFormDialog(props: {
                   i: i + 1,
                   answers,
                   setValue,
+                  setErroneous,
                   prefill: () => prefill(section),
                   setDone: () =>
                     setCustomSectionsDone(
@@ -207,6 +221,7 @@ export default function InsuranceApplicationFormDialog(props: {
                 i={i + 1}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
                 prefill={() => prefill(section)}
                 //commit={commitAnswers}
               />

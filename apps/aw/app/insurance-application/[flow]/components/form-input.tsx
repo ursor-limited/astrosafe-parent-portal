@@ -16,6 +16,7 @@ export default function InsuranceApplicationFormInput(
       id: IAWFormInput["id"],
       newValue: IAWFormInputAnswer["value"]
     ) => void;
+    setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
     disabled?: boolean;
   }
 ) {
@@ -34,6 +35,7 @@ export default function InsuranceApplicationFormInput(
           <AWTextField
             value={props.answers?.find((a) => a.inputId === props.id)?.value}
             setValue={(v) => props.setValue(props.id, v)}
+            setErroneous={(e: boolean) => props.setErroneous?.(props.id, e)}
             placeholder={props.placeholder}
             maxLength={props.maxLength}
             numeric={props.numeric}

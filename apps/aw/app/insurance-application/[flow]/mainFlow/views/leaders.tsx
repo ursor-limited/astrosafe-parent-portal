@@ -13,6 +13,7 @@ import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
 import {
+  IAWFormInput,
   IAWFormInputAnswer,
   IAWFormSection,
 } from "../../components/form-dialog";
@@ -349,6 +350,10 @@ const LeaderRow = (props: {
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
                 date
+                error={{
+                  format: "date",
+                  message: "The date should be in the format 01/31/2024",
+                }}
                 maxLength={8}
               />
             </div>
@@ -567,6 +572,17 @@ export default function InsuranceApplicationLeaders(props: {
       ...leaders.slice(i + 1),
     ]);
 
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) =>
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+
   return (
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.leaders}
@@ -639,6 +655,7 @@ export default function InsuranceApplicationLeaders(props: {
                 {...section}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
               />
             ))}
           </div>
