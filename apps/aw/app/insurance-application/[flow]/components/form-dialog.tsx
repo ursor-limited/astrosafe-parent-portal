@@ -50,6 +50,15 @@ export interface IAWFormInput {
     step: AWInsuranceApplicationMainFlowStep;
     inputId: IAWFormInput["id"];
   };
+  visibilityAndOptionalityDependence?: {
+    inputId: string;
+    answer: string;
+  };
+  error?: {
+    minLength?: number;
+    message: string;
+    format: "min" | "date";
+  };
   maxLength?: number;
   numeric?: boolean;
   date?: boolean;
@@ -82,7 +91,9 @@ export default function InsuranceApplicationFormDialog(props: {
   nextCallback: () => void;
   customSections?: Record<
     IAWFormSection["id"],
-    React.FC<IAWFormSectionProps & { setDone: () => void }>
+    React.FC<
+      IAWFormSectionProps & { setDone: () => void; highlightEmpties?: boolean }
+    >
   >;
   canProceed?: boolean;
 }) {
@@ -112,33 +123,6 @@ export default function InsuranceApplicationFormDialog(props: {
     [committedAnswers, props.stepId]
   );
 
-  const [customSectionsDone, setCustomSectionsDone] = useState<
-    IAWFormSection["id"][]
-  >([]);
-
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-  useEffect(() => {
-    setCanProceed(
-      customSectionsDone.length >=
-        props.sections.filter((s) => s.custom).length &&
-        props.sections
-          .filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
-    );
-  }, [answers, customSectionsDone, props.sections]);
-
-  // useEffect(() => {
-  //   setCanProceed(!!props.canProceed);
-  // }, [props.canProceed]);
-
   const commitAnswers = () =>
     setCommittedAnswers({ ...committedAnswers, [props.stepId]: answers });
 
@@ -150,7 +134,7 @@ export default function InsuranceApplicationFormDialog(props: {
             ? answers
             : committedAnswers[input.prefill.step]
         )?.find((a) => a.inputId === input.prefill!.inputId)?.value;
-        if (newValue && !answers.find((a) => a.inputId === input.id)?.value) {
+        if (newValue) {
           setValue(input.id, newValue);
         }
       }
@@ -171,18 +155,90 @@ export default function InsuranceApplicationFormDialog(props: {
     [answers]
   );
 
+  const [highlightEmpties, setHighlightEmpties] = useState<boolean>(false);
+
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) => {
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+  };
+
+  const [dependantInputsVisible, setDependantInputsVisible] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  useEffect(() => {
+    setDependantInputsVisible(
+      props.sections
+        .filter((s) => !s.custom)
+        .flatMap((s) => [
+          ...(s.inputs || []),
+          ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+        ])
+        .filter((input) => {
+          if (input.visibilityAndOptionalityDependence) {
+            const value = answers.find(
+              (a) =>
+                a.inputId === input.visibilityAndOptionalityDependence?.inputId
+            )?.value;
+            return (
+              value && value === input.visibilityAndOptionalityDependence.answer
+            );
+          }
+        })
+        .map((input) => input.id)
+    );
+  }, [answers]);
+
+  const [emptyRequiredInputIds, setEmptyRequiredInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+  useEffect(() => {
+    setEmptyRequiredInputIds(
+      props.sections
+        .filter((s) => !s.custom)
+        .flatMap((s) => [
+          ...(s.inputs || []),
+          ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+        ])
+        .filter(
+          (input) =>
+            !input.optional &&
+            (!input.visibilityAndOptionalityDependence ||
+              dependantInputsVisible.includes(input.id))
+        )
+        .filter((input) => !answers.find((a) => a.inputId === input?.id)?.value)
+        .map((input) => input.id)
+    );
+  }, [props.sections, dependantInputsVisible, answers]);
+
+  const [customSectionsDone, setCustomSectionsDone] = useState<
+    IAWFormSection["id"][]
+  >([]);
+
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+  useEffect(() => {
+    setCanProceed(
+      erroneousValueInputIds.length === 0 &&
+        customSectionsDone.length >=
+          props.sections.filter((s) => s.custom).length &&
+        emptyRequiredInputIds.length === 0
+    );
+  }, [
+    emptyRequiredInputIds,
+    customSectionsDone,
+    props.sections,
+    erroneousValueInputIds,
+    dependantInputsVisible,
+  ]);
   return (
-    <InsuranceApplicationDialog
-      title={props.title}
-      // leftCallback={() => setStepIndex(stepIndex - 1)}
-      // rightCallback={() => setStepIndex(stepIndex + 1)}
-      rightArrowFaded={!canProceed}
-      progress={props.progress}
-      // stepper={{
-      //   n: STEPS.length,
-      //   current: stepIndex,
-      // }}
-    >
+    <InsuranceApplicationDialog title={props.title} progress={props.progress}>
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         {props.subtitle ? (
           <div className="font-medium text-xl text-darkTeal-2 pb-xl">
@@ -198,10 +254,12 @@ export default function InsuranceApplicationFormDialog(props: {
                   i: i + 1,
                   answers,
                   setValue,
+                  setErroneous,
+                  highlightEmpties,
                   prefill: () => prefill(section),
                   setDone: () =>
-                    setCustomSectionsDone(
-                      _.uniq([...customSectionsDone, section.id])
+                    setCustomSectionsDone((prev) =>
+                      _.uniq([...prev, section.id])
                     ),
                 })}
               </div>
@@ -212,8 +270,10 @@ export default function InsuranceApplicationFormDialog(props: {
                 i={i + 1}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
                 prefill={() => prefill(section)}
-                //commit={commitAnswers}
+                dependantInputsVisible={dependantInputsVisible}
               />
             )
           )}
@@ -224,11 +284,20 @@ export default function InsuranceApplicationFormDialog(props: {
           </AWButton>
           <AWButton
             width={182}
-            disabled={!canProceed}
             onClick={() => {
               commitAnswers();
-              //setStepIndex(stepIndex + 1);
-              props.nextCallback();
+              if (canProceed) {
+                props.nextCallback();
+              } else {
+                setHighlightEmpties(true);
+                document
+                  .getElementById(
+                    emptyRequiredInputIds[0] || erroneousValueInputIds[0]
+                  )
+                  ?.parentElement?.parentElement?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+              }
             }}
           >
             Next

@@ -79,6 +79,7 @@ export default function AWDropdown(props: {
   setValue: (newValue: string) => void;
   placeholder?: string;
   options?: IAWMultiChoiceFieldOption[];
+  highlightEmpty?: boolean;
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const onOutsideClick = () => setOpen(false);
@@ -156,6 +157,9 @@ export default function AWDropdown(props: {
       <div
         ref={setListPositionRef}
         className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative cursor-pointer"
+        style={{
+          border: props.highlightEmpty ? `1px solid #F50000` : undefined,
+        }}
         onClick={() => setOpen(!open)}
       >
         <div

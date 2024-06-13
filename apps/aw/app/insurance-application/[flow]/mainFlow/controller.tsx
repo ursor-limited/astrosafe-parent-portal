@@ -98,6 +98,9 @@ export function AWFormSectionSubsection(
       id: IAWFormInput["id"],
       newValue: IAWFormInputAnswer["value"]
     ) => void;
+    setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+    highlightEmpties?: boolean;
+    dependantInputsVisible?: IAWFormInput["id"][];
   }
 ) {
   const [checked, setChecked] = useState<boolean>(false);
@@ -126,14 +129,22 @@ export function AWFormSectionSubsection(
         <>
           <div className="text-xl font-medium text-darkTeal-2">{`${props.i}.${props.j}) ${props.title}`}</div>
           <div className="flex flex-col gap-xl">
-            {props.inputs.map((input, index) => (
-              <InsuranceApplicationFormInput
-                key={index}
-                {...input}
-                setValue={props.setValue}
-                answers={props.answers}
-              />
-            ))}
+            {props.inputs
+              .filter(
+                (input) =>
+                  !input.visibilityAndOptionalityDependence ||
+                  props.dependantInputsVisible?.includes(input.id)
+              )
+              .map((input, index) => (
+                <InsuranceApplicationFormInput
+                  key={index}
+                  {...input}
+                  setValue={props.setValue}
+                  setErroneous={props.setErroneous}
+                  highlightEmpty={props.highlightEmpties}
+                  answers={props.answers}
+                />
+              ))}
           </div>
         </>
       ) : null}
@@ -148,7 +159,10 @@ export type IAWFormSectionProps = IAWFormSection & {
     id: IAWFormInput["id"],
     newValue: IAWFormInputAnswer["value"]
   ) => void;
+  setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+  dependantInputsVisible?: IAWFormInput["id"][];
   prefill?: () => void;
+  highlightEmpties?: boolean;
 };
 
 export function AWFormSection(props: IAWFormSectionProps) {
@@ -195,15 +209,23 @@ export function AWFormSection(props: IAWFormSectionProps) {
       ) : null}
       {props.inputs ? (
         <div className="flex flex-col gap-xl">
-          {props.inputs.map((input, index) => (
-            <InsuranceApplicationFormInput
-              key={index}
-              {...input}
-              setValue={props.setValue}
-              answers={props.answers}
-              disabled={checked && props.disablePrefill}
-            />
-          ))}
+          {props.inputs
+            .filter(
+              (input) =>
+                !input.visibilityAndOptionalityDependence ||
+                props.dependantInputsVisible?.includes(input.id)
+            )
+            .map((input, index) => (
+              <InsuranceApplicationFormInput
+                key={index}
+                {...input}
+                setValue={props.setValue}
+                setErroneous={props.setErroneous}
+                highlightEmpty={props.highlightEmpties}
+                answers={props.answers}
+                disabled={checked && props.disablePrefill}
+              />
+            ))}
         </div>
       ) : null}
       {props.subsections ? (
@@ -216,6 +238,9 @@ export function AWFormSection(props: IAWFormSectionProps) {
               j={j + 1}
               answers={props.answers}
               setValue={props.setValue}
+              setErroneous={props.setErroneous}
+              highlightEmpties={props.highlightEmpties}
+              dependantInputsVisible={props.dependantInputsVisible}
             />
           ))}
         </div>
@@ -259,8 +284,13 @@ export default function InsuranceApplicationMainFlowController() {
     AWInsuranceApplicationMainFlowStep | undefined
   >("currentStep", "welcome");
 
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationMainFlowStep | undefined
+  >("previousStep", undefined);
+
   const setStepComplete = (step: AWInsuranceApplicationMainFlowStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
+    setPreviousStep(step);
     setCurrentStep(
       awInsuranceApplicationMainFlowSteps[
         awInsuranceApplicationMainFlowSteps.indexOf(step) + 1
@@ -270,10 +300,14 @@ export default function InsuranceApplicationMainFlowController() {
 
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.scrollTo(0, 0), [currentStep]);
+
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      ref={setRef}
     >
       {currentStep && StepView ? (
         <StepView

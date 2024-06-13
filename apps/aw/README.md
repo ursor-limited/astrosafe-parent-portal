@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# API hookup checklist
 
-## Getting Started
+## 1. Send the data to db upon saving
 
-First, run the development server:
+components: InsuranceApplicationFormDialog + InsuranceApplicationLeaders + InsuranceApplicationKeyholders.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+These three components contain a function called `commitAnswers`, which currently puts the data into local storage.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Most data goes via the instance in `InsuranceApplicationFormDialog`. The two others have a custom one due to their need to submit variable amounts of identities, i.e. leaders or keyholders.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 2. Identity verification statuses
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- remove `leadersWithHardcodedStatuses` and `keyholdersWithHardcodedStatuses` and use actual statuses
+- trigger email
+  figma: https://www.figma.com/design/uCjOF1qfcPHm2Q3C3Bk02l/FINH-%3C%3E-AnchorWatch-Handover-V2?node-id=14229-30355&t=SaSjCWqiRkIlv1zq-4
+  component: InsuranceApplicationIdentityStatus
 
-## Learn More
+## 3. QR code flow
 
-To learn more about Next.js, take a look at the following resources:
+figma: https://www.figma.com/design/uCjOF1qfcPHm2Q3C3Bk02l/FINH-%3C%3E-AnchorWatch-Handover-V2?node-id=11515-563742&t=fdxwBRpoU0cZT0uD-4
+component: InsuranceApplicationIdentityKYC
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Note that if you use a redirect url from the external platform, it will depend on which flow is in progress.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 3. Documents list:
 
-## Deploy on Vercel
+figma: https://www.figma.com/design/uCjOF1qfcPHm2Q3C3Bk02l/FINH-%3C%3E-AnchorWatch-Handover-V2?node-id=14331-549776&t=fdxwBRpoU0cZT0uD-4
+component: InsuranceApplicationUpload > `onClick` currently just causes flow to advance
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 4. Trigger Payment flow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+figma: https://www.figma.com/design/uCjOF1qfcPHm2Q3C3Bk02l/FINH-%3C%3E-AnchorWatch-Handover-V2?node-id=11632-529643&t=mnG5Hzl2mUSGIByS-4
+component: InsuranceApplicationPayment > `buttonCallback` currently does nothing
+
+## When you have finished testing, remove TestingBar.tsx and its reference in InsuranceApplicationPage.tsx

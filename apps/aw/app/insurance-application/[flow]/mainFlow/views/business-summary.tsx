@@ -4,6 +4,13 @@ import InsuranceApplicationFormDialog, {
 } from "../../components/form-dialog";
 import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
+const LICENSES_INPUT_ID = "6654cb06b933bdbaa3f0ed75";
+const LICENSES_YES_OPTION_ID = "6654cb1d8a8dcbe65bdf3fa7";
+const BANKRUPTCY_INPUT_ID = "6664b0c75b0bd09a293f54a5";
+const BANKRUPTCY_YES_OPTION_ID = "6664b0cc83a22ae8b722ce2c";
+const AUDITS_INPUT_ID = "6664b1687b24d86a6c1e7673";
+const AUDITS_YES_OPTION_ID = "6664b16df540e66af0750603";
+
 export const SECTIONS: IAWFormSection[] = [
   {
     id: "6652e2c52226b1c9658f4560",
@@ -60,7 +67,13 @@ export const SECTIONS: IAWFormSection[] = [
         id: "665346cf1ec61b1354a74f9a",
         inputType: "text",
         placeholder: "Enter number here",
+        numeric: true,
         maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -219,6 +232,7 @@ export const SECTIONS: IAWFormSection[] = [
         id: "6654ca6e45f33d87561374e6",
         title: "Number of employees",
         inputType: "text",
+        numeric: true,
         placeholder: "Enter number here",
       },
     ],
@@ -228,11 +242,11 @@ export const SECTIONS: IAWFormSection[] = [
     title: "Does the entity hold any licenses issued by a regulatory body?",
     inputs: [
       {
-        id: "6654cb06b933bdbaa3f0ed75",
+        id: LICENSES_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6654cb1d8a8dcbe65bdf3fa7",
+            id: LICENSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -244,10 +258,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6654cb6272a687f9559817a4",
         inputType: "textLong",
-        optional: true,
         title:
-          "If yes, name the regulatory authority and the licenses held by the entity and Key Holders. You will also need to upload them at the end of the application.",
+          "Name the regulatory authority and the licenses held by the entity and Key Holders. You will also need to upload them at the end of the application.",
         placeholder: "List licenses and the issuing regulatory body",
+        visibilityAndOptionalityDependence: {
+          inputId: LICENSES_INPUT_ID,
+          answer: LICENSES_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -282,11 +299,11 @@ export const SECTIONS: IAWFormSection[] = [
     title: "Have the entity or its leaders ever filed for bankruptcy?",
     inputs: [
       {
-        id: "6664b0c75b0bd09a293f54a5",
+        id: BANKRUPTCY_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b0cc83a22ae8b722ce2c",
+            id: BANKRUPTCY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -298,8 +315,11 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6664b113d8abcd247065c75c",
         inputType: "textLong",
-        optional: true,
-        placeholder: "If yes, please share details",
+        placeholder: "Please share details",
+        visibilityAndOptionalityDependence: {
+          inputId: BANKRUPTCY_INPUT_ID,
+          answer: BANKRUPTCY_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -310,11 +330,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the entity engage in regular pen testing and/or cybersecurity audits by a third party firm?",
     inputs: [
       {
-        id: "6664b1687b24d86a6c1e7673",
+        id: AUDITS_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b16df540e66af0750603",
+            id: AUDITS_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -326,9 +346,12 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6664b178a0829cf0b935120a",
         inputType: "textLong",
-        optional: true,
         placeholder:
-          "If yes, share the name of the auditor and the date of the most recent audit.",
+          "Share the name of the auditor and the date of the most recent audit.",
+        visibilityAndOptionalityDependence: {
+          inputId: AUDITS_INPUT_ID,
+          answer: AUDITS_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -381,6 +404,7 @@ export const SECTIONS: IAWFormSection[] = [
             id: "6654f004e59414a2e3ca72f2",
             inputType: "text",
             title: "Entity name (if applicable)",
+            optional: true,
             placeholder: "Name with which entity was incorporated",
           },
           {

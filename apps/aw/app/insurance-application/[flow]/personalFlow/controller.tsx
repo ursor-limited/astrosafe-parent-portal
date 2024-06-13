@@ -98,8 +98,13 @@ export default function InsuranceApplicationPersonalFlowController() {
     AWInsuranceApplicationPersonalFlowStep | undefined
   >("currentStep", "welcome");
 
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationPersonalFlowStep | undefined
+  >("previousStep", undefined);
+
   const setStepComplete = (step: AWInsuranceApplicationPersonalFlowStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
+    setPreviousStep(step);
     setCurrentStep(
       awInsuranceApplicationPersonalFlowSteps[
         awInsuranceApplicationPersonalFlowSteps.indexOf(step) + 1

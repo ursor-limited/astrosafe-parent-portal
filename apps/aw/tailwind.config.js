@@ -6,11 +6,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // buttons: {
-      //   secondary: {
-      //     hover
-      //   }
-      // }
       fontSize: { lg: ["18px", "21.6px"], xl: ["20px", "24px"] },
       spacing: {
         lg: "12px",
@@ -111,6 +106,7 @@ module.exports = {
             default: "#0E656B",
             selected: "#E2B000",
           },
+          error: "#F50000"
         },
       },
       keyframes: {

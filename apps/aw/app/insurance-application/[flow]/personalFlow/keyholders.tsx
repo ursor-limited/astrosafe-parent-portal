@@ -10,7 +10,11 @@ import PersonIcon from "@/images/icons/PersonIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDownIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
-import { IAWFormInputAnswer, IAWFormSection } from "../components/form-dialog";
+import {
+  IAWFormInput,
+  IAWFormInputAnswer,
+  IAWFormSection,
+} from "../components/form-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
 import AWTextField from "@/components/AWTextField";
 import {
@@ -19,6 +23,21 @@ import {
 } from "./controller";
 import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
+import {
+  PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+  PERSONAL_DETAILS_EMAIL_INPUT_ID,
+  PERSONAL_DETAILS_NAME_INPUT_ID,
+} from "../mainFlow/views/identity/personal-details";
+
+const BIRTHDAY_INPUT_ID = "keyholders-birthday";
+const DESCRIPTION_SECTION_ID = "665f4e4fcd81bc33290c2cd4";
+const DESCRIPTION_INPUT_ID = "665f4e5369bc960c37e387ee";
+const INVESTIGATION_YES_OPTION_ID = "665f4246be7e00eede11c7f9";
+const DISHONESTY_YES_OPTION_ID = "665f426c8eb680b7e46ee61a";
+const LOSSES_YES_OPTION_ID = "665f42b8520100b245e9e7ab";
+const PERSONAL_LOSSES_YES_OPTION_ID = "665f430a2cfbeb1847db7031";
+const KIDNAPPING_YES_OPTION_ID = "6664b320524e335af68b98f9";
+const SECURITY_YES_OPTION_ID = "6664b3514c676f49c3823795";
 
 export interface IAWKeyholder {
   name: string;
@@ -40,7 +59,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f4246be7e00eede11c7f9",
+            id: INVESTIGATION_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -61,7 +80,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f426c8eb680b7e46ee61a",
+            id: DISHONESTY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -82,7 +101,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f42b8520100b245e9e7ab",
+            id: LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -96,14 +115,14 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f4301ad072875140001b8",
     title:
-      "Has a Key Holder experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
+      "Has a Key Holder experienced any losses in personal holdings or losses related to prior employers greater than $10,000 in Bitcoin, cryptocurrency, or other digital assets?",
     inputs: [
       {
         id: "665f430586bf43b7aecea5ac",
         inputType: "multiChoice",
         options: [
           {
-            id: "665f430a2cfbeb1847db7031",
+            id: PERSONAL_LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -125,7 +144,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b320524e335af68b98f9",
+            id: KIDNAPPING_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -146,7 +165,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b3514c676f49c3823795",
+            id: SECURITY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -157,17 +176,15 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
-
   {
-    id: "665f4e4fcd81bc33290c2cd4",
+    id: DESCRIPTION_SECTION_ID,
     title:
       "If you answered yes to any of the questions above, please provide a detailed description below",
     noNumber: true,
     inputs: [
       {
-        id: "665f4e5369bc960c37e387ee",
+        id: DESCRIPTION_INPUT_ID,
         inputType: "textLong",
-        optional: true,
         placeholder: "Write your description here",
       },
     ],
@@ -184,6 +201,7 @@ const KeyholderRow = (props: {
   title: string;
   zipsN: number;
   update: (update: Partial<IAWKeyholder>) => void;
+  setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   delete?: () => void;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -194,9 +212,10 @@ const KeyholderRow = (props: {
     () =>
       props.details &&
       setStatus(
-        Object.values(props.details).every((x) =>
-          typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
-        )
+        props.details.zips.length >= props.zipsN &&
+          Object.values(props.details).every((x) =>
+            typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
+          )
           ? "complete"
           : Object.values(props.details).some((x) =>
               typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
@@ -280,6 +299,11 @@ const KeyholderRow = (props: {
                 placeholder="MM/DD/YYYY"
                 date
                 maxLength={8}
+                error={{
+                  format: "date",
+                  message: "The date should be in the format 01/31/2024",
+                }}
+                setErroneous={(e) => props.setErroneous(BIRTHDAY_INPUT_ID, e)}
               />
             </div>
             <div className={`flex flex-col gap-xl`}>
@@ -416,7 +440,7 @@ export default function InsuranceApplicationKeyholders(props: {
 
   const commitAnswers = () =>
     setCommittedAnswers({
-      ...committedAnswers.keyholders,
+      ...committedAnswers,
       keyholders: answers.find(
         (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
       )
@@ -437,9 +461,29 @@ export default function InsuranceApplicationKeyholders(props: {
           ],
     });
 
-  const [keyholders, setKeyholders] = useState<IAWKeyholder[]>([
-    getEmptyKeyHolder(),
-  ]);
+  const [keyholders, setKeyholders] = useState<IAWKeyholder[]>([]);
+  useEffect(() => {
+    if (keyholders.length === 0) {
+      const prefilledKeyholder = {
+        name:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_NAME_INPUT_ID
+          )?.value ?? "",
+        birthday:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
+          )?.value ?? "",
+        email:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_EMAIL_INPUT_ID
+          )?.value ?? "",
+        job: "",
+        zips: [],
+      };
+      setKeyholders([prefilledKeyholder]);
+    }
+  }, []);
+
   useEffect(() => {
     const keyholders_ = answers?.find(
       (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
@@ -448,40 +492,6 @@ export default function InsuranceApplicationKeyholders(props: {
       setKeyholders(keyholders_);
     }
   }, [answers]);
-
-  // const [keyholdersDone, setKeyholdersDone] = useState<boolean[]>([])
-  // useEffect(() => upon change of keyholdes n, set or remove themv)
-  const [keyholdersFilled, setKeyholdersFilled] = useState<boolean>(false);
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-
-  useEffect(() => {
-    const keyholdersDone = keyholders.every(
-      (l, i) =>
-        Object.values(l).every((x) => !!x) &&
-        l.zips.every((zip) => !!zip) &&
-        l.zips.length >= getZipsN(i)
-    );
-    if (keyholdersDone) {
-      if (!keyholdersFilled) {
-        setKeyholdersFilled(true);
-      }
-      setCanProceed(
-        SECTIONS.filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
-      );
-    } else {
-      setKeyholdersFilled(false);
-      setCanProceed(false);
-    }
-  }, [answers, keyholders]);
 
   const addKeyholder = () =>
     setKeyholders((prev) => [...prev, getEmptyKeyHolder()]);
@@ -511,10 +521,75 @@ export default function InsuranceApplicationKeyholders(props: {
         : 1
       : 1;
 
+  const [highlightEmpties, setHighlightEmpties] = useState<boolean>(false);
+
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) =>
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+
+  const [descriptionInputRequired, setDescriptionInputRequired] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setDescriptionInputRequired(
+        [
+          INVESTIGATION_YES_OPTION_ID,
+          DISHONESTY_YES_OPTION_ID,
+          LOSSES_YES_OPTION_ID,
+          PERSONAL_LOSSES_YES_OPTION_ID,
+          KIDNAPPING_YES_OPTION_ID,
+          SECURITY_YES_OPTION_ID,
+        ].some((optionId) => answers.find((a) => a.value === optionId))
+      ),
+    [answers]
+  );
+
+  const [emptyRequiredInputIds, setEmptyRequiredInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+  useEffect(() => {
+    setEmptyRequiredInputIds(
+      SECTIONS.filter((s) => !s.custom)
+        .flatMap((s) => [...(s.inputs || [])])
+        .filter(
+          (input) =>
+            (input.id !== DESCRIPTION_INPUT_ID || descriptionInputRequired) &&
+            !answers.find((a) => a.inputId === input?.id)?.value
+        )
+        .map((input) => input.id)
+    );
+  }, [answers, descriptionInputRequired]);
+
+  useEffect(() => {
+    if (keyholders.length === 0) return;
+    const keyholdersDone = keyholders.every(
+      (k, i) =>
+        Object.values(k).every((x) => !!x) &&
+        k.zips.every((zip) => !!zip) &&
+        k.zips.length >= getZipsN(i)
+    );
+    if (keyholdersDone) {
+      setCanProceed(
+        erroneousValueInputIds.length === 0 &&
+          emptyRequiredInputIds.length === 0
+      );
+    } else {
+      setCanProceed(false);
+    }
+  }, [answers, keyholders, erroneousValueInputIds]);
+
   return (
     <InsuranceApplicationDialog
       title={PERSONAL_FLOW_STEP_TITLES.keyholders}
-      rightArrowFaded={!canProceed}
       progress={
         CHECKPOINT_STEPS.indexOf("keyholders") / CHECKPOINT_STEPS.length
       }
@@ -589,6 +664,7 @@ export default function InsuranceApplicationKeyholders(props: {
                 zipsN={getZipsN(i)}
                 title={getRowTitle(i)}
                 update={(update) => updateKeyholder(i, update)}
+                setErroneous={setErroneous}
                 delete={
                   i > 2
                     ? () =>
@@ -608,13 +684,19 @@ export default function InsuranceApplicationKeyholders(props: {
             Answer the following questions for the Key Holders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
-            {SECTIONS.map((section, i) => (
+            {SECTIONS.filter(
+              (section) =>
+                section.id !== DESCRIPTION_SECTION_ID ||
+                descriptionInputRequired
+            ).map((section, i) => (
               <AWFormSection
                 i={i + 1}
                 key={section.id}
                 {...section}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
               />
             ))}
           </div>
@@ -625,11 +707,20 @@ export default function InsuranceApplicationKeyholders(props: {
           </AWButton>
           <AWButton
             width={182}
-            disabled={!canProceed}
             onClick={() => {
               commitAnswers();
-              //setStepIndex(stepIndex + 1);
-              props.nextCallback();
+              if (canProceed) {
+                props.nextCallback();
+              } else {
+                setHighlightEmpties(true);
+                document
+                  .getElementById(
+                    emptyRequiredInputIds[0] || erroneousValueInputIds[0]
+                  )
+                  ?.parentElement?.parentElement?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+              }
             }}
           >
             Next

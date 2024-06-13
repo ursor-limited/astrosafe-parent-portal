@@ -18,13 +18,17 @@ const countriesOptions = Object.entries(COUNTRIES_ALPHA2).map(
   ([alpha2, name]) => ({ id: alpha2, text: name })
 );
 
+export const PERSONAL_DETAILS_NAME_INPUT_ID = "6655be2de0735e8450474863";
+export const PERSONAL_DETAILS_BIRTHDAY_INPUT_ID = "6655c02aab2c63b1bea64cd8";
+export const PERSONAL_DETAILS_EMAIL_INPUT_ID = "6666d36213b43594dd02e69b";
+
 const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
   {
     id: "6655be26fe62c4cb7d4efba6",
     title: "Legal name",
     inputs: [
       {
-        id: "6655be2de0735e8450474863",
+        id: PERSONAL_DETAILS_NAME_INPUT_ID,
         prefill: {
           step: "policyOwner",
           inputId: "6652e4a2214b3b8b436dc33d",
@@ -39,11 +43,15 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Date of birth",
     inputs: [
       {
-        id: "6655c02aab2c63b1bea64cd8",
+        id: PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
         inputType: "text",
         placeholder: "MM/DD/YYYY",
         date: true,
         maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
       },
     ],
   },
@@ -54,8 +62,14 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c0b839dd2e99a8b4135f",
         inputType: "text",
+        numeric: true,
         placeholder: "Enter your 9 digit SSN here",
         maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -72,6 +86,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -128,6 +143,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
         },
         title: "Address line 2",
         inputType: "text",
+        optional: true,
         placeholder: "Insert apartment or suite number",
       },
       {
@@ -221,6 +237,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -276,6 +293,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -361,7 +379,13 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c0b839dd2e99a8b4135f",
         inputType: "text",
         placeholder: "Enter your 9 digit SSN here",
+        numeric: true,
         maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -378,6 +402,7 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -452,6 +477,7 @@ const EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -490,7 +516,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Legal name",
     inputs: [
       {
-        id: "6655be2de0735e8450474863",
+        id: PERSONAL_DETAILS_NAME_INPUT_ID,
         prefill: {
           step: "policyOwner",
           inputId: "6652e4a2214b3b8b436dc33d",
@@ -505,11 +531,15 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Date of birth",
     inputs: [
       {
-        id: "6655c02aab2c63b1bea64cd8",
+        id: PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
         inputType: "text",
         placeholder: "MM/DD/YYYY",
         date: true,
         maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
       },
     ],
   },
@@ -521,7 +551,13 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c0b839dd2e99a8b4135f",
         inputType: "text",
         placeholder: "Enter your 9 digit SSN here",
+        numeric: true,
         maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -553,7 +589,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Email",
     inputs: [
       {
-        id: "6666d36213b43594dd02e69b",
+        id: PERSONAL_DETAILS_EMAIL_INPUT_ID,
         inputType: "text",
         placeholder: "Enter email address here",
       },
@@ -572,6 +608,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -627,6 +664,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -747,7 +785,11 @@ export default function InsuranceApplicationPersonalDetails(props: {
     <InsuranceApplicationFormDialog
       stepId="identity"
       title={IDENTITY_STEP_TITLES.personalDetails}
-      subtitle="As a company leader, please input your application information and proceed to identity verification KYC/AML."
+      subtitle={
+        props.flow !== "personal"
+          ? "As a company leader, please input your application information and proceed to identity verification KYC/AML."
+          : undefined
+      }
       sections={FLOW_SECTIONS[props.flow || "main"]}
       nextCallback={props.nextCallback}
       customSections={

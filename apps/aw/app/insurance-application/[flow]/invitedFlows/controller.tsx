@@ -56,11 +56,29 @@ const STEP_COMPONENTS: Record<
 export default function InsuranceApplicationInvitedFlowsController(props: {
   flow: AWInsuranceApplicationFlow;
 }) {
+  const [stepCompletions, setStepCompletions] = useLocalStorage<
+    Partial<Record<AWInsuranceApplicationInvitedFlowStep, boolean>>
+  >("stepCompletions", {});
+
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationInvitedFlowStep | undefined
   >("currentStep", "welcome");
 
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationInvitedFlowStep | undefined
+  >("previousStep", undefined);
+
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
+
+  const setStepComplete = (step: AWInsuranceApplicationInvitedFlowStep) => {
+    setStepCompletions({ ...stepCompletions, [step]: true });
+    setPreviousStep(step);
+    setCurrentStep(
+      awInsuranceApplicationInvitedFlowSteps[
+        awInsuranceApplicationInvitedFlowSteps.indexOf(step) + 1
+      ]
+    );
+  };
 
   return (
     <div
@@ -74,13 +92,14 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
             awInsuranceApplicationInvitedFlowSteps.length
           }
           flow={props.flow}
-          nextCallback={() =>
-            setCurrentStep(
-              awInsuranceApplicationInvitedFlowSteps[
-                awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1
-              ]
-            )
-          }
+          nextCallback={() => setStepComplete(currentStep)}
+          // nextCallback={() =>
+          //   setCurrentStep(
+          //     awInsuranceApplicationInvitedFlowSteps[
+          //       awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1
+          //     ]
+          //   )
+          // }
         />
       ) : null}
       <TestingBar flow={props.flow} />

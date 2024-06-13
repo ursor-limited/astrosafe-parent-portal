@@ -2,7 +2,6 @@ import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { AWButton } from "@/components/AWButton";
@@ -11,6 +10,15 @@ import XIcon from "@/images/icons/XIcon.svg";
 import AWTextField from "@/components/AWTextField";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 import AWInfoLine from "@/components/AWInfoLine";
+
+const PROPERTY_INPUT_ID = "6658d2b8b876632b2e886cc6";
+const PROPERTY_INPUT_NO_OPTION_ID = "6658d2fe7e1330344086c121";
+const APPROVED_INPUT_ID = "6659f756aed44c395f11380a";
+const APPROVED_INPUT_YES_OPTION_ID = "6659f779361588594ffe8805";
+const POLICIES_INPUT_ID = "6659f7d10a44908ffd529b4b";
+const POLICIES_INPUT_YES_OPTION_ID = "6659f7d5cbc8f81da6ff87ad";
+const TERMINATED_INPUT_ID = "666af0f80f531338febe6006";
+const TERMINATED_INPUT_YES_OPTION_ID = "6659facf120e9c073efb1592";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),
@@ -32,7 +40,7 @@ export const SECTIONS: IAWFormSection[] = [
       "Is the Bitcoin to be insured the property of the prospective insured?",
     inputs: [
       {
-        id: "6658d2b8b876632b2e886cc6",
+        id: PROPERTY_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
@@ -40,7 +48,7 @@ export const SECTIONS: IAWFormSection[] = [
             text: "Yes",
           },
           {
-            id: "6658d2fe7e1330344086c121",
+            id: PROPERTY_INPUT_NO_OPTION_ID,
             text: "No",
           },
         ],
@@ -48,9 +56,12 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6658d31fad53b64069c83b24",
         inputType: "text",
-        optional: true,
-        title: "If no, who is the title holder of the Bitcoin?",
+        title: "Who is the title holder of the Bitcoin?",
         placeholder: "Legal name",
+        visibilityAndOptionalityDependence: {
+          inputId: PROPERTY_INPUT_ID,
+          answer: PROPERTY_INPUT_NO_OPTION_ID,
+        },
       },
     ],
   },
@@ -65,11 +76,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Has the prospective insured been approved for other digital currency or cryptocurrency related insurance policies?",
     inputs: [
       {
-        id: "6659f756aed44c395f11380a",
+        id: APPROVED_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6659f779361588594ffe8805",
+            id: APPROVED_INPUT_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -81,9 +92,12 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659f78de8a344a5cef42375",
         inputType: "textLong",
-        optional: true,
         placeholder: "Name the policy and carrier",
-        title: "If yes, please list policies",
+        title: "Please list policies",
+        visibilityAndOptionalityDependence: {
+          inputId: APPROVED_INPUT_ID,
+          answer: APPROVED_INPUT_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -93,11 +107,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the prospective insured have active and current insurance policies?",
     inputs: [
       {
-        id: "6659f7d10a44908ffd529b4b",
+        id: POLICIES_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6659f7d5cbc8f81da6ff87ad",
+            id: POLICIES_INPUT_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -109,11 +123,14 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659f7df20f54552fbde5ee2",
         inputType: "textLong",
-        optional: true,
         placeholder:
           "Examples include D&O, E&O, Kidnap & Ransom, Business Interruption, General Liability, Crime Homeowners, Crime and others",
         title:
-          "If yes, please list additional insurance policies and include the name of the insurer.",
+          "Please list additional insurance policies and include the name of the insurer.",
+        visibilityAndOptionalityDependence: {
+          inputId: POLICIES_INPUT_ID,
+          answer: POLICIES_INPUT_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -123,11 +140,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Has the prospective insured ever had insurance coverage terminated due to failure to comply with the policy?",
     inputs: [
       {
-        id: "6659facb023a86b3bf0b08ae",
+        id: TERMINATED_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "6659facf120e9c073efb1592",
+            id: TERMINATED_INPUT_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -139,10 +156,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "6659fad759c8d6f0b1235d78",
         inputType: "textLong",
-        optional: true,
         placeholder:
           "Include amount involved, specific location, the sequence of events and any relevant parties",
-        title: "If yes, please describe the circumstances in detail.",
+        title: "Please describe the circumstances in detail.",
+        visibilityAndOptionalityDependence: {
+          inputId: TERMINATED_INPUT_ID,
+          answer: TERMINATED_INPUT_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -214,7 +234,10 @@ const SELF_CUSTODY_OPTION_ID = "6658d9e125c05ba09615c27e";
 const NOT_PURCHASED_OPTION_ID = "6658d9f4d74b500ca7fcadbd";
 
 const BitcoinStorageSection = (
-  props: IAWFormSectionProps & { setDone: () => void }
+  props: IAWFormSectionProps & {
+    setDone: () => void;
+    highlightEmpties?: boolean;
+  }
 ) => {
   const [addresses, setAddresses] = useState<string[]>([""]);
   const [modified, setModified] = useState<boolean>(false);
@@ -232,14 +255,39 @@ const BitcoinStorageSection = (
   }, [props.answers]);
 
   useEffect(() => {
+    console.log("boo", addresses, modified);
     modified && addresses && props.setValue(ADDRESSES_INPUT_ID, addresses);
   }, [addresses]);
 
   const addRow = () => setAddresses((prev) => [...prev, ""]);
 
+  const [location, setLocation] = useState<
+    "exchange" | "self" | "notyet" | undefined
+  >();
   useEffect(() => {
-    props.setDone();
-  }, []);
+    const loc = props.answers?.find(
+      (a) => a.inputId === BITCOIN_LOCATION_INPUT_ID
+    )?.value;
+    setLocation(
+      loc === EXCHANGE_CUSTODIAN_OPTION_ID
+        ? "exchange"
+        : loc === SELF_CUSTODY_OPTION_ID
+        ? "self"
+        : loc === NOT_PURCHASED_OPTION_ID
+        ? "notyet"
+        : undefined
+    );
+  }, [props.answers]);
+
+  useEffect(() => {
+    const exchangeInputFilled =
+      location === "exchange" &&
+      props.answers?.find((a) => a.inputId === EXCHANGE_CUSTODIAN_INPUT_ID)
+        ?.value;
+    const selfCustodyInputFilled = location === "self" && !!addresses.join("");
+    (exchangeInputFilled || selfCustodyInputFilled || location === "notyet") &&
+      props.setDone();
+  }, [location, addresses, props.answers]);
 
   return (
     <div className={`flex flex-col gap-xl opacity-0 animate-fadeIn`}>
@@ -265,12 +313,16 @@ const BitcoinStorageSection = (
               text: "Not purchased yet",
             },
           ]}
+          highlightEmpty={
+            props.highlightEmpties &&
+            !props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
+              ?.value
+          }
         />
-        {props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
-          ?.value === EXCHANGE_CUSTODIAN_OPTION_ID ? (
+        {location === "exchange" ? (
           <div className="flex flex-col gap-1">
             <div className="text-lg text-darkTeal-2">
-              What exchange/custodians are funds currently being held?
+              What exchange/custodians are funds currently being held by?
             </div>
             <AWTextField
               value={
@@ -280,13 +332,16 @@ const BitcoinStorageSection = (
               }
               setValue={(v) => props.setValue(EXCHANGE_CUSTODIAN_INPUT_ID, v)}
               placeholder="Name the current custodian or the institution"
+              highlightEmpty={
+                props.highlightEmpties &&
+                !props.answers?.find(
+                  (a) => a.inputId === EXCHANGE_CUSTODIAN_INPUT_ID
+                )?.value
+              }
             />
           </div>
         ) : null}
-        {addresses &&
-        addresses.length > 0 &&
-        props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
-          ?.value === SELF_CUSTODY_OPTION_ID ? (
+        {addresses && addresses.length > 0 && location === "self" ? (
           <div className="flex flex-col gap-[12px]">
             <div className="flex flex-col gap-1">
               <div className="text-lg text-darkTeal-2">
@@ -302,14 +357,16 @@ const BitcoinStorageSection = (
                   <div key={i} className="flex gap-lg relative">
                     <AWTextField
                       value={a}
-                      setValue={(a) =>
+                      setValue={(a) => {
+                        setModified(true);
                         setAddresses([
                           ...addresses.slice(0, i),
                           a,
                           ...addresses.slice(i + 1),
-                        ])
-                      }
+                        ]);
+                      }}
                       placeholder={`Address ${i + 1}`}
+                      highlightEmpty={props.highlightEmpties && !a}
                     />
                     {addresses.length > 1 ? (
                       <div
