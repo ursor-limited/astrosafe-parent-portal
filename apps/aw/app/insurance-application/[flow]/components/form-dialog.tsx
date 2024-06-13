@@ -172,17 +172,7 @@ export default function InsuranceApplicationFormDialog(props: {
   );
 
   return (
-    <InsuranceApplicationDialog
-      title={props.title}
-      // leftCallback={() => setStepIndex(stepIndex - 1)}
-      // rightCallback={() => setStepIndex(stepIndex + 1)}
-      rightArrowFaded={!canProceed}
-      progress={props.progress}
-      // stepper={{
-      //   n: STEPS.length,
-      //   current: stepIndex,
-      // }}
-    >
+    <InsuranceApplicationDialog title={props.title} progress={props.progress}>
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         {props.subtitle ? (
           <div className="font-medium text-xl text-darkTeal-2 pb-xl">

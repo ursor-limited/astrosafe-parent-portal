@@ -259,8 +259,13 @@ export default function InsuranceApplicationMainFlowController() {
     AWInsuranceApplicationMainFlowStep | undefined
   >("currentStep", "welcome");
 
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationMainFlowStep | undefined
+  >("previousStep", undefined);
+
   const setStepComplete = (step: AWInsuranceApplicationMainFlowStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
+    setPreviousStep(step);
     setCurrentStep(
       awInsuranceApplicationMainFlowSteps[
         awInsuranceApplicationMainFlowSteps.indexOf(step) + 1

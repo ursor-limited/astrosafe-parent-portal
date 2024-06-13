@@ -3,6 +3,8 @@
 import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRightIcon.svg";
 import { DM_Mono } from "next/font/google";
+import { AWInsuranceApplicationMainFlowStep } from "../mainFlow/controller";
+import { useLocalStorage } from "usehooks-ts";
 
 const CONTENTS_MIN_HEIGHT = 525;
 
@@ -13,12 +15,19 @@ export const dmMono = DM_Mono({
 
 export default function InsuranceApplicationDialog(props: {
   title: string;
-  leftCallback?: () => void;
-  rightCallback?: () => void;
-  rightArrowFaded?: boolean;
+  //backCallback: () => void;
+  //leftCallback?: () => void;
+  //rightCallback?: () => void;
   progress?: number;
   children: React.ReactNode;
 }) {
+  const [currentStep, setCurrentStep] = useLocalStorage<
+    AWInsuranceApplicationMainFlowStep | undefined
+  >("currentStep", "welcome");
+
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationMainFlowStep | undefined
+  >("previousStep", undefined);
   return (
     <div
       className="bg-greyscale-white w-[1050px] h-fit flex flex-col border-2 border-solid border-greyscale-6 justify-center items-center"
@@ -27,13 +36,33 @@ export default function InsuranceApplicationDialog(props: {
       }}
     >
       <div className="h-[48px] w-full flex items-center justify-between px-[14px]">
-        <div
+        {/* <div
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.leftCallback}
           style={{
             opacity: !props.leftCallback || props.progress === 0 ? 0 : 1,
             pointerEvents:
               !props.leftCallback || props.progress === 0 ? "none" : undefined,
+          }}
+        >
+          <ChevronLeftIcon height="20px" width="20px" />
+        </div> */}
+        <div
+          className="cursor-pointer hover:opacity-60 duration-200"
+          onClick={() => setCurrentStep(previousStep)}
+          style={{
+            opacity:
+              !previousStep ||
+              previousStep === currentStep ||
+              props.progress === 0
+                ? 0
+                : 1,
+            pointerEvents:
+              !previousStep ||
+              previousStep === currentStep ||
+              props.progress === 0
+                ? "none"
+                : undefined,
           }}
         >
           <ChevronLeftIcon height="20px" width="20px" />
@@ -59,7 +88,7 @@ export default function InsuranceApplicationDialog(props: {
             ))}
           </div>
         ) : null}
-        <div
+        {/* <div
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.rightCallback}
           style={{
@@ -75,7 +104,7 @@ export default function InsuranceApplicationDialog(props: {
           }}
         >
           <ChevronRightIcon height="20px" width="20px" />
-        </div>
+        </div> */}
       </div>
       <div
         className={`h-[50px] w-full box-border bg-[#F0F1F1] px-3xl flex items-center font-medium text-darkTeal-2 text-xl border-y-2 border-y-greyscale-6 ${dmMono.className}`}

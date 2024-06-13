@@ -533,7 +533,6 @@ export default function InsuranceApplicationLeaders(props: {
   return (
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.leaders}
-      rightArrowFaded={!canProceed}
       progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">

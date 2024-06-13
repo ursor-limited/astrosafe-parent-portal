@@ -72,6 +72,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -128,6 +129,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
         },
         title: "Address line 2",
         inputType: "text",
+        optional: true,
         placeholder: "Insert apartment or suite number",
       },
       {
@@ -221,6 +223,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -276,6 +279,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -378,6 +382,7 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -452,6 +457,7 @@ const EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -572,6 +578,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -627,6 +634,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },

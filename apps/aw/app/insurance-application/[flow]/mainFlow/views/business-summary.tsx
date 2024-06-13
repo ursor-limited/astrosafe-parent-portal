@@ -381,6 +381,7 @@ export const SECTIONS: IAWFormSection[] = [
             id: "6654f004e59414a2e3ca72f2",
             inputType: "text",
             title: "Entity name (if applicable)",
+            optional: true,
             placeholder: "Name with which entity was incorporated",
           },
           {
