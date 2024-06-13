@@ -4,6 +4,7 @@ import InsuranceApplicationFormDialog, {
 } from "../../components/form-dialog";
 import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
+export const POLICY_OWNER_NAME_INPUT_ID = "6652e4a2214b3b8b436dc33d";
 export const POLICY_OWNER_EMAIL_INPUT_ID = "6652e4e30ea140b445d02a07";
 export const POLICY_OWNER_JOB_INPUT_ID = "6652e4c66385fa89ff2e7f0e";
 
@@ -13,7 +14,7 @@ export const SECTIONS: IAWFormSection[] = [
     title: "Full name",
     inputs: [
       {
-        id: "6652e4a2214b3b8b436dc33d",
+        id: POLICY_OWNER_NAME_INPUT_ID,
         inputType: "text",
         placeholder: "Insert name here",
       },

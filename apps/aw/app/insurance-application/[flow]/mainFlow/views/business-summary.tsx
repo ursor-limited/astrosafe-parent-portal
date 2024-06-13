@@ -380,7 +380,6 @@ export const SECTIONS: IAWFormSection[] = [
             id: "6654dfb696f4be7b678d7b82",
             inputType: "text",
             title: "Relationship with name insured",
-            optional: true,
             placeholder: "Enter relationship here",
           },
           {

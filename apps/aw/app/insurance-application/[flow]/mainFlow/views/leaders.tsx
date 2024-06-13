@@ -29,6 +29,7 @@ import {
 import {
   POLICY_OWNER_EMAIL_INPUT_ID,
   POLICY_OWNER_JOB_INPUT_ID,
+  POLICY_OWNER_NAME_INPUT_ID,
 } from "./policy-owner";
 
 export interface IAWCompanyLeader {
@@ -496,16 +497,23 @@ export default function InsuranceApplicationLeaders(props: {
     },
   ]);
 
+  console.log(
+    "gggg",
+    committedAnswers.policyOwner?.find(
+      (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
+    )?.value ?? ""
+  );
+
   useEffect(() => {
     const prefilledLeader = {
       name:
-        committedAnswers.identity?.find(
-          (answer) => answer.inputId === PERSONAL_DETAILS_NAME_INPUT_ID
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
         )?.value ?? "",
-      birthday:
-        committedAnswers.identity?.find(
-          (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
-        )?.value ?? "",
+      birthday: "",
+      // committedAnswers.policyOwner?.find(
+      //   (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
+      // )?.value ?? "",
       email:
         committedAnswers.policyOwner?.find(
           (answer) => answer.inputId === POLICY_OWNER_EMAIL_INPUT_ID
@@ -522,7 +530,7 @@ export default function InsuranceApplicationLeaders(props: {
       },
     };
     setLeaders([prefilledLeader, ...leaders.slice(1)]);
-  }, []);
+  }, [committedAnswers]);
 
   useEffect(() => {
     const leaders_ = answers?.find(
