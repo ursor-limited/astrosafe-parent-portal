@@ -30,6 +30,14 @@ import {
 } from "../mainFlow/views/identity/personal-details";
 
 const BIRTHDAY_INPUT_ID = "keyholders-birthday";
+const DESCRIPTION_SECTION_ID = "665f4e4fcd81bc33290c2cd4";
+const DESCRIPTION_INPUT_ID = "665f4e5369bc960c37e387ee";
+const INVESTIGATION_YES_OPTION_ID = "665f4246be7e00eede11c7f9";
+const DISHONESTY_YES_OPTION_ID = "665f426c8eb680b7e46ee61a";
+const LOSSES_YES_OPTION_ID = "665f42b8520100b245e9e7ab";
+const PERSONAL_LOSSES_YES_OPTION_ID = "665f430a2cfbeb1847db7031";
+const KIDNAPPING_YES_OPTION_ID = "6664b320524e335af68b98f9";
+const SECURITY_YES_OPTION_ID = "6664b3514c676f49c3823795";
 
 export interface IAWKeyholder {
   name: string;
@@ -51,7 +59,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f4246be7e00eede11c7f9",
+            id: INVESTIGATION_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -72,7 +80,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f426c8eb680b7e46ee61a",
+            id: DISHONESTY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -93,7 +101,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f42b8520100b245e9e7ab",
+            id: LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -107,14 +115,14 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f4301ad072875140001b8",
     title:
-      "Has a Key Holder experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
+      "Has a Key Holder experienced any losses in personal holdings or losses related to prior employers greater than $10,000 in Bitcoin, cryptocurrency, or other digital assets?",
     inputs: [
       {
         id: "665f430586bf43b7aecea5ac",
         inputType: "multiChoice",
         options: [
           {
-            id: "665f430a2cfbeb1847db7031",
+            id: PERSONAL_LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -136,7 +144,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b320524e335af68b98f9",
+            id: KIDNAPPING_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -157,7 +165,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "6664b3514c676f49c3823795",
+            id: SECURITY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -169,15 +177,14 @@ export const SECTIONS: IAWFormSection[] = [
     ],
   },
   {
-    id: "665f4e4fcd81bc33290c2cd4",
+    id: DESCRIPTION_SECTION_ID,
     title:
       "If you answered yes to any of the questions above, please provide a detailed description below",
     noNumber: true,
     inputs: [
       {
-        id: "665f4e5369bc960c37e387ee",
+        id: DESCRIPTION_INPUT_ID,
         inputType: "textLong",
-        optional: true,
         placeholder: "Write your description here",
       },
     ],
@@ -433,7 +440,7 @@ export default function InsuranceApplicationKeyholders(props: {
 
   const commitAnswers = () =>
     setCommittedAnswers({
-      ...committedAnswers.keyholders,
+      ...committedAnswers,
       keyholders: answers.find(
         (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
       )
@@ -476,6 +483,7 @@ export default function InsuranceApplicationKeyholders(props: {
       setKeyholders([prefilledKeyholder]);
     }
   }, []);
+
   useEffect(() => {
     const keyholders_ = answers?.find(
       (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
@@ -513,6 +521,8 @@ export default function InsuranceApplicationKeyholders(props: {
         : 1
       : 1;
 
+  const [highlightEmpties, setHighlightEmpties] = useState<boolean>(false);
+
   const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
     IAWFormInput["id"][]
   >([]);
@@ -526,6 +536,39 @@ export default function InsuranceApplicationKeyholders(props: {
 
   const [canProceed, setCanProceed] = useState<boolean>(false);
 
+  const [descriptionInputRequired, setDescriptionInputRequired] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setDescriptionInputRequired(
+        [
+          INVESTIGATION_YES_OPTION_ID,
+          DISHONESTY_YES_OPTION_ID,
+          LOSSES_YES_OPTION_ID,
+          PERSONAL_LOSSES_YES_OPTION_ID,
+          KIDNAPPING_YES_OPTION_ID,
+          SECURITY_YES_OPTION_ID,
+        ].some((optionId) => answers.find((a) => a.value === optionId))
+      ),
+    [answers]
+  );
+
+  const [emptyRequiredInputIds, setEmptyRequiredInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+  useEffect(() => {
+    setEmptyRequiredInputIds(
+      SECTIONS.filter((s) => !s.custom)
+        .flatMap((s) => [...(s.inputs || [])])
+        .filter(
+          (input) =>
+            (input.id !== DESCRIPTION_INPUT_ID || descriptionInputRequired) &&
+            !answers.find((a) => a.inputId === input?.id)?.value
+        )
+        .map((input) => input.id)
+    );
+  }, [answers, descriptionInputRequired]);
+
   useEffect(() => {
     if (keyholders.length === 0) return;
     const keyholdersDone = keyholders.every(
@@ -537,18 +580,7 @@ export default function InsuranceApplicationKeyholders(props: {
     if (keyholdersDone) {
       setCanProceed(
         erroneousValueInputIds.length === 0 &&
-          SECTIONS.filter((s) => !s.custom)
-            .flatMap((s) => [
-              ...(s.inputs || []),
-              ...(s.subsections
-                ? s.subsections.flatMap((ss) => ss.inputs)
-                : []),
-            ])
-            .every(
-              (input) =>
-                input.optional ||
-                answers.find((a) => a.inputId === input?.id)?.value
-            )
+          emptyRequiredInputIds.length === 0
       );
     } else {
       setCanProceed(false);
@@ -652,7 +684,11 @@ export default function InsuranceApplicationKeyholders(props: {
             Answer the following questions for the Key Holders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
-            {SECTIONS.map((section, i) => (
+            {SECTIONS.filter(
+              (section) =>
+                section.id !== DESCRIPTION_SECTION_ID ||
+                descriptionInputRequired
+            ).map((section, i) => (
               <AWFormSection
                 i={i + 1}
                 key={section.id}
@@ -660,6 +696,7 @@ export default function InsuranceApplicationKeyholders(props: {
                 answers={answers}
                 setValue={setValue}
                 setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
               />
             ))}
           </div>
@@ -670,11 +707,20 @@ export default function InsuranceApplicationKeyholders(props: {
           </AWButton>
           <AWButton
             width={182}
-            disabled={!canProceed}
             onClick={() => {
               commitAnswers();
-              //setStepIndex(stepIndex + 1);
-              props.nextCallback();
+              if (canProceed) {
+                props.nextCallback();
+              } else {
+                setHighlightEmpties(true);
+                document
+                  .getElementById(
+                    emptyRequiredInputIds[0] || erroneousValueInputIds[0]
+                  )
+                  ?.parentElement?.parentElement?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+              }
             }}
           >
             Next

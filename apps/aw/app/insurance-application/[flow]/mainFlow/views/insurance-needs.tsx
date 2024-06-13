@@ -234,7 +234,10 @@ const SELF_CUSTODY_OPTION_ID = "6658d9e125c05ba09615c27e";
 const NOT_PURCHASED_OPTION_ID = "6658d9f4d74b500ca7fcadbd";
 
 const BitcoinStorageSection = (
-  props: IAWFormSectionProps & { setDone: () => void }
+  props: IAWFormSectionProps & {
+    setDone: () => void;
+    highlightEmpties?: boolean;
+  }
 ) => {
   const [addresses, setAddresses] = useState<string[]>([""]);
   const [modified, setModified] = useState<boolean>(false);
@@ -252,6 +255,7 @@ const BitcoinStorageSection = (
   }, [props.answers]);
 
   useEffect(() => {
+    console.log("boo", addresses, modified);
     modified && addresses && props.setValue(ADDRESSES_INPUT_ID, addresses);
   }, [addresses]);
 
@@ -309,6 +313,11 @@ const BitcoinStorageSection = (
               text: "Not purchased yet",
             },
           ]}
+          highlightEmpty={
+            props.highlightEmpties &&
+            !props.answers?.find((a) => a.inputId === BITCOIN_LOCATION_INPUT_ID)
+              ?.value
+          }
         />
         {location === "exchange" ? (
           <div className="flex flex-col gap-1">
@@ -323,6 +332,12 @@ const BitcoinStorageSection = (
               }
               setValue={(v) => props.setValue(EXCHANGE_CUSTODIAN_INPUT_ID, v)}
               placeholder="Name the current custodian or the institution"
+              highlightEmpty={
+                props.highlightEmpties &&
+                !props.answers?.find(
+                  (a) => a.inputId === EXCHANGE_CUSTODIAN_INPUT_ID
+                )?.value
+              }
             />
           </div>
         ) : null}
@@ -342,14 +357,16 @@ const BitcoinStorageSection = (
                   <div key={i} className="flex gap-lg relative">
                     <AWTextField
                       value={a}
-                      setValue={(a) =>
+                      setValue={(a) => {
+                        setModified(true);
                         setAddresses([
                           ...addresses.slice(0, i),
                           a,
                           ...addresses.slice(i + 1),
-                        ])
-                      }
+                        ]);
+                      }}
                       placeholder={`Address ${i + 1}`}
+                      highlightEmpty={props.highlightEmpties && !a}
                     />
                     {addresses.length > 1 ? (
                       <div

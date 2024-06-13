@@ -91,7 +91,9 @@ export default function InsuranceApplicationFormDialog(props: {
   nextCallback: () => void;
   customSections?: Record<
     IAWFormSection["id"],
-    React.FC<IAWFormSectionProps & { setDone: () => void }>
+    React.FC<
+      IAWFormSectionProps & { setDone: () => void; highlightEmpties?: boolean }
+    >
   >;
   canProceed?: boolean;
 }) {
@@ -253,6 +255,7 @@ export default function InsuranceApplicationFormDialog(props: {
                   answers,
                   setValue,
                   setErroneous,
+                  highlightEmpties,
                   prefill: () => prefill(section),
                   setDone: () =>
                     setCustomSectionsDone((prev) =>
