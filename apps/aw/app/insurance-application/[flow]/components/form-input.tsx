@@ -22,7 +22,8 @@ export default function InsuranceApplicationFormInput(
   }
 ) {
   return (
-    <div key={props.id} className="flex flex-col gap-1">
+    // the id below is used to for scrolling the page up to this element you click Next and this is erroneous or empty
+    <div key={props.id} id={props.id} className="flex flex-col gap-1">
       {props.title ? (
         <div className="text-lg text-darkTeal-2">{props.title}</div>
       ) : null}
