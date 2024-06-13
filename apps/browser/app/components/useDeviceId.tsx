@@ -17,12 +17,13 @@ const useDeviceId = () => {
   }, []);
 
   useEffect(() => {
-    window.postMessage(
-      {
-        getDeviceId: true,
-      },
-      "*"
-    );
+    !deviceId &&
+      window.postMessage(
+        {
+          getDeviceId: true,
+        },
+        "*"
+      );
   }, []);
 
   return deviceId;

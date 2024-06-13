@@ -164,6 +164,8 @@ export default function HomePageContents(props: { mobile: boolean }) {
 
   const router = useRouter();
 
+  console.log(Object.values(channels), "P))");
+
   return (
     <PageLayout
       headerButtonId="home"
@@ -250,7 +252,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
                       minWidth="2px"
                       bgcolor={PALETTE.secondary.grey[2]}
                     />,
-                    ...channels.map((c, i) => (
+                    ...channels?.map((c, i) => (
                       <UrsorFadeIn
                         key={c.id}
                         duration={800}
