@@ -21,6 +21,14 @@ import DynamicContainer from "@/components/DynamicContainer";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import AWTextField from "@/components/AWTextField";
 import AWLongTextField from "@/components/AWLongTextField";
+import {
+  PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+  PERSONAL_DETAILS_NAME_INPUT_ID,
+} from "./identity/personal-details";
+import {
+  POLICY_OWNER_EMAIL_INPUT_ID,
+  POLICY_OWNER_JOB_INPUT_ID,
+} from "./policy-owner";
 
 export interface IAWCompanyLeader {
   name: string;
@@ -466,6 +474,35 @@ export default function InsuranceApplicationLeaders(props: {
       },
     },
   ]);
+
+  useEffect(() => {
+    const prefilledLeader = {
+      name:
+        committedAnswers.identity?.find(
+          (answer) => answer.inputId === PERSONAL_DETAILS_NAME_INPUT_ID
+        )?.value ?? "",
+      birthday:
+        committedAnswers.identity?.find(
+          (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
+        )?.value ?? "",
+      email:
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_EMAIL_INPUT_ID
+        )?.value ?? "",
+      job:
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_JOB_INPUT_ID
+        )?.value ?? "",
+      areas: "",
+      roles: {
+        executive: false,
+        assMan: false,
+        shareholder: false,
+      },
+    };
+    setLeaders([prefilledLeader, ...leaders.slice(1)]);
+  }, []);
+
   useEffect(() => {
     const leaders_ = answers?.find(
       (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID

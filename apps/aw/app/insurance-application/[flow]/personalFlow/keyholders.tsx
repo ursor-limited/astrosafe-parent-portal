@@ -19,6 +19,11 @@ import {
 } from "./controller";
 import { CHECKPOINT_STEPS } from "./checkpoint-dialog";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
+import {
+  PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+  PERSONAL_DETAILS_EMAIL_INPUT_ID,
+  PERSONAL_DETAILS_NAME_INPUT_ID,
+} from "../mainFlow/views/identity/personal-details";
 
 export interface IAWKeyholder {
   name: string;
@@ -157,7 +162,6 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
-
   {
     id: "665f4e4fcd81bc33290c2cd4",
     title:
@@ -194,9 +198,10 @@ const KeyholderRow = (props: {
     () =>
       props.details &&
       setStatus(
-        Object.values(props.details).every((x) =>
-          typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
-        )
+        props.details.zips.length >= props.zipsN &&
+          Object.values(props.details).every((x) =>
+            typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
+          )
           ? "complete"
           : Object.values(props.details).some((x) =>
               typeof x === "object" ? Object.values(x).some((y) => !!y) : !!x
@@ -437,9 +442,28 @@ export default function InsuranceApplicationKeyholders(props: {
           ],
     });
 
-  const [keyholders, setKeyholders] = useState<IAWKeyholder[]>([
-    getEmptyKeyHolder(),
-  ]);
+  const [keyholders, setKeyholders] = useState<IAWKeyholder[]>([]);
+  useEffect(() => {
+    if (keyholders.length === 0) {
+      const prefilledKeyholder = {
+        name:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_NAME_INPUT_ID
+          )?.value ?? "",
+        birthday:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
+          )?.value ?? "",
+        email:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PERSONAL_DETAILS_EMAIL_INPUT_ID
+          )?.value ?? "",
+        job: "",
+        zips: [],
+      };
+      setKeyholders([prefilledKeyholder]);
+    }
+  }, []);
   useEffect(() => {
     const keyholders_ = answers?.find(
       (a) => a.inputId === KEYHOLDER_DETAILS_AGGLOMERATED_INPUT_ID
@@ -449,22 +473,17 @@ export default function InsuranceApplicationKeyholders(props: {
     }
   }, [answers]);
 
-  // const [keyholdersDone, setKeyholdersDone] = useState<boolean[]>([])
-  // useEffect(() => upon change of keyholdes n, set or remove themv)
-  const [keyholdersFilled, setKeyholdersFilled] = useState<boolean>(false);
   const [canProceed, setCanProceed] = useState<boolean>(false);
 
   useEffect(() => {
+    if (keyholders.length === 0) return;
     const keyholdersDone = keyholders.every(
-      (l, i) =>
-        Object.values(l).every((x) => !!x) &&
-        l.zips.every((zip) => !!zip) &&
-        l.zips.length >= getZipsN(i)
+      (k, i) =>
+        Object.values(k).every((x) => !!x) &&
+        k.zips.every((zip) => !!zip) &&
+        k.zips.length >= getZipsN(i)
     );
     if (keyholdersDone) {
-      if (!keyholdersFilled) {
-        setKeyholdersFilled(true);
-      }
       setCanProceed(
         SECTIONS.filter((s) => !s.custom)
           .flatMap((s) => [
@@ -478,7 +497,6 @@ export default function InsuranceApplicationKeyholders(props: {
           )
       );
     } else {
-      setKeyholdersFilled(false);
       setCanProceed(false);
     }
   }, [answers, keyholders]);
@@ -514,7 +532,6 @@ export default function InsuranceApplicationKeyholders(props: {
   return (
     <InsuranceApplicationDialog
       title={PERSONAL_FLOW_STEP_TITLES.keyholders}
-      rightArrowFaded={!canProceed}
       progress={
         CHECKPOINT_STEPS.indexOf("keyholders") / CHECKPOINT_STEPS.length
       }
