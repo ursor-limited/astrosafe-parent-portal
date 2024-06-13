@@ -300,10 +300,14 @@ export default function InsuranceApplicationMainFlowController() {
 
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.scrollTo(0, 0), [currentStep]);
+
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      ref={setRef}
     >
       {currentStep && StepView ? (
         <StepView

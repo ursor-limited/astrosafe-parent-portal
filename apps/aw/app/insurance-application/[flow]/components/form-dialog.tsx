@@ -220,8 +220,6 @@ export default function InsuranceApplicationFormDialog(props: {
     IAWFormSection["id"][]
   >([]);
 
-  console.log("lok", emptyRequiredInputIds.length);
-
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(() => {
     setCanProceed(

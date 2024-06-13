@@ -281,12 +281,6 @@ const BitcoinStorageSection = (
       props.answers?.find((a) => a.inputId === EXCHANGE_CUSTODIAN_INPUT_ID)
         ?.value;
     const selfCustodyInputFilled = location === "self" && !!addresses.join("");
-    console.log(
-      "&&",
-      exchangeInputFilled,
-      selfCustodyInputFilled,
-      location === "notyet"
-    );
     (exchangeInputFilled || selfCustodyInputFilled || location === "notyet") &&
       props.setDone();
   }, [location, addresses, props.answers]);

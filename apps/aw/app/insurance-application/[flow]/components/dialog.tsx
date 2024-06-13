@@ -88,6 +88,7 @@ export default function InsuranceApplicationDialog(props: {
             ))}
           </div>
         ) : null}
+        <div />
         {/* <div
           className="cursor-pointer hover:opacity-60 duration-200"
           onClick={props.rightCallback}

@@ -23,8 +23,6 @@ export default function AWTextField(props: {
 }) {
   const [erroneousValue, setErroneousValue] = useState<boolean>(false);
 
-  console.log(props.highlightEmpty, "&*&*");
-
   useEffect(() => {
     if (props.value) {
       validate();

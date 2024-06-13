@@ -50,21 +50,21 @@ export default function InsuranceApplicationFormInput(
             numeric={props.numeric}
             date={props.date}
             error={props.error}
-            highlightEmpty={props.highlightEmpty && !value}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
         ) : props.inputType === "textLong" ? (
           <AWLongTextField
             value={value}
             setValue={(v) => props.setValue(props.id, v)}
             placeholder={props.placeholder}
-            highlightEmpty={props.highlightEmpty && !value}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
         ) : props.inputType === "multiChoice" ? (
           <AWMultiChoiceField
             value={props.answers?.find((a) => a.inputId === props.id)?.value}
             setValue={(v) => props.setValue(props.id, v)}
             options={props.options}
-            highlightEmpty={props.highlightEmpty && !value}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
         ) : props.inputType === "dropdown" ? (
           <AWDropdown
@@ -72,6 +72,7 @@ export default function InsuranceApplicationFormInput(
             setValue={(v) => props.setValue(props.id, v)}
             options={props.options}
             placeholder={props.placeholder}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
         ) : null}
       </div>
