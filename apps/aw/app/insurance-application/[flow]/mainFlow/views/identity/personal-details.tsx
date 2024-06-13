@@ -48,6 +48,10 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
         placeholder: "MM/DD/YYYY",
         date: true,
         maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
       },
     ],
   },
@@ -520,6 +524,10 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
         placeholder: "MM/DD/YYYY",
         date: true,
         maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
       },
     ],
   },

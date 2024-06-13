@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 const getFormattedDate = (value: string) =>
   _.compact([value.slice(0, 2), value.slice(2, 4), value.slice(4)]).join("/");
 
+export type AWTextFieldErrorFormat = "min" | "date";
+
 export default function AWTextField(props: {
   value?: string;
   setValue: (newValue: string) => void;
@@ -20,11 +22,18 @@ export default function AWTextField(props: {
     erroneousValue && checkError();
   }, [props.value]);
 
-  const checkError = () =>
-    setErroneousValue(
-      props.error?.format === "min" &&
-        (props.value?.length ?? 0) < (props.error.minLength ?? 0)
-    );
+  const checkError = () => {
+    if (!props.value) return false;
+    if (props.error?.format === "min") {
+      setErroneousValue(
+        (props.value.length ?? 0) < (props.error.minLength ?? 0)
+      );
+    } else if (props.error?.format === "date") {
+      const month = parseInt(props.value.slice(0, 2), 10);
+      const day = parseInt(props.value.slice(2, 4), 10);
+      setErroneousValue(month > 12 || day > 31);
+    }
+  };
   return (
     <div
       className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative"
