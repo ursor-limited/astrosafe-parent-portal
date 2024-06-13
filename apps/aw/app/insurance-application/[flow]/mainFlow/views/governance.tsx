@@ -4,6 +4,23 @@ import InsuranceApplicationFormDialog, {
 } from "../../components/form-dialog";
 import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
+const COMPLIANCE_INPUT_ID = "665a0100501f2efd6a31fcc9";
+const COMPLIANCE_YES_OPTION_ID = "665a01050750ac467bae89e0";
+const CERTIFICATIONS_INPUT_ID = "665a04102f5af77711a28381";
+const CERTIFICATIONS_YES_OPTION_ID = "665a04147c51b5c12fe1aabd";
+const AUDITS_INPUT_ID = "665a04c55ed612bd152fd70a";
+const AUDITS_YES_OPTION_ID = "665a04c9dbe666685b488ac6";
+const PREVENTION_INPUT_ID = "665a052feebbc832aa1341e8";
+const PREVENTION_YES_OPTION_ID = "665a0534c61a254d988cce3d";
+const RISK_INPUT_ID = "665a056d490b2744654d955a";
+const RISK_YES_OPTION_ID = "665a0570bbbe724fa5d4be1a";
+const AWARENESS_INPUT_ID = "665a05a27dfe5926b5aa230d";
+const AWARENESS_YES_OPTION_ID = "665a05a549551fe138f9ffd0";
+const NETWORK_INPUT_ID = "665a05e8e8a6bc1a354c7df6";
+const NETWORK_YES_OPTION_ID = "665a05ec33ad60b40b729866";
+const SENSITIVE_INPUT_ID = "665a063960fe08b39306e39a";
+const SENSITIVE_YES_OPTION_ID = "665a063d0dc14b16fe2499c6";
+
 export const SECTIONS: IAWFormSection[] = [
   {
     id: "665a0153cc2ebcd9ab9f703f",
@@ -35,11 +52,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the entity provide employees with required compliance training?",
     inputs: [
       {
-        id: "665a0100501f2efd6a31fcc9",
+        id: COMPLIANCE_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a01050750ac467bae89e0",
+            id: COMPLIANCE_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -51,10 +68,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a010df4c32d0d514909e5",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
         title:
-          "If yes, please provide the topics covered, frequency of training and the process for tracking employee completion of the  training.",
+          "Please provide the topics covered, frequency of training and the process for tracking employee completion of the training.",
+        visibilityAndOptionalityDependence: {
+          inputId: COMPLIANCE_INPUT_ID,
+          answer: COMPLIANCE_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -66,11 +86,11 @@ export const SECTIONS: IAWFormSection[] = [
     descriptionAtEnd: true,
     inputs: [
       {
-        id: "665a04102f5af77711a28381",
+        id: CERTIFICATIONS_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a04147c51b5c12fe1aabd",
+            id: CERTIFICATIONS_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -82,10 +102,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a041d88de1163106563aa",
         inputType: "text",
-        optional: true,
         placeholder:
           "Insert type, like SOC 1 or SOC 2, type 1 or type 2, ISO, etc",
-        title: "If yes,  which certifications has the entity completed?",
+        title: "Which certifications has the entity completed?",
+        visibilityAndOptionalityDependence: {
+          inputId: CERTIFICATIONS_INPUT_ID,
+          answer: COMPLIANCE_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -95,11 +118,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the prospective insured participate in compliance and governance external audits?",
     inputs: [
       {
-        id: "665a04c55ed612bd152fd70a",
+        id: AUDITS_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a04c9dbe666685b488ac6",
+            id: AUDITS_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -111,10 +134,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a04d280534eb3f03e4d68",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
         title:
-          "If yes, which procedures were audited and what was the outcome of the review?",
+          "Which procedures were audited and what was the outcome of the review?",
+        visibilityAndOptionalityDependence: {
+          inputId: AUDITS_INPUT_ID,
+          answer: AUDITS_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -124,11 +150,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the prospective insured have internal procedures to prevent internal collusion and financial crimes?",
     inputs: [
       {
-        id: "665a052feebbc832aa1341e8",
+        id: PREVENTION_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a0534c61a254d988cce3d",
+            id: PREVENTION_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -140,9 +166,12 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a053e0c0ff948d34fa06e",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
-        title: "If yes, describe the technology and procedures.",
+        title: "Describe the technology and procedures.",
+        visibilityAndOptionalityDependence: {
+          inputId: PREVENTION_INPUT_ID,
+          answer: PREVENTION_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -152,11 +181,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the prospective insured have a formalized vendor risk management program in place for evaluating and monitoring third party service providers?",
     inputs: [
       {
-        id: "665a056d490b2744654d955a",
+        id: RISK_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a0570bbbe724fa5d4be1a",
+            id: RISK_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -168,10 +197,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a0579ceeb3409221fe39a",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
         title:
-          "If yes, how are third party vendors audited or assessed for their security practices?",
+          "How are third party vendors audited or assessed for their security practices?",
+        visibilityAndOptionalityDependence: {
+          inputId: RISK_INPUT_ID,
+          answer: RISK_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -180,11 +212,11 @@ export const SECTIONS: IAWFormSection[] = [
     title: "Are employees required to undergo security awareness training?",
     inputs: [
       {
-        id: "665a05a27dfe5926b5aa230d",
+        id: AWARENESS_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a05a549551fe138f9ffd0",
+            id: AWARENESS_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -196,10 +228,13 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a05ac0660b8cc360316fb",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
         title:
-          "If yes, please provide the topics covered, frequency of training and the process for tracking employee completion of the securty awareness training.",
+          "Please provide the topics covered, frequency of training and the process for tracking employee completion of the securty awareness training.",
+        visibilityAndOptionalityDependence: {
+          inputId: AWARENESS_INPUT_ID,
+          answer: AWARENESS_YES_OPTION_ID,
+        },
       },
     ],
   },
@@ -209,11 +244,11 @@ export const SECTIONS: IAWFormSection[] = [
       "Does the prospective insured have a documented network security policy in place, including the use of firewalls, intrusion detection/prevention systems and secure configurations?",
     inputs: [
       {
-        id: "665a05e8e8a6bc1a354c7df6",
+        id: NETWORK_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a05ec33ad60b40b729866",
+            id: NETWORK_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -225,23 +260,26 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a05f3a3dfd09c4add68f7",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
-        title: "If yes, please summarize below.",
+        title: "Please summarize below.",
+        visibilityAndOptionalityDependence: {
+          inputId: NETWORK_INPUT_ID,
+          answer: NETWORK_YES_OPTION_ID,
+        },
       },
     ],
   },
   {
     id: "665a06363edc454449f03629",
     title:
-      "9) Does the prospective insured have controls in place to ensure that access to sensitive information and systems is granted only to authorized individuals?",
+      "Does the prospective insured have controls in place to ensure that access to sensitive information and systems is granted only to authorized individuals?",
     inputs: [
       {
-        id: "665a063960fe08b39306e39a",
+        id: SENSITIVE_INPUT_ID,
         inputType: "multiChoice",
         options: [
           {
-            id: "665a063d0dc14b16fe2499c6",
+            id: SENSITIVE_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -253,17 +291,23 @@ export const SECTIONS: IAWFormSection[] = [
       {
         id: "665a0644f41cd268009ae18c",
         inputType: "textLong",
-        optional: true,
         placeholder: "Insert details",
-        title: "If yes, please summarize below.",
+        title: "Please summarize below.",
+        visibilityAndOptionalityDependence: {
+          inputId: SENSITIVE_INPUT_ID,
+          answer: SENSITIVE_YES_OPTION_ID,
+        },
       },
       {
         id: "665a0661dfcaac17a5c44a1e",
         inputType: "text",
-        optional: true,
         placeholder: "Describe process to review and revoke unused access",
         title:
-          "If yes, how frequently is access periodically reviewed and revoked when no longer needed?",
+          "How frequently is access periodically reviewed and revoked when no longer needed?",
+        visibilityAndOptionalityDependence: {
+          inputId: SENSITIVE_INPUT_ID,
+          answer: SENSITIVE_YES_OPTION_ID,
+        },
       },
     ],
   },

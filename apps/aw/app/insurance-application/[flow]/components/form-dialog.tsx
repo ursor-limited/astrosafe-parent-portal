@@ -50,6 +50,10 @@ export interface IAWFormInput {
     step: AWInsuranceApplicationMainFlowStep;
     inputId: IAWFormInput["id"];
   };
+  visibilityAndOptionalityDependence?: {
+    inputId: string;
+    answer: string;
+  };
   error?: {
     minLength?: number;
     message: string;
@@ -117,33 +121,6 @@ export default function InsuranceApplicationFormDialog(props: {
     [committedAnswers, props.stepId]
   );
 
-  const [customSectionsDone, setCustomSectionsDone] = useState<
-    IAWFormSection["id"][]
-  >([]);
-
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-  useEffect(() => {
-    setCanProceed(
-      customSectionsDone.length >=
-        props.sections.filter((s) => s.custom).length &&
-        props.sections
-          .filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
-    );
-  }, [answers, customSectionsDone, props.sections]);
-
-  // useEffect(() => {
-  //   setCanProceed(!!props.canProceed);
-  // }, [props.canProceed]);
-
   const commitAnswers = () =>
     setCommittedAnswers({ ...committedAnswers, [props.stepId]: answers });
 
@@ -155,7 +132,7 @@ export default function InsuranceApplicationFormDialog(props: {
             ? answers
             : committedAnswers[input.prefill.step]
         )?.find((a) => a.inputId === input.prefill!.inputId)?.value;
-        if (newValue && !answers.find((a) => a.inputId === input.id)?.value) {
+        if (newValue) {
           setValue(input.id, newValue);
         }
       }
@@ -180,14 +157,75 @@ export default function InsuranceApplicationFormDialog(props: {
     IAWFormInput["id"][]
   >([]);
 
-  const setErroneous = (id: string, e: boolean) =>
+  const setErroneous = (id: string, e: boolean) => {
+    console.log(id, e);
     setErroneousValueInputIds(
       e
         ? _.uniq([...erroneousValueInputIds, id])
         : erroneousValueInputIds.filter((eviid) => id !== eviid)
     );
+  };
 
-  console.log(erroneousValueInputIds);
+  const [dependantInputsVisible, setDependantInputsVisible] = useState<
+    IAWFormInput["id"][]
+  >([]);
+  useEffect(() => {
+    setDependantInputsVisible(
+      props.sections
+        .filter((s) => !s.custom)
+        .flatMap((s) => [
+          ...(s.inputs || []),
+          ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+        ])
+        .filter((input) => {
+          if (input.visibilityAndOptionalityDependence) {
+            const value = answers.find(
+              (a) =>
+                a.inputId === input.visibilityAndOptionalityDependence?.inputId
+            )?.value;
+            return (
+              value && value === input.visibilityAndOptionalityDependence.answer
+            );
+          }
+        })
+        .map((input) => input.id)
+    );
+  }, [answers]);
+
+  const [customSectionsDone, setCustomSectionsDone] = useState<
+    IAWFormSection["id"][]
+  >([]);
+
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+  useEffect(() => {
+    setCanProceed(
+      erroneousValueInputIds.length === 0 &&
+        customSectionsDone.length >=
+          props.sections.filter((s) => s.custom).length &&
+        props.sections
+          .filter((s) => !s.custom)
+          .flatMap((s) => [
+            ...(s.inputs || []),
+            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
+          ])
+          .filter(
+            (input) =>
+              !input.visibilityAndOptionalityDependence ||
+              dependantInputsVisible.includes(input.id)
+          )
+          .every(
+            (input) =>
+              input.optional ||
+              answers.find((a) => a.inputId === input?.id)?.value
+          )
+    );
+  }, [
+    answers,
+    customSectionsDone,
+    props.sections,
+    erroneousValueInputIds,
+    dependantInputsVisible,
+  ]);
 
   return (
     <InsuranceApplicationDialog title={props.title} progress={props.progress}>
@@ -209,8 +247,8 @@ export default function InsuranceApplicationFormDialog(props: {
                   setErroneous,
                   prefill: () => prefill(section),
                   setDone: () =>
-                    setCustomSectionsDone(
-                      _.uniq([...customSectionsDone, section.id])
+                    setCustomSectionsDone((prev) =>
+                      _.uniq([...prev, section.id])
                     ),
                 })}
               </div>
@@ -223,7 +261,7 @@ export default function InsuranceApplicationFormDialog(props: {
                 setValue={setValue}
                 setErroneous={setErroneous}
                 prefill={() => prefill(section)}
-                //commit={commitAnswers}
+                dependantInputsVisible={dependantInputsVisible}
               />
             )
           )}

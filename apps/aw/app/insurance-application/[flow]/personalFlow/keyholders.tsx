@@ -194,6 +194,7 @@ const KeyholderRow = (props: {
   title: string;
   zipsN: number;
   update: (update: Partial<IAWKeyholder>) => void;
+  setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   delete?: () => void;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -295,6 +296,7 @@ const KeyholderRow = (props: {
                   format: "date",
                   message: "The date should be in the format 01/31/2024",
                 }}
+                setErroneous={(e) => props.setErroneous(BIRTHDAY_INPUT_ID, e)}
               />
             </div>
             <div className={`flex flex-col gap-xl`}>
@@ -483,34 +485,6 @@ export default function InsuranceApplicationKeyholders(props: {
     }
   }, [answers]);
 
-  const [canProceed, setCanProceed] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (keyholders.length === 0) return;
-    const keyholdersDone = keyholders.every(
-      (k, i) =>
-        Object.values(k).every((x) => !!x) &&
-        k.zips.every((zip) => !!zip) &&
-        k.zips.length >= getZipsN(i)
-    );
-    if (keyholdersDone) {
-      setCanProceed(
-        SECTIONS.filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
-      );
-    } else {
-      setCanProceed(false);
-    }
-  }, [answers, keyholders]);
-
   const addKeyholder = () =>
     setKeyholders((prev) => [...prev, getEmptyKeyHolder()]);
 
@@ -549,6 +523,37 @@ export default function InsuranceApplicationKeyholders(props: {
         ? _.uniq([...erroneousValueInputIds, id])
         : erroneousValueInputIds.filter((eviid) => id !== eviid)
     );
+
+  const [canProceed, setCanProceed] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (keyholders.length === 0) return;
+    const keyholdersDone = keyholders.every(
+      (k, i) =>
+        Object.values(k).every((x) => !!x) &&
+        k.zips.every((zip) => !!zip) &&
+        k.zips.length >= getZipsN(i)
+    );
+    if (keyholdersDone) {
+      setCanProceed(
+        erroneousValueInputIds.length === 0 &&
+          SECTIONS.filter((s) => !s.custom)
+            .flatMap((s) => [
+              ...(s.inputs || []),
+              ...(s.subsections
+                ? s.subsections.flatMap((ss) => ss.inputs)
+                : []),
+            ])
+            .every(
+              (input) =>
+                input.optional ||
+                answers.find((a) => a.inputId === input?.id)?.value
+            )
+      );
+    } else {
+      setCanProceed(false);
+    }
+  }, [answers, keyholders, erroneousValueInputIds]);
 
   return (
     <InsuranceApplicationDialog
@@ -627,6 +632,7 @@ export default function InsuranceApplicationKeyholders(props: {
                 zipsN={getZipsN(i)}
                 title={getRowTitle(i)}
                 update={(update) => updateKeyholder(i, update)}
+                setErroneous={setErroneous}
                 delete={
                   i > 2
                     ? () =>

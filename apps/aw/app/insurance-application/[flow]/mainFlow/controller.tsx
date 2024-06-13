@@ -99,6 +99,7 @@ export function AWFormSectionSubsection(
       newValue: IAWFormInputAnswer["value"]
     ) => void;
     setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+    dependantInputsVisible?: IAWFormInput["id"][];
   }
 ) {
   const [checked, setChecked] = useState<boolean>(false);
@@ -127,15 +128,21 @@ export function AWFormSectionSubsection(
         <>
           <div className="text-xl font-medium text-darkTeal-2">{`${props.i}.${props.j}) ${props.title}`}</div>
           <div className="flex flex-col gap-xl">
-            {props.inputs.map((input, index) => (
-              <InsuranceApplicationFormInput
-                key={index}
-                {...input}
-                setValue={props.setValue}
-                setErroneous={props.setErroneous}
-                answers={props.answers}
-              />
-            ))}
+            {props.inputs
+              .filter(
+                (input) =>
+                  !input.visibilityAndOptionalityDependence ||
+                  props.dependantInputsVisible?.includes(input.id)
+              )
+              .map((input, index) => (
+                <InsuranceApplicationFormInput
+                  key={index}
+                  {...input}
+                  setValue={props.setValue}
+                  setErroneous={props.setErroneous}
+                  answers={props.answers}
+                />
+              ))}
           </div>
         </>
       ) : null}
@@ -151,6 +158,7 @@ export type IAWFormSectionProps = IAWFormSection & {
     newValue: IAWFormInputAnswer["value"]
   ) => void;
   setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+  dependantInputsVisible?: IAWFormInput["id"][];
   prefill?: () => void;
 };
 
@@ -198,16 +206,22 @@ export function AWFormSection(props: IAWFormSectionProps) {
       ) : null}
       {props.inputs ? (
         <div className="flex flex-col gap-xl">
-          {props.inputs.map((input, index) => (
-            <InsuranceApplicationFormInput
-              key={index}
-              {...input}
-              setValue={props.setValue}
-              setErroneous={props.setErroneous}
-              answers={props.answers}
-              disabled={checked && props.disablePrefill}
-            />
-          ))}
+          {props.inputs
+            .filter(
+              (input) =>
+                !input.visibilityAndOptionalityDependence ||
+                props.dependantInputsVisible?.includes(input.id)
+            )
+            .map((input, index) => (
+              <InsuranceApplicationFormInput
+                key={index}
+                {...input}
+                setValue={props.setValue}
+                setErroneous={props.setErroneous}
+                answers={props.answers}
+                disabled={checked && props.disablePrefill}
+              />
+            ))}
         </div>
       ) : null}
       {props.subsections ? (
@@ -221,6 +235,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
               answers={props.answers}
               setValue={props.setValue}
               setErroneous={props.setErroneous}
+              dependantInputsVisible={props.dependantInputsVisible}
             />
           ))}
         </div>

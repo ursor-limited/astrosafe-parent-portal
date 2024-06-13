@@ -18,6 +18,7 @@ export default function InsuranceApplicationFormInput(
     ) => void;
     setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
     disabled?: boolean;
+    hidden?: boolean;
   }
 ) {
   return (

@@ -528,16 +528,19 @@ export default function InsuranceApplicationLeaders(props: {
         setLeadersFilled(true);
       }
       setCanProceed(
-        SECTIONS.filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
+        erroneousValueInputIds.length === 0 &&
+          SECTIONS.filter((s) => !s.custom)
+            .flatMap((s) => [
+              ...(s.inputs || []),
+              ...(s.subsections
+                ? s.subsections.flatMap((ss) => ss.inputs)
+                : []),
+            ])
+            .every(
+              (input) =>
+                input.optional ||
+                answers.find((a) => a.inputId === input?.id)?.value
+            )
       );
     } else {
       setLeadersFilled(false);
