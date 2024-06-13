@@ -99,6 +99,7 @@ export function AWFormSectionSubsection(
       newValue: IAWFormInputAnswer["value"]
     ) => void;
     setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+    highlightEmpties?: boolean;
     dependantInputsVisible?: IAWFormInput["id"][];
   }
 ) {
@@ -140,6 +141,7 @@ export function AWFormSectionSubsection(
                   {...input}
                   setValue={props.setValue}
                   setErroneous={props.setErroneous}
+                  highlightEmpty={props.highlightEmpties}
                   answers={props.answers}
                 />
               ))}
@@ -160,6 +162,7 @@ export type IAWFormSectionProps = IAWFormSection & {
   setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   dependantInputsVisible?: IAWFormInput["id"][];
   prefill?: () => void;
+  highlightEmpties?: boolean;
 };
 
 export function AWFormSection(props: IAWFormSectionProps) {
@@ -218,6 +221,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
                 {...input}
                 setValue={props.setValue}
                 setErroneous={props.setErroneous}
+                highlightEmpty={props.highlightEmpties}
                 answers={props.answers}
                 disabled={checked && props.disablePrefill}
               />
@@ -235,6 +239,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
               answers={props.answers}
               setValue={props.setValue}
               setErroneous={props.setErroneous}
+              highlightEmpties={props.highlightEmpties}
               dependantInputsVisible={props.dependantInputsVisible}
             />
           ))}

@@ -153,6 +153,8 @@ export default function InsuranceApplicationFormDialog(props: {
     [answers]
   );
 
+  const [highlightEmpties, setHighlightEmpties] = useState<boolean>(false);
+
   const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
     IAWFormInput["id"][]
   >([]);
@@ -218,6 +220,8 @@ export default function InsuranceApplicationFormDialog(props: {
     IAWFormSection["id"][]
   >([]);
 
+  console.log("lok", emptyRequiredInputIds.length);
+
   const [canProceed, setCanProceed] = useState<boolean>(false);
   useEffect(() => {
     setCanProceed(
@@ -266,6 +270,7 @@ export default function InsuranceApplicationFormDialog(props: {
                 answers={answers}
                 setValue={setValue}
                 setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
                 prefill={() => prefill(section)}
                 dependantInputsVisible={dependantInputsVisible}
               />
@@ -283,13 +288,11 @@ export default function InsuranceApplicationFormDialog(props: {
               if (canProceed) {
                 props.nextCallback();
               } else {
-                console.log(
-                  emptyRequiredInputIds[0],
-                  document.getElementById(emptyRequiredInputIds[0]),
-                  "(99"
-                );
+                setHighlightEmpties(true);
                 document
-                  .getElementById(emptyRequiredInputIds[0])
+                  .getElementById(
+                    emptyRequiredInputIds[0] || erroneousValueInputIds[0]
+                  )
                   ?.parentElement?.parentElement?.scrollIntoView({
                     behavior: "smooth",
                   });

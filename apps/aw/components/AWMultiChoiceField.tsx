@@ -4,6 +4,7 @@ const AWMultiChoiceField = (props: {
   value?: string;
   setValue: (newValue: string) => void;
   options?: IAWMultiChoiceFieldOption[];
+  highlightEmpty?: boolean;
 }) => (
   <div
     className={`${
@@ -20,7 +21,9 @@ const AWMultiChoiceField = (props: {
         >
           <div
             className={`h-[15px] w-[15px] flex items-center justify-center rounded-full ${
-              props.value === o.id
+              props.highlightEmpty
+                ? "border-fields-error"
+                : props.value === o.id
                 ? "border-fields-checkbox-selected"
                 : "border-fields-checkbox-default"
             } border-[1.5px] border-solid duration-300`}
@@ -31,7 +34,13 @@ const AWMultiChoiceField = (props: {
               }`}
             />
           </div>
-          <div className="text-darkTeal-5 text-xl">{o.text}</div>
+          <div
+            className={`${
+              props.highlightEmpty ? "text-fields-error" : "text-darkTeal-5"
+            } text-xl`}
+          >
+            {o.text}
+          </div>
         </div>
         {o.explanation ? (
           <div className="text-darkTeal-0 text-lg">{o.explanation}</div>

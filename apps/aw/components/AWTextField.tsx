@@ -19,8 +19,11 @@ export default function AWTextField(props: {
   numeric?: boolean;
   date?: boolean;
   error?: IAWFormInput["error"];
+  highlightEmpty?: boolean;
 }) {
   const [erroneousValue, setErroneousValue] = useState<boolean>(false);
+
+  console.log(props.highlightEmpty, "&*&*");
 
   useEffect(() => {
     if (props.value) {
@@ -72,12 +75,17 @@ export default function AWTextField(props: {
     <div
       className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative"
       style={{
-        border: erroneousValue ? `1px solid #F50000` : undefined,
+        border:
+          erroneousValue || props.highlightEmpty
+            ? `1px solid #F50000`
+            : undefined,
       }}
     >
       <input
         className={`w-full text-[18px] bg-transparent placeholder-greyscale-6 ${
-          erroneousValue ? "text-fields-error" : "text-fields-text-pressed"
+          erroneousValue || props.highlightEmpty
+            ? "text-fields-error"
+            : "text-fields-text-pressed"
         } placeholder:text-fields-text-placeholder`}
         placeholder={props.placeholder}
         value={
