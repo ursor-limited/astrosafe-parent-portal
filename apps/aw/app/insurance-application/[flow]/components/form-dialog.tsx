@@ -50,6 +50,11 @@ export interface IAWFormInput {
     step: AWInsuranceApplicationMainFlowStep;
     inputId: IAWFormInput["id"];
   };
+  error?: {
+    minLength?: number;
+    message: string;
+    format: "min" | "date";
+  };
   maxLength?: number;
   numeric?: boolean;
   date?: boolean;

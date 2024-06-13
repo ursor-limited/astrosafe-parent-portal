@@ -1,4 +1,6 @@
-import _ from "lodash";
+import { IAWFormInput } from "@/app/insurance-application/[flow]/components/form-dialog";
+import _, { values } from "lodash";
+import { useEffect, useState } from "react";
 
 const getFormattedDate = (value: string) =>
   _.compact([value.slice(0, 2), value.slice(2, 4), value.slice(4)]).join("/");
@@ -10,11 +12,30 @@ export default function AWTextField(props: {
   maxLength?: number;
   numeric?: boolean;
   date?: boolean;
+  error?: IAWFormInput["error"];
 }) {
+  const [erroneousValue, setErroneousValue] = useState<boolean>(false);
+
+  useEffect(() => {
+    erroneousValue && checkError();
+  }, [props.value]);
+
+  const checkError = () =>
+    setErroneousValue(
+      props.error?.format === "min" &&
+        (props.value?.length ?? 0) < (props.error.minLength ?? 0)
+    );
   return (
-    <div className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs">
+    <div
+      className="h-[50px] w-full flex items-center px-lg bg-fields-bg rounded-xs relative"
+      style={{
+        border: erroneousValue ? `1px solid #F50000` : undefined,
+      }}
+    >
       <input
-        className="w-full text-[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder"
+        className={`w-full text-[18px] bg-transparent placeholder-greyscale-6 ${
+          erroneousValue ? "text-fields-error" : "text-fields-text-pressed"
+        } placeholder:text-fields-text-placeholder`}
         placeholder={props.placeholder}
         value={
           props.value
@@ -37,7 +58,13 @@ export default function AWTextField(props: {
         style={{
           outline: "none",
         }}
+        onBlur={() => props.value && props.error && checkError()}
       />
+      {erroneousValue ? (
+        <div className="absolute bottom-[-25px] left-0 text-fields-error">
+          {props.error?.message}
+        </div>
+      ) : null}
     </div>
   );
 }
