@@ -75,7 +75,7 @@ export default function InsuranceApplicationDialog(props: {
             ))}
           </div>
         ) : null}
-        <div />
+        <div className="w-[20px]" />
       </div>
       <div
         className={`h-[50px] w-full box-border bg-[#F0F1F1] px-3xl flex items-center font-medium text-darkTeal-2 text-xl border-y-2 border-y-greyscale-6 ${dmMono.className}`}
