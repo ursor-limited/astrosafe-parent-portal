@@ -1,7 +1,8 @@
-import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/[flow]/components/form-dialog";
 import _, { values } from "lodash";
 import { useEffect, useState } from "react";
-import AWDropdown from "./AWDropdown";
+import AWDropdown, { IAWDropdownOption } from "./AWDropdown";
+import countryCodes from "country-codes-list";
+import { IAWMultiChoiceFieldOption } from "@/app/insurance-application/[flow]/components/form-dialog";
 
 const MIN_LENGTH = 6;
 
@@ -29,13 +30,64 @@ const MIN_LENGTH = 6;
 //   }, [textFieldValue, props.options]);
 // }
 
+export interface IAWPhoneNumber {
+  countryCode: string;
+  countryCallingCode: string;
+  number: string;
+}
+
 export default function AWPhoneNumberField(props: {
-  value?: { countryCode: string; countryNumber: string; number: string };
-  setValue: (newValue: string) => void;
+  value?: IAWPhoneNumber;
+  setValue: (newValue: IAWPhoneNumber) => void;
   setErroneous?: (e: boolean) => void;
   highlightEmpty?: boolean;
 }) {
   const [erroneousValue, setErroneousValue] = useState<boolean>(false);
+
+  const [countryCodesOptions, setCountryCodesOptions] = useState<
+    IAWDropdownOption["options"]
+  >([]);
+  useEffect(() => {
+    const countryNames = countryCodes.customList(
+      //@ts-ignore
+      "countryCode",
+      "{countryNameEn}"
+    );
+    const countryCallingCodes = countryCodes.customList(
+      //@ts-ignore
+      "countryCode",
+      "{countryCallingCode}"
+    );
+    setCountryCodesOptions(
+      Object.keys(countryNames).map((countryCode) => ({
+        id: countryCode,
+        displayKey: countryCode, //@ts-ignore
+        text: `+${countryCallingCodes[countryCode]}`, //@ts-ignore
+        searchableStrings: [countryNames[countryCode]],
+      }))
+    );
+  }, []);
+
+  const [countryCode, setCountryCode] = useState<string | undefined>();
+  const [number, setNumber] = useState<string>("");
+  useEffect(() => {
+    if (props.value) {
+      setCountryCode(props.value.countryCode);
+      setNumber(props.value.number);
+    }
+  }, [props.value?.countryCode, props.value?.number]);
+  useEffect(() => {
+    const countryCallingCode = countryCodesOptions?.find(
+      (o) => o.id === countryCode
+    )?.text;
+    countryCode &&
+      countryCallingCode &&
+      props.setValue({
+        countryCode,
+        countryCallingCode,
+        number,
+      });
+  }, [countryCode, number]);
 
   useEffect(() => {
     if (props.value) {
@@ -44,12 +96,12 @@ export default function AWPhoneNumberField(props: {
   }, []);
 
   useEffect(() => {
-    if (erroneousValue && props.value) {
+    if (erroneousValue && number) {
       validate();
     }
-  }, [props.value]);
+  }, [number]);
 
-  const isErroneous = () => props.value?.number.length ?? 0 < MIN_LENGTH;
+  const isErroneous = () => (number.length ?? 0) < MIN_LENGTH;
 
   const validate = () => {
     if (isErroneous()) {
@@ -62,14 +114,15 @@ export default function AWPhoneNumberField(props: {
   };
 
   return (
-    <div className="gap-lg">
+    <div className="gap-lg flex">
       <div className="w-[200px]">
         <AWDropdown
-          value={props.answers?.find((a) => a.inputId === props.id)?.value}
-          setValue={(v) => props.setValue(props.id, v)}
-          options={props.options}
-          placeholder={props.placeholder}
-          highlightEmpty={props.highlightEmpty && !props.optional && !value}
+          value={countryCode}
+          displayKey={countryCode}
+          setValue={setCountryCode}
+          options={countryCodesOptions}
+          placeholder={"+0"}
+          highlightEmpty={props.highlightEmpty && !countryCode}
         />
       </div>
       <div
@@ -88,14 +141,14 @@ export default function AWPhoneNumberField(props: {
               : "text-fields-text-pressed"
           } placeholder:text-fields-text-placeholder`}
           placeholder="Enter your number"
-          value={props.value?.number}
+          value={number}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            props.setValue(event.target.value.replace(/\D/g, ""));
+            setNumber(event.target.value.replace(/\D/g, ""));
           }}
           style={{
             outline: "none",
           }}
-          onBlur={() => props.value && validate()}
+          onBlur={() => number && validate()}
         />
         {erroneousValue ? (
           <div className="absolute bottom-[-25px] left-0 text-fields-error">

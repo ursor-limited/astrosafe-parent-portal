@@ -578,7 +578,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     inputs: [
       {
         id: "6666d34c462f61a6575c85bf",
-        inputType: "text",
+        inputType: "phoneNumber",
         numeric: true,
         placeholder: "Enter your phone number here",
       },

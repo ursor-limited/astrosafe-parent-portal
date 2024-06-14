@@ -42,7 +42,7 @@ export const SECTIONS: IAWFormSection[] = [
           {
             id: "6665ffd88c3ddc4d7a84df5d",
             title: "Cell phone number",
-            inputType: "text",
+            inputType: "phoneNumber",
             numeric: true,
             placeholder: "Enter phone number here",
           },
@@ -79,7 +79,7 @@ export const SECTIONS: IAWFormSection[] = [
           {
             id: "6666003fe302e477565c66e1",
             title: "Cell phone number",
-            inputType: "text",
+            inputType: "phoneNumber",
             numeric: true,
             placeholder: "Enter phone number here",
           },
