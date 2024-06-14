@@ -26,6 +26,7 @@ function AWDropdownList(props: {
   }, [
     listRef?.getBoundingClientRect()?.width,
     listRef?.getBoundingClientRect()?.height,
+    props.options?.length,
   ]);
 
   const [hoveringRowId, setHoveringRowId] = useState<string | undefined>();
@@ -82,6 +83,29 @@ export default function AWDropdown(props: {
   highlightEmpty?: boolean;
 }) {
   const [open, setOpen] = useState<boolean>(false);
+
+  const [textFieldValue, setTextFieldValue] = useState<string>("");
+  useEffect(
+    () =>
+      setTextFieldValue(
+        props.options?.find((o) => o.id === props.value)?.text ?? ""
+      ),
+    [props.value, props.options]
+  );
+  const [filteredOptions, setFilteredOptions] = useState<
+    IAWMultiChoiceFieldOption[]
+  >([]);
+  useEffect(() => {
+    props.options &&
+      setFilteredOptions(
+        textFieldValue
+          ? props.options?.filter((o) =>
+              o.text.toLowerCase().includes(textFieldValue.toLowerCase())
+            )
+          : props.options
+      );
+  }, [textFieldValue, props.options]);
+
   const onOutsideClick = () => setOpen(false);
   const setOutsideClickRef = useOutsideClick(onOutsideClick);
 
@@ -146,7 +170,7 @@ export default function AWDropdown(props: {
         >
           <AWDropdownList
             open={open}
-            options={props.options}
+            options={filteredOptions}
             setValue={props.setValue}
             width={listWidth}
             maxHeight={listMaxHeight}
@@ -160,9 +184,12 @@ export default function AWDropdown(props: {
         style={{
           border: props.highlightEmpty ? `1px solid #F50000` : undefined,
         }}
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          setOpen(!open);
+          setTextFieldValue("");
+        }}
       >
-        <div
+        {/* <div
           className={`w-full text-[18px] ${
             props.value
               ? "text-fields-text-filling"
@@ -171,7 +198,18 @@ export default function AWDropdown(props: {
         >
           {props.options?.find((o) => o.id === props.value)?.text ||
             props.placeholder}
-        </div>
+        </div> */}
+        <input
+          className={`w-full text-[18px] bg-transparent placeholder-greyscale-6 text-fields-text-pressed placeholder:text-fields-text-placeholder`}
+          placeholder={props.placeholder}
+          value={textFieldValue}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setTextFieldValue(event.target.value);
+          }}
+          style={{
+            outline: "none",
+          }}
+        />
         <ChevronDownIcon />
       </div>
     </div>
