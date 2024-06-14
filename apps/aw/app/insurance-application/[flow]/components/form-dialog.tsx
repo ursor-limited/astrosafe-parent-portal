@@ -11,6 +11,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import _ from "lodash";
 import { AWInsuranceApplicationPersonalFlowStep } from "../personalFlow/controller";
+import { AWInsuranceApplicationInvitedFlowStep } from "../invitedFlows/controller";
 
 export interface IAWFormSection {
   id: string;
@@ -96,6 +97,10 @@ export default function InsuranceApplicationFormDialog(props: {
     >
   >;
   canProceed?: boolean;
+  backbuttonStep:
+    | AWInsuranceApplicationMainFlowStep
+    | AWInsuranceApplicationInvitedFlowStep
+    | AWInsuranceApplicationPersonalFlowStep;
 }) {
   const [answers, setAnswers] = useState<IAWFormInputAnswer[]>([]);
 
@@ -238,7 +243,11 @@ export default function InsuranceApplicationFormDialog(props: {
     dependantInputsVisible,
   ]);
   return (
-    <InsuranceApplicationDialog title={props.title} progress={props.progress}>
+    <InsuranceApplicationDialog
+      title={props.title}
+      progress={props.progress}
+      backbuttonStep={props.backbuttonStep}
+    >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         {props.subtitle ? (
           <div className="font-medium text-xl text-darkTeal-2 pb-xl">

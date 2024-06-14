@@ -60,6 +60,9 @@ export default function InsuranceApplicationPolicyOwner(props: {
       progress={
         CHECKPOINT_STEPS.indexOf("policyOwner") / CHECKPOINT_STEPS.length
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("policyOwner") - 1]
+      }
     />
   );
 }

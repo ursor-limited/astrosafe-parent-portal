@@ -5,6 +5,9 @@ import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import dynamic from "next/dynamic";
 import { useLottie } from "lottie-react";
 import VaultLottie from "@/images/VaultLottie.json";
+import { AWInsuranceApplicationMainFlowStep } from "../mainFlow/controller";
+import { AWInsuranceApplicationInvitedFlowStep } from "../invitedFlows/controller";
+import { AWInsuranceApplicationPersonalFlowStep } from "../personalFlow/controller";
 
 const AWInfoLine = dynamic(
   () => import("@/components/AWInfoLine"),
@@ -21,6 +24,10 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   progress?: number;
   illustration?: React.ReactNode;
   children?: React.ReactNode;
+  backbuttonStep?:
+    | AWInsuranceApplicationMainFlowStep
+    | AWInsuranceApplicationInvitedFlowStep
+    | AWInsuranceApplicationPersonalFlowStep;
 }) {
   const options = {
     animationData: VaultLottie,
@@ -28,7 +35,11 @@ export default function InsuranceApplicationIllustrationDialog(props: {
   };
   const { View: Lottie } = useLottie(options, { height: 360 });
   return (
-    <InsuranceApplicationDialog title={props.title} progress={props.progress}>
+    <InsuranceApplicationDialog
+      title={props.title}
+      progress={props.progress}
+      backbuttonStep={props.backbuttonStep}
+    >
       <div className="h-full  w-full flex" style={{ minHeight: "inherit" }}>
         <div
           className="h-full flex flex-col p-3xl gap-[74px] h-full w-[525px] justify-between border-r-2 border-r-greyscale-6"

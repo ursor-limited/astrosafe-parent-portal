@@ -501,13 +501,6 @@ export default function InsuranceApplicationLeaders(props: {
     },
   ]);
 
-  console.log(
-    "gggg",
-    committedAnswers.policyOwner?.find(
-      (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
-    )?.value ?? ""
-  );
-
   useEffect(() => {
     const prefilledLeader = {
       name:
@@ -515,9 +508,6 @@ export default function InsuranceApplicationLeaders(props: {
           (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
         )?.value ?? "",
       birthday: "",
-      // committedAnswers.policyOwner?.find(
-      //   (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
-      // )?.value ?? "",
       email:
         committedAnswers.policyOwner?.find(
           (answer) => answer.inputId === POLICY_OWNER_EMAIL_INPUT_ID
@@ -646,6 +636,7 @@ export default function InsuranceApplicationLeaders(props: {
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.leaders}
       progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
+      backbuttonStep={CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("leaders") - 1]}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className=" flex flex-col font-medium text-xl text-darkTeal-2 gap-[52px]">

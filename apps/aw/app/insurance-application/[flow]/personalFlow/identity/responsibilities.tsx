@@ -5,7 +5,7 @@ import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
-import { CHECKPOINT_STEPS } from "../../mainFlow/views/checkpoints/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "../checkpoint-dialog";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
@@ -28,6 +28,9 @@ export default function InsuranceApplicationResponsibilities(props: {
           awInsuranceApplicationIdentityStepViews.indexOf("responsibilities") /
             awInsuranceApplicationIdentityStepViews.length) /
           CHECKPOINT_STEPS.length
+      }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
       }
     >
       <div className="flex flex-col gap-3xl">

@@ -170,6 +170,9 @@ export default function InsuranceApplicationWhitelist(props: {
       canProceed
       nextCallback={props.nextCallback}
       progress={CHECKPOINT_STEPS.indexOf("whitelist") / CHECKPOINT_STEPS.length}
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("whitelist") - 1]
+      }
     />
   );
 }
