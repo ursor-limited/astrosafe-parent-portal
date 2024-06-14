@@ -13,6 +13,7 @@ import {
   AWInsuranceApplicationFlow,
   SCROLLABLE_PAGE_ID,
 } from "../mainFlow/controller";
+import { useEffect, useState } from "react";
 
 export const awInsuranceApplicationInvitedFlowSteps = [
   "welcome",
@@ -80,10 +81,14 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
     );
   };
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.scrollTo(0, 0), [currentStep]);
+
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      ref={setRef}
     >
       {currentStep && StepView ? (
         <StepView

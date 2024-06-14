@@ -807,16 +807,20 @@ export default function InsuranceApplicationPersonalDetails(props: {
           : undefined
       }
       progress={
-        props.progress ||
-        (CHECKPOINT_STEPS.indexOf("identity") +
-          awInsuranceApplicationIdentityStepViews.indexOf("personalDetails") /
-            awInsuranceApplicationIdentityStepViews.length) /
-          CHECKPOINT_STEPS.length
+        props.flow === "main"
+          ? props.progress ||
+            (CHECKPOINT_STEPS.indexOf("identity") +
+              awInsuranceApplicationIdentityStepViews.indexOf(
+                "personalDetails"
+              ) /
+                awInsuranceApplicationIdentityStepViews.length) /
+              CHECKPOINT_STEPS.length
+          : 0.08 // this is for the Personal Flow
       }
       backbuttonStep={
         props.flow === "main"
           ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
-          : "responsibilities"
+          : "start"
       }
     />
   );
