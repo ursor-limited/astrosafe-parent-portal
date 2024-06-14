@@ -22,7 +22,7 @@ export default function InsuranceApplicationDialog(props: {
   //rightCallback?: () => void;
   progress?: number;
   children: React.ReactNode;
-  backbuttonStep:
+  backbuttonStep?:
     | AWInsuranceApplicationMainFlowStep
     | AWInsuranceApplicationInvitedFlowStep
     | AWInsuranceApplicationPersonalFlowStep;
