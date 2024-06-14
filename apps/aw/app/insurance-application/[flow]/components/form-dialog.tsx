@@ -57,7 +57,7 @@ export interface IAWFormInput {
   error?: {
     minLength?: number;
     message: string;
-    format: "min" | "date";
+    format: "min" | "date" | "email";
   };
   maxLength?: number;
   numeric?: boolean;

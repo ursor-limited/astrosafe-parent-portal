@@ -592,6 +592,10 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
         id: PERSONAL_DETAILS_EMAIL_INPUT_ID,
         inputType: "text",
         placeholder: "Enter email address here",
+        error: {
+          format: "email",
+          message: "The address should be in the format bob@xxx.com",
+        },
       },
     ],
   },

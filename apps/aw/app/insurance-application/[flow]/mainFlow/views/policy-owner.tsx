@@ -39,6 +39,10 @@ export const SECTIONS: IAWFormSection[] = [
         id: POLICY_OWNER_EMAIL_INPUT_ID,
         inputType: "text",
         placeholder: "Insert email address here",
+        error: {
+          format: "email",
+          message: "The address should be in the format bob@xxx.com",
+        },
       },
     ],
   },
