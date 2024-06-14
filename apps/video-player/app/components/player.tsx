@@ -268,12 +268,16 @@ const Player = (props: {
   }, [url, player, hasBegunPlaying]);
 
   const resume = () => {
+    // the playerState used to be in player.v, then it was changed to player.playerState, and then back. So we cannot rely on youtube to keep it constant.
+    const playerState =
+      player?.playerInfo?.playerState || player?.v?.playerState;
     setEnded(false);
     if (
       url?.includes("youtube") &&
-      ((player?.v || player?.playerInfo)?.playerState === 2 ||
-        (player?.v || player?.playerInfo)?.playerState === 0 || // 0 is the ended
-        (player?.v || player?.playerInfo)?.playerState === 5) // 5 is the non-yet-started
+      playerState &&
+      (playerState === 2 ||
+        playerState === 0 || // 0 is the ended
+        playerState === 5) // 5 is the non-yet-started
     ) {
       player?.playVideo();
     } else if (url?.includes("vimeo")) {
