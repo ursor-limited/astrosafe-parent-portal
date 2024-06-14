@@ -21,6 +21,7 @@ const countriesOptions = Object.entries(COUNTRIES_ALPHA2).map(
 export const PERSONAL_DETAILS_NAME_INPUT_ID = "6655be2de0735e8450474863";
 export const PERSONAL_DETAILS_BIRTHDAY_INPUT_ID = "6655c02aab2c63b1bea64cd8";
 export const PERSONAL_DETAILS_EMAIL_INPUT_ID = "6666d36213b43594dd02e69b";
+export const PROFESSION_INPUT_ID = "6666d3176639e924e5c46ac5";
 
 const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
   {
@@ -566,7 +567,7 @@ const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Profession",
     inputs: [
       {
-        id: "6666d3176639e924e5c46ac5",
+        id: PROFESSION_INPUT_ID,
         inputType: "text",
         placeholder: "Insert your profession here",
       },

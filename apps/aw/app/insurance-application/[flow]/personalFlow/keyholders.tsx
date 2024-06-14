@@ -27,6 +27,7 @@ import {
   PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
   PERSONAL_DETAILS_EMAIL_INPUT_ID,
   PERSONAL_DETAILS_NAME_INPUT_ID,
+  PROFESSION_INPUT_ID,
 } from "../mainFlow/views/identity/personal-details";
 
 const BIRTHDAY_INPUT_ID = "keyholders-birthday";
@@ -481,7 +482,10 @@ export default function InsuranceApplicationKeyholders(props: {
           committedAnswers.identity?.find(
             (answer) => answer.inputId === PERSONAL_DETAILS_EMAIL_INPUT_ID
           )?.value ?? "",
-        job: "",
+        job:
+          committedAnswers.identity?.find(
+            (answer) => answer.inputId === PROFESSION_INPUT_ID
+          )?.value ?? "",
         zips: [],
       };
       setKeyholders([prefilledKeyholder]);
