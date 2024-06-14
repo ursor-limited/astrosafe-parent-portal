@@ -1,4 +1,5 @@
 import InsuranceApplicationIllustrationDialog from "../../components/illustration-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import { IDENTITY_STEP_TITLES } from "./identity/main";
 
 export default function InsuranceApplicationPayment(props: {
@@ -9,6 +10,7 @@ export default function InsuranceApplicationPayment(props: {
       title={IDENTITY_STEP_TITLES.success}
       subtitle="$1000 Underwriting & Concierge Fee"
       buttonCallback={() => null}
+      backbuttonStep="upload"
     >
       <div className="flex flex-col gap-xl text-xl text-darkTeal-5">
         <div>This fee covers:</div>

@@ -31,6 +31,9 @@ export default function InsuranceApplicationIdentitySuccess(props: {
           unoptimized
         />
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+      }
     >
       <div className="h-[347px] flex flex-col gap-3xl text-xl font-medium text-darkTeal-2">
         <div>Your identity was successfully verified.</div>

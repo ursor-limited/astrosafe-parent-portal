@@ -29,6 +29,9 @@ export default function InsuranceApplicationResponsibilities(props: {
             awInsuranceApplicationIdentityStepViews.length) /
           CHECKPOINT_STEPS.length
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+      }
     >
       <div className="flex flex-col gap-3xl">
         <div className="flex flex-col gap-lg">

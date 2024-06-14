@@ -601,6 +601,7 @@ export default function InsuranceApplicationKeyholders(props: {
       progress={
         CHECKPOINT_STEPS.indexOf("keyholders") / CHECKPOINT_STEPS.length
       }
+      backbuttonStep="beneficiary"
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
         <div className=" flex flex-col font-medium text-xl text-darkTeal-2 gap-[52px]">

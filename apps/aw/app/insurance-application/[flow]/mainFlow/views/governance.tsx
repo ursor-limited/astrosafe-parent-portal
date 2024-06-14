@@ -346,6 +346,9 @@ export default function InsuranceApplicationGovernance(props: {
       progress={
         CHECKPOINT_STEPS.indexOf("governance") / CHECKPOINT_STEPS.length
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("governance") - 1]
+      }
     />
   );
 }

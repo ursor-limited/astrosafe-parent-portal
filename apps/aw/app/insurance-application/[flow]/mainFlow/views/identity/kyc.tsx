@@ -1,4 +1,5 @@
 import InsuranceApplicationIllustrationDialog from "../../../components/illustration-dialog";
+import { AWInsuranceApplicationFlow } from "../../controller";
 import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
 import {
   IDENTITY_STEP_TITLES,
@@ -10,6 +11,7 @@ import Image from "next/image";
 export default function InsuranceApplicationIdentityKYC(props: {
   nextCallback: () => void;
   progress?: number;
+  flow?: AWInsuranceApplicationFlow;
 }) {
   return (
     <InsuranceApplicationIllustrationDialog
@@ -31,6 +33,11 @@ export default function InsuranceApplicationIdentityKYC(props: {
           alt="qr code"
           unoptimized
         />
+      }
+      backbuttonStep={
+        props.flow === "main"
+          ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+          : "personalInfo"
       }
     >
       <div className="h-[347px] flex flex-col gap-3xl text-lg text-darkTeal-5">

@@ -1,4 +1,8 @@
-import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
+import {
+  IAWFormSectionProps,
+  MAIN_FLOW_STEP_TITLES,
+  awInsuranceApplicationMainFlowSteps,
+} from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
@@ -10,6 +14,7 @@ import XIcon from "@/images/icons/XIcon.svg";
 import AWTextField from "@/components/AWTextField";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 import AWInfoLine from "@/components/AWInfoLine";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 
 const PROPERTY_INPUT_ID = "6658d2b8b876632b2e886cc6";
 const PROPERTY_INPUT_NO_OPTION_ID = "6658d2fe7e1330344086c121";
@@ -417,6 +422,9 @@ export default function InsuranceApplicationInsuranceNeeds(props: {
       }}
       nextCallback={props.nextCallback}
       progress={0.48}
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("insuranceNeeds") - 1]
+      }
     />
   );
 }

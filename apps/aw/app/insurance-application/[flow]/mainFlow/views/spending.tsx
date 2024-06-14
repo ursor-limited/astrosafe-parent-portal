@@ -116,6 +116,9 @@ export default function InsuranceApplicationSpending(props: {
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={CHECKPOINT_STEPS.indexOf("spending") / CHECKPOINT_STEPS.length}
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("spending") - 1]
+      }
     />
   );
 }

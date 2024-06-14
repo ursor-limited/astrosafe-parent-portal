@@ -813,6 +813,11 @@ export default function InsuranceApplicationPersonalDetails(props: {
             awInsuranceApplicationIdentityStepViews.length) /
           CHECKPOINT_STEPS.length
       }
+      backbuttonStep={
+        props.flow === "main"
+          ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+          : "responsibilities"
+      }
     />
   );
 }
