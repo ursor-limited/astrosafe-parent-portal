@@ -216,6 +216,9 @@ importers:
       axios-retry:
         specifier: ^3.8.1
         version: 3.8.1
+      country-codes-list:
+        specifier: ^1.6.11
+        version: 1.6.11
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -5044,6 +5047,10 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       typescript: 5.2.2
+    dev: false
+
+  /country-codes-list@1.6.11:
+    resolution: {integrity: sha512-MsHoJ83tGyv9tFspeI8yHBomiTH4rruHxdWhNWGG9d1ykXgLyawh/VykmYPH5KqduY+9Q2RUNlL2/KGkXJqANA==}
     dev: false
 
   /create-require@1.1.1:
