@@ -384,6 +384,10 @@ const LeaderRow = (props: {
                 setValue={(email) => props.update({ email })}
                 placeholder="Enter address here"
                 highlightEmpty={props.highlightEmpties && !props.details.email}
+                error={{
+                  format: "email",
+                  message: "The address should be in the format bob@xxx.com",
+                }}
               />
             </div>
             <div className={`flex flex-col gap-1`}>

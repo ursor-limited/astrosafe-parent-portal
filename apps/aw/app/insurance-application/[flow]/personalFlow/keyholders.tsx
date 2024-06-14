@@ -318,6 +318,10 @@ const KeyholderRow = (props: {
                 value={props.details.email}
                 setValue={(email) => props.update({ email })}
                 placeholder="Enter address here"
+                error={{
+                  format: "email",
+                  message: "The address should be in the format bob@xxx.com",
+                }}
               />
             </div>
             <div className={`flex flex-col gap-1`}>

@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import AWLongTextField from "@/components/AWLongTextField";
 import AWMultiChoiceField from "@/components/AWMultiChoiceField";
 import { useEffect, useState } from "react";
+import AWPhoneNumberField from "@/components/AWPhoneNumberField";
 
 const AWDropdown = dynamic(
   () => import("@/components/AWDropdown"),
@@ -72,6 +73,13 @@ export default function InsuranceApplicationFormInput(
             setValue={(v) => props.setValue(props.id, v)}
             options={props.options}
             placeholder={props.placeholder}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
+          />
+        ) : props.inputType === "phoneNumber" ? (
+          <AWPhoneNumberField
+            value={props.answers?.find((a) => a.inputId === props.id)?.value}
+            setValue={(v) => props.setValue(props.id, v)}
+            setErroneous={(e: boolean) => props.setErroneous?.(props.id, e)}
             highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
         ) : null}

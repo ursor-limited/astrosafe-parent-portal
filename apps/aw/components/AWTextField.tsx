@@ -1,7 +1,6 @@
 import { IAWFormInput } from "@/app/insurance-application/[flow]/components/form-dialog";
 import _, { values } from "lodash";
 import { useEffect, useState } from "react";
-import { useLocalStorage } from "usehooks-ts";
 
 const getFormattedDate = (value: string) =>
   _.compact([value.slice(0, 2), value.slice(2, 4), value.slice(4)]).join("/");
@@ -35,19 +34,6 @@ export default function AWTextField(props: {
     }
   }, [props.value]);
 
-  // const [erroneousValueInputIds, setErroneousValueInputIds] = useLocalStorage<
-  //   string[]
-  // >("erroneousValueInputIds", []);
-
-  // useEffect(() => {
-  //   props.inputId &&
-  //     erroneousValue &&
-  //     !isErroneous() &&
-  //     setErroneousValueInputIds(
-  //       erroneousValueInputIds.filter((id) => id !== props.inputId)
-  //     );
-  // }, [props.value, erroneousValue]);
-
   const isErroneous = () => {
     if (!props.value) return false;
     if (props.error?.format === "min") {
@@ -56,6 +42,12 @@ export default function AWTextField(props: {
       const month = parseInt(props.value.slice(0, 2), 10);
       const day = parseInt(props.value.slice(2, 4), 10);
       return month > 12 || day > 31 || props.value.length < 8;
+    } else if (props.error?.format === "email") {
+      return (
+        props.value.split("@").length !== 2 ||
+        props.value.split("@")[1].split(".").length !== 2 ||
+        !props.value.split("@")[1].split(".")[1]
+      );
     }
   };
 

@@ -387,6 +387,10 @@ export const SECTIONS: IAWFormSection[] = [
             inputType: "text",
             title: "Email address",
             placeholder: "Enter email address here",
+            error: {
+              format: "email",
+              message: "The address should be in the format bob@xxx.com",
+            },
           },
         ],
       },
@@ -417,6 +421,10 @@ export const SECTIONS: IAWFormSection[] = [
             inputType: "text",
             title: "Email address",
             placeholder: "Enter email address here",
+            error: {
+              format: "email",
+              message: "The address should be in the format bob@xxx.com",
+            },
           },
         ],
       },
