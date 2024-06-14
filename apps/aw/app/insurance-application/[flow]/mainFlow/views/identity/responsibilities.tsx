@@ -6,10 +6,12 @@ import {
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
 import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
+import { AWInsuranceApplicationFlow } from "../../controller";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
   progress?: number;
+  flow?: AWInsuranceApplicationFlow;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
   return (
@@ -23,14 +25,20 @@ export default function InsuranceApplicationResponsibilities(props: {
       }}
       buttonDisabled={!checked}
       progress={
-        props.progress ||
-        (CHECKPOINT_STEPS.indexOf("identity") +
-          awInsuranceApplicationIdentityStepViews.indexOf("responsibilities") /
-            awInsuranceApplicationIdentityStepViews.length) /
-          CHECKPOINT_STEPS.length
+        props.flow === "main"
+          ? props.progress ||
+            (CHECKPOINT_STEPS.indexOf("identity") +
+              awInsuranceApplicationIdentityStepViews.indexOf(
+                "responsibilities"
+              ) /
+                awInsuranceApplicationIdentityStepViews.length) /
+              CHECKPOINT_STEPS.length
+          : undefined
       }
       backbuttonStep={
-        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+        props.flow === "main"
+          ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+          : undefined
       }
     >
       <div className="flex flex-col gap-3xl">

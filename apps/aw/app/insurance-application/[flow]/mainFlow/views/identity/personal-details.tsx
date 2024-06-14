@@ -955,8 +955,7 @@ export default function InsuranceApplicationPersonalDetails(props: {
       nextCallback={props.nextCallback}
       customSections={
         !props.flow ||
-        props.flow === "main" ||
-        props.flow === "shareholderKeyHolder25"
+        ["main", "keyholderPure", "shareholderKeyHolder25"].includes(props.flow)
           ? {
               "665738851df0c1e04588163f": SigningDeviceSection,
             }
@@ -976,7 +975,9 @@ export default function InsuranceApplicationPersonalDetails(props: {
       backbuttonStep={
         props.flow === "main"
           ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
-          : "start"
+          : props.flow === "personal"
+          ? "start"
+          : "responsibilities"
       }
     />
   );

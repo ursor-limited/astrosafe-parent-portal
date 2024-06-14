@@ -6,10 +6,12 @@ import {
   awInsuranceApplicationIdentityStepViews,
 } from "./main";
 import { CHECKPOINT_STEPS } from "../checkpoint-dialog";
+import { AWInsuranceApplicationFlow } from "../../mainFlow/controller";
 
 export default function InsuranceApplicationResponsibilities(props: {
   nextCallback: () => void;
   progress?: number;
+  flow?: AWInsuranceApplicationFlow;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
   return (
