@@ -74,6 +74,13 @@ export default function InsuranceApplicationFormInput(
             placeholder={props.placeholder}
             highlightEmpty={props.highlightEmpty && !props.optional && !value}
           />
+        ) : props.inputType === "phoneNumber" ? (
+          <AWPhoneNumberField
+            value={value}
+            setValue={(v) => props.setValue(props.id, v)}
+            setErroneous={(e: boolean) => props.setErroneous?.(props.id, e)}
+            highlightEmpty={props.highlightEmpty && !props.optional && !value}
+          />
         ) : null}
       </div>
     </div>
