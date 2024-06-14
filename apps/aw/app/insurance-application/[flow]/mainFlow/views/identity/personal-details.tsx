@@ -196,7 +196,162 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
   },
 ];
 
-const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
+const KEYHOLDER_PURE_FLOW_SECTIONS: IAWFormSection[] = [
+  {
+    id: "6655be26fe62c4cb7d4efba6",
+    title: "Legal name",
+    inputs: [
+      {
+        id: PERSONAL_DETAILS_NAME_INPUT_ID,
+        prefill: {
+          step: "policyOwner",
+          inputId: "6652e4a2214b3b8b436dc33d",
+        },
+        inputType: "text",
+        placeholder: "Insert name here",
+      },
+    ],
+  },
+  {
+    id: "6655c01a3c825d234588dd21",
+    title: "Date of birth",
+    inputs: [
+      {
+        id: PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+        inputType: "text",
+        placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
+      },
+    ],
+  },
+  {
+    id: "6655c0ea700a54316acc765d",
+    title: "Primary address of residence",
+    inputs: [
+      {
+        id: "6655c0fe63a59eef74dfcd2f",
+        title: "Address line 1",
+        inputType: "text",
+        placeholder: "Insert street address",
+      },
+      {
+        id: "6655c1595eb7619ecf4f664c",
+        title: "Address line 2",
+        optional: true,
+        inputType: "text",
+        placeholder: "Insert apartment or suite number",
+      },
+      {
+        id: "6655c171a4a4f8c8b3d6a26f",
+        title: "City",
+        inputType: "text",
+        placeholder: "Insert city",
+      },
+      {
+        id: "6655c18ff69ad61442a6fa2b",
+        title: "State or province",
+        inputType: "text",
+        placeholder: "Insert state or province",
+      },
+      {
+        id: "6655c1b04f9526468edc17b0",
+        title: "Country",
+        inputType: "dropdown",
+        placeholder: "Choose your country",
+        options: countriesOptions,
+      },
+      {
+        id: "6655c1eb44e7da94b593e696",
+        title: "ZIP code",
+        inputType: "text",
+        placeholder: "Enter postal code",
+      },
+    ],
+  },
+  {
+    id: "66561d001124a06d63bbd22b",
+    title: "Mailing address",
+    description:
+      "Key Holders will receive their Signing Device in the mail. Please provide a mailing address.",
+    prefillInputPrompt: "Use same address as residence address above",
+    disablePrefill: true,
+    inputs: [
+      {
+        id: "66561d077be86edef7a7c569",
+        prefill: {
+          step: "identity",
+          inputId: "6655c0fe63a59eef74dfcd2f",
+        },
+        title: "Address line 1",
+        inputType: "text",
+        placeholder: "Insert street address",
+      },
+      {
+        id: "66561d1605b212a580f388eb",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1595eb7619ecf4f664c",
+        },
+        title: "Address line 2",
+        inputType: "text",
+        optional: true,
+        placeholder: "Insert apartment or suite number",
+      },
+      {
+        id: "66561d1b4c32d5191c3ae48d",
+        prefill: {
+          step: "identity",
+          inputId: "6655c171a4a4f8c8b3d6a26f",
+        },
+        title: "City",
+        inputType: "text",
+        placeholder: "Insert city",
+      },
+      {
+        id: "66561d1f2bdd8d9d05725bb0",
+        prefill: {
+          step: "identity",
+          inputId: "6655c18ff69ad61442a6fa2b",
+        },
+        title: "State or province",
+        inputType: "text",
+        placeholder: "Insert state or province",
+      },
+      {
+        id: "66561d25fb1f010c0bd6ace9",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1b04f9526468edc17b0",
+        },
+        title: "Country",
+        inputType: "dropdown",
+        placeholder: "Choose your country",
+        options: countriesOptions,
+      },
+      {
+        id: "66561d2a42becad2f5f4f9ed",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1eb44e7da94b593e696",
+        },
+        title: "ZIP code",
+        inputType: "text",
+        placeholder: "Enter postal code",
+      },
+    ],
+  },
+  {
+    id: "665738851df0c1e04588163f",
+    custom: true,
+  },
+];
+
+const KEYHOLDER_25_FLOW_SECTIONS: IAWFormSection[] = [
   {
     id: "6655be26fe62c4cb7d4efba6",
     title: "Legal name",
@@ -722,9 +877,10 @@ const FLOW_SECTIONS: Record<AWInsuranceApplicationFlow, IAWFormSection[]> = {
   main: MAIN_FLOW_SECTIONS,
   executive: EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS,
   digAssMan: EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS,
-  keyholder: KEYHOLDER_FLOW_SECTIONS,
+  keyholderPure: KEYHOLDER_PURE_FLOW_SECTIONS,
+  keyholder25: KEYHOLDER_25_FLOW_SECTIONS,
   shareholder: SHAREHOLDER_FLOW_SECTIONS,
-  shareholderKeyHolder: MAIN_FLOW_SECTIONS,
+  shareholderKeyHolder25: MAIN_FLOW_SECTIONS,
   personal: PERSONAL_FLOW_SECTIONS,
 };
 
@@ -800,7 +956,7 @@ export default function InsuranceApplicationPersonalDetails(props: {
       customSections={
         !props.flow ||
         props.flow === "main" ||
-        props.flow === "shareholderKeyHolder"
+        props.flow === "shareholderKeyHolder25"
           ? {
               "665738851df0c1e04588163f": SigningDeviceSection,
             }

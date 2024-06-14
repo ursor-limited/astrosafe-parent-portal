@@ -42,8 +42,9 @@ export type AWInsuranceApplicationFlow =
   | "executive"
   | "digAssMan"
   | "shareholder"
-  | "keyholder"
-  | "shareholderKeyHolder"
+  | "keyholderPure"
+  | "keyholder25"
+  | "shareholderKeyHolder25"
   | "personal";
 
 export const awInsuranceApplicationMainFlowSteps = [
