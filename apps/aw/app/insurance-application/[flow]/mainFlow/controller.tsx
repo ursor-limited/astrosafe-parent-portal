@@ -13,7 +13,6 @@ import {
   IAWFormInputAnswer,
   IAWFormSection,
   IAWFormSectionSubsection,
-  IAWMultiChoiceFieldOption,
 } from "../components/form-dialog";
 import InsuranceApplicationPolicyOwner from "./views/policy-owner";
 import InsuranceApplicationBusinessSummary from "./views/business-summary";
@@ -44,7 +43,7 @@ export type AWInsuranceApplicationFlow =
   | "shareholder"
   | "keyholderPure"
   | "keyholder25"
-  | "shareholderKeyHolder25"
+  | "shareholderKeyHolder"
   | "personal";
 
 export const awInsuranceApplicationMainFlowSteps = [
@@ -163,16 +162,20 @@ export type IAWFormSectionProps = IAWFormSection & {
   setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
   dependantInputsVisible?: IAWFormInput["id"][];
   prefill?: () => void;
+  disablePrefill?: boolean;
+  isWhollyPrefillable?: boolean;
   highlightEmpties?: boolean;
 };
 
 export function AWFormSection(props: IAWFormSectionProps) {
+  // const [checkBoxEnabled, setCheckboxEnabled] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   useEffect(() => {
     if (checked) {
       props.prefill?.();
     }
   }, [checked]);
+
   return (
     <div
       className={`flex flex-col ${
@@ -201,7 +204,13 @@ export function AWFormSection(props: IAWFormSectionProps) {
         </div>
       ) : null}
       {props.prefillInputPrompt ? (
-        <div className={`flex items-center gap-[12px]`}>
+        <div
+          className={`flex items-center gap-[12px]`}
+          style={{
+            opacity: props.isWhollyPrefillable ? 1 : 0.4,
+            pointerEvents: props.isWhollyPrefillable ? undefined : "none",
+          }}
+        >
           <AWCheckbox checked={checked} callback={() => setChecked(!checked)} />
           <div className="text-lg font-medium text-darkTeal-2">
             {props.prefillInputPrompt}

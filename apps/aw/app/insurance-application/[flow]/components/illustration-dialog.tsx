@@ -1,10 +1,8 @@
 import { AWButton } from "@/components/AWButton";
 import InsuranceApplicationDialog from "./dialog";
-import VaultIllustration from "@/images/VaultIllustration.svg";
 import { IAWInfoLineProps } from "@/components/AWInfoLine";
 import dynamic from "next/dynamic";
 import { useLottie } from "lottie-react";
-import VaultLottie from "@/images/VaultLottie.json";
 import { AWInsuranceApplicationMainFlowStep } from "../mainFlow/controller";
 import { AWInsuranceApplicationInvitedFlowStep } from "../invitedFlows/controller";
 import { AWInsuranceApplicationPersonalFlowStep } from "../personalFlow/controller";
@@ -14,6 +12,7 @@ const AWInfoLine = dynamic(
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 
+const VaultLottie = dynamic(() => import("./vault-lottie"), { ssr: false });
 export default function InsuranceApplicationIllustrationDialog(props: {
   title: string;
   subtitle?: string;
@@ -29,11 +28,6 @@ export default function InsuranceApplicationIllustrationDialog(props: {
     | AWInsuranceApplicationInvitedFlowStep
     | AWInsuranceApplicationPersonalFlowStep;
 }) {
-  const options = {
-    animationData: VaultLottie,
-    autoplay: true,
-  };
-  const { View: Lottie } = useLottie(options, { height: 360 });
   return (
     <InsuranceApplicationDialog
       title={props.title}
@@ -66,7 +60,7 @@ export default function InsuranceApplicationIllustrationDialog(props: {
           </div>
         </div>
         <div className="flex flex-1 justify-center items-center">
-          {props.illustration || Lottie}
+          {props.illustration || <VaultLottie />}
         </div>
       </div>
     </InsuranceApplicationDialog>
