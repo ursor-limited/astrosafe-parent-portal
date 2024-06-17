@@ -21,15 +21,12 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import StarFillIcon from "@/images/icons/StarFillIcon.svg";
 import TelescopeIcon from "@/images/icons/TelescopeIcon.svg";
 import { PALETTE } from "ui";
-import useDeviceId from "../components/useDeviceId";
 
 export type AstroContent = "link" | "stack";
 
 const OVERALL_X_PADDING = "20px";
 
 export default function HomePageContents(props: { mobile: boolean }) {
-  const deviceId = useDeviceId();
-
   const [favorites, setFavorites] = useLocalStorage<
     {
       contentId: string;
@@ -38,6 +35,13 @@ export default function HomePageContents(props: { mobile: boolean }) {
   >("favorites", []);
   const [discoverLinks, setDiscoverLinks] = useState<IBrowserLink[]>([]);
   //const [discoverStacks, setDiscoverStacks] = useState<IStack[]>([]);
+
+  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+    "deviceId",
+    undefined
+  );
+
+  useEffect(() => setDeviceId("66700ddc6c4f1833bb12f1e6"), []);
 
   useEffect(() => {
     if (deviceId) {
@@ -163,8 +167,6 @@ export default function HomePageContents(props: { mobile: boolean }) {
   }, [links, stacks, selectedChannelId, nColumns]);
 
   const router = useRouter();
-
-  console.log(Object.values(channels), "P))");
 
   return (
     <PageLayout

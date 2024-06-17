@@ -264,10 +264,11 @@ class ApiController {
     }).then((response: any) => response.json());
   }
 
-  static async addDeviceToSchool(schoolId: string, name: string) {
+  static async addDeviceToSchool(schoolId: string, name: string, nativeDeviceId: string) {
     return post(`schools/${schoolId}/addDevice`, {
       name,
-      type: "chrome",
+      nativeDeviceId,
+      type: "android",
     }).then((response: any) => response.json());
   }
 

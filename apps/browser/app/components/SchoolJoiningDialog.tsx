@@ -9,6 +9,7 @@ import UrsorDialog from "./UrsorDialog";
 import UrsorFadeIn from "./UrsorFadeIn";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
+import useNativeDeviceId from "./useDeviceId";
 
 const JOIN_CODE_LENGTH = 6;
 const FAILURE_DURATION = 2000;
@@ -130,24 +131,34 @@ export interface ISchoolJoiningDialogProps {
 }
 
 export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
-  const [inputedCode, setInputedCode] = useState<string>("");
-  const [codeInputActive, setCodeInputActive] = useState<boolean>(true);
-  const [inputedDeviceName, setInputedDeviceName] = useState<string>("");
-  const [showFailure, setShowFailure] = useState<boolean>(false);
-  const [showSuccess, setShowSuccess] = useState<boolean>(false);
+  const nativeDeviceId = useNativeDeviceId();
 
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined
   );
+
   const [schoolId, setSchoolId] = useLocalStorage<string | undefined>(
     "schoolId",
     undefined
   );
-  const [useMode, setUseMode] = useLocalStorage<"actual" | "guest" | undefined>(
-    "useMode",
-    undefined
-  );
+
+  useEffect(() => {
+    console.log("AOOOl", deviceId);
+    deviceId &&
+      window.postMessage(
+        {
+          setDeviceId: deviceId,
+        },
+        "*"
+      );
+  }, [deviceId]);
+
+  const [inputedCode, setInputedCode] = useState<string>("");
+  const [codeInputActive, setCodeInputActive] = useState<boolean>(true);
+  const [inputedDeviceName, setInputedDeviceName] = useState<string>("");
+  const [showFailure, setShowFailure] = useState<boolean>(false);
+  const [showSuccess, setShowSuccess] = useState<boolean>(false);
 
   const [instructionsViewOpen, setInstructionsViewOpen] =
     useState<boolean>(false);
@@ -178,33 +189,35 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
   }, [inputedCode.length]);
 
   const submitAddition = () =>
-    ApiController.addDeviceToSchool(schoolId ?? "", inputedDeviceName).then(
-      (device) => {
-        setDeviceId(device.id);
-        props.closeCallback();
-        if (
-          (window as any).webkit &&
-          (window as any).webkit.messageHandlers &&
-          (window as any).webkit.messageHandlers.websiteToiOSDetails
-        ) {
-          const data = {
-            schoolId,
-            deviceId: device.id,
-          };
-          const jsonData = JSON.stringify(data);
-          (
-            window as any
-          ).webkit.messageHandlers.websiteToiOSDetails.postMessage(jsonData);
-          window.postMessage(
-            // sharing the new answers with the app too; needed for the worksheet cards
-            {
-              connectToSchool: true,
-            },
-            "*"
-          );
-        }
+    ApiController.addDeviceToSchool(
+      schoolId ?? "",
+      inputedDeviceName,
+      nativeDeviceId ?? ""
+    ).then((device) => {
+      setDeviceId(device.id);
+      props.closeCallback();
+      if (
+        (window as any).webkit &&
+        (window as any).webkit.messageHandlers &&
+        (window as any).webkit.messageHandlers.websiteToiOSDetails
+      ) {
+        const data = {
+          schoolId,
+          deviceId: device.id,
+        };
+        const jsonData = JSON.stringify(data);
+        (window as any).webkit.messageHandlers.websiteToiOSDetails.postMessage(
+          jsonData
+        );
+        window.postMessage(
+          // sharing the new answers with the app too; needed for the worksheet cards
+          {
+            connectToSchool: true,
+          },
+          "*"
+        );
       }
-    );
+    });
 
   return (
     <UrsorDialog
@@ -227,10 +240,12 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
             ]
       }
       titleSize={isMobile ? "h4" : "h3"}
-      supertitle="Connect to a School"
-      open={true}
+      supertitle={isMobile ? undefined : "Connect to a School"}
+      open={props.open}
       onCloseCallback={props.closeCallback}
       noOverflowHidden={isMobile}
+      paddingX={isMobile ? "12px" : undefined}
+      paddingY={isMobile ? "12px" : undefined}
       backButtonCallback={
         isMobile
           ? undefined
@@ -333,14 +348,18 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
           </Stack>
         )
       ) : (
-        <Stack height="100%" width="80%" justifyContent="center">
+        <Stack
+          height="100%"
+          width={isMobile ? "100%" : "80%"}
+          justifyContent="center"
+        >
           <UrsorFadeIn duration={800} key="device-name">
             <UrsorInputField
               value={inputedDeviceName}
               placeholder="Mickey's Mac"
               width="100%"
               height="74px"
-              fontSize="28px"
+              fontSize={isMobile ? "24px" : "28px"}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setInputedDeviceName(event.target.value)
               }

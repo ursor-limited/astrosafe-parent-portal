@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 
-const useDeviceId = () => {
-  const [deviceId, setDeviceId] = useState<string | undefined>();
+const useNativeDeviceId = () => {
+  const [nativeDeviceId, setNativeDeviceId] = useState<string | undefined>(
+    undefined
+  );
 
   const receiveExtensionMessage = (event: any) => {
-    if (event.data?.deviceId) {
-      setDeviceId(event.data?.deviceId);
+    if (event.data?.nativeDeviceId) {
+      setNativeDeviceId(event.data.nativeDeviceId);
     }
   };
 
@@ -14,19 +16,19 @@ const useDeviceId = () => {
     return () => {
       window.removeEventListener("message", receiveExtensionMessage);
     };
-  }, []);
+  }, [nativeDeviceId]);
 
   useEffect(() => {
-    !deviceId &&
+    !nativeDeviceId &&
       window.postMessage(
         {
-          getDeviceId: true,
+          getNativeDeviceId: true,
         },
         "*"
       );
   }, []);
 
-  return deviceId;
+  return nativeDeviceId;
 };
 
-export default useDeviceId;
+export default useNativeDeviceId;
