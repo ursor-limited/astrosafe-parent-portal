@@ -22,6 +22,7 @@ export interface IAWFormSection {
   subsections?: IAWFormSectionSubsection[];
   custom?: boolean;
   prefillInputPrompt?: string;
+  isWhollyPrefillable?: boolean;
   disablePrefill?: boolean;
   infos?: IAWInfoLineProps[];
   noNumber?: boolean;
@@ -145,6 +146,17 @@ export default function InsuranceApplicationFormDialog(props: {
       }
     });
 
+  const getIsWhollyPrefillable = (section: IAWFormSection) =>
+    section.inputs?.every(
+      (input) =>
+        !input.prefill ||
+        !!(
+          input.prefill.step === props.stepId
+            ? answers
+            : committedAnswers[input.prefill.step]
+        )?.find((a) => a.inputId === input.prefill!.inputId)?.value
+    );
+
   useEffect(
     // prefill the prefillable fields that are not bound by a switch
     () =>
@@ -266,6 +278,7 @@ export default function InsuranceApplicationFormDialog(props: {
                   setErroneous,
                   highlightEmpties,
                   prefill: () => prefill(section),
+                  isWhollyPrefillable: getIsWhollyPrefillable(section),
                   setDone: () =>
                     setCustomSectionsDone((prev) =>
                       _.uniq([...prev, section.id])
@@ -282,6 +295,7 @@ export default function InsuranceApplicationFormDialog(props: {
                 setErroneous={setErroneous}
                 highlightEmpties={highlightEmpties}
                 prefill={() => prefill(section)}
+                isWhollyPrefillable={getIsWhollyPrefillable(section)}
                 dependantInputsVisible={dependantInputsVisible}
               />
             )

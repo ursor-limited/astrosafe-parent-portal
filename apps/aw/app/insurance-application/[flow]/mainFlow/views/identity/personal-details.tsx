@@ -880,7 +880,7 @@ const FLOW_SECTIONS: Record<AWInsuranceApplicationFlow, IAWFormSection[]> = {
   keyholderPure: KEYHOLDER_PURE_FLOW_SECTIONS,
   keyholder25: KEYHOLDER_25_FLOW_SECTIONS,
   shareholder: SHAREHOLDER_FLOW_SECTIONS,
-  shareholderKeyHolder25: MAIN_FLOW_SECTIONS,
+  shareholderKeyHolder: MAIN_FLOW_SECTIONS,
   personal: PERSONAL_FLOW_SECTIONS,
 };
 
@@ -955,7 +955,7 @@ export default function InsuranceApplicationPersonalDetails(props: {
       nextCallback={props.nextCallback}
       customSections={
         !props.flow ||
-        ["main", "keyholderPure", "shareholderKeyHolder25"].includes(props.flow)
+        ["main", "keyholderPure", "shareholderKeyHolder"].includes(props.flow)
           ? {
               "665738851df0c1e04588163f": SigningDeviceSection,
             }
