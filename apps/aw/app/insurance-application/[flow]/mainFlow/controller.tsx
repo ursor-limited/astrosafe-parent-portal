@@ -264,7 +264,7 @@ export function AWFormSection(props: IAWFormSectionProps) {
 
 const STEP_COMPONENTS: Record<
   AWInsuranceApplicationMainFlowStep,
-  React.FC<{ nextCallback: () => void }>
+  React.FC<{ nextCallback: () => void; flow: AWInsuranceApplicationFlow }>
 > = {
   welcome: InsuranceApplicationWelcome,
   glossary: InsuranceApplicationGlossary,
@@ -323,6 +323,7 @@ export default function InsuranceApplicationMainFlowController() {
         <StepView
           key={currentStep}
           nextCallback={() => setStepComplete(currentStep)}
+          flow="main"
         />
       ) : null}
       <TestingBar flow="main" />

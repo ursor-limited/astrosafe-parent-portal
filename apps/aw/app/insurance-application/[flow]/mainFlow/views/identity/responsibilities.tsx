@@ -14,6 +14,7 @@ export default function InsuranceApplicationResponsibilities(props: {
   flow?: AWInsuranceApplicationFlow;
 }) {
   const [checked, setChecked] = useState<boolean>(false);
+
   return (
     <InsuranceApplicationIllustrationDialog
       title={IDENTITY_STEP_TITLES.responsibilities}
@@ -25,7 +26,7 @@ export default function InsuranceApplicationResponsibilities(props: {
       }}
       buttonDisabled={!checked}
       progress={
-        props.flow === "main"
+        !props.flow || props.flow === "main"
           ? props.progress ||
             (CHECKPOINT_STEPS.indexOf("identity") +
               awInsuranceApplicationIdentityStepViews.indexOf(
@@ -36,7 +37,7 @@ export default function InsuranceApplicationResponsibilities(props: {
           : undefined
       }
       backbuttonStep={
-        props.flow === "main"
+        !props.flow || props.flow === "main"
           ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
           : undefined
       }
