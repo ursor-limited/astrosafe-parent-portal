@@ -32,14 +32,11 @@ const AddressesSection = (
   ]);
   const [modified, setModified] = useState<boolean>(false);
 
-  console.log(addresses, "------");
-
   useEffect(() => {
     if (addresses.length === 0 || !modified) {
       const addresses_ = props.answers?.find((a) => a.inputId === INPUT_ID)
         ?.value;
       if (addresses_) {
-        console.log("aaaa", addresses_);
         setAddresses(addresses_);
         setModified(true);
       }
