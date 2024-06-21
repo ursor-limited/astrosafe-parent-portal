@@ -931,6 +931,11 @@ const SigningDeviceSection = (
             zip && props.setDone();
           }}
           placeholder="Insert ZIP code"
+          highlightEmpty={
+            props.highlightEmpties &&
+            !props.answers?.find((a) => a.inputId === SIGNING_DEVICE_INPUT_ID)
+              ?.value
+          }
         />
       </div>
     </div>
@@ -942,7 +947,6 @@ export default function InsuranceApplicationPersonalDetails(props: {
   progress?: number;
   flow?: AWInsuranceApplicationFlow;
 }) {
-  console.log(props.flow, "dool");
   return (
     <InsuranceApplicationFormDialog
       stepId="identity"
