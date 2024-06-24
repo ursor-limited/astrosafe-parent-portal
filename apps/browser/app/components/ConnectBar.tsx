@@ -2,11 +2,15 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { OVERALL_X_PADDING } from "./PageLayout";
 import SchoolJoiningDialog from "./SchoolJoiningDialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ConnectBar = (props: { mobile: boolean }) => {
+const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
   const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
     useState<boolean>(false);
+  useEffect(
+    () => setSchoolJoiningDialogOpen(!!props.openConnect),
+    [props.openConnect]
+  );
   return (
     <>
       <Stack

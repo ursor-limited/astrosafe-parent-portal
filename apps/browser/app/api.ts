@@ -123,7 +123,7 @@ export interface IVideoComment {
 }
 
 const BACKEND_URLS = {
-  development: "http://10.0.2.2:8080",
+  development: "http://localhost:8080",
   preview:
     "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
   production: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",

@@ -8,11 +8,16 @@ async function HomePage({
   searchParams,
 }: {
   params: { videoId: string };
-  searchParams: { share: string };
+  searchParams: { openConnect: string };
 }) {
   const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <HomePageContents mobile={mobile} />;
+  return (
+    <HomePageContents
+      mobile={mobile}
+      openConnect={searchParams.openConnect === "true"}
+    />
+  );
 }
 
 export default HomePage;

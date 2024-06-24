@@ -10,6 +10,7 @@ import BrowserLinkCard from "../components/BrowserLinkCard";
 import StackCard from "../components/StackCard";
 import StackViewDialog from "../components/StackViewDialog";
 import VideoCard from "../components/VideoCard";
+import { useRouter } from "next/navigation";
 
 export const GRID_SPACING = "12px";
 
@@ -93,6 +94,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
   );
 
   useEffect(() => {
+    if (!props.links || !props.stacks || !props.videos) return;
     const linkDetails = props.links.map((l) => ({
       type: "link" as BrowserContent,
       details: l,
@@ -230,6 +232,8 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
   //   };
   // }, [window]);
 
+  const router = useRouter();
+
   return (
     <>
       <Stack pb="64px" flex={1}>
@@ -274,14 +278,11 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                               {item.type === "link" ? (
                                 <BrowserLinkCard
                                   link={item.details as IBrowserLink}
-                                  clickCallback={() => {
-                                    window.open(
-                                      getAbsoluteUrl(
-                                        (item.details as IBrowserLink).url
-                                      ),
-                                      "_blank"
-                                    );
-                                  }}
+                                  clickCallback={() =>
+                                    router.push(
+                                      (item.details as IBrowserLink).url
+                                    )
+                                  }
                                 />
                               ) : item.type === "stack" ? (
                                 <Stack
@@ -294,14 +295,9 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                               ) : item.type === "video" ? (
                                 <VideoCard
                                   video={item.details as IVideo}
-                                  clickCallback={() => {
-                                    window.open(
-                                      getAbsoluteUrl(
-                                        (item.details as IVideo).url
-                                      ),
-                                      "_blank"
-                                    );
-                                  }}
+                                  clickCallback={() =>
+                                    router.push((item.details as IVideo).url)
+                                  }
                                   mobile={props.mobile}
                                 />
                               ) : // ) : item.type === "searchResult" ? (

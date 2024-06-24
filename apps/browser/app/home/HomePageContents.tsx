@@ -26,7 +26,10 @@ export type AstroContent = "link" | "stack";
 
 const OVERALL_X_PADDING = "20px";
 
-export default function HomePageContents(props: { mobile: boolean }) {
+export default function HomePageContents(props: {
+  mobile: boolean;
+  openConnect: boolean;
+}) {
   const [favorites, setFavorites] = useLocalStorage<
     {
       contentId: string;
@@ -40,8 +43,6 @@ export default function HomePageContents(props: { mobile: boolean }) {
     "deviceId",
     undefined
   );
-
-  useEffect(() => setDeviceId("66700ddc6c4f1833bb12f1e6"), []);
 
   useEffect(() => {
     if (deviceId) {
@@ -172,6 +173,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
     <PageLayout
       headerButtonId="home"
       mobile={props.mobile}
+      openConnect={props.openConnect}
       sections={[
         {
           title: "Home",
