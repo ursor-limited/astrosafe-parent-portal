@@ -17,6 +17,8 @@ import BrowserLinkCard from "../components/BrowserLinkCard";
 import { BrowserContent, IBrowserContent } from "../home/AstroContentColumns";
 import VideoCard from "../components/VideoCard";
 import { useRouter } from "next/navigation";
+import { Typography } from "ui";
+import Image from "next/image";
 
 const DUMMY_VIDEOS = [
   {
@@ -58,6 +60,12 @@ const DUMMY_VIDEOS = [
 
 export type AstroContent = "link" | "stack";
 
+interface ISearchResult {
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
 const AstroContentRow = (props: {
   videos: IVideo[];
   links: IBrowserLink[];
@@ -96,7 +104,6 @@ const AstroContentRow = (props: {
       {[
         <Stack key="lp" minWidth="8px" />,
         ...allContentDetails.map((c) => {
-          console.log(c.details.url);
           return (
             <Stack
               key={c.details.id}
@@ -118,6 +125,44 @@ const AstroContentRow = (props: {
   );
 };
 
+const AstroSearchResultsColumn = (props: {
+  searchResults: ISearchResult[];
+}) => (
+  <Stack spacing="12px">
+    {props.searchResults.map((sr) => (
+      <Stack
+        bgcolor="rgb(255,255,255)"
+        borderRadius="12px"
+        height="84px"
+        px="12px"
+        py="12px"
+        boxSizing="border-box"
+        justifyContent="space-between"
+      >
+        <Stack spacing="12px" direction="row">
+          <Stack
+            width="26px"
+            height="26px"
+            borderRadius="100%"
+            overflow="hidden"
+          >
+            <Image
+              src={sr.imageUrl}
+              width={26}
+              height={26}
+              alt="domain favicon"
+            />
+          </Stack>
+          <Typography variant="large" bold>
+            {sr.title}
+          </Typography>
+        </Stack>
+        <Typography maxLines={1}>{sr.description}</Typography>
+      </Stack>
+    ))}
+  </Stack>
+);
+
 export default function SearchResultsPageContents(props: { mobile: boolean }) {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
@@ -133,6 +178,27 @@ export default function SearchResultsPageContents(props: { mobile: boolean }) {
     ).then((links) => setLinks(_.reverse(links.slice())));
   }, [deviceId]);
 
+  const [searchResults, setSearchResults] = useState<ISearchResult[]>([
+    {
+      title: "Booo",
+      description: "Bofof",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    },
+    {
+      title: "Booodd",
+      description: "Bofof",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    },
+    {
+      title: "Bosssdsdoo",
+      description: "Bofof",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    },
+  ]);
+
   return (
     <PageLayout
       headerButtonId="home"
@@ -143,6 +209,14 @@ export default function SearchResultsPageContents(props: { mobile: boolean }) {
           contents: (
             <Stack overflow="scroll">
               <AstroContentRow videos={videos} links={links} />
+            </Stack>
+          ),
+        },
+        {
+          title: "More results",
+          contents: (
+            <Stack overflow="scroll" px="20px" pb="42px">
+              <AstroSearchResultsColumn searchResults={searchResults} />
             </Stack>
           ),
         },
