@@ -300,48 +300,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                                   }
                                   mobile={props.mobile}
                                 />
-                              ) : // ) : item.type === "searchResult" ? (
-                              //   <Stack
-                              //     sx={{
-                              //       "&:hover": { opacity: 0.7 },
-                              //       transition: "0.2s",
-                              //       cursor: "pointer",
-                              //     }}
-                              //     onClick={() =>
-                              //       window.open(
-                              //         (item.details as ISearchResult).url,
-                              //         "_blank"
-                              //       )
-                              //     }
-                              //   >
-                              //     <SearchResultCard
-                              //       {...(item.details as ISearchResult)}
-                              //     />
-                              //   </Stack>
-                              // ) : item.type === "pedia" ? (
-                              //   <Stack
-                              //     sx={{
-                              //       "&:hover": { opacity: 0.7 },
-                              //       transition: "0.2s",
-                              //       cursor: "pointer",
-                              //     }}
-                              //     onClick={() =>
-                              //       window.open(
-                              //         (item.details as ISearchResult).url,
-                              //         "_blank"
-                              //       )
-                              //     }
-                              //   >
-                              //     <PediaMainCard
-                              //       {...(item.details as IPediaMainCard)}
-                              //       title={props.pediaCardTitle}
-                              //       imageHeight="220px"
-                              //       titleFontSize="large"
-                              //       factFontSize="small"
-                              //       backgroundColor="rgb(255,255,255)"
-                              //     />
-                              //   </Stack>
-                              null}
+                              ) : null}
                             </UrsorFadeIn>
                           </Stack>
                         ))}
