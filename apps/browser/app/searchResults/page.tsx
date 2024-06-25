@@ -11,7 +11,9 @@ async function SearchResultsPage({
 }) {
   const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <SearchResultsPageContents mobile={mobile} />;
+  return (
+    <SearchResultsPageContents mobile={mobile} searchTerm={searchParams.q} />
+  );
 }
 
 export default SearchResultsPage;

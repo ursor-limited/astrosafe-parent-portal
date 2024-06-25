@@ -69,6 +69,7 @@ interface ISearchResult {
 const AstroContentRow = (props: {
   videos: IVideo[];
   links: IBrowserLink[];
+  filter?: string;
 }) => {
   const [allContentDetails, setAllContentDetails] = useState<
     {
@@ -78,14 +79,26 @@ const AstroContentRow = (props: {
   >([]);
   useEffect(() => {
     if (!props.links || !props.videos) return;
-    const linkDetails = props.links.map((l) => ({
-      type: "link" as BrowserContent,
-      details: l,
-    }));
-    const videoDetails = props.videos.map((v) => ({
-      type: "video" as BrowserContent,
-      details: v,
-    }));
+    const linkDetails = props.links
+      .filter(
+        (l) =>
+          !props.filter ||
+          l.title.toLowerCase().includes(props.filter.toLowerCase())
+      )
+      .map((l) => ({
+        type: "link" as BrowserContent,
+        details: l,
+      }));
+    const videoDetails = props.videos
+      .filter(
+        (v) =>
+          !props.filter ||
+          v.title.toLowerCase().includes(props.filter.toLowerCase())
+      )
+      .map((v) => ({
+        type: "video" as BrowserContent,
+        details: v,
+      }));
     const all = [
       ..._.reverse(
         _.sortBy(
@@ -163,7 +176,10 @@ const AstroSearchResultsColumn = (props: {
   </Stack>
 );
 
-export default function SearchResultsPageContents(props: { mobile: boolean }) {
+export default function SearchResultsPageContents(props: {
+  mobile: boolean;
+  searchTerm: string;
+}) {
   const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
     "deviceId",
     undefined
@@ -208,7 +224,11 @@ export default function SearchResultsPageContents(props: { mobile: boolean }) {
           title: "Suggested",
           contents: (
             <Stack overflow="scroll">
-              <AstroContentRow videos={videos} links={links} />
+              <AstroContentRow
+                videos={videos}
+                links={links}
+                filter={props.searchTerm}
+              />
             </Stack>
           ),
         },
