@@ -109,7 +109,9 @@ export default function DashboardPageContents() {
                           <MoonsafeLessonCard
                             {...lesson}
                             clickCallback={() =>
-                              router.push(`/lesson/${lesson.canonicalUrl}`)
+                              router.push(
+                                `/moonSafePlaylist/${lesson.canonicalUrl}`
+                              )
                             }
                             deletionCallback={loadLessons}
                           />

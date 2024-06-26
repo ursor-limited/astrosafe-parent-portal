@@ -119,7 +119,6 @@ const SidebarItem = (props: {
   noText?: boolean;
   tourId?: string;
   notificationCount?: number;
-  noBackgroundFill: boolean;
 }) => (
   <Stack
     id={props.tourId}
@@ -130,20 +129,18 @@ const SidebarItem = (props: {
       cursor: "pointer",
       "&:hover": { opacity: 0.6 },
       transition: "0.2s",
-      svg: !props.noBackgroundFill
-        ? {
-            path: {
-              fill: props.selected
-                ? PALETTE.secondary.purple[2]
-                : PALETTE.secondary.grey[5],
-            },
-            rect: {
-              stroke: props.selected
-                ? PALETTE.secondary.purple[2]
-                : PALETTE.secondary.grey[5],
-            },
-          }
-        : undefined,
+      svg: {
+        path: {
+          fill: props.selected
+            ? PALETTE.secondary.purple[2]
+            : PALETTE.secondary.grey[5],
+        },
+        rect: {
+          stroke: props.selected
+            ? PALETTE.secondary.purple[2]
+            : PALETTE.secondary.grey[5],
+        },
+      },
     }}
     onClick={props.callback}
     position="relative"
@@ -254,7 +251,6 @@ export default function Sidebar(props: ISidebarProps) {
             noText={noText}
             tourId={item.tourId}
             notificationCount={item.notificationCount}
-            noBackgroundFill={item.id === "moonsafe"}
           >
             <item.icon height={small ? SMALL_ICON_SIZE : ICON_SIZE} />
           </SidebarItem>

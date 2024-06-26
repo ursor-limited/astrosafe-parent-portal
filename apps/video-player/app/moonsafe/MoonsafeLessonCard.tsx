@@ -3,9 +3,11 @@ import { Stack, keyframes } from "@mui/system";
 import { ILesson } from "../lesson/[subdirectory]/page";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import ClockIcon from "@/images/icons/ClockIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import CircleQuestionIcon from "@/images/icons/CircleQuestionIcon.svg";
 import NotificationContext from "../components/NotificationContext";
 import ApiController from "../api";
 import UrsorActionButton from "../components/UrsorActionButton";
@@ -15,6 +17,35 @@ import { useRouter } from "next/navigation";
 import { SECONDARY_COLOR_ORDER } from "../dashboard/LinkDialog";
 import useOrangeBorder from "../components/useOrangeBorder";
 import _ from "lodash";
+
+const MoonsafeLessonCardTag = (props: {
+  text: string;
+  color: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+}) => (
+  <Stack
+    height="24px"
+    px="8px"
+    boxSizing="border-box"
+    direction="row"
+    spacing="8px"
+    alignItems="center"
+    bgcolor={PALETTE.secondary.grey[1]}
+    borderRadius="12px"
+    sx={{
+      svg: {
+        path: {
+          fill: props.color,
+        },
+      },
+    }}
+  >
+    <props.icon width="16px" height="16px" />
+    <Typography color={props.color} variant="tiny" bold>
+      {props.text}
+    </Typography>
+  </Stack>
+);
 
 const MoonsafeLessonCard = (
   props: ILesson & {
@@ -203,7 +234,7 @@ const MoonsafeLessonCard = (
                   </Stack>
                 ) : null}
               </Stack>
-              <Stack spacing="4px" width="30%">
+              <Stack spacing="4px" width="50%">
                 <Stack
                   flex={1}
                   bgcolor={PALETTE.secondary.blue[2]}
@@ -273,6 +304,23 @@ const MoonsafeLessonCard = (
                   </Typography>
                 </Stack>
               </Stack>
+            </Stack>
+            <Stack direction="row" spacing="8px">
+              <MoonsafeLessonCardTag
+                text="1h 25m"
+                color={PALETTE.secondary.grey[5]}
+                icon={ClockIcon}
+              />
+              <MoonsafeLessonCardTag
+                text={`${props.contents.length} videos`}
+                color={PALETTE.system.red}
+                icon={CirclePlayIcon}
+              />
+              <MoonsafeLessonCardTag
+                text="Nintendo 64"
+                color={PALETTE.secondary.blue[2]}
+                icon={CircleQuestionIcon}
+              />
             </Stack>
           </Stack>
         </Stack>

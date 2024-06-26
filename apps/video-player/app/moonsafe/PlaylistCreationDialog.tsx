@@ -6,12 +6,13 @@ import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
 } from "../components/UrsorDialog";
-import { Dialog } from "@mui/material";
+import { Dialog, Slider } from "@mui/material";
 import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { useUserContext } from "../components/UserContext";
+import { MoonsafeDurationIndicator } from "../moonSafePlaylist/[subdirectory]/MoonsafePageCard";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
@@ -88,6 +89,23 @@ const CHANNELS: IPlaylistCreationChannel[] = [
     id: "UCnEHS4Wa8WOxvQiKX4Vd-5g",
     imageUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/goBuster.webp",
+  },
+  {
+    title: "Mia's magic playground",
+    id: "UCTAK0ka811-5WYi9Z-3ByAg",
+    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/mia.webp",
+  },
+  {
+    title: "Little Baby Bum",
+    id: "UCKAqou7V9FAWXpZd9xtOg3Q",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littlebabyb.webp",
+  },
+  {
+    title: "Gecko's Garage",
+    id: "UChULBXQf9VDYAi3vRLu_U-w",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/geckosGarage.webp",
   },
 ];
 // CoComelon, UCbCmjCuTUZos6Inko4u57UQ, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/cocomelon.webp,
@@ -258,13 +276,45 @@ const NameView = (props: {
 );
 
 const DurationView = (props: {
-  value: string;
+  value: number;
   setValue: (name: number) => void;
   proceed: () => void;
 }) => (
   <Stack flex={1} width="70%" justifyContent="center" alignItems="center">
-    <UrsorFadeIn duration={800} key="device-name" fullWidth>
-      <UrsorInputField
+    <UrsorFadeIn duration={800} key="device-name">
+      <MoonsafeDurationIndicator value={props.value * 2 * 36} />
+    </UrsorFadeIn>
+    <UrsorFadeIn delay={400} duration={800} key="device-name">
+      <Stack
+        width="482px"
+        sx={{
+          ".MuiSlider-thumb": {
+            background: PALETTE.secondary.purple[2],
+          },
+          ".MuiSlider-track": {
+            background: PALETTE.secondary.purple[1],
+            border: "none",
+          },
+          ".MuiSlider-rail": {
+            height: "4px",
+            borderRadius: "2px",
+            background: PALETTE.secondary.grey[2],
+            opacity: 1,
+          },
+        }}
+      >
+        <Slider
+          value={props.value}
+          onChange={(event: Event, newValue: number | number[]) => {
+            props.setValue(newValue as number);
+          }}
+        />
+      </Stack>
+    </UrsorFadeIn>
+    {/* <Stack width='482px'>
+
+      </Stack> */}
+    {/* <UrsorInputField
         value={props.value}
         placeholder="Duration"
         width="100%"
@@ -274,8 +324,7 @@ const DurationView = (props: {
           props.setValue(parseInt(event.target.value))
         }
         onEnterKey={props.proceed}
-      />
-    </UrsorFadeIn>
+      /> */}
   </Stack>
 );
 
@@ -385,7 +434,7 @@ const PlaylistCreationDialog = (props: {
           />
         ) : step === "duration" ? (
           <DurationView
-            value={duration.toString()}
+            value={duration}
             setValue={(value) => setDuration(value)}
             proceed={() => setStep("selection")}
           />
