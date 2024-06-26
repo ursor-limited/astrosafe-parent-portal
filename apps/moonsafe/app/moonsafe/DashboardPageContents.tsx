@@ -87,7 +87,7 @@ export default function DashboardPageContents() {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
       if (scrollTop + clientHeight > scrollHeight - 800) {
-        PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
+        PAGE_SIZE * (latestPageIndex + 1) < lessons.length &&
           setLatestPageIndex(latestPageIndex + 1);
       }
     }
@@ -96,17 +96,19 @@ export default function DashboardPageContents() {
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
   const [cardColumns, setCardColumns] = useState<ILesson[][]>([]);
-  const [cards, setCards] = useState<ILesson[]>([]);
 
   useEffect(() => {
-    const pageLimitedCards = cards.slice(0, (latestPageIndex + 1) * PAGE_SIZE);
+    const pageLimitedCards = lessons.slice(
+      0,
+      (latestPageIndex + 1) * PAGE_SIZE
+    );
     const chunked = _.chunk(pageLimitedCards, nColumns);
     setCardColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns, cards, latestPageIndex]);
+  }, [nColumns, lessons, latestPageIndex]);
 
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
 

@@ -10,6 +10,7 @@ import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import MoonsafeIcon from "@/images/icons/MoonsafeIcon.svg";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import { useRouter } from "next/navigation";
 
@@ -66,7 +67,8 @@ export type SideBarItemId =
   | "plugins"
   | "safety"
   | "users"
-  | "channels";
+  | "channels"
+  | "moonsafe";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -117,6 +119,7 @@ const SidebarItem = (props: {
   noText?: boolean;
   tourId?: string;
   notificationCount?: number;
+  noBackgroundFill: boolean;
 }) => (
   <Stack
     id={props.tourId}
@@ -127,18 +130,20 @@ const SidebarItem = (props: {
       cursor: "pointer",
       "&:hover": { opacity: 0.6 },
       transition: "0.2s",
-      svg: {
-        path: {
-          fill: props.selected
-            ? PALETTE.secondary.purple[2]
-            : PALETTE.secondary.grey[5],
-        },
-        rect: {
-          stroke: props.selected
-            ? PALETTE.secondary.purple[2]
-            : PALETTE.secondary.grey[5],
-        },
-      },
+      svg: !props.noBackgroundFill
+        ? {
+            path: {
+              fill: props.selected
+                ? PALETTE.secondary.purple[2]
+                : PALETTE.secondary.grey[5],
+            },
+            rect: {
+              stroke: props.selected
+                ? PALETTE.secondary.purple[2]
+                : PALETTE.secondary.grey[5],
+            },
+          }
+        : undefined,
     }}
     onClick={props.callback}
     position="relative"
@@ -217,6 +222,13 @@ export default function Sidebar(props: ISidebarProps) {
       title: "Users",
       callback: () => router.push("/users"),
     },
+    {
+      id: "moonsafe",
+      //tourId: "devices-button",
+      icon: MoonsafeIcon,
+      title: "Moonsafe",
+      callback: () => router.push("/moonsafe"),
+    },
   ];
 
   const bottomItems: ISidebarItem[] = [
@@ -242,6 +254,7 @@ export default function Sidebar(props: ISidebarProps) {
             noText={noText}
             tourId={item.tourId}
             notificationCount={item.notificationCount}
+            noBackgroundFill={item.id === "moonsafe"}
           >
             <item.icon height={small ? SMALL_ICON_SIZE : ICON_SIZE} />
           </SidebarItem>

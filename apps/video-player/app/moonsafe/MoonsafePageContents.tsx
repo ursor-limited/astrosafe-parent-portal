@@ -13,19 +13,13 @@ import useColumnWidth from "../dashboard/useColumnWidth";
 import ApiController from "../api";
 import { useUserContext } from "../components/UserContext";
 import { useRouter } from "next/navigation";
+import MoonsafeLessonCard from "./MoonsafeLessonCard";
 
 export const TRIAL_DAYS = 14;
 
 const PAGE_SIZE = 30;
 
-const FILTER_MULTI_ROW_WINDOW_WIDTH_THRESHOLD = 1023;
-const SHORTENED_TOOL_NAME_IN_BUTTONS_WINDOW_WIDTH_THRESHOLD = 924;
-
-const POPOVER_MARGIN = 10;
-
 export const DEFAULT_LESSON_TITLE = "Untitled Lesson";
-
-const NO_EMPTY_STATE_ILLUSTRATIONS_WINDOW_HEIGHT_THRESHOLD = 448;
 
 export const GRID_SPACING = "20px";
 
@@ -37,8 +31,8 @@ export default function DashboardPageContents() {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
-      ApiController.getUserLessons(userDetails.user.id).then((videos) =>
-        setLessons(_.reverse(videos.slice()).filter((v: any) => v.thumbnailUrl))
+      ApiController.getUserLessons(userDetails.user.id).then((lessons) =>
+        setLessons(_.reverse(lessons.slice(-30)))
       );
   };
   useEffect(() => {
@@ -51,26 +45,28 @@ export default function DashboardPageContents() {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
       if (scrollTop + clientHeight > scrollHeight - 800) {
-        PAGE_SIZE * (latestPageIndex + 1) < cards.length &&
+        PAGE_SIZE * (latestPageIndex + 1) < lessons.length &&
           setLatestPageIndex(latestPageIndex + 1);
       }
     }
   };
 
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(404, 390, 480);
 
   const [cardColumns, setCardColumns] = useState<ILesson[][]>([]);
-  const [cards, setCards] = useState<ILesson[]>([]);
 
   useEffect(() => {
-    const pageLimitedCards = cards.slice(0, (latestPageIndex + 1) * PAGE_SIZE);
+    const pageLimitedCards = lessons.slice(
+      0,
+      (latestPageIndex + 1) * PAGE_SIZE
+    );
     const chunked = _.chunk(pageLimitedCards, nColumns);
     setCardColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns, cards, latestPageIndex]);
+  }, [nColumns, lessons, latestPageIndex]);
 
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
 
@@ -83,7 +79,7 @@ export default function DashboardPageContents() {
         onScroll={onScroll}
         title="Moonsafe"
         bodyWidth="100%"
-        selectedSidebarItemId="home"
+        selectedSidebarItemId="moonsafe"
         scrollable
         button={{
           text: "Create a Playlist",
@@ -97,20 +93,20 @@ export default function DashboardPageContents() {
               flex={1}
               pb="110px"
               direction="row"
-              spacing={GRID_SPACING}
+              spacing="24px"
               pl={`${SIDEBAR_X_MARGIN}px`}
               pt="8px"
             >
               {cardColumns.map((column, i) => (
-                <Stack key={i} flex={1} spacing={LESSON_GRID_SPACING}>
+                <Stack key={i} flex={1} spacing="40px">
                   {
                     column.map((lesson, j) => (
-                      <Stack key={lesson.id} spacing={GRID_SPACING}>
+                      <Stack key={lesson.id} spacing="30px">
                         <UrsorFadeIn
                           delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
                           duration={900}
                         >
-                          <LessonCard
+                          <MoonsafeLessonCard
                             {...lesson}
                             clickCallback={() =>
                               router.push(`/lesson/${lesson.canonicalUrl}`)

@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardPageContents from "./DashboardPageContents";
+import MoonsafePageContents from "./MoonsafePageContents";
 import { Metadata } from "next";
 import AuthWrapper from "../components/AuthWrapper";
 import { UserProvider } from "../components/UserContext";
@@ -13,7 +13,7 @@ async function DashboardPage() {
   return (
     <AuthWrapper>
       <UserProvider>
-        <DashboardPageContents />;
+        <MoonsafePageContents />;
       </UserProvider>
     </AuthWrapper>
   );

@@ -141,6 +141,7 @@ class ApiController {
   }
 
   static async getUserLessons(id: string) {
+    console.log("OPOPO_", id);
     //@ts-ignore
     return get(`lesson/user/${id}`).then((response: any) => response.json());
   }
