@@ -6,7 +6,7 @@ import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
 } from "../components/UrsorDialog";
-import { Dialog } from "@mui/material";
+import { Dialog, Grid } from "@mui/material";
 import { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
@@ -167,13 +167,13 @@ const SelectionView = (props: {
   proceed: () => void;
 }) => (
   <Stack spacing="20px" width="100%" height="100%">
-    {_.chunk(props.videos.slice(0, 6), 3).map((row, i) => (
-      <Stack key={i} spacing="20px" flex={1} direction="row">
-        {row.map((video) => (
+    <Grid container gap="12px">
+      {props.videos.map((video) => (
+        <Grid item>
           <PlaylistCreationVideoCard {...video} />
-        ))}
-      </Stack>
-    ))}
+        </Grid>
+      ))}
+    </Grid>
   </Stack>
 );
 
