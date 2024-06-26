@@ -512,12 +512,29 @@ class ApiController {
     return dellete(`/video/${id}`);
   }
   static async createPlaylist(details: {
-    userId: string;
+    creatorId: string;
     title: string;
-    channels: IVideo[];
+    channels: string[];
   }) {
-    return post(`/lesson/playlist`, details);
+    return post(`playlist`, details).then((response: any) =>
+      response.json()
+    );
   }
+  static async addToPlaylist(
+    id: string,
+    index: number,
+    videoId: string
+  ) {
+    return post(`playlist/add`, { id, index, videoId }).then(
+      (response: any) => response.json()
+    );
+  }
+  static async getPlaylistFromUrlWithContents(url: string) {
+    return post(`playlist/getPlaylistFromUrlWithContents`, { url }).then(
+      (response: any) => response.json()
+    );
+  }
+
 }
 
 export default ApiController;

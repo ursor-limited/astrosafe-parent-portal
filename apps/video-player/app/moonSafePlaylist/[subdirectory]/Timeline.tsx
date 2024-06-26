@@ -18,84 +18,44 @@ export const CARD_SPACING = 120;
 export const RIGHT_COLUMN_Y_OFFSET = 60;
 
 const Timeline = (props: {
-  contents: {
-    type: AstroLessonContent;
-    contentId: string;
-  }[];
-  contentsWithSide: {
-    type: AstroLessonContent;
-    contentId: string;
+  selectedVideos: string[];
+  videosWithSide: {
+    id: string;
     left: boolean;
   }[];
   videos: IVideo[];
-  links: ILink[];
-  texts: IText[];
-  images: IImage[];
-  worksheets: IWorksheet[];
-  quizzes: IQuiz[];
   lessonId: string;
   expansionCallback: (id: string) => void;
   setVideoEditingDialogId: (id: string) => void;
-  setLinkEditingDialogId: (id: string) => void;
-  setTextEditingDialogId: (id: string) => void;
-  setImageEditingDialogId: (id: string) => void;
-  setWorksheetEditingDialogId: (id: string) => void;
-  setQuizEditingDialogId: (id: string) => void;
   loadLesson: () => void;
   setDraggedContentId: (id: string) => void;
   draggedContentId?: string;
   singleContentsColumnWidth: number;
 }) => {
-  const [rightCards, setRightCards] = useState<
-    {
-      type: AstroLessonContent;
-      contentId: string;
-    }[]
-  >([]);
-  const [leftCards, setLeftCards] = useState<
-    {
-      type: AstroLessonContent;
-      contentId: string;
-    }[]
-  >([]);
+  const [rightVideos, setRightVideos] = useState<string[]>([]);
+  const [leftVideos, setLeftVideos] = useState<string[]>([]);
   useEffect(() => {
-    setRightCards(
-      props.contentsWithSide
-        .filter((c) => !c.left)
-        .map((c) => ({ contentId: c.contentId, type: c.type }))
+    setRightVideos(
+      props.videosWithSide.filter((c) => !c.left).map((v) => v.id)
     );
-    setLeftCards(
-      props.contentsWithSide
-        .filter((c) => c.left)
-        .map((c) => ({ contentId: c.contentId, type: c.type }))
-    );
-  }, [props.contentsWithSide]);
+    setLeftVideos(props.videosWithSide.filter((c) => c.left).map((v) => v.id));
+  }, [props.videosWithSide]);
   return (
     <Stack direction="row">
       <Stack
         flex={1}
         pt={
-          !props.contentsWithSide[0]?.left
+          !props.videosWithSide[0]?.left
             ? `${RIGHT_COLUMN_Y_OFFSET}px`
             : undefined
         }
       >
-        {props.contents.length > 0 ? (
+        {props.selectedVideos.length > 0 ? (
           <ContentCards
-            contents={leftCards}
+            selectedVideos={leftVideos}
             videos={props.videos}
-            links={props.links}
-            texts={props.texts}
-            images={props.images}
-            worksheets={props.worksheets}
-            quizzes={props.quizzes}
             lessonId={props.lessonId}
             setVideoEditingDialogId={props.setVideoEditingDialogId}
-            setLinkEditingDialogId={props.setLinkEditingDialogId}
-            setTextEditingDialogId={props.setTextEditingDialogId}
-            setImageEditingDialogId={props.setImageEditingDialogId}
-            setWorksheetEditingDialogId={props.setWorksheetEditingDialogId}
-            setQuizEditingDialogId={props.setQuizEditingDialogId}
             updateCallback={props.loadLesson}
             dragStartCallback={props.setDraggedContentId}
             draggedContentId={
@@ -107,20 +67,7 @@ const Timeline = (props: {
               <Stack //@ts-ignore
                 key={card?.props?.id}
                 position="relative"
-                // onMouseEnter={() => {
-                //   setHoveringContentSide("left");
-                //   setHoveringContentIndex(i);
-                // }}
-                // onMouseMove={(event) => {
-                //   setHoveringContentSide("left");
-                //   setHoveringContentIndex(i);
-                //   //@ts-ignore
-                //   const rect = event?.target?.getBoundingClientRect();
-                //   setHoveringAboveCenter(
-                //     event.pageY < rect.height / 2 + rect.top
-                //   );
-                // }}
-                pb={i < leftCards.length - 1 ? `${CARD_SPACING}px` : undefined}
+                pb={i < leftVideos.length - 1 ? `${CARD_SPACING}px` : undefined}
                 sx={{
                   opacity:
                     //@ts-ignore
@@ -132,16 +79,7 @@ const Timeline = (props: {
                       : undefined,
                 }}
               >
-                <Stack
-                  width="96%"
-                  //   onMouseEnter={() => {
-                  //     setHoveringOnContentCard(true);
-                  //   }}
-                  //   onMouseLeave={() => {
-                  //     setHoveringOnContentCard(false);
-                  //   }}
-                  alignItems="flex-end"
-                >
+                <Stack width="96%" alignItems="flex-end">
                   {card}
                 </Stack>
                 <Stack
@@ -164,26 +102,16 @@ const Timeline = (props: {
       <Stack
         flex={1}
         pt={
-          props.contentsWithSide[0]?.left
+          props.videosWithSide[0]?.left
             ? `${RIGHT_COLUMN_Y_OFFSET}px`
             : undefined
         }
       >
         <ContentCards
-          contents={rightCards}
+          selectedVideos={rightVideos}
           videos={props.videos}
-          links={props.links}
-          texts={props.texts}
-          images={props.images}
-          worksheets={props.worksheets}
-          quizzes={props.quizzes}
           lessonId={props.lessonId}
           setVideoEditingDialogId={props.setVideoEditingDialogId}
-          setLinkEditingDialogId={props.setLinkEditingDialogId}
-          setTextEditingDialogId={props.setTextEditingDialogId}
-          setImageEditingDialogId={props.setImageEditingDialogId}
-          setWorksheetEditingDialogId={props.setWorksheetEditingDialogId}
-          setQuizEditingDialogId={props.setQuizEditingDialogId}
           updateCallback={props.loadLesson}
           dragStartCallback={props.setDraggedContentId}
           columnWidth={props.singleContentsColumnWidth}
@@ -192,20 +120,7 @@ const Timeline = (props: {
             <Stack //@ts-ignore
               key={card?.props?.id}
               position="relative"
-              //   onMouseEnter={() => {
-              //     setHoveringContentSide("right");
-              //     setHoveringContentIndex(i);
-              //   }}
-              //   onMouseMove={(event) => {
-              //     setHoveringContentSide("right");
-              //     setHoveringContentIndex(i);
-              //     //@ts-ignore
-              //     const rect = event?.target?.getBoundingClientRect();
-              //     setHoveringAboveCenter(
-              //       event.pageY < rect.height / 2 + rect.top
-              //     );
-              //   }}
-              pb={i < rightCards.length - 1 ? `${CARD_SPACING}px` : undefined}
+              pb={i < rightVideos.length - 1 ? `${CARD_SPACING}px` : undefined}
               sx={{
                 opacity:
                   //@ts-ignore
@@ -230,17 +145,7 @@ const Timeline = (props: {
                 top={`${DOT_CARD_Y}px`}
                 zIndex={2}
               />
-              <Stack
-                width="96%"
-                // onMouseEnter={() => {
-                //   setHoveringOnContentCard(true);
-                // }}
-                // onMouseLeave={() => {
-                //   setHoveringOnContentCard(false);
-                // }}
-              >
-                {card}
-              </Stack>
+              <Stack width="96%">{card}</Stack>
             </Stack>
           )}
         />

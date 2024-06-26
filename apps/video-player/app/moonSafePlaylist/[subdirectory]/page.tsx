@@ -5,7 +5,7 @@ import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import MoonsafeLessonPageContents from "./MoonsafeLessonPageContents";
+import MoonsafeLessonPageContents from "./MoonsafePlaylistPageContents";
 import { AstroContent } from "@/app/dashboard/DashboardPageContents";
 import MobileLessonPageContents from "./MobileLessonPageContents";
 

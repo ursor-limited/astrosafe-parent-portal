@@ -13,6 +13,7 @@ import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { useUserContext } from "../components/UserContext";
 import { MoonsafeDurationIndicator } from "../moonSafePlaylist/[subdirectory]/MoonsafePageCard";
+import { useRouter } from "next/navigation";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
@@ -379,23 +380,32 @@ const PlaylistCreationDialog = (props: {
 
   const [channels, setChannels] =
     useState<IPlaylistCreationChannel[]>(CHANNELS);
-  const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
-  useEffect(() => setSelectedVideos(channels.map((c) => c.id)), [channels]);
+  const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
+  useEffect(() => setSelectedChannels(channels.map((c) => c.id)), [channels]);
 
   const userDetails = useUserContext().user;
+
+  const [createdPlaylistId, setCreatedPlaylistId] = useState<
+    string | undefined
+  >();
+
+  const router = useRouter();
 
   const stepButtonCallbacks: Record<PlaylistCreationStep, () => void> = {
     name: () => setStep("duration"),
     duration: () => setStep("selection"),
     selection: () => {
       setStep("finish");
-      // ApiController.createPlaylist({
-      //   userId: userDetails?.id ?? "",
-      //   title: name,
-      //   channels: channels.filter((v) => selectedVideos.includes(v.id)),
-      // }).then(() => props.refreshLessons);
+      ApiController.createPlaylist({
+        creatorId: userDetails?.id ?? "",
+        title: name,
+        channels: selectedChannels,
+      }).then((response) => {
+        props.refreshLessons();
+        setCreatedPlaylistId(response.id);
+      });
     },
-    finish: props.onClose,
+    finish: () => router.push(`/moonSafePlaylist/${createdPlaylistId}`),
   };
 
   return (
@@ -444,12 +454,12 @@ const PlaylistCreationDialog = (props: {
           />
         ) : step === "selection" ? (
           <SelectionView
-            selected={selectedVideos}
+            selected={selectedChannels}
             flipVideoSelection={(id) =>
-              setSelectedVideos(
-                selectedVideos.includes(id)
-                  ? selectedVideos.filter((videoId) => videoId !== id)
-                  : [...selectedVideos, id]
+              setSelectedChannels(
+                selectedChannels.includes(id)
+                  ? selectedChannels.filter((videoId) => videoId !== id)
+                  : [...selectedChannels, id]
               )
             }
             channels={CHANNELS}
