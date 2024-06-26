@@ -126,7 +126,6 @@ export default function DashboardPageContents() {
           icon: PlusIcon,
           callback: () => setCreationDialogOpen(true),
         }}
-        buttonsDelay={3000}
       >
         <Stack pt="32px" flex={1} ref={setColumnsContainerRef}>
           <Stack flex={1}>

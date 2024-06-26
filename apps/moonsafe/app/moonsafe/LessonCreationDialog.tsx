@@ -1,7 +1,6 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { UrsorInputField, UrsorTextField } from "ui";
-import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import { useContext, useEffect, useState } from "react";
 import ApiController from "../api";
 import { useRouter } from "next/navigation";

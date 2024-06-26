@@ -6,13 +6,16 @@ import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
 } from "../components/UrsorDialog";
-import { Dialog, Grid } from "@mui/material";
+import { Dialog } from "@mui/material";
 import { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
+const ILLUSTRATION_URL =
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png";
 
 type PlaylistCreationStep = "name" | "duration" | "selection" | "finish";
 
@@ -21,6 +24,13 @@ const STEP_TITLES: Record<PlaylistCreationStep, string> = {
   duration: "How long should the playlist be?",
   selection: "What shows do you want in the playlist?",
   finish: "Your playlist is ready!",
+};
+
+const STEP_BUTTON_TEXTS: Record<PlaylistCreationStep, string> = {
+  name: "Next",
+  duration: "Next",
+  selection: "Create",
+  finish: "Go to Playlist",
 };
 
 const DUMMY_VIDEOS = [
@@ -85,13 +95,16 @@ const DUMMY_VIDEOS = [
   },
 ];
 
-const PlaylistCreationVideoCard = (props: IVideo) => (
+const PlaylistCreationVideoCard = (
+  props: IVideo & { selected: boolean; flipSelection: () => void }
+) => (
   <Stack
     borderRadius="12px"
     bgcolor="rgb(255,255,255)"
     border={`1px solid ${PALETTE.secondary.grey[2]}`}
     flex={1}
     p="4px"
+    spacing="6px"
     boxSizing="border-box"
   >
     <Stack
@@ -102,6 +115,8 @@ const PlaylistCreationVideoCard = (props: IVideo) => (
       width="100%"
       overflow="hidden"
       position="relative"
+      boxSizing="border-box"
+      borderRadius="8px"
     >
       <Image
         src={props.thumbnailUrl ?? ""}
@@ -109,6 +124,32 @@ const PlaylistCreationVideoCard = (props: IVideo) => (
         style={{ objectFit: "cover" }}
         alt="video thumbnail"
       />
+      <Stack
+        position="absolute"
+        top="8px"
+        right="8px"
+        height="28px"
+        width="28px"
+        bgcolor="rgb(255,255,255)"
+        borderRadius="100%"
+        alignItems="center"
+        justifyContent="center"
+        sx={{
+          cursor: "pointer",
+          "&:hover": { transform: "scale(1.1)" },
+          transition: "0.2s",
+          svg: {
+            path: {
+              fill: props.selected
+                ? PALETTE.secondary.purple[2]
+                : "rgb(186, 186, 186)",
+            },
+          },
+        }}
+        onClick={props.flipSelection}
+      >
+        <CheckIcon width="14px" heigh="14px" />
+      </Stack>
     </Stack>
     <Typography bold maxLines={1}>
       {props.title}
@@ -161,19 +202,38 @@ const DurationView = (props: {
 );
 
 const SelectionView = (props: {
-  // value: string;
-  //setValue: (name: number) => void;
+  selected: string[];
+  flipVideoSelection: (id: string) => void;
   videos: IVideo[];
-  proceed: () => void;
 }) => (
   <Stack spacing="20px" width="100%" height="100%">
-    <Grid container gap="12px">
-      {props.videos.map((video) => (
-        <Grid item>
-          <PlaylistCreationVideoCard {...video} />
-        </Grid>
-      ))}
-    </Grid>
+    {_.chunk(props.videos.slice(0, 6), 3).map((row, i) => (
+      <Stack key={i} spacing="20px" flex={1} direction="row">
+        {[
+          ...row.map((video) => (
+            <PlaylistCreationVideoCard
+              {...video}
+              selected={props.selected.includes(video.id)}
+              flipSelection={() => props.flipVideoSelection(video.id)}
+            />
+          )),
+          ...[...Array(3 - row.length).keys()].map(() => <Stack flex={1} />),
+        ]}
+      </Stack>
+    ))}
+  </Stack>
+);
+
+const FinishView = () => (
+  <Stack flex={1} justifyContent="center" alignItems="center">
+    <UrsorFadeIn duration={800} key="device-name" fullWidth>
+      <Image
+        src={ILLUSTRATION_URL}
+        width={638}
+        height={428}
+        alt="finish illustration"
+      />
+    </UrsorFadeIn>
   </Stack>
 );
 
@@ -181,9 +241,22 @@ const PlaylistCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
 }) => {
+  const [step, setStep] = useState<PlaylistCreationStep>("name");
   const [name, setName] = useState<string>("");
   const [duration, setDuration] = useState<number>(0);
-  const [step, setStep] = useState<PlaylistCreationStep>("name");
+  const [selectedVideos, setSelectedVideos] = useState<string[]>(
+    DUMMY_VIDEOS.map((v) => v.id)
+  );
+
+  const stepButtonCallbacks: Record<PlaylistCreationStep, () => void> = {
+    name: () => setStep("duration"),
+    duration: () => setStep("selection"),
+    selection: () => {
+      setStep("finish");
+    },
+    finish: props.onClose,
+  };
+
   return (
     <Dialog
       transitionDuration={400}
@@ -230,16 +303,29 @@ const PlaylistCreationDialog = (props: {
           />
         ) : step === "selection" ? (
           <SelectionView
-            //value={name}
-            //setValue={(value) => setDuration(value)}
+            selected={selectedVideos}
+            flipVideoSelection={(id) =>
+              setSelectedVideos(
+                selectedVideos.includes(id)
+                  ? selectedVideos.filter((videoId) => videoId !== id)
+                  : [...selectedVideos, id]
+              )
+            }
             videos={DUMMY_VIDEOS}
-            proceed={() => setStep("finish")}
           />
-        ) : null}
+        ) : (
+          <FinishView />
+        )}
 
         <Stack>
-          <UrsorButton height="42px" width="358px" dark variant="tertiary">
-            Next
+          <UrsorButton
+            height="42px"
+            width="358px"
+            dark
+            variant="tertiary"
+            onClick={stepButtonCallbacks[step]}
+          >
+            {STEP_BUTTON_TEXTS[step]}
           </UrsorButton>
         </Stack>
       </Stack>
