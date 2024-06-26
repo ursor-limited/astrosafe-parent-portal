@@ -17,8 +17,9 @@ import { useRouter } from "next/navigation";
 import { SECONDARY_COLOR_ORDER } from "../dashboard/LinkDialog";
 import useOrangeBorder from "../components/useOrangeBorder";
 import _ from "lodash";
+import { IPlaylist } from "../moonSafePlaylist/[subdirectory]/MoonsafePlaylistPageContents";
 
-const MoonsafeLessonCardTag = (props: {
+const MoonsafePlaylistCardTag = (props: {
   text: string;
   color: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -47,8 +48,8 @@ const MoonsafeLessonCardTag = (props: {
   </Stack>
 );
 
-const MoonsafeLessonCard = (
-  props: ILesson & {
+const MoonsafePlaylistCard = (
+  props: IPlaylist & {
     clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -306,17 +307,17 @@ const MoonsafeLessonCard = (
               </Stack>
             </Stack>
             <Stack direction="row" spacing="8px">
-              <MoonsafeLessonCardTag
+              <MoonsafePlaylistCardTag
                 text="1h 25m"
                 color={PALETTE.secondary.grey[5]}
                 icon={ClockIcon}
               />
-              <MoonsafeLessonCardTag
-                text={`${props.contents.length} videos`}
+              <MoonsafePlaylistCardTag
+                text={`${props.videos.length} videos`}
                 color={PALETTE.system.red}
                 icon={CirclePlayIcon}
               />
-              <MoonsafeLessonCardTag
+              <MoonsafePlaylistCardTag
                 text="Nintendo 64"
                 color={PALETTE.secondary.blue[2]}
                 icon={CircleQuestionIcon}
@@ -337,4 +338,4 @@ const MoonsafeLessonCard = (
   );
 };
 
-export default MoonsafeLessonCard;
+export default MoonsafePlaylistCard;

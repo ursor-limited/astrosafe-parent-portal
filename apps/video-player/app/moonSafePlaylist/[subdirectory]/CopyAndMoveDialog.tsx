@@ -26,7 +26,7 @@ export default function CopyAndMoveDialog(props: {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   useEffect(() => {
     userDetails?.id &&
-      ApiController.getUserLessons(userDetails.id).then((l) => setLessons(l));
+      ApiController.getUserPlaylists(userDetails.id).then((l) => setLessons(l));
   }, [userDetails?.id]);
 
   const [searchValue, setSearchValue] = useState<string>("");

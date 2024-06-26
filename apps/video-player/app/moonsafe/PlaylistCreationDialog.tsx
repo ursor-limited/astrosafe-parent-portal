@@ -475,6 +475,7 @@ const PlaylistCreationDialog = (props: {
             dark
             variant="tertiary"
             onClick={stepButtonCallbacks[step]}
+            disabled={step === "finish" && !createdPlaylistId}
           >
             {STEP_BUTTON_TEXTS[step]}
           </UrsorButton>

@@ -15,6 +15,7 @@ module.exports = withSvgr({
       "ursorassets.s3.eu-west-1.amazonaws.com",
       "ursorimagespublic.s3.us-east-1.amazonaws.com",
       "i.ytimg.com",
+      'i3.ytimg.com',
       "assets-global.website-files.com",
       "images.unsplash.com",
       "static01.nyt.com",

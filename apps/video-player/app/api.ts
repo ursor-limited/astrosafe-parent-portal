@@ -140,10 +140,9 @@ class ApiController {
     );
   }
 
-  static async getUserLessons(id: string) {
-    console.log("OPOPO_", id);
+  static async getUserPlaylists(id: string) {
     //@ts-ignore
-    return get(`lesson/user/${id}`).then((response: any) => response.json());
+    return get(`playlist/user/${id}`).then((response: any) => response.json());
   }
   static async addToLesson(
     id: string,

@@ -73,6 +73,8 @@ export interface IPlaylist {
   nonCanonicalUrlList: string[];
   duration: number;
   createdAt: string;
+  imageUrls?: string[];
+  updatedAt: string;
 }
 
 const CONTENT_PADDING_X = 24;

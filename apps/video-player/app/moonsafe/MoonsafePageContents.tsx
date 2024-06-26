@@ -13,7 +13,8 @@ import useColumnWidth from "../dashboard/useColumnWidth";
 import ApiController from "../api";
 import { useUserContext } from "../components/UserContext";
 import { useRouter } from "next/navigation";
-import MoonsafeLessonCard from "./MoonsafeLessonCard";
+import MoonsafePlaylistCard from "./MoonsafeLessonCard";
+import { IPlaylist } from "../moonSafePlaylist/[subdirectory]/MoonsafePlaylistPageContents";
 
 export const TRIAL_DAYS = 14;
 
@@ -28,15 +29,15 @@ export const LESSON_GRID_SPACING = "34px";
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
-  const [lessons, setLessons] = useState<ILesson[]>([]);
-  const loadLessons = () => {
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
+  const loadPlaylists = () => {
     userDetails?.user?.id &&
-      ApiController.getUserLessons(userDetails.user.id).then((lessons) =>
-        setLessons(_.reverse(lessons.slice(-30)))
+      ApiController.getUserPlaylists(userDetails.user.id).then((lessons) =>
+        setPlaylists(_.reverse(lessons.slice(-30)))
       );
   };
   useEffect(() => {
-    loadLessons();
+    loadPlaylists();
   }, [userDetails?.user?.id]);
 
   const [latestPageIndex, setLatestPageIndex] = useState<number>(0);
@@ -45,7 +46,7 @@ export default function DashboardPageContents() {
     if (scrollableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = scrollableRef.current;
       if (scrollTop + clientHeight > scrollHeight - 800) {
-        PAGE_SIZE * (latestPageIndex + 1) < lessons.length &&
+        PAGE_SIZE * (latestPageIndex + 1) < playlists.length &&
           setLatestPageIndex(latestPageIndex + 1);
       }
     }
@@ -53,10 +54,10 @@ export default function DashboardPageContents() {
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth(404, 390, 480);
 
-  const [cardColumns, setCardColumns] = useState<ILesson[][]>([]);
+  const [cardColumns, setCardColumns] = useState<IPlaylist[][]>([]);
 
   useEffect(() => {
-    const pageLimitedCards = lessons.slice(
+    const pageLimitedCards = playlists.slice(
       0,
       (latestPageIndex + 1) * PAGE_SIZE
     );
@@ -66,7 +67,7 @@ export default function DashboardPageContents() {
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns, lessons, latestPageIndex]);
+  }, [nColumns, playlists, latestPageIndex]);
 
   const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
 
@@ -100,20 +101,18 @@ export default function DashboardPageContents() {
               {cardColumns.map((column, i) => (
                 <Stack key={i} flex={1} spacing="40px">
                   {
-                    column.map((lesson, j) => (
-                      <Stack key={lesson.id} spacing="30px">
+                    column.map((playlist, j) => (
+                      <Stack key={playlist.id} spacing="30px">
                         <UrsorFadeIn
                           delay={latestPageIndex === 0 ? j * 190 + i * 190 : 0}
                           duration={900}
                         >
-                          <MoonsafeLessonCard
-                            {...lesson}
+                          <MoonsafePlaylistCard
+                            {...playlist}
                             clickCallback={() =>
-                              router.push(
-                                `/moonSafePlaylist/${lesson.canonicalUrl}`
-                              )
+                              router.push(`/moonSafePlaylist/${playlist.id}`)
                             }
-                            deletionCallback={loadLessons}
+                            deletionCallback={loadPlaylists}
                           />
                         </UrsorFadeIn>
                       </Stack>
@@ -129,7 +128,7 @@ export default function DashboardPageContents() {
       <PlaylistCreationDialog
         open={creationDialogOpen}
         onClose={() => setCreationDialogOpen(false)}
-        refreshLessons={loadLessons}
+        refreshLessons={loadPlaylists}
       />
     </>
   );
