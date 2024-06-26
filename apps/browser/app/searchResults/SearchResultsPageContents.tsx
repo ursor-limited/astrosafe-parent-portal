@@ -12,13 +12,52 @@ import ApiController, {
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import _ from "lodash";
-import PageLayout from "../components/PageLayout";
 import BrowserLinkCard from "../components/BrowserLinkCard";
 import { BrowserContent, IBrowserContent } from "../home/AstroContentColumns";
 import VideoCard from "../components/VideoCard";
 import { useRouter } from "next/navigation";
-import { Typography } from "ui";
+import { PALETTE, Typography } from "ui";
 import Image from "next/image";
+import SearchIcon from "@/images/icons/SearchIcon.svg";
+import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import ImageIcon from "@/images/icons/ImageIcon.svg";
+
+const SearchResultsCategoryButton = (props: {
+  text: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  selected: boolean;
+  onClick: () => void;
+}) => (
+  <Stack
+    direction="row"
+    spacing="4px"
+    alignItems="center"
+    borderRadius="99px"
+    bgcolor="rgb(255,255,255)"
+    height="31px"
+    px="12px"
+    sx={{
+      svg: {
+        path: {
+          fill: props.selected ? PALETTE.secondary.purple[2] : undefined,
+          transition: "0.2s",
+        },
+      },
+    }}
+    onClick={props.onClick}
+  >
+    <props.icon width="16px" height="16px" />
+    <Typography
+      color={props.selected ? PALETTE.secondary.purple[2] : undefined}
+      bold
+      sx={{
+        transition: "0.2s",
+      }}
+    >
+      {props.text}
+    </Typography>
+  </Stack>
+);
 
 const DUMMY_VIDEOS = [
   {
@@ -166,7 +205,7 @@ const AstroSearchResultsColumn = (props: {
               alt="domain favicon"
             />
           </Stack>
-          <Typography variant="large" bold>
+          <Typography variant="large" bold maxLines={1}>
             {sr.title}
           </Typography>
         </Stack>
@@ -202,7 +241,7 @@ export default function SearchResultsPageContents(props: {
         "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
     },
     {
-      title: "Booodd",
+      title: "Booodds dsd sd s d s d s d  s d sdssdsddsd",
       description: "Bofof",
       imageUrl:
         "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
@@ -215,32 +254,54 @@ export default function SearchResultsPageContents(props: {
     },
   ]);
 
+  const [selectedCategory, setSelectedCategory] = useState<
+    "all" | "image" | "video"
+  >("all");
+
   return (
-    <PageLayout
-      headerButtonId="home"
-      mobile={props.mobile}
-      sections={[
-        {
-          title: "Suggested",
-          contents: (
-            <Stack overflow="scroll">
-              <AstroContentRow
-                videos={videos}
-                links={links}
-                filter={props.searchTerm}
-              />
-            </Stack>
-          ),
-        },
-        {
-          title: "More results",
-          contents: (
-            <Stack overflow="scroll" px="20px" pb="42px">
-              <AstroSearchResultsColumn searchResults={searchResults} />
-            </Stack>
-          ),
-        },
-      ]}
-    />
+    <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
+      <Stack spacing="20px">
+        <Stack direction="row" spacing="10px" px="20px">
+          <SearchResultsCategoryButton
+            text="All"
+            icon={SearchIcon}
+            selected={selectedCategory === "all"}
+            onClick={() => setSelectedCategory("all")}
+          />
+          <SearchResultsCategoryButton
+            text="Videos"
+            icon={CirclePlayIcon}
+            selected={selectedCategory === "video"}
+            onClick={() => setSelectedCategory("video")}
+          />
+          <SearchResultsCategoryButton
+            text="Images"
+            icon={ImageIcon}
+            selected={selectedCategory === "image"}
+            onClick={() => setSelectedCategory("image")}
+          />
+        </Stack>
+        <Stack spacing="20px">
+          <Stack px="20px" spacing="12px" direction="row" alignItems="center">
+            <Typography variant="h5">Suggested</Typography>
+          </Stack>
+          <Stack overflow="scroll">
+            <AstroContentRow
+              videos={videos}
+              links={links}
+              filter={props.searchTerm}
+            />
+          </Stack>
+        </Stack>
+        <Stack spacing="20px">
+          <Stack px="20px" spacing="12px" direction="row" alignItems="center">
+            <Typography variant="h5">Other results</Typography>
+          </Stack>
+          <Stack overflow="scroll" px="20px" pb="42px">
+            <AstroSearchResultsColumn searchResults={searchResults} />
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 }
