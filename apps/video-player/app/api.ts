@@ -167,11 +167,17 @@ class ApiController {
       response.json()
     );
   }
-  static async getUser(auth0Id: string, auth0UserId?: string, updateLatestDate?: boolean) {
+  static async getUser(
+    auth0Id: string,
+    auth0UserId?: string,
+    updateLatestDate?: boolean
+  ) {
     //@ts-ignore
-    return post(`video/getUser`, { auth0Id, auth0UserId, updateLatestDate }).then(
-      (response: any) => response.json()
-    );
+    return post(`video/getUser`, {
+      auth0Id,
+      auth0UserId,
+      updateLatestDate,
+    }).then((response: any) => response.json());
   }
   static async getUserById(id: string) {
     //@ts-ignore
@@ -503,7 +509,14 @@ class ApiController {
   }
   static async deleteUser(id: string) {
     return dellete(`/video/${id}`);
-  }  
+  }
+  static async createPlaylist(details: {
+    userId: string;
+    title: string;
+    channels: IVideo[];
+  }) {
+    return post(`/lesson/playlist`, details);
+  }
 }
 
 export default ApiController;

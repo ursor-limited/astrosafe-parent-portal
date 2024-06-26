@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
@@ -11,6 +11,7 @@ import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
+import { useUserContext } from "../components/UserContext";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
@@ -33,70 +34,144 @@ const STEP_BUTTON_TEXTS: Record<PlaylistCreationStep, string> = {
   finish: "Go to Playlist",
 };
 
-const DUMMY_VIDEOS = [
+interface IPlaylistCreationChannel {
+  title: string;
+  id: string;
+  imageUrl: string;
+}
+
+const CHANNELS: IPlaylistCreationChannel[] = [
   {
-    id: "6658dd53d54478910600b2ac",
-    title: "Coolest kids",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+    title: "CoComelon",
+    id: "UCbCmjCuTUZos6Inko4u57UQ",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/cocomelon.webp",
   },
   {
-    id: "6659d2b1b66f5d5ee1349b01",
-    title: "Star Wars",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+    title: "Blippi",
+    id: "UC5PYHgAzJ1wLEidB58SK6Xw",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/blippi.webp",
   },
   {
-    id: "6659d2b4b886df523356cb13",
-    title: "Pokemon",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+    title: "Morphle",
+    id: "UC5Ti4_DVp7LW34PjEwB13Xg",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/morphle.webp",
   },
   {
-    id: "667bda40bfbe6aca34a82382",
-    title: "Mario",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+    title: "Little angel",
+    id: "UCNzsYU0aWwjERj-9Y9HUEng",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littleAngel.webp",
   },
   {
-    id: "667bda4700c411f249ddf0cc",
-    title: "Digimon",
-    videoChannelId: "6659a32823838b9510e565e2",
-    thumbnailUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
-    creatorId: "",
-    comments: [],
-    createdAt: "",
-    updatedAt: "",
-    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+    title: "Oddbods",
+    id: "UCtlth0w7_mYqpHPViMhQ99Q",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/oddbods.webp",
+  },
+  {
+    title: "ARPO",
+    id: "UCrSx8rek9EuC3YGHvG8aalw",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/arpo.webp",
+  },
+  {
+    title: "Lellobee city farm",
+    id: "UCqbLFYZfANp88Rn-dIN_Dsg",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/lellobee.webp",
+  },
+  {
+    title: "Go Buster",
+    id: "UCnEHS4Wa8WOxvQiKX4Vd-5g",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/goBuster.webp",
   },
 ];
+// CoComelon, UCbCmjCuTUZos6Inko4u57UQ, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/cocomelon.webp,
+// Blippi, UC5PYHgAzJ1wLEidB58SK6Xw, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/blippi.webp,
+// Morphle, UC5Ti4_DVp7LW34PjEwB13Xg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/morphle.webp,
+// Little angel, UCNzsYU0aWwjERj-9Y9HUEng, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littleAngel.webp,
+// Oddbods, UCtlth0w7_mYqpHPViMhQ99Q, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/oddbods.webp,
+// ARPO, UCrSx8rek9EuC3YGHvG8aalw, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/arpo.webp,
+// Lellobee city farm, UCqbLFYZfANp88Rn-dIN_Dsg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/lellobee.webp,
+// Go Buster, UCnEHS4Wa8WOxvQiKX4Vd-5g,https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/goBuster.webp,
+// Mia's magic playground, UCTAK0ka811-5WYi9Z-3ByAg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/mia.webp,
+// Little Baby Bum, UCKAqou7V9FAWXpZd9xtOg3Q, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littlebabyb.webp,
+// Gecko's Garage, UChULBXQf9VDYAi3vRLu_U-w, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/geckosGarage.webp,
+// Supa Strikas, UCdtojT_ZwTRlZThoBSMVhoQ, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/supaStrikas.webp,
+// T-rex Ranch, UCJykHJfN9FHtf79IgYE00zg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/TRexRanch.webp,
+// Mini bods, UCLuxe6t2GvCj2EM0TAwIZJA, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/minibods.webp,
 
-const PlaylistCreationVideoCard = (
-  props: IVideo & { selected: boolean; flipSelection: () => void }
+// const DUMMY_VIDEOS = [
+//   {
+//     id: "6658dd53d54478910600b2ac",
+//     title: "Coolest kids",
+//     videoChannelId: "6659a32823838b9510e565e2",
+//     thumbnailUrl:
+//       "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
+//     creatorId: "",
+//     comments: [],
+//     createdAt: "",
+//     updatedAt: "",
+//     url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+//   },
+//   {
+//     id: "6659d2b1b66f5d5ee1349b01",
+//     title: "Star Wars",
+//     videoChannelId: "6659a32823838b9510e565e2",
+//     thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
+//     creatorId: "",
+//     comments: [],
+//     createdAt: "",
+//     updatedAt: "",
+//     url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+//   },
+//   {
+//     id: "6659d2b4b886df523356cb13",
+//     title: "Pokemon",
+//     videoChannelId: "6659a32823838b9510e565e2",
+//     thumbnailUrl:
+//       "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+//     creatorId: "",
+//     comments: [],
+//     createdAt: "",
+//     updatedAt: "",
+//     url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+//   },
+//   {
+//     id: "667bda40bfbe6aca34a82382",
+//     title: "Mario",
+//     videoChannelId: "6659a32823838b9510e565e2",
+//     thumbnailUrl:
+//       "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+//     creatorId: "",
+//     comments: [],
+//     createdAt: "",
+//     updatedAt: "",
+//     url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+//   },
+//   {
+//     id: "667bda4700c411f249ddf0cc",
+//     title: "Digimon",
+//     videoChannelId: "6659a32823838b9510e565e2",
+//     thumbnailUrl:
+//       "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+//     creatorId: "",
+//     comments: [],
+//     createdAt: "",
+//     updatedAt: "",
+//     url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+//   },
+// ];
+
+const PlaylistCreationChannelCard = (
+  props: IPlaylistCreationChannel & {
+    selected: boolean;
+    flipSelection: () => void;
+  }
 ) => (
   <Stack
     borderRadius="12px"
@@ -117,13 +192,15 @@ const PlaylistCreationVideoCard = (
       position="relative"
       boxSizing="border-box"
       borderRadius="8px"
+      bgcolor={PALETTE.secondary.grey[1]}
     >
       <Image
-        src={props.thumbnailUrl ?? ""}
+        src={props.imageUrl ?? ""}
         fill
         style={{ objectFit: "cover" }}
         alt="video thumbnail"
       />
+
       <Stack
         position="absolute"
         top="8px"
@@ -147,6 +224,7 @@ const PlaylistCreationVideoCard = (
           },
         }}
         onClick={props.flipSelection}
+        boxShadow="0 0 40px rgba(0,0,0,0.15)"
       >
         <CheckIcon width="14px" heigh="14px" />
       </Stack>
@@ -204,17 +282,17 @@ const DurationView = (props: {
 const SelectionView = (props: {
   selected: string[];
   flipVideoSelection: (id: string) => void;
-  videos: IVideo[];
+  channels: IPlaylistCreationChannel[];
 }) => (
-  <Stack spacing="20px" width="100%" height="100%">
-    {_.chunk(props.videos.slice(0, 6), 3).map((row, i) => (
+  <Stack spacing="20px" width="100%" height="100%" overflow="scroll">
+    {_.chunk(props.channels, 3).map((row, i) => (
       <Stack key={i} spacing="20px" flex={1} direction="row">
         {[
-          ...row.map((video) => (
-            <PlaylistCreationVideoCard
-              {...video}
-              selected={props.selected.includes(video.id)}
-              flipSelection={() => props.flipVideoSelection(video.id)}
+          ...row.map((playlist) => (
+            <PlaylistCreationChannelCard
+              {...playlist}
+              selected={props.selected.includes(playlist.id)}
+              flipSelection={() => props.flipVideoSelection(playlist.id)}
             />
           )),
           ...[...Array(3 - row.length).keys()].map(() => <Stack flex={1} />),
@@ -229,8 +307,8 @@ const FinishView = () => (
     <UrsorFadeIn duration={800} key="device-name" fullWidth>
       <Image
         src={ILLUSTRATION_URL}
-        width={638}
-        height={428}
+        width={581}
+        height={390}
         alt="finish illustration"
       />
     </UrsorFadeIn>
@@ -240,20 +318,29 @@ const FinishView = () => (
 const PlaylistCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
+  refreshLessons: () => void;
 }) => {
   const [step, setStep] = useState<PlaylistCreationStep>("name");
   const [name, setName] = useState<string>("");
   const [duration, setDuration] = useState<number>(0);
-  const [selectedVideos, setSelectedVideos] = useState<string[]>(
-    DUMMY_VIDEOS.map((v) => v.id)
-  );
+
+  const [channels, setChannels] =
+    useState<IPlaylistCreationChannel[]>(CHANNELS);
+  const [selectedVideos, setSelectedVideos] = useState<string[]>([]);
+  useEffect(() => setSelectedVideos(channels.map((c) => c.id)), [channels]);
+
+  const userDetails = useUserContext().user;
 
   const stepButtonCallbacks: Record<PlaylistCreationStep, () => void> = {
     name: () => setStep("duration"),
     duration: () => setStep("selection"),
     selection: () => {
       setStep("finish");
-      ApiController.createPlaylist({});
+      // ApiController.createPlaylist({
+      //   userId: userDetails?.id ?? "",
+      //   title: name,
+      //   channels: channels.filter((v) => selectedVideos.includes(v.id)),
+      // }).then(() => props.refreshLessons);
     },
     finish: props.onClose,
   };
@@ -312,7 +399,7 @@ const PlaylistCreationDialog = (props: {
                   : [...selectedVideos, id]
               )
             }
-            videos={DUMMY_VIDEOS}
+            channels={CHANNELS}
           />
         ) : (
           <FinishView />
