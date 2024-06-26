@@ -1,12 +1,15 @@
 import { Stack } from "@mui/system";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import { useState } from "react";
 import UrsorDialog, {
   BACKDROP_STYLE,
   BORDER_RADIUS,
 } from "../components/UrsorDialog";
 import { Dialog } from "@mui/material";
+import { IVideo } from "../api";
+import _ from "lodash";
+import Image from "next/image";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
@@ -19,6 +22,99 @@ const STEP_TITLES: Record<PlaylistCreationStep, string> = {
   selection: "What shows do you want in the playlist?",
   finish: "Your playlist is ready!",
 };
+
+const DUMMY_VIDEOS = [
+  {
+    id: "6658dd53d54478910600b2ac",
+    title: "Coolest kids",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame_427320551.webp",
+    creatorId: "",
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+  },
+  {
+    id: "6659d2b1b66f5d5ee1349b01",
+    title: "Star Wars",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/seals2.png",
+    creatorId: "",
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+  },
+  {
+    id: "6659d2b4b886df523356cb13",
+    title: "Pokemon",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    creatorId: "",
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+  },
+  {
+    id: "667bda40bfbe6aca34a82382",
+    title: "Mario",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    creatorId: "",
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+  },
+  {
+    id: "667bda4700c411f249ddf0cc",
+    title: "Digimon",
+    videoChannelId: "6659a32823838b9510e565e2",
+    thumbnailUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/testImage2.jpeg",
+    creatorId: "",
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+    url: "https://www.youtube.com/watch?v=0S_colMG1Uo",
+  },
+];
+
+const PlaylistCreationVideoCard = (props: IVideo) => (
+  <Stack
+    borderRadius="12px"
+    bgcolor="rgb(255,255,255)"
+    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+    flex={1}
+    p="4px"
+    boxSizing="border-box"
+  >
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      p="12px"
+      height="144px"
+      width="100%"
+      overflow="hidden"
+      position="relative"
+    >
+      <Image
+        src={props.thumbnailUrl ?? ""}
+        fill
+        style={{ objectFit: "cover" }}
+        alt="video thumbnail"
+      />
+    </Stack>
+    <Typography bold maxLines={1}>
+      {props.title}
+    </Typography>
+  </Stack>
+);
 
 const NameView = (props: {
   value: string;
@@ -64,6 +160,23 @@ const DurationView = (props: {
   </Stack>
 );
 
+const SelectionView = (props: {
+  // value: string;
+  //setValue: (name: number) => void;
+  videos: IVideo[];
+  proceed: () => void;
+}) => (
+  <Stack spacing="20px" width="100%" height="100%">
+    {_.chunk(props.videos.slice(0, 6), 3).map((row, i) => (
+      <Stack key={i} spacing="20px" flex={1} direction="row">
+        {row.map((video) => (
+          <PlaylistCreationVideoCard {...video} />
+        ))}
+      </Stack>
+    ))}
+  </Stack>
+);
+
 const PlaylistCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
@@ -97,7 +210,7 @@ const PlaylistCreationDialog = (props: {
         },
       }}
     >
-      <Stack height="100%" width="100%" alignItems="center">
+      <Stack height="100%" width="100%" alignItems="center" spacing="24px">
         <Stack height="52px" alignItems="center" justifyContent="center">
           <Typography color={PALETTE.secondary.purple[2]} variant="h4">
             {STEP_TITLES[step]}
@@ -111,11 +224,24 @@ const PlaylistCreationDialog = (props: {
           />
         ) : step === "duration" ? (
           <DurationView
-            value={name}
+            value={duration.toString()}
             setValue={(value) => setDuration(value)}
             proceed={() => setStep("selection")}
           />
+        ) : step === "selection" ? (
+          <SelectionView
+            //value={name}
+            //setValue={(value) => setDuration(value)}
+            videos={DUMMY_VIDEOS}
+            proceed={() => setStep("finish")}
+          />
         ) : null}
+
+        <Stack>
+          <UrsorButton height="42px" width="358px" dark variant="tertiary">
+            Next
+          </UrsorButton>
+        </Stack>
       </Stack>
     </Dialog>
   );
