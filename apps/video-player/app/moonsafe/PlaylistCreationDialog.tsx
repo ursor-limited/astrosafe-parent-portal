@@ -107,21 +107,25 @@ const CHANNELS: IPlaylistCreationChannel[] = [
     imageUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/geckosGarage.webp",
   },
+  {
+    title: "Supa Strikas",
+    id: "UCdtojT_ZwTRlZThoBSMVhoQ",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/supaStrikas.webp",
+  },
+  {
+    title: "T-rex Ranch",
+    id: "UCJykHJfN9FHtf79IgYE00zg",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/TRexRanch.webp",
+  },
+  {
+    title: " Mini bods",
+    id: "UCLuxe6t2GvCj2EM0TAwIZJA",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/minibods.webp",
+  },
 ];
-// CoComelon, UCbCmjCuTUZos6Inko4u57UQ, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/cocomelon.webp,
-// Blippi, UC5PYHgAzJ1wLEidB58SK6Xw, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/blippi.webp,
-// Morphle, UC5Ti4_DVp7LW34PjEwB13Xg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/morphle.webp,
-// Little angel, UCNzsYU0aWwjERj-9Y9HUEng, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littleAngel.webp,
-// Oddbods, UCtlth0w7_mYqpHPViMhQ99Q, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/oddbods.webp,
-// ARPO, UCrSx8rek9EuC3YGHvG8aalw, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/arpo.webp,
-// Lellobee city farm, UCqbLFYZfANp88Rn-dIN_Dsg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/lellobee.webp,
-// Go Buster, UCnEHS4Wa8WOxvQiKX4Vd-5g,https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/goBuster.webp,
-// Mia's magic playground, UCTAK0ka811-5WYi9Z-3ByAg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/mia.webp,
-// Little Baby Bum, UCKAqou7V9FAWXpZd9xtOg3Q, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/littlebabyb.webp,
-// Gecko's Garage, UChULBXQf9VDYAi3vRLu_U-w, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/geckosGarage.webp,
-// Supa Strikas, UCdtojT_ZwTRlZThoBSMVhoQ, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/supaStrikas.webp,
-// T-rex Ranch, UCJykHJfN9FHtf79IgYE00zg, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/TRexRanch.webp,
-// Mini bods, UCLuxe6t2GvCj2EM0TAwIZJA, https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug/minibods.webp,
 
 // const DUMMY_VIDEOS = [
 //   {

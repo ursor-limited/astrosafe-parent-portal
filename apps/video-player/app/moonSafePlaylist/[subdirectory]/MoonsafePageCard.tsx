@@ -16,9 +16,9 @@ to {
 
 export const MoonsafeDurationIndicator = (props: { value: number }) => (
   <Stack
+    width="265px"
     direction="row"
     height="76px"
-    width="fit-content"
     px="30px"
     boxSizing="border-box"
     borderRadius="38px"
