@@ -308,7 +308,9 @@ const MoonsafePlaylistCard = (
             </Stack>
             <Stack direction="row" spacing="8px">
               <MoonsafePlaylistCardTag
-                text="1h 25m"
+                text={`${Math.floor(props.duration / 3600)}h ${Math.floor(
+                  (props.duration % 3600) / 60
+                )}m`}
                 color={PALETTE.secondary.grey[5]}
                 icon={ClockIcon}
               />
@@ -317,11 +319,11 @@ const MoonsafePlaylistCard = (
                 color={PALETTE.system.red}
                 icon={CirclePlayIcon}
               />
-              <MoonsafePlaylistCardTag
+              {/* <MoonsafePlaylistCardTag
                 text="Nintendo 64"
                 color={PALETTE.secondary.blue[2]}
                 icon={CircleQuestionIcon}
-              />
+              /> */}
             </Stack>
           </Stack>
         </Stack>

@@ -13,7 +13,7 @@ import useColumnWidth from "../dashboard/useColumnWidth";
 import ApiController from "../api";
 import { useUserContext } from "../components/UserContext";
 import { useRouter } from "next/navigation";
-import MoonsafePlaylistCard from "./MoonsafeLessonCard";
+import MoonsafePlaylistCard from "./MoonsafePlaylistCard";
 import { IPlaylist } from "../moonSafePlaylist/[subdirectory]/MoonsafePlaylistPageContents";
 
 export const TRIAL_DAYS = 14;
