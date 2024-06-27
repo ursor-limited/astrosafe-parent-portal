@@ -44,6 +44,7 @@ const TimeRange = (props: {
   shortCommentsList?: boolean;
   noSpacing?: boolean;
   hideLimits?: boolean;
+  white?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
@@ -250,7 +251,7 @@ const TimeRange = (props: {
         )}
       </Stack>
       <Stack
-        bgcolor={PALETTE.secondary.grey[1]}
+        bgcolor={props.white ? "rgb(255,255,255)" : PALETTE.secondary.grey[1]}
         borderRadius="8px"
         height="40px"
         justifyContent="center"

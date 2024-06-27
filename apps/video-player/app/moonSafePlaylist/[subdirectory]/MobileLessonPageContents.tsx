@@ -16,7 +16,7 @@ import {
   AstroContent,
   DEFAULT_LESSON_TITLE,
 } from "@/app/dashboard/DashboardPageContents";
-import LessonVideoCard from "./LessonVideoCard";
+import LessonVideoCard from "./MoonsafeKidsVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";

@@ -1,9 +1,17 @@
+import { IVideo } from "@/app/api";
 import { Dialog } from "@mui/material";
+import { Stack } from "@mui/system";
+import MoonsafeKidsVideoCard from "./MoonsafeKidsVideoCard";
+import { PALETTE } from "ui";
 
 const HEIGHT = 834;
 const WIDTH = 1194;
 
-const KidsView = (props: { open: boolean; onClose: () => void }) => {
+const KidsView = (props: {
+  open: boolean;
+  onClose: () => void;
+  videos: IVideo[];
+}) => {
   return (
     <Dialog
       transitionDuration={400}
@@ -22,7 +30,7 @@ const KidsView = (props: { open: boolean; onClose: () => void }) => {
           padding: "32px",
           boxSizing: "border-box",
           border: "39px solid rgba(10,10,10)",
-          background: "rgb(255,255,255)",
+          background: PALETTE.secondary.grey[1],
         },
       }}
       sx={{
@@ -32,7 +40,13 @@ const KidsView = (props: { open: boolean; onClose: () => void }) => {
           backgroundColor: "rgba(0, 0, 0, 0.3) !important",
         },
       }}
-    ></Dialog>
+    >
+      <Stack spacing="20px">
+        {props.videos.map((v) => (
+          <MoonsafeKidsVideoCard {...v} />
+        ))}
+      </Stack>
+    </Dialog>
   );
 };
 

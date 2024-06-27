@@ -10,7 +10,7 @@ import { PALETTE, Typography } from "ui";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
-import { getFormattedDate } from "./LessonVideoCard";
+import { getFormattedDate } from "./MoonsafeKidsVideoCard";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";

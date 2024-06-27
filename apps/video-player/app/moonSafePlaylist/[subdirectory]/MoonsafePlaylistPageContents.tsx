@@ -1054,7 +1054,11 @@ export default function MoonsafePlaylistPageContents(props: {
           })
         }
       />
-      <KidsView open={kidsViewOpen} onClose={() => setKidsViewOpen(false)} />
+      <KidsView
+        videos={videos}
+        open={kidsViewOpen}
+        onClose={() => setKidsViewOpen(false)}
+      />
     </>
   );
 }
