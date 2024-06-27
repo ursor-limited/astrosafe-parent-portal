@@ -12,7 +12,6 @@ import StarIcon from "@/images/icons/StarIcon.svg";
 import SyncIcon from "@/images/icons/Sync.svg";
 import { MoonsafeDurationIndicator } from "./MoonsafePageCard";
 import _ from "lodash";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const HEIGHT = 834;
 const WIDTH = 1194;
@@ -213,7 +212,7 @@ const KidsView = (props: {
         style: {
           width: WIDTH,
           maxWidth: WIDTH,
-          maxHeight: HEIGHT,
+          maxHeight: "90%",
           height: HEIGHT,
           borderRadius: "32px",
           margin: "20px",
@@ -246,7 +245,7 @@ const KidsView = (props: {
         }}
       >
         <Image
-          src="https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png"
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+(5).png"
           style={{
             objectFit: "cover",
           }}
