@@ -96,7 +96,7 @@ const EndDialog = (props: { onClick: () => void }) => (
         alignItems="center"
       >
         <Typography variant="h4" sx={{ textAlign: "center" }}>
-          Time's up!
+          Time&apos;s up!
         </Typography>
         <Typography variant="h4" sx={{ textAlign: "center" }}>
           See you next time.

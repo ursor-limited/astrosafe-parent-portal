@@ -347,14 +347,17 @@ const SelectionView = (props: {
     {_.chunk(props.channels, 3).map((row, i) => (
       <Stack key={i} spacing="20px" flex={1} direction="row">
         {[
-          ...row.map((playlist) => (
+          ...row.map((playlist, j) => (
             <PlaylistCreationChannelCard
+              key={j}
               {...playlist}
               selected={props.selected.includes(playlist.id)}
               flipSelection={() => props.flipVideoSelection(playlist.id)}
             />
           )),
-          ...[...Array(3 - row.length).keys()].map(() => <Stack flex={1} />),
+          ...[...Array(3 - row.length).keys()].map((k) => (
+            <Stack key={k} flex={1} />
+          )),
         ]}
       </Stack>
     ))}
