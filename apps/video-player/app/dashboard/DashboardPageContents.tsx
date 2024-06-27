@@ -567,7 +567,7 @@ export default function DashboardPageContents() {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
-      ApiController.getUserPlaylists(userDetails.user.id)
+      ApiController.getUserLessons(userDetails.user.id)
         .then((l) => {
           setLessons(_.reverse(l.slice()));
         })

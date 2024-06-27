@@ -144,6 +144,11 @@ class ApiController {
     //@ts-ignore
     return get(`playlist/user/${id}`).then((response: any) => response.json());
   }
+
+  static async getUserLessons(id: string) {
+    //@ts-ignore
+    return get(`lesson/user/${id}`).then((response: any) => response.json());
+  }
   static async addToLesson(
     id: string,
     index: number,
