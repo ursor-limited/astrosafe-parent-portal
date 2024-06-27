@@ -518,7 +518,7 @@ class ApiController {
   static async createPlaylist(details: {
     creatorId: string;
     title: string;
-    channels: string[];
+    excludedChannelIds: string[];
     duration: number
   }) {
     return post(`playlist`, details).then((response: any) =>
