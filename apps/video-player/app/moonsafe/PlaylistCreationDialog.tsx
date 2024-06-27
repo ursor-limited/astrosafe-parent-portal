@@ -234,24 +234,26 @@ const PlaylistCreationChannelCard = (
         width="28px"
         bgcolor="rgb(255,255,255)"
         borderRadius="100%"
+        border={`1px solid ${PALETTE.secondary.purple[2]}`}
         alignItems="center"
         justifyContent="center"
         sx={{
           cursor: "pointer",
           "&:hover": { transform: "scale(1.1)" },
           transition: "0.2s",
+
           svg: {
             path: {
-              fill: props.selected
-                ? PALETTE.secondary.purple[2]
-                : "rgb(186, 186, 186)",
+              fill: PALETTE.secondary.purple[2],
             },
           },
         }}
         onClick={props.flipSelection}
         boxShadow="0 0 40px rgba(0,0,0,0.15)"
       >
-        <CheckIcon width="14px" heigh="14px" />
+        <Stack sx={{ opacity: props.selected ? 1 : 0 }}>
+          <CheckIcon width="14px" heigh="14px" />
+        </Stack>
       </Stack>
     </Stack>
     <Typography bold maxLines={1}>
