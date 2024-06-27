@@ -59,7 +59,9 @@ import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 import CopyAndMoveDialog from "./CopyAndMoveDialog";
-import MoonsafePageCard from "./MoonsafePageCard";
+import MoonsafePageCard, {
+  MoonsafeDurationIndicator,
+} from "./MoonsafePageCard";
 import KidsView from "./KidsView";
 
 export interface IPlaylist {
@@ -650,7 +652,13 @@ export default function MoonsafePlaylistPageContents(props: {
             </Typography>
             <Typography variant="h4">{playlist?.title}</Typography>
           </Stack>
-          <Stack direction="row">
+          <Stack direction="row" spacing="12px">
+            <MoonsafeDurationIndicator
+              value={playlist?.duration ?? 0}
+              tiny
+              small
+              vibrantText
+            />
             <UrsorButton
               dark
               variant="tertiary"
@@ -1054,11 +1062,13 @@ export default function MoonsafePlaylistPageContents(props: {
           })
         }
       />
-      <KidsView
-        videos={videos}
-        open={kidsViewOpen}
-        onClose={() => setKidsViewOpen(false)}
-      />
+      {kidsViewOpen ? (
+        <KidsView
+          videos={videos}
+          open={kidsViewOpen}
+          onClose={() => setKidsViewOpen(false)}
+        />
+      ) : null}
     </>
   );
 }

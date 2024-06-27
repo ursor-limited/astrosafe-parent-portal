@@ -14,28 +14,49 @@ to {
 }
 `;
 
-export const MoonsafeDurationIndicator = (props: { value: number }) => (
+export const MoonsafeDurationIndicator = (props: {
+  value: number;
+  small?: boolean;
+  tiny?: boolean;
+  vibrantText?: boolean;
+}) => (
   <Stack
-    width="265px"
+    width={props.small ? "160px" : "265px"}
     direction="row"
-    height="76px"
-    px="30px"
+    height={props.tiny ? "43px" : props.small ? "48px" : "76px"}
+    px={props.small ? "13px" : "30px"}
     boxSizing="border-box"
     borderRadius="38px"
-    border={`4px solid ${PALETTE.secondary.blue[3]}`}
+    border={`${props.small ? 2 : 4}px solid ${PALETTE.secondary.blue[3]}`}
     spacing="12px"
     alignItems="center"
     mb="20px"
   >
-    <ClockIcon height="32px" width="32px" />
+    <ClockIcon
+      height={props.small ? "24px" : "32px"}
+      width={props.small ? "24px" : "32px"}
+    />
     {/* <Typography variant="h3">{`${Math.floor(props.duration / 3600)
   .toString()
   .padStart(2, "0")}h ${Math.floor((props.duration % 3600) / 60)
   .toString()
   .padStart(2, "0")}m`}</Typography> */}
-    <Typography variant="h3">{`${Math.floor(props.value / 3600)}h ${Math.floor(
-      (props.value % 3600) / 60
-    )}m`}</Typography>
+    <Stack
+      sx={
+        props.vibrantText
+          ? {
+              background: "linear-gradient(180deg, #6596FF, #7B61FF)",
+              "-webkit-text-fill-color": "transparent",
+              backgroundClip: "text",
+              "-webkit-background-clip": "text",
+            }
+          : undefined
+      }
+    >
+      <Typography variant={props.small ? "h5" : "h3"}>{`${Math.floor(
+        props.value / 3600
+      )}h ${Math.floor((props.value % 3600) / 60)}m`}</Typography>
+    </Stack>
   </Stack>
 );
 
@@ -85,7 +106,8 @@ const MoonsafePageCard = (props: {
         pt="20px"
         alignItems="center"
       >
-        <MoonsafeDurationIndicator value={props.duration} />
+        {/* <MoonsafeDurationIndicator value={props.duration} /> */}
+        <Stack />
         {props.children}
         {!props.noBottomPadding ? <Stack height="24px" /> : null}
       </Stack>

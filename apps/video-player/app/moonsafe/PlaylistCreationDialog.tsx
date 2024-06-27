@@ -20,7 +20,7 @@ const HEIGHT = "597px";
 export const MOONSAFE_ILLUSTRATION_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png";
 
-const MAX_DURATION = 2 * 3600;
+const MAX_DURATION = 2 * 60 * 60;
 
 type PlaylistCreationStep = "name" | "duration" | "selection" | "finish";
 
@@ -266,7 +266,7 @@ const NameView = (props: {
   proceed: () => void;
 }) => (
   <Stack flex={1} width="70%" justifyContent="center" alignItems="center">
-    <UrsorFadeIn duration={800} key="device-name" fullWidth>
+    <UrsorFadeIn duration={800} fullWidth>
       <UrsorInputField
         value={props.value}
         placeholder="Playlist title"
@@ -288,10 +288,10 @@ const DurationView = (props: {
   proceed: () => void;
 }) => (
   <Stack flex={1} width="70%" justifyContent="center" alignItems="center">
-    <UrsorFadeIn duration={800} key="device-name">
+    <UrsorFadeIn duration={800}>
       <MoonsafeDurationIndicator value={props.value * 2 * 36} />
     </UrsorFadeIn>
-    <UrsorFadeIn delay={400} duration={800} key="device-name">
+    <UrsorFadeIn delay={400} duration={800}>
       <Stack
         width="482px"
         sx={{
@@ -360,7 +360,7 @@ const SelectionView = (props: {
 
 const FinishView = () => (
   <Stack flex={1} justifyContent="center" alignItems="center">
-    <UrsorFadeIn duration={800} key="device-name" fullWidth>
+    <UrsorFadeIn duration={800} fullWidth>
       <Image
         src={MOONSAFE_ILLUSTRATION_URL}
         width={581}
@@ -402,7 +402,7 @@ const PlaylistCreationDialog = (props: {
         creatorId: userDetails?.id ?? "",
         title: name,
         channels: selectedChannels,
-        duration: duration * MAX_DURATION,
+        duration: (duration / 100) * MAX_DURATION,
       }).then((response) => {
         props.refreshLessons();
         setCreatedPlaylistId(response.id);

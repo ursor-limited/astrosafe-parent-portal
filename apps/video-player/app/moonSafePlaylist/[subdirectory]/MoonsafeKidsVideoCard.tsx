@@ -154,6 +154,7 @@ const MoonsafeKidsVideoCard = (
     noButtons?: boolean;
     expansionCallback?: () => void;
     hideLimits?: boolean;
+    play?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -199,6 +200,13 @@ const MoonsafeKidsVideoCard = (
   const [playingSetter, setPlayingSetter] = useState<
     undefined | ((playing: boolean) => void)
   >();
+
+  useEffect(() => {
+    if (playingSetter) {
+      setPlaying(!!props.play);
+      playingSetter(!!props.play);
+    }
+  }, [props.play, playingSetter]);
 
   const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
