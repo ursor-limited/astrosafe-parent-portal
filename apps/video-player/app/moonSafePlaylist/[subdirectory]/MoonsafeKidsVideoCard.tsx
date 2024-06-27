@@ -196,7 +196,7 @@ const MoonsafeKidsVideoCard = (
     undefined | ((time: number) => void)
   >();
   useEffect(() => {
-    props.setCurrentTime(currentTime);
+    props.setCurrentTime?.(currentTime);
   }, [currentTime]);
 
   const [playing, setPlaying] = useState<boolean>(false);
