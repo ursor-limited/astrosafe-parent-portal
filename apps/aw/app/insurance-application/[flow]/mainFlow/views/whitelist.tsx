@@ -2,7 +2,7 @@ import { IAWFormSectionProps, MAIN_FLOW_STEP_TITLES } from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import { useEffect, useState } from "react";
 import BitcoinIcon from "@/images/icons/BitcoinIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
@@ -32,11 +32,14 @@ const AddressesSection = (
   ]);
   const [modified, setModified] = useState<boolean>(false);
 
+  console.log(addresses, "------");
+
   useEffect(() => {
     if (addresses.length === 0 || !modified) {
       const addresses_ = props.answers?.find((a) => a.inputId === INPUT_ID)
         ?.value;
       if (addresses_) {
+        console.log("aaaa", addresses_);
         setAddresses(addresses_);
         setModified(true);
       }
@@ -45,8 +48,11 @@ const AddressesSection = (
 
   useEffect(() => {
     modified && addresses && props.setValue(INPUT_ID, addresses);
-    addresses.every((a) => a.address && a.nickname) && props.setDone();
   }, [addresses]);
+
+  useEffect(() => {
+    props.setDone();
+  }, []);
 
   const addRow = () => {
     setAddresses((prev) => [...prev, { nickname: "", address: "" }]);
@@ -58,26 +64,28 @@ const AddressesSection = (
         <div>{`AnchorWatch enforces a cool down period of at least three days before sending to a new bitcoin address.`}</div>
         <div>{`You can add bitcoin addresses to your whitelist address book now, which will begin the cool down period. Additional addresses can be added after your policy begins.`}</div>
       </div>
-      <div className="flex flex-col gap-lg">
+      <div className="flex flex-col">
         {addresses?.map((address, i) => (
           <WhitelistAddressRow
             key={i}
             i={i + 1}
             value={address}
-            setNickname={(n) =>
+            setNickname={(n) => {
+              setModified(true);
               setAddresses([
                 ...addresses.slice(0, i),
                 { nickname: n, address: address.address },
                 ...addresses.slice(i + 1),
-              ])
-            }
-            setAddress={(a) =>
+              ]);
+            }}
+            setAddress={(a) => {
+              setModified(true);
               setAddresses([
                 ...addresses.slice(0, i),
                 { nickname: address.nickname, address: a },
                 ...addresses.slice(i + 1),
-              ])
-            }
+              ]);
+            }}
             delete={
               addresses.length > 1
                 ? () =>
@@ -124,6 +132,7 @@ const WhitelistAddressRow = (props: {
           value={props.value.nickname}
           setValue={props.setNickname}
           placeholder="Up to 15 characters"
+          maxLength={15}
         />
       </div>
       <div className="flex flex-col w-full gap-1">
@@ -131,7 +140,8 @@ const WhitelistAddressRow = (props: {
         <AWTextField
           value={props.value.address}
           setValue={props.setAddress}
-          placeholder="Default Input Text"
+          placeholder="Insert address here"
+          maxLength={62}
         />
       </div>
       {props.delete ? (

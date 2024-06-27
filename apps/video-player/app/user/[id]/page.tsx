@@ -29,7 +29,7 @@ async function TeacherPage({ params }: { params: { id: string } }) {
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
 
-  const lessons = (await ApiController.getUserLessons(params.id).then((l) =>
+  const lessons = (await ApiController.getUserPlaylists(params.id).then((l) =>
     _.reverse(l.slice())
   )) as ILesson[];
 

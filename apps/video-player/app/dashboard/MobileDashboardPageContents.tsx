@@ -104,7 +104,7 @@ export default function MobileDashboardPageContents() {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
-      ApiController.getUserLessons(userDetails.user.id)
+      ApiController.getUserPlaylists(userDetails.user.id)
         .then((l) => setLessons(_.reverse(l.slice())))
         .finally(() => setLessonsLoaded(true));
   };

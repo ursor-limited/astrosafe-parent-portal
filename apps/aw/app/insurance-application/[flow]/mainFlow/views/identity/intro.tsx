@@ -1,6 +1,6 @@
 import { useState } from "react";
 import InsuranceApplicationIllustrationDialog from "../../../components/illustration-dialog";
-import { CHECKPOINT_STEPS } from "../../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
 import { IDENTITY_STEP_TITLES } from "./main";
 
 export default function InsuranceApplicationIdentityIntro(props: {

@@ -4,7 +4,7 @@ import { MAIN_FLOW_STEP_TITLES } from "../../controller";
 import dynamic from "next/dynamic";
 
 const InsuranceApplicationCheckpointDialog = dynamic(
-  () => import("../../../components/checkpoint-dialog"),
+  () => import("./checkpoint-dialog"),
   { ssr: false } // not including this component on server-side due to its dependence on 'document'
 );
 

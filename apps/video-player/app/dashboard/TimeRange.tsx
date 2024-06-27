@@ -43,6 +43,8 @@ const TimeRange = (props: {
   commentsButton?: boolean;
   shortCommentsList?: boolean;
   noSpacing?: boolean;
+  hideLimits?: boolean;
+  white?: boolean;
 }) => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   useEffect(() => {
@@ -249,7 +251,7 @@ const TimeRange = (props: {
         )}
       </Stack>
       <Stack
-        bgcolor={PALETTE.secondary.grey[1]}
+        bgcolor={props.white ? "rgb(255,255,255)" : PALETTE.secondary.grey[1]}
         borderRadius="8px"
         height="40px"
         justifyContent="center"
@@ -443,66 +445,68 @@ const TimeRange = (props: {
                 ))}
               </Stack>
             </Stack>
-            <Stack width={0}>
-              <Stack
-                position="absolute"
-                height="20px"
-                width="4px"
-                bgcolor={
-                  props.greyLines
-                    ? PALETTE.secondary.grey[3]
-                    : PALETTE.secondary.blue[2]
-                }
-                borderRadius="2px"
-                top={0}
-                bottom={0}
-                marginTop="auto"
-                marginBottom="auto"
-                sx={{
-                  pointerEvents: props.setRange ? undefined : "none",
-                  transform: "translateX(-50%)",
-                  cursor: props.setRange
-                    ? draggingStartLine
-                      ? "grabbing"
-                      : "grab"
-                    : undefined,
-                }}
-                left={startLineX}
-                onMouseDown={(e) => {
-                  setDraggingStartLine(true);
-                  e.preventDefault();
-                }}
-              />
-              <Stack
-                position="absolute"
-                height="20px"
-                width="4px"
-                bgcolor={
-                  props.greyLines
-                    ? PALETTE.secondary.grey[3]
-                    : PALETTE.secondary.blue[2]
-                }
-                borderRadius="2px"
-                top={0}
-                bottom={0}
-                marginTop="auto"
-                marginBottom="auto"
-                sx={{
-                  pointerEvents: props.setRange ? undefined : "none",
-                  transform: "translateX(-50%)",
-                  cursor: props.setRange
-                    ? draggingEndLine
-                      ? "grabbing"
-                      : "grab"
-                    : undefined,
-                }}
-                left={endLineX}
-                onMouseDown={(e) => {
-                  setDraggingEndLine(true);
-                  e.preventDefault();
-                }}
-              />
-            </Stack>
+            {!props.hideLimits ? (
+              <Stack width={0}>
+                <Stack
+                  position="absolute"
+                  height="20px"
+                  width="4px"
+                  bgcolor={
+                    props.greyLines
+                      ? PALETTE.secondary.grey[3]
+                      : PALETTE.secondary.blue[2]
+                  }
+                  borderRadius="2px"
+                  top={0}
+                  bottom={0}
+                  marginTop="auto"
+                  marginBottom="auto"
+                  sx={{
+                    pointerEvents: props.setRange ? undefined : "none",
+                    transform: "translateX(-50%)",
+                    cursor: props.setRange
+                      ? draggingStartLine
+                        ? "grabbing"
+                        : "grab"
+                      : undefined,
+                  }}
+                  left={startLineX}
+                  onMouseDown={(e) => {
+                    setDraggingStartLine(true);
+                    e.preventDefault();
+                  }}
+                />
+                <Stack
+                  position="absolute"
+                  height="20px"
+                  width="4px"
+                  bgcolor={
+                    props.greyLines
+                      ? PALETTE.secondary.grey[3]
+                      : PALETTE.secondary.blue[2]
+                  }
+                  borderRadius="2px"
+                  top={0}
+                  bottom={0}
+                  marginTop="auto"
+                  marginBottom="auto"
+                  sx={{
+                    pointerEvents: props.setRange ? undefined : "none",
+                    transform: "translateX(-50%)",
+                    cursor: props.setRange
+                      ? draggingEndLine
+                        ? "grabbing"
+                        : "grab"
+                      : undefined,
+                  }}
+                  left={endLineX}
+                  onMouseDown={(e) => {
+                    setDraggingEndLine(true);
+                    e.preventDefault();
+                  }}
+                />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

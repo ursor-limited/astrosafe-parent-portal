@@ -464,7 +464,9 @@ class BrowserApiController {
     });
   }
 
-
+  static async addDummyVideoChannel() {
+    return post(`videoChannel/addDummy`);
+  }
 }
 
 export default BrowserApiController;

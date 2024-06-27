@@ -18,11 +18,11 @@ const DashboardSignupPromptDialog = (props: {
   closeCallback: () => void;
   mobile?: boolean;
 }) => {
-  const { loginWithPopup, loginWithRedirect } = useAuth0();
+  const { loginWithPopup } = useAuth0();
   return (
     <UrsorDialog
       supertitle="Sign in"
-      title={"Your dashboard awaits"}
+      title="Your dashboard awaits"
       subtitle={[
         "Login or create a free account to create",
         "and store videos and worksheets.",

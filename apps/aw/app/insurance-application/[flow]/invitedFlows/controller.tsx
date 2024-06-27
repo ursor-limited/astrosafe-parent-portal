@@ -9,7 +9,10 @@ import InsuranceApplicationResponsibilities from "../mainFlow/views/identity/res
 import InsuranceApplicationPersonalDetails from "../mainFlow/views/identity/personal-details";
 import InsuranceApplicationIdentityKYC from "../mainFlow/views/identity/kyc";
 import InsuranceApplicationIdentitySuccess from "../mainFlow/views/identity/success";
-import { AWInsuranceApplicationFlow } from "../mainFlow/controller";
+import {
+  AWInsuranceApplicationFlow,
+  SCROLLABLE_PAGE_ID,
+} from "../mainFlow/controller";
 
 export const awInsuranceApplicationInvitedFlowSteps = [
   "welcome",
@@ -53,14 +56,35 @@ const STEP_COMPONENTS: Record<
 export default function InsuranceApplicationInvitedFlowsController(props: {
   flow: AWInsuranceApplicationFlow;
 }) {
+  const [stepCompletions, setStepCompletions] = useLocalStorage<
+    Partial<Record<AWInsuranceApplicationInvitedFlowStep, boolean>>
+  >("stepCompletions", {});
+
   const [currentStep, setCurrentStep] = useLocalStorage<
     AWInsuranceApplicationInvitedFlowStep | undefined
   >("currentStep", "welcome");
 
+  const [previousStep, setPreviousStep] = useLocalStorage<
+    AWInsuranceApplicationInvitedFlowStep | undefined
+  >("previousStep", undefined);
+
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
+  const setStepComplete = (step: AWInsuranceApplicationInvitedFlowStep) => {
+    setStepCompletions({ ...stepCompletions, [step]: true });
+    setPreviousStep(step);
+    setCurrentStep(
+      awInsuranceApplicationInvitedFlowSteps[
+        awInsuranceApplicationInvitedFlowSteps.indexOf(step) + 1
+      ]
+    );
+  };
+
   return (
-    <div className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative">
+    <div
+      id={SCROLLABLE_PAGE_ID}
+      className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+    >
       {currentStep && StepView ? (
         <StepView
           progress={
@@ -68,13 +92,14 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
             awInsuranceApplicationInvitedFlowSteps.length
           }
           flow={props.flow}
-          nextCallback={() =>
-            setCurrentStep(
-              awInsuranceApplicationInvitedFlowSteps[
-                awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1
-              ]
-            )
-          }
+          nextCallback={() => setStepComplete(currentStep)}
+          // nextCallback={() =>
+          //   setCurrentStep(
+          //     awInsuranceApplicationInvitedFlowSteps[
+          //       awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1
+          //     ]
+          //   )
+          // }
         />
       ) : null}
       <TestingBar flow={props.flow} />

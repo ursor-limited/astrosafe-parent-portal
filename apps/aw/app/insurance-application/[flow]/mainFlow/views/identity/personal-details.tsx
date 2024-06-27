@@ -2,7 +2,7 @@ import { COUNTRIES_ALPHA2 } from "@/components/countries";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "../checkpoints/checkpoint-dialog";
 import {
   IDENTITY_STEP_TITLES,
   awInsuranceApplicationIdentityStepViews,
@@ -18,13 +18,17 @@ const countriesOptions = Object.entries(COUNTRIES_ALPHA2).map(
   ([alpha2, name]) => ({ id: alpha2, text: name })
 );
 
+export const PERSONAL_DETAILS_NAME_INPUT_ID = "6655be2de0735e8450474863";
+export const PERSONAL_DETAILS_BIRTHDAY_INPUT_ID = "6655c02aab2c63b1bea64cd8";
+export const PERSONAL_DETAILS_EMAIL_INPUT_ID = "6666d36213b43594dd02e69b";
+
 const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
   {
     id: "6655be26fe62c4cb7d4efba6",
     title: "Legal name",
     inputs: [
       {
-        id: "6655be2de0735e8450474863",
+        id: PERSONAL_DETAILS_NAME_INPUT_ID,
         prefill: {
           step: "policyOwner",
           inputId: "6652e4a2214b3b8b436dc33d",
@@ -39,9 +43,15 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
     title: "Date of birth",
     inputs: [
       {
-        id: "6655c02aab2c63b1bea64cd8",
+        id: PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
         inputType: "text",
         placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
       },
     ],
   },
@@ -52,7 +62,14 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c0b839dd2e99a8b4135f",
         inputType: "text",
+        numeric: true,
         placeholder: "Enter your 9 digit SSN here",
+        maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -69,6 +86,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -125,6 +143,7 @@ const MAIN_FLOW_SECTIONS: IAWFormSection[] = [
         },
         title: "Address line 2",
         inputType: "text",
+        optional: true,
         placeholder: "Insert apartment or suite number",
       },
       {
@@ -200,6 +219,8 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c02aab2c63b1bea64cd8",
         inputType: "text",
         placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
       },
     ],
   },
@@ -216,6 +237,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -271,6 +293,7 @@ const KEYHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
           inputId: "6655c1595eb7619ecf4f664c",
         },
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -343,6 +366,8 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c02aab2c63b1bea64cd8",
         inputType: "text",
         placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
       },
     ],
   },
@@ -354,6 +379,13 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c0b839dd2e99a8b4135f",
         inputType: "text",
         placeholder: "Enter your 9 digit SSN here",
+        numeric: true,
+        maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
       },
     ],
   },
@@ -370,6 +402,7 @@ const SHAREHOLDER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -426,6 +459,8 @@ const EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS: IAWFormSection[] = [
         id: "6655c02aab2c63b1bea64cd8",
         inputType: "text",
         placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
       },
     ],
   },
@@ -442,6 +477,7 @@ const EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS: IAWFormSection[] = [
       {
         id: "6655c1595eb7619ecf4f664c",
         title: "Address line 2",
+        optional: true,
         inputType: "text",
         placeholder: "Insert apartment or suite number",
       },
@@ -474,6 +510,213 @@ const EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS: IAWFormSection[] = [
   },
 ];
 
+const PERSONAL_FLOW_SECTIONS: IAWFormSection[] = [
+  {
+    id: "6655be26fe62c4cb7d4efba6",
+    title: "Legal name",
+    inputs: [
+      {
+        id: PERSONAL_DETAILS_NAME_INPUT_ID,
+        prefill: {
+          step: "policyOwner",
+          inputId: "6652e4a2214b3b8b436dc33d",
+        },
+        inputType: "text",
+        placeholder: "Insert name here",
+      },
+    ],
+  },
+  {
+    id: "6655c01a3c825d234588dd21",
+    title: "Date of birth",
+    inputs: [
+      {
+        id: PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+        inputType: "text",
+        placeholder: "MM/DD/YYYY",
+        date: true,
+        maxLength: 8,
+        error: {
+          format: "date",
+          message: "The date should be in the format 01/31/2024",
+        },
+      },
+    ],
+  },
+  {
+    id: "6655c0b45c7eb689c350c15d",
+    title: "Social security number (SSN)",
+    inputs: [
+      {
+        id: "6655c0b839dd2e99a8b4135f",
+        inputType: "text",
+        placeholder: "Enter your 9 digit SSN here",
+        numeric: true,
+        maxLength: 9,
+        error: {
+          format: "min",
+          minLength: 9,
+          message: "Enter your 9-digit number",
+        },
+      },
+    ],
+  },
+  {
+    id: "6666d312ab5df41063ec2df7",
+    title: "Profession",
+    inputs: [
+      {
+        id: "6666d3176639e924e5c46ac5",
+        inputType: "text",
+        placeholder: "Insert your profession here",
+      },
+    ],
+  },
+  {
+    id: "6666d349dd1334878e26a78c",
+    title: "Cell phone number",
+    inputs: [
+      {
+        id: "6666d34c462f61a6575c85bf",
+        inputType: "phoneNumber",
+        numeric: true,
+        placeholder: "Enter your phone number here",
+      },
+    ],
+  },
+  {
+    id: "6666d35fc8f1599979af91ba",
+    title: "Email",
+    inputs: [
+      {
+        id: PERSONAL_DETAILS_EMAIL_INPUT_ID,
+        inputType: "text",
+        placeholder: "Enter email address here",
+        error: {
+          format: "email",
+          message: "The address should be in the format bob@xxx.com",
+        },
+      },
+    ],
+  },
+  {
+    id: "6655c0ea700a54316acc765d",
+    title: "Primary address of residence",
+    inputs: [
+      {
+        id: "6655c0fe63a59eef74dfcd2f",
+        title: "Address line 1",
+        inputType: "text",
+        placeholder: "Insert street address",
+      },
+      {
+        id: "6655c1595eb7619ecf4f664c",
+        title: "Address line 2",
+        optional: true,
+        inputType: "text",
+        placeholder: "Insert apartment or suite number",
+      },
+      {
+        id: "6655c171a4a4f8c8b3d6a26f",
+        title: "City",
+        inputType: "text",
+        placeholder: "Insert city",
+      },
+      {
+        id: "6655c18ff69ad61442a6fa2b",
+        title: "State or province",
+        inputType: "text",
+        placeholder: "Insert state or province",
+      },
+      {
+        id: "6655c1b04f9526468edc17b0",
+        title: "Country",
+        inputType: "dropdown",
+        placeholder: "Choose your country",
+        options: countriesOptions,
+      },
+      {
+        id: "6655c1eb44e7da94b593e696",
+        title: "ZIP code",
+        inputType: "text",
+        placeholder: "Enter postal code",
+      },
+    ],
+  },
+  {
+    id: "66561d001124a06d63bbd22b",
+    title: "Mailing address",
+    description:
+      "Key Holders will receive their Signing Device in the mail. Please provide a mailing address.",
+    prefillInputPrompt: "Use same address as residence address above",
+    disablePrefill: true,
+    inputs: [
+      {
+        id: "66561d077be86edef7a7c569",
+        prefill: {
+          step: "identity",
+          inputId: "6655c0fe63a59eef74dfcd2f",
+        },
+        title: "Address line 1",
+        inputType: "text",
+        placeholder: "Insert street address",
+      },
+      {
+        id: "66561d1605b212a580f388eb",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1595eb7619ecf4f664c",
+        },
+        title: "Address line 2",
+        optional: true,
+        inputType: "text",
+        placeholder: "Insert apartment or suite number",
+      },
+      {
+        id: "66561d1b4c32d5191c3ae48d",
+        prefill: {
+          step: "identity",
+          inputId: "6655c171a4a4f8c8b3d6a26f",
+        },
+        title: "City",
+        inputType: "text",
+        placeholder: "Insert city",
+      },
+      {
+        id: "66561d1f2bdd8d9d05725bb0",
+        prefill: {
+          step: "identity",
+          inputId: "6655c18ff69ad61442a6fa2b",
+        },
+        title: "State or province",
+        inputType: "text",
+        placeholder: "Insert state or province",
+      },
+      {
+        id: "66561d25fb1f010c0bd6ace9",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1b04f9526468edc17b0",
+        },
+        title: "Country",
+        inputType: "dropdown",
+        placeholder: "Choose your country",
+        options: countriesOptions,
+      },
+      {
+        id: "66561d2a42becad2f5f4f9ed",
+        prefill: {
+          step: "identity",
+          inputId: "6655c1eb44e7da94b593e696",
+        },
+        title: "ZIP code",
+        inputType: "text",
+        placeholder: "Enter postal code",
+      },
+    ],
+  },
+];
+
 const FLOW_SECTIONS: Record<AWInsuranceApplicationFlow, IAWFormSection[]> = {
   main: MAIN_FLOW_SECTIONS,
   executive: EXECUTIVE_AND_ASSET_MANAGER_FLOW_SECTIONS,
@@ -481,6 +724,7 @@ const FLOW_SECTIONS: Record<AWInsuranceApplicationFlow, IAWFormSection[]> = {
   keyholder: KEYHOLDER_FLOW_SECTIONS,
   shareholder: SHAREHOLDER_FLOW_SECTIONS,
   shareholderKeyHolder: MAIN_FLOW_SECTIONS,
+  personal: PERSONAL_FLOW_SECTIONS,
 };
 
 const SIGNING_DEVICE_INPUT_ID = "665f91c8d7ecc15c7d1c6258";
@@ -545,7 +789,11 @@ export default function InsuranceApplicationPersonalDetails(props: {
     <InsuranceApplicationFormDialog
       stepId="identity"
       title={IDENTITY_STEP_TITLES.personalDetails}
-      subtitle="As a company leader, please input your application information and proceed to identity verification KYC/AML."
+      subtitle={
+        props.flow !== "personal"
+          ? "As a company leader, please input your application information and proceed to identity verification KYC/AML."
+          : undefined
+      }
       sections={FLOW_SECTIONS[props.flow || "main"]}
       nextCallback={props.nextCallback}
       customSections={

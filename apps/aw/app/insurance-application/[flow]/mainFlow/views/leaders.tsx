@@ -13,14 +13,24 @@ import AddPersonIcon from "@/images/icons/AddPersonIcon.svg";
 import XIcon from "@/images/icons/XIcon.svg";
 import _ from "lodash";
 import {
+  IAWFormInput,
   IAWFormInputAnswer,
   IAWFormSection,
 } from "../../components/form-dialog";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import DynamicContainer from "@/components/DynamicContainer";
 import { AWCheckbox } from "@/components/AWCheckbox";
 import AWTextField from "@/components/AWTextField";
 import AWLongTextField from "@/components/AWLongTextField";
+import {
+  PERSONAL_DETAILS_BIRTHDAY_INPUT_ID,
+  PERSONAL_DETAILS_NAME_INPUT_ID,
+} from "./identity/personal-details";
+import {
+  POLICY_OWNER_EMAIL_INPUT_ID,
+  POLICY_OWNER_JOB_INPUT_ID,
+  POLICY_OWNER_NAME_INPUT_ID,
+} from "./policy-owner";
 
 export interface IAWCompanyLeader {
   name: string;
@@ -37,6 +47,15 @@ export interface IAWCompanyLeader {
 
 export const LEADER_DETAILS_AGGLOMERATED_INPUT_ID = "leaders";
 
+const DESCRIPTION_SECTION_ID = "665f4e4fcd81bc33290c2cd4";
+const DESCRIPTION_INPUT_ID = "665f4e5369bc960c37e387ee";
+const INVESTIGATION_YES_OPTION_ID = "665f4246be7e00eede11c7f9";
+const DISHONESTY_YES_OPTION_ID = "665f426c8eb680b7e46ee61a";
+const LOSSES_YES_OPTION_ID = "665f42b8520100b245e9e7ab";
+const PERSONAL_LOSSES_YES_OPTION_ID = "665f430a2cfbeb1847db7031";
+const KIDNAPPING_YES_OPTION_ID = "6664b320524e335af68b98f9";
+const SECURITY_YES_OPTION_ID = "6664b3514c676f49c3823795";
+
 export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f42111472a5653be043fa",
@@ -47,7 +66,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f4246be7e00eede11c7f9",
+            id: INVESTIGATION_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -68,7 +87,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f426c8eb680b7e46ee61a",
+            id: DISHONESTY_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -89,7 +108,7 @@ export const SECTIONS: IAWFormSection[] = [
         inputType: "multiChoice",
         options: [
           {
-            id: "665f42b8520100b245e9e7ab",
+            id: LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -103,14 +122,14 @@ export const SECTIONS: IAWFormSection[] = [
   {
     id: "665f4301ad072875140001b8",
     title:
-      "Has a Company Leader experienced any losses in personal holdings or losses related to prior employers greater than $10,000  in Bitcoin, cryptocurrency, or other digital assets?",
+      "Has a Company Leader experienced any losses in personal holdings or losses related to prior employers greater than $10,000 in Bitcoin, cryptocurrency, or other digital assets?",
     inputs: [
       {
         id: "665f430586bf43b7aecea5ac",
         inputType: "multiChoice",
         options: [
           {
-            id: "665f430a2cfbeb1847db7031",
+            id: PERSONAL_LOSSES_YES_OPTION_ID,
             text: "Yes",
           },
           {
@@ -121,16 +140,58 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
+
   {
-    id: "665f4e4fcd81bc33290c2cd4",
+    id: "6664b312ffeda4742f2767ca",
+    title:
+      "Has a Company Leader ever experienced a kidnapping or threat of kidnapping of themselves or family members?",
+    inputs: [
+      {
+        id: "6664b31bcd61e2ddee41174d",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: KIDNAPPING_YES_OPTION_ID,
+            text: "Yes",
+          },
+          {
+            id: "6664b324589ab67ade71c897",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "6664b3470dfcf1864a7f96b1",
+    title: "Does any Company Leader engage private security?",
+    inputs: [
+      {
+        id: "6664b34c853da138d6891b6a",
+        inputType: "multiChoice",
+        options: [
+          {
+            id: SECURITY_YES_OPTION_ID,
+            text: "Yes",
+          },
+          {
+            id: "6664b355ddfd837bc112f10f",
+            text: "No",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: DESCRIPTION_SECTION_ID,
     title:
       "If you answered yes to any of the questions above, please provide a detailed description below",
     noNumber: true,
     inputs: [
       {
-        id: "665f4e5369bc960c37e387ee",
+        id: DESCRIPTION_INPUT_ID,
         inputType: "textLong",
-        optional: true,
         placeholder: "Write your description here",
       },
     ],
@@ -149,6 +210,8 @@ const LeaderRow = (props: {
   title: string;
   update: (update: Partial<IAWCompanyLeader>) => void;
   delete?: () => void;
+  setErroneous: (id: IAWFormInput["id"], e: boolean) => void;
+  highlightEmpties?: boolean;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [status, setStatus] = useState<"complete" | "incomplete" | "empty">(
@@ -286,6 +349,7 @@ const LeaderRow = (props: {
                 value={props.details.name}
                 setValue={(name) => props.update({ name })}
                 placeholder="Enter name here"
+                highlightEmpty={props.highlightEmpties && !props.details.name}
               />
             </div>
             <div className={`flex flex-col gap-1`}>
@@ -296,6 +360,15 @@ const LeaderRow = (props: {
                 value={props.details.birthday}
                 setValue={(birthday) => props.update({ birthday })}
                 placeholder="MM/DD/YYYY"
+                date
+                error={{
+                  format: "date",
+                  message: "The date should be in the format 01/31/2024",
+                }}
+                maxLength={8}
+                highlightEmpty={
+                  props.highlightEmpties && !props.details.birthday
+                }
               />
             </div>
             <div className={`flex flex-col gap-xl`}>
@@ -310,6 +383,11 @@ const LeaderRow = (props: {
                 value={props.details.email}
                 setValue={(email) => props.update({ email })}
                 placeholder="Enter address here"
+                highlightEmpty={props.highlightEmpties && !props.details.email}
+                error={{
+                  format: "email",
+                  message: "The address should be in the format bob@xxx.com",
+                }}
               />
             </div>
             <div className={`flex flex-col gap-1`}>
@@ -320,6 +398,7 @@ const LeaderRow = (props: {
                 value={props.details.job}
                 setValue={(job) => props.update({ job })}
                 placeholder="Enter job title in organization"
+                highlightEmpty={props.highlightEmpties && !props.details.job}
               />
             </div>
             <div className={`flex flex-col gap-1`}>
@@ -330,6 +409,7 @@ const LeaderRow = (props: {
                 value={props.details.areas}
                 setValue={(areas) => props.update({ areas })}
                 placeholder="Describe the primary responsibilities of this role, including any specific responsibility for the management of or decisions related to digital assets."
+                highlightEmpty={props.highlightEmpties && !props.details.areas}
               />
             </div>
           </div>
@@ -364,7 +444,7 @@ export default function InsuranceApplicationLeaders(props: {
 
   const commitAnswers = () =>
     setCommittedAnswers({
-      ...committedAnswers.leaders,
+      ...committedAnswers,
       leaders: answers.find(
         (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
       )
@@ -420,6 +500,42 @@ export default function InsuranceApplicationLeaders(props: {
       },
     },
   ]);
+
+  console.log(
+    "gggg",
+    committedAnswers.policyOwner?.find(
+      (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
+    )?.value ?? ""
+  );
+
+  useEffect(() => {
+    const prefilledLeader = {
+      name:
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_NAME_INPUT_ID
+        )?.value ?? "",
+      birthday: "",
+      // committedAnswers.policyOwner?.find(
+      //   (answer) => answer.inputId === PERSONAL_DETAILS_BIRTHDAY_INPUT_ID
+      // )?.value ?? "",
+      email:
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_EMAIL_INPUT_ID
+        )?.value ?? "",
+      job:
+        committedAnswers.policyOwner?.find(
+          (answer) => answer.inputId === POLICY_OWNER_JOB_INPUT_ID
+        )?.value ?? "",
+      areas: "",
+      roles: {
+        executive: false,
+        assMan: false,
+        shareholder: false,
+      },
+    };
+    setLeaders([prefilledLeader, ...leaders.slice(1)]);
+  }, [committedAnswers]);
+
   useEffect(() => {
     const leaders_ = answers?.find(
       (a) => a.inputId === LEADER_DETAILS_AGGLOMERATED_INPUT_ID
@@ -430,32 +546,73 @@ export default function InsuranceApplicationLeaders(props: {
   }, [answers]);
 
   const [leadersFilled, setLeadersFilled] = useState<boolean>(false);
+
   const [canProceed, setCanProceed] = useState<boolean>(false);
+
+  const [descriptionInputRequired, setDescriptionInputRequired] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setDescriptionInputRequired(
+        [
+          INVESTIGATION_YES_OPTION_ID,
+          DISHONESTY_YES_OPTION_ID,
+          LOSSES_YES_OPTION_ID,
+          PERSONAL_LOSSES_YES_OPTION_ID,
+          KIDNAPPING_YES_OPTION_ID,
+          SECURITY_YES_OPTION_ID,
+        ].some((optionId) => answers.find((a) => a.value === optionId))
+      ),
+    [answers]
+  );
+
+  const [highlightEmpties, setHighlightEmpties] = useState<boolean>(false);
+
+  const [erroneousValueInputIds, setErroneousValueInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
+
+  const setErroneous = (id: string, e: boolean) =>
+    setErroneousValueInputIds(
+      e
+        ? _.uniq([...erroneousValueInputIds, id])
+        : erroneousValueInputIds.filter((eviid) => id !== eviid)
+    );
+
+  const [emptyRequiredInputIds, setEmptyRequiredInputIds] = useState<
+    IAWFormInput["id"][]
+  >([]);
   useEffect(() => {
-    const leadersDone = leaders.every((l) =>
-      Object.values(l).every((x) => !!x)
+    setEmptyRequiredInputIds(
+      SECTIONS.filter((s) => !s.custom)
+        .flatMap((s) => [...(s.inputs || [])])
+        .filter(
+          (input) =>
+            (input.id !== DESCRIPTION_INPUT_ID || descriptionInputRequired) &&
+            !answers.find((a) => a.inputId === input?.id)?.value
+        )
+        .map((input) => input.id)
+    );
+  }, [answers, descriptionInputRequired]);
+
+  useEffect(() => {
+    const leadersDone = leaders.every(
+      (l) =>
+        Object.values(l).every((x) => !!x) &&
+        Object.values(l.roles).some((x) => x)
     );
     if (leadersDone) {
       if (!leadersFilled) {
         setLeadersFilled(true);
-        //commitAnswers();
       }
       setCanProceed(
-        SECTIONS.filter((s) => !s.custom)
-          .flatMap((s) => [
-            ...(s.inputs || []),
-            ...(s.subsections ? s.subsections.flatMap((ss) => ss.inputs) : []),
-          ])
-          .every(
-            (input) =>
-              input.optional ||
-              answers.find((a) => a.inputId === input?.id)?.value
-          )
+        erroneousValueInputIds.length === 0 &&
+          emptyRequiredInputIds.length === 0
       );
     } else {
       setLeadersFilled(false);
     }
-  }, [answers, leaders]);
+  }, [answers, leaders, erroneousValueInputIds, emptyRequiredInputIds]);
 
   const addLeader = () =>
     setLeaders((prev) => [
@@ -488,7 +645,6 @@ export default function InsuranceApplicationLeaders(props: {
   return (
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.leaders}
-      rightArrowFaded={!canProceed}
       progress={CHECKPOINT_STEPS.indexOf("leaders") / CHECKPOINT_STEPS.length}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-[32px] py-[64px]">
@@ -516,7 +672,10 @@ export default function InsuranceApplicationLeaders(props: {
           </div>
         </div>
         <div className="w-full flex flex-col gap-5xl">
-          <div className="w-full flex flex-col gap-xl">
+          <div
+            id={LEADER_DETAILS_AGGLOMERATED_INPUT_ID}
+            className="w-full flex flex-col gap-xl"
+          >
             {leaders.map((l, i) => (
               <LeaderRow
                 key={i}
@@ -532,6 +691,8 @@ export default function InsuranceApplicationLeaders(props: {
                         ])
                     : undefined
                 }
+                setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
               />
             ))}
           </div>
@@ -551,13 +712,19 @@ export default function InsuranceApplicationLeaders(props: {
             Answer the following questions for the Company Leaders listed above.
           </div>
           <div className="w-full flex flex-col gap-[46px]">
-            {SECTIONS.map((section, i) => (
+            {SECTIONS.filter(
+              (section) =>
+                section.id !== DESCRIPTION_SECTION_ID ||
+                descriptionInputRequired
+            ).map((section, i) => (
               <AWFormSection
                 i={i + 1}
                 key={section.id}
                 {...section}
                 answers={answers}
                 setValue={setValue}
+                setErroneous={setErroneous}
+                highlightEmpties={highlightEmpties}
               />
             ))}
           </div>
@@ -568,11 +735,22 @@ export default function InsuranceApplicationLeaders(props: {
           </AWButton>
           <AWButton
             width={182}
-            disabled={!canProceed}
             onClick={() => {
               commitAnswers();
-              //setStepIndex(stepIndex + 1);
-              props.nextCallback();
+              if (canProceed) {
+                props.nextCallback();
+              } else {
+                setHighlightEmpties(true);
+                document
+                  .getElementById(
+                    !leadersFilled
+                      ? LEADER_DETAILS_AGGLOMERATED_INPUT_ID
+                      : emptyRequiredInputIds[0] || erroneousValueInputIds[0]
+                  )
+                  ?.parentElement?.parentElement?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+              }
             }}
           >
             Next

@@ -58,6 +58,7 @@ import Image from "next/image";
 import ShareDialog from "./ShareDialog";
 import { fadeIn } from "./TimeRange";
 import TutorialVideoBar from "../components/TutorialVideoBar";
+import BrowserApiController from "../browserApi";
 
 export const TRIAL_DAYS = 14;
 
@@ -566,7 +567,7 @@ export default function DashboardPageContents() {
   const [lessons, setLessons] = useState<ILesson[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
-      ApiController.getUserLessons(userDetails.user.id)
+      ApiController.getUserPlaylists(userDetails.user.id)
         .then((l) => {
           setLessons(_.reverse(l.slice()));
         })
@@ -1357,9 +1358,10 @@ export default function DashboardPageContents() {
               endIcon={ShareIcon}
               iconSize={14}
               onClick={() => {
-                userDetails.user?.externalDashboardTitle
-                  ? router.push(`/user/${userDetails.user.id}`)
-                  : setShareDialogOpen(true);
+                BrowserApiController.addDummyVideoChannel();
+                // userDetails.user?.externalDashboardTitle
+                //   ? router.push(`/user/${userDetails.user.id}`)
+                //   : setShareDialogOpen(true);
               }}
             >
               Share with Students

@@ -21,12 +21,12 @@ export const IDENTITY_STEP_TITLES: Record<
   AWInsuranceApplicationIdentityStepView,
   string
 > = {
-  intro: "Identity verification",
-  responsibilities: "Your responsibilities as a Key Holder",
-  personalDetails: "Company leader personal details",
-  kyc: "Identity verification",
-  success: "Identity verified",
-  status: "Identity verification status",
+  intro: "Identity Verification",
+  responsibilities: "Your Responsibilities as a Key Holder",
+  personalDetails: "Policy Owner Information",
+  kyc: "Identity Verification",
+  success: "Identity Verified",
+  status: "Identity Verification Status",
 };
 
 const IDENTITY_STEP_VIEW_COMPONENTS: Partial<

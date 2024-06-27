@@ -2,7 +2,7 @@ import InsuranceApplicationDialog from "../../components/dialog";
 import { MAIN_FLOW_STEP_TITLES } from "../controller";
 import { AWButton } from "@/components/AWButton";
 import _ from "lodash";
-import { CHECKPOINT_STEPS } from "../../components/checkpoint-dialog";
+import { CHECKPOINT_STEPS } from "./checkpoints/checkpoint-dialog";
 import DocumentIcon from "@/images/icons/DocumentIcon.svg";
 
 const BULLETPOINTS = [
