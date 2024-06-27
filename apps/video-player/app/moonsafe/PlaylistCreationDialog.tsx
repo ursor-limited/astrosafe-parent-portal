@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 const WIDTH = "943px";
 const HEIGHT = "597px";
-const ILLUSTRATION_URL =
+export const MOONSAFE_ILLUSTRATION_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png";
 
 const MAX_DURATION = 2 * 3600;
@@ -362,7 +362,7 @@ const FinishView = () => (
   <Stack flex={1} justifyContent="center" alignItems="center">
     <UrsorFadeIn duration={800} key="device-name" fullWidth>
       <Image
-        src={ILLUSTRATION_URL}
+        src={MOONSAFE_ILLUSTRATION_URL}
         width={581}
         height={390}
         alt="finish illustration"
