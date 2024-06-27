@@ -408,7 +408,9 @@ const PlaylistCreationDialog = (props: {
       ApiController.createPlaylist({
         creatorId: userDetails?.id ?? "",
         title: name,
-        channels: selectedChannels,
+        excludedChannelIds: channels
+          .map((c) => c.id)
+          .filter((id) => !selectedChannels.includes(id)),
         duration: (duration / 100) * MAX_DURATION,
       }).then((response) => {
         props.refreshLessons();
