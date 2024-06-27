@@ -63,6 +63,8 @@ import MoonsafePageCard, {
   MoonsafeDurationIndicator,
 } from "./MoonsafePageCard";
 import KidsView from "./KidsView";
+import { SIDEBAR_X_MARGIN, SIDEBAR_Y_MARGIN } from "@/app/dashboard/PageLayout";
+import Sidebar, { WIDTH } from "@/app/dashboard/Sidebar";
 
 export interface IPlaylist {
   id: string;
@@ -604,339 +606,360 @@ export default function MoonsafePlaylistPageContents(props: {
             ? PALETTE.primary.navy
             : undefined
         }
-        sx={{
-          opacity: 0,
-          animation: `${fadeIn} 0.2s ease-in`,
-          animationFillMode: "forwards",
-          animationDelay: "2s",
-        }}
         // sx={{
         //   pointerEvents: draggedContentId ? "none" : undefined,
         // }}
-        spacing="12px"
+        direction="row"
       >
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          px="200px"
-          py="20px"
+          minWidth={`calc(${WIDTH} + ${SIDEBAR_X_MARGIN}px)`}
+          alignItems="flex-end"
+          py={SIDEBAR_Y_MARGIN}
+          mr="5px"
+          justifyContent="center"
         >
-          <Stack direction="row" justifyContent="center" spacing="12px">
-            <Stack
-              sx={{
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
-                cursor: "pointer",
-              }}
-              onClick={() => router.push("/moonsafe")}
-            >
-              <Typography variant="h4" sx={{ transform: "translateY(1px)" }}>
-                <ChevronLeft width="32px" height="32px" />
-              </Typography>
-            </Stack>
-            <Stack
-              sx={{
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
-                cursor: "pointer",
-              }}
-              onClick={() => router.push("/moonsafe")}
-            >
-              <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
-                MoonSafe
-              </Typography>
-            </Stack>
-            <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
-              /
-            </Typography>
-            <Typography variant="h4">{playlist?.title}</Typography>
-          </Stack>
-          <Stack direction="row" spacing="12px">
-            <MoonsafeDurationIndicator
-              value={playlist?.duration ?? 0}
-              tiny
-              small
-              vibrantText
-            />
-            <UrsorButton
-              dark
-              variant="tertiary"
-              endIcon={PlayIcon}
-              onClick={() => setKidsViewOpen(true)}
-            >
-              Start Playlist
-            </UrsorButton>
-          </Stack>
+          <Sidebar selectedItemId="moonsafe" />
         </Stack>
-        <MoonsafePageCard
-          createdAt={playlist?.createdAt ?? undefined}
-          width="100%"
-          maxWidth={
-            !userDetails?.user || userDetails.user.id !== playlist?.creatorId
-              ? "1260px"
-              : undefined
-          }
-          noBottomPadding
-          editingCallback={() => setEditingDialogOpen(true)}
-          editingEnabled={
-            !!userDetails?.user?.id &&
-            userDetails.user.id === playlist?.creatorId
-          }
-          duration={playlist?.duration ?? 0}
+        <Stack
+          spacing="12px"
+          flex={1}
+          sx={{
+            opacity: 0,
+            animation: `${fadeIn} 0.2s ease-in`,
+            animationFillMode: "forwards",
+            animationDelay: "2s",
+          }}
         >
-          {orderedVideos.length > 0 &&
-          !!userDetails?.user?.id &&
-          userDetails.user.id === playlist?.creatorId ? (
-            <Stack
-              height="100%"
-              width="48px"
-              position="fixed"
-              top={0}
-              left="50%"
-              sx={{
-                transform: `translate(-24px, -26px)`,
-                opacity: 0,
-                animation: `${fadeIn} 0.2s ease-in`,
-                animationFillMode: "forwards",
-              }}
-              zIndex={3}
-              onWheel={(event) => {
-                pageRef?.scroll({
-                  //@ts-ignore
-                  top: event?.deltaY + pageRef.scrollTop,
-                });
-              }}
-            >
-              {draggedContentId ? (
-                <Stack
-                  bgcolor={PALETTE.secondary.purple[1]}
-                  height="16px"
-                  width="16px"
-                  borderRadius="100%"
-                  position="absolute"
-                  left={0}
-                  right={0}
-                  marginLeft="auto"
-                  marginRight="auto"
-                  top={
-                    expandedContentIds.includes(draggedContentId)
-                      ? mouseY -
-                        draggedElementTopMouseYSeparation -
-                        2 * EXPANDED_CARD_DOT_Y
-                      : mouseY - draggedElementTopMouseYSeparation + DOT_CARD_Y
-                  }
-                  zIndex={2}
-                />
-              ) : (
-                <Stack
-                  position="absolute"
-                  top={addButtonY}
-                  left={0}
-                  right={0}
-                  marginLeft="auto"
-                  marginRight="auto"
-                  onClick={() => {
-                    setStaticAddButtonY(mouseY);
-                    if (addContentPopoverOpen) return;
-                    setContentInsertionIndex(getContentInsertionIndex(mouseY));
-                  }}
-                  alignItems="center"
-                  zIndex={8}
-                >
-                  <Stack
-                    sx={{
-                      opacity:
-                        orderedVideos.length === 0 || !hoveringOnContentCard
-                          ? 1
-                          : 0,
-                      transition: "0.2s",
-                    }}
-                  >
-                    <AddContentButton
-                      open={addContentPopoverOpen}
-                      setOpen={setAddContentPopoverOpen}
-                      callback={(type) => contentCallbacks[type]()}
-                      premiumCallback={() => {
-                        setUpgradeDialogOpen(true);
-                        setStaticAddButtonY(null);
-                        setAddContentPopoverOpen(false);
-                      }}
-                      clickOutsideCloseCallback={() =>
-                        setContentInsertionIndex(undefined)
-                      }
-                    />
-                  </Stack>
-                </Stack>
-              )}
-            </Stack>
-          ) : null}
-          <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
-            <Stack
-              px={`${CONTENT_PADDING_X}px`}
-              ref={setContentsColumnRef}
-              position="relative"
-              pb="48px"
-              flex={1}
-            >
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            px="123px"
+            py="20px"
+            spacing="24px"
+          >
+            <Stack direction="row" justifyContent="center" spacing="12px">
               <Stack
-                position="absolute"
+                sx={{
+                  "&:hover": { opacity: 0.7 },
+                  transition: "0.2s",
+                  cursor: "pointer",
+                }}
+                onClick={() => router.push("/moonsafe")}
+              >
+                <Typography variant="h4" sx={{ transform: "translateY(1px)" }}>
+                  <ChevronLeft width="32px" height="32px" />
+                </Typography>
+              </Stack>
+              <Stack
+                sx={{
+                  "&:hover": { opacity: 0.7 },
+                  transition: "0.2s",
+                  cursor: "pointer",
+                }}
+                onClick={() => router.push("/moonsafe")}
+              >
+                <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
+                  MoonSafe
+                </Typography>
+              </Stack>
+              <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
+                /
+              </Typography>
+              <Typography variant="h4" maxLines={1}>
+                {playlist?.title}
+              </Typography>
+            </Stack>
+            <Stack direction="row" spacing="12px">
+              <MoonsafeDurationIndicator
+                value={playlist?.duration ?? 0}
+                tiny
+                small
+                vibrantText
+              />
+              <UrsorButton
+                dark
+                variant="tertiary"
+                endIcon={PlayIcon}
+                onClick={() => setKidsViewOpen(true)}
+              >
+                Start Playlist
+              </UrsorButton>
+            </Stack>
+          </Stack>
+          <MoonsafePageCard
+            createdAt={playlist?.createdAt ?? undefined}
+            width="100%"
+            maxWidth={
+              !userDetails?.user || userDetails.user.id !== playlist?.creatorId
+                ? "1260px"
+                : undefined
+            }
+            noBottomPadding
+            editingCallback={() => setEditingDialogOpen(true)}
+            editingEnabled={
+              !!userDetails?.user?.id &&
+              userDetails.user.id === playlist?.creatorId
+            }
+            duration={playlist?.duration ?? 0}
+          >
+            {orderedVideos.length > 0 &&
+            !!userDetails?.user?.id &&
+            userDetails.user.id === playlist?.creatorId ? (
+              <Stack
                 height="100%"
-                width="50px"
-                right={0}
-                left={0}
-                marginLeft="auto"
-                marginRight="auto"
+                width="48px"
+                position="fixed"
+                top={0}
+                left="50%"
+                sx={{
+                  transform: `translate(55px, -26px)`,
+                  opacity: 0,
+                  animation: `${fadeIn} 0.2s ease-in`,
+                  animationFillMode: "forwards",
+                }}
+                zIndex={3}
                 onWheel={(event) => {
                   pageRef?.scroll({
                     //@ts-ignore
                     top: event?.deltaY + pageRef.scrollTop,
                   });
                 }}
-                onMouseEnter={() => setHoveringOnContentCard(false)}
               >
-                <Stack height="100%" position="relative">
-                  {orderedVideos.length === 0 ||
-                  (contentsWithDotY[0]?.dotY &&
-                    contentsWithDotY[contentsWithDotY.length - 1]?.dotY) ? (
+                {draggedContentId ? (
+                  <Stack
+                    bgcolor={PALETTE.secondary.purple[1]}
+                    height="16px"
+                    width="16px"
+                    borderRadius="100%"
+                    position="absolute"
+                    left={0}
+                    right={0}
+                    marginLeft="auto"
+                    marginRight="auto"
+                    top={
+                      expandedContentIds.includes(draggedContentId)
+                        ? mouseY -
+                          draggedElementTopMouseYSeparation -
+                          2 * EXPANDED_CARD_DOT_Y
+                        : mouseY -
+                          draggedElementTopMouseYSeparation +
+                          DOT_CARD_Y
+                    }
+                    zIndex={2}
+                  />
+                ) : (
+                  <Stack
+                    position="absolute"
+                    top={addButtonY}
+                    left={0}
+                    right={0}
+                    marginLeft="auto"
+                    marginRight="auto"
+                    onClick={() => {
+                      setStaticAddButtonY(mouseY);
+                      if (addContentPopoverOpen) return;
+                      setContentInsertionIndex(
+                        getContentInsertionIndex(mouseY)
+                      );
+                    }}
+                    alignItems="center"
+                    zIndex={8}
+                  >
                     <Stack
-                      width="2px"
-                      height={"calc(100% - 50px)"}
-                      bgcolor={PALETTE.secondary.grey[3]}
+                      sx={{
+                        opacity:
+                          orderedVideos.length === 0 || !hoveringOnContentCard
+                            ? 1
+                            : 0,
+                        transition: "0.2s",
+                      }}
+                    >
+                      <AddContentButton
+                        open={addContentPopoverOpen}
+                        setOpen={setAddContentPopoverOpen}
+                        callback={(type) => contentCallbacks[type]()}
+                        premiumCallback={() => {
+                          setUpgradeDialogOpen(true);
+                          setStaticAddButtonY(null);
+                          setAddContentPopoverOpen(false);
+                        }}
+                        clickOutsideCloseCallback={() =>
+                          setContentInsertionIndex(undefined)
+                        }
+                      />
+                    </Stack>
+                  </Stack>
+                )}
+              </Stack>
+            ) : null}
+            <Stack width="100%" pt="36px" minHeight="44px" flex={1}>
+              <Stack
+                px={`${CONTENT_PADDING_X}px`}
+                ref={setContentsColumnRef}
+                position="relative"
+                pb="48px"
+                flex={1}
+              >
+                <Stack
+                  position="absolute"
+                  height="100%"
+                  width="50px"
+                  right={0}
+                  left={0}
+                  marginLeft="auto"
+                  marginRight="auto"
+                  onWheel={(event) => {
+                    pageRef?.scroll({
+                      //@ts-ignore
+                      top: event?.deltaY + pageRef.scrollTop,
+                    });
+                  }}
+                  onMouseEnter={() => setHoveringOnContentCard(false)}
+                >
+                  <Stack height="100%" position="relative">
+                    {orderedVideos.length === 0 ||
+                    (contentsWithDotY[0]?.dotY &&
+                      contentsWithDotY[contentsWithDotY.length - 1]?.dotY) ? (
+                      <Stack
+                        width="2px"
+                        height={"calc(100% - 50px)"}
+                        bgcolor={PALETTE.secondary.grey[3]}
+                        position="absolute"
+                        left="-1px"
+                        right={0}
+                        marginRight="auto"
+                        marginLeft="auto"
+                        top="50px"
+                      />
+                    ) : null}
+
+                    <Stack
+                      width="100%"
+                      height="260px"
+                      bgcolor="rgb(255,255,255)"
+                      sx={{
+                        background: `linear-gradient(0, rgb(255,255,255), rgba(255,255,255,0))`,
+                      }}
                       position="absolute"
-                      left="-1px"
                       right={0}
                       marginRight="auto"
                       marginLeft="auto"
-                      top="50px"
-                    />
-                  ) : null}
-
-                  <Stack
-                    width="100%"
-                    height="260px"
-                    bgcolor="rgb(255,255,255)"
-                    sx={{
-                      background: `linear-gradient(0, rgb(255,255,255), rgba(255,255,255,0))`,
-                    }}
-                    position="absolute"
-                    right={0}
-                    marginRight="auto"
-                    marginLeft="auto"
-                    bottom={0}
-                    zIndex={2}
-                  />
-                </Stack>
-              </Stack>
-              <Stack spacing="50px" pb="70px">
-                {orderedVideos.length === 0 ? (
-                  <Stack width="50%">
-                    <InitialAddContentButton
-                      setStarterAddContentPopoverOpen={() =>
-                        setStarterAddContentPopoverOpen(true)
-                      }
+                      bottom={0}
+                      zIndex={2}
                     />
                   </Stack>
-                ) : null}
-                {expansionChunkedContentIds.map((chunk, i) => {
-                  if (
-                    chunk.length === 1 &&
-                    expandedContentIds.includes(chunk[0])
-                  ) {
-                    const expandedContent = orderedVideos.find(
-                      (v) => v === chunk[0]
-                    );
-                    return expandedContent ? (
-                      <Stack
-                        key={`${i}expanded`}
-                        zIndex={3}
-                        alignItems="center"
-                        spacing={`${EXPANDED_CARD_DOT_Y}px`}
-                        sx={{
-                          opacity: draggedContentId === chunk[0] ? 0 : 1,
-                          transition: "0.2s",
-                        }}
-                      >
+                </Stack>
+                <Stack spacing="50px" pb="70px">
+                  {orderedVideos.length === 0 ? (
+                    <Stack width="50%">
+                      <InitialAddContentButton
+                        setStarterAddContentPopoverOpen={() =>
+                          setStarterAddContentPopoverOpen(true)
+                        }
+                      />
+                    </Stack>
+                  ) : null}
+                  {expansionChunkedContentIds.map((chunk, i) => {
+                    if (
+                      chunk.length === 1 &&
+                      expandedContentIds.includes(chunk[0])
+                    ) {
+                      const expandedContent = orderedVideos.find(
+                        (v) => v === chunk[0]
+                      );
+                      return expandedContent ? (
                         <Stack
-                          // @ts-ignore
-                          id={`${chunk[0]}dot`}
-                          bgcolor={PALETTE.secondary.purple[1]}
-                          height="16px"
-                          width="16px"
-                          borderRadius="100%"
-                          top={`${DOT_CARD_Y}px`}
-                          zIndex={2}
-                        />
-                        <ContentCards
-                          selectedVideos={[expandedContent]}
-                          expanded
+                          key={`${i}expanded`}
+                          zIndex={3}
+                          alignItems="center"
+                          spacing={`${EXPANDED_CARD_DOT_Y}px`}
+                          sx={{
+                            opacity: draggedContentId === chunk[0] ? 0 : 1,
+                            transition: "0.2s",
+                          }}
+                        >
+                          <Stack
+                            // @ts-ignore
+                            id={`${chunk[0]}dot`}
+                            bgcolor={PALETTE.secondary.purple[1]}
+                            height="16px"
+                            width="16px"
+                            borderRadius="100%"
+                            top={`${DOT_CARD_Y}px`}
+                            zIndex={2}
+                          />
+                          <ContentCards
+                            selectedVideos={[expandedContent]}
+                            expanded
+                            videos={videos}
+                            lessonId={props.subdirectory}
+                            hideLimits
+                            columnWidth={singleContentsColumnWidth}
+                            draggedContentId={
+                              draggedContentId ? draggedContentId : undefined
+                            }
+                            dragStartCallback={(id) => setDraggedContentId(id)}
+                            setVideoEditingDialogId={setVideoEditingDialogId}
+                            updateCallback={loadPlaylist}
+                            expansionCallback={() => {
+                              const newExpandedContentIds =
+                                expandedContentIds.filter(
+                                  (cid) => cid !== chunk[0]
+                                );
+                              setExpandedContentIds(newExpandedContentIds);
+                              ApiController.updateLesson(props.subdirectory, {
+                                expandedContentIds: newExpandedContentIds,
+                              });
+                            }}
+                          />
+                        </Stack>
+                      ) : null;
+                    } else {
+                      return (
+                        <Timeline
+                          key={`${i}columns`}
+                          selectedVideos={orderedVideos.filter((c) =>
+                            chunk.includes(c)
+                          )}
+                          videosWithSide={videosWithSide.filter((c) =>
+                            chunk.includes(c.id)
+                          )}
                           videos={videos}
                           lessonId={props.subdirectory}
-                          hideLimits
-                          columnWidth={singleContentsColumnWidth}
+                          loadLesson={loadPlaylist}
+                          singleContentsColumnWidth={singleContentsColumnWidth}
+                          setDraggedContentId={setDraggedContentId}
                           draggedContentId={
                             draggedContentId ? draggedContentId : undefined
                           }
-                          dragStartCallback={(id) => setDraggedContentId(id)}
                           setVideoEditingDialogId={setVideoEditingDialogId}
-                          updateCallback={loadPlaylist}
-                          expansionCallback={() => {
+                          expansionCallback={(id) => {
                             const newExpandedContentIds =
-                              expandedContentIds.filter(
-                                (cid) => cid !== chunk[0]
-                              );
+                              expandedContentIds.includes(id)
+                                ? expandedContentIds.filter((cid) => cid !== id)
+                                : [...expandedContentIds, id];
                             setExpandedContentIds(newExpandedContentIds);
                             ApiController.updateLesson(props.subdirectory, {
                               expandedContentIds: newExpandedContentIds,
                             });
                           }}
                         />
-                      </Stack>
-                    ) : null;
-                  } else {
-                    return (
-                      <Timeline
-                        key={`${i}columns`}
-                        selectedVideos={orderedVideos.filter((c) =>
-                          chunk.includes(c)
-                        )}
-                        videosWithSide={videosWithSide.filter((c) =>
-                          chunk.includes(c.id)
-                        )}
-                        videos={videos}
-                        lessonId={props.subdirectory}
-                        loadLesson={loadPlaylist}
-                        singleContentsColumnWidth={singleContentsColumnWidth}
-                        setDraggedContentId={setDraggedContentId}
-                        draggedContentId={
-                          draggedContentId ? draggedContentId : undefined
-                        }
-                        setVideoEditingDialogId={setVideoEditingDialogId}
-                        expansionCallback={(id) => {
-                          const newExpandedContentIds =
-                            expandedContentIds.includes(id)
-                              ? expandedContentIds.filter((cid) => cid !== id)
-                              : [...expandedContentIds, id];
-                          setExpandedContentIds(newExpandedContentIds);
-                          ApiController.updateLesson(props.subdirectory, {
-                            expandedContentIds: newExpandedContentIds,
-                          });
-                        }}
-                      />
-                    );
-                  }
-                })}
+                      );
+                    }
+                  })}
+                </Stack>
               </Stack>
             </Stack>
-          </Stack>
-          {playlist &&
-          (!userDetails?.user?.id ||
-            userDetails?.user?.id !== playlist?.creatorId) ? (
-            <Stack px="24px" height="100vh" justifyContent="center">
-              <ExternalPageFooter />
-            </Stack>
-          ) : null}
-        </MoonsafePageCard>
+            {playlist &&
+            (!userDetails?.user?.id ||
+              userDetails?.user?.id !== playlist?.creatorId) ? (
+              <Stack px="24px" height="100vh" justifyContent="center">
+                <ExternalPageFooter />
+              </Stack>
+            ) : null}
+          </MoonsafePageCard>
+        </Stack>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}
