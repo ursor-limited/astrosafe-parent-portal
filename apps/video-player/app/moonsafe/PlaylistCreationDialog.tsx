@@ -11,6 +11,7 @@ import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
+import XIcon from "@/images/icons/X.svg";
 import { useUserContext } from "../components/UserContext";
 import { MoonsafeDurationIndicator } from "../moonSafePlaylist/[subdirectory]/MoonsafePageCard";
 import { useRouter } from "next/navigation";
@@ -439,7 +440,27 @@ const PlaylistCreationDialog = (props: {
         },
       }}
     >
-      <Stack height="100%" width="100%" alignItems="center" spacing="24px">
+      <Stack
+        position="absolute"
+        top="41px"
+        right="41px"
+        onClick={props.onClose}
+        sx={{
+          cursor: "pointer",
+          "&:hover": { opacity: 0.6 },
+          transition: "0.2s",
+        }}
+        zIndex={3}
+      >
+        <XIcon height="28px" width="28px" />
+      </Stack>
+      <Stack
+        height="100%"
+        width="100%"
+        alignItems="center"
+        spacing="24px"
+        position="relative"
+      >
         <Stack height="52px" alignItems="center" justifyContent="center">
           <Typography color={PALETTE.secondary.purple[2]} variant="h4">
             {STEP_TITLES[step]}
