@@ -636,6 +636,7 @@ export default function MoonsafePlaylistPageContents(props: {
             alignItems="center"
             px="123px"
             py="20px"
+            spacing="24px"
           >
             <Stack direction="row" justifyContent="center" spacing="12px">
               <Stack
@@ -665,7 +666,9 @@ export default function MoonsafePlaylistPageContents(props: {
               <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
                 /
               </Typography>
-              <Typography variant="h4">{playlist?.title}</Typography>
+              <Typography variant="h4" maxLines={1}>
+                {playlist?.title}
+              </Typography>
             </Stack>
             <Stack direction="row" spacing="12px">
               <MoonsafeDurationIndicator
