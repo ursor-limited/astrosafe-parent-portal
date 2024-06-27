@@ -514,6 +514,7 @@ class ApiController {
     creatorId: string;
     title: string;
     channels: string[];
+    duration: number
   }) {
     return post(`playlist`, details).then((response: any) =>
       response.json()

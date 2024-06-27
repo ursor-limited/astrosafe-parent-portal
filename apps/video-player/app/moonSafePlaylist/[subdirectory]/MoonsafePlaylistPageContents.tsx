@@ -60,6 +60,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 import CopyAndMoveDialog from "./CopyAndMoveDialog";
 import MoonsafePageCard from "./MoonsafePageCard";
+import KidsView from "./KidsView";
 
 export interface IPlaylist {
   id: string;
@@ -91,7 +92,9 @@ to {
 
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
-export default function LessonPageContents(props: { subdirectory: string }) {
+export default function MoonsafePlaylistPageContents(props: {
+  subdirectory: string;
+}) {
   const [playlist, setPlaylist] = useState<IPlaylist | undefined>(undefined);
   const [videos, setVideos] = useState<IVideo[]>([]);
 
@@ -551,6 +554,8 @@ export default function LessonPageContents(props: { subdirectory: string }) {
 
   const [makeCopyDialogOpen, setMakeCopyDialogOpen] = useState<boolean>(false);
 
+  const [kidsViewOpen, setKidsViewOpen] = useState<boolean>(false);
+
   return (
     <>
       {draggedElement
@@ -646,7 +651,12 @@ export default function LessonPageContents(props: { subdirectory: string }) {
             <Typography variant="h4">{playlist?.title}</Typography>
           </Stack>
           <Stack direction="row">
-            <UrsorButton dark variant="tertiary" endIcon={PlayIcon}>
+            <UrsorButton
+              dark
+              variant="tertiary"
+              endIcon={PlayIcon}
+              onClick={() => setKidsViewOpen(true)}
+            >
               Start Playlist
             </UrsorButton>
           </Stack>
@@ -854,6 +864,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
                           expanded
                           videos={videos}
                           lessonId={props.subdirectory}
+                          hideLimits
                           columnWidth={singleContentsColumnWidth}
                           draggedContentId={
                             draggedContentId ? draggedContentId : undefined
@@ -1002,6 +1013,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           selectedVideos={orderedVideos}
           videos={videos}
           lessonId={props.subdirectory}
+          hideLimits
           columnWidth={singleContentsColumnWidth}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setHeight={(id, height) => {
@@ -1042,6 +1054,7 @@ export default function LessonPageContents(props: { subdirectory: string }) {
           })
         }
       />
+      <KidsView open={kidsViewOpen} onClose={() => setKidsViewOpen(false)} />
     </>
   );
 }

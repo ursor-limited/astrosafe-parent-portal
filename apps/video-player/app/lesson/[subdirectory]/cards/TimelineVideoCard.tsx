@@ -159,8 +159,10 @@ const TimelineVideoCard = (
     noPlayer?: boolean;
     noButtons?: boolean;
     expansionCallback?: () => void;
+    hideLimits?: boolean;
   }
 ) => {
+  console.log("xxx", props.title, props.hideLimits);
   const notificationCtx = useContext(NotificationContext);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   const submitDeletion = () =>
@@ -396,6 +398,7 @@ const TimelineVideoCard = (
                 commentsButton={!props.noButtons}
                 shortCommentsList={!props.expanded}
                 noSpacing
+                hideLimits={props.hideLimits}
               />
             </Stack>
           ) : null}

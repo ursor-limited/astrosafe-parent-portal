@@ -55,6 +55,7 @@ const Timeline = (props: {
             selectedVideos={leftVideos}
             videos={props.videos}
             lessonId={props.lessonId}
+            hideLimits
             setVideoEditingDialogId={props.setVideoEditingDialogId}
             updateCallback={props.loadLesson}
             dragStartCallback={props.setDraggedContentId}
@@ -111,6 +112,7 @@ const Timeline = (props: {
           selectedVideos={rightVideos}
           videos={props.videos}
           lessonId={props.lessonId}
+          hideLimits
           setVideoEditingDialogId={props.setVideoEditingDialogId}
           updateCallback={props.loadLesson}
           dragStartCallback={props.setDraggedContentId}

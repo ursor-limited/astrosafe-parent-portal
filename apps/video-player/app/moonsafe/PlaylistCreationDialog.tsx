@@ -20,6 +20,8 @@ const HEIGHT = "597px";
 const ILLUSTRATION_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png";
 
+const MAX_DURATION = 2 * 3600;
+
 type PlaylistCreationStep = "name" | "duration" | "selection" | "finish";
 
 const STEP_TITLES: Record<PlaylistCreationStep, string> = {
@@ -376,7 +378,7 @@ const PlaylistCreationDialog = (props: {
 }) => {
   const [step, setStep] = useState<PlaylistCreationStep>("name");
   const [name, setName] = useState<string>("");
-  const [duration, setDuration] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(50);
 
   const [channels, setChannels] =
     useState<IPlaylistCreationChannel[]>(CHANNELS);
@@ -400,6 +402,7 @@ const PlaylistCreationDialog = (props: {
         creatorId: userDetails?.id ?? "",
         title: name,
         channels: selectedChannels,
+        duration: duration * MAX_DURATION,
       }).then((response) => {
         props.refreshLessons();
         setCreatedPlaylistId(response.id);

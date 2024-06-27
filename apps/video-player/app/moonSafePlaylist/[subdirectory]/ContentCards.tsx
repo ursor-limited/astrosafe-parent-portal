@@ -1,6 +1,6 @@
 import { IVideo } from "@/app/api";
+import TimelineVideoCard from "@/app/lesson/[subdirectory]/cards/TimelineVideoCard";
 import React, { useState } from "react";
-import TimelineVideoCard from "./cards/TimelineVideoCard";
 
 const ContentCards = (props: {
   videos: IVideo[];
@@ -17,6 +17,7 @@ const ContentCards = (props: {
   expanded?: boolean;
   noPlayer?: boolean;
   noButtons?: boolean; // the buttons would be clickable in the column of invisible contents
+  hideLimits?: boolean;
 }) => {
   return (
     <>
@@ -41,6 +42,7 @@ const ContentCards = (props: {
               expansionCallback={() => props.expansionCallback?.(sv)}
               noPlayer={props.noPlayer}
               noButtons={props.noButtons}
+              hideLimits={props.hideLimits}
             />
           ) : null;
         })
