@@ -147,6 +147,7 @@ const MoonsafeKidsVideoCard = (
     deletionCallback?: () => void;
     duplicationCallback?: () => void;
     onDragStart?: () => void;
+    setCurrentTime?: (time: number) => void;
     dragging?: boolean;
     columnWidth?: number;
     expanded?: boolean;
@@ -191,10 +192,12 @@ const MoonsafeKidsVideoCard = (
   }, [props.startTime, props.endTime]);
 
   const [currentTime, setCurrentTime] = useState<number>(0);
-
   const [currentTimeSetter, setCurrentTimeSetter] = useState<
     undefined | ((time: number) => void)
   >();
+  useEffect(() => {
+    props.setCurrentTime(currentTime);
+  }, [currentTime]);
 
   const [playing, setPlaying] = useState<boolean>(false);
   const [playingSetter, setPlayingSetter] = useState<

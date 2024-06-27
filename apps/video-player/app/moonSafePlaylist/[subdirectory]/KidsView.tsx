@@ -200,7 +200,7 @@ const KidsView = (props: {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<
     number | undefined
   >(0);
-
+  const [currentTime, setCurrentTime] = useState<number>(0);
   return (
     <Dialog
       transitionDuration={400}
@@ -279,9 +279,13 @@ const KidsView = (props: {
         <EndDialog onClick={props.onClose} />
       </Stack>
       <MenuBar
-        durationLeft={_.sum(
-          _.compact(props.videos.slice(currentVideoIndex).map((v) => v.endTime))
-        )}
+        durationLeft={
+          _.sum(
+            _.compact(
+              props.videos.slice(currentVideoIndex).map((v) => v.endTime)
+            )
+          ) - currentTime
+        }
       />
       <Stack overflow="scroll">
         <Stack spacing="20px" padding="32px">
@@ -295,6 +299,7 @@ const KidsView = (props: {
               <MoonsafeKidsVideoCard
                 {...v}
                 play={!showBackgroundView && currentVideoIndex === i}
+                setCurrentTime={setCurrentTime}
               />
             </Stack>
           ))}
