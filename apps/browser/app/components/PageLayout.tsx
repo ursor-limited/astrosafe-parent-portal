@@ -30,22 +30,26 @@ const PageLayout = (props: {
     undefined
   );
   const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
-  // useEffect(() => {
-  //   deviceId && setLandingViewOpen(false);
-  //   !deviceId && setTimeout(() => setLandingViewOpen(true), 1500);
-  // }, [deviceId]);
+
+  useEffect(() => {
+    deviceId &&
+      window.postMessage(
+        {
+          setDeviceId: deviceId,
+        },
+        "*"
+      );
+  }, [deviceId]);
+
   return (
     <>
       {!props.mobile ? <Navbar selected={props.headerButtonId} /> : null}
       <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-        {!deviceId ? (
-          <Stack px={OVERALL_X_PADDING}>
-            <ConnectBar
-              mobile={!!props.mobile}
-              openConnect={props.openConnect}
-            />
-          </Stack>
-        ) : null}
+        {/* {!deviceId ? ( */}
+        <Stack px={OVERALL_X_PADDING}>
+          <ConnectBar mobile={!!props.mobile} openConnect={props.openConnect} />
+        </Stack>
+        {/* ) : null} */}
         {props.sections.map((section, i) => (
           <Stack key={i} spacing="20px">
             <Stack spacing="20px">
