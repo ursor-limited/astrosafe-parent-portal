@@ -8,6 +8,8 @@ module.exports = withSvgr({
     domains: [
       "https://browser.astrosafe.co",
       "https://browser.astrosafe.co/_next/image",
+      "https://dev.browser.astrosafe.co",
+      "https://dev.browser.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://dev.astrosafe.co",
       "https://astro-monorepo-canvas.vercel.app",
@@ -24,7 +26,7 @@ module.exports = withSvgr({
     process.env.VERCEL_ENV === "production"
       ? "https://browser.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
-      ? "https://dev.astrosafe.co"
+      ? "https://dev.browser.astrosafe.co"
       : undefined,
   async redirects() {
     return [
