@@ -133,25 +133,15 @@ export interface ISchoolJoiningDialogProps {
 export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
   const nativeDeviceId = useNativeDeviceId();
 
-  // const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
-  //   "deviceId",
-  //   undefined
-  // );
+  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+    "deviceId",
+    undefined
+  );
 
   const [schoolId, setSchoolId] = useLocalStorage<string | undefined>(
     "schoolId",
     undefined
   );
-
-  // useEffect(() => {
-  //   deviceId &&
-  //     window.postMessage(
-  //       {
-  //         setDeviceId: deviceId,
-  //       },
-  //       "*"
-  //     );
-  // }, [deviceId]);
 
   const [inputedCode, setInputedCode] = useState<string>("");
   const [codeInputActive, setCodeInputActive] = useState<boolean>(true);
