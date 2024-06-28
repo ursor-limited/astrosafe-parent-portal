@@ -114,8 +114,6 @@ export default function MoonsafePlaylistPageContents(props: {
       }
     );
 
-  console.log(playlist);
-
   useEffect(() => {
     props.subdirectory && loadPlaylist();
   }, [props.subdirectory]);
