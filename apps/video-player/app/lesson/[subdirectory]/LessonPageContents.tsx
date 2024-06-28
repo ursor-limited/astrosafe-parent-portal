@@ -59,6 +59,8 @@ import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 import CopyAndMoveDialog from "./CopyAndMoveDialog";
+import { WIDTH } from "@/app/dashboard/Sidebar";
+import { SIDEBAR_X_MARGIN } from "@/app/dashboard/PageLayout";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;

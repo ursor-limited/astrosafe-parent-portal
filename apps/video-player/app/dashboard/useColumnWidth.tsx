@@ -5,7 +5,11 @@ export const MIN_COLUMN_WIDTH = 245;
 export const MAX_COLUMN_WIDTH = 402;
 export const IDEAL_COLUMN_WIDTH = 271;
 
-const useColumnWidth = () => {
+const useColumnWidth = (
+  idealWidth?: number,
+  minWidth?: number,
+  maxWidth?: number
+) => {
   const [nColumns, setNColumns] = useState<number>(1);
 
   const { width } = useWindowSize();
@@ -15,14 +19,14 @@ const useColumnWidth = () => {
   useEffect(() => {
     const possibleNColumns = Math.floor(
       (columnsContainerRef?.getBoundingClientRect().width ?? 0) /
-        IDEAL_COLUMN_WIDTH
+        (idealWidth || IDEAL_COLUMN_WIDTH)
     );
 
     const possibleColumnWidth =
       (columnsContainerRef?.getBoundingClientRect().width ?? 0) /
       possibleNColumns;
-    if (possibleColumnWidth > MIN_COLUMN_WIDTH) {
-      if (possibleColumnWidth < MAX_COLUMN_WIDTH) {
+    if (possibleColumnWidth > (minWidth || MIN_COLUMN_WIDTH)) {
+      if (possibleColumnWidth < (maxWidth || MAX_COLUMN_WIDTH)) {
         setNColumns(possibleNColumns);
       } else {
         setNColumns(possibleNColumns + 1);

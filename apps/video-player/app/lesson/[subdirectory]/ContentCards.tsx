@@ -48,6 +48,7 @@ const ContentCards = (props: {
   expanded?: boolean;
   noPlayer?: boolean;
   noButtons?: boolean; // the buttons would be clickable in the column of invisible contents
+  hideLimits?: boolean;
 }) => {
   return (
     <>
@@ -75,6 +76,7 @@ const ContentCards = (props: {
                 expansionCallback={() => props.expansionCallback?.(c.contentId)}
                 noPlayer={props.noPlayer}
                 noButtons={props.noButtons}
+                hideLimits={props.hideLimits}
               />
             ) : null;
           } else if (c.type === "link") {

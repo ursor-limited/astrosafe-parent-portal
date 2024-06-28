@@ -10,6 +10,7 @@ import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
+import MoonsafeIcon from "@/images/icons/MoonsafeIcon.svg";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import { useRouter } from "next/navigation";
 
@@ -66,7 +67,8 @@ export type SideBarItemId =
   | "plugins"
   | "safety"
   | "users"
-  | "channels";
+  | "channels"
+  | "moonsafe";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -216,6 +218,13 @@ export default function Sidebar(props: ISidebarProps) {
       icon: PeopleIcon,
       title: "Users",
       callback: () => router.push("/users"),
+    },
+    {
+      id: "moonsafe",
+      //tourId: "devices-button",
+      icon: MoonsafeIcon,
+      title: "Moonsafe",
+      callback: () => router.push("/moonsafe"),
     },
   ];
 

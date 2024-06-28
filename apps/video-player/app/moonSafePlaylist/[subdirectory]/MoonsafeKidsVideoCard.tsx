@@ -1,11 +1,7 @@
-import { Stack, alpha } from "@mui/system";
-import TimelineCard from "./TimelineCard";
-import DeletionDialog from "@/app/components/DeletionDialog";
+import { Stack } from "@mui/system";
 import { useCallback, useContext, useEffect, useState } from "react";
 import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
-import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
@@ -18,7 +14,6 @@ import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import { isMobile } from "react-device-detect";
-import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 export const COMMENT_PAUSE_THRESHOLD = 1;
 
@@ -145,14 +140,14 @@ export const TimelineVideoCardCommentDisplayCard = (
   </Stack>
 );
 
-const TimelineVideoCard = (
+const MoonsafeKidsVideoCard = (
   props: IVideo & {
-    lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
     duplicationCallback?: () => void;
     onDragStart?: () => void;
+    setCurrentTime?: (time: number) => void;
     dragging?: boolean;
     columnWidth?: number;
     expanded?: boolean;
@@ -160,6 +155,7 @@ const TimelineVideoCard = (
     noButtons?: boolean;
     expansionCallback?: () => void;
     hideLimits?: boolean;
+    play?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -168,11 +164,6 @@ const TimelineVideoCard = (
     ApiController.deleteVideo(props.id)
       .then(props.deletionCallback)
       .then(() => notificationCtx.negativeSuccess("Deleted Video."));
-
-  const submitDuplication = () =>
-    ApiController.duplicateVideo(props.id, props.lessonId)
-      .then(props.duplicationCallback)
-      .then(() => notificationCtx.success("Duplicated Video."));
 
   const [playerWidth, setPlayerWidth] = useState<number>(0);
   const [playerHeight, setPlayerHeight] = useState<number>(0);
@@ -201,15 +192,24 @@ const TimelineVideoCard = (
   }, [props.startTime, props.endTime]);
 
   const [currentTime, setCurrentTime] = useState<number>(0);
-
   const [currentTimeSetter, setCurrentTimeSetter] = useState<
     undefined | ((time: number) => void)
   >();
+  useEffect(() => {
+    props.setCurrentTime?.(currentTime);
+  }, [currentTime]);
 
   const [playing, setPlaying] = useState<boolean>(false);
   const [playingSetter, setPlayingSetter] = useState<
     undefined | ((playing: boolean) => void)
   >();
+
+  useEffect(() => {
+    if (playingSetter) {
+      setPlaying(!!props.play);
+      playingSetter(!!props.play);
+    }
+  }, [props.play, playingSetter]);
 
   const [muted, setMuted] = useState<boolean>(false);
   const [muteSetter, setMuteSetter] = useState<undefined | (() => void)>();
@@ -270,30 +270,13 @@ const TimelineVideoCard = (
     }
   }, [currentTime, commentGroups]);
 
-  const [copyDialogOpen, setCopyDialogOpen] = useState<boolean>(false);
-
   return (
     <>
-      <TimelineCard
-        id={props.id}
-        title={props.title}
-        description={props.description}
-        setHeight={props.setHeight}
-        updatedAt={props.updatedAt}
-        color={alpha(CONTENT_BRANDING.video.color, 0.12)}
-        onDragStart={props.onDragStart}
-        dragging={props.dragging}
-        deletionCallback={() => setDeletionDialogOpen(true)}
-        editingCallback={props.editingCallback}
-        copyAndMoveCallback={() => setCopyDialogOpen(true)}
-        duplicationCallback={submitDuplication}
-        width={props.columnWidth}
-        creatorId={props.creatorId}
-        expanded={props.expanded}
-        expansionCallback={props.expansionCallback}
-        useExpandedHeight
-        comments={sortedComments}
-        noButtons={props.noButtons}
+      <Stack
+        p="12px"
+        borderRadius="20px"
+        bgcolor="rgb(255,255,255)"
+        boxShadow="0 0 20px rgba(0,0,0,0.08)"
       >
         <Stack spacing="8px" flex={1}>
           <Stack flex={1} position="relative">
@@ -310,7 +293,7 @@ const TimelineVideoCard = (
               {!props.noPlayer && provider && playerHeight ? (
                 <Stack height={props.noPlayer ? 0 : undefined} spacing="12px">
                   <Player
-                    playerId={`player-${props.id}`}
+                    playerId={`kids-player-${props.id}`}
                     url={props.url}
                     provider={provider}
                     width={playerWidth}
@@ -356,10 +339,7 @@ const TimelineVideoCard = (
             ) : null}
           </Stack>
           {duration && !isMobile ? (
-            <Stack
-              borderBottom={`2px solid ${PALETTE.secondary.grey[2]}`}
-              pb="6px"
-            >
+            <Stack pb="8px">
               <TimeRange
                 range={range}
                 duration={duration}
@@ -397,30 +377,18 @@ const TimelineVideoCard = (
                 commentsButton={!props.noButtons}
                 shortCommentsList={!props.expanded}
                 noSpacing
-                hideLimits={props.hideLimits}
+                hideLimits
+                white
               />
             </Stack>
           ) : null}
+          <Typography variant="h5" maxLines={1}>
+            {props.title}
+          </Typography>
         </Stack>
-      </TimelineCard>
-      {deletionDialogOpen ? (
-        <DeletionDialog
-          open={deletionDialogOpen}
-          closeCallback={() => setDeletionDialogOpen(false)}
-          deletionCallback={submitDeletion}
-          category="Video"
-        />
-      ) : null}
-      {copyDialogOpen && props.id ? (
-        <CopyAndMoveDialog
-          id={props.id}
-          title={props.title}
-          open={copyDialogOpen}
-          closeCallback={() => setCopyDialogOpen(false)}
-        />
-      ) : null}
+      </Stack>
     </>
   );
 };
 
-export default TimelineVideoCard;
+export default MoonsafeKidsVideoCard;

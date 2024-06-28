@@ -159,7 +159,6 @@ const TimelineVideoCard = (
     noPlayer?: boolean;
     noButtons?: boolean;
     expansionCallback?: () => void;
-    hideLimits?: boolean;
   }
 ) => {
   const notificationCtx = useContext(NotificationContext);
@@ -397,7 +396,6 @@ const TimelineVideoCard = (
                 commentsButton={!props.noButtons}
                 shortCommentsList={!props.expanded}
                 noSpacing
-                hideLimits={props.hideLimits}
               />
             </Stack>
           ) : null}
