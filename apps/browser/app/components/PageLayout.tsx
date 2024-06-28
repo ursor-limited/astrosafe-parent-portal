@@ -45,11 +45,14 @@ const PageLayout = (props: {
     <>
       {!props.mobile ? <Navbar selected={props.headerButtonId} /> : null}
       <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-        {/* {!deviceId ? ( */}
-        <Stack px={OVERALL_X_PADDING}>
-          <ConnectBar mobile={!!props.mobile} openConnect={props.openConnect} />
-        </Stack>
-        {/* ) : null} */}
+        {!deviceId ? (
+          <Stack px={OVERALL_X_PADDING}>
+            <ConnectBar
+              mobile={!!props.mobile}
+              openConnect={props.openConnect}
+            />
+          </Stack>
+        ) : null}
         {props.sections.map((section, i) => (
           <Stack key={i} spacing="20px">
             <Stack spacing="20px">
