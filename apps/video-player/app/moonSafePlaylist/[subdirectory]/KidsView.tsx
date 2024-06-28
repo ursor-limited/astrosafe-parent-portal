@@ -16,6 +16,8 @@ import _ from "lodash";
 const HEIGHT = 834;
 const WIDTH = 1194;
 
+const PERIOD = 10000;
+
 const IntroDialog = (props: { onClick: () => void }) => (
   <Stack
     position="absolute"
@@ -190,6 +192,7 @@ const KidsView = (props: {
   open: boolean;
   onClose: () => void;
   videos: IVideo[];
+  duration: number;
 }) => {
   const [showIntroDialog, setShowIntroDialog] = useState<boolean>(false);
   const [showBackgroundView, setShowBackgroundView] = useState<boolean>(true);
@@ -200,7 +203,16 @@ const KidsView = (props: {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<
     number | undefined
   >(0);
-  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(props.duration);
+  useEffect(() => {
+    let interval = setInterval(() => {
+      setTimeLeft(timeLeft - PERIOD / 1000);
+    }, PERIOD);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
   return (
     <Dialog
       transitionDuration={400}
@@ -278,15 +290,7 @@ const KidsView = (props: {
       >
         <EndDialog onClick={props.onClose} />
       </Stack>
-      <MenuBar
-        durationLeft={
-          _.sum(
-            _.compact(
-              props.videos.slice(currentVideoIndex).map((v) => v.endTime)
-            )
-          ) - currentTime
-        }
-      />
+      <MenuBar durationLeft={timeLeft} />
       <Stack overflow="scroll">
         <Stack spacing="20px" padding="32px">
           {props.videos.map((v, i) => (
@@ -299,7 +303,6 @@ const KidsView = (props: {
               <MoonsafeKidsVideoCard
                 {...v}
                 play={!showBackgroundView && currentVideoIndex === i}
-                setCurrentTime={setCurrentTime}
               />
             </Stack>
           ))}
