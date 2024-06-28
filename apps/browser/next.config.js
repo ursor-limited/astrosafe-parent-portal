@@ -6,8 +6,8 @@ module.exports = withSvgr({
   transpilePackages: ["ui"],
   images: {
     domains: [
-      "https://www.astrosafe.co",
-      "https://www.astrosafe.co/_next/image",
+      "https://browser.astrosafe.co",
+      "https://browser.astrosafe.co/_next/image",
       "https://astrosafe.co",
       "https://dev.astrosafe.co",
       "https://astro-monorepo-canvas.vercel.app",
@@ -22,7 +22,7 @@ module.exports = withSvgr({
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
-      ? "https://www.astrosafe.co"
+      ? "https://browser.astrosafe.co"
       : process.env.VERCEL_ENV === "preview"
       ? "https://dev.astrosafe.co"
       : undefined,
