@@ -173,21 +173,7 @@ const patch = (route: string, body: any) =>
     }
   );
 
-const dellete = (route: string) =>
-  fetch(
-    `${
-      //@ts-ignore
-      BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV || "development"]
-    }/${route}`,
-    {
-      method: "DELETE",
-    }
-  );
-
 class ApiController {
-  // static async getSchool(id: string) {
-  //   return get(`schools/${id}`).then((response: any) => response.json());
-  // }
   static async getChannels(deviceId: string) {
     return get(`schools/devices/${deviceId}/channels`).then((response: any) =>
       response.json()
