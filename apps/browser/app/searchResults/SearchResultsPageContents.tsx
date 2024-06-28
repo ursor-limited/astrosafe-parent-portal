@@ -181,8 +181,9 @@ const AstroSearchResultsColumn = (props: {
   searchResults: ISearchResult[];
 }) => (
   <Stack spacing="12px">
-    {props.searchResults.map((sr) => (
+    {props.searchResults.map((sr, i) => (
       <Stack
+        key={i}
         bgcolor="rgb(255,255,255)"
         borderRadius="12px"
         height="84px"
