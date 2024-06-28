@@ -5,6 +5,7 @@ import InsuranceApplicationIdentityIntro from "./intro";
 import InsuranceApplicationIdentityKYC from "./kyc";
 import InsuranceApplicationIdentitySuccess from "./success";
 import InsuranceApplicationIdentityStatus from "./status";
+import { AWInsuranceApplicationFlow } from "../../controller";
 
 export const awInsuranceApplicationIdentityStepViews = [
   "intro",
@@ -32,7 +33,7 @@ export const IDENTITY_STEP_TITLES: Record<
 const IDENTITY_STEP_VIEW_COMPONENTS: Partial<
   Record<
     AWInsuranceApplicationIdentityStepView,
-    React.FC<{ nextCallback: () => void }>
+    React.FC<{ nextCallback: () => void; flow: AWInsuranceApplicationFlow }>
   >
 > = {
   intro: InsuranceApplicationIdentityIntro,
@@ -53,6 +54,7 @@ export default function InsuranceApplicationIdentity(props: {
 
   return View ? (
     <View
+      flow="main"
       nextCallback={() =>
         currentView === "status"
           ? props.nextCallback()

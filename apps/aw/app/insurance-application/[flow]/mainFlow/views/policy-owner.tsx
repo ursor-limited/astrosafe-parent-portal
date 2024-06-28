@@ -46,6 +46,18 @@ export const SECTIONS: IAWFormSection[] = [
       },
     ],
   },
+  {
+    id: "6671669fc24a66dde7778efb",
+    title: "Cell phone number",
+    inputs: [
+      {
+        id: "667166a3519cb0963053e0c4",
+        inputType: "phoneNumber",
+        numeric: true,
+        placeholder: "Enter your phone number here",
+      },
+    ],
+  },
 ];
 
 export default function InsuranceApplicationPolicyOwner(props: {
@@ -59,6 +71,9 @@ export default function InsuranceApplicationPolicyOwner(props: {
       nextCallback={props.nextCallback}
       progress={
         CHECKPOINT_STEPS.indexOf("policyOwner") / CHECKPOINT_STEPS.length
+      }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("policyOwner") - 1]
       }
     />
   );

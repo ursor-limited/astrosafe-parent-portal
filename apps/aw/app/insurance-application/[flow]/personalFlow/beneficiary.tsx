@@ -109,6 +109,9 @@ export default function InsuranceApplicationBeneficiary(props: {
       progress={
         CHECKPOINT_STEPS.indexOf("beneficiary") / CHECKPOINT_STEPS.length
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("beneficiary") - 1]
+      }
     />
   );
 }

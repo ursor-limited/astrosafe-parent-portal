@@ -13,6 +13,13 @@ import {
   AWInsuranceApplicationFlow,
   SCROLLABLE_PAGE_ID,
 } from "../mainFlow/controller";
+import { useEffect, useState } from "react";
+
+const NON_KEYHOLDER_FLOWS: AWInsuranceApplicationFlow[] = [
+  "digAssMan",
+  "executive",
+  "shareholder",
+];
 
 export const awInsuranceApplicationInvitedFlowSteps = [
   "welcome",
@@ -24,6 +31,10 @@ export const awInsuranceApplicationInvitedFlowSteps = [
 ] as const;
 export type AWInsuranceApplicationInvitedFlowStep =
   (typeof awInsuranceApplicationInvitedFlowSteps)[number];
+
+//@ts-ignore
+export const awInsuranceApplicationInvitedFlowNonKeyholderSteps: Partial<AWInsuranceApplicationInvitedFlowStep> =
+  ["welcome", "termsOfService", "personalInfo", "identity", "success"];
 
 export const INVITED_FLOWS_STEP_TITLES: Record<
   AWInsuranceApplicationInvitedFlowStep,
@@ -73,17 +84,31 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
   const setStepComplete = (step: AWInsuranceApplicationInvitedFlowStep) => {
     setStepCompletions({ ...stepCompletions, [step]: true });
     setPreviousStep(step);
-    setCurrentStep(
-      awInsuranceApplicationInvitedFlowSteps[
-        awInsuranceApplicationInvitedFlowSteps.indexOf(step) + 1
-      ]
-    );
+    setCurrentStep(steps[steps.indexOf(step) + 1]);
   };
+
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.scrollTo(0, 0), [currentStep]);
+
+  const [steps, setSteps] = useState<AWInsuranceApplicationInvitedFlowStep[]>( //@ts-ignore
+    awInsuranceApplicationInvitedFlowSteps
+  );
+  useEffect(
+    () =>
+      setSteps(
+        //@ts-ignore
+        NON_KEYHOLDER_FLOWS.includes(props.flow)
+          ? awInsuranceApplicationInvitedFlowNonKeyholderSteps
+          : awInsuranceApplicationInvitedFlowSteps
+      ),
+    [props.flow]
+  );
 
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      ref={setRef}
     >
       {currentStep && StepView ? (
         <StepView
@@ -93,13 +118,6 @@ export default function InsuranceApplicationInvitedFlowsController(props: {
           }
           flow={props.flow}
           nextCallback={() => setStepComplete(currentStep)}
-          // nextCallback={() =>
-          //   setCurrentStep(
-          //     awInsuranceApplicationInvitedFlowSteps[
-          //       awInsuranceApplicationInvitedFlowSteps.indexOf(currentStep) + 1
-          //     ]
-          //   )
-          // }
         />
       ) : null}
       <TestingBar flow={props.flow} />

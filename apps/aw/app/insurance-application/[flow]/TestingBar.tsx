@@ -68,6 +68,10 @@ const TestingBar = (props: { flow: AWInsuranceApplicationFlow }) => {
                   text: "DigAssMan",
                 },
                 {
+                  id: "keyholderPure",
+                  text: "Keyholder",
+                },
+                {
                   id: "shareholder",
                   text: "25% Shareholder",
                 },

@@ -32,6 +32,9 @@ export default function InsuranceApplicationIdentityKYC(props: {
           unoptimized
         />
       }
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+      }
     >
       <div className="h-[347px] flex flex-col gap-3xl text-lg text-darkTeal-5">
         <div className="flex gap-lg text-lg text-darkTeal-5">
