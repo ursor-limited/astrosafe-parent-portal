@@ -1358,10 +1358,10 @@ export default function DashboardPageContents() {
               endIcon={ShareIcon}
               iconSize={14}
               onClick={() => {
-                BrowserApiController.addDummyVideoChannel();
-                // userDetails.user?.externalDashboardTitle
-                //   ? router.push(`/user/${userDetails.user.id}`)
-                //   : setShareDialogOpen(true);
+                // BrowserApiController.addDummyVideoChannel();
+                userDetails.user?.externalDashboardTitle
+                  ? router.push(`/user/${userDetails.user.id}`)
+                  : setShareDialogOpen(true);
               }}
             >
               Share with Students
