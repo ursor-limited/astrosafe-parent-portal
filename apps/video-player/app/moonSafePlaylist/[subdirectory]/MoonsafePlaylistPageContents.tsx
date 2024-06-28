@@ -114,8 +114,6 @@ export default function MoonsafePlaylistPageContents(props: {
       }
     );
 
-  console.log(playlist);
-
   useEffect(() => {
     props.subdirectory && loadPlaylist();
   }, [props.subdirectory]);
@@ -1088,6 +1086,7 @@ export default function MoonsafePlaylistPageContents(props: {
       {kidsViewOpen ? (
         <KidsView
           videos={videos}
+          duration={playlist?.duration ?? 0}
           open={kidsViewOpen}
           onClose={() => setKidsViewOpen(false)}
         />

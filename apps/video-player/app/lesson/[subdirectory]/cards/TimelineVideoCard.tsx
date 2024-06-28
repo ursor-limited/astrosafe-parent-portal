@@ -162,7 +162,6 @@ const TimelineVideoCard = (
     hideLimits?: boolean;
   }
 ) => {
-  console.log("xxx", props.title, props.hideLimits);
   const notificationCtx = useContext(NotificationContext);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   const submitDeletion = () =>

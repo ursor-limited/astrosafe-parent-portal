@@ -11,6 +11,7 @@ import ApiController, { IVideo } from "../api";
 import _ from "lodash";
 import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import XIcon from "@/images/icons/X.svg";
 import { useUserContext } from "../components/UserContext";
 import { MoonsafeDurationIndicator } from "../moonSafePlaylist/[subdirectory]/MoonsafePageCard";
@@ -460,6 +461,22 @@ const PlaylistCreationDialog = (props: {
       >
         <XIcon height="28px" width="28px" />
       </Stack>
+      {step === "duration" || step === "selection" ? (
+        <Stack
+          position="absolute"
+          top="41px"
+          left="41px"
+          onClick={() => setStep(step === "duration" ? "name" : "duration")}
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
+          zIndex={3}
+        >
+          <ChevronLeftIcon height="28px" width="28px" />
+        </Stack>
+      ) : null}
       <Stack
         height="100%"
         width="100%"

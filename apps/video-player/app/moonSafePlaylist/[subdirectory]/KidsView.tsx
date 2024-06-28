@@ -3,7 +3,7 @@ import { Dialog } from "@mui/material";
 import { Stack } from "@mui/system";
 import MoonsafeKidsVideoCard from "./MoonsafeKidsVideoCard";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Star from "@/images/Star.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
@@ -12,9 +12,12 @@ import StarIcon from "@/images/icons/StarIcon.svg";
 import SyncIcon from "@/images/icons/Sync.svg";
 import { MoonsafeDurationIndicator } from "./MoonsafePageCard";
 import _ from "lodash";
+import UrsorParticles from "@/app/components/UrsorParticles";
 
 const HEIGHT = 834;
 const WIDTH = 1194;
+
+const PERIOD = 1000;
 
 const IntroDialog = (props: { onClick: () => void }) => (
   <Stack
@@ -36,6 +39,7 @@ const IntroDialog = (props: { onClick: () => void }) => (
       justifyContent="space-between"
       p="32px"
       boxSizing="border-box"
+      boxShadow="0 0 30px rgba(255,255,255,0.46)"
     >
       <Image
         src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192+(1).png"
@@ -73,7 +77,7 @@ const EndDialog = (props: { onClick: () => void }) => (
     height="100%"
     justifyContent="center"
     alignItems="center"
-    zIndex={99999999}
+    zIndex={9999999999}
   >
     <Stack
       bgcolor="rgb(255,255,255)"
@@ -84,6 +88,7 @@ const EndDialog = (props: { onClick: () => void }) => (
       p="32px"
       boxSizing="border-box"
       spacing="16px"
+      boxShadow="0 0 30px rgba(255,255,255,0.46)"
     >
       <Stack
         sx={{
@@ -108,88 +113,101 @@ const EndDialog = (props: { onClick: () => void }) => (
   </Stack>
 );
 
-const MenuBar = (props: { durationLeft: number }) => (
-  <Stack
-    height="80px"
-    minHeight="80px"
-    bgcolor="rgb(255,255,255)"
-    direction="row"
-    spacing="14px"
-    alignItems="center"
-    px="28px"
-    boxShadow="0 0 20px rgba(0,0,0,0.05)"
-    zIndex={999}
-  >
+const MenuBar = (props: { duration: number; started: boolean }) => {
+  const [timeLeft, setTimeLeft] = useState<number>(props.duration);
+  useEffect(() => {
+    if (!props.started) return;
+    let interval = setInterval(() => {
+      setTimeLeft(timeLeft - PERIOD / 1000);
+    }, PERIOD);
+    return () => {
+      clearInterval(interval);
+    };
+  });
+  return (
     <Stack
-      height="48px"
-      width="48px"
-      borderRadius="100%"
-      bgcolor={PALETTE.secondary.grey[1]}
-      sx={{
-        svg: {
-          path: {
-            fill: PALETTE.secondary.blue[3],
-          },
-        },
-      }}
-      justifyContent="center"
-      alignItems="center"
-    >
-      <MoonsafeIcon height="24px" width="24px" />
-    </Stack>
-    <Stack
+      height="80px"
+      minHeight="80px"
+      bgcolor="rgb(255,255,255)"
       direction="row"
-      height="48px"
-      bgcolor={PALETTE.secondary.grey[1]}
+      spacing="14px"
       alignItems="center"
-      flex={1}
-      borderRadius="24px"
-      pl="20px"
-      justifyContent="space-between"
+      px="28px"
+      boxShadow="0 0 20px rgba(0,0,0,0.05)"
+      zIndex={999}
     >
       <Stack
-        direction="row"
+        height="48px"
+        width="48px"
+        borderRadius="100%"
+        bgcolor={PALETTE.secondary.grey[1]}
         sx={{
           svg: {
             path: {
-              fill: PALETTE.secondary.grey[3],
+              fill: PALETTE.secondary.blue[3],
             },
           },
         }}
+        justifyContent="center"
         alignItems="center"
-        spacing="8px"
       >
-        <SearchIcon height="18px" width="18px" />
-        <Typography variant="medium" bold color={PALETTE.secondary.grey[3]}>
-          Search an idea...
-        </Typography>
+        <MoonsafeIcon height="24px" width="24px" />
       </Stack>
       <Stack
         direction="row"
-        sx={{
-          svg: {
-            path: {
-              fill: PALETTE.primary.navy,
-            },
-          },
-        }}
+        height="48px"
+        bgcolor={PALETTE.secondary.grey[1]}
+        alignItems="center"
+        flex={1}
+        borderRadius="24px"
+        pl="20px"
+        justifyContent="space-between"
       >
-        <Stack width="48px">
-          <StarIcon width="26px" height="26px" />
+        <Stack
+          direction="row"
+          sx={{
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[3],
+              },
+            },
+          }}
+          alignItems="center"
+          spacing="8px"
+        >
+          <SearchIcon height="18px" width="18px" />
+          <Typography variant="medium" bold color={PALETTE.secondary.grey[3]}>
+            Search an idea...
+          </Typography>
         </Stack>
-        <Stack width="48px">
-          <SyncIcon width="26px" height="26px" />
+        <Stack
+          direction="row"
+          sx={{
+            svg: {
+              path: {
+                fill: PALETTE.primary.navy,
+              },
+            },
+          }}
+        >
+          <Stack width="48px">
+            <StarIcon width="26px" height="26px" />
+          </Stack>
+          <Stack width="48px">
+            <SyncIcon width="26px" height="26px" />
+          </Stack>
         </Stack>
       </Stack>
+      <MoonsafeDurationIndicator vibrantText value={timeLeft} small />
     </Stack>
-    <MoonsafeDurationIndicator vibrantText value={props.durationLeft} small />
-  </Stack>
-);
+  );
+};
 
 const KidsView = (props: {
   open: boolean;
   onClose: () => void;
   videos: IVideo[];
+  duration: number;
 }) => {
   const [showIntroDialog, setShowIntroDialog] = useState<boolean>(false);
   const [showBackgroundView, setShowBackgroundView] = useState<boolean>(true);
@@ -200,7 +218,30 @@ const KidsView = (props: {
   const [currentVideoIndex, setCurrentVideoIndex] = useState<
     number | undefined
   >(0);
-  const [currentTime, setCurrentTime] = useState<number>(0);
+
+  const [Particles, setParticles] = useState<React.ReactNode | undefined>();
+  useEffect(
+    () =>
+      setParticles(
+        <Stack
+          position="absolute"
+          top={0}
+          left={0}
+          height="100%"
+          width="100%"
+          sx={{
+            "#tsparticles": {
+              height: "100%",
+            },
+          }}
+          zIndex={99999}
+        >
+          <UrsorParticles number={10} />
+        </Stack>
+      ),
+    []
+  );
+
   return (
     <Dialog
       transitionDuration={400}
@@ -253,8 +294,9 @@ const KidsView = (props: {
           alt="moonsafe intros"
         />
       </Stack>
+      {showBackgroundView ? Particles : null}
       <Stack
-        zIndex={9999}
+        zIndex={999999}
         sx={{
           opacity: showIntroDialog ? 1 : 0,
           pointerEvents: showIntroDialog ? undefined : "none",
@@ -269,7 +311,7 @@ const KidsView = (props: {
         />
       </Stack>
       <Stack
-        zIndex={9999}
+        zIndex={999999}
         sx={{
           opacity: showEndDialog ? 1 : 0,
           pointerEvents: showEndDialog ? undefined : "none",
@@ -278,15 +320,7 @@ const KidsView = (props: {
       >
         <EndDialog onClick={props.onClose} />
       </Stack>
-      <MenuBar
-        durationLeft={
-          _.sum(
-            _.compact(
-              props.videos.slice(currentVideoIndex).map((v) => v.endTime)
-            )
-          ) - currentTime
-        }
-      />
+      <MenuBar duration={props.duration} started={!showBackgroundView} />
       <Stack overflow="scroll">
         <Stack spacing="20px" padding="32px">
           {props.videos.map((v, i) => (
@@ -299,7 +333,6 @@ const KidsView = (props: {
               <MoonsafeKidsVideoCard
                 {...v}
                 play={!showBackgroundView && currentVideoIndex === i}
-                setCurrentTime={setCurrentTime}
               />
             </Stack>
           ))}
