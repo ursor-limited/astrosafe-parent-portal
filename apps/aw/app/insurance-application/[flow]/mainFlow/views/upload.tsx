@@ -21,6 +21,7 @@ export default function InsuranceApplicationUpload(props: {
     <InsuranceApplicationDialog
       title={MAIN_FLOW_STEP_TITLES.upload}
       progress={CHECKPOINT_STEPS.indexOf("upload") / CHECKPOINT_STEPS.length}
+      backbuttonStep={CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("upload") - 1]}
     >
       <div className="w-[600px] h-full justify-center flex flex-col gap-8xl py-[64px]">
         <div className="flex flex-col gap-xl font-medium text-xl text-darkTeal-2">

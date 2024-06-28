@@ -14,7 +14,7 @@ import { AWInsuranceApplicationFlow } from "../mainFlow/controller";
 import InsuranceApplicationPersonalCheckpointsStart from "./start";
 import InsuranceApplicationWelcome from "../mainFlow/views/welcome";
 import InsuranceApplicationKeyholders from "./keyholders";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import InsuranceApplicationCheckpointsPersonalSubmit from "./submit";
 import InsuranceApplicationBeneficiary from "./beneficiary";
 import InsuranceApplicationIdentity from "./identity/main";
@@ -114,10 +114,14 @@ export default function InsuranceApplicationPersonalFlowController() {
 
   const StepView = currentStep ? STEP_COMPONENTS[currentStep] : null;
 
+  const [ref, setRef] = useState<HTMLElement | null>(null);
+  useEffect(() => ref?.scrollTo(0, 0), [currentStep]);
+
   return (
     <div
       id={SCROLLABLE_PAGE_ID}
       className="h-screen w-screen py-[98px] flex justify-center overflow-scroll relative"
+      ref={setRef}
     >
       {currentStep && StepView ? (
         <StepView

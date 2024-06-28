@@ -15,6 +15,9 @@ export default function InsuranceApplicationIdentityIntro(props: {
           "Information collected for Company Leaders is required for either regulatory compliance or insurance underwriting",
       }}
       progress={CHECKPOINT_STEPS.indexOf("identity") / CHECKPOINT_STEPS.length}
+      backbuttonStep={
+        CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("identity") - 1]
+      }
     >
       <div className="flex flex-col gap-3xl text-xl text-darkTeal-5">
         <div>

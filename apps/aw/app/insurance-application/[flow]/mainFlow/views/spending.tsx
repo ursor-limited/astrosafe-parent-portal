@@ -1,4 +1,7 @@
-import { MAIN_FLOW_STEP_TITLES } from "../controller";
+import {
+  AWInsuranceApplicationFlow,
+  MAIN_FLOW_STEP_TITLES,
+} from "../controller";
 import InsuranceApplicationFormDialog, {
   IAWFormSection,
 } from "../../components/form-dialog";
@@ -107,6 +110,7 @@ export const SECTIONS: IAWFormSection[] = [
 
 export default function InsuranceApplicationSpending(props: {
   nextCallback: () => void;
+  flow?: AWInsuranceApplicationFlow;
 }) {
   return (
     <InsuranceApplicationFormDialog
@@ -116,6 +120,11 @@ export default function InsuranceApplicationSpending(props: {
       sections={SECTIONS}
       nextCallback={props.nextCallback}
       progress={CHECKPOINT_STEPS.indexOf("spending") / CHECKPOINT_STEPS.length}
+      backbuttonStep={
+        props.flow === "main"
+          ? CHECKPOINT_STEPS[CHECKPOINT_STEPS.indexOf("spending") - 1]
+          : "identity" // for the Personal flow
+      }
     />
   );
 }

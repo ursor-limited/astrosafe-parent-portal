@@ -227,7 +227,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             >
               {props.supertitle ||
               (props.onCloseCallback && !props.noCloseButton) ? (
-                <Stack direction="row" width="100%">
+                <Stack direction="row" width="100%" minHeight="20px">
                   <Stack width="100%" alignItems="center">
                     <Typography
                       variant={props.title ? "medium" : "large"}
