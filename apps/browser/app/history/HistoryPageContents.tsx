@@ -42,66 +42,6 @@ export interface IJourney {
   }[];
 }
 
-// const DUMMY_JOURNEYS = [
-//   {
-//     datetime: 1717398708,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make risotto",
-//     urls: [
-//       {
-//         title: "Boo",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "nintendo.com",
-//       },
-//       {
-//         title: "Hooooo boo",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-//   {
-//     datetime: 1717398708,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make chili con carne",
-//     urls: [
-//       {
-//         title: "Aeeeeee",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "boo.com",
-//       },
-//       {
-//         title: "Paaaaaah",
-//         timestamp: 1717431108,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-//   {
-//     datetime: 1717402065,
-//     deviceId: "659685e649ded4f6a4e28c53",
-//     title: "How to make chili con carne",
-//     urls: [
-//       {
-//         title: "Aeeeeee",
-//         timestamp: 1717398708,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "boo.com",
-//       },
-//       {
-//         title: "Paaaaaah",
-//         timestamp: 1717431108,
-//         favIconUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-//         domain: "lego.com",
-//       },
-//     ],
-//   },
-// ];
-
 const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
   {
     //@ts-ignore

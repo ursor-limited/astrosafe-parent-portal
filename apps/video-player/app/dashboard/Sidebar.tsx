@@ -7,7 +7,7 @@ import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
-import LockIcon from "@/images/icons/LockIcon.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import MoonsafeIcon from "@/images/icons/MoonsafeIcon.svg";
@@ -59,7 +59,7 @@ export type SideBarItemId =
   | "account"
   | "search"
   | "tutorials"
-  | "filter"
+  | "filters"
   | "apps"
   | "monitor"
   | "devices"
@@ -199,11 +199,11 @@ export default function Sidebar(props: ISidebarProps) {
       callback: () => router.push("/channels"),
     },
     {
-      id: "safety",
+      id: "filters",
       //tourId: "devices-button",
-      icon: LockIcon,
-      title: "Safety",
-      callback: () => router.push("/safety"),
+      icon: FilterIcon,
+      title: "Filters",
+      callback: () => router.push("/filters"),
     },
     {
       id: "apps",
