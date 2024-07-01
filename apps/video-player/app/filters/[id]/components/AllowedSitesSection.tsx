@@ -3,7 +3,7 @@ import { FilterPageSection } from "./FilterPageSection";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorInputField } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import {
   IFilter,
@@ -27,6 +27,7 @@ interface IAllowedSitesTableRowItems {
 
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterUrl[];
+  addSite: (url: string) => void;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
@@ -102,7 +103,7 @@ const FilterPageAllowedSitesSection = (props: {
     );
   }, [rows, searchValue]);
 
-  const [sortedColumn, setSortedColumn] = useState<string>("updatedAt");
+  const [sortedColumn, setSortedColumn] = useState<string>("createdAt");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   useEffect(() => {
     if (!filteredRows) return;
@@ -123,32 +124,47 @@ const FilterPageAllowedSitesSection = (props: {
       }`}
       subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding category. Be careful this overrides the filter!"
     >
-      <UrsorTable
-        columns={TABLE_COLUMNS}
-        rows={filteredRows}
-        defaultSortedByColumn="createdAt"
-        defaultSortedAscending
-        selectedSort={sortedColumn}
-        ascending={sortDirection === "asc"}
-        sortSelectionCallback={(columnId) => {
-          if (columnId === sortedColumn) {
-            setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-          } else {
-            setSortedColumn(columnId);
-            setSortDirection("asc");
+      <Stack spacing="20px">
+        <UrsorInputField
+          value={searchValue}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(event.target.value)
           }
-        }}
-        noHeaderGradient
-        getActionButtonItems={(id) => [
-          {
-            icon: TrashcanIcon,
-            text: "Delete",
-            kallback: () => null,
-            color: PALETTE.system.red,
-          },
-        ]}
-        rowClickCallback={(id) => null}
-      />
+          onEnterKey={() => {
+            props.addSite(searchValue);
+          }}
+          placeholder="Add a URL"
+          width="100%"
+          leftAlign
+          boldValue
+        />
+        <UrsorTable
+          columns={TABLE_COLUMNS}
+          rows={sortedRows}
+          defaultSortedByColumn="createdAt"
+          defaultSortedAscending
+          selectedSort={sortedColumn}
+          ascending={sortDirection === "asc"}
+          sortSelectionCallback={(columnId) => {
+            if (columnId === sortedColumn) {
+              setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+            } else {
+              setSortedColumn(columnId);
+              setSortDirection("asc");
+            }
+          }}
+          noHeaderGradient
+          getActionButtonItems={(id) => [
+            {
+              icon: TrashcanIcon,
+              text: "Delete",
+              kallback: () => null,
+              color: PALETTE.system.red,
+            },
+          ]}
+          rowClickCallback={(id) => null}
+        />
+      </Stack>
     </FilterPageSection>
   );
 };

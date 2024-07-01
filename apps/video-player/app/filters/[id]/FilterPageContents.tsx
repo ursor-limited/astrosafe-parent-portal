@@ -89,8 +89,14 @@ export default function FilterPageContents() {
             )
           }
         />
-        <FilterPageAllowedSitesSection allowedSites={allowedSites} />
-        <FilterPageBlockedSitesSection blockedSites={blockedSites} />
+        <FilterPageAllowedSitesSection
+          allowedSites={allowedSites}
+          addSite={(url) => null}
+        />
+        <FilterPageBlockedSitesSection
+          blockedSites={blockedSites}
+          addSite={(url) => null}
+        />
       </Stack>
     </PageLayout>
   );
