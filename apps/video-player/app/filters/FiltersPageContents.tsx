@@ -8,7 +8,7 @@ import StopIcon from "@/images/icons/StopIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
+import LockIcon from "@/images/icons/LockIcon.svg";
 import NotificationContext from "../components/NotificationContext";
 import BrowserApiController, { IDevice, IStack } from "../browserApi";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -86,6 +86,8 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
     p="16px"
     boxSizing="border-box"
     justifyContent="space-between"
+    position="relative"
+    overflow="hidden"
   >
     <Stack spacing="12px">
       <Stack direction="row" spacing="4px" alignItems="center">
@@ -113,6 +115,20 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
           </Stack>
         </Stack>
       </Typography>
+    </Stack>
+    <Stack
+      position="absolute"
+      right={0}
+      top="75px"
+      sx={{
+        svg: {
+          path: {
+            fill: "rgba(0,0,0,0.06)",
+          },
+        },
+      }}
+    >
+      <LockIcon height="171px" width="171px" />
     </Stack>
     <Stack direction="row" spacing="4px">
       <Stack direction="row" spacing="36px">
