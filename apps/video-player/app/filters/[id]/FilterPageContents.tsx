@@ -3,7 +3,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
   DUMMY_BLOCKED_SITES,
@@ -15,12 +14,8 @@ import {
   IFilterUrl,
 } from "../FiltersPageContents";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import Image from "next/image";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import { FilterPageSection } from "./components/FilterPagerSection";
 import FilterPageServicesSection from "./components/ServicesSection";
+import FilterPageCategoriesSection from "./components/CategoriesSection";
 
 export default function FilterPageContents() {
   // const [fl, setChannels] = useState<IChannel[] | undefined>(undefined);
@@ -77,46 +72,18 @@ export default function FilterPageContents() {
             )
           }
         />
-        <FilterPageSection
-          icon={ThumbsUpIcon}
-          title={`${filter.allowedCategories.length} allowed Categories`}
-          subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
-        >
-          <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-            {categories.map((c) => (
-              <Stack
-                key={c.id}
-                height="72px"
-                bgcolor="rgb(255,255,255)"
-                borderRadius="12px"
-                border={`1px solid ${PALETTE.secondary.grey[2]}`}
-                px="16px"
-                boxSizing="border-box"
-                justifyContent="space-between"
-                alignItems="center"
-                direction="row"
-              >
-                <Stack justifyContent="space-between">
-                  <Stack spacing="16px" alignItems="center" direction="row">
-                    <Typography maxLines={1} bold>
-                      {c.title}
-                    </Typography>
-                  </Stack>
-                </Stack>
-                <AstroSwitch
-                  on={allowedCategories.includes(c.id)}
-                  callback={() =>
-                    setAllowedCategories(
-                      allowedCategories.includes(c.id)
-                        ? allowedCategories.filter((sid) => sid !== c.id)
-                        : [...allowedCategories, c.id]
-                    )
-                  }
-                />
-              </Stack>
-            ))}
-          </DynamicCardGrid>
-        </FilterPageSection>
+        <FilterPageCategoriesSection
+          filter={filter}
+          categories={categories}
+          allowedCategories={allowedCategories}
+          flipCategory={(id) =>
+            setAllowedCategories(
+              allowedCategories.includes(id)
+                ? allowedCategories.filter((sid) => sid !== id)
+                : [...allowedCategories, id]
+            )
+          }
+        />
       </Stack>
     </PageLayout>
   );
