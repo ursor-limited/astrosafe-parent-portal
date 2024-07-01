@@ -5,6 +5,7 @@ export const FilterPageSection = (props: {
   title: string;
   subtitle: string;
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  legend?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="20px" p="16px">
@@ -26,30 +27,7 @@ export const FilterPageSection = (props: {
             {props.subtitle}
           </Typography>
         </Stack>
-        <Stack direction="row" spacing="20px">
-          <Stack>
-            <Stack direction="row" alignItems="center" spacing="10px">
-              <Typography bold>Allowed</Typography>
-              <Stack
-                height="15px"
-                width="16px"
-                borderRadius="100%"
-                bgcolor={PALETTE.system.green}
-              />
-            </Stack>
-          </Stack>
-          <Stack>
-            <Stack direction="row" alignItems="center" spacing="10px">
-              <Typography bold>Blocked</Typography>
-              <Stack
-                height="15px"
-                width="16px"
-                borderRadius="100%"
-                bgcolor={PALETTE.secondary.grey[3]}
-              />
-            </Stack>
-          </Stack>
-        </Stack>
+        {props.legend}
       </Stack>
     </Stack>
     {props.children}

@@ -43,6 +43,7 @@ export interface IFilterUrl {
   url: string;
   title: string;
   imageUrl: string;
+  createdAt: string;
   groupId: string;
 }
 
@@ -161,6 +162,7 @@ export const DUMMY_SERVICES: IFilterUrl[] = [
     imageUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png",
     groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
   },
   {
     id: "defefe3e",
@@ -168,6 +170,7 @@ export const DUMMY_SERVICES: IFilterUrl[] = [
     url: "nytimes.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
     groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
   },
 ];
 
@@ -199,6 +202,26 @@ export const DUMMY_CATEGORIES: IFilterCategory[] = [
   },
 ];
 
+export const DUMMY_ALLOWED_SITES: IFilterUrl[] = [
+  {
+    id: "lolololololoklo8787878787",
+    title: "FINH",
+    url: "finf.cc",
+    imageUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png",
+    groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
+  },
+  {
+    id: "doddodjo",
+    title: "Pornhub",
+    url: "pornhub.com",
+    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
+    groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
+  },
+];
+
 export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
   {
     id: "lolololololoklo8787878787",
@@ -207,6 +230,7 @@ export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
     imageUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png",
     groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
   },
   {
     id: "doddodjo",
@@ -214,6 +238,7 @@ export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
     url: "pornhub.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
     groupId: DUMMY_GROUP_ID,
+    createdAt: "2024-05-06",
   },
 ];
 

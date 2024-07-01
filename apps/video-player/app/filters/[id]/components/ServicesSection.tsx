@@ -5,7 +5,8 @@ import { IFilter, IFilterUrl } from "../../FiltersPageContents";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { FilterPageSection } from "./FilterPagerSection";
+import { FilterPageSection } from "./FilterPageSection";
+import { FilterLegend } from "./CategoriesSection";
 
 const FilterPageServicesSection = (props: {
   filter: IFilter;
@@ -17,6 +18,7 @@ const FilterPageServicesSection = (props: {
     icon={DesktopIcon}
     title={`${props.filter.allowedServices.length} allowed Services`}
     subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
+    legend={<FilterLegend />}
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.services.map((s) => (

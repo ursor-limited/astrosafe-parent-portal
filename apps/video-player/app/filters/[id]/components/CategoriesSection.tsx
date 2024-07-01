@@ -1,5 +1,5 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { FilterPageSection } from "./FilterPagerSection";
+import { FilterPageSection } from "./FilterPageSection";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
@@ -9,6 +9,33 @@ import {
   IFilterCategory,
   IFilterUrl,
 } from "../../FiltersPageContents";
+
+export const FilterLegend = () => (
+  <Stack direction="row" spacing="20px">
+    <Stack>
+      <Stack direction="row" alignItems="center" spacing="10px">
+        <Typography bold>Allowed</Typography>
+        <Stack
+          height="15px"
+          width="16px"
+          borderRadius="100%"
+          bgcolor={PALETTE.system.green}
+        />
+      </Stack>
+    </Stack>
+    <Stack>
+      <Stack direction="row" alignItems="center" spacing="10px">
+        <Typography bold>Blocked</Typography>
+        <Stack
+          height="15px"
+          width="16px"
+          borderRadius="100%"
+          bgcolor={PALETTE.secondary.grey[3]}
+        />
+      </Stack>
+    </Stack>
+  </Stack>
+);
 
 const FilterPageCategoriesSection = (props: {
   filter: IFilter;
@@ -20,6 +47,7 @@ const FilterPageCategoriesSection = (props: {
     icon={ThumbsUpIcon}
     title={`${props.filter.allowedCategories.length} allowed Categories`}
     subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
+    legend={<FilterLegend />}
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.categories.map((c) => (

@@ -5,6 +5,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
+  DUMMY_ALLOWED_SITES,
   DUMMY_BLOCKED_SITES,
   DUMMY_CATEGORIES,
   DUMMY_FILTERS,
@@ -16,6 +17,8 @@ import {
 import { Stack } from "@mui/system";
 import FilterPageServicesSection from "./components/ServicesSection";
 import FilterPageCategoriesSection from "./components/CategoriesSection";
+import FilterPageAllowedSitesSection from "./components/AllowedSitesSection";
+import FilterPageBlockedSitesSection from "./components/BlockedSitesSection";
 
 export default function FilterPageContents() {
   // const [fl, setChannels] = useState<IChannel[] | undefined>(undefined);
@@ -30,7 +33,8 @@ export default function FilterPageContents() {
   const [filter, setFilter] = useState<IFilter>(DUMMY_FILTERS[0]);
   const [blockedSites, setBlockedSites] =
     useState<IFilterUrl[]>(DUMMY_BLOCKED_SITES);
-  const [allowedSites, setAllowedSites] = useState<IFilterUrl[]>([]);
+  const [allowedSites, setAllowedSites] =
+    useState<IFilterUrl[]>(DUMMY_ALLOWED_SITES);
 
   const [categories, setCategories] =
     useState<IFilterCategory[]>(DUMMY_CATEGORIES);
@@ -58,8 +62,9 @@ export default function FilterPageContents() {
         icon: PlusIcon,
       }}
       maxWidth={834}
+      scrollable
     >
-      <Stack px="49px" spacing="20px">
+      <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
         <FilterPageServicesSection
           filter={filter}
           services={services}
@@ -84,6 +89,8 @@ export default function FilterPageContents() {
             )
           }
         />
+        <FilterPageAllowedSitesSection allowedSites={allowedSites} />
+        <FilterPageBlockedSitesSection blockedSites={blockedSites} />
       </Stack>
     </PageLayout>
   );
