@@ -3,14 +3,14 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IActionPopupItem } from "../components/ActionPopup";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import ClippyIcon from "@/images/icons/ClippyIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import NotificationContext from "../components/NotificationContext";
-import BrowserApiController, { IStack } from "../browserApi";
+import BrowserApiController, { IDevice, IStack } from "../browserApi";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
 import UrsorActionButton from "../components/UrsorActionButton";
@@ -27,6 +27,7 @@ import PageLayout, {
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";
+import Image from "next/image";
 
 export const GRID_SPACING = "20px";
 
@@ -55,16 +56,39 @@ export interface IFilter {
   groupId: string;
 }
 
-const FilterCard = (props: IFilter) => (
+// export type AstroDeviceType = 'chrome' | 'android'
+
+// export interface INewDevice {
+
+//     id: string;
+//     name: string;
+//     backgroundColor: string[];
+//     profileAvatarUrl: string[];
+//     lastOnline: string;
+//     connected: boolean;
+//     deviceType: AstroDeviceType;
+//     favorites:
+//     requestedSites   DevicesRequests[]
+
+//     contentBuckets Int[]
+
+//     configs    DevicesConfig[]
+//     timeLimits DevicesTimeLimit[]
+//     history    DevicesHistory[]
+
+// }
+
+const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   <Stack
     height="213px"
     borderRadius="12px"
     bgcolor="#EDEAFF"
     p="16px"
     boxSizing="border-box"
+    justifyContent="space-between"
   >
     <Stack spacing="12px">
-      <Stack direction="row" spacing="4px">
+      <Stack direction="row" spacing="4px" alignItems="center">
         <Typography variant="h5">{props.title}</Typography>
         <VerifiedIcon height="20px" width="20px" />
       </Stack>
@@ -89,6 +113,45 @@ const FilterCard = (props: IFilter) => (
           </Stack>
         </Stack>
       </Typography>
+    </Stack>
+    <Stack direction="row" spacing="4px">
+      <Stack direction="row" spacing="36px">
+        {props.deviceImageUrls.slice(0, 3).map((url, i) => (
+          <Stack key={i} width={0} position="relative" overflow="visible">
+            <Stack position="absolute" bottom={0} left={0}>
+              <Stack
+                borderRadius="100%"
+                overflow="hidden"
+                boxShadow="0 0 16px rgba(0,0,0,0.1)"
+              >
+                <Image src={url} width={42} height={42} alt="profile image" />
+              </Stack>
+            </Stack>
+          </Stack>
+        ))}
+      </Stack>
+      {props.deviceImageUrls.length > 3 ? (
+        <Stack
+          direction="row"
+          spacing="4px"
+          alignItems="center"
+          sx={{
+            transform: "translate(48px, -10px)",
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[4],
+              },
+            },
+          }}
+        >
+          <Typography
+            variant="small"
+            bold
+            color={PALETTE.secondary.grey[4]}
+          >{`+${props.deviceImageUrls.length - 3}`}</Typography>
+          <PeopleIcon height="12px" width="12px" />
+        </Stack>
+      ) : null}
     </Stack>
   </Stack>
 );
@@ -196,7 +259,17 @@ export default function FiltersPage() {
       <Stack px="50px">
         <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
           {DUMMY_FILTERS.map((f) => (
-            <FilterCard key={f.id} {...f} />
+            <FilterCard
+              key={f.id}
+              {...f}
+              deviceImageUrls={[
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+              ]}
+            />
           ))}
         </DynamicCardGrid>
       </Stack>
