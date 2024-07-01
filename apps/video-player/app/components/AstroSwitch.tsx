@@ -2,15 +2,16 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { PALETTE } from "ui";
 
-const AstroSwitch = (props: { on: boolean }) => {
+const AstroSwitch = (props: { on: boolean; callback: () => void }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
     <Stack
-      height="34px"
-      width="73px"
-      bgcolor={PALETTE.secondary.grey[4]}
+      height="28px"
+      width="60px"
+      bgcolor={props.on ? PALETTE.system.green : PALETTE.secondary.grey[3]}
       borderRadius="20px"
-      px="4px"
+      px="2px"
+      boxSizing="border-box"
       justifyContent="center"
       onMouseEnter={() => {
         setHovering(true);
@@ -21,18 +22,17 @@ const AstroSwitch = (props: { on: boolean }) => {
       sx={{
         cursor: "pointer",
       }}
+      onClick={props.callback}
     >
       <Stack
-        height="28px"
-        width="28px"
+        height="24px"
+        width="24px"
         borderRadius="100%"
         sx={{
-          background: props.on
-            ? "linear-gradient(150deg, #F279C5, #FD9B41)"
-            : PALETTE.secondary.grey[1],
+          background: "rgb(255,255,255)",
           opacity: hovering ? 0.7 : 1,
           transition: "0.2s ease-out",
-          transform: `translateX(${!props.on ? 0 : 46}px)`,
+          transform: `translateX(${!props.on ? 0 : 32}px)`,
         }}
       />
     </Stack>

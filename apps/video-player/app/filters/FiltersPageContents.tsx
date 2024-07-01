@@ -28,16 +28,17 @@ import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const GRID_SPACING = "20px";
 
-interface IFilterCategory {
+export interface IFilterCategory {
   id: string;
   title: string;
   groupId: string;
 }
 
-interface IFilterUrl {
+export interface IFilterUrl {
   id: string;
   url: string;
   title: string;
@@ -55,28 +56,6 @@ export interface IFilter {
   blockedWords: string[];
   groupId: string;
 }
-
-// export type AstroDeviceType = 'chrome' | 'android'
-
-// export interface INewDevice {
-
-//     id: string;
-//     name: string;
-//     backgroundColor: string[];
-//     profileAvatarUrl: string[];
-//     lastOnline: string;
-//     connected: boolean;
-//     deviceType: AstroDeviceType;
-//     favorites:
-//     requestedSites   DevicesRequests[]
-
-//     contentBuckets Int[]
-
-//     configs    DevicesConfig[]
-//     timeLimits DevicesTimeLimit[]
-//     history    DevicesHistory[]
-
-// }
 
 const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   <Stack
@@ -174,7 +153,7 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
 
 const DUMMY_GROUP_ID = "iuiubifbekjfnlej";
 
-const DUMMY_SERVICES: IFilterUrl[] = [
+export const DUMMY_SERVICES: IFilterUrl[] = [
   {
     id: "4icuheiuf",
     title: "Nintendo",
@@ -192,7 +171,7 @@ const DUMMY_SERVICES: IFilterUrl[] = [
   },
 ];
 
-const DUMMY_CATEGORIES: IFilterCategory[] = [
+export const DUMMY_CATEGORIES: IFilterCategory[] = [
   {
     id: "ioiojiolkm",
     title: "dog",
@@ -213,9 +192,14 @@ const DUMMY_CATEGORIES: IFilterCategory[] = [
     title: "parrot",
     groupId: DUMMY_GROUP_ID,
   },
+  {
+    id: "danger",
+    title: "parrot",
+    groupId: DUMMY_GROUP_ID,
+  },
 ];
 
-const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
+export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
   {
     id: "lolololololoklo8787878787",
     title: "FINH",
@@ -233,7 +217,7 @@ const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
   },
 ];
 
-const DUMMY_FILTERS: IFilter[] = [
+export const DUMMY_FILTERS: IFilter[] = [
   {
     id: "boo",
     title: "Hey guys",
@@ -258,6 +242,8 @@ export default function FiltersPage() {
 
   const [filters, setFilters] = useState<IFilter[]>(DUMMY_FILTERS);
 
+  const router = useRouter();
+
   return (
     <PageLayout
       title="My Filters"
@@ -274,18 +260,29 @@ export default function FiltersPage() {
     >
       <Stack px="50px">
         <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
-          {DUMMY_FILTERS.map((f) => (
-            <FilterCard
+          {DUMMY_FILTERS.map((f, i) => (
+            <Stack
               key={f.id}
-              {...f}
-              deviceImageUrls={[
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-              ]}
-            />
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
+              }}
+              onClick={() => router.push(`/filters/${f.id}`)}
+            >
+              <UrsorFadeIn duration={800} delay={i * 150}>
+                <FilterCard
+                  {...f}
+                  deviceImageUrls={[
+                    "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                    "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+                    "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                    "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                    "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                  ]}
+                />
+              </UrsorFadeIn>
+            </Stack>
           ))}
         </DynamicCardGrid>
       </Stack>

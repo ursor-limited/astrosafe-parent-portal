@@ -3,7 +3,7 @@ import AuthWrapper from "../components/AuthWrapper";
 import FiltersPageContents from "./FiltersPageContents";
 import { BrowserUserProvider } from "../components/BrowserUserContext";
 
-async function ChannelsPage() {
+async function FilterPage() {
   return (
     <AuthWrapper>
       <BrowserUserProvider>
@@ -13,4 +13,4 @@ async function ChannelsPage() {
   );
 }
 
-export default ChannelsPage;
+export default FilterPage;
