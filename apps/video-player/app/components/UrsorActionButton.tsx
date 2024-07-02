@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import React, { useState } from "react";
 import ActionPopup, { IActionPopupItem } from "./ActionPopup";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import MoreIcon from "@/images/icons/MoreIcon.svg";
 import { PALETTE } from "ui";
 
@@ -46,6 +45,7 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
           },
           transition: "0.2s",
           svg: {
+            transform: "rotate(90deg)",
             path: {
               fill:
                 props.fontColor ||
@@ -70,17 +70,10 @@ export default function UrsorActionButton(props: IUrsorActionButtonProps) {
         }}
         boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.08)" : undefined}
       >
-        {props.threeDots ? (
-          <MoreIcon
-            height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
-            width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
-          />
-        ) : (
-          <PencilIcon
-            height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
-            width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
-          />
-        )}
+        <MoreIcon
+          height={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
+          width={props.iconSize || (props.large ? LARGE_SIZE : DEFAULT_SIZE)}
+        />
       </Stack>
     </ActionPopup>
   );

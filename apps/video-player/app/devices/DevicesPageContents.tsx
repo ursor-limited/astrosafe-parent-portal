@@ -2,6 +2,9 @@
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
+import PlugIcon from "@/images/icons/PlugIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
@@ -11,11 +14,15 @@ import {
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DeviceCard from "./components/DeviceCard";
 import { Stack } from "@mui/system";
+import UrsorActionButton from "../components/UrsorActionButton";
+import { PALETTE } from "ui";
+import { useRouter } from "next/navigation";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicesPageContents() {
   const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
+  const router = useRouter();
   return (
     <PageLayout
       title="My Filters"
@@ -44,6 +51,30 @@ export default function DevicesPageContents() {
               {...d}
               showBrowsing
               url="nintendo.com/bopioijgorfrifunrifjni"
+              button={
+                <UrsorActionButton
+                  size="16px"
+                  iconSize="16px"
+                  actions={[
+                    {
+                      text: "Open",
+                      kallback: () => router.push(`/devices/${d.id}`),
+                      icon: ArrowUpRightIcon,
+                    },
+                    {
+                      text: "Edit name",
+                      kallback: () => null,
+                      icon: PencilIcon,
+                    },
+                    {
+                      text: "Disconnect",
+                      kallback: () => null,
+                      icon: PlugIcon,
+                      color: PALETTE.system.red,
+                    },
+                  ]}
+                />
+              }
             />
           ))}
         </DynamicCardGrid>

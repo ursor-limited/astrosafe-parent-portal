@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import AstroCard from "../../filters/[id]/components/AstroCard";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
-import XIcon from "@/images/icons/X.svg";
+import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import { DeviceType, IDevice_new } from "../../filters/[id]/FilterPageContents";
@@ -10,6 +10,7 @@ import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getAbsoluteUrl } from "@/app/browserApi";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -18,9 +19,14 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 };
 
 const DeviceCard = (
-  props: IDevice_new & { showBrowsing?: boolean; url?: string }
+  props: IDevice_new & {
+    showBrowsing?: boolean;
+    url?: string;
+    button: React.ReactNode;
+  }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  const [videoModeOn, setVideoModeOn] = useState<boolean>(false);
 
   const router = useRouter();
   const onClick = () => router.push(`/devices/${props.id}`);
@@ -36,8 +42,9 @@ const DeviceCard = (
             "&:hover": { opacity: 0.6 },
             transition: "0.2s",
           }}
+          zIndex={2}
         >
-          <XIcon height={16} width={16} />
+          {props.button}
         </Stack>
         <Stack
           direction="row"
@@ -124,20 +131,67 @@ const DeviceCard = (
         >
           <Stack
             direction="row"
-            sx={{ svg: { path: { fill: PALETTE.secondary.grey[4] } } }}
+            justifyContent="space-between"
             alignItems="center"
-            spacing="4px"
+            flex={1}
           >
-            <GlobeIcon height="16px" width="16px" />
-            <Typography variant="tiny">{`Browsing is ${
-              !browsingEnabled ? "disabled" : "enabled"
-            }`}</Typography>
+            <Stack
+              direction="row"
+              sx={{ svg: { path: { fill: PALETTE.secondary.grey[4] } } }}
+              alignItems="center"
+              spacing="4px"
+            >
+              <GlobeIcon height="16px" width="16px" />
+              <Typography variant="tiny">{`Browsing is ${
+                !browsingEnabled ? "disabled" : "enabled"
+              }`}</Typography>
+            </Stack>
+            <AstroSwitch
+              small
+              on={browsingEnabled}
+              callback={() => setBrowsingEnabled(!browsingEnabled)}
+            />
           </Stack>
-          <AstroSwitch
-            small
-            on={browsingEnabled}
-            callback={() => setBrowsingEnabled(!browsingEnabled)}
-          />
+          {!browsingEnabled ? (
+            <>
+              <Stack height="100%" width="20px" alignItems="center">
+                <Stack
+                  height="100%"
+                  width="1.5px"
+                  bgcolor={PALETTE.secondary.grey[2]}
+                />
+              </Stack>
+              <Stack flex={1}>
+                <UrsorFadeIn duration={800} fullWidth>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    flex={1}
+                  >
+                    <Stack
+                      direction="row"
+                      sx={{
+                        svg: { path: { fill: PALETTE.secondary.grey[4] } },
+                      }}
+                      alignItems="center"
+                      spacing="4px"
+                    >
+                      <CirclePlayIcon height="16px" width="16px" />
+                      <Typography variant="tiny">{`Video mode ${
+                        videoModeOn ? "on" : "off"
+                      }`}</Typography>
+                    </Stack>
+                    <AstroSwitch
+                      small
+                      on={videoModeOn}
+                      callback={() => setVideoModeOn(!videoModeOn)}
+                    />
+                  </Stack>
+                </UrsorFadeIn>
+              </Stack>
+            </>
+          ) : null}
         </Stack>
       </Stack>
     </AstroCard>

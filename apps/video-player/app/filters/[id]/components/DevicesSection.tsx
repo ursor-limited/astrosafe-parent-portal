@@ -35,7 +35,14 @@ const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
       <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
         {props.devices.map((d, i) => (
           <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-            <DeviceCard {...d} />
+            <DeviceCard
+              {...d}
+              button={
+                <Stack onClick={() => null}>
+                  <XIcon height={16} width={16} />
+                </Stack>
+              }
+            />
           </UrsorFadeIn>
         ))}
       </DynamicCardGrid>
