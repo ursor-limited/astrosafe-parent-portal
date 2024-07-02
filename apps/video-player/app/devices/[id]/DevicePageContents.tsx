@@ -15,12 +15,17 @@ import { PALETTE } from "ui";
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicePageContents(props: { deviceId: number }) {
-  const [device, setDevice] = useState<IDevice_new | undefined>(
-    DUMMY_DEVICES.find((d) => d.id === props.deviceId)
-  );
+  const [device, setDevice] = useState<IDevice_new | undefined>();
+  useEffect(() => {
+    setDevice(DUMMY_DEVICES.find((d) => d.id === props.deviceId));
+    console.log(
+      "ac",
+      typeof props.deviceId,
+      DUMMY_DEVICES.map((d) => d.id)
+    );
+  }, [props.deviceId]);
   return (
     <PageLayout
-      title="My Filters"
       titleRow={[
         {
           text: "All Devices",
@@ -28,22 +33,26 @@ export default function DevicePageContents(props: { deviceId: number }) {
         {
           text: device?.name,
           image: device ? (
-            <Stack position="relative" borderRadius="100%" overflow="hidden">
-              <Image
-                height={36}
-                width={36}
-                src={device.profileAvatarUrl}
-                alt="profile avatar"
-              />
+            <Stack position="relative" borderRadius="100%">
+              <Stack borderRadius="100%" overflow="hidden">
+                <Image
+                  height={36}
+                  width={36}
+                  src={device.profileAvatarUrl}
+                  alt="profile avatar"
+                />
+              </Stack>
               {device?.connected ? (
                 <Stack
-                  height="25px"
-                  width="25px"
+                  height="11px"
+                  width="11px"
+                  border={`2px solid ${PALETTE.secondary.grey[1]}`}
                   borderRadius="100%"
                   bgcolor={PALETTE.system.green}
                   position="absolute"
                   bottom={0}
                   right={0}
+                  sx={{ transform: "translate(2px, 2px)" }}
                 />
               ) : null}
             </Stack>

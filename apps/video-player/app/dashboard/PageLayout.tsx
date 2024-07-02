@@ -27,7 +27,7 @@ export interface IPageLayoutProps {
     text: string;
     image?: React.ReactNode;
     options?: { text: string; imageUrl?: string; callback: () => void }[];
-  };
+  }[];
   description?: string;
   dotColor?: string;
   titleBackButton?: boolean;
@@ -168,17 +168,57 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                             overflow="hidden"
                           >
                             <Stack overflow="hidden" spacing="5px">
-                              <Typography
-                                variant="h3"
-                                color={
-                                  props.dark
-                                    ? PALETTE.font.light
-                                    : PALETTE.font.dark
-                                }
-                                noWrap
-                              >
-                                {props.title}
-                              </Typography>
+                              {props.titleRow ? (
+                                <Stack
+                                  direction="row"
+                                  spacing="12px"
+                                  alignItems="center"
+                                >
+                                  {props.titleRow.map((x, i) => (
+                                    <Stack
+                                      key={i}
+                                      alignItems="center"
+                                      direction="row"
+                                      spacing="12px"
+                                    >
+                                      <Stack direction="row" spacing="12px">
+                                        {x.image}
+                                        <Typography
+                                          variant="h4"
+                                          color={
+                                            i <
+                                            (props.titleRow?.length ?? 0) - 1
+                                              ? PALETTE.secondary.grey[3]
+                                              : undefined
+                                          }
+                                        >
+                                          {x.text}
+                                        </Typography>
+                                      </Stack>
+                                      {i < (props.titleRow?.length ?? 0) - 1 ? (
+                                        <Typography
+                                          variant="h4"
+                                          color={PALETTE.secondary.grey[3]}
+                                        >
+                                          /
+                                        </Typography>
+                                      ) : null}
+                                    </Stack>
+                                  ))}
+                                </Stack>
+                              ) : (
+                                <Typography
+                                  variant="h3"
+                                  color={
+                                    props.dark
+                                      ? PALETTE.font.light
+                                      : PALETTE.font.dark
+                                  }
+                                  noWrap
+                                >
+                                  {props.title}
+                                </Typography>
+                              )}
                               {props.description ? (
                                 <Typography
                                   variant="small"
