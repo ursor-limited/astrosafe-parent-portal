@@ -9,7 +9,8 @@ export const FilterPageSection = (props: {
   subtitle: string;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   iconColor?: string;
-  legend?: React.ReactNode;
+  topRightStuff?: React.ReactNode;
+  notCollapsible?: boolean;
   children: React.ReactNode;
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
@@ -43,18 +44,20 @@ export const FilterPageSection = (props: {
             </Typography>
           </Stack>
           <Stack direction="row" spacing="24px" height="fit-content">
-            {props.legend}
-            <Stack
-              sx={{
-                transform: `rotate(${collapsed ? 0 : 180}deg)`,
-                transition: "0.2s",
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-              }}
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              <ChevronDownIcon height="24px" width="24px" />
-            </Stack>
+            {props.topRightStuff}
+            {!props.notCollapsible ? (
+              <Stack
+                sx={{
+                  transform: `rotate(${collapsed ? 0 : 180}deg)`,
+                  transition: "0.2s",
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.6 },
+                }}
+                onClick={() => setCollapsed(!collapsed)}
+              >
+                <ChevronDownIcon height="24px" width="24px" />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

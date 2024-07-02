@@ -1,9 +1,11 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { FilterPageSection } from "./FilterPageSection";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import XIcon from "@/images/icons/X.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import {
   IFilter,
@@ -38,6 +40,21 @@ const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
     <FilterPageSection
       title={`Filter applied to these ${props.devices.length} devices`}
       subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding category. Be careful this overrides the filter!"
+      notCollapsible
+      topRightStuff={
+        <Stack direction="row" spacing="12px">
+          <UrsorButton
+            size="small"
+            variant="secondary"
+            endIcon={ChevronRightIcon}
+          >
+            View all
+          </UrsorButton>
+          <UrsorButton dark variant="tertiary" size="small" endIcon={PlusIcon}>
+            Add Device
+          </UrsorButton>
+        </Stack>
+      }
     >
       <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
         {props.devices.map((d) => (
@@ -73,7 +90,9 @@ const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
                 <Typography bold>{d.name}</Typography>
                 <Stack direction="row" spacing="4px" alignItems="center">
                   <PhoneIcon height="8px" width="8px" />
-                  <Typography variant="tiny">{d.deviceType}</Typography>
+                  <Typography variant="tiny">
+                    {DEVICE_TYPE_DISPLAY_NAMES[d.deviceType]}
+                  </Typography>
                 </Stack>
               </Stack>
             </Stack>

@@ -49,7 +49,7 @@ const FilterPageCategoriesSection = (props: {
       props.allowedCategories.length === 1 ? "Category" : "Categories"
     }`}
     subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
-    legend={<FilterLegend />}
+    topRightStuff={<FilterLegend />}
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.categories.map((c) => (
