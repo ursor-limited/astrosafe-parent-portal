@@ -19,14 +19,14 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import Image from "next/image";
 import ContentAgeSelectionPopup from "./ContentAgeSelectionPopup";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
-import AddDeviceDialog from "../monitor/AddDeviceDialog";
+import AddDeviceDialog from "../monitor_old/AddDeviceDialog";
 import {
   BACKDROP_STYLE,
   DEFAULT_FADEIN_DURATION,
 } from "../components/UrsorDialog";
 import { BORDER_RADIUS } from "ui/ursor-input-field";
-import DeviceDialog from "../monitor/DeviceDialog/DeviceDialog";
-import ContentAgeModeIcon from "../monitor/ContentAgeModeIcon";
+import DeviceDialog from "../monitor_old/DeviceDialog/DeviceDialog";
+import ContentAgeModeIcon from "../monitor_old/ContentAgeModeIcon";
 
 const WIDTH = "850px";
 const MIN_HEIGHT = "470px";

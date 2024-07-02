@@ -4,7 +4,7 @@ import ChevronDown from "@/images/icons/ChevronDown.svg";
 import { ContentAgeMode, IDevice } from "../browserApi";
 import UrsorPopover from "../components/UrsorPopover";
 import UrsorSelectList from "../components/UrsorSelectList";
-import ContentAgeModeIcon from "../monitor/ContentAgeModeIcon";
+import ContentAgeModeIcon from "../monitor_old/ContentAgeModeIcon";
 
 // export const getContentAgeMode: (age: number) => ContentAgeMode = (age) =>
 //   age < 6 ? "trailblazer" : age < 10 ? "explorer" : "adventurer";

@@ -1,16 +1,16 @@
 import React from "react";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { BrowserUserProvider } from "@/app/components/BrowserUserContext";
-import FilterPageContents from "./FilterPageContents";
+import DevicePageContents from "./DevicePageContents";
 
-async function FilterPage({ params }: { params: { id: number } }) {
+async function DevicePage({ params }: { params: { id: number } }) {
   return (
     <AuthWrapper>
       <BrowserUserProvider>
-        <FilterPageContents filterId={params.id} />
+        <DevicePageContents deviceId={params.id} />
       </BrowserUserProvider>
     </AuthWrapper>
   );
 }
 
-export default FilterPage;
+export default DevicePage;

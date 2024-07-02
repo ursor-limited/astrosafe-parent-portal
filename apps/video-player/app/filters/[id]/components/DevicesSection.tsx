@@ -8,7 +8,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
 import { DeviceType, IDevice_new } from "../FilterPageContents";
-import DeviceCard from "./DeviceCard";
+import DeviceCard from "../../../devices/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {

@@ -25,7 +25,7 @@ import FilterPageDevicesSection from "./components/DevicesSection";
 export type DeviceType = "chrome" | "android" | "ios";
 
 export interface IDevice_new {
-  id: string;
+  id: number;
   name: string;
   backgroundColor: string;
   profileAvatarUrl: string;
@@ -34,11 +34,12 @@ export interface IDevice_new {
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
+  locked: boolean;
 }
 
-const DUMMY_DEVICES: IDevice_new[] = [
+export const DUMMY_DEVICES: IDevice_new[] = [
   {
-    id: "hfihrhf",
+    id: 1,
     name: "Joe's iPad",
     backgroundColor: "cyan",
     profileAvatarUrl:
@@ -48,9 +49,10 @@ const DUMMY_DEVICES: IDevice_new[] = [
     deviceType: "ios",
     favorites: [],
     requestedSites: [],
+    locked: false,
   },
   {
-    id: "aoakaokaok",
+    id: 2,
     name: "F's N64",
     backgroundColor: "cyan",
     profileAvatarUrl:
@@ -60,10 +62,11 @@ const DUMMY_DEVICES: IDevice_new[] = [
     deviceType: "android",
     favorites: [],
     requestedSites: [],
+    locked: false,
   },
 ];
 
-export default function FilterPageContents() {
+export default function FilterPageContents(props: { filterId: number }) {
   const [filter, setFilter] = useState<IFilter>(DUMMY_FILTERS[0]);
   const [blockedSites, setBlockedSites] =
     useState<IFilterUrl[]>(DUMMY_BLOCKED_SITES);

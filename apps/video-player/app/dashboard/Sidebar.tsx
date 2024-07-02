@@ -6,7 +6,7 @@ import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
-import DesktopIcon from "@/images/icons/DesktopIcon.svg";
+import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
@@ -185,11 +185,11 @@ export default function Sidebar(props: ISidebarProps) {
   const router = useRouter();
   const topItems: ISidebarItem[] = [
     {
-      id: "monitor",
+      id: "devices",
       //tourId: "devices-button",
-      icon: DesktopIcon,
-      title: "Monitor",
-      callback: () => router.push("/monitor"),
+      icon: PhoneIcon,
+      title: "Devices",
+      callback: () => router.push("/devices"),
     },
     {
       id: "channels",

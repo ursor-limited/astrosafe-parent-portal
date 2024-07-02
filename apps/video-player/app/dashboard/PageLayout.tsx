@@ -23,6 +23,11 @@ const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
 export interface IPageLayoutProps {
   dark?: boolean;
   title: string;
+  titleRow?: {
+    text: string;
+    image?: React.ReactNode;
+    options?: { text: string; imageUrl?: string; callback: () => void }[];
+  };
   description?: string;
   dotColor?: string;
   titleBackButton?: boolean;

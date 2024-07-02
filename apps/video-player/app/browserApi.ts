@@ -1,3 +1,5 @@
+import { IDevice_new } from "./filters/[id]/FilterPageContents";
+
 export interface ISchool {
   id: string;
   name: string;
@@ -8,8 +10,7 @@ export interface ISchool {
   postcode?: string;
   country?: string;
   isDeleted: boolean;
-  devices: IDevice[];
-  lock?: ILock;
+  devices: IDevice_new[];
   joinCode: string;
   teacherCode: string;
   ownerId: string;
@@ -17,24 +18,6 @@ export interface ISchool {
   teacherLimit: number;
   expirationDate?: string;
   free?: boolean;
-}
-
-export interface ILock {
-  devices: string[];
-  endTime: string;
-}
-
-export type ContentAgeMode = "trailblazer" | "explorer" | "adventurer";
-
-export interface IDevice {
-  id: string;
-  name: string;
-  lastOnline?: string;
-  history: { studentId: string; startTime: string; endTime?: string }[];
-  connected?: "approved" | "denied";
-  reviewerId?: string;
-  type: "chrome" | "ipad";
-  contentAgeMode: ContentAgeMode;
 }
 
 export interface IChannel {
@@ -159,12 +142,6 @@ class BrowserApiController {
 
   static async updateDeviceName(deviceId: string, name: string) {
     return patch(`schools/devices/${deviceId}/name`, { name }).then(
-      (response: any) => response.json()
-    );
-  }
-
-  static async updateDeviceAge(deviceId: string, mode: ContentAgeMode) {
-    return patch(`schools/devices/${deviceId}/contentAgeMode`, { mode }).then(
       (response: any) => response.json()
     );
   }

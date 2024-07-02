@@ -21,7 +21,7 @@ import {
 } from "../components/BrowserUserContext";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import dayjs from "dayjs";
-import DetailsSection from "../monitor/DeviceDialog/DetailsSection";
+import DetailsSection from "../monitor_old/DeviceDialog/DetailsSection";
 import BrowserApiController from "../browserApi";
 
 const WIDTH = "847px";
