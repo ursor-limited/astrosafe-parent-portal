@@ -19,17 +19,51 @@ import FilterPageServicesSection from "./components/ServicesSection";
 import FilterPageCategoriesSection from "./components/CategoriesSection";
 import FilterPageAllowedSitesSection from "./components/AllowedSitesSection";
 import FilterPageBlockedSitesSection from "./components/BlockedSitesSection";
+import FilterPageSearchWordsSection from "./components/SearchWordsSection";
+import FilterPageDevicesSection from "./components/DevicesSection";
+
+export type DeviceType = "chrome" | "android" | "ios";
+
+export interface IDevice_new {
+  id: string;
+  name: string;
+  backgroundColor: string;
+  profileAvatarUrl: string;
+  lastOnline: string;
+  connected: boolean;
+  deviceType: DeviceType;
+  favorites: number[];
+  requestedSites: IFilterUrl[];
+}
+
+const DUMMY_DEVICES: IDevice_new[] = [
+  {
+    id: "hfihrhf",
+    name: "Joe's iPad",
+    backgroundColor: "cyan",
+    profileAvatarUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+    lastOnline: "2024-06-20",
+    connected: true,
+    deviceType: "ios",
+    favorites: [],
+    requestedSites: [],
+  },
+  {
+    id: "aoakaokaok",
+    name: "F's N64",
+    backgroundColor: "cyan",
+    profileAvatarUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+    lastOnline: "2024-06-20",
+    connected: true,
+    deviceType: "android",
+    favorites: [],
+    requestedSites: [],
+  },
+];
 
 export default function FilterPageContents() {
-  // const [fl, setChannels] = useState<IChannel[] | undefined>(undefined);
-  // const loadChannels = () =>
-  //   BrowserApiController.getChannelsInSchool(userDetails?.schoolId ?? "")
-  //     .then((c) => setChannels(c))
-  //     .catch((error) => notificationCtx.error(error.message));
-  // useEffect(() => {
-  //   userDetails?.schoolId && loadChannels();
-  // }, [userDetails?.schoolId]);
-
   const [filter, setFilter] = useState<IFilter>(DUMMY_FILTERS[0]);
   const [blockedSites, setBlockedSites] =
     useState<IFilterUrl[]>(DUMMY_BLOCKED_SITES);
@@ -49,6 +83,8 @@ export default function FilterPageContents() {
   );
   useEffect(() => setAllowedServices(filter.allowedServices), [filter]);
 
+  const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([]);
+
   return (
     <PageLayout
       title="My Filters"
@@ -65,6 +101,7 @@ export default function FilterPageContents() {
       scrollable
     >
       <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
+        <FilterPageDevicesSection devices={DUMMY_DEVICES} />
         <FilterPageServicesSection
           filter={filter}
           services={services}
@@ -96,6 +133,15 @@ export default function FilterPageContents() {
         <FilterPageBlockedSitesSection
           blockedSites={blockedSites}
           addSite={(url) => null}
+        />
+        <FilterPageSearchWordsSection
+          blockedSearchWords={blockedSearchWords}
+          addWord={(word) =>
+            setBlockedSearchWords([...blockedSearchWords, word])
+          }
+          removeWord={(word) =>
+            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
+          }
         />
       </Stack>
     </PageLayout>

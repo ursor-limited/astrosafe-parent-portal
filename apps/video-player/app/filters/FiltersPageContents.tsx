@@ -196,22 +196,63 @@ export const DUMMY_CATEGORIES: IFilterCategory[] = [
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "danger",
-    title: "parrot",
+    id: "cssf",
+    title: "budgie",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "porn",
+    title: "porn",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "weapons",
+    title: "weapons",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "xxx",
+    title: "xxx",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "meth",
+    title: "meth",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "cocaine",
+    title: "cocaine",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "weed",
+    title: "weed",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "sex",
+    title: "sex",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "mating",
+    title: "mating",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "hardcore",
+    title: "hardcore",
+    groupId: DUMMY_GROUP_ID,
+  },
+  {
+    id: "muuuuu",
+    title: "music",
     groupId: DUMMY_GROUP_ID,
   },
 ];
 
 export const DUMMY_ALLOWED_SITES: IFilterUrl[] = [
-  {
-    id: "lolololololoklo8787878787",
-    title: "FINH",
-    url: "finf.cc",
-    imageUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321192.png",
-    groupId: DUMMY_GROUP_ID,
-    createdAt: "2024-05-06",
-  },
   {
     id: "doddodjo",
     title: "Pornhub",
@@ -234,8 +275,8 @@ export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
   },
   {
     id: "doddodjo",
-    title: "Pornhub",
-    url: "pornhub.com",
+    title: "Pokemon",
+    url: "pokemon.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
     groupId: DUMMY_GROUP_ID,
     createdAt: "2024-05-06",

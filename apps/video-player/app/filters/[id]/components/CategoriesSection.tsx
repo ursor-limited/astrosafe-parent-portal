@@ -45,7 +45,9 @@ const FilterPageCategoriesSection = (props: {
 }) => (
   <FilterPageSection
     icon={ThumbsUpIcon}
-    title={`${props.filter.allowedCategories.length} allowed Categories`}
+    title={`${props.allowedCategories.length} allowed ${
+      props.allowedCategories.length === 1 ? "Category" : "Categories"
+    }`}
     subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
     legend={<FilterLegend />}
   >

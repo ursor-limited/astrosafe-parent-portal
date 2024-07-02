@@ -16,7 +16,9 @@ const FilterPageServicesSection = (props: {
 }) => (
   <FilterPageSection
     icon={DesktopIcon}
-    title={`${props.filter.allowedServices.length} allowed Services`}
+    title={`${props.filter.allowedServices.length} allowed Service${
+      props.filter.allowedServices.length === 1 ? "" : "s"
+    }`}
     subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
     legend={<FilterLegend />}
   >

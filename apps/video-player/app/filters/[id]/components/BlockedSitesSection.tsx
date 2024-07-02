@@ -1,5 +1,5 @@
 import { FilterPageSection } from "./FilterPageSection";
-import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
+import ThumbsDownIcon from "@/images/icons/ThumbsDownIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorInputField } from "ui";
@@ -112,9 +112,9 @@ const FilterPageBlockedSitesSection = (props: {
 
   return (
     <FilterPageSection
-      icon={ThumbsUpIcon}
-      title={`${props.blockedSites.length} allowed ${
-        props.blockedSites.length === 1 ? "Category" : "Categories"
+      icon={ThumbsDownIcon}
+      title={`${props.blockedSites.length} blocked site exception${
+        props.blockedSites.length === 1 ? "" : "s"
       }`}
       subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
     >
