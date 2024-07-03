@@ -6,6 +6,7 @@ import { PALETTE, Typography } from "ui";
 
 const daysN = 8;
 const hoursInterval = 2;
+const TIME_LIMIT = 6;
 
 const AstroTimeChart = (props: { times: number[] }) => {
   const [selectedDay, setSelectedDay] = useState<number>(0);
@@ -78,7 +79,32 @@ const AstroTimeChart = (props: { times: number[] }) => {
                 sx={{
                   transition: "0.2s",
                 }}
-              />
+                position="relative"
+              >
+                {time >= TIME_LIMIT ? (
+                  <Stack
+                    width="50px"
+                    justifyContent="center"
+                    position="absolute"
+                    top="-25px"
+                    sx={{
+                      transform: "translateX(-8.5px)",
+                    }}
+                  >
+                    <Typography
+                      variant="tiny"
+                      bold
+                      color={PALETTE.secondary.grey[3]}
+                      sx={{
+                        textAlign: "center",
+                      }}
+                    >
+                      Limit reached
+                    </Typography>
+                  </Stack>
+                ) : null}
+              </Stack>
+
               <Stack>
                 <Typography
                   bold
