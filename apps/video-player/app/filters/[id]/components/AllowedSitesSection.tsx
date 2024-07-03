@@ -1,5 +1,5 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { AstroSectionCard } from "./AstroSectionCard";
+import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
@@ -117,7 +117,7 @@ const FilterPageAllowedSitesSection = (props: {
   }, [filteredRows, sortDirection, sortedColumn]);
 
   return (
-    <AstroSectionCard
+    <AstroBentoCard
       icon={ThumbsUpIcon}
       title={`${props.allowedSites.length} allowed site exception${
         props.allowedSites.length === 1 ? "" : "s"
@@ -165,7 +165,7 @@ const FilterPageAllowedSitesSection = (props: {
           rowClickCallback={(id) => null}
         />
       </Stack>
-    </AstroSectionCard>
+    </AstroBentoCard>
   );
 };
 

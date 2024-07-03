@@ -1,4 +1,4 @@
-import { AstroSectionCard } from "./AstroSectionCard";
+import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsDownIcon from "@/images/icons/ThumbsDownIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import XIcon from "@/images/icons/X.svg";
@@ -15,7 +15,7 @@ const SearchWordsSection = (props: {
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   return (
-    <AstroSectionCard
+    <AstroBentoCard
       icon={StopIcon}
       iconColor={PALETTE.system.red}
       title={`${props.blockedSearchWords.length} blocked search word${
@@ -68,7 +68,7 @@ const SearchWordsSection = (props: {
           </Stack>
         ))}
       </Stack>
-    </AstroSectionCard>
+    </AstroBentoCard>
   );
 };
 

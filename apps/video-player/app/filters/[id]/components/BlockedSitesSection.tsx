@@ -1,4 +1,4 @@
-import { AstroSectionCard } from "./AstroSectionCard";
+import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsDownIcon from "@/images/icons/ThumbsDownIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
@@ -111,7 +111,7 @@ const FilterPageBlockedSitesSection = (props: {
   }, [filteredRows, sortDirection, sortedColumn]);
 
   return (
-    <AstroSectionCard
+    <AstroBentoCard
       icon={ThumbsDownIcon}
       title={`${props.blockedSites.length} blocked site exception${
         props.blockedSites.length === 1 ? "" : "s"
@@ -159,7 +159,7 @@ const FilterPageBlockedSitesSection = (props: {
           rowClickCallback={(id) => null}
         />
       </Stack>
-    </AstroSectionCard>
+    </AstroBentoCard>
   );
 };
 

@@ -8,8 +8,11 @@ const daysN = 8;
 const hoursInterval = 2;
 const TIME_LIMIT = 6;
 
-const AstroTimeChart = (props: { times: number[] }) => {
-  const [selectedDay, setSelectedDay] = useState<number>(0);
+const AstroTimeChart = (props: {
+  times: number[];
+  selectedDayIndex: number;
+  setSelectedDayIndex: (i: number) => void;
+}) => {
   const [maxTime, setMaxTime] = useState<number>(0);
   useEffect(
     () => setMaxTime(_.max(props.times) ?? props.times[0]),
@@ -57,7 +60,7 @@ const AstroTimeChart = (props: { times: number[] }) => {
               justifyContent="flex-end"
               spacing="6px"
               sx={
-                selectedDay !== i
+                props.selectedDayIndex !== i
                   ? {
                       cursor: "pointer",
                       "&:hover": { opacity: 0.7 },
@@ -65,14 +68,14 @@ const AstroTimeChart = (props: { times: number[] }) => {
                     }
                   : null
               }
-              onClick={() => setSelectedDay(i)}
+              onClick={() => props.setSelectedDayIndex(i)}
             >
               <Stack
                 height={`${(100 * time) / yRange}%`}
                 width="32px"
                 borderRadius="4px 4px 0 0"
                 bgcolor={
-                  selectedDay === i
+                  props.selectedDayIndex === i
                     ? PALETTE.secondary.purple[2]
                     : PALETTE.secondary.grey[2]
                 }
@@ -109,7 +112,9 @@ const AstroTimeChart = (props: { times: number[] }) => {
                 <Typography
                   bold
                   color={
-                    selectedDay === i ? undefined : PALETTE.secondary.grey[3]
+                    props.selectedDayIndex === i
+                      ? undefined
+                      : PALETTE.secondary.grey[3]
                   }
                 >
                   {dayjs()
@@ -120,7 +125,9 @@ const AstroTimeChart = (props: { times: number[] }) => {
                   width="100%"
                   height="2px"
                   bgcolor={
-                    selectedDay === i ? PALETTE.secondary.purple[2] : undefined
+                    props.selectedDayIndex === i
+                      ? PALETTE.secondary.purple[2]
+                      : undefined
                   }
                   sx={{
                     transition: "0.2s",

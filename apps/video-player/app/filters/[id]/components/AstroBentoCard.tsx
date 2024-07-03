@@ -4,7 +4,7 @@ import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { useState } from "react";
 import DynamicContainer from "@/app/components/DynamicContainer";
 
-export const AstroSectionCard = (props: {
+export const AstroBentoCard = (props: {
   title: string;
   subtitle?: string;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;

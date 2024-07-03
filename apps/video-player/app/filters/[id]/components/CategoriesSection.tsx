@@ -1,5 +1,5 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { AstroSectionCard } from "./AstroSectionCard";
+import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
@@ -43,7 +43,7 @@ const FilterPageCategoriesSection = (props: {
   allowedCategories: IFilterUrl["id"][];
   flipCategory: (id: number) => void;
 }) => (
-  <AstroSectionCard
+  <AstroBentoCard
     icon={ThumbsUpIcon}
     title={`${props.allowedCategories.length} allowed ${
       props.allowedCategories.length === 1 ? "Category" : "Categories"
@@ -79,7 +79,7 @@ const FilterPageCategoriesSection = (props: {
         </Stack>
       ))}
     </DynamicCardGrid>
-  </AstroSectionCard>
+  </AstroBentoCard>
 );
 
 export default FilterPageCategoriesSection;

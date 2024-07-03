@@ -3,6 +3,8 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
   DUMMY_DEVICES,
@@ -10,13 +12,19 @@ import {
 } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import AstroTimeChart from "./AstroTimeChart";
 import { DUMMY_GROUP_ID, IFilterUrl } from "@/app/filters/FiltersPageContents";
-import { AstroSectionCard } from "@/app/filters/[id]/components/AstroSectionCard";
+import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import _ from "lodash";
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat.js";
+import AstroTabSwitch from "./AstroTabSwitch";
+dayjs.extend(advancedFormat);
 
 export type DeviceType = "chrome" | "android" | "ios";
+
+type AstroAccountTab = "monitoring" | "settings" | "content";
 
 const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
   {
@@ -58,6 +66,9 @@ export default function DevicePageContents(props: { deviceId: number }) {
   }, [props.deviceId]);
 
   const [timeSpent, setTimeSpent] = useState<number>(59083);
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
+
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
   return (
     <PageLayout
       titleRow={[
@@ -111,10 +122,61 @@ export default function DevicePageContents(props: { deviceId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack pl="48px">
+      <Stack pl="48px" spacing="24px">
+        <AstroTabSwitch
+          select={(id) => setSelectedTab(id as AstroAccountTab)}
+          selected={selectedTab}
+          items={[
+            {
+              text: "Monitoring",
+              id: "monitoring",
+            },
+            {
+              text: "Settings",
+              id: "settings",
+            },
+            {
+              text: "Content",
+              id: "content",
+            },
+          ]}
+        />
+        <Stack direction="row" spacing="10px" alignItems="center">
+          <Stack
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            onClick={() => setSelectedDayIndex(selectedDayIndex + 1)}
+          >
+            <ChevronLeftIcon height="24px" width="24px" />
+          </Stack>
+          <Typography variant="h5">
+            {`${
+              selectedDayIndex === 0
+                ? "Today"
+                : selectedDayIndex === 1
+                ? "Yesterday"
+                : `${dayjs().subtract(selectedDayIndex, "days").format("dddd")}`
+            }, ${dayjs().subtract(selectedDayIndex, "days").format("Do MMMM")}`}
+          </Typography>
+          <Stack
+            sx={{
+              opacity: selectedDayIndex === 0 ? 0.3 : 1,
+              pointerEvents: selectedDayIndex === 0 ? "none" : undefined,
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            onClick={() => setSelectedDayIndex(selectedDayIndex - 1)}
+          >
+            <ChevronRightIcon height="24px" width="24px" />
+          </Stack>
+        </Stack>
         <Stack height="290px" spacing="28px" direction="row">
           <Stack width="54%" flex={1}>
-            <AstroSectionCard
+            <AstroBentoCard
               title={`${Math.floor(timeSpent / 3600)}h ${Math.floor(
                 (timeSpent % 3600) / 60
               )}m spent on screen`}
@@ -129,15 +191,24 @@ export default function DevicePageContents(props: { deviceId: number }) {
                 boxSizing="border-box"
                 spacing="30px"
               >
-                <AstroTimeChart times={[2, 0.5, 3, 7, 8, 1, 3]} />
+                <AstroTimeChart
+                  selectedDayIndex={selectedDayIndex}
+                  setSelectedDayIndex={setSelectedDayIndex}
+                  times={[2, 0.5, 3, 7, 8, 1, 3]}
+                />
               </Stack>
-            </AstroSectionCard>
+            </AstroBentoCard>
           </Stack>
           <Stack flex={1}>
-            <AstroSectionCard
+            <AstroBentoCard
               title="Most visited sites today"
               notCollapsible
               paddingBottom="0"
+              topRightStuff={
+                <UrsorButton size="small" variant="secondary">
+                  View all
+                </UrsorButton>
+              }
             >
               {DUMMY_MOST_VISITED.map((site, i) => (
                 <Stack
@@ -186,7 +257,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
                   </Stack>
                 </Stack>
               ))}
-            </AstroSectionCard>
+            </AstroBentoCard>
           </Stack>
         </Stack>
       </Stack>

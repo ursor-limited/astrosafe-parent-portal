@@ -5,7 +5,7 @@ import { IFilter, IFilterUrl } from "../../FiltersPageContents";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { AstroSectionCard } from "./AstroSectionCard";
+import { AstroBentoCard } from "./AstroBentoCard";
 import { FilterLegend } from "./CategoriesSection";
 
 const FilterPageServicesSection = (props: {
@@ -14,7 +14,7 @@ const FilterPageServicesSection = (props: {
   allowedServices: IFilterUrl["id"][];
   flipService: (id: number) => void;
 }) => (
-  <AstroSectionCard
+  <AstroBentoCard
     icon={DesktopIcon}
     title={`${props.filter.allowedServices.length} allowed Service${
       props.filter.allowedServices.length === 1 ? "" : "s"
@@ -62,7 +62,7 @@ const FilterPageServicesSection = (props: {
         </Stack>
       ))}
     </DynamicCardGrid>
-  </AstroSectionCard>
+  </AstroBentoCard>
 );
 
 export default FilterPageServicesSection;
