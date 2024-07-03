@@ -22,7 +22,7 @@ const AstroTimeChart = (props: { times: number[] }) => {
   return (
     <Stack flex={1} px="24px" position="relative" mr="62px !important">
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
-        <Stack flex={1} justifyContent="space-between" pb="22px">
+        <Stack flex={1} justifyContent="space-between" pb="28px">
           {[...Array(1 + yRange / hoursInterval).keys()].map((i) => (
             <Stack
               key={i}
@@ -54,6 +54,7 @@ const AstroTimeChart = (props: { times: number[] }) => {
               alignItems="center"
               width="60px"
               justifyContent="flex-end"
+              spacing="6px"
             >
               <Stack
                 height={`${(100 * time) / yRange}%`}
@@ -65,16 +66,25 @@ const AstroTimeChart = (props: { times: number[] }) => {
                     : PALETTE.secondary.grey[2]
                 }
               />
-              <Typography
-                bold
-                color={
-                  selectedDay === i ? undefined : PALETTE.secondary.grey[2]
-                }
-              >
-                {dayjs()
-                  .subtract(i, "days")
-                  .format(i < 7 ? "ddd" : "MM/DD")}
-              </Typography>
+              <Stack>
+                <Typography
+                  bold
+                  color={
+                    selectedDay === i ? undefined : PALETTE.secondary.grey[3]
+                  }
+                >
+                  {dayjs()
+                    .subtract(i, "days")
+                    .format(i < 7 ? "ddd" : "MM/DD")}
+                </Typography>
+                <Stack
+                  width="100%"
+                  height="2px"
+                  bgcolor={
+                    selectedDay === i ? PALETTE.secondary.purple[2] : undefined
+                  }
+                />
+              </Stack>
             </Stack>
           ))
         )}
