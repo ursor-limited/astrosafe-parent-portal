@@ -1,5 +1,5 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { FilterPageSection } from "./FilterPageSection";
+import { AstroSectionCard } from "./AstroSectionCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
@@ -41,9 +41,9 @@ const FilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
   allowedCategories: IFilterUrl["id"][];
-  flipCategory: (id: string) => void;
+  flipCategory: (id: number) => void;
 }) => (
-  <FilterPageSection
+  <AstroSectionCard
     icon={ThumbsUpIcon}
     title={`${props.allowedCategories.length} allowed ${
       props.allowedCategories.length === 1 ? "Category" : "Categories"
@@ -79,7 +79,7 @@ const FilterPageCategoriesSection = (props: {
         </Stack>
       ))}
     </DynamicCardGrid>
-  </FilterPageSection>
+  </AstroSectionCard>
 );
 
 export default FilterPageCategoriesSection;

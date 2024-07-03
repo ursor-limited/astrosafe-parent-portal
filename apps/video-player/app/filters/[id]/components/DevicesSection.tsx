@@ -1,5 +1,5 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import { FilterPageSection } from "./FilterPageSection";
+import { AstroSectionCard } from "./AstroSectionCard";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import XIcon from "@/images/icons/X.svg";
@@ -13,7 +13,7 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
   return (
-    <FilterPageSection
+    <AstroSectionCard
       title={`Filter applied to these ${props.devices.length} devices`}
       subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding category. Be careful this overrides the filter!"
       notCollapsible
@@ -46,7 +46,7 @@ const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
           </UrsorFadeIn>
         ))}
       </DynamicCardGrid>
-    </FilterPageSection>
+    </AstroSectionCard>
   );
 };
 

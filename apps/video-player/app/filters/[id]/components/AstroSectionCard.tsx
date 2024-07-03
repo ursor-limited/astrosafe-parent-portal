@@ -4,14 +4,15 @@ import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { useState } from "react";
 import DynamicContainer from "@/app/components/DynamicContainer";
 
-export const FilterPageSection = (props: {
+export const AstroSectionCard = (props: {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   iconColor?: string;
   topRightStuff?: React.ReactNode;
   notCollapsible?: boolean;
   children: React.ReactNode;
+  paddingBottom?: string;
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   return (
@@ -20,6 +21,8 @@ export const FilterPageSection = (props: {
       borderRadius="12px"
       spacing="20px"
       p="16px"
+      paddingBottom={props.paddingBottom}
+      flex={1}
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
@@ -39,9 +42,11 @@ export const FilterPageSection = (props: {
                 {props.title}
               </Typography>
             </Stack>
-            <Typography color={PALETTE.secondary.grey[4]} variant="small">
-              {props.subtitle}
-            </Typography>
+            {props.subtitle ? (
+              <Typography color={PALETTE.secondary.grey[4]} variant="small">
+                {props.subtitle}
+              </Typography>
+            ) : null}
           </Stack>
           <Stack direction="row" spacing="24px" height="fit-content">
             {props.topRightStuff}
@@ -61,9 +66,13 @@ export const FilterPageSection = (props: {
           </Stack>
         </Stack>
       </Stack>
-      <DynamicContainer duration={800} fullWidth>
-        {collapsed ? null : props.children}
-      </DynamicContainer>
+      {!props.notCollapsible ? (
+        <DynamicContainer duration={800} fullWidth>
+          {collapsed ? null : props.children}
+        </DynamicContainer>
+      ) : (
+        <Stack flex={1}>{props.children}</Stack>
+      )}
     </Stack>
   );
 };

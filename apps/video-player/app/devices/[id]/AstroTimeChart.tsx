@@ -21,7 +21,7 @@ const AstroTimeChart = (props: { times: number[] }) => {
     [maxTime]
   );
   return (
-    <Stack flex={1} px="24px" position="relative" mr="62px !important">
+    <Stack flex={1} px="24px" position="relative" mr="56px !important">
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
         <Stack flex={1} justifyContent="space-between" pb="28px">
           {[...Array(1 + yRange / hoursInterval).keys()].map((i) => (

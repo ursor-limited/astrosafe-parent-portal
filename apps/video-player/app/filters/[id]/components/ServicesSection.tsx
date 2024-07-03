@@ -5,16 +5,16 @@ import { IFilter, IFilterUrl } from "../../FiltersPageContents";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { FilterPageSection } from "./FilterPageSection";
+import { AstroSectionCard } from "./AstroSectionCard";
 import { FilterLegend } from "./CategoriesSection";
 
 const FilterPageServicesSection = (props: {
   filter: IFilter;
   services: IFilterUrl[];
   allowedServices: IFilterUrl["id"][];
-  flipService: (id: string) => void;
+  flipService: (id: number) => void;
 }) => (
-  <FilterPageSection
+  <AstroSectionCard
     icon={DesktopIcon}
     title={`${props.filter.allowedServices.length} allowed Service${
       props.filter.allowedServices.length === 1 ? "" : "s"
@@ -62,7 +62,7 @@ const FilterPageServicesSection = (props: {
         </Stack>
       ))}
     </DynamicCardGrid>
-  </FilterPageSection>
+  </AstroSectionCard>
 );
 
 export default FilterPageServicesSection;

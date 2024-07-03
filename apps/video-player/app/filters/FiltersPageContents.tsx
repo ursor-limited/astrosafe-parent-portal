@@ -1,29 +1,16 @@
 "use client";
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { IActionPopupItem } from "../components/ActionPopup";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
-import NotificationContext from "../components/NotificationContext";
-import BrowserApiController, { IDevice, IStack } from "../browserApi";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
-import UrsorActionButton from "../components/UrsorActionButton";
-import {
-  ITeacher,
-  useBrowserUserContext,
-} from "../components/BrowserUserContext";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import ChannelDialog from "../safety/ChannelDialog";
-import PageLayout, {
-  SIDEBAR_X_MARGIN,
-  SIDEBAR_Y_MARGIN,
-} from "../dashboard/PageLayout";
+import PageLayout from "../dashboard/PageLayout";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";
@@ -33,29 +20,29 @@ import { useRouter } from "next/navigation";
 export const GRID_SPACING = "20px";
 
 export interface IFilterCategory {
-  id: string;
+  id: number;
   title: string;
-  groupId: string;
+  groupId: number;
 }
 
 export interface IFilterUrl {
-  id: string;
+  id: number;
   url: string;
   title: string;
   imageUrl: string;
   createdAt: string;
-  groupId: string;
+  groupId: number;
 }
 
 export interface IFilter {
-  id: string;
+  id: number;
   title: string;
   allowedServices: IFilterUrl["id"][];
   allowedCategories: IFilterCategory["id"][];
   allowedSiteExceptions: IFilterUrl["id"][];
   blockedSiteExceptions: IFilterUrl["id"][];
   blockedWords: string[];
-  groupId: string;
+  groupId: number;
 }
 
 const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
@@ -152,11 +139,11 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   </Stack>
 );
 
-const DUMMY_GROUP_ID = "iuiubifbekjfnlej";
+export const DUMMY_GROUP_ID = 43;
 
 export const DUMMY_SERVICES: IFilterUrl[] = [
   {
-    id: "4icuheiuf",
+    id: 1,
     title: "Nintendo",
     url: "nintendo.com",
     imageUrl:
@@ -165,7 +152,7 @@ export const DUMMY_SERVICES: IFilterUrl[] = [
     createdAt: "2024-05-06",
   },
   {
-    id: "defefe3e",
+    id: 2,
     title: "New York Times",
     url: "nytimes.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
@@ -176,77 +163,77 @@ export const DUMMY_SERVICES: IFilterUrl[] = [
 
 export const DUMMY_CATEGORIES: IFilterCategory[] = [
   {
-    id: "ioiojiolkm",
+    id: 1,
     title: "dog",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "fefef",
+    id: 2,
     title: "cat",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "cococooclcclcl",
+    id: 3,
     title: "bunny",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "ddddwdw",
+    id: 4,
     title: "parrot",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "cssf",
+    id: 5,
     title: "budgie",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "porn",
+    id: 6,
     title: "porn",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "weapons",
+    id: 7,
     title: "weapons",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "xxx",
+    id: 8,
     title: "xxx",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "meth",
+    id: 9,
     title: "meth",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "cocaine",
+    id: 10,
     title: "cocaine",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "weed",
+    id: 11,
     title: "weed",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "sex",
+    id: 12,
     title: "sex",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "mating",
+    id: 13,
     title: "mating",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "hardcore",
+    id: 14,
     title: "hardcore",
     groupId: DUMMY_GROUP_ID,
   },
   {
-    id: "muuuuu",
+    id: 15,
     title: "music",
     groupId: DUMMY_GROUP_ID,
   },
@@ -254,7 +241,7 @@ export const DUMMY_CATEGORIES: IFilterCategory[] = [
 
 export const DUMMY_ALLOWED_SITES: IFilterUrl[] = [
   {
-    id: "doddodjo",
+    id: 1,
     title: "Pornhub",
     url: "pornhub.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
@@ -265,7 +252,7 @@ export const DUMMY_ALLOWED_SITES: IFilterUrl[] = [
 
 export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
   {
-    id: "lolololololoklo8787878787",
+    id: 1,
     title: "FINH",
     url: "finf.cc",
     imageUrl:
@@ -274,7 +261,7 @@ export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
     createdAt: "2024-05-06",
   },
   {
-    id: "doddodjo",
+    id: 2,
     title: "Pokemon",
     url: "pokemon.com",
     imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/moonbug.png",
@@ -285,11 +272,11 @@ export const DUMMY_BLOCKED_SITES: IFilterUrl[] = [
 
 export const DUMMY_FILTERS: IFilter[] = [
   {
-    id: "boo",
+    id: 1,
     title: "Hey guys",
-    allowedServices: ["4icuheiuf"],
-    allowedCategories: ["ioiojiolkm", "cococooclcclcl"],
-    blockedSiteExceptions: ["lolololololoklo8787878787", "doddodjo"],
+    allowedServices: [1],
+    allowedCategories: [1, 2],
+    blockedSiteExceptions: [1, 2],
     allowedSiteExceptions: [],
     blockedWords: [""],
     groupId: DUMMY_GROUP_ID,
