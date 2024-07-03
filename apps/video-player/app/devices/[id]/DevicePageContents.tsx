@@ -10,7 +10,7 @@ import {
 } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import { PALETTE } from "ui";
+import { PALETTE, Typography } from "ui";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -19,6 +19,8 @@ export default function DevicePageContents(props: { deviceId: number }) {
   useEffect(() => {
     setDevice(DUMMY_DEVICES.find((d) => d.id === props.deviceId));
   }, [props.deviceId]);
+
+  const [timeSpent, setTimeSpent] = useState<number>(0);
   return (
     <PageLayout
       titleRow={[
@@ -71,6 +73,12 @@ export default function DevicePageContents(props: { deviceId: number }) {
       }}
       maxWidth={834}
       scrollable
-    ></PageLayout>
+    >
+      <Stack height="290px">
+        <Stack width="59%" borderRadius="12px">
+          <Typography bold variant="large"></Typography>
+        </Stack>
+      </Stack>
+    </PageLayout>
   );
 }
