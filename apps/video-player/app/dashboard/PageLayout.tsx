@@ -4,6 +4,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import Sidebar, { SideBarItemId, WIDTH } from "./Sidebar";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
+import ChevronDown from "@/images/icons/ChevronDown.svg";
 import { useWindowSize } from "usehooks-ts";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -202,6 +203,12 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                                         >
                                           /
                                         </Typography>
+                                      ) : null}
+                                      {x.options && x.options.length > 0 ? (
+                                        <ChevronDown
+                                          height="32px"
+                                          width="32px"
+                                        />
                                       ) : null}
                                     </Stack>
                                   ))}

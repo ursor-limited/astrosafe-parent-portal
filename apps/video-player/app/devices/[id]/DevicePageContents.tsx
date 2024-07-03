@@ -18,11 +18,6 @@ export default function DevicePageContents(props: { deviceId: number }) {
   const [device, setDevice] = useState<IDevice_new | undefined>();
   useEffect(() => {
     setDevice(DUMMY_DEVICES.find((d) => d.id === props.deviceId));
-    console.log(
-      "ac",
-      typeof props.deviceId,
-      DUMMY_DEVICES.map((d) => d.id)
-    );
   }, [props.deviceId]);
   return (
     <PageLayout
@@ -57,6 +52,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
               ) : null}
             </Stack>
           ) : null,
+          options: ["oo"],
         },
       ]}
       titleBackButton={true}
