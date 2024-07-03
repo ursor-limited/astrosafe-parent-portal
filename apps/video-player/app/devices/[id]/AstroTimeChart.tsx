@@ -55,6 +55,16 @@ const AstroTimeChart = (props: { times: number[] }) => {
               width="60px"
               justifyContent="flex-end"
               spacing="6px"
+              sx={
+                selectedDay !== i
+                  ? {
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.7 },
+                      transition: "0.2s",
+                    }
+                  : null
+              }
+              onClick={() => setSelectedDay(i)}
             >
               <Stack
                 height={`${(100 * time) / yRange}%`}
@@ -65,6 +75,9 @@ const AstroTimeChart = (props: { times: number[] }) => {
                     ? PALETTE.secondary.purple[2]
                     : PALETTE.secondary.grey[2]
                 }
+                sx={{
+                  transition: "0.2s",
+                }}
               />
               <Stack>
                 <Typography
@@ -83,6 +96,9 @@ const AstroTimeChart = (props: { times: number[] }) => {
                   bgcolor={
                     selectedDay === i ? PALETTE.secondary.purple[2] : undefined
                   }
+                  sx={{
+                    transition: "0.2s",
+                  }}
                 />
               </Stack>
             </Stack>
