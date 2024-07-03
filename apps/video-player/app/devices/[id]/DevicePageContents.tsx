@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
+import AstroTimeChart from "./AstroTimeChart";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -20,7 +21,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
     setDevice(DUMMY_DEVICES.find((d) => d.id === props.deviceId));
   }, [props.deviceId]);
 
-  const [timeSpent, setTimeSpent] = useState<number>(0);
+  const [timeSpent, setTimeSpent] = useState<number>(59083);
   return (
     <PageLayout
       titleRow={[
@@ -74,9 +75,28 @@ export default function DevicePageContents(props: { deviceId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack height="290px">
-        <Stack width="59%" borderRadius="12px">
-          <Typography bold variant="large"></Typography>
+      <Stack pl="48px">
+        <Stack height="290px" spacing="28px" direction="row">
+          <Stack
+            width="54%"
+            borderRadius="12px"
+            bgcolor="rgb(255,255,255)"
+            p="16px"
+            boxSizing="border-box"
+            spacing="30px"
+          >
+            <Typography bold variant="large">{`${Math.floor(
+              timeSpent / 3600
+            )}h ${Math.floor(
+              (timeSpent % 3600) / 60
+            )}m spent on screen`}</Typography>
+            <AstroTimeChart times={[2, 0.5, 3, 7, 8, 1, 3]} />
+          </Stack>
+          <Stack
+            flex={1}
+            bgcolor="rgb(255,255,255)"
+            borderRadius="12px"
+          ></Stack>
         </Stack>
       </Stack>
     </PageLayout>
