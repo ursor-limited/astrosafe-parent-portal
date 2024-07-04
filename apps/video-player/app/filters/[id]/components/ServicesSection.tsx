@@ -1,12 +1,11 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
-import { Stack } from "@mui/system";
 import { IFilter, IFilterUrl } from "../../FiltersPageContents";
-import { PALETTE, Typography } from "ui";
-import Image from "next/image";
-import AstroSwitch from "@/app/components/AstroSwitch";
 import { AstroBentoCard } from "./AstroBentoCard";
 import { FilterLegend } from "./CategoriesSection";
+import AstroToggleCard from "./AstroToggleCard";
+import { Stack } from "@mui/system";
+import Image from "next/image";
 
 const FilterPageServicesSection = (props: {
   filter: IFilter;
@@ -24,42 +23,26 @@ const FilterPageServicesSection = (props: {
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.services.map((s) => (
-        <Stack
-          key={s.id}
-          height="72px"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="12px"
-          border={`1px solid ${PALETTE.secondary.grey[2]}`}
-          px="16px"
-          boxSizing="border-box"
-          justifyContent="space-between"
-          alignItems="center"
-          direction="row"
-        >
-          <Stack justifyContent="space-between">
-            <Stack spacing="16px" alignItems="center" direction="row">
-              <Stack
-                borderRadius="8px"
-                overflow="hidden"
-                boxShadow="0 0 16px rgba(0,0,0,0.08)"
-              >
-                <Image
-                  src={s.imageUrl}
-                  height={41}
-                  width={41}
-                  alt="platform image"
-                />
-              </Stack>
-              <Typography maxLines={1} bold>
-                {s.title}
-              </Typography>
+        <AstroToggleCard
+          on={props.allowedServices.includes(s.id)}
+          callback={() => props.flipService(s.id)}
+          title={s.title}
+          image={
+            <Stack
+              borderRadius="8px"
+              overflow="hidden"
+              boxShadow="0 0 16px rgba(0,0,0,0.08)"
+            >
+              <Image
+                src={s.imageUrl}
+                height={41}
+                width={41}
+                alt="platform image"
+              />
             </Stack>
-          </Stack>
-          <AstroSwitch
-            on={props.allowedServices.includes(s.id)}
-            callback={() => props.flipService(s.id)}
-          />
-        </Stack>
+          }
+          key={s.id}
+        />
       ))}
     </DynamicCardGrid>
   </AstroBentoCard>

@@ -96,7 +96,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     buttonRef?.focus();
   }, [buttonRef]);
 
-  const { height } = useWindowSize();
+  const { width: windowWidth, height } = useWindowSize();
 
   useEffect(() => {
     setYOffset((props.yOffset ?? 0) - (referenceElement?.offsetHeight ?? 0));
@@ -117,6 +117,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     referenceElement?.getBoundingClientRect().top,
     props.yOffset,
     height,
+    windowWidth,
   ]);
 
   return (
@@ -217,6 +218,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
                       width={
                         props.width ?? (props.buttonWidth ? width : undefined)
                       }
+                      boxSizing="border-box"
                       borderRadius={props.cornerRadius ?? DEFAULT_CORNER_RADIUS}
                       p={props.noCard || props.noPadding ? undefined : PADDING}
                       sx={{
