@@ -7,6 +7,8 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
+import TimeMinusIcon from "@/images/icons/TimeMinusIcon.svg";
+import TimePlusIcon from "@/images/icons/TimePlusIcon.svg";
 import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
@@ -16,6 +18,8 @@ export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
 const DEFAULT_START = 10;
 const DEFAULT_END = 16;
+const DEFAULT_DAILY_LIMIT = 2;
+const DAILY_LIMIT_INCREMENT = 0.25;
 
 const DUMMY_FILTERS = [
   {
@@ -81,6 +85,7 @@ export interface ITimeLimit {
   day: number;
   startTime: number; // currently in hours, 0 - 24 //////////////////////////////////////////////
   endTime: number;
+  dailyLimit: number;
 }
 
 const getDefaultTimeLimit = (day: ITimeLimit["day"]) => ({
@@ -89,6 +94,7 @@ const getDefaultTimeLimit = (day: ITimeLimit["day"]) => ({
   day,
   startTime: DEFAULT_START,
   endTime: DEFAULT_END,
+  dailyLimit: DEFAULT_DAILY_LIMIT,
 });
 
 const DUMMY_TIME_LIMITS: ITimeLimit[] = [
@@ -119,6 +125,16 @@ const DevicePageSettingsTab = () => {
     setTimes([...times.filter((t) => t.day !== day), getDefaultTimeLimit(day)]);
 
   const [schedulesEnabled, setSchedulesEnabled] = useState<boolean>(false);
+
+  const [dailyLimits, setDailyLimits] = useState<number[]>([
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+    DEFAULT_DAILY_LIMIT,
+  ]);
 
   return (
     <Stack spacing="24px" pb="33px">
@@ -206,7 +222,7 @@ const DevicePageSettingsTab = () => {
             topRightStuff={
               <AstroSwitch
                 on={schedulesEnabled}
-                callback={() => setSchedulesEnabled(false)}
+                callback={() => setSchedulesEnabled(!schedulesEnabled)}
               />
             }
           >
@@ -261,7 +277,63 @@ const DevicePageSettingsTab = () => {
           subtitle="Set a daily browsing limit"
           notCollapsible
         >
-          <></>
+          <Stack spacing="36px" pb="12px">
+            {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
+              <Stack
+                key={day}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography
+                  variant="large"
+                  bold
+                  color={PALETTE.secondary.grey[3]}
+                >
+                  {_.capitalize(day)}
+                </Typography>
+                <Stack direction="row" spacing="6px" alignItems="center">
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.6 },
+                      transition: "0.2s",
+                    }}
+                    onClick={() =>
+                      setDailyLimits([
+                        ...dailyLimits.slice(0, i),
+                        Math.max(0, dailyLimits[i] - DAILY_LIMIT_INCREMENT),
+                        ...dailyLimits.slice(i + 1),
+                      ])
+                    }
+                  >
+                    <TimeMinusIcon height="20px" width="20px" />
+                  </Stack>
+                  <Stack width="80px" alignItems="center">
+                    <Typography variant="large" bold>{`${Math.floor(
+                      dailyLimits[i]
+                    )}:${60 * (dailyLimits[i] % 1) || "00"} hr`}</Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": { opacity: 0.6 },
+                      transition: "0.2s",
+                    }}
+                    onClick={() =>
+                      setDailyLimits([
+                        ...dailyLimits.slice(0, i),
+                        Math.min(20, dailyLimits[i] + DAILY_LIMIT_INCREMENT),
+                        ...dailyLimits.slice(i + 1),
+                      ])
+                    }
+                  >
+                    <TimePlusIcon height="20px" width="20px" />
+                  </Stack>
+                </Stack>
+              </Stack>
+            ))}
+          </Stack>
         </AstroBentoCard>
       </Stack>
     </Stack>
