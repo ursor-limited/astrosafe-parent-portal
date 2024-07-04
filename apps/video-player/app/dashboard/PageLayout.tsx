@@ -4,11 +4,11 @@ import React, { forwardRef, useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 import Sidebar, { SideBarItemId, WIDTH } from "./Sidebar";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
-import ChevronDown from "@/images/icons/ChevronDown.svg";
 import { useWindowSize } from "usehooks-ts";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import dynamic from "next/dynamic";
+import TitleRow, { ITitleRowItem } from "./TitleRow";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("../components/DynamicallyLoadedPortal"),
@@ -24,11 +24,7 @@ const GRADIENT = "linear-gradient(178deg, #F279C5, #FD9B41)";
 export interface IPageLayoutProps {
   dark?: boolean;
   title: string;
-  titleRow?: {
-    text: string;
-    image?: React.ReactNode;
-    options?: { text: string; imageUrl?: string; callback: () => void }[];
-  }[];
+  titleRow?: ITitleRowItem[];
   description?: string;
   dotColor?: string;
   titleBackButton?: boolean;
@@ -170,49 +166,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                           >
                             <Stack overflow="hidden" spacing="5px">
                               {props.titleRow ? (
-                                <Stack
-                                  direction="row"
-                                  spacing="12px"
-                                  alignItems="center"
-                                >
-                                  {props.titleRow.map((x, i) => (
-                                    <Stack
-                                      key={i}
-                                      alignItems="center"
-                                      direction="row"
-                                      spacing="12px"
-                                    >
-                                      <Stack direction="row" spacing="12px">
-                                        {x.image}
-                                        <Typography
-                                          variant="h4"
-                                          color={
-                                            i <
-                                            (props.titleRow?.length ?? 0) - 1
-                                              ? PALETTE.secondary.grey[3]
-                                              : undefined
-                                          }
-                                        >
-                                          {x.text}
-                                        </Typography>
-                                      </Stack>
-                                      {i < (props.titleRow?.length ?? 0) - 1 ? (
-                                        <Typography
-                                          variant="h4"
-                                          color={PALETTE.secondary.grey[3]}
-                                        >
-                                          /
-                                        </Typography>
-                                      ) : null}
-                                      {x.options && x.options.length > 0 ? (
-                                        <ChevronDown
-                                          height="32px"
-                                          width="32px"
-                                        />
-                                      ) : null}
-                                    </Stack>
-                                  ))}
-                                </Stack>
+                                <TitleRow items={props.titleRow} />
                               ) : (
                                 <Typography
                                   variant="h3"

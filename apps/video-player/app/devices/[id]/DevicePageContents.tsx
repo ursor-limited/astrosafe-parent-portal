@@ -25,7 +25,9 @@ type AstroAccountTab = "monitoring" | "settings" | "content";
 export default function DevicePageContents(props: { deviceId: number }) {
   const [device, setDevice] = useState<IDevice_new | undefined>();
   useEffect(() => {
-    setDevice(DUMMY_DEVICES.find((d) => d.id === props.deviceId));
+    setDevice(
+      DUMMY_DEVICES.find((d) => d.id.toString() === props.deviceId.toString())
+    );
   }, [props.deviceId]);
 
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
@@ -62,7 +64,20 @@ export default function DevicePageContents(props: { deviceId: number }) {
               ) : null}
             </Stack>
           ) : null,
-          options: ["oo"],
+          options: [
+            {
+              text: "Boo",
+              imageUrl:
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+              callback: () => null,
+            },
+            {
+              text: "gooo",
+              imageUrl:
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+              callback: () => null,
+            },
+          ],
         },
       ]}
       titleBackButton={true}
