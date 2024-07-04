@@ -3,6 +3,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
   DUMMY_DEVICES,
@@ -15,6 +16,7 @@ import _ from "lodash";
 import AstroTabSwitch from "./AstroTabSwitch";
 import DevicePageMonitoringTab from "./MonitoringTab";
 import DevicePageSettingsTab from "./SettingsTab";
+import Link from "next/link";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -80,6 +82,67 @@ export default function DevicePageContents(props: { deviceId: number }) {
       maxWidth={834}
       scrollable
     >
+      <Stack px="48px">
+        <Stack
+          bgcolor="rgb(255,255,255)"
+          height="52px"
+          minHeight="52px"
+          borderRadius="12px"
+          px="16px"
+          boxSizing="border-box"
+          alignItems="center"
+          spacing="20px"
+          direction="row"
+        >
+          <Typography bold variant="large">
+            Currently viewing
+          </Typography>
+          <Link
+            href="https://nintendo.com"
+            target="_blank"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Stack
+              alignItems="center"
+              spacing="12px"
+              direction="row"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                svg: { path: { fill: PALETTE.secondary.purple[2] } },
+              }}
+            >
+              <Stack
+                height="28px"
+                width="28px"
+                borderRadius="7px"
+                overflow="hidden"
+              >
+                <Image
+                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
+                  height={28}
+                  width={28}
+                  alt="most viewed favicon"
+                />
+              </Stack>
+              <Typography
+                variant="large"
+                bold
+                color={PALETTE.secondary.blue[3]}
+              >
+                nintendo.com/i-wanna-marry-princess-peach
+              </Typography>
+              <LinkExternalIcon width="24px" height="24px" />
+            </Stack>
+          </Link>
+        </Stack>
+      </Stack>
+      <Stack height="24px" alignItems="center">
+        <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
+      </Stack>
       <Stack pl="48px" spacing="24px">
         <AstroTabSwitch
           select={(id) => setSelectedTab(id as AstroAccountTab)}
