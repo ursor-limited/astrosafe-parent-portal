@@ -74,6 +74,66 @@ const DUMMY_SEARCHES = [
   },
 ];
 
+export interface ITimeLimit {
+  id: number;
+  deviceId: number;
+  day: number;
+  startTime: number; // currently in hours, 0 - 24 //////////////////////////////////////////////
+  endTime: number;
+}
+
+const DUMMY_TIME_LIMITS: ITimeLimit[] = [
+  {
+    id: 1,
+    deviceId: 1,
+    day: 1,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 2,
+    deviceId: 1,
+    day: 2,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 3,
+    deviceId: 1,
+    day: 3,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 4,
+    deviceId: 1,
+    day: 4,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 5,
+    deviceId: 1,
+    day: 5,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 6,
+    deviceId: 1,
+    day: 6,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+  {
+    id: 0,
+    deviceId: 1,
+    day: 0,
+    startTime: DEFAULT_START,
+    endTime: DEFAULT_END,
+  },
+];
+
 const DevicePageSettingsTab = () => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(false);
@@ -83,24 +143,33 @@ const DevicePageSettingsTab = () => {
   const [selectedSearch, setSelectedSearch] = useState<string>(
     DUMMY_SEARCHES[0].id
   );
-  const [times, setTimes] = useState<
-    Record<Weekday, [number, number]> | undefined
-  >();
-  useEffect(
-    () =>
-      setTimes({
-        mon: [DEFAULT_START, DEFAULT_END],
-        tue: [DEFAULT_START, DEFAULT_END],
-        wed: [DEFAULT_START, DEFAULT_END],
-        thu: [DEFAULT_START, DEFAULT_END],
-        fri: [DEFAULT_START, DEFAULT_END],
-        sat: [DEFAULT_START, DEFAULT_END],
-        sun: [DEFAULT_START, DEFAULT_END],
-      }),
-    []
-  );
+  const [times, setTimes] = useState<ITimeLimit[]>(DUMMY_TIME_LIMITS);
 
-  console.log(times?.mon);
+  const addTimeLimit = (day: ITimeLimit["day"]) =>
+    setTimes([
+      ...times,
+      {
+        id: _.random() * 10000,
+        deviceId: 1,
+        day,
+        startTime: DEFAULT_START,
+        endTime: DEFAULT_END,
+      },
+    ]);
+  // useEffect(
+  //   () =>
+  //     setTimes({
+  //       mon: [[DEFAULT_START, DEFAULT_END]],
+  //       tue: [[DEFAULT_START, DEFAULT_END]],
+  //       wed: [[DEFAULT_START, DEFAULT_END]],
+  //       thu: [[DEFAULT_START, DEFAULT_END]],
+  //       fri: [[DEFAULT_START, DEFAULT_END]],
+  //       sat: [[DEFAULT_START, DEFAULT_END]],
+  //       sun: [[DEFAULT_START, DEFAULT_END]],
+  //     }),
+  //   []
+  // );
+
   return (
     <Stack spacing="24px" pb="33px">
       <Typography variant="h5">Device controls</Typography>
@@ -188,7 +257,7 @@ const DevicePageSettingsTab = () => {
             {times ? (
               <Stack spacing="36px" pb="12px">
                 {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map(
-                  (day) => (
+                  (day, i) => (
                     <Stack key={day} direction="row" alignItems="center">
                       <Stack width="120px">
                         <Typography bold color={PALETTE.secondary.grey[3]}>
@@ -196,10 +265,13 @@ const DevicePageSettingsTab = () => {
                         </Typography>
                       </Stack>
                       <BrowsingTimeSelector
-                        start={times[day as Weekday][0]}
-                        end={times[day as Weekday][1]}
-                        setTimes={(start, end) =>
-                          setTimes({ ...times, [day]: [start, end] })
+                        times={times.filter((t) => t.day === i)}
+                        setTimes={(startTime, endTime) =>
+                          setTimes(
+                            times.filter((t) =>
+                              t.day === i ? { ...t, startTime, endTime } : t
+                            )
+                          )
                         }
                       />
                       <Stack pl="60px" direction="row" spacing="8px">
@@ -207,6 +279,7 @@ const DevicePageSettingsTab = () => {
                           size="small"
                           variant="secondary"
                           backgroundColor="rgb(255,255,255)"
+                          onClick={() => addTimeLimit(i)}
                         >
                           Add
                         </UrsorButton>
