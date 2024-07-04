@@ -163,11 +163,11 @@ const DevicePageSettingsTab = () => {
             notCollapsible
           >
             <Stack spacing="36px" pb="12px">
-              {["mon", "tue", "wed", "thur", "fri", "sat", "sun"].map((day) => (
+              {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day) => (
                 <Stack key={day} direction="row" alignItems="center">
-                  <Stack width="120px">
-                    <Typography bold color={PALETTE.secondary.grey[3]}>
-                      {_.capitalize(day)}
+                  <Stack width="140px">
+                    <Typography variant="h5" bold color="#d1d1d1">
+                      {day.toUpperCase()}
                     </Typography>
                   </Stack>
                   <BrowsingTimeSelector />
