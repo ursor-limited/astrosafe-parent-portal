@@ -136,6 +136,8 @@ const DevicePageSettingsTab = () => {
     DEFAULT_DAILY_LIMIT,
   ]);
 
+  const [dailyLimitsEnabled, setDailyLimitsEnabled] = useState<boolean>(false);
+
   return (
     <Stack spacing="24px" pb="33px">
       <Typography variant="h5">Device controls</Typography>
@@ -276,6 +278,12 @@ const DevicePageSettingsTab = () => {
           title="Daily limits"
           subtitle="Set a daily browsing limit"
           notCollapsible
+          topRightStuff={
+            <AstroSwitch
+              on={dailyLimitsEnabled}
+              callback={() => setDailyLimitsEnabled(!dailyLimitsEnabled)}
+            />
+          }
         >
           <Stack spacing="36px" pb="12px">
             {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
