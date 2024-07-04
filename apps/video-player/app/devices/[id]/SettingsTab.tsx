@@ -82,56 +82,22 @@ export interface ITimeLimit {
   endTime: number;
 }
 
+const getDefaultTimeLimit = (day: ITimeLimit["day"]) => ({
+  id: Math.round(Math.random() * 10000),
+  deviceId: 1,
+  day,
+  startTime: DEFAULT_START,
+  endTime: DEFAULT_END,
+});
+
 const DUMMY_TIME_LIMITS: ITimeLimit[] = [
-  {
-    id: 1,
-    deviceId: 1,
-    day: 1,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 2,
-    deviceId: 1,
-    day: 2,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 3,
-    deviceId: 1,
-    day: 3,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 4,
-    deviceId: 1,
-    day: 4,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 5,
-    deviceId: 1,
-    day: 5,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 6,
-    deviceId: 1,
-    day: 6,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
-  {
-    id: 0,
-    deviceId: 1,
-    day: 0,
-    startTime: DEFAULT_START,
-    endTime: DEFAULT_END,
-  },
+  getDefaultTimeLimit(0),
+  getDefaultTimeLimit(1),
+  getDefaultTimeLimit(2),
+  getDefaultTimeLimit(3),
+  getDefaultTimeLimit(4),
+  getDefaultTimeLimit(5),
+  getDefaultTimeLimit(6),
 ];
 
 const DevicePageSettingsTab = () => {
@@ -146,29 +112,10 @@ const DevicePageSettingsTab = () => {
   const [times, setTimes] = useState<ITimeLimit[]>(DUMMY_TIME_LIMITS);
 
   const addTimeLimit = (day: ITimeLimit["day"]) =>
-    setTimes([
-      ...times,
-      {
-        id: _.random() * 10000,
-        deviceId: 1,
-        day,
-        startTime: DEFAULT_START,
-        endTime: DEFAULT_END,
-      },
-    ]);
-  // useEffect(
-  //   () =>
-  //     setTimes({
-  //       mon: [[DEFAULT_START, DEFAULT_END]],
-  //       tue: [[DEFAULT_START, DEFAULT_END]],
-  //       wed: [[DEFAULT_START, DEFAULT_END]],
-  //       thu: [[DEFAULT_START, DEFAULT_END]],
-  //       fri: [[DEFAULT_START, DEFAULT_END]],
-  //       sat: [[DEFAULT_START, DEFAULT_END]],
-  //       sun: [[DEFAULT_START, DEFAULT_END]],
-  //     }),
-  //   []
-  // );
+    setTimes([...times, getDefaultTimeLimit(day)]);
+
+  const reset = (day: ITimeLimit["day"]) =>
+    setTimes([...times.filter((t) => t.day !== day), getDefaultTimeLimit(day)]);
 
   return (
     <Stack spacing="24px" pb="33px">
@@ -266,10 +213,10 @@ const DevicePageSettingsTab = () => {
                       </Stack>
                       <BrowsingTimeSelector
                         times={times.filter((t) => t.day === i)}
-                        setTimes={(startTime, endTime) =>
+                        setTimes={(id, startTime, endTime) =>
                           setTimes(
-                            times.filter((t) =>
-                              t.day === i ? { ...t, startTime, endTime } : t
+                            times.map((t) =>
+                              t.id === id ? { ...t, startTime, endTime } : t
                             )
                           )
                         }
@@ -288,6 +235,7 @@ const DevicePageSettingsTab = () => {
                           variant="secondary"
                           backgroundColor={PALETTE.secondary.grey[1]}
                           borderColor={PALETTE.secondary.grey[1]}
+                          onClick={() => reset(i)}
                         >
                           Reset
                         </UrsorButton>

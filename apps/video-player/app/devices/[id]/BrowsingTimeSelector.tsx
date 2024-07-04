@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { ITimeLimit } from "./SettingsTab";
+import _ from "lodash";
 
 const DISPLAY_INTERVAL = 2; // hours
 const MIN = 4;
@@ -23,7 +24,7 @@ const BrowsingTimeSelectorRange = (props: {
   const [dot1X, setDot1X] = useState<number>(0);
   const [dot2X, setDot2X] = useState<number>(0);
   useEffect(() => {
-    if (props.start && props.end) {
+    if (_.isNumber(props.start) && _.isNumber(props.end)) {
       setDot1X((props.lineWidth * (props.start - MIN)) / (MAX - MIN));
       setDot2X((props.lineWidth * (props.end - MIN)) / (MAX - MIN));
     }
