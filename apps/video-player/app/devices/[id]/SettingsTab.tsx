@@ -10,6 +10,7 @@ import SearchIcon from "@/images/icons/SearchIcon.svg";
 import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
+import AstroSwitch from "@/app/components/AstroSwitch";
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
@@ -117,6 +118,8 @@ const DevicePageSettingsTab = () => {
   const reset = (day: ITimeLimit["day"]) =>
     setTimes([...times.filter((t) => t.day !== day), getDefaultTimeLimit(day)]);
 
+  const [schedulesEnabled, setSchedulesEnabled] = useState<boolean>(false);
+
   return (
     <Stack spacing="24px" pb="33px">
       <Typography variant="h5">Device controls</Typography>
@@ -200,6 +203,12 @@ const DevicePageSettingsTab = () => {
             title="Allowed browsing time"
             subtitle="Select when you want the browser to be online. Turn this off to remove schedules."
             notCollapsible
+            topRightStuff={
+              <AstroSwitch
+                on={schedulesEnabled}
+                callback={() => setSchedulesEnabled(false)}
+              />
+            }
           >
             {times ? (
               <Stack spacing="36px" pb="12px">

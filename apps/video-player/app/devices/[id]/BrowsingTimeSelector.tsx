@@ -73,7 +73,7 @@ const BrowsingTimeSelectorRange = (props: {
   }, [handleDraggingEnd]);
   return (
     <>
-      <Stack position="absolute" left={dot1X} zIndex={2}>
+      <Stack position="absolute" left={dot1X} zIndex={3}>
         <Stack flex={1} position="relative">
           <Stack
             position="absolute"
@@ -94,7 +94,7 @@ const BrowsingTimeSelectorRange = (props: {
           />
         </Stack>
       </Stack>
-      <Stack position="absolute" left={dot2X} zIndex={2}>
+      <Stack position="absolute" left={dot2X} zIndex={3}>
         <Stack flex={1} position="relative">
           <Stack
             position="absolute"
@@ -106,7 +106,7 @@ const BrowsingTimeSelectorRange = (props: {
             }}
             height="14px"
             width="14px"
-            bgcolor={PALETTE.secondary.purple[2]}
+            bgcolor={PALETTE.secondary.blue[2]}
             borderRadius="100%"
             onMouseDown={(e) => {
               setDraggingDot2(true);
@@ -119,11 +119,12 @@ const BrowsingTimeSelectorRange = (props: {
         position="absolute"
         left={Math.min(dot1X, dot2X)}
         width={Math.abs(dot2X - dot1X)}
-        bgcolor={PALETTE.secondary.purple[2]}
+        //bgcolor={PALETTE.secondary.purple[2]}
         height="4px"
         zIndex={2}
         sx={{
           pointerEvents: "none",
+          background: `linear-gradient(90deg, ${PALETTE.secondary.purple[1]}, ${PALETTE.secondary.blue[1]})`,
         }}
       />
     </>
