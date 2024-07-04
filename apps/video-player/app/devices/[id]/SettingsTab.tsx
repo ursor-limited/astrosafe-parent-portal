@@ -2,12 +2,14 @@ import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import AstroToggleCard from "@/app/filters/[id]/components/AstroToggleCard";
 import { Stack } from "@mui/system";
 import { useState } from "react";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import AstroDropdownCard from "./AstroDropdownCard";
+import BrowsingTimeSelector from "./BrowsingTimeSelector";
+import _ from "lodash";
 
 const DUMMY_FILTERS = [
   {
@@ -151,6 +153,52 @@ const DevicePageSettingsTab = () => {
               select={setSelectedSearch}
             />
           </Stack>
+        </AstroBentoCard>
+      </Stack>
+      <Stack direction="row" spacing="24px">
+        <Stack width="70%">
+          <AstroBentoCard
+            title="Allowed browsing time"
+            subtitle="Select when you want the browser to be online. Turn this off to remove schedules."
+            notCollapsible
+          >
+            <Stack spacing="36px" pb="12px">
+              {["mon", "tue", "wed", "thur", "fri", "sat", "sun"].map((day) => (
+                <Stack key={day} direction="row" alignItems="center">
+                  <Stack width="120px">
+                    <Typography bold color={PALETTE.secondary.grey[3]}>
+                      {_.capitalize(day)}
+                    </Typography>
+                  </Stack>
+                  <BrowsingTimeSelector />
+                  <Stack pl="60px" direction="row" spacing="8px">
+                    <UrsorButton
+                      size="small"
+                      variant="secondary"
+                      backgroundColor="rgb(255,255,255)"
+                    >
+                      Add
+                    </UrsorButton>
+                    <UrsorButton
+                      size="small"
+                      variant="secondary"
+                      backgroundColor={PALETTE.secondary.grey[1]}
+                      borderColor={PALETTE.secondary.grey[1]}
+                    >
+                      Reset
+                    </UrsorButton>
+                  </Stack>
+                </Stack>
+              ))}
+            </Stack>
+          </AstroBentoCard>
+        </Stack>
+        <AstroBentoCard
+          title="Daily limits"
+          subtitle="Set a daily browsing limit"
+          notCollapsible
+        >
+          <></>
         </AstroBentoCard>
       </Stack>
     </Stack>
