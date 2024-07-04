@@ -1,7 +1,7 @@
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import AstroToggleCard from "@/app/filters/[id]/components/AstroToggleCard";
 import { Stack } from "@mui/system";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
@@ -10,6 +10,11 @@ import SearchIcon from "@/images/icons/SearchIcon.svg";
 import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
+
+export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+
+const DEFAULT_START = 10;
+const DEFAULT_END = 16;
 
 const DUMMY_FILTERS = [
   {
@@ -78,8 +83,26 @@ const DevicePageSettingsTab = () => {
   const [selectedSearch, setSelectedSearch] = useState<string>(
     DUMMY_SEARCHES[0].id
   );
+  const [times, setTimes] = useState<
+    Record<Weekday, [number, number]> | undefined
+  >();
+  useEffect(
+    () =>
+      setTimes({
+        mon: [DEFAULT_START, DEFAULT_END],
+        tue: [DEFAULT_START, DEFAULT_END],
+        wed: [DEFAULT_START, DEFAULT_END],
+        thu: [DEFAULT_START, DEFAULT_END],
+        fri: [DEFAULT_START, DEFAULT_END],
+        sat: [DEFAULT_START, DEFAULT_END],
+        sun: [DEFAULT_START, DEFAULT_END],
+      }),
+    []
+  );
+
+  console.log(times?.mon);
   return (
-    <Stack spacing="24px">
+    <Stack spacing="24px" pb="33px">
       <Typography variant="h5">Device controls</Typography>
       <Stack direction="row" spacing="24px">
         <AstroBentoCard
@@ -162,35 +185,45 @@ const DevicePageSettingsTab = () => {
             subtitle="Select when you want the browser to be online. Turn this off to remove schedules."
             notCollapsible
           >
-            <Stack spacing="36px" pb="12px">
-              {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day) => (
-                <Stack key={day} direction="row" alignItems="center">
-                  <Stack width="140px">
-                    <Typography variant="h5" bold color="#d1d1d1">
-                      {day.toUpperCase()}
-                    </Typography>
-                  </Stack>
-                  <BrowsingTimeSelector />
-                  <Stack pl="60px" direction="row" spacing="8px">
-                    <UrsorButton
-                      size="small"
-                      variant="secondary"
-                      backgroundColor="rgb(255,255,255)"
-                    >
-                      Add
-                    </UrsorButton>
-                    <UrsorButton
-                      size="small"
-                      variant="secondary"
-                      backgroundColor={PALETTE.secondary.grey[1]}
-                      borderColor={PALETTE.secondary.grey[1]}
-                    >
-                      Reset
-                    </UrsorButton>
-                  </Stack>
-                </Stack>
-              ))}
-            </Stack>
+            {times ? (
+              <Stack spacing="36px" pb="12px">
+                {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map(
+                  (day) => (
+                    <Stack key={day} direction="row" alignItems="center">
+                      <Stack width="120px">
+                        <Typography bold color={PALETTE.secondary.grey[3]}>
+                          {_.capitalize(day)}
+                        </Typography>
+                      </Stack>
+                      <BrowsingTimeSelector
+                        start={times[day as Weekday][0]}
+                        end={times[day as Weekday][1]}
+                        setTimes={(start, end) =>
+                          setTimes({ ...times, [day]: [start, end] })
+                        }
+                      />
+                      <Stack pl="60px" direction="row" spacing="8px">
+                        <UrsorButton
+                          size="small"
+                          variant="secondary"
+                          backgroundColor="rgb(255,255,255)"
+                        >
+                          Add
+                        </UrsorButton>
+                        <UrsorButton
+                          size="small"
+                          variant="secondary"
+                          backgroundColor={PALETTE.secondary.grey[1]}
+                          borderColor={PALETTE.secondary.grey[1]}
+                        >
+                          Reset
+                        </UrsorButton>
+                      </Stack>
+                    </Stack>
+                  )
+                )}
+              </Stack>
+            ) : null}
           </AstroBentoCard>
         </Stack>
         <AstroBentoCard

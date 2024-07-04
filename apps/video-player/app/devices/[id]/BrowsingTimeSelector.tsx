@@ -1,13 +1,17 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography } from "ui";
 
 const DISPLAY_INTERVAL = 2; // hours
 const MIN = 4;
 const MAX = 24;
 const DRAG_INTERVAL = 0.25; // hours
 
-const BrowsingTimeSelector = () => {
+const BrowsingTimeSelector = (props: {
+  start: number;
+  end: number;
+  setTimes: (start: number, end: number) => void;
+}) => {
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
   const [lineLeftX, setLineLeftX] = useState<number>(0);
@@ -36,6 +40,10 @@ const BrowsingTimeSelector = () => {
 
   const [dot1X, setDot1X] = useState<number>(0);
   const [dot2X, setDot2X] = useState<number>(0);
+  useEffect(() => {
+    setDot1X((lineWidth * (props.start - MIN)) / (MAX - MIN));
+    setDot2X((lineWidth * (props.end - MIN)) / (MAX - MIN));
+  }, [props.start, props.end, lineWidth]);
 
   const [dragInterval, setDragInterval] = useState<number>(1); // px
   useEffect(
@@ -45,7 +53,6 @@ const BrowsingTimeSelector = () => {
 
   useEffect(() => {
     if (draggingDot1) {
-      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newDotX = Math.max(0, Math.min(lineWidth, mouseX - lineLeftX));
       const lockedEndLineX = Math.round(newDotX / dragInterval) * dragInterval; // the closest interval
       setDot1X(lockedEndLineX);
@@ -54,7 +61,6 @@ const BrowsingTimeSelector = () => {
 
   useEffect(() => {
     if (draggingDot2) {
-      const lineLeftX = lineRef?.getBoundingClientRect?.().left ?? 0;
       const newDotX = Math.max(0, Math.min(lineWidth, mouseX - lineLeftX));
       const lockedEndLineX = Math.round(newDotX / dragInterval) * dragInterval; // the closest interval
       setDot2X(lockedEndLineX);
@@ -62,9 +68,15 @@ const BrowsingTimeSelector = () => {
   }, [draggingDot2, mouseX]);
 
   const handleDraggingEnd = useCallback(() => {
-    setDraggingDot1(false);
-    setDraggingDot2(false);
-  }, []);
+    if (draggingDot1 || draggingDot2) {
+      setDraggingDot1(false);
+      setDraggingDot2(false);
+      props.setTimes(
+        (Math.min(dot1X, dot2X) / lineWidth) * (MAX - MIN) + MIN,
+        (Math.max(dot1X, dot2X) / lineWidth) * (MAX - MIN) + MIN
+      );
+    }
+  }, [dot1X, dot2X, lineWidth, draggingDot1, draggingDot2]);
 
   useEffect(() => {
     window.addEventListener("mouseup", handleDraggingEnd);
@@ -132,6 +144,9 @@ const BrowsingTimeSelector = () => {
           bgcolor={PALETTE.secondary.purple[2]}
           height="4px"
           zIndex={2}
+          sx={{
+            pointerEvents: "none",
+          }}
         />
         <Stack flex={1} justifyContent="space-between" direction="row">
           {[...Array(1 + (MAX - MIN) / DISPLAY_INTERVAL).keys()].map((i) => (
