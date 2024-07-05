@@ -17,7 +17,7 @@ const ByteStepper = dynamic(
 const WIDTH = "926px";
 const HEIGHT = "630px";
 export const BORDER_RADIUS = "24px";
-export const PADDING = "32px";
+export const PADDING = "45px";
 const BUTTON_WIDTH = "280px";
 export const DEFAULT_FADEIN_DURATION = 400;
 const LONG_FADEIN_DURATION = 2000;
@@ -242,7 +242,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     position="relative"
                     sx={{ transform: "translateX(-24px)" }}
                   >
-                    <Stack position="absolute" right={0} top="17px">
+                    <Stack position="absolute" right={0} top={0}>
                       {props.onCloseCallback ? (
                         <Box
                           position="absolute"
@@ -266,7 +266,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               {props.title ? (
                 <Stack maxWidth={props.titleMaxWidth}>
                   <Typography
-                    variant={props.titleSize || "h4"}
+                    variant={props.titleSize || "h3"}
                     color={PALETTE.secondary.purple[2]}
                     sx={{ maxWidth: props.titleMaxWidth }}
                   >

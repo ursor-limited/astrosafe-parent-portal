@@ -11,7 +11,10 @@ import { IDevice_new } from "@/app/filters/[id]/FilterPageContents";
 import DeviceCard from "@/app/devices/components/DeviceCard";
 import { useState } from "react";
 
-const ContentPageDevicesSection = (props: { devices: IDevice_new[] }) => {
+const ContentPageDevicesSection = (props: {
+  devices: IDevice_new[];
+  onAdd: () => void;
+}) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
   return (
     <AstroBentoCard
@@ -26,7 +29,13 @@ const ContentPageDevicesSection = (props: { devices: IDevice_new[] }) => {
           >
             View all
           </UrsorButton>
-          <UrsorButton dark variant="tertiary" size="small" endIcon={PlusIcon}>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="small"
+            endIcon={PlusIcon}
+            onClick={props.onAdd}
+          >
             Add Device
           </UrsorButton>
         </Stack>
@@ -70,6 +79,7 @@ const ContentPageDevicesSection = (props: { devices: IDevice_new[] }) => {
           }}
           onMouseEnter={() => setHoveringOnButton(true)}
           onMouseLeave={() => setHoveringOnButton(false)}
+          onClick={props.onAdd}
         >
           <PlusIcon height="32px" width="32px" />
           <Typography
