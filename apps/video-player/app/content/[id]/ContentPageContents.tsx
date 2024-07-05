@@ -9,7 +9,7 @@ import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import { Stack } from "@mui/system";
-import { PALETTE } from "ui";
+import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import {
   AstroContent,
@@ -237,7 +237,15 @@ export default function ContentPageContents(props: { folderId: number }) {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack direction="row" justifyContent="flex-end">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Typography
+            variant="large"
+            bold
+          >{`${contents.length} pieces of Content in this Folder`}</Typography>
           <Stack
             direction="row"
             spacing="12px"
