@@ -14,6 +14,7 @@ import useOrangeBorder from "@/app/components/useOrangeBorder";
 import _ from "lodash";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import ProfileImageRow from "@/app/filters/ProfileImageRow";
 
 export const spin = keyframes`
   from {
@@ -27,6 +28,7 @@ export const spin = keyframes`
 const NewLessonCard = (
   props: IContentBucket & {
     imageUrls: string[];
+    profileImageUrls?: string[];
     clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -292,6 +294,9 @@ const NewLessonCard = (
                 </Typography>
                 <VersionsIcon height="20px" width="20px" />
               </Stack> */}
+              {props.profileImageUrls ? (
+                <ProfileImageRow imageUrls={props.profileImageUrls} />
+              ) : null}
             </Stack>
           </Stack>
         </Stack>

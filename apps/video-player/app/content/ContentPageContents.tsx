@@ -59,6 +59,12 @@ const ContentPageContents = () => {
                 "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
                 "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
               ]}
+              profileImageUrls={[
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
+              ]}
             />
           ))}
         </DynamicCardGrid>

@@ -16,6 +16,7 @@ import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import ProfileImageRow from "./ProfileImageRow";
 
 export const GRID_SPACING = "20px";
 
@@ -97,45 +98,7 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
     >
       <LockIcon height="171px" width="171px" />
     </Stack>
-    <Stack direction="row" spacing="4px">
-      <Stack direction="row" spacing="36px">
-        {props.deviceImageUrls.slice(0, 3).map((url, i) => (
-          <Stack key={i} width={0} position="relative" overflow="visible">
-            <Stack position="absolute" bottom={0} left={0}>
-              <Stack
-                borderRadius="100%"
-                overflow="hidden"
-                boxShadow="0 0 16px rgba(0,0,0,0.1)"
-              >
-                <Image src={url} width={42} height={42} alt="profile image" />
-              </Stack>
-            </Stack>
-          </Stack>
-        ))}
-      </Stack>
-      {props.deviceImageUrls.length > 3 ? (
-        <Stack
-          direction="row"
-          spacing="4px"
-          alignItems="center"
-          sx={{
-            transform: "translate(48px, -10px)",
-            svg: {
-              path: {
-                fill: PALETTE.secondary.grey[4],
-              },
-            },
-          }}
-        >
-          <Typography
-            variant="small"
-            bold
-            color={PALETTE.secondary.grey[4]}
-          >{`+${props.deviceImageUrls.length - 3}`}</Typography>
-          <PeopleIcon height="12px" width="12px" />
-        </Stack>
-      ) : null}
-    </Stack>
+    <ProfileImageRow imageUrls={props.deviceImageUrls} />
   </Stack>
 );
 
