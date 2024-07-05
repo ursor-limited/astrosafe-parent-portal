@@ -151,23 +151,42 @@ export default function ContentPageContents(props: { folderId: number }) {
 
   const router = useRouter();
 
-  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [selectedContentType, setSelectedContentType] = useState<
+    AstroContent | "all"
+  >("all");
 
   const [contents, setContents] = useState<IContent[]>(DUMMY_CONTENTS);
+  const [filteredContents, setFilteredContents] =
+    useState<IContent[]>(DUMMY_CONTENTS);
+
+  useEffect(
+    () =>
+      setFilteredContents(
+        contents
+          .filter(
+            (c) =>
+              selectedContentType === "all" || c.type === selectedContentType
+          )
+          .filter(
+            (c) =>
+              !searchValue ||
+              c.title.toLowerCase().includes(searchValue.toLowerCase())
+          )
+      ),
+    [searchValue, selectedContentType]
+  );
+
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
   const [columns, setColumns] = useState<IContent[][]>([]);
   useEffect(() => {
-    const chunked = _.chunk(contents, nColumns);
+    const chunked = _.chunk(filteredContents, nColumns);
     setColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [nColumns]);
-
-  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
-  const [selectedContentType, setSelectedContentType] = useState<
-    AstroContent | "all"
-  >("all");
+  }, [nColumns, filteredContents]);
 
   return (
     <PageLayout
