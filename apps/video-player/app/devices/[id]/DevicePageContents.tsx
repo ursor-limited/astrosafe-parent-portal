@@ -18,6 +18,7 @@ import DevicePageMonitoringTab from "./MonitoringTab";
 import DevicePageSettingsTab from "./SettingsTab";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import DevicePageContentTab from "./ContentTab";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -31,7 +32,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
     );
   }, [props.deviceId]);
 
-  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("content");
 
   const router = useRouter();
   return (
@@ -176,7 +177,9 @@ export default function DevicePageContents(props: { deviceId: number }) {
           <DevicePageMonitoringTab />
         ) : selectedTab === "settings" ? (
           <DevicePageSettingsTab />
-        ) : null}
+        ) : (
+          <DevicePageContentTab />
+        )}
       </Stack>
     </PageLayout>
   );
