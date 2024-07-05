@@ -6,8 +6,9 @@ import { IContentBucket } from "../devices/[id]/ContentTab";
 import NewLessonCard from "../devices/[id]/NewLessonCard";
 import PageLayout from "../dashboard/PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { useRouter } from "next/navigation";
 
-const DUMMY_FOLDERS: IContentBucket[] = [
+export const DUMMY_FOLDERS: IContentBucket[] = [
   {
     id: 1,
     title: "Booo boo",
@@ -35,7 +36,8 @@ const DUMMY_FOLDERS: IContentBucket[] = [
   },
 ];
 
-const ContentPageContents = () => {
+const ContentsPageContents = () => {
+  const router = useRouter();
   return (
     <PageLayout
       title="My Content"
@@ -55,6 +57,7 @@ const ContentPageContents = () => {
           {DUMMY_FOLDERS.map((f) => (
             <NewLessonCard
               {...f}
+              clickCallback={() => router.push(`/content/${f.id}`)}
               imageUrls={[
                 "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
                 "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
@@ -73,4 +76,4 @@ const ContentPageContents = () => {
   );
 };
 
-export default ContentPageContents;
+export default ContentsPageContents;

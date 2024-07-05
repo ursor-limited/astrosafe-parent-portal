@@ -1,13 +1,13 @@
 import React from "react";
 import AuthWrapper from "../components/AuthWrapper";
 import { BrowserUserProvider } from "../components/BrowserUserContext";
-import ContentPageContents from "./ContentPageContents";
+import ContentsPageContents from "./ContentsPageContents";
 
 async function ContentPage() {
   return (
     <AuthWrapper>
       <BrowserUserProvider>
-        <ContentPageContents />
+        <ContentsPageContents />
       </BrowserUserProvider>
     </AuthWrapper>
   );
