@@ -1,8 +1,15 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { SearchInput } from "@/app/dashboard/DashboardPageContents";
+import { IDevice_new } from "@/app/filters/[id]/FilterPageContents";
+import { Stack } from "@mui/system";
 import { useState } from "react";
+import { PALETTE, Typography } from "ui";
 
-const AddDeviceDialog = (props: { open: boolean; onClose: () => void }) => {
+const AddDeviceDialog = (props: {
+  open: boolean;
+  onClose: () => void;
+  devices: IDevice_new[];
+}) => {
   const [searchValue, setSearchValue] = useState<string>("");
   return (
     <UrsorDialog
@@ -20,6 +27,19 @@ const AddDeviceDialog = (props: { open: boolean; onClose: () => void }) => {
         height="41px"
         grey
       />
+      <Stack pt="16px" spacing="16px" width="100%">
+        {props.devices.map((d) => (
+          <Stack key={d.id} direction="row" spacing="8px" px="8px">
+            <Stack
+              borderRadius="100%"
+              height="23px"
+              width="23px"
+              bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
+            />
+            <Typography bold>{d.name}</Typography>
+          </Stack>
+        ))}
+      </Stack>
     </UrsorDialog>
   );
 };

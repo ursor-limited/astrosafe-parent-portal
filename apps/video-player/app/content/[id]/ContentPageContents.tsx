@@ -165,7 +165,7 @@ export default function ContentPageContents(props: { folderId: number }) {
   const [filteredContents, setFilteredContents] =
     useState<IContent[]>(DUMMY_CONTENTS);
 
-  const [devices, setDevices] = useState<IDevice_new[]>([]);
+  const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
 
   useEffect(
     () =>
@@ -367,10 +367,13 @@ export default function ContentPageContents(props: { folderId: number }) {
           </Stack>
         </Stack>
       </PageLayout>
-      <AddDeviceDialog
-        open={addDeviceDialogOpen}
-        onClose={() => setAddDeviceDialogOpen(false)}
-      />
+      {devices ? (
+        <AddDeviceDialog
+          open={addDeviceDialogOpen}
+          onClose={() => setAddDeviceDialogOpen(false)}
+          devices={devices}
+        />
+      ) : null}
     </>
   );
 }
