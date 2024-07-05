@@ -29,6 +29,7 @@ import ChannelCard from "./ChannelCard";
 import { SearchInput } from "@/app/dashboard/DashboardPageContents";
 import SortButton from "@/app/components/SortButton";
 import { CONTENT_TAG_DISPLAY_NAMES } from "./ContentCard";
+import Image from "next/image";
 
 export interface IAstroContentBranding {
   title: string;
@@ -228,7 +229,7 @@ export default function ContentPageContents(props: { folderId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack pl="48px" spacing="24px">
+      <Stack pl="48px" spacing="24px" p="31px">
         <ContentPageDevicesSection devices={DUMMY_DEVICES} />
         <Stack justifyContent="center">
           <Stack
@@ -294,7 +295,7 @@ export default function ContentPageContents(props: { folderId: number }) {
         >
           <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
             {contents.length > 0 ? (
-              <Stack flex={1} direction="row" spacing="20px" pb="50px">
+              <Stack flex={1} direction="row" spacing="20px">
                 {[
                   ...columns.map((column, i) => (
                     <Stack key={i} flex={1} spacing="20px" overflow="hidden">
@@ -318,7 +319,31 @@ export default function ContentPageContents(props: { folderId: number }) {
                   // ].map(() => <Stack key="extra" flex={1} />),
                 ]}
               </Stack>
-            ) : null}
+            ) : (
+              <Stack
+                height="457px"
+                justifyContent="center"
+                alignItems="center"
+                spacing="13px"
+              >
+                <Image
+                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                  width={179}
+                  height={152}
+                  alt="empty state illustration"
+                />
+                <Stack width="444px">
+                  <Typography
+                    color={PALETTE.secondary.grey[3]}
+                    sx={{ textAlign: "center" }}
+                    bold
+                  >
+                    This Folder is currently empty. Click one of the buttons
+                    above to add Content to the assigned Devices.
+                  </Typography>
+                </Stack>
+              </Stack>
+            )}
           </Stack>
         </Stack>
       </Stack>
