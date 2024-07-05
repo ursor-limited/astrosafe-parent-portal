@@ -1,0 +1,70 @@
+"use client";
+
+import DynamicCardGrid from "@/app/components/DynamicCardGrid";
+import { Stack } from "@mui/system";
+import { IContentBucket } from "../devices/[id]/ContentTab";
+import NewLessonCard from "../devices/[id]/NewLessonCard";
+import PageLayout from "../dashboard/PageLayout";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+
+const DUMMY_FOLDERS: IContentBucket[] = [
+  {
+    id: 1,
+    title: "Booo boo",
+    contentIds: [],
+  },
+  {
+    id: 2,
+    title: "Cooooool",
+    contentIds: [],
+  },
+  {
+    id: 3,
+    title: "Bamboo goo oo",
+    contentIds: [],
+  },
+  {
+    id: 4,
+    title: "LOL!",
+    contentIds: [],
+  },
+  {
+    id: 5,
+    title: "Nosh fuuuuuu",
+    contentIds: [],
+  },
+];
+
+const ContentPageContents = () => {
+  return (
+    <PageLayout
+      title="My Content"
+      bodyWidth="100%"
+      fullHeight
+      selectedSidebarItemId="content"
+      button={{
+        text: "Create a Folder",
+        callback: () => null,
+        icon: PlusIcon,
+      }}
+      maxWidth={834}
+      scrollable
+    >
+      <Stack pt="20px" pl="51px">
+        <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
+          {DUMMY_FOLDERS.map((f) => (
+            <NewLessonCard
+              {...f}
+              imageUrls={[
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+              ]}
+            />
+          ))}
+        </DynamicCardGrid>
+      </Stack>
+    </PageLayout>
+  );
+};
+
+export default ContentPageContents;

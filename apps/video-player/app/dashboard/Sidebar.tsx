@@ -4,7 +4,7 @@ import * as React from "react";
 import { Stack, keyframes } from "@mui/system";
 import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
+import BookIcon from "@/images/icons/BookIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
@@ -68,7 +68,8 @@ export type SideBarItemId =
   | "safety"
   | "users"
   | "channels"
-  | "moonsafe";
+  | "moonsafe"
+  | "content";
 
 export interface ISidebarItem {
   id?: SideBarItemId;
@@ -192,13 +193,6 @@ export default function Sidebar(props: ISidebarProps) {
       callback: () => router.push("/devices"),
     },
     {
-      id: "channels",
-      //tourId: "devices-button",
-      icon: ListUnorderedIcon,
-      title: "Channels",
-      callback: () => router.push("/channels"),
-    },
-    {
       id: "filters",
       //tourId: "devices-button",
       icon: FilterIcon,
@@ -206,25 +200,11 @@ export default function Sidebar(props: ISidebarProps) {
       callback: () => router.push("/filters"),
     },
     {
-      id: "apps",
+      id: "content",
       //tourId: "devices-button",
-      icon: EmptyCheckboxIcon,
-      title: "Apps",
-      callback: () => router.push("/apps"),
-    },
-    {
-      id: "users",
-      //tourId: "devices-button",
-      icon: PeopleIcon,
-      title: "Users",
-      callback: () => router.push("/users"),
-    },
-    {
-      id: "moonsafe",
-      //tourId: "devices-button",
-      icon: MoonsafeIcon,
-      title: "Moonsafe",
-      callback: () => router.push("/moonsafe"),
+      icon: BookIcon,
+      title: "Content",
+      callback: () => router.push("/content"),
     },
   ];
 
@@ -276,7 +256,7 @@ export default function Sidebar(props: ISidebarProps) {
         id="my-first-step"
       >
         <Stack spacing={small ? "16px" : "24px"} alignItems="center">
-          {getList(
+          {/* {getList(
             [
               {
                 id: "home",
@@ -288,8 +268,8 @@ export default function Sidebar(props: ISidebarProps) {
             ],
             small,
             noText
-          )}
-          <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} />
+          )} */}
+          {/* <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} /> */}
           {getList(topItems, small, noText)}
         </Stack>
         {getList(bottomItems, small, noText)}

@@ -79,7 +79,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight
-      selectedSidebarItemId="channels"
+      selectedSidebarItemId="devices"
       actions={[
         {
           text: "Edit name",
