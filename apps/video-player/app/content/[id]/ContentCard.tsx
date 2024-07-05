@@ -4,6 +4,12 @@ import { CONTENT_BRANDING } from "./ContentPageContents";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 
+const CONTENT_TAG_DISPLAY_NAMES: Record<AstroContent, string> = {
+  video: "Video",
+  videoChannel: "Channel",
+  link: "Link",
+};
+
 const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
@@ -53,7 +59,7 @@ const ContentCard = (props: {
             bold
             color={CONTENT_BRANDING[props.type].color}
           >
-            {_.capitalize(props.type)}
+            {CONTENT_TAG_DISPLAY_NAMES[props.type]}
           </Typography>
         </Stack>
       </Stack>

@@ -25,6 +25,7 @@ import useColumnWidth from "@/app/dashboard/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
 import VideoCard from "./VideoCard";
+import ChannelCard from "./ChannelCard";
 
 export interface IAstroContentBranding {
   title: string;
@@ -97,6 +98,16 @@ const DUMMY_CONTENTS: IContent[] = [
     url: "kirby.com",
     imgUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
+    cardColor: "white",
+  },
+  {
+    id: 9,
+    type: "videoChannel",
+    title: "Kirby is cool",
+    url: "kirby.com",
+    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+    thumbnailImgUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/kirby-and-stars-sticker.png",
     cardColor: "white",
   },
   {
@@ -229,6 +240,8 @@ export default function ContentPageContents(props: { folderId: number }) {
                               <LinkCard {...content} onClick={() => null} />
                             ) : content.type === "video" ? (
                               <VideoCard {...content} onClick={() => null} />
+                            ) : content.type === "videoChannel" ? (
+                              <ChannelCard {...content} onClick={() => null} />
                             ) : null}
                           </UrsorFadeIn>
                         </Stack>

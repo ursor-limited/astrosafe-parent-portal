@@ -10,6 +10,7 @@ export interface IContent {
   title: string;
   url: string;
   imgUrl: string;
+  thumbnailImgUrl?: string;
   cardColor: string;
 }
 
