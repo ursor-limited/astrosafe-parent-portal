@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
@@ -22,11 +21,10 @@ import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
 import { DUMMY_DEVICES } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import useColumnWidth from "@/app/dashboard/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { content } from "html2canvas/dist/types/css/property-descriptors/content";
 import LinkCard from "./LinkCard";
+import VideoCard from "./VideoCard";
 
 export interface IAstroContentBranding {
   title: string;
@@ -78,7 +76,7 @@ const DUMMY_CONTENTS: IContent[] = [
   },
   {
     id: 3,
-    type: "link",
+    type: "video",
     title: "Kirby is cool",
     url: "kirby.com",
     imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
@@ -94,10 +92,37 @@ const DUMMY_CONTENTS: IContent[] = [
   },
   {
     id: 5,
-    type: "link",
+    type: "video",
     title: "Kirby is cool",
     url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+    imgUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
+    cardColor: "white",
+  },
+  {
+    id: 6,
+    type: "video",
+    title:
+      "Booo fooo goifoe ieni e nooof iejf ifiehf ieuf iujie fu ief ienf ienfini",
+    url: "nintendo.com",
+    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/numberbonds_.png",
+    cardColor: "white",
+  },
+  {
+    id: 7,
+    type: "link",
+    title: "Booo fooo goifoe ieni e",
+    url: "nintendo.com",
+    imgUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/kirby-and-stars-sticker.png",
+    cardColor: "white",
+  },
+  {
+    id: 8,
+    type: "link",
+    title: "Booo fooo goifoe ieni e",
+    url: "nintendo.com",
+    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
     cardColor: "white",
   },
 ];
@@ -202,6 +227,8 @@ export default function ContentPageContents(props: { folderId: number }) {
                           <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
                             {content.type === "link" ? (
                               <LinkCard {...content} onClick={() => null} />
+                            ) : content.type === "video" ? (
+                              <VideoCard {...content} onClick={() => null} />
                             ) : null}
                           </UrsorFadeIn>
                         </Stack>
