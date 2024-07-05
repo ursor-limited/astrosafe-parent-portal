@@ -5,7 +5,10 @@ import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import PinIcon from "@/images/icons/PinIcon.svg";
 import FilledPinIcon from "@/images/icons/FilledPinIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { useState } from "react";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
 
 const CONTENT_TAG_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",
@@ -31,6 +34,26 @@ const ContentCard = (props: {
       boxSizing="border-box"
       overflow="hidden"
     >
+      <Stack position="absolute" right="2px" bottom="32px">
+        <UrsorActionButton
+          iconSize="16px"
+          size="26px"
+          background="transparent"
+          actions={[
+            {
+              text: "Edit",
+              kallback: () => null,
+              icon: PencilIcon,
+            },
+            {
+              text: "Delete",
+              kallback: () => null,
+              icon: TrashcanIcon,
+              color: PALETTE.system.red,
+            },
+          ]}
+        />
+      </Stack>
       <Stack
         position="absolute"
         right="18px"
@@ -69,7 +92,7 @@ const ContentCard = (props: {
         spacing="6px"
       >
         {props.children}
-        <Stack width="calc(100% - 40px)">
+        <Stack width="calc(100% - 24px)">
           <Typography bold maxLines={2}>
             {props.title}
           </Typography>
