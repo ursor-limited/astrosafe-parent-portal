@@ -19,7 +19,10 @@ import {
 import { DUMMY_FOLDERS } from "../ContentsPageContents";
 import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
-import { DUMMY_DEVICES } from "@/app/filters/[id]/FilterPageContents";
+import {
+  DUMMY_DEVICES,
+  IDevice_new,
+} from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
 import useColumnWidth from "@/app/dashboard/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
@@ -161,6 +164,8 @@ export default function ContentPageContents(props: { folderId: number }) {
   const [filteredContents, setFilteredContents] =
     useState<IContent[]>(DUMMY_CONTENTS);
 
+  const [devices, setDevices] = useState<IDevice_new[]>([]);
+
   useEffect(
     () =>
       setFilteredContents(
@@ -230,7 +235,7 @@ export default function ContentPageContents(props: { folderId: number }) {
       scrollable
     >
       <Stack pl="48px" spacing="24px" p="31px">
-        <ContentPageDevicesSection devices={DUMMY_DEVICES} />
+        <ContentPageDevicesSection devices={devices} />
         <Stack justifyContent="center">
           <Stack
             width="100%"
