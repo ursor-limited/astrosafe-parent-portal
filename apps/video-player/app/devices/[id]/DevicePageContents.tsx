@@ -17,6 +17,7 @@ import AstroTabSwitch from "./AstroTabSwitch";
 import DevicePageMonitoringTab from "./MonitoringTab";
 import DevicePageSettingsTab from "./SettingsTab";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -31,11 +32,14 @@ export default function DevicePageContents(props: { deviceId: number }) {
   }, [props.deviceId]);
 
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
+
+  const router = useRouter();
   return (
     <PageLayout
       titleRow={[
         {
           text: "All Devices",
+          callback: () => router.push("/devices"),
         },
         {
           text: device?.name,
@@ -64,20 +68,11 @@ export default function DevicePageContents(props: { deviceId: number }) {
               ) : null}
             </Stack>
           ) : null,
-          options: [
-            {
-              text: "Boo",
-              imageUrl:
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-              callback: () => null,
-            },
-            {
-              text: "gooo",
-              imageUrl:
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-              callback: () => null,
-            },
-          ],
+          options: DUMMY_DEVICES.map((d) => ({
+            text: d.name,
+            imageUrl: d.profileAvatarUrl,
+            callback: () => router.push(`/devices/${d.id}`),
+          })),
         },
       ]}
       titleBackButton={true}

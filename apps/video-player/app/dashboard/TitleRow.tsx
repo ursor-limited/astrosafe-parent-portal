@@ -11,17 +11,50 @@ export interface ITitleRowItem {
   text: string;
   image?: React.ReactNode;
   options?: { text: string; imageUrl?: string; callback: () => void }[];
+  callback?: () => void;
 }
 
 const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
   const [open, setOpen] = useState<boolean>(false);
-  return (
+  const ActualItem = (
+    <Stack
+      direction="row"
+      spacing="12px"
+      onClick={() => {
+        setOpen(true);
+        props.callback?.();
+      }}
+    >
+      {props.image}
+      <Typography
+        variant="h4"
+        color={!props.last ? PALETTE.secondary.grey[3] : undefined}
+      >
+        {props.text}
+      </Typography>
+      {props.options && props.options.length > 0 ? (
+        <ChevronDown height="32px" width="32px" />
+      ) : null}
+    </Stack>
+  );
+  return props.options ? (
     <UrsorPopover
       open={open}
       content={
         <Stack spacing="10px">
           {props.options?.map((o, i) => (
-            <Stack key={i} direction="row" alignItems="center" spacing="8px">
+            <Stack
+              key={i}
+              direction="row"
+              alignItems="center"
+              spacing="8px"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+              }}
+              onClick={o.callback}
+            >
               {o.imageUrl ? (
                 <Stack borderRadius="100%" overflow="hidden">
                   <Image
@@ -39,21 +72,11 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
       }
       closeCallback={() => setOpen(false)}
       buttonWidth
-      disabled={!props.options}
     >
-      <Stack direction="row" spacing="12px" onClick={() => setOpen(true)}>
-        {props.image}
-        <Typography
-          variant="h4"
-          color={!props.last ? PALETTE.secondary.grey[3] : undefined}
-        >
-          {props.text}
-        </Typography>
-        {props.options && props.options.length > 0 ? (
-          <ChevronDown height="32px" width="32px" />
-        ) : null}
-      </Stack>
+      {ActualItem}
     </UrsorPopover>
+  ) : (
+    ActualItem
   );
 };
 
