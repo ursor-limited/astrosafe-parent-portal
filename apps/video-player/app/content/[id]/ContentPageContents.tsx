@@ -23,6 +23,10 @@ import ContentPageDevicesSection from "./DevicesSection";
 import { DUMMY_DEVICES } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
+import useColumnWidth from "@/app/dashboard/useColumnWidth";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { content } from "html2canvas/dist/types/css/property-descriptors/content";
+import LinkCard from "./LinkCard";
 
 export interface IAstroContentBranding {
   title: string;
@@ -59,7 +63,8 @@ const DUMMY_CONTENTS: IContent[] = [
     type: "link",
     title: "Kirby is cool",
     url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+    imgUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
     cardColor: "white",
   },
   {
@@ -67,7 +72,8 @@ const DUMMY_CONTENTS: IContent[] = [
     type: "link",
     title: "Kirby is cool",
     url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+    imgUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
     cardColor: "white",
   },
   {
@@ -105,6 +111,20 @@ export default function ContentPageContents(props: { folderId: number }) {
   }, [props.folderId]);
 
   const router = useRouter();
+
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
+
+  const [contents, setContents] = useState<IContent[]>(DUMMY_CONTENTS);
+  const [columns, setColumns] = useState<IContent[][]>([]);
+  useEffect(() => {
+    const chunked = _.chunk(contents, nColumns);
+    setColumns(
+      [...Array(nColumns).keys()].map((i) =>
+        _.compact(chunked.map((chunk) => chunk[i]))
+      )
+    );
+  }, [nColumns]);
+
   return (
     <PageLayout
       titleRow={[
@@ -145,9 +165,9 @@ export default function ContentPageContents(props: { folderId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack px="48px">
+      <Stack px="48px" spacing="24px">
         <ContentPageDevicesSection devices={DUMMY_DEVICES} />
-        <Stack height="48px" justifyContent="center">
+        <Stack justifyContent="center">
           <Stack
             width="100%"
             height="1px"
@@ -167,13 +187,34 @@ export default function ContentPageContents(props: { folderId: number }) {
         <Stack
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
-          border={`1px solid ${PALETTE.secondary.grey[1]}`}
+          border={`1px solid ${PALETTE.secondary.grey[2]}`}
+          p="16px"
+          boxSizing="border-box"
         >
-          <DynamicCardGrid
-            cardWidth="292px"
-            rowGap="40px"
-            columnGap="20px"
-          ></DynamicCardGrid>
+          <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
+            {contents.length > 0 ? (
+              <Stack flex={1} direction="row" spacing="20px" pb="50px">
+                {[
+                  ...columns.map((column, i) => (
+                    <Stack key={i} flex={1} spacing="20px" overflow="hidden">
+                      {column.map((content, j) => (
+                        <Stack key={content.id}>
+                          <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                            {content.type === "link" ? (
+                              <LinkCard {...content} onClick={() => null} />
+                            ) : null}
+                          </UrsorFadeIn>
+                        </Stack>
+                      ))}
+                    </Stack>
+                  )),
+                  // ...[
+                  //   ...Array(Math.max(0, nColumns - columns.length)).keys(),
+                  // ].map(() => <Stack key="extra" flex={1} />),
+                ]}
+              </Stack>
+            ) : null}
+          </Stack>
         </Stack>
       </Stack>
     </PageLayout>

@@ -23,6 +23,7 @@ export const AstroBentoCard = (props: {
       p="16px"
       paddingBottom={props.paddingBottom}
       flex={1}
+      border={`1px solid ${PALETTE.secondary.grey[2]}`}
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
