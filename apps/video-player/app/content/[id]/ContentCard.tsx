@@ -10,7 +10,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 
-const CONTENT_TAG_DISPLAY_NAMES: Record<AstroContent, string> = {
+export const CONTENT_TAG_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",
   videoChannel: "Channel",
   link: "Link",

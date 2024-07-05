@@ -26,6 +26,9 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
 import VideoCard from "./VideoCard";
 import ChannelCard from "./ChannelCard";
+import { SearchInput } from "@/app/dashboard/DashboardPageContents";
+import SortButton from "@/app/components/SortButton";
+import { CONTENT_TAG_DISPLAY_NAMES } from "./ContentCard";
 
 export interface IAstroContentBranding {
   title: string;
@@ -161,6 +164,11 @@ export default function ContentPageContents(props: { folderId: number }) {
     );
   }, [nColumns]);
 
+  const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
+  const [selectedContentType, setSelectedContentType] = useState<
+    AstroContent | "all"
+  >("all");
+
   return (
     <PageLayout
       titleRow={[
@@ -179,7 +187,7 @@ export default function ContentPageContents(props: { folderId: number }) {
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight
-      selectedSidebarItemId="devices"
+      selectedSidebarItemId="content"
       actions={[
         {
           text: "Edit name",
@@ -201,7 +209,7 @@ export default function ContentPageContents(props: { folderId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack px="48px" spacing="24px">
+      <Stack pl="48px" spacing="24px">
         <ContentPageDevicesSection devices={DUMMY_DEVICES} />
         <Stack justifyContent="center">
           <Stack
@@ -209,6 +217,36 @@ export default function ContentPageContents(props: { folderId: number }) {
             height="1px"
             bgcolor={PALETTE.secondary.grey[2]}
           />
+        </Stack>
+        <Stack direction="row" justifyContent="flex-end">
+          <Stack
+            direction="row"
+            spacing="12px"
+            alignItems="center"
+            width="fit-content"
+          >
+            <SearchInput
+              value={searchValue ?? ""}
+              callback={(value: string) => {
+                setSearchValue(value);
+              }}
+              clearCallback={() => setSearchValue(undefined)}
+              shadow
+            />
+            <SortButton
+              noText
+              selected={selectedContentType}
+              callback={(id) => setSelectedContentType(id)}
+              types={["all", "link", "video", "videoChannel"]}
+              displayNames={{
+                all: "All",
+                video: "Video",
+                videoChannel: "Channel",
+                link: "Link",
+              }}
+              width="120px"
+            />
+          </Stack>
         </Stack>
         <Stack direction="row" spacing="24px">
           {["link", "video", "videoChannel"].map((c) => (

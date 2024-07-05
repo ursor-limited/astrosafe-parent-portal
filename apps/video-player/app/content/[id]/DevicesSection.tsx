@@ -40,6 +40,7 @@ const ContentPageDevicesSection = (props: { devices: IDevice_new[] }) => {
                   <XIcon height={16} width={16} />
                 </Stack>
               }
+              hideToggles
             />
           </UrsorFadeIn>
         ))}

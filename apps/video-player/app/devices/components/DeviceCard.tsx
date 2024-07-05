@@ -20,6 +20,7 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 
 const DeviceCard = (
   props: IDevice_new & {
+    hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
     button: React.ReactNode;
@@ -122,77 +123,79 @@ const DeviceCard = (
             ) : null}
           </Stack>
         </Stack>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          borderTop={`1px solid ${PALETTE.secondary.grey[2]}`}
-          py="8px"
-        >
+        {!props.hideToggles ? (
           <Stack
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            flex={1}
+            borderTop={`1px solid ${PALETTE.secondary.grey[2]}`}
+            py="8px"
           >
             <Stack
               direction="row"
-              sx={{ svg: { path: { fill: PALETTE.secondary.grey[4] } } }}
+              justifyContent="space-between"
               alignItems="center"
-              spacing="4px"
+              flex={1}
             >
-              <GlobeIcon height="16px" width="16px" />
-              <Typography variant="tiny">{`Browsing is ${
-                !browsingEnabled ? "disabled" : "enabled"
-              }`}</Typography>
-            </Stack>
-            <AstroSwitch
-              small
-              on={browsingEnabled}
-              callback={() => setBrowsingEnabled(!browsingEnabled)}
-            />
-          </Stack>
-          {!browsingEnabled ? (
-            <>
-              <Stack height="100%" width="20px" alignItems="center">
-                <Stack
-                  height="100%"
-                  width="1.5px"
-                  bgcolor={PALETTE.secondary.grey[2]}
-                />
+              <Stack
+                direction="row"
+                sx={{ svg: { path: { fill: PALETTE.secondary.grey[4] } } }}
+                alignItems="center"
+                spacing="4px"
+              >
+                <GlobeIcon height="16px" width="16px" />
+                <Typography variant="tiny">{`Browsing is ${
+                  !browsingEnabled ? "disabled" : "enabled"
+                }`}</Typography>
               </Stack>
-              <Stack flex={1}>
-                <UrsorFadeIn duration={800} fullWidth>
+              <AstroSwitch
+                small
+                on={browsingEnabled}
+                callback={() => setBrowsingEnabled(!browsingEnabled)}
+              />
+            </Stack>
+            {!browsingEnabled ? (
+              <>
+                <Stack height="100%" width="20px" alignItems="center">
                   <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                    flex={1}
-                  >
+                    height="100%"
+                    width="1.5px"
+                    bgcolor={PALETTE.secondary.grey[2]}
+                  />
+                </Stack>
+                <Stack flex={1}>
+                  <UrsorFadeIn duration={800} fullWidth>
                     <Stack
                       direction="row"
-                      sx={{
-                        svg: { path: { fill: PALETTE.secondary.grey[4] } },
-                      }}
+                      justifyContent="space-between"
                       alignItems="center"
-                      spacing="4px"
+                      flex={1}
                     >
-                      <CirclePlayIcon height="16px" width="16px" />
-                      <Typography variant="tiny">{`Video mode ${
-                        videoModeOn ? "on" : "off"
-                      }`}</Typography>
+                      <Stack
+                        direction="row"
+                        sx={{
+                          svg: { path: { fill: PALETTE.secondary.grey[4] } },
+                        }}
+                        alignItems="center"
+                        spacing="4px"
+                      >
+                        <CirclePlayIcon height="16px" width="16px" />
+                        <Typography variant="tiny">{`Video mode ${
+                          videoModeOn ? "on" : "off"
+                        }`}</Typography>
+                      </Stack>
+                      <AstroSwitch
+                        small
+                        on={videoModeOn}
+                        callback={() => setVideoModeOn(!videoModeOn)}
+                      />
                     </Stack>
-                    <AstroSwitch
-                      small
-                      on={videoModeOn}
-                      callback={() => setVideoModeOn(!videoModeOn)}
-                    />
-                  </Stack>
-                </UrsorFadeIn>
-              </Stack>
-            </>
-          ) : null}
-        </Stack>
+                  </UrsorFadeIn>
+                </Stack>
+              </>
+            ) : null}
+          </Stack>
+        ) : null}
       </Stack>
     </AstroCard>
   );
