@@ -9,6 +9,8 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import dynamic from "next/dynamic";
 import TitleRow, { ITitleRowItem } from "./TitleRow";
+import { IActionPopupItem } from "../components/ActionPopup";
+import UrsorActionButton from "../components/UrsorActionButton";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("../components/DynamicallyLoadedPortal"),
@@ -59,6 +61,7 @@ export interface IPageLayoutProps {
   onScroll?: () => void;
   fullHeight?: string;
   maxWidth?: number;
+  actions: IActionPopupItem[];
   children: React.ReactNode;
 }
 
@@ -207,7 +210,8 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                     </Stack>
                     {props.button ||
                     props.secondaryButton ||
-                    props.buttonRowExtraElement ? (
+                    props.buttonRowExtraElement ||
+                    props.actions ? (
                       <UrsorFadeIn
                         delay={props.buttonsDelay || 600}
                         duration={1100}
@@ -245,6 +249,15 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
                             </Box>
                           ) : null}
                           {props.buttonRowExtraElementRight}
+                          {props.actions ? (
+                            <UrsorActionButton
+                              actions={props.actions}
+                              large
+                              iconSize="18px"
+                              background="transparent"
+                              border
+                            />
+                          ) : null}
                         </Stack>
                       </UrsorFadeIn>
                     ) : null}

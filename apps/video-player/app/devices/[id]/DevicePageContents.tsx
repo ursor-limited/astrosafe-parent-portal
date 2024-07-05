@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import DownloadIcon from "@/images/icons/DownloadIcon.svg";
+import PlugIcon from "@/images/icons/PlugIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import PageLayout from "@/app/dashboard/PageLayout";
 import {
@@ -80,16 +80,19 @@ export default function DevicePageContents(props: { deviceId: number }) {
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="channels"
-      button={{
-        text: "Add a Device",
-        callback: () => null,
-        icon: PlusIcon,
-      }}
-      secondaryButton={{
-        text: "Get Browser",
-        callback: () => null,
-        icon: DownloadIcon,
-      }}
+      actions={[
+        {
+          text: "Edit name",
+          kallback: () => null,
+          icon: PencilIcon,
+        },
+        {
+          text: "Disconnect",
+          kallback: () => null,
+          icon: PlugIcon,
+          color: PALETTE.system.red,
+        },
+      ]}
       maxWidth={834}
       scrollable
     >
