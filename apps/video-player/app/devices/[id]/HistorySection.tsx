@@ -118,8 +118,9 @@ const HistoryDomainRow = (props: {
             py="12px"
             spacing="16px"
           >
-            {props.domain.urls.map((url) => (
+            {props.domain.urls.map((url, i) => (
               <HistoryRow
+                key={i}
                 {...url}
                 faviconUrl={url.imageUrl}
                 datetime={url.createdAt}
@@ -140,7 +141,7 @@ const HistorySection = (props: {
     <AstroBentoCard title="Browser history" notCollapsible>
       <Stack spacing="16px">
         {props.domainUrls.map((d) => (
-          <HistoryDomainRow domain={d} />
+          <HistoryDomainRow key={d.id} domain={d} />
         ))}
       </Stack>
     </AstroBentoCard>

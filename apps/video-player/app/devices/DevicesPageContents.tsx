@@ -22,7 +22,7 @@ import DeviceInstructionsView from "./DeviceInstructionsView";
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicesPageContents() {
-  const [devices, setDevices] = useState<IDevice_new[]>([]);
+  const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
   const router = useRouter();
   return (
     <PageLayout

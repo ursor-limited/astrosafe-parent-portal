@@ -219,7 +219,11 @@ const DevicePageSettingsTab = () => {
         <Stack width="70%">
           <AstroBentoCard
             title="Allowed browsing time"
-            subtitle="Select when you want the browser to be online. Turn this off to remove schedules."
+            subtitle="Select when you want the Browser to be online. Turn this off to remove schedules."
+            info={{
+              title: "Buu",
+              body: "Maybe not the best char in Smash Bros, but Kirby is defo much better than Jigglypuff.",
+            }}
             notCollapsible
             topRightStuff={
               <AstroSwitch
@@ -278,6 +282,10 @@ const DevicePageSettingsTab = () => {
           title="Daily limits"
           subtitle="Set a daily browsing limit"
           notCollapsible
+          info={{
+            title: "Buu",
+            body: "Maybe not the best char in Smash Bros, but Kirby is defo much better than Jigglypuff.",
+          }}
           topRightStuff={
             <AstroSwitch
               on={dailyLimitsEnabled}

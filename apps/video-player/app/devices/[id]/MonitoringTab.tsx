@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
 import Link from "next/link";
+import CalendarButton from "@/app/components/CalendarButton";
 dayjs.extend(advancedFormat);
 
 const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
@@ -133,38 +134,46 @@ const DevicePageMonitoringTab = () => {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   return (
     <Stack spacing="24px">
-      <Stack direction="row" spacing="10px" alignItems="center">
-        <Stack
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
-          }}
-          onClick={() => setSelectedDayIndex(selectedDayIndex + 1)}
-        >
-          <ChevronLeftIcon height="24px" width="24px" />
+      <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" spacing="10px" alignItems="center">
+          <Stack
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            onClick={() => setSelectedDayIndex(selectedDayIndex + 1)}
+          >
+            <ChevronLeftIcon height="24px" width="24px" />
+          </Stack>
+          <Typography variant="h5">
+            {`${
+              selectedDayIndex === 0
+                ? "Today"
+                : selectedDayIndex === 1
+                ? "Yesterday"
+                : `${dayjs().subtract(selectedDayIndex, "days").format("dddd")}`
+            }, ${dayjs().subtract(selectedDayIndex, "days").format("Do MMMM")}`}
+          </Typography>
+          <Stack
+            sx={{
+              opacity: selectedDayIndex === 0 ? 0.3 : 1,
+              pointerEvents: selectedDayIndex === 0 ? "none" : undefined,
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            onClick={() => setSelectedDayIndex(selectedDayIndex - 1)}
+          >
+            <ChevronRightIcon height="24px" width="24px" />
+          </Stack>
         </Stack>
-        <Typography variant="h5">
-          {`${
-            selectedDayIndex === 0
-              ? "Today"
-              : selectedDayIndex === 1
-              ? "Yesterday"
-              : `${dayjs().subtract(selectedDayIndex, "days").format("dddd")}`
-          }, ${dayjs().subtract(selectedDayIndex, "days").format("Do MMMM")}`}
-        </Typography>
-        <Stack
-          sx={{
-            opacity: selectedDayIndex === 0 ? 0.3 : 1,
-            pointerEvents: selectedDayIndex === 0 ? "none" : undefined,
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
-          }}
-          onClick={() => setSelectedDayIndex(selectedDayIndex - 1)}
-        >
-          <ChevronRightIcon height="24px" width="24px" />
-        </Stack>
+        <CalendarButton
+          value={dayjs().subtract(selectedDayIndex, "days").toDate()}
+          setValue={(date: Date) =>
+            setSelectedDayIndex(dayjs().diff(date, "days"))
+          }
+        />
       </Stack>
       <Stack height="290px" spacing="28px" direction="row">
         <Stack width="54%" flex={1}>
@@ -204,6 +213,7 @@ const DevicePageMonitoringTab = () => {
           >
             {DUMMY_MOST_VISITED.map((site, i) => (
               <Stack
+                key={site.id}
                 flex={1}
                 borderTop={
                   i > 0 ? `2px solid ${PALETTE.secondary.grey[2]}` : undefined

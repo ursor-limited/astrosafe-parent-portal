@@ -3,6 +3,7 @@ import { PALETTE, Typography } from "ui";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { useState } from "react";
 import DynamicContainer from "@/app/components/DynamicContainer";
+import InfoButton, { IInfoButtonProps } from "@/app/components/InfoButton";
 
 export const AstroBentoCard = (props: {
   title: string;
@@ -13,6 +14,7 @@ export const AstroBentoCard = (props: {
   notCollapsible?: boolean;
   children: React.ReactNode;
   paddingBottom?: string;
+  info?: IInfoButtonProps;
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   return (
@@ -42,6 +44,7 @@ export const AstroBentoCard = (props: {
               <Typography variant="large" bold>
                 {props.title}
               </Typography>
+              {props.info ? <InfoButton {...props.info} /> : null}
             </Stack>
             {props.subtitle ? (
               <Typography color={PALETTE.secondary.grey[4]} variant="small">
