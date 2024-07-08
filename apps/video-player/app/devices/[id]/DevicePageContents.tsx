@@ -32,7 +32,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
     );
   }, [props.deviceId]);
 
-  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("content");
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
 
   const router = useRouter();
   return (
@@ -96,7 +96,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
       maxWidth={834}
       scrollable
     >
-      <Stack px="48px">
+      <Stack pl="48px">
         <Stack
           bgcolor="rgb(255,255,255)"
           height="52px"

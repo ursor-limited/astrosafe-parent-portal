@@ -2,7 +2,11 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import { DUMMY_GROUP_ID, IFilterUrl } from "@/app/filters/FiltersPageContents";
+import {
+  DUMMY_GROUP_ID,
+  IFilterDomain,
+  IFilterUrl,
+} from "@/app/filters/FiltersPageContents";
 import Image from "next/image";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import _ from "lodash";
@@ -10,7 +14,83 @@ import AstroTimeChart from "./AstroTimeChart";
 import { useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
+import HistorySection from "./HistorySection";
 dayjs.extend(advancedFormat);
+
+const DUMMY_DOMAIN_URLS: IFilterDomain[] = [
+  {
+    id: 1,
+    domain: "https://www.nationalreview.com/",
+    title: "National Review",
+    faviconUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+    urls: [
+      {
+        id: 1,
+        url: "https://www.nationalreview.com/",
+        title: "National Review",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+      {
+        id: 2,
+        url: "https://www.nationalgeographic.com/",
+        title: "National Geographic",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+      {
+        id: 3,
+        url: "https://www.nintendo.com/",
+        title: "Nintendo",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+    ],
+  },
+  {
+    id: 2,
+    domain: "https://www.nationalreview.com/",
+    title: "National Review",
+    faviconUrl:
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+    urls: [
+      {
+        id: 1,
+        url: "https://www.nationalreview.com/",
+        title: "National Review",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+      {
+        id: 2,
+        url: "https://www.nationalgeographic.com/",
+        title: "National Geographic",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+      {
+        id: 3,
+        url: "https://www.nintendo.com/",
+        title: "Nintendo",
+        imageUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        createdAt: "2024-06-06",
+        groupId: DUMMY_GROUP_ID,
+      },
+    ],
+  },
+];
 
 const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
   {
@@ -167,6 +247,7 @@ const DevicePageMonitoringTab = () => {
           </AstroBentoCard>
         </Stack>
       </Stack>
+      <HistorySection domainUrls={DUMMY_DOMAIN_URLS} />
     </Stack>
   );
 };

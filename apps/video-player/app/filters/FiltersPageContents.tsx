@@ -35,6 +35,14 @@ export interface IFilterUrl {
   groupId: number;
 }
 
+export interface IFilterDomain {
+  id: number;
+  domain: string;
+  title: string;
+  faviconUrl: string;
+  urls: IFilterUrl[];
+}
+
 export interface IFilter {
   id: number;
   title: string;
