@@ -17,11 +17,12 @@ import { Stack } from "@mui/system";
 import UrsorActionButton from "../components/UrsorActionButton";
 import { PALETTE } from "ui";
 import { useRouter } from "next/navigation";
+import DeviceInstructionsView from "./DeviceInstructionsView";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicesPageContents() {
-  const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
+  const [devices, setDevices] = useState<IDevice_new[]>([]);
   const router = useRouter();
   return (
     <PageLayout
@@ -43,41 +44,45 @@ export default function DevicesPageContents() {
       maxWidth={834}
       scrollable
     >
-      <Stack px="50px">
-        <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-          {devices.map((d) => (
-            <DeviceCard
-              key={d.id}
-              {...d}
-              showBrowsing
-              url="nintendo.com/bopioijgorfrifunrifjni"
-              button={
-                <UrsorActionButton
-                  size="16px"
-                  iconSize="16px"
-                  actions={[
-                    {
-                      text: "Open",
-                      kallback: () => router.push(`/devices/${d.id}`),
-                      icon: ArrowUpRightIcon,
-                    },
-                    {
-                      text: "Edit name",
-                      kallback: () => null,
-                      icon: PencilIcon,
-                    },
-                    {
-                      text: "Disconnect",
-                      kallback: () => null,
-                      icon: PlugIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
-                />
-              }
-            />
-          ))}
-        </DynamicCardGrid>
+      <Stack px="50px" flex={1}>
+        {devices.length > 0 ? (
+          <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+            {devices.map((d) => (
+              <DeviceCard
+                key={d.id}
+                {...d}
+                showBrowsing
+                url="nintendo.com/bopioijgorfrifunrifjni"
+                button={
+                  <UrsorActionButton
+                    size="16px"
+                    iconSize="16px"
+                    actions={[
+                      {
+                        text: "Open",
+                        kallback: () => router.push(`/devices/${d.id}`),
+                        icon: ArrowUpRightIcon,
+                      },
+                      {
+                        text: "Edit name",
+                        kallback: () => null,
+                        icon: PencilIcon,
+                      },
+                      {
+                        text: "Disconnect",
+                        kallback: () => null,
+                        icon: PlugIcon,
+                        color: PALETTE.system.red,
+                      },
+                    ]}
+                  />
+                }
+              />
+            ))}
+          </DynamicCardGrid>
+        ) : (
+          <DeviceInstructionsView />
+        )}
       </Stack>
     </PageLayout>
   );
