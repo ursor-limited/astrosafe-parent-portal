@@ -17,13 +17,14 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
 dayjs.extend(advancedFormat);
 
-const DUMMY_DOMAIN_URLS: IFilterDomain[] = [
+const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
   {
     id: 1,
     domain: "https://www.nationalreview.com/",
     title: "National Review",
     faviconUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+    time: 3094,
     urls: [
       {
         id: 1,
@@ -60,6 +61,7 @@ const DUMMY_DOMAIN_URLS: IFilterDomain[] = [
     title: "National Review",
     faviconUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+    time: 124,
     urls: [
       {
         id: 1,
