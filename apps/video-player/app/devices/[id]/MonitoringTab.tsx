@@ -15,6 +15,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
+import Link from "next/link";
 dayjs.extend(advancedFormat);
 
 const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
@@ -203,47 +204,67 @@ const DevicePageMonitoringTab = () => {
           >
             {DUMMY_MOST_VISITED.map((site, i) => (
               <Stack
-                key={site.id}
                 flex={1}
-                direction="row"
-                spacing="12px"
-                alignItems="center"
                 borderTop={
                   i > 0 ? `2px solid ${PALETTE.secondary.grey[2]}` : undefined
                 }
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { opacity: 0.7 },
+                  transition: "0.2s",
+                }}
+                justifyContent="center"
               >
-                <Stack borderRadius="8px" overflow="hidden">
-                  <Image
-                    src={site.imageUrl}
-                    height={42}
-                    width={42}
-                    alt="favicon"
-                  />
-                </Stack>
-                <Stack spacing="8px" width="100%">
-                  <Stack direction="row" spacing="8px" alignItems="center">
-                    <Typography bold>{site.title}</Typography>
-                    <Typography bold color={PALETTE.secondary.grey[3]}>
-                      {site.url}
-                    </Typography>
-                  </Stack>
-                  <Stack direction="row" alignItems="center" spacing="12px">
-                    <Stack
-                      width={`${
-                        (100 * site.time) /
-                        (_.max(DUMMY_MOST_VISITED.map((s) => s.time)) ?? 1)
-                      }%`}
-                      height="8px"
-                      bgcolor={PALETTE.secondary.purple[1]}
-                      borderRadius="4px"
-                    />
-                    <Stack width="60px">
-                      <Typography bold variant="tiny">{`${Math.floor(
-                        site.time / 3600
-                      )}h ${Math.floor((site.time % 3600) / 60)}m`}</Typography>
+                <Link
+                  key={site.id}
+                  href={site.url}
+                  target="_blank"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
+                  <Stack
+                    flex={1}
+                    direction="row"
+                    spacing="12px"
+                    alignItems="center"
+                  >
+                    <Stack borderRadius="8px" overflow="hidden">
+                      <Image
+                        src={site.imageUrl}
+                        height={42}
+                        width={42}
+                        alt="favicon"
+                      />
+                    </Stack>
+                    <Stack spacing="8px" width="100%">
+                      <Stack direction="row" spacing="8px" alignItems="center">
+                        <Typography bold>{site.title}</Typography>
+                        <Typography bold color={PALETTE.secondary.grey[3]}>
+                          {site.url}
+                        </Typography>
+                      </Stack>
+                      <Stack direction="row" alignItems="center" spacing="12px">
+                        <Stack
+                          width={`${
+                            (100 * site.time) /
+                            (_.max(DUMMY_MOST_VISITED.map((s) => s.time)) ?? 1)
+                          }%`}
+                          height="8px"
+                          bgcolor={PALETTE.secondary.purple[1]}
+                          borderRadius="4px"
+                        />
+                        <Stack width="60px">
+                          <Typography bold variant="tiny">{`${Math.floor(
+                            site.time / 3600
+                          )}h ${Math.floor(
+                            (site.time % 3600) / 60
+                          )}m`}</Typography>
+                        </Stack>
+                      </Stack>
                     </Stack>
                   </Stack>
-                </Stack>
+                </Link>
               </Stack>
             ))}
           </AstroBentoCard>

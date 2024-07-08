@@ -154,7 +154,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
           </Link>
         </Stack>
       </Stack>
-      <Stack height="24px" alignItems="center">
+      <Stack minHeight="24px" alignItems="center">
         <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
       </Stack>
       <Stack pl="48px" spacing="24px">

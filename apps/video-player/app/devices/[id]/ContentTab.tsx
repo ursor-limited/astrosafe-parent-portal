@@ -1,6 +1,7 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import NewLessonCard from "./NewLessonCard";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 export type AstroContent = "video" | "videoChannel" | "link";
 
@@ -52,14 +53,16 @@ const DevicePageContentTab = () => {
   return (
     <Stack pt="20px">
       <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
-        {DUMMY_FOLDERS.map((f) => (
-          <NewLessonCard
-            {...f}
-            imageUrls={[
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-              "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-            ]}
-          />
+        {DUMMY_FOLDERS.map((f, i) => (
+          <UrsorFadeIn duration={800} delay={100 * i}>
+            <NewLessonCard
+              {...f}
+              imageUrls={[
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
+                "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
+              ]}
+            />
+          </UrsorFadeIn>
         ))}
       </DynamicCardGrid>
     </Stack>
