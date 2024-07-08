@@ -14,7 +14,7 @@ import UrsorActionButton from "../components/UrsorActionButton";
 import { spin } from "../components/LessonCard";
 import DeletionDialog from "../components/DeletionDialog";
 import { useRouter } from "next/navigation";
-import { SECONDARY_COLOR_ORDER } from "../dashboard/LinkDialog";
+import { SECONDARY_COLOR_ORDER } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import useOrangeBorder from "../components/useOrangeBorder";
 import _ from "lodash";
 import { IPlaylist } from "../moonSafePlaylist/[subdirectory]/MoonsafePlaylistPageContents";

@@ -15,26 +15,30 @@ import NotificationContext from "@/app/components/NotificationContext";
 import {
   AstroContent,
   DEFAULT_LESSON_TITLE,
-} from "@/app/dashboard/DashboardPageContents";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import LessonVideoCard from "./LessonVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import AddContentButton from "./AddContentButton";
-import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
-import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
-import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
+import LinkDialog, {
+  ILink,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
+import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
 import { ILesson } from "./page";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
+import NoCreationsLeftDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
-import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LiteModeBar";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
-import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
+import LessonCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LessonCreationDialog";
+import ImageDialog, {
+  IImage,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
 import TextCard from "@/app/components/TextCard";
 import "react-quill/dist/quill.snow.css";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
-import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
 import { useLocalStorage } from "usehooks-ts";
 import TimelineImageCard from "./cards/TimelineImageCard";
 import TimelineLinkCard from "./cards/TimelineLinkCard";

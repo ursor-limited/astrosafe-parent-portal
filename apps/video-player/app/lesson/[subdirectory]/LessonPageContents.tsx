@@ -28,17 +28,21 @@ import NotificationContext from "@/app/components/NotificationContext";
 import {
   AstroContent,
   DEFAULT_LESSON_TITLE,
-} from "@/app/dashboard/DashboardPageContents";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import AddContentButton from "./AddContentButton";
-import LinkDialog, { ILink } from "@/app/dashboard/LinkDialog";
-import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
-import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
+import LinkDialog, {
+  ILink,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
+import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
 import { ILesson } from "./page";
-import NoCreationsLeftDialog from "@/app/dashboard/NoCreationsLeftDialog";
+import NoCreationsLeftDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import LessonCreationDialog from "@/app/dashboard/LessonCreationDialog";
-import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
+import LessonCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LessonCreationDialog";
+import ImageDialog, {
+  IImage,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import "react-quill/dist/quill.snow.css";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import ContentCards from "./ContentCards";
@@ -52,15 +56,15 @@ import Timeline, {
   RIGHT_COLUMN_Y_OFFSET,
 } from "./Timeline";
 import InitialAddContentButton from "./InitialAddContentButton";
-import MakeCopyDialog from "@/app/dashboard/MakeCopyDialog";
+import MakeCopyDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MakeCopyDialog";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";
 import QuizDialog, { IQuiz } from "@/app/components/QuizDialog";
 import { useAuth0 } from "@auth0/auth0-react";
 import TutorialVideoBar from "@/app/components/TutorialVideoBar";
 import CopyAndMoveDialog from "./CopyAndMoveDialog";
-import { WIDTH } from "@/app/dashboard/Sidebar";
-import { SIDEBAR_X_MARGIN } from "@/app/dashboard/PageLayout";
+import { WIDTH } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/Sidebar";
+import { SIDEBAR_X_MARGIN } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 
 const CONTENT_PADDING_X = 24;
 const EXPANDED_CARD_DOT_Y = 16;

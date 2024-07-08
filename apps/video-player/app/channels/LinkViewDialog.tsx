@@ -14,7 +14,7 @@ import {
 import BrowserLinkCard from "../safety/BrowserLinkCard";
 import { Stack } from "@mui/system";
 import { BORDER_RADIUS } from "ui/ursor-input-field";
-import { CARD_WIDTH } from "../dashboard/LinkDialog";
+import { CARD_WIDTH } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import {
   ITeacher,
   useBrowserUserContext,

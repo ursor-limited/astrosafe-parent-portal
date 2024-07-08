@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import NotificationContext from "@/app/components/NotificationContext";
 import { IContentBucket } from "./ContentTab";
-import { SECONDARY_COLOR_ORDER } from "@/app/dashboard/LinkDialog";
+import { SECONDARY_COLOR_ORDER } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
 import _ from "lodash";
 import UrsorActionButton from "@/app/components/UrsorActionButton";

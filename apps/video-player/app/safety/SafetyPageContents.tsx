@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { PALETTE, UrsorButton } from "ui";
 import { BOLD_FONT_WEIGHT, FONT_SIZES, Typography } from "ui/typography";
-import { ILink } from "../dashboard/LinkDialog";
+import { ILink } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import {
   ITeacher,
   useBrowserUserContext,
@@ -28,12 +28,14 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { DEFAULT_FADEIN_DURATION } from "../components/UrsorDialog";
 import UrlPopover from "./components/UrlPopover";
 import dayjs from "dayjs";
-import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
+import PageLayout, {
+  SIDEBAR_X_MARGIN,
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import DeviceFiltersDialog from "./DeviceFiltersDialog";
 import LinkDeletionDialog from "./LinkDeletionDialog";
 import BrowserLinkDialog from "./BrowserLinkDialog";
 import Image from "next/image";
-import { SearchInput } from "../dashboard/DashboardPageContents";
+import { SearchInput } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import dynamic from "next/dynamic";
 
 const DynamicallyLoadedPortal = dynamic(

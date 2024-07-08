@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import MoonsafeLessonPageContents from "./MoonsafePlaylistPageContents";
-import { AstroContent } from "@/app/dashboard/DashboardPageContents";
+import { AstroContent } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import MobileLessonPageContents from "./MobileLessonPageContents";
 
 export interface ILesson {

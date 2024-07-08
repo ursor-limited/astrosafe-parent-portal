@@ -8,8 +8,8 @@ import {
   GRID_SPACING,
   LESSON_GRID_SPACING,
   SearchInput,
-} from "@/app/dashboard/DashboardPageContents";
-import useColumnWidth from "@/app/dashboard/useColumnWidth";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
+import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
@@ -19,7 +19,7 @@ import { isMobile } from "react-device-detect";
 import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
 import ExternalPageFooter from "../../components/ExternalPageFooter";
-import ShareDialog from "@/app/dashboard/ShareDialog";
+import ShareDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ShareDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import { PALETTE } from "ui";
 

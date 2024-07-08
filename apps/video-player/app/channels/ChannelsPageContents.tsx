@@ -23,7 +23,7 @@ import ChannelDialog from "../safety/ChannelDialog";
 import PageLayout, {
   SIDEBAR_X_MARGIN,
   SIDEBAR_Y_MARGIN,
-} from "../dashboard/PageLayout";
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import BrowserLinkCard from "../safety/BrowserLinkCard";
@@ -33,7 +33,7 @@ import AddDialog from "./AddDialog";
 import StackViewDialog from "./StackViewDialog";
 import LinkViewDialog from "./LinkViewDialog";
 import Image from "next/image";
-import useColumnWidth from "../dashboard/useColumnWidth";
+import useColumnWidth from "../dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import StackDialog from "../safety/StackDialog";
 import DeletionDialog from "../components/DeletionDialog";
 

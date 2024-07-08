@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
+import PageLayout, {
+  SIDEBAR_X_MARGIN,
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { Stack } from "@mui/system";
 import NotificationContext from "../components/NotificationContext";
 import PlusIcon from "@/images/icons/PlusIcon.svg";

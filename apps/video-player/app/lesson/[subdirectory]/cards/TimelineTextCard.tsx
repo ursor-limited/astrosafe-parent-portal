@@ -5,7 +5,7 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useEffect, useRef, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { IText } from "@/app/components/TextDialog";
 import { PALETTE } from "ui";
 import CopyAndMoveDialog from "../CopyAndMoveDialog";

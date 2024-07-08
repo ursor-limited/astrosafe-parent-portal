@@ -17,7 +17,7 @@ import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useWindowSize } from "usehooks-ts";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 
 const A4_HEIGHT = 297;
 const A4_WIDTH = 210;

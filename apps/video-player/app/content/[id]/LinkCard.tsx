@@ -5,9 +5,16 @@ import { Stack } from "@mui/system";
 
 const IMAGE_HEIGHT = 227;
 
-const LinkCard = (props: IContent & { onClick: () => void }) => {
+const LinkCard = (
+  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+) => {
   return (
-    <ContentCard type="link" title={props.title} onClick={props.onClick}>
+    <ContentCard
+      type="link"
+      title={props.title}
+      onClick={props.onClick}
+      noPointerEvents={props.noPointerEvents}
+    >
       <Stack
         height={IMAGE_HEIGHT}
         width="100%"

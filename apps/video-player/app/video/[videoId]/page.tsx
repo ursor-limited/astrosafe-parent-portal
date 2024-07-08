@@ -6,7 +6,7 @@ import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
-import MobileDashboardPageContents from "@/app/dashboard/MobileDashboardPageContents";
+import MobileDashboardPageContents from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobileDashboardPageContents";
 import MobileVideoPageContents from "./MobileVideoPageContents";
 
 export async function generateStaticParams() {

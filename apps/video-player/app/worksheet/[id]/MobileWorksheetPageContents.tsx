@@ -30,8 +30,8 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
-import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
-import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
+import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 

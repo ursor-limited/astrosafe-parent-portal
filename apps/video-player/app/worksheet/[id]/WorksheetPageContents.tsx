@@ -37,7 +37,7 @@ import NumberBondWorksheet, {
   NUMBER_BOND_VERTICAL_N_COLUMNS,
   NUMBER_BOND_VERTICAL_ROWS_N,
 } from "./NumberBondWorksheet";
-import WorksheetCreationDialog from "@/app/dashboard/WorksheetCreationDialog";
+import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import { getFormattedDate } from "@/app/components/VideoCard";

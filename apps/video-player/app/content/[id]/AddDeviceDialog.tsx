@@ -1,5 +1,5 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { SearchInput } from "@/app/dashboard/DashboardPageContents";
+import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { IDevice_new } from "@/app/filters/[id]/FilterPageContents";
 import { Stack } from "@mui/system";
 import { useState } from "react";

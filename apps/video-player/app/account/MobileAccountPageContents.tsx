@@ -8,7 +8,7 @@ import DeleteAccountDialog from "./dialogs/DeleteAccountDialog";
 import PageLayout, {
   SIDEBAR_X_MARGIN,
   SIDEBAR_Y_MARGIN,
-} from "../dashboard/PageLayout";
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import HomeIcon from "@/images/icons/HomeIcon.svg";
 import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useAuth0 } from "@auth0/auth0-react";

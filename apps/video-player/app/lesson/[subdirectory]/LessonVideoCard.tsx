@@ -13,7 +13,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import useOrangeBorder from "@/app/components/useOrangeBorder";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 dayjs.extend(advancedFormat);
 
 const PLACEHOLDER_THUMBNAIL =

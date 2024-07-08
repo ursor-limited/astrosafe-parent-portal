@@ -1,7 +1,7 @@
 import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
-import { IImage } from "@/app/dashboard/ImageDialog";
+import { IImage } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
@@ -19,7 +19,7 @@ import {
 import { useWindowSize } from "usehooks-ts";
 import { getNPages } from "@/app/worksheet/[id]/WorksheetPageContents";
 import { PALETTE } from "ui";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import CopyAndMoveDialog from "../CopyAndMoveDialog";
 

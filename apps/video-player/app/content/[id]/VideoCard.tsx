@@ -6,9 +6,16 @@ import Play from "@/images/play.svg";
 
 const IMAGE_HEIGHT = 144;
 
-const VideoCard = (props: IContent & { onClick: () => void }) => {
+const VideoCard = (
+  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+) => {
   return (
-    <ContentCard type="video" title={props.title} onClick={props.onClick}>
+    <ContentCard
+      type="video"
+      title={props.title}
+      onClick={props.onClick}
+      noPointerEvents={props.noPointerEvents}
+    >
       <Stack
         height={IMAGE_HEIGHT}
         width="100%"

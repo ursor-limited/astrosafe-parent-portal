@@ -10,7 +10,7 @@ import LockIcon from "@/images/icons/LockIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import PageLayout from "../dashboard/PageLayout";
+import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";

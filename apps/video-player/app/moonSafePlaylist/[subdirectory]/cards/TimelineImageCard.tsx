@@ -1,12 +1,12 @@
 import { Stack, alpha } from "@mui/system";
 import Image from "next/image";
 import TimelineCard from "./TimelineCard";
-import { IImage } from "@/app/dashboard/ImageDialog";
+import { IImage } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useContext, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import CopyAndMoveDialog from "../CopyAndMoveDialog";
 
 const WIDTH_RATIO = 0.86;

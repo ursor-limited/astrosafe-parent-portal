@@ -8,8 +8,8 @@ import {
   GRID_SPACING,
   LESSON_GRID_SPACING,
   SearchInput,
-} from "@/app/dashboard/DashboardPageContents";
-import useColumnWidth from "@/app/dashboard/useColumnWidth";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
+import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
@@ -18,7 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import UserPageFooter from "../../components/ExternalPageFooter";
 import { useUserContext } from "@/app/components/UserContext";
-import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
 import { PALETTE } from "ui";
 import MobileExternalPageFooter from "../../components/MobileExternalPageFooter";
 

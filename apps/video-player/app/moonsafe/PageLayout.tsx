@@ -7,7 +7,10 @@ import { useWindowSize } from "usehooks-ts";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import dynamic from "next/dynamic";
-import Sidebar, { SideBarItemId, WIDTH } from "../dashboard/Sidebar";
+import Sidebar, {
+  SideBarItemId,
+  WIDTH,
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/Sidebar";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("../components/DynamicallyLoadedPortal"),

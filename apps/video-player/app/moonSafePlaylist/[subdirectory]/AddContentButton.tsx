@@ -7,9 +7,9 @@ import {
   AstroContent,
   CONTENT_BRANDING,
   ToolButton,
-} from "@/app/dashboard/DashboardPageContents";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import _ from "lodash";
-import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LiteModeBar";
 import { PREMIUM_CONTENTS } from "./AddContentDialog";
 
 export const AddContentButtonDialogContentButton = (props: {

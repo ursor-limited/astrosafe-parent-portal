@@ -17,8 +17,8 @@ import { Header } from "@/app/components/header2";
 import dayjs from "dayjs";
 import { CircularButton } from "./VideoPageContents";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
-import MobilePageCard from "@/app/dashboard/MobilePageCard";
+import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
+import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 

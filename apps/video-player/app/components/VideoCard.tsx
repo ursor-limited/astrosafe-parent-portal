@@ -13,7 +13,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import UrsorActionButton from "./UrsorActionButton";
 import DeletionDialog from "./DeletionDialog";
 import NotificationContext from "./NotificationContext";
-import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import useOrangeBorder from "./useOrangeBorder";
 dayjs.extend(advancedFormat);
 

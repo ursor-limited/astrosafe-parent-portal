@@ -11,7 +11,9 @@ import X from "@/images/icons/X.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import BrowserApiController, { IDevice, ISchool } from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
-import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
+import PageLayout, {
+  SIDEBAR_X_MARGIN,
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DynamicCardGrid from "../components/DynamicCardGrid";
 import DeviceCard from "./DeviceCard";
@@ -20,7 +22,7 @@ import AddDeviceDialog from "./AddDeviceDialog";
 import LockDialog from "./LockDialog";
 import DeviceDialog from "./DeviceDialog/DeviceDialog";
 import dynamic from "next/dynamic";
-import DashboardSignupPromptDialog from "../dashboard/DashboardSignupPromptDialog";
+import DashboardSignupPromptDialog from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardSignupPromptDialog";
 import { useUserContext } from "../components/UserContext";
 import AddTeacherUpgradePromptDialog from "./AddDeviceUpgradePromptDialog";
 import UpgradeDialog from "../components/UpgradeDialog";

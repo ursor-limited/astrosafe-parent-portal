@@ -4,17 +4,20 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import { useCallback, useContext, useEffect, useState } from "react";
 import ApiController, { IVideo, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
-import { CONTENT_BRANDING } from "@/app/dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
-import { VIDEO_HEIGHT, VIDEO_WIDTH } from "@/app/dashboard/VideoCreationDialog";
+import {
+  VIDEO_HEIGHT,
+  VIDEO_WIDTH,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import CommentIcon from "@/images/icons/CommentIcon.svg";
 import PlayIcon from "@/images/icons/PlayIcon.svg";
-import TimeRange from "@/app/dashboard/TimeRange";
+import TimeRange from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/TimeRange";
 import _ from "lodash";
-import { VideoCommentCard } from "@/app/dashboard/VideoDialogCommentsTab";
+import { VideoCommentCard } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoDialogCommentsTab";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import { isMobile } from "react-device-detect";

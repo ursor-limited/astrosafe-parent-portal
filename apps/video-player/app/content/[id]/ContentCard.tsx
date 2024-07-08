@@ -10,7 +10,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 
-export const CONTENT_TAG_DISPLAY_NAMES: Record<AstroContent, string> = {
+export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",
   videoChannel: "Channel",
   link: "Link",
@@ -20,6 +20,7 @@ const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
   onClick?: () => void;
+  noPointerEvents?: boolean;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -36,6 +37,7 @@ const ContentCard = (props: {
     >
       <Stack position="absolute" right="2px" bottom="32px">
         <UrsorActionButton
+          notClickable={props.noPointerEvents}
           iconSize="16px"
           size="26px"
           background="transparent"
@@ -73,6 +75,7 @@ const ContentCard = (props: {
           svg: {
             fill: PALETTE.secondary.purple[2],
           },
+          pointerEvents: props.noPointerEvents ? "none" : undefined,
         }}
         onClick={() => setPinned(!pinned)}
       >
@@ -92,7 +95,7 @@ const ContentCard = (props: {
         spacing="6px"
       >
         {props.children}
-        <Stack width="calc(100% - 24px)">
+        <Stack width="calc(100% - 24px)" minHeight="24px">
           <Typography bold maxLines={2}>
             {props.title}
           </Typography>
@@ -114,7 +117,7 @@ const ContentCard = (props: {
             bold
             color={CONTENT_BRANDING[props.type].color}
           >
-            {CONTENT_TAG_DISPLAY_NAMES[props.type]}
+            {CONTENT_DISPLAY_NAMES[props.type]}
           </Typography>
         </Stack>
       </Stack>

@@ -7,7 +7,7 @@ import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
-import PageLayout from "@/app/dashboard/PageLayout";
+import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
@@ -24,16 +24,20 @@ import {
   IDevice_new,
 } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
-import useColumnWidth from "@/app/dashboard/useColumnWidth";
+import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
 import VideoCard from "./VideoCard";
 import ChannelCard from "./ChannelCard";
-import { SearchInput } from "@/app/dashboard/DashboardPageContents";
+import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import SortButton from "@/app/components/SortButton";
-import { CONTENT_TAG_DISPLAY_NAMES } from "./ContentCard";
+import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
 import Image from "next/image";
 import AddDeviceDialog from "./AddDeviceDialog";
+import ContentCreationDialog from "./ContentCreationDialog";
+import VideoCreationDialog from "./VideoCreationDialog";
+import LinkCreationDialog from "./LinkCreationDialog";
+import ChannelCreationDialog from "./ChannelCreationDialog";
 
 export interface IAstroContentBranding {
   title: string;
@@ -58,7 +62,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   //   icon: VersionsIcon,
   // },
   link: {
-    title: "Add Lesson",
+    title: "Add Link",
     color: PALETTE.secondary.blue[3],
     icon: LinkIcon,
   },
@@ -198,6 +202,10 @@ export default function ContentPageContents(props: { folderId: number }) {
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
     useState<boolean>(false);
 
+  const [creationDialogOpen, setCreationDialogOpen] = useState<
+    AstroContent | undefined
+  >();
+
   return (
     <>
       <PageLayout
@@ -239,7 +247,7 @@ export default function ContentPageContents(props: { folderId: number }) {
         maxWidth={834}
         scrollable
       >
-        <Stack pl="48px" spacing="24px" p="31px">
+        <Stack pl="48px" spacing="24px">
           <ContentPageDevicesSection
             devices={devices}
             onAdd={() => setAddDeviceDialogOpen(true)}
@@ -291,12 +299,17 @@ export default function ContentPageContents(props: { folderId: number }) {
           </Stack>
           <Stack direction="row" spacing="24px">
             {["link", "video", "videoChannel"].map((c) => (
-              <AddContentButton
-                key={c as AstroContent}
-                onClick={() => null}
-                {...CONTENT_BRANDING[c as AstroContent]}
-                fullWidth
-              />
+              <Stack
+                onClick={() => setCreationDialogOpen(c as AstroContent)}
+                flex={1}
+              >
+                <AddContentButton
+                  key={c as AstroContent}
+                  onClick={() => null}
+                  {...CONTENT_BRANDING[c as AstroContent]}
+                  fullWidth
+                />
+              </Stack>
             ))}
           </Stack>
           <Stack
@@ -373,6 +386,30 @@ export default function ContentPageContents(props: { folderId: number }) {
           onClose={() => setAddDeviceDialogOpen(false)}
           devices={devices}
         />
+      ) : null}
+      {creationDialogOpen ? (
+        creationDialogOpen === "video" ? (
+          <VideoCreationDialog
+            open={true}
+            onClose={() => {
+              setCreationDialogOpen(undefined);
+            }}
+          />
+        ) : creationDialogOpen === "link" ? (
+          <LinkCreationDialog
+            open={true}
+            onClose={() => {
+              setCreationDialogOpen(undefined);
+            }}
+          />
+        ) : creationDialogOpen === "videoChannel" ? (
+          <ChannelCreationDialog
+            open={true}
+            onClose={() => {
+              setCreationDialogOpen(undefined);
+            }}
+          />
+        ) : null
       ) : null}
     </>
   );

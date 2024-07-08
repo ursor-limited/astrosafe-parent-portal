@@ -1,11 +1,13 @@
 import { IVideo } from "@/app/api";
 import { AstroLessonContent } from "./LessonPageContents";
 import LessonVideoCard from "./LessonVideoCard";
-import { ILink } from "@/app/dashboard/LinkDialog";
+import { ILink } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import LinkCard from "@/app/components/LinkCard";
 import TextCard from "@/app/components/TextCard";
 import TextCreationDialog, { IText } from "@/app/components/TextDialog";
-import ImageDialog, { IImage } from "@/app/dashboard/ImageDialog";
+import ImageDialog, {
+  IImage,
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import ImageCard from "@/app/components/ImageCard";
 import LessonWorksheetPreview from "./LessonWorksheetPreview";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";

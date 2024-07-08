@@ -4,7 +4,7 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import { IContentBucket } from "../devices/[id]/ContentTab";
 import NewLessonCard from "../devices/[id]/NewLessonCard";
-import PageLayout from "../dashboard/PageLayout";
+import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { useRouter } from "next/navigation";
 

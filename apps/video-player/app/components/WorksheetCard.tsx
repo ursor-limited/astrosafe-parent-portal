@@ -16,7 +16,7 @@ import NotificationContext from "./NotificationContext";
 import ApiController from "../api";
 import DeletionDialog from "./DeletionDialog";
 import useOrangeBorder from "./useOrangeBorder";
-import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 
 const WorksheetCard = (
   props: IWorksheet & {

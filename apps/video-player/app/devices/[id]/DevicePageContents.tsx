@@ -4,7 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
-import PageLayout from "@/app/dashboard/PageLayout";
+import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import {
   DUMMY_DEVICES,
   IDevice_new,

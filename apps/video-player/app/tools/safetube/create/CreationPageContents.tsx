@@ -19,7 +19,7 @@ import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { MAGICAL_BORDER_THICKNESS } from "@/app/video/[videoId]/VideoPageContents";
 import mixpanel from "mixpanel-browser";
 import InvalidUrlView from "./InvalidUrlView";
-import SignupPromptDialog from "@/app/dashboard/SignupPromptDialog";
+import SignupPromptDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/SignupPromptDialog";
 import { useUserContext } from "@/app/components/UserContext";
 import { isMobile } from "react-device-detect";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";

@@ -5,12 +5,15 @@ import { Stack } from "@mui/system";
 
 const IMAGE_HEIGHT = 160;
 
-const ChannelCard = (props: IContent & { onClick: () => void }) => {
+const ChannelCard = (
+  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+) => {
   return (
     <ContentCard
       type="videoChannel"
       title={props.title}
       onClick={props.onClick}
+      noPointerEvents={props.noPointerEvents}
     >
       <Stack
         height={IMAGE_HEIGHT}

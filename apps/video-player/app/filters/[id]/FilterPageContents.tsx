@@ -3,7 +3,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import PageLayout from "@/app/dashboard/PageLayout";
+import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import {
   DUMMY_ALLOWED_SITES,
   DUMMY_BLOCKED_SITES,

@@ -3,7 +3,7 @@ import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-import { ILink } from "../dashboard/LinkDialog";
+import { ILink } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import { getFormattedDate } from "./VideoCard";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -13,7 +13,7 @@ import DeletionDialog from "./DeletionDialog";
 import ApiController from "../api";
 import NotificationContext from "./NotificationContext";
 import useOrangeBorder from "./useOrangeBorder";
-import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import Link from "next/link";
 
 const LIGHT_TEXT_THRESHOLD = 200;

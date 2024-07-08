@@ -16,7 +16,7 @@ import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
-import VideoCreationDialog from "@/app/dashboard/VideoCreationDialog";
+import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { ILesson } from "@/app/lesson/[subdirectory]/page";
 import _ from "lodash";
@@ -24,7 +24,7 @@ import {
   COMMENT_PAUSE_THRESHOLD,
   TimelineVideoCardCommentDisplayCard,
 } from "@/app/lesson/[subdirectory]/cards/TimelineVideoCard";
-import TimeRange from "@/app/dashboard/TimeRange";
+import TimeRange from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/TimeRange";
 import { isMobile } from "react-device-detect";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
 import { Header } from "@/app/components/header2";

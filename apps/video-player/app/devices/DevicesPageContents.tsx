@@ -6,7 +6,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
-import PageLayout from "@/app/dashboard/PageLayout";
+import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import {
   DUMMY_DEVICES,
   IDevice_new,

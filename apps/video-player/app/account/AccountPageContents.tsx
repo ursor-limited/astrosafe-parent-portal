@@ -18,7 +18,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import PageLayout, {
   SIDEBAR_X_MARGIN,
   SIDEBAR_Y_MARGIN,
-} from "../dashboard/PageLayout";
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import MortarBoardIcon from "@/images/icons/MortarboardIcon.svg";
 import { useRouter } from "next/navigation";

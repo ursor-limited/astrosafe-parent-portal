@@ -12,7 +12,7 @@ import NotificationContext from "./NotificationContext";
 import { IText } from "./TextDialog";
 import "react-quill/dist/quill.core.css";
 import "./TextEditorToolBar.css";
-import { CONTENT_BRANDING } from "../dashboard/DashboardPageContents";
+import { CONTENT_BRANDING } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import useOrangeBorder from "./useOrangeBorder";
 import { TextPreview } from "../lesson/[subdirectory]/cards/TimelineTextCard";
 

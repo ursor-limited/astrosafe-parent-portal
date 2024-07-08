@@ -6,9 +6,11 @@ import UsersPageTeachersTab, { ITeacher } from "./UsersPageTeachersTab";
 import BrowserApiController, { IChannel, ISchool, IStack } from "../browserApi";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
-import PageLayout, { SIDEBAR_X_MARGIN } from "../dashboard/PageLayout";
+import PageLayout, {
+  SIDEBAR_X_MARGIN,
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { Stack } from "@mui/system";
-import { SearchInput } from "../dashboard/DashboardPageContents";
+import { SearchInput } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import TeacherInvitationDialog from "./dialogs/TeacherInvitationDialog";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import { ISafeTubeUser, useUserContext } from "../components/UserContext";

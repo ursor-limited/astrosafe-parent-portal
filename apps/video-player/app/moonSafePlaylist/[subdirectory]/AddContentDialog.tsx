@@ -4,7 +4,7 @@ import {
   AstroContent,
   CONTENT_BRANDING,
   getTrialDaysLeft,
-} from "@/app/dashboard/DashboardPageContents";
+} from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import _ from "lodash";
 import { Dialog } from "@mui/material";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/app/components/UrsorDialog";
 import { useUserContext } from "@/app/components/UserContext";
 import { useEffect, useState } from "react";
-import { useOnBasicMode } from "@/app/dashboard/LiteModeBar";
+import { useOnBasicMode } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LiteModeBar";
 
 export const PREMIUM_CONTENTS: AstroContent[] = ["video", "worksheet", "quiz"];
 

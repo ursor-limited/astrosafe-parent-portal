@@ -5,7 +5,7 @@ import {
   BACKDROP_STYLE,
   DEFAULT_FADEIN_DURATION,
 } from "@/app/components/UrsorDialog";
-import { SearchInput } from "@/app/dashboard/DashboardPageContents";
+import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { ILesson } from "./page";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";

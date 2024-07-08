@@ -18,16 +18,16 @@ import {
   DialogSection,
   ImageButton,
   getPlaceholderImageUrl,
-} from "../dashboard/LinkDialog";
+} from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import ApiController from "../api";
 import BrowserApiController from "../browserApi";
 import isValidDomain from "is-valid-domain";
 import UrsorDialog from "../components/UrsorDialog";
 import UrsorToggle from "../components/UrsorToggle";
-import UrlInput from "../dashboard/UrlInput";
-import InvalidUrlDialog from "../dashboard/InvalidUrlDialog";
+import UrlInput from "../dashboard_DESTINED_FOR_THE_FURNACE/UrlInput";
+import InvalidUrlDialog from "../dashboard_DESTINED_FOR_THE_FURNACE/InvalidUrlDialog";
 import DomainWarningDialog from "../safety/DomainWarningDialog";
-import LessonImageUploader from "../dashboard/LessonImageUploader";
+import LessonImageUploader from "../dashboard_DESTINED_FOR_THE_FURNACE/LessonImageUploader";
 const MAX_CHARACTERS = 25;
 
 export const getTopImageStyle = (url: string, height: string) => ({
