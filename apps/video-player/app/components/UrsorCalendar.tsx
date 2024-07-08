@@ -121,9 +121,6 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
           pointerEvents:
             props.hidePast && showingCurrentMonth ? "none" : "auto",
         },
-        ".otherMonthFaded": {
-          opacity: 0.35,
-        },
         ".hidePast": {
           opacity: 0.16,
           pointerEvents: "none",
@@ -157,11 +154,8 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
               : props.disableFuture &&
                 dayjs(tileProps.date).isAfter(dayjs(), "days")
               ? "hidePast"
-              : viewMonthStartDate?.getMonth() !== tileProps.date.getMonth()
-              ? "otherMonthFaded"
               : ""
           }
-          //minDate={new Date()}
           maxDate={new Date()}
           minDetail="month"
         />

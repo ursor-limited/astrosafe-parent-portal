@@ -4,7 +4,7 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 
-const daysN = 8;
+const daysN = 7;
 const hoursInterval = 2;
 const TIME_LIMIT = 6;
 
@@ -23,6 +23,22 @@ const AstroTimeChart = (props: {
     () => setYRange((Math.ceil(maxTime / hoursInterval) + 1) * hoursInterval),
     [maxTime]
   );
+  const [dateIndexRange, setDateIndexRange] = useState<[number, number]>([
+    0, 7,
+  ]);
+  useEffect(() => {
+    if (props.selectedDayIndex < 4) {
+      setDateIndexRange([
+        Math.max(0, props.selectedDayIndex - 3),
+        6 - props.selectedDayIndex,
+      ]);
+    } else if (props.times.length - props.selectedDayIndex < 4) {
+      setDateIndexRange([
+        props.times.length - 6 + (props.times.length - props.selectedDayIndex),
+        Math.min(props.times.length - 1, props.selectedDayIndex + 3),
+      ]);
+    }
+  }, [props.selectedDayIndex]);
   return (
     <Stack flex={1} px="24px" position="relative" mr="56px !important">
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
