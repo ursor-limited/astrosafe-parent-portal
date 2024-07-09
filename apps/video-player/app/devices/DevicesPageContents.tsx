@@ -26,11 +26,11 @@ export default function DevicesPageContents() {
   const router = useRouter();
   return (
     <PageLayout
-      title="My Filters"
+      title="Devices"
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight
-      selectedSidebarItemId="channels"
+      selectedSidebarItemId="devices"
       button={{
         text: "Add a Device",
         callback: () => null,

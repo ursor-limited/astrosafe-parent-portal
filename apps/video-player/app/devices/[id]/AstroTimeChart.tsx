@@ -28,17 +28,26 @@ const AstroTimeChart = (props: {
   ]);
   useEffect(() => {
     if (props.selectedDayIndex < 4) {
+      const shiftNDays = props.selectedDayIndex - 3;
       setDateIndexRange([
-        Math.max(0, props.selectedDayIndex - 3),
-        6 - props.selectedDayIndex,
+        Math.max(0, shiftNDays),
+        props.selectedDayIndex + 3 - shiftNDays,
       ]);
     } else if (props.times.length - props.selectedDayIndex < 4) {
+      const shiftNDays = props.times.length - 1 - props.selectedDayIndex;
+      console.log(shiftNDays, "LOOOL");
       setDateIndexRange([
-        props.times.length - 6 + (props.times.length - props.selectedDayIndex),
+        props.selectedDayIndex - 6 + shiftNDays,
         Math.min(props.times.length - 1, props.selectedDayIndex + 3),
       ]);
+    } else {
+      setDateIndexRange([
+        props.selectedDayIndex - 3,
+        props.selectedDayIndex + 3,
+      ]);
     }
-  }, [props.selectedDayIndex]);
+  }, [props.selectedDayIndex, props.times]);
+  console.log(dateIndexRange, "L)_)_)");
   return (
     <Stack flex={1} px="24px" position="relative" mr="56px !important">
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
@@ -68,15 +77,15 @@ const AstroTimeChart = (props: {
       </Stack>
       <Stack direction="row" flex={1} justifyContent="space-between" zIndex={2}>
         {_.reverse(
-          props.times.map((time, i) => (
+          _.range(dateIndexRange[0], dateIndexRange[1] + 1).map((dayIndex) => (
             <Stack
-              key={i}
+              key={dayIndex}
               alignItems="center"
               width="60px"
               justifyContent="flex-end"
               spacing="6px"
               sx={
-                props.selectedDayIndex !== i
+                props.selectedDayIndex !== dayIndex
                   ? {
                       cursor: "pointer",
                       "&:hover": { opacity: 0.7 },
@@ -84,14 +93,14 @@ const AstroTimeChart = (props: {
                     }
                   : null
               }
-              onClick={() => props.setSelectedDayIndex(i)}
+              onClick={() => props.setSelectedDayIndex(dayIndex)}
             >
               <Stack
-                height={`${(100 * time) / yRange}%`}
+                height={`${(100 * props.times[dayIndex]) / yRange}%`}
                 width="32px"
                 borderRadius="4px 4px 0 0"
                 bgcolor={
-                  props.selectedDayIndex === i
+                  props.selectedDayIndex === dayIndex
                     ? PALETTE.secondary.purple[2]
                     : PALETTE.secondary.grey[2]
                 }
@@ -100,7 +109,7 @@ const AstroTimeChart = (props: {
                 }}
                 position="relative"
               >
-                {time >= TIME_LIMIT ? (
+                {props.times[dayIndex] >= TIME_LIMIT ? (
                   <Stack
                     width="50px"
                     justifyContent="center"
@@ -128,20 +137,20 @@ const AstroTimeChart = (props: {
                 <Typography
                   bold
                   color={
-                    props.selectedDayIndex === i
+                    props.selectedDayIndex === dayIndex
                       ? undefined
                       : PALETTE.secondary.grey[3]
                   }
                 >
                   {dayjs()
-                    .subtract(i, "days")
-                    .format(i < 7 ? "ddd" : "MM/DD")}
+                    .subtract(dayIndex, "days")
+                    .format(dayIndex < 7 ? "ddd" : "MM/DD")}
                 </Typography>
                 <Stack
                   width="100%"
                   height="2px"
                   bgcolor={
-                    props.selectedDayIndex === i
+                    props.selectedDayIndex === dayIndex
                       ? PALETTE.secondary.purple[2]
                       : undefined
                   }
