@@ -3,15 +3,31 @@ import ContentCreationDialog from "./ContentCreationDialog";
 import VideoCard from "./VideoCard";
 import { useState } from "react";
 import LinkCard from "./LinkCard";
+import ApiController from "@/app/api";
+import { IContentBucket } from "@/app/devices/[id]/ContentTab";
 
-const LinkCreationDialog = (props: { open: boolean; onClose: () => void }) => {
+const LinkCreationDialog = (props: {
+  open: boolean;
+  onClose: () => void;
+  folderId: IContentBucket["id"];
+}) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
+  const submit = () =>
+    ApiController.createLink(
+      title,
+      url,
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      props.folderId
+    );
   return (
     <ContentCreationDialog
       open={props.open}
       closeCallback={props.onClose}
-      creationCallback={() => null}
+      onSubmit={() => {
+        submit();
+        props.onClose();
+      }}
       type="link"
       setTitle={setTitle}
       title={title}

@@ -2,6 +2,7 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import NewLessonCard from "./NewLessonCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { useState } from "react";
 
 export type AstroContent = "video" | "videoChannel" | "link";
 
@@ -19,42 +20,16 @@ export interface IContentBucket {
   id: number;
   title: string;
   contentIds: number[];
+  groupId: number;
 }
 
-const DUMMY_FOLDERS: IContentBucket[] = [
-  {
-    id: 1,
-    title: "Booo boo",
-    contentIds: [],
-  },
-  {
-    id: 2,
-    title: "Cooooool",
-    contentIds: [],
-  },
-  {
-    id: 3,
-    title: "Bamboo goo oo",
-    contentIds: [],
-  },
-  {
-    id: 4,
-    title: "LOL!",
-    contentIds: [],
-  },
-  {
-    id: 5,
-    title: "Nosh fuuuuuu",
-    contentIds: [],
-  },
-];
-
 const DevicePageContentTab = () => {
+  const [folders, setFolders] = useState<IContentBucket[]>([]);
   return (
     <Stack pt="20px">
       <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
-        {DUMMY_FOLDERS.map((f, i) => (
-          <UrsorFadeIn duration={800} delay={100 * i}>
+        {folders.map((f, i) => (
+          <UrsorFadeIn key={f.id} duration={800} delay={100 * i}>
             <NewLessonCard
               {...f}
               imageUrls={[

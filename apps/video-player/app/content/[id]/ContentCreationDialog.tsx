@@ -26,10 +26,8 @@ export interface IContentCreationDialogProps {
   setTitle: (title: IFilterUrl["title"]) => void;
   url: IFilterUrl["url"];
   setUrl: (url: IFilterUrl["url"]) => void;
-  // lessonId?: string;
-  // updateCallback?: () => void;
   closeCallback: () => void;
-  creationCallback?: () => void;
+  onSubmit?: () => void;
   children?: React.ReactNode;
 }
 
@@ -87,9 +85,12 @@ export default function ContentCreationDialog(
           <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
           <Stack width="299px">{props.children}</Stack>
         </Stack>
-        <UrsorButton width="358px" dark variant="tertiary">{`Add ${
-          CONTENT_DISPLAY_NAMES[props.type]
-        }`}</UrsorButton>
+        <UrsorButton
+          width="358px"
+          dark
+          variant="tertiary"
+          onClick={props.onSubmit}
+        >{`Add ${CONTENT_DISPLAY_NAMES[props.type]}`}</UrsorButton>
       </Stack>
     </UrsorDialog>
   );

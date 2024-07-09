@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
@@ -16,7 +16,6 @@ import {
   IContent,
   IContentBucket,
 } from "@/app/devices/[id]/ContentTab";
-import { DUMMY_FOLDERS } from "../ContentsPageContents";
 import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
 import {
@@ -31,13 +30,14 @@ import VideoCard from "./VideoCard";
 import ChannelCard from "./ChannelCard";
 import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import SortButton from "@/app/components/SortButton";
-import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
 import Image from "next/image";
 import AddDeviceDialog from "./AddDeviceDialog";
-import ContentCreationDialog from "./ContentCreationDialog";
 import VideoCreationDialog from "./VideoCreationDialog";
 import LinkCreationDialog from "./LinkCreationDialog";
 import ChannelCreationDialog from "./ChannelCreationDialog";
+import ApiController from "@/app/api";
+import FolderRenameDialog from "./FolderRenameDialog";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export interface IAstroContentBranding {
   title: string;
@@ -152,10 +152,11 @@ const DUMMY_CONTENTS: IContent[] = [
 
 export default function ContentPageContents(props: { folderId: number }) {
   const [folder, setFolder] = useState<IContentBucket | undefined>();
+  const [contents, setContents] = useState<IContent[]>(DUMMY_CONTENTS);
+  const loadFolder = () =>
+    ApiController.getFolder(props.folderId).then((f) => setFolder(f));
   useEffect(() => {
-    setFolder(
-      DUMMY_FOLDERS.find((d) => d.id.toString() === props.folderId.toString())
-    );
+    loadFolder();
   }, [props.folderId]);
 
   const router = useRouter();
@@ -165,7 +166,6 @@ export default function ContentPageContents(props: { folderId: number }) {
     AstroContent | "all"
   >("all");
 
-  const [contents, setContents] = useState<IContent[]>(DUMMY_CONTENTS);
   const [filteredContents, setFilteredContents] =
     useState<IContent[]>(DUMMY_CONTENTS);
 
@@ -206,6 +206,13 @@ export default function ContentPageContents(props: { folderId: number }) {
     AstroContent | undefined
   >();
 
+  const [folders, setFolders] = useState<IContentBucket[]>([]);
+
+  const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
+    useState<boolean>(false);
+
+  const notificationCtx = useContext(NotificationContext);
+
   return (
     <>
       <PageLayout
@@ -216,7 +223,7 @@ export default function ContentPageContents(props: { folderId: number }) {
           },
           {
             text: folder?.title,
-            options: DUMMY_FOLDERS.map((d) => ({
+            options: folders.map((d) => ({
               text: d.title,
               callback: () => router.push(`/content/${d.id}`),
             })),
@@ -229,7 +236,7 @@ export default function ContentPageContents(props: { folderId: number }) {
         actions={[
           {
             text: "Edit name",
-            kallback: () => null,
+            kallback: () => setFolderRenameDialogOpen(true),
             icon: PencilIcon,
           },
           {
@@ -300,6 +307,7 @@ export default function ContentPageContents(props: { folderId: number }) {
           <Stack direction="row" spacing="24px">
             {["link", "video", "videoChannel"].map((c) => (
               <Stack
+                key={c}
                 onClick={() => setCreationDialogOpen(c as AstroContent)}
                 flex={1}
               >
@@ -387,6 +395,17 @@ export default function ContentPageContents(props: { folderId: number }) {
           devices={devices}
         />
       ) : null}
+      <FolderRenameDialog
+        open={folderRenameDialogOpen}
+        onClose={() => setFolderRenameDialogOpen(false)}
+        name={folder?.title ?? ""}
+        onSubmit={(name) =>
+          ApiController.renameFolder(props.folderId, name).then(() => {
+            loadFolder();
+            notificationCtx.success("Renamed Folder");
+          })
+        }
+      />
       {creationDialogOpen ? (
         creationDialogOpen === "video" ? (
           <VideoCreationDialog
@@ -401,6 +420,7 @@ export default function ContentPageContents(props: { folderId: number }) {
             onClose={() => {
               setCreationDialogOpen(undefined);
             }}
+            folderId={props.folderId}
           />
         ) : creationDialogOpen === "videoChannel" ? (
           <ChannelCreationDialog
