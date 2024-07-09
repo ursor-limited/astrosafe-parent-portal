@@ -16,7 +16,7 @@ import Star from "@/images/Star.svg";
 import X from "@/images/icons/X.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import { useContext, useEffect, useRef, useState } from "react";
-import ApiController, { IVideo } from "../api";
+import ApiController, { IVideo_DEPRECATED } from "../api";
 import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
@@ -42,8 +42,8 @@ import TrialExpirationDialog from "./TrialExpirationDialog";
 import ProfileButton from "../components/ProfileButton";
 import dynamic from "next/dynamic";
 import LessonCreationDialog from "./LessonCreationDialog";
-import { ILesson } from "../lesson/[subdirectory]/page";
-import LinkDialog, { ILink, shouldBeLightText } from "./LinkDialog";
+import { ILesson_DEPRECATED } from "../lesson/[subdirectory]/page";
+import LinkDialog, { ILink_DEPRECATED, shouldBeLightText } from "./LinkDialog";
 import LessonCard from "../components/LessonCard";
 import LiteModeBar, { useOnBasicMode } from "./LiteModeBar";
 import NoCreationsLeftDialog from "./NoCreationsLeftDialog";
@@ -564,7 +564,7 @@ export const ToolButton = (props: {
 export default function DashboardPageContents() {
   const userDetails = useUserContext();
 
-  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const [lessons, setLessons] = useState<ILesson_DEPRECATED[]>([]);
   const loadLessons = () => {
     userDetails?.user?.id &&
       ApiController.getUserLessons(userDetails.user.id)
@@ -577,7 +577,7 @@ export default function DashboardPageContents() {
     loadLessons();
   }, [userDetails?.user?.id]);
 
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>([]);
   const loadVideos = () => {
     userDetails?.user?.id &&
       ApiController.getUserVideos(userDetails.user.id)
@@ -632,7 +632,7 @@ export default function DashboardPageContents() {
   //   loadTexts();
   // }, [userDetails?.user?.id]);
 
-  const [links, setLinks] = useState<ILink[]>([]);
+  const [links, setLinks] = useState<ILink_DEPRECATED[]>([]);
   const loadLinks = () => {
     userDetails?.user?.id &&
       ApiController.getUserLinks(userDetails.user.id)
@@ -660,19 +660,37 @@ export default function DashboardPageContents() {
   const [cardColumns, setCardColumns] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
+      details:
+        | IVideo_DEPRECATED
+        | IWorksheet
+        | ILesson_DEPRECATED
+        | ILink_DEPRECATED
+        | IImage
+        | IText;
     }[][]
   >([]);
   const [cards, setCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
+      details:
+        | IVideo_DEPRECATED
+        | IWorksheet
+        | ILesson_DEPRECATED
+        | ILink_DEPRECATED
+        | IImage
+        | IText;
     }[]
   >([]);
   const [filteredCards, setFilteredCards] = useState<
     {
       type: AstroContent;
-      details: IVideo | IWorksheet | ILesson | ILink | IImage | IText;
+      details:
+        | IVideo_DEPRECATED
+        | IWorksheet
+        | ILesson_DEPRECATED
+        | ILink_DEPRECATED
+        | IImage
+        | IText;
     }[]
   >([]);
   const [selectedBinaryFilter, setSelectedBinaryFilter] = useState<
@@ -1411,7 +1429,7 @@ export default function DashboardPageContents() {
                         >
                           {item.type === "video" ? (
                             <VideoCard
-                              {...(item.details as IVideo)}
+                              {...(item.details as IVideo_DEPRECATED)}
                               editingCallback={() =>
                                 setVideoEditingDialogId(item.details.id)
                               }
@@ -1435,7 +1453,7 @@ export default function DashboardPageContents() {
                             />
                           ) : item.type === "link" ? (
                             <LinkCard
-                              {...(item.details as ILink)}
+                              {...(item.details as ILink_DEPRECATED)}
                               editCallback={() =>
                                 setLinkEditingDialogId(item.details.id)
                               }
@@ -1444,17 +1462,19 @@ export default function DashboardPageContents() {
                             />
                           ) : item.type === "lesson" ? (
                             <LessonCard
-                              {...(item.details as ILesson)}
+                              {...(item.details as ILesson_DEPRECATED)}
                               clickCallback={() =>
                                 router.push(
                                   `/lesson/${
-                                    (item.details as ILesson).canonicalUrl
+                                    (item.details as ILesson_DEPRECATED)
+                                      .canonicalUrl
                                   }`
                                 )
                               }
                               editingCallback={() =>
                                 setLessonEditingDialogId(
-                                  (item.details as ILesson).canonicalUrl
+                                  (item.details as ILesson_DEPRECATED)
+                                    .canonicalUrl
                                 )
                               }
                               deletionCallback={loadLessons}

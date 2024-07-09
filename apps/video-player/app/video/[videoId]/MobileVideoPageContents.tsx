@@ -2,7 +2,7 @@
 
 import React, { use, useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
@@ -19,7 +19,7 @@ import { CircularButton } from "./VideoPageContents";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export const MAGICAL_BORDER_THICKNESS = 1.8;
@@ -73,13 +73,15 @@ const VIDEO_WIDTH = 845;
 const VIDEO_HEIGHT = 475;
 
 function MobileVideoPageContents(props: {
-  details: IVideo;
+  details: IVideo_DEPRECATED;
   lessonId?: string;
 }) {
-  const [video, setVideo] = useState<IVideo | undefined>(undefined);
+  const [video, setVideo] = useState<IVideo_DEPRECATED | undefined>(undefined);
   useEffect(() => setVideo(props.details), []);
 
-  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  const [lesson, setLesson] = useState<ILesson_DEPRECATED | undefined>(
+    undefined
+  );
   useEffect(() => {
     props.lessonId &&
       ApiController.getLesson(props.lessonId).then((l) => setLesson(l));

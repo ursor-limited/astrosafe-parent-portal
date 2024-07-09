@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import _ from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import LessonCard from "../components/LessonCard";
-import { ILesson } from "../lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "../lesson/[subdirectory]/page";
 import useColumnWidth from "../dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import ApiController from "../api";
 import { useUserContext } from "../components/UserContext";

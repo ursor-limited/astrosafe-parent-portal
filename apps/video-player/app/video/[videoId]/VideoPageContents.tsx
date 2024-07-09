@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import ApiController, { IVideo, IVideoComment } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED, IVideoComment } from "@/app/api";
 import dynamic from "next/dynamic";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useWindowSize } from "usehooks-ts";
@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import _ from "lodash";
 import {
   COMMENT_PAUSE_THRESHOLD,
@@ -109,13 +109,20 @@ const SigninPromptBar = (props: { signInCallback: () => void }) => (
   </Stack>
 );
 
-function VideoPageContents(props: { details: IVideo; lessonId?: string }) {
+function VideoPageContents(props: {
+  details: IVideo_DEPRECATED;
+  lessonId?: string;
+}) {
   const { user } = useAuth0();
 
-  const [details, setDetails] = useState<IVideo | undefined>(undefined);
+  const [details, setDetails] = useState<IVideo_DEPRECATED | undefined>(
+    undefined
+  );
   useEffect(() => setDetails(props.details), [props.details]);
 
-  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  const [lesson, setLesson] = useState<ILesson_DEPRECATED | undefined>(
+    undefined
+  );
   useEffect(() => {
     props.lessonId &&
       ApiController.getLesson(props.lessonId).then((l) => setLesson(l));

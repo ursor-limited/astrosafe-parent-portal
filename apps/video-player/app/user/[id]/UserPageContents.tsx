@@ -10,7 +10,7 @@ import {
   SearchInput,
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ import { PALETTE } from "ui";
 const PAGE_SIZE = 24;
 
 export default function UserPageContents(props: {
-  lessons: ILesson[];
+  lessons: ILesson_DEPRECATED[];
   title: string;
   userId: string;
 }) {
@@ -48,9 +48,11 @@ export default function UserPageContents(props: {
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth();
 
-  const [columns, setColumns] = useState<ILesson[][]>([]);
+  const [columns, setColumns] = useState<ILesson_DEPRECATED[][]>([]);
 
-  const [filteredLessons, setFilteredLessons] = useState<ILesson[]>([]);
+  const [filteredLessons, setFilteredLessons] = useState<ILesson_DEPRECATED[]>(
+    []
+  );
   useEffect(() => {
     setFilteredLessons(
       props.lessons.filter(

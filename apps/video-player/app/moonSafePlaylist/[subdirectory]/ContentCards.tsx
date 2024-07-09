@@ -1,9 +1,9 @@
-import { IVideo } from "@/app/api";
+import { IVideo_DEPRECATED } from "@/app/api";
 import TimelineVideoCard from "@/app/lesson/[subdirectory]/cards/TimelineVideoCard";
 import React, { useState } from "react";
 
 const ContentCards = (props: {
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   selectedVideos: string[];
   lessonId: string;
   columnWidth: number;

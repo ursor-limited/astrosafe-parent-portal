@@ -14,7 +14,7 @@ const ChannelCreationDialog = (props: {
       open={props.open}
       closeCallback={props.onClose}
       creationCallback={() => null}
-      type="videoChannel"
+      type="channel"
       setTitle={setTitle}
       title={title}
       setUrl={setUrl}

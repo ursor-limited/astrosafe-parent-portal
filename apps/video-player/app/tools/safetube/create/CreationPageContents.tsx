@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import Logo from "@/images/playerLogo.svg";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import Kitemark from "@/images/coloredKitemark.svg";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import dynamic from "next/dynamic";
@@ -64,7 +64,7 @@ export const CreationPageInputSection = (props: {
 
 const extractUrl = (html: string) => html.split('src="')[1].split("?")[0];
 
-function CreationPageContents(props: { details: IVideo }) {
+function CreationPageContents(props: { details: IVideo_DEPRECATED }) {
   // useEffect(() => {
   //   mixpanel.init(
   //     process.env.NEXT_PUBLIC_REACT_APP_MIXPANEL_PROJECT_TOKEN as string,

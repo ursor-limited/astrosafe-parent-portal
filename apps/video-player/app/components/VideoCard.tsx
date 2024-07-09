@@ -1,7 +1,7 @@
 import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ApiController, { IVideo } from "../api";
+import ApiController, { IVideo_DEPRECATED } from "../api";
 import { PALETTE, Typography } from "ui";
 import Play from "@/images/play.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
@@ -24,7 +24,7 @@ export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
 const VideoCard = (
-  props: IVideo & {
+  props: IVideo_DEPRECATED & {
     editingCallback: () => void;
     deletionCallback: () => void;
   }

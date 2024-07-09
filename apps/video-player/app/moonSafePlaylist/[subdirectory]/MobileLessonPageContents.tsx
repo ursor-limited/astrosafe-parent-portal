@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
@@ -20,7 +20,7 @@ import LessonVideoCard from "./MoonsafeKidsVideoCard";
 import LinkCard from "@/app/components/LinkCard";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, {
-  ILink,
+  ILink_DEPRECATED,
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
@@ -57,8 +57,8 @@ export default function MobileLessonPageContents(props: {
   subdirectory: string;
 }) {
   const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
-  const [videos, setVideos] = useState<IVideo[]>([]);
-  const [links, setLinks] = useState<ILink[]>([]);
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>([]);
+  const [links, setLinks] = useState<ILink_DEPRECATED[]>([]);
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);
@@ -135,9 +135,9 @@ export default function MobileLessonPageContents(props: {
   const updateLesson = (
     lesson: ILesson,
     actualContents: {
-      videos: IVideo[];
+      videos: IVideo_DEPRECATED[];
       worksheets: IWorksheet[];
-      links: ILink[];
+      links: ILink_DEPRECATED[];
       images: IImage[];
       texts: IText[];
     }

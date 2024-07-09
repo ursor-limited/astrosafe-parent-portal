@@ -1,8 +1,8 @@
 import { Stack } from "@mui/system";
 import ContentCards from "./ContentCards";
 import { AstroLessonContent } from "./MobileLessonPageContents";
-import { IVideo } from "@/app/api";
-import { ILink } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import { IVideo_DEPRECATED } from "@/app/api";
+import { ILink_DEPRECATED } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import { IText } from "@/app/components/TextDialog";
 import { IImage } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/ImageDialog";
 import { IWorksheet } from "@/app/components/WorksheetGenerator";
@@ -23,7 +23,7 @@ const Timeline = (props: {
     id: string;
     left: boolean;
   }[];
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   lessonId: string;
   expansionCallback: (id: string) => void;
   setVideoEditingDialogId: (id: string) => void;

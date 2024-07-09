@@ -21,7 +21,7 @@ import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
@@ -31,7 +31,7 @@ import {
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, {
-  ILink,
+  ILink_DEPRECATED,
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
@@ -109,7 +109,7 @@ export default function MoonsafePlaylistPageContents(props: {
   subdirectory: string;
 }) {
   const [playlist, setPlaylist] = useState<IPlaylist | undefined>(undefined);
-  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>([]);
 
   const router = useRouter();
 

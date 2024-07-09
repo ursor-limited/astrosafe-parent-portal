@@ -3,7 +3,7 @@ import { Stack, alpha } from "@mui/system";
 import dayjs from "dayjs";
 import { PALETTE, Typography } from "ui";
 import { useRouter } from "next/navigation";
-import { ILink } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import { ILink_DEPRECATED } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import { getFormattedDate } from "./VideoCard";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -81,14 +81,14 @@ export const getAbsoluteUrl = (url: string) =>
   `https://${getPrefixRemovedUrl(url)}`;
 
 const LinkCard = (props: {
-  id: ILink["id"];
-  title: ILink["title"];
-  url: ILink["url"];
-  description?: ILink["description"];
-  imageUrl: ILink["imageUrl"];
-  color: ILink["color"];
-  createdAt: ILink["createdAt"];
-  updatedAt: ILink["updatedAt"];
+  id: ILink_DEPRECATED["id"];
+  title: ILink_DEPRECATED["title"];
+  url: ILink_DEPRECATED["url"];
+  description?: ILink_DEPRECATED["description"];
+  imageUrl: ILink_DEPRECATED["imageUrl"];
+  color: ILink_DEPRECATED["color"];
+  createdAt: ILink_DEPRECATED["createdAt"];
+  updatedAt: ILink_DEPRECATED["updatedAt"];
   height?: string;
   clickCallback?: () => void;
   editCallback?: () => void;

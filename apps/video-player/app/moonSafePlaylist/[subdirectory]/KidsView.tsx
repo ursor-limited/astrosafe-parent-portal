@@ -1,4 +1,4 @@
-import { IVideo } from "@/app/api";
+import { IVideo_DEPRECATED } from "@/app/api";
 import { Dialog } from "@mui/material";
 import { Stack } from "@mui/system";
 import MoonsafeKidsVideoCard from "./MoonsafeKidsVideoCard";
@@ -206,7 +206,7 @@ const MenuBar = (props: { duration: number; started: boolean }) => {
 const KidsView = (props: {
   open: boolean;
   onClose: () => void;
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   duration: number;
 }) => {
   const [showIntroDialog, setShowIntroDialog] = useState<boolean>(false);

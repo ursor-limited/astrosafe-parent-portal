@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import BrowserApiController, { IChannel, IStack } from "../browserApi";
+import BrowserApiController, {
+  IChannel_DEPRECATED,
+  IStack,
+} from "../browserApi";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import NotificationContext from "../components/NotificationContext";
@@ -58,7 +61,7 @@ export type TeacherUpdate = Partial<
 
 export interface IAdminPageTeachersTabProps {
   teachers: ITeacher[];
-  channels: IChannel[];
+  channels: IChannel_DEPRECATED[];
   stacks: IStack[];
   links: IBrowserLink[];
   submitCallback: () => void;
@@ -85,7 +88,7 @@ const tagColumnName = "name";
 interface ITeachersTableRowItems {
   name: string;
   username: string;
-  channels: IChannel[];
+  channels: IChannel_DEPRECATED[];
 }
 
 export default function UsersPageTeachersTab(
@@ -171,7 +174,7 @@ export default function UsersPageTeachersTab(
                     name: teacher.teacherName,
                     username: teacher.email,
                     channels: props.channels.filter(
-                      (c: IChannel) => c.creatorId === teacher.id
+                      (c: IChannel_DEPRECATED) => c.creatorId === teacher.id
                     ),
                     stacks: props.stacks.filter(
                       (l) => l.creatorId === teacher.id

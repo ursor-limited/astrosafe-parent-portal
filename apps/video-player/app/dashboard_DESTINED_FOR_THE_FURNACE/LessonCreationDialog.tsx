@@ -8,13 +8,13 @@ import { useRouter } from "next/navigation";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "../components/UserContext";
 import NotificationContext from "../components/NotificationContext";
-import { ILesson } from "../lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "../lesson/[subdirectory]/page";
 import { useLocalStorage } from "usehooks-ts";
 
 const LessonCreationDialog = (props: {
   open: boolean;
   closeCallback: () => void;
-  lesson?: ILesson;
+  lesson?: ILesson_DEPRECATED;
   updateCallback?: () => void;
   skipCallback?: () => void;
 }) => {

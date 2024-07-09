@@ -2,7 +2,7 @@ import { Stack, alpha } from "@mui/system";
 import TimelineCard from "./TimelineCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { useCallback, useContext, useEffect, useState } from "react";
-import ApiController, { IVideo, IVideoComment } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { useRouter } from "next/navigation";
@@ -149,7 +149,7 @@ export const TimelineVideoCardCommentDisplayCard = (
 );
 
 const TimelineVideoCard = (
-  props: IVideo & {
+  props: IVideo_DEPRECATED & {
     lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;

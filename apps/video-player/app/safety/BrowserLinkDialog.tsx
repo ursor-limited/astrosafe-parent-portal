@@ -2,7 +2,10 @@
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { IBrowserLink } from "./DomainLinksDialog";
-import BrowserApiController, { IChannel, IStack } from "../browserApi";
+import BrowserApiController, {
+  IChannel_DEPRECATED,
+  IStack,
+} from "../browserApi";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorInputField } from "ui";
 import ActionPopup from "../components/ActionPopup";
@@ -545,7 +548,9 @@ export default function BrowserLinkDialog(props: ILinkDialogProps) {
   const [channelCreationDialogOpen, setChannelCreationDialogOpen] =
     useState<boolean>(false);
 
-  const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
+  const [channels, setChannels] = useState<IChannel_DEPRECATED[] | undefined>(
+    undefined
+  );
   const loadChannels = () =>
     BrowserApiController.getChannelsInSchool(userDetails?.schoolId ?? "")
       .then((channels) => setChannels(channels))

@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
-import ApiController, { IVideo, IVideoComment } from "../api";
+import ApiController, { IVideo_DEPRECATED, IVideoComment } from "../api";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
@@ -112,11 +112,11 @@ const VideoCreationDialog = (props: {
   closeCallback: () => void;
   creationCallback?: (videoId: string, title: string) => void;
   editingCallback?: () => void;
-  video?: IVideo;
+  video?: IVideo_DEPRECATED;
 }) => {
   const router = useRouter();
 
-  const [video, setVideo] = useState<IVideo | undefined>();
+  const [video, setVideo] = useState<IVideo_DEPRECATED | undefined>();
   useEffect(() => setVideo(props.video), [props.video]);
 
   const [url, setUrl] = useState<string>("");

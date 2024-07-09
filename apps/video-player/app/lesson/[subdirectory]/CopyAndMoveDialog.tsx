@@ -7,7 +7,7 @@ import {
 } from "@/app/components/UrsorDialog";
 import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { ILesson } from "./page";
+import { ILesson_DEPRECATED } from "./page";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useUserContext } from "@/app/components/UserContext";
@@ -23,14 +23,14 @@ export default function CopyAndMoveDialog(props: {
 }) {
   const userDetails = useUserContext().user;
 
-  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const [lessons, setLessons] = useState<ILesson_DEPRECATED[]>([]);
   useEffect(() => {
     userDetails?.id &&
       ApiController.getUserLessons(userDetails.id).then((l) => setLessons(l));
   }, [userDetails?.id]);
 
   const [searchValue, setSearchValue] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<ILesson[]>([]);
+  const [searchResults, setSearchResults] = useState<ILesson_DEPRECATED[]>([]);
   useEffect(
     () =>
       setSearchResults(

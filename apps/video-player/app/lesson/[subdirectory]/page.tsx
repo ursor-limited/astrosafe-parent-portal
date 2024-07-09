@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
@@ -9,7 +9,7 @@ import LessonPageContents from "./LessonPageContents";
 import { AstroContent } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import MobileLessonPageContents from "./MobileLessonPageContents";
 
-export interface ILesson {
+export interface ILesson_DEPRECATED {
   id: string;
   creatorId?: string;
   title: string;
@@ -36,7 +36,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const details = (await ApiController.getLessonFromUrl(
     params.subdirectory
-  )) as ILesson;
+  )) as ILesson_DEPRECATED;
   return {
     title: details.title,
     description: "Create math worksheets with Astro Worksheet Generator.",

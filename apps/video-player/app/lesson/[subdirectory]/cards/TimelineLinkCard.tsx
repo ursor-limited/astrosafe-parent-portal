@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import ApiController from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import { CONTENT_BRANDING } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
-import { ILink } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import { ILink_DEPRECATED } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import { useRouter } from "next/navigation";
 import { getPrefixRemovedUrl } from "@/app/components/LinkCard";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
@@ -17,7 +17,7 @@ import CopyAndMoveDialog from "../CopyAndMoveDialog";
 const WIDTH_RATIO = 0.65;
 
 const TimelineLinkCard = (
-  props: ILink & {
+  props: ILink_DEPRECATED & {
     lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback?: () => void;

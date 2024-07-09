@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { PALETTE, UrsorButton } from "ui";
 import { BOLD_FONT_WEIGHT, FONT_SIZES, Typography } from "ui/typography";
-import { ILink } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import { ILink_DEPRECATED } from "../dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import {
   ITeacher,
   useBrowserUserContext,
@@ -67,7 +67,7 @@ const PAGE_SIZE = 20;
 export const APPROVAL_LIST_MAX_DEFAULT_VISIBLE = 3;
 
 export interface IFilterPageLinksTabProps {
-  links: ILink[];
+  links: ILink_DEPRECATED[];
   teachers: ITeacher[];
   submitCallback: () => void;
   linkUpdateCallback: () => void;

@@ -6,7 +6,7 @@ import NotificationContext from "../components/NotificationContext";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import BrowserApiController, { IChannel } from "../browserApi";
+import BrowserApiController, { IChannel_DEPRECATED } from "../browserApi";
 import {
   BACKDROP_STYLE,
   DEFAULT_FADEIN_DURATION,
@@ -30,7 +30,9 @@ export default function MovingDialog(props: IMovingDialogProps) {
   );
 
   const userDetails = useBrowserUserContext().userDetails;
-  const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
+  const [channels, setChannels] = useState<IChannel_DEPRECATED[] | undefined>(
+    undefined
+  );
   const loadChannels = () =>
     BrowserApiController.getChannelsInSchool(userDetails!.schoolId)
       .then((channels) => setChannels(channels))

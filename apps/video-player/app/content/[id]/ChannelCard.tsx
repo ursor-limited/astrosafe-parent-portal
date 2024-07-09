@@ -1,19 +1,25 @@
-import { IContent } from "@/app/devices/[id]/ContentTab";
+import { IChannel, IContent } from "@/app/devices/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
+import ApiController from "@/app/api";
 
 const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
-  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+  props: IChannel & {
+    onClick: () => void;
+    noPointerEvents?: boolean;
+    onDelete?: () => void;
+  }
 ) => {
   return (
     <ContentCard
-      type="videoChannel"
+      type="channel"
       title={props.title}
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
+      onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -24,7 +30,7 @@ const ChannelCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.imgUrl}
+          src={props.backgroundUrl}
           style={{
             objectFit: "cover",
             justifyContent: "center",
@@ -33,7 +39,7 @@ const ChannelCard = (
           fill
           alt="image card image"
         />
-        {props.thumbnailImgUrl ? (
+        {props.profileUrl ? (
           <Stack
             position="absolute"
             top={0}
@@ -53,7 +59,7 @@ const ChannelCard = (
               boxShadow="0 0 20px rgba(0,0,0,0.1)"
             >
               <Image
-                src={props.thumbnailImgUrl}
+                src={props.profileUrl}
                 style={{
                   objectFit: "cover",
                   justifyContent: "center",

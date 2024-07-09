@@ -39,7 +39,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import { getFormattedDate } from "@/app/components/VideoCard";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import ExternalPageFooter from "@/app/components/ExternalPageFooter";
@@ -371,7 +371,9 @@ export default function WorksheetPageContents(props: {
   const [worksheet, setWorksheet] = useState<IWorksheet | undefined>(undefined);
   useEffect(() => setWorksheet(props.details), []);
 
-  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  const [lesson, setLesson] = useState<ILesson_DEPRECATED | undefined>(
+    undefined
+  );
   useEffect(() => {
     props.lessonId &&
       ApiController.getLesson(props.lessonId).then((l) => setLesson(l));

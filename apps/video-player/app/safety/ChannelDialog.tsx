@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import BrowserApiController, { IChannel } from "../browserApi";
+import BrowserApiController, { IChannel_DEPRECATED } from "../browserApi";
 import NotificationContext from "../components/NotificationContext";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import { Stack } from "@mui/system";
@@ -19,7 +19,7 @@ const UPDATE_SUCCESS_MESSAGE = "Lesson updated";
 const MAX_CHARACTERS = 20;
 
 export interface IChannelDialogProps {
-  channel?: IChannel;
+  channel?: IChannel_DEPRECATED;
   open: boolean;
   closeCallback: () => void;
   backCallback?: () => void;

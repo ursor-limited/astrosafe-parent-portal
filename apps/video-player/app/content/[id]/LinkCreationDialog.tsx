@@ -10,6 +10,7 @@ const LinkCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
   folderId: IContentBucket["id"];
+  creationCallback: () => void;
 }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
@@ -17,9 +18,9 @@ const LinkCreationDialog = (props: {
     ApiController.createLink(
       title,
       url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png",
       props.folderId
-    );
+    ).then(props.creationCallback);
   return (
     <ContentCreationDialog
       open={props.open}
@@ -41,11 +42,9 @@ const LinkCreationDialog = (props: {
       >
         <LinkCard
           id={0}
-          type="link"
           title={title}
           url={url}
-          imgUrl=""
-          cardColor=""
+          thumbnailUrl=""
           onClick={() => null}
           noPointerEvents
         />

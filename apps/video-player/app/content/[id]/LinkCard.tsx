@@ -1,12 +1,17 @@
-import { IContent } from "@/app/devices/[id]/ContentTab";
+import { IContent, ILink } from "@/app/devices/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
+import ApiController from "@/app/api";
 
 const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
-  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+  props: ILink & {
+    onClick: () => void;
+    noPointerEvents?: boolean;
+    onDelete?: () => void;
+  }
 ) => {
   return (
     <ContentCard
@@ -14,6 +19,7 @@ const LinkCard = (
       title={props.title}
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
+      onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -24,7 +30,7 @@ const LinkCard = (
         boxShadow="0 0 6px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.imgUrl}
+          src={props.thumbnailUrl}
           style={{ objectFit: "cover" }}
           fill
           alt="image card image"

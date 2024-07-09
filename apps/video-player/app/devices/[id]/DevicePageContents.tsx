@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import DevicePageContentTab from "./ContentTab";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
+import DeletionDialog from "@/app/components/DeletionDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 

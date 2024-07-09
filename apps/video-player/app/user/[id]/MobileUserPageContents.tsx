@@ -10,7 +10,7 @@ import {
   SearchInput,
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import { Stack, alpha } from "@mui/system";
 import _, { filter } from "lodash";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ import MobileExternalPageFooter from "../../components/MobileExternalPageFooter"
 const PAGE_SIZE = 8;
 
 export default function MobileUserPageContents(props: {
-  lessons: ILesson[];
+  lessons: ILesson_DEPRECATED[];
   title: string;
   userId: string;
 }) {
@@ -45,7 +45,9 @@ export default function MobileUserPageContents(props: {
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);
 
-  const [filteredLessons, setFilteredLessons] = useState<ILesson[]>([]);
+  const [filteredLessons, setFilteredLessons] = useState<ILesson_DEPRECATED[]>(
+    []
+  );
   useEffect(() => {
     setFilteredLessons(
       props.lessons.filter(

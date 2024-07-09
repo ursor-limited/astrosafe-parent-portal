@@ -4,10 +4,15 @@ import {
   INumberBondWorksheetSettings,
   WorksheetTopic,
 } from "./components/WorksheetGenerator";
-import { IContent, IContentBucket } from "./devices/[id]/ContentTab";
+import {
+  IContent,
+  IContentBucket,
+  ILink,
+  IVideo,
+} from "./devices/[id]/ContentTab";
 import { AstroLessonContent } from "./lesson/[subdirectory]/LessonPageContents";
 
-export interface IVideo {
+export interface IVideo_DEPRECATED {
   id: string;
   creatorId: string;
   url: string;
@@ -113,12 +118,34 @@ class ApiController {
   }
 
   static async createLink(
-    title: IContent["title"],
-    url: IContent["url"],
-    thumbnailUrl: IContent["imgUrl"],
+    title: ILink["title"],
+    url: ILink["url"],
+    thumbnailUrl: ILink["thumbnailUrl"],
     contentBucketId: IContentBucket["id"]
   ) {
     return post(`content/links`, { title, url, thumbnailUrl, contentBucketId });
+  }
+
+  static async deleteLink(id: ILink["id"]) {
+    return dellete(`content/links/${id}`);
+  }
+
+  static async createVideo(
+    title: ILink["title"],
+    url: ILink["url"],
+    thumbnailUrl: ILink["thumbnailUrl"],
+    contentBucketId: IContentBucket["id"]
+  ) {
+    return post(`content/videos`, {
+      title,
+      url,
+      thumbnailUrl,
+      contentBucketId,
+    });
+  }
+
+  static async deleteVideo(id: IVideo["id"]) {
+    return dellete(`content/videos/${id}`);
   }
 
   // static async createLesson(details: any) {

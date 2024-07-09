@@ -7,7 +7,7 @@ import { PALETTE, Typography } from "ui";
 import useColumnWidth from "./useColumnWidth";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
-import { IVideo } from "../api";
+import { IVideo_DEPRECATED } from "../api";
 
 export const GRID_SPACING = "12px";
 const PADDING = "0px";
@@ -17,7 +17,7 @@ export type ContentCard = "video" | "worksheet";
 export interface IAstroContentColumnsProps {
   title: string;
   description?: string;
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   worksheets: IWorksheet[];
   minColumnWidth: number;
   maxColumnWidth: number;
@@ -28,7 +28,7 @@ export interface IAstroContentColumnsProps {
 
 interface IBrowserContent {
   type: ContentCard;
-  details: IVideo | IWorksheet;
+  details: IVideo_DEPRECATED | IWorksheet;
 }
 
 export const EmptyStateIllustration = (props: {
@@ -122,7 +122,7 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                         <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
                           {item.type === "video" ? (
                             <VideoCard
-                              {...(item.details as IVideo)}
+                              {...(item.details as IVideo_DEPRECATED)}
                               editingCallback={() => null}
                               deletionCallback={() => null}
                             />

@@ -32,7 +32,7 @@ import NumberBondWorksheet, {
 } from "./NumberBondWorksheet";
 import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
 import MobilePageCard from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/MobilePageCard";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import MobileExternalPageFooter from "@/app/components/MobileExternalPageFooter";
 
 export default function MobileWorksheetPageContents(props: {
@@ -42,7 +42,9 @@ export default function MobileWorksheetPageContents(props: {
   const [worksheet, setWorksheet] = useState<IWorksheet | undefined>(undefined);
   useEffect(() => setWorksheet(props.details), []);
 
-  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
+  const [lesson, setLesson] = useState<ILesson_DEPRECATED | undefined>(
+    undefined
+  );
   useEffect(() => {
     props.lessonId &&
       ApiController.getLesson(props.lessonId).then((l) => setLesson(l));

@@ -8,7 +8,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import Image from "next/image";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import NotificationContext from "@/app/components/NotificationContext";
@@ -23,7 +23,7 @@ export const getFormattedDate = (date: string) =>
   dayjs(date).format("Do MMMM YYYY");
 
 const LessonVideoCard = (
-  props: IVideo & {
+  props: IVideo_DEPRECATED & {
     lessonId: string;
     setHeight?: (height: number) => void;
     editingCallback: () => void;

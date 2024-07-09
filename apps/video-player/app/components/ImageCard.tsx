@@ -1,7 +1,7 @@
 import { Stack, alpha } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ApiController, { IVideo } from "../api";
+import ApiController, { IVideo_DEPRECATED } from "../api";
 import { PALETTE, Typography } from "ui";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";

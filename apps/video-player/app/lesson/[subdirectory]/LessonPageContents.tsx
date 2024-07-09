@@ -21,7 +21,7 @@ import "slick-carousel/slick/slick-theme.css";
 import PageCard from "@/app/components/PageCard";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import TextDialog, { IText } from "@/app/components/TextDialog";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/components/UserContext";
 import NotificationContext from "@/app/components/NotificationContext";
@@ -31,11 +31,11 @@ import {
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import AddContentButton from "./AddContentButton";
 import LinkDialog, {
-  ILink,
+  ILink_DEPRECATED,
 } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import VideoCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/VideoCreationDialog";
 import WorksheetCreationDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/WorksheetCreationDialog";
-import { ILesson } from "./page";
+import { ILesson_DEPRECATED } from "./page";
 import NoCreationsLeftDialog from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/NoCreationsLeftDialog";
 import UpgradeDialog from "@/app/components/UpgradeDialog";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
@@ -81,9 +81,11 @@ to {
 export type AstroLessonContent = Omit<AstroContent, "lesson">;
 
 export default function LessonPageContents(props: { subdirectory: string }) {
-  const [lesson, setLesson] = useState<ILesson | undefined>(undefined);
-  const [videos, setVideos] = useState<IVideo[]>([]);
-  const [links, setLinks] = useState<ILink[]>([]);
+  const [lesson, setLesson] = useState<ILesson_DEPRECATED | undefined>(
+    undefined
+  );
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>([]);
+  const [links, setLinks] = useState<ILink_DEPRECATED[]>([]);
   const [images, setImages] = useState<IImage[]>([]);
   const [texts, setTexts] = useState<IText[]>([]);
   const [worksheets, setWorksheets] = useState<IWorksheet[]>([]);

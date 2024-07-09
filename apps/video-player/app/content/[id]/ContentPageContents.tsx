@@ -13,8 +13,11 @@ import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import {
   AstroContent,
+  IChannel,
   IContent,
   IContentBucket,
+  ILink,
+  IVideo,
 } from "@/app/devices/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
@@ -51,7 +54,7 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
     color: "#FC5C5C",
     icon: CirclePlayIcon,
   },
-  videoChannel: {
+  channel: {
     title: "Add Youtube Channel",
     color: PALETTE.system.orange,
     icon: VideoCameraIcon,
@@ -68,93 +71,38 @@ export const CONTENT_BRANDING: Record<AstroContent, IAstroContentBranding> = {
   },
 };
 
-const DUMMY_CONTENTS: IContent[] = [
-  {
-    id: 1,
-    type: "link",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
-    cardColor: "white",
-  },
-  {
-    id: 2,
-    type: "link",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
-    cardColor: "white",
-  },
-  {
-    id: 3,
-    type: "video",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-    cardColor: "white",
-  },
-  {
-    id: 4,
-    type: "link",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-    cardColor: "white",
-  },
-  {
-    id: 5,
-    type: "video",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/istockphoto-2076260813-2048x2048.jpg",
-    cardColor: "white",
-  },
-  {
-    id: 9,
-    type: "videoChannel",
-    title: "Kirby is cool",
-    url: "kirby.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-    thumbnailImgUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/kirby-and-stars-sticker.png",
-    cardColor: "white",
-  },
-  {
-    id: 6,
-    type: "video",
-    title:
-      "Booo fooo goifoe ieni e nooof iejf ifiehf ieuf iujie fu ief ienf ienfini",
-    url: "nintendo.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/numberbonds_.png",
-    cardColor: "white",
-  },
-  {
-    id: 7,
-    type: "link",
-    title: "Booo fooo goifoe ieni e",
-    url: "nintendo.com",
-    imgUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/kirby-and-stars-sticker.png",
-    cardColor: "white",
-  },
-  {
-    id: 8,
-    type: "link",
-    title: "Booo fooo goifoe ieni e",
-    url: "nintendo.com",
-    imgUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
-    cardColor: "white",
-  },
-];
+export interface IContentCard {
+  type: AstroContent;
+  content: IContent;
+}
 
 export default function ContentPageContents(props: { folderId: number }) {
   const [folder, setFolder] = useState<IContentBucket | undefined>();
-  const [contents, setContents] = useState<IContent[]>(DUMMY_CONTENTS);
+  const [contents, setContents] = useState<IContentCard[]>([]);
   const loadFolder = () =>
-    ApiController.getFolder(props.folderId).then((f) => setFolder(f));
+    ApiController.getFolder(props.folderId).then((f: IContentBucket) => {
+      setFolder(f);
+      setContents(
+        _.sortBy(
+          [
+            ...f.Links.map((l) => ({
+              type: "link" as AstroContent,
+              content: l,
+            })),
+            ...f.Videos.map((v) => ({
+              type: "video" as AstroContent,
+              content: v,
+            })),
+            ...f.Channels.map((c) => ({
+              type: "channel" as AstroContent,
+              content: c,
+            })),
+            // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
+          ],
+          (c) => c.content.title
+        )
+      );
+    });
   useEffect(() => {
     loadFolder();
   }, [props.folderId]);
@@ -166,8 +114,7 @@ export default function ContentPageContents(props: { folderId: number }) {
     AstroContent | "all"
   >("all");
 
-  const [filteredContents, setFilteredContents] =
-    useState<IContent[]>(DUMMY_CONTENTS);
+  const [filteredContents, setFilteredContents] = useState<IContentCard[]>([]);
 
   const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
 
@@ -182,14 +129,14 @@ export default function ContentPageContents(props: { folderId: number }) {
           .filter(
             (c) =>
               !searchValue ||
-              c.title.toLowerCase().includes(searchValue.toLowerCase())
+              c.content.title.toLowerCase().includes(searchValue.toLowerCase())
           )
       ),
-    [searchValue, selectedContentType]
+    [searchValue, selectedContentType, contents]
   );
 
   const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
-  const [columns, setColumns] = useState<IContent[][]>([]);
+  const [columns, setColumns] = useState<IContentCard[][]>([]);
   useEffect(() => {
     const chunked = _.chunk(filteredContents, nColumns);
     setColumns(
@@ -293,11 +240,11 @@ export default function ContentPageContents(props: { folderId: number }) {
                 noText
                 selected={selectedContentType}
                 callback={(id) => setSelectedContentType(id)}
-                types={["all", "link", "video", "videoChannel"]}
+                types={["all", "link", "video", "channel"]}
                 displayNames={{
                   all: "All",
                   video: "Video",
-                  videoChannel: "Channel",
+                  channel: "Channel",
                   link: "Link",
                 }}
                 width="120px"
@@ -305,7 +252,7 @@ export default function ContentPageContents(props: { folderId: number }) {
             </Stack>
           </Stack>
           <Stack direction="row" spacing="24px">
-            {["link", "video", "videoChannel"].map((c) => (
+            {["link", "video", "channel"].map((c) => (
               <Stack
                 key={c}
                 onClick={() => setCreationDialogOpen(c as AstroContent)}
@@ -333,20 +280,29 @@ export default function ContentPageContents(props: { folderId: number }) {
                   {[
                     ...columns.map((column, i) => (
                       <Stack key={i} flex={1} spacing="20px" overflow="hidden">
-                        {column.map((content, j) => (
-                          <Stack key={content.id}>
+                        {column.map((x, j) => (
+                          <Stack key={x.content.id}>
                             <UrsorFadeIn
                               delay={j * 150 + i * 80}
                               duration={800}
                             >
-                              {content.type === "link" ? (
-                                <LinkCard {...content} onClick={() => null} />
-                              ) : content.type === "video" ? (
-                                <VideoCard {...content} onClick={() => null} />
-                              ) : content.type === "videoChannel" ? (
-                                <ChannelCard
-                                  {...content}
+                              {x.type === "link" ? (
+                                <LinkCard
+                                  {...(x.content as ILink)}
                                   onClick={() => null}
+                                  onDelete={loadFolder}
+                                />
+                              ) : x.type === "video" ? (
+                                <VideoCard
+                                  {...(x.content as IVideo)}
+                                  onClick={() => null}
+                                  onDelete={loadFolder}
+                                />
+                              ) : x.type === "channel" ? (
+                                <ChannelCard
+                                  {...(x.content as IChannel)}
+                                  onClick={() => null}
+                                  onDelete={loadFolder}
                                 />
                               ) : null}
                             </UrsorFadeIn>
@@ -354,9 +310,6 @@ export default function ContentPageContents(props: { folderId: number }) {
                         ))}
                       </Stack>
                     )),
-                    // ...[
-                    //   ...Array(Math.max(0, nColumns - columns.length)).keys(),
-                    // ].map(() => <Stack key="extra" flex={1} />),
                   ]}
                 </Stack>
               ) : (
@@ -413,6 +366,8 @@ export default function ContentPageContents(props: { folderId: number }) {
             onClose={() => {
               setCreationDialogOpen(undefined);
             }}
+            folderId={props.folderId}
+            creationCallback={loadFolder}
           />
         ) : creationDialogOpen === "link" ? (
           <LinkCreationDialog
@@ -421,8 +376,9 @@ export default function ContentPageContents(props: { folderId: number }) {
               setCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
+            creationCallback={loadFolder}
           />
-        ) : creationDialogOpen === "videoChannel" ? (
+        ) : creationDialogOpen === "channel" ? (
           <ChannelCreationDialog
             open={true}
             onClose={() => {

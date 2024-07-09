@@ -125,7 +125,7 @@ export const ImageButton = (props: {
 export const getPlaceholderImageUrl = (n: number) =>
   `${PLACEHOLDER_IMAGE_URL_COMMON_SECTION}${n.toString().padStart(3, "0")}.png`;
 
-export interface ILink {
+export interface ILink_DEPRECATED {
   id: string;
   creatorId: string;
   title: string;
@@ -180,14 +180,14 @@ export const shouldBeLightText = (color: string) =>
 
 export interface ILinkDialogProps {
   open: boolean;
-  link?: ILink;
+  link?: ILink_DEPRECATED;
   url?: string;
   lessonId?: string;
   platform?: boolean;
   updateCallback?: () => void;
   closeCallback: () => void;
   backCallback?: () => void;
-  creationCallback?: (link: ILink) => void;
+  creationCallback?: (link: ILink_DEPRECATED) => void;
   //newChannelCallback?: () => void;
   //newStackCallback?: () => void;
 }

@@ -1,7 +1,7 @@
-import { IVideo } from "@/app/api";
+import { IVideo_DEPRECATED } from "@/app/api";
 import { AstroLessonContent } from "./LessonPageContents";
 import LessonVideoCard from "./LessonVideoCard";
-import { ILink } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
+import { ILink_DEPRECATED } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import LinkCard from "@/app/components/LinkCard";
 import TextCard from "@/app/components/TextCard";
 import TextCreationDialog, { IText } from "@/app/components/TextDialog";
@@ -23,8 +23,8 @@ import { IQuiz } from "@/app/components/QuizDialog";
 import TimelineQuizCard from "./cards/TimelineQuizCard";
 
 const ContentCards = (props: {
-  videos: IVideo[];
-  links: ILink[];
+  videos: IVideo_DEPRECATED[];
+  links: ILink_DEPRECATED[];
   texts: IText[];
   images: IImage[];
   worksheets: IWorksheet[];

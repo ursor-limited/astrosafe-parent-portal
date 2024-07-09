@@ -7,7 +7,7 @@ import UrsorDialog, {
   BORDER_RADIUS,
 } from "../components/UrsorDialog";
 import { Dialog, Slider } from "@mui/material";
-import ApiController, { IVideo } from "../api";
+import ApiController, { IVideo_DEPRECATED } from "../api";
 import _ from "lodash";
 import Image from "next/image";
 import CheckIcon from "@/images/icons/CheckIcon.svg";

@@ -1,13 +1,18 @@
-import { IContent } from "@/app/devices/[id]/ContentTab";
+import { IContent, IVideo } from "@/app/devices/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import Play from "@/images/play.svg";
+import ApiController from "@/app/api";
 
 const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
-  props: IContent & { onClick: () => void; noPointerEvents?: boolean }
+  props: IVideo & {
+    onClick: () => void;
+    noPointerEvents?: boolean;
+    onDelete?: () => void;
+  }
 ) => {
   return (
     <ContentCard
@@ -15,6 +20,7 @@ const VideoCard = (
       title={props.title}
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
+      onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
     >
       <Stack
         height={IMAGE_HEIGHT}
@@ -25,7 +31,7 @@ const VideoCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.imgUrl}
+          src={props.thumbnailUrl}
           style={{
             objectFit: "cover",
             justifyContent: "center",

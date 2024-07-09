@@ -1,6 +1,9 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { PALETTE, UrsorInputField, UrsorTextField } from "ui";
-import BrowserApiController, { IChannel, IStack } from "../browserApi";
+import BrowserApiController, {
+  IChannel_DEPRECATED,
+  IStack,
+} from "../browserApi";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import NotificationContext from "../components/NotificationContext";
 import UrsorDialog from "../components/UrsorDialog";
@@ -128,7 +131,9 @@ export default function StackDialog(props: IStackDialogProps) {
       .then(() => notificationCtx.success(UPDATE_SUCCESS_MESSAGE))
       .catch((error) => notificationCtx.error(error.message));
 
-  const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
+  const [channels, setChannels] = useState<IChannel_DEPRECATED[] | undefined>(
+    undefined
+  );
   const loadChannels = () =>
     BrowserApiController.getChannelsInSchool(userDetails!.schoolId)
       .then((channels) => setChannels(channels))
@@ -137,7 +142,7 @@ export default function StackDialog(props: IStackDialogProps) {
     userDetails?.schoolId && loadChannels();
   }, [userDetails?.schoolId]);
 
-  const [userChannels, setUserChannels] = useState<IChannel[]>([]);
+  const [userChannels, setUserChannels] = useState<IChannel_DEPRECATED[]>([]);
   useEffect(
     () =>
       setUserChannels(

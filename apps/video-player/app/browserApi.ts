@@ -20,7 +20,7 @@ export interface ISchool {
   free?: boolean;
 }
 
-export interface IChannel {
+export interface IChannel_DEPRECATED {
   id: string;
   creatorId?: string;
   schoolId: string;

@@ -4,23 +4,36 @@ import NewLessonCard from "./NewLessonCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useState } from "react";
 
-export type AstroContent = "video" | "videoChannel" | "link";
+export type AstroContent = "video" | "channel" | "link";
 
 export interface IContent {
   id: number;
-  type: AstroContent;
   title: string;
   url: string;
-  imgUrl: string;
-  thumbnailImgUrl?: string;
-  cardColor: string;
 }
 
 export interface IContentBucket {
   id: number;
   title: string;
-  contentIds: number[];
   groupId: number;
+  Videos: IVideo[];
+  Channels: IChannel[];
+  Links: ILink[];
+  Lessons: ILesson[];
+}
+
+export interface ILink extends IContent {
+  thumbnailUrl: string;
+}
+export interface IChannel extends IContent {
+  profileUrl: string;
+  backgroundUrl: string;
+}
+export interface IVideo extends IContent {
+  thumbnailUrl: string;
+}
+export interface ILesson extends IContent {
+  imageUrls: string[];
 }
 
 const DevicePageContentTab = () => {

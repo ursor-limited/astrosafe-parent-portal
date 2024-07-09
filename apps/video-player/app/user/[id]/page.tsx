@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ApiController, { IVideo } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED } from "@/app/api";
 import AuthWrapper from "@/app/components/AuthWrapper";
 import { ISafeTubeUser, UserProvider } from "@/app/components/UserContext";
 import { Metadata } from "next";
@@ -7,7 +7,7 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import _ from "lodash";
 import UserPageContents from "./UserPageContents";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import MobileUserPageContents from "./MobileUserPageContents";
 
 export const dynamicParams = true;
@@ -30,7 +30,7 @@ async function TeacherPage({ params }: { params: { id: string } }) {
 
   const lessons = (await ApiController.getUserLessons(params.id).then((l) =>
     _.reverse(l.slice())
-  )) as ILesson[];
+  )) as ILesson_DEPRECATED[];
 
   const title = ((await ApiController.getUserById(params.id)) as ISafeTubeUser)
     .externalDashboardTitle;

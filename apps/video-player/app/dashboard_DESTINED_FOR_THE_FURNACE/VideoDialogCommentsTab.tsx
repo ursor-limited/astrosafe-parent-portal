@@ -11,7 +11,7 @@ import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useCallback, useEffect, useState } from "react";
 import TimeRange from "./TimeRange";
-import { IVideo, IVideoComment } from "../api";
+import { IVideo_DEPRECATED, IVideoComment } from "../api";
 import _, { uniqueId } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import DeletionDialog from "../components/DeletionDialog";
@@ -169,7 +169,7 @@ const VideoDialogCommentsTab = (props: {
   url: string;
   originalUrl: string;
   setOriginalUrl: (url: string) => void;
-  video?: IVideo;
+  video?: IVideo_DEPRECATED;
   mainButtonCallback: () => void;
   mainButtonText: string;
   provider?: "youtube" | "vimeo";

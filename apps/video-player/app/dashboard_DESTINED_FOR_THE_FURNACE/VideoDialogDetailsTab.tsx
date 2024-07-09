@@ -13,13 +13,13 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import { VIDEO_HEIGHT, VIDEO_WIDTH } from "./VideoCreationDialog";
 import Player from "../components/player";
 import { useEffect, useState } from "react";
-import ApiController, { IVideo } from "../api";
+import ApiController, { IVideo_DEPRECATED } from "../api";
 
 const VideoDialogDetailsTab = (props: {
   url: string;
   originalUrl: string;
   setOriginalUrl: (url: string) => void;
-  video?: IVideo;
+  video?: IVideo_DEPRECATED;
   title: string;
   setTitle: (title: string) => void;
   description: string;

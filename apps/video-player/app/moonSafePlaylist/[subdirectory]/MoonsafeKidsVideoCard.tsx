@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { useCallback, useContext, useEffect, useState } from "react";
-import ApiController, { IVideo, IVideoComment } from "@/app/api";
+import ApiController, { IVideo_DEPRECATED, IVideoComment } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import dayjs from "dayjs";
 import Player from "@/app/components/player";
@@ -144,7 +144,7 @@ export const TimelineVideoCardCommentDisplayCard = (
 );
 
 const MoonsafeKidsVideoCard = (
-  props: IVideo & {
+  props: IVideo_DEPRECATED & {
     setHeight?: (height: number) => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;

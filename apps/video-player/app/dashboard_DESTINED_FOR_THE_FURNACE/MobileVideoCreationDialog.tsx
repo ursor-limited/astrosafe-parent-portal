@@ -13,7 +13,7 @@ import {
 } from "ui";
 import Player from "../components/player";
 import { deNoCookiefy } from "../components/utils";
-import ApiController, { IVideo, IVideoComment } from "../api";
+import ApiController, { IVideo_DEPRECATED, IVideoComment } from "../api";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useUserContext } from "../components/UserContext";
 import VideoSignupPromptDialog from "../components/VideoSignupPromptDialog";
@@ -32,7 +32,7 @@ const MobileVideoCreationDialog = (props: {
   closeCallback: () => void;
   creationCallback?: (videoId: string, title: string) => void;
   editingCallback?: () => void;
-  video?: IVideo;
+  video?: IVideo_DEPRECATED;
 }) => {
   const router = useRouter();
   const [url, setUrl] = useState<string>("");

@@ -3,7 +3,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import NotificationContext from "../components/NotificationContext";
 import UsersPageTeachersTab, { ITeacher } from "./UsersPageTeachersTab";
-import BrowserApiController, { IChannel, ISchool, IStack } from "../browserApi";
+import BrowserApiController, {
+  IChannel_DEPRECATED,
+  ISchool,
+  IStack,
+} from "../browserApi";
 import { IBrowserLink } from "../safety/DomainLinksDialog";
 import { useBrowserUserContext } from "../components/BrowserUserContext";
 import PageLayout, {
@@ -35,7 +39,9 @@ export default function UsersPageContents() {
   const userDetails = useBrowserUserContext().userDetails;
 
   const [teachers, setTeachers] = useState<ITeacher[]>([]);
-  const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
+  const [channels, setChannels] = useState<IChannel_DEPRECATED[] | undefined>(
+    undefined
+  );
   const loadChannels = () =>
     BrowserApiController.getChannelsInSchool(userDetails?.schoolId ?? "")
       .then((channels) => setChannels(channels))

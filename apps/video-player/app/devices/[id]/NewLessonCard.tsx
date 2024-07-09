@@ -6,7 +6,7 @@ import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
-import { ILesson } from "@/app/lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
 import NotificationContext from "@/app/components/NotificationContext";
 import { IContentBucket } from "./ContentTab";
 import { SECONDARY_COLOR_ORDER } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
