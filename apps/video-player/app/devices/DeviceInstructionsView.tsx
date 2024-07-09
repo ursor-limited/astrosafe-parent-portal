@@ -16,15 +16,135 @@ export const pulse = keyframes`
   }
 `;
 
+export const FloatingIntroCards = (props: {
+  onOpen: () => void;
+  fadedEdges?: boolean;
+  greyCards?: boolean;
+  spacing: string;
+}) => (
+  <Stack position="relative" width="100%">
+    {props.fadedEdges ? (
+      <>
+        <Stack
+          position="absolute"
+          right={0}
+          top={0}
+          width="230px"
+          height="100%"
+          sx={{
+            background: `linear-gradient(-90deg, ${
+              PALETTE.secondary.grey[1]
+            }, ${alpha(PALETTE.secondary.grey[1], 0)})`,
+          }}
+          zIndex={2}
+        />
+        <Stack
+          position="absolute"
+          left={0}
+          top={0}
+          width="230px"
+          height="100%"
+          sx={{
+            background: `linear-gradient(90deg, ${
+              PALETTE.secondary.grey[1]
+            }, ${alpha(PALETTE.secondary.grey[1], 0)})`,
+          }}
+          zIndex={2}
+        />
+      </>
+    ) : null}
+    <Stack left={0} position="absolute" width="100%">
+      <Stack position="relative" width="100%" height="100px">
+        <Image
+          src="https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png"
+          style={{ objectFit: "cover" }}
+          fill
+          alt="wave"
+        />
+      </Stack>
+    </Stack>
+    <Stack
+      direction="row"
+      width="100%"
+      spacing={props.spacing}
+      justifyContent="center"
+    >
+      <Stack
+        sx={{
+          transform: `translateY(-${PULSE_AMPLITUDE + 51})`,
+          animation: `${pulse} 5s ease-in-out`,
+          animationDirection: "alternate",
+          animationIterationCount: "infinite",
+        }}
+      >
+        <InstructionCard
+          stepIndex={1}
+          text="Download the AstroSafe App on child's Device"
+          grey={props.greyCards}
+        >
+          <UrsorButton
+            onClick={props.onOpen}
+            size="small"
+            variant="secondary"
+            endIcon={ChevronRightIcon}
+            iconSize={16}
+          >
+            Download options
+          </UrsorButton>
+        </InstructionCard>
+      </Stack>
+      <Stack
+        sx={{
+          transform: `translateY(-${PULSE_AMPLITUDE})`,
+          animation: `${pulse} 5s ease-in-out`,
+          animationDirection: "alternate",
+          animationDelay: "1.5s",
+          animationIterationCount: "infinite",
+        }}
+      >
+        <InstructionCard
+          stepIndex={2}
+          text={"Enter join code to connect."}
+          grey={props.greyCards}
+        >
+          <Typography
+            variant="h3"
+            color={PALETTE.secondary.purple[2]}
+            sx={{ transform: "translateY(-3px)" }}
+          >
+            700-008
+          </Typography>
+        </InstructionCard>
+      </Stack>
+      <Stack
+        sx={{
+          transform: `translateY(-${PULSE_AMPLITUDE + 40})`,
+          animation: `${pulse} 5s ease-in-out`,
+          animationDirection: "alternate",
+          animationDelay: "3s",
+          animationIterationCount: "infinite",
+        }}
+      >
+        <InstructionCard
+          stepIndex={3}
+          text="Delete all other Browsers on device"
+          grey={props.greyCards}
+        />
+      </Stack>
+    </Stack>
+  </Stack>
+);
+
 const InstructionCard = (props: {
   stepIndex: number;
   text: string;
+  grey?: boolean;
   children?: React.ReactNode;
 }) => (
   <Stack
     width="260px"
     borderRadius="12px"
-    bgcolor="rgb(255,255,255)"
+    bgcolor={props.grey ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"}
     alignItems="center"
     p="12px"
     boxSizing="border-box"
@@ -94,111 +214,10 @@ const DeviceInstructionsView = () => {
             </Typography>
           </Stack>
         </Stack>
-        <Stack
-          position="absolute"
-          right={0}
-          top={0}
-          width="230px"
-          height="100%"
-          sx={{
-            background: `linear-gradient(-90deg, ${
-              PALETTE.secondary.grey[1]
-            }, ${alpha(PALETTE.secondary.grey[1], 0)})`,
-          }}
-          zIndex={2}
+        <FloatingIntroCards
+          onOpen={() => setDownloadDialogOpen(true)}
+          spacing="320px"
         />
-        <Stack
-          position="absolute"
-          left={0}
-          top={0}
-          width="230px"
-          height="100%"
-          sx={{
-            background: `linear-gradient(90deg, ${
-              PALETTE.secondary.grey[1]
-            }, ${alpha(PALETTE.secondary.grey[1], 0)})`,
-          }}
-          zIndex={2}
-        />
-        <Stack position="relative">
-          <Stack
-            direction="row"
-            spacing="21px"
-            position="absolute"
-            sx={{ transform: "translate(-50%, -50%)" }}
-          >
-            <Image
-              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png"
-              height={100}
-              width={1400}
-              alt="wave"
-            />
-          </Stack>
-          <Stack
-            position="absolute"
-            left="-480px"
-            top="-51px"
-            sx={{
-              transform: `translateY(-${PULSE_AMPLITUDE})`,
-              animation: `${pulse} 5s ease-in-out`,
-              animationDirection: "alternate",
-              animationIterationCount: "infinite",
-            }}
-          >
-            <InstructionCard
-              stepIndex={1}
-              text="Download the AstroSafe App on child's device"
-            >
-              <UrsorButton
-                onClick={() => setDownloadDialogOpen(true)}
-                size="small"
-                variant="secondary"
-                endIcon={ChevronRightIcon}
-                iconSize={16}
-              >
-                Download options
-              </UrsorButton>
-            </InstructionCard>
-          </Stack>
-          <Stack
-            position="absolute"
-            left="-120px"
-            sx={{
-              transform: `translateY(-${PULSE_AMPLITUDE})`,
-              animation: `${pulse} 5s ease-in-out`,
-              animationDirection: "alternate",
-              animationDelay: "1.5s",
-              animationIterationCount: "infinite",
-            }}
-          >
-            <InstructionCard stepIndex={2} text={"Enter join code to connect."}>
-              <Typography
-                variant="h3"
-                color={PALETTE.secondary.purple[2]}
-                sx={{ transform: "translateY(-3px)" }}
-              >
-                700-008
-              </Typography>
-            </InstructionCard>
-          </Stack>
-          <Stack
-            position="absolute"
-            left="240px"
-            top="-40px"
-            sx={{
-              transform: `translateY(-${PULSE_AMPLITUDE})`,
-              animation: `${pulse} 5s ease-in-out`,
-              animationDirection: "alternate",
-              animationDelay: "3s",
-              animationIterationCount: "infinite",
-            }}
-          >
-            <InstructionCard
-              stepIndex={3}
-              text="Delete all other Browsers on device"
-            />
-          </Stack>
-        </Stack>
       </Stack>
       <DownloadDialog
         open={downloadDialogOpen}

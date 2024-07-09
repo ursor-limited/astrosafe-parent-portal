@@ -20,6 +20,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DevicePageContentTab from "./ContentTab";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
+import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -38,6 +39,8 @@ export default function DevicePageContents(props: { deviceId: number }) {
   const router = useRouter();
 
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+  const [disconnectDialogOpen, setDisconnectDialogOpen] =
+    useState<boolean>(false);
   return (
     <>
       <PageLayout
@@ -92,7 +95,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
           },
           {
             text: "Disconnect",
-            kallback: () => null,
+            kallback: () => setDisconnectDialogOpen(true),
             icon: PlugIcon,
             color: PALETTE.system.red,
           },
@@ -192,6 +195,12 @@ export default function DevicePageContents(props: { deviceId: number }) {
       <DeviceRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
+        onSubmit={(name) => null}
+      />
+      <DeviceDisconnectDialog
+        open={disconnectDialogOpen}
+        onClose={() => setDisconnectDialogOpen(false)}
+        onSubmit={() => null}
       />
     </>
   );

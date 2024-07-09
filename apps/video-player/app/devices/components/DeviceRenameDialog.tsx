@@ -4,7 +4,11 @@ import { useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
 
-const DeviceRenameDialog = (props: { open: boolean; onClose: () => void }) => {
+const DeviceRenameDialog = (props: {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (name: string) => void;
+}) => {
   const [name, setName] = useState<string>("");
   return (
     <UrsorDialog

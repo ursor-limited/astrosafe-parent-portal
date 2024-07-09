@@ -61,6 +61,7 @@ export interface IUrsorDialogProps {
   paddingX?: string;
   paddingY?: string;
   paddingTop?: string;
+  xButtonRight?: string;
   longFadeIn?: boolean;
   bunchedUpContent?: boolean;
   scrollable?: boolean;
@@ -221,8 +222,6 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               width="100%"
               alignItems="center"
               textAlign="center"
-              //maxWidth="476px"
-              //px={props.paddingX}
               boxSizing="border-box"
             >
               {props.supertitle ||
@@ -242,7 +241,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     position="relative"
                     sx={{ transform: "translateX(-24px)" }}
                   >
-                    <Stack position="absolute" right={0} top="17px">
+                    <Stack
+                      position="absolute"
+                      right={props.xButtonRight ?? 0}
+                      top="17px"
+                    >
                       {props.onCloseCallback ? (
                         <Box
                           position="absolute"
