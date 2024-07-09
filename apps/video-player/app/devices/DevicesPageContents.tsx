@@ -48,7 +48,7 @@ export default function DevicesPageContents() {
         }}
         secondaryButton={{
           text: "Get Browser",
-          callback: () => null,
+          callback: () => setDownloadDialogOpen(true),
           icon: DownloadIcon,
         }}
         maxWidth={834}

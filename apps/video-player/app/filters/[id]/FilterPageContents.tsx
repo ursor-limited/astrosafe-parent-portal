@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
@@ -21,6 +21,7 @@ import FilterPageAllowedSitesSection from "./components/AllowedSitesSection";
 import FilterPageBlockedSitesSection from "./components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "./components/SearchWordsSection";
 import FilterPageDevicesSection from "./components/DevicesSection";
+import FilterExceptionDialog from "./components/FilterExceptionDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -88,6 +89,9 @@ export default function FilterPageContents(props: { filterId: number }) {
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([]);
 
+  const [exceptionDialogOpen, setExceptionDialogOpen] =
+    useState<boolean>(false);
+
   return (
     <PageLayout
       title="My Filters"
@@ -131,7 +135,7 @@ export default function FilterPageContents(props: { filterId: number }) {
         />
         <FilterPageAllowedSitesSection
           allowedSites={allowedSites}
-          addSite={(url) => null}
+          addSite={(url) => setExceptionDialogOpen(true)}
         />
         <FilterPageBlockedSitesSection
           blockedSites={blockedSites}
@@ -145,6 +149,11 @@ export default function FilterPageContents(props: { filterId: number }) {
           removeWord={(word) =>
             setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
           }
+        />
+        <FilterExceptionDialog
+          open={exceptionDialogOpen}
+          onClose={() => setExceptionDialogOpen(false)}
+          onSubmit={() => null}
         />
       </Stack>
     </PageLayout>

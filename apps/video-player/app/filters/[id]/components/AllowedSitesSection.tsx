@@ -39,7 +39,10 @@ const FilterPageAllowedSitesSection = (props: {
         return (
           <Stack borderRadius="100%" overflow="hidden">
             <Image
-              src={props.allowedSites.find((s) => s.id === id)?.imageUrl ?? ""}
+              src={
+                props.allowedSites.find((s) => s.id.toString() === id)
+                  ?.imageUrl ?? ""
+              }
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -69,7 +72,7 @@ const FilterPageAllowedSitesSection = (props: {
     (async () => {
       const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
         props.allowedSites?.map((a) => ({
-          id: a.id,
+          id: a.id.toString(),
           items: {
             title: a.title ?? "",
             url: a.url,
