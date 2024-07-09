@@ -10,8 +10,10 @@ import _ from "lodash";
 import { DeviceType, IDevice_new } from "../FilterPageContents";
 import DeviceCard from "../../../devices/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { useRouter } from "next/navigation";
 
 const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
+  const router = useRouter();
   return (
     <AstroBentoCard
       title={`Filter applied to these ${props.devices.length} devices`}
@@ -23,6 +25,7 @@ const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
             size="small"
             variant="secondary"
             endIcon={ChevronRightIcon}
+            onClick={() => router.push(`/devices`)}
           >
             View all
           </UrsorButton>

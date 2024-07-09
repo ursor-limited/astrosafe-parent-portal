@@ -35,7 +35,6 @@ const AstroTimeChart = (props: {
       ]);
     } else if (props.times.length - props.selectedDayIndex < 4) {
       const shiftNDays = props.times.length - 1 - props.selectedDayIndex;
-      console.log(shiftNDays, "LOOOL");
       setDateIndexRange([
         props.selectedDayIndex - 6 + shiftNDays,
         Math.min(props.times.length - 1, props.selectedDayIndex + 3),
@@ -47,7 +46,6 @@ const AstroTimeChart = (props: {
       ]);
     }
   }, [props.selectedDayIndex, props.times]);
-  console.log(dateIndexRange, "L)_)_)");
   return (
     <Stack flex={1} px="24px" position="relative" mr="56px !important">
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">

@@ -17,6 +17,7 @@ import UrsorDialog from "@/app/components/UrsorDialog";
 import { AstroContent } from "@/app/devices/[id]/ContentTab";
 import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
 import { IFilterUrl } from "@/app/filters/FiltersPageContents";
+import { LabeledInputField } from "ui/labeled-input-field";
 
 export interface IContentCreationDialogProps {
   open: boolean;
@@ -60,10 +61,7 @@ export default function ContentCreationDialog(
           justifyContent="space-between"
         >
           <Stack flex={1} spacing="20px" overflow="hidden">
-            <Stack spacing="8px">
-              <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-                URL
-              </Typography>
+            <LabeledInputField label="URL">
               <UrsorInputField
                 value={props.url}
                 placeholder="Set a URL"
@@ -73,11 +71,8 @@ export default function ContentCreationDialog(
                 leftAlign
                 width="100%"
               />
-            </Stack>
-            <Stack spacing="8px">
-              <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-                Title
-              </Typography>
+            </LabeledInputField>
+            <LabeledInputField label="Title">
               <UrsorInputField
                 value={props.title}
                 placeholder="Set a title"
@@ -87,7 +82,7 @@ export default function ContentCreationDialog(
                 leftAlign
                 width="100%"
               />
-            </Stack>
+            </LabeledInputField>
           </Stack>
           <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
           <Stack width="299px">{props.children}</Stack>
