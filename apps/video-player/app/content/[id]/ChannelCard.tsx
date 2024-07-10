@@ -11,6 +11,7 @@ const ChannelCard = (
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
+    onUpdate?: () => void;
   }
 ) => {
   return (

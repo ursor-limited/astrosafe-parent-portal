@@ -23,6 +23,7 @@ const ContentCard = (props: {
   onClick?: () => void;
   noPointerEvents?: boolean;
   onDelete: () => void;
+  onOpenEditingDialog: () => void;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -48,7 +49,7 @@ const ContentCard = (props: {
             actions={[
               {
                 text: "Edit",
-                kallback: () => null,
+                kallback: props.onOpenEditingDialog,
                 icon: PencilIcon,
               },
               {

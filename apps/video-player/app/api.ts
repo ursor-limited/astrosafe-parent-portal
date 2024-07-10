@@ -126,6 +126,15 @@ class ApiController {
     return post(`content/links`, { title, url, thumbnailUrl, contentBucketId });
   }
 
+  static async updateLink(
+    id: ILink["id"],
+    title: ILink["title"],
+    url: ILink["url"],
+    thumbnailUrl: ILink["thumbnailUrl"]
+  ) {
+    return put(`content/links/${id}`, { title, url, thumbnailUrl });
+  }
+
   static async deleteLink(id: ILink["id"]) {
     return dellete(`content/links/${id}`);
   }

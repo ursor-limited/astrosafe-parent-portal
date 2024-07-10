@@ -11,6 +11,7 @@ const LinkCard = (
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
+    onOpenEditingDialog?: () => void;
   }
 ) => {
   return (
@@ -20,6 +21,7 @@ const LinkCard = (
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
+      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
     >
       <Stack
         height={IMAGE_HEIGHT}

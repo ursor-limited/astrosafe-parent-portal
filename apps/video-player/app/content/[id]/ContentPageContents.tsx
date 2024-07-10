@@ -160,6 +160,10 @@ export default function ContentPageContents(props: { folderId: number }) {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [linkEditingDialogId, setLinkEditingDialogId] = useState<
+    ILink["id"] | undefined
+  >(undefined);
+
   return (
     <>
       <PageLayout
@@ -291,18 +295,23 @@ export default function ContentPageContents(props: { folderId: number }) {
                                   {...(x.content as ILink)}
                                   onClick={() => null}
                                   onDelete={loadFolder}
+                                  onOpenEditingDialog={() =>
+                                    setLinkEditingDialogId(x.content.id)
+                                  }
                                 />
                               ) : x.type === "video" ? (
                                 <VideoCard
                                   {...(x.content as IVideo)}
                                   onClick={() => null}
                                   onDelete={loadFolder}
+                                  onUpdate={loadFolder}
                                 />
                               ) : x.type === "channel" ? (
                                 <ChannelCard
                                   {...(x.content as IChannel)}
                                   onClick={() => null}
                                   onDelete={loadFolder}
+                                  onUpdate={loadFolder}
                                 />
                               ) : null}
                             </UrsorFadeIn>
@@ -386,6 +395,21 @@ export default function ContentPageContents(props: { folderId: number }) {
             }}
           />
         ) : null
+      ) : null}
+      {linkEditingDialogId && contents ? (
+        <LinkCreationDialog
+          open={true}
+          onClose={() => {
+            setLinkEditingDialogId(undefined);
+          }}
+          folderId={props.folderId}
+          creationCallback={loadFolder}
+          updateDetails={{
+            link: contents.find((c) => c.content.id === linkEditingDialogId)
+              ?.content as ILink,
+            callback: loadFolder,
+          }}
+        />
       ) : null}
     </>
   );

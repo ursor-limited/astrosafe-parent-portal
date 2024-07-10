@@ -12,6 +12,7 @@ const VideoCard = (
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
+    onUpdate?: () => void;
   }
 ) => {
   return (

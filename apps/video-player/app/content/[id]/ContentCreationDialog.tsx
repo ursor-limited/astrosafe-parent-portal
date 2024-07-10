@@ -28,6 +28,7 @@ export interface IContentCreationDialogProps {
   setUrl: (url: IFilterUrl["url"]) => void;
   closeCallback: () => void;
   onSubmit?: () => void;
+  editing?: boolean;
   children?: React.ReactNode;
 }
 
@@ -38,7 +39,9 @@ export default function ContentCreationDialog(
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.closeCallback}
-      title={`Add a ${CONTENT_DISPLAY_NAMES[props.type]}`}
+      title={`${props.editing ? "Edit" : "Add a"} ${
+        CONTENT_DISPLAY_NAMES[props.type]
+      }`}
       dynamicHeight
       noPadding={isMobile}
     >
@@ -90,7 +93,11 @@ export default function ContentCreationDialog(
           dark
           variant="tertiary"
           onClick={props.onSubmit}
-        >{`Add ${CONTENT_DISPLAY_NAMES[props.type]}`}</UrsorButton>
+        >
+          {props.editing
+            ? "Save changes"
+            : `Add ${CONTENT_DISPLAY_NAMES[props.type]}`}
+        </UrsorButton>
       </Stack>
     </UrsorDialog>
   );
