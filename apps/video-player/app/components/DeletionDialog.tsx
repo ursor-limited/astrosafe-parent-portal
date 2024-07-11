@@ -11,7 +11,7 @@ const INPUT_PHRASE = "yes";
 
 const DeletionDialog = (props: {
   open: boolean;
-  type: AstroContent;
+  type: AstroContent | "Folder";
   onClose: () => void;
   onSubmit: () => void;
   subtitle: string;

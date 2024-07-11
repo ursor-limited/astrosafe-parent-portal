@@ -2,19 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import { Stack, keyframes } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
-import VersionsIcon from "@/images/icons/VersionsIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { useRouter } from "next/navigation";
-import { ILesson_DEPRECATED } from "@/app/lesson/[subdirectory]/page";
-import NotificationContext from "@/app/components/NotificationContext";
 import { IContentBucket } from "./ContentTab";
 import { SECONDARY_COLOR_ORDER } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
-import useOrangeBorder from "@/app/components/useOrangeBorder";
 import _ from "lodash";
-import UrsorActionButton from "@/app/components/UrsorActionButton";
-import DeletionDialog from "@/app/components/DeletionDialog";
 import ProfileImageRow from "@/app/filters/ProfileImageRow";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
+import DeletionDialog from "@/app/components/DeletionDialog";
 
 export const spin = keyframes`
   from {
@@ -25,7 +22,7 @@ export const spin = keyframes`
   }
 `;
 
-const NewLessonCard = (
+const FolderCard = (
   props: IContentBucket & {
     imageUrls: string[];
     profileImageUrls?: string[];
@@ -35,13 +32,6 @@ const NewLessonCard = (
     strongShadow?: boolean;
   }
 ) => {
-  // const notificationCtx = useContext(NotificationContext);
-  // const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
-  // const submitDeletion = () =>
-  //   ApiController.deleteLesson(props.id)
-  //     .then(() => notificationCtx.negativeSuccess("Deleted Lesson."))
-  //     .then(props.deletionCallback);
-
   const [stackCard1Color, setStackCard1Color] = useState<string>("#ffffff");
   const [stackCard2Color, setStackCard2Color] = useState<string>("#ffffff");
   useEffect(() => {
@@ -62,6 +52,8 @@ const NewLessonCard = (
   //const orangeBorderOn = useOrangeBorder(props.updatedAt);
 
   const router = useRouter();
+
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -119,19 +111,24 @@ const NewLessonCard = (
           }
           zIndex={0}
         />
-        {/* {props.editingCallback && props.deletionCallback ? (
+        {props.editingCallback && props.deletionCallback ? (
           <Stack
             position="absolute"
             top="11px"
             right="11px"
             zIndex={2}
-           // onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
+            // onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
               iconSize="16px"
               notClickable
               actions={[
+                {
+                  text: "Open",
+                  kallback: () => router.push(`/content/${props.id}`),
+                  icon: ArrowUpRight,
+                },
                 {
                   text: "Edit",
                   kallback: () => props.editingCallback?.(),
@@ -146,7 +143,7 @@ const NewLessonCard = (
               ]}
             />
           </Stack>
-        ) : null} */}
+        ) : null}
         <Stack
           borderRadius="12px"
           border={`4px solid rgb(255,255,255)`}
@@ -301,16 +298,15 @@ const NewLessonCard = (
           </Stack>
         </Stack>
       </Stack>
-      {/* <DeletionDialog
+      <DeletionDialog
         open={deletionDialogOpen}
-        closeCallback={() => setDeletionDialogOpen(false)}
-        deletionCallback={submitDeletion}
-        category="Lesson"
-        title={props.title}
-      /> */}
-      {/* ) : null} */}
+        type="Folder"
+        onClose={() => setDeletionDialogOpen(false)}
+        subtitle="Not sure if we need some copy here too."
+        onSubmit={() => null}
+      />
     </>
   );
 };
 
-export default NewLessonCard;
+export default FolderCard;

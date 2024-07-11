@@ -3,7 +3,7 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import { IContentBucket } from "../devices/[id]/ContentTab";
-import NewLessonCard from "../devices/[id]/NewLessonCard";
+import FolderCard from "../devices/[id]/FolderCard";
 import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ const ContentsPageContents = () => {
       <Stack pt="20px" pl="51px">
         <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
           {folders.map((f) => (
-            <NewLessonCard
+            <FolderCard
               key={f.id}
               {...f}
               clickCallback={() => router.push(`/content/${f.id}`)}

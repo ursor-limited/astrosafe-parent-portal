@@ -1,6 +1,6 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
-import NewLessonCard from "./NewLessonCard";
+import FolderCard from "./FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useState } from "react";
 
@@ -44,7 +44,7 @@ const DevicePageContentTab = () => {
       <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
         {folders.map((f, i) => (
           <UrsorFadeIn key={f.id} duration={800} delay={100 * i}>
-            <NewLessonCard
+            <FolderCard
               {...f}
               imageUrls={[
                 "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
