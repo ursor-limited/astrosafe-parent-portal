@@ -6,8 +6,8 @@ import ApiController, {
   IChannel,
   IPlatform,
   IStack,
-  IVideo,
-  IVideoChannel,
+  IVideo_DEPRECATED,
+  IVideoChannel_DEPRECATED,
   getAbsoluteUrl,
 } from "../api";
 import { useLocalStorage } from "usehooks-ts";
@@ -68,8 +68,10 @@ export default function HomePageContents(props: { mobile: boolean }) {
       ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
   }, [deviceId]);
 
-  const [videoChannels, setVideoChannels] = useState<IVideoChannel[]>([]); //@ts-ignore
-  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
+  const [videoChannels, setVideoChannels] = useState<
+    IVideoChannel_DEPRECATED[]
+  >([]); //@ts-ignore
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>(DUMMY_VIDEOS);
   useEffect(() => {
     deviceId &&
       ApiController.getVideoChannels(deviceId).then((vc) =>
@@ -85,7 +87,7 @@ export default function HomePageContents(props: { mobile: boolean }) {
       setSelectedChannelId(videoChannels[0]?.id);
   }, [videoChannels, selectedChannelId]);
 
-  const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<IVideo_DEPRECATED[]>([]);
   useEffect(
     () =>
       setFilteredVideos(

@@ -4,6 +4,7 @@ import React from "react";
 import type { SxProps } from "@mui/system";
 import { Box } from "@mui/system";
 import { PALETTE } from "./palette";
+import { LabeledInputField } from "./labeled-input-field";
 
 export const DEFAULT_FONT_WEIGHT = 360;
 export const BOLD_FONT_WEIGHT = 500;

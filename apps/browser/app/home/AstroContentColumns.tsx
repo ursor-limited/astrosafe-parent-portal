@@ -1,5 +1,10 @@
 import { Stack } from "@mui/system";
-import { IBrowserLink, IStack, IVideo, getAbsoluteUrl } from "../api";
+import {
+  IBrowserLink,
+  IStack,
+  IVideo_DEPRECATED,
+  getAbsoluteUrl,
+} from "../api";
 import { PALETTE, Typography } from "ui";
 import GraphIllustration from "@/images/GraphIllustration.svg";
 import { useEffect, useState } from "react";
@@ -27,7 +32,7 @@ export interface IAstroContentColumnsProps {
   description?: string;
   links: IBrowserLink[];
   stacks: IStack[];
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   // platforms: IPlatform[];
   // searchResults: ISearchResult[];
   // pediaCard?: IPediaMainCard;
@@ -42,7 +47,7 @@ export interface IAstroContentColumnsProps {
 
 export interface IBrowserContent {
   type: BrowserContent;
-  details: IBrowserLink | IStack | IVideo;
+  details: IBrowserLink | IStack | IVideo_DEPRECATED;
 }
 
 export const EmptyStateIllustration = (props: {
@@ -294,9 +299,11 @@ const AstroContentColumns = (props: IAstroContentColumnsProps) => {
                                 </Stack>
                               ) : item.type === "video" ? (
                                 <VideoCard
-                                  video={item.details as IVideo}
+                                  video={item.details as IVideo_DEPRECATED}
                                   clickCallback={() =>
-                                    router.push((item.details as IVideo).url)
+                                    router.push(
+                                      (item.details as IVideo_DEPRECATED).url
+                                    )
                                   }
                                   mobile={props.mobile}
                                 />

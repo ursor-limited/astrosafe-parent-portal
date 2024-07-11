@@ -10,7 +10,7 @@ export interface ISchool {
   postcode?: string;
   country?: string;
   isDeleted: boolean;
-  devices: IDevice[];
+  devices: IDevice_DEPRECATED[];
   lock?: ILock;
   joinCode: string;
   teacherCode: string;
@@ -28,7 +28,7 @@ export interface ILock {
 
 export type ContentAgeMode = "trailblazer" | "explorer" | "adventurer";
 
-export interface IDevice {
+export interface IDevice_DEPRECATED {
   id: string;
   name: string;
   lastOnline?: string;
@@ -91,7 +91,7 @@ export interface IPlatform {
   installed: boolean;
 }
 
-export interface IVideoChannel {
+export interface IVideoChannel_DEPRECATED {
   id: string;
   creatorId?: string;
   schoolId: string;
@@ -101,7 +101,7 @@ export interface IVideoChannel {
   profileImageUrl: string;
 }
 
-export interface IVideo {
+export interface IVideo_DEPRECATED {
   id: string;
   creatorId: string;
   videoChannelId: string;
@@ -123,7 +123,7 @@ export interface IVideoComment {
 }
 
 const BACKEND_URLS = {
-  development: "http://localhost:8080",
+  development: "http://api.astrosafe.co",
   preview:
     "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
   production: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",

@@ -6,7 +6,7 @@ import ApiController, {
   IChannel,
   IPlatform,
   IStack,
-  IVideo,
+  IVideo_DEPRECATED,
   getAbsoluteUrl,
 } from "../api";
 import { useLocalStorage } from "usehooks-ts";
@@ -106,14 +106,14 @@ interface ISearchResult {
 }
 
 const AstroContentRow = (props: {
-  videos: IVideo[];
+  videos: IVideo_DEPRECATED[];
   links: IBrowserLink[];
   filter?: string;
 }) => {
   const [allContentDetails, setAllContentDetails] = useState<
     {
       type: BrowserContent;
-      details: IBrowserLink | IVideo;
+      details: IBrowserLink | IVideo_DEPRECATED;
     }[]
   >([]);
   useEffect(() => {
@@ -166,7 +166,7 @@ const AstroContentRow = (props: {
               {c.type === "link" ? (
                 <BrowserLinkCard link={c.details as IBrowserLink} />
               ) : c.type === "video" ? (
-                <VideoCard video={c.details as IVideo} />
+                <VideoCard video={c.details as IVideo_DEPRECATED} />
               ) : null}
             </Stack>
           );
@@ -225,7 +225,7 @@ export default function SearchResultsPageContents(props: {
     undefined
   );
 
-  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
+  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>(DUMMY_VIDEOS);
   const [links, setLinks] = useState<IBrowserLink[]>([]);
   useEffect(() => {
     (deviceId

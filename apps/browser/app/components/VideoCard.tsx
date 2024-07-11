@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IBrowserLink, IVideo } from "../api";
+import { IBrowserLink, IVideo_DEPRECATED } from "../api";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import dayjs from "dayjs";
@@ -56,7 +56,7 @@ export const getAgoText: (datetime?: string) => {
 };
 
 const VideoCard = (props: {
-  video: IVideo;
+  video: IVideo_DEPRECATED;
   clickCallback?: () => void;
   editCallback?: () => void;
   updateCallback?: () => void;
