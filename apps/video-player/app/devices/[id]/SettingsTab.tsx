@@ -13,6 +13,8 @@ import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
+import { IFilterUrl } from "@/app/filters/FiltersPageContents";
+import RequestedSitesSection from "./RequestedSitesSection";
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
@@ -138,8 +140,51 @@ const DevicePageSettingsTab = () => {
 
   const [dailyLimitsEnabled, setDailyLimitsEnabled] = useState<boolean>(false);
 
+  const [requestedSites, setRequestedSites] = useState<IFilterUrl[]>([
+    {
+      id: 0,
+      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).pnghttps://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+      title:
+        "NintendoNintendoNintendoNintendoNintendoNintendo mNintendoNintendoNintendo",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+      createdAt: "2024-05-04",
+      groupId: 1,
+    },
+    {
+      id: 1,
+      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+      title: "Nintendo",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+      createdAt: "2024-05-04",
+      groupId: 1,
+    },
+    {
+      id: 2,
+      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+      title: "Nintendo",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+      createdAt: "2024-05-04",
+      groupId: 1,
+    },
+    {
+      id: 3,
+      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
+      title: "Nintendo",
+      imageUrl:
+        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
+      createdAt: "2024-05-04",
+      groupId: 1,
+    },
+  ]);
+
   return (
     <Stack spacing="24px" pb="33px">
+      {requestedSites.length > 0 ? (
+        <RequestedSitesSection sites={requestedSites} />
+      ) : null}
       <Typography variant="h5">Device controls</Typography>
       <Stack direction="row" spacing="24px">
         <AstroBentoCard
