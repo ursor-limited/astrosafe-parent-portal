@@ -31,7 +31,12 @@ const DeviceRenameDialog = (props: {
             leftAlign
           />
         </LabeledInputField>
-        <UrsorButton dark variant="tertiary" width="100%">
+        <UrsorButton
+          dark
+          variant="tertiary"
+          width="100%"
+          onClick={() => props.onSubmit(name)}
+        >
           Save
         </UrsorButton>
       </Stack>

@@ -11,6 +11,7 @@ import {
   ILink,
   IVideo,
 } from "./devices/[id]/ContentTab";
+import { IDevice } from "./filters/[id]/FilterPageContents";
 import { AstroLessonContent } from "./lesson/[subdirectory]/LessonPageContents";
 
 export interface IVideo_DEPRECATED {
@@ -206,6 +207,10 @@ class ApiController {
 
   static async getDevice(id: number) {
     return get(`devices/${id}`).then((response: any) => response.json());
+  }
+
+  static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
+    return put(`devices/updateDevice/${id}`, { name });
   }
 
   // static async createLesson(details: any) {

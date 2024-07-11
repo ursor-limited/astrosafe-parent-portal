@@ -2,7 +2,7 @@ import NotificationContext from "@/app/components/NotificationContext";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { useContext, useState } from "react";
-import { UrsorButton, UrsorInputField } from "ui";
+import { PALETTE, UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
 
 const INPUT_PHRASE = "yes";
@@ -43,6 +43,7 @@ const DeviceDisconnectDialog = (props: {
           <UrsorButton
             dark
             variant="tertiary"
+            backgroundColor={PALETTE.system.red}
             width="100%"
             disabled={inputValue !== INPUT_PHRASE}
             onClick={() => {

@@ -19,13 +19,16 @@ import DeviceRenameDialog from "./components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "./components/DeviceDisconnectDialog";
 import DeviceConnectDialog from "./components/DeviceConnectDialog";
 import DownloadDialog from "./components/DownloadDialog";
+import ApiController from "../api";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicesPageContents() {
-  const [devices, setDevices] = useState<IDevice[]>(DUMMY_DEVICES);
+  const [devices, setDevices] = useState<IDevice[]>([]);
   const router = useRouter();
-  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+  const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
+    number | undefined
+  >();
   const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
   const [disconnectDialogOpen, setDisconnectDialogOpen] =
     useState<boolean>(false);
@@ -72,7 +75,7 @@ export default function DevicesPageContents() {
                         },
                         {
                           text: "Edit name",
-                          kallback: () => setRenameDialogOpen(true),
+                          kallback: () => setRenameDeviceDialogId(d.id),
                           icon: PencilIcon,
                         },
                         {
@@ -92,11 +95,16 @@ export default function DevicesPageContents() {
           )}
         </Stack>
       </PageLayout>
-      <DeviceRenameDialog
-        open={renameDialogOpen}
-        onClose={() => setRenameDialogOpen(false)}
-        onSubmit={(name) => null}
-      />
+      {renameDeviceDialogId ? (
+        <DeviceRenameDialog
+          open={true}
+          onClose={() => setRenameDeviceDialogId(undefined)}
+          onSubmit={(name) => {
+            ApiController.renameDevice(renameDeviceDialogId, name).then();
+            setRenameDeviceDialogId(undefined);
+          }}
+        />
+      ) : null}
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}
         onClose={() => setDisconnectDialogOpen(false)}

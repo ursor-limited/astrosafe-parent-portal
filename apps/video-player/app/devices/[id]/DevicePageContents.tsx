@@ -20,6 +20,7 @@ import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
+import { DEVICE_TYPE_DISPLAY_NAMES } from "../components/DeviceCard";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -27,9 +28,13 @@ type AstroAccountTab = "monitoring" | "settings" | "content";
 
 export default function DevicePageContents(props: { deviceId: number }) {
   const [device, setDevice] = useState<IDevice | undefined>();
+  const loadDevice = useCallback(
+    () => ApiController.getDevice(props.deviceId).then((d) => setDevice(d)),
+    [props.deviceId]
+  );
   useEffect(() => {
-    ApiController.getDevice(props.deviceId).then((d) => setDevice(d));
-  }, [props.deviceId]);
+    loadDevice();
+  }, [loadDevice]);
 
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
 
@@ -38,6 +43,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
   const [disconnectDialogOpen, setDisconnectDialogOpen] =
     useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -78,6 +84,9 @@ export default function DevicePageContents(props: { deviceId: number }) {
               imageUrl: d.profileAvatarUrl,
               callback: () => router.push(`/devices/${d.id}`),
             })),
+            label: device?.deviceType
+              ? DEVICE_TYPE_DISPLAY_NAMES[device?.deviceType]
+              : undefined,
           },
         ]}
         titleBackButton={true}
@@ -192,7 +201,10 @@ export default function DevicePageContents(props: { deviceId: number }) {
       <DeviceRenameDialog
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
-        onSubmit={(name) => null}
+        onSubmit={(name) => {
+          ApiController.renameDevice(props.deviceId, name).then(loadDevice);
+          setRenameDialogOpen(false);
+        }}
       />
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}

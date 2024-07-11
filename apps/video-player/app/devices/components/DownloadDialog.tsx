@@ -1,5 +1,4 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import { Stack } from "@mui/system";
 import Image from "next/image";
@@ -77,7 +76,7 @@ const DownloadDialog = (props: { open: boolean; onClose: () => void }) => (
   >
     <Stack spacing="20px" direction="row" alignItems="center" flex={1}>
       {PLATFORMS.map((p) => (
-        <DownloadCard imageUrl={p.logoUrl} name={p.name} />
+        <DownloadCard key={p.name} imageUrl={p.logoUrl} name={p.name} />
       ))}
     </Stack>
   </UrsorDialog>

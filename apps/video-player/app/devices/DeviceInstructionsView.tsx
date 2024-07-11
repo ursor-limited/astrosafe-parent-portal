@@ -57,7 +57,7 @@ export const FloatingIntroCards = (props: {
       <Stack position="relative" width="100%" height="100px">
         <Image
           src="https://ursorassets.s3.eu-west-1.amazonaws.com/Vector+86.png"
-          style={{ objectFit: "cover" }}
+          //style={{ objectFit: "cover" }}
           fill
           alt="wave"
         />
@@ -209,14 +209,16 @@ const DeviceInstructionsView = () => {
               sx={{ textAlign: "center" }}
               color={PALETTE.secondary.grey[4]}
             >
-              Connect your child or student’s device to start exploring the
-              internet with them safely!
+              {
+                "Connect your child or student's device to start exploring the internet with them safely!"
+              }
             </Typography>
           </Stack>
         </Stack>
         <FloatingIntroCards
           onOpen={() => setDownloadDialogOpen(true)}
-          spacing="320px"
+          spacing="120px"
+          fadedEdges
         />
       </Stack>
       <DownloadDialog

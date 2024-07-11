@@ -11,6 +11,7 @@ export interface ITitleRowItem {
   text: string;
   image?: React.ReactNode;
   options?: { text: string; imageUrl?: string; callback: () => void }[];
+  label?: string; // a small grey text between the actual text and the chevron
   callback?: () => void;
 }
 
@@ -32,6 +33,13 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
       >
         {props.text}
       </Typography>
+      {props.label ? (
+        <Stack justifyContent="flex-end">
+          <Typography color={PALETTE.secondary.grey[4]}>
+            {props.label}
+          </Typography>
+        </Stack>
+      ) : null}
       {props.options && props.options.length > 0 ? (
         <ChevronDown height="32px" width="32px" />
       ) : null}
@@ -70,6 +78,7 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
           ))}
         </Stack>
       }
+      placement="left"
       closeCallback={() => setOpen(false)}
     >
       {ActualItem}
