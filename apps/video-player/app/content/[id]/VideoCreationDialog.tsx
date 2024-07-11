@@ -1,31 +1,58 @@
 import { Stack } from "@mui/system";
 import ContentCreationDialog from "./ContentCreationDialog";
 import VideoCard from "./VideoCard";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController from "@/app/api";
-import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IContentBucket, IVideo } from "@/app/devices/[id]/ContentTab";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const VideoCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
   folderId: IContentBucket["id"];
   creationCallback: () => void;
+  updateDetails?: {
+    video: IVideo;
+    callback?: () => void;
+  };
 }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
-  const submit = () =>
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+  useEffect(() => {
+    props.updateDetails && setTitle(props.updateDetails?.video.title);
+    props.updateDetails && setUrl(props.updateDetails?.video.url);
+    props.updateDetails &&
+      setThumbnailUrl(props.updateDetails?.video.thumbnailUrl);
+  }, [props.updateDetails]);
+
+  const notificationCtx = useContext(NotificationContext);
+
+  const submitCreation = () =>
     ApiController.createVideo(
       title,
       url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png",
       props.folderId
     ).then(props.creationCallback);
+
+  const submitUpdate = () =>
+    props.updateDetails?.video.id &&
+    ApiController.updateVideo(
+      props.updateDetails.video.id,
+      title,
+      url,
+      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
+    )
+      .then(props.updateDetails?.callback)
+      .then(() => notificationCtx.success("Updated Video"));
+
   return (
     <ContentCreationDialog
       open={props.open}
       closeCallback={props.onClose}
       onSubmit={() => {
-        submit();
+        (props.updateDetails?.callback ? submitUpdate : submitCreation)();
         props.onClose();
       }}
       type="video"
@@ -43,7 +70,7 @@ const VideoCreationDialog = (props: {
           id={0}
           title={title}
           url={url}
-          thumbnailUrl=""
+          thumbnailUrl={thumbnailUrl}
           onClick={() => null}
           noPointerEvents
         />

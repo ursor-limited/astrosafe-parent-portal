@@ -7,12 +7,12 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
-import { DeviceType, IDevice_new } from "../FilterPageContents";
+import { DeviceType, IDevice } from "../FilterPageContents";
 import DeviceCard from "../../../devices/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 
-const FilterPageDevicesSection = (props: { devices: IDevice_new[] }) => {
+const FilterPageDevicesSection = (props: { devices: IDevice[] }) => {
   const router = useRouter();
   return (
     <AstroBentoCard

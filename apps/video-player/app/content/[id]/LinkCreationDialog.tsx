@@ -1,9 +1,10 @@
 import { Stack } from "@mui/system";
 import ContentCreationDialog from "./ContentCreationDialog";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import LinkCard from "./LinkCard";
 import ApiController from "@/app/api";
 import { IContentBucket, ILink } from "@/app/devices/[id]/ContentTab";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const LinkCreationDialog = (props: {
   open: boolean;
@@ -17,10 +18,15 @@ const LinkCreationDialog = (props: {
 }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.link.title);
     props.updateDetails && setUrl(props.updateDetails?.link.url);
+    props.updateDetails &&
+      setThumbnailUrl(props.updateDetails?.link.thumbnailUrl);
   }, [props.updateDetails]);
+
+  const notificationCtx = useContext(NotificationContext);
 
   const submitCreation = () =>
     ApiController.createLink(
@@ -37,7 +43,9 @@ const LinkCreationDialog = (props: {
       title,
       url,
       "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
-    ).then(props.updateDetails?.callback);
+    )
+      .then(props.updateDetails?.callback)
+      .then(() => notificationCtx.success("Updated Link"));
 
   return (
     <ContentCreationDialog
@@ -63,7 +71,7 @@ const LinkCreationDialog = (props: {
           id={0}
           title={title}
           url={url}
-          thumbnailUrl=""
+          thumbnailUrl={thumbnailUrl}
           onClick={() => null}
           noPointerEvents
         />

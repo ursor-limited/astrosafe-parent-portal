@@ -8,11 +8,12 @@ import ApiController from "@/app/api";
 const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
-  props: IVideo & {
+  props: Omit<IVideo, "createdAt"> & {
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
     onUpdate?: () => void;
+    onOpenEditingDialog?: () => void;
   }
 ) => {
   return (
@@ -22,6 +23,7 @@ const VideoCard = (
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
+      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
     >
       <Stack
         height={IMAGE_HEIGHT}

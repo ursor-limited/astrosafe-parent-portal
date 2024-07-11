@@ -71,7 +71,6 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
         </Stack>
       }
       closeCallback={() => setOpen(false)}
-      buttonWidth
     >
       {ActualItem}
     </UrsorPopover>

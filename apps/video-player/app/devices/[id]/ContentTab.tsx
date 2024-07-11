@@ -10,6 +10,7 @@ export interface IContent {
   id: number;
   title: string;
   url: string;
+  createdAt: string;
 }
 
 export interface IContentBucket {

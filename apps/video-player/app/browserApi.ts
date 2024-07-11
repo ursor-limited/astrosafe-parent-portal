@@ -1,4 +1,4 @@
-import { IDevice_new } from "./filters/[id]/FilterPageContents";
+import { IDevice } from "./filters/[id]/FilterPageContents";
 
 export interface ISchool {
   id: string;
@@ -10,7 +10,7 @@ export interface ISchool {
   postcode?: string;
   country?: string;
   isDeleted: boolean;
-  devices: IDevice_new[];
+  devices: IDevice[];
   joinCode: string;
   teacherCode: string;
   ownerId: string;

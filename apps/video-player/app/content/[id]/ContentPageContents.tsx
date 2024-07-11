@@ -21,10 +21,7 @@ import {
 } from "@/app/devices/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
-import {
-  DUMMY_DEVICES,
-  IDevice_new,
-} from "@/app/filters/[id]/FilterPageContents";
+import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
 import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
@@ -41,6 +38,7 @@ import ChannelCreationDialog from "./ChannelCreationDialog";
 import ApiController from "@/app/api";
 import FolderRenameDialog from "./FolderRenameDialog";
 import NotificationContext from "@/app/components/NotificationContext";
+import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 
 export interface IAstroContentBranding {
   title: string;
@@ -99,13 +97,15 @@ export default function ContentPageContents(props: { folderId: number }) {
             })),
             // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
           ],
-          (c) => c.content.title
+          (c) => c.content.createdAt
         )
       );
     });
   useEffect(() => {
     loadFolder();
   }, [props.folderId]);
+
+  console.log(contents);
 
   const router = useRouter();
 
@@ -116,12 +116,12 @@ export default function ContentPageContents(props: { folderId: number }) {
 
   const [filteredContents, setFilteredContents] = useState<IContentCard[]>([]);
 
-  const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
+  const [devices, setDevices] = useState<IDevice[]>(DUMMY_DEVICES);
 
   useEffect(
     () =>
       setFilteredContents(
-        contents
+        _(contents)
           .filter(
             (c) =>
               selectedContentType === "all" || c.type === selectedContentType
@@ -131,6 +131,8 @@ export default function ContentPageContents(props: { folderId: number }) {
               !searchValue ||
               c.content.title.toLowerCase().includes(searchValue.toLowerCase())
           )
+          .reverse()
+          .value()
       ),
     [searchValue, selectedContentType, contents]
   );
@@ -162,6 +164,14 @@ export default function ContentPageContents(props: { folderId: number }) {
 
   const [linkEditingDialogId, setLinkEditingDialogId] = useState<
     ILink["id"] | undefined
+  >(undefined);
+
+  const [videoEditingDialogId, setVideoEditingDialogId] = useState<
+    IVideo["id"] | undefined
+  >(undefined);
+
+  const [channelEditingDialogId, setChannelEditingDialogId] = useState<
+    IChannel["id"] | undefined
   >(undefined);
 
   return (
@@ -304,14 +314,18 @@ export default function ContentPageContents(props: { folderId: number }) {
                                   {...(x.content as IVideo)}
                                   onClick={() => null}
                                   onDelete={loadFolder}
-                                  onUpdate={loadFolder}
+                                  onOpenEditingDialog={() =>
+                                    setVideoEditingDialogId(x.content.id)
+                                  }
                                 />
                               ) : x.type === "channel" ? (
                                 <ChannelCard
                                   {...(x.content as IChannel)}
                                   onClick={() => null}
                                   onDelete={loadFolder}
-                                  onUpdate={loadFolder}
+                                  onOpenEditingDialog={() =>
+                                    setChannelEditingDialogId(x.content.id)
+                                  }
                                 />
                               ) : null}
                             </UrsorFadeIn>
@@ -393,6 +407,8 @@ export default function ContentPageContents(props: { folderId: number }) {
             onClose={() => {
               setCreationDialogOpen(undefined);
             }}
+            folderId={props.folderId}
+            creationCallback={loadFolder}
           />
         ) : null
       ) : null}
@@ -407,6 +423,37 @@ export default function ContentPageContents(props: { folderId: number }) {
           updateDetails={{
             link: contents.find((c) => c.content.id === linkEditingDialogId)
               ?.content as ILink,
+            callback: loadFolder,
+          }}
+        />
+      ) : null}
+      {videoEditingDialogId && contents ? (
+        <VideoCreationDialog
+          open={true}
+          onClose={() => {
+            setVideoEditingDialogId(undefined);
+          }}
+          folderId={props.folderId}
+          creationCallback={loadFolder}
+          updateDetails={{
+            video: contents.find((c) => c.content.id === videoEditingDialogId)
+              ?.content as IVideo,
+            callback: loadFolder,
+          }}
+        />
+      ) : null}
+      {channelEditingDialogId && contents ? (
+        <ChannelCreationDialog
+          open={true}
+          onClose={() => {
+            setChannelEditingDialogId(undefined);
+          }}
+          folderId={props.folderId}
+          creationCallback={loadFolder}
+          updateDetails={{
+            channel: contents.find(
+              (c) => c.content.id === channelEditingDialogId
+            )?.content as IChannel,
             callback: loadFolder,
           }}
         />

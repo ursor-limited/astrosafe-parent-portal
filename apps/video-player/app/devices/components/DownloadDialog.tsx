@@ -1,5 +1,5 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { IDevice_new } from "@/app/filters/[id]/FilterPageContents";
+import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import { Stack } from "@mui/system";
 import Image from "next/image";

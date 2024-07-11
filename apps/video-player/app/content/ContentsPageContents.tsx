@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import ApiController from "../api";
 import { useState } from "react";
 
+const DEFAULT_TITLE = "Untitled Folder";
+
 const ContentsPageContents = () => {
   const router = useRouter();
   const [folders, setFolders] = useState<IContentBucket[]>([]);
@@ -21,7 +23,10 @@ const ContentsPageContents = () => {
       selectedSidebarItemId="content"
       button={{
         text: "Create a Folder",
-        callback: () => ApiController.createFolder("Buu!", 1),
+        callback: () =>
+          ApiController.createFolder(DEFAULT_TITLE, 1).then((f) =>
+            router.push(`/content/${f.id}`)
+          ),
         icon: PlusIcon,
       }}
       maxWidth={834}

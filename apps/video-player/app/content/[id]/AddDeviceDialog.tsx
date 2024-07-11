@@ -1,6 +1,6 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
-import { IDevice_new } from "@/app/filters/[id]/FilterPageContents";
+import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import { PALETTE, Typography } from "ui";
@@ -8,7 +8,7 @@ import { PALETTE, Typography } from "ui";
 const AddDeviceDialog = (props: {
   open: boolean;
   onClose: () => void;
-  devices: IDevice_new[];
+  devices: IDevice[];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   return (

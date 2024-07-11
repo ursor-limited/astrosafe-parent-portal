@@ -25,7 +25,7 @@ import FilterExceptionDialog from "./components/FilterExceptionDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
-export interface IDevice_new {
+export interface IDevice {
   id: number;
   name: string;
   backgroundColor: string;
@@ -38,7 +38,7 @@ export interface IDevice_new {
   locked: boolean;
 }
 
-export const DUMMY_DEVICES: IDevice_new[] = [
+export const DUMMY_DEVICES: IDevice[] = [
   {
     id: 1,
     name: "Joe's iPad",

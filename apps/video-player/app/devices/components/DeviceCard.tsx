@@ -5,7 +5,7 @@ import { PALETTE, Typography } from "ui";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import { DeviceType, IDevice_new } from "../../filters/[id]/FilterPageContents";
+import { DeviceType, IDevice } from "../../filters/[id]/FilterPageContents";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 };
 
 const DeviceCard = (
-  props: IDevice_new & {
+  props: IDevice & {
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;

@@ -29,6 +29,8 @@ export interface IContentCreationDialogProps {
   closeCallback: () => void;
   onSubmit?: () => void;
   editing?: boolean;
+  buttonDisabled?: boolean;
+  extraBottomElement?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -84,6 +86,18 @@ export default function ContentCreationDialog(
                 width="100%"
               />
             </LabeledInputField>
+            {props.extraBottomElement ? (
+              <Stack>
+                <Stack height="20px">
+                  <Stack
+                    height="2px"
+                    width="100%"
+                    bgcolor={PALETTE.secondary.grey[2]}
+                  />
+                </Stack>
+                {props.extraBottomElement}
+              </Stack>
+            ) : null}
           </Stack>
           <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
           <Stack width="299px">{props.children}</Stack>
@@ -93,6 +107,7 @@ export default function ContentCreationDialog(
           dark
           variant="tertiary"
           onClick={props.onSubmit}
+          disabled={props.buttonDisabled || !props.title || !props.url}
         >
           {props.editing
             ? "Save changes"

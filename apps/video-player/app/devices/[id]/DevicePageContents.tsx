@@ -5,10 +5,7 @@ import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
-import {
-  DUMMY_DEVICES,
-  IDevice_new,
-} from "@/app/filters/[id]/FilterPageContents";
+import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -22,17 +19,16 @@ import DevicePageContentTab from "./ContentTab";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import ApiController from "@/app/api";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
 type AstroAccountTab = "monitoring" | "settings" | "content";
 
 export default function DevicePageContents(props: { deviceId: number }) {
-  const [device, setDevice] = useState<IDevice_new | undefined>();
+  const [device, setDevice] = useState<IDevice | undefined>();
   useEffect(() => {
-    setDevice(
-      DUMMY_DEVICES.find((d) => d.id.toString() === props.deviceId.toString())
-    );
+    ApiController.getDevice(props.deviceId).then((d) => setDevice(d));
   }, [props.deviceId]);
 
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");

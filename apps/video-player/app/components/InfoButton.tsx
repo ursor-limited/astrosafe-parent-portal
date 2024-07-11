@@ -32,6 +32,7 @@ const InfoButton = (props: { title: string; body: string }) => {
       closeCallback={() => setOpen(false)}
       placement="left"
       noPadding
+      zIndex={9999}
     >
       <Stack
         onClick={() => setOpen(true)}

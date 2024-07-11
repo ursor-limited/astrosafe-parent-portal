@@ -7,7 +7,7 @@ import ApiController from "@/app/api";
 const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
-  props: ILink & {
+  props: Omit<ILink, "createdAt"> & {
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;

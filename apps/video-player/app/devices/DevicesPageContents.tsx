@@ -7,10 +7,7 @@ import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
-import {
-  DUMMY_DEVICES,
-  IDevice_new,
-} from "@/app/filters/[id]/FilterPageContents";
+import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DeviceCard from "./components/DeviceCard";
 import { Stack } from "@mui/system";
@@ -26,7 +23,7 @@ import DownloadDialog from "./components/DownloadDialog";
 export type DeviceType = "chrome" | "android" | "ios";
 
 export default function DevicesPageContents() {
-  const [devices, setDevices] = useState<IDevice_new[]>(DUMMY_DEVICES);
+  const [devices, setDevices] = useState<IDevice[]>(DUMMY_DEVICES);
   const router = useRouter();
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
   const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);

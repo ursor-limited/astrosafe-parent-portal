@@ -39,7 +39,7 @@ import DeletionDialog from "../components/DeletionDialog";
 
 export const GRID_SPACING = "20px";
 
-export interface IChannel {
+export interface IChannel_DEPRECATED {
   id: string;
   creatorId?: string;
   schoolId: string;
@@ -51,7 +51,7 @@ export interface IChannel {
 }
 
 const ChannelCard = (props: {
-  channel: IChannel;
+  channel: IChannel_DEPRECATED;
   nStacks: number;
   nLinks: number;
   selected: boolean;
@@ -281,7 +281,7 @@ const ChannelsColumn = (props: {
   selectionCallback: (id: string) => void;
   deleteCallback: (id: string) => void;
   updateCallback: () => void;
-  channels: IChannel[];
+  channels: IChannel_DEPRECATED[];
   my?: boolean;
   //editCallback: (id: string) => void;
 }) => {
@@ -385,7 +385,9 @@ export default function LibraryPage() {
   const userDetails = useBrowserUserContext().userDetails;
   const notificationCtx = useContext(NotificationContext);
 
-  const [channels, setChannels] = useState<IChannel[] | undefined>(undefined);
+  const [channels, setChannels] = useState<IChannel_DEPRECATED[] | undefined>(
+    undefined
+  );
   const loadChannels = () =>
     BrowserApiController.getChannelsInSchool(userDetails?.schoolId ?? "")
       .then((c) => setChannels(c))
@@ -414,7 +416,9 @@ export default function LibraryPage() {
 
   const [my, setMy] = useState<boolean>(false);
 
-  const [filteredChannels, setFilteredChannels] = useState<IChannel[]>([]);
+  const [filteredChannels, setFilteredChannels] = useState<
+    IChannel_DEPRECATED[]
+  >([]);
   const [selectedChannelId, setSelectedChannelId] = useState<
     string | undefined
   >(undefined);

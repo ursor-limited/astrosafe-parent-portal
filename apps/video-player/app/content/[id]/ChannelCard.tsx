@@ -7,11 +7,12 @@ import ApiController from "@/app/api";
 const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
-  props: IChannel & {
+  props: Omit<IChannel, "createdAt"> & {
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
     onUpdate?: () => void;
+    onOpenEditingDialog?: () => void;
   }
 ) => {
   return (
@@ -21,6 +22,7 @@ const ChannelCard = (
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
+      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
     >
       <Stack
         height={IMAGE_HEIGHT}
