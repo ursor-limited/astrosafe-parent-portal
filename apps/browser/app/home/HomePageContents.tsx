@@ -1,28 +1,93 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import ApiController, {
-  IBrowserLink,
-  IChannel,
-  IPlatform,
-  IStack,
-  getAbsoluteUrl,
-} from "../api";
+import { useCallback, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
-import ChannelButton from "./ChannelButton";
+import FolderButton from "./FolderButton";
 import useColumnWidth from "../components/useColumnWidth";
-import AstroContentColumns, { BrowserContent } from "./AstroContentColumns";
+import { BrowserContent } from "./AstroContentColumns";
 import _ from "lodash";
-import PlatformCard from "../components/PlatformCard";
 import { useRouter } from "next/navigation";
 import PageLayout from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import StarFillIcon from "@/images/icons/StarFillIcon.svg";
-import TelescopeIcon from "@/images/icons/TelescopeIcon.svg";
-import { PALETTE } from "ui";
+import { PALETTE, Typography } from "ui";
+import Image from "next/image";
+import LinkCard from "../components/LinkCard";
+import ChannelCard from "../components/ChannelCard";
+import ApiController, { getAbsoluteUrl } from "../api";
+import VideoCard from "../components/VideoCard";
+import PlatformCard from "../components/PlatformCard";
 
-export type AstroContent = "link" | "stack";
+export type AstroContent = "video" | "channel" | "link";
+
+export interface IContent {
+  id: number;
+  title: string;
+  url: string;
+  createdAt: string;
+}
+
+export interface IContentCard {
+  type: AstroContent;
+  content: IContent;
+}
+
+export interface IContentBucket {
+  id: number;
+  title: string;
+  groupId: number;
+  Videos: IVideo[];
+  Channels: IChannel[];
+  Links: ILink[];
+  Lessons: ILesson[];
+}
+
+export interface ILink extends IContent {
+  thumbnailUrl: string;
+}
+export interface IChannel extends IContent {
+  profileUrl: string;
+  backgroundUrl: string;
+}
+export interface IVideo extends IContent {
+  thumbnailUrl: string;
+}
+export interface ILesson extends IContent {
+  imageUrls: string[];
+}
+
+export interface IContentBucket {
+  id: number;
+  title: string;
+  groupId: number;
+  videos: IVideo[];
+  channels: IChannel[];
+  links: ILink[];
+  lessons: ILesson[];
+}
+
+export type DeviceType = "chrome" | "android" | "ios";
+
+export interface IDevice {
+  id: number;
+  name: string;
+  backgroundColor: string;
+  profileAvatarUrl: string;
+  lastOnline: string;
+  connected: boolean;
+  deviceType: DeviceType;
+  favorites: number[];
+  requestedSites: IFilterUrl[];
+}
+
+export interface IFilterUrl {
+  id: number;
+  url: string;
+  title: string;
+  imageUrl: string;
+  createdAt: string;
+  groupId: number;
+}
 
 const OVERALL_X_PADDING = "20px";
 
@@ -36,274 +101,194 @@ export default function HomePageContents(props: {
       contentType: BrowserContent;
     }[]
   >("favorites", []);
-  const [discoverLinks, setDiscoverLinks] = useState<IBrowserLink[]>([]);
-  //const [discoverStacks, setDiscoverStacks] = useState<IStack[]>([]);
 
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
+    1
+  );
+
+  const [schoolId, setSchoolId] = useLocalStorage<string | undefined>(
+    "schoolId",
     undefined
   );
 
+  const [services, setServices] = useState<IFilterUrl[]>([]);
+  // useEffect(() => {
+  //   deviceId &&
+  //     ApiController.getDeviceServices(deviceId).then((s) => setServices(s));
+  // }, [deviceId]);
+
+  const [folders, setFolders] = useState<IContentBucket[] | undefined>();
   useEffect(() => {
-    if (deviceId) {
-      ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
-      ApiController.getDiscoverContents(deviceId).then((response) => {
-        if (response) {
-          setDiscoverLinks(response);
-          //setDiscoverStacks(response.links);
-        }
-      });
-    }
+    deviceId &&
+      ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
   }, [deviceId]);
 
-  const [channels, setChannels] = useState<IChannel[]>([]);
-  const [links, setLinks] = useState<IBrowserLink[]>([]);
-  const [stacks, setStacks] = useState<IStack[]>([]);
-  const [apps, setApps] = useState<IPlatform[]>([]);
-  useEffect(() => {
-    (deviceId
-      ? ApiController.getLinks(deviceId)
-      : ApiController.getGuestLinks()
-    ).then((links) => setLinks(_.reverse(links.slice())));
-    deviceId
-      ? ApiController.getStacks(deviceId).then((stacks) => setStacks(stacks))
-      : setStacks([]);
-    (deviceId
-      ? ApiController.getChannels(deviceId)
-      : ApiController.getGuestChannels()
-    ).then((channels) => setChannels(channels));
-    (deviceId
-      ? ApiController.getApps(deviceId)
-      : ApiController.getGuestApps()
-    ).then((apps) => setApps(_.reverse(apps.slice())));
-  }, [deviceId]);
-
-  const [selectedChannelId, setSelectedChannelId] = useState<
-    string | undefined
-  >(undefined);
-
-  const [showFavorites, setShowFavorites] = useState<boolean>(false);
-  const [showDiscover, setShowDiscover] = useState<boolean>(true);
-
-  const [filteredLinks, setFilteredLinks] = useState<IBrowserLink[]>([]);
-  useEffect(
-    () =>
-      setFilteredLinks(
-        showDiscover
-          ? discoverLinks
-          : links?.filter((l) =>
-              showFavorites
-                ? favorites.find((f) => f.contentId === l.id)
-                : !l.stackId && l.channelId === selectedChannelId
-            )
-      ),
-    [
-      links,
-      selectedChannelId,
-      showFavorites,
-      showDiscover,
-      discoverLinks,
-      favorites,
-    ]
-  );
-  const [filteredStacks, setFilteredStacks] = useState<IStack[]>([]);
-  useEffect(
-    () =>
-      setFilteredStacks(
-        showDiscover
-          ? []
-          : stacks?.filter((s) =>
-              showFavorites
-                ? favorites.find((f) => f.contentId === s.id)
-                : s.channelId === selectedChannelId
-            )
-      ),
-    [stacks, selectedChannelId, showFavorites, favorites]
-  );
-
-  const [cardColumns, setCardColumns] = useState<
-    {
-      type: AstroContent;
-      details: IBrowserLink | IStack;
-    }[][]
+  const [selectedFolderId, setSelectedFolderId] = useState<
+    IContentBucket["id"] | undefined
+  >();
+  const [currentFolderContents, setCurrentFolderContents] = useState<
+    IContentCard[]
   >([]);
-
-  const { nColumns, setColumnsContainerRef } = useColumnWidth();
-
+  const loadFolder = useCallback(
+    () =>
+      selectedFolderId &&
+      ApiController.getFolder(selectedFolderId).then((f: IContentBucket) => {
+        //setFolder(f);
+        setCurrentFolderContents(
+          _.sortBy(
+            [
+              ...f.links.map((l) => ({
+                type: "link" as AstroContent,
+                content: l,
+              })),
+              ...f.videos.map((v) => ({
+                type: "video" as AstroContent,
+                content: v,
+              })),
+              ...f.channels.map((c) => ({
+                type: "channel" as AstroContent,
+                content: c,
+              })),
+            ],
+            (c) => c.content.createdAt
+          )
+        );
+      }),
+    [selectedFolderId]
+  );
   useEffect(() => {
-    const linkDetails = (
-      links?.filter((l) =>
-        showDiscover
-          ? discoverLinks
-          : showFavorites
-          ? favorites.find((f) => f.contentId === l.id)
-          : !l.stackId && l.channelId === selectedChannelId
-      ) || []
-    ).map((l) => ({
-      type: "link" as AstroContent,
-      details: l,
-    }));
-    const stackDetails = (
-      stacks?.filter((s) =>
-        showFavorites
-          ? favorites.find((f) => f.contentId === s.id)
-          : s.channelId === selectedChannelId
-      ) || []
-    ).map((s) => ({
-      type: "stack" as AstroContent,
-      details: s,
-    }));
-    const allContentDetails = _.reverse(
-      _.sortBy(
-        [...linkDetails, ...stackDetails],
-        (c) => new Date(c.details.createdAt)
-      ).slice()
-    );
-    const chunked = _.chunk(allContentDetails, nColumns);
-    setCardColumns(
+    loadFolder();
+  }, [loadFolder]);
+
+  const router = useRouter();
+
+  const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
+  const [columns, setColumns] = useState<IContentCard[][]>([]);
+  useEffect(() => {
+    const chunked = _.chunk(currentFolderContents, nColumns);
+    setColumns(
       [...Array(nColumns).keys()].map((i) =>
         _.compact(chunked.map((chunk) => chunk[i]))
       )
     );
-  }, [links, stacks, selectedChannelId, nColumns]);
-
-  const router = useRouter();
+  }, [nColumns, currentFolderContents]);
 
   return (
     <PageLayout
       headerButtonId="home"
       mobile={props.mobile}
       openConnect={props.openConnect}
-      sections={[
-        {
-          title: "Home",
-          contents: (
-            <Stack overflow="scroll" height="162px">
-              <Stack
-                direction="row"
-                spacing="12px"
-                px={OVERALL_X_PADDING}
-                boxSizing="border-box"
-              >
-                {[
-                  ...apps.map((a, i) => (
-                    <Stack
+    >
+      <Stack spacing="20px">
+        <Stack overflow="scroll" height="162px">
+          <Stack
+            direction="row"
+            spacing="12px"
+            px={OVERALL_X_PADDING}
+            boxSizing="border-box"
+          >
+            {[
+              ...services.map((a, i) => (
+                <Stack key={a.id} onClick={() => setSelectedFolderId(a.id)}>
+                  <UrsorFadeIn duration={1200} delay={i * 70}>
+                    <PlatformCard
                       key={a.id}
-                      onClick={() => setSelectedChannelId(a.id)}
-                    >
-                      <UrsorFadeIn duration={1200} delay={i * 70}>
-                        <PlatformCard
-                          key={a.id}
-                          platform={a}
-                          clickCallback={() =>
-                            router.push(getAbsoluteUrl(a.url))
-                          }
-                        />
-                      </UrsorFadeIn>
+                      platform={a}
+                      clickCallback={() => router.push(getAbsoluteUrl(a.url))}
+                    />
+                  </UrsorFadeIn>
+                </Stack>
+              )),
+              <Stack key="padding" minWidth="8px" />,
+            ]}
+          </Stack>
+        </Stack>
+        <Stack overflow="scroll">
+          <Stack
+            direction="row"
+            spacing="12px"
+            px={OVERALL_X_PADDING}
+            boxSizing="border-box"
+          >
+            {folders?.map((f, i) => (
+              <UrsorFadeIn key={f.id} duration={800} delay={700 + (i + 1) * 90}>
+                <Stack
+                  onClick={() => {
+                    setSelectedFolderId(f.id);
+                  }}
+                >
+                  <FolderButton
+                    key={f.id}
+                    title={f.title}
+                    selected={selectedFolderId === f.id}
+                  />
+                </Stack>
+              </UrsorFadeIn>
+            ))}
+          </Stack>
+        </Stack>
+        <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
+          <Stack ref={setColumnsContainerRef} overflow="hidden" flex={1}>
+            {currentFolderContents.length > 0 ? (
+              <Stack flex={1} direction="row" spacing="20px">
+                {[
+                  ...columns.map((column, i) => (
+                    <Stack key={i} flex={1} spacing="20px" overflow="hidden">
+                      {column.map((x, j) => (
+                        <Stack key={x.content.id}>
+                          <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                            {x.type === "link" ? (
+                              <LinkCard
+                                {...(x.content as ILink)}
+                                onClick={() => null}
+                              />
+                            ) : x.type === "video" ? (
+                              <VideoCard
+                                {...(x.content as IVideo)}
+                                onClick={() => null}
+                              />
+                            ) : x.type === "channel" ? (
+                              <ChannelCard
+                                {...(x.content as IChannel)}
+                                onClick={() => null}
+                              />
+                            ) : null}
+                          </UrsorFadeIn>
+                        </Stack>
+                      ))}
                     </Stack>
                   )),
-                  <Stack key="padding" minWidth="8px" />,
                 ]}
               </Stack>
-            </Stack>
-          ),
-        },
-        {
-          title: "Channels",
-          contents: (
-            <>
-              <Stack overflow="scroll">
-                <Stack
-                  direction="row"
-                  spacing="12px"
-                  px={OVERALL_X_PADDING}
-                  boxSizing="border-box"
-                >
-                  {[
-                    <UrsorFadeIn key="discover" duration={800} delay={700}>
-                      <Stack
-                        onClick={() => {
-                          setSelectedChannelId(undefined);
-                          setShowDiscover(true);
-                          setShowFavorites(false);
-                        }}
-                      >
-                        <ChannelButton
-                          title="AstroSafe Discover"
-                          icon={TelescopeIcon}
-                          selected={showDiscover}
-                        />
-                      </Stack>
-                    </UrsorFadeIn>,
-                    <UrsorFadeIn key="favorites" duration={800} delay={790}>
-                      <Stack
-                        onClick={() => {
-                          setSelectedChannelId(undefined);
-                          setShowFavorites(true);
-                          setShowDiscover(false);
-                        }}
-                      >
-                        <ChannelButton
-                          title="My favorites"
-                          icon={StarFillIcon}
-                          selected={showFavorites}
-                        />
-                      </Stack>
-                    </UrsorFadeIn>,
-                    <Stack
-                      key="line"
-                      height="100%"
-                      minWidth="2px"
-                      bgcolor={PALETTE.secondary.grey[2]}
-                    />,
-                    ...channels?.map((c, i) => (
-                      <UrsorFadeIn
-                        key={c.id}
-                        duration={800}
-                        delay={700 + (i + 1) * 90}
-                      >
-                        <Stack
-                          onClick={() => {
-                            setSelectedChannelId(c.id);
-                            setShowFavorites(false);
-                            setShowDiscover(false);
-                          }}
-                        >
-                          <ChannelButton
-                            key={c.id}
-                            title={c.title}
-                            color={c.color}
-                            selected={selectedChannelId === c.id}
-                          />
-                        </Stack>
-                      </UrsorFadeIn>
-                    )),
-                    <Stack key="padding" minWidth="8px" />,
-                  ]}
+            ) : (
+              <Stack
+                height="457px"
+                justifyContent="center"
+                alignItems="center"
+                spacing="13px"
+              >
+                <Image
+                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                  width={179}
+                  height={152}
+                  alt="empty state illustration"
+                />
+                <Stack width="444px">
+                  <Typography
+                    color={PALETTE.secondary.grey[3]}
+                    sx={{ textAlign: "center" }}
+                    bold
+                  >
+                    This Folder is currently empty. Click one of the buttons
+                    above to add Content to the assigned Devices.
+                  </Typography>
                 </Stack>
               </Stack>
-              <Stack flex={1} overflow="scroll" px={OVERALL_X_PADDING}>
-                <AstroContentColumns
-                  title={
-                    showDiscover
-                      ? "AstroSafe Discover"
-                      : showFavorites
-                      ? "Favorites"
-                      : channels.find((c) => c.id === selectedChannelId)
-                          ?.title ?? ""
-                  }
-                  links={filteredLinks}
-                  stacks={filteredStacks}
-                  videos={[]}
-                  shareSelectedStackIdWithExtension
-                  emptyStateText="No Links yet."
-                  mobile={props.mobile}
-                />
-              </Stack>
-            </>
-          ),
-        },
-      ]}
-    />
+            )}
+          </Stack>
+        </Stack>
+      </Stack>
+    </PageLayout>
   );
 }

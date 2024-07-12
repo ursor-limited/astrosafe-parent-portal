@@ -1,26 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ApiController, {
-  IBrowserLink,
-  IChannel,
-  IPlatform,
-  IStack,
-  IVideo_DEPRECATED,
-  getAbsoluteUrl,
-} from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import BrowserLinkCard from "../components/BrowserLinkCard";
 import { BrowserContent, IBrowserContent } from "../home/AstroContentColumns";
-import VideoCard from "../components/VideoCard";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ImageIcon from "@/images/icons/ImageIcon.svg";
+import { ILink, IVideo } from "../home/HomePageContents";
+import LinkCard from "../components/LinkCard";
+import VideoCard from "../components/VideoCard";
 
 const SearchResultsCategoryButton = (props: {
   text: string;
@@ -97,8 +91,6 @@ const DUMMY_VIDEOS = [
   },
 ];
 
-export type AstroContent = "link" | "stack";
-
 interface ISearchResult {
   title: string;
   description: string;
@@ -106,14 +98,14 @@ interface ISearchResult {
 }
 
 const AstroContentRow = (props: {
-  videos: IVideo_DEPRECATED[];
-  links: IBrowserLink[];
+  videos: IVideo[];
+  links: ILink[];
   filter?: string;
 }) => {
   const [allContentDetails, setAllContentDetails] = useState<
     {
       type: BrowserContent;
-      details: IBrowserLink | IVideo_DEPRECATED;
+      details: ILink | IVideo;
     }[]
   >([]);
   useEffect(() => {
@@ -147,7 +139,7 @@ const AstroContentRow = (props: {
       ),
     ];
     setAllContentDetails(all);
-  }, [props.links, props.videos]);
+  }, [props.links, props.videos, props.filter]);
 
   const router = useRouter();
 
@@ -164,9 +156,15 @@ const AstroContentRow = (props: {
               width="350px"
             >
               {c.type === "link" ? (
-                <BrowserLinkCard link={c.details as IBrowserLink} />
+                <LinkCard
+                  {...c.details}
+                  onClick={() => router.push(c.details.url)}
+                />
               ) : c.type === "video" ? (
-                <VideoCard video={c.details as IVideo_DEPRECATED} />
+                <VideoCard
+                  {...c.details}
+                  onClick={() => router.push(c.details.url)}
+                />
               ) : null}
             </Stack>
           );
@@ -220,19 +218,19 @@ export default function SearchResultsPageContents(props: {
   mobile: boolean;
   searchTerm: string;
 }) {
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
 
-  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>(DUMMY_VIDEOS);
-  const [links, setLinks] = useState<IBrowserLink[]>([]);
-  useEffect(() => {
-    (deviceId
-      ? ApiController.getLinks(deviceId)
-      : ApiController.getGuestLinks()
-    ).then((links) => setLinks(_.reverse(links.slice())));
-  }, [deviceId]);
+  const [videos, setVideos] = useState<IVideo[]>([]);
+  const [links, setLinks] = useState<ILink[]>([]);
+  // useEffect(() => {
+  //   (deviceId
+  //     ? ApiController.getLinks(deviceId)
+  //     : ApiController.getGuestLinks()
+  //   ).then((links) => setLinks(_.reverse(links.slice())));
+  // }, [deviceId]);
 
   const [searchResults, setSearchResults] = useState<ISearchResult[]>([
     {

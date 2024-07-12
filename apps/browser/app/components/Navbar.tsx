@@ -4,6 +4,7 @@ import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
+import StarIcon from "@/images/icons/StarIcon.svg";
 import { useRouter } from "next/navigation";
 import { PALETTE } from "ui";
 import NavbarSearchBar from "./NavbarSearchBar";
@@ -69,7 +70,7 @@ export function NavigationButton(props: {
   );
 }
 
-export type NavbarButton = "home" | "videoChannels" | "history";
+export type NavbarButton = "home" | "videoChannels" | "history" | "favorites";
 
 export interface INavbarProps {
   selected?: NavbarButton;
@@ -111,6 +112,15 @@ export default function Navbar(props: INavbarProps) {
             )}
             callback={() => router.push("/videoChannels")}
             selected={props.selected === "videoChannels"}
+          />
+          <NavigationButton
+            icon={StarIcon}
+            color={alpha(
+              PALETTE.secondary.purple[2],
+              props.selected === "favorites" ? 1 : 0.45
+            )}
+            callback={() => router.push("/favorites")}
+            selected={props.selected === "favorites"}
           />
           <NavigationButton
             icon={ClockIcon}

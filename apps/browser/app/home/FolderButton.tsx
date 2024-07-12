@@ -1,10 +1,10 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
-import { IChannel } from "../api";
+import { IContentBucket } from "./HomePageContents";
 
-const ChannelButton = (props: {
-  title: IChannel["title"];
-  color?: IChannel["color"];
+const FolderButton = (props: {
+  title: IContentBucket["title"];
+  //color: IContentBucket["color"];
   selected: boolean;
   icon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }) => {
@@ -27,28 +27,7 @@ const ChannelButton = (props: {
         transition: "0.2s",
       }}
     >
-      {props.icon ? (
-        <Stack
-          sx={{
-            svg: {
-              path: {
-                fill: props.selected
-                  ? "rgb(255,255,255)"
-                  : PALETTE.secondary.purple[2],
-              },
-            },
-          }}
-        >
-          <props.icon height="12px" width="12px" />
-        </Stack>
-      ) : (
-        <Stack
-          height="12px"
-          width="12px"
-          bgcolor={props.color || PALETTE.secondary.pink[2]}
-          borderRadius="100%"
-        />
-      )}
+      {/* <Stack height="12px" width="12px" bgcolor={props.color} /> */}
       <Typography
         bold
         noWrap
@@ -63,4 +42,4 @@ const ChannelButton = (props: {
   );
 };
 
-export default ChannelButton;
+export default FolderButton;

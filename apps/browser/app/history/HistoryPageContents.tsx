@@ -122,12 +122,12 @@ const DUMMY_JOURNEYS: { datetime: string; journeys: IJourney[] }[] = [
 export const OVERALL_X_PADDING = "20px";
 
 export default function JourneyPageContents(props: { mobile: boolean }) {
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
 
-  useEffect(() => setDeviceId("659685e649ded4f6a4e28c53"), []);
+  useEffect(() => setDeviceId(1), []);
 
   const router = useRouter();
 
@@ -135,27 +135,18 @@ export default function JourneyPageContents(props: { mobile: boolean }) {
     useState<{ datetime: string; journeys: IJourney[] }[]>(DUMMY_JOURNEYS);
 
   return (
-    <PageLayout
-      headerButtonId="history"
-      mobile={props.mobile}
-      sections={[
-        {
-          title: "History",
-          contents: (
-            <Stack spacing="10px" px={OVERALL_X_PADDING}>
-              {dateJourneys.map((dateGroup, i) => (
-                <UrsorFadeIn key={i} duration={800} delay={i * 120}>
-                  <DateJourneysCard
-                    date={dateGroup.datetime}
-                    journeys={dateGroup.journeys}
-                    mobile={props.mobile}
-                  />
-                </UrsorFadeIn>
-              ))}
-            </Stack>
-          ),
-        },
-      ]}
-    />
+    <PageLayout headerButtonId="history" mobile={props.mobile}>
+      <Stack spacing="10px" px={OVERALL_X_PADDING}>
+        {dateJourneys.map((dateGroup, i) => (
+          <UrsorFadeIn key={i} duration={800} delay={i * 120}>
+            <DateJourneysCard
+              date={dateGroup.datetime}
+              journeys={dateGroup.journeys}
+              mobile={props.mobile}
+            />
+          </UrsorFadeIn>
+        ))}
+      </Stack>
+    </PageLayout>
   );
 }

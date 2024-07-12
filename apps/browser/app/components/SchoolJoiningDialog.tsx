@@ -133,7 +133,7 @@ export interface ISchoolJoiningDialogProps {
 export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
   const nativeDeviceId = useNativeDeviceId();
 
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );

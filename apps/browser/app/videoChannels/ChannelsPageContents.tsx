@@ -1,30 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ApiController, {
-  IBrowserLink,
-  IChannel,
-  IPlatform,
-  IStack,
-  IVideo_DEPRECATED,
-  IVideoChannel_DEPRECATED,
-  getAbsoluteUrl,
-} from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
 import useColumnWidth from "../components/useColumnWidth";
 import _ from "lodash";
-import { useRouter } from "next/navigation";
 import VideoChannelCard from "../components/VideoChannelCard";
 import AstroContentColumns, {
   BrowserContent,
   IBrowserContent,
 } from "../home/AstroContentColumns";
-import ConnectBar from "../components/ConnectBar";
 import Image from "next/image";
 import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
 import UrsorFadeIn from "../components/UrsorFadeIn";
+import ApiController from "../api";
+import { IChannel, IVideo } from "../home/HomePageContents";
 
 const DUMMY_VIDEOS = [
   {
@@ -49,8 +39,8 @@ const DUMMY_VIDEOS = [
   },
 ];
 
-export default function HomePageContents(props: { mobile: boolean }) {
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+export default function ChannelsContents(props: { mobile: boolean }) {
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
@@ -68,10 +58,8 @@ export default function HomePageContents(props: { mobile: boolean }) {
       ApiController.getDevice(deviceId).then((d) => setFavorites(d?.favorites));
   }, [deviceId]);
 
-  const [videoChannels, setVideoChannels] = useState<
-    IVideoChannel_DEPRECATED[]
-  >([]); //@ts-ignore
-  const [videos, setVideos] = useState<IVideo_DEPRECATED[]>(DUMMY_VIDEOS);
+  const [videoChannels, setVideoChannels] = useState<IVideo[]>([]); //@ts-ignore
+  const [videos, setVideos] = useState<IVideo[]>(DUMMY_VIDEOS);
   useEffect(() => {
     deviceId &&
       ApiController.getVideoChannels(deviceId).then((vc) =>
@@ -80,19 +68,16 @@ export default function HomePageContents(props: { mobile: boolean }) {
   }, [deviceId]);
 
   const [selectedChannelId, setSelectedChannelId] = useState<
-    string | undefined
+    IChannel["id"] | undefined
   >(undefined);
   useEffect(() => {
     !videoChannels.find((vc) => vc.id === selectedChannelId) &&
       setSelectedChannelId(videoChannels[0]?.id);
   }, [videoChannels, selectedChannelId]);
 
-  const [filteredVideos, setFilteredVideos] = useState<IVideo_DEPRECATED[]>([]);
+  const [filteredVideos, setFilteredVideos] = useState<IVideo[]>([]);
   useEffect(
-    () =>
-      setFilteredVideos(
-        videos?.filter((v) => v.videoChannelId === selectedChannelId)
-      ),
+    () => setFilteredVideos(videos?.filter((v) => v.id === selectedChannelId)),
     [videos, selectedChannelId]
   );
 
