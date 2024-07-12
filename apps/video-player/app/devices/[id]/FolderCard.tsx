@@ -12,6 +12,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import { IGroupContentBucket } from "@/app/content/ContentsPageContents";
 
 export const spin = keyframes`
   from {
@@ -23,9 +24,7 @@ export const spin = keyframes`
 `;
 
 const FolderCard = (
-  props: IContentBucket & {
-    imageUrls: string[];
-    profileImageUrls?: string[];
+  props: IGroupContentBucket & {
     clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -195,12 +194,12 @@ const FolderCard = (
                   },
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundImage: props.imageUrls?.[0]
-                    ? `url(${props.imageUrls[0]})`
+                  backgroundImage: props.thumbnailUrls?.[0]
+                    ? `url(${props.thumbnailUrls[0]})`
                     : undefined,
                 }}
               >
-                {!props.imageUrls?.[0] ? (
+                {!props.thumbnailUrls?.[0] ? (
                   <Stack
                     sx={{
                       animation: `${spin} 9s linear`,
@@ -225,12 +224,12 @@ const FolderCard = (
                     },
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    backgroundImage: props.imageUrls?.[1]
-                      ? `url(${props.imageUrls[1]})`
+                    backgroundImage: props.thumbnailUrls?.[1]
+                      ? `url(${props.thumbnailUrls[1]})`
                       : undefined,
                   }}
                 >
-                  {!props.imageUrls?.[1] ? (
+                  {!props.thumbnailUrls?.[1] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 12s linear`,
@@ -255,12 +254,12 @@ const FolderCard = (
                     },
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    backgroundImage: props.imageUrls?.[2]
-                      ? `url(${props.imageUrls[2]})`
+                    backgroundImage: props.thumbnailUrls?.[2]
+                      ? `url(${props.thumbnailUrls[2]})`
                       : undefined,
                   }}
                 >
-                  {!props.imageUrls?.[2] ? (
+                  {!props.thumbnailUrls?.[2] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 4s linear`,
@@ -291,8 +290,8 @@ const FolderCard = (
                 </Typography>
                 <VersionsIcon height="20px" width="20px" />
               </Stack> */}
-              {props.profileImageUrls ? (
-                <ProfileImageRow imageUrls={props.profileImageUrls} />
+              {props.avatarUrls ? (
+                <ProfileImageRow imageUrls={props.avatarUrls} />
               ) : null}
             </Stack>
           </Stack>

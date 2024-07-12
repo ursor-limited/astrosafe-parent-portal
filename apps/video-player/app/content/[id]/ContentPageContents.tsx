@@ -23,7 +23,6 @@ import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
 import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
-import useColumnWidth from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
 import VideoCard from "./VideoCard";
@@ -39,6 +38,14 @@ import ApiController from "@/app/api";
 import FolderRenameDialog from "./FolderRenameDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import DevicesGridDialog from "@/app/components/DevicesGridDialog";
+import useColumnWidth from "@/app/components/useColumnWidth";
+import { DUMMY_GROUP_ID } from "@/app/filters/FiltersPageContents";
+
+export interface IGroup {
+  id: number;
+  title: string;
+  joinCode: string;
+}
 
 export interface IAstroContentBranding {
   title: string;
@@ -83,15 +90,15 @@ export default function ContentPageContents(props: { folderId: number }) {
       setContents(
         _.sortBy(
           [
-            ...f.Links.map((l) => ({
+            ...f.links.map((l) => ({
               type: "link" as AstroContent,
               content: l,
             })),
-            ...f.Videos.map((v) => ({
+            ...f.videos.map((v) => ({
               type: "video" as AstroContent,
               content: v,
             })),
-            ...f.Channels.map((c) => ({
+            ...f.channels.map((c) => ({
               type: "channel" as AstroContent,
               content: c,
             })),
@@ -104,6 +111,8 @@ export default function ContentPageContents(props: { folderId: number }) {
   useEffect(() => {
     loadFolder();
   }, [props.folderId]);
+
+  console.log(contents);
 
   const router = useRouter();
 
@@ -365,8 +374,9 @@ export default function ContentPageContents(props: { folderId: number }) {
       {devices ? (
         <AddDeviceDialog
           open={addDeviceDialogOpen}
+          groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
-          devices={devices}
+          addedDevices={devices}
         />
       ) : null}
       <FolderRenameDialog

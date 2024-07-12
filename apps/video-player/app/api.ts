@@ -1,3 +1,4 @@
+import { IGroup } from "./content/[id]/ContentPageContents";
 import {
   IChannel,
   IContent,
@@ -95,6 +96,20 @@ const dellete = (route: string) =>
 // });
 
 class ApiController {
+  static async getDevice(id: number) {
+    return get(`devices/${id}`).then((response: any) => response.json());
+  }
+
+  static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
+    return put(`devices/${id}`, { name });
+  }
+
+  static async getGroupDevices(id: IGroup["id"]) {
+    return get(`users/groups/${id}/devices`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async createFolder(
     title: IContentBucket["title"],
     groupId: IContentBucket["groupId"]
@@ -202,14 +217,6 @@ class ApiController {
 
   static async deleteChannel(id: ILink["id"]) {
     return dellete(`content/channels/${id}`);
-  }
-
-  static async getDevice(id: number) {
-    return get(`devices/${id}`).then((response: any) => response.json());
-  }
-
-  static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
-    return put(`devices/${id}`, { name });
   }
 
   // static async createLesson(details: any) {

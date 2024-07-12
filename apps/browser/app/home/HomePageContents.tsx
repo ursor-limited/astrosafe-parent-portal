@@ -32,16 +32,6 @@ export interface IContentCard {
   content: IContent;
 }
 
-export interface IContentBucket {
-  id: number;
-  title: string;
-  groupId: number;
-  Videos: IVideo[];
-  Channels: IChannel[];
-  Links: ILink[];
-  Lessons: ILesson[];
-}
-
 export interface ILink extends IContent {
   thumbnailUrl: string;
 }

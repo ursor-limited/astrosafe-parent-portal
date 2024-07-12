@@ -10,12 +10,21 @@ import { useRouter } from "next/navigation";
 import ApiController from "../api";
 import { useEffect, useState } from "react";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import { IDevice } from "../filters/[id]/FilterPageContents";
 
 const DEFAULT_TITLE = "Untitled Folder";
 
+export interface IGroupContentBucket {
+  id: IContentBucket["id"];
+  title: IContentBucket["id"];
+  deviceCount: number;
+  thumbnailUrls: string[];
+  avatarUrls: IDevice["profileAvatarUrl"][];
+}
+
 const ContentsPageContents = () => {
   const router = useRouter();
-  const [folders, setFolders] = useState<IContentBucket[]>([]);
+  const [folders, setFolders] = useState<IGroupContentBucket[]>([]);
   useEffect(() => {
     ApiController.getGroupFolders(DUMMY_GROUP_ID).then((f) => setFolders(f));
   }, []);
@@ -43,16 +52,8 @@ const ContentsPageContents = () => {
               key={f.id}
               {...f}
               clickCallback={() => router.push(`/content/${f.id}`)}
-              imageUrls={[
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-              ]}
-              profileImageUrls={[
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-              ]}
+              thumbnailUrls={f.thumbnailUrls}
+              avatarUrls={f.avatarUrls}
             />
           ))}
         </DynamicCardGrid>
