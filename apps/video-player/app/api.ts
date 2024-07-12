@@ -1,9 +1,3 @@
-import { IQuiz, QuizQuestionType } from "./components/QuizDialog";
-import {
-  EquationOrientation,
-  INumberBondWorksheetSettings,
-  WorksheetTopic,
-} from "./components/WorksheetGenerator";
 import {
   IChannel,
   IContent,
@@ -12,7 +6,6 @@ import {
   IVideo,
 } from "./devices/[id]/ContentTab";
 import { IDevice } from "./filters/[id]/FilterPageContents";
-import { AstroLessonContent } from "./lesson/[subdirectory]/LessonPageContents";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -117,6 +110,12 @@ class ApiController {
     );
   }
 
+  static async getGroupFolders(id: number) {
+    return get(`content/buckets/group/${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async renameFolder(id: number, title: IContentBucket["title"]) {
     return put(`content/buckets/${id}`, { title });
   }
@@ -210,7 +209,7 @@ class ApiController {
   }
 
   static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
-    return put(`devices/updateDevice/${id}`, { name });
+    return put(`devices/${id}`, { name });
   }
 
   // static async createLesson(details: any) {

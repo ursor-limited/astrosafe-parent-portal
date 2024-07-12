@@ -19,7 +19,7 @@ import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import BrowserLinkCard from "../safety/BrowserLinkCard";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import useColumnWidth from "../dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
+import useColumnWidth from "../components/useColumnWidth";
 import FixedBottomDialog from "../components/FixedBottomDialog";
 import _ from "lodash";
 import UrsorActionButton from "../components/UrsorActionButton";

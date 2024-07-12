@@ -8,13 +8,17 @@ import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { useRouter } from "next/navigation";
 import ApiController from "../api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 
 const DEFAULT_TITLE = "Untitled Folder";
 
 const ContentsPageContents = () => {
   const router = useRouter();
   const [folders, setFolders] = useState<IContentBucket[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFolders(DUMMY_GROUP_ID).then((f) => setFolders(f));
+  }, []);
   return (
     <PageLayout
       title="My Content"

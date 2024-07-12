@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import {
   DUMMY_ALLOWED_SITES,
@@ -22,6 +25,7 @@ import FilterPageBlockedSitesSection from "./components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "./components/SearchWordsSection";
 import FilterPageDevicesSection from "./components/DevicesSection";
 import FilterExceptionDialog from "./components/FilterExceptionDialog";
+import { PALETTE } from "ui";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -35,7 +39,6 @@ export interface IDevice {
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
-  locked: boolean;
 }
 
 export const DUMMY_DEVICES: IDevice[] = [
@@ -92,6 +95,8 @@ export default function FilterPageContents(props: { filterId: number }) {
   const [exceptionDialogOpen, setExceptionDialogOpen] =
     useState<boolean>(false);
 
+  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+
   return (
     <PageLayout
       title="My Filters"
@@ -106,6 +111,24 @@ export default function FilterPageContents(props: { filterId: number }) {
       }}
       maxWidth={834}
       scrollable
+      actions={[
+        {
+          text: "Edit name",
+          kallback: () => setRenameDialogOpen(true),
+          icon: PencilIcon,
+        },
+        {
+          text: "Duplicate",
+          kallback: () => null,
+          icon: DuplicateIcon,
+        },
+        {
+          text: "Delete",
+          kallback: () => null,
+          icon: TrashcanIcon,
+          color: PALETTE.system.red,
+        },
+      ]}
     >
       <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
         <FilterPageDevicesSection devices={DUMMY_DEVICES} />

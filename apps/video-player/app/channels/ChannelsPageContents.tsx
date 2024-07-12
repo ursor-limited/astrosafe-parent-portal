@@ -33,7 +33,7 @@ import AddDialog from "./AddDialog";
 import StackViewDialog from "./StackViewDialog";
 import LinkViewDialog from "./LinkViewDialog";
 import Image from "next/image";
-import useColumnWidth from "../dashboard_DESTINED_FOR_THE_FURNACE/useColumnWidth";
+import useColumnWidth from "../components/useColumnWidth";
 import StackDialog from "../safety/StackDialog";
 import DeletionDialog from "../components/DeletionDialog";
 

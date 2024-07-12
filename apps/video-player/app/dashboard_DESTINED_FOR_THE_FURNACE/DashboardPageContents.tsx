@@ -21,7 +21,7 @@ import _, { over } from "lodash";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
 import { IWorksheet } from "../components/WorksheetGenerator";
-import useColumnWidth from "./useColumnWidth";
+import useColumnWidth from "../components/useColumnWidth";
 import WorksheetCard from "../components/WorksheetCard";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCreationDialog from "./VideoCreationDialog";

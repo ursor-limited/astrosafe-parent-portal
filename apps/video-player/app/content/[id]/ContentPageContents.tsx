@@ -105,8 +105,6 @@ export default function ContentPageContents(props: { folderId: number }) {
     loadFolder();
   }, [props.folderId]);
 
-  console.log(contents);
-
   const router = useRouter();
 
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined);

@@ -110,7 +110,7 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   </Stack>
 );
 
-export const DUMMY_GROUP_ID = 43;
+export const DUMMY_GROUP_ID = 1;
 
 export const DUMMY_SERVICES: IFilterUrl[] = [
   {

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import { IWorksheet } from "../components/WorksheetGenerator";
 import { PALETTE, Typography } from "ui";
-import useColumnWidth from "./useColumnWidth";
+import useColumnWidth from "../components/useColumnWidth";
 import UrsorFadeIn from "../components/UrsorFadeIn";
 import VideoCard from "../components/VideoCard";
 import { IVideo_DEPRECATED } from "../api";
