@@ -272,7 +272,7 @@ const FolderCard = (
                 </Stack>
               </Stack>
             </Stack>
-            <Stack px="4px" spacing="12px">
+            <Stack px="4px" spacing="42px">
               <Stack alignItems="space-between" flex={1} minHeight="58px">
                 <Stack pt="8px">
                   <Typography bold variant="medium" maxLines={2}>

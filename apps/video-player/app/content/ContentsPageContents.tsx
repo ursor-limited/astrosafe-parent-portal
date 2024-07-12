@@ -37,8 +37,8 @@ const ContentsPageContents = () => {
       button={{
         text: "Create a Folder",
         callback: () =>
-          ApiController.createFolder(DEFAULT_TITLE, 1).then((f) =>
-            router.push(`/content/${f.id}`)
+          ApiController.createFolder(DEFAULT_TITLE, DUMMY_GROUP_ID).then((id) =>
+            router.push(`/content/${id}`)
           ),
         icon: PlusIcon,
       }}
