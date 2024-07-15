@@ -207,7 +207,9 @@ const PricingCard = (props: {
     boxSizing="border-box"
     alignItems="center"
     borderRadius="20px"
-    border={props.border ? `4px solid ${PALETTE.system.orange}` : undefined}
+    border={
+      props.border ? `4px solid ${PALETTE.secondary.purple[3]}` : undefined
+    }
     position="relative"
   >
     {props.notif ? (
@@ -248,13 +250,6 @@ const PricingCard = (props: {
               {props.subtitle}
             </Typography>
           </Stack>
-          {/* <Typography
-            variant="tiny"
-            bold
-            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
-          >
-            {props.subtitle}
-          </Typography> */}
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing="3px">
@@ -271,6 +266,17 @@ const PricingCard = (props: {
           >
             {props.price}
           </Typography>
+          <Stack
+            height="28px"
+            bgcolor={PALETTE.secondary.orange[4]}
+            borderRadius="10px"
+            px="8px"
+            justifyContent="center"
+          >
+            <Typography bold variant="small" color="rgb(255,255,255)">
+              Save 30%
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
 
@@ -476,7 +482,7 @@ const UpgradeDialog = (props: {
               Add your AstroSafe license key
             </Typography>
           </Stack>
-          <Stack alignItems="center" spacing="8px">
+          <Stack alignItems="center" spacing="10px">
             <UrsorInputField
               value={licenseKeyInputValue}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -507,7 +513,11 @@ const UpgradeDialog = (props: {
         <Typography bold color={PALETTE.secondary.grey[4]}>
           Need a plan with more devices?
         </Typography>
-        <UrsorButton variant="secondary" size="small">
+        <UrsorButton
+          variant="secondary"
+          size="small"
+          onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+        >
           Contact sales
         </UrsorButton>
       </Stack>
