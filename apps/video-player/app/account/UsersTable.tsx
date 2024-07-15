@@ -13,7 +13,6 @@ import { PALETTE } from "ui";
 interface IAdultUsersTableRowItems {
   name: string;
   email: string;
-  lastActive: string;
   dateJoined: string;
 }
 

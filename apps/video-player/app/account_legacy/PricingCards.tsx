@@ -80,7 +80,7 @@ const PricingCards = (props: {
                 props.email
                   ? getPaymentUrl(
                       props.email,
-                      pd?.plan || "individual",
+                      pd?.plan || "home",
                       props.frequency
                     )
                   : ""

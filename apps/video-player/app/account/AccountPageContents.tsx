@@ -14,7 +14,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import UsersTable from "./UsersTable";
 import DevicesTable from "./DevicesTable";
-import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import EditProfileDialog from "./EditProfileDialog";
 import Image from "next/image";
@@ -23,6 +23,7 @@ import { IGroup } from "../content/[id]/ContentPageContents";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 import DeviceConnectDialog from "../devices/components/DeviceConnectDialog";
 import DownloadDialog from "../devices/components/DownloadDialog";
+import UpgradeDialog from "../components/UpgradeDialog";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
@@ -106,6 +107,7 @@ const AccountPageContents = () => {
 
   const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -149,6 +151,7 @@ const AccountPageContents = () => {
                 backgroundColor="rgb(255,255,255)"
                 fontColor={PALETTE.primary.navy}
                 hoverOpacity={0.7}
+                onClick={() => setUpgradeDialogOpen(true)}
               >
                 Upgrade
               </UrsorButton>
@@ -249,7 +252,7 @@ const AccountPageContents = () => {
                 <Typography variant="h4" color="rgb(255,255,255)">
                   Free trial
                 </Typography>
-                <Stack direction="row" alignItems="center">
+                <Stack direction="row" alignItems="center" spacing="24px">
                   <Stack flex={1}>
                     {PLAN_BANNER_ITEMS[planState].map((item, i) => (
                       <Stack
@@ -279,6 +282,7 @@ const AccountPageContents = () => {
                       backgroundColor="rgb(255,255,255)"
                       fontColor={PALETTE.primary.navy}
                       hoverOpacity={0.7}
+                      onClick={() => setUpgradeDialogOpen(true)}
                     >
                       Upgrade
                     </UrsorButton>
@@ -399,6 +403,10 @@ const AccountPageContents = () => {
       <DownloadDialog
         open={downloadDialogOpen}
         onClose={() => setDownloadDialogOpen(false)}
+      />
+      <UpgradeDialog
+        open={upgradeDialogOpen}
+        closeCallback={() => setUpgradeDialogOpen(false)}
       />
     </>
   );
