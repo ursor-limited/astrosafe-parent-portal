@@ -9,6 +9,7 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import { IActionPopupItem } from "./ActionPopup";
 import UrsorActionButton from "./UrsorActionButton";
+import { ITitleRowItem } from "./TitleRow";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
