@@ -1,0 +1,41 @@
+import UrsorDialog from "@/app/components/UrsorDialog";
+import { Stack } from "@mui/system";
+import { useState } from "react";
+import { UrsorButton, UrsorInputField } from "ui";
+import { LabeledInputField } from "ui/labeled-input-field";
+import { DUMMY_USER, IUser, UserInitialsCircle } from "./AccountPageContents";
+
+const InviteDialog = (props: { open: boolean; onClose: () => void }) => {
+  const [email, setEmail] = useState<IUser["name"]>();
+  return (
+    <UrsorDialog
+      open={props.open}
+      onCloseCallback={props.onClose}
+      title="Invite"
+      subtitle={[
+        "Add a parents or teacher's email address to join your AstroSafe Group Plan.",
+      ]}
+      width="462px"
+      height="343px"
+    >
+      <Stack justifyContent="space-between" height="100%" width="100%">
+        <LabeledInputField label="Email">
+          <UrsorInputField
+            value={email}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(event.target.value)
+            }
+            placeholder="Email"
+            width="100%"
+            leftAlign
+          />
+        </LabeledInputField>
+        <UrsorButton dark variant="tertiary" width="100%">
+          Invite
+        </UrsorButton>
+      </Stack>
+    </UrsorDialog>
+  );
+};
+
+export default InviteDialog;

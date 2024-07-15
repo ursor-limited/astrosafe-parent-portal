@@ -28,10 +28,7 @@ const EditProfileDialog = (props: {
           alignItems="flex-end"
           width="100%"
         >
-          <UserInitialsCircle
-            name={name ?? ""}
-            color={DUMMY_USER.backgroundColor}
-          />
+          <UserInitialsCircle name={name ?? ""} />
           <Stack spacing="24px" flex={1}>
             <LabeledInputField label="Name">
               <UrsorInputField

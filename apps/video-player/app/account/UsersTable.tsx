@@ -8,6 +8,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { DUMMY_USER, IUser } from "./AccountPageContents";
 import _ from "lodash";
+import { PALETTE } from "ui";
 
 interface IAdultUsersTableRowItems {
   name: string;
@@ -30,7 +31,7 @@ const UsersTable = () => {
           <Stack
             borderRadius="100%"
             overflow="hidden"
-            bgcolor={users.find((u) => u.id.toString() === id)?.backgroundColor}
+            bgcolor={PALETTE.secondary.blue[2]}
             minWidth="20px"
             minHeight="20px"
           />

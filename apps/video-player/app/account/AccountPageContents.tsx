@@ -8,6 +8,7 @@ import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import PersonIcon from "@/images/icons/PersonIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
@@ -17,6 +18,9 @@ import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
 import EditProfileDialog from "./EditProfileDialog";
 import Image from "next/image";
+import InviteDialog from "./InviteDialog";
+import { IGroup } from "../content/[id]/ContentPageContents";
+import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
@@ -25,9 +29,9 @@ export const DUMMY_USER: IUser = {
   name: "Bob Brown",
   nickname: "Mr. Brown",
   email: "bob@gmail.com",
-  backgroundColor: PALETTE.secondary.blue[2],
   lastActive: "2024-05-05",
   createdAt: "2024-05-05",
+  groupId: DUMMY_GROUP_ID,
 };
 
 export interface IUser {
@@ -36,7 +40,7 @@ export interface IUser {
   nickname: string;
   email: string;
   lastActive: string;
-  backgroundColor: string;
+  groupId: IGroup["id"];
   createdAt: string;
 }
 
@@ -69,14 +73,11 @@ export const getInitials = (name: string) =>
     ?.slice(0, 2)
     .join("");
 
-export const UserInitialsCircle = (props: {
-  name: IUser["name"];
-  color: IUser["backgroundColor"];
-}) => (
+export const UserInitialsCircle = (props: { name: IUser["name"] }) => (
   <Stack
     height="132px"
     width="132px"
-    bgcolor={props.color}
+    bgcolor={PALETTE.secondary.blue[2]}
     borderRadius="100%"
     overflow="hidden"
     justifyContent="center"
@@ -99,6 +100,8 @@ const AccountPageContents = () => {
   const [planState, setPlanState] = useState<AstroPlanState>("freeTrial");
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
+  const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false);
+
   return (
     <>
       <PageLayout
@@ -136,6 +139,7 @@ const AccountPageContents = () => {
               <UrsorButton
                 dark
                 endIcon={VerifiedIcon}
+                iconSize={15}
                 size="small"
                 backgroundColor="rgb(255,255,255)"
                 fontColor={PALETTE.primary.navy}
@@ -176,10 +180,7 @@ const AccountPageContents = () => {
                 alignItems="center"
                 flex={1}
               >
-                <UserInitialsCircle
-                  name={name ?? ""}
-                  color={DUMMY_USER.backgroundColor}
-                />
+                <UserInitialsCircle name={name ?? ""} />
                 <Stack direction="row" spacing="26px" minWidth="400px">
                   <Stack width="100%" spacing="12px" alignItems="center">
                     <Stack spacing="4px" width="100%">
@@ -281,7 +282,23 @@ const AccountPageContents = () => {
               </Stack>
             </AstroBentoCard>
           </Stack>
-          <AstroBentoCard title="Users in my space" notCollapsible>
+          <AstroBentoCard
+            title="Users in my space"
+            notCollapsible
+            topRightStuff={
+              <Stack direction="row" spacing="12px">
+                <UrsorButton
+                  endIcon={PersonIcon}
+                  size="small"
+                  variant="secondary"
+                  iconSize={16}
+                  onClick={() => setInviteDialogOpen(true)}
+                >
+                  Add an adult
+                </UrsorButton>
+              </Stack>
+            }
+          >
             <Stack spacing="24px">
               <UsersTable />
               <DevicesTable />
@@ -352,6 +369,10 @@ const AccountPageContents = () => {
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
         onSave={(name, nickname) => null}
+      />
+      <InviteDialog
+        open={inviteDialogOpen}
+        onClose={() => setInviteDialogOpen(false)}
       />
     </>
   );
