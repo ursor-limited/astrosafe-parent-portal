@@ -1,7 +1,6 @@
 import React from "react";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import AccountPageContents from "./AccountPageContents";
 
 async function AccountPage({
   params,
@@ -12,7 +11,7 @@ async function AccountPage({
 }) {
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <AccountPageContents />;
+  return <></>;
 }
 
 export default AccountPage;

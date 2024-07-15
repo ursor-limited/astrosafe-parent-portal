@@ -39,34 +39,8 @@ export interface IDevice {
   deviceType: DeviceType;
   favorites: number[];
   requestedSites: IFilterUrl[];
+  createdAt: string;
 }
-
-export const DUMMY_DEVICES: IDevice[] = [
-  {
-    id: 1,
-    name: "Joe's iPad",
-    backgroundColor: "cyan",
-    profileAvatarUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-    lastOnline: "2024-06-20",
-    connected: true,
-    deviceType: "ios",
-    favorites: [],
-    requestedSites: [],
-  },
-  {
-    id: 2,
-    name: "F's N64",
-    backgroundColor: "cyan",
-    profileAvatarUrl:
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-    lastOnline: "2024-06-20",
-    connected: true,
-    deviceType: "android",
-    favorites: [],
-    requestedSites: [],
-  },
-];
 
 export default function FilterPageContents(props: { filterId: number }) {
   const [filter, setFilter] = useState<IFilter>(DUMMY_FILTERS[0]);
@@ -94,6 +68,8 @@ export default function FilterPageContents(props: { filterId: number }) {
     useState<boolean>(false);
 
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+
+  const [devices, setDevices] = useState<IDevice[]>([]);
 
   return (
     <PageLayout
@@ -129,7 +105,7 @@ export default function FilterPageContents(props: { filterId: number }) {
       ]}
     >
       <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
-        <FilterPageDevicesSection devices={DUMMY_DEVICES} />
+        <FilterPageDevicesSection devices={devices} />
         <FilterPageServicesSection
           filter={filter}
           services={services}

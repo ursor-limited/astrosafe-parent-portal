@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
-import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
+import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import AstroTabSwitch from "./AstroTabSwitch";
 import DevicePageMonitoringTab from "./MonitoringTab";
@@ -17,10 +17,10 @@ import { useRouter } from "next/navigation";
 import DevicePageContentTab from "./ContentTab";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
-import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../components/DeviceCard";
 import PageLayout from "@/app/components/PageLayout";
+import { DUMMY_GROUP_ID } from "@/app/filters/FiltersPageContents";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -43,6 +43,11 @@ export default function DevicePageContents(props: { deviceId: number }) {
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
   const [disconnectDialogOpen, setDisconnectDialogOpen] =
     useState<boolean>(false);
+
+  const [allDevices, setAllDevices] = useState<IDevice[]>([]);
+  useEffect(() => {
+    ApiController.getGroupDevices(DUMMY_GROUP_ID).then((d) => setAllDevices(d));
+  }, []);
 
   return (
     <>
@@ -79,7 +84,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
                 ) : null}
               </Stack>
             ) : null,
-            options: DUMMY_DEVICES.map((d) => ({
+            options: allDevices.map((d) => ({
               text: d.name,
               imageUrl: d.profileAvatarUrl,
               callback: () => router.push(`/devices/${d.id}`),

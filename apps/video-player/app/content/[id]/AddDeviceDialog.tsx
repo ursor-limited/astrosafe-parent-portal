@@ -10,6 +10,7 @@ import { IGroup } from "./ContentPageContents";
 const AddDeviceDialog = (props: {
   open: boolean;
   onClose: () => void;
+  onAdd: () => void;
   addedDevices: IDevice[];
   groupId: IGroup["id"];
 }) => {

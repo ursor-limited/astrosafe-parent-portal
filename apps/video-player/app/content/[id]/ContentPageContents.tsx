@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
@@ -20,7 +20,7 @@ import {
 } from "@/app/devices/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ContentPageDevicesSection from "./DevicesSection";
-import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
+import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import { AddContentButton } from "./AddContentButton";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
@@ -84,35 +84,36 @@ export interface IContentCard {
 export default function ContentPageContents(props: { folderId: number }) {
   const [folder, setFolder] = useState<IContentBucket | undefined>();
   const [contents, setContents] = useState<IContentCard[]>([]);
-  const loadFolder = () =>
-    ApiController.getFolder(props.folderId).then((f: IContentBucket) => {
-      setFolder(f);
-      setContents(
-        _.sortBy(
-          [
-            ...f.links.map((l) => ({
-              type: "link" as AstroContent,
-              content: l,
-            })),
-            ...f.videos.map((v) => ({
-              type: "video" as AstroContent,
-              content: v,
-            })),
-            ...f.channels.map((c) => ({
-              type: "channel" as AstroContent,
-              content: c,
-            })),
-            // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
-          ],
-          (c) => c.content.createdAt
-        )
-      );
-    });
+  const loadFolder = useCallback(
+    () =>
+      ApiController.getFolder(props.folderId).then((f: IContentBucket) => {
+        setFolder(f);
+        setContents(
+          _.sortBy(
+            [
+              ...f.links.map((l) => ({
+                type: "link" as AstroContent,
+                content: l,
+              })),
+              ...f.videos.map((v) => ({
+                type: "video" as AstroContent,
+                content: v,
+              })),
+              ...f.channels.map((c) => ({
+                type: "channel" as AstroContent,
+                content: c,
+              })),
+              // ...f.Lessons.map((l) => ({ type: "lesson", content: l })),
+            ],
+            (c) => c.content.createdAt
+          )
+        );
+      }),
+    [props.folderId]
+  );
   useEffect(() => {
     loadFolder();
-  }, [props.folderId]);
-
-  console.log(contents);
+  }, [loadFolder]);
 
   const router = useRouter();
 
@@ -123,7 +124,17 @@ export default function ContentPageContents(props: { folderId: number }) {
 
   const [filteredContents, setFilteredContents] = useState<IContentCard[]>([]);
 
-  const [devices, setDevices] = useState<IDevice[]>(DUMMY_DEVICES);
+  const [devices, setDevices] = useState<IDevice[]>([]);
+  const loadDevices = useCallback(
+    () =>
+      ApiController.getContentBucketDevices(props.folderId).then((d) =>
+        setDevices(d)
+      ),
+    [props.folderId]
+  );
+  useEffect(() => {
+    loadDevices();
+  }, [loadDevices]);
 
   useEffect(
     () =>
@@ -225,7 +236,9 @@ export default function ContentPageContents(props: { folderId: number }) {
         <Stack pl="48px" spacing="24px">
           <ContentPageDevicesSection
             devices={devices}
+            folderId={props.folderId}
             onAdd={() => setAddDeviceDialogOpen(true)}
+            onRemove={loadFolder}
           />
           <Stack justifyContent="center">
             <Stack

@@ -110,6 +110,26 @@ class ApiController {
     );
   }
 
+  static async getContentBucketDevices(id: IContentBucket["id"]) {
+    return get(`content/buckets/${id}/devices`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async addFolderToDevice(
+    folderId: IContentBucket["id"],
+    deviceId: IDevice["id"]
+  ) {
+    return dellete(`content/buckets/${folderId}/devices/${deviceId}`);
+  }
+
+  static async removeFolderFromDevice(
+    folderId: IContentBucket["id"],
+    deviceId: IDevice["id"]
+  ) {
+    return dellete(`content/buckets/${folderId}/devices/${deviceId}`);
+  }
+
   static async createFolder(
     title: IContentBucket["title"],
     groupId: IContentBucket["groupId"]

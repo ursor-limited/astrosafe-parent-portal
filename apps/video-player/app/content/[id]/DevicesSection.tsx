@@ -11,15 +11,24 @@ import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DeviceCard from "@/app/devices/components/DeviceCard";
 import { useState } from "react";
 import DevicesGridDialog from "@/app/components/DevicesGridDialog";
+import ApiController from "@/app/api";
+import { IContentBucket } from "@/app/devices/[id]/ContentTab";
 
 const ContentPageDevicesSection = (props: {
   devices: IDevice[];
+  folderId: IContentBucket["id"];
   onAdd: () => void;
+  onRemove: () => void;
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
 
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
+
+  const removeDevice = (id: IDevice["id"]) =>
+    ApiController.removeFolderFromDevice(props.folderId, id).then(
+      props.onRemove
+    );
 
   return (
     <>
@@ -55,7 +64,7 @@ const ContentPageDevicesSection = (props: {
                 <DeviceCard
                   {...d}
                   button={
-                    <Stack onClick={() => null}>
+                    <Stack onClick={() => removeDevice(d.id)}>
                       <XIcon height={16} width={16} />
                     </Stack>
                   }
