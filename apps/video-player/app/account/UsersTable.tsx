@@ -44,15 +44,6 @@ const UsersTable = () => {
       sortable: true,
     },
     {
-      name: "lastActive",
-      displayName: "Last active",
-      sortable: true,
-      itemDisplay: (lastActive) => {
-        const hours = dayjs().diff(lastActive, "hours");
-        return `${hours} hour${hours === 1 ? "" : "s"} ago`;
-      },
-    },
-    {
       name: "dateJoined",
       displayName: "Date joined",
       sortable: true,
@@ -72,7 +63,6 @@ const UsersTable = () => {
           items: {
             name: a.name ?? "",
             email: a.email,
-            lastActive: a.lastActive,
             dateJoined: a.createdAt,
           },
           tags: [],

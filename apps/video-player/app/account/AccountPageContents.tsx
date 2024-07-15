@@ -21,6 +21,8 @@ import Image from "next/image";
 import InviteDialog from "./InviteDialog";
 import { IGroup } from "../content/[id]/ContentPageContents";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import DeviceConnectDialog from "../devices/components/DeviceConnectDialog";
+import DownloadDialog from "../devices/components/DownloadDialog";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
@@ -101,6 +103,9 @@ const AccountPageContents = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false);
+
+  const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -296,6 +301,15 @@ const AccountPageContents = () => {
                 >
                   Add an adult
                 </UrsorButton>
+                <UrsorButton
+                  endIcon={PhoneIcon}
+                  size="small"
+                  variant="secondary"
+                  iconSize={16}
+                  onClick={() => setConnectDialogOpen(true)}
+                >
+                  Add a Device
+                </UrsorButton>
               </Stack>
             }
           >
@@ -373,6 +387,18 @@ const AccountPageContents = () => {
       <InviteDialog
         open={inviteDialogOpen}
         onClose={() => setInviteDialogOpen(false)}
+      />
+      <DeviceConnectDialog
+        open={connectDialogOpen}
+        onClose={() => setConnectDialogOpen(false)}
+        onOpen={() => {
+          setDownloadDialogOpen(true);
+          setConnectDialogOpen(false);
+        }}
+      />
+      <DownloadDialog
+        open={downloadDialogOpen}
+        onClose={() => setDownloadDialogOpen(false)}
       />
     </>
   );
