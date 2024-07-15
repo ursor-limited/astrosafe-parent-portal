@@ -6,7 +6,7 @@ import UrsorTable, {
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import dayjs from "dayjs";
-import { IUser } from "./AccountPageContents";
+import { DUMMY_USER, IUser } from "./AccountPageContents";
 import _ from "lodash";
 
 interface IAdultUsersTableRowItems {
@@ -17,16 +17,7 @@ interface IAdultUsersTableRowItems {
 }
 
 const UsersTable = () => {
-  const [users, setUsers] = useState<IUser[]>([
-    {
-      id: 1,
-      name: "Boo Brown",
-      email: "mkl.brown@gmail.com",
-      lastActive: "2024-06-08",
-      createdAt: "2024-07-04",
-      avatarUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/Kirby.webp",
-    },
-  ]);
+  const [users, setUsers] = useState<IUser[]>([DUMMY_USER]);
 
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
@@ -36,14 +27,13 @@ const UsersTable = () => {
       newTag: true,
       getAvatar: (id) => {
         return (
-          <Stack borderRadius="100%" overflow="hidden">
-            <Image
-              src={users.find((u) => u.id.toString() === id)?.avatarUrl ?? ""}
-              height={20}
-              width={20}
-              alt="allowed site favicon"
-            />
-          </Stack>
+          <Stack
+            borderRadius="100%"
+            overflow="hidden"
+            bgcolor={users.find((u) => u.id.toString() === id)?.backgroundColor}
+            minWidth="20px"
+            minHeight="20px"
+          />
         );
       },
     },

@@ -12,6 +12,7 @@ import { DeviceType } from "../devices/DevicesPageContents";
 import { IDevice } from "../filters/[id]/FilterPageContents";
 import ApiController from "../api";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import { DEVICE_TYPE_DISPLAY_NAMES } from "../devices/components/DeviceCard";
 
 interface IDevicesTableRowItems {
   name: string;
@@ -50,9 +51,10 @@ const DevicesTable = () => {
       },
     },
     {
-      name: "email",
-      displayName: "Email",
+      name: "type",
+      displayName: "Device type",
       sortable: true,
+      itemDisplay: (type) => DEVICE_TYPE_DISPLAY_NAMES[type as DeviceType],
     },
     {
       name: "lastActive",
