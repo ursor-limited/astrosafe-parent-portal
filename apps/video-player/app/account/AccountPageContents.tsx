@@ -16,6 +16,9 @@ import DevicesTable from "./DevicesTable";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
 import EditProfileDialog from "./EditProfileDialog";
+import Image from "next/image";
+
+export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
 export const DUMMY_USER: IUser = {
   id: 1,
@@ -113,6 +116,35 @@ const AccountPageContents = () => {
         }}
         maxWidth={834}
         scrollable
+        header={
+          <Stack
+            height="71px"
+            px="24px"
+            alignItems="center"
+            direction="row"
+            justifyContent="space-between"
+            sx={{
+              background: VIBRANT_GRADIENT,
+            }}
+            borderRadius="12px"
+            pr="54px"
+          >
+            <Stack spacing="16px" alignItems="center" direction="row">
+              <Typography variant="large" bold color="rgb(255,255,255)">
+                Upgrade to a Family or School account to get unlimited access!
+              </Typography>
+              <UrsorButton dark endIcon={VerifiedIcon} size="small">
+                Upgrade
+              </UrsorButton>
+            </Stack>
+            <Image
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Ellipse+399.png"
+              height={71}
+              width={245}
+              alt="upgrade"
+            />
+          </Stack>
+        }
       >
         <Stack pl="50px" spacing="12px">
           <Stack direction="row" spacing="12px" height="248px">
@@ -195,7 +227,7 @@ const AccountPageContents = () => {
               <Stack
                 borderRadius="12px"
                 sx={{
-                  background: `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`,
+                  background: VIBRANT_GRADIENT,
                 }}
                 justifyContent="space-between"
                 p="20px"
