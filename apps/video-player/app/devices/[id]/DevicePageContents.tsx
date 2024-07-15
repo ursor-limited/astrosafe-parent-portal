@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
-import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
@@ -21,6 +20,7 @@ import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import ApiController from "@/app/api";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../components/DeviceCard";
+import PageLayout from "@/app/components/PageLayout";
 
 export type DeviceType = "chrome" | "android" | "ios";
 

@@ -6,7 +6,6 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
-import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import {
   DUMMY_ALLOWED_SITES,
   DUMMY_BLOCKED_SITES,
@@ -26,6 +25,7 @@ import FilterPageSearchWordsSection from "./components/SearchWordsSection";
 import FilterPageDevicesSection from "./components/DevicesSection";
 import FilterExceptionDialog from "./components/FilterExceptionDialog";
 import { PALETTE } from "ui";
+import PageLayout from "@/app/components/PageLayout";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -53,7 +53,6 @@ export const DUMMY_DEVICES: IDevice[] = [
     deviceType: "ios",
     favorites: [],
     requestedSites: [],
-    locked: false,
   },
   {
     id: 2,
@@ -66,7 +65,6 @@ export const DUMMY_DEVICES: IDevice[] = [
     deviceType: "android",
     favorites: [],
     requestedSites: [],
-    locked: false,
   },
 ];
 

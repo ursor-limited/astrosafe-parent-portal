@@ -9,8 +9,8 @@ import { DeviceType, IDevice } from "../../filters/[id]/FilterPageContents";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getAbsoluteUrl } from "@/app/browserApi";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { getAbsoluteUrl } from "@/app/api";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",

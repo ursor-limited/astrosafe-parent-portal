@@ -4,7 +4,6 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import { IContentBucket } from "../devices/[id]/ContentTab";
 import FolderCard from "../devices/[id]/FolderCard";
-import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { useRouter } from "next/navigation";
 import ApiController from "../api";
@@ -12,6 +11,7 @@ import { useEffect, useState } from "react";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 import { IDevice } from "../filters/[id]/FilterPageContents";
 import UrsorFadeIn from "../components/UrsorFadeIn";
+import PageLayout from "../components/PageLayout";
 
 const DEFAULT_TITLE = "Untitled Folder";
 

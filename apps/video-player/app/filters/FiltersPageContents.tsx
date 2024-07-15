@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
@@ -10,13 +9,11 @@ import LockIcon from "@/images/icons/LockIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import PageLayout from "../dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
-import { IBrowserLink } from "../safety/DomainLinksDialog";
 import _ from "lodash";
 import DynamicCardGrid from "../components/DynamicCardGrid";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import ProfileImageRow from "./ProfileImageRow";
+import PageLayout from "../components/PageLayout";
 
 export const GRID_SPACING = "20px";
 

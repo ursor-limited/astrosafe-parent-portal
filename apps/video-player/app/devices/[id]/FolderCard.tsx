@@ -3,8 +3,6 @@ import { Stack, keyframes } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import { useRouter } from "next/navigation";
-import { IContentBucket } from "./ContentTab";
-import { SECONDARY_COLOR_ORDER } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/LinkDialog";
 import _ from "lodash";
 import ProfileImageRow from "@/app/filters/ProfileImageRow";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
@@ -13,6 +11,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { IGroupContentBucket } from "@/app/content/ContentsPageContents";
+import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
 
 export const spin = keyframes`
   from {

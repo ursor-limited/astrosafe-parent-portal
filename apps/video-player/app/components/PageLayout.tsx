@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef } from "react";
 import { Box, Stack } from "@mui/material";
 import ChevronLeft from "@/images/icons/ChevronLeft.svg";
 import { useWindowSize } from "usehooks-ts";
@@ -9,7 +9,8 @@ import UrsorFadeIn from "./UrsorFadeIn";
 import dynamic from "next/dynamic";
 import { IActionPopupItem } from "./ActionPopup";
 import UrsorActionButton from "./UrsorActionButton";
-import { ITitleRowItem } from "./TitleRow";
+import TitleRow, { ITitleRowItem } from "./TitleRow";
+import Sidebar, { SideBarItemId, WIDTH as SIDEBAR_WIDTH } from "./Sidebar";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -80,7 +81,7 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
         >
           {!props.noSidebar ? (
             <Stack
-              minWidth={`calc(${WIDTH} + ${SIDEBAR_X_MARGIN}px)`}
+              minWidth={`calc(${SIDEBAR_WIDTH} + ${SIDEBAR_X_MARGIN}px)`}
               alignItems="flex-end"
               py={SIDEBAR_Y_MARGIN}
               mr="5px"

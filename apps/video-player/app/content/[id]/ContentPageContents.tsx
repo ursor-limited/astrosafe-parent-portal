@@ -7,7 +7,6 @@ import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
-import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
@@ -27,7 +26,6 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import LinkCard from "./LinkCard";
 import VideoCard from "./VideoCard";
 import ChannelCard from "./ChannelCard";
-import { SearchInput } from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import SortButton from "@/app/components/SortButton";
 import Image from "next/image";
 import AddDeviceDialog from "./AddDeviceDialog";
@@ -40,6 +38,8 @@ import NotificationContext from "@/app/components/NotificationContext";
 import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 import useColumnWidth from "@/app/components/useColumnWidth";
 import { DUMMY_GROUP_ID } from "@/app/filters/FiltersPageContents";
+import { SearchInput } from "@/app/components/SearchInput";
+import PageLayout from "@/app/components/PageLayout";
 
 export interface IGroup {
   id: number;

@@ -78,23 +78,23 @@ const ImageUploader = forwardRef((props: ILessonImageUploaderProps, ref) => {
     }
   };
 
-  const upload = (signedUrl: string) =>
-    ApiController.uploadToS3(signedUrl, file);
+  // const upload = (signedUrl: string) =>
+  //   ApiController.uploadToS3(signedUrl, file);
 
-  useEffect(() => {
-    if (!file) {
-      return;
-    }
-    props.previewUrlCallback(URL.createObjectURL(file));
-    ApiController.getS3ImageUploadParams(
-      file!.name.split(".")[file!.name.split(".").length - 1],
-      file!.type
-    ).then(({ signedUrl }) =>
-      props.downloadUrlCallback(getDownloadUrl(signedUrl), () =>
-        upload(signedUrl)
-      )
-    );
-  }, [file]);
+  // useEffect(() => {
+  //   if (!file) {
+  //     return;
+  //   }
+  //   props.previewUrlCallback(URL.createObjectURL(file));
+  //   ApiController.getS3ImageUploadParams(
+  //     file!.name.split(".")[file!.name.split(".").length - 1],
+  //     file!.type
+  //   ).then(({ signedUrl }) =>
+  //     props.downloadUrlCallback(getDownloadUrl(signedUrl), () =>
+  //       upload(signedUrl)
+  //     )
+  //   );
+  // }, [file]);
 
   return (
     <Stack

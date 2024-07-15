@@ -6,8 +6,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import DownloadIcon from "@/images/icons/DownloadIcon.svg";
-import PageLayout from "@/app/dashboard_DESTINED_FOR_THE_FURNACE/PageLayout";
-import { DUMMY_DEVICES, IDevice } from "@/app/filters/[id]/FilterPageContents";
+import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DeviceCard from "./components/DeviceCard";
 import { Stack } from "@mui/system";
@@ -20,6 +19,7 @@ import DeviceDisconnectDialog from "./components/DeviceDisconnectDialog";
 import DeviceConnectDialog from "./components/DeviceConnectDialog";
 import DownloadDialog from "./components/DownloadDialog";
 import ApiController from "../api";
+import PageLayout from "../components/PageLayout";
 
 export type DeviceType = "chrome" | "android" | "ios";
 

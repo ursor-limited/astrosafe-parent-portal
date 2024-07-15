@@ -7,8 +7,6 @@ import ApiController from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 import Hotjar from "@hotjar/browser";
-import BrowserApiController from "../browserApi";
-import { ITeacher } from "./BrowserUserContext";
 
 const hotjarVersion = 6;
 
@@ -64,60 +62,60 @@ const UserProvider = (props: IUserProviderProps) => {
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
 
-  useEffect(() => {
-    setTimeout(
-      () => {
-        loadUser();
-      },
-      props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
-    );
-    if (user?.email && !signedIn) {
-      notificationCtx.success("Signed in");
-      setSignedIn(true);
-    }
-  }, [user?.email, isLoading, upgradedNotificationPending]);
+  // useEffect(() => {
+  //   setTimeout(
+  //     () => {
+  //       loadUser();
+  //     },
+  //     props.checkoutSessionId || upgradedNotificationPending ? 5000 : 0 // to make sure that there is enough time to store the subscription change before fetching
+  //   );
+  //   if (user?.email && !signedIn) {
+  //     notificationCtx.success("Signed in");
+  //     setSignedIn(true);
+  //   }
+  // }, [user?.email, isLoading, upgradedNotificationPending]);
 
-  useEffect(() => {
-    user?.email &&
-      BrowserApiController.checkTeacherExists(user?.email, user.name ?? "");
-  }, [user?.email]);
+  // useEffect(() => {
+  //   user?.email &&
+  //     BrowserApiController.checkTeacherExists(user?.email, user.name ?? "");
+  // }, [user?.email]);
 
-  const loadUser = () => {
-    if (user?.email && user?.sub) {
-      setLoading(true);
-      ApiController.getUser(user.email, user.sub, true)
-        .then((u) =>
-          u
-            ? setSafeTubeUser(u)
-            : ApiController.createUser(user.email!)
-                .then((u) => setSafeTubeUser(u))
-                .then(() =>
-                  BrowserApiController.createTeacher(
-                    user.email!,
-                    user.name ?? ""
-                  )
-                )
-        )
-        .then(() => {
-          setLoading(false);
-          setLoaded(true);
-        })
-        .catch(() => setLoaded(true));
-    } else {
-      setLoaded(!isLoading);
-    }
-  };
+  // const loadUser = () => {
+  //   if (user?.email && user?.sub) {
+  //     setLoading(true);
+  //     ApiController.getUser(user.email, user.sub, true)
+  //       .then((u) =>
+  //         u
+  //           ? setSafeTubeUser(u)
+  //           : ApiController.createUser(user.email!)
+  //               .then((u) => setSafeTubeUser(u))
+  //               .then(() =>
+  //                 BrowserApiController.createTeacher(
+  //                   user.email!,
+  //                   user.name ?? ""
+  //                 )
+  //               )
+  //       )
+  //       .then(() => {
+  //         setLoading(false);
+  //         setLoaded(true);
+  //       })
+  //       .catch(() => setLoaded(true));
+  //   } else {
+  //     setLoaded(!isLoading);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (props.checkoutSessionId) {
-      safeTubeUser?.id &&
-        ApiController.claimCheckoutSessionId(
-          props.checkoutSessionId,
-          safeTubeUser?.id
-        ).then(loadUser);
-      //setTimeout(loadUser, 600); // needed to make sure that there is enough time to store the
-    }
-  }, [safeTubeUser?.id]);
+  // useEffect(() => {
+  //   if (props.checkoutSessionId) {
+  //     safeTubeUser?.id &&
+  //       ApiController.claimCheckoutSessionId(
+  //         props.checkoutSessionId,
+  //         safeTubeUser?.id
+  //       ).then(loadUser);
+  //     //setTimeout(loadUser, 600); // needed to make sure that there is enough time to store the
+  //   }
+  // }, [safeTubeUser?.id]);
 
   useEffect(() => {
     if (signedIn && upgradedNotificationPending && safeTubeUser?.subscribed) {
@@ -133,18 +131,18 @@ const UserProvider = (props: IUserProviderProps) => {
     safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
   }, [safeTubeUser?.subscribed]);
 
-  useEffect(() => {
-    safeTubeUser &&
-      !safeTubeUser?.subscribed &&
-      user?.email &&
-      BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? "").then(
-        //@ts-ignore
-        (response) =>
-          ApiController.getUser(response?.ownerEmail).then(
-            (owner: ISafeTubeUser) => setSchoolIsSubscribed(owner.subscribed)
-          )
-      );
-  }, [user?.email, safeTubeUser]);
+  // useEffect(() => {
+  //   safeTubeUser &&
+  //     !safeTubeUser?.subscribed &&
+  //     user?.email &&
+  //     BrowserApiController.getUserSchoolOwnerEmail(user?.email ?? "").then(
+  //       //@ts-ignore
+  //       (response) =>
+  //         ApiController.getUser(response?.ownerEmail).then(
+  //           (owner: ISafeTubeUser) => setSchoolIsSubscribed(owner.subscribed)
+  //         )
+  //     );
+  // }, [user?.email, safeTubeUser]);
 
   // const [safetubeSchoolOwner, setSafetubeSchoolOwner] = useState<
   //   ISafeTubeUser | undefined
@@ -200,7 +198,7 @@ const UserProvider = (props: IUserProviderProps) => {
         loading,
         loaded,
         clear: () => setSafeTubeUser(undefined),
-        refresh: loadUser,
+        refresh: () => null, //loadUser,
         schoolIsSubscribed,
       }}
     >

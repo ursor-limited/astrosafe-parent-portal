@@ -8,8 +8,8 @@ import DeviceCard from "../devices/components/DeviceCard";
 import { BACKDROP_STYLE, BORDER_RADIUS } from "./UrsorDialog";
 import { Dialog } from "@mui/material";
 import { Typography, UrsorButton } from "ui";
-import { SearchInput } from "../dashboard_DESTINED_FOR_THE_FURNACE/DashboardPageContents";
 import { useEffect, useState } from "react";
+import { SearchInput } from "./SearchInput";
 
 const DevicesGridDialog = (props: {
   title: string;
