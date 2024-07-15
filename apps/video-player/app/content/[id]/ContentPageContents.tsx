@@ -238,7 +238,7 @@ export default function ContentPageContents(props: { folderId: number }) {
             devices={devices}
             folderId={props.folderId}
             onAdd={() => setAddDeviceDialogOpen(true)}
-            onRemove={loadFolder}
+            onRemove={loadDevices}
           />
           <Stack justifyContent="center">
             <Stack
@@ -390,6 +390,8 @@ export default function ContentPageContents(props: { folderId: number }) {
           groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
           addedDevices={devices}
+          folderId={props.folderId}
+          onAdd={loadDevices}
         />
       ) : null}
       <FolderRenameDialog

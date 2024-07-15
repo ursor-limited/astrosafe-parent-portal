@@ -6,11 +6,13 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { IGroup } from "./ContentPageContents";
+import { IContentBucket } from "@/app/devices/[id]/ContentTab";
 
 const AddDeviceDialog = (props: {
   open: boolean;
   onClose: () => void;
   onAdd: () => void;
+  folderId: IContentBucket["id"];
   addedDevices: IDevice[];
   groupId: IGroup["id"];
 }) => {
@@ -21,12 +23,17 @@ const AddDeviceDialog = (props: {
       setAllDevices(response.devices)
     );
   }, [props.groupId]);
+  const add = (id: IDevice["id"]) =>
+    ApiController.addFolderToDevice(props.folderId, id).then(() => {
+      props.onAdd();
+      props.onClose();
+    });
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
       title="Share to a Device"
-      subtitle={["Add or remove device access to this", "content folder."]}
+      subtitle={["Add or remove device access to this", "Content Folder."]}
       width="434px"
     >
       <SearchInput
@@ -39,7 +46,18 @@ const AddDeviceDialog = (props: {
       />
       <Stack pt="16px" spacing="16px" width="100%">
         {allDevices?.map((d) => (
-          <Stack key={d.id} direction="row" spacing="8px" px="8px">
+          <Stack
+            key={d.id}
+            direction="row"
+            spacing="8px"
+            px="8px"
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+            }}
+            onClick={() => add(d.id)}
+          >
             <Stack
               borderRadius="100%"
               height="23px"

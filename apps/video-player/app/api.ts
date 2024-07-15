@@ -120,7 +120,7 @@ class ApiController {
     folderId: IContentBucket["id"],
     deviceId: IDevice["id"]
   ) {
-    return dellete(`content/buckets/${folderId}/devices/${deviceId}`);
+    return post(`content/buckets/${folderId}/devices`, { deviceId });
   }
 
   static async removeFolderFromDevice(
