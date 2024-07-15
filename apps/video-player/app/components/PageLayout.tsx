@@ -106,7 +106,11 @@ export const PageLayout = forwardRef<HTMLDivElement, any>(
             ref={ref}
             onScroll={props.onScroll}
           >
-            {props.header ? <Stack pl="50px">{props.header}</Stack> : null}
+            {props.header ? (
+              <Stack pl="50px" pb="24px">
+                {props.header}
+              </Stack>
+            ) : null}
             <Stack
               spacing="30px"
               justifyContent="space-between"

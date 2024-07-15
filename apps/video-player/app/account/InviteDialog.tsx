@@ -6,7 +6,7 @@ import { LabeledInputField } from "ui/labeled-input-field";
 import { DUMMY_USER, IUser, UserInitialsCircle } from "./AccountPageContents";
 
 const InviteDialog = (props: { open: boolean; onClose: () => void }) => {
-  const [email, setEmail] = useState<IUser["name"]>();
+  const [email, setEmail] = useState<IUser["realName"]>();
   return (
     <UrsorDialog
       open={props.open}

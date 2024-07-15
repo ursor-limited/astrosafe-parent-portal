@@ -368,10 +368,11 @@ const UpgradeDialog = (props: {
   closeCallback: () => void;
   mobile?: boolean;
 }) => {
+  const user = useUserContext().user;
+
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
   const router = useRouter();
-  const email = useUserContext().user?.auth0Id;
 
   const [locale, setLocale] = useState<string>("US");
 
@@ -438,7 +439,9 @@ const UpgradeDialog = (props: {
           unit={frequency === "monthly" ? "month" : "year"}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, "home", frequency) : "");
+            router.push(
+              user?.email ? getPaymentUrl(user.email, "home", frequency) : ""
+            );
             setUpgradedNotificationPending(true);
           }}
         />
@@ -460,7 +463,9 @@ const UpgradeDialog = (props: {
           unit={frequency === "monthly" ? "month" : "year"}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
-            router.push(email ? getPaymentUrl(email, "school", frequency) : "");
+            router.push(
+              user?.email ? getPaymentUrl(user.email, "school", frequency) : ""
+            );
             setUpgradedNotificationPending(true);
           }}
         />
@@ -476,7 +481,7 @@ const UpgradeDialog = (props: {
         >
           <Stack spacing="4px" alignItems="center">
             <Typography color={PALETTE.secondary.grey[4]} variant="h4">
-              Licence key
+              License key
             </Typography>
             <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
               Add your AstroSafe license key

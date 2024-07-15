@@ -3,31 +3,15 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
-import ApiController from "../api";
 import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 import Hotjar from "@hotjar/browser";
+import { DUMMY_USER, IUser } from "../account/AccountPageContents";
 
 const hotjarVersion = 6;
 
-export interface ISafeTubeUser {
-  id: string;
-  auth0Id: string;
-  subscribed: boolean;
-  subscriptionDeletionDate?: number;
-  subscriptionDate?: string;
-  subscriptionProductId?: string;
-  paymentFailed?: boolean;
-  createdAt: string;
-  freeTrialStart?: string;
-  creations: number;
-  externalDashboardTitle?: string;
-  switchedOffDashboardTutorialVideo?: boolean;
-  switchedOffLessonTutorialVideo?: boolean;
-}
-
 export interface IUserContext {
-  user?: ISafeTubeUser;
+  user?: IUser;
   loaded: boolean;
   loading?: boolean;
   refresh?: () => void;
@@ -51,10 +35,8 @@ export interface IUserProviderProps {
 }
 
 const UserProvider = (props: IUserProviderProps) => {
-  const [safeTubeUser, setSafeTubeUser] = useState<ISafeTubeUser | undefined>(
-    undefined
-  );
-  const { user, isLoading, error } = useAuth0();
+  const [user, setUser] = useState<IUser | undefined>();
+  useEffect(() => setUser(DUMMY_USER), []);
   const [loading, setLoading] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -117,19 +99,19 @@ const UserProvider = (props: IUserProviderProps) => {
   //   }
   // }, [safeTubeUser?.id]);
 
-  useEffect(() => {
-    if (signedIn && upgradedNotificationPending && safeTubeUser?.subscribed) {
-      notificationCtx.success("Upgraded");
-      setUpgradedNotificationPending(false);
-    }
-  }, [safeTubeUser?.subscribed]);
+  // useEffect(() => {
+  //   if (signedIn && upgradedNotificationPending && user?.subscribed) {
+  //     notificationCtx.success("Upgraded");
+  //     setUpgradedNotificationPending(false);
+  //   }
+  // }, [use?.subscribed]);
 
   ////// GETTING THE SUBSCRIPTION STATUS //////////////////////////////////////////////////////////////////
 
-  const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
-  useEffect(() => {
-    safeTubeUser?.subscribed && setSchoolIsSubscribed(true);
-  }, [safeTubeUser?.subscribed]);
+  // const [schoolIsSubscribed, setSchoolIsSubscribed] = useState<boolean>(false);
+  // useEffect(() => {
+  //   user?.subscribed && setSchoolIsSubscribed(true);
+  // }, [user?.subscribed]);
 
   // useEffect(() => {
   //   safeTubeUser &&
@@ -162,25 +144,25 @@ const UserProvider = (props: IUserProviderProps) => {
     "subscriptionStatusChangePossible",
     null
   );
-  useEffect(() => {
-    if (!signedIn) return;
-    if (
-      safeTubeUser?.subscriptionDeletionDate &&
-      subscriptionStatusChangePossible === "cancelled"
-    ) {
-      notificationCtx.success("Canceled subscription.");
-      setSubscriptionStatusChangePossible(null);
-    } else if (
-      !safeTubeUser?.subscriptionDeletionDate &&
-      subscriptionStatusChangePossible === "renewed"
-    ) {
-      notificationCtx.success("Renewed subscription.");
-      setSubscriptionStatusChangePossible(null);
-    }
-  }, [
-    subscriptionStatusChangePossible,
-    safeTubeUser?.subscriptionDeletionDate,
-  ]);
+  // useEffect(() => {
+  //   if (!signedIn) return;
+  //   if (
+  //     safeTubeUser?.subscriptionDeletionDate &&
+  //     subscriptionStatusChangePossible === "cancelled"
+  //   ) {
+  //     notificationCtx.success("Canceled subscription.");
+  //     setSubscriptionStatusChangePossible(null);
+  //   } else if (
+  //     !safeTubeUser?.subscriptionDeletionDate &&
+  //     subscriptionStatusChangePossible === "renewed"
+  //   ) {
+  //     notificationCtx.success("Renewed subscription.");
+  //     setSubscriptionStatusChangePossible(null);
+  //   }
+  // }, [
+  //   subscriptionStatusChangePossible,
+  //   safeTubeUser?.subscriptionDeletionDate,
+  // ]);
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -194,12 +176,12 @@ const UserProvider = (props: IUserProviderProps) => {
   return (
     <UserContext.Provider
       value={{
-        user: safeTubeUser,
+        user,
         loading,
         loaded,
-        clear: () => setSafeTubeUser(undefined),
+        clear: () => setUser(undefined),
         refresh: () => null, //loadUser,
-        schoolIsSubscribed,
+        schoolIsSubscribed: true,
       }}
     >
       {props.children}

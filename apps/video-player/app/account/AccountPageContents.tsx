@@ -20,29 +20,28 @@ import EditProfileDialog from "./EditProfileDialog";
 import Image from "next/image";
 import InviteDialog from "./InviteDialog";
 import { IGroup } from "../content/[id]/ContentPageContents";
-import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 import DeviceConnectDialog from "../devices/components/DeviceConnectDialog";
 import DownloadDialog from "../devices/components/DownloadDialog";
 import UpgradeDialog from "../components/UpgradeDialog";
+import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import { useUserContext } from "../components/UserContext";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
 export const DUMMY_USER: IUser = {
   id: 1,
-  name: "Bob Brown",
-  nickname: "Mr. Brown",
+  realName: "Bob Brown",
+  displayName: "Mr. Brown",
   email: "bob@gmail.com",
-  lastActive: "2024-05-05",
   createdAt: "2024-05-05",
   groupId: DUMMY_GROUP_ID,
 };
 
 export interface IUser {
   id: number;
-  name: string;
-  nickname: string;
+  realName: string;
+  displayName: string;
   email: string;
-  lastActive: string;
   groupId: IGroup["id"];
   createdAt: string;
 }
@@ -76,7 +75,7 @@ export const getInitials = (name: string) =>
     ?.slice(0, 2)
     .join("");
 
-export const UserInitialsCircle = (props: { name: IUser["name"] }) => (
+export const UserInitialsCircle = (props: { name: IUser["realName"] }) => (
   <Stack
     height="132px"
     width="132px"
@@ -93,11 +92,19 @@ export const UserInitialsCircle = (props: { name: IUser["name"] }) => (
 );
 
 const AccountPageContents = () => {
+  const user = useUserContext().user;
+
   const [name, setName] = useState<string | undefined>(undefined);
-  useEffect(() => setName(DUMMY_USER.name), []);
   const [nickname, setNickname] = useState<string | undefined>(undefined);
-  useEffect(() => setNickname(DUMMY_USER.nickname), []);
   const [email, setEmail] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (user) {
+      setName(user.realName);
+      setNickname(user.displayName);
+      setEmail(user.email);
+    }
+  }, [user]);
+
   useEffect(() => setEmail(DUMMY_USER.email), []);
 
   const [planState, setPlanState] = useState<AstroPlanState>("freeTrial");

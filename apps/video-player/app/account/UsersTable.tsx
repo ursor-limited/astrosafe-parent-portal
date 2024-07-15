@@ -60,7 +60,7 @@ const UsersTable = () => {
         users?.map((a) => ({
           id: a.id.toString(),
           items: {
-            name: a.name ?? "",
+            name: a.realName ?? "",
             email: a.email,
             dateJoined: a.createdAt,
           },

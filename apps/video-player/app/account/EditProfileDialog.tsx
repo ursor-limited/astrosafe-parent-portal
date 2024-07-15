@@ -7,11 +7,11 @@ import { DUMMY_USER, IUser, UserInitialsCircle } from "./AccountPageContents";
 
 const EditProfileDialog = (props: {
   open: boolean;
-  onSave: (name: IUser["name"], nickname: IUser["nickname"]) => void;
+  onSave: (name: IUser["realName"], nickname: IUser["displayName"]) => void;
   onClose: () => void;
 }) => {
-  const [nickname, setNickname] = useState<IUser["nickname"]>();
-  const [name, setName] = useState<IUser["name"]>();
+  const [nickname, setNickname] = useState<IUser["displayName"]>();
+  const [name, setName] = useState<IUser["realName"]>();
   return (
     <UrsorDialog
       open={props.open}
