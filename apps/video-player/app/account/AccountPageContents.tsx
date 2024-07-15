@@ -75,17 +75,25 @@ export const getInitials = (name: string) =>
     ?.slice(0, 2)
     .join("");
 
-export const UserInitialsCircle = (props: { name: IUser["realName"] }) => (
+export const UserInitialsCircle = (props: {
+  name: IUser["realName"];
+  size?: number;
+  fontSize?: number;
+}) => (
   <Stack
-    height="132px"
-    width="132px"
+    height={`${props.size || 132}px`}
+    width={`${props.size || 132}px`}
     bgcolor={PALETTE.secondary.blue[2]}
     borderRadius="100%"
     overflow="hidden"
     justifyContent="center"
     alignItems="center"
   >
-    <Typography variant="h2" color="rgb(255,255,255)">
+    <Typography
+      variant="h2"
+      color="rgb(255,255,255)"
+      sx={props.fontSize ? { fontSize: props.fontSize } : undefined}
+    >
       {props.name ? getInitials(props.name) : ""}
     </Typography>
   </Stack>

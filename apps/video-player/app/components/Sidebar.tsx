@@ -9,6 +9,8 @@ import GearIcon from "@/images/icons/GearIcon.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "./UserContext";
+import { UserInitialsCircle } from "../account/AccountPageContents";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";
@@ -179,6 +181,7 @@ const SidebarItem = (props: {
 );
 
 export default function Sidebar(props: ISidebarProps) {
+  const user = useUserContext().user;
   const router = useRouter();
   const topItems: ISidebarItem[] = [
     {
@@ -252,28 +255,23 @@ export default function Sidebar(props: ISidebarProps) {
         id="my-first-step"
       >
         <Stack spacing={small ? "16px" : "24px"} alignItems="center">
-          {/* {getList(
-            [
-              {
-                id: "home",
-                tourId: "home-button",
-                icon: VersionsIcon,
-                title: "Create",
-                callback: () => router.push("/dashboard"),
-              },
-            ],
-            small,
-            noText
-          )} */}
-          {/* <Stack height="2px" width="66%" bgcolor={PALETTE.secondary.grey[2]} /> */}
           {getList(topItems, small, noText)}
         </Stack>
-        {getList(bottomItems, small, noText)}
+        <SidebarItem
+          title="Account"
+          callback={() => router.push("/account")}
+          selected={"account" === props.selectedItemId}
+          small={small}
+          noText={noText}
+          tourId="account"
+        >
+          <UserInitialsCircle
+            size={32}
+            fontSize={12}
+            name={user ? user?.realName : ""}
+          />
+        </SidebarItem>
       </Stack>
-      {/* <BrowserDialog
-        open={browserDialogOpen}
-        closeCallback={() => setBrowserDialogOpen(false)}
-      /> */}
     </>
   );
 }
