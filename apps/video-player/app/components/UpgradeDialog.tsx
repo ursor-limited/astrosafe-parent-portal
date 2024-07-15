@@ -99,13 +99,10 @@ export const FrequencySwitch = (props: {
   callback: () => void;
 }) => (
   <Stack direction="row" spacing="12px" alignItems="center" height="26px">
-    <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-      Monthly
+    <Typography bold color={PALETTE.secondary.grey[4]}>
+      Annual discount
     </Typography>
     <AstroSwitch on={props.value === "annual"} callback={props.callback} />
-    <Typography variant="small" color={PALETTE.secondary.grey[4]}>
-      Annual
-    </Typography>
   </Stack>
 );
 
@@ -409,7 +406,7 @@ const UpgradeDialog = (props: {
       titleMaxWidth="600px"
       scrollable
     >
-      <Stack width="100%" alignItems="flex-end">
+      <Stack width="100%" alignItems="center">
         <FrequencySwitch
           value={frequency}
           callback={() =>
