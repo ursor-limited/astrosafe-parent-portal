@@ -133,7 +133,14 @@ const AccountPageContents = () => {
               <Typography variant="large" bold color="rgb(255,255,255)">
                 Upgrade to a Family or School account to get unlimited access!
               </Typography>
-              <UrsorButton dark endIcon={VerifiedIcon} size="small">
+              <UrsorButton
+                dark
+                endIcon={VerifiedIcon}
+                size="small"
+                backgroundColor="rgb(255,255,255)"
+                fontColor={PALETTE.primary.navy}
+                hoverOpacity={0.7}
+              >
                 Upgrade
               </UrsorButton>
             </Stack>
@@ -260,7 +267,13 @@ const AccountPageContents = () => {
                     ))}
                   </Stack>
                   <Stack height="100%" justifyContent="flex-end">
-                    <UrsorButton dark endIcon={VerifiedIcon}>
+                    <UrsorButton
+                      dark
+                      endIcon={VerifiedIcon}
+                      backgroundColor="rgb(255,255,255)"
+                      fontColor={PALETTE.primary.navy}
+                      hoverOpacity={0.7}
+                    >
                       Upgrade
                     </UrsorButton>
                   </Stack>
