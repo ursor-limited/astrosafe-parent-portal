@@ -11,6 +11,7 @@ import ApiController from "../api";
 import { useEffect, useState } from "react";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 import { IDevice } from "../filters/[id]/FilterPageContents";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 
 const DEFAULT_TITLE = "Untitled Folder";
 
@@ -47,14 +48,15 @@ const ContentsPageContents = () => {
     >
       <Stack pt="20px" pl="51px">
         <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
-          {folders.map((f) => (
-            <FolderCard
-              key={f.id}
-              {...f}
-              clickCallback={() => router.push(`/content/${f.id}`)}
-              thumbnailUrls={f.thumbnailUrls}
-              avatarUrls={f.avatarUrls}
-            />
+          {folders.map((f, i) => (
+            <UrsorFadeIn key={f.id} duration={800} delay={i * 90}>
+              <FolderCard
+                {...f}
+                clickCallback={() => router.push(`/content/${f.id}`)}
+                thumbnailUrls={f.thumbnailUrls}
+                avatarUrls={f.avatarUrls}
+              />
+            </UrsorFadeIn>
           ))}
         </DynamicCardGrid>
       </Stack>

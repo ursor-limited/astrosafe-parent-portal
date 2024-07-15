@@ -112,7 +112,7 @@ export default function DevicesPageContents() {
       />
       <DeviceConnectDialog
         open={connectDialogOpen}
-        onClose={() => setConnectDialogOpen(true)}
+        onClose={() => setConnectDialogOpen(false)}
         onOpen={() => {
           setDownloadDialogOpen(true);
           setConnectDialogOpen(false);
