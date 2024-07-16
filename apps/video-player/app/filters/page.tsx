@@ -1,12 +1,12 @@
 import React from "react";
-import AuthWrapper from "../components/AuthWrapper";
 import FiltersPageContents from "./FiltersPageContents";
+import { UserProvider } from "../components/UserContext";
 
 async function FilterPage() {
   return (
-    <AuthWrapper>
+    <UserProvider>
       <FiltersPageContents />
-    </AuthWrapper>
+    </UserProvider>
   );
 }
 

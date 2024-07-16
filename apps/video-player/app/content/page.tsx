@@ -1,12 +1,12 @@
 import React from "react";
-import AuthWrapper from "../components/AuthWrapper";
 import ContentsPageContents from "./ContentsPageContents";
+import { UserProvider } from "../components/UserContext";
 
 async function ContentPage() {
   return (
-    <AuthWrapper>
+    <UserProvider>
       <ContentsPageContents />
-    </AuthWrapper>
+    </UserProvider>
   );
 }
 

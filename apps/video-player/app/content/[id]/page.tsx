@@ -1,12 +1,12 @@
 import React from "react";
-import AuthWrapper from "@/app/components/AuthWrapper";
 import ContentPageContents from "./ContentPageContents";
+import { UserProvider } from "@/app/components/UserContext";
 
 async function ContentPage({ params }: { params: { id: string } }) {
   return (
-    <AuthWrapper>
+    <UserProvider>
       <ContentPageContents folderId={parseInt(params.id)} />
-    </AuthWrapper>
+    </UserProvider>
   );
 }
 

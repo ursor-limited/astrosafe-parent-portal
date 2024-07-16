@@ -19,9 +19,7 @@ const AddDeviceDialog = (props: {
   const [searchValue, setSearchValue] = useState<string>("");
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(props.groupId).then((response) =>
-      setAllDevices(response.devices)
-    );
+    ApiController.getGroupDevices(props.groupId).then((d) => setAllDevices(d));
   }, [props.groupId]);
   const add = (id: IDevice["id"]) =>
     ApiController.addFolderToDevice(props.folderId, id).then(() => {
@@ -44,30 +42,46 @@ const AddDeviceDialog = (props: {
         height="41px"
         grey
       />
-      <Stack pt="16px" spacing="16px" width="100%">
-        {allDevices?.map((d) => (
-          <Stack
-            key={d.id}
-            direction="row"
-            spacing="8px"
-            px="8px"
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.7 },
-            }}
-            onClick={() => add(d.id)}
+      {allDevices.length === props.addedDevices.length ? (
+        <Stack flex={1} justifyContent="center" width="66%">
+          <Typography
+            color={PALETTE.secondary.grey[3]}
+            bold
+            sx={{ textAlign: "center" }}
           >
-            <Stack
-              borderRadius="100%"
-              height="23px"
-              width="23px"
-              bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
-            />
-            <Typography bold>{d.name}</Typography>
-          </Stack>
-        ))}
-      </Stack>
+            This Folder has been added to all of your Devices.
+          </Typography>
+        </Stack>
+      ) : (
+        <Stack pt="16px" spacing="16px" width="100%">
+          {allDevices
+            ?.filter(
+              (d) => !props.addedDevices.find((device) => device.id === d.id)
+            )
+            .map((d) => (
+              <Stack
+                key={d.id}
+                direction="row"
+                spacing="8px"
+                px="8px"
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
+                }}
+                onClick={() => add(d.id)}
+              >
+                <Stack
+                  borderRadius="100%"
+                  height="23px"
+                  width="23px"
+                  bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
+                />
+                <Typography bold>{d.name}</Typography>
+              </Stack>
+            ))}
+        </Stack>
+      )}
     </UrsorDialog>
   );
 };
