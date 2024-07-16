@@ -34,7 +34,7 @@ export const DUMMY_USER: IUser = {
   displayName: "Mr. Brown",
   email: "bob@gmail.com",
   createdAt: "2024-05-05",
-  groupId: DUMMY_GROUP_ID,
+  groupId: 1,
 };
 
 export interface IUser {

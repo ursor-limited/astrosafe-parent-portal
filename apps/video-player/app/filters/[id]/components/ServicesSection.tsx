@@ -1,5 +1,6 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
+import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { IFilter, IFilterUrl } from "../../FiltersPageContents";
 import { AstroBentoCard } from "./AstroBentoCard";
 import { FilterLegend } from "./CategoriesSection";
@@ -7,6 +8,7 @@ import AstroToggleCard from "./AstroToggleCard";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { PALETTE } from "ui";
 
 const FilterPageServicesSection = (props: {
   filter: IFilter;
@@ -30,17 +32,37 @@ const FilterPageServicesSection = (props: {
             callback={() => props.flipService(s.id)}
             title={s.title}
             image={
-              <Stack
-                borderRadius="8px"
-                overflow="hidden"
-                boxShadow="0 0 16px rgba(0,0,0,0.08)"
-              >
-                <Image
-                  src={s.imageUrl}
-                  height={41}
-                  width={41}
-                  alt="platform image"
-                />
+              <Stack position="relative">
+                {props.allowedServices.includes(s.id) ? (
+                  <Stack
+                    position="absolute"
+                    top="-6px"
+                    right="-10px"
+                    width="20px"
+                    height="20px"
+                    bgcolor={PALETTE.secondary.green[4]}
+                    sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+                    borderRadius="100%"
+                    overflow="hidden"
+                    border="1.5px solid white"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <CheckIcon width="12px" height="12px" />
+                  </Stack>
+                ) : null}
+                <Stack
+                  borderRadius="8px"
+                  overflow="hidden"
+                  boxShadow="0 0 16px rgba(0,0,0,0.08)"
+                >
+                  <Image
+                    src={s.imageUrl}
+                    height={41}
+                    width={41}
+                    alt="platform image"
+                  />
+                </Stack>
               </Stack>
             }
             key={s.id}
