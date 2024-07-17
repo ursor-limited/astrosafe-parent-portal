@@ -94,13 +94,22 @@ export default function HomePageContents(props: {
     }[]
   >([]);
   useEffect(() => {
-    ApiController.getFavorites(DUMMY_DEVICE_ID).then((f) => setFavorites(f));
+    ApiController.getFavorites(DUMMY_DEVICE_ID).then((f) =>
+      setFavorites([
+        ...f.videos.map((v: IVideo) => ({ type: "video", id: v.id })),
+        ...f.links.map((l: ILink) => ({ type: "link", id: l.id })),
+        ...f.channels.map((c: IChannel) => ({ type: "channel", id: c.id })),
+        ...f.lessons.map((l: ILesson) => ({ type: "lesson", id: l.id })),
+      ])
+    );
   }, []);
   const flipFavorite = (id: IContent["id"], type: AstroContent) => {
-    if (favorites.find((f) => f.id === id)) {
-      setFavorites(favorites.filter((f) => f.id !== id));
+    if (favorites.find((f) => f.id === id && f.type === type)) {
+      setFavorites(favorites.filter((f) => !(f.id === id && f.type === type)));
+      ApiController.removeFavorite(DUMMY_DEVICE_ID, id, type);
     } else {
       setFavorites([...favorites, { id, type }]);
+      ApiController.setFavorite(DUMMY_DEVICE_ID, id, type);
     }
   };
 
@@ -251,19 +260,44 @@ export default function HomePageContents(props: {
                                 {...(x.content as ILink)}
                                 onClick={() => null}
                                 favorite={
-                                  !!favorites.find((f) => f.id === x.content.id)
+                                  !!favorites.find(
+                                    (f) =>
+                                      f.id === x.content.id && f.type === "link"
+                                  )
                                 }
-                                setFavorite={flipFavorite}
+                                flipFavorite={() =>
+                                  flipFavorite(x.content.id, "link")
+                                }
                               />
                             ) : x.type === "video" ? (
                               <VideoCard
                                 {...(x.content as IVideo)}
                                 onClick={() => null}
+                                favorite={
+                                  !!favorites.find(
+                                    (f) =>
+                                      f.id === x.content.id &&
+                                      f.type === "video"
+                                  )
+                                }
+                                setFavorite={() =>
+                                  flipFavorite(x.content.id, "video")
+                                }
                               />
                             ) : x.type === "channel" ? (
                               <ChannelCard
                                 {...(x.content as IChannel)}
                                 onClick={() => null}
+                                favorite={
+                                  !!favorites.find(
+                                    (f) =>
+                                      f.id === x.content.id &&
+                                      f.type === "channel"
+                                  )
+                                }
+                                setFavorite={() =>
+                                  flipFavorite(x.content.id, "channel")
+                                }
                               />
                             ) : null}
                           </UrsorFadeIn>

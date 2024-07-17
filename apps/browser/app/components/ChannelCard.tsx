@@ -23,7 +23,7 @@ const ChannelCard = (
       title={props.title}
       onClick={props.onClick}
       favorite={props.favorite}
-      setFavorite={props.setFavorite}
+      flipFavorite={props.setFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}

@@ -49,7 +49,7 @@ const ContentCard = (props: {
   title: IContent["title"];
   onClick?: () => void;
   favorite: boolean;
-  setFavorite: () => void;
+  flipFavorite: () => void;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -69,7 +69,7 @@ const ContentCard = (props: {
         zIndex={3}
         right="12px"
         top="12px"
-        onClick={() => setPinned(!pinned)}
+        onClick={props.flipFavorite}
       >
         <FavoriteStar id={props.id} type={props.type} filled={props.favorite} />
       </Stack>

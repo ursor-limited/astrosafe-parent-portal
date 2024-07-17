@@ -1,9 +1,7 @@
-import { displayName } from "react-quill";
 import { IUser } from "./account/AccountPageContents";
 import { IGroup } from "./content/[id]/ContentPageContents";
 import {
   IChannel,
-  IContent,
   IContentBucket,
   ILink,
   IVideo,

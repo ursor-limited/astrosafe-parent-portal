@@ -8,7 +8,7 @@ const IMAGE_HEIGHT = 227;
 const LinkCard = (
   props: Omit<ILink, "createdAt"> & {
     favorite: boolean;
-    setFavorite: () => void;
+    flipFavorite: () => void;
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
@@ -22,7 +22,7 @@ const LinkCard = (
       title={props.title}
       onClick={props.onClick}
       favorite={props.favorite}
-      setFavorite={props.setFavorite}
+      flipFavorite={props.flipFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}
