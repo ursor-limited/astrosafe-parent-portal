@@ -4,9 +4,8 @@ import UrsorTable, {
   IUrsorTableRow,
 } from "../components/UrsorTable";
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import dayjs from "dayjs";
-import { DUMMY_USER, IUser } from "./AccountPageContents";
+import { IUser } from "./AccountPageContents";
 import _ from "lodash";
 import { PALETTE } from "ui";
 
@@ -16,13 +15,13 @@ interface IAdultUsersTableRowItems {
   dateJoined: string;
 }
 
-const UsersTable = () => {
-  const [users, setUsers] = useState<IUser[]>([DUMMY_USER]);
-
+const UsersTable = (props: { users: IUser[] }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
       name: "name",
-      displayName: `${users.length} Adult${users.length === 1 ? "" : "s"}`,
+      displayName: `${props.users.length} Adult${
+        props.users.length === 1 ? "" : "s"
+      }`,
       sortable: true,
       newTag: true,
       getAvatar: (id) => {
@@ -57,7 +56,7 @@ const UsersTable = () => {
   useEffect(() => {
     (async () => {
       const userRows: IUrsorTableRow<IAdultUsersTableRowItems>[] =
-        users?.map((a) => ({
+        props.users?.map((a) => ({
           id: a.id.toString(),
           items: {
             name: a.realName ?? "",
@@ -69,7 +68,7 @@ const UsersTable = () => {
         })) || [];
       setRows(userRows);
     })();
-  }, [users]);
+  }, [props.users]);
 
   const [sortedRows, setSortedRows] = useState<
     IUrsorTableRow<IAdultUsersTableRowItems>[]

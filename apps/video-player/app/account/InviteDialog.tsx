@@ -3,9 +3,13 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
-import { DUMMY_USER, IUser, UserInitialsCircle } from "./AccountPageContents";
+import { IUser } from "./AccountPageContents";
 
-const InviteDialog = (props: { open: boolean; onClose: () => void }) => {
+const InviteDialog = (props: {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (email: string) => void;
+}) => {
   const [email, setEmail] = useState<IUser["realName"]>();
   return (
     <UrsorDialog
@@ -30,7 +34,13 @@ const InviteDialog = (props: { open: boolean; onClose: () => void }) => {
             leftAlign
           />
         </LabeledInputField>
-        <UrsorButton dark variant="tertiary" width="100%">
+        <UrsorButton
+          dark
+          variant="tertiary"
+          width="100%"
+          onClick={() => email && props.onSubmit(email)}
+          disabled={!email || !email.includes("@") || !email.includes(".")}
+        >
           Invite
         </UrsorButton>
       </Stack>

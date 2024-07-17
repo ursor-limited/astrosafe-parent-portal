@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { useContext, useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
-import { DUMMY_USER, IUser, UserInitialsCircle } from "./AccountPageContents";
+import { IUser, UserInitialsCircle } from "./AccountPageContents";
 
 const EditProfileDialog = (props: {
   open: boolean;

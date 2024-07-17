@@ -6,8 +6,8 @@ export type ContentAgeMode = "trailblazer" | "explorer" | "adventurer";
 const BACKEND_URLS = {
   development: "https://api.astrosafe.co",
   preview:
-    "https://058vkvcapb.execute-api.eu-west-1.amazonaws.com/dev/dev-ursor-express-serverless",
-  production: "https://xdt8565hsf.execute-api.eu-west-1.amazonaws.com/prod/api",
+    "https://api.astrosafe.co",
+  production: "https://api.astrosafe.co",
 };
 
 export const getAbsoluteUrl = (url: string) => `https://${url}`;

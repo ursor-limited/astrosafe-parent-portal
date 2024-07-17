@@ -117,6 +117,9 @@ export default function HomePageContents(props: {
   const [selectedFolderId, setSelectedFolderId] = useState<
     IContentBucket["id"] | undefined
   >();
+  useEffect(() => {
+    !selectedFolderId && folders && setSelectedFolderId(folders[0]?.id);
+  }, [folders]);
   const [currentFolderContents, setCurrentFolderContents] = useState<
     IContentCard[]
   >([]);
@@ -202,7 +205,7 @@ export default function HomePageContents(props: {
             boxSizing="border-box"
           >
             {folders?.map((f, i) => (
-              <UrsorFadeIn key={f.id} duration={800} delay={700 + (i + 1) * 90}>
+              <UrsorFadeIn key={f.id} duration={800} delay={(i + 1) * 90}>
                 <Stack
                   onClick={() => {
                     setSelectedFolderId(f.id);
@@ -227,7 +230,10 @@ export default function HomePageContents(props: {
                     <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                       {column.map((x, j) => (
                         <Stack key={x.content.id}>
-                          <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
+                          <UrsorFadeIn
+                            delay={300 + (j * 150 + i * 80)}
+                            duration={800}
+                          >
                             {x.type === "link" ? (
                               <LinkCard
                                 {...(x.content as ILink)}

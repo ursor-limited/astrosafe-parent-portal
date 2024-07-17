@@ -91,11 +91,11 @@ export default function FilterPageContents(props: { filterId: number }) {
           kallback: () => setRenameDialogOpen(true),
           icon: PencilIcon,
         },
-        {
-          text: "Duplicate",
-          kallback: () => null,
-          icon: DuplicateIcon,
-        },
+        // {
+        //   text: "Duplicate",
+        //   kallback: () => null,
+        //   icon: DuplicateIcon,
+        // },
         {
           text: "Delete",
           kallback: () => null,

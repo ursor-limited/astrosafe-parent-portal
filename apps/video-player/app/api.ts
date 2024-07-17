@@ -1,3 +1,5 @@
+import { displayName } from "react-quill";
+import { IUser } from "./account/AccountPageContents";
 import { IGroup } from "./content/[id]/ContentPageContents";
 import {
   IChannel,
@@ -105,9 +107,7 @@ class ApiController {
   }
 
   static async getGroupDevices(id: IGroup["id"]) {
-    return get(`users/groups/${id}/devices`).then((response: any) =>
-      response.json()
-    );
+    return get(`groups/${id}/devices`).then((response: any) => response.json());
   }
 
   static async getContentBucketDevices(id: IContentBucket["id"]) {
@@ -237,6 +237,18 @@ class ApiController {
 
   static async deleteChannel(id: ILink["id"]) {
     return dellete(`content/channels/${id}`);
+  }
+
+  static async getUser(id: IUser["id"]) {
+    return get(`users/${id}`).then((response: any) => response.json());
+  }
+
+  static async getGroupUsers(id: IUser["id"]) {
+    return get(`users/${id}`).then((response: any) => response.json());
+  }
+
+  static async createUser(email: IUser["email"]) {
+    return post("users", { email, realName: "", displayName: "" });
   }
 
   // static async createLesson(details: any) {

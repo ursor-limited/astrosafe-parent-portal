@@ -218,11 +218,11 @@ export default function ContentPageContents(props: { folderId: number }) {
             kallback: () => setFolderRenameDialogOpen(true),
             icon: PencilIcon,
           },
-          {
-            text: "Duplicate",
-            kallback: () => null,
-            icon: DuplicateIcon,
-          },
+          // {
+          //   text: "Duplicate",
+          //   kallback: () => null,
+          //   icon: DuplicateIcon,
+          // },
           {
             text: "Delete",
             kallback: () => null,
@@ -233,7 +233,7 @@ export default function ContentPageContents(props: { folderId: number }) {
         maxWidth={834}
         scrollable
       >
-        <Stack pl="48px" spacing="24px">
+        <Stack pl="48px" spacing="24px" pb="32px">
           <ContentPageDevicesSection
             devices={devices}
             folderId={props.folderId}

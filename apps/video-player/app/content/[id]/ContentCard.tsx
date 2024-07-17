@@ -61,7 +61,7 @@ const ContentCard = (props: {
             ]}
           />
         </Stack>
-        <Stack
+        {/* <Stack
           position="absolute"
           right="18px"
           top="18px"
@@ -89,7 +89,7 @@ const ContentCard = (props: {
           ) : (
             <PinIcon height="14px" width="14px" />
           )}
-        </Stack>
+        </Stack> */}
         <Stack
           onClick={props.onClick}
           sx={{

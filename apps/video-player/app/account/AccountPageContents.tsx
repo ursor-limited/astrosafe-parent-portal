@@ -11,7 +11,7 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PersonIcon from "@/images/icons/PersonIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UsersTable from "./UsersTable";
 import DevicesTable from "./DevicesTable";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -25,17 +25,9 @@ import DownloadDialog from "../devices/components/DownloadDialog";
 import UpgradeDialog from "../components/UpgradeDialog";
 import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
 import { useUserContext } from "../components/UserContext";
+import ApiController from "../api";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
-
-export const DUMMY_USER: IUser = {
-  id: 1,
-  realName: "Bob Brown",
-  displayName: "Mr. Brown",
-  email: "bob@gmail.com",
-  createdAt: "2024-05-05",
-  groupId: 1,
-};
 
 export interface IUser {
   id: number;
@@ -113,8 +105,6 @@ const AccountPageContents = () => {
     }
   }, [user]);
 
-  useEffect(() => setEmail(DUMMY_USER.email), []);
-
   const [planState, setPlanState] = useState<AstroPlanState>("freeTrial");
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
@@ -123,6 +113,15 @@ const AccountPageContents = () => {
   const [connectDialogOpen, setConnectDialogOpen] = useState<boolean>(false);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState<boolean>(false);
+
+  const [users, setUsers] = useState<IUser[]>([]);
+  const loadUsers = useCallback(
+    () => ApiController.getGroupUsers(DUMMY_GROUP_ID).then((u) => setUsers(u)),
+    []
+  );
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   return (
     <>
@@ -333,7 +332,7 @@ const AccountPageContents = () => {
             }
           >
             <Stack spacing="24px">
-              <UsersTable />
+              <UsersTable users={users} />
               <DevicesTable />
             </Stack>
           </AstroBentoCard>
@@ -406,6 +405,7 @@ const AccountPageContents = () => {
       <InviteDialog
         open={inviteDialogOpen}
         onClose={() => setInviteDialogOpen(false)}
+        onSubmit={(email) => ApiController.createUser(email).then(loadUsers)}
       />
       <DeviceConnectDialog
         open={connectDialogOpen}

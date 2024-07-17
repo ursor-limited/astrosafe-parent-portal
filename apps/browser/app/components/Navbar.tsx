@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { PALETTE } from "ui";
 import NavbarSearchBar from "./NavbarSearchBar";
 import { OVERALL_X_PADDING } from "./PageLayout";
+import SchoolJoiningDialog from "./SchoolJoiningDialog";
+import { useState } from "react";
 
 const BUTTON_SIZE = 52;
 const BUTTON_SPACING = "12px";
@@ -80,6 +82,8 @@ export interface INavbarProps {
 
 export default function Navbar(props: INavbarProps) {
   const router = useRouter();
+  const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
+    useState<boolean>(false);
   return (
     <>
       <Stack
@@ -201,11 +205,16 @@ export default function Navbar(props: INavbarProps) {
               transition: "0.2s",
               cursor: "pointer",
             }}
+            onClick={() => setSchoolJoiningDialogOpen(true)}
           >
             <PlugIcon width="26px" height="26px" />
           </Stack>
         </Stack>
       </Stack>
+      <SchoolJoiningDialog
+        open={schoolJoiningDialogOpen}
+        closeCallback={() => setSchoolJoiningDialogOpen(false)}
+      />
     </>
   );
 }

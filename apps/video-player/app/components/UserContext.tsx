@@ -7,6 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 import NotificationContext from "./NotificationContext";
 import Hotjar from "@hotjar/browser";
 import { DUMMY_USER, IUser } from "../account/AccountPageContents";
+import ApiController from "../api";
 
 const hotjarVersion = 6;
 
@@ -36,7 +37,10 @@ export interface IUserProviderProps {
 
 const UserProvider = (props: IUserProviderProps) => {
   const [user, setUser] = useState<IUser | undefined>();
-  useEffect(() => setUser(DUMMY_USER), []);
+
+  useEffect(() => {
+    ApiController.getUser(1).then((u) => setUser(u));
+  }, []);
   const [loading, setLoading] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -163,15 +167,6 @@ const UserProvider = (props: IUserProviderProps) => {
   //   subscriptionStatusChangePossible,
   //   safeTubeUser?.subscriptionDeletionDate,
   // ]);
-
-  const notificationCtx = useContext(NotificationContext);
-
-  useEffect(() => {
-    Hotjar.init(
-      parseInt(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID!),
-      hotjarVersion
-    );
-  }, []);
 
   return (
     <UserContext.Provider

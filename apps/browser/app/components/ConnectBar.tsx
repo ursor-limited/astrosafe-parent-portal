@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { OVERALL_X_PADDING } from "./PageLayout";
 import SchoolJoiningDialog from "./SchoolJoiningDialog";
+import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useEffect, useState } from "react";
 
 const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
@@ -14,20 +15,33 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
   return (
     <>
       <Stack
-        height="60px"
+        maxHeight="52px"
         borderRadius="12px"
-        direction={props.mobile ? "column" : "row"}
-        border={`2px solid ${PALETTE.secondary.purple[2]}`}
+        direction="row"
+        //border={`2px solid ${PALETTE.secondary.purple[2]}`}
         justifyContent="space-between"
-        alignItems={props.mobile ? undefined : "center"}
+        alignItems="center"
         px={OVERALL_X_PADDING}
         p={props.mobile ? "16px" : undefined}
-        bgcolor="rgb(255,255,255)"
+        bgcolor={PALETTE.system.orange}
+        sx={{
+          svg: {
+            path: {
+              fill: "rgb(255,255,255)",
+            },
+          },
+        }}
+        onClick={() => setSchoolJoiningDialogOpen(true)}
       >
-        <Typography variant={props.mobile ? "small" : "large"} bold>
+        <Typography
+          variant={props.mobile ? "small" : "large"}
+          bold
+          color="rgb(255,255,255)"
+        >
           Connect to a group for a safe experience
         </Typography>
-        <Stack direction="row" spacing="12px">
+        <ChevronRight width="20px" height="20px" />
+        {/* <Stack direction="row" spacing="12px">
           <UrsorButton
             variant="secondary"
             size="small"
@@ -44,7 +58,7 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
           >
             Connect
           </UrsorButton>
-        </Stack>
+        </Stack> */}
       </Stack>
       <SchoolJoiningDialog
         open={schoolJoiningDialogOpen}

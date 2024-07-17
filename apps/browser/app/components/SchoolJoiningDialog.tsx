@@ -133,6 +133,16 @@ export interface ISchoolJoiningDialogProps {
 export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
   const nativeDeviceId = useNativeDeviceId();
 
+  useEffect(() => {
+    !nativeDeviceId &&
+      window.postMessage(
+        {
+          setDeviceId: 7906,
+        },
+        "*"
+      );
+  }, [nativeDeviceId]);
+
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
@@ -154,59 +164,59 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
 
   const [limitReached, setLimitReached] = useState<boolean>(false);
 
-  useEffect(() => {
-    inputedCode.length === JOIN_CODE_LENGTH &&
-      ApiController.verifyJoinCode(inputedCode)
-        .then((school) => {
-          setShowSuccess(true);
-          setTimeout(() => {
-            setShowSuccess(false);
-            setSchoolId(school.id);
-          }, 1000);
-        })
-        .catch((error) => {
-          if (error.response.status === LIMIT_REACHED_ERROR_CODE) {
-            setLimitReached(true);
-          }
-          setShowFailure(true);
-          setTimeout(() => {
-            setShowFailure(false);
-            setCodeInputActive(true);
-            setInputedCode("");
-          }, FAILURE_DURATION);
-        });
-  }, [inputedCode.length]);
+  // useEffect(() => {
+  //   inputedCode.length === JOIN_CODE_LENGTH &&
+  //     ApiController.verifyJoinCode(inputedCode)
+  //       .then((school) => {
+  //         setShowSuccess(true);
+  //         setTimeout(() => {
+  //           setShowSuccess(false);
+  //           setSchoolId(school.id);
+  //         }, 1000);
+  //       })
+  //       .catch((error) => {
+  //         if (error.response.status === LIMIT_REACHED_ERROR_CODE) {
+  //           setLimitReached(true);
+  //         }
+  //         setShowFailure(true);
+  //         setTimeout(() => {
+  //           setShowFailure(false);
+  //           setCodeInputActive(true);
+  //           setInputedCode("");
+  //         }, FAILURE_DURATION);
+  //       });
+  // }, [inputedCode.length]);
 
-  const submitAddition = () =>
-    ApiController.addDeviceToSchool(
-      schoolId ?? "",
-      inputedDeviceName,
-      nativeDeviceId ?? ""
-    ).then((device) => {
-      setDeviceId(device.id);
-      props.closeCallback();
-      if (
-        (window as any).webkit &&
-        (window as any).webkit.messageHandlers &&
-        (window as any).webkit.messageHandlers.websiteToiOSDetails
-      ) {
-        const data = {
-          schoolId,
-          deviceId: device.id,
-        };
-        const jsonData = JSON.stringify(data);
-        (window as any).webkit.messageHandlers.websiteToiOSDetails.postMessage(
-          jsonData
-        );
-        window.postMessage(
-          // sharing the new answers with the app too; needed for the worksheet cards
-          {
-            connectToSchool: true,
-          },
-          "*"
-        );
-      }
-    });
+  // const submitAddition = () =>
+  //   ApiController.addDeviceToSchool(
+  //     schoolId ?? "",
+  //     inputedDeviceName,
+  //     nativeDeviceId ?? ""
+  //   ).then((device) => {
+  //     setDeviceId(device.id);
+  //     props.closeCallback();
+  //     if (
+  //       (window as any).webkit &&
+  //       (window as any).webkit.messageHandlers &&
+  //       (window as any).webkit.messageHandlers.websiteToiOSDetails
+  //     ) {
+  //       const data = {
+  //         schoolId,
+  //         deviceId: device.id,
+  //       };
+  //       const jsonData = JSON.stringify(data);
+  //       (window as any).webkit.messageHandlers.websiteToiOSDetails.postMessage(
+  //         jsonData
+  //       );
+  //       window.postMessage(
+  //         // sharing the new answers with the app too; needed for the worksheet cards
+  //         {
+  //           connectToSchool: true,
+  //         },
+  //         "*"
+  //       );
+  //     }
+  //   });
 
   return (
     <UrsorDialog
@@ -243,9 +253,9 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
       button={{
         text: instructionsViewOpen ? "Got it!" : "Connect",
         callback: async () => {
-          instructionsViewOpen
-            ? setInstructionsViewOpen(false)
-            : submitAddition();
+          // instructionsViewOpen
+          //   ? setInstructionsViewOpen(false)
+          //   : submitAddition();
         },
         disabled:
           !instructionsViewOpen &&
@@ -352,7 +362,7 @@ export default function SchoolJoiningDialog(props: ISchoolJoiningDialogProps) {
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setInputedDeviceName(event.target.value)
               }
-              onEnterKey={() => inputedDeviceName && submitAddition()}
+              //onEnterKey={() => inputedDeviceName && submitAddition()}
             />
           </UrsorFadeIn>
         </Stack>
