@@ -17,6 +17,7 @@ import ApiController, { getAbsoluteUrl } from "../api";
 import VideoCard from "../components/VideoCard";
 import PlatformCard from "../components/PlatformCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
+import AvatarSelectionDialog from "./AvatarSelectionDialog";
 
 export const DUMMY_DEVICE_ID = 1;
 
@@ -188,8 +189,11 @@ export default function HomePageContents(props: {
     );
   }, [nColumns, currentFolderContents]);
 
-  const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
+  const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
     useState<boolean>(true);
+
+  const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -341,6 +345,14 @@ export default function HomePageContents(props: {
           </Stack>
         </Stack>
       </PageLayout>
+      <AvatarSelectionDialog
+        open={avatarSelectionDialogOpen}
+        onClose={() => setAvatarSelectionDialogOpen(false)}
+        onNext={() => {
+          setAvatarSelectionDialogOpen(false);
+          setDeviceReadyDialogOpen(true);
+        }}
+      />
       <DeviceReadyDialog
         open={deviceReadyDialogOpen}
         onClose={() => setDeviceReadyDialogOpen(false)}
