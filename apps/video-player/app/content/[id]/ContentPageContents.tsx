@@ -237,8 +237,13 @@ export default function ContentPageContents(props: { folderId: number }) {
           <ContentPageDevicesSection
             devices={devices}
             folderId={props.folderId}
-            onAdd={() => setAddDeviceDialogOpen(true)}
-            onRemove={loadDevices}
+            onAdd={() => {
+              setAddDeviceDialogOpen(true);
+            }}
+            onRemove={() => {
+              loadDevices();
+              notificationCtx.negativeSuccess("Removed Device");
+            }}
           />
           <Stack justifyContent="center">
             <Stack
@@ -391,7 +396,10 @@ export default function ContentPageContents(props: { folderId: number }) {
           onClose={() => setAddDeviceDialogOpen(false)}
           addedDevices={devices}
           folderId={props.folderId}
-          onAdd={loadDevices}
+          onAdd={() => {
+            loadDevices();
+            notificationCtx.success("Added Device");
+          }}
         />
       ) : null}
       <FolderRenameDialog
