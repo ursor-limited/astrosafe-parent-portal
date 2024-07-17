@@ -2,39 +2,20 @@ import { Stack } from "@mui/system";
 import StarIcon from "@/images/icons/StarIcon.svg";
 import StarFillIcon from "@/images/icons/StarFillIcon.svg";
 import { PALETTE } from "ui";
-import { useEffect, useState } from "react";
-import ApiController from "../api";
-import { BrowserContent } from "../home/AstroContentColumns";
-import { useLocalStorage } from "usehooks-ts";
 import { AstroContent, IContent } from "../home/HomePageContents";
 
 const FavoriteStar = (props: {
   id: IContent["id"];
   type: AstroContent;
   black?: boolean;
+  filled: boolean;
 }) => {
-  const [favorites, setFavorites] = useLocalStorage<
-    {
-      contentId: IContent["id"];
-      contentType: BrowserContent;
-    }[]
-  >("favorites", []);
-  const [selected, setSelected] = useState<boolean>(false);
-  useEffect(
-    () => setSelected(!!favorites?.find((f) => f.contentId === props.id)),
-    [favorites]
-  );
-
-  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
-    "deviceId",
-    undefined
-  );
   return (
     <Stack
       justifyContent="center"
       alignItems="center"
-      width="28px"
-      height="28px"
+      width="30px"
+      height="30px"
       borderRadius="100%"
       overflow="hidden"
       bgcolor="rgb(255,255,255)"
@@ -54,7 +35,7 @@ const FavoriteStar = (props: {
         },
         svg: {
           path: {
-            fill: selected
+            fill: props.filled
               ? props.black
                 ? "rgb(10,10,10)"
                 : PALETTE.secondary.purple[2]
@@ -75,7 +56,7 @@ const FavoriteStar = (props: {
         // );
       }}
     >
-      {selected ? (
+      {props.filled ? (
         <StarFillIcon height="17px" width="17px" />
       ) : (
         <StarIcon height="17px" width="17px" />

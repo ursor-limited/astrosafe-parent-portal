@@ -18,6 +18,8 @@ import ApiController, { getAbsoluteUrl } from "../api";
 import VideoCard from "../components/VideoCard";
 import PlatformCard from "../components/PlatformCard";
 
+export const DUMMY_DEVICE_ID = 1;
+
 export type AstroContent = "video" | "channel" | "link";
 
 export interface IContent {
@@ -85,12 +87,22 @@ export default function HomePageContents(props: {
   mobile: boolean;
   openConnect: boolean;
 }) {
-  const [favorites, setFavorites] = useLocalStorage<
+  const [favorites, setFavorites] = useState<
     {
-      contentId: string;
-      contentType: BrowserContent;
+      id: IContent["id"];
+      type: AstroContent;
     }[]
-  >("favorites", []);
+  >([]);
+  useEffect(() => {
+    ApiController.getFavorites(DUMMY_DEVICE_ID).then((f) => setFavorites(f));
+  }, []);
+  const flipFavorite = (id: IContent["id"], type: AstroContent) => {
+    if (favorites.find((f) => f.id === id)) {
+      setFavorites(favorites.filter((f) => f.id !== id));
+    } else {
+      setFavorites([...favorites, { id, type }]);
+    }
+  };
 
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
@@ -238,6 +250,10 @@ export default function HomePageContents(props: {
                               <LinkCard
                                 {...(x.content as ILink)}
                                 onClick={() => null}
+                                favorite={
+                                  !!favorites.find((f) => f.id === x.content.id)
+                                }
+                                setFavorite={flipFavorite}
                               />
                             ) : x.type === "video" ? (
                               <VideoCard

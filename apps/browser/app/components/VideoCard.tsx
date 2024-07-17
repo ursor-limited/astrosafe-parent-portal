@@ -8,6 +8,8 @@ const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
   props: Omit<IVideo, "createdAt"> & {
+    favorite: boolean;
+    setFavorite: () => void;
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
@@ -21,6 +23,8 @@ const VideoCard = (
       id={props.id}
       title={props.title}
       onClick={props.onClick}
+      favorite={props.favorite}
+      setFavorite={props.setFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}

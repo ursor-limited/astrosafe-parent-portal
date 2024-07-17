@@ -1,13 +1,14 @@
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import ApiController from "@/app/api";
 import { ILink } from "../home/HomePageContents";
 
 const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
   props: Omit<ILink, "createdAt"> & {
+    favorite: boolean;
+    setFavorite: () => void;
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
@@ -20,6 +21,8 @@ const LinkCard = (
       id={props.id}
       title={props.title}
       onClick={props.onClick}
+      favorite={props.favorite}
+      setFavorite={props.setFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}

@@ -48,11 +48,12 @@ const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
   onClick?: () => void;
+  favorite: boolean;
+  setFavorite: () => void;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
   const [pinned, setPinned] = useState<boolean>(false);
-  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   return (
     <Stack
       position="relative"
@@ -70,7 +71,7 @@ const ContentCard = (props: {
         top="12px"
         onClick={() => setPinned(!pinned)}
       >
-        <FavoriteStar id={props.id} type={props.type} />
+        <FavoriteStar id={props.id} type={props.type} filled={props.favorite} />
       </Stack>
       <Stack
         onClick={props.onClick}

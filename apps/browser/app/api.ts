@@ -70,6 +70,11 @@ class ApiController {
     //   response.json()
     // );
   }
+  static async getFavorites(id: IDevice['id']) {
+    return get(`devices/${id}/favorites`).then((response: any) =>
+      response.json()
+    );
+  }
   // static async getChannels(deviceId: string) {
   //   return get(`schools/devices/${deviceId}/channels`).then((response: any) =>
   //     response.json()

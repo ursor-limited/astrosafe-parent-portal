@@ -1,13 +1,14 @@
-import { IChannel, IContent } from "@/app/devices/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
-import ApiController from "@/app/api";
+import { IChannel } from "../home/HomePageContents";
 
 const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
   props: Omit<IChannel, "createdAt"> & {
+    favorite: boolean;
+    setFavorite: () => void;
     onClick: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
@@ -18,11 +19,11 @@ const ChannelCard = (
   return (
     <ContentCard
       type="channel"
+      id={props.id}
       title={props.title}
       onClick={props.onClick}
-      noPointerEvents={props.noPointerEvents}
-      onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
-      onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
+      favorite={props.favorite}
+      setFavorite={props.setFavorite}
     >
       <Stack
         height={IMAGE_HEIGHT}
