@@ -112,73 +112,95 @@ const AgeCard = (props: {
   </Stack>
 );
 
-const INTRO_STEP_TITLE = "Lets configure your browser in 3 steps";
-const IntroStepView = () => (
-  <Stack
-    flex={1}
-    sx={{
-      svg: {
-        path: {
-          fill: PALETTE.secondary.purple[1],
+const INTRO_STEP_TITLE = "Let's configure your browser in 3 steps";
+const IntroStepView = (props: { onNext: () => void }) => (
+  <>
+    <Stack
+      flex={1}
+      sx={{
+        svg: {
+          path: {
+            fill: PALETTE.secondary.purple[1],
+          },
         },
-      },
-    }}
-    direction="row"
-    spacing="18px"
-    alignItems="center"
-  >
-    <ConfigurationStepCard
-      icon={ShieldLockIcon}
-      n={1}
-      title="Configure your security settings"
-    />
-    <ChevronRightIcon height="32px" width="32px" />
-    <ConfigurationStepCard
-      icon={VerifiedIcon}
-      n={2}
-      title="Select your approved Content"
-    />
-    <ChevronRightIcon height="32px" width="32px" />
-    <ConfigurationStepCard
-      icon={GlobeIcon}
-      n={3}
-      title="Set up your personal Browser"
-    />
-  </Stack>
+      }}
+      direction="row"
+      spacing="18px"
+      alignItems="center"
+    >
+      <ConfigurationStepCard
+        icon={ShieldLockIcon}
+        n={1}
+        title="Configure your security settings"
+      />
+      <ChevronRightIcon height="32px" width="32px" />
+      <ConfigurationStepCard
+        icon={VerifiedIcon}
+        n={2}
+        title="Select your approved Content"
+      />
+      <ChevronRightIcon height="32px" width="32px" />
+      <ConfigurationStepCard
+        icon={GlobeIcon}
+        n={3}
+        title="Set up your personal Browser"
+      />
+    </Stack>
+    <UrsorButton
+      dark
+      variant="tertiary"
+      size="large"
+      endIcon={ChevronRightIcon}
+      onClick={props.onNext}
+    >
+      Let's get started
+    </UrsorButton>
+  </>
 );
 
 const SECURITY_STEP_TITLE = "Set up the Browser, the basics...";
-const SecurityStepView = () => {
+const SecurityStepView = (props: { onNext: () => void }) => {
   const [selectedCardIndex, setSelectedCardIndex] = useState<
     number | undefined
   >();
   return (
-    <Stack direction="row" spacing="32px">
-      <AgeCard
-        title="Adventurer"
-        ages="For age 3 to 6"
-        subtitle="Provide access to a safe version of the internet with safe links."
-        selected={selectedCardIndex === 0}
-        faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 0}
-        onClick={() => setSelectedCardIndex(0)}
-      />
-      <AgeCard
-        title="Explorer"
-        ages="For age 7 to 10"
-        subtitle="Provide access to a safe version of the internet with safe links."
-        selected={selectedCardIndex === 1}
-        faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 1}
-        onClick={() => setSelectedCardIndex(1)}
-      />
-      <AgeCard
-        title="Navigator"
-        ages="For ages 11+"
-        subtitle="Provide access to a safe version of the internet with safe links."
-        selected={selectedCardIndex === 2}
-        faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 2}
-        onClick={() => setSelectedCardIndex(2)}
-      />
-    </Stack>
+    <>
+      <Stack direction="row" spacing="32px">
+        <AgeCard
+          title="Adventurer"
+          ages="For age 3 to 6"
+          subtitle="Provide access to a safe version of the internet with safe links."
+          selected={selectedCardIndex === 0}
+          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 0}
+          onClick={() => setSelectedCardIndex(0)}
+        />
+        <AgeCard
+          title="Explorer"
+          ages="For age 7 to 10"
+          subtitle="Provide access to a safe version of the internet with safe links."
+          selected={selectedCardIndex === 1}
+          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 1}
+          onClick={() => setSelectedCardIndex(1)}
+        />
+        <AgeCard
+          title="Navigator"
+          ages="For ages 11+"
+          subtitle="Provide access to a safe version of the internet with safe links."
+          selected={selectedCardIndex === 2}
+          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 2}
+          onClick={() => setSelectedCardIndex(2)}
+        />
+      </Stack>
+      <UrsorButton
+        dark
+        variant="tertiary"
+        size="large"
+        endIcon={ChevronRightIcon}
+        onClick={props.onNext}
+      >
+        Next
+      </UrsorButton>
+    </>
   );
 };
 
@@ -269,20 +291,12 @@ export default function OnBoardingFlow(props: { mobile: boolean }) {
           </Typography>
         </Stack>
         {!_.isNumber(step) ? (
-          <IntroStepView />
+          <IntroStepView onNext={() => setStep(0)} />
         ) : step === 0 ? (
-          <SecurityStepView />
+          <SecurityStepView onNext={() => setStep(1)} />
         ) : (
           ""
         )}
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="large"
-          endIcon={ChevronRightIcon}
-        >
-          Let's get started
-        </UrsorButton>
       </Stack>
       <Stack
         position="absolute"
