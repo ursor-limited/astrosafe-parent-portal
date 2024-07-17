@@ -271,7 +271,7 @@ const FolderCard = (
                 </Stack>
               </Stack>
             </Stack>
-            <Stack px="4px" spacing="42px">
+            <Stack px="4px">
               <Stack alignItems="space-between" flex={1} minHeight="58px">
                 <Stack pt="8px">
                   <Typography bold variant="medium" maxLines={2}>
@@ -279,16 +279,6 @@ const FolderCard = (
                   </Typography>
                 </Stack>
               </Stack>
-              {/* <Stack
-                direction="row"
-                justifyContent="space-between"
-                sx={{ svg: { path: { fill: CONTENT_BRANDING.lesson.color } } }}
-              >
-                <Typography variant="small">
-                  {getFormattedDate(props.createdAt)}
-                </Typography>
-                <VersionsIcon height="20px" width="20px" />
-              </Stack> */}
               {props.avatarUrls ? (
                 <ProfileImageRow imageUrls={props.avatarUrls} />
               ) : null}
