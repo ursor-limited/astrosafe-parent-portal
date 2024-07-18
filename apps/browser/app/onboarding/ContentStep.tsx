@@ -5,6 +5,7 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import XIcon from "@/images/icons/X.svg";
 import { Grid } from "@mui/material";
 import { useState } from "react";
+import TimeLimitSelector from "./TimeLimitSelector";
 
 const DUMMY_TOPICS = [
   "boo",
@@ -15,6 +16,8 @@ const DUMMY_TOPICS = [
   "architecture",
   "aaaa",
 ];
+
+const MAX_DURATION = 5 * 3600;
 
 const TopicTag = (props: {
   selected: boolean;
@@ -103,13 +106,33 @@ export const CONTENT_STEP_VIEWS: {
   {
     title: "Set your device time limits",
     component: (props: { onNext: () => void }) => {
-      const [duration, setDuration] = useState<number>(3600);
+      const [selectorValue, setSelectorValue] = useState<number>(35);
       return (
-        <Stack>
-          <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
-            {getFormattedDuration(duration)}
-          </Typography>
-        </Stack>
+        <>
+          <Stack alignItems="center" spacing="50px">
+            <Stack alignItems="center" spacing="8px">
+              <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
+                {getFormattedDuration((selectorValue / 100) * MAX_DURATION)}
+              </Typography>
+              <Typography variant="h5" color="rgba(255,255,255,0.87)">
+                Daily
+              </Typography>
+            </Stack>
+            <TimeLimitSelector
+              value={selectorValue}
+              setValue={setSelectorValue}
+            />
+          </Stack>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="large"
+            endIcon={ChevronRightIcon}
+            onClick={props.onNext}
+          >
+            Next
+          </UrsorButton>
+        </>
       );
     },
   },

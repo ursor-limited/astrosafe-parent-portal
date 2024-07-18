@@ -37,8 +37,8 @@ const ConfigurationStepButton = (props: {
 );
 
 export default function OnBoardingFlow(props: { mobile: boolean }) {
-  const [step, setStep] = useState<number | undefined>(0);
-  const [contentStepIndex, setContentStepIndex] = useState<number>(0);
+  const [step, setStep] = useState<number | undefined>(1);
+  const [contentStepIndex, setContentStepIndex] = useState<number>(1);
   const ContentStepView = CONTENT_STEP_VIEWS[contentStepIndex].component;
   return (
     <>
