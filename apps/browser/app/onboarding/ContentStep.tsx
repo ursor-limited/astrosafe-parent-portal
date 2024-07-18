@@ -7,7 +7,8 @@ import XIcon from "@/images/icons/X.svg";
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import TimeLimitSelector from "./TimeLimitSelector";
-import { OnBoardingViewLayout } from "./OnboardingFlow";
+import { FADE_DURATION, OnBoardingViewLayout } from "./OnboardingFlow";
+import { fadeIn, fadeOut } from "../components/UrsorDialog";
 
 const PIN_KEY_SEPARATION = "25px";
 
@@ -220,30 +221,55 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
     const [pin, setPin] = useState<number[]>([]);
     const [confirmationPin, setConfirmationPin] = useState<number[]>([]);
     const [confirming, setConfirming] = useState<boolean>(false);
-    useEffect(() => setConfirming(pin.length === 4), [pin]);
+    const [fade, setFade] = useState<"in" | "out">("in");
+    useEffect(() => {
+      if (pin.length === 4) {
+        setFade("out");
+        setTimeout(() => {
+          setConfirming(true);
+          setFade("in");
+        }, FADE_DURATION);
+      }
+    }, [pin]);
     useEffect(() => {
       pin.length > 0 && pin === confirmationPin && props.onNext();
     }, [pin, confirmationPin]);
 
     const addToPin = (n: number) =>
       (confirming ? confirmationPin : pin).length < 4 &&
-      setPin([...(confirming ? confirmationPin : pin), n]);
+      (confirming ? setConfirmationPin : setPin)([
+        ...(confirming ? confirmationPin : pin),
+        n,
+      ]);
     return (
-      <OnBoardingViewLayout
-        title={
-          confirming
-            ? "Confirm your super safe pin"
-            : "Set your parental pin to keep this safe!"
-        }
+      <Stack
+        height="100%"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
+        sx={{
+          animation: `${
+            fade === "in" ? fadeIn : fadeOut
+          } ${FADE_DURATION}ms ease-out`,
+          animationFillMode: "forwards",
+        }}
       >
-        <PinPad
-          pin={confirming ? confirmationPin : pin}
-          onAdd={addToPin}
-          onRemove={() =>
-            setPin((confirming ? confirmationPin : pin).slice(0, -1))
+        <OnBoardingViewLayout
+          title={
+            confirming
+              ? "Confirm your super safe pin"
+              : "Set your parental pin to keep this safe!"
           }
-        />
-      </OnBoardingViewLayout>
+        >
+          <PinPad
+            pin={confirming ? confirmationPin : pin}
+            onAdd={addToPin}
+            onRemove={() =>
+              setPin((confirming ? confirmationPin : pin).slice(0, -1))
+            }
+          />
+        </OnBoardingViewLayout>
+      </Stack>
     );
   },
 ];
