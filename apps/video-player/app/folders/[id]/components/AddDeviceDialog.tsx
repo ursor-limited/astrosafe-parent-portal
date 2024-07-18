@@ -35,6 +35,7 @@ const AddDeviceDialog = (props: {
       subtitle={["Add or remove device access to this", "Content Folder."]}
       width="434px"
       height={props.isMobile ? "76%" : undefined}
+      isMobile={props.isMobile}
     >
       <SearchInput
         value={searchValue}

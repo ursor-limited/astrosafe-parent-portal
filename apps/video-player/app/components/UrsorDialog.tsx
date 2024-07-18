@@ -40,6 +40,7 @@ export interface IDialogButtonDetails {
 }
 
 export interface IUrsorDialogProps {
+  // there is a lot of legacy stuff in here. Got to declutter.
   open: boolean;
   width?: string;
   maxWidth?: string;
@@ -71,6 +72,7 @@ export interface IUrsorDialogProps {
   noOverflowHidden?: boolean;
   children?: React.ReactNode; // the contents
   fitContent?: boolean;
+  isMobile?: boolean;
 }
 
 export const fadeIn = keyframes`
@@ -146,9 +148,6 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           display: props.noBackdrop ? "none" : "visible",
           ...BACKDROP_STYLE,
         },
-        // ".MuiDialog-container": {
-        //   overflow: "scroll",
-        // },
       }}
     >
       <Stack
@@ -177,22 +176,6 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
             <ChevronLeft height="27px" />
           </Box>
         ) : null}
-        {/* {!props.noCloseButton ? (
-          <Box
-            position="absolute"
-            top={props.noPadding ? "10px" : PADDING}
-            right={props.noPadding ? "10px" : PADDING}
-            onClick={props.onCloseCallback}
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.6 },
-              transition: "0.2s",
-              zIndex: Z_INDEX,
-            }}
-          >
-            <X height="27px" />
-          </Box>
-        ) : null} */}
         {_.isNumber(props.step) && props.nSteps ? (
           <Stack
             width="100%"
@@ -218,7 +201,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           props.supertitle ||
           props.onCloseCallback ? (
             <Stack
-              spacing="12px"
+              spacing={props.isMobile ? "6px" : "12px"}
               width="100%"
               alignItems="center"
               textAlign="center"
@@ -243,8 +226,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                   >
                     <Stack
                       position="absolute"
-                      right={props.xButtonRight ?? 0}
-                      top="17px"
+                      right={props.isMobile ? "-17px" : props.xButtonRight ?? 0}
+                      top={props.isMobile ? "-16px" : "17px"}
                     >
                       {props.onCloseCallback ? (
                         <Box
@@ -259,7 +242,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                             zIndex: Z_INDEX,
                           }}
                         >
-                          <X height="27px" />
+                          <X height={props.isMobile ? "22px" : "27px"} />
                         </Box>
                       ) : null}
                     </Stack>
@@ -269,7 +252,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               {props.title ? (
                 <Stack maxWidth={props.titleMaxWidth}>
                   <Typography
-                    variant={props.titleSize || "h4"}
+                    variant={props.isMobile ? "h5" : props.titleSize || "h4"}
+                    bold
                     color={PALETTE.secondary.purple[2]}
                     sx={{ maxWidth: props.titleMaxWidth }}
                   >
@@ -280,7 +264,10 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
               {props.subtitle ? (
                 <Stack alignItems="center">
                   {windowWidth < 750 ? (
-                    <Typography variant="medium" sx={{ textAlign: "center" }}>
+                    <Typography
+                      variant={props.isMobile ? "normal" : "medium"}
+                      sx={{ textAlign: "center" }}
+                    >
                       {props.subtitle.join(" ")}
                     </Typography>
                   ) : (

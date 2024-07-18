@@ -10,6 +10,7 @@ const FolderRenameDialog = (props: {
   onClose: () => void;
   name: IContentBucket["title"];
   onSubmit: (name: string) => void;
+  isMobile?: boolean;
 }) => {
   const [name, setName] = useState<string>("");
   useEffect(() => setName(props.name), [props.name]);
@@ -20,6 +21,7 @@ const FolderRenameDialog = (props: {
       title="Rename Folder"
       width="422px"
       height="294px"
+      isMobile={props.isMobile}
     >
       <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
         <LabeledInputField label="Name">

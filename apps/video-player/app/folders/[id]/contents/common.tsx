@@ -257,6 +257,7 @@ export default function FolderPage(props: {
             notificationCtx.success("Renamed Folder");
           })
         }
+        isMobile={props.isMobile}
       />
       {creationDialogOpen ? (
         creationDialogOpen === "video" ? (

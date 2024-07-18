@@ -1,5 +1,4 @@
 import { Stack } from "@mui/system";
-import ContentPageDevicesSection from "../components/DevicesSection";
 import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import {
   AstroContent,
@@ -20,6 +19,9 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import Image from "next/image";
 import MobileContentPageDevicesSection from "../components/MobileDevicesSection";
 import TitleRow, { ITitleRowItem } from "@/app/components/TitleRow";
+import UrsorActionButton from "@/app/components/UrsorActionButton";
+import PencilIcon from "@/images/icons/Pencil.svg";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -50,8 +52,27 @@ const FolderPageMobileBody = (props: {
       py="24px"
       boxSizing="border-box"
     >
-      <Stack pb="24px">
+      <Stack pb="24px" justifyContent="space-between" direction="row">
         <TitleRow items={props.titleRow} isMobile />
+        <UrsorActionButton
+          actions={[
+            {
+              text: "Edit name",
+              kallback: props.onEditFolder,
+              icon: PencilIcon,
+            },
+            {
+              text: "Delete",
+              kallback: () => null,
+              icon: TrashcanIcon,
+              color: PALETTE.system.red,
+            },
+          ]}
+          iconSize="14px"
+          size="32px"
+          background="transparent"
+          border
+        />
       </Stack>
       <Stack spacing="24px" pb="32px">
         <MobileContentPageDevicesSection
@@ -67,13 +88,25 @@ const FolderPageMobileBody = (props: {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        {/* <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Stack spacing="12px">
+          {["link", "video", "channel"].map((c) => (
+            <Stack
+              key={c}
+              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+              flex={1}
+            >
+              <AddContentButton
+                key={c as AstroContent}
+                onClick={() => null}
+                {...CONTENT_BRANDING[c as AstroContent]}
+                fullWidth
+              />
+            </Stack>
+          ))}
+        </Stack>
+        <Stack justifyContent="space-between" spacing="8px">
           <Typography
-            variant="large"
+            variant="medium"
             bold
           >{`${props.contents.length} pieces of Content in this Folder`}</Typography>
           <Stack
@@ -89,6 +122,7 @@ const FolderPageMobileBody = (props: {
               }}
               clearCallback={() => props.setSearchValue("")}
               shadow
+              fullWidth
             />
             <SortButton
               noText
@@ -106,24 +140,8 @@ const FolderPageMobileBody = (props: {
               width="120px"
             />
           </Stack>
-        </Stack> */}
-        {/* <Stack direction="row" spacing="24px">
-          {["link", "video", "channel"].map((c) => (
-            <Stack
-              key={c}
-              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
-              flex={1}
-            >
-              <AddContentButton
-                key={c as AstroContent}
-                onClick={() => null}
-                {...CONTENT_BRANDING[c as AstroContent]}
-                fullWidth
-              />
-            </Stack>
-          ))}
-        </Stack> */}
-        {/* <Stack
+        </Stack>
+        <Stack
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
           border={`1px solid ${PALETTE.secondary.grey[2]}`}
@@ -132,7 +150,7 @@ const FolderPageMobileBody = (props: {
         >
           <Stack overflow="hidden" flex={1}>
             {props.contents.length > 0 ? (
-              <Stack flex={1} direction="row" spacing="20px">
+              <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
                   <Stack key={x.content.id}>
                     <UrsorFadeIn delay={i * 80} duration={800}>
@@ -194,7 +212,7 @@ const FolderPageMobileBody = (props: {
               </Stack>
             )}
           </Stack>
-        </Stack> */}
+        </Stack>
       </Stack>
     </Stack>
   );
