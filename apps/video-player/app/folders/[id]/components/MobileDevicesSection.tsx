@@ -48,6 +48,7 @@ const MobileContentPageDevicesSection = (props: {
                     </Stack>
                   }
                   hideToggles
+                  small
                 />
               </UrsorFadeIn>
             ))}

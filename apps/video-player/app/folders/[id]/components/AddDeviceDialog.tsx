@@ -15,6 +15,7 @@ const AddDeviceDialog = (props: {
   folderId: IContentBucket["id"];
   addedDevices: IDevice[];
   groupId: IGroup["id"];
+  isMobile?: boolean;
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
@@ -33,6 +34,7 @@ const AddDeviceDialog = (props: {
       title="Share to a Device"
       subtitle={["Add or remove device access to this", "Content Folder."]}
       width="434px"
+      height={props.isMobile ? "76%" : undefined}
     >
       <SearchInput
         value={searchValue}

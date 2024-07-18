@@ -244,6 +244,7 @@ export default function FolderPage(props: {
             loadDevices();
             notificationCtx.success("Added Device");
           }}
+          isMobile={props.isMobile}
         />
       ) : null}
       <FolderRenameDialog

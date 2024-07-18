@@ -24,6 +24,7 @@ const DeviceCard = (
     showBrowsing?: boolean;
     url?: string;
     button: React.ReactNode;
+    small?: boolean;
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
@@ -51,15 +52,15 @@ const DeviceCard = (
           direction="row"
           spacing="8px"
           position="relative"
-          height="90px"
+          height={props.small ? "58px" : "90px"}
           sx={{
             opacity: browsingEnabled ? 1 : 0.5,
           }}
           alignItems="center"
         >
           <Stack
-            height="74px"
-            width="74px"
+            height={props.small ? "40px" : "74px"}
+            width={props.small ? "40px" : "74px"}
             borderRadius="100%"
             overflow="hidden"
             bgcolor={props.backgroundColor}
@@ -72,8 +73,8 @@ const DeviceCard = (
           >
             <Image
               src={props.profileAvatarUrl}
-              height={74}
-              width={74}
+              height={props.small ? 40 : 74}
+              width={props.small ? 40 : 74}
               alt="device profile"
             />
           </Stack>
