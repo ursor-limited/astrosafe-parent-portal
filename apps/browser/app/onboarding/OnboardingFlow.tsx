@@ -10,44 +10,10 @@ import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import UrsorParticles from "../components/UrsorParticles";
 import { useState } from "react";
 import _ from "lodash";
-
-const ConfigurationStepCard = (props: {
-  n: number;
-  title: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
-}) => (
-  <Stack
-    width="202px"
-    height="185px"
-    borderRadius="12px"
-    border={`2.5px solid ${PALETTE.secondary.purple[1]}`}
-    sx={{
-      svg: {
-        path: {
-          fill: PALETTE.secondary.purple[1],
-        },
-      },
-    }}
-    justifyContent="center"
-    alignItems="center"
-    spacing="24px"
-  >
-    <props.icon width="34px" height="34px" />
-    <Stack spacing="4px" alignItems="center" width="162px">
-      <Typography variant="h5" color="rgba(255,255,255,0.9)">
-        {props.n}
-      </Typography>
-      <Typography
-        variant="medium"
-        bold
-        color="rgba(255,255,255,0.9)"
-        sx={{ textAlign: "center" }}
-      >
-        {props.title}
-      </Typography>
-    </Stack>
-  </Stack>
-);
+import { Grid } from "@mui/material";
+import IntroStepView, { INTRO_STEP_TITLE } from "./IntroStep";
+import { CONTENT_STEP_VIEWS } from "./ContentStep";
+import SecurityStepView, { SECURITY_STEP_TITLE } from "./SecurityStep";
 
 const ConfigurationStepButton = (props: {
   text: string;
@@ -70,149 +36,10 @@ const ConfigurationStepButton = (props: {
   </Stack>
 );
 
-const AgeCard = (props: {
-  title: string;
-  ages: string;
-  selected: boolean;
-  faded: boolean;
-  subtitle: string;
-  onClick: () => void;
-}) => (
-  <Stack
-    width="251px"
-    height="317px"
-    borderRadius="12px"
-    alignItems="center"
-    p="16px"
-    boxSizing="border-box"
-    bgcolor="rgba(255,255,255,0.95)"
-    sx={{
-      opacity: props.faded ? 0.6 : 1,
-      cursor: "pointer",
-      "&:hover": { opacity: 0.8 },
-      transition: "0.2s",
-      pointerEvents: props.selected ? "none" : undefined,
-      outline: `2px solid ${
-        props.selected ? PALETTE.secondary.purple[2] : "transparent"
-      }`,
-    }}
-    spacing="12px"
-    onClick={props.onClick}
-    boxShadow={`0 0 30px ${props.selected ? "#A594FF" : undefined}`}
-  >
-    <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
-      {props.title}
-    </Typography>
-    <Typography bold variant="small" color={PALETTE.secondary.grey[5]}>
-      {props.ages}
-    </Typography>
-    <Typography bold variant="small" color={PALETTE.secondary.grey[5]}>
-      {props.subtitle}
-    </Typography>
-  </Stack>
-);
-
-const INTRO_STEP_TITLE = "Let's configure your browser in 3 steps";
-const IntroStepView = (props: { onNext: () => void }) => (
-  <>
-    <Stack
-      flex={1}
-      sx={{
-        svg: {
-          path: {
-            fill: PALETTE.secondary.purple[1],
-          },
-        },
-      }}
-      direction="row"
-      spacing="18px"
-      alignItems="center"
-    >
-      <ConfigurationStepCard
-        icon={ShieldLockIcon}
-        n={1}
-        title="Configure your security settings"
-      />
-      <ChevronRightIcon height="32px" width="32px" />
-      <ConfigurationStepCard
-        icon={VerifiedIcon}
-        n={2}
-        title="Select your approved Content"
-      />
-      <ChevronRightIcon height="32px" width="32px" />
-      <ConfigurationStepCard
-        icon={GlobeIcon}
-        n={3}
-        title="Set up your personal Browser"
-      />
-    </Stack>
-    <UrsorButton
-      dark
-      variant="tertiary"
-      size="large"
-      endIcon={ChevronRightIcon}
-      onClick={props.onNext}
-    >
-      Let's get started
-    </UrsorButton>
-  </>
-);
-
-const SECURITY_STEP_TITLE = "Set up the Browser, the basics...";
-const SecurityStepView = (props: { onNext: () => void }) => {
-  const [selectedCardIndex, setSelectedCardIndex] = useState<
-    number | undefined
-  >();
-  return (
-    <>
-      <Stack direction="row" spacing="32px">
-        <AgeCard
-          title="Adventurer"
-          ages="For age 3 to 6"
-          subtitle="Provide access to a safe version of the internet with safe links."
-          selected={selectedCardIndex === 0}
-          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 0}
-          onClick={() => setSelectedCardIndex(0)}
-        />
-        <AgeCard
-          title="Explorer"
-          ages="For age 7 to 10"
-          subtitle="Provide access to a safe version of the internet with safe links."
-          selected={selectedCardIndex === 1}
-          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 1}
-          onClick={() => setSelectedCardIndex(1)}
-        />
-        <AgeCard
-          title="Navigator"
-          ages="For ages 11+"
-          subtitle="Provide access to a safe version of the internet with safe links."
-          selected={selectedCardIndex === 2}
-          faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 2}
-          onClick={() => setSelectedCardIndex(2)}
-        />
-      </Stack>
-      <UrsorButton
-        dark
-        variant="tertiary"
-        size="large"
-        endIcon={ChevronRightIcon}
-        onClick={props.onNext}
-      >
-        Next
-      </UrsorButton>
-    </>
-  );
-};
-
-const CONTENT_STEP_VIEWS: { title: string; component: React.ReactNode }[] = [
-  {
-    title: "",
-    component: <Stack />,
-  },
-];
-
 export default function OnBoardingFlow(props: { mobile: boolean }) {
   const [step, setStep] = useState<number | undefined>(0);
+  const [contentStepIndex, setContentStepIndex] = useState<number>(0);
+  const ContentStepView = CONTENT_STEP_VIEWS[contentStepIndex].component;
   return (
     <>
       <Stack
@@ -287,16 +114,20 @@ export default function OnBoardingFlow(props: { mobile: boolean }) {
               ? INTRO_STEP_TITLE
               : step === 0
               ? SECURITY_STEP_TITLE
-              : ""}
+              : step === 1
+              ? CONTENT_STEP_VIEWS[contentStepIndex].title
+              : null}
           </Typography>
         </Stack>
         {!_.isNumber(step) ? (
           <IntroStepView onNext={() => setStep(0)} />
         ) : step === 0 ? (
           <SecurityStepView onNext={() => setStep(1)} />
-        ) : (
-          ""
-        )}
+        ) : step === 1 ? (
+          <ContentStepView
+            onNext={() => setContentStepIndex(contentStepIndex + 1)}
+          />
+        ) : null}
       </Stack>
       <Stack
         position="absolute"
