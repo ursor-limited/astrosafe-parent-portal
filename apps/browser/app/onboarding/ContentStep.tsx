@@ -24,60 +24,78 @@ const DUMMY_TOPICS = [
 
 const MAX_DURATION = 5 * 3600;
 
+const SHOW_RED_DURATION = 1200;
+
 const PinPad = (props: {
   pin: number[];
   onAdd: (n: number) => void;
   onRemove: () => void;
-}) => (
-  <Stack spacing="46px">
-    <Stack direction="row" spacing="24px" justifyContent="center">
-      {[...Array(4).keys()].map((i) => (
-        <Stack
-          height="16px"
-          width="16px"
-          sx={{ opacity: 0.9 }}
-          border={`2px solid white`}
-          bgcolor={props.pin.length >= i + 1 ? "white" : "transparent"}
-          borderRadius="100%"
-        />
-      ))}
-    </Stack>
-    <Stack spacing={PIN_KEY_SEPARATION}>
-      <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-        <PinKey n={1} onClick={() => props.onAdd(1)} />
-        <PinKey n={2} onClick={() => props.onAdd(2)} />
-        <PinKey n={3} onClick={() => props.onAdd(3)} />
+  wrong: boolean;
+}) => {
+  const [red, setRed] = useState<boolean>(false);
+  useEffect(() => {
+    if (props.wrong) {
+      setRed(props.wrong);
+      setTimeout(() => setRed(false), SHOW_RED_DURATION);
+    }
+  }, [props.wrong]);
+  return (
+    <Stack spacing="46px">
+      <Stack direction="row" spacing="24px" justifyContent="center">
+        {[...Array(4).keys()].map((i) => (
+          <Stack
+            height="16px"
+            width="16px"
+            sx={{ opacity: 0.9, transition: "0.2s" }}
+            border={`2px solid ${red ? PALETTE.system.red : "white"}`}
+            bgcolor={
+              red
+                ? PALETTE.system.red
+                : props.pin.length >= i + 1
+                ? "white"
+                : "transparent"
+            }
+            borderRadius="100%"
+          />
+        ))}
       </Stack>
-      <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-        <PinKey n={4} onClick={() => props.onAdd(4)} />
-        <PinKey n={5} onClick={() => props.onAdd(5)} />
-        <PinKey n={6} onClick={() => props.onAdd(6)} />
-      </Stack>
-      <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-        <PinKey n={7} onClick={() => props.onAdd(7)} />
-        <PinKey n={8} onClick={() => props.onAdd(8)} />
-        <PinKey n={9} onClick={() => props.onAdd(9)} />
-      </Stack>
-      <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-        <Stack flex={1} />
-        <PinKey n={0} onClick={() => props.onAdd(0)} />
-        <Stack
-          flex={1}
-          justifyContent="center"
-          alignItems="center"
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.8 },
-          }}
-          onClick={props.onRemove}
-        >
-          <DeleteIcon height="30px" width="30px" />
+      <Stack spacing={PIN_KEY_SEPARATION}>
+        <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
+          <PinKey n={1} onClick={() => props.onAdd(1)} />
+          <PinKey n={2} onClick={() => props.onAdd(2)} />
+          <PinKey n={3} onClick={() => props.onAdd(3)} />
+        </Stack>
+        <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
+          <PinKey n={4} onClick={() => props.onAdd(4)} />
+          <PinKey n={5} onClick={() => props.onAdd(5)} />
+          <PinKey n={6} onClick={() => props.onAdd(6)} />
+        </Stack>
+        <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
+          <PinKey n={7} onClick={() => props.onAdd(7)} />
+          <PinKey n={8} onClick={() => props.onAdd(8)} />
+          <PinKey n={9} onClick={() => props.onAdd(9)} />
+        </Stack>
+        <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
+          <Stack flex={1} />
+          <PinKey n={0} onClick={() => props.onAdd(0)} />
+          <Stack
+            flex={1}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.8 },
+            }}
+            onClick={props.onRemove}
+          >
+            <DeleteIcon height="30px" width="30px" />
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 const TopicTag = (props: {
   selected: boolean;
@@ -199,7 +217,6 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
           </UrsorButton>
         }
       >
-        {" "}
         <Stack alignItems="center" spacing="50px">
           <Stack alignItems="center" spacing="8px">
             <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
@@ -221,6 +238,21 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
     const [pin, setPin] = useState<number[]>([]);
     const [confirmationPin, setConfirmationPin] = useState<number[]>([]);
     const [confirming, setConfirming] = useState<boolean>(false);
+
+    const [wrong, setWrong] = useState<boolean>(false);
+    const [displayIncorrectnessTitle, setDisplayIncorrectnessTitle] =
+      useState<boolean>(false);
+    useEffect(() => {
+      if (pin.length === 4 && confirmationPin.length === 4) {
+        setWrong(true);
+        setDisplayIncorrectnessTitle(true);
+        setTimeout(() => {
+          setWrong(false);
+          setConfirmationPin([]);
+        }, SHOW_RED_DURATION);
+      }
+    }, [pin, confirmationPin]);
+
     const [fade, setFade] = useState<"in" | "out">("in");
     useEffect(() => {
       if (pin.length === 4) {
@@ -256,7 +288,9 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
       >
         <OnBoardingViewLayout
           title={
-            confirming
+            displayIncorrectnessTitle
+              ? "The pin you entered is incorrect, please try again"
+              : confirming
               ? "Confirm your super safe pin"
               : "Set your parental pin to keep this safe!"
           }
@@ -267,6 +301,7 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
             onRemove={() =>
               setPin((confirming ? confirmationPin : pin).slice(0, -1))
             }
+            wrong={wrong}
           />
         </OnBoardingViewLayout>
       </Stack>
