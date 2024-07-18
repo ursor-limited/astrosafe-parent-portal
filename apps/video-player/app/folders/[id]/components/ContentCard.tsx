@@ -1,6 +1,6 @@
 import { AstroContent, IContent } from "@/app/devices/[id]/ContentTab";
 import { Stack } from "@mui/system";
-import { CONTENT_BRANDING } from "./ContentPageContents";
+import { CONTENT_BRANDING } from "../contents/common";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import PinIcon from "@/images/icons/PinIcon.svg";

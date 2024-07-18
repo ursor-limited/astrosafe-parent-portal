@@ -10,7 +10,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { IGroupContentBucket } from "@/app/content/ContentsPageContents";
+import { IGroupContentBucket } from "@/app/folders/ContentsPageContents";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
 
 export const spin = keyframes`

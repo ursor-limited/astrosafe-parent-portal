@@ -1,5 +1,5 @@
 import { IUser } from "./account/AccountPageContents";
-import { IGroup } from "./content/[id]/ContentPageContents";
+import { IGroup } from "./folders/[id]/contents/common";
 import {
   IChannel,
   IContentBucket,

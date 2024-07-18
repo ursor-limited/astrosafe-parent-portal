@@ -19,7 +19,7 @@ import _ from "lodash";
 import EditProfileDialog from "./EditProfileDialog";
 import Image from "next/image";
 import InviteDialog from "./InviteDialog";
-import { IGroup } from "../content/[id]/ContentPageContents";
+import { IGroup } from "../folders/[id]/contents/common";
 import DeviceConnectDialog from "../devices/components/DeviceConnectDialog";
 import DownloadDialog from "../devices/components/DownloadDialog";
 import UpgradeDialog from "../components/UpgradeDialog";

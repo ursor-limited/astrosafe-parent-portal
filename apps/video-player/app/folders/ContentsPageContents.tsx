@@ -39,7 +39,7 @@ const ContentsPageContents = () => {
         text: "Create a Folder",
         callback: () =>
           ApiController.createFolder(DEFAULT_TITLE, DUMMY_GROUP_ID).then((id) =>
-            router.push(`/content/${id}`)
+            router.push(`/folders/${id}`)
           ),
         icon: PlusIcon,
       }}
@@ -52,7 +52,7 @@ const ContentsPageContents = () => {
             <UrsorFadeIn key={f.id} duration={800} delay={i * 90}>
               <FolderCard
                 {...f}
-                clickCallback={() => router.push(`/content/${f.id}`)}
+                clickCallback={() => router.push(`/folders/${f.id}`)}
                 thumbnailUrls={f.thumbnailUrls}
                 avatarUrls={f.avatarUrls}
               />
