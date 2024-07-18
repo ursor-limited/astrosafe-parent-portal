@@ -5,8 +5,9 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import DeleteIcon from "@/images/icons/DeleteIcon.svg";
 import XIcon from "@/images/icons/X.svg";
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TimeLimitSelector from "./TimeLimitSelector";
+import { OnBoardingViewLayout } from "./OnboardingFlow";
 
 const PIN_KEY_SEPARATION = "25px";
 
@@ -140,34 +141,13 @@ const PinKey = (props: { n: number; onClick: () => void }) => (
   </Stack>
 );
 
-export const CONTENT_STEP_VIEWS: {
-  title: string;
-  component: React.FC<{ onNext: () => void }>;
-}[] = [
-  {
-    title: "What are your kids interested in?",
-    component: (props: { onNext: () => void }) => {
-      const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-      return (
-        <>
-          <Grid container gap="12px" width={692} justifyContent="center">
-            {DUMMY_TOPICS.map((topic, i) => (
-              <Grid key={i} item>
-                <TopicTag
-                  selected={selectedTopics.includes(topic)}
-                  onClick={() =>
-                    setSelectedTopics(
-                      selectedTopics.includes(topic)
-                        ? selectedTopics.filter((t) => t !== topic)
-                        : [...selectedTopics, topic]
-                    )
-                  }
-                >
-                  {topic}
-                </TopicTag>
-              </Grid>
-            ))}
-          </Grid>
+export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
+  (props: { onNext: () => void }) => {
+    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    return (
+      <OnBoardingViewLayout
+        title="What are your kids interested in?"
+        button={
           <UrsorButton
             dark
             variant="tertiary"
@@ -178,30 +158,35 @@ export const CONTENT_STEP_VIEWS: {
           >
             Next
           </UrsorButton>
-        </>
-      );
-    },
+        }
+      >
+        <Grid container gap="12px" width={692} justifyContent="center">
+          {DUMMY_TOPICS.map((topic, i) => (
+            <Grid key={i} item>
+              <TopicTag
+                selected={selectedTopics.includes(topic)}
+                onClick={() =>
+                  setSelectedTopics(
+                    selectedTopics.includes(topic)
+                      ? selectedTopics.filter((t) => t !== topic)
+                      : [...selectedTopics, topic]
+                  )
+                }
+              >
+                {topic}
+              </TopicTag>
+            </Grid>
+          ))}
+        </Grid>
+      </OnBoardingViewLayout>
+    );
   },
-  {
-    title: "Set your device time limits",
-    component: (props: { onNext: () => void }) => {
-      const [selectorValue, setSelectorValue] = useState<number>(35);
-      return (
-        <>
-          <Stack alignItems="center" spacing="50px">
-            <Stack alignItems="center" spacing="8px">
-              <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
-                {getFormattedDuration((selectorValue / 100) * MAX_DURATION)}
-              </Typography>
-              <Typography variant="h5" color="rgba(255,255,255,0.87)">
-                Daily
-              </Typography>
-            </Stack>
-            <TimeLimitSelector
-              value={selectorValue}
-              setValue={setSelectorValue}
-            />
-          </Stack>
+  (props: { onNext: () => void }) => {
+    const [selectorValue, setSelectorValue] = useState<number>(35);
+    return (
+      <OnBoardingViewLayout
+        title="Set your Device time limits"
+        button={
           <UrsorButton
             dark
             variant="tertiary"
@@ -211,25 +196,54 @@ export const CONTENT_STEP_VIEWS: {
           >
             Next
           </UrsorButton>
-        </>
-      );
-    },
-  },
-  {
-    title: "Set your parental pin to keep this safe!",
-    component: (props: { onNext: () => void }) => {
-      const [pin, setPin] = useState<number[]>([]);
-      const addToPin = (n: number) => pin.length < 4 && setPin([...pin, n]);
-      return (
-        <>
-          <PinPad
-            pin={pin}
-            onAdd={addToPin}
-            onRemove={() => setPin(pin.slice(0, -1))}
+        }
+      >
+        {" "}
+        <Stack alignItems="center" spacing="50px">
+          <Stack alignItems="center" spacing="8px">
+            <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
+              {getFormattedDuration((selectorValue / 100) * MAX_DURATION)}
+            </Typography>
+            <Typography variant="h5" color="rgba(255,255,255,0.87)">
+              Daily
+            </Typography>
+          </Stack>
+          <TimeLimitSelector
+            value={selectorValue}
+            setValue={setSelectorValue}
           />
-          <Stack />
-        </>
-      );
-    },
+        </Stack>
+      </OnBoardingViewLayout>
+    );
+  },
+  (props: { onNext: () => void }) => {
+    const [pin, setPin] = useState<number[]>([]);
+    const [confirmationPin, setConfirmationPin] = useState<number[]>([]);
+    const [confirming, setConfirming] = useState<boolean>(false);
+    useEffect(() => setConfirming(pin.length === 4), [pin]);
+    useEffect(() => {
+      pin.length > 0 && pin === confirmationPin && props.onNext();
+    }, [pin, confirmationPin]);
+
+    const addToPin = (n: number) =>
+      (confirming ? confirmationPin : pin).length < 4 &&
+      setPin([...(confirming ? confirmationPin : pin), n]);
+    return (
+      <OnBoardingViewLayout
+        title={
+          confirming
+            ? "Confirm your super safe pin"
+            : "Set your parental pin to keep this safe!"
+        }
+      >
+        <PinPad
+          pin={confirming ? confirmationPin : pin}
+          onAdd={addToPin}
+          onRemove={() =>
+            setPin((confirming ? confirmationPin : pin).slice(0, -1))
+          }
+        />
+      </OnBoardingViewLayout>
+    );
   },
 ];

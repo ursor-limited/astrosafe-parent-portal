@@ -8,7 +8,7 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import UrsorParticles from "../components/UrsorParticles";
-import { useState } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import { Grid } from "@mui/material";
 import IntroStepView, { INTRO_STEP_TITLE } from "./IntroStep";
@@ -36,10 +36,30 @@ const ConfigurationStepButton = (props: {
   </Stack>
 );
 
+export const OnBoardingViewLayout = (props: {
+  title: string;
+  button?: React.ReactNode;
+  children: React.ReactNode;
+}) => (
+  <>
+    <Stack width="523px">
+      <Typography
+        color="rgba(255,255,255,0.88)"
+        variant="h3"
+        sx={{ textAlign: "center" }}
+      >
+        {props.title}
+      </Typography>
+    </Stack>
+    {props.children}
+    <Stack>{props.button}</Stack>
+  </>
+);
+
 export default function OnBoardingFlow(props: { mobile: boolean }) {
   const [step, setStep] = useState<number | undefined>(1);
   const [contentStepIndex, setContentStepIndex] = useState<number>(2);
-  const ContentStepView = CONTENT_STEP_VIEWS[contentStepIndex].component;
+  const ContentStepView = CONTENT_STEP_VIEWS[contentStepIndex];
   return (
     <>
       <Stack
@@ -103,21 +123,6 @@ export default function OnBoardingFlow(props: { mobile: boolean }) {
             />
           </Stack>
           <Stack width="48px" />
-        </Stack>
-        <Stack width="523px">
-          <Typography
-            color="rgba(255,255,255,0.88)"
-            variant="h3"
-            sx={{ textAlign: "center" }}
-          >
-            {!_.isNumber(step)
-              ? INTRO_STEP_TITLE
-              : step === 0
-              ? SECURITY_STEP_TITLE
-              : step === 1
-              ? CONTENT_STEP_VIEWS[contentStepIndex].title
-              : null}
-          </Typography>
         </Stack>
         {!_.isNumber(step) ? (
           <IntroStepView onNext={() => setStep(0)} />
