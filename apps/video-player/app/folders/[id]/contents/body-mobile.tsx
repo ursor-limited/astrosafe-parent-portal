@@ -22,6 +22,7 @@ import TitleRow, { ITitleRowItem } from "@/app/components/TitleRow";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import MobilePageLayout from "@/app/components/MobilePageLayout";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -44,36 +45,22 @@ const FolderPageMobileBody = (props: {
   titleRow: ITitleRowItem[];
 }) => {
   return (
-    <Stack
-      height="100%"
-      width="100%"
-      overflow="scroll"
-      px="12px"
-      py="24px"
-      boxSizing="border-box"
+    <MobilePageLayout
+      titleRow={props.titleRow}
+      actions={[
+        {
+          text: "Edit name",
+          kallback: props.onEditFolder,
+          icon: PencilIcon,
+        },
+        {
+          text: "Delete",
+          kallback: () => null,
+          icon: TrashcanIcon,
+          color: PALETTE.system.red,
+        },
+      ]}
     >
-      <Stack pb="24px" justifyContent="space-between" direction="row">
-        <TitleRow items={props.titleRow} isMobile />
-        <UrsorActionButton
-          actions={[
-            {
-              text: "Edit name",
-              kallback: props.onEditFolder,
-              icon: PencilIcon,
-            },
-            {
-              text: "Delete",
-              kallback: () => null,
-              icon: TrashcanIcon,
-              color: PALETTE.system.red,
-            },
-          ]}
-          iconSize="14px"
-          size="32px"
-          background="transparent"
-          border
-        />
-      </Stack>
       <Stack spacing="24px" pb="32px">
         <MobileContentPageDevicesSection
           devices={props.devices}
@@ -214,7 +201,7 @@ const FolderPageMobileBody = (props: {
           </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </MobilePageLayout>
   );
 };
 

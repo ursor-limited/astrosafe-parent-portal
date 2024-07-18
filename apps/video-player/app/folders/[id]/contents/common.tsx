@@ -154,6 +154,20 @@ export default function FolderPage(props: {
     IChannel["id"] | undefined
   >(undefined);
 
+  const titleRow = [
+    {
+      text: "My Folders",
+      callback: () => router.push("/folders"),
+    },
+    {
+      text: folder?.title ?? "",
+      options: allFolders.map((d) => ({
+        text: d.title,
+        callback: () => router.push(`/folders/${d.id}`),
+      })),
+    },
+  ];
+
   return (
     <>
       {props.isMobile ? (
@@ -180,19 +194,7 @@ export default function FolderPage(props: {
           setLinkEditingDialogId={setLinkEditingDialogId}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setChannelEditingDialogId={setChannelEditingDialogId}
-          titleRow={[
-            {
-              text: "My Content",
-              callback: () => router.push("/content"),
-            },
-            {
-              text: folder?.title ?? "",
-              options: allFolders.map((d) => ({
-                text: d.title,
-                callback: () => router.push(`/content/${d.id}`),
-              })),
-            },
-          ]}
+          titleRow={titleRow}
         />
       ) : (
         <FolderPageDesktopBody
@@ -218,19 +220,7 @@ export default function FolderPage(props: {
           setLinkEditingDialogId={setLinkEditingDialogId}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setChannelEditingDialogId={setChannelEditingDialogId}
-          titleRow={[
-            {
-              text: "My Content",
-              callback: () => router.push("/content"),
-            },
-            {
-              text: folder?.title ?? "",
-              options: allFolders.map((d) => ({
-                text: d.title,
-                callback: () => router.push(`/content/${d.id}`),
-              })),
-            },
-          ]}
+          titleRow={titleRow}
         />
       )}
       {devices ? (
