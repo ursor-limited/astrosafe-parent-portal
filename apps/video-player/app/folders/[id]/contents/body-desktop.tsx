@@ -26,6 +26,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
 import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { ITitleRowItem } from "@/app/components/TitleRow";
 
 const FolderPageDesktopBody = (props: {
   folderId: IContentBucket["id"];
@@ -45,6 +46,7 @@ const FolderPageDesktopBody = (props: {
   setLinkEditingDialogId: (id: ILink["id"]) => void;
   setVideoEditingDialogId: (id: IVideo["id"]) => void;
   setChannelEditingDialogId: (id: IChannel["id"]) => void;
+  titleRow: ITitleRowItem[];
 }) => {
   const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
   const [columns, setColumns] = useState<IContentCard[][]>([]);
@@ -60,19 +62,7 @@ const FolderPageDesktopBody = (props: {
   const router = useRouter();
   return (
     <PageLayout
-      titleRow={[
-        {
-          text: "My Content",
-          callback: () => router.push("/content"),
-        },
-        {
-          text: props.folder?.title,
-          options: props.allFolders.map((d) => ({
-            text: d.title,
-            callback: () => router.push(`/content/${d.id}`),
-          })),
-        },
-      ]}
+      titleRow={props.titleRow}
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight

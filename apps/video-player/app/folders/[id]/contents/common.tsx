@@ -157,9 +157,44 @@ export default function FolderPage(props: {
   return (
     <>
       {props.isMobile ? (
-        <></>
+        <FolderPageMobileBody
+          folderId={props.folderId}
+          folder={folder}
+          contents={filteredContents}
+          allFolders={allFolders}
+          devices={devices}
+          setCreationDialogOpen={setCreationDialogOpen}
+          onEditFolder={() => setFolderRenameDialogOpen(true)}
+          loadFolderAndContents={loadFolderAndContents}
+          setAddDeviceDialogOpen={() => {
+            setAddDeviceDialogOpen(true);
+          }}
+          onRemoveDevice={() => {
+            loadDevices();
+            notificationCtx.negativeSuccess("Removed Device");
+          }}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          selectedContentType={selectedContentType}
+          setSelectedContentType={setSelectedContentType}
+          setLinkEditingDialogId={setLinkEditingDialogId}
+          setVideoEditingDialogId={setVideoEditingDialogId}
+          setChannelEditingDialogId={setChannelEditingDialogId}
+          titleRow={[
+            {
+              text: "My Content",
+              callback: () => router.push("/content"),
+            },
+            {
+              text: folder?.title ?? "",
+              options: allFolders.map((d) => ({
+                text: d.title,
+                callback: () => router.push(`/content/${d.id}`),
+              })),
+            },
+          ]}
+        />
       ) : (
-        // <FolderPageMobileBody />
         <FolderPageDesktopBody
           folderId={props.folderId}
           folder={folder}
@@ -183,6 +218,19 @@ export default function FolderPage(props: {
           setLinkEditingDialogId={setLinkEditingDialogId}
           setVideoEditingDialogId={setVideoEditingDialogId}
           setChannelEditingDialogId={setChannelEditingDialogId}
+          titleRow={[
+            {
+              text: "My Content",
+              callback: () => router.push("/content"),
+            },
+            {
+              text: folder?.title ?? "",
+              options: allFolders.map((d) => ({
+                text: d.title,
+                callback: () => router.push(`/content/${d.id}`),
+              })),
+            },
+          ]}
         />
       )}
       {devices ? (

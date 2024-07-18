@@ -15,12 +15,14 @@ export interface ITitleRowItem {
   callback?: () => void;
 }
 
-const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
+const TitleRowItemCore = (
+  props: ITitleRowItem & { last: boolean; isMobile?: boolean }
+) => {
   const [open, setOpen] = useState<boolean>(false);
   const ActualItem = (
     <Stack
       direction="row"
-      spacing="12px"
+      spacing={props.isMobile ? "6px" : "12px"}
       onClick={() => {
         setOpen(true);
         props.callback?.();
@@ -28,7 +30,8 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
     >
       {props.image}
       <Typography
-        variant="h4"
+        bold
+        variant={props.isMobile ? "medium" : "h4"}
         color={!props.last ? PALETTE.secondary.grey[3] : undefined}
       >
         {props.text}
@@ -88,15 +91,19 @@ const TitleRowItemCore = (props: ITitleRowItem & { last: boolean }) => {
   );
 };
 
-const TitleRow = (props: { items: ITitleRowItem[] }) => {
+const TitleRow = (props: { items: ITitleRowItem[]; isMobile?: boolean }) => {
   return (
-    <Stack direction="row" spacing="12px" alignItems="center">
+    <Stack
+      direction="row"
+      spacing={props.isMobile ? "6px" : "12px"}
+      alignItems="center"
+    >
       {props.items.map((x, i) => (
         <Stack
           key={i}
           alignItems="center"
           direction="row"
-          spacing="12px"
+          spacing={props.isMobile ? "6px" : "12px"}
           sx={{
             cursor: "pointer",
             transition: "0.2s",
@@ -106,9 +113,14 @@ const TitleRow = (props: { items: ITitleRowItem[] }) => {
           <TitleRowItemCore
             {...x}
             last={i === (props.items?.length ?? 0) - 1}
+            isMobile={props.isMobile}
           />
           {i < (props.items?.length ?? 0) - 1 ? (
-            <Typography variant="h4" color={PALETTE.secondary.grey[3]}>
+            <Typography
+              bold
+              variant={props.isMobile ? "medium" : "h4"}
+              color={PALETTE.secondary.grey[3]}
+            >
               /
             </Typography>
           ) : null}

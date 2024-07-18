@@ -15,6 +15,7 @@ export const AstroBentoCard = (props: {
   children: React.ReactNode;
   paddingBottom?: string;
   info?: IInfoButtonProps;
+  isMobile?: boolean;
 }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   return (
@@ -41,7 +42,7 @@ export const AstroBentoCard = (props: {
               spacing="8px"
             >
               {props.icon ? <props.icon height="20px" width="20px" /> : null}
-              <Typography variant="large" bold>
+              <Typography variant={props.isMobile ? "normal" : "large"} bold>
                 {props.title}
               </Typography>
               {props.info ? <InfoButton {...props.info} /> : null}

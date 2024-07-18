@@ -10,11 +10,10 @@ import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DeviceCard from "@/app/devices/components/DeviceCard";
 import { useState } from "react";
-import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 import ApiController from "@/app/api";
 import { IContentBucket } from "@/app/devices/[id]/ContentTab";
 
-const ContentPageDevicesSection = (props: {
+const MobileContentPageDevicesSection = (props: {
   devices: IDevice[];
   folderId: IContentBucket["id"];
   onAdd: () => void;
@@ -35,30 +34,10 @@ const ContentPageDevicesSection = (props: {
       <AstroBentoCard
         title={`${props.devices.length} Devices have access to this Folder`}
         notCollapsible
-        topRightStuff={
-          <Stack direction="row" spacing="12px">
-            <UrsorButton
-              size="small"
-              variant="secondary"
-              endIcon={ChevronRightIcon}
-              onClick={() => setDevicesGridDialogOpen(true)}
-            >
-              View all
-            </UrsorButton>
-            <UrsorButton
-              dark
-              variant="tertiary"
-              size="small"
-              endIcon={PlusIcon}
-              onClick={props.onAdd}
-            >
-              Add Device
-            </UrsorButton>
-          </Stack>
-        }
+        isMobile
       >
         {props.devices.length > 0 ? (
-          <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+          <Stack spacing="8px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <DeviceCard
@@ -72,7 +51,7 @@ const ContentPageDevicesSection = (props: {
                 />
               </UrsorFadeIn>
             ))}
-          </DynamicCardGrid>
+          </Stack>
         ) : (
           <Stack
             height="90px"
@@ -106,21 +85,30 @@ const ContentPageDevicesSection = (props: {
             </Typography>
           </Stack>
         )}
+        <Stack direction="row" spacing="8px" pt="14px">
+          <UrsorButton
+            size="small"
+            variant="secondary"
+            endIcon={ChevronRightIcon}
+            onClick={() => setDevicesGridDialogOpen(true)}
+            width="100%"
+          >
+            View all
+          </UrsorButton>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="small"
+            endIcon={PlusIcon}
+            onClick={props.onAdd}
+            width="100%"
+          >
+            Add Device
+          </UrsorButton>
+        </Stack>
       </AstroBentoCard>
-      <DevicesGridDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have access to this Folder`}
-        devices={props.devices.slice(0, 4)}
-        open={devicesGridDialogOpen}
-        onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={() => {
-          props.onAdd();
-          setDevicesGridDialogOpen(false);
-        }}
-      />
     </>
   );
 };
 
-export default ContentPageDevicesSection;
+export default MobileContentPageDevicesSection;
