@@ -3,12 +3,13 @@ import TitleRow, { ITitleRowItem } from "./TitleRow";
 import UrsorActionButton from "./UrsorActionButton";
 import { IActionPopupItem } from "./ActionPopup";
 import React from "react";
-import { Typography } from "ui";
+import { Typography, UrsorButton } from "ui";
 
 const MobilePageLayout = (props: {
-  actions?: IActionPopupItem[];
   title?: string;
   titleRow?: ITitleRowItem[];
+  actions?: IActionPopupItem[];
+  topRightElement?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <Stack
@@ -26,6 +27,7 @@ const MobilePageLayout = (props: {
         </Typography>
       ) : null}
       {props.titleRow ? <TitleRow items={props.titleRow} isMobile /> : null}
+      {props.topRightElement}
       <Stack width="32px">
         {props.actions ? (
           <UrsorActionButton
