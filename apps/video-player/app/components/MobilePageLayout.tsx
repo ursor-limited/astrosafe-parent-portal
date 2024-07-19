@@ -20,7 +20,12 @@ const MobilePageLayout = (props: {
     py="24px"
     boxSizing="border-box"
   >
-    <Stack pb="24px" justifyContent="space-between" direction="row">
+    <Stack
+      pb="24px"
+      justifyContent="space-between"
+      alignItems="center"
+      direction="row"
+    >
       {props.title ? (
         <Typography bold variant="medium">
           {props.title}
@@ -28,17 +33,15 @@ const MobilePageLayout = (props: {
       ) : null}
       {props.titleRow ? <TitleRow items={props.titleRow} isMobile /> : null}
       {props.topRightElement}
-      <Stack width="32px">
-        {props.actions ? (
-          <UrsorActionButton
-            actions={props.actions}
-            iconSize="14px"
-            size="32px"
-            background="transparent"
-            border
-          />
-        ) : null}
-      </Stack>
+      {props.actions ? (
+        <UrsorActionButton
+          actions={props.actions}
+          iconSize="14px"
+          size="32px"
+          background="transparent"
+          border
+        />
+      ) : null}
     </Stack>
     {props.children}
   </Stack>

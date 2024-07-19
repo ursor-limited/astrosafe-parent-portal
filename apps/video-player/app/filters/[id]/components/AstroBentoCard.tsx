@@ -30,7 +30,7 @@ export const AstroBentoCard = (props: {
     >
       <Stack>
         <Stack justifyContent="space-between" direction="row">
-          <Stack>
+          <Stack spacing={props.isMobile ? "6px" : undefined}>
             <Stack
               direction="row"
               sx={

@@ -1,13 +1,17 @@
 import React from "react";
-import FiltersPageContents from "./FiltersPageContents";
 import { UserProvider } from "../components/UserContext";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { headers } from "next/headers";
+import AllFiltersPage from "./contents/common";
 
-async function FilterPage() {
+async function Page() {
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   return (
     <UserProvider>
-      <FiltersPageContents />
+      <AllFiltersPage isMobile={isMobile} />
     </UserProvider>
   );
 }
 
-export default FilterPage;
+export default Page;

@@ -1,12 +1,12 @@
 import ApiController from "@/app/api";
 import { SearchInput } from "@/app/components/SearchInput";
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { IGroup } from "../contents/common";
 import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
 const AddDeviceDialog = (props: {
   open: boolean;

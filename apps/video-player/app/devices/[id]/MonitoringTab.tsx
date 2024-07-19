@@ -2,11 +2,6 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import {
-  DUMMY_GROUP_ID,
-  IFilterDomain,
-  IFilterUrl,
-} from "@/app/filters/FiltersPageContents";
 import Image from "next/image";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import _ from "lodash";
@@ -17,6 +12,8 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
 import Link from "next/link";
 import CalendarButton from "@/app/components/CalendarButton";
+import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 dayjs.extend(advancedFormat);
 
 const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [

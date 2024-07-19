@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { IDevice } from "../filters/[id]/FilterPageContents";
+import { IDevice } from "../filters/[id]/contents/common";
 import DynamicCardGrid from "./DynamicCardGrid";
 import UrsorFadeIn from "./UrsorFadeIn";
 import XIcon from "@/images/icons/X.svg";

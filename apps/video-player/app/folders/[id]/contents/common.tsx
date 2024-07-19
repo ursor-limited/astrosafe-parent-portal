@@ -16,29 +16,18 @@ import {
   IVideo,
 } from "@/app/devices/[id]/ContentTab";
 import { useRouter } from "next/navigation";
-import ContentPageDevicesSection from "../components/DevicesSection";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
-import { AddContentButton } from "../components/AddContentButton";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import LinkCard from "../components/LinkCard";
-import ChannelCard from "../components/ChannelCard";
-import SortButton from "@/app/components/SortButton";
-import Image from "next/image";
 import AddDeviceDialog from "../components/AddDeviceDialog";
 import LinkCreationDialog from "../components/LinkCreationDialog";
 import ChannelCreationDialog from "../components/ChannelCreationDialog";
 import ApiController from "@/app/api";
 import FolderRenameDialog from "../components/FolderRenameDialog";
 import NotificationContext from "@/app/components/NotificationContext";
-import useColumnWidth from "@/app/components/useColumnWidth";
-import { DUMMY_GROUP_ID } from "@/app/filters/FiltersPageContents";
-import { SearchInput } from "@/app/components/SearchInput";
-import PageLayout from "@/app/components/PageLayout";
 import useLoadFolderAndContents from "../components/useLoadFolderAndContents";
-import VideoCard from "../components/VideoCard";
 import VideoCreationDialog from "../components/VideoCreationDialog";
 import FolderPageMobileBody from "./body-mobile";
 import FolderPageDesktopBody from "./body-desktop";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
 export interface IGroup {
   id: number;

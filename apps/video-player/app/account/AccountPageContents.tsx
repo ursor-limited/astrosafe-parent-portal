@@ -23,7 +23,7 @@ import { IGroup } from "../folders/[id]/contents/common";
 import DeviceConnectDialog from "../devices/components/DeviceConnectDialog";
 import DownloadDialog from "../devices/components/DownloadDialog";
 import UpgradeDialog from "../components/UpgradeDialog";
-import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import { DUMMY_GROUP_ID } from "../filters/contents/body-desktop";
 import { useUserContext } from "../components/UserContext";
 import ApiController from "../api";
 

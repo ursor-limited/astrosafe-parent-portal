@@ -1,56 +1,20 @@
 "use client";
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import StopIcon from "@/images/icons/StopIcon.svg";
-import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { Stack } from "@mui/system";
-import UrsorFadeIn from "../components/UrsorFadeIn";
+import UrsorFadeIn from "../../components/UrsorFadeIn";
 import _ from "lodash";
-import DynamicCardGrid from "../components/DynamicCardGrid";
+import DynamicCardGrid from "../../components/DynamicCardGrid";
 import { useRouter } from "next/navigation";
-import ProfileImageRow from "./ProfileImageRow";
-import PageLayout from "../components/PageLayout";
-import FilterCard from "./FilterCard";
+import ProfileImageRow from "../[id]/components/ProfileImageRow";
+import PageLayout from "../../components/PageLayout";
+import FilterCard from "../[id]/components/FilterCard";
+import { IFilter, IFilterCategory, IFilterUrl } from "./common";
 
 export const GRID_SPACING = "20px";
-
-export interface IFilterCategory {
-  id: number;
-  title: string;
-  groupId: number;
-}
-
-export interface IFilterUrl {
-  id: number;
-  url: string;
-  title: string;
-  imageUrl: string;
-  createdAt: string;
-  groupId: number;
-}
-
-export interface IFilterDomain {
-  id: number;
-  domain: string;
-  title: string;
-  faviconUrl: string;
-  urls: IFilterUrl[];
-}
-
-export interface IFilter {
-  id: number;
-  title: string;
-  allowedServices: IFilterUrl["id"][];
-  allowedCategories: IFilterCategory["id"][];
-  allowedSiteExceptions: IFilterUrl["id"][];
-  blockedSiteExceptions: IFilterUrl["id"][];
-  blockedWords: string[];
-  groupId: number;
-}
 
 export const DUMMY_GROUP_ID = 1;
 
@@ -196,11 +160,11 @@ export const DUMMY_FILTERS: IFilter[] = [
   },
 ];
 
-export default function FiltersPage() {
-  const [filters, setFilters] = useState<IFilter[]>(DUMMY_FILTERS);
-
+export default function AllFiltersPageDesktopBody(props: {
+  filters: IFilter[];
+  createFilter: () => void;
+}) {
   const router = useRouter();
-
   return (
     <PageLayout
       title="My Filters"

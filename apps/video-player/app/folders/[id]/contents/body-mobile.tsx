@@ -1,5 +1,4 @@
 import { Stack } from "@mui/system";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import {
   AstroContent,
   IChannel,
@@ -17,12 +16,13 @@ import VideoCard from "../components/VideoCard";
 import ChannelCard from "../components/ChannelCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import Image from "next/image";
-import MobileContentPageDevicesSection from "../components/MobileDevicesSection";
+import MobileDevicesSection from "../components/MobileDevicesSection";
 import TitleRow, { ITitleRowItem } from "@/app/components/TitleRow";
-import UrsorActionButton from "@/app/components/UrsorActionButton";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import ApiController from "@/app/api";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -62,11 +62,16 @@ const FolderPageMobileBody = (props: {
       ]}
     >
       <Stack spacing="24px" pb="32px">
-        <MobileContentPageDevicesSection
+        <MobileDevicesSection
+          title={`${props.devices.length} Devices have access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
-          onRemove={props.onRemoveDevice}
+          onRemove={(id: IDevice["id"]) =>
+            ApiController.removeFolderFromDevice(props.folderId, id).then(
+              props.onRemoveDevice
+            )
+          }
         />
         <Stack justifyContent="center">
           <Stack

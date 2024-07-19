@@ -1,0 +1,94 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { Stack } from "@mui/system";
+import FilterPageCategoriesSection from "../components/CategoriesSection";
+import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
+import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
+import FilterPageSearchWordsSection from "../components/SearchWordsSection";
+import FilterPageDevicesSection from "../components/DevicesSection";
+import PageLayout from "@/app/components/PageLayout";
+import { IActionPopupItem } from "@/app/components/ActionPopup";
+import { IDevice } from "./common";
+import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import { ITitleRowItem } from "@/app/components/TitleRow";
+import DevicesSection from "@/app/folders/[id]/components/DevicesSection";
+
+export default function FilterPageDesktopBody(props: {
+  filterId: number;
+  filter: IFilter;
+  categories: IFilterCategory[];
+  allowedCategories: IFilterUrl["id"][];
+  flipCategory: (id: IFilterCategory["id"]) => void;
+  allowedSites: IFilterUrl[];
+  blockedSites: IFilterUrl[];
+  blockedSearchWords: string[];
+  addToBlockedSearchWords: (word: string) => void;
+  removeFromBlockedSearchWords: (word: string) => void;
+  devices: IDevice[];
+  actions: IActionPopupItem[];
+  setExceptionDialogOpen: (url: IFilterUrl["url"]) => void;
+  titleRow: ITitleRowItem[];
+  setAddDeviceDialogOpen: () => void;
+  onRemoveDevice: () => void;
+}) {
+  return (
+    <PageLayout
+      titleRow={props.titleRow}
+      titleBackButton={true}
+      bodyWidth="100%"
+      fullHeight
+      selectedSidebarItemId="channels"
+      button={{
+        text: "Add a Filter",
+        callback: () => null,
+        icon: PlusIcon,
+      }}
+      maxWidth={834}
+      scrollable
+      actions={props.actions}
+    >
+      <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
+        <DevicesSection
+          title={`Filter applied to ${props.devices.length} Devices.`}
+          devices={props.devices}
+          folderId={props.filterId}
+          onAdd={props.setAddDeviceDialogOpen}
+          onRemove={props.onRemoveDevice}
+        />
+        {/* <FilterPageServicesSection
+          filter={props.filter}
+          services={services}
+          allowedServices={allowedServices}
+          flipService={(id) =>
+            setAllowedServices(
+              allowedServices.includes(id)
+                ? allowedServices.filter((sid) => sid !== id)
+                : [...allowedServices, id]
+            )
+          }
+        /> */}
+        <FilterPageCategoriesSection
+          filter={props.filter}
+          categories={props.categories}
+          allowedCategories={props.allowedCategories}
+          flipCategory={props.flipCategory}
+        />
+        <FilterPageAllowedSitesSection
+          allowedSites={props.allowedSites}
+          addSite={props.setExceptionDialogOpen}
+        />
+        <FilterPageBlockedSitesSection
+          blockedSites={props.blockedSites}
+          addSite={(url) => null}
+        />
+        <FilterPageSearchWordsSection
+          blockedSearchWords={props.blockedSearchWords}
+          addWord={props.addToBlockedSearchWords}
+          removeWord={props.removeFromBlockedSearchWords}
+        />
+      </Stack>
+    </PageLayout>
+  );
+}

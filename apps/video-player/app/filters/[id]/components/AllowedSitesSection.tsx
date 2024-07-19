@@ -4,12 +4,6 @@ import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorInputField } from "ui";
-import AstroSwitch from "@/app/components/AstroSwitch";
-import {
-  IFilter,
-  IFilterCategory,
-  IFilterUrl,
-} from "../../FiltersPageContents";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
@@ -18,6 +12,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import _ from "lodash";
+import { IFilterUrl } from "../../contents/common";
 
 interface IAllowedSitesTableRowItems {
   title: string;
@@ -28,6 +23,7 @@ interface IAllowedSitesTableRowItems {
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterUrl[];
   addSite: (url: string) => void;
+  isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
@@ -37,7 +33,7 @@ const FilterPageAllowedSitesSection = (props: {
       newTag: true,
       getAvatar: (id) => {
         return (
-          <Stack borderRadius="100%" overflow="hidden">
+          <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <Image
               src={
                 props.allowedSites.find((s) => s.id.toString() === id)
@@ -126,6 +122,7 @@ const FilterPageAllowedSitesSection = (props: {
         props.allowedSites.length === 1 ? "" : "s"
       }`}
       subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding category. Be careful this overrides the filter!"
+      isMobile={props.isMobile}
     >
       <Stack spacing="20px">
         <UrsorInputField

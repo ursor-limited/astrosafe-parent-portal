@@ -20,7 +20,7 @@ import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
 import ApiController from "@/app/api";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../components/DeviceCard";
 import PageLayout from "@/app/components/PageLayout";
-import { DUMMY_GROUP_ID } from "@/app/filters/FiltersPageContents";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 
 export type DeviceType = "chrome" | "android" | "ios";
 

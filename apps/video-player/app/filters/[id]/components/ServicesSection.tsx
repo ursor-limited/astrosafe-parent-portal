@@ -1,7 +1,6 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
-import { IFilter, IFilterUrl } from "../../FiltersPageContents";
 import { AstroBentoCard } from "./AstroBentoCard";
 import { FilterLegend } from "./CategoriesSection";
 import AstroToggleCard from "./AstroToggleCard";
@@ -9,6 +8,7 @@ import { Stack } from "@mui/system";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { PALETTE } from "ui";
+import { IFilter, IFilterUrl } from "../../contents/common";
 
 const FilterPageServicesSection = (props: {
   filter: IFilter;

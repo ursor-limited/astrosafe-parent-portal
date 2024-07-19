@@ -9,9 +9,9 @@ import dayjs from "dayjs";
 import { IUser } from "./AccountPageContents";
 import _ from "lodash";
 import { DeviceType } from "../devices/DevicesPageContents";
-import { IDevice } from "../filters/[id]/FilterPageContents";
+import { IDevice } from "../filters/[id]/contents/common";
 import ApiController from "../api";
-import { DUMMY_GROUP_ID } from "../filters/FiltersPageContents";
+import { DUMMY_GROUP_ID } from "../filters/contents/body-desktop";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../devices/components/DeviceCard";
 
 interface IDevicesTableRowItems {

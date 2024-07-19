@@ -1,11 +1,11 @@
 import { Stack } from "@mui/system";
-import { IFilter } from "./FiltersPageContents";
 import { PALETTE, Typography } from "ui";
 import ListUnorderedIcon from "@/images/icons/ListUnorderedIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import ProfileImageRow from "./ProfileImageRow";
+import { IFilter } from "../../contents/common";
 
 const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   <Stack

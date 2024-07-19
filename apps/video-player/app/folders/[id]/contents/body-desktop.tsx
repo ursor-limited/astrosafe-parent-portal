@@ -1,6 +1,6 @@
 import PageLayout from "@/app/components/PageLayout";
 import { Stack } from "@mui/system";
-import ContentPageDevicesSection from "../components/DevicesSection";
+import DevicesSection from "../components/DevicesSection";
 import { PALETTE, Typography } from "ui";
 import { SearchInput } from "@/app/components/SearchInput";
 import SortButton from "@/app/components/SortButton";
@@ -23,10 +23,9 @@ import useColumnWidth from "@/app/components/useColumnWidth";
 import { useRouter } from "next/navigation";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import DuplicateIcon from "@/images/icons/DuplicateIcon.svg";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { ITitleRowItem } from "@/app/components/TitleRow";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
 const FolderPageDesktopBody = (props: {
   folderId: IContentBucket["id"];
@@ -89,7 +88,8 @@ const FolderPageDesktopBody = (props: {
       scrollable
     >
       <Stack pl="48px" spacing="24px" pb="32px">
-        <ContentPageDevicesSection
+        <DevicesSection
+          title={`${props.devices.length} Devices have access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}

@@ -6,47 +6,9 @@ import { PALETTE, Typography } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import { FilterLegend } from "./CategoriesSection";
 
-export const FilterLegend = (props: { small?: boolean }) => (
-  <Stack direction="row" spacing="20px">
-    <Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
-      >
-        <Typography variant={props.small ? "small" : "normal"} bold>
-          Allowed
-        </Typography>
-        <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
-          borderRadius="100%"
-          bgcolor={PALETTE.system.green}
-        />
-      </Stack>
-    </Stack>
-    <Stack>
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={props.small ? "7px" : "10px"}
-      >
-        <Typography variant={props.small ? "small" : "normal"} bold>
-          Blocked
-        </Typography>
-        <Stack
-          height={props.small ? "12px" : "16px"}
-          width={props.small ? "12px" : "16px"}
-          borderRadius="100%"
-          bgcolor={PALETTE.secondary.grey[3]}
-        />
-      </Stack>
-    </Stack>
-  </Stack>
-);
-
-const FilterPageCategoriesSection = (props: {
+const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
   allowedCategories: IFilterUrl["id"][];
@@ -58,13 +20,16 @@ const FilterPageCategoriesSection = (props: {
       props.allowedCategories.length === 1 ? "Category" : "Categories"
     }`}
     subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
-    topRightStuff={<FilterLegend />}
+    isMobile
   >
-    <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+    <Stack spacing="10px">
+      <Stack alignItems="flex-end">
+        <FilterLegend small />
+      </Stack>
       {props.categories.map((c, i) => (
         <UrsorFadeIn key={c.id} duration={800} delay={i * 80}>
           <Stack
-            height="72px"
+            height="50px"
             bgcolor="rgb(255,255,255)"
             borderRadius="12px"
             border={`1px solid ${PALETTE.secondary.grey[2]}`}
@@ -88,8 +53,8 @@ const FilterPageCategoriesSection = (props: {
           </Stack>
         </UrsorFadeIn>
       ))}
-    </DynamicCardGrid>
+    </Stack>
   </AstroBentoCard>
 );
 
-export default FilterPageCategoriesSection;
+export default MobileFilterPageCategoriesSection;

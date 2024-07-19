@@ -1,4 +1,3 @@
-import { IFilterDomain, IFilterUrl } from "@/app/filters/FiltersPageContents";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
@@ -9,6 +8,7 @@ import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { useState } from "react";
 import DynamicContainer from "@/app/components/DynamicContainer";
 import Link from "next/link";
+import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
 
 const HistoryRow = (props: {
   faviconUrl: IFilterUrl["imageUrl"];

@@ -4,14 +4,14 @@ import { PALETTE, Typography } from "ui";
 import Star from "@/images/Star.svg";
 import { useRouter } from "next/navigation";
 import _ from "lodash";
-import ProfileImageRow from "@/app/filters/ProfileImageRow";
+import ProfileImageRow from "@/app/filters/[id]/components/ProfileImageRow";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import { IGroupContentBucket } from "@/app/folders/ContentsPageContents";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
+import { IGroupContentBucket } from "./ContentTab";
 
 export const spin = keyframes`
   from {

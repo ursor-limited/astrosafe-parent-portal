@@ -1,5 +1,5 @@
-import { IFilterUrl } from "@/app/filters/FiltersPageContents";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
+import { IFilterUrl } from "@/app/filters/contents/common";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import { PALETTE, Typography, UrsorButton } from "ui";

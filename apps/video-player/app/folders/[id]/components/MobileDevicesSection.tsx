@@ -1,4 +1,3 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
@@ -7,35 +6,26 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DeviceCard from "@/app/devices/components/DeviceCard";
 import { useState } from "react";
-import ApiController from "@/app/api";
 import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
-const MobileContentPageDevicesSection = (props: {
+const MobileDevicesSection = (props: {
+  title: string;
   devices: IDevice[];
   folderId: IContentBucket["id"];
   onAdd: () => void;
-  onRemove: () => void;
+  onRemove: (id: IDevice["id"]) => void;
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
 
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
 
-  const removeDevice = (id: IDevice["id"]) =>
-    ApiController.removeFolderFromDevice(props.folderId, id).then(
-      props.onRemove
-    );
-
   return (
     <>
-      <AstroBentoCard
-        title={`${props.devices.length} Devices have access to this Folder`}
-        notCollapsible
-        isMobile
-      >
+      <AstroBentoCard title={props.title} notCollapsible isMobile>
         {props.devices.length > 0 ? (
           <Stack spacing="8px">
             {props.devices.map((d, i) => (
@@ -43,7 +33,7 @@ const MobileContentPageDevicesSection = (props: {
                 <DeviceCard
                   {...d}
                   button={
-                    <Stack onClick={() => removeDevice(d.id)}>
+                    <Stack onClick={() => props.onRemove(d.id)}>
                       <XIcon height={16} width={16} />
                     </Stack>
                   }
@@ -112,4 +102,4 @@ const MobileContentPageDevicesSection = (props: {
   );
 };
 
-export default MobileContentPageDevicesSection;
+export default MobileDevicesSection;

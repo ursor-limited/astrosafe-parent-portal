@@ -3,7 +3,6 @@ import ThumbsDownIcon from "@/images/icons/ThumbsDownIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorInputField } from "ui";
-import { IFilterUrl } from "../../FiltersPageContents";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
@@ -12,6 +11,7 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import _ from "lodash";
+import { IFilterUrl } from "../../contents/common";
 
 interface IBlockedSitesTableRowItems {
   title: string;
@@ -22,6 +22,7 @@ interface IBlockedSitesTableRowItems {
 const FilterPageBlockedSitesSection = (props: {
   blockedSites: IFilterUrl[];
   addSite: (url: string) => void;
+  isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
@@ -31,9 +32,12 @@ const FilterPageBlockedSitesSection = (props: {
       newTag: true,
       getAvatar: (id) => {
         return (
-          <Stack borderRadius="100%" overflow="hidden">
+          <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <Image
-              src={props.blockedSites.find((s) => s.id === id)?.imageUrl ?? ""}
+              src={
+                props.blockedSites.find((s) => s.id.toString() === id)
+                  ?.imageUrl ?? ""
+              }
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -63,7 +67,7 @@ const FilterPageBlockedSitesSection = (props: {
     (async () => {
       const linkRows: IUrsorTableRow<IBlockedSitesTableRowItems>[] =
         props.blockedSites?.map((a) => ({
-          id: a.id,
+          id: a.id.toString(),
           items: {
             title: a.title ?? "",
             url: a.url,
@@ -116,7 +120,8 @@ const FilterPageBlockedSitesSection = (props: {
       title={`${props.blockedSites.length} blocked site exception${
         props.blockedSites.length === 1 ? "" : "s"
       }`}
-      subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
+      subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
+      isMobile={props.isMobile}
     >
       <Stack spacing="20px">
         <UrsorInputField

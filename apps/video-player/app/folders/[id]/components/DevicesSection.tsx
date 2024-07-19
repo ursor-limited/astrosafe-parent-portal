@@ -7,14 +7,15 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import DeviceCard from "@/app/devices/components/DeviceCard";
 import { useState } from "react";
 import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 import ApiController from "@/app/api";
 import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
-const ContentPageDevicesSection = (props: {
+const DevicesSection = (props: {
+  title: string;
   devices: IDevice[];
   folderId: IContentBucket["id"];
   onAdd: () => void;
@@ -33,7 +34,7 @@ const ContentPageDevicesSection = (props: {
   return (
     <>
       <AstroBentoCard
-        title={`${props.devices.length} Devices have access to this Folder`}
+        title={props.title}
         notCollapsible
         topRightStuff={
           <Stack direction="row" spacing="12px">
@@ -123,4 +124,4 @@ const ContentPageDevicesSection = (props: {
   );
 };
 
-export default ContentPageDevicesSection;
+export default DevicesSection;

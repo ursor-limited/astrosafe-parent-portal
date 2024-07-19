@@ -6,7 +6,7 @@ import {
   ILink,
   IVideo,
 } from "./devices/[id]/ContentTab";
-import { IDevice } from "./filters/[id]/FilterPageContents";
+import { IDevice } from "./filters/[id]/contents/common";
 
 export interface IVideo_DEPRECATED {
   id: string;

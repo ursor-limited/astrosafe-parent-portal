@@ -13,8 +13,8 @@ import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { IFilterUrl } from "@/app/filters/FiltersPageContents";
 import RequestedSitesSection from "./RequestedSitesSection";
+import { IFilterUrl } from "@/app/filters/contents/common";
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 

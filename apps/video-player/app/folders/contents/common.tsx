@@ -4,8 +4,8 @@ import { IContentBucket } from "../../devices/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ApiController from "../../api";
 import { useEffect, useState } from "react";
-import { DUMMY_GROUP_ID } from "../../filters/FiltersPageContents";
-import { IDevice } from "../../filters/[id]/FilterPageContents";
+import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
+import { IDevice } from "../../filters/[id]/contents/common";
 import AllFoldersPageDesktopBody from "./body-desktop";
 import AllFoldersPageMobileBody from "./body-mobile";
 
