@@ -1,23 +1,20 @@
 "use client";
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React from "react";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import LockIcon from "@/images/icons/LockIcon.svg";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { UrsorButton } from "ui";
 import { Stack } from "@mui/system";
 import UrsorFadeIn from "../../components/UrsorFadeIn";
 import _ from "lodash";
 import DynamicCardGrid from "../../components/DynamicCardGrid";
 import { useRouter } from "next/navigation";
-import ProfileImageRow from "../[id]/components/ProfileImageRow";
-import PageLayout from "../../components/PageLayout";
 import FilterCard from "../[id]/components/FilterCard";
 import { IFilter } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 2;
+export const DUMMY_GROUP_ID = 1;
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IFilter[];
@@ -61,6 +58,7 @@ export default function AllFiltersPageMobileBody(props: {
                   "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
                   "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
                 ]}
+                isMobile
               />
             </UrsorFadeIn>
           </Stack>

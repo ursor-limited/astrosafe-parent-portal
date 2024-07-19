@@ -65,7 +65,7 @@ const DownloadCard = (props: { imageUrl: string; name: string }) => (
 const DownloadDialog = (props: {
   open: boolean;
   onClose: () => void;
-  isMobile: boolean;
+  isMobile?: boolean;
 }) => (
   <UrsorDialog
     open={props.open}

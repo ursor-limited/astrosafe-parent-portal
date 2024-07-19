@@ -5,13 +5,6 @@ import { PALETTE, Typography } from "ui";
 import { SearchInput } from "@/app/components/SearchInput";
 import SortButton from "@/app/components/SortButton";
 import { AddContentButton } from "../components/AddContentButton";
-import {
-  AstroContent,
-  IChannel,
-  IContentBucket,
-  ILink,
-  IVideo,
-} from "@/app/profiles/[id]/ContentTab";
 import { CONTENT_BRANDING, IContentCard } from "./common";
 import Image from "next/image";
 import ChannelCard from "../components/ChannelCard";
@@ -26,6 +19,13 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import {
+  AstroContent,
+  IChannel,
+  IContentBucket,
+  ILink,
+  IVideo,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 const FolderPageDesktopBody = (props: {
   folderId: IContentBucket["id"];

@@ -31,7 +31,7 @@ const DeviceCard = (
   const [videoModeOn, setVideoModeOn] = useState<boolean>(false);
 
   const router = useRouter();
-  const onClick = () => router.push(`/devices/${props.id}`);
+  const onClick = () => router.push(`/profiles/${props.id}`);
   return (
     <AstroCard>
       <Stack px="12px" boxSizing="border-box" position="relative">

@@ -7,14 +7,6 @@ import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
-import {
-  AstroContent,
-  IChannel,
-  IContent,
-  IContentBucket,
-  ILink,
-  IVideo,
-} from "@/app/profiles/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import AddDeviceDialog from "../components/AddDeviceDialog";
 import LinkCreationDialog from "../components/LinkCreationDialog";
@@ -28,6 +20,14 @@ import FolderPageMobileBody from "./body-mobile";
 import FolderPageDesktopBody from "./body-desktop";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import {
+  AstroContent,
+  IChannel,
+  IContent,
+  IContentBucket,
+  ILink,
+  IVideo,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 export interface IGroup {
   id: number;

@@ -1,13 +1,8 @@
 import { IUser } from "./account/AccountPageContents";
 import { IGroup } from "./folders/[id]/contents/common";
-import {
-  IChannel,
-  IContentBucket,
-  ILink,
-  IVideo,
-} from "./profiles/[id]/ContentTab";
 import { IDevice } from "./filters/[id]/contents/common";
 import { IFilter } from "./filters/contents/common";
+import { IChannel, IContentBucket, ILink, IVideo } from "./profiles/[id]/components/ContentTab";
 
 export interface IVideo_DEPRECATED {
   id: string;

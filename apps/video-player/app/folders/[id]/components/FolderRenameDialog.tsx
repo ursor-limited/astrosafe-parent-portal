@@ -1,5 +1,5 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
+import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";

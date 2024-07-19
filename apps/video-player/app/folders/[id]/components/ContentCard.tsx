@@ -1,15 +1,16 @@
-import { AstroContent, IContent } from "@/app/profiles/[id]/ContentTab";
 import { Stack } from "@mui/system";
 import { CONTENT_BRANDING } from "../contents/common";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
-import PinIcon from "@/images/icons/PinIcon.svg";
-import FilledPinIcon from "@/images/icons/FilledPinIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import { useState } from "react";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import {
+  AstroContent,
+  IContent,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",

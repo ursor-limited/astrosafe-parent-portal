@@ -13,7 +13,7 @@ import { IFilter } from "./common";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 2;
+export const DUMMY_GROUP_ID = 1;
 
 export default function AllFiltersPageDesktopBody(props: {
   filters: IFilter[];

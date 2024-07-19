@@ -1,9 +1,9 @@
-import { IContent, IVideo } from "@/app/profiles/[id]/ContentTab";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import Play from "@/images/play.svg";
 import ApiController from "@/app/api";
 import ContentCard from "./ContentCard";
+import { IVideo } from "@/app/profiles/[id]/components/ContentTab";
 
 const IMAGE_HEIGHT = 144;
 

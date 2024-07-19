@@ -1,12 +1,11 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import PageLayout from "@/app/components/PageLayout";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
-import FolderCard from "@/app/profiles/[id]/FolderCard";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { IGroupContentBucket } from "./common";
+import FolderCard from "@/app/profiles/[id]/components/FolderCard";
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IGroupContentBucket[];

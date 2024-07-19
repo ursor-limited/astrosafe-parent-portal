@@ -11,8 +11,8 @@ import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
 import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 import ApiController from "@/app/api";
-import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 
 const DevicesSection = (props: {
   title: string;

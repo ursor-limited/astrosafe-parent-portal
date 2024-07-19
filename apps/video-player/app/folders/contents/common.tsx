@@ -1,6 +1,5 @@
 "use client";
 
-import { IContentBucket } from "../../profiles/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ApiController from "../../api";
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
 import { IDevice } from "../../filters/[id]/contents/common";
 import AllFoldersPageDesktopBody from "./body-desktop";
 import AllFoldersPageMobileBody from "./body-mobile";
+import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 
 const DEFAULT_TITLE = "Untitled Folder";
 

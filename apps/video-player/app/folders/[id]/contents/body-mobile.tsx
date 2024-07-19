@@ -1,11 +1,4 @@
 import { Stack } from "@mui/system";
-import {
-  AstroContent,
-  IChannel,
-  IContentBucket,
-  ILink,
-  IVideo,
-} from "@/app/profiles/[id]/ContentTab";
 import { CONTENT_BRANDING, IContentCard } from "./common";
 import { PALETTE, Typography } from "ui";
 import { SearchInput } from "@/app/components/SearchInput";
@@ -23,6 +16,13 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController from "@/app/api";
+import {
+  AstroContent,
+  IChannel,
+  IContentBucket,
+  ILink,
+  IVideo,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];

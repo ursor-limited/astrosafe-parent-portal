@@ -1,8 +1,11 @@
-import { AstroContent, IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { useCallback, useEffect, useState } from "react";
 import { IContentCard } from "../contents/common";
 import ApiController from "@/app/api";
 import _ from "lodash";
+import {
+  AstroContent,
+  IContentBucket,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 const useLoadFolderAndContents = (folderId: IContentBucket["id"]) => {
   const [folder, setFolder] = useState<IContentBucket | undefined>();

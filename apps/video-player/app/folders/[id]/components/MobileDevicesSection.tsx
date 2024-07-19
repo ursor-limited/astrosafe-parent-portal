@@ -8,8 +8,8 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
-import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 
 const MobileDevicesSection = (props: {
   title: string;

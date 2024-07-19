@@ -1,13 +1,17 @@
 import React from "react";
-import AuthWrapper from "@/app/components/AuthWrapper";
-import DevicePageContents from "./DevicePageContents";
+import { headers } from "next/headers";
+import { getSelectorsByUserAgent } from "react-device-detect";
+import { UserProvider } from "@/app/components/UserContext";
+import ProfilePage from "./contents/common";
 
-async function DevicePage({ params }: { params: { id: string } }) {
+async function Page({ params }: { params: { id: string } }) {
+  const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
+    ?.isMobile;
   return (
-    <AuthWrapper>
-      <DevicePageContents deviceId={parseInt(params.id)} />
-    </AuthWrapper>
+    <UserProvider>
+      <ProfilePage deviceId={parseInt(params.id)} isMobile={isMobile} />
+    </UserProvider>
   );
 }
 
-export default DevicePage;
+export default Page;

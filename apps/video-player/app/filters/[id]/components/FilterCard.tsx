@@ -7,7 +7,9 @@ import LockIcon from "@/images/icons/LockIcon.svg";
 import ProfileImageRow from "./ProfileImageRow";
 import { IFilter } from "../../contents/common";
 
-const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
+const FilterCard = (
+  props: IFilter & { deviceImageUrls: string[]; isMobile?: boolean }
+) => (
   <Stack
     height="213px"
     borderRadius="12px"
@@ -20,7 +22,9 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
   >
     <Stack spacing="12px">
       <Stack direction="row" spacing="4px" alignItems="center">
-        <Typography variant="h5">{props.title}</Typography>
+        <Typography variant={props.isMobile ? "medium" : "h5"}>
+          {props.title}
+        </Typography>
         <VerifiedIcon height="20px" width="20px" />
       </Stack>
       <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
