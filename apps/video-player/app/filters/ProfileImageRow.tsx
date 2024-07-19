@@ -24,6 +24,7 @@ const ProfileImageRow = (props: { imageUrls: string[] }) => (
         </Stack>
         {props.imageUrls.length > 3 ? (
           <Stack
+            height="63px"
             direction="row"
             spacing="4px"
             alignItems="center"
