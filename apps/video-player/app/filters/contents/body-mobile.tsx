@@ -13,12 +13,11 @@ import ProfileImageRow from "../[id]/components/ProfileImageRow";
 import PageLayout from "../../components/PageLayout";
 import FilterCard from "../[id]/components/FilterCard";
 import { IFilter } from "./common";
-import { DUMMY_FILTERS } from "./body-desktop";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 
 export const GRID_SPACING = "20px";
 
-export const DUMMY_GROUP_ID = 1;
+export const DUMMY_GROUP_ID = 2;
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IFilter[];
@@ -42,7 +41,7 @@ export default function AllFiltersPageMobileBody(props: {
       }
     >
       <DynamicCardGrid cardWidth="350px" rowGap="20px" columnGap="20px">
-        {DUMMY_FILTERS.map((f, i) => (
+        {props.filters.map((f, i) => (
           <Stack
             key={f.id}
             sx={{

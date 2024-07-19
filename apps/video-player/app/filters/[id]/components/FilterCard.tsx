@@ -30,16 +30,16 @@ const FilterCard = (props: IFilter & { deviceImageUrls: string[] }) => (
         >
           <Stack spacing="4px" direction="row" alignItems="center">
             <ListUnorderedIcon width="12px" height="12px" />
-            <div>{`${props.allowedSiteExceptions.length} ${
-              props.allowedSiteExceptions.length === 1
+            <div>{`${props.filterCategoryWhitelist?.length ?? 0} ${
+              props.filterCategoryWhitelist?.length === 1
                 ? "Category"
                 : "Categories"
             } allowed`}</div>
           </Stack>
           <Stack spacing="4px" direction="row" alignItems="center">
             <StopIcon width="12px" height="12px" />
-            <div>{`${props.blockedWords.length} blocked ${
-              props.blockedWords.length === 1 ? "word" : "words"
+            <div>{`${props.filterWordBlacklist?.length} blocked ${
+              props.filterWordBlacklist?.length === 1 ? "word" : "words"
             }`}</div>
           </Stack>
         </Stack>

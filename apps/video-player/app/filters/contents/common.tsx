@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import AllFiltersPageDesktopBody, { DUMMY_FILTERS } from "./body-desktop";
-import AllFiltersPageMobileBody from "./body-mobile";
+import { useEffect, useState } from "react";
+import AllFiltersPageDesktopBody from "./body-desktop";
+import AllFiltersPageMobileBody, { DUMMY_GROUP_ID } from "./body-mobile";
+import ApiController from "@/app/api";
 
 export interface IFilterCategory {
   id: number;
@@ -27,19 +28,26 @@ export interface IFilterDomain {
   urls: IFilterUrl[];
 }
 
+export interface IFilterBlacklistedWord {
+  id: number;
+  word: string;
+}
+
 export interface IFilter {
   id: number;
   title: string;
-  allowedServices: IFilterUrl["id"][];
-  allowedCategories: IFilterCategory["id"][];
-  allowedSiteExceptions: IFilterUrl["id"][];
-  blockedSiteExceptions: IFilterUrl["id"][];
-  blockedWords: string[];
+  filterWordBlacklist: IFilterBlacklistedWord[];
+  filterCategoryWhitelist: IFilterCategory[];
+  allowedSiteExceptions: IFilterUrl[];
+  blockedSiteExceptions: IFilterUrl[];
   groupId: number;
 }
 
 const AllFiltersPage = (props: { isMobile: boolean }) => {
-  const [filters, setFilters] = useState<IFilter[]>(DUMMY_FILTERS);
+  const [filters, setFilters] = useState<IFilter[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then((f) => setFilters(f));
+  }, []);
   return props.isMobile ? (
     <AllFiltersPageMobileBody filters={filters} createFilter={() => null} />
   ) : (

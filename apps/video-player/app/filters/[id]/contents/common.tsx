@@ -2,23 +2,15 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 
-import PlusIcon from "@/images/icons/PlusIcon.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import {
-  DUMMY_ALLOWED_SITES,
-  DUMMY_BLOCKED_SITES,
-  DUMMY_CATEGORIES,
-  DUMMY_FILTERS,
-  DUMMY_SERVICES,
-} from "../../contents/body-desktop";
 import FilterExceptionDialog from "../components/FilterExceptionDialog";
 import { PALETTE } from "ui";
-import PageLayout from "@/app/components/PageLayout";
 import FilterPageDesktopBody from "./body-desktop";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
 import { useRouter } from "next/navigation";
 import FilterPageMobileBody from "./body-mobile";
+import ApiController from "@/app/api";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -39,24 +31,17 @@ export default function FilterPage(props: {
   isMobile: boolean;
   filterId: number;
 }) {
-  const [filter, setFilter] = useState<IFilter>(DUMMY_FILTERS[0]);
-  const [blockedSites, setBlockedSites] =
-    useState<IFilterUrl[]>(DUMMY_BLOCKED_SITES);
-  const [allowedSites, setAllowedSites] =
-    useState<IFilterUrl[]>(DUMMY_ALLOWED_SITES);
+  const [filter, setFilter] = useState<IFilter | undefined>();
+  const [blockedSites, setBlockedSites] = useState<IFilterUrl[]>([]);
+  const [allowedSites, setAllowedSites] = useState<IFilterUrl[]>([]);
+  useEffect(() => {
+    ApiController.getFilter(props.filterId).then(setFilter);
+  }, [props.filterId]);
 
-  const [categories, setCategories] =
-    useState<IFilterCategory[]>(DUMMY_CATEGORIES);
+  const [categories, setCategories] = useState<IFilterCategory[]>([]);
   const [allowedCategories, setAllowedCategories] = useState<
     IFilterUrl["id"][]
   >([]);
-  useEffect(() => setAllowedServices(filter.allowedCategories), [filter]);
-
-  const [services, setServices] = useState<IFilterUrl[]>(DUMMY_SERVICES);
-  const [allowedServices, setAllowedServices] = useState<IFilterUrl["id"][]>(
-    []
-  );
-  useEffect(() => setAllowedServices(filter.allowedServices), [filter]);
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([]);
 
@@ -108,7 +93,7 @@ export default function FilterPage(props: {
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
     useState<boolean>(false);
 
-  return (
+  return filter ? (
     <>
       {props.isMobile ? (
         <FilterPageMobileBody
@@ -175,5 +160,5 @@ export default function FilterPage(props: {
         onSubmit={() => null}
       />
     </>
-  );
+  ) : null;
 }
