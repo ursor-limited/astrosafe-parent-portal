@@ -1,4 +1,4 @@
-import { AstroContent, IContent } from "@/app/devices/[id]/ContentTab";
+import { AstroContent, IContent } from "@/app/profiles/[id]/ContentTab";
 import { Stack } from "@mui/system";
 import { CONTENT_BRANDING } from "../contents/common";
 import { PALETTE, Typography } from "ui";

@@ -11,7 +11,7 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from "@/app/devices/[id]/ContentTab";
+} from "@/app/profiles/[id]/ContentTab";
 import { CONTENT_BRANDING, IContentCard } from "./common";
 import Image from "next/image";
 import ChannelCard from "../components/ChannelCard";

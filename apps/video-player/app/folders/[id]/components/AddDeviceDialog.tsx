@@ -5,7 +5,7 @@ import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { IGroup } from "../contents/common";
-import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 
 const AddDeviceDialog = (props: {

@@ -1,4 +1,4 @@
-import { IChannel, IContent } from "@/app/devices/[id]/ContentTab";
+import { IChannel, IContent } from "@/app/profiles/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";

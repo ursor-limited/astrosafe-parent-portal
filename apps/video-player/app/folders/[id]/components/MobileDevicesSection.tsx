@@ -6,9 +6,9 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import DeviceCard from "@/app/devices/components/DeviceCard";
+import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
-import { IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 
 const MobileDevicesSection = (props: {

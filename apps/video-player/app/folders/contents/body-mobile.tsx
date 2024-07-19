@@ -1,6 +1,6 @@
 import PageLayout from "@/app/components/PageLayout";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import FolderCard from "@/app/devices/[id]/FolderCard";
+import FolderCard from "@/app/profiles/[id]/FolderCard";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";

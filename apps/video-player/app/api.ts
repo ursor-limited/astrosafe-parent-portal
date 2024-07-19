@@ -5,7 +5,7 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from "./devices/[id]/ContentTab";
+} from "./profiles/[id]/ContentTab";
 import { IDevice } from "./filters/[id]/contents/common";
 import { IFilter } from "./filters/contents/common";
 

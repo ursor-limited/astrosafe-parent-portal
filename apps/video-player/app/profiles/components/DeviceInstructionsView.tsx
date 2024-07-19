@@ -2,7 +2,7 @@ import { Stack, alpha, keyframes } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import Image from "next/image";
-import DownloadDialog from "./components/DownloadDialog";
+import DownloadDialog from "./DownloadDialog";
 import { useState } from "react";
 
 const PULSE_AMPLITUDE = "12px";
@@ -127,11 +127,52 @@ export const FloatingIntroCards = (props: {
       >
         <InstructionCard
           stepIndex={3}
-          text="Delete all other Browsers on device"
+          text="Delete all other Browsers on Device"
           grey={props.greyCards}
         />
       </Stack>
     </Stack>
+  </Stack>
+);
+
+export const MobileIntroCards = (props: {
+  onOpen: () => void;
+  greyCards?: boolean;
+}) => (
+  <Stack position="relative" spacing="16px" alignItems="center">
+    <InstructionCard
+      stepIndex={1}
+      text="Download the AstroSafe App on child's Device"
+      grey={props.greyCards}
+    >
+      <UrsorButton
+        onClick={props.onOpen}
+        size="small"
+        variant="secondary"
+        endIcon={ChevronRightIcon}
+        iconSize={16}
+      >
+        Download options
+      </UrsorButton>
+    </InstructionCard>
+    <InstructionCard
+      stepIndex={2}
+      text={"Enter join code to connect."}
+      grey={props.greyCards}
+    >
+      <Typography
+        variant="h3"
+        color={PALETTE.secondary.purple[2]}
+        sx={{ transform: "translateY(-3px)" }}
+      >
+        700-008
+      </Typography>
+    </InstructionCard>
+    <InstructionCard
+      stepIndex={3}
+      text="Delete all other Browsers on Device"
+      grey={props.greyCards}
+    />
   </Stack>
 );
 

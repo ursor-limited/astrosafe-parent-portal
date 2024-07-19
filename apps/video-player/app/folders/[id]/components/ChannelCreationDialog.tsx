@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import ContentCreationDialog from "./ContentCreationDialog";
 import { useContext, useEffect, useState } from "react";
 import ChannelCard from "./ChannelCard";
-import { IChannel, IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { IChannel, IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import NotificationContext from "@/app/components/NotificationContext";
 import ApiController from "@/app/api";
 import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";

@@ -14,7 +14,7 @@ import Image from "next/image";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
 import { isMobile } from "react-device-detect";
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { AstroContent } from "@/app/devices/[id]/ContentTab";
+import { AstroContent } from "@/app/profiles/[id]/ContentTab";
 import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
 import { IFilterUrl } from "@/app/filters/contents/FiltersPageContents";
 import { LabeledInputField } from "ui/labeled-input-field";

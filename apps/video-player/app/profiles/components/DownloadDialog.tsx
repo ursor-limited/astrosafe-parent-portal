@@ -62,19 +62,30 @@ const DownloadCard = (props: { imageUrl: string; name: string }) => (
   </Stack>
 );
 
-const DownloadDialog = (props: { open: boolean; onClose: () => void }) => (
+const DownloadDialog = (props: {
+  open: boolean;
+  onClose: () => void;
+  isMobile: boolean;
+}) => (
   <UrsorDialog
     open={props.open}
     onCloseCallback={props.onClose}
     title="Download Browser App"
     subtitle={[
       "Download the version of AstroSafe that matches",
-      "your kid's device.",
+      "your kid's Device.",
     ]}
     width="926px"
     height="510px"
+    isMobile={props.isMobile}
+    scrollable
   >
-    <Stack spacing="20px" direction="row" alignItems="center" flex={1}>
+    <Stack
+      spacing={props.isMobile ? "12px" : "20px"}
+      direction={props.isMobile ? "column" : "row"}
+      alignItems="center"
+      flex={1}
+    >
       {PLATFORMS.map((p) => (
         <DownloadCard key={p.name} imageUrl={p.logoUrl} name={p.name} />
       ))}

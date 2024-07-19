@@ -1,4 +1,4 @@
-import { IContent, ILink } from "@/app/devices/[id]/ContentTab";
+import { IContent, ILink } from "@/app/profiles/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";

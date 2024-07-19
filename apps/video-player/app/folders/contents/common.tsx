@@ -1,6 +1,6 @@
 "use client";
 
-import { IContentBucket } from "../../devices/[id]/ContentTab";
+import { IContentBucket } from "../../profiles/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import ApiController from "../../api";
 import { useEffect, useState } from "react";

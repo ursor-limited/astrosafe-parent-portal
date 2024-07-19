@@ -8,7 +8,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
 import { DeviceType, IDevice } from "../contents/common";
-import DeviceCard from "../../../devices/components/DeviceCard";
+import DeviceCard from "../../../profiles/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 

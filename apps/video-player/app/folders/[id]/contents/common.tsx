@@ -14,7 +14,7 @@ import {
   IContentBucket,
   ILink,
   IVideo,
-} from "@/app/devices/[id]/ContentTab";
+} from "@/app/profiles/[id]/ContentTab";
 import { useRouter } from "next/navigation";
 import AddDeviceDialog from "../components/AddDeviceDialog";
 import LinkCreationDialog from "../components/LinkCreationDialog";

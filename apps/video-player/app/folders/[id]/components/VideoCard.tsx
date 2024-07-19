@@ -1,4 +1,4 @@
-import { IContent, IVideo } from "@/app/devices/[id]/ContentTab";
+import { IContent, IVideo } from "@/app/profiles/[id]/ContentTab";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import Play from "@/images/play.svg";

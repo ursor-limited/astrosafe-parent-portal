@@ -1,11 +1,12 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
-import { FloatingIntroCards } from "../DeviceInstructionsView";
+import { FloatingIntroCards, MobileIntroCards } from "./DeviceInstructionsView";
 
 const DeviceConnectDialog = (props: {
   open: boolean;
   onClose: () => void;
   onOpen: () => void;
+  isMobile?: boolean;
 }) => {
   return (
     <UrsorDialog
@@ -13,16 +14,22 @@ const DeviceConnectDialog = (props: {
       onCloseCallback={props.onClose}
       title="Connect a Device"
       subtitle={[
-        "Connect your child or student's Device to start",
+        "Connect your child's or student's Device to start",
         "exploring the internet with them safely!",
       ]}
       width="926px"
       height="510px"
-      paddingX="0px"
-      xButtonRight="34px"
+      paddingX={props.isMobile ? undefined : "0px"}
+      xButtonRight={props.isMobile ? undefined : "34px"}
+      isMobile={props.isMobile}
+      scrollable
     >
       <Stack justifyContent="center" width="100%" height="100%">
-        <FloatingIntroCards onOpen={props.onOpen} spacing="36px" greyCards />
+        {props.isMobile ? (
+          <MobileIntroCards onOpen={props.onOpen} greyCards />
+        ) : (
+          <FloatingIntroCards onOpen={props.onOpen} spacing="36px" greyCards />
+        )}
       </Stack>
     </UrsorDialog>
   );

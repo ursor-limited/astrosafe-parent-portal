@@ -1,4 +1,4 @@
-import { AstroContent, IContentBucket } from "@/app/devices/[id]/ContentTab";
+import { AstroContent, IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import { useCallback, useEffect, useState } from "react";
 import { IContentCard } from "../contents/common";
 import ApiController from "@/app/api";

@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
@@ -21,6 +20,7 @@ import ApiController from "@/app/api";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../components/DeviceCard";
 import PageLayout from "@/app/components/PageLayout";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -90,7 +90,7 @@ export default function DevicePageContents(props: { deviceId: number }) {
               callback: () => router.push(`/devices/${d.id}`),
             })),
             label: device?.deviceType
-              ? DEVICE_TYPE_DISPLAY_NAMES[device?.deviceType]
+              ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]
               : undefined,
           },
         ]}
