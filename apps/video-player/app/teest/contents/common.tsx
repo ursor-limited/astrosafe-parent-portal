@@ -10,12 +10,14 @@ import XIcon from "@/images/icons/X.svg";
 import _ from "lodash";
 import Image from "next/image";
 import { useState } from "react";
+import { UserInitialsCircle } from "@/app/account/AccountPageContents";
 
 export const astroPages = [
   "profiles",
   "filters",
   "content",
   "lessons",
+  "account",
 ] as const;
 export type AstroPage = (typeof astroPages)[number];
 const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
@@ -23,6 +25,7 @@ const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
   filters: FilterIcon,
   content: BookIcon,
   lessons: VersionsIcon,
+  account: VersionsIcon,
 };
 
 const AllFiltersPage = (props: { isMobile: boolean }) => {
@@ -67,44 +70,71 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
             width={59}
             alt="astro"
           />
-          <XIcon height="28px" width="28px" />
+          <Stack onClick={() => setOpen(false)}>
+            <XIcon height="28px" width="28px" />
+          </Stack>
         </Stack>
-        <Stack spacing="24px">
-          {astroPages.map((page) => {
-            const Icon = PAGE_ICONS[page];
-            return (
-              <Stack
-                direction="row"
-                spacing="12px"
-                alignItems="center"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.7 },
-                  transition: "0.2s",
-                  svg: {
-                    path: {
-                      fill:
-                        selectedPage === page
-                          ? PALETTE.secondary.purple[2]
-                          : PALETTE.primary.navy,
+        <Stack justifyContent="space-between" height="100%">
+          <Stack spacing="24px">
+            {["profiles", "filters", "content", "lessons"].map((page) => {
+              const Icon = PAGE_ICONS[page as AstroPage];
+              return (
+                <Stack
+                  direction="row"
+                  spacing="12px"
+                  alignItems="center"
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    svg: {
+                      path: {
+                        fill:
+                          selectedPage === page
+                            ? PALETTE.secondary.purple[2]
+                            : PALETTE.primary.navy,
+                      },
                     },
-                  },
-                }}
-              >
-                <Icon height="28px" width="28px" />
-                <Typography
-                  bold
-                  color={
-                    selectedPage === page
-                      ? PALETTE.secondary.purple[2]
-                      : PALETTE.primary.navy
-                  }
+                  }}
                 >
-                  {_.capitalize(page)}
-                </Typography>
-              </Stack>
-            );
-          })}
+                  <Icon height="28px" width="28px" />
+                  <Typography
+                    bold
+                    color={
+                      selectedPage === page
+                        ? PALETTE.secondary.purple[2]
+                        : PALETTE.primary.navy
+                    }
+                  >
+                    {_.capitalize(page)}
+                  </Typography>
+                </Stack>
+              );
+            })}
+          </Stack>
+          <Stack
+            direction="row"
+            spacing="12px"
+            alignItems="center"
+            onClick={() => setSelectedPage("account")}
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+            }}
+          >
+            <UserInitialsCircle size={32} fontSize={12} name={"Mario Super"} />
+            <Typography
+              bold
+              color={
+                selectedPage === "account"
+                  ? PALETTE.secondary.purple[2]
+                  : PALETTE.primary.navy
+              }
+            >
+              Account
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
     </>
