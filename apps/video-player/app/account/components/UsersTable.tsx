@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from "../components/UrsorTable";
+} from "../../components/UrsorTable";
 import { Stack } from "@mui/system";
 import dayjs from "dayjs";
-import { IUser } from "./AccountPageContents";
+import { IUser } from "../contents/common";
 import _ from "lodash";
 import { PALETTE } from "ui";
 

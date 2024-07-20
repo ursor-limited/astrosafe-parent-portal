@@ -10,7 +10,7 @@ import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "./UserContext";
-import { UserInitialsCircle } from "../account/AccountPageContents";
+import { UserInitialsCircle } from "../account/contents/common";
 
 export const WIDTH = "106px";
 const Y_PADDING = "26px";

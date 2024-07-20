@@ -3,13 +3,16 @@ import TitleRow, { ITitleRowItem } from "./TitleRow";
 import UrsorActionButton from "./UrsorActionButton";
 import { IActionPopupItem } from "./ActionPopup";
 import React from "react";
-import { Typography, UrsorButton } from "ui";
+import { Typography } from "ui";
+import { AstroPage } from "../teest/contents/common";
 
 const MobilePageLayout = (props: {
   title?: string;
   titleRow?: ITitleRowItem[];
   actions?: IActionPopupItem[];
   topRightElement?: React.ReactNode;
+  selectedSidebarItemId?: AstroPage;
+  header?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <Stack
@@ -20,6 +23,7 @@ const MobilePageLayout = (props: {
     py="24px"
     boxSizing="border-box"
   >
+    {props.header ? <Stack pb="24px">{props.header}</Stack> : null}
     <Stack
       pb="24px"
       justifyContent="space-between"

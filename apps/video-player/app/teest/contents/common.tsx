@@ -10,7 +10,7 @@ import XIcon from "@/images/icons/X.svg";
 import _ from "lodash";
 import Image from "next/image";
 import { useState } from "react";
-import { UserInitialsCircle } from "@/app/account/AccountPageContents";
+import { UserInitialsCircle } from "@/app/account/contents/common";
 
 export const astroPages = [
   "profiles",

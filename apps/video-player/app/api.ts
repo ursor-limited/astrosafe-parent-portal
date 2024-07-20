@@ -1,4 +1,4 @@
-import { IUser } from "./account/AccountPageContents";
+import { IUser } from "./account/contents/common";
 import { IGroup } from "./folders/[id]/contents/common";
 import { IDevice } from "./filters/[id]/contents/common";
 import { IFilter } from "./filters/contents/common";

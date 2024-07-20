@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import UrsorTable, {
   IUrsorTableColumn,
   IUrsorTableRow,
-} from "../components/UrsorTable";
+} from "../../components/UrsorTable";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import dayjs from "dayjs";
-import { IUser } from "./AccountPageContents";
 import _ from "lodash";
-import { DeviceType } from "../profiles/contents/common";
-import { IDevice } from "../filters/[id]/contents/common";
-import ApiController from "../api";
-import { DUMMY_GROUP_ID } from "../filters/contents/body-desktop";
-import { DEVICE_TYPE_DISPLAY_NAMES } from "../profiles/components/DeviceCard";
+import { DeviceType } from "../../profiles/contents/common";
+import { IDevice } from "../../filters/[id]/contents/common";
+import ApiController from "../../api";
+import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
+import { DEVICE_TYPE_DISPLAY_NAMES } from "../../profiles/components/DeviceCard";
 
 interface IDevicesTableRowItems {
   name: string;

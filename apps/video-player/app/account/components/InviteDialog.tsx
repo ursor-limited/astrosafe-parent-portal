@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
-import { IUser } from "./AccountPageContents";
+import { IUser } from "../contents/common";
 
 const InviteDialog = (props: {
   open: boolean;
