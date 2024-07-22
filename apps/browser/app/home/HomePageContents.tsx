@@ -131,10 +131,10 @@ export default function HomePageContents(props: {
   // }, [deviceId]);
 
   const [folders, setFolders] = useState<IContentBucket[] | undefined>();
-  useEffect(() => {
-    deviceId &&
-      ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
-  }, [deviceId]);
+  // useEffect(() => {
+  //   deviceId &&
+  //     ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
+  // }, [deviceId]);
 
   const [selectedFolderId, setSelectedFolderId] = useState<
     IContentBucket["id"] | undefined

@@ -5,6 +5,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import ShieldLockIcon from "@/images/icons/ShieldLockIcon.svg";
 
 const DeviceReadyDialogValueCard = (props: {
   color: string;
@@ -49,6 +50,7 @@ const DeviceReadyDialog = (props: { open: boolean; onClose: () => void }) => {
       PaperProps={{
         style: {
           width: 746,
+          maxWidth: "90%",
           borderRadius: 32,
           padding: "32px",
           background: PALETTE.secondary.grey[1],
@@ -97,43 +99,82 @@ const DeviceReadyDialog = (props: { open: boolean; onClose: () => void }) => {
         </Stack>
         <Stack direction="row" spacing="20px" width="100%">
           <Stack
-            height="198px"
             borderRadius="20px"
             border={`2px solid ${PALETTE.secondary.grey[2]}`}
             justifyContent="center"
             alignItems="center"
             spacing="24px"
+            p="32px"
             bgcolor="rgb(255,255,255)"
             width="100%"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.purple[2],
+                },
+              },
+            }}
           >
-            <Typography
-              bold
-              color={PALETTE.secondary.grey[4]}
-              sx={{ textAlign: "center" }}
-            >
-              Some nice copy here, guys.
-            </Typography>
-            <UrsorButton variant="secondary">Go to Browser</UrsorButton>
+            <Stack>
+              <GlobeIcon height="35px" width="35px" />
+            </Stack>
+            <Stack width="251px">
+              <Typography bold variant="h5" sx={{ textAlign: "center" }}>
+                Try out the browser and set up later
+              </Typography>
+            </Stack>
+            <Stack width="251px">
+              <Typography
+                bold
+                variant="small"
+                color={PALETTE.secondary.grey[4]}
+                sx={{ textAlign: "center" }}
+              >
+                Let your child enjoy the browser; connect the portal later.
+              </Typography>
+            </Stack>
+            <UrsorButton variant="secondary" onClick={props.onClose}>
+              Stay in kids' Browser
+            </UrsorButton>
           </Stack>
           <Stack
-            height="198px"
             borderRadius="20px"
-            border={`2px solid ${PALETTE.secondary.grey[2]}`}
+            border={`2px solid ${PALETTE.secondary.purple[2]}`}
             justifyContent="center"
             alignItems="center"
             spacing="24px"
+            p="32px"
             bgcolor="rgb(255,255,255)"
             width="100%"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.purple[2],
+                },
+              },
+            }}
           >
-            <Typography
-              bold
-              color={PALETTE.secondary.grey[4]}
-              sx={{ textAlign: "center" }}
-            >
-              Some nice copy here, guys.
-            </Typography>
-            <UrsorButton variant="tertiary" dark>
-              Go to Secure
+            <Stack>
+              <ShieldLockIcon height="35px" width="35px" />
+            </Stack>
+            <Stack width="251px">
+              <Typography bold variant="h5" sx={{ textAlign: "center" }}>
+                Finish your secure parental setup
+              </Typography>
+            </Stack>
+            <Stack width="280px">
+              <Typography
+                bold
+                variant="small"
+                color={PALETTE.secondary.grey[4]}
+                sx={{ textAlign: "center" }}
+              >
+                Learn more about monitoring, setting filters and adding your own
+                content
+              </Typography>
+            </Stack>
+            <UrsorButton dark variant="tertiary">
+              Go to Parental Controls
             </UrsorButton>
           </Stack>
         </Stack>
