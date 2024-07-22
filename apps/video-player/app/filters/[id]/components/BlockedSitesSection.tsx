@@ -12,16 +12,13 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { IFilterUrl } from "../../contents/common";
-
-interface IBlockedSitesTableRowItems {
-  title: string;
-  url: string;
-  createdAt: string;
-}
+import FilterWhitelistExceptionDialog from "./FilterWhitelistExceptionDialog";
+import { IAllowedSitesTableRowItems } from "./AllowedSitesSection";
+import FilterBlacklistExceptionDialog from "./FilterBlacklistExceptionDialog";
 
 const FilterPageBlockedSitesSection = (props: {
   blockedSites: IFilterUrl[];
-  addSite: (url: string) => void;
+  add: (url: string) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -60,12 +57,12 @@ const FilterPageBlockedSitesSection = (props: {
   ];
 
   const [rows, setRows] = useState<
-    IUrsorTableRow<IBlockedSitesTableRowItems>[]
+    IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
 
   useEffect(() => {
     (async () => {
-      const linkRows: IUrsorTableRow<IBlockedSitesTableRowItems>[] =
+      const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
         props.blockedSites?.map((a) => ({
           id: a.id.toString(),
           items: {
@@ -82,10 +79,10 @@ const FilterPageBlockedSitesSection = (props: {
   }, [props.blockedSites]);
 
   const [sortedRows, setSortedRows] = useState<
-    IUrsorTableRow<IBlockedSitesTableRowItems>[]
+    IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
   const [filteredRows, setFilteredRows] = useState<
-    IUrsorTableRow<IBlockedSitesTableRowItems>[]
+    IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
   const [searchValue, setSearchValue] = useState<string>("");
   useEffect(() => {
@@ -114,58 +111,81 @@ const FilterPageBlockedSitesSection = (props: {
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
   }, [filteredRows, sortDirection, sortedColumn]);
 
+  const [confirmationDialogOpen, setConfirmationDialogOpen] =
+    useState<boolean>(false);
+
   return (
-    <AstroBentoCard
-      icon={ThumbsDownIcon}
-      title={`${props.blockedSites.length} blocked site exception${
-        props.blockedSites.length === 1 ? "" : "s"
-      }`}
-      subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
-      isMobile={props.isMobile}
-    >
-      <Stack spacing="20px">
-        <UrsorInputField
-          value={searchValue}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchValue(event.target.value)
-          }
-          onEnterKey={() => {
-            props.addSite(searchValue);
-          }}
-          placeholder="Add a URL"
-          width="100%"
-          leftAlign
-          boldValue
-        />
-        <UrsorTable
-          columns={TABLE_COLUMNS}
-          rows={sortedRows}
-          defaultSortedByColumn="createdAt"
-          defaultSortedAscending
-          selectedSort={sortedColumn}
-          ascending={sortDirection === "asc"}
-          sortSelectionCallback={(columnId) => {
-            if (columnId === sortedColumn) {
-              setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-            } else {
-              setSortedColumn(columnId);
-              setSortDirection("asc");
+    <>
+      <AstroBentoCard
+        icon={ThumbsDownIcon}
+        title={`${props.blockedSites.length ?? 0} blocked site exception${
+          props.blockedSites.length === 1 ? "" : "s"
+        }`}
+        subtitle="Add sites here that you never want to be accessible. This will make sure the site isn't accessible even if the rest of the corresponding Category is!"
+        isMobile={props.isMobile}
+      >
+        <Stack spacing="20px">
+          <UrsorInputField
+            value={searchValue}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchValue(event.target.value)
             }
-          }}
-          noHeaderGradient
-          getActionButtonItems={(id) => [
-            {
-              icon: TrashcanIcon,
-              text: "Delete",
-              kallback: () => null,
-              color: PALETTE.system.red,
-            },
-          ]}
-          rowClickCallback={(id) => null}
-        />
-      </Stack>
-    </AstroBentoCard>
+            onEnterKey={() => {
+              () => setConfirmationDialogOpen(true);
+            }}
+            placeholder="Add a URL"
+            width="100%"
+            leftAlign
+            boldValue
+          />
+          <UrsorTable
+            columns={TABLE_COLUMNS}
+            rows={sortedRows}
+            defaultSortedByColumn="createdAt"
+            defaultSortedAscending
+            selectedSort={sortedColumn}
+            ascending={sortDirection === "asc"}
+            sortSelectionCallback={(columnId) => {
+              if (columnId === sortedColumn) {
+                setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+              } else {
+                setSortedColumn(columnId);
+                setSortDirection("asc");
+              }
+            }}
+            noHeaderGradient
+            getActionButtonItems={(id) => [
+              {
+                icon: TrashcanIcon,
+                text: "Delete",
+                kallback: () => null,
+                color: PALETTE.system.red,
+              },
+            ]}
+            rowClickCallback={(id) => null}
+          />
+        </Stack>
+      </AstroBentoCard>
+      <FilterBlacklistExceptionDialog
+        open={confirmationDialogOpen}
+        onClose={() => setConfirmationDialogOpen(false)}
+        onSubmit={() => props.add(searchValue)}
+      />
+    </>
   );
 };
 
 export default FilterPageBlockedSitesSection;
+
+// <Stack>
+//   {props.allowedSites.map((s) => (
+//     <Stack
+//       key={s.id}
+//       height="48px"
+//       px="16px"
+//       border={`1px solid ${PALETTE.secondary.grey[1]}`}
+//     >
+//       <Typography>{s.url}</Typography>
+//     </Stack>
+//   ))}
+// </Stack>

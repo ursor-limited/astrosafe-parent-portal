@@ -56,7 +56,7 @@ const AllDevicesPageDesktopBody = (props: {
                     actions={[
                       {
                         text: "Open",
-                        kallback: () => router.push(`/devices/${d.id}`),
+                        kallback: () => router.push(`/profiles/${d.id}`),
                         icon: ArrowUpRightIcon,
                       },
                       {

@@ -23,7 +23,7 @@ const DeviceCard = (
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
-    button: React.ReactNode;
+    button?: React.ReactNode;
     small?: boolean;
   }
 ) => {

@@ -13,8 +13,10 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { IFilterUrl } from "../../contents/common";
+import FilterWhitelistExceptionDialog from "./FilterWhitelistExceptionDialog";
+import ApiController from "@/app/api";
 
-interface IAllowedSitesTableRowItems {
+export interface IAllowedSitesTableRowItems {
   title: string;
   url: string;
   createdAt: string;
@@ -22,7 +24,7 @@ interface IAllowedSitesTableRowItems {
 
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterUrl[];
-  addSite: (url: string) => void;
+  add: (url: string) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -115,57 +117,67 @@ const FilterPageAllowedSitesSection = (props: {
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
   }, [filteredRows, sortDirection, sortedColumn]);
 
+  const [confirmationDialogOpen, setConfirmationDialogOpen] =
+    useState<boolean>(false);
+
   return (
-    <AstroBentoCard
-      icon={ThumbsUpIcon}
-      title={`${props.allowedSites.length} allowed site exception${
-        props.allowedSites.length === 1 ? "" : "s"
-      }`}
-      subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding category. Be careful this overrides the filter!"
-      isMobile={props.isMobile}
-    >
-      <Stack spacing="20px">
-        <UrsorInputField
-          value={searchValue}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchValue(event.target.value)
-          }
-          onEnterKey={() => {
-            props.addSite(searchValue);
-          }}
-          placeholder="Add a URL"
-          width="100%"
-          leftAlign
-          boldValue
-        />
-        <UrsorTable
-          columns={TABLE_COLUMNS}
-          rows={sortedRows}
-          defaultSortedByColumn="createdAt"
-          defaultSortedAscending
-          selectedSort={sortedColumn}
-          ascending={sortDirection === "asc"}
-          sortSelectionCallback={(columnId) => {
-            if (columnId === sortedColumn) {
-              setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-            } else {
-              setSortedColumn(columnId);
-              setSortDirection("asc");
+    <>
+      <AstroBentoCard
+        icon={ThumbsUpIcon}
+        title={`${props.allowedSites.length ?? 0} allowed site exception${
+          props.allowedSites.length === 1 ? "" : "s"
+        }`}
+        subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
+        isMobile={props.isMobile}
+      >
+        <Stack spacing="20px">
+          <UrsorInputField
+            value={searchValue}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchValue(event.target.value)
             }
-          }}
-          noHeaderGradient
-          getActionButtonItems={(id) => [
-            {
-              icon: TrashcanIcon,
-              text: "Delete",
-              kallback: () => null,
-              color: PALETTE.system.red,
-            },
-          ]}
-          rowClickCallback={(id) => null}
-        />
-      </Stack>
-    </AstroBentoCard>
+            onEnterKey={() => {
+              () => setConfirmationDialogOpen(true);
+            }}
+            placeholder="Add a URL"
+            width="100%"
+            leftAlign
+            boldValue
+          />
+          <UrsorTable
+            columns={TABLE_COLUMNS}
+            rows={sortedRows}
+            defaultSortedByColumn="createdAt"
+            defaultSortedAscending
+            selectedSort={sortedColumn}
+            ascending={sortDirection === "asc"}
+            sortSelectionCallback={(columnId) => {
+              if (columnId === sortedColumn) {
+                setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+              } else {
+                setSortedColumn(columnId);
+                setSortDirection("asc");
+              }
+            }}
+            noHeaderGradient
+            getActionButtonItems={(id) => [
+              {
+                icon: TrashcanIcon,
+                text: "Delete",
+                kallback: () => null,
+                color: PALETTE.system.red,
+              },
+            ]}
+            rowClickCallback={(id) => null}
+          />
+        </Stack>
+      </AstroBentoCard>
+      <FilterWhitelistExceptionDialog
+        open={confirmationDialogOpen}
+        onClose={() => setConfirmationDialogOpen(false)}
+        onSubmit={() => props.add(searchValue)}
+      />
+    </>
   );
 };
 

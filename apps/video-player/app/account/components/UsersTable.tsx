@@ -19,7 +19,7 @@ const UsersTable = (props: { users: IUser[] }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
     {
       name: "name",
-      displayName: `${props.users.length} Adult${
+      displayName: `${props.users.length ?? 0} Adult${
         props.users.length === 1 ? "" : "s"
       }`,
       sortable: true,

@@ -12,12 +12,19 @@ import DeviceCard from "../../../profiles/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 
-const FilterPageDevicesSection = (props: { devices: IDevice[] }) => {
+const FilterPageDevicesSection = (props: {
+  devices: IDevice[];
+  onAdd: () => void;
+  onRemove: () => void;
+}) => {
   const router = useRouter();
   return (
     <AstroBentoCard
-      title={`Filter applied to these ${props.devices.length} devices`}
-      subtitle="Add sites here that you always want to be accessible. Even if you block their corresponding Category. Be careful this overrides the Filter!"
+      title={
+        props.devices.length === 1
+          ? "Filter applied to this Device"
+          : `Filter applied to these ${props.devices.length ?? 0} Devices`
+      }
       notCollapsible
       topRightStuff={
         <Stack direction="row" spacing="12px">
@@ -25,11 +32,19 @@ const FilterPageDevicesSection = (props: { devices: IDevice[] }) => {
             size="small"
             variant="secondary"
             endIcon={ChevronRightIcon}
-            onClick={() => router.push(`/devices`)}
+            iconSize={16}
+            onClick={() => router.push(`/profiles`)}
           >
             View all
           </UrsorButton>
-          <UrsorButton dark variant="tertiary" size="small" endIcon={PlusIcon}>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="small"
+            endIcon={PlusIcon}
+            iconSize={16}
+            onClick={props.onAdd}
+          >
             Add Device
           </UrsorButton>
         </Stack>
@@ -40,11 +55,11 @@ const FilterPageDevicesSection = (props: { devices: IDevice[] }) => {
           <UrsorFadeIn key={i} duration={800} delay={i * 150}>
             <DeviceCard
               {...d}
-              button={
-                <Stack onClick={() => null}>
-                  <XIcon height={16} width={16} />
-                </Stack>
-              }
+              // button={
+              //   <Stack onClick={() => null}>
+              //     <XIcon height={16} width={16} />
+              //   </Stack>
+              // }
             />
           </UrsorFadeIn>
         ))}

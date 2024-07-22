@@ -2,12 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { Stack } from "@mui/system";
-import FilterPageCategoriesSection from "../components/CategoriesSection";
 import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
 import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "../components/SearchWordsSection";
-import FilterPageDevicesSection from "../components/DevicesSection";
-import PageLayout from "@/app/components/PageLayout";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice } from "./common";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
@@ -34,6 +31,8 @@ export default function FilterPageMobileBody(props: {
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
+  addWhitelistException: (url: IFilterUrl["url"]) => void;
+  addBlacklistException: (url: IFilterUrl["url"]) => void;
 }) {
   return (
     <MobilePageLayout
@@ -73,12 +72,12 @@ export default function FilterPageMobileBody(props: {
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
-          addSite={props.setExceptionDialogOpen}
+          add={props.addWhitelistException}
           isMobile
         />
         <FilterPageBlockedSitesSection
           blockedSites={props.blockedSites}
-          addSite={(url) => null}
+          add={props.addBlacklistException}
           isMobile
         />
         <FilterPageSearchWordsSection

@@ -50,7 +50,7 @@ export default function ProfilePage(props: {
   const titleRow = [
     {
       text: "All Devices",
-      callback: () => router.push("/devices"),
+      callback: () => router.push("/profiles"),
     },
     {
       text: device?.name ?? "",
@@ -82,7 +82,7 @@ export default function ProfilePage(props: {
       options: allDevices.map((d) => ({
         text: d.name,
         imageUrl: d.profileAvatarUrl,
-        callback: () => router.push(`/devices/${d.id}`),
+        callback: () => router.push(`/profiles/${d.id}`),
       })),
       label: device?.deviceType
         ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]

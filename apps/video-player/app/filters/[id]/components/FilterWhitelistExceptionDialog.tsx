@@ -2,15 +2,15 @@ import NotificationContext from "@/app/components/NotificationContext";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { useContext, useState } from "react";
-import { UrsorButton, UrsorInputField } from "ui";
-import { LabeledInputField } from "ui/labeled-input-field";
+import { UrsorButton } from "ui";
+import { IFilterUrl } from "../../contents/common";
 
 const INPUT_PHRASE = "yes";
 
-const FilterExceptionDialog = (props: {
+const FilterWhitelistExceptionDialog = (props: {
   open: boolean;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: (url: IFilterUrl["url"]) => void;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const notificationCtx = useContext(NotificationContext);
@@ -51,4 +51,4 @@ const FilterExceptionDialog = (props: {
   );
 };
 
-export default FilterExceptionDialog;
+export default FilterWhitelistExceptionDialog;

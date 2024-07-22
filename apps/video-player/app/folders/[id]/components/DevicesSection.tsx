@@ -42,6 +42,7 @@ const DevicesSection = (props: {
               size="small"
               variant="secondary"
               endIcon={ChevronRightIcon}
+              iconSize={16}
               onClick={() => setDevicesGridDialogOpen(true)}
             >
               View all
@@ -51,6 +52,7 @@ const DevicesSection = (props: {
               variant="tertiary"
               size="small"
               endIcon={PlusIcon}
+              iconSize={16}
               onClick={props.onAdd}
             >
               Add Device
@@ -64,11 +66,11 @@ const DevicesSection = (props: {
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <DeviceCard
                   {...d}
-                  button={
-                    <Stack onClick={() => removeDevice(d.id)}>
-                      <XIcon height={16} width={16} />
-                    </Stack>
-                  }
+                  // button={
+                  //   <Stack onClick={() => removeDevice(d.id)}>
+                  //     <XIcon height={16} width={16} />
+                  //   </Stack>
+                  // }
                   hideToggles
                 />
               </UrsorFadeIn>

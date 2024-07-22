@@ -1,8 +1,13 @@
 import { IUser } from "./account/contents/common";
 import { IGroup } from "./folders/[id]/contents/common";
 import { IDevice } from "./filters/[id]/contents/common";
-import { IFilter } from "./filters/contents/common";
-import { IChannel, IContentBucket, ILink, IVideo } from "./profiles/[id]/components/ContentTab";
+import { IFilter, IFilterUrl } from "./filters/contents/common";
+import {
+  IChannel,
+  IContentBucket,
+  ILink,
+  IVideo,
+} from "./profiles/[id]/components/ContentTab";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -101,7 +106,9 @@ class ApiController {
   }
 
   static async getGroupDevices(id: IGroup["id"]) {
-    return get(`devices?groupId=${id}`).then((response: any) => response.json());
+    return get(`devices?groupId=${id}`).then((response: any) =>
+      response.json()
+    );
   }
 
   static async getFolderDevices(id: IContentBucket["id"]) {
@@ -250,7 +257,15 @@ class ApiController {
   }
 
   static async getGroupFilters(id: IGroup["id"]) {
-    return get(`groups/${id}/filters`).then((response: any) => response.json());
+    return get(`filters?groupId=${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getFilterDevices(id: IFilter["id"]) {
+    return get(`devices?filterId=${id}`).then((response: any) =>
+      response.json()
+    );
   }
 
   static async addFilterToDevice(
@@ -260,6 +275,31 @@ class ApiController {
     return post(`filters/${filterId}/devices`, { deviceId });
   }
 
+  static async getWhitelistExceptions(filterId: IFilter["id"]) {
+    return get(`filters/${filterId}/whitelist/exceptions`).then(
+      (response: any) => response.json()
+    );
+  }
+
+  static async getBlacklistExceptions(filterId: IFilter["id"]) {
+    return get(`filters/${filterId}/blacklist/exceptions`).then(
+      (response: any) => response.json()
+    );
+  }
+
+  static async addWhitelistException(
+    filterId: IFilter["id"],
+    domain: IFilterUrl["url"]
+  ) {
+    return post(`filters/${filterId}/whitelist/exceptions`, { domain });
+  }
+
+  static async addBlacklistException(
+    filterId: IFilter["id"],
+    domain: IFilterUrl["url"]
+  ) {
+    return post(`filters/${filterId}/blacklist/exceptions`, { domain });
+  }
 }
 
 export default ApiController;

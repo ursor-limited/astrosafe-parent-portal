@@ -1,6 +1,5 @@
 import PageLayout from "@/app/components/PageLayout";
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import LogOutIcon from "@/images/icons/LogOutIcon.svg";
@@ -42,9 +41,6 @@ const AccountPageDesktopBody = (props: {
       secondaryButton={{
         text: "Log out",
         callback: () => null,
-        //   ApiController.createFolder(DEFAULT_TITLE, DUMMY_GROUP_ID).then((id) =>
-        //     router.push(`/content/${id}`)
-        //   ),
         icon: LogOutIcon,
       }}
       maxWidth={834}

@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
-import FilterExceptionDialog from "../components/FilterExceptionDialog";
 import { PALETTE } from "ui";
 import FilterPageDesktopBody from "./body-desktop";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
@@ -35,11 +34,39 @@ export default function FilterPage(props: {
   filterId: number;
 }) {
   const [filter, setFilter] = useState<IFilter | undefined>();
-  const [blockedSites, setBlockedSites] = useState<IFilterUrl[]>([]);
-  const [allowedSites, setAllowedSites] = useState<IFilterUrl[]>([]);
+  // const [blockedSites, setBlockedSites] = useState<IFilterUrl[]>([]);
+  // const [allowedSites, setAllowedSites] = useState<IFilterUrl[]>([]);
   useEffect(() => {
     ApiController.getFilter(props.filterId).then(setFilter);
   }, [props.filterId]);
+
+  const [whitelistExceptions, setWhitelistExceptions] = useState<IFilterUrl[]>(
+    []
+  );
+  const loadWhitelistExceptions = useCallback(
+    () =>
+      ApiController.getWhitelistExceptions(props.filterId).then(
+        setWhitelistExceptions
+      ),
+    [props.filterId]
+  );
+  useEffect(() => {
+    loadWhitelistExceptions();
+  }, [loadWhitelistExceptions]);
+
+  const [blacklistExceptions, setBlacklistExceptions] = useState<IFilterUrl[]>(
+    []
+  );
+  const loadBlacklistExceptions = useCallback(
+    () =>
+      ApiController.getBlacklistExceptions(props.filterId).then(
+        setBlacklistExceptions
+      ),
+    [props.filterId]
+  );
+  useEffect(() => {
+    loadBlacklistExceptions();
+  }, [loadBlacklistExceptions]);
 
   const [categories, setCategories] = useState<IFilterCategory[]>([]);
   const [allowedCategories, setAllowedCategories] = useState<
@@ -54,7 +81,13 @@ export default function FilterPage(props: {
   const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
 
   const [devices, setDevices] = useState<IDevice[]>([]);
-  const loadDevices = useCallback(() => null, []);
+  const loadDevices = useCallback(
+    () => ApiController.getFilterDevices(props.filterId).then(setDevices),
+    [props.filterId]
+  );
+  useEffect(() => {
+    loadDevices();
+  }, [loadDevices]);
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
 
@@ -115,8 +148,8 @@ export default function FilterPage(props: {
           actions={actions}
           categories={categories}
           allowedCategories={allowedCategories}
-          allowedSites={allowedSites}
-          blockedSites={blockedSites}
+          allowedSites={whitelistExceptions}
+          blockedSites={blacklistExceptions}
           blockedSearchWords={blockedSearchWords}
           addToBlockedSearchWords={(word) =>
             setBlockedSearchWords([...blockedSearchWords, word])
@@ -128,6 +161,16 @@ export default function FilterPage(props: {
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
+          addWhitelistException={(url: string) =>
+            ApiController.addWhitelistException(props.filterId, url).then(
+              loadWhitelistExceptions
+            )
+          }
+          addBlacklistException={(url: string) =>
+            ApiController.addBlacklistException(props.filterId, url).then(
+              loadBlacklistExceptions
+            )
+          }
         />
       ) : (
         <FilterPageDesktopBody
@@ -144,8 +187,8 @@ export default function FilterPage(props: {
           actions={actions}
           categories={categories}
           allowedCategories={allowedCategories}
-          allowedSites={allowedSites}
-          blockedSites={blockedSites}
+          allowedSites={whitelistExceptions}
+          blockedSites={blacklistExceptions}
           blockedSearchWords={blockedSearchWords}
           addToBlockedSearchWords={(word) =>
             setBlockedSearchWords([...blockedSearchWords, word])
@@ -157,13 +200,18 @@ export default function FilterPage(props: {
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
+          addWhitelistException={(url: string) =>
+            ApiController.addWhitelistException(props.filterId, url).then(
+              loadWhitelistExceptions
+            )
+          }
+          addBlacklistException={(url: string) =>
+            ApiController.addBlacklistException(props.filterId, url).then(
+              loadBlacklistExceptions
+            )
+          }
         />
       )}
-      <FilterExceptionDialog
-        open={exceptionDialogOpen}
-        onClose={() => setExceptionDialogOpen(false)}
-        onSubmit={() => null}
-      />
       {devices ? (
         <AddDeviceDialog
           open={addDeviceDialogOpen}

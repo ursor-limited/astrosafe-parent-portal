@@ -13,7 +13,6 @@ import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice } from "./common";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
-import DevicesSection from "@/app/folders/[id]/components/DevicesSection";
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
@@ -32,6 +31,8 @@ export default function FilterPageDesktopBody(props: {
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
+  addWhitelistException: (url: IFilterUrl["url"]) => void;
+  addBlacklistException: (url: IFilterUrl["url"]) => void;
 }) {
   return (
     <PageLayout
@@ -50,10 +51,8 @@ export default function FilterPageDesktopBody(props: {
       actions={props.actions}
     >
       <Stack pl="49px" pr="2px" spacing="20px" pb="33px">
-        <DevicesSection
-          title={`Filter applied to ${props.devices.length} Devices.`}
+        <FilterPageDevicesSection
           devices={props.devices}
-          folderId={props.filterId}
           onAdd={props.setAddDeviceDialogOpen}
           onRemove={props.onRemoveDevice}
         />
@@ -77,11 +76,11 @@ export default function FilterPageDesktopBody(props: {
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
-          addSite={props.setExceptionDialogOpen}
+          add={props.addWhitelistException}
         />
         <FilterPageBlockedSitesSection
           blockedSites={props.blockedSites}
-          addSite={(url) => null}
+          add={props.addBlacklistException}
         />
         <FilterPageSearchWordsSection
           blockedSearchWords={props.blockedSearchWords}
