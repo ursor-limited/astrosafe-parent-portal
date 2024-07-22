@@ -69,17 +69,30 @@ const DeviceReadyDialog = (props: { open: boolean; onClose: () => void }) => {
         pt="16px"
       >
         <Stack spacing="12px" justifyContent="center" alignItems="center">
-          <Stack width="380px" spacing="12px">
+          <Stack width="380px" spacing="5px" alignItems="center">
             <Typography variant="h4" sx={{ textAlign: "center" }}>
-              The Safe Browser for Alex is ready!
+              The Safe Browser for
             </Typography>
+            <Stack direction="row" alignItems="center" spacing="8px">
+              <Stack
+                sx={{
+                  background: `linear-gradient(180deg, ${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
+                  "-webkit-text-fill-color": "transparent",
+                  backgroundClip: "text",
+                  "-webkit-background-clip": "text",
+                }}
+              >
+                <Typography variant="h4">Alex</Typography>
+              </Stack>
+              <Typography variant="h4">is ready!</Typography>
+            </Stack>
           </Stack>
           <Stack width="240px">
             <Typography variant="small" sx={{ textAlign: "center" }}>
               We've added curated Content that Alex will surely enjoy.
             </Typography>
           </Stack>
-          <Stack direction="row" spacing="12px">
+          <Stack direction="row" spacing="12px" pt="12px">
             <DeviceReadyDialogValueCard
               text="Links"
               color={PALETTE.secondary.orange[3]}
