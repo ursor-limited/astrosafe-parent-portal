@@ -1,6 +1,10 @@
+"use client";
+
 import { Stack } from "@mui/system";
 import Image from "next/image";
-import { PALETTE, Typography } from "ui";
+import { useState } from "react";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
+import { LabeledInputField } from "ui/labeled-input-field";
 
 interface IProviderButtonDetails {
   name: string;
@@ -39,6 +43,8 @@ const PROVIDER_BUTTON_DETAILS: IProviderButtonDetails[] = [
 ];
 
 const LoginPage = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   return (
     <Stack direction="row" height="100%">
       <Stack px="8%" height="100%" justifyContent="center">
@@ -63,9 +69,11 @@ const LoginPage = () => {
                 Welcome to AstroSafe
               </Typography>
             </Stack>
-            <Typography variant="small">
-              Log in to your account and start creating
-            </Typography>
+            <Stack pb="8px" width="170px" sx={{ textAlign: "center" }}>
+              <Typography variant="small">
+                Log in to your account and start Creating.
+              </Typography>
+            </Stack>
           </Stack>
           <Stack pt="16px" spacing="9px" width="100%">
             {PROVIDER_BUTTON_DETAILS.map((x, i) => (
@@ -74,9 +82,10 @@ const LoginPage = () => {
           </Stack>
           <Stack
             direction="row"
-            height="48px"
+            height="68px"
             alignItems="center"
             spacing="16px"
+            pt="3px"
           >
             <Stack
               height="1px"
@@ -91,6 +100,49 @@ const LoginPage = () => {
               bgcolor={PALETTE.secondary.grey[3]}
               width="100%"
             />
+          </Stack>
+          <Stack spacing="12px">
+            <LabeledInputField label="Email">
+              <UrsorInputField
+                value={email}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(event.target.value)
+                }
+                placeholder="Enter your email"
+                width="100%"
+                leftAlign
+              />
+            </LabeledInputField>
+            <LabeledInputField label="Password">
+              <UrsorInputField
+                value={password}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(event.target.value)
+                }
+                placeholder="Enter your password"
+                width="100%"
+                leftAlign
+              />
+            </LabeledInputField>
+          </Stack>
+          <Stack pt="16px" alignItems="center" spacing="10px">
+            <UrsorButton width="100%" onClick={() => null}>
+              Sign in
+            </UrsorButton>
+            <Stack direction="row" spacing="6px">
+              <Typography>{`Don't have an account?`}</Typography>
+              <Stack
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.6 },
+                }}
+              >
+                <Typography bold color={PALETTE.secondary.purple[2]}>
+                  Sign up
+                </Typography>
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
