@@ -13,7 +13,7 @@ import ApiController from "@/app/api";
 import PageLayout from "@/app/components/PageLayout";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard";
+import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard_legacy";
 import ProfilePageDesktopBody from "./body-desktop";
 import DeviceRenameDialog from "../../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../../components/DeviceDisconnectDialog";

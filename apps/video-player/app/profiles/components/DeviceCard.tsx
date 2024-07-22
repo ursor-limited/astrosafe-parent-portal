@@ -2,15 +2,13 @@ import { Stack } from "@mui/system";
 import AstroCard from "../../filters/[id]/components/AstroCard";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
-import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
+import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { getAbsoluteUrl } from "@/app/api";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -28,13 +26,11 @@ const DeviceCard = (
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
-  const [videoModeOn, setVideoModeOn] = useState<boolean>(false);
-
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
     <AstroCard>
-      <Stack px="12px" boxSizing="border-box" position="relative">
+      <Stack p="20px" pb={0} boxSizing="border-box" position="relative">
         <Stack
           position="absolute"
           top="8px"
@@ -95,108 +91,66 @@ const DeviceCard = (
                 {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
               </Typography>
             </Stack>
-            {props.url ? (
-              <Stack
-                sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.6 },
-                  svg: {
-                    path: {
-                      fill: PALETTE.secondary.blue[3],
-                    },
-                  },
-                }}
-                alignItems="center"
-                spacing="4px"
-                direction="row"
-                onClick={() => router.push(getAbsoluteUrl(props.url ?? ""))}
-              >
-                <GlobeIcon height="8px" width="8px" />
-                <Typography
-                  variant="tiny"
-                  color={PALETTE.secondary.blue[3]}
-                  maxLines={1}
-                >
-                  {props.url}
-                </Typography>
-              </Stack>
-            ) : null}
           </Stack>
         </Stack>
-        {!props.hideToggles ? (
+        <Stack
+          height="72px"
+          boxSizing="border-box"
+          px="12px"
+          py="10px"
+          alignItems="space-between"
+          borderRadius="8px"
+          border={`1px solid ${PALETTE.secondary.grey[2]}`}
+        >
+          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
+            Browsing status
+          </Typography>
           <Stack
             direction="row"
-            justifyContent="space-between"
             alignItems="center"
-            borderTop={`1px solid ${PALETTE.secondary.grey[2]}`}
-            py="8px"
+            justifyContent="space-between"
+            spacing="6px"
           >
             <Stack
+              spacing="8px"
               direction="row"
-              justifyContent="space-between"
               alignItems="center"
-              flex={1}
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.grey[4],
+                  },
+                },
+              }}
             >
-              <Stack
-                direction="row"
-                sx={{ svg: { path: { fill: PALETTE.secondary.grey[4] } } }}
-                alignItems="center"
-                spacing="4px"
-              >
-                <GlobeIcon height="16px" width="16px" />
-                <Typography variant="tiny">{`Browsing is ${
-                  !browsingEnabled ? "disabled" : "enabled"
-                }`}</Typography>
-              </Stack>
-              <AstroSwitch
-                small
-                on={browsingEnabled}
-                callback={() => setBrowsingEnabled(!browsingEnabled)}
-              />
+              <GlobeIcon height="20px" width="20px" />
+              <Typography bold color={PALETTE.secondary.grey[5]}>
+                Browsing is enabled
+              </Typography>
             </Stack>
-            {!browsingEnabled ? (
-              <>
-                <Stack height="100%" width="20px" alignItems="center">
-                  <Stack
-                    height="100%"
-                    width="1.5px"
-                    bgcolor={PALETTE.secondary.grey[2]}
-                  />
-                </Stack>
-                <Stack flex={1}>
-                  <UrsorFadeIn duration={800} fullWidth>
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      flex={1}
-                    >
-                      <Stack
-                        direction="row"
-                        sx={{
-                          svg: { path: { fill: PALETTE.secondary.grey[4] } },
-                        }}
-                        alignItems="center"
-                        spacing="4px"
-                      >
-                        <CirclePlayIcon height="16px" width="16px" />
-                        <Typography variant="tiny">{`Video mode ${
-                          videoModeOn ? "on" : "off"
-                        }`}</Typography>
-                      </Stack>
-                      <AstroSwitch
-                        small
-                        on={videoModeOn}
-                        callback={() => setVideoModeOn(!videoModeOn)}
-                      />
-                    </Stack>
-                  </UrsorFadeIn>
-                </Stack>
-              </>
-            ) : null}
+            <AstroSwitch
+              on={browsingEnabled}
+              callback={() => setBrowsingEnabled(!browsingEnabled)}
+            />
           </Stack>
-        ) : null}
+        </Stack>
+        <Stack
+          minHeight="70px"
+          sx={{
+            cursor: "pointer",
+            "&:hover": { opacity: 0.6 },
+            transition: "0.2s",
+          }}
+          alignItems="center"
+          justifyContent="center"
+          direction="row"
+          spacing="8px"
+        >
+          <Typography bold variant="small" color={PALETTE.primary.indigo}>
+            Go to Device
+          </Typography>
+          <ChevronRightIcon height="16px" width="16px" />
+        </Stack>
       </Stack>
     </AstroCard>
   );

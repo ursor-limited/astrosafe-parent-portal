@@ -7,12 +7,12 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
 import ApiController from "@/app/api";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
+import DeviceCard from "@/app/profiles/components/DeviceCard";
 
 const DevicesSection = (props: {
   title: string;

@@ -1,18 +1,15 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import PageLayout from "@/app/components/PageLayout";
 import { Stack } from "@mui/system";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import DownloadIcon from "@/images/icons/DownloadIcon.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import DeviceInstructionsView from "../components/DeviceInstructionsView";
-import DeviceCard from "../components/DeviceCard";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { PALETTE, UrsorButton } from "ui";
 import { useRouter } from "next/navigation";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
+import DeviceCard from "../components/DeviceCard";
 
 const AllDevicesPageMobileBody = (props: {
   devices: IDevice[];

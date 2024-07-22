@@ -188,7 +188,7 @@ export default function Sidebar(props: ISidebarProps) {
       id: "devices",
       //tourId: "devices-button",
       icon: PhoneIcon,
-      title: "Devices",
+      title: "Profiles",
       callback: () => router.push("/profiles"),
     },
     {

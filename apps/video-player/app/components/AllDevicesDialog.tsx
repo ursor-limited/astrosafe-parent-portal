@@ -4,7 +4,7 @@ import DynamicCardGrid from "./DynamicCardGrid";
 import UrsorFadeIn from "./UrsorFadeIn";
 import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import DeviceCard from "../profiles/components/DeviceCard";
+import DeviceCard from "../profiles/components/DeviceCard_legacy";
 import { BACKDROP_STYLE, BORDER_RADIUS } from "./UrsorDialog";
 import { Dialog } from "@mui/material";
 import { Typography, UrsorButton } from "ui";

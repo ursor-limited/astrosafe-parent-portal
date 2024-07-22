@@ -42,7 +42,7 @@ const FilterCard = (
           </Stack>
           <Stack spacing="4px" direction="row" alignItems="center">
             <StopIcon width="12px" height="12px" />
-            <div>{`${props.filterWordBlacklist?.length} blocked ${
+            <div>{`${props.filterWordBlacklist?.length ?? 0} blocked ${
               props.filterWordBlacklist?.length === 1 ? "word" : "words"
             }`}</div>
           </Stack>

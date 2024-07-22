@@ -7,10 +7,10 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import DeviceInstructionsView from "../components/DeviceInstructionsView";
-import DeviceCard from "../components/DeviceCard";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { PALETTE } from "ui";
 import { useRouter } from "next/navigation";
+import DeviceCard from "../components/DeviceCard";
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IDevice[];
