@@ -216,10 +216,12 @@ export default function FolderPage(props: {
           groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
           addedDevices={devices}
-          folderId={props.folderId}
-          onAdd={() => {
-            loadDevices();
-            notificationCtx.success("Added Device");
+          onAdd={(id) => {
+            ApiController.addFolderToDevice(props.folderId, id).then(() => {
+              setAddDeviceDialogOpen(false);
+              loadDevices();
+              notificationCtx.success("Added Device");
+            });
           }}
           isMobile={props.isMobile}
         />

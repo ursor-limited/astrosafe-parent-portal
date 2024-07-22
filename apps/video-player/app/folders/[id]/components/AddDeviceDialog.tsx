@@ -6,13 +6,11 @@ import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { IGroup } from "../contents/common";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 
 const AddDeviceDialog = (props: {
   open: boolean;
   onClose: () => void;
-  onAdd: () => void;
-  folderId: IContentBucket["id"];
+  onAdd: (id: IDevice["id"]) => void;
   addedDevices: IDevice[];
   groupId: IGroup["id"];
   isMobile?: boolean;
@@ -22,11 +20,6 @@ const AddDeviceDialog = (props: {
   useEffect(() => {
     ApiController.getGroupDevices(props.groupId).then((d) => setAllDevices(d));
   }, [props.groupId]);
-  const add = (id: IDevice["id"]) =>
-    ApiController.addFolderToDevice(props.folderId, id).then(() => {
-      props.onAdd();
-      props.onClose();
-    });
   return (
     <UrsorDialog
       open={props.open}
@@ -72,7 +65,7 @@ const AddDeviceDialog = (props: {
                   transition: "0.2s",
                   "&:hover": { opacity: 0.7 },
                 }}
-                onClick={() => add(d.id)}
+                onClick={() => props.onAdd(d.id)}
               >
                 <Stack
                   borderRadius="100%"

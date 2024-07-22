@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
@@ -11,6 +11,9 @@ import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
 import { useRouter } from "next/navigation";
 import FilterPageMobileBody from "./body-mobile";
 import ApiController from "@/app/api";
+import AddDeviceDialog from "@/app/folders/[id]/components/AddDeviceDialog";
+import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -93,6 +96,8 @@ export default function FilterPage(props: {
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
     useState<boolean>(false);
 
+  const notificationCtx = useContext(NotificationContext);
+
   return filter ? (
     <>
       {props.isMobile ? (
@@ -159,6 +164,22 @@ export default function FilterPage(props: {
         onClose={() => setExceptionDialogOpen(false)}
         onSubmit={() => null}
       />
+      {devices ? (
+        <AddDeviceDialog
+          open={addDeviceDialogOpen}
+          groupId={DUMMY_GROUP_ID}
+          onClose={() => setAddDeviceDialogOpen(false)}
+          addedDevices={devices}
+          onAdd={(id) => {
+            ApiController.addFilterToDevice(props.filterId, id).then(() => {
+              setAddDeviceDialogOpen(false);
+              loadDevices();
+              notificationCtx.success("Applied this Filter to Device.");
+            });
+          }}
+          isMobile={props.isMobile}
+        />
+      ) : null}
     </>
   ) : null;
 }

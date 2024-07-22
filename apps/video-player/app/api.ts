@@ -252,6 +252,14 @@ class ApiController {
   static async getGroupFilters(id: IGroup["id"]) {
     return get(`groups/${id}/filters`).then((response: any) => response.json());
   }
+
+  static async addFilterToDevice(
+    filterId: IFilter["id"],
+    deviceId: IDevice["id"]
+  ) {
+    return post(`filters/${filterId}/devices`, { deviceId });
+  }
+
 }
 
 export default ApiController;
