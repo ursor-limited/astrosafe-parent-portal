@@ -7,6 +7,7 @@ import Image from "next/image";
 const AccountPageHeader = (props: {
   setUpgradeDialogOpen: () => void;
   isMobile?: boolean;
+  smallerFont?: boolean;
 }) => (
   <Stack
     height={props.isMobile ? undefined : "71px"}
@@ -19,7 +20,7 @@ const AccountPageHeader = (props: {
     }}
     borderRadius="12px"
     pr="54px"
-    spacing={props.isMobile ? "12px" : undefined}
+    spacing={props.smallerFont || props.isMobile ? "12px" : undefined}
   >
     <Stack
       spacing="16px"
@@ -27,7 +28,7 @@ const AccountPageHeader = (props: {
       direction={props.isMobile ? "column" : "row"}
     >
       <Typography
-        variant={props.isMobile ? "normal" : "large"}
+        variant={props.smallerFont || props.isMobile ? "normal" : "large"}
         bold
         color="rgb(255,255,255)"
       >
