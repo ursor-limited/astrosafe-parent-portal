@@ -41,11 +41,11 @@ export default function FilterPageDesktopBody(props: {
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="channels"
-      button={{
-        text: "Add a Filter",
-        callback: () => null,
-        icon: PlusIcon,
-      }}
+      // button={{
+      //   text: "Add a Filter",
+      //   callback: () => null,
+      //   icon: PlusIcon,
+      // }}
       maxWidth={834}
       scrollable
       actions={props.actions}

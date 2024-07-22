@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import PageLayout from "../../components/PageLayout";
 import FilterCard from "../[id]/components/FilterCard";
 import { IFilter } from "./common";
+import ApiController from "@/app/api";
 
 export const GRID_SPACING = "20px";
 
@@ -17,7 +18,7 @@ export const DUMMY_GROUP_ID = 1;
 
 export default function AllFiltersPageDesktopBody(props: {
   filters: IFilter[];
-  createFilter: () => void;
+  setCreateFilterDialogOpen: () => void;
 }) {
   const router = useRouter();
   return (
@@ -29,7 +30,7 @@ export default function AllFiltersPageDesktopBody(props: {
       selectedSidebarItemId="filters"
       button={{
         text: "Add a Filter",
-        callback: () => null,
+        callback: props.setCreateFilterDialogOpen,
         icon: PlusIcon,
       }}
       maxWidth={834}

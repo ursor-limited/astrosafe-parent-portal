@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import AllFiltersPageDesktopBody from "./body-desktop";
 import AllFiltersPageMobileBody, { DUMMY_GROUP_ID } from "./body-mobile";
 import ApiController from "@/app/api";
+import FilterRenameDialog from "../[id]/components/FilterRenameDialog";
+import { useRouter } from "next/navigation";
+import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 
 export interface IFilterCategory {
   id: number;
@@ -48,10 +51,32 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
   useEffect(() => {
     ApiController.getGroupFilters(DUMMY_GROUP_ID).then((f) => setFilters(f));
   }, []);
-  return props.isMobile ? (
-    <AllFiltersPageMobileBody filters={filters} createFilter={() => null} />
-  ) : (
-    <AllFiltersPageDesktopBody filters={filters} createFilter={() => null} />
+  const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
+    useState<boolean>(false);
+  const router = useRouter();
+  return (
+    <>
+      {props.isMobile ? (
+        <AllFiltersPageMobileBody
+          filters={filters}
+          setCreateFilterDialogOpen={() => setFilterCreationDialogOpen(true)}
+        />
+      ) : (
+        <AllFiltersPageDesktopBody
+          filters={filters}
+          setCreateFilterDialogOpen={() => setFilterCreationDialogOpen(true)}
+        />
+      )}
+      <FilterCreationDialog
+        open={filterCreationDialogOpen}
+        onClose={() => setFilterCreationDialogOpen(false)}
+        onSubmit={(title: IFilter["title"]) =>
+          ApiController.createFilter(DUMMY_GROUP_ID, title).then((f) =>
+            router.push(`/filters/${f.id}`)
+          )
+        }
+      />
+    </>
   );
 };
 

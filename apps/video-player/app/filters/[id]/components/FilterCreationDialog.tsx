@@ -1,34 +1,39 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import { Typography, UrsorButton, UrsorInputField } from "ui";
+import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
 import { IFilter } from "../../contents/common";
 
-const FilterRenameDialog = (props: {
+const FilterCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  name: IFilter["title"];
   onSubmit: (name: string) => void;
 }) => {
   const [name, setName] = useState<string>("");
-  useEffect(() => setName(props.name), [props.name]);
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title="Rename Filter"
+      title="Create Filter"
+      subtitle={["Choose a name for", "your Filter."]}
       width="422px"
-      height="294px"
+      dynamicHeight
     >
-      <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
+      <Stack
+        flex={1}
+        width="100%"
+        height="100%"
+        justifyContent="space-between"
+        spacing="12px"
+      >
         <LabeledInputField label="Name">
           <UrsorInputField
             value={name}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setName(event.target.value)
             }
-            placeholder="Choose a new name"
+            placeholder="Choose a name"
             width="100%"
             leftAlign
           />
@@ -42,11 +47,11 @@ const FilterRenameDialog = (props: {
             props.onClose();
           }}
         >
-          Save
+          Create
         </UrsorButton>
       </Stack>
     </UrsorDialog>
   );
 };
 
-export default FilterRenameDialog;
+export default FilterCreationDialog;

@@ -18,7 +18,7 @@ export const DUMMY_GROUP_ID = 1;
 
 export default function AllFiltersPageMobileBody(props: {
   filters: IFilter[];
-  createFilter: () => void;
+  setCreateFilterDialogOpen: () => void;
 }) {
   const router = useRouter();
 
@@ -32,9 +32,9 @@ export default function AllFiltersPageMobileBody(props: {
           variant="tertiary"
           size="small"
           endIcon={PlusIcon}
-          onClick={props.createFilter}
+          onClick={props.setCreateFilterDialogOpen}
         >
-          Create a Filter
+          Add a Filter
         </UrsorButton>
       }
     >

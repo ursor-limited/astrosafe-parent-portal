@@ -252,6 +252,12 @@ class ApiController {
     return post("users", { email, realName: "", displayName: "" });
   }
 
+  static async createFilter(groupId: IGroup["id"], title: IFilter["title"]) {
+    return post(`groups/${groupId}/filters`, { title }).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async getFilter(id: IFilter["id"]) {
     return get(`filters/${id}`).then((response: any) => response.json());
   }
