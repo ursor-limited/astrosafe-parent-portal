@@ -1,5 +1,6 @@
 "use client";
 
+import UrsorParticles from "@/app/components/UrsorParticles";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import { useState } from "react";
@@ -46,107 +47,134 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   return (
-    <Stack direction="row" height="100%">
-      <Stack px="8%" height="100%" justifyContent="center">
-        <Stack
-          bgcolor="rgb(255,255,255)"
-          borderRadius="24px"
-          p="28px"
-          boxSizing="border-box"
-          justifyContent="center"
-          width="391px"
-        >
-          <Stack alignItems="center" spacing="12px" width="100%">
-            <Stack
-              sx={{
-                background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
-                "-webkit-text-fill-color": "transparent",
-                backgroundClip: "text",
-                "-webkit-background-clip": "text",
-              }}
-            >
-              <Typography variant="h5" color={PALETTE.secondary.purple[2]}>
-                Welcome to AstroSafe
-              </Typography>
-            </Stack>
-            <Stack pb="8px" width="170px" sx={{ textAlign: "center" }}>
-              <Typography variant="small">
-                Log in to your account and start Creating.
-              </Typography>
-            </Stack>
-          </Stack>
-          <Stack pt="16px" spacing="9px" width="100%">
-            {PROVIDER_BUTTON_DETAILS.map((x, i) => (
-              <LoginButton key={i} {...x} />
-            ))}
-          </Stack>
+    <>
+      <Stack direction="row" height="100%" zIndex={2}>
+        <Stack px="8%" height="100%" justifyContent="center">
           <Stack
-            direction="row"
-            height="68px"
-            alignItems="center"
-            spacing="16px"
-            pt="3px"
+            bgcolor="rgb(255,255,255)"
+            borderRadius="24px"
+            p="28px"
+            boxSizing="border-box"
+            justifyContent="center"
+            width="391px"
+            boxShadow="0 0 63px #A594FF"
           >
-            <Stack
-              height="1px"
-              bgcolor={PALETTE.secondary.grey[3]}
-              width="100%"
-            />
-            <Typography color={PALETTE.secondary.grey[3]} variant="small">
-              OR
-            </Typography>
-            <Stack
-              height="1px"
-              bgcolor={PALETTE.secondary.grey[3]}
-              width="100%"
-            />
-          </Stack>
-          <Stack spacing="12px">
-            <LabeledInputField label="Email">
-              <UrsorInputField
-                value={email}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(event.target.value)
-                }
-                placeholder="Enter your email"
-                width="100%"
-                leftAlign
-              />
-            </LabeledInputField>
-            <LabeledInputField label="Password">
-              <UrsorInputField
-                value={password}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setPassword(event.target.value)
-                }
-                placeholder="Enter your password"
-                width="100%"
-                leftAlign
-              />
-            </LabeledInputField>
-          </Stack>
-          <Stack pt="16px" alignItems="center" spacing="10px">
-            <UrsorButton width="100%" onClick={() => null}>
-              Sign in
-            </UrsorButton>
-            <Stack direction="row" spacing="6px">
-              <Typography>{`Don't have an account?`}</Typography>
+            <Stack alignItems="center" spacing="12px" width="100%">
               <Stack
                 sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.6 },
+                  background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
+                  "-webkit-text-fill-color": "transparent",
+                  backgroundClip: "text",
+                  "-webkit-background-clip": "text",
                 }}
               >
-                <Typography bold color={PALETTE.secondary.purple[2]}>
-                  Sign up
+                <Typography variant="h5" color={PALETTE.secondary.purple[2]}>
+                  Welcome to AstroSafe
                 </Typography>
+              </Stack>
+              <Stack pb="8px" width="170px" sx={{ textAlign: "center" }}>
+                <Typography variant="small">
+                  Log in to your account and start Creating.
+                </Typography>
+              </Stack>
+            </Stack>
+            <Stack pt="16px" spacing="9px" width="100%">
+              {PROVIDER_BUTTON_DETAILS.map((x, i) => (
+                <LoginButton key={i} {...x} />
+              ))}
+            </Stack>
+            <Stack
+              direction="row"
+              height="68px"
+              alignItems="center"
+              spacing="16px"
+              pt="3px"
+            >
+              <Stack
+                height="1px"
+                bgcolor={PALETTE.secondary.grey[3]}
+                width="100%"
+              />
+              <Typography color={PALETTE.secondary.grey[3]} variant="small">
+                OR
+              </Typography>
+              <Stack
+                height="1px"
+                bgcolor={PALETTE.secondary.grey[3]}
+                width="100%"
+              />
+            </Stack>
+            <Stack spacing="12px">
+              <LabeledInputField label="Email">
+                <UrsorInputField
+                  value={email}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(event.target.value)
+                  }
+                  placeholder="Enter your email"
+                  width="100%"
+                  leftAlign
+                />
+              </LabeledInputField>
+              <LabeledInputField label="Password">
+                <UrsorInputField
+                  value={password}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(event.target.value)
+                  }
+                  placeholder="Enter your password"
+                  width="100%"
+                  leftAlign
+                />
+              </LabeledInputField>
+            </Stack>
+            <Stack pt="16px" alignItems="center" spacing="10px">
+              <UrsorButton width="100%" onClick={() => null}>
+                Sign in
+              </UrsorButton>
+              <Stack direction="row" spacing="6px">
+                <Typography>{`Don't have an account?`}</Typography>
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    transition: "0.2s",
+                    "&:hover": { opacity: 0.6 },
+                  }}
+                >
+                  <Typography bold color={PALETTE.secondary.purple[2]}>
+                    Sign up
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
           </Stack>
         </Stack>
+        <Stack flex={1} position="relative">
+          <Image
+            src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427320856.png"
+            //   width={747}
+            //   height={602}
+            style={{ objectFit: "contain" }}
+            fill
+            alt="boo"
+          />
+        </Stack>
       </Stack>
-    </Stack>
+      <Stack
+        position="absolute"
+        top={0}
+        left={0}
+        height="100%"
+        width="100%"
+        sx={{
+          "#tsparticles": {
+            height: "100%",
+          },
+        }}
+      >
+        <UrsorParticles number={6} />
+      </Stack>
+    </>
   );
 };
 
