@@ -20,12 +20,36 @@ const AddDeviceDialog = (props: {
   useEffect(() => {
     ApiController.getGroupDevices(props.groupId).then((d) => setAllDevices(d));
   }, [props.groupId]);
+
+  const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([]);
+  useEffect(
+    () =>
+      setNonAddedDevices(
+        allDevices.filter(
+          (d) => !props.addedDevices.find((device) => device.id === d.id)
+        )
+      ),
+    [allDevices, props.addedDevices]
+  );
+
+  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([]);
+  useEffect(
+    () =>
+      setFilteredDevices(
+        nonAddedDevices.filter(
+          (d) =>
+            !searchValue ||
+            d.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      ),
+    [nonAddedDevices, searchValue]
+  );
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
       title="Share to a Device"
-      subtitle={["Add or remove device access to this", "Content Folder."]}
+      subtitle={["Add or remove Device access to this", "Content Folder."]}
       width="434px"
       height={props.isMobile ? "76%" : undefined}
       isMobile={props.isMobile}
@@ -38,44 +62,40 @@ const AddDeviceDialog = (props: {
         height="41px"
         grey
       />
-      {allDevices.length === props.addedDevices.length ? (
+      {nonAddedDevices.length === 0 ? (
         <Stack flex={1} justifyContent="center" width="66%">
           <Typography
             color={PALETTE.secondary.grey[3]}
             bold
             sx={{ textAlign: "center" }}
           >
-            This Folder has been added to all of your Devices.
+            This Filter has been applied to all of your Devices.
           </Typography>
         </Stack>
       ) : (
         <Stack pt="16px" spacing="16px" width="100%">
-          {allDevices
-            ?.filter(
-              (d) => !props.addedDevices.find((device) => device.id === d.id)
-            )
-            .map((d) => (
+          {filteredDevices.map((d) => (
+            <Stack
+              key={d.id}
+              direction="row"
+              spacing="8px"
+              px="8px"
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.7 },
+              }}
+              onClick={() => props.onAdd(d.id)}
+            >
               <Stack
-                key={d.id}
-                direction="row"
-                spacing="8px"
-                px="8px"
-                sx={{
-                  cursor: "pointer",
-                  transition: "0.2s",
-                  "&:hover": { opacity: 0.7 },
-                }}
-                onClick={() => props.onAdd(d.id)}
-              >
-                <Stack
-                  borderRadius="100%"
-                  height="23px"
-                  width="23px"
-                  bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
-                />
-                <Typography bold>{d.name}</Typography>
-              </Stack>
-            ))}
+                borderRadius="100%"
+                height="23px"
+                width="23px"
+                bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
+              />
+              <Typography bold>{d.name}</Typography>
+            </Stack>
+          ))}
         </Stack>
       )}
     </UrsorDialog>
