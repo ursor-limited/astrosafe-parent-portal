@@ -3,6 +3,7 @@ import _ from "lodash";
 import { useState } from "react";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
+import { OnBoardingViewLayout } from "./OnboardingFlow";
 
 const AgeCard = (props: {
   title: string;
@@ -82,15 +83,33 @@ const AgeCard = (props: {
   </Stack>
 );
 
-export const SAFETY_STEP_TITLE =
-  "First, select a Browser pre-set that matches your child's age";
 const SafetyStepView = (props: { onNext: () => void }) => {
   const [selectedCardIndex, setSelectedCardIndex] = useState<
     number | undefined
   >();
   return (
-    <>
-      <Stack direction="row" spacing="32px">
+    <OnBoardingViewLayout
+      title="First, select a Browser pre-set that matches your child's age"
+      button={
+        <Stack alignItems="center" spacing="24px">
+          <Typography color="rgb(255,255,255)" bold>
+            Don't worry, you can change this later
+          </Typography>
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="large"
+            endIcon={ChevronRightIcon}
+            iconSize={22}
+            onClick={props.onNext}
+            disabled={!_.isNumber(selectedCardIndex)}
+          >
+            Next
+          </UrsorButton>
+        </Stack>
+      }
+    >
+      <Stack direction="row" spacing="32px" flex={1} alignItems="center">
         <AgeCard
           title="Adventurer"
           ages="For age 3 to 7"
@@ -131,23 +150,7 @@ const SafetyStepView = (props: { onNext: () => void }) => {
           onClick={() => setSelectedCardIndex(2)}
         />
       </Stack>
-      <Stack alignItems="center" spacing="24px">
-        <Typography color="rgb(255,255,255)" bold>
-          Don't worry, you can change this later
-        </Typography>
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="large"
-          endIcon={ChevronRightIcon}
-          iconSize={22}
-          onClick={props.onNext}
-          disabled={!_.isNumber(selectedCardIndex)}
-        >
-          Next
-        </UrsorButton>
-      </Stack>
-    </>
+    </OnBoardingViewLayout>
   );
 };
 

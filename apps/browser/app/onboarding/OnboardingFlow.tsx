@@ -7,9 +7,9 @@ import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import UrsorParticles from "../components/UrsorParticles";
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import IntroStepView, { INTRO_STEP_TITLE } from "./IntroStep";
+import IntroStepView from "./IntroStep";
 import { CONTENT_STEP_VIEWS } from "./ContentStep";
-import SafetyStepView, { SAFETY_STEP_TITLE } from "./SafetyStep";
+import SafetyStepView from "./SafetyStep";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
 
 type OnboardingStepCategory = "intro" | "safety" | "content" | "security";
@@ -61,7 +61,7 @@ export const OnBoardingViewLayout = (props: {
     alignItems="center"
     spacing="30px"
   >
-    <Stack width="523px">
+    <Stack width="805px">
       <Typography
         color="rgba(255,255,255,0.88)"
         variant="h3"
@@ -154,6 +154,7 @@ const ActualOnboardingFlow = () => {
         width="100%"
         justifyContent="center"
         alignItems="center"
+        pt="30px"
         spacing="30px"
         sx={{
           animation: `${

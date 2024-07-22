@@ -4,6 +4,7 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ShieldLockIcon from "@/images/icons/ShieldLockIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import { OnBoardingViewLayout } from "./OnboardingFlow";
 
 const ConfigurationIntroStepCard = (props: {
   n: number;
@@ -43,9 +44,22 @@ const ConfigurationIntroStepCard = (props: {
   </Stack>
 );
 
-export const INTRO_STEP_TITLE = "Let's configure your browser in 3 steps";
 const IntroStepView = (props: { onNext: () => void }) => (
-  <>
+  <OnBoardingViewLayout
+    title="Lets get your new your safe Browser ready in 3 simple steps"
+    button={
+      <UrsorButton
+        dark
+        variant="tertiary"
+        size="large"
+        iconSize={22}
+        endIcon={ChevronRightIcon}
+        onClick={props.onNext}
+      >
+        Let's get started
+      </UrsorButton>
+    }
+  >
     <Stack
       flex={1}
       sx={{
@@ -77,17 +91,7 @@ const IntroStepView = (props: { onNext: () => void }) => (
         title="Set up your personal Browser"
       />
     </Stack>
-    <UrsorButton
-      dark
-      variant="tertiary"
-      size="large"
-      iconSize={22}
-      endIcon={ChevronRightIcon}
-      onClick={props.onNext}
-    >
-      Let's get started
-    </UrsorButton>
-  </>
+  </OnBoardingViewLayout>
 );
 
 export default IntroStepView;
