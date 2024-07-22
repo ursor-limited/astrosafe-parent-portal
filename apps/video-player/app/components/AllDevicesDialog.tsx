@@ -11,7 +11,7 @@ import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
 
-const DevicesGridDialog = (props: {
+const AllDevicesDialog = (props: {
   title: string;
   open: boolean;
   onClose: () => void;
@@ -95,4 +95,4 @@ const DevicesGridDialog = (props: {
   );
 };
 
-export default DevicesGridDialog;
+export default AllDevicesDialog;

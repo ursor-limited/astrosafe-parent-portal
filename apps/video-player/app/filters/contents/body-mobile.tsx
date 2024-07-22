@@ -25,6 +25,7 @@ export default function AllFiltersPageMobileBody(props: {
   return (
     <MobilePageLayout
       title="My Filters"
+      selectedPage="filters"
       topRightElement={
         <UrsorButton
           dark

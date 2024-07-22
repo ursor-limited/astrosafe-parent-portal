@@ -9,10 +9,10 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
-import DevicesGridDialog from "@/app/components/DevicesGridDialog";
 import ApiController from "@/app/api";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
+import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 
 const DevicesSection = (props: {
   title: string;
@@ -108,7 +108,7 @@ const DevicesSection = (props: {
           </Stack>
         )}
       </AstroBentoCard>
-      <DevicesGridDialog
+      <AllDevicesDialog
         title={`${props.devices.length} Device${
           props.devices.length === 1 ? "" : "s"
         } have access to this Folder`}

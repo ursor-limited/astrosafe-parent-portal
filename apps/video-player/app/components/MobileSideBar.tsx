@@ -11,6 +11,8 @@ import _ from "lodash";
 import Image from "next/image";
 import { useState } from "react";
 import { UserInitialsCircle } from "@/app/account/contents/common";
+import { Router } from "express";
+import { useRouter } from "next/navigation";
 
 export const astroPages = [
   "profiles",
@@ -28,9 +30,20 @@ const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
   account: VersionsIcon,
 };
 
-const AllFiltersPage = (props: { isMobile: boolean }) => {
-  const [selectedPage, setSelectedPage] = useState<AstroPage>("profiles");
-  const [open, setOpen] = useState<boolean>(false);
+const PAGE_ROUTES: Record<AstroPage, string> = {
+  profiles: "profiles",
+  filters: "filters",
+  content: "folders",
+  lessons: "lessons",
+  account: "account",
+};
+
+const MobileSideBar = (props: {
+  open: boolean;
+  onClose: () => void;
+  selectedPage: AstroPage;
+}) => {
+  const router = useRouter();
   return (
     <>
       <Stack
@@ -38,12 +51,14 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         bgcolor="rgba(0,0,0,0.2)"
         width="100%"
         height="100%"
-        onClick={() => setOpen(!open)}
+        onClick={props.onClose}
         sx={{
-          //pointerEvents: open ? undefined : "none",
-          opacity: open ? 1 : 0,
+          pointerEvents: props.open ? undefined : "none",
+          opacity: props.open ? 1 : 0,
           transition: "0.6s",
+          backdropFilter: "blur(2px)",
         }}
+        zIndex={999}
       />
       <Stack
         position="absolute"
@@ -55,9 +70,10 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         py="56px"
         boxSizing="border-box"
         sx={{
-          transform: `translateX(${open ? 0 : "-100%"})`,
+          transform: `translateX(${props.open ? 0 : "-100%"})`,
           transition: "0.6s",
         }}
+        zIndex={1000}
       >
         <Stack
           direction="row"
@@ -70,7 +86,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
             width={59}
             alt="astro"
           />
-          <Stack onClick={() => setOpen(false)}>
+          <Stack onClick={props.onClose}>
             <XIcon height="28px" width="28px" />
           </Stack>
         </Stack>
@@ -90,18 +106,21 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
                     svg: {
                       path: {
                         fill:
-                          selectedPage === page
+                          props.selectedPage === page
                             ? PALETTE.secondary.purple[2]
                             : PALETTE.primary.navy,
                       },
                     },
                   }}
+                  onClick={() =>
+                    router.push(`/${PAGE_ROUTES[page as AstroPage]}`)
+                  }
                 >
                   <Icon height="28px" width="28px" />
                   <Typography
                     bold
                     color={
-                      selectedPage === page
+                      props.selectedPage === page
                         ? PALETTE.secondary.purple[2]
                         : PALETTE.primary.navy
                     }
@@ -116,7 +135,9 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
             direction="row"
             spacing="12px"
             alignItems="center"
-            onClick={() => setSelectedPage("account")}
+            onClick={() =>
+              router.push(`/${PAGE_ROUTES["account" as AstroPage]}`)
+            }
             sx={{
               cursor: "pointer",
               "&:hover": { opacity: 0.7 },
@@ -127,7 +148,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
             <Typography
               bold
               color={
-                selectedPage === "account"
+                props.selectedPage === "account"
                   ? PALETTE.secondary.purple[2]
                   : PALETTE.primary.navy
               }
@@ -141,4 +162,4 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
   );
 };
 
-export default AllFiltersPage;
+export default MobileSideBar;

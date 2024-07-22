@@ -16,6 +16,7 @@ const AllFoldersPageMobileBody = (props: {
   return (
     <MobilePageLayout
       title="My Folders"
+      selectedPage="content"
       topRightElement={
         <UrsorButton
           dark

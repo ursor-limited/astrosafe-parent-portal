@@ -36,7 +36,11 @@ export default function FilterPageMobileBody(props: {
   onRemoveDevice: () => void;
 }) {
   return (
-    <MobilePageLayout actions={props.actions} titleRow={props.titleRow}>
+    <MobilePageLayout
+      actions={props.actions}
+      titleRow={props.titleRow}
+      selectedPage="filters"
+    >
       <Stack spacing="20px" pb="33px">
         <MobileDevicesSection
           title={`Filter applied to ${props.devices.length} Devices.`}

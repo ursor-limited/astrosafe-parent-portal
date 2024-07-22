@@ -47,6 +47,7 @@ const FolderPageMobileBody = (props: {
   return (
     <MobilePageLayout
       titleRow={props.titleRow}
+      selectedPage="content"
       actions={[
         {
           text: "Edit name",

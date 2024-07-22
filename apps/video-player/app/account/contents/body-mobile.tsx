@@ -32,7 +32,7 @@ const AccountPageMobileBody = (props: {
 }) => (
   <MobilePageLayout
     title="My Account"
-    selectedSidebarItemId="account"
+    selectedPage="account"
     topRightElement={
       <UrsorButton
         size="small"

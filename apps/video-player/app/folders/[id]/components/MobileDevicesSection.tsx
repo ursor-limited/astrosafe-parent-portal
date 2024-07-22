@@ -10,6 +10,7 @@ import DeviceCard from "@/app/profiles/components/DeviceCard";
 import { useState } from "react";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
+import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 
 const MobileDevicesSection = (props: {
   title: string;
@@ -98,6 +99,18 @@ const MobileDevicesSection = (props: {
           </UrsorButton>
         </Stack>
       </AstroBentoCard>
+      <MobileAllDevicesDialog
+        title={`${props.devices.length} Device${
+          props.devices.length === 1 ? "" : "s"
+        } have access to this Folder`}
+        devices={props.devices.slice(0, 4)}
+        open={devicesGridDialogOpen}
+        onClose={() => setDevicesGridDialogOpen(false)}
+        onAdd={() => {
+          props.onAdd();
+          setDevicesGridDialogOpen(false);
+        }}
+      />
     </>
   );
 };

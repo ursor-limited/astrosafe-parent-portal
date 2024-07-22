@@ -24,7 +24,7 @@ const ProfilePageMobileBody = (props: {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
   return (
-    <MobilePageLayout titleRow={props.titleRow}>
+    <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
       <Stack pl="48px">
         <Stack
           bgcolor="rgb(255,255,255)"

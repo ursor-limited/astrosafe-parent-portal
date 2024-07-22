@@ -44,6 +44,7 @@ const AllDevicesPageMobileBody = (props: {
     // >
     <MobilePageLayout
       title="My Devices"
+      selectedPage="profiles"
       topRightElement={
         <Stack direction="row" spacing="8px">
           {/* <UrsorButton
