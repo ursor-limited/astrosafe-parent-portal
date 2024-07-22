@@ -183,10 +183,8 @@ const AccountPageMobileBody = (props: {
           </Stack>
         </Stack>
       </AstroBentoCard>
-      <AstroBentoCard
-        title="Users in my space"
-        notCollapsible
-        topRightStuff={
+      <AstroBentoCard title="Users in my space" notCollapsible isMobile>
+        <Stack spacing="12px">
           <Stack direction="row" spacing="12px">
             <UrsorButton
               endIcon={PersonIcon}
@@ -194,6 +192,7 @@ const AccountPageMobileBody = (props: {
               variant="secondary"
               iconSize={16}
               onClick={props.setInviteDialogOpen}
+              width="100%"
             >
               Add an adult
             </UrsorButton>
@@ -203,78 +202,75 @@ const AccountPageMobileBody = (props: {
               variant="secondary"
               iconSize={16}
               onClick={props.setConnectDialogOpen}
+              width="100%"
             >
               Add a Device
             </UrsorButton>
           </Stack>
-        }
-        isMobile
-      >
-        <Stack spacing="24px">
+
           <UsersTable users={props.allUsers} />
           <DevicesTable />
         </Stack>
       </AstroBentoCard>
-      <Stack direction="row" spacing="12px">
-        <AstroBentoCard title="Boring bits" notCollapsible isMobile>
-          <Stack spacing="6px">
-            <a
-              target="_blank"
-              href="https://www.astrosafe.co/terms-and-conditions"
-              style={{
-                textDecoration: "none",
+
+      <AstroBentoCard title="Boring bits" notCollapsible isMobile>
+        <Stack spacing="6px">
+          <a
+            target="_blank"
+            href="https://www.astrosafe.co/terms-and-conditions"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Stack
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
               }}
             >
-              <Stack
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
-              >
-                <Typography color={PALETTE.secondary.blue[3]}>
-                  Terms & Conditions
-                </Typography>
-              </Stack>
-            </a>
-            <a
-              target="_blank"
-              href="https://www.astrosafe.co/app/privacy-policy"
-              style={{
-                textDecoration: "none",
+              <Typography color={PALETTE.secondary.blue[3]}>
+                Terms & Conditions
+              </Typography>
+            </Stack>
+          </a>
+          <a
+            target="_blank"
+            href="https://www.astrosafe.co/app/privacy-policy"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Stack
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
               }}
             >
-              <Stack
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.6 },
-                  transition: "0.2s",
-                }}
-              >
-                <Typography color={PALETTE.secondary.blue[3]}>
-                  Privacy policy
-                </Typography>
-              </Stack>
-            </a>
-          </Stack>
-        </AstroBentoCard>
-        <AstroBentoCard
-          title="Feedback"
-          notCollapsible
-          topRightStuff={
-            <UrsorButton
-              variant="secondary"
-              size="small"
-              onClick={() => window.open("mailto:hello@astrosafe.co")}
-            >
-              Send
-            </UrsorButton>
-          }
-          isMobile
-        >
-          <Typography>{`We'd love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
-        </AstroBentoCard>
-      </Stack>
+              <Typography color={PALETTE.secondary.blue[3]}>
+                Privacy policy
+              </Typography>
+            </Stack>
+          </a>
+        </Stack>
+      </AstroBentoCard>
+      <AstroBentoCard
+        title="Feedback"
+        notCollapsible
+        topRightStuff={
+          <UrsorButton
+            variant="secondary"
+            size="small"
+            onClick={() => window.open("mailto:hello@astrosafe.co")}
+          >
+            Send
+          </UrsorButton>
+        }
+        isMobile
+      >
+        <Typography>{`We'd love to hear your thoughts! Please send us through any ideas you have about the app, or let us know if you encounter any bugs or hiccups!`}</Typography>
+      </AstroBentoCard>
     </Stack>
   </MobilePageLayout>
 );
