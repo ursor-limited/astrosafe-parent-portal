@@ -81,6 +81,7 @@ const IntroStepView = (props: { onNext: () => void }) => (
       dark
       variant="tertiary"
       size="large"
+      iconSize={22}
       endIcon={ChevronRightIcon}
       onClick={props.onNext}
     >

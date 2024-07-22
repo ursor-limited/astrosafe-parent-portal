@@ -172,6 +172,7 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
             variant="tertiary"
             size="large"
             endIcon={ChevronRightIcon}
+            iconSize={22}
             onClick={props.onNext}
             disabled={selectedTopics.length === 0}
           >
@@ -210,6 +211,7 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
             dark
             variant="tertiary"
             size="large"
+            iconSize={22}
             endIcon={ChevronRightIcon}
             onClick={props.onNext}
           >

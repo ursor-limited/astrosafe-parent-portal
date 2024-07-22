@@ -2,28 +2,24 @@
 
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import ShieldLockIcon from "@/images/icons/ShieldLockIcon.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import UrsorParticles from "../components/UrsorParticles";
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import { Grid } from "@mui/material";
 import IntroStepView, { INTRO_STEP_TITLE } from "./IntroStep";
 import { CONTENT_STEP_VIEWS } from "./ContentStep";
-import SecurityStepView, { SECURITY_STEP_TITLE } from "./SecurityStep";
+import SafetyStepView, { SAFETY_STEP_TITLE } from "./SafetyStep";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
 
-type OnboardingStepCategory = "intro" | "security" | "content" | "curation";
+type OnboardingStepCategory = "intro" | "safety" | "content" | "security";
 
 const STEP_COMPONENTS: {
   category: OnboardingStepCategory;
   component: React.FC<{ onNext: () => void }>;
 }[] = [
   { category: "intro", component: IntroStepView },
-  { category: "security", component: SecurityStepView },
+  { category: "safety", component: SafetyStepView },
   ...CONTENT_STEP_VIEWS.map((component) => ({
     category: "content" as OnboardingStepCategory,
     component,
@@ -82,7 +78,7 @@ export const OnBoardingViewLayout = (props: {
 const ActualOnboardingFlow = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(4);
+  const [stepIndex, setStepIndex] = useState<number>(0);
   useEffect(() => setStepCategory(STEP_COMPONENTS[stepIndex].category));
   const [fade, setFade] = useState<"in" | "out">("in");
   const StepView = STEP_COMPONENTS[stepIndex].component;
@@ -133,22 +129,22 @@ const ActualOnboardingFlow = () => {
           }}
         >
           <ConfigurationStepButton
-            text="1. Security"
+            text="1. Safety"
             selected={
-              stepCategory === "security" ||
+              stepCategory === "safety" ||
               stepCategory === "content" ||
-              stepCategory === "curation"
+              stepCategory === "security"
             }
           />
           <ChevronRightIcon height="32px" width="32px" />
           <ConfigurationStepButton
             text="2. Content"
-            selected={stepCategory === "content" || stepCategory === "curation"}
+            selected={stepCategory === "content" || stepCategory === "security"}
           />
           <ChevronRightIcon height="32px" width="32px" />
           <ConfigurationStepButton
-            text="3. Curation"
-            selected={stepCategory === "curation"}
+            text="3. Security"
+            selected={stepCategory === "security"}
           />
         </Stack>
         <Stack width="48px" />
