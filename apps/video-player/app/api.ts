@@ -101,11 +101,11 @@ class ApiController {
   }
 
   static async getGroupDevices(id: IGroup["id"]) {
-    return get(`groups/${id}/devices`).then((response: any) => response.json());
+    return get(`devices?groupId=${id}`).then((response: any) => response.json());
   }
 
-  static async getContentBucketDevices(id: IContentBucket["id"]) {
-    return get(`content/buckets/${id}/devices`).then((response: any) =>
+  static async getFolderDevices(id: IContentBucket["id"]) {
+    return get(`devices?contentBucketId=${id}`).then((response: any) =>
       response.json()
     );
   }

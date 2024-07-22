@@ -26,6 +26,9 @@ import {
   ILink,
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
+import { useWindowSize } from "usehooks-ts";
+
+const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 
 const FolderPageDesktopBody = (props: {
   folderId: IContentBucket["id"];
@@ -59,6 +62,9 @@ const FolderPageDesktopBody = (props: {
   }, [nColumns, props.contents]);
 
   const router = useRouter();
+
+  const { width } = useWindowSize();
+
   return (
     <PageLayout
       titleRow={props.titleRow}
@@ -142,22 +148,31 @@ const FolderPageDesktopBody = (props: {
             />
           </Stack>
         </Stack>
-        <Stack direction="row" spacing="24px">
-          {["link", "video", "channel"].map((c) => (
-            <Stack
-              key={c}
-              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
-              flex={1}
-            >
-              <AddContentButton
-                key={c as AstroContent}
-                onClick={() => null}
-                {...CONTENT_BRANDING[c as AstroContent]}
-                fullWidth
-              />
-            </Stack>
-          ))}
-        </Stack>
+        <UrsorFadeIn delay={800} duration={1200}>
+          <Stack
+            direction={
+              width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "column" : "row"
+            }
+            spacing={
+              width < SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD ? "8px" : "24px"
+            }
+          >
+            {["link", "video", "channel"].map((c) => (
+              <Stack
+                key={c}
+                onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+                flex={1}
+              >
+                <AddContentButton
+                  key={c as AstroContent}
+                  onClick={() => null}
+                  {...CONTENT_BRANDING[c as AstroContent]}
+                  fullWidth
+                />
+              </Stack>
+            ))}
+          </Stack>
+        </UrsorFadeIn>
         <Stack
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"

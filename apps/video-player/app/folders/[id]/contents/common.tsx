@@ -78,9 +78,7 @@ export default function FolderPage(props: {
   const [devices, setDevices] = useState<IDevice[]>([]);
   const loadDevices = useCallback(
     () =>
-      ApiController.getContentBucketDevices(props.folderId).then((d) =>
-        setDevices(d)
-      ),
+      ApiController.getFolderDevices(props.folderId).then((d) => setDevices(d)),
     [props.folderId]
   );
   useEffect(() => {

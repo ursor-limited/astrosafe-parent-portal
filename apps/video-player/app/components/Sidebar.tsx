@@ -203,7 +203,7 @@ export default function Sidebar(props: ISidebarProps) {
       //tourId: "devices-button",
       icon: BookIcon,
       title: "Content",
-      callback: () => router.push("/content"),
+      callback: () => router.push("/folders"),
     },
   ];
 
