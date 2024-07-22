@@ -11,6 +11,7 @@ import { DeviceType, IDevice } from "../contents/common";
 import DeviceCard from "../../../profiles/components/DeviceCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const FilterPageDevicesSection = (props: {
   devices: IDevice[];
@@ -18,6 +19,7 @@ const FilterPageDevicesSection = (props: {
   onRemove: () => void;
 }) => {
   const router = useRouter();
+  const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
   return (
     <AstroBentoCard
       title={
@@ -50,20 +52,47 @@ const FilterPageDevicesSection = (props: {
         </Stack>
       }
     >
-      <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-        {props.devices.map((d, i) => (
-          <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-            <DeviceCard
-              {...d}
-              // button={
-              //   <Stack onClick={() => null}>
-              //     <XIcon height={16} width={16} />
-              //   </Stack>
-              // }
-            />
-          </UrsorFadeIn>
-        ))}
-      </DynamicCardGrid>
+      {props.devices.length > 0 ? (
+        <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+          {props.devices.map((d, i) => (
+            <UrsorFadeIn key={i} duration={800} delay={i * 150}>
+              <DeviceCard {...d} />
+            </UrsorFadeIn>
+          ))}
+        </DynamicCardGrid>
+      ) : (
+        <Stack
+          height="90px"
+          spacing="1px"
+          borderRadius="8px"
+          border={`1px solid ${PALETTE.secondary.grey[2]}`}
+          justifyContent="center"
+          alignItems="center"
+          bgcolor={
+            hoveringOnButton ? PALETTE.secondary.grey[1] : "rgb(255,255,255)"
+          }
+          sx={{
+            transition: "0.2s",
+            cursor: "pointer",
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[4],
+              },
+            },
+          }}
+          onMouseEnter={() => setHoveringOnButton(true)}
+          onMouseLeave={() => setHoveringOnButton(false)}
+          onClick={props.onAdd}
+        >
+          <PlusIcon height="32px" width="32px" />
+          <Typography
+            bold
+            color={PALETTE.secondary.grey[hoveringOnButton ? 4 : 3]}
+          >
+            Add a Device
+          </Typography>
+        </Stack>
+      )}
     </AstroBentoCard>
   );
 };
