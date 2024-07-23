@@ -22,7 +22,7 @@ const AllDevicesPageDesktopBody = (props: {
   const router = useRouter();
   return (
     <PageLayout
-      title="My Devices"
+      title="My Kids"
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight

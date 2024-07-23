@@ -6,7 +6,7 @@ import { useElementSize, useLocalStorage } from "usehooks-ts";
 import { PALETTE, Typography } from "ui";
 import BookIcon from "@/images/icons/BookIcon.svg";
 import GearIcon from "@/images/icons/GearIcon.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "./UserContext";
@@ -187,8 +187,8 @@ export default function Sidebar(props: ISidebarProps) {
     {
       id: "devices",
       //tourId: "devices-button",
-      icon: PhoneIcon,
-      title: "Profiles",
+      icon: PeopleIcon,
+      title: "Kids",
       callback: () => router.push("/profiles"),
     },
     {

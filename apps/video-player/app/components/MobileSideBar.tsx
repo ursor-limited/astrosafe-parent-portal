@@ -38,6 +38,14 @@ const PAGE_ROUTES: Record<AstroPage, string> = {
   account: "account",
 };
 
+const PAGE_DISPLAY_NAMES: Record<AstroPage, string> = {
+  profiles: "Kids",
+  filters: "Filters",
+  content: "Content",
+  lessons: "Lessons",
+  account: "Account",
+};
+
 const MobileSideBar = (props: {
   open: boolean;
   onClose: () => void;
@@ -96,6 +104,7 @@ const MobileSideBar = (props: {
               const Icon = PAGE_ICONS[page as AstroPage];
               return (
                 <Stack
+                  key={page}
                   direction="row"
                   spacing="12px"
                   alignItems="center"
@@ -125,7 +134,7 @@ const MobileSideBar = (props: {
                         : PALETTE.primary.navy
                     }
                   >
-                    {_.capitalize(page)}
+                    {PAGE_DISPLAY_NAMES[page]}
                   </Typography>
                 </Stack>
               );

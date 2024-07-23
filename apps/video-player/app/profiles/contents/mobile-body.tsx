@@ -40,7 +40,7 @@ const AllDevicesPageMobileBody = (props: {
     //   scrollable
     // >
     <MobilePageLayout
-      title="My Devices"
+      title="My Kids"
       selectedPage="profiles"
       topRightElement={
         <Stack direction="row" spacing="8px">
