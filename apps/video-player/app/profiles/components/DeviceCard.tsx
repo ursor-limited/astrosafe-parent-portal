@@ -17,6 +17,62 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   ios: "iOS",
 };
 
+const DeviceCardSection = (props: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <Stack
+    height="72px"
+    boxSizing="border-box"
+    px="12px"
+    py="10px"
+    justifyContent="space-between"
+    borderRadius="8px"
+    border={`1px solid ${PALETTE.secondary.grey[2]}`}
+  >
+    <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
+      {props.title}
+    </Typography>
+    {props.children}
+  </Stack>
+);
+
+const DeviceCardBrowsingStatusSection = (props: {
+  browsingEnabled: boolean;
+  flipBrowsingEnabled: () => void;
+}) => (
+  <DeviceCardSection title="Browsing status">
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      spacing="6px"
+    >
+      <Stack
+        spacing="8px"
+        direction="row"
+        alignItems="center"
+        sx={{
+          svg: {
+            path: {
+              fill: PALETTE.secondary.grey[4],
+            },
+          },
+        }}
+      >
+        <GlobeIcon height="20px" width="20px" />
+        <Typography bold color={PALETTE.secondary.grey[5]}>
+          Browsing is enabled
+        </Typography>
+      </Stack>
+      <AstroSwitch
+        on={props.browsingEnabled}
+        callback={props.flipBrowsingEnabled}
+      />
+    </Stack>
+  </DeviceCardSection>
+);
+
 const DeviceCard = (
   props: IDevice & {
     hideToggles?: boolean;
@@ -56,8 +112,8 @@ const DeviceCard = (
           alignItems="center"
         >
           <Stack
-            height={props.small ? "40px" : "74px"}
-            width={props.small ? "40px" : "74px"}
+            minHeight={props.small ? "40px" : "74px"}
+            minWidth={props.small ? "40px" : "74px"}
             borderRadius="100%"
             overflow="hidden"
             bgcolor={props.backgroundColor}
@@ -84,7 +140,7 @@ const DeviceCard = (
                 "&:hover": { opacity: 0.6 },
               }}
             >
-              <Typography bold variant="h5">
+              <Typography bold variant="h5" maxLines={1}>
                 {props.name}
               </Typography>
             </Stack>
@@ -111,47 +167,10 @@ const DeviceCard = (
             </Stack>
           </Stack>
         </Stack>
-        <Stack
-          height="72px"
-          boxSizing="border-box"
-          px="12px"
-          py="10px"
-          alignItems="space-between"
-          borderRadius="8px"
-          border={`1px solid ${PALETTE.secondary.grey[2]}`}
-        >
-          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
-            Browsing status
-          </Typography>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            spacing="6px"
-          >
-            <Stack
-              spacing="8px"
-              direction="row"
-              alignItems="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: PALETTE.secondary.grey[4],
-                  },
-                },
-              }}
-            >
-              <GlobeIcon height="20px" width="20px" />
-              <Typography bold color={PALETTE.secondary.grey[5]}>
-                Browsing is enabled
-              </Typography>
-            </Stack>
-            <AstroSwitch
-              on={browsingEnabled}
-              callback={() => setBrowsingEnabled(!browsingEnabled)}
-            />
-          </Stack>
-        </Stack>
+        <DeviceCardBrowsingStatusSection
+          browsingEnabled={browsingEnabled}
+          flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+        />
         <Stack
           minHeight="70px"
           sx={{
