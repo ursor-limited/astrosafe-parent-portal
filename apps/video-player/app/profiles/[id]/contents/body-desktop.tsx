@@ -8,7 +8,7 @@ import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
-import DevicePageMonitoringTab from "../components/MonitoringTab";
+import DevicePageInsightsTab from "../components/InsightsTab";
 import DevicePageSettingsTab from "../components/SettingsTab";
 import DevicePageContentTab from "../components/ContentTab";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const ProfilePageDesktopBody = (props: {
   actions: IActionPopupItem[];
 }) => {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("insights");
   return (
     <PageLayout
       titleRow={props.titleRow}
@@ -100,26 +100,24 @@ const ProfilePageDesktopBody = (props: {
           selected={selectedTab}
           items={[
             {
-              text: "Monitoring",
-              id: "monitoring",
-            },
-            {
-              text: "Settings",
-              id: "settings",
-            },
-            {
               text: "Content",
               id: "content",
             },
+            {
+              text: "Apps",
+              id: "apps",
+            },
+            {
+              text: "Insights",
+              id: "insights",
+            },
           ]}
         />
-        {selectedTab === "monitoring" ? (
-          <DevicePageMonitoringTab />
-        ) : selectedTab === "settings" ? (
-          <DevicePageSettingsTab />
-        ) : (
+        {selectedTab === "insights" ? (
+          <DevicePageInsightsTab />
+        ) : selectedTab === "content" ? (
           <DevicePageContentTab />
-        )}
+        ) : null}
       </Stack>
     </PageLayout>
   );

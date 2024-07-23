@@ -21,7 +21,7 @@ import ProfilePageMobileBody from "./body-mobile";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
-export type AstroAccountTab = "monitoring" | "settings" | "content";
+export type AstroAccountTab = "content" | "insights" | "apps";
 
 export default function ProfilePage(props: {
   deviceId: number;

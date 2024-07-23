@@ -1,39 +1,46 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
-import { AstroBentoCard } from "./AstroBentoCard";
-import { FilterLegend } from "./CategoriesSection";
-import AstroToggleCard from "./AstroToggleCard";
+import { AstroBentoCard } from "../../../filters/[id]/components/AstroBentoCard";
+import { FilterLegend } from "../../../filters/[id]/components/CategoriesSection";
+import AstroToggleCard from "../../../filters/[id]/components/AstroToggleCard";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { PALETTE } from "ui";
-import { IFilter, IFilterUrl } from "../../contents/common";
+import { IFilterUrl } from "../../../filters/contents/common";
 
-const FilterPageServicesSection = (props: {
-  filter: IFilter;
-  services: IFilterUrl[];
+export interface IApp {
+  id: number;
+  title: string;
+  url: string;
+  logoUrl: string;
+  description: string;
+}
+
+const AppsTab = (props: {
+  apps: IApp[];
   allowedServices: IFilterUrl["id"][];
   flipService: (id: number) => void;
 }) => (
   <AstroBentoCard
     icon={DesktopIcon}
-    title={`${props.filter.allowedServices.length} allowed Service${
-      props.filter.allowedServices.length === 1 ? "" : "s"
+    title={`${props.apps.length} allowed Service${
+      props.apps.length === 1 ? "" : "s"
     }`}
-    subtitle="Turn the switch on to allow the category to be browsed on the assigned devices."
+    subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
     topRightStuff={<FilterLegend />}
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-      {props.services.map((s, i) => (
-        <UrsorFadeIn key={s.id} duration={800} delay={i * 80}>
+      {props.apps.map((a, i) => (
+        <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
           <AstroToggleCard
-            on={props.allowedServices.includes(s.id)}
-            callback={() => props.flipService(s.id)}
-            title={s.title}
+            on={props.allowedServices.includes(a.id)}
+            callback={() => props.flipService(a.id)}
+            title={a.title}
             image={
               <Stack position="relative">
-                {props.allowedServices.includes(s.id) ? (
+                {props.allowedServices.includes(a.id) ? (
                   <Stack
                     position="absolute"
                     top="-6px"
@@ -57,7 +64,7 @@ const FilterPageServicesSection = (props: {
                   boxShadow="0 0 16px rgba(0,0,0,0.08)"
                 >
                   <Image
-                    src={s.imageUrl}
+                    src={a.logoUrl}
                     height={41}
                     width={41}
                     alt="platform image"
@@ -65,7 +72,7 @@ const FilterPageServicesSection = (props: {
                 </Stack>
               </Stack>
             }
-            key={s.id}
+            key={a.id}
           />
         </UrsorFadeIn>
       ))}
@@ -73,4 +80,4 @@ const FilterPageServicesSection = (props: {
   </AstroBentoCard>
 );
 
-export default FilterPageServicesSection;
+export default AppsTab;

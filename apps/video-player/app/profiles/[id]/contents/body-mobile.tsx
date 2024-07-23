@@ -8,7 +8,7 @@ import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
-import DevicePageMonitoringTab from "../components/MonitoringTab";
+import DevicePageInsightsTab from "../components/InsightsTab";
 import DevicePageSettingsTab from "../components/SettingsTab";
 import DevicePageContentTab from "../components/ContentTab";
 import Link from "next/link";
@@ -106,7 +106,7 @@ const ProfilePageMobileBody = (props: {
           ]}
         />
         {selectedTab === "monitoring" ? (
-          <DevicePageMonitoringTab />
+          <DevicePageInsightsTab />
         ) : selectedTab === "settings" ? (
           <DevicePageSettingsTab />
         ) : (
