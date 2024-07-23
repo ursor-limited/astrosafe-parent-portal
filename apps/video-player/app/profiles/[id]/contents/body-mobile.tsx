@@ -9,12 +9,12 @@ import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import DevicePageInsightsTab from "../components/InsightsTab";
-import DevicePageSettingsTab from "../components/SettingsTab";
 import DevicePageContentTab from "../components/ContentTab";
 import Link from "next/link";
 import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
+import DevicePageLimitsTab from "../components/LimitsTab";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -22,7 +22,7 @@ const ProfilePageMobileBody = (props: {
   actions: IActionPopupItem[];
 }) => {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("monitoring");
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("insights");
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
       <Stack pl="48px">
@@ -105,13 +105,13 @@ const ProfilePageMobileBody = (props: {
             },
           ]}
         />
-        {selectedTab === "monitoring" ? (
+        {selectedTab === "insights" ? (
           <DevicePageInsightsTab />
-        ) : selectedTab === "settings" ? (
-          <DevicePageSettingsTab />
-        ) : (
+        ) : selectedTab === "content" ? (
           <DevicePageContentTab />
-        )}
+        ) : selectedTab === "limits" ? (
+          <DevicePageLimitsTab />
+        ) : null}
       </Stack>
     </MobilePageLayout>
   );

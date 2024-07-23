@@ -126,7 +126,7 @@ const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
   },
 ];
 
-const DevicePageInsightsTab = () => {
+const DevicePageInsightsTab = (props: { isMobile: boolean }) => {
   const [timeSpent, setTimeSpent] = useState<number>(59083);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   return (

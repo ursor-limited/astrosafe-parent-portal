@@ -1,21 +1,17 @@
 import PageLayout from "@/app/components/PageLayout";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
-import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import DevicePageInsightsTab from "../components/InsightsTab";
-import DevicePageSettingsTab from "../components/SettingsTab";
 import DevicePageContentTab from "../components/ContentTab";
-import Link from "next/link";
 import { useState } from "react";
 import { AstroAccountTab } from "./common";
-import DeviceCard from "../../components/DeviceCard";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
+import DevicePageLimitsTab from "../components/LimitsTab";
 
 const ProfilePageDesktopBody = (props: {
   device: IDevice;
@@ -62,12 +58,18 @@ const ProfilePageDesktopBody = (props: {
               text: "Insights",
               id: "insights",
             },
+            {
+              text: "Limits",
+              id: "limits",
+            },
           ]}
         />
         {selectedTab === "insights" ? (
           <DevicePageInsightsTab />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab />
+        ) : selectedTab === "limits" ? (
+          <DevicePageLimitsTab />
         ) : null}
       </Stack>
     </PageLayout>

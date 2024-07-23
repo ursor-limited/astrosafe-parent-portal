@@ -21,7 +21,7 @@ import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
-export type AstroAccountTab = "content" | "insights" | "apps";
+export type AstroAccountTab = "content" | "insights" | "apps" | "limits";
 
 export default function ProfilePage(props: {
   deviceId: number;

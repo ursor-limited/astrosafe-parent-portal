@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import { ITimeLimit } from "./SettingsTab";
+import { ITimeLimit } from "./LimitsTab";
 import _ from "lodash";
 
 const DISPLAY_INTERVAL = 2; // hours

@@ -185,8 +185,8 @@ const DevicePageSettingsTab = () => {
       {requestedSites.length > 0 ? (
         <RequestedSitesSection sites={requestedSites} />
       ) : null}
-      <Typography variant="h5">Device controls</Typography>
-      <Stack direction="row" spacing="24px">
+      {/* <Typography variant="h5">Device controls</Typography> */}
+      {/* <Stack direction="row" spacing="24px">
         <AstroBentoCard
           title="General settings"
           subtitle="Control features for your Browser"
@@ -259,7 +259,7 @@ const DevicePageSettingsTab = () => {
             />
           </Stack>
         </AstroBentoCard>
-      </Stack>
+      </Stack> */}
       <Stack direction="row" spacing="24px">
         <Stack width="70%">
           <AstroBentoCard
