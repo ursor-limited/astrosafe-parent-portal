@@ -51,8 +51,8 @@ const AllDevicesPageDesktopBody = (props: {
                 url="nintendo.com/bopioijgorfrifunrifjni"
                 button={
                   <UrsorActionButton
-                    size="16px"
-                    iconSize="16px"
+                    size="18px"
+                    iconSize="18px"
                     actions={[
                       {
                         text: "Open",

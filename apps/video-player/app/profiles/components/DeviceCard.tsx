@@ -6,10 +6,14 @@ import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
+import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { IFilterUrl } from "@/app/filters/contents/common";
+import Link from "next/link";
+import { getAbsoluteUrl } from "@/app/api";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -117,6 +121,59 @@ const DeviceCardScreenTimeSection = (props: {
   </DeviceCardSection>
 );
 
+const DeviceCardCurrentUrlSection = (props: {
+  url: IFilterUrl["url"];
+  title: IFilterUrl["title"];
+  faviconUrl: IFilterUrl["imageUrl"];
+}) => (
+  <DeviceCardSection title="Browsing status">
+    <Link
+      href={getAbsoluteUrl(props.url)}
+      target="_blank"
+      style={{
+        textDecoration: "none",
+      }}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing="8px"
+        sx={{
+          cursor: "pointer",
+          transition: "0.2s",
+          "&:hover": { opacity: 0.7 },
+          svg: {
+            path: {
+              fill: PALETTE.secondary.purple[2],
+            },
+          },
+        }}
+      >
+        <Stack direction="row" spacing="8px">
+          <Stack
+            height="20px"
+            width="20px"
+            borderRadius="5px"
+            overflow="hidden"
+          >
+            <Image
+              src={props.faviconUrl}
+              height={20}
+              width={20}
+              alt="favicon"
+            />
+          </Stack>
+          <Typography bold color={PALETTE.secondary.purple[2]}>
+            {props.title}
+          </Typography>
+        </Stack>
+        <LinkExternalIcon height="20px" width="20px" />
+      </Stack>
+    </Link>
+  </DeviceCardSection>
+);
+
 const DeviceCard = (
   props: IDevice & {
     hideToggles?: boolean;
@@ -134,8 +191,8 @@ const DeviceCard = (
       <Stack p="20px" pb={0} boxSizing="border-box" position="relative">
         <Stack
           position="absolute"
-          top="8px"
-          right="8px"
+          top="28px"
+          right="15px"
           sx={{
             cursor: "pointer",
             "&:hover": { opacity: 0.6 },
@@ -209,6 +266,11 @@ const DeviceCard = (
           </Stack>
         </Stack>
         <Stack spacing="12px" pt="20px">
+          <DeviceCardCurrentUrlSection
+            url="nintendo.com"
+            title="Got to bind this up with API"
+            faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
+          />
           <DeviceCardScreenTimeSection totalTime={5004} elapsedTime={4020} />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
