@@ -25,7 +25,7 @@ const AstroSettingCard = (props: IAstroSettingCardProps) => (
     direction="row"
   >
     <Stack justifyContent="space-between">
-      <Stack spacing="16px" alignItems="center" direction="row">
+      <Stack spacing="8px" alignItems="center" direction="row">
         {props.image}
         <Stack>
           <Typography maxLines={1} bold color={props.textColor}>

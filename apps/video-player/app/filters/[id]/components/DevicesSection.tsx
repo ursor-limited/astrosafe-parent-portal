@@ -8,11 +8,11 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import _ from "lodash";
 import { DeviceType, IDevice } from "../contents/common";
-import DeviceCard from "../../../profiles/components/DeviceCard_legacy";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
+import DeviceCard from "@/app/profiles/components/DeviceCard";
 
 const FilterPageDevicesSection = (props: {
   devices: IDevice[];

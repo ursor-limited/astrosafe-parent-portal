@@ -21,7 +21,7 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   ios: "iOS",
 };
 
-const DeviceCardSection = (props: {
+export const DeviceCardSection = (props: {
   title: string;
   children: React.ReactNode;
 }) => (

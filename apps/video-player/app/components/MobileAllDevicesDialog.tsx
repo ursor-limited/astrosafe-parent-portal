@@ -2,12 +2,12 @@ import { Stack } from "@mui/system";
 import { IDevice } from "../filters/[id]/contents/common";
 import UrsorFadeIn from "./UrsorFadeIn";
 import XIcon from "@/images/icons/X.svg";
-import DeviceCard from "../profiles/components/DeviceCard_legacy";
 import { BACKDROP_STYLE, BORDER_RADIUS } from "./UrsorDialog";
 import { Dialog } from "@mui/material";
 import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
+import DeviceCard from "../profiles/components/DeviceCard";
 
 const MobileAllDevicesDialog = (props: {
   title: string;

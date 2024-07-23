@@ -2,24 +2,131 @@ import { Stack } from "@mui/system";
 import AstroCard from "../../filters/[id]/components/AstroCard";
 import Image from "next/image";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import SearchIcon from "@/images/icons/SearchIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
-import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
+import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   DeviceCardBrowsingStatusSection,
   DeviceCardCurrentUrlSection,
   DeviceCardScreenTimeSection,
+  DeviceCardSection,
 } from "./DeviceCard";
+import AstroSwitch from "@/app/components/AstroSwitch";
+import { IFilter } from "@/app/filters/contents/common";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
+import ApiController from "@/app/api";
+import UrsorPopover from "@/app/components/UrsorPopover";
+import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
   chrome: "Chromebook",
   ios: "iOS",
+};
+
+export const DeviceCardFilterSection = (props: {
+  selectedFilter: IFilter["id"];
+}) => {
+  const [allFilters, setAllFilters] = useState<IFilter[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
+  }, []);
+  const [open, setOpen] = useState<boolean>(false);
+  return (
+    <UrsorPopover
+      open={open}
+      content={
+        <Stack bgcolor="rgb(255,255,255)" borderRadius="12px" spacing="12px">
+          {allFilters.map((f, i) => (
+            <Stack
+              key={i}
+              sx={{
+                opacity: props.selectedFilter != f.id ? 0.6 : 1,
+                pointerEvents:
+                  props.selectedFilter == f.id ? "none" : undefined,
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+              }}
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <AstroSettingCard
+                image={
+                  <Stack
+                    sx={{
+                      svg: {
+                        path: {
+                          fill: PALETTE.system.orange,
+                        },
+                      },
+                    }}
+                  >
+                    <FilterIcon height="20px" width="20px" />
+                  </Stack>
+                }
+                title={f.title}
+                rightContent={
+                  props.selectedFilter == f.id ? (
+                    <CheckCircleFillIcon height="24px" width="24px" />
+                  ) : undefined
+                }
+                textColor={
+                  props.selectedFilter == f.id
+                    ? PALETTE.secondary.purple[2]
+                    : undefined
+                }
+              />
+            </Stack>
+          ))}
+        </Stack>
+      }
+      closeCallback={() => setOpen(false)}
+      buttonWidth
+      flexButton
+    >
+      <Stack onClick={() => setOpen(true)} flex={1}>
+        <DeviceCardSection title="Filter">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.7 },
+              transition: "0.2s",
+            }}
+          >
+            <Stack
+              spacing="8px"
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.system.orange,
+                  },
+                },
+              }}
+              direction="row"
+            >
+              <Stack justifyContent="center">
+                <FilterIcon direction="row" height="20px" width="20px" />
+              </Stack>
+              <Typography bold color={PALETTE.secondary.grey[5]}>
+                {allFilters?.find((f) => f.id == props.selectedFilter)?.title}
+              </Typography>
+            </Stack>
+            <ChevronDownIcon height="20px" width="20px" />
+          </Stack>
+        </DeviceCardSection>
+      </Stack>
+    </UrsorPopover>
+  );
 };
 
 const HorizontalDeviceCard = (props: IDevice) => {
@@ -65,6 +172,7 @@ const HorizontalDeviceCard = (props: IDevice) => {
             faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
           />
           <DeviceCardScreenTimeSection totalTime={5004} elapsedTime={4020} />
+          <DeviceCardFilterSection selectedFilter={1} />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
             flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}

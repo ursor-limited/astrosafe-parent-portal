@@ -58,6 +58,7 @@ export interface IUrsorPopoverProps {
   margin?: string;
   flip?: boolean;
   top?: boolean;
+  flexButton?: boolean;
   children: React.ReactNode; // the button
 }
 
@@ -124,6 +125,7 @@ export default function UrsorPopover(props: IUrsorPopoverProps) {
     <>
       <Stack
         ref={setReferenceElement}
+        flex={props.flexButton ? 1 : undefined}
         // zIndex={
         //   props.open && props.floatButton === "zIndex"
         //     ? zIndices.POPUP + 1
