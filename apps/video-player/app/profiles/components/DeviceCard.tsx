@@ -26,6 +26,7 @@ const DeviceCardSection = (props: {
   children: React.ReactNode;
 }) => (
   <Stack
+    flex={1}
     height="72px"
     boxSizing="border-box"
     px="12px"
@@ -41,7 +42,7 @@ const DeviceCardSection = (props: {
   </Stack>
 );
 
-const DeviceCardBrowsingStatusSection = (props: {
+export const DeviceCardBrowsingStatusSection = (props: {
   browsingEnabled: boolean;
   flipBrowsingEnabled: () => void;
 }) => (
@@ -77,7 +78,7 @@ const DeviceCardBrowsingStatusSection = (props: {
   </DeviceCardSection>
 );
 
-const DeviceCardScreenTimeSection = (props: {
+export const DeviceCardScreenTimeSection = (props: {
   totalTime: number;
   elapsedTime: number;
 }) => (
@@ -121,7 +122,7 @@ const DeviceCardScreenTimeSection = (props: {
   </DeviceCardSection>
 );
 
-const DeviceCardCurrentUrlSection = (props: {
+export const DeviceCardCurrentUrlSection = (props: {
   url: IFilterUrl["url"];
   title: IFilterUrl["title"];
   faviconUrl: IFilterUrl["imageUrl"];
