@@ -40,9 +40,9 @@ const AllDevicesPageDesktopBody = (props: {
       maxWidth={834}
       scrollable
     >
-      <Stack px="50px" flex={1}>
+      <Stack px="50px" flex={1} pb="31px">
         {props.devices.length > 0 ? (
-          <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+          <DynamicCardGrid cardWidth="355px" rowGap="20px" columnGap="20px">
             {props.devices.map((d) => (
               <DeviceCard
                 key={d.id}

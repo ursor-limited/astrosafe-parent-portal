@@ -134,7 +134,7 @@ const MobileSideBar = (props: {
                         : PALETTE.primary.navy
                     }
                   >
-                    {PAGE_DISPLAY_NAMES[page]}
+                    {PAGE_DISPLAY_NAMES[page as AstroPage]}
                   </Typography>
                 </Stack>
               );

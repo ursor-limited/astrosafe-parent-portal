@@ -164,7 +164,7 @@ const DeviceCardCurrentUrlSection = (props: {
               alt="favicon"
             />
           </Stack>
-          <Typography bold color={PALETTE.secondary.purple[2]}>
+          <Typography bold color={PALETTE.secondary.purple[2]} maxLines={1}>
             {props.title}
           </Typography>
         </Stack>
@@ -208,10 +208,11 @@ const DeviceCard = (
           position="relative"
           height={props.small ? "58px" : "90px"}
           alignItems="center"
+          width="94%"
         >
           <Stack
-            minHeight={props.small ? "40px" : "74px"}
-            minWidth={props.small ? "40px" : "74px"}
+            minHeight={props.small ? "40px" : "97px"}
+            minWidth={props.small ? "40px" : "97px"}
             borderRadius="100%"
             overflow="hidden"
             bgcolor={props.backgroundColor}
@@ -224,8 +225,8 @@ const DeviceCard = (
           >
             <Image
               src={props.profileAvatarUrl}
-              height={props.small ? 40 : 74}
-              width={props.small ? 40 : 74}
+              height={props.small ? 40 : 97}
+              width={props.small ? 40 : 97}
               alt="device profile"
             />
           </Stack>
@@ -238,7 +239,12 @@ const DeviceCard = (
                 "&:hover": { opacity: 0.6 },
               }}
             >
-              <Typography bold variant="h5" maxLines={1}>
+              <Typography
+                bold
+                variant="h5"
+                maxLines={1}
+                sx={{ wordBreak: "break-all" }}
+              >
                 {props.name}
               </Typography>
             </Stack>
