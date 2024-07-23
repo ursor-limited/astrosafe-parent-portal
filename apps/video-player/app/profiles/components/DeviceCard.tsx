@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import AstroCard from "../../filters/[id]/components/AstroCard";
 import Image from "next/image";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
@@ -73,6 +73,50 @@ const DeviceCardBrowsingStatusSection = (props: {
   </DeviceCardSection>
 );
 
+const DeviceCardScreenTimeSection = (props: {
+  totalTime: number;
+  elapsedTime: number;
+}) => (
+  <DeviceCardSection title="Screen time left today">
+    <Stack direction="row" alignItems="center" spacing="38px">
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing="8px"
+        width="100%"
+      >
+        <Typography bold color={PALETTE.secondary.purple[2]}>
+          {`${Math.floor(
+            (props.totalTime - props.elapsedTime) / 3600
+          )}h ${Math.floor(
+            ((props.totalTime - props.elapsedTime) % 3600) / 60
+          )}m`}
+        </Typography>
+        <Stack
+          flex={1}
+          height="11px"
+          bgcolor={PALETTE.secondary.grey[2]}
+          borderRadius="6px"
+          position="relative"
+        >
+          <Stack
+            height="100%"
+            width={`${
+              (100 * (props.totalTime - props.elapsedTime)) / props.totalTime
+            }%`}
+            bgcolor={PALETTE.secondary.purple[1]}
+            borderRadius="6px"
+          />
+        </Stack>
+      </Stack>
+      <UrsorButton variant="secondary" size="small">
+        View
+      </UrsorButton>
+    </Stack>
+  </DeviceCardSection>
+);
+
 const DeviceCard = (
   props: IDevice & {
     hideToggles?: boolean;
@@ -106,9 +150,6 @@ const DeviceCard = (
           spacing="8px"
           position="relative"
           height={props.small ? "58px" : "90px"}
-          sx={{
-            opacity: browsingEnabled ? 1 : 0.5,
-          }}
           alignItems="center"
         >
           <Stack
@@ -167,10 +208,13 @@ const DeviceCard = (
             </Stack>
           </Stack>
         </Stack>
-        <DeviceCardBrowsingStatusSection
-          browsingEnabled={browsingEnabled}
-          flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
-        />
+        <Stack spacing="12px" pt="20px">
+          <DeviceCardScreenTimeSection totalTime={5004} elapsedTime={4020} />
+          <DeviceCardBrowsingStatusSection
+            browsingEnabled={browsingEnabled}
+            flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+          />
+        </Stack>
         <Stack
           minHeight="70px"
           sx={{
