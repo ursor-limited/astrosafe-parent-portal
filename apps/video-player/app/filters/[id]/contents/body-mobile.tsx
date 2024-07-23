@@ -18,8 +18,8 @@ export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterUrl["id"][];
-  flipCategory: (id: IFilterCategory["id"]) => void;
+  allowedCategories: IFilterCategory["categoryId"][];
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
   allowedSites: IFilterUrl[];
   blockedSites: IFilterUrl[];
   blockedSearchWords: string[];

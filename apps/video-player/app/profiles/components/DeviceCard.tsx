@@ -5,6 +5,7 @@ import { PALETTE, Typography } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useState } from "react";
@@ -83,13 +84,30 @@ const DeviceCard = (
                 "&:hover": { opacity: 0.6 },
               }}
             >
-              <Typography bold>{props.name}</Typography>
+              <Typography bold variant="h5">
+                {props.name}
+              </Typography>
             </Stack>
-            <Stack direction="row" spacing="4px" alignItems="center">
-              <PhoneIcon height="8px" width="8px" />
-              <Typography variant="tiny" maxLines={1}>
+            <Stack direction="row" spacing="8px" alignItems="center">
+              <PhoneIcon height="16px" width="16px" />
+              <Typography maxLines={1}>
                 {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
               </Typography>
+            </Stack>
+            <Stack
+              direction="row"
+              spacing="8px"
+              alignItems="center"
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.system.orange,
+                  },
+                },
+              }}
+            >
+              <FilterIcon height="16px" width="16px" />
+              <Typography maxLines={1}>Explorer Filter</Typography>
             </Stack>
           </Stack>
         </Stack>

@@ -1,7 +1,11 @@
 import { IUser } from "./account/contents/common";
 import { IGroup } from "./folders/[id]/contents/common";
 import { IDevice } from "./filters/[id]/contents/common";
-import { IFilter, IFilterUrl } from "./filters/contents/common";
+import {
+  IFilter,
+  IFilterCategory,
+  IFilterUrl,
+} from "./filters/contents/common";
 import {
   IChannel,
   IContentBucket,
@@ -268,6 +272,16 @@ class ApiController {
     );
   }
 
+  static async getAllFilterCategories() {
+    return get("filters/categories").then((response: any) => response.json());
+  }
+
+  static async getFilterCategories(id: IFilter["id"]) {
+    return get(`filters/${id}/whitelist/categories`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async getFilterDevices(id: IFilter["id"]) {
     return get(`devices?filterId=${id}`).then((response: any) =>
       response.json()
@@ -305,6 +319,20 @@ class ApiController {
     domain: IFilterUrl["url"]
   ) {
     return post(`filters/${filterId}/blacklist/exceptions`, { domain });
+  }
+
+  static async addWhitelistCategory(
+    filterId: IFilter["id"],
+    categoryId: IFilterCategory["categoryId"]
+  ) {
+    return post(`filters/${filterId}/whitelist/categories`, { categoryId });
+  }
+
+  static async removeWhitelistCategory(
+    filterId: IFilter["id"],
+    categoryId: IFilterCategory["categoryId"]
+  ) {
+    return dellete(`filters/${filterId}/whitelist/categories/${categoryId}`);
   }
 }
 

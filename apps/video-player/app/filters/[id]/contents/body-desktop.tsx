@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import FilterPageCategoriesSection from "../components/CategoriesSection";
 import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
@@ -18,8 +17,8 @@ export default function FilterPageDesktopBody(props: {
   filterId: number;
   filter: IFilter;
   categories: IFilterCategory[];
-  allowedCategories: IFilterUrl["id"][];
-  flipCategory: (id: IFilterCategory["id"]) => void;
+  allowedCategories: IFilterCategory["categoryId"][];
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
   allowedSites: IFilterUrl[];
   blockedSites: IFilterUrl[];
   blockedSearchWords: string[];

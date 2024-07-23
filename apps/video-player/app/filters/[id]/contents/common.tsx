@@ -69,9 +69,18 @@ export default function FilterPage(props: {
   }, [loadBlacklistExceptions]);
 
   const [categories, setCategories] = useState<IFilterCategory[]>([]);
+  useEffect(() => {
+    ApiController.getAllFilterCategories().then(setCategories);
+  }, []);
+
   const [allowedCategories, setAllowedCategories] = useState<
-    IFilterUrl["id"][]
+    IFilterCategory["categoryId"][]
   >([]);
+  useEffect(() => {
+    ApiController.getFilterCategories(props.filterId).then(
+      setAllowedCategories
+    );
+  }, [props.filterId]);
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([]);
 
@@ -90,6 +99,9 @@ export default function FilterPage(props: {
   }, [loadDevices]);
 
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setAllFilters);
+  }, []);
 
   const actions = [
     {
@@ -176,13 +188,17 @@ export default function FilterPage(props: {
         <FilterPageDesktopBody
           filterId={props.filterId}
           filter={filter}
-          flipCategory={(id) =>
-            setAllowedCategories(
-              allowedCategories.includes(id)
-                ? allowedCategories.filter((sid) => sid !== id)
-                : [...allowedCategories, id]
-            )
-          }
+          flipCategory={(id) => {
+            if (allowedCategories.includes(id)) {
+              setAllowedCategories(
+                allowedCategories.filter((sid) => sid !== id)
+              );
+              ApiController.removeWhitelistCategory(DUMMY_GROUP_ID, id);
+            } else {
+              setAllowedCategories([...allowedCategories, id]);
+              ApiController.addWhitelistCategory(DUMMY_GROUP_ID, id);
+            }
+          }}
           devices={devices}
           actions={actions}
           categories={categories}

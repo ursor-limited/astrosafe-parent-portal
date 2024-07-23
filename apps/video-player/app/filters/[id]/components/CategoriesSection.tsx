@@ -50,7 +50,7 @@ const FilterPageCategoriesSection = (props: {
   filter: IFilter;
   categories: IFilterCategory[];
   allowedCategories: IFilterUrl["id"][];
-  flipCategory: (id: number) => void;
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
@@ -62,7 +62,7 @@ const FilterPageCategoriesSection = (props: {
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.categories.map((c, i) => (
-        <UrsorFadeIn key={c.id} duration={800} delay={i * 80}>
+        <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 80}>
           <Stack
             height="72px"
             bgcolor="rgb(255,255,255)"
@@ -82,8 +82,8 @@ const FilterPageCategoriesSection = (props: {
               </Stack>
             </Stack>
             <AstroSwitch
-              on={props.allowedCategories.includes(c.id)}
-              callback={() => props.flipCategory(c.id)}
+              on={props.allowedCategories.includes(c.categoryId)}
+              callback={() => props.flipCategory(c.categoryId)}
             />
           </Stack>
         </UrsorFadeIn>

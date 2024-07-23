@@ -4,14 +4,12 @@ import { useEffect, useState } from "react";
 import AllFiltersPageDesktopBody from "./body-desktop";
 import AllFiltersPageMobileBody, { DUMMY_GROUP_ID } from "./body-mobile";
 import ApiController from "@/app/api";
-import FilterRenameDialog from "../[id]/components/FilterRenameDialog";
 import { useRouter } from "next/navigation";
 import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 
 export interface IFilterCategory {
-  id: number;
+  categoryId: number;
   title: string;
-  groupId: number;
 }
 
 export interface IFilterUrl {
