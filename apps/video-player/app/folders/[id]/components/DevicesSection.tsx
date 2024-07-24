@@ -71,7 +71,7 @@ const DevicesSection = (props: {
                   //     <XIcon height={16} width={16} />
                   //   </Stack>
                   // }
-                  hideToggles
+                  noExtras
                 />
               </UrsorFadeIn>
             ))}

@@ -62,7 +62,7 @@ const FilterPageDevicesSection = (props: {
           <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-                <DeviceCard {...d} />
+                <DeviceCard {...d} noExtras />
               </UrsorFadeIn>
             ))}
           </DynamicCardGrid>

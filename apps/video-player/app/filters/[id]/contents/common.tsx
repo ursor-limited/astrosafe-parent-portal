@@ -83,6 +83,11 @@ export default function FilterPage(props: {
   }, [props.filterId]);
 
   const [blockedSearchWords, setBlockedSearchWords] = useState<string[]>([]);
+  useEffect(() => {
+    ApiController.getBlockedSearchWords(props.filterId).then(
+      setBlockedSearchWords
+    );
+  }, [props.filterId]);
 
   const [exceptionDialogOpen, setExceptionDialogOpen] =
     useState<boolean>(false);
@@ -163,12 +168,14 @@ export default function FilterPage(props: {
           allowedSites={whitelistExceptions}
           blockedSites={blacklistExceptions}
           blockedSearchWords={blockedSearchWords}
-          addToBlockedSearchWords={(word) =>
-            setBlockedSearchWords([...blockedSearchWords, word])
-          }
-          removeFromBlockedSearchWords={(word) =>
-            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
-          }
+          addToBlockedSearchWords={(word) => {
+            setBlockedSearchWords([...blockedSearchWords, word]);
+            ApiController.addBlockedSearchWord(props.filterId, word);
+          }}
+          removeFromBlockedSearchWords={(word) => {
+            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word));
+            ApiController.removeBlockedSearchWord(props.filterId, word);
+          }}
           setExceptionDialogOpen={(url) => setExceptionDialogOpen(true)}
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
@@ -206,12 +213,14 @@ export default function FilterPage(props: {
           allowedSites={whitelistExceptions}
           blockedSites={blacklistExceptions}
           blockedSearchWords={blockedSearchWords}
-          addToBlockedSearchWords={(word) =>
-            setBlockedSearchWords([...blockedSearchWords, word])
-          }
-          removeFromBlockedSearchWords={(word) =>
-            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word))
-          }
+          addToBlockedSearchWords={(word) => {
+            setBlockedSearchWords([...blockedSearchWords, word]);
+            ApiController.addBlockedSearchWord(props.filterId, word);
+          }}
+          removeFromBlockedSearchWords={(word) => {
+            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word));
+            ApiController.removeBlockedSearchWord(props.filterId, word);
+          }}
           setExceptionDialogOpen={(url) => setExceptionDialogOpen(true)}
           titleRow={titleRow}
           onRemoveDevice={loadDevices}

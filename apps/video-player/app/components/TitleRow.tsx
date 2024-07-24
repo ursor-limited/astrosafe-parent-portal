@@ -35,6 +35,7 @@ const TitleRowItemCore = (
           variant={props.isMobile ? "medium" : "h4"}
           color={!props.last ? PALETTE.secondary.grey[3] : undefined}
           maxLines={1}
+          sx={{ wordBreak: "break-all" }}
         >
           {props.text}
         </Typography>

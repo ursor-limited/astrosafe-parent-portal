@@ -182,6 +182,7 @@ const DeviceCard = (
     url?: string;
     button?: React.ReactNode;
     small?: boolean;
+    noExtras?: boolean;
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
@@ -189,7 +190,12 @@ const DeviceCard = (
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
     <AstroCard>
-      <Stack p="20px" pb={0} boxSizing="border-box" position="relative">
+      <Stack
+        p="20px"
+        pb={props.noExtras ? undefined : 0}
+        boxSizing="border-box"
+        position="relative"
+      >
         <Stack
           position="absolute"
           top="28px"
@@ -212,8 +218,8 @@ const DeviceCard = (
           width="94%"
         >
           <Stack
-            minHeight={props.small ? "40px" : "97px"}
-            minWidth={props.small ? "40px" : "97px"}
+            minHeight={props.small ? "40px" : "92px"}
+            minWidth={props.small ? "40px" : "92px"}
             borderRadius="100%"
             overflow="hidden"
             bgcolor={props.backgroundColor}
@@ -226,8 +232,8 @@ const DeviceCard = (
           >
             <Image
               src={props.profileAvatarUrl}
-              height={props.small ? 40 : 97}
-              width={props.small ? 40 : 97}
+              height={props.small ? 40 : 92}
+              width={props.small ? 40 : 92}
               alt="device profile"
             />
           </Stack>
@@ -272,35 +278,42 @@ const DeviceCard = (
             </Stack>
           </Stack>
         </Stack>
-        <Stack spacing="12px" pt="20px">
-          <DeviceCardCurrentUrlSection
-            url="nintendo.com"
-            title="Got to bind this up with API"
-            faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
-          />
-          <DeviceCardScreenTimeSection totalTime={5004} elapsedTime={4020} />
-          <DeviceCardBrowsingStatusSection
-            browsingEnabled={browsingEnabled}
-            flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
-          />
-        </Stack>
-        <Stack
-          minHeight="70px"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-          }}
-          alignItems="center"
-          justifyContent="center"
-          direction="row"
-          spacing="8px"
-        >
-          <Typography bold variant="small" color={PALETTE.primary.indigo}>
-            Go to Device
-          </Typography>
-          <ChevronRightIcon height="16px" width="16px" />
-        </Stack>
+        {!props.noExtras ? (
+          <>
+            <Stack spacing="12px" pt="20px">
+              <DeviceCardCurrentUrlSection
+                url="nintendo.com"
+                title="Got to bind this up with API"
+                faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
+              />
+              <DeviceCardScreenTimeSection
+                totalTime={5004}
+                elapsedTime={4020}
+              />
+              <DeviceCardBrowsingStatusSection
+                browsingEnabled={browsingEnabled}
+                flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+              />
+            </Stack>
+            <Stack
+              minHeight="70px"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.6 },
+                transition: "0.2s",
+              }}
+              alignItems="center"
+              justifyContent="center"
+              direction="row"
+              spacing="8px"
+            >
+              <Typography bold variant="small" color={PALETTE.primary.indigo}>
+                Go to Device
+              </Typography>
+              <ChevronRightIcon height="16px" width="16px" />
+            </Stack>
+          </>
+        ) : null}
       </Stack>
     </AstroCard>
   );

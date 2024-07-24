@@ -73,7 +73,7 @@ const SearchWordsSection = (props: {
               <Grid key={i} item>
                 <BlockedWordTag
                   word={bs}
-                  onClick={() => props.removeWord(inputValue)}
+                  onClick={() => props.removeWord(bs)}
                 />
               </Grid>
             ))}
@@ -84,7 +84,7 @@ const SearchWordsSection = (props: {
               <BlockedWordTag
                 key={i}
                 word={bs}
-                onClick={() => props.removeWord(inputValue)}
+                onClick={() => props.removeWord(bs)}
               />
             ))}
           </Stack>

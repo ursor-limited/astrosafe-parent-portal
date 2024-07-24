@@ -334,6 +334,20 @@ class ApiController {
   ) {
     return dellete(`filters/${filterId}/whitelist/categories/${categoryId}`);
   }
+
+  static async getBlockedSearchWords(filterId: IFilter["id"]) {
+    return get(`filters/${filterId}/blacklist/words`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async addBlockedSearchWord(filterId: IFilter["id"], word: string) {
+    return post(`filters/${filterId}/blacklist/words`, { word });
+  }
+
+  static async removeBlockedSearchWord(filterId: IFilter["id"], word: string) {
+    return dellete(`filters/${filterId}/blacklist/words/${word}`);
+  }
 }
 
 export default ApiController;

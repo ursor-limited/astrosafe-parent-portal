@@ -62,7 +62,7 @@ const FilterPageCategoriesSection = (props: {
   >
     <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
       {props.categories.map((c, i) => (
-        <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 80}>
+        <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 40}>
           <Stack
             height="72px"
             bgcolor="rgb(255,255,255)"
