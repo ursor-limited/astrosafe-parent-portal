@@ -7,6 +7,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useLocalStorage, useWindowSize } from "usehooks-ts";
 import { useEffect, useState } from "react";
+import AccountPagePricingCard from "./AccountPagePricingCard";
 
 export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
 export type AstroCurrency = (typeof astroCurrency)[number];
