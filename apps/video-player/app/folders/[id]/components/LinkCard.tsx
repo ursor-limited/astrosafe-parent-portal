@@ -1,8 +1,8 @@
-import { IContent, ILink } from "@/app/profiles/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import ApiController from "@/app/api";
+import { ILink } from "@/app/profiles/[id]/components/ContentTab";
 
 const IMAGE_HEIGHT = 227;
 

@@ -1,4 +1,3 @@
-import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import { Stack } from "@mui/system";
@@ -27,7 +26,7 @@ const MobileFilterPageCategoriesSection = (props: {
         <FilterLegend small />
       </Stack>
       {props.categories.map((c, i) => (
-        <UrsorFadeIn key={c.id} duration={800} delay={i * 80}>
+        <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 80}>
           <Stack
             height="50px"
             bgcolor="rgb(255,255,255)"
@@ -47,8 +46,8 @@ const MobileFilterPageCategoriesSection = (props: {
               </Stack>
             </Stack>
             <AstroSwitch
-              on={props.allowedCategories.includes(c.id)}
-              callback={() => props.flipCategory(c.id)}
+              on={props.allowedCategories.includes(c.categoryId)}
+              callback={() => props.flipCategory(c.categoryId)}
             />
           </Stack>
         </UrsorFadeIn>

@@ -177,58 +177,58 @@ export function WorksheetGeneratorEquationModule(
 
   const userDetails = useUserContext();
 
-  useEffect(() => {
-    setPreviewWorksheet(
-      <EquationWorksheet
-        title={props.title}
-        description={props.description}
-        orientation={orientation}
-        topic={props.topic}
-        nDigits={nDigits}
-        pairs={pairs}
-        pageIndex={props.pageIndex}
-      />
-    );
-    props.setCreationCallback(() =>
-      ApiController.createEquationWorksheet(
-        props.title,
-        orientation,
-        props.topic,
-        max || 1,
-        randomize,
-        pairs,
-        factor,
-        props.description,
-        userDetails?.user?.id
-      ).then((ws) => ws.id)
-    );
-    props.id &&
-      props.setUpdateCallback(() =>
-        ApiController.updateEquationWorksheet(
-          props.id!,
-          props.title,
-          orientation,
-          props.topic,
-          max || 1,
-          randomize,
-          pairs,
-          factor,
-          props.description
-        )
-      );
-  }, [
-    props.title,
-    props.description,
-    props.topic,
-    nDigits,
-    factor,
-    pairs,
-    max,
-    randomize,
-    props.pageIndex,
-    orientation,
-    userDetails.user?.id,
-  ]);
+  // useEffect(() => {
+  //   setPreviewWorksheet(
+  //     <EquationWorksheet
+  //       title={props.title}
+  //       description={props.description}
+  //       orientation={orientation}
+  //       topic={props.topic}
+  //       nDigits={nDigits}
+  //       pairs={pairs}
+  //       pageIndex={props.pageIndex}
+  //     />
+  //   );
+  //   props.setCreationCallback(() =>
+  //     ApiController.createEquationWorksheet(
+  //       props.title,
+  //       orientation,
+  //       props.topic,
+  //       max || 1,
+  //       randomize,
+  //       pairs,
+  //       factor,
+  //       props.description,
+  //       userDetails?.user?.id
+  //     ).then((ws) => ws.id)
+  //   );
+  //   props.id &&
+  //     props.setUpdateCallback(() =>
+  //       ApiController.updateEquationWorksheet(
+  //         props.id!,
+  //         props.title,
+  //         orientation,
+  //         props.topic,
+  //         max || 1,
+  //         randomize,
+  //         pairs,
+  //         factor,
+  //         props.description
+  //       )
+  //     );
+  // }, [
+  //   props.title,
+  //   props.description,
+  //   props.topic,
+  //   nDigits,
+  //   factor,
+  //   pairs,
+  //   max,
+  //   randomize,
+  //   props.pageIndex,
+  //   orientation,
+  //   userDetails.user?.id,
+  // ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);

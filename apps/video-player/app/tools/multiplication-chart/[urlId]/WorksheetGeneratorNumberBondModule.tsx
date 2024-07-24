@@ -223,56 +223,56 @@ export function WorksheetGeneratorNumberBondModule(
 
   const userDetails = useUserContext();
 
-  useEffect(() => {
-    setPreviewWorksheet(
-      <NumberBondWorksheet
-        title={props.title}
-        description={props.description}
-        orientation={orientation}
-        sum={sum}
-        empty={empty}
-        leftNumbers={leftNumbers}
-        pageIndex={props.pageIndex}
-      />
-    );
-    props.setCreationCallback(() =>
-      ApiController.createNumberBondWorksheet(
-        props.title,
-        orientation,
-        sum ?? 0,
-        empty,
-        leftNumbers,
-        props.description,
-        userDetails.user?.id
-      )
-        // .then((ws) => {
-        //   router.push(`/worksheet/${ws.id}`);
-        //   return ws;
-        // })
-        .then((ws) => ws.id)
-    );
-    props.id &&
-      props.setUpdateCallback(() =>
-        ApiController.updateNumberBondWorksheet(
-          props.id!,
-          props.title,
-          orientation,
-          sum ?? 0,
-          empty,
-          leftNumbers,
-          props.description
-        )
-      );
-  }, [
-    props.title,
-    props.description,
-    sum,
-    props.pageIndex,
-    orientation,
-    empty,
-    leftNumbers,
-    userDetails.user?.id,
-  ]);
+  // useEffect(() => {
+  //   setPreviewWorksheet(
+  //     <NumberBondWorksheet
+  //       title={props.title}
+  //       description={props.description}
+  //       orientation={orientation}
+  //       sum={sum}
+  //       empty={empty}
+  //       leftNumbers={leftNumbers}
+  //       pageIndex={props.pageIndex}
+  //     />
+  //   );
+  //   props.setCreationCallback(() =>
+  //     ApiController.createNumberBondWorksheet(
+  //       props.title,
+  //       orientation,
+  //       sum ?? 0,
+  //       empty,
+  //       leftNumbers,
+  //       props.description,
+  //       userDetails.user?.id
+  //     )
+  //       // .then((ws) => {
+  //       //   router.push(`/worksheet/${ws.id}`);
+  //       //   return ws;
+  //       // })
+  //       .then((ws) => ws.id)
+  //   );
+  //   props.id &&
+  //     props.setUpdateCallback(() =>
+  //       ApiController.updateNumberBondWorksheet(
+  //         props.id!,
+  //         props.title,
+  //         orientation,
+  //         sum ?? 0,
+  //         empty,
+  //         leftNumbers,
+  //         props.description
+  //       )
+  //     );
+  // }, [
+  //   props.title,
+  //   props.description,
+  //   sum,
+  //   props.pageIndex,
+  //   orientation,
+  //   empty,
+  //   leftNumbers,
+  //   userDetails.user?.id,
+  // ]);
   useEffect(() => {
     previewWorksheet && props.callback(previewWorksheet);
   }, [previewWorksheet]);
