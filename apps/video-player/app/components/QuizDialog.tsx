@@ -287,46 +287,46 @@ const QuizDialog = (props: {
 
   const notificationCtx = useContext(NotificationContext);
 
-  const submitCreation = () =>
-    ApiController.createQuiz(
-      title,
-      userDetails?.id ?? "",
-      questions.map((q) => ({
-        ..._.omit(q, "id"),
-        options: q.options?.map((o) => o.value) || [],
-        correctOptions: q.correctOptions.map(
-          (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
-        ),
-      })),
-      description
-    ).then((newQuiz) => {
-      props.closeCallback();
-      props.creationCallback?.(newQuiz);
-    });
+  // const submitCreation = () =>
+  //   ApiController.createQuiz(
+  //     title,
+  //     userDetails?.id ?? "",
+  //     questions.map((q) => ({
+  //       ..._.omit(q, "id"),
+  //       options: q.options?.map((o) => o.value) || [],
+  //       correctOptions: q.correctOptions.map(
+  //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
+  //       ),
+  //     })),
+  //     description
+  //   ).then((newQuiz) => {
+  //     props.closeCallback();
+  //     props.creationCallback?.(newQuiz);
+  //   });
 
-  const submitUpdate = () =>
-    props.quiz?.id &&
-    ApiController.updateQuiz(props.quiz?.id, {
-      title,
-      description,
-      questions: questions.map((q) => ({
-        ..._.omit(q, "id"),
-        options: q.options?.map((o) => o.value) || [],
-        correctOptions: q.correctOptions.map(
-          (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
-        ),
-      })),
-    })
-      .then(() => {
-        props.editingCallback?.();
-        props.closeCallback();
-      })
-      .then(() => notificationCtx.success("Updated Quiz"));
+  // const submitUpdate = () =>
+  //   props.quiz?.id &&
+  //   ApiController.updateQuiz(props.quiz?.id, {
+  //     title,
+  //     description,
+  //     questions: questions.map((q) => ({
+  //       ..._.omit(q, "id"),
+  //       options: q.options?.map((o) => o.value) || [],
+  //       correctOptions: q.correctOptions.map(
+  //         (qo) => q.options?.map((o) => o.id)?.indexOf(qo)
+  //       ),
+  //     })),
+  //   })
+  //     .then(() => {
+  //       props.editingCallback?.();
+  //       props.closeCallback();
+  //     })
+  //     .then(() => notificationCtx.success("Updated Quiz"));
 
-  const [listEndRef, setListEndRef] = useState<HTMLElement | null>(null);
-  const scrollToBottom = useCallback(() => {
-    listEndRef?.scrollIntoView({ behavior: "smooth" });
-  }, [listEndRef]);
+  // const [listEndRef, setListEndRef] = useState<HTMLElement | null>(null);
+  // const scrollToBottom = useCallback(() => {
+  //   listEndRef?.scrollIntoView({ behavior: "smooth" });
+  // }, [listEndRef]);
 
   return (
     <>
@@ -375,7 +375,7 @@ const QuizDialog = (props: {
                 dark
                 variant="tertiary"
                 endIcon={PencilIcon}
-                onClick={() => (props.quiz ? submitUpdate : submitCreation)()}
+                //onClick={() => (props.quiz ? submitUpdate : submitCreation)()}
               >
                 {props.quiz ? "Update" : "Create"}
               </UrsorButton>
@@ -462,7 +462,7 @@ const QuizDialog = (props: {
                     endIcon={PlusIcon}
                     onClick={() => {
                       setQuestions([...questions, getNewQuestion()]);
-                      setTimeout(() => scrollToBottom(), 300);
+                      //setTimeout(() => scrollToBottom(), 300);
                     }}
                     disabled={questions.length === MAX_QUESTIONS}
                   >
@@ -587,14 +587,14 @@ const QuizDialog = (props: {
                         }
                       />
                     ))}
-                    <Stack alignItems="center" ref={setListEndRef}>
+                    {/* <Stack alignItems="center" ref={setListEndRef}>
                       <CircularPlusButton
                         onClick={() => {
                           setTimeout(() => scrollToBottom(), 300);
                           setQuestions([...questions, getNewQuestion()]);
                         }}
                       />
-                    </Stack>
+                    </Stack> */}
                   </Stack>
                 </Stack>
               </Stack>
