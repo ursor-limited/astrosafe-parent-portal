@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
+import { UrsorTypographyVariant } from "ui/typography";
 
 const daysN = 7;
 const hoursInterval = 2;
@@ -12,6 +13,9 @@ const AstroTimeChart = (props: {
   times: number[];
   selectedDayIndex: number;
   setSelectedDayIndex: (i: number) => void;
+  barWidth?: number;
+  labelFontSize?: UrsorTypographyVariant;
+  barsXPadding?: number;
 }) => {
   const [maxTime, setMaxTime] = useState<number>(0);
   useEffect(
@@ -47,7 +51,12 @@ const AstroTimeChart = (props: {
     }
   }, [props.selectedDayIndex, props.times]);
   return (
-    <Stack flex={1} px="24px" position="relative" mr="56px !important">
+    <Stack
+      flex={1}
+      px={`${props.barsXPadding}px` ?? "24px"}
+      position="relative"
+      mr="56px !important"
+    >
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
         <Stack flex={1} justifyContent="space-between" pb="28px">
           {[...Array(1 + yRange / hoursInterval).keys()].map((i) => (
@@ -95,7 +104,7 @@ const AstroTimeChart = (props: {
             >
               <Stack
                 height={`${(100 * props.times[dayIndex]) / yRange}%`}
-                width="32px"
+                width={props.barWidth ?? "32px"}
                 borderRadius="4px 4px 0 0"
                 bgcolor={
                   props.selectedDayIndex === dayIndex
@@ -109,24 +118,38 @@ const AstroTimeChart = (props: {
               >
                 {props.times[dayIndex] >= TIME_LIMIT ? (
                   <Stack
-                    width="50px"
-                    justifyContent="center"
                     position="absolute"
-                    top="-25px"
-                    sx={{
-                      transform: "translateX(-8.5px)",
-                    }}
+                    left={0}
+                    right={0}
+                    margin="0 auto"
+                    width={0}
+                    overflow="visible"
+                    alignItems="center"
                   >
-                    <Typography
-                      variant="tiny"
-                      bold
-                      color={PALETTE.secondary.grey[3]}
-                      sx={{
-                        textAlign: "center",
-                      }}
+                    <Stack
+                      width="50px"
+                      justifyContent="center"
+                      position="absolute"
+                      top="-25px"
+                      sx={
+                        {
+                          // transform: `translateX(-${
+                          //   props.limitReachedXTranslation ?? "8.5"
+                          // }px)`,
+                        }
+                      }
                     >
-                      Limit reached
-                    </Typography>
+                      <Typography
+                        variant="tiny"
+                        bold
+                        color={PALETTE.secondary.grey[3]}
+                        sx={{
+                          textAlign: "center",
+                        }}
+                      >
+                        Limit reached
+                      </Typography>
+                    </Stack>
                   </Stack>
                 ) : null}
               </Stack>
@@ -139,6 +162,7 @@ const AstroTimeChart = (props: {
                       ? undefined
                       : PALETTE.secondary.grey[3]
                   }
+                  variant={props.labelFontSize ?? "normal"}
                 >
                   {dayjs()
                     .subtract(dayIndex, "days")

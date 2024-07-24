@@ -16,7 +16,7 @@ import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 dayjs.extend(advancedFormat);
 
-const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
+export const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
   {
     id: 1,
     domain: "https://www.nationalreview.com/",
@@ -93,7 +93,7 @@ const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
   },
 ];
 
-const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
+export const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
   {
     id: 1,
     url: "https://www.nationalreview.com/",
@@ -126,7 +126,7 @@ const DUMMY_MOST_VISITED: (IFilterUrl & { time: number })[] = [
   },
 ];
 
-const DevicePageInsightsTab = (props: { isMobile: boolean }) => {
+const DevicePageInsightsTab = () => {
   const [timeSpent, setTimeSpent] = useState<number>(59083);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   return (

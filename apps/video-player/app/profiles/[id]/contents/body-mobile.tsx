@@ -15,6 +15,8 @@ import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import DevicePageLimitsTab from "../components/LimitsTab";
+import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
+import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -25,88 +27,37 @@ const ProfilePageMobileBody = (props: {
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("insights");
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
-      <Stack pl="48px">
-        <Stack
-          bgcolor="rgb(255,255,255)"
-          height="52px"
-          minHeight="52px"
-          borderRadius="12px"
-          px="16px"
-          boxSizing="border-box"
-          alignItems="center"
-          spacing="20px"
-          direction="row"
-        >
-          <Typography bold variant="large">
-            Currently viewing
-          </Typography>
-          <Link
-            href="https://nintendo.com"
-            target="_blank"
-            style={{
-              textDecoration: "none",
-            }}
-          >
-            <Stack
-              alignItems="center"
-              spacing="12px"
-              direction="row"
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.7 },
-                transition: "0.2s",
-                svg: { path: { fill: PALETTE.secondary.purple[2] } },
-              }}
-            >
-              <Stack
-                height="28px"
-                width="28px"
-                borderRadius="7px"
-                overflow="hidden"
-              >
-                <Image
-                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
-                  height={28}
-                  width={28}
-                  alt="most viewed favicon"
-                />
-              </Stack>
-              <Typography
-                variant="large"
-                bold
-                color={PALETTE.secondary.blue[3]}
-              >
-                nintendo.com/i-wanna-marry-princess-peach
-              </Typography>
-              <LinkExternalIcon width="24px" height="24px" />
-            </Stack>
-          </Link>
-        </Stack>
+      <Stack overflow="scroll">
+        <HorizontalDeviceCard {...props.device} />
       </Stack>
       <Stack minHeight="24px" alignItems="center">
         <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
       </Stack>
-      <Stack pl="48px" spacing="24px">
+      <Stack spacing="24px">
         <AstroTabSwitch
           select={(id) => setSelectedTab(id as AstroAccountTab)}
           selected={selectedTab}
           items={[
             {
-              text: "Monitoring",
-              id: "monitoring",
-            },
-            {
-              text: "Settings",
-              id: "settings",
-            },
-            {
               text: "Content",
               id: "content",
+            },
+            {
+              text: "Apps",
+              id: "apps",
+            },
+            {
+              text: "Insights",
+              id: "insights",
+            },
+            {
+              text: "Limits",
+              id: "limits",
             },
           ]}
         />
         {selectedTab === "insights" ? (
-          <DevicePageInsightsTab />
+          <DevicePageMobileInsightsTab />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab />
         ) : selectedTab === "limits" ? (
