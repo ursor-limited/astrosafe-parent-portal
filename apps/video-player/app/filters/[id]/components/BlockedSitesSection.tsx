@@ -138,32 +138,34 @@ const FilterPageBlockedSitesSection = (props: {
             leftAlign
             boldValue
           />
-          <UrsorTable
-            columns={TABLE_COLUMNS}
-            rows={sortedRows}
-            defaultSortedByColumn="createdAt"
-            defaultSortedAscending
-            selectedSort={sortedColumn}
-            ascending={sortDirection === "asc"}
-            sortSelectionCallback={(columnId) => {
-              if (columnId === sortedColumn) {
-                setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-              } else {
-                setSortedColumn(columnId);
-                setSortDirection("asc");
-              }
-            }}
-            noHeaderGradient
-            getActionButtonItems={(id) => [
-              {
-                icon: TrashcanIcon,
-                text: "Delete",
-                kallback: () => null,
-                color: PALETTE.system.red,
-              },
-            ]}
-            rowClickCallback={(id) => null}
-          />
+          {sortedRows.length > 0 ? (
+            <UrsorTable
+              columns={TABLE_COLUMNS}
+              rows={sortedRows}
+              defaultSortedByColumn="createdAt"
+              defaultSortedAscending
+              selectedSort={sortedColumn}
+              ascending={sortDirection === "asc"}
+              sortSelectionCallback={(columnId) => {
+                if (columnId === sortedColumn) {
+                  setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+                } else {
+                  setSortedColumn(columnId);
+                  setSortDirection("asc");
+                }
+              }}
+              noHeaderGradient
+              getActionButtonItems={(id) => [
+                {
+                  icon: TrashcanIcon,
+                  text: "Delete",
+                  kallback: () => null,
+                  color: PALETTE.system.red,
+                },
+              ]}
+              rowClickCallback={(id) => null}
+            />
+          ) : null}
         </Stack>
       </AstroBentoCard>
       <FilterBlacklistExceptionDialog

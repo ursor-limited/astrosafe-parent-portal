@@ -39,7 +39,6 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
           // width: "30px !important",
           height: "42px",
           border: "none",
-          fontFamily: "__Rubik_5c20f6",
           fontSize: 15,
           background: "transparent",
           // "> abbr": {

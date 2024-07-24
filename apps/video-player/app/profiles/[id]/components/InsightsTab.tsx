@@ -131,7 +131,7 @@ const DevicePageInsightsTab = () => {
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
   return (
     <>
-      <Stack spacing="24px">
+      <Stack spacing="24px" pb="32px">
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" spacing="10px" alignItems="center">
             <Stack
