@@ -2,7 +2,6 @@
 
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
-import MailIcon from "@/images/icons/MailIcon.svg";
 import { Stack, alpha } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import UrsorDialog from "./UrsorDialog";
@@ -10,11 +9,17 @@ import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
-import {
-  AstroCurrency,
-  CURRENCY_SYMBOLS,
-} from "../account_legacy/PricingCards";
 import AstroSwitch from "./AstroSwitch";
+
+export const astroCurrency = ["USD", "GBP", "CAD", "EUR"] as const;
+export type AstroCurrency = (typeof astroCurrency)[number];
+
+export const CURRENCY_SYMBOLS: Record<AstroCurrency, string> = {
+  USD: "$",
+  GBP: "£",
+  CAD: "CA$",
+  EUR: "€",
+};
 
 interface IAstroProduct {
   monthlyId: string;
