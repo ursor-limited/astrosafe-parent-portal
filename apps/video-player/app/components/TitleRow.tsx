@@ -29,16 +29,22 @@ const TitleRowItemCore = (
       }}
     >
       {props.image}
-      <Typography
-        bold
-        variant={props.isMobile ? "medium" : "h4"}
-        color={!props.last ? PALETTE.secondary.grey[3] : undefined}
-      >
-        {props.text}
-      </Typography>
+      <Stack justifyContent="center">
+        <Typography
+          bold
+          variant={props.isMobile ? "medium" : "h4"}
+          color={!props.last ? PALETTE.secondary.grey[3] : undefined}
+          maxLines={1}
+        >
+          {props.text}
+        </Typography>
+      </Stack>
       {props.label ? (
         <Stack justifyContent="flex-end">
-          <Typography color={PALETTE.secondary.grey[4]}>
+          <Typography
+            variant={props.isMobile ? "tiny" : "normal"}
+            color={PALETTE.secondary.grey[4]}
+          >
             {props.label}
           </Typography>
         </Stack>
