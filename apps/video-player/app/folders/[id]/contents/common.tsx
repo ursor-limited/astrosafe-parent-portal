@@ -277,8 +277,9 @@ export default function FolderPage(props: {
           folderId={props.folderId}
           creationCallback={loadFolderAndContents}
           updateDetails={{
-            link: contents.find((c) => c.content.id === linkEditingDialogId)
-              ?.content as ILink,
+            link: contents.find(
+              (c) => c.content.id === linkEditingDialogId && c.type === "link"
+            )?.content as ILink,
             callback: loadFolderAndContents,
           }}
         />
@@ -292,8 +293,9 @@ export default function FolderPage(props: {
           folderId={props.folderId}
           creationCallback={loadFolderAndContents}
           updateDetails={{
-            video: contents.find((c) => c.content.id === videoEditingDialogId)
-              ?.content as IVideo,
+            video: contents.find(
+              (c) => c.content.id === videoEditingDialogId && c.type === "video"
+            )?.content as IVideo,
             callback: loadFolderAndContents,
           }}
         />
@@ -308,7 +310,8 @@ export default function FolderPage(props: {
           creationCallback={loadFolderAndContents}
           updateDetails={{
             channel: contents.find(
-              (c) => c.content.id === channelEditingDialogId
+              (c) =>
+                c.content.id === channelEditingDialogId && c.type === "channel"
             )?.content as IChannel,
             callback: loadFolderAndContents,
           }}

@@ -62,7 +62,16 @@ const FilterPageDevicesSection = (props: {
           <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-                <DeviceCard {...d} noExtras />
+                <Stack
+                  onClick={() => router.push(`/profiles/${d.id}`)}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }}
+                >
+                  <DeviceCard {...d} noExtras />
+                </Stack>
               </UrsorFadeIn>
             ))}
           </DynamicCardGrid>

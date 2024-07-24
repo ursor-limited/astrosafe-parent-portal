@@ -121,6 +121,12 @@ class ApiController {
     );
   }
 
+  static async getDeviceFolders(id: IDevice["id"]) {
+    return get(`content/buckets?deviceId=${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async addFolderToDevice(
     folderId: IContentBucket["id"],
     deviceId: IDevice["id"]
@@ -212,14 +218,14 @@ class ApiController {
   static async createChannel(
     title: IChannel["title"],
     url: IChannel["url"],
-    backgroundUrl: IChannel["backgroundUrl"],
+    bannerUrl: IChannel["bannerUrl"],
     profileUrl: IChannel["profileUrl"],
     contentBucketId: IContentBucket["id"]
   ) {
     return post(`content/channels`, {
       title,
       url,
-      backgroundUrl,
+      bannerUrl,
       profileUrl,
       contentBucketId,
     });
@@ -229,13 +235,13 @@ class ApiController {
     id: IChannel["id"],
     title: IChannel["title"],
     url: IChannel["url"],
-    backgroundUrl: IChannel["backgroundUrl"],
+    bannerUrl: IChannel["bannerUrl"],
     profileUrl: IChannel["profileUrl"]
   ) {
     return put(`content/channels/${id}`, {
       title,
       url,
-      backgroundUrl,
+      bannerUrl,
       profileUrl,
     });
   }

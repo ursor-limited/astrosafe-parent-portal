@@ -8,16 +8,12 @@ import {
   UrsorTextField,
 } from "ui";
 import _ from "lodash";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import DesktopDownloadIcon from "@/images/icons/DesktopDownloadIcon.svg";
-import Image from "next/image";
-import WonderingIllustration from "@/images/WonderingIllustration.png";
 import { isMobile } from "react-device-detect";
 import UrsorDialog from "@/app/components/UrsorDialog";
-import { AstroContent } from "@/app/profiles/[id]/ContentTab";
 import { CONTENT_DISPLAY_NAMES } from "./ContentCard";
-import { IFilterUrl } from "@/app/filters/contents/FiltersPageContents";
 import { LabeledInputField } from "ui/labeled-input-field";
+import { AstroContent } from "@/app/profiles/[id]/components/ContentTab";
+import { IFilterUrl } from "@/app/filters/contents/common";
 
 export interface IContentCreationDialogProps {
   open: boolean;

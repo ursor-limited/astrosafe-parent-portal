@@ -16,6 +16,9 @@ import { DUMMY_DOMAIN_URLS, DUMMY_MOST_VISITED } from "./InsightsTab";
 import MobileHistorySection from "./MobileHistorySection";
 dayjs.extend(advancedFormat);
 
+export const cleanUrl = (url: string) =>
+  url.replace("http://", "").replace("https://", "").replace("www.", "");
+
 const DevicePageMobileInsightsTab = () => {
   const [timeSpent, setTimeSpent] = useState<number>(59083);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
@@ -158,10 +161,7 @@ const DevicePageMobileInsightsTab = () => {
                           color={PALETTE.secondary.grey[3]}
                           maxLines={1}
                         >
-                          {site.url
-                            .replace("http://", "")
-                            .replace("https://", "")
-                            .replace("www.", "")}
+                          {cleanUrl(site.url)}
                         </Typography>
                       </Stack>
                       <Stack

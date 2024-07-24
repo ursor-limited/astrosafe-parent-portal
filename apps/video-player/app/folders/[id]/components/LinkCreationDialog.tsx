@@ -3,8 +3,11 @@ import ContentCreationDialog from "./ContentCreationDialog";
 import { useContext, useEffect, useState } from "react";
 import LinkCard from "./LinkCard";
 import ApiController from "@/app/api";
-import { IContentBucket, ILink } from "@/app/profiles/[id]/ContentTab";
 import NotificationContext from "@/app/components/NotificationContext";
+import {
+  IContentBucket,
+  ILink,
+} from "@/app/profiles/[id]/components/ContentTab";
 
 const LinkCreationDialog = (props: {
   open: boolean;

@@ -53,7 +53,9 @@ const VideoCreationDialog = (props: {
   return (
     <ContentCreationDialog
       open={props.open}
-      closeCallback={props.onClose}
+      closeCallback={() => {
+        props.onClose();
+      }}
       onSubmit={() => {
         (props.updateDetails?.callback ? submitUpdate : submitCreation)();
         props.onClose();
@@ -63,6 +65,7 @@ const VideoCreationDialog = (props: {
       title={title}
       setUrl={setUrl}
       url={url}
+      editing={!!props.updateDetails}
     >
       <Stack
         sx={{

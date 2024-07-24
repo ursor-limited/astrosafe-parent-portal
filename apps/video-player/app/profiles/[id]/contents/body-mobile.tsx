@@ -9,8 +9,10 @@ import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import DevicePageInsightsTab from "../components/InsightsTab";
-import DevicePageContentTab from "../components/ContentTab";
-import Link from "next/link";
+import DevicePageContentTab, {
+  IContentBucket,
+  IGroupContentBucket,
+} from "../components/ContentTab";
 import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
@@ -22,9 +24,13 @@ const ProfilePageMobileBody = (props: {
   device: IDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
+  folders: IGroupContentBucket[];
+  tab?: AstroAccountTab;
 }) => {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>("insights");
+  const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
+    props.tab ?? "content"
+  );
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
       <Stack overflow="scroll">
@@ -59,7 +65,7 @@ const ProfilePageMobileBody = (props: {
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab />
         ) : selectedTab === "content" ? (
-          <DevicePageContentTab />
+          <DevicePageContentTab folders={props.folders} />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab />
         ) : null}

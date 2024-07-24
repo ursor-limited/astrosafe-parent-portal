@@ -27,6 +27,8 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { useWindowSize } from "usehooks-ts";
+import { getAbsoluteUrl } from "@/app/api";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 
@@ -192,7 +194,11 @@ const FolderPageDesktopBody = (props: {
                             {x.type === "link" ? (
                               <LinkCard
                                 {...(x.content as ILink)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.content.url))
+                                  )
+                                }
                                 onDelete={props.loadFolderAndContents}
                                 onOpenEditingDialog={() =>
                                   props.setLinkEditingDialogId(x.content.id)
@@ -201,7 +207,11 @@ const FolderPageDesktopBody = (props: {
                             ) : x.type === "video" ? (
                               <VideoCard
                                 {...(x.content as IVideo)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.content.url))
+                                  )
+                                }
                                 onDelete={props.loadFolderAndContents}
                                 onOpenEditingDialog={() =>
                                   props.setVideoEditingDialogId(x.content.id)
@@ -210,7 +220,11 @@ const FolderPageDesktopBody = (props: {
                             ) : x.type === "channel" ? (
                               <ChannelCard
                                 {...(x.content as IChannel)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.content.url))
+                                  )
+                                }
                                 onDelete={props.loadFolderAndContents}
                                 onOpenEditingDialog={() =>
                                   props.setChannelEditingDialogId(x.content.id)

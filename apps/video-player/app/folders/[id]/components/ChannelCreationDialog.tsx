@@ -2,18 +2,19 @@ import { Stack } from "@mui/system";
 import ContentCreationDialog from "./ContentCreationDialog";
 import { useContext, useEffect, useState } from "react";
 import ChannelCard from "./ChannelCard";
-import { IChannel, IContentBucket } from "@/app/profiles/[id]/ContentTab";
 import NotificationContext from "@/app/components/NotificationContext";
 import ApiController from "@/app/api";
 import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import { PALETTE, Typography } from "ui";
 import InfoButton from "@/app/components/InfoButton";
+import { IGroupContentBucket } from "../../contents/common";
+import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
 
 const ChannelCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IContentBucket["id"];
+  folderId: IGroupContentBucket["id"];
   creationCallback: () => void;
   updateDetails?: {
     channel: IChannel;
@@ -25,7 +26,7 @@ const ChannelCreationDialog = (props: {
   const [profileUrl, setProfileUrl] = useState<string>(
     "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
   );
-  const [backgroundUrl, setBackgroundUrl] = useState<string>(
+  const [bannerUrl, setBannerUrl] = useState<string>(
     "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
   );
   useEffect(() => {
@@ -33,8 +34,7 @@ const ChannelCreationDialog = (props: {
     props.updateDetails && setUrl(props.updateDetails?.channel.url);
     props.updateDetails &&
       setProfileUrl(props.updateDetails?.channel.profileUrl);
-    props.updateDetails &&
-      setBackgroundUrl(props.updateDetails?.channel.backgroundUrl);
+    props.updateDetails && setBannerUrl(props.updateDetails?.channel.bannerUrl);
   }, [props.updateDetails]);
 
   const notificationCtx = useContext(NotificationContext);
@@ -43,7 +43,7 @@ const ChannelCreationDialog = (props: {
     ApiController.createChannel(
       title,
       url,
-      backgroundUrl,
+      bannerUrl,
       profileUrl,
       props.folderId
     ).then(props.creationCallback);
@@ -54,7 +54,7 @@ const ChannelCreationDialog = (props: {
       props.updateDetails.channel.id,
       title,
       url,
-      backgroundUrl,
+      bannerUrl,
       profileUrl
     )
       .then(props.updateDetails?.callback)
@@ -74,41 +74,44 @@ const ChannelCreationDialog = (props: {
       title={title}
       setUrl={setUrl}
       url={url}
-      buttonDisabled={!checked}
+      buttonDisabled={!checked && !props.updateDetails}
+      editing={!!props.updateDetails}
       extraBottomElement={
-        <Stack direction="row" spacing="8px">
-          <Stack
-            pt="3px"
-            sx={{
-              cursor: "pointer",
-              "&:hover": { opacity: 0.7 },
-              transition: "0.2s",
-              svg: {
-                path: {
-                  fill: PALETTE.secondary.purple[2],
+        !props.updateDetails ? (
+          <Stack direction="row" spacing="8px">
+            <Stack
+              pt="3px"
+              sx={{
+                cursor: "pointer",
+                "&:hover": { opacity: 0.7 },
+                transition: "0.2s",
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.purple[2],
+                  },
                 },
-              },
-            }}
-            onClick={() => setChecked(!checked)}
-          >
-            {checked ? (
-              <CheckboxIcon width="20px" height="20px" />
-            ) : (
-              <EmptyCheckboxIcon width="20px" height="20px" />
-            )}
+              }}
+              onClick={() => setChecked(!checked)}
+            >
+              {checked ? (
+                <CheckboxIcon width="20px" height="20px" />
+              ) : (
+                <EmptyCheckboxIcon width="20px" height="20px" />
+              )}
+            </Stack>
+            <Typography variant="small" bold>
+              {
+                "I'm aware that I'm adding all Videos from this Channel to the Folder."
+              }
+            </Typography>
+            <Stack>
+              <InfoButton
+                title="Boo"
+                body="Kirby is so much better than Jigglypuff"
+              />
+            </Stack>
           </Stack>
-          <Typography variant="small" bold>
-            {
-              "I'm aware that I'm adding all Videos from this Channel to the Folder."
-            }
-          </Typography>
-          <Stack>
-            <InfoButton
-              title="Boo"
-              body="Kirby is so much better than Jigglypuff"
-            />
-          </Stack>
-        </Stack>
+        ) : null
       }
     >
       <Stack
@@ -121,7 +124,7 @@ const ChannelCreationDialog = (props: {
           title={title}
           url={url}
           profileUrl={profileUrl}
-          backgroundUrl={backgroundUrl}
+          bannerUrl={bannerUrl}
           onClick={() => null}
           noPointerEvents
         />

@@ -8,7 +8,10 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
-import DevicePageContentTab from "../components/ContentTab";
+import DevicePageContentTab, {
+  IContentBucket,
+  IGroupContentBucket,
+} from "../components/ContentTab";
 import ApiController from "@/app/api";
 import PageLayout from "@/app/components/PageLayout";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
@@ -26,6 +29,7 @@ export type AstroAccountTab = "content" | "insights" | "apps" | "limits";
 export default function ProfilePage(props: {
   deviceId: number;
   isMobile: boolean;
+  tab?: AstroAccountTab;
 }) {
   const [device, setDevice] = useState<IDevice | undefined>();
   const loadDevice = useCallback(
@@ -47,9 +51,14 @@ export default function ProfilePage(props: {
     ApiController.getGroupDevices(DUMMY_GROUP_ID).then((d) => setAllDevices(d));
   }, []);
 
+  const [folders, setFolders] = useState<IGroupContentBucket[]>([]);
+  useEffect(() => {
+    ApiController.getDeviceFolders(props.deviceId).then(setFolders);
+  }, [props.deviceId]);
+
   const titleRow = [
     {
-      text: "All Devices",
+      text: "All Kids",
       callback: () => router.push("/profiles"),
     },
     {
@@ -111,12 +120,16 @@ export default function ProfilePage(props: {
           device={device}
           titleRow={titleRow}
           actions={actions}
+          folders={folders}
+          tab={props.tab}
         />
       ) : (
         <ProfilePageDesktopBody
           device={device}
           titleRow={titleRow}
           actions={actions}
+          folders={folders}
+          tab={props.tab}
         />
       )}
       <DeviceRenameDialog

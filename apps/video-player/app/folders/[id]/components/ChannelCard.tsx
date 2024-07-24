@@ -1,8 +1,8 @@
-import { IChannel, IContent } from "@/app/profiles/[id]/ContentTab";
 import ContentCard from "./ContentCard";
 import Image from "next/image";
 import { Stack } from "@mui/system";
 import ApiController from "@/app/api";
+import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
 
 const IMAGE_HEIGHT = 160;
 
@@ -33,14 +33,14 @@ const ChannelCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.backgroundUrl}
+          src={props.bannerUrl}
           style={{
             objectFit: "cover",
             justifyContent: "center",
             alignItems: "center",
           }}
           fill
-          alt="image card image"
+          alt="banner image"
         />
         {props.profileUrl ? (
           <Stack
@@ -69,7 +69,7 @@ const ChannelCard = (
                   alignItems: "center",
                 }}
                 fill
-                alt="image card image"
+                alt="profile image"
               />
             </Stack>
           </Stack>

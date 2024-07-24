@@ -81,6 +81,7 @@ export const DeviceCardBrowsingStatusSection = (props: {
 export const DeviceCardScreenTimeSection = (props: {
   totalTime: number;
   elapsedTime: number;
+  onClickView: () => void;
 }) => (
   <DeviceCardSection title="Screen time left today">
     <Stack direction="row" alignItems="center" spacing="38px">
@@ -115,7 +116,7 @@ export const DeviceCardScreenTimeSection = (props: {
           />
         </Stack>
       </Stack>
-      <UrsorButton variant="secondary" size="small">
+      <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
         View
       </UrsorButton>
     </Stack>
@@ -289,6 +290,9 @@ const DeviceCard = (
               <DeviceCardScreenTimeSection
                 totalTime={5004}
                 elapsedTime={4020}
+                onClickView={() =>
+                  router.push(`/profiles/${props.id}?tab=limits`)
+                }
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
@@ -306,6 +310,7 @@ const DeviceCard = (
               justifyContent="center"
               direction="row"
               spacing="8px"
+              onClick={() => router.push(`/profiles/${props.id}`)}
             >
               <Typography bold variant="small" color={PALETTE.primary.indigo}>
                 Go to Device

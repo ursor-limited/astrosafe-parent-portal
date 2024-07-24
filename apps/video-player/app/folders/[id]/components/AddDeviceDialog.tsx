@@ -90,10 +90,12 @@ const AddDeviceDialog = (props: {
               <Stack
                 borderRadius="100%"
                 height="23px"
-                width="23px"
+                minWidth="23px"
                 bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
               />
-              <Typography bold>{d.name}</Typography>
+              <Typography maxLines={1} bold>
+                {d.name}
+              </Typography>
             </Stack>
           ))}
         </Stack>

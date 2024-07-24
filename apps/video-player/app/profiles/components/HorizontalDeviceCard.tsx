@@ -171,7 +171,11 @@ const HorizontalDeviceCard = (props: IDevice) => {
             title="Got to bind this up with API"
             faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
           />
-          <DeviceCardScreenTimeSection totalTime={5004} elapsedTime={4020} />
+          <DeviceCardScreenTimeSection
+            totalTime={5004}
+            elapsedTime={4020}
+            onClickView={() => router.push(`/profiles/${props.id}?tab=limits`)}
+          />
           <DeviceCardFilterSection selectedFilter={1} />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}

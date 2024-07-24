@@ -2,9 +2,10 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import FolderCard from "./FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { useState } from "react";
-import { IDevice } from "@/app/filters/[id]/FilterPageContents";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import ApiController from "@/app/api";
 
 export type AstroContent = "video" | "channel" | "link";
 
@@ -30,7 +31,7 @@ export interface ILink extends IContent {
 }
 export interface IChannel extends IContent {
   profileUrl: string;
-  backgroundUrl: string;
+  bannerUrl: string;
 }
 export interface IVideo extends IContent {
   thumbnailUrl: string;
@@ -47,18 +48,17 @@ export interface IGroupContentBucket {
   avatarUrls: IDevice["profileAvatarUrl"][];
 }
 
-const DevicePageContentTab = () => {
-  const [folders, setFolders] = useState<IGroupContentBucket[]>([]);
+const DevicePageContentTab = (props: { folders: IGroupContentBucket[] }) => {
   const router = useRouter();
   return (
     <Stack pt="20px">
       <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
-        {folders.map((f, i) => (
+        {props.folders.map((f, i) => (
           <UrsorFadeIn key={f.id} duration={800} delay={100 * i}>
             <FolderCard
               key={f.id}
               {...f}
-              clickCallback={() => router.push(`/content/${f.id}`)}
+              clickCallback={() => router.push(`/folders/${f.id}`)}
               thumbnailUrls={f.thumbnailUrls}
             />
           </UrsorFadeIn>

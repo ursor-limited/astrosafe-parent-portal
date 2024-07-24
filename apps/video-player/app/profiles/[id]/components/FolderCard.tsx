@@ -11,7 +11,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
-import { IGroupContentBucket } from "./ContentTab";
+import { IContentBucket, IGroupContentBucket } from "./ContentTab";
 
 export const spin = keyframes`
   from {
@@ -142,6 +142,7 @@ const FolderCard = (
             />
           </Stack>
         ) : null}
+
         <Stack
           borderRadius="12px"
           border={`4px solid rgb(255,255,255)`}

@@ -39,7 +39,7 @@ export default function FilterPageDesktopBody(props: {
       titleBackButton={true}
       bodyWidth="100%"
       fullHeight
-      selectedSidebarItemId="channels"
+      selectedSidebarItemId="filters"
       // button={{
       //   text: "Add a Filter",
       //   callback: () => null,
