@@ -200,10 +200,10 @@ export default function FilterPage(props: {
               setAllowedCategories(
                 allowedCategories.filter((sid) => sid !== id)
               );
-              ApiController.removeWhitelistCategory(DUMMY_GROUP_ID, id);
+              ApiController.removeWhitelistCategory(props.filterId, id);
             } else {
               setAllowedCategories([...allowedCategories, id]);
-              ApiController.addWhitelistCategory(DUMMY_GROUP_ID, id);
+              ApiController.addWhitelistCategory(props.filterId, id);
             }
           }}
           devices={devices}

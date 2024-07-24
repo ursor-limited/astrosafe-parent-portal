@@ -331,7 +331,9 @@ class ApiController {
     filterId: IFilter["id"],
     categoryId: IFilterCategory["categoryId"]
   ) {
-    return post(`filters/${filterId}/whitelist/categories`, { categoryId });
+    return post(`filters/${filterId}/whitelist/categories`, {
+      categoryId: categoryId.toString(),
+    });
   }
 
   static async removeWhitelistCategory(
