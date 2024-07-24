@@ -1,9 +1,9 @@
 import React from "react";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import VideoChannelsPageContents from "./VideoChannelsPageContents";
+import ChannelsPageContents from "./ChannelsPageContents";
 
-async function VideoChannelsPage({
+async function ChannelsPage({
   params,
   searchParams,
 }: {
@@ -12,7 +12,7 @@ async function VideoChannelsPage({
 }) {
   const mobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
-  return <VideoChannelsPageContents mobile={mobile} />;
+  return <ChannelsPageContents mobile={mobile} />;
 }
 
-export default VideoChannelsPage;
+export default ChannelsPage;

@@ -10,10 +10,10 @@ import UrsorFadeIn from "../components/UrsorFadeIn";
 import { Captioned } from "../tools/multiplication-chart/[urlId]/LandingPageContents";
 import UrsorSelect from "../components/UrsorSelect";
 import _ from "lodash";
-import { SearchInput } from "../dashboard/DashboardPageContents";
 import { ApprovedCompanyCard } from "./ApprovedCompanyCard";
 import WonderingIllustration from "@/images/WonderingIllustration.png";
 import Link from "next/link";
+import { SearchInput } from "../components/SearchInput";
 
 export const S3_BASE_URL =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/astroseal";

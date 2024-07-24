@@ -17,15 +17,11 @@ export const OVERALL_X_PADDING = "20px";
 
 const PageLayout = (props: {
   headerButtonId: NavbarButton;
-  sections: {
-    title: string;
-    titleImage?: React.ReactNode;
-    contents: React.ReactNode;
-  }[];
   mobile?: boolean;
   openConnect?: boolean;
+  children: React.ReactNode;
 }) => {
-  const [deviceId, setDeviceId] = useLocalStorage<string | undefined>(
+  const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
@@ -53,31 +49,7 @@ const PageLayout = (props: {
             />
           </Stack>
         ) : null}
-        {props.sections.map((section, i) => (
-          <Stack key={i} spacing="20px">
-            <Stack spacing="20px">
-              <Stack
-                px={OVERALL_X_PADDING}
-                spacing="12px"
-                direction="row"
-                alignItems="center"
-              >
-                {section.titleImage}
-                <Typography variant="h5">{section.title}</Typography>
-              </Stack>
-              {section.contents}
-            </Stack>
-            {i < props.sections.length - 1 ? (
-              <Stack px={OVERALL_X_PADDING}>
-                <Stack
-                  width="100%"
-                  height="2px"
-                  bgcolor={PALETTE.secondary.grey[2]}
-                />
-              </Stack>
-            ) : null}
-          </Stack>
-        ))}
+        {props.children}
       </Stack>
       {landingViewOpen ? (
         <DynamicallyLoadedPortal>

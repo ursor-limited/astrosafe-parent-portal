@@ -1,31 +1,17 @@
 import React from "react";
-import ApiController from "@/app/api";
-import AuthWrapper from "@/app/components/AuthWrapper";
-import { UserProvider } from "@/app/components/UserContext";
-import AccountPageContents from "../account/AccountPageContents";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import MobileAccountPageContents from "./MobileAccountPageContents";
-import { BrowserUserProvider } from "../components/BrowserUserContext";
+import AccountPage from "./contents/common";
+import { UserProvider } from "../components/UserContext";
 
-async function AccountPage({
-  params,
-  searchParams,
-}: {
-  params: { videoId: string };
-  searchParams: { share: string };
-}) {
+async function Page() {
   const isMobile = getSelectorsByUserAgent(headers().get("user-agent") ?? "")
     ?.isMobile;
   return (
-    <AuthWrapper>
-      <BrowserUserProvider>
-        <UserProvider>
-          {isMobile ? <MobileAccountPageContents /> : <AccountPageContents />}
-        </UserProvider>
-      </BrowserUserProvider>
-    </AuthWrapper>
+    <UserProvider>
+      <AccountPage isMobile={isMobile} />
+    </UserProvider>
   );
 }
 
-export default AccountPage;
+export default Page;

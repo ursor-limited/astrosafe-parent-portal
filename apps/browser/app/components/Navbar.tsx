@@ -4,10 +4,13 @@ import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import PlugIcon from "@/images/icons/PlugIcon.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
+import StarIcon from "@/images/icons/StarIcon.svg";
 import { useRouter } from "next/navigation";
 import { PALETTE } from "ui";
 import NavbarSearchBar from "./NavbarSearchBar";
 import { OVERALL_X_PADDING } from "./PageLayout";
+import SchoolJoiningDialog from "./SchoolJoiningDialog";
+import { useState } from "react";
 
 const BUTTON_SIZE = 52;
 const BUTTON_SPACING = "12px";
@@ -69,7 +72,7 @@ export function NavigationButton(props: {
   );
 }
 
-export type NavbarButton = "home" | "videoChannels" | "history";
+export type NavbarButton = "home" | "videoChannels" | "history" | "favorites";
 
 export interface INavbarProps {
   selected?: NavbarButton;
@@ -79,6 +82,8 @@ export interface INavbarProps {
 
 export default function Navbar(props: INavbarProps) {
   const router = useRouter();
+  const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
+    useState<boolean>(false);
   return (
     <>
       <Stack
@@ -111,6 +116,15 @@ export default function Navbar(props: INavbarProps) {
             )}
             callback={() => router.push("/videoChannels")}
             selected={props.selected === "videoChannels"}
+          />
+          <NavigationButton
+            icon={StarIcon}
+            color={alpha(
+              PALETTE.secondary.purple[2],
+              props.selected === "favorites" ? 1 : 0.45
+            )}
+            callback={() => router.push("/favorites")}
+            selected={props.selected === "favorites"}
           />
           <NavigationButton
             icon={ClockIcon}
@@ -191,11 +205,16 @@ export default function Navbar(props: INavbarProps) {
               transition: "0.2s",
               cursor: "pointer",
             }}
+            onClick={() => setSchoolJoiningDialogOpen(true)}
           >
             <PlugIcon width="26px" height="26px" />
           </Stack>
         </Stack>
       </Stack>
+      <SchoolJoiningDialog
+        open={schoolJoiningDialogOpen}
+        closeCallback={() => setSchoolJoiningDialogOpen(false)}
+      />
     </>
   );
 }

@@ -47,6 +47,7 @@ const SortButton = <T extends string>(
       closeCallback={() => setOpen(false)}
       placement="right"
       disabled={props.disabled}
+      buttonWidth
     >
       {props.iconOnly ? (
         <Stack

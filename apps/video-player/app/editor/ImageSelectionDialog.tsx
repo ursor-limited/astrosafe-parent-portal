@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import UrsorDialog from "../components/UrsorDialog";
 import ChevronRight from "@/images/icons/ChevronRight.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import ImageUploader from "./ImageUploader";
+import ImageUploader from "../components/ImageUploader";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { getImageSize } from "react-image-size";

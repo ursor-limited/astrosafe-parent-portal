@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Stack } from "@mui/system";
-import { IVideoChannel } from "../api";
+import { IVideoChannel_DEPRECATED } from "../api";
 import { PALETTE, Typography } from "ui";
 import Image from "next/image";
 
@@ -11,7 +11,7 @@ export const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern";
 
 export interface IVideoChannelCardProps {
-  videoChannel: IVideoChannel;
+  videoChannel: IVideoChannel_DEPRECATED;
   clickCallback: () => void;
   mobile?: boolean;
 }

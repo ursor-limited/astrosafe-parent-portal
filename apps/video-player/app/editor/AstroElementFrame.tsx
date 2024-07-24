@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import ImageUploader from "./ImageUploader";
+import ImageUploader from "../components/ImageUploader";
 import { useEffect, useState } from "react";
 import { getImageSize } from "react-image-size";
 import useMousePosition from "./useMousePosition";

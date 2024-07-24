@@ -4,17 +4,107 @@ import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import MailIcon from "@/images/icons/MailIcon.svg";
 import { Stack, alpha } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
 import UrsorDialog from "./UrsorDialog";
 import { useUserContext } from "./UserContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 import { useEffect, useState } from "react";
-import { AstroCurrency, CURRENCY_SYMBOLS } from "../account/PricingCards";
 import {
-  FrequencySwitch,
-  PRODUCT_DETAILS,
-} from "../account/AccountPageContents";
+  AstroCurrency,
+  CURRENCY_SYMBOLS,
+} from "../account_legacy/PricingCards";
+import AstroSwitch from "./AstroSwitch";
+
+interface IAstroProduct {
+  monthlyId: string;
+  annualId: string;
+  plan: "home" | "school";
+  items: string[];
+  title: string;
+  subtitle: string;
+  monthlyPrices: {
+    [locale in AstroCurrency]: number;
+  };
+  annualPrices: {
+    [locale in AstroCurrency]: number;
+  };
+}
+
+export const PRODUCT_DETAILS: IAstroProduct[] = [
+  {
+    monthlyId:
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+        ? "prod_PlC9OCbk8oBkWW"
+        : "prod_QBufh97tFHY0PT",
+    annualId:
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+        ? "prod_PlWrHG8V57yjrn"
+        : "prod_QBufh97tFHY0PT",
+    plan: "home",
+    items: [
+      "10 devices monitored",
+      "Unlimited parents/teachers",
+      "All features included",
+    ],
+    title: "Home",
+    subtitle: "Ideal for families",
+    monthlyPrices: {
+      USD: 12.99,
+      GBP: 8.99,
+      CAD: 15.99,
+      EUR: 10.99,
+    },
+    annualPrices: {
+      USD: 119.99,
+      GBP: 79.99,
+      CAD: 149.99,
+      EUR: 99.99,
+    },
+  },
+  {
+    monthlyId:
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+        ? "prod_QAEaFpLDEJnlli"
+        : "prod_QBufZ1xT1eUOx8",
+    annualId:
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+        ? "prod_QAEYttD39HvFKz"
+        : "prod_QBufZ1xT1eUOx8",
+    plan: "school",
+    items: [
+      "10 devices monitored",
+      "Unlimited parents/teachers",
+      "All features included",
+    ],
+    title: "School",
+    subtitle: "Ideal for Schools",
+    monthlyPrices: {
+      USD: 59.99,
+      GBP: 39.99,
+      CAD: 74.99,
+      EUR: 49.99,
+    },
+    annualPrices: {
+      USD: 599.99,
+      GBP: 399.99,
+      CAD: 749.99,
+      EUR: 499.99,
+    },
+  },
+];
+
+export const FrequencySwitch = (props: {
+  value: "monthly" | "annual";
+  callback: () => void;
+}) => (
+  <Stack direction="row" spacing="12px" alignItems="center" height="26px">
+    <Typography bold color={PALETTE.secondary.grey[4]}>
+      Annual discount
+    </Typography>
+    <AstroSwitch on={props.value === "annual"} callback={props.callback} />
+  </Stack>
+);
 
 export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
   US: "USD",
@@ -75,22 +165,22 @@ export const LOCALE_CURRENCIES: Record<string, AstroCurrency> = {
 
 export const getPaymentUrl = (
   email: string,
-  plan: "individual" | "department",
+  plan: "home" | "school",
   frequency: "monthly" | "annual"
 ) =>
   `${
     frequency === "monthly"
-      ? plan === "individual"
+      ? plan === "home"
         ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_INDIVIDUAL
         : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_MONTHLY_DEPARTMENT
-      : plan === "individual"
+      : plan === "home"
       ? process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_INDIVIDUAL
       : process.env.NEXT_PUBLIC_STRIPE_PAYMENT_URL_ANNUAL_DEPARTMENT
   }?prefilled_email=${encodeURIComponent(email)}`;
 
 const PricingCard = (props: {
   title: string;
-  //subtitle: string;
+  subtitle: string;
   buttonText: string;
   price: string;
   currency: string;
@@ -114,7 +204,9 @@ const PricingCard = (props: {
     boxSizing="border-box"
     alignItems="center"
     borderRadius="20px"
-    border={props.border ? `4px solid ${PALETTE.system.orange}` : undefined}
+    border={
+      props.border ? `4px solid ${PALETTE.secondary.purple[3]}` : undefined
+    }
     position="relative"
   >
     {props.notif ? (
@@ -133,23 +225,30 @@ const PricingCard = (props: {
         </Typography>
       </Stack>
     ) : null}
-    <Stack spacing="2px">
+    <Stack spacing="2px" alignItems="center">
       <Stack spacing="20px" justifyContent="center" alignItems="center">
         <Stack spacing="4px" alignItems="center">
-          <Typography
-            variant="h4"
-            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
-          >
-            {props.title}
-          </Typography>
-          {/* <Typography
-            variant="tiny"
-            bold
-            color={props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]}
-          >
-            {props.subtitle}
-          </Typography> */}
+          <Stack spacing="4px" alignItems="center">
+            <Typography
+              variant="h4"
+              color={
+                props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]
+              }
+            >
+              {props.title}
+            </Typography>
+            <Typography
+              color={
+                props.dark ? PALETTE.font.light : PALETTE.secondary.grey[4]
+              }
+              variant="small"
+              bold
+            >
+              {props.subtitle}
+            </Typography>
+          </Stack>
         </Stack>
+
         <Stack direction="row" alignItems="center" spacing="3px">
           <Typography
             variant="small"
@@ -164,15 +263,28 @@ const PricingCard = (props: {
           >
             {props.price}
           </Typography>
-          <Typography
-            variant="small"
-            bold
-            color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+          <Stack
+            height="28px"
+            bgcolor={PALETTE.secondary.orange[4]}
+            borderRadius="10px"
+            px="8px"
+            justifyContent="center"
           >
-            {`/ ${props.unit}`}
-          </Typography>
+            <Typography bold variant="small" color="rgb(255,255,255)">
+              Save 30%
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
+
+      <Typography
+        variant="tiny"
+        bold
+        color={PALETTE.secondary.grey[props.dark ? 2 : 4]}
+      >
+        {`per ${props.unit}`}
+      </Typography>
+
       <Stack alignItems="center" width="100%" pb="20px">
         <Typography
           variant="tiny"
@@ -253,10 +365,11 @@ const UpgradeDialog = (props: {
   closeCallback: () => void;
   mobile?: boolean;
 }) => {
+  const user = useUserContext().user;
+
   const [upgradedNotificationPending, setUpgradedNotificationPending] =
     useLocalStorage<boolean>("upgradedNotificationPending", false);
   const router = useRouter();
-  const email = useUserContext().user?.auth0Id;
 
   const [locale, setLocale] = useState<string>("US");
 
@@ -265,7 +378,6 @@ const UpgradeDialog = (props: {
     const response = await fetch("https://ipapi.co/json/").then(
       async (response) => {
         const data = await response.json();
-        console.log(data);
         // Set the IP address to the constant `ip`
         data.country_code && setLocale(data.country_code);
       }
@@ -279,10 +391,11 @@ const UpgradeDialog = (props: {
 
   const [frequency, setFrequency] = useState<"monthly" | "annual">("annual");
 
+  const [licenseKeyInputValue, setLicenseKeyInputValue] = useState<string>("");
+
   return (
     <UrsorDialog
-      supertitle="Upgrade"
-      title="Upgrade to Astrosafe premium and enjoy unlimited access."
+      title="Upgrade to a paid plan and enjoy unlimited access."
       open={props.open}
       titleSize={props.mobile ? "h5" : "h3"}
       noOverflowHidden
@@ -292,34 +405,8 @@ const UpgradeDialog = (props: {
       maxWidth="1030px"
       titleMaxWidth="600px"
       scrollable
-
-      //paddingX="40px"
     >
-      {/* <UrsorButton
-        onClick={() => {
-          const iframe = document.getElementsByTagName(
-            "stripe-pricing-table"
-          )?.[0]?.shadowRoot?.children?.[0];
-          console.log(iframe);
-          if (iframe) {
-            //@ts-ignore
-            const iframeContent = iframe.contentWindow.document; //@ts-ignore
-            const amount =
-              iframeContent.getElementsByClassName("CurrencyAmount");
-            console.log(amount);
-          }
-        }}
-      >
-        BOO
-      </UrsorButton> */}
-      {/* @ts-ignore */}
-      {/* <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-      {/* @ts-ignore */}
-      {/* <stripe-pricing-table
-        pricing-table-id={process.env.NEXT_PUBLIC_STRIPE_PRICING_TABLE_ID}
-        publishable-key={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-      /> */}
-      <Stack width="100%" alignItems="flex-end">
+      <Stack width="100%" alignItems="center">
         <FrequencySwitch
           value={frequency}
           callback={() =>
@@ -333,23 +420,10 @@ const UpgradeDialog = (props: {
         width="100%"
         pt="20px"
       >
-        {/* <PricingCard
-          title="Basic"
-          subtitle="Monthly"
-          price="0"
-          currency={
-            CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
-          }
-          unit="month"
-          tinyText="No credit card required"
-          items={["Create lessons with text, images, and video."]}
-          buttonText="Stay free"
-          noButtonIcon
-          callback={props.closeCallback}
-        /> */}
         <PricingCard
-          title="Individual"
-          buttonText="Go Premium"
+          title="Home"
+          subtitle="Ideal for families"
+          buttonText="Upgrade"
           price={(
             (frequency === "annual"
               ? PRODUCT_DETAILS[0]?.annualPrices
@@ -360,13 +434,10 @@ const UpgradeDialog = (props: {
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
           }
           unit={frequency === "monthly" ? "month" : "year"}
-          // tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-          //   PRODUCT_DETAILS[0].prices[LOCALE_CURRENCIES[locale]] ?? 0
-          // } / month`}
           items={PRODUCT_DETAILS[0].items}
           callback={() => {
             router.push(
-              email ? getPaymentUrl(email, "individual", frequency) : ""
+              user?.email ? getPaymentUrl(user.email, "home", frequency) : ""
             );
             setUpgradedNotificationPending(true);
           }}
@@ -374,9 +445,9 @@ const UpgradeDialog = (props: {
         <PricingCard
           dark
           border
-          title="Department"
-          // subtitle="Monthly"
-          buttonText="Go Premium"
+          title="School"
+          subtitle="Ideal for schools"
+          buttonText="Upgrade"
           price={(
             (frequency === "annual"
               ? PRODUCT_DETAILS[1]?.annualPrices
@@ -387,69 +458,71 @@ const UpgradeDialog = (props: {
             CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
           }
           unit={frequency === "monthly" ? "month" : "year"}
-          // tinyText={`Billed as ${CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale]]}${
-          //   PRODUCT_DETAILS[1].prices[LOCALE_CURRENCIES[locale]] ?? 0
-          // } / month`}
           items={PRODUCT_DETAILS[1].items}
           callback={() => {
             router.push(
-              email ? getPaymentUrl(email, "department", frequency) : ""
+              user?.email ? getPaymentUrl(user.email, "school", frequency) : ""
             );
             setUpgradedNotificationPending(true);
           }}
         />
-        <PricingCard
-          title="Custom"
-          // subtitle="Monthly"
-          buttonText="Contact Sales"
-          price="POA"
-          currency={
-            CURRENCY_SYMBOLS[LOCALE_CURRENCIES[locale as AstroCurrency]]
-          }
-          unit={frequency === "monthly" ? "month" : "year"}
-          text="Contact sales for custom pricing based on the number of teacher accounts and devices you would like in your plan, and we'll make it happen!!!"
-          callback={() => (window.location.href = "mailto:hello@astrosafe.co")}
-          icon={MailIcon}
-        />
-      </Stack>
-      {/* <Stack flex={1} alignItems="center">
         <Stack
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.7 },
-            transition: "0.2s",
-          }}
-        >
-          <UrsorButton
-            backgroundColor="linear-gradient(150deg, #F279C5, #FD9B41)"
-            onClick={() => {
-              router.push(email ? getPaymentUrl(email) : "");
-              setUpgradedNotificationPending(true);
-            }}
-            endIcon={PersonIcon}
-          >
-            Upgrade now
-          </UrsorButton>
-        </Stack>
-        <Stack
-          width="727px"
-          height="392px"
+          flex={1}
+          bgcolor={PALETTE.secondary.grey[1]}
+          p="28px"
+          boxSizing="border-box"
+          alignItems="center"
           borderRadius="20px"
-          border={`6px solid ${PALETTE.secondary.grey[5]}`}
-          sx={{
-            transform: "translateY(30px)",
-          }}
-          overflow="hidden"
+          position="relative"
+          spacing="20px"
         >
-          <Image
-            src={SCREENSHOT_URL}
-            width={727}
-            height={454}
-            priority={true}
-            alt="signup dialog screenshot"
-          />
+          <Stack spacing="4px" alignItems="center">
+            <Typography color={PALETTE.secondary.grey[4]} variant="h4">
+              License key
+            </Typography>
+            <Typography variant="small" bold color={PALETTE.secondary.grey[4]}>
+              Add your AstroSafe license key
+            </Typography>
+          </Stack>
+          <Stack alignItems="center" spacing="10px">
+            <UrsorInputField
+              value={licenseKeyInputValue}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setLicenseKeyInputValue(event.target.value);
+              }}
+              leftAlign
+              backgroundColor="rgb(255,255,255)"
+              width="100%"
+            />
+            <Typography color={PALETTE.secondary.grey[4]} bold variant="tiny">
+              12 digit code sent to you by the Astro team
+            </Typography>
+          </Stack>
+          <UrsorButton variant="secondary">Unlock</UrsorButton>
         </Stack>
-      </Stack> */}
+      </Stack>
+      <Stack
+        height="52px"
+        width="100%"
+        justifyContent="center"
+        bgcolor={PALETTE.secondary.grey[1]}
+        alignItems="center"
+        mt="24px"
+        spacing="20px"
+        direction="row"
+        borderRadius="20px"
+      >
+        <Typography bold color={PALETTE.secondary.grey[4]}>
+          Need a plan with more devices?
+        </Typography>
+        <UrsorButton
+          variant="secondary"
+          size="small"
+          onClick={() => (window.location.href = "mailto:hello@astrosafe.co")}
+        >
+          Contact sales
+        </UrsorButton>
+      </Stack>
     </UrsorDialog>
   );
 };

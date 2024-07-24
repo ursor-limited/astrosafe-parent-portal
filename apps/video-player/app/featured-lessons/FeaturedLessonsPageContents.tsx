@@ -9,7 +9,7 @@ import { IAstroLandingPage } from "../tools/multiplication-chart/[urlId]/Landing
 import AstroLandingPage from "../tools/multiplication-chart/[urlId]/AstroLandingPage";
 import LandingPageViewport from "../tools/multiplication-chart/[urlId]/LandingPageViewport";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import { ILesson } from "../lesson/[subdirectory]/page";
+import { ILesson_DEPRECATED } from "../lesson/[subdirectory]/page";
 import LessonCard from "../components/LessonCard";
 import ApiController from "../api";
 import ExternalPageFooter from "../components/ExternalPageFooter";
@@ -25,12 +25,12 @@ export default function FeaturedLessonsPageContents(props: IAstroLandingPage) {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   useEffect(() => setIsMobile(width < MOBILE_WINDOW_WIDTH_THRESHOLD), [width]);
 
-  const [lessons, setLessons] = useState<ILesson[]>([]);
+  const [lessons, setLessons] = useState<ILesson_DEPRECATED[]>([]);
   useEffect(() => {
     ApiController.getFeaturedLessons().then((l) => setLessons(l));
   }, []);
 
-  const [columns, setColumns] = useState<ILesson[][]>([]);
+  const [columns, setColumns] = useState<ILesson_DEPRECATED[][]>([]);
   const [nColumns, setNColumns] = useState<number>(1);
   useEffect(
     () =>
