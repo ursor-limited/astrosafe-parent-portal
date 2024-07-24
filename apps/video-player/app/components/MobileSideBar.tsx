@@ -9,9 +9,7 @@ import VersionsIcon from "@/images/icons/VersionsIcon.svg";
 import XIcon from "@/images/icons/X.svg";
 import _ from "lodash";
 import Image from "next/image";
-import { useState } from "react";
 import { UserInitialsCircle } from "@/app/account/contents/common";
-import { Router } from "express";
 import { useRouter } from "next/navigation";
 
 export const astroPages = [
