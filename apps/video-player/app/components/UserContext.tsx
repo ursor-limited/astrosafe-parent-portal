@@ -1,12 +1,9 @@
 "use client";
 
-import { useAuth0 } from "@auth0/auth0-react";
 import _ from "lodash";
 import React, { useContext, createContext, useState, useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import NotificationContext from "./NotificationContext";
-import Hotjar from "@hotjar/browser";
-import { DUMMY_USER, IUser } from "../account/contents/common";
+import { IUser } from "../account/contents/common";
 import ApiController from "../api";
 
 const hotjarVersion = 6;
