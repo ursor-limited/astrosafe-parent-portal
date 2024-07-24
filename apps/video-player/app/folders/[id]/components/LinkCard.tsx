@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Stack } from "@mui/system";
 import ApiController from "@/app/api";
 import { ILink } from "@/app/profiles/[id]/components/ContentTab";
+import { PALETTE } from "ui";
 
 const IMAGE_HEIGHT = 227;
 
@@ -31,12 +32,16 @@ const LinkCard = (
         position="relative"
         boxShadow="0 0 6px rgba(0,0,0,0.08)"
       >
-        <Image
-          src={props.thumbnailUrl}
-          style={{ objectFit: "cover" }}
-          fill
-          alt="image card image"
-        />
+        {props.thumbnailUrl ? (
+          <Image
+            src={props.thumbnailUrl}
+            style={{ objectFit: "cover" }}
+            fill
+            alt="image card image"
+          />
+        ) : (
+          <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />
+        )}
       </Stack>
     </ContentCard>
   );

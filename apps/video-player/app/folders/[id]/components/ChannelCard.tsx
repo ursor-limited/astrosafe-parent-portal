@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Stack } from "@mui/system";
 import ApiController from "@/app/api";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
+import { PALETTE } from "ui";
 
 const IMAGE_HEIGHT = 160;
 
@@ -32,16 +33,20 @@ const ChannelCard = (
         position="relative"
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
-        <Image
-          src={props.bannerUrl}
-          style={{
-            objectFit: "cover",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          fill
-          alt="banner image"
-        />
+        {props.bannerUrl ? (
+          <Image
+            src={props.bannerUrl}
+            style={{
+              objectFit: "cover",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            fill
+            alt="banner image"
+          />
+        ) : (
+          <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />
+        )}
         {props.profileUrl ? (
           <Stack
             position="absolute"
@@ -61,16 +66,20 @@ const ChannelCard = (
               position="relative"
               boxShadow="0 0 20px rgba(0,0,0,0.1)"
             >
-              <Image
-                src={props.profileUrl}
-                style={{
-                  objectFit: "cover",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                fill
-                alt="profile image"
-              />
+              {props.profileUrl ? (
+                <Image
+                  src={props.profileUrl}
+                  style={{
+                    objectFit: "cover",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  fill
+                  alt="profile image"
+                />
+              ) : (
+                <Stack flex={1} bgcolor={PALETTE.secondary.grey[3]} />
+              )}
             </Stack>
           </Stack>
         ) : null}
