@@ -13,6 +13,7 @@ import HistorySection from "./HistorySection";
 import Link from "next/link";
 import CalendarButton from "@/app/components/CalendarButton";
 import { DUMMY_DOMAIN_URLS, DUMMY_MOST_VISITED } from "./InsightsTab";
+import MobileHistorySection from "./MobileHistorySection";
 dayjs.extend(advancedFormat);
 
 const DevicePageMobileInsightsTab = () => {
@@ -194,7 +195,7 @@ const DevicePageMobileInsightsTab = () => {
           </Stack>
         </AstroBentoCard>
 
-        <HistorySection domainUrls={DUMMY_DOMAIN_URLS} />
+        <MobileHistorySection domainUrls={DUMMY_DOMAIN_URLS} />
       </Stack>
       {/* <MobileAllDevicesDialog
         title={`${props.devices.length} Device${

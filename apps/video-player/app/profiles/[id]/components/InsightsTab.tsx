@@ -19,7 +19,7 @@ dayjs.extend(advancedFormat);
 export const DUMMY_DOMAIN_URLS: (IFilterDomain & { time: number })[] = [
   {
     id: 1,
-    domain: "https://www.nationalreview.com/",
+    domain: "https://www.nationalreview.com/buuuuu/boooo",
     title: "National Review",
     faviconUrl:
       "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
