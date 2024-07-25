@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { OnBoardingViewLayout } from "./OnboardingFlow";
-import { UrsorButton } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
+import XIcon from "@/images/icons/X.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import {
   AstroContent,
   IContentBucket,
@@ -64,36 +66,88 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
         </UrsorButton>
       }
     >
-      <Stack flex={1} height="100%" justifyContent="center">
+      <Stack flex={1} height="100%" justifyContent="center" alignItems="center">
         <Stack
-          justifyContent="center"
+          direction="row"
           alignItems="center"
-          position="relative"
           sx={{
-            pointerEvents: "none",
-            transform: "scale(1.4) translateY(-70px)",
+            transform: "translateY(-70px)",
           }}
+          height="430px"
         >
-          {_.reverse(
-            videos.map((v, i) => (
-              <Stack
-                key={v.id}
-                width="364px"
-                position="absolute"
-                sx={{
-                  transform: `translateY(${i * (42 - i * 4.5)}px) scale(${
-                    1 - i * 0.1
-                  })`,
-                  opacity: i === 0 ? 1 : i === 1 ? 0.93 : i === 2 ? 0.4 : 0,
-                }}
-                boxShadow={
-                  stackIndex === i ? "0 0 28px rgb(0,0,0,0.2)" : undefined
-                }
-              >
-                <VideoCard {...v} />
-              </Stack>
-            ))
-          )}
+          <Stack
+            width="72px"
+            height="72px"
+            borderRadius="100%"
+            border={`1px solid ${PALETTE.system.red}`}
+            justifyContent="center"
+            alignItems="center"
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+              svg: {
+                path: { fill: PALETTE.system.red },
+              },
+            }}
+          >
+            <XIcon height="40px" width="40px" />
+          </Stack>
+          <Stack
+            justifyContent="center"
+            alignItems="center"
+            position="relative"
+            width="600px"
+            sx={{
+              pointerEvents: "none",
+              transform: "scale(1.4)",
+            }}
+          >
+            {_.reverse(
+              videos.map((v, i) => (
+                <Stack
+                  key={v.id}
+                  width="364px"
+                  position="absolute"
+                  sx={{
+                    transform: `translateY(${i * (42 - i * 4.5)}px) scale(${
+                      1 - i * 0.1
+                    })`,
+                    opacity: i === 0 ? 1 : i === 1 ? 0.9 : i === 2 ? 0.4 : 0,
+                  }}
+                  boxShadow={
+                    stackIndex === i ? "0 0 25px rgb(0,0,0,0.22)" : undefined
+                  }
+                >
+                  <VideoCard {...v} />
+                </Stack>
+              ))
+            )}
+          </Stack>
+          <Stack
+            width="72px"
+            height="72px"
+            borderRadius="100%"
+            justifyContent="center"
+            alignItems="center"
+            bgcolor={PALETTE.secondary.green[3]}
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+              //   svg: {
+              //     path: { fill: PALETTE.system.red },
+              //   },
+            }}
+          >
+            <PlusIcon height="40px" width="40px" />
+          </Stack>
+        </Stack>
+        <Stack width="466px" sx={{ textAlign: "center" }}>
+          <Typography color="rgb(255,255,255)" variant="medium" bold>
+            {`Mark Rober's channel features fun and educational science and
+          engineering projects.`}
+          </Typography>
         </Stack>
       </Stack>
     </OnBoardingViewLayout>
