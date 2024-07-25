@@ -8,7 +8,6 @@ import DeleteIcon from "@/images/icons/DeleteIcon.svg";
 import XIcon from "@/images/icons/X.svg";
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import TimeLimitSelector from "./TimeLimitSelector";
 import { FADE_DURATION, OnBoardingViewLayout } from "./OnboardingFlow";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
 import UrsorFadeIn from "../components/UrsorFadeIn";
@@ -17,6 +16,7 @@ import {
   ChannelAdditionView,
   VideoAdditionView,
 } from "./ContentAdditionView";
+import TimeLimitsView from "./TimeLimitsView";
 
 const PIN_KEY_SEPARATION = "25px";
 
@@ -29,8 +29,6 @@ const DUMMY_TOPICS = [
   "architecture",
   "aaaa",
 ];
-
-const MAX_DURATION = 5 * 3600;
 
 const SHOW_RED_DURATION = 1200;
 
@@ -145,9 +143,6 @@ const TopicTag = (props: {
   </Stack>
 );
 
-const getFormattedDuration = (duration: number) =>
-  `${Math.floor(duration / 3600)}h ${Math.floor((duration % 3600) / 60)}m`;
-
 const PinKey = (props: { n: number; onClick: () => void }) => (
   <Stack
     width="66px"
@@ -249,45 +244,10 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
       </OnBoardingViewLayout>
     );
   },
-  (props: { onNext: () => void }) => {
-    const [selectorValue, setSelectorValue] = useState<number>(35);
-    return (
-      <OnBoardingViewLayout
-        title="Set a daily browsing time limit"
-        subtitle="After this time is reached, the Browser will be locked. Don't worry, you can change this later!"
-        button={
-          <UrsorButton
-            dark
-            variant="tertiary"
-            size="large"
-            iconSize={22}
-            endIcon={ChevronRightIcon}
-            onClick={props.onNext}
-          >
-            Next
-          </UrsorButton>
-        }
-      >
-        <Stack alignItems="center" spacing="50px">
-          <Stack alignItems="center" spacing="8px">
-            <Typography variant="h0" color={PALETTE.secondary.purple[1]}>
-              {getFormattedDuration((selectorValue / 100) * MAX_DURATION)}
-            </Typography>
-            <Typography variant="h5" color="rgba(255,255,255,0.87)">
-              Daily
-            </Typography>
-          </Stack>
-          <TimeLimitSelector
-            value={selectorValue}
-            setValue={setSelectorValue}
-          />
-        </Stack>
-      </OnBoardingViewLayout>
-    );
-  },
   VideoAdditionView,
   ChannelAdditionView,
   AppsAdditionView,
+  TimeLimitsView,
   (props: { onNext: () => void }) => {
     const [pin, setPin] = useState<number[]>([]);
     const [confirmationPin, setConfirmationPin] = useState<number[]>([]);

@@ -1,4 +1,4 @@
-import { Dialog } from "@mui/material";
+import { Dialog, Grid } from "@mui/material";
 import { BACKDROP_STYLE } from "../components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";
@@ -6,27 +6,11 @@ import Image from "next/image";
 import { useState } from "react";
 import _ from "lodash";
 
-const AVATARS: { imageUrl: string; color: string }[] = [
-  {
-    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/pizza_icon.png",
-    color: PALETTE.secondary.pink[3],
-  },
-  {
-    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/statue_icon.png",
-    color: PALETTE.secondary.green[4],
-  },
-  {
-    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/ball_icon.png",
-    color: PALETTE.secondary.blue[2],
-  },
-  {
-    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/leaf_icon.png",
-    color: PALETTE.secondary.purple[2],
-  },
-  {
-    imageUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/rocket_icon.png",
-    color: PALETTE.secondary.orange[3],
-  },
+const AVATAR_IMAGE_URL_BASE =
+  "https://ursorassets.s3.eu-west-1.amazonaws.com/profileIcon";
+
+const AVATAR_IMAGE_IDS = [
+  4, 18, 5, 6, 7, 15, 2, 1, 3, 4, 10, 9, 8, 16, 17, 11, 12, 13, 14,
 ];
 
 export const getInitials = (name: string) =>
@@ -56,8 +40,10 @@ const AvatarSelectionDialog = (props: {
       PaperProps={{
         style: {
           width: 746,
+          height: 512,
           borderRadius: 32,
           padding: "32px",
+          paddingBottom: 0,
           background: PALETTE.secondary.grey[1],
         },
       }}
@@ -66,160 +52,153 @@ const AvatarSelectionDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack
-        spacing="40px"
-        justifyContent="center"
-        alignItems="center"
-        flex={1}
-        pt="16px"
-      >
-        <Stack width="478px">
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            Customise this profile. Who is this Browser for?
-          </Typography>
-        </Stack>
-        <UrsorInputField
-          value={name}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setName(event.target.value)
-          }
-          placeholder="Write your name"
-          width="335px"
-          height="44px"
-          backgroundColor="rgb(255,255,255)"
-          paddingLeft="0"
-        />
-        <Stack spacing="26px">
-          <Stack spacing="26px" direction="row">
-            {[
-              PALETTE.secondary.orange[3],
-              PALETTE.secondary.blue[2],
-              PALETTE.secondary.purple[2],
-              PALETTE.secondary.green[4],
-              PALETTE.secondary.pink[3],
-            ].map((c, i) => (
-              <Stack
-                key={c}
-                position="relative"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.7 },
-                  transition: "0.2s",
-                  pointerEvents:
-                    _.isNumber(selectedAvatarIndex) &&
-                    selectedAvatarIndex === i &&
-                    initialsAvatar
-                      ? "none"
-                      : undefined,
-                }}
-              >
+      <Stack flex={1} overflow="hidden">
+        <Stack overflow="scroll">
+          <Stack
+            spacing="40px"
+            justifyContent="center"
+            alignItems="center"
+            pt="16px"
+          >
+            <Stack width="240px" height="60px">
+              <Typography variant="h4" sx={{ textAlign: "center" }}>
+                Create your personal profile
+              </Typography>
+            </Stack>
+            <UrsorInputField
+              value={name}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setName(event.target.value)
+              }
+              placeholder="Write your name"
+              width="335px"
+              height="44px"
+              backgroundColor="rgb(255,255,255)"
+              paddingLeft="0"
+            />
+            <Grid gap="26px" container justifyContent="center">
+              {[
                 <Stack
-                  borderRadius="100%"
-                  bgcolor={c}
-                  overflow="hidden"
-                  alignItems="center"
-                  justifyContent="center"
-                  height="90px"
-                  width="90px"
-                  onClick={() => {
-                    setInitialsAvatar(true);
-                    setColor(c);
-                    setSelectedAvatarIndex(i);
+                  key="initials"
+                  position="relative"
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                    pointerEvents: initialsAvatar ? "none" : undefined,
                   }}
                 >
-                  <Typography color="rgb(255,255,255)" variant="h4">
-                    {getInitials(name)}
-                  </Typography>
-                </Stack>
-                {_.isNumber(selectedAvatarIndex) &&
-                selectedAvatarIndex === i &&
-                initialsAvatar ? (
                   <Stack
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    top={0}
-                    bottom={0}
-                    margin="auto"
-                    justifyContent="center"
+                    borderRadius="100%"
+                    bgcolor={PALETTE.secondary.blue[4]}
+                    overflow="hidden"
                     alignItems="center"
-                  >
-                    <Stack
-                      minWidth="100px"
-                      minHeight="100px"
-                      borderRadius="100%"
-                      border={`5px solid ${PALETTE.secondary.purple[1]}`}
-                    />
-                  </Stack>
-                ) : null}
-              </Stack>
-            ))}
-          </Stack>
-          <Stack spacing="26px" direction="row">
-            {AVATARS.map((a, i) => (
-              <Stack
-                key={i}
-                position="relative"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.7 },
-                  transition: "0.2s",
-                  pointerEvents:
-                    _.isNumber(selectedAvatarIndex) &&
-                    selectedAvatarIndex === i &&
-                    !initialsAvatar
-                      ? "none"
-                      : undefined,
-                }}
-              >
-                <Stack
-                  borderRadius="100%"
-                  bgcolor={a.color}
-                  overflow="hidden"
-                  alignItems="center"
-                  justifyContent="center"
-                  height="90px"
-                  width="90px"
-                  onClick={() => {
-                    setInitialsAvatar(false);
-                    setColor(a.color);
-                    setImageUrl(a.imageUrl);
-                    setSelectedAvatarIndex(i);
-                  }}
-                >
-                  <Image src={a.imageUrl} height={62} width={62} alt="avatar" />
-                </Stack>
-                {_.isNumber(selectedAvatarIndex) &&
-                selectedAvatarIndex === i &&
-                !initialsAvatar ? (
-                  <Stack
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    top={0}
-                    bottom={0}
-                    margin="auto"
                     justifyContent="center"
-                    alignItems="center"
+                    height="90px"
+                    width="90px"
+                    onClick={() => {
+                      setInitialsAvatar(true);
+                      //setColor(c);
+                      //setSelectedAvatarIndex(i);
+                    }}
                   >
-                    <Stack
-                      minWidth="100px"
-                      minHeight="100px"
-                      borderRadius="100%"
-                      border={`5px solid ${PALETTE.secondary.purple[1]}`}
-                    />
+                    <Typography color="rgb(255,255,255)" variant="h4">
+                      {getInitials(name)}
+                    </Typography>
                   </Stack>
-                ) : null}
-              </Stack>
-            ))}
+                  {initialsAvatar ? (
+                    <Stack
+                      position="absolute"
+                      left={0}
+                      right={0}
+                      top={0}
+                      bottom={0}
+                      margin="auto"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Stack
+                        minWidth="100px"
+                        minHeight="100px"
+                        borderRadius="100%"
+                        border={`5px solid ${PALETTE.secondary.purple[1]}`}
+                      />
+                    </Stack>
+                  ) : null}
+                </Stack>,
+                ...AVATAR_IMAGE_IDS.map((i) => (
+                  <Grid key={i} item>
+                    <Stack
+                      position="relative"
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { opacity: 0.7 },
+                        transition: "0.2s",
+                        pointerEvents:
+                          _.isNumber(selectedAvatarIndex) &&
+                          selectedAvatarIndex === i &&
+                          !initialsAvatar
+                            ? "none"
+                            : undefined,
+                      }}
+                    >
+                      <Stack
+                        borderRadius="100%"
+                        overflow="hidden"
+                        alignItems="center"
+                        justifyContent="center"
+                        height="90px"
+                        width="90px"
+                        onClick={() => {
+                          setInitialsAvatar(false);
+                          // setColor(a.color);
+                          // setImageUrl(a.imageUrl);
+                          setSelectedAvatarIndex(i);
+                        }}
+                      >
+                        <Image
+                          src={`${AVATAR_IMAGE_URL_BASE}${i}.png`}
+                          height={90}
+                          width={90}
+                          alt="avatar"
+                        />
+                      </Stack>
+                      {_.isNumber(selectedAvatarIndex) &&
+                      selectedAvatarIndex === i &&
+                      !initialsAvatar ? (
+                        <Stack
+                          position="absolute"
+                          left={0}
+                          right={0}
+                          top={0}
+                          bottom={0}
+                          margin="auto"
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          <Stack
+                            minWidth="100px"
+                            minHeight="100px"
+                            borderRadius="100%"
+                            border={`5px solid ${PALETTE.secondary.purple[1]}`}
+                          />
+                        </Stack>
+                      ) : null}
+                    </Stack>
+                  </Grid>
+                )),
+              ]}
+            </Grid>
           </Stack>
         </Stack>
-        <UrsorButton
-          disabled={!selectedAvatarIndex || !name}
-          onClick={props.onNext}
-        >
-          Next
-        </UrsorButton>
+        <Stack py="24px" alignItems="center">
+          <UrsorButton
+            disabled={!selectedAvatarIndex || !name}
+            onClick={props.onNext}
+          >
+            Next
+          </UrsorButton>
+        </Stack>
       </Stack>
     </Dialog>
   );
