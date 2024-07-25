@@ -11,9 +11,22 @@ import {
   IVideo,
 } from "../home/HomePageContents";
 import ApiController from "../api";
-import { Stack } from "@mui/system";
+import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import VideoCard from "../components/VideoCard";
+
+export const getRemoveTopCardAnimation = (left: boolean) => keyframes`
+from {
+  transform: translateY(0) rotate(0deg);
+  opacity: 1;
+}
+to {
+  transform: translate(${left ? "-" : ""}340px, -180px) rotate(${
+    left ? "-" : ""
+  }80deg);
+  opacity: 0;
+}
+`;
 
 const ContentAdditionView = (props: { onNext: () => void }) => {
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -49,6 +62,9 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
   }, [loadFolder]);
 
   const [stackIndex, setStackIndex] = useState<number>(0);
+  const [latestDecision, setLatestDecision] = useState<
+    "added" | "removed" | undefined
+  >();
   return (
     <OnBoardingViewLayout
       title="We've got some Video Content for you!"
@@ -90,6 +106,10 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
                 path: { fill: PALETTE.system.red },
               },
             }}
+            onClick={() => {
+              setStackIndex(stackIndex + 1);
+              setLatestDecision("removed");
+            }}
           >
             <XIcon height="40px" width="40px" />
           </Stack>
@@ -104,24 +124,47 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
             }}
           >
             {_.reverse(
-              videos.map((v, i) => (
-                <Stack
-                  key={v.id}
-                  width="364px"
-                  position="absolute"
-                  sx={{
-                    transform: `translateY(${i * (42 - i * 4.5)}px) scale(${
-                      1 - i * 0.1
-                    })`,
-                    opacity: i === 0 ? 1 : i === 1 ? 0.9 : i === 2 ? 0.4 : 0,
-                  }}
-                  boxShadow={
-                    stackIndex === i ? "0 0 25px rgb(0,0,0,0.22)" : undefined
-                  }
-                >
-                  <VideoCard {...v} />
-                </Stack>
-              ))
+              videos.map((v, i) => {
+                const effectiveIndex = i - stackIndex;
+                return (
+                  <Stack
+                    key={v.id}
+                    width="364px"
+                    position="absolute"
+                    sx={{
+                      transition: "0.36s ease-out",
+                      transitionDelay: "0.2s",
+                      transform: `translateY(${
+                        effectiveIndex * (42 - effectiveIndex * 4.5)
+                      }px) scale(${1 - effectiveIndex * 0.1})`,
+                      opacity:
+                        effectiveIndex === -1
+                          ? 1
+                          : effectiveIndex === 0
+                          ? 1
+                          : effectiveIndex === 1
+                          ? 0.9
+                          : effectiveIndex === 2
+                          ? 0.4
+                          : 0,
+                      animation:
+                        effectiveIndex === -1
+                          ? `${getRemoveTopCardAnimation(
+                              latestDecision === "removed"
+                            )} 0.4s ease-out`
+                          : undefined,
+                      animationFillMode: "forwards",
+                    }}
+                    boxShadow={
+                      stackIndex === effectiveIndex
+                        ? "0 0 25px rgb(0,0,0,0.22)"
+                        : undefined
+                    }
+                  >
+                    <VideoCard {...v} />
+                  </Stack>
+                );
+              })
             )}
           </Stack>
           <Stack
@@ -138,6 +181,10 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
               //   svg: {
               //     path: { fill: PALETTE.system.red },
               //   },
+            }}
+            onClick={() => {
+              setStackIndex(stackIndex + 1);
+              setLatestDecision("added");
             }}
           >
             <PlusIcon height="40px" width="40px" />
