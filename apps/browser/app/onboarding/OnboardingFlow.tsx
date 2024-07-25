@@ -51,6 +51,7 @@ const ConfigurationStepButton = (props: {
 
 export const OnBoardingViewLayout = (props: {
   title: string;
+  subtitle: string;
   button?: React.ReactNode;
   children: React.ReactNode;
 }) => (
@@ -61,7 +62,7 @@ export const OnBoardingViewLayout = (props: {
     alignItems="center"
     spacing="30px"
   >
-    <Stack width="805px">
+    <Stack width="850px" spacing="24px" alignItems="center">
       <Typography
         color="rgba(255,255,255,0.88)"
         variant="h3"
@@ -69,6 +70,16 @@ export const OnBoardingViewLayout = (props: {
       >
         {props.title}
       </Typography>
+      <Stack width="85%">
+        <Typography
+          variant="medium"
+          bold
+          color="rgba(255,255,255,0.88)"
+          sx={{ textAlign: "center" }}
+        >
+          {props.subtitle}
+        </Typography>
+      </Stack>
     </Stack>
     {props.children}
     <Stack>{props.button}</Stack>

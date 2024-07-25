@@ -4,6 +4,7 @@ import { useState } from "react";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { OnBoardingViewLayout } from "./OnboardingFlow";
+import Image from "next/image";
 
 const AgeCard = (props: {
   title: string;
@@ -11,6 +12,7 @@ const AgeCard = (props: {
   selected: boolean;
   faded: boolean;
   subtitle: string;
+  imageUrl: string;
   items: string[];
   onClick: () => void;
 }) => (
@@ -19,6 +21,7 @@ const AgeCard = (props: {
     height="317px"
     borderRadius="12px"
     alignItems="center"
+    justifyContent="space-between"
     p="16px"
     py="26px"
     boxSizing="border-box"
@@ -37,40 +40,31 @@ const AgeCard = (props: {
     onClick={props.onClick}
     boxShadow={`0 0 30px ${props.selected ? "#A594FF" : undefined}`}
   >
-    <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
-      {props.title}
-    </Typography>
-    <Typography
-      bold
-      variant="small"
-      color={
-        props.faded ? PALETTE.secondary.purple[1] : PALETTE.secondary.grey[5]
-      }
-    >
-      {props.ages}
-    </Typography>
-    <Stack
-      height="73px"
-      width="100%"
-      bgcolor={PALETTE.secondary.grey[2]}
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Typography bold color={PALETTE.secondary.grey[3]}>
-        VISUAL
+    <Stack alignItems="center">
+      <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
+        {props.title}
+      </Typography>
+      <Typography bold variant="small" color={PALETTE.secondary.purple[1]}>
+        {props.ages}
       </Typography>
     </Stack>
+    <Image
+      src={props.imageUrl}
+      height={70}
+      width={118}
+      alt="age illustration"
+    />
     <Typography
       bold
-      variant="small"
       color={PALETTE.secondary.grey[5]}
       sx={{ textAlign: "center" }}
     >
       {props.subtitle}
     </Typography>
     <Stack spacing="8px" alignItems="center">
-      {props.items.map((x) => (
+      {props.items.map((x, i) => (
         <Typography
+          key={i}
           variant="tiny"
           bold
           color={PALETTE.secondary.grey[4]}
@@ -89,11 +83,12 @@ const SafetyStepView = (props: { onNext: () => void }) => {
   >();
   return (
     <OnBoardingViewLayout
-      title="First, select a Browser pre-set that matches your child's age"
+      title="Pick a setting that matches your child’s age"
+      subtitle="Different settings have different freedom levels, you can change this as they grow."
       button={
         <Stack alignItems="center" spacing="24px">
           <Typography color="rgb(255,255,255)" bold>
-            Don't worry, you can change this later
+            {"Don't worry, you can change this later"}
           </Typography>
           <UrsorButton
             dark
@@ -113,38 +108,41 @@ const SafetyStepView = (props: { onNext: () => void }) => {
         <AgeCard
           title="Adventurer"
           ages="For age 3 to 7"
-          subtitle="Provide a limited and curated internet experience."
+          subtitle="Ideal for the youngest of children"
           items={[
-            "Search & internet access is not allowed",
-            "Browse safe Videos and Links from our library",
-            "XXX",
+            "Disabled search engine",
+            "Only browse content approved by you",
+            "A focused ad-free video player",
           ]}
+          imageUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/adventurer.png"
           selected={selectedCardIndex === 0}
           faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 0}
           onClick={() => setSelectedCardIndex(0)}
         />
         <AgeCard
           title="Explorer"
-          ages="For age 7 to 10"
-          subtitle="An exploratory internet experience for older kids."
+          ages="For age 8 to 12"
+          subtitle="Ideal for children that use the internet"
           items={[
-            "Access to Search with 20+ Filters",
-            "Browse Links, Apps and Videos",
-            "Browse from an encyclopaedic repository",
+            "Enabled safe search engine",
+            "Custom built filter  for kid-first content",
+            "A focused ad-free video player",
           ]}
+          imageUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/explorer.png"
           selected={selectedCardIndex === 1}
           faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 1}
           onClick={() => setSelectedCardIndex(1)}
         />
         <AgeCard
           title="Navigator"
-          ages="For ages 11+"
-          subtitle="A braver and wider, independent Browser"
+          ages="For age 12+"
+          subtitle="Ideal for independent use by older teens"
           items={[
-            "Access to Search with 40+ Filters",
-            "Access to Search with more inclusive Filters",
-            "Videos from our library",
+            "A search engine that returns safe content",
+            "A broader filter for more internet access",
+            "A focused ad-free video player",
           ]}
+          imageUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/navigator.png"
           selected={selectedCardIndex === 2}
           faded={_.isNumber(selectedCardIndex) && selectedCardIndex !== 2}
           onClick={() => setSelectedCardIndex(2)}

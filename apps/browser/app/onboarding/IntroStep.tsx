@@ -46,7 +46,8 @@ const ConfigurationIntroStepCard = (props: {
 
 const IntroStepView = (props: { onNext: () => void }) => (
   <OnBoardingViewLayout
-    title="Lets get your new your safe Browser ready in 3 simple steps"
+    title="Get your browser ready in 3 simple steps"
+    subtitle="This will only take a few minutes to make your Browser safe, secure and full of Content that you and your kids love!"
     button={
       <UrsorButton
         dark
@@ -56,7 +57,7 @@ const IntroStepView = (props: { onNext: () => void }) => (
         endIcon={ChevronRightIcon}
         onClick={props.onNext}
       >
-        Let's get started
+        Get started
       </UrsorButton>
     }
   >
