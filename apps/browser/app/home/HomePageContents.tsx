@@ -15,7 +15,7 @@ import LinkCard from "../components/LinkCard";
 import ChannelCard from "../components/ChannelCard";
 import ApiController, { getAbsoluteUrl } from "../api";
 import VideoCard from "../components/VideoCard";
-import PlatformCard from "../components/PlatformCard";
+import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 
@@ -124,7 +124,7 @@ export default function HomePageContents(props: {
     undefined
   );
 
-  const [services, setServices] = useState<IFilterUrl[]>([]);
+  const [services, setServices] = useState<IApp[]>([]);
   // useEffect(() => {
   //   deviceId &&
   //     ApiController.getDeviceServices(deviceId).then((s) => setServices(s));
@@ -214,9 +214,9 @@ export default function HomePageContents(props: {
                 ...services.map((a, i) => (
                   <Stack key={a.id} onClick={() => setSelectedFolderId(a.id)}>
                     <UrsorFadeIn duration={1200} delay={i * 70}>
-                      <PlatformCard
+                      <AppCard
                         key={a.id}
-                        platform={a}
+                        app={a}
                         clickCallback={() => router.push(getAbsoluteUrl(a.url))}
                       />
                     </UrsorFadeIn>

@@ -12,7 +12,11 @@ import TimeLimitSelector from "./TimeLimitSelector";
 import { FADE_DURATION, OnBoardingViewLayout } from "./OnboardingFlow";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
 import UrsorFadeIn from "../components/UrsorFadeIn";
-import { ChannelAdditionView, VideoAdditionView } from "./ContentAdditionView";
+import {
+  AppsAdditionView,
+  ChannelAdditionView,
+  VideoAdditionView,
+} from "./ContentAdditionView";
 
 const PIN_KEY_SEPARATION = "25px";
 
@@ -283,6 +287,7 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
   },
   VideoAdditionView,
   ChannelAdditionView,
+  AppsAdditionView,
   (props: { onNext: () => void }) => {
     const [pin, setPin] = useState<number[]>([]);
     const [confirmationPin, setConfirmationPin] = useState<number[]>([]);

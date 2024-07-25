@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Stack } from "@mui/system";
-import { IPlatform } from "../api";
 import { PALETTE, Typography } from "ui";
+import { IApp } from "../profiles/[id]/components/AppsTab";
 
 const PADDING = "8px";
 export const MIN_WIDTH = "175px";
@@ -12,7 +12,7 @@ export const PLACEHOLDER_IMAGE_URL_COMMON_SECTION =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/img/cardAssets/patterns/pattern";
 
 export interface IPlatformCardProps {
-  platform: IPlatform;
+  app: IApp;
   clickCallback: () => void;
 }
 
@@ -34,10 +34,10 @@ const PlatformCard = (props: IPlatformCardProps) => {
     >
       <Stack
         sx={{
-          backgroundImage: `url(${props.platform.img})`,
+          backgroundImage: `url(${props.app.logoUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center center",
-          backgroundColor: props.platform.img.includes(
+          backgroundColor: props.app.logoUrl.includes(
             PLACEHOLDER_IMAGE_URL_COMMON_SECTION
           )
             ? PALETTE.secondary.grey[2]
@@ -48,7 +48,7 @@ const PlatformCard = (props: IPlatformCardProps) => {
         borderRadius="8px"
       />
       <Typography variant="small" bold maxLines={2}>
-        {props.platform.title}
+        {props.app.title}
       </Typography>
     </Stack>
   );

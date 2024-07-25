@@ -16,6 +16,7 @@ import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import VideoCard from "../components/VideoCard";
 import ChannelCard from "../components/ChannelCard";
+import AppCard, { IApp } from "../components/AppCard";
 
 export const getRemoveTopCardAnimation = (left: boolean) => keyframes`
 from {
@@ -45,7 +46,9 @@ export const VideoAdditionView = (props: { onNext: () => void }) => {
   return (
     <ContentAdditionView
       cards={videos.map((v) => (
-        <VideoCard key={v.id} {...v} />
+        <Stack key={v.id} width="364px">
+          <VideoCard {...v} />
+        </Stack>
       ))}
       title={[
         { value: "We've got some" },
@@ -72,12 +75,70 @@ export const ChannelAdditionView = (props: { onNext: () => void }) => {
   return (
     <ContentAdditionView
       cards={channels.map((c) => (
-        <ChannelCard key={c.id} {...c} />
+        <Stack key={c.id} width="364px">
+          <ChannelCard {...c} />
+        </Stack>
       ))}
       title={[
         { value: "Also, we've got some" },
         { value: "Channels", color: PALETTE.secondary.orange[3] },
         { value: "for you!" },
+      ]}
+      onNext={props.onNext}
+    />
+  );
+};
+
+export const AppsAdditionView = (props: { onNext: () => void }) => {
+  const [apps, setApps] = useState<IApp[]>([
+    {
+      id: 1,
+      title: "Boo",
+      url: "hs.fi",
+      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      description: "Boo",
+    },
+    {
+      id: 2,
+      title: "Boo",
+      url: "hs.fi",
+      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      description: "Boo",
+    },
+    {
+      id: 3,
+      title: "Boo",
+      url: "hs.fi",
+      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      description: "Boo",
+    },
+    {
+      id: 4,
+      title: "Boo",
+      url: "hs.fi",
+      logoUrl: "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_banner.jpg",
+      description: "Boo",
+    },
+  ]);
+  //   const loadFolder = useCallback(
+  //     () =>
+  //       ApiController.getFolder(1).then((f: IContentBucket) => {
+  //         setApps(_.sortBy(f.channels, (a) => a.id));
+  //       }),
+  //     []
+  //   );
+  //   useEffect(() => {
+  //     loadFolder();
+  //   }, [loadFolder]);
+  return (
+    <ContentAdditionView
+      cards={apps.map((app) => (
+        <AppCard key={app.id} app={app} />
+      ))}
+      title={[
+        { value: "Lastly, we have some great" },
+        { value: "Apps", color: PALETTE.secondary.purple[1] },
+        { value: "for you" },
       ]}
       onNext={props.onNext}
     />
@@ -100,18 +161,19 @@ const ContentAdditionView = (props: {
     <OnBoardingViewLayout
       title={props.title}
       subtitle="43 added"
-      button={
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="large"
-          iconSize={22}
-          endIcon={ChevronRightIcon}
-          onClick={props.onNext}
-        >
-          Next
-        </UrsorButton>
-      }
+      //   button={
+      //     <UrsorButton
+      //       dark
+      //       variant="tertiary"
+      //       size="large"
+      //       iconSize={22}
+      //       endIcon={ChevronRightIcon}
+      //       onClick={props.onNext}
+      //       disabled={stackIndex < props.cards.length}
+      //     >
+      //       Next
+      //     </UrsorButton>
+      //   }
     >
       <Stack flex={1} height="100%" justifyContent="center" alignItems="center">
         <Stack
@@ -160,7 +222,6 @@ const ContentAdditionView = (props: {
                 return (
                   <Stack
                     key={i}
-                    width="364px"
                     position="absolute"
                     sx={{
                       transition: "0.36s ease-out",
