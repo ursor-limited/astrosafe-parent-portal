@@ -58,7 +58,7 @@ export const OnBoardingViewLayout = (props: {
   <Stack
     width="100%"
     height="100%"
-    justifyContent="center"
+    justifyContent="space-between"
     alignItems="center"
     spacing="30px"
   >
@@ -70,7 +70,7 @@ export const OnBoardingViewLayout = (props: {
       >
         {props.title}
       </Typography>
-      <Stack width="85%">
+      <Stack width="85%" alignItems="center">
         <Typography
           variant="medium"
           bold
@@ -89,7 +89,7 @@ export const OnBoardingViewLayout = (props: {
 const ActualOnboardingFlow = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(2);
+  const [stepIndex, setStepIndex] = useState<number>(4);
   useEffect(
     () => setStepCategory(STEP_COMPONENTS[stepIndex].category),
     [stepIndex]
