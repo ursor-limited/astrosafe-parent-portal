@@ -190,7 +190,7 @@ export default function HomePageContents(props: {
   }, [nColumns, currentFolderContents]);
 
   const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
     useState<boolean>(false);
@@ -318,7 +318,7 @@ export default function HomePageContents(props: {
                 </Stack>
               ) : (
                 <Stack
-                  height="457px"
+                  height={props.mobile ? undefined : "457px"}
                   justifyContent="center"
                   alignItems="center"
                   spacing="13px"
@@ -329,14 +329,16 @@ export default function HomePageContents(props: {
                     height={152}
                     alt="empty state illustration"
                   />
-                  <Stack width="444px">
+                  <Stack
+                    width={props.mobile ? "100%" : "444px"}
+                    alignItems="center"
+                  >
                     <Typography
                       color={PALETTE.secondary.grey[3]}
                       sx={{ textAlign: "center" }}
                       bold
                     >
-                      This Folder is currently empty. Click one of the buttons
-                      above to add Content to the assigned Devices.
+                      This Folder is currently empty.
                     </Typography>
                   </Stack>
                 </Stack>

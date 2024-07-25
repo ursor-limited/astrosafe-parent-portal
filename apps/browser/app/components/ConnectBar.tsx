@@ -15,15 +15,13 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
   return (
     <>
       <Stack
-        maxHeight="52px"
-        borderRadius="12px"
+        height="44px"
+        maxHeight="44px"
         direction="row"
-        //border={`2px solid ${PALETTE.secondary.purple[2]}`}
+        px="20px"
         justifyContent="space-between"
         alignItems="center"
-        px={OVERALL_X_PADDING}
-        p={props.mobile ? "16px" : undefined}
-        bgcolor={PALETTE.system.orange}
+        bgcolor={PALETTE.secondary.purple[1]}
         sx={{
           svg: {
             path: {
@@ -34,13 +32,15 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
         onClick={() => setSchoolJoiningDialogOpen(true)}
       >
         <Typography
-          variant={props.mobile ? "small" : "large"}
+          variant={props.mobile ? "normal" : "large"}
           bold
           color="rgb(255,255,255)"
         >
-          Connect to a group for a safe experience
+          Set up your parent portal
         </Typography>
-        <ChevronRight width="20px" height="20px" />
+        <UrsorButton size="small" dark fontColor={PALETTE.secondary.purple[1]}>
+          Connect
+        </UrsorButton>
         {/* <Stack direction="row" spacing="12px">
           <UrsorButton
             variant="secondary"

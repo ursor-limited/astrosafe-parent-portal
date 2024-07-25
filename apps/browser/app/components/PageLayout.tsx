@@ -40,15 +40,10 @@ const PageLayout = (props: {
   return (
     <>
       {!props.mobile ? <Navbar selected={props.headerButtonId} /> : null}
+      {!deviceId ? (
+        <ConnectBar mobile={!!props.mobile} openConnect={props.openConnect} />
+      ) : null}
       <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-        {!deviceId ? (
-          <Stack px={OVERALL_X_PADDING}>
-            <ConnectBar
-              mobile={!!props.mobile}
-              openConnect={props.openConnect}
-            />
-          </Stack>
-        ) : null}
         {props.children}
       </Stack>
       {landingViewOpen ? (
