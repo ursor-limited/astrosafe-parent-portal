@@ -50,7 +50,7 @@ const ConfigurationStepButton = (props: {
 );
 
 export const OnBoardingViewLayout = (props: {
-  title: string;
+  title: string | { value: string; color?: string }[];
   subtitle: string;
   button?: React.ReactNode;
   children: React.ReactNode;
@@ -63,13 +63,27 @@ export const OnBoardingViewLayout = (props: {
     spacing="30px"
   >
     <Stack width="850px" spacing="24px" alignItems="center">
-      <Typography
-        color="rgba(255,255,255,0.88)"
-        variant="h3"
-        sx={{ textAlign: "center" }}
-      >
-        {props.title}
-      </Typography>
+      {typeof props.title === "string" ? (
+        <Typography
+          color="rgba(255,255,255,0.88)"
+          variant="h3"
+          sx={{ textAlign: "center" }}
+        >
+          {props.title}
+        </Typography>
+      ) : (
+        <Stack direction="row" spacing="10px">
+          {props.title.map((x, i) => (
+            <Typography
+              key={i}
+              variant="h3"
+              color={x.color || "rgba(255,255,255,0.88)"}
+            >
+              {x.value}
+            </Typography>
+          ))}
+        </Stack>
+      )}
       <Stack width="85%" alignItems="center">
         <Typography
           variant="medium"

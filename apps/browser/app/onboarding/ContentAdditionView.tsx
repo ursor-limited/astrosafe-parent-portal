@@ -67,7 +67,11 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
   >();
   return (
     <OnBoardingViewLayout
-      title="We've got some Video Content for you!"
+      title={[
+        { value: "We've got some" },
+        { value: "Video Content", color: PALETTE.system.red },
+        { value: "for you!" },
+      ]}
       subtitle="43 added"
       button={
         <UrsorButton
