@@ -16,9 +16,9 @@ export type DeviceType = "chrome" | "android" | "ios";
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
   const [devices, setDevices] = useState<IDevice[]>([]);
-  // useEffect(() => {
-  //   ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
-  // }, []);
+  useEffect(() => {
+    ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
+  }, []);
   const router = useRouter();
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice["id"] | undefined

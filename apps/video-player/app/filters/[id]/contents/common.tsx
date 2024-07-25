@@ -242,6 +242,8 @@ export default function FilterPage(props: {
           open={addDeviceDialogOpen}
           groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
+          title="Apply to a Device"
+          subtitle={["Replace a Device's current Filter", "with this one."]}
           addedDevices={devices}
           onAdd={(id) => {
             ApiController.addFilterToDevice(props.filterId, id).then(() => {
