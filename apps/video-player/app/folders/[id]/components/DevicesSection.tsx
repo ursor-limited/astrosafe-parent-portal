@@ -13,6 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
+import DeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
 
 const DevicesSection = (props: {
   title: string;
@@ -30,6 +31,9 @@ const DevicesSection = (props: {
     ApiController.removeFolderFromDevice(props.folderId, id).then(
       props.onRemove
     );
+
+  const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
+    useState<number | undefined>();
 
   return (
     <>
@@ -66,11 +70,11 @@ const DevicesSection = (props: {
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <DeviceCard
                   {...d}
-                  // button={
-                  //   <Stack onClick={() => removeDevice(d.id)}>
-                  //     <XIcon height={16} width={16} />
-                  //   </Stack>
-                  // }
+                  button={
+                    <Stack onClick={() => setRemovalConfirmationDialogId(d.id)}>
+                      <XIcon height={16} width={16} />
+                    </Stack>
+                  }
                   noExtras
                 />
               </UrsorFadeIn>
@@ -111,9 +115,9 @@ const DevicesSection = (props: {
         )}
       </AstroBentoCard>
       <AllDevicesDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have access to this Folder`}
+        title={`${props.devices.length} ${
+          props.devices.length === 1 ? "Device has" : "Devices have"
+        } access to this Folder`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
@@ -122,6 +126,17 @@ const DevicesSection = (props: {
           setDevicesGridDialogOpen(false);
         }}
       />
+      {removalConfirmationDialogId ? (
+        <DeviceRemovalConfirmationDialog
+          open={true}
+          onClose={() => setRemovalConfirmationDialogId(undefined)}
+          onSubmit={() => removeDevice(removalConfirmationDialogId)}
+          deviceName={
+            props.devices.find((d) => d.id === removalConfirmationDialogId)
+              ?.name ?? ""
+          }
+        />
+      ) : null}
     </>
   );
 };

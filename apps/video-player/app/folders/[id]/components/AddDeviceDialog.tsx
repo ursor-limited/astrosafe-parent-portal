@@ -90,7 +90,12 @@ const AddDeviceDialog = (props: {
               }}
               onClick={() => props.onAdd(d.id)}
             >
-              <Stack borderRadius="100%" overflow="hidden">
+              <Stack
+                borderRadius="100%"
+                overflow="hidden"
+                minWidth={23}
+                minHeight={23}
+              >
                 <Image
                   src={d.profileAvatarUrl}
                   height={23}
