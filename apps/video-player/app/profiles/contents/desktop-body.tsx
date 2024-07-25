@@ -11,6 +11,7 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { PALETTE } from "ui";
 import { useRouter } from "next/navigation";
 import DeviceCard from "../components/DeviceCard";
+import QRCodeView from "../components/QRCodeView";
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IDevice[];
@@ -77,7 +78,7 @@ const AllDevicesPageDesktopBody = (props: {
             ))}
           </DynamicCardGrid>
         ) : (
-          <DeviceInstructionsView />
+          <QRCodeView />
         )}
       </Stack>
     </PageLayout>
