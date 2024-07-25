@@ -1,3 +1,6 @@
+"use client";
+
+/* eslint-disable eslint-comments/require-description -- foolish requirement */
 /* eslint-disable @typescript-eslint/ban-ts-comment -- no time to fix */
 import React, { useRef } from "react";
 import { Box } from "@mui/system";
@@ -18,7 +21,8 @@ export function DynamicContainer(props: DynamicContainerProps): JSX.Element {
     <Box
       style={{
         transition: `${props.duration || 600}ms`, //@ts-expect-error
-        height: `${rect.height}px`,
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        height: `${rect?.height}px`,
         width: props.width ?? "100%",
         overflow: "hidden",
       }}

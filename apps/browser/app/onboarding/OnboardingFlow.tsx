@@ -89,8 +89,11 @@ export const OnBoardingViewLayout = (props: {
 const ActualOnboardingFlow = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(0);
-  useEffect(() => setStepCategory(STEP_COMPONENTS[stepIndex].category));
+  const [stepIndex, setStepIndex] = useState<number>(2);
+  useEffect(
+    () => setStepCategory(STEP_COMPONENTS[stepIndex].category),
+    [stepIndex]
+  );
   const [fade, setFade] = useState<"in" | "out">("in");
   const StepView = STEP_COMPONENTS[stepIndex].component;
   return (

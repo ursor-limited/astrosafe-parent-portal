@@ -1,5 +1,7 @@
+"use client";
+
 import { Stack } from "@mui/system";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { DynamicContainer, PALETTE, Typography, UrsorButton } from "ui";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import DeleteIcon from "@/images/icons/DeleteIcon.svg";
@@ -9,6 +11,7 @@ import { useEffect, useState } from "react";
 import TimeLimitSelector from "./TimeLimitSelector";
 import { FADE_DURATION, OnBoardingViewLayout } from "./OnboardingFlow";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
+import UrsorFadeIn from "../components/UrsorFadeIn";
 
 const PIN_KEY_SEPARATION = "25px";
 
@@ -44,6 +47,7 @@ const PinPad = (props: {
       <Stack direction="row" spacing="24px" justifyContent="center">
         {[...Array(4).keys()].map((i) => (
           <Stack
+            key={i}
             height="16px"
             width="16px"
             sx={{ opacity: 0.9, transition: "0.2s" }}
@@ -165,7 +169,8 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
     return (
       <OnBoardingViewLayout
-        title="What are your kids interested in?"
+        title="What type of content do you want to see?"
+        subtitle="Please select 3 or more and we will help you and your child discover more great Content from the internet!"
         button={
           <UrsorButton
             dark
@@ -180,24 +185,62 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
           </UrsorButton>
         }
       >
-        <Grid container gap="12px" width={692} justifyContent="center">
-          {DUMMY_TOPICS.map((topic, i) => (
-            <Grid key={i} item>
-              <TopicTag
-                selected={selectedTopics.includes(topic)}
-                onClick={() =>
-                  setSelectedTopics(
-                    selectedTopics.includes(topic)
-                      ? selectedTopics.filter((t) => t !== topic)
-                      : [...selectedTopics, topic]
-                  )
-                }
-              >
-                {topic}
-              </TopicTag>
+        <Stack spacing="32px" alignItems="center">
+          <DynamicContainer duration={400}>
+            <Grid
+              container
+              gap="12px"
+              width={692}
+              alignItems="center"
+              justifyContent="center"
+              border={`2px solid ${PALETTE.secondary.grey[4]}`}
+              p="12px"
+              borderRadius="12px"
+              maxWidth="686px"
+            >
+              {selectedTopics.map((topic, i) => (
+                <UrsorFadeIn key={i} duration={600}>
+                  <Grid item>
+                    <TopicTag
+                      selected
+                      onClick={() =>
+                        setSelectedTopics(
+                          selectedTopics.includes(topic)
+                            ? selectedTopics.filter((t) => t !== topic)
+                            : [...selectedTopics, topic]
+                        )
+                      }
+                    >
+                      {topic}
+                    </TopicTag>
+                  </Grid>
+                </UrsorFadeIn>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          </DynamicContainer>
+          <Grid container gap="12px" width={692} justifyContent="center">
+            {DUMMY_TOPICS.map((topic, i) => (
+              <Grid
+                key={i}
+                item
+                sx={{ opacity: selectedTopics.includes(topic) ? 0.4 : 1 }}
+              >
+                <TopicTag
+                  selected={selectedTopics.includes(topic)}
+                  onClick={() =>
+                    setSelectedTopics(
+                      selectedTopics.includes(topic)
+                        ? selectedTopics.filter((t) => t !== topic)
+                        : [...selectedTopics, topic]
+                    )
+                  }
+                >
+                  {topic}
+                </TopicTag>
+              </Grid>
+            ))}
+          </Grid>
+        </Stack>
       </OnBoardingViewLayout>
     );
   },
@@ -205,7 +248,8 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
     const [selectorValue, setSelectorValue] = useState<number>(35);
     return (
       <OnBoardingViewLayout
-        title="Set your Device time limits"
+        title="Set a daily browsing time limit"
+        subtitle="After this time is reached, the Browser will be locked. Don't worry, you can change this later!"
         button={
           <UrsorButton
             dark
@@ -293,8 +337,15 @@ export const CONTENT_STEP_VIEWS: React.FC<{ onNext: () => void }>[] = [
             displayIncorrectnessTitle
               ? "The pin you entered is incorrect, please try again"
               : confirming
-              ? "Confirm your super safe pin"
+              ? "Please confirm your pin"
               : "Set your parental pin to keep this safe!"
+          }
+          subtitle={
+            displayIncorrectnessTitle
+              ? "Please enter the same pin"
+              : confirming
+              ? "Enter your pin again to make sure it's correct! Keep this safe!"
+              : "This is needed so you can manage your settings later. Ask your child to look away and note this down!"
           }
         >
           <PinPad
