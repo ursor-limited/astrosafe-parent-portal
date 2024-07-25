@@ -53,7 +53,7 @@ const AstroTimeChart = (props: {
   return (
     <Stack
       flex={1}
-      px={`${props.barsXPadding}px` ?? "24px"}
+      px={props.barsXPadding ? `${props.barsXPadding}px` : "24px"}
       position="relative"
       mr="56px !important"
     >

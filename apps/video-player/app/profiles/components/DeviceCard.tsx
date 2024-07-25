@@ -67,7 +67,7 @@ export const DeviceCardBrowsingStatusSection = (props: {
       >
         <GlobeIcon height="20px" width="20px" />
         <Typography bold color={PALETTE.secondary.grey[5]}>
-          Browsing is enabled
+          {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
         </Typography>
       </Stack>
       <AstroSwitch
