@@ -40,7 +40,7 @@ export interface ILink extends IContent {
 }
 export interface IChannel extends IContent {
   profileUrl: string;
-  backgroundUrl: string;
+  bannerUrl: string;
 }
 export interface IVideo extends IContent {
   thumbnailUrl: string;

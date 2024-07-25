@@ -6,6 +6,7 @@ import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import {
   AstroContent,
+  IChannel,
   IContentBucket,
   IContentCard,
   IVideo,
@@ -14,6 +15,7 @@ import ApiController from "../api";
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 import VideoCard from "../components/VideoCard";
+import ChannelCard from "../components/ChannelCard";
 
 export const getRemoveTopCardAnimation = (left: boolean) => keyframes`
 from {
@@ -28,31 +30,11 @@ to {
 }
 `;
 
-const ContentAdditionView = (props: { onNext: () => void }) => {
+export const VideoAdditionView = (props: { onNext: () => void }) => {
   const [videos, setVideos] = useState<IVideo[]>([]);
   const loadFolder = useCallback(
     () =>
       ApiController.getFolder(1).then((f: IContentBucket) => {
-        //setFolder(f);
-        // setCurrentFolderContents(
-        //   _.sortBy(
-        //     [
-        //       ...f.links.map((l) => ({
-        //         type: "link" as AstroContent,
-        //         content: l,
-        //       })),
-        //       ...f.videos.map((v) => ({
-        //         type: "video" as AstroContent,
-        //         content: v,
-        //       })),
-        //       ...f.channels.map((c) => ({
-        //         type: "channel" as AstroContent,
-        //         content: c,
-        //       })),
-        //     ],
-        //     (c) => c.content.createdAt
-        //   )
-        // );
         setVideos(_.sortBy(f.videos, (v) => v.id));
       }),
     []
@@ -60,18 +42,63 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
   useEffect(() => {
     loadFolder();
   }, [loadFolder]);
-
-  const [stackIndex, setStackIndex] = useState<number>(0);
-  const [latestDecision, setLatestDecision] = useState<
-    "added" | "removed" | undefined
-  >();
   return (
-    <OnBoardingViewLayout
+    <ContentAdditionView
+      cards={videos.map((v) => (
+        <VideoCard key={v.id} {...v} />
+      ))}
       title={[
         { value: "We've got some" },
         { value: "Video Content", color: PALETTE.system.red },
         { value: "for you!" },
       ]}
+      onNext={props.onNext}
+    />
+  );
+};
+
+export const ChannelAdditionView = (props: { onNext: () => void }) => {
+  const [channels, setChannels] = useState<IChannel[]>([]);
+  const loadFolder = useCallback(
+    () =>
+      ApiController.getFolder(1).then((f: IContentBucket) => {
+        setChannels(_.sortBy(f.channels, (c) => c.id));
+      }),
+    []
+  );
+  useEffect(() => {
+    loadFolder();
+  }, [loadFolder]);
+  return (
+    <ContentAdditionView
+      cards={channels.map((c) => (
+        <ChannelCard key={c.id} {...c} />
+      ))}
+      title={[
+        { value: "Also, we've got some" },
+        { value: "Channels", color: PALETTE.secondary.orange[3] },
+        { value: "for you!" },
+      ]}
+      onNext={props.onNext}
+    />
+  );
+};
+
+const ContentAdditionView = (props: {
+  cards: React.ReactNode[];
+  title: { value: string; color?: string }[];
+  onNext: () => void;
+}) => {
+  const [stackIndex, setStackIndex] = useState<number>(0);
+  useEffect(() => {
+    props.cards.length && stackIndex === props.cards.length && props.onNext();
+  }, [stackIndex]);
+  const [latestDecision, setLatestDecision] = useState<
+    "added" | "removed" | undefined
+  >();
+  return (
+    <OnBoardingViewLayout
+      title={props.title}
       subtitle="43 added"
       button={
         <UrsorButton
@@ -128,11 +155,11 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
             }}
           >
             {_.reverse(
-              videos.map((v, i) => {
+              props.cards.map((c, i) => {
                 const effectiveIndex = i - stackIndex;
                 return (
                   <Stack
-                    key={v.id}
+                    key={i}
                     width="364px"
                     position="absolute"
                     sx={{
@@ -165,7 +192,7 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
                         : undefined
                     }
                   >
-                    <VideoCard {...v} />
+                    {c}
                   </Stack>
                 );
               })
@@ -197,12 +224,10 @@ const ContentAdditionView = (props: { onNext: () => void }) => {
         <Stack width="466px" sx={{ textAlign: "center" }}>
           <Typography color="rgb(255,255,255)" variant="medium" bold>
             {`Mark Rober's channel features fun and educational science and
-          engineering projects.`}
+            engineering projects.`}
           </Typography>
         </Stack>
       </Stack>
     </OnBoardingViewLayout>
   );
 };
-
-export default ContentAdditionView;
