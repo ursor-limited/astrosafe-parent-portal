@@ -1,17 +1,15 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { OVERALL_X_PADDING } from "./PageLayout";
-import SchoolJoiningDialog from "./SchoolJoiningDialog";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useEffect, useState } from "react";
+import LoginToParentPortalDialog from "../home/LoginToParentPortalDialog";
 
 const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
-  const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
-    useState<boolean>(false);
   useEffect(
-    () => setSchoolJoiningDialogOpen(!!props.openConnect),
+    () => setParentPortalDialogOpen(!!props.openConnect),
     [props.openConnect]
   );
+  const [parentPortalDialogOpen, setParentPortalDialogOpen] =
+    useState<boolean>(false);
   return (
     <>
       <Stack
@@ -29,7 +27,7 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
             },
           },
         }}
-        onClick={() => setSchoolJoiningDialogOpen(true)}
+        onClick={() => setParentPortalDialogOpen(true)}
       >
         <Typography
           variant={props.mobile ? "normal" : "large"}
@@ -41,28 +39,10 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
         <UrsorButton size="small" dark fontColor={PALETTE.secondary.purple[1]}>
           Connect
         </UrsorButton>
-        {/* <Stack direction="row" spacing="12px">
-          <UrsorButton
-            variant="secondary"
-            size="small"
-            width={props.mobile ? "100%" : undefined}
-          >
-            Get a plan
-          </UrsorButton>
-          <UrsorButton
-            variant="tertiary"
-            dark
-            size="small"
-            width={props.mobile ? "100%" : undefined}
-            onClick={() => setSchoolJoiningDialogOpen(true)}
-          >
-            Connect
-          </UrsorButton>
-        </Stack> */}
       </Stack>
-      <SchoolJoiningDialog
-        open={schoolJoiningDialogOpen}
-        closeCallback={() => setSchoolJoiningDialogOpen(false)}
+      <LoginToParentPortalDialog
+        open={parentPortalDialogOpen}
+        onClose={() => setParentPortalDialogOpen(false)}
       />
     </>
   );

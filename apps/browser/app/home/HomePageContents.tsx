@@ -18,6 +18,7 @@ import VideoCard from "../components/VideoCard";
 import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
+import LoginToParentPortalDialog from "./LoginToParentPortalDialog";
 
 export const DUMMY_DEVICE_ID = 1;
 
