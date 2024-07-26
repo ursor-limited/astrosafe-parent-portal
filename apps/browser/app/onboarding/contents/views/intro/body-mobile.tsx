@@ -1,10 +1,11 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
+import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ShieldLockIcon from "@/images/icons/ShieldLockIcon.svg";
 import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import { DesktopOnBoardingViewLayout } from "../../layout/desktop";
+import { MobileOnBoardingViewLayout } from "../../layout/mobile";
 
 const ConfigurationIntroStepCard = (props: {
   n: number;
@@ -12,8 +13,8 @@ const ConfigurationIntroStepCard = (props: {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
 }) => (
   <Stack
-    width="202px"
-    height="185px"
+    height="82px"
+    width="100%"
     borderRadius="12px"
     border={`2.5px solid ${PALETTE.secondary.purple[1]}`}
     sx={{
@@ -23,12 +24,14 @@ const ConfigurationIntroStepCard = (props: {
         },
       },
     }}
-    justifyContent="center"
+    justifyContent="space-between"
     alignItems="center"
     spacing="24px"
+    direction="row"
+    px="24px"
+    boxSizing="border-box"
   >
-    <props.icon width="34px" height="34px" />
-    <Stack spacing="4px" alignItems="center" width="162px">
+    <Stack direction="row" spacing="22px" alignItems="center">
       <Typography variant="h5" color="rgba(255,255,255,0.9)">
         {props.n}
       </Typography>
@@ -41,11 +44,12 @@ const ConfigurationIntroStepCard = (props: {
         {props.title}
       </Typography>
     </Stack>
+    <props.icon width="29px" height="29px" />
   </Stack>
 );
 
 const IntroStepViewMobileBody = (props: { onNext: () => void }) => (
-  <DesktopOnBoardingViewLayout
+  <MobileOnBoardingViewLayout
     title="Get your browser ready in 3 simple steps"
     subtitle="This will only take a few minutes to make your Browser safe, secure and full of Content that you and your kids love!"
     button={
@@ -62,7 +66,7 @@ const IntroStepViewMobileBody = (props: { onNext: () => void }) => (
     }
   >
     <Stack
-      flex={1}
+      width="100%"
       sx={{
         svg: {
           path: {
@@ -70,29 +74,28 @@ const IntroStepViewMobileBody = (props: { onNext: () => void }) => (
           },
         },
       }}
-      direction="row"
-      spacing="18px"
+      spacing="8px"
       alignItems="center"
     >
       <ConfigurationIntroStepCard
         icon={ShieldLockIcon}
         n={1}
-        title="Configure your security settings"
+        title="Select the appropriate age"
       />
-      <ChevronRightIcon height="32px" width="32px" />
+      <ChevronDownIcon height="32px" width="32px" />
       <ConfigurationIntroStepCard
         icon={VerifiedIcon}
         n={2}
-        title="Select your approved Content"
+        title="Choose content you love"
       />
-      <ChevronRightIcon height="32px" width="32px" />
+      <ChevronDownIcon height="32px" width="32px" />
       <ConfigurationIntroStepCard
         icon={GlobeIcon}
         n={3}
-        title="Set up your personal Browser"
+        title="Set your time limits"
       />
     </Stack>
-  </DesktopOnBoardingViewLayout>
+  </MobileOnBoardingViewLayout>
 );
 
 export default IntroStepViewMobileBody;
