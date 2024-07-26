@@ -131,7 +131,7 @@ export const AppsSelectionView = (props: {
   return (
     <ContentSelectionView
       cards={apps.map((app) => (
-        <Stack width={props.isMobile ? "fit-content" : undefined}>
+        <Stack key={app.id} width={props.isMobile ? "fit-content" : undefined}>
           <AppCard key={app.id} app={app} />
         </Stack>
       ))}

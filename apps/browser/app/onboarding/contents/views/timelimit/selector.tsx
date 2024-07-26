@@ -5,23 +5,24 @@ import { PALETTE, Typography } from "ui";
 const TimeLimitSlider = (props: {
   value: number;
   setValue: (newValue: number) => void;
+  barHeight?: string;
+  circleSize?: string;
 }) => (
   <Stack
-    width="546px"
     sx={{
       ".MuiSlider-thumb": {
         background: "#f8f8f8",
-        height: "48px",
-        width: "48px",
+        height: props.circleSize ?? "48px",
+        width: props.circleSize ?? "48px",
       },
       ".MuiSlider-track": {
         background: PALETTE.secondary.purple[1],
         border: "none",
-        height: "30px",
+        height: props.barHeight ?? "30px",
         borderRadius: "40px",
       },
       ".MuiSlider-rail": {
-        height: "30px",
+        height: props.barHeight ?? "30px",
         borderRadius: "40px",
         background: "#384f61",
         opacity: 1,
@@ -39,11 +40,21 @@ const TimeLimitSlider = (props: {
 
 const TimeLimitSelector = (props: {
   value: number;
+  width: string;
+  barHeight?: string;
+  circleSize?: string;
+  spacing?: string;
   setValue: (newValue: number) => void;
 }) => {
   return (
-    <Stack spacing="16px">
-      <TimeLimitSlider value={props.value} setValue={props.setValue} />
+    <Stack spacing={props.spacing || "16px"} width={props.width}>
+      <TimeLimitSlider
+        value={props.value}
+        setValue={props.setValue}
+        barHeight={props.barHeight}
+        circleSize={props.circleSize}
+        //width={props.width}
+      />
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
           30 mins

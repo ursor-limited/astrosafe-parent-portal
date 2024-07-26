@@ -4,6 +4,8 @@ import { FADE_DURATION } from "../../common";
 import { Stack } from "@mui/system";
 import { fadeIn, fadeOut } from "@/app/components/UrsorDialog";
 import { DesktopOnBoardingViewLayout } from "../../layout/desktop";
+import PinViewDesktopBody from "./body-desktop";
+import PinViewMobileBody from "./body-mobile";
 
 const PinView = (props: { onNext: () => void; isMobile?: boolean }) => {
   const [pin, setPin] = useState<number[]>([]);
@@ -57,31 +59,31 @@ const PinView = (props: { onNext: () => void; isMobile?: boolean }) => {
         animationFillMode: "forwards",
       }}
     >
-      <DesktopOnBoardingViewLayout
-        title={
-          displayIncorrectnessTitle
-            ? "The pin you entered is incorrect, please try again"
-            : confirming
-            ? "Please confirm your pin"
-            : "Set your parental pin to keep this safe!"
-        }
-        subtitle={
-          displayIncorrectnessTitle
-            ? "Please enter the same pin"
-            : confirming
-            ? "Enter your pin again to make sure it's correct! Keep this safe!"
-            : "This is needed so you can manage your settings later. Ask your child to look away and note this down!"
-        }
-      >
-        <PinPad
-          pin={confirming ? confirmationPin : pin}
-          onKey={addToPin}
-          onRemove={() =>
-            setPin((confirming ? confirmationPin : pin).slice(0, -1))
-          }
+      {props.isMobile ? (
+        <PinViewMobileBody
+          pin={pin}
+          confirmationPin={confirmationPin}
+          addToPin={addToPin}
+          setPin={setPin}
           wrong={wrong}
+          confirming={confirming}
+          fade={fade}
+          displayIncorrectnessTitle={displayIncorrectnessTitle}
+          onNext={props.onNext}
         />
-      </DesktopOnBoardingViewLayout>
+      ) : (
+        <PinViewDesktopBody
+          pin={pin}
+          confirmationPin={confirmationPin}
+          addToPin={addToPin}
+          setPin={setPin}
+          wrong={wrong}
+          confirming={confirming}
+          fade={fade}
+          displayIncorrectnessTitle={displayIncorrectnessTitle}
+          onNext={props.onNext}
+        />
+      )}
     </Stack>
   );
 };

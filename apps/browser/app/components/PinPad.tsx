@@ -6,10 +6,15 @@ import { useEffect, useState } from "react";
 const PIN_KEY_SEPARATION = "25px";
 export const SHOW_RED_DURATION = 1200;
 
-const PinKey = (props: { n: number; onClick: () => void; dark?: boolean }) => (
+const PinKey = (props: {
+  n: number;
+  onClick: () => void;
+  dark?: boolean;
+  keySize?: string;
+}) => (
   <Stack
-    width="66px"
-    height="66px"
+    width={props.keySize || "66px"}
+    height={props.keySize || "66px"}
     justifyContent="center"
     alignItems="center"
     onClick={props.onClick}
@@ -41,26 +46,78 @@ const PinPadKeys = (props: {
   onKey: (n: number) => void;
   onRemove: () => void;
   dark?: boolean;
+  gap?: string;
+  keySize?: string;
 }) => (
-  <Stack spacing={PIN_KEY_SEPARATION}>
-    <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-      <PinKey n={1} onClick={() => props.onKey(1)} dark={props.dark} />
-      <PinKey n={2} onClick={() => props.onKey(2)} dark={props.dark} />
-      <PinKey n={3} onClick={() => props.onKey(3)} dark={props.dark} />
+  <Stack spacing={props.gap || PIN_KEY_SEPARATION}>
+    <Stack direction="row" spacing={props.gap || PIN_KEY_SEPARATION}>
+      <PinKey
+        n={1}
+        onClick={() => props.onKey(1)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={2}
+        onClick={() => props.onKey(2)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={3}
+        onClick={() => props.onKey(3)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
     </Stack>
-    <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-      <PinKey n={4} onClick={() => props.onKey(4)} dark={props.dark} />
-      <PinKey n={5} onClick={() => props.onKey(5)} dark={props.dark} />
-      <PinKey n={6} onClick={() => props.onKey(6)} dark={props.dark} />
+    <Stack direction="row" spacing={props.gap || PIN_KEY_SEPARATION}>
+      <PinKey
+        n={4}
+        onClick={() => props.onKey(4)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={5}
+        onClick={() => props.onKey(5)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={6}
+        onClick={() => props.onKey(6)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
     </Stack>
-    <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
-      <PinKey n={7} onClick={() => props.onKey(7)} dark={props.dark} />
-      <PinKey n={8} onClick={() => props.onKey(8)} dark={props.dark} />
-      <PinKey n={9} onClick={() => props.onKey(9)} dark={props.dark} />
+    <Stack direction="row" spacing={props.gap || PIN_KEY_SEPARATION}>
+      <PinKey
+        n={7}
+        onClick={() => props.onKey(7)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={8}
+        onClick={() => props.onKey(8)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
+      <PinKey
+        n={9}
+        onClick={() => props.onKey(9)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
     </Stack>
-    <Stack direction="row" spacing={PIN_KEY_SEPARATION}>
+    <Stack direction="row" spacing={props.gap || PIN_KEY_SEPARATION}>
       <Stack flex={1} />
-      <PinKey n={0} onClick={() => props.onKey(0)} dark={props.dark} />
+      <PinKey
+        n={0}
+        onClick={() => props.onKey(0)}
+        dark={props.dark}
+        keySize={props.keySize}
+      />
       <Stack
         flex={1}
         justifyContent="center"
@@ -89,6 +146,8 @@ const PinPad = (props: {
   onRemove: () => void;
   wrong: boolean;
   dark?: boolean;
+  gap?: string;
+  keySize?: string;
 }) => {
   const [red, setRed] = useState<boolean>(false);
   useEffect(() => {
@@ -130,6 +189,8 @@ const PinPad = (props: {
         onKey={props.onKey}
         onRemove={props.onRemove}
         dark={props.dark}
+        gap={props.gap}
+        keySize={props.keySize}
       />
     </Stack>
   );
