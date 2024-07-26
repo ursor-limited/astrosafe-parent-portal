@@ -4,7 +4,6 @@ import { BACKDROP_STYLE } from "../components/UrsorDialog";
 import { Stack } from "@mui/system";
 import PinPad, { SHOW_RED_DURATION } from "../components/PinPad";
 import { useEffect, useState } from "react";
-import { FADE_DURATION } from "../onboarding/OnboardingFlow";
 
 const LoginToParentPortalDialog = (props: {
   open: boolean;
