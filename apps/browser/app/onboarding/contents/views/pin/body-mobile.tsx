@@ -24,7 +24,7 @@ const PinViewMobileBody = (props: {
       setScaling(
         Math.min(
           1,
-          (sizeRef?.getBoundingClientRect?.()?.height -
+          ((sizeRef?.getBoundingClientRect?.()?.height ?? 0) -
             ((sizeRef?.getBoundingClientRect?.()?.bottom ?? 0) - height) ?? 0) /
             430
         )
