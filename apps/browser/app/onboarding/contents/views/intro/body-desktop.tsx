@@ -44,7 +44,7 @@ const ConfigurationIntroStepCard = (props: {
   </Stack>
 );
 
-const IntroStepView = (props: { onNext: () => void }) => (
+const IntroStepViewDesktopBody = (props: { onNext: () => void }) => (
   <DesktopOnBoardingViewLayout
     title="Get your browser ready in 3 simple steps"
     subtitle="This will only take a few minutes to make your Browser safe, secure and full of Content that you and your kids love!"
@@ -95,4 +95,4 @@ const IntroStepView = (props: { onNext: () => void }) => (
   </DesktopOnBoardingViewLayout>
 );
 
-export default IntroStepView;
+export default IntroStepViewDesktopBody;

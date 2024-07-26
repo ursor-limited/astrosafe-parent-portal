@@ -77,7 +77,7 @@ const AgeCard = (props: {
   </Stack>
 );
 
-const SafetyStepView = (props: { onNext: () => void }) => {
+const SafetyStepView = (props: { onNext: () => void; isMobile?: boolean }) => {
   const [selectedCardIndex, setSelectedCardIndex] = useState<
     number | undefined
   >();

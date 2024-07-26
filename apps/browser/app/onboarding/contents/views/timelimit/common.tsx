@@ -2,7 +2,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import { useState } from "react";
 import { Stack } from "@mui/system";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import TimeLimitSelector from "./TimeLimitSelector";
+import TimeLimitSelector from "./selector";
 import { DesktopOnBoardingViewLayout } from "../../layout/desktop";
 
 const MAX_DURATION = 5 * 3600;
@@ -10,7 +10,7 @@ const MAX_DURATION = 5 * 3600;
 const getFormattedDuration = (duration: number) =>
   `${Math.floor(duration / 3600)}h ${Math.floor((duration % 3600) / 60)}m`;
 
-const TimeLimitsView = (props: { onNext: () => void }) => {
+const TimeLimitView = (props: { onNext: () => void; isMobile?: boolean }) => {
   const [selectorValue, setSelectorValue] = useState<number>(35);
   return (
     <DesktopOnBoardingViewLayout
@@ -39,4 +39,4 @@ const TimeLimitsView = (props: { onNext: () => void }) => {
   );
 };
 
-export default TimeLimitsView;
+export default TimeLimitView;

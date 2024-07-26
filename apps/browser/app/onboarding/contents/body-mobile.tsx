@@ -2,11 +2,14 @@ import { Stack } from "@mui/system";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import { Typography } from "ui";
-import { FADE_DURATION, OnboardingStepCategory } from "./common";
+import {
+  FADE_DURATION,
+  OnboardingStepCategory,
+  STEP_COMPONENTS,
+} from "./common";
 import { useEffect, useState } from "react";
-import IntroStepView from "./steps/intro/mobile";
-import SafetyStepView from "./steps/safety/SafetyStep";
-import { CONTENT_STEP_VIEWS } from "./steps/content/ContentStep";
+import IntroStepView from "./views/intro/body-mobile";
+import SafetyStepView from "./views/safety/common";
 import { fadeIn, fadeOut } from "../../components/UrsorDialog";
 
 const ConfigurationStepButton = (props: {
@@ -92,22 +95,10 @@ const OnboardingHeader = (props: { stepCategory: OnboardingStepCategory }) => (
   </Stack>
 );
 
-export const STEP_COMPONENTS: {
-  category: OnboardingStepCategory;
-  component: React.FC<{ onNext: () => void }>;
-}[] = [
-  { category: "intro", component: IntroStepView },
-  { category: "safety", component: SafetyStepView },
-  ...CONTENT_STEP_VIEWS.map((component) => ({
-    category: "content" as OnboardingStepCategory,
-    component,
-  })),
-];
-
 const OnboardingFlowMobileBody = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(4);
+  const [stepIndex, setStepIndex] = useState<number>(3);
   useEffect(
     () => setStepCategory(STEP_COMPONENTS[stepIndex].category),
     [stepIndex]
@@ -121,7 +112,9 @@ const OnboardingFlowMobileBody = () => {
       justifyContent="space-between"
       alignItems="center"
       zIndex={2}
+      boxSizing="border-box"
       px="20px"
+      overflow="scroll"
     >
       <OnboardingHeader stepCategory={stepCategory} />
       <Stack
@@ -130,6 +123,7 @@ const OnboardingFlowMobileBody = () => {
         justifyContent="center"
         alignItems="center"
         pt="30px"
+        pb="45px"
         spacing="30px"
         sx={{
           animation: `${
@@ -146,6 +140,7 @@ const OnboardingFlowMobileBody = () => {
               setStepIndex(stepIndex + 1);
             }, FADE_DURATION);
           }}
+          isMobile
         />
       </Stack>
     </Stack>

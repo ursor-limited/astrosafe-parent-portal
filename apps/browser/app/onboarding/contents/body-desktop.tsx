@@ -2,12 +2,23 @@ import { Stack } from "@mui/system";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ArrowLeftIcon from "@/images/icons/ArrowLeftIcon.svg";
 import { Typography } from "ui";
-import { FADE_DURATION, OnboardingStepCategory } from "./common";
+import {
+  FADE_DURATION,
+  OnboardingStepCategory,
+  STEP_COMPONENTS,
+} from "./common";
 import { useEffect, useState } from "react";
-import IntroStepView from "./steps/intro/desktop";
-import SafetyStepView from "./steps/safety/SafetyStep";
-import { CONTENT_STEP_VIEWS } from "./steps/content/ContentStep";
+import IntroStepView from "./views/intro/body-desktop";
+import SafetyStepView from "./views/safety/common";
 import { fadeIn, fadeOut } from "../../components/UrsorDialog";
+import {
+  AppsSelectionView,
+  ChannelSelectionView,
+  VideoSelectionView,
+} from "./views/content-selection/common";
+import TimeLimitsView from "./views/timelimit/common";
+import PinView from "./views/pin/common";
+import TopicSelectionView from "./views/topic-selection/common";
 
 const ConfigurationStepButton = (props: {
   text: string;
@@ -29,18 +40,6 @@ const ConfigurationStepButton = (props: {
     </Typography>
   </Stack>
 );
-
-export const STEP_COMPONENTS: {
-  category: OnboardingStepCategory;
-  component: React.FC<{ onNext: () => void }>;
-}[] = [
-  { category: "intro", component: IntroStepView },
-  { category: "safety", component: SafetyStepView },
-  ...CONTENT_STEP_VIEWS.map((component) => ({
-    category: "content" as OnboardingStepCategory,
-    component,
-  })),
-];
 
 const OnboardingFlowDesktopBody = () => {
   const [stepCategory, setStepCategory] =

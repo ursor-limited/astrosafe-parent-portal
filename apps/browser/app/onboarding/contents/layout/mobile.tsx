@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 
@@ -14,27 +15,29 @@ export const MobileOnBoardingViewLayout = (props: {
     alignItems="center"
     spacing="30px"
   >
-    <Stack width="850px" spacing="12px" alignItems="center">
+    <Stack spacing="12px" alignItems="center" width="100%">
       {typeof props.title === "string" ? (
         <Typography
           color="rgba(255,255,255,0.88)"
-          variant="h3"
+          variant="h5"
           sx={{ textAlign: "center" }}
         >
           {props.title}
         </Typography>
       ) : (
-        <Stack direction="row" spacing="10px">
+        <Grid container columnGap="10px" rowGap="4px" justifyContent="center">
           {props.title.map((x, i) => (
-            <Typography
-              key={i}
-              variant="h3"
-              color={x.color || "rgba(255,255,255,0.88)"}
-            >
-              {x.value}
-            </Typography>
+            <Grid key={i} item>
+              <Typography
+                key={i}
+                variant="h5"
+                color={x.color || "rgba(255,255,255,0.88)"}
+              >
+                {x.value}
+              </Typography>
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
       )}
       <Stack width="85%" alignItems="center">
         <Typography
