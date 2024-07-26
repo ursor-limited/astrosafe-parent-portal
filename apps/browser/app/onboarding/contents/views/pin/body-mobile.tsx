@@ -33,6 +33,7 @@ const PinViewMobileBody = (props: {
       sizeRef?.getBoundingClientRect?.()?.height,
       height,
       sizeRef?.getBoundingClientRect?.()?.bottom,
+      props.confirming,
     ]
   );
 
