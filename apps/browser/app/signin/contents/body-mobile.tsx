@@ -93,130 +93,119 @@ const MobileActualLoginView = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   return (
-    <Stack direction="row" height="100%" zIndex={2}>
-      <Stack px="8%" height="100%" justifyContent="center">
-        <UrsorFadeIn duration={800}>
+    <Stack height="100%" justifyContent="center" alignItems="center" zIndex={2}>
+      <UrsorFadeIn duration={800}>
+        <Stack
+          bgcolor="rgb(255,255,255)"
+          borderRadius="24px"
+          p="28px"
+          boxSizing="border-box"
+          justifyContent="center"
+          width="100%"
+          boxShadow="0 0 30px #A594FF"
+        >
+          <Stack alignItems="center" spacing="12px" width="100%">
+            <Stack
+              sx={{
+                background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
+                "-webkit-text-fill-color": "transparent",
+                backgroundClip: "text",
+                "-webkit-background-clip": "text",
+              }}
+            >
+              <Typography variant="h5" color={PALETTE.secondary.purple[2]}>
+                Welcome to AstroSafe
+              </Typography>
+            </Stack>
+            <Stack pb="8px" width="170px" sx={{ textAlign: "center" }}>
+              <Typography variant="small">
+                Log in to your account and start Creating.
+              </Typography>
+            </Stack>
+          </Stack>
+          <Stack pt="16px" spacing="9px" width="100%">
+            {PROVIDER_BUTTON_DETAILS.map((x, i) => (
+              <LoginButton key={i} {...x} />
+            ))}
+          </Stack>
           <Stack
-            bgcolor="rgb(255,255,255)"
-            borderRadius="24px"
-            p="28px"
-            boxSizing="border-box"
-            justifyContent="center"
-            width="391px"
-            boxShadow="0 0 63px #A594FF"
+            direction="row"
+            height="68px"
+            alignItems="center"
+            spacing="16px"
+            pt="3px"
           >
-            <Stack alignItems="center" spacing="12px" width="100%">
+            <Stack
+              height="1px"
+              bgcolor={PALETTE.secondary.grey[3]}
+              width="100%"
+            />
+            <Typography color={PALETTE.secondary.grey[3]} variant="small">
+              OR
+            </Typography>
+            <Stack
+              height="1px"
+              bgcolor={PALETTE.secondary.grey[3]}
+              width="100%"
+            />
+          </Stack>
+          <Stack spacing="12px">
+            <LabeledInputField label="Email">
+              <UrsorInputField
+                value={email}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(event.target.value)
+                }
+                placeholder="Enter your email"
+                width="100%"
+                leftAlign
+              />
+            </LabeledInputField>
+            <LabeledInputField label="Password">
+              <UrsorInputField
+                value={password}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPassword(event.target.value)
+                }
+                placeholder="Enter your password"
+                width="100%"
+                leftAlign
+              />
+            </LabeledInputField>
+          </Stack>
+          <Stack pt="16px" alignItems="center" spacing="10px">
+            <UrsorButton width="100%" onClick={() => null}>
+              Sign in
+            </UrsorButton>
+            <Stack direction="row" spacing="6px">
+              <Typography>{`Don't have an account?`}</Typography>
               <Stack
                 sx={{
-                  background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
-                  "-webkit-text-fill-color": "transparent",
-                  backgroundClip: "text",
-                  "-webkit-background-clip": "text",
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.6 },
                 }}
               >
-                <Typography variant="h5" color={PALETTE.secondary.purple[2]}>
-                  Welcome to AstroSafe
+                <Typography bold color={PALETTE.secondary.purple[2]}>
+                  Sign up
                 </Typography>
-              </Stack>
-              <Stack pb="8px" width="170px" sx={{ textAlign: "center" }}>
-                <Typography variant="small">
-                  Log in to your account and start Creating.
-                </Typography>
-              </Stack>
-            </Stack>
-            <Stack pt="16px" spacing="9px" width="100%">
-              {PROVIDER_BUTTON_DETAILS.map((x, i) => (
-                <LoginButton key={i} {...x} />
-              ))}
-            </Stack>
-            <Stack
-              direction="row"
-              height="68px"
-              alignItems="center"
-              spacing="16px"
-              pt="3px"
-            >
-              <Stack
-                height="1px"
-                bgcolor={PALETTE.secondary.grey[3]}
-                width="100%"
-              />
-              <Typography color={PALETTE.secondary.grey[3]} variant="small">
-                OR
-              </Typography>
-              <Stack
-                height="1px"
-                bgcolor={PALETTE.secondary.grey[3]}
-                width="100%"
-              />
-            </Stack>
-            <Stack spacing="12px">
-              <LabeledInputField label="Email">
-                <UrsorInputField
-                  value={email}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setEmail(event.target.value)
-                  }
-                  placeholder="Enter your email"
-                  width="100%"
-                  leftAlign
-                />
-              </LabeledInputField>
-              <LabeledInputField label="Password">
-                <UrsorInputField
-                  value={password}
-                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                    setPassword(event.target.value)
-                  }
-                  placeholder="Enter your password"
-                  width="100%"
-                  leftAlign
-                />
-              </LabeledInputField>
-            </Stack>
-            <Stack pt="16px" alignItems="center" spacing="10px">
-              <UrsorButton width="100%" onClick={() => null}>
-                Sign in
-              </UrsorButton>
-              <Stack direction="row" spacing="6px">
-                <Typography>{`Don't have an account?`}</Typography>
-                <Stack
-                  sx={{
-                    cursor: "pointer",
-                    transition: "0.2s",
-                    "&:hover": { opacity: 0.6 },
-                  }}
-                >
-                  <Typography bold color={PALETTE.secondary.purple[2]}>
-                    Sign up
-                  </Typography>
-                </Stack>
               </Stack>
             </Stack>
           </Stack>
-        </UrsorFadeIn>
-      </Stack>
-      <Stack flex={1} justifyContent="center" alignItems="flex-end">
-        <Stack
-          height="90%"
-          width="104vh"
-          position="relative"
-          alignItems="flex-end"
-        >
-          <Image
-            src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321951+(1).png"
-            style={{ objectFit: "fill" }}
-            fill
-            alt="boo"
-          />
         </Stack>
-      </Stack>
+      </UrsorFadeIn>
     </Stack>
   );
 };
 
 const MobileForkView = (props: { switchToActualLogin: () => void }) => (
-  <Stack flex={1} justifyContent="center" alignItems="center" spacing="24px">
+  <Stack
+    flex={1}
+    justifyContent="center"
+    alignItems="center"
+    spacing="24px"
+    pt="36px"
+  >
     <Stack justifyContent="center" alignItems="center" spacing="12px">
       <Typography variant="h5" color="rgba(255,255,255,0.9)">
         Welcome to AstroSafe
@@ -260,7 +249,7 @@ const MobileForkView = (props: { switchToActualLogin: () => void }) => (
 const SignInPageMobileBody = () => {
   const [view, setView] = useState<"fork" | "login" | "scan">("fork");
   return (
-    <Stack overflow="scroll" px="24px" pt="36px" pb="24px" zIndex={2}>
+    <Stack overflow="scroll" p="24px" height="100%" zIndex={2}>
       <Stack flex={1} justifyContent="center" alignItems="center">
         {view === "fork" ? (
           <MobileForkView switchToActualLogin={() => setView("login")} />
