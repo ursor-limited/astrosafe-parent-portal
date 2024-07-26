@@ -3,7 +3,7 @@ import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import { Stack } from "@mui/system";
 import { PALETTE } from "ui";
-import LoginPage from "./contents/common";
+import SignInPage from "./contents/common";
 
 async function Page({
   params,
@@ -21,7 +21,7 @@ async function Page({
       bgcolor={PALETTE.primary.navy}
       position="relative"
     >
-      <LoginPage />
+      <SignInPage isMobile={mobile} />
     </Stack>
   );
 }

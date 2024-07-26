@@ -10,7 +10,7 @@ const AVATAR_IMAGE_URL_BASE =
   "https://ursorassets.s3.eu-west-1.amazonaws.com/profileIcon";
 
 const AVATAR_IMAGE_IDS = [
-  4, 18, 5, 6, 7, 15, 2, 1, 3, 4, 10, 9, 8, 16, 17, 11, 12, 13, 14,
+  4, 18, 5, 6, 7, 15, 2, 1, 3, 19, 10, 9, 8, 16, 17, 11, 12, 13, 14,
 ];
 
 export const getInitials = (name: string) =>

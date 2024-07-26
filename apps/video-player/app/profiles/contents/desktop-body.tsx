@@ -12,6 +12,7 @@ import { PALETTE } from "ui";
 import { useRouter } from "next/navigation";
 import DeviceCard from "../components/DeviceCard";
 import QRCodeView from "../components/QRCodeView";
+import { useEffect } from "react";
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IDevice[];
@@ -21,6 +22,11 @@ const AllDevicesPageDesktopBody = (props: {
   setDisconnectDialogOpen: (id: IDevice["id"]) => void;
 }) => {
   const router = useRouter();
+  useEffect(() => {
+    new WebSocket(
+      "wss://api.astrosafe.co/sessions/groups/1?deviceId=2&isDevice=true"
+    );
+  }, []);
   return (
     <PageLayout
       title="My Kids"

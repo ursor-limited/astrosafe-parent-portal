@@ -12,7 +12,9 @@ import { CONTENT_STEP_VIEWS } from "./ContentStep";
 import SafetyStepView from "./SafetyStep";
 import { fadeIn, fadeOut } from "../components/UrsorDialog";
 
-type OnboardingStepCategory = "intro" | "safety" | "content" | "security";
+type OnboardingStepCategory =
+  // | "signIn" //////////// bring the login view over here
+  "intro" | "safety" | "content" | "security";
 
 const STEP_COMPONENTS: {
   category: OnboardingStepCategory;
