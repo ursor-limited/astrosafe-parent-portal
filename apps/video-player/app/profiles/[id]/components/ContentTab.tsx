@@ -40,15 +40,13 @@ export interface ILesson extends IContent {
   imageUrls: string[];
 }
 
-export interface IGroupContentBucket {
+export interface IDeviceContentBucket {
   id: IContentBucket["id"];
   title: IContentBucket["id"];
-  deviceCount: number;
   thumbnailUrls: string[];
-  avatarUrls: IDevice["profileAvatarUrl"][];
 }
 
-const DevicePageContentTab = (props: { folders: IGroupContentBucket[] }) => {
+const DevicePageContentTab = (props: { folders: IDeviceContentBucket[] }) => {
   const router = useRouter();
   return (
     <Stack pt="20px">
