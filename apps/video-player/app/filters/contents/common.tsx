@@ -6,6 +6,7 @@ import AllFiltersPageMobileBody, { DUMMY_GROUP_ID } from "./body-mobile";
 import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
+import { IDevice } from "../[id]/contents/common";
 
 export interface IFilterCategory {
   categoryId: number;
@@ -44,8 +45,17 @@ export interface IFilter {
   groupId: number;
 }
 
+export interface IGroupFilter {
+  id: IFilter["id"];
+  title: IFilter["title"];
+  profileAvatarUrls: IDevice["profileAvatarUrl"][];
+  devices: number;
+  whitelistedCategories: number;
+  blacklistedWords: number;
+}
+
 const AllFiltersPage = (props: { isMobile: boolean }) => {
-  const [filters, setFilters] = useState<IFilter[]>([]);
+  const [filters, setFilters] = useState<IGroupFilter[]>([]);
   useEffect(() => {
     ApiController.getGroupFilters(DUMMY_GROUP_ID).then((f) => setFilters(f));
   }, []);
