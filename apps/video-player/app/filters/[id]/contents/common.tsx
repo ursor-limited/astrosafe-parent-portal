@@ -16,6 +16,12 @@ import NotificationContext from "@/app/components/NotificationContext";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
+export interface IFilterException {
+  url: string;
+  title: string;
+  favicon: string;
+}
+
 export interface IDevice {
   id: number;
   name: string;
@@ -40,9 +46,9 @@ export default function FilterPage(props: {
     ApiController.getFilter(props.filterId).then(setFilter);
   }, [props.filterId]);
 
-  const [whitelistExceptions, setWhitelistExceptions] = useState<IFilterUrl[]>(
-    []
-  );
+  const [whitelistExceptions, setWhitelistExceptions] = useState<
+    IFilterException[]
+  >([]);
   const loadWhitelistExceptions = useCallback(
     () =>
       ApiController.getWhitelistExceptions(props.filterId).then(
@@ -54,9 +60,9 @@ export default function FilterPage(props: {
     loadWhitelistExceptions();
   }, [loadWhitelistExceptions]);
 
-  const [blacklistExceptions, setBlacklistExceptions] = useState<IFilterUrl[]>(
-    []
-  );
+  const [blacklistExceptions, setBlacklistExceptions] = useState<
+    IFilterException[]
+  >([]);
   const loadBlacklistExceptions = useCallback(
     () =>
       ApiController.getBlacklistExceptions(props.filterId).then(

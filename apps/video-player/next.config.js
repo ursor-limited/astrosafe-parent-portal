@@ -19,6 +19,7 @@ module.exports = withSvgr({
       "assets-global.website-files.com",
       "images.unsplash.com",
       "static01.nyt.com",
+      "www.google.com",
     ],
   },
   assetPrefix:

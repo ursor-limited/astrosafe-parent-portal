@@ -3,12 +3,11 @@ import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { useContext, useState } from "react";
 import { UrsorButton } from "ui";
-import { IFilterUrl } from "../../contents/common";
 
 const FilterBlacklistExceptionDialog = (props: {
   open: boolean;
   onClose: () => void;
-  onSubmit: (url: IFilterUrl["url"]) => void;
+  onSubmit: () => void;
 }) => {
   return (
     <UrsorDialog
@@ -19,7 +18,7 @@ const FilterBlacklistExceptionDialog = (props: {
         "This will override our Filters and remove access to this site from all of the assigned Devices. They will not be able to access this site until it is removed or they change Filter.",
       ]}
       width="422px"
-      height="432px"
+      dynamicHeight
     >
       <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
         <Stack
@@ -33,7 +32,8 @@ const FilterBlacklistExceptionDialog = (props: {
             variant="tertiary"
             width="100%"
             onClick={() => {
-              null;
+              props.onSubmit();
+              props.onClose();
             }}
           >
             Yes

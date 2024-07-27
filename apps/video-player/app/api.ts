@@ -12,6 +12,7 @@ import {
   ILink,
   IVideo,
 } from "./profiles/[id]/components/ContentTab";
+import _ from "lodash";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -315,16 +316,16 @@ class ApiController {
 
   static async addWhitelistException(
     filterId: IFilter["id"],
-    domain: IFilterUrl["url"]
+    url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/whitelist/exceptions`, { domain });
+    return post(`filters/${filterId}/whitelist/exceptions`, { url, title: _.uniqueId() });
   }
 
   static async addBlacklistException(
     filterId: IFilter["id"],
-    domain: IFilterUrl["url"]
+    url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/blacklist/exceptions`, { domain });
+    return post(`filters/${filterId}/blacklist/exceptions`,  { url, title: _.uniqueId() });
   }
 
   static async addWhitelistCategory(

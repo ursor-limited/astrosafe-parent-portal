@@ -11,13 +11,12 @@ import Image from "next/image";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import _ from "lodash";
-import { IFilterUrl } from "../../contents/common";
-import FilterWhitelistExceptionDialog from "./FilterWhitelistExceptionDialog";
 import { IAllowedSitesTableRowItems } from "./AllowedSitesSection";
 import FilterBlacklistExceptionDialog from "./FilterBlacklistExceptionDialog";
+import { IFilterException } from "../contents/common";
 
 const FilterPageBlockedSitesSection = (props: {
-  blockedSites: IFilterUrl[];
+  blockedSites: IFilterException[];
   add: (url: string) => void;
   isMobile?: boolean;
 }) => {
@@ -27,14 +26,11 @@ const FilterPageBlockedSitesSection = (props: {
       displayName: "Title",
       sortable: true,
       newTag: true,
-      getAvatar: (id) => {
+      getAvatar: (i) => {
         return (
           <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <Image
-              src={
-                props.blockedSites.find((s) => s.id.toString() === id)
-                  ?.imageUrl ?? ""
-              }
+              src={props.blockedSites[parseInt(i)]?.favicon ?? ""}
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -63,12 +59,12 @@ const FilterPageBlockedSitesSection = (props: {
   useEffect(() => {
     (async () => {
       const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
-        props.blockedSites?.map((a) => ({
-          id: a.id.toString(),
+        props.blockedSites?.map((a, i) => ({
+          id: i.toString(),
           items: {
             title: a.title ?? "",
             url: a.url,
-            createdAt: a.createdAt,
+            createdAt: "",
           },
           tags: [],
           disabled: false,
@@ -103,13 +99,13 @@ const FilterPageBlockedSitesSection = (props: {
   useEffect(() => {
     if (!filteredRows) return;
     const sorted = _.sortBy(
-      filteredRows,
+      rows,
       (row) =>
         //@ts-ignore
         row.items?.[sortedColumn]?.toLowerCase()
     );
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
-  }, [filteredRows, sortDirection, sortedColumn]);
+  }, [rows, sortDirection, sortedColumn]);
 
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
     useState<boolean>(false);
@@ -130,9 +126,7 @@ const FilterPageBlockedSitesSection = (props: {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setSearchValue(event.target.value)
             }
-            onEnterKey={() => {
-              () => setConfirmationDialogOpen(true);
-            }}
+            onEnterKey={() => setConfirmationDialogOpen(true)}
             placeholder="Add a URL"
             width="100%"
             leftAlign
