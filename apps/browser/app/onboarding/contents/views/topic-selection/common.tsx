@@ -7,6 +7,8 @@ import { Grid } from "@mui/material";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import XIcon from "@/images/icons/X.svg";
+import TopicSelectionViewDesktopBody from "./body-desktop";
+import TopicSelectionViewMobileBody from "./body-mobile";
 
 const DUMMY_TOPICS = [
   "boo",
@@ -18,7 +20,7 @@ const DUMMY_TOPICS = [
   "aaaa",
 ];
 
-const TopicTag = (props: {
+export const TopicTag = (props: {
   selected: boolean;
   onClick: () => void;
   children: React.ReactNode;
@@ -62,81 +64,30 @@ const TopicSelectionView = (props: {
   isMobile?: boolean;
 }) => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
-  return (
-    <DesktopOnBoardingViewLayout
-      title="What type of content do you want to see?"
-      subtitle="Please select 3 or more and we will help you and your child discover more great Content from the internet!"
-      button={
-        <UrsorButton
-          dark
-          variant="tertiary"
-          size="large"
-          endIcon={ChevronRightIcon}
-          iconSize={22}
-          onClick={props.onNext}
-          disabled={selectedTopics.length === 0}
-        >
-          Next
-        </UrsorButton>
+  return props.isMobile ? (
+    <TopicSelectionViewMobileBody
+      onNext={props.onNext}
+      selectedTopics={selectedTopics}
+      addOrRemoveTopic={(topic) =>
+        setSelectedTopics(
+          selectedTopics.includes(topic)
+            ? selectedTopics.filter((t) => t !== topic)
+            : [...selectedTopics, topic]
+        )
       }
-    >
-      <Stack spacing="32px" alignItems="center">
-        <DynamicContainer duration={400}>
-          <Grid
-            container
-            gap="12px"
-            width={692}
-            alignItems="center"
-            justifyContent="center"
-            border={`2px solid ${PALETTE.secondary.grey[4]}`}
-            p="12px"
-            borderRadius="12px"
-            maxWidth="686px"
-          >
-            {selectedTopics.map((topic, i) => (
-              <UrsorFadeIn key={i} duration={600}>
-                <Grid item>
-                  <TopicTag
-                    selected
-                    onClick={() =>
-                      setSelectedTopics(
-                        selectedTopics.includes(topic)
-                          ? selectedTopics.filter((t) => t !== topic)
-                          : [...selectedTopics, topic]
-                      )
-                    }
-                  >
-                    {topic}
-                  </TopicTag>
-                </Grid>
-              </UrsorFadeIn>
-            ))}
-          </Grid>
-        </DynamicContainer>
-        <Grid container gap="12px" width={692} justifyContent="center">
-          {DUMMY_TOPICS.map((topic, i) => (
-            <Grid
-              key={i}
-              item
-              sx={{ opacity: selectedTopics.includes(topic) ? 0.4 : 1 }}
-            >
-              <TopicTag
-                selected={selectedTopics.includes(topic)}
-                onClick={() =>
-                  setSelectedTopics(
-                    selectedTopics.includes(topic)
-                      ? selectedTopics.filter((t) => t !== topic)
-                      : [...selectedTopics, topic]
-                  )
-                }
-              >
-                {topic}
-              </TopicTag>
-            </Grid>
-          ))}
-        </Grid>
-      </Stack>
-    </DesktopOnBoardingViewLayout>
+    />
+  ) : (
+    <TopicSelectionViewDesktopBody
+      onNext={props.onNext}
+      selectedTopics={selectedTopics}
+      addOrRemoveTopic={(topic) =>
+        setSelectedTopics(
+          selectedTopics.includes(topic)
+            ? selectedTopics.filter((t) => t !== topic)
+            : [...selectedTopics, topic]
+        )
+      }
+    />
   );
 };
 

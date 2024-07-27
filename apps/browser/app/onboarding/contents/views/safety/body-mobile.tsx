@@ -19,28 +19,27 @@ const AgeCard = (props: {
 }) => {
   const [showItems, setShowItems] = useState<boolean>(false);
   return (
-    <DynamicContainer duration={600}>
-      <Stack
-        borderRadius="12px"
-        justifyContent="space-between"
-        px="16px"
-        py="12px"
-        boxSizing="border-box"
-        bgcolor="rgba(255,255,255,0.95)"
-        sx={{
-          opacity: props.faded ? 0.6 : 1,
-          cursor: "pointer",
-          "&:hover": { opacity: 0.8 },
-          transition: "0.2s",
-          pointerEvents: props.selected ? "none" : undefined,
-          outline: `2px solid ${
-            props.selected ? PALETTE.secondary.purple[2] : "transparent"
-          }`,
-        }}
-        spacing="12px"
-        onClick={props.onClick}
-        boxShadow={`0 0 30px ${props.selected ? "#A594FF" : undefined}`}
-      >
+    <Stack
+      borderRadius="12px"
+      justifyContent="space-between"
+      px="16px"
+      py="12px"
+      boxSizing="border-box"
+      bgcolor="rgba(255,255,255,0.95)"
+      sx={{
+        opacity: props.faded ? 0.6 : 1,
+        cursor: "pointer",
+        transition: "0.2s",
+        pointerEvents: props.selected ? "none" : undefined,
+        outline: `2px solid ${
+          props.selected ? PALETTE.secondary.purple[2] : "transparent"
+        }`,
+      }}
+      spacing="12px"
+      onClick={props.onClick}
+      boxShadow={`0 0 30px ${props.selected ? "#A594FF" : undefined}`}
+    >
+      <DynamicContainer duration={600}>
         <Stack>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="h5" color={PALETTE.secondary.purple[2]}>
@@ -84,8 +83,8 @@ const AgeCard = (props: {
             ))}
           </Stack>
         ) : null}
-      </Stack>
-    </DynamicContainer>
+      </DynamicContainer>
+    </Stack>
   );
 };
 
