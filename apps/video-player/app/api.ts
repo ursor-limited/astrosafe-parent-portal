@@ -379,6 +379,12 @@ class ApiController {
       response.json()
     );
   }
+
+  static async getVideoPreview(url: ILink['url']) {
+    return get(`content/videos/preview/${url}`).then((response: any) =>
+      response.json()
+    );
+  }
 }
 
 export default ApiController;

@@ -47,12 +47,9 @@ const LinkCreationDialog = (props: {
   const notificationCtx = useContext(NotificationContext);
 
   const submitCreation = () =>
-    ApiController.createLink(
-      title,
-      url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png",
-      props.folderId
-    ).then(props.creationCallback);
+    ApiController.createLink(title, url, thumbnailUrl, props.folderId).then(
+      props.creationCallback
+    );
 
   const submitUpdate = () =>
     props.updateDetails?.link.id &&
@@ -60,7 +57,7 @@ const LinkCreationDialog = (props: {
       props.updateDetails.link.id,
       title,
       url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
+      thumbnailUrl
     )
       .then(props.updateDetails?.callback)
       .then(() => notificationCtx.success("Updated Link"));
@@ -75,7 +72,10 @@ const LinkCreationDialog = (props: {
       }}
       type="link"
       editing={!!props.updateDetails}
-      setTitle={setTitle}
+      setTitle={(t) => {
+        setTitle(t);
+        setManuallyChangedTitle(true);
+      }}
       title={title}
       setUrl={setUrl}
       url={url}
