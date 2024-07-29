@@ -2,12 +2,13 @@ import { Stack } from "@mui/system";
 import ContentCreationDialog from "./ContentCreationDialog";
 import { useContext, useEffect, useState } from "react";
 import LinkCard from "./LinkCard";
-import ApiController from "@/app/api";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import {
   IContentBucket,
   ILink,
 } from "@/app/profiles/[id]/components/ContentTab";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const LinkCreationDialog = (props: {
   open: boolean;
@@ -28,6 +29,20 @@ const LinkCreationDialog = (props: {
     props.updateDetails &&
       setThumbnailUrl(props.updateDetails?.link.thumbnailUrl);
   }, [props.updateDetails]);
+
+  const [manuallyChangedTitle, setManuallyChangedTitle] =
+    useState<boolean>(false);
+
+  const loadPreview = () => {
+    ApiController.getLinkPreview(
+      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
+    )
+      .then((result) => {
+        result.title && !manuallyChangedTitle && setTitle(result.title);
+        result.favicon && setThumbnailUrl(result.favicon);
+      })
+      .catch(() => null);
+  };
 
   const notificationCtx = useContext(NotificationContext);
 
@@ -64,6 +79,7 @@ const LinkCreationDialog = (props: {
       title={title}
       setUrl={setUrl}
       url={url}
+      onUrlFieldBlur={loadPreview}
     >
       <Stack
         sx={{

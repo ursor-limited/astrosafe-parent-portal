@@ -1,23 +1,13 @@
 "use client";
 
-import PageLayout from "@/app/components/PageLayout";
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import LogOutIcon from "@/images/icons/LogOutIcon.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
-import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import PersonIcon from "@/images/icons/PersonIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
-import UsersTable from "../components/UsersTable";
-import DevicesTable from "../components/DevicesTable";
-import { PALETTE, Typography, UrsorButton } from "ui";
+import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import EditProfileDialog from "../components/EditProfileDialog";
-import Image from "next/image";
 import InviteDialog from "../components/InviteDialog";
 import { IGroup } from "../../folders/[id]/contents/common";
 import DeviceConnectDialog from "../../profiles/components/DeviceConnectDialog";
@@ -109,13 +99,14 @@ const AccountPage = (props: { isMobile: boolean }) => {
 
   const [allUsers, setAllUsers] = useState<IUser[]>([]);
   const loadUsers = useCallback(
-    () =>
-      ApiController.getGroupUsers(DUMMY_GROUP_ID).then((u) => setAllUsers(u)),
+    () => ApiController.getGroupUsers(DUMMY_GROUP_ID).then(setAllUsers),
     []
   );
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [loadUsers]);
+
+  console.log(allUsers, "alalalalalla");
 
   return user ? (
     <>

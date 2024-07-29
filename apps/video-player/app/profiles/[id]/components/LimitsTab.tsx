@@ -1,20 +1,24 @@
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import AstroToggleCard from "@/app/filters/[id]/components/AstroToggleCard";
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import TimeMinusIcon from "@/images/icons/TimeMinusIcon.svg";
 import TimePlusIcon from "@/images/icons/TimePlusIcon.svg";
-import AstroDropdownCard from "./AstroDropdownCard";
 import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import RequestedSitesSection from "./RequestedSitesSection";
-import { IFilterUrl } from "@/app/filters/contents/common";
+import ApiController from "@/app/api";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+
+export interface IRequestedSite {
+  id: number;
+  url: string;
+  title: string;
+  faviconUrl: string;
+}
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
@@ -109,7 +113,7 @@ const DUMMY_TIME_LIMITS: ITimeLimit[] = [
   getDefaultTimeLimit(6),
 ];
 
-const DevicePageSettingsTab = () => {
+const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(false);
   const [selectedFilter, setSelectedFilter] = useState<string>(
@@ -140,50 +144,23 @@ const DevicePageSettingsTab = () => {
 
   const [dailyLimitsEnabled, setDailyLimitsEnabled] = useState<boolean>(false);
 
-  const [requestedSites, setRequestedSites] = useState<IFilterUrl[]>([
-    {
-      id: 0,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).pnghttps://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title:
-        "NintendoNintendoNintendoNintendoNintendoNintendo mNintendoNintendoNintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 1,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 2,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 3,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-  ]);
+  const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([]);
+  const loadRequestedSites = useCallback(
+    () =>
+      ApiController.getRequestedSites(props.deviceId).then(setRequestedSites),
+    [props.deviceId]
+  );
+  useEffect(() => {
+    loadRequestedSites();
+  }, [loadRequestedSites]);
 
   return (
     <Stack spacing="24px" pb="33px">
       {requestedSites.length > 0 ? (
-        <RequestedSitesSection sites={requestedSites} />
+        <RequestedSitesSection
+          sites={requestedSites}
+          onUpdate={loadRequestedSites}
+        />
       ) : null}
       {/* <Typography variant="h5">Device controls</Typography> */}
       {/* <Stack direction="row" spacing="24px">
@@ -401,4 +378,4 @@ const DevicePageSettingsTab = () => {
   );
 };
 
-export default DevicePageSettingsTab;
+export default DevicePageLimitsTab;

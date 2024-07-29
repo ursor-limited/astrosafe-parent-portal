@@ -7,14 +7,12 @@ import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import DevicePageInsightsTab from "../components/InsightsTab";
-import DevicePageContentTab, {
-  IContentBucket,
-  IGroupContentBucket,
-} from "../components/ContentTab";
+import DevicePageContentTab from "../components/ContentTab";
 import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageLimitsTab from "../components/LimitsTab";
+import { IGroupContentBucket } from "@/app/folders/contents/common";
 
 const ProfilePageDesktopBody = (props: {
   device: IDevice;
@@ -76,7 +74,7 @@ const ProfilePageDesktopBody = (props: {
         ) : selectedTab === "content" ? (
           <DevicePageContentTab folders={props.folders} />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab />
+          <DevicePageLimitsTab deviceId={props.device.id} />
         ) : null}
       </Stack>
     </PageLayout>

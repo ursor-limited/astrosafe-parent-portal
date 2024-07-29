@@ -92,13 +92,6 @@ export const DeviceCardScreenTimeSection = (props: {
         spacing="8px"
         width="100%"
       >
-        <Typography bold color={PALETTE.secondary.purple[2]}>
-          {`${Math.floor(
-            (props.totalTime - props.elapsedTime) / 3600
-          )}h ${Math.floor(
-            ((props.totalTime - props.elapsedTime) % 3600) / 60
-          )}m`}
-        </Typography>
         <Stack
           flex={1}
           height="11px"
@@ -108,13 +101,18 @@ export const DeviceCardScreenTimeSection = (props: {
         >
           <Stack
             height="100%"
-            width={`${
-              (100 * (props.totalTime - props.elapsedTime)) / props.totalTime
-            }%`}
+            width={`${(100 * props.elapsedTime) / props.totalTime}%`}
             bgcolor={PALETTE.secondary.purple[1]}
             borderRadius="6px"
           />
         </Stack>
+        <Typography bold color={PALETTE.secondary.grey[3]}>
+          {`${Math.floor(
+            (props.totalTime - props.elapsedTime) / 3600
+          )}h ${Math.floor(
+            ((props.totalTime - props.elapsedTime) % 3600) / 60
+          )}m`}
+        </Typography>
       </Stack>
       <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
         View

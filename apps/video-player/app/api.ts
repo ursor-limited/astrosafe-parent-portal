@@ -8,11 +8,13 @@ import {
 } from "./filters/contents/common";
 import {
   IChannel,
+  IContent,
   IContentBucket,
   ILink,
   IVideo,
 } from "./profiles/[id]/components/ContentTab";
 import _ from "lodash";
+import { IRequestedSite } from "./profiles/[id]/components/LimitsTab";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -256,7 +258,7 @@ class ApiController {
   }
 
   static async getGroupUsers(id: IUser["id"]) {
-    return get(`users/${id}`).then((response: any) => response.json());
+    return get(`users?groupId=${id}`).then((response: any) => response.json());
   }
 
   static async createUser(email: IUser["email"]) {
@@ -356,6 +358,26 @@ class ApiController {
 
   static async removeBlockedSearchWord(filterId: IFilter["id"], word: string) {
     return dellete(`filters/${filterId}/blacklist/words/${word}`);
+  }
+
+  static async getRequestedSites(deviceId: IDevice["id"]) {
+    return get(`devices/${deviceId}/requests`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async approveRequestedSite(id: IRequestedSite["id"]) {
+    return post(`devices/requests/${id}/approve`, {})
+  }
+
+  static async denyRequestedSite(id: IRequestedSite["id"]) {
+    return dellete(`devices/requests/${id}/deny`)
+  }
+
+  static async getLinkPreview(url: ILink['url']) {
+    return get(`content/links/preview/${url}`).then((response: any) =>
+      response.json()
+    );
   }
 }
 
