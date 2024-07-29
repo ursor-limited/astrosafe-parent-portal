@@ -52,10 +52,11 @@ const AvatarSelectionDialog = (props: {
       PaperProps={{
         style: {
           width: 746,
-          height: 602,
+          height: 590,
           borderRadius: 32,
           padding: "32px",
           paddingBottom: 0,
+          margin: props.isMobile ? "16px" : undefined,
           background: PALETTE.secondary.grey[1],
         },
       }}
@@ -76,6 +77,7 @@ const AvatarSelectionDialog = (props: {
             <Typography
               variant={props.isMobile ? "h5" : "h4"}
               sx={{ textAlign: "center" }}
+              color={PALETTE.secondary.grey[5]}
             >
               Create your personal profile
             </Typography>

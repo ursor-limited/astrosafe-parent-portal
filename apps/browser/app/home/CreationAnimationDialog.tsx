@@ -11,6 +11,8 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { getRemoveTopCardAnimation } from "../onboarding/contents/views/content-selection/card-stack";
 
+const CARD_PERIOD = 2500;
+
 export const getCardHover = (distance: number) => keyframes`
 from {
   transform: translateY(0);
@@ -94,6 +96,7 @@ const CreationAnimationDialog = (props: {
   open: boolean;
   onClose: () => void;
   onNext: () => void;
+  isMobile?: boolean;
 }) => {
   const [stackIndex, setStackIndex] = useState<number>(0);
 
@@ -101,19 +104,18 @@ const CreationAnimationDialog = (props: {
     if (stackIndex < CREATION_ANIMATION_CARDS.length) {
       const intervalId = setInterval(() => {
         setStackIndex((prev) => prev + 1);
-      }, 2000);
+      }, CARD_PERIOD);
       return () => {
         clearInterval(intervalId);
       };
     } else {
-      console.log("looodj");
       props.onNext();
     }
   }, []);
 
   useEffect(() => {
-    stackIndex === CREATION_ANIMATION_CARDS.length &&
-      setInterval(props.onNext, 500);
+    stackIndex === CREATION_ANIMATION_CARDS.length && setStackIndex(0);
+    setInterval(props.onNext, 500);
   }, [stackIndex]);
 
   return (
@@ -128,6 +130,7 @@ const CreationAnimationDialog = (props: {
           borderRadius: 32,
           padding: "32px",
           paddingBottom: 0,
+          margin: props.isMobile ? "16px" : undefined,
           background: PALETTE.secondary.grey[1],
         },
       }}
@@ -143,9 +146,21 @@ const CreationAnimationDialog = (props: {
           alignItems="center"
           pt="16px"
         >
-          <Stack width="240px" height="60px">
-            <Typography variant="h4" sx={{ textAlign: "center" }}>
-              Create your personal profile
+          <Stack
+            width="240px"
+            height="60px"
+            sx={{
+              background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
+              "-webkit-text-fill-color": "transparent",
+              backgroundClip: "text",
+              "-webkit-background-clip": "text",
+            }}
+          >
+            <Typography
+              variant={props.isMobile ? "h5" : "h4"}
+              sx={{ textAlign: "center" }}
+            >
+              Crafting your Browser...
             </Typography>
           </Stack>
         </Stack>
@@ -155,6 +170,9 @@ const CreationAnimationDialog = (props: {
           alignItems="center"
           position="relative"
           flex={1}
+          sx={{
+            transform: props.isMobile ? "scale(0.85)" : undefined,
+          }}
         >
           {_.reverse(
             CREATION_ANIMATION_CARDS.map((c, i) => {
@@ -175,8 +193,12 @@ const CreationAnimationDialog = (props: {
                     opacity: effectiveIndex >= 0 && effectiveIndex < 3 ? 1 : 0,
                     animation:
                       effectiveIndex === -1
-                        ? `${getRemoveTopCardAnimation()} 0.4s ease-out`
+                        ? `${getRemoveTopCardAnimation(
+                            false,
+                            true
+                          )} 0.4s ease-out`
                         : undefined,
+                    animationFillMode: "forwards",
                   }}
                 >
                   <Stack

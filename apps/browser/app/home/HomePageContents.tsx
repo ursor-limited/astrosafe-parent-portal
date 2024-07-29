@@ -358,6 +358,7 @@ export default function HomePageContents(props: {
           setAvatarSelectionDialogOpen(true);
           setCreationAnimationDialogOpen(false);
         }}
+        isMobile={props.mobile}
       />
       <AvatarSelectionDialog
         open={avatarSelectionDialogOpen}
