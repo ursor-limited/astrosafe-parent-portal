@@ -19,7 +19,7 @@ const PinViewDesktopBody = (props: {
           ? "The pin you entered is incorrect, please try again"
           : props.confirming
           ? "Please confirm your pin"
-          : "Set your parental pin to keep this safe!"
+          : "Set a pin to access your parental controls"
       }
       subtitle={
         props.displayIncorrectnessTitle

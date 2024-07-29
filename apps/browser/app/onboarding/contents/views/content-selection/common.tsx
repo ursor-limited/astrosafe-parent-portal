@@ -45,6 +45,7 @@ export const VideoSelectionView = (props: {
         { value: "Video Content", color: PALETTE.system.red },
         { value: "for you!" },
       ]}
+      subtitle="Press + to add these into your browser, or x to delete them. You can always add more later."
       onNext={props.onNext}
       isMobile={props.isMobile}
     />
@@ -78,6 +79,7 @@ export const ChannelSelectionView = (props: {
         { value: "Channels", color: PALETTE.secondary.orange[3] },
         { value: "for you!" },
       ]}
+      subtitle="Press + to add these into your browser, or x to delete them. You can always add more later."
       onNext={props.onNext}
       isMobile={props.isMobile}
     />
@@ -140,6 +142,7 @@ export const AppsSelectionView = (props: {
         { value: "Apps", color: PALETTE.secondary.purple[1] },
         { value: "for you" },
       ]}
+      subtitle="Press + to add these into your browser, or x to delete them. You can always add more later."
       onNext={props.onNext}
       isMobile={props.isMobile}
     />
@@ -191,18 +194,21 @@ export const PlusButton = () => (
 const ContentSelectionView = (props: {
   cards: React.ReactNode[];
   title: { value: string; color?: string }[];
+  subtitle: string;
   onNext: () => void;
   isMobile?: boolean;
 }) => {
   return props.isMobile ? (
     <ContentSelectionViewMobileBody
       title={props.title}
+      subtitle={props.subtitle}
       cards={props.cards}
       onNext={props.onNext}
     />
   ) : (
     <ContentSelectionViewDesktopBody
       title={props.title}
+      subtitle={props.subtitle}
       cards={props.cards}
       onNext={props.onNext}
     />

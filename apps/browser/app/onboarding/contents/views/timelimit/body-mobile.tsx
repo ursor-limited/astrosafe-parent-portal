@@ -10,8 +10,8 @@ const TimeLimitViewMobileBody = (props: { onNext: () => void }) => {
   const [selectorValue, setSelectorValue] = useState<number>(35);
   return (
     <MobileOnBoardingViewLayout
-      title="Set a daily browsing time limit"
-      subtitle="After this time is reached, the Browser will be locked. Don't worry, you can change this later!"
+      title="Set a daily Browser limit"
+      subtitle="The Browser will lock once you've reached the time limit.  Don't worry, you can change this later!"
       button={
         <UrsorButton
           dark

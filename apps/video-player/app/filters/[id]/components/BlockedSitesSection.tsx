@@ -80,19 +80,19 @@ const FilterPageBlockedSitesSection = (props: {
   const [filteredRows, setFilteredRows] = useState<
     IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
   useEffect(() => {
     setFilteredRows(
       rows.filter((row) =>
-        searchValue
+        inputValue
           ? [row.items.title, row.items.url.replace("www.", "")]
               .join("_")
               .toLowerCase()
-              .includes(searchValue.toLowerCase())
+              .includes(inputValue.toLowerCase())
           : true
       )
     );
-  }, [rows, searchValue]);
+  }, [rows, inputValue]);
 
   const [sortedColumn, setSortedColumn] = useState<string>("createdAt");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
@@ -122,9 +122,9 @@ const FilterPageBlockedSitesSection = (props: {
       >
         <Stack spacing="20px">
           <UrsorInputField
-            value={searchValue}
+            value={inputValue}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setSearchValue(event.target.value)
+              setInputValue(event.target.value)
             }
             onEnterKey={() => setConfirmationDialogOpen(true)}
             placeholder="Add a URL"
@@ -165,7 +165,10 @@ const FilterPageBlockedSitesSection = (props: {
       <FilterBlacklistExceptionDialog
         open={confirmationDialogOpen}
         onClose={() => setConfirmationDialogOpen(false)}
-        onSubmit={() => props.add(searchValue)}
+        onSubmit={() => {
+          props.add(inputValue);
+          setInputValue("");
+        }}
       />
     </>
   );

@@ -8,6 +8,7 @@ import { Typography } from "ui";
 const ContentSelectionViewDesktopBody = (props: {
   cards: React.ReactNode[];
   title: { value: string; color?: string }[];
+  subtitle: string;
   onNext: () => void;
   isMobile?: boolean;
 }) => {
@@ -21,7 +22,7 @@ const ContentSelectionViewDesktopBody = (props: {
   return (
     <DesktopOnBoardingViewLayout
       title={props.title}
-      subtitle="43 added"
+      subtitle={props.subtitle}
       //   button={
       //     <UrsorButton
       //       dark

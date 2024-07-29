@@ -8,6 +8,7 @@ import { MobileOnBoardingViewLayout } from "../../layout/mobile";
 const ContentSelectionViewMobileBody = (props: {
   cards: React.ReactNode[];
   title: { value: string; color?: string }[];
+  subtitle: string;
   onNext: () => void;
 }) => {
   const [stackIndex, setStackIndex] = useState<number>(0);
@@ -18,7 +19,7 @@ const ContentSelectionViewMobileBody = (props: {
     "added" | "removed" | undefined
   >();
   return (
-    <MobileOnBoardingViewLayout title={props.title} subtitle="43 added">
+    <MobileOnBoardingViewLayout title={props.title} subtitle={props.subtitle}>
       <Stack flex={1} height="100%" justifyContent="center" alignItems="center">
         <Stack
           direction="row"
