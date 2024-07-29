@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import LoginToParentPortalDialog from "../home/LoginToParentPortalDialog";
+import MobileLoginToParentPortalDialog from "../home/MobileLoginToParentPortalDialog copy";
 
 const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
   useEffect(
@@ -40,10 +41,17 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
           Connect
         </UrsorButton>
       </Stack>
-      <LoginToParentPortalDialog
-        open={parentPortalDialogOpen}
-        onClose={() => setParentPortalDialogOpen(false)}
-      />
+      {props.mobile ? (
+        <MobileLoginToParentPortalDialog
+          open={parentPortalDialogOpen}
+          onClose={() => setParentPortalDialogOpen(false)}
+        />
+      ) : (
+        <LoginToParentPortalDialog
+          open={parentPortalDialogOpen}
+          onClose={() => setParentPortalDialogOpen(false)}
+        />
+      )}
     </>
   );
 };

@@ -98,7 +98,7 @@ const OnboardingHeader = (props: { stepCategory: OnboardingStepCategory }) => (
 const OnboardingFlowMobileBody = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(0);
+  const [stepIndex, setStepIndex] = useState<number>(3);
   useEffect(
     () => setStepCategory(STEP_COMPONENTS[stepIndex].category),
     [stepIndex]

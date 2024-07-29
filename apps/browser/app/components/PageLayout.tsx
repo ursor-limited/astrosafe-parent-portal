@@ -7,6 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 import LandingView from "./LandingView";
 import dynamic from "next/dynamic";
 import MobileLandingView from "./MobileLandingView";
+import useNativeDeviceId from "./useDeviceId";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -21,6 +22,7 @@ const PageLayout = (props: {
   openConnect?: boolean;
   children: React.ReactNode;
 }) => {
+  const nativeDeviceId = useNativeDeviceId();
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
@@ -35,7 +37,25 @@ const PageLayout = (props: {
         },
         "*"
       );
+    deviceId &&
+      window.postMessage(
+        {
+          setAvatarUrl:
+            "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        },
+        "*"
+      );
   }, [deviceId]);
+
+  useEffect(() => {
+    window.postMessage(
+      {
+        setAvatarUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+      },
+      "*"
+    );
+  }, []);
 
   return (
     <>

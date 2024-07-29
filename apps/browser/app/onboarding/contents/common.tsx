@@ -16,6 +16,7 @@ import {
 } from "./views/content-selection/common";
 import TimeLimitView from "./views/timelimit/common";
 import PinView from "./views/pin/common";
+import LoadingView from "./views/loading";
 
 export type OnboardingStepCategory =
   | "intro"
@@ -32,6 +33,7 @@ export const STEP_COMPONENTS: {
   { category: "intro", component: IntroStepView },
   { category: "safety", component: SafetyStepView },
   { category: "content", component: TopicSelectionView },
+  { category: "content", component: LoadingView },
   { category: "content", component: VideoSelectionView },
   { category: "content", component: ChannelSelectionView },
   { category: "content", component: AppsSelectionView },
