@@ -1,7 +1,7 @@
 import { Stack, keyframes } from "@mui/system";
 import _ from "lodash";
 
-export const getRemoveTopCardAnimation = (left: boolean) => keyframes`
+export const getRemoveTopCardAnimation = (left?: boolean) => keyframes`
 from {
   transform: translateY(0) rotate(0deg);
   opacity: 1;

@@ -18,7 +18,7 @@ import VideoCard from "../components/VideoCard";
 import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
-import LoginToParentPortalDialog from "./LoginToParentPortalDialog";
+import CreationAnimationDialog from "./CreationAnimationDialog";
 
 export const DUMMY_DEVICE_ID = 1;
 
@@ -190,8 +190,11 @@ export default function HomePageContents(props: {
     );
   }, [nColumns, currentFolderContents]);
 
-  const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
+  const [creationAnimationDialogOpen, setCreationAnimationDialogOpen] =
     useState<boolean>(false);
+
+  const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
+    useState<boolean>(true);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
     useState<boolean>(false);
@@ -348,6 +351,14 @@ export default function HomePageContents(props: {
           </Stack>
         </Stack>
       </PageLayout>
+      <CreationAnimationDialog
+        open={creationAnimationDialogOpen}
+        onClose={() => setCreationAnimationDialogOpen(false)}
+        onNext={() => {
+          setAvatarSelectionDialogOpen(true);
+          setCreationAnimationDialogOpen(false);
+        }}
+      />
       <AvatarSelectionDialog
         open={avatarSelectionDialogOpen}
         onClose={() => setAvatarSelectionDialogOpen(false)}
@@ -355,6 +366,7 @@ export default function HomePageContents(props: {
           setAvatarSelectionDialogOpen(false);
           setDeviceReadyDialogOpen(true);
         }}
+        isMobile={props.mobile}
       />
       <DeviceReadyDialog
         open={deviceReadyDialogOpen}
