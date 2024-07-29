@@ -101,12 +101,12 @@ export default function ProfilePage(props: {
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
-    {
-      text: "Disconnect",
-      kallback: () => setDisconnectDialogOpen(true),
-      icon: PlugIcon,
-      color: PALETTE.system.red,
-    },
+    // {
+    //   text: "Disconnect",
+    //   kallback: () => setDisconnectDialogOpen(true),
+    //   icon: PlugIcon,
+    //   color: PALETTE.system.red,
+    // },
   ];
 
   return device ? (

@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import DeviceCard from "../components/DeviceCard";
 import QRCodeView from "../components/QRCodeView";
 import { useEffect } from "react";
+import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IDevice[];
@@ -50,41 +51,44 @@ const AllDevicesPageDesktopBody = (props: {
       <Stack px="50px" flex={1} pb="31px">
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="355px" rowGap="20px" columnGap="20px">
-            {props.devices.map((d) => (
-              <DeviceCard
-                key={d.id}
-                {...d}
-                showBrowsing
-                url="nintendo.com/bopioijgorfrifunrifjni"
-                button={
-                  <UrsorActionButton
-                    size="18px"
-                    iconSize="18px"
-                    actions={[
-                      {
-                        text: "Open",
-                        kallback: () => router.push(`/profiles/${d.id}`),
-                        icon: ArrowUpRightIcon,
-                      },
-                      {
-                        text: "Edit name",
-                        kallback: () => props.setRenameDeviceDialogId(d.id),
-                        icon: PencilIcon,
-                      },
-                      {
-                        text: "Disconnect",
-                        kallback: () => props.setDisconnectDialogOpen(d.id),
-                        icon: PlugIcon,
-                        color: PALETTE.system.red,
-                      },
-                    ]}
-                  />
-                }
-              />
+            {props.devices.map((d, i) => (
+              <UrsorFadeIn key={d.id} duration={i * 90}>
+                <DeviceCard
+                  {...d}
+                  showBrowsing
+                  url="nintendo.com/bopioijgorfrifunrifjni"
+                  button={
+                    <UrsorActionButton
+                      size="18px"
+                      iconSize="18px"
+                      actions={[
+                        {
+                          text: "Open",
+                          kallback: () => router.push(`/profiles/${d.id}`),
+                          icon: ArrowUpRightIcon,
+                        },
+                        {
+                          text: "Edit name",
+                          kallback: () => props.setRenameDeviceDialogId(d.id),
+                          icon: PencilIcon,
+                        },
+                        // {
+                        //   text: "Disconnect",
+                        //   kallback: () => props.setDisconnectDialogOpen(d.id),
+                        //   icon: PlugIcon,
+                        //   color: PALETTE.system.red,
+                        // },
+                      ]}
+                    />
+                  }
+                />
+              </UrsorFadeIn>
             ))}
           </DynamicCardGrid>
         ) : (
-          <QRCodeView />
+          <UrsorFadeIn delay={500} duration={800}>
+            <QRCodeView />
+          </UrsorFadeIn>
         )}
       </Stack>
     </PageLayout>

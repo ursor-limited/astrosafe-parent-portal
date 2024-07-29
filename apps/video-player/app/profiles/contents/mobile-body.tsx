@@ -88,12 +88,12 @@ const AllDevicesPageMobileBody = (props: {
                         kallback: () => props.setRenameDeviceDialogId(d.id),
                         icon: PencilIcon,
                       },
-                      {
-                        text: "Disconnect",
-                        kallback: () => props.setDisconnectDialogOpen(d.id),
-                        icon: PlugIcon,
-                        color: PALETTE.system.red,
-                      },
+                      // {
+                      //   text: "Disconnect",
+                      //   kallback: () => props.setDisconnectDialogOpen(d.id),
+                      //   icon: PlugIcon,
+                      //   color: PALETTE.system.red,
+                      // },
                     ]}
                   />
                 }
