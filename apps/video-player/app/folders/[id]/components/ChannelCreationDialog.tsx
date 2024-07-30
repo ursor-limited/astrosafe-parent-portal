@@ -10,7 +10,6 @@ import { PALETTE, Typography } from "ui";
 import InfoButton from "@/app/components/InfoButton";
 import { IGroupContentBucket } from "../../contents/common";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
-import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const ChannelCreationDialog = (props: {
   open: boolean;

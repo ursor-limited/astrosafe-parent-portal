@@ -11,7 +11,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
-import { IContentBucket, IGroupContentBucket } from "./ContentTab";
+import { IGroupContentBucket } from "@/app/folders/contents/common";
 
 export const spin = keyframes`
   from {

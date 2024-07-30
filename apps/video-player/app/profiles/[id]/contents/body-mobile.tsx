@@ -8,17 +8,14 @@ import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
-import DevicePageInsightsTab from "../components/InsightsTab";
-import DevicePageContentTab, {
-  IContentBucket,
-  IGroupContentBucket,
-} from "../components/ContentTab";
+import DevicePageContentTab from "../components/ContentTab";
 import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
+import { IGroupContentBucket } from "@/app/folders/contents/common";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -67,7 +64,7 @@ const ProfilePageMobileBody = (props: {
         ) : selectedTab === "content" ? (
           <DevicePageContentTab folders={props.folders} />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab />
+          <DevicePageLimitsTab deviceId={props.device.id} />
         ) : null}
       </Stack>
     </MobilePageLayout>
