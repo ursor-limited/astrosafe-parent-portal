@@ -86,6 +86,7 @@ const DUMMY_SEARCHES = [
 ];
 
 export interface ITimeLimit {
+  id: number;
   day: number;
   allowedMinutes: number;
 }
@@ -255,40 +256,48 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
           }
           timeLimits={timeLimits}
           increment={(day) => {
-            setTimeLimits(
-              timeLimits.map((l) =>
-                l.day === day
-                  ? {
-                      day: l.day,
-                      allowedMinutes: l.allowedMinutes + DAILY_LIMIT_INCREMENT,
-                    }
-                  : l
-              )
-            );
-            ApiController.setTimeLimit(
-              props.deviceId,
-              day,
-              (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
-                DAILY_LIMIT_INCREMENT
-            );
+            const limitId = timeLimits.find((l) => l.day === day)?.id;
+            if (limitId) {
+              setTimeLimits(
+                timeLimits.map((l) =>
+                  l.day === day
+                    ? {
+                        id: limitId,
+                        day: l.day,
+                        allowedMinutes:
+                          l.allowedMinutes + DAILY_LIMIT_INCREMENT,
+                      }
+                    : l
+                )
+              );
+              ApiController.setTimeLimit(
+                limitId,
+                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
+                  DAILY_LIMIT_INCREMENT
+              );
+            }
           }}
           decrement={(day) => {
-            setTimeLimits(
-              timeLimits.map((l) =>
-                l.day === day
-                  ? {
-                      day: l.day,
-                      allowedMinutes: l.allowedMinutes - DAILY_LIMIT_INCREMENT,
-                    }
-                  : l
-              )
-            );
-            ApiController.setTimeLimit(
-              props.deviceId,
-              day,
-              (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
-                DAILY_LIMIT_INCREMENT
-            );
+            const limitId = timeLimits.find((l) => l.day === day)?.id;
+            if (limitId) {
+              setTimeLimits(
+                timeLimits.map((l) =>
+                  l.day === day
+                    ? {
+                        id: limitId,
+                        day: l.day,
+                        allowedMinutes:
+                          l.allowedMinutes - DAILY_LIMIT_INCREMENT,
+                      }
+                    : l
+                )
+              );
+              ApiController.setTimeLimit(
+                limitId,
+                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
+                  DAILY_LIMIT_INCREMENT
+              );
+            }
           }}
         />
       </Stack>

@@ -14,6 +14,7 @@ import {
 } from "./profiles/[id]/components/ContentTab";
 import _ from "lodash";
 import { IRequestedSite } from "./profiles/[id]/components/LimitsTab";
+import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -331,7 +332,7 @@ class ApiController {
     url: IFilterUrl["url"]
   ) {
     return post(`filters/${filterId}/whitelist/exceptions`, {
-      url,
+      url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
 
@@ -340,7 +341,7 @@ class ApiController {
     url: IFilterUrl["url"]
   ) {
     return post(`filters/${filterId}/blacklist/exceptions`, {
-      url,
+      url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
 
@@ -401,11 +402,10 @@ class ApiController {
   }
 
   static async setTimeLimit(
-    deviceId: IDevice["id"],
-    day: number,
+    limitId: number,
     timeLimit: number
   ) {
-    return put(`devices/configs/screentime/limits/${day + 1}`, { timeLimit });
+    return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
   }
 
   static async flipBrowsingAllowed(

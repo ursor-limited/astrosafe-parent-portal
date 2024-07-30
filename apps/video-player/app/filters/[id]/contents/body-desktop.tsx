@@ -55,24 +55,12 @@ export default function FilterPageDesktopBody(props: {
           onAdd={props.setAddDeviceDialogOpen}
           onRemove={props.onRemoveDevice}
         />
-        {/* <FilterPageServicesSection
-          filter={props.filter}
-          services={services}
-          allowedServices={allowedServices}
-          flipService={(id) =>
-            setAllowedServices(
-              allowedServices.includes(id)
-                ? allowedServices.filter((sid) => sid !== id)
-                : [...allowedServices, id]
-            )
-          }
-        /> */}
-        {/* <FilterPageCategoriesSection
+        <FilterPageCategoriesSection
           filter={props.filter}
           categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
-        /> */}
+        />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
           add={props.addWhitelistException}
