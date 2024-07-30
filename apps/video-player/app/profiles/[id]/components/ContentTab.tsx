@@ -2,10 +2,7 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
 import FolderCard from "./FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IDevice } from "@/app/filters/[id]/contents/common";
-import ApiController from "@/app/api";
 
 export type AstroContent = "video" | "channel" | "link";
 
@@ -40,13 +37,15 @@ export interface ILesson extends IContent {
   imageUrls: string[];
 }
 
-export interface IDeviceContentBucket {
+export interface IEnrichedContentBucket {
   id: IContentBucket["id"];
   title: IContentBucket["id"];
   thumbnailUrls: string[];
+  avatarUrls: string[];
+  deviceCount: number;
 }
 
-const DevicePageContentTab = (props: { folders: IDeviceContentBucket[] }) => {
+const DevicePageContentTab = (props: { folders: IEnrichedContentBucket[] }) => {
   const router = useRouter();
   return (
     <Stack pt="20px">
