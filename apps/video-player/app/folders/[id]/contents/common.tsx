@@ -215,6 +215,8 @@ export default function FolderPage(props: {
           open={addDeviceDialogOpen}
           groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
+          title="Share to a Device"
+          subtitle={["Add Device access to this", "Content Folder."]}
           addedDevices={devices}
           onAdd={(id) => {
             ApiController.addFolderToDevice(props.folderId, id).then(() => {

@@ -4,6 +4,7 @@ import Play from "@/images/play.svg";
 import ApiController from "@/app/api";
 import ContentCard from "./ContentCard";
 import { IVideo } from "@/app/profiles/[id]/components/ContentTab";
+import { PALETTE } from "ui";
 
 const IMAGE_HEIGHT = 144;
 
@@ -33,16 +34,20 @@ const VideoCard = (
         position="relative"
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
-        <Image
-          src={props.thumbnailUrl}
-          style={{
-            objectFit: "cover",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          fill
-          alt="image card image"
-        />
+        {props.thumbnailUrl ? (
+          <Image
+            src={props.thumbnailUrl}
+            style={{
+              objectFit: "cover",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            fill
+            alt="image card image"
+          />
+        ) : (
+          <Stack flex={1} bgcolor={PALETTE.secondary.grey[2]} />
+        )}
         <Stack
           position="absolute"
           top={0}

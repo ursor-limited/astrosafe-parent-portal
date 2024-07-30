@@ -1,13 +1,14 @@
 import { Stack } from "@mui/system";
 import VideoCard from "./VideoCard";
 import { useContext, useEffect, useState } from "react";
-import ApiController from "@/app/api";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
 import NotificationContext from "@/app/components/NotificationContext";
 import ContentCreationDialog from "./ContentCreationDialog";
 import {
   IContentBucket,
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const VideoCreationDialog = (props: {
   open: boolean;
@@ -29,15 +30,26 @@ const VideoCreationDialog = (props: {
       setThumbnailUrl(props.updateDetails?.video.thumbnailUrl);
   }, [props.updateDetails]);
 
+  const [manuallyChangedTitle, setManuallyChangedTitle] =
+    useState<boolean>(false);
+
+  const loadPreview = () => {
+    ApiController.getVideoPreview(
+      encodeURIComponent(getAbsoluteUrl(cleanUrl(url)))
+    )
+      .then((result) => {
+        result.title && !manuallyChangedTitle && setTitle(result.title);
+        result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl);
+      })
+      .catch(() => null);
+  };
+
   const notificationCtx = useContext(NotificationContext);
 
   const submitCreation = () =>
-    ApiController.createVideo(
-      title,
-      url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png",
-      props.folderId
-    ).then(props.creationCallback);
+    ApiController.createVideo(title, url, thumbnailUrl, props.folderId).then(
+      props.creationCallback
+    );
 
   const submitUpdate = () =>
     props.updateDetails?.video.id &&
@@ -45,7 +57,7 @@ const VideoCreationDialog = (props: {
       props.updateDetails.video.id,
       title,
       url,
-      "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
+      thumbnailUrl
     )
       .then(props.updateDetails?.callback)
       .then(() => notificationCtx.success("Updated Video"));
@@ -61,11 +73,15 @@ const VideoCreationDialog = (props: {
         props.onClose();
       }}
       type="video"
-      setTitle={setTitle}
+      setTitle={(t) => {
+        setTitle(t);
+        setManuallyChangedTitle(true);
+      }}
       title={title}
       setUrl={setUrl}
       url={url}
       editing={!!props.updateDetails}
+      onUrlFieldBlur={loadPreview}
     >
       <Stack
         sx={{

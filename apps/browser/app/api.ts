@@ -1,4 +1,3 @@
-import { BrowserContent } from "./home/AstroContentColumns";
 import {
   AstroContent,
   IContent,

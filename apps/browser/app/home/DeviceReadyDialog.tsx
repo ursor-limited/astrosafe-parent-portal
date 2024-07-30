@@ -89,7 +89,7 @@ const DeviceReadyDialog = (props: { open: boolean; onClose: () => void }) => {
           </Stack>
           <Stack width="240px">
             <Typography variant="small" sx={{ textAlign: "center" }}>
-              We've added curated Content that Alex will surely enjoy.
+              {`We've added curated Content that Alex will surely enjoy.`}
             </Typography>
           </Stack>
           <Stack direction="row" spacing="12px" pt="12px">
@@ -147,7 +147,7 @@ const DeviceReadyDialog = (props: { open: boolean; onClose: () => void }) => {
               </Typography>
             </Stack>
             <UrsorButton variant="secondary" onClick={props.onClose}>
-              Stay in kids' Browser
+              {`Stay in kids' Browser`}
             </UrsorButton>
           </Stack>
           <Stack

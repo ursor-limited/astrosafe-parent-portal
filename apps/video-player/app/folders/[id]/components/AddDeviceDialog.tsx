@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { IGroup } from "../contents/common";
 import { IDevice } from "@/app/filters/[id]/contents/common";
+import Image from "next/image";
 
 const AddDeviceDialog = (props: {
+  title: string;
+  subtitle: string[];
   open: boolean;
   onClose: () => void;
   onAdd: (id: IDevice["id"]) => void;
@@ -48,8 +51,8 @@ const AddDeviceDialog = (props: {
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title="Share to a Device"
-      subtitle={["Add or remove Device access to this", "Content Folder."]}
+      title={props.title}
+      subtitle={props.subtitle}
       width="434px"
       height={props.isMobile ? "76%" : undefined}
       isMobile={props.isMobile}
@@ -89,10 +92,17 @@ const AddDeviceDialog = (props: {
             >
               <Stack
                 borderRadius="100%"
-                height="23px"
-                minWidth="23px"
-                bgcolor={d.backgroundColor || PALETTE.secondary.orange[2]}
-              />
+                overflow="hidden"
+                minWidth={23}
+                minHeight={23}
+              >
+                <Image
+                  src={d.profileAvatarUrl}
+                  height={23}
+                  width={23}
+                  alt="avatar"
+                />
+              </Stack>
               <Typography maxLines={1} bold>
                 {d.name}
               </Typography>

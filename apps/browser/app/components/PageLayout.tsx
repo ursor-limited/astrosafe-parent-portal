@@ -7,6 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 import LandingView from "./LandingView";
 import dynamic from "next/dynamic";
 import MobileLandingView from "./MobileLandingView";
+import useNativeDeviceId from "./useNativeDeviceId";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -21,11 +22,14 @@ const PageLayout = (props: {
   openConnect?: boolean;
   children: React.ReactNode;
 }) => {
+  const nativeDeviceId = useNativeDeviceId();
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     undefined
   );
   const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
+
+  useEffect(() => setDeviceId(1), []); // TODO: REMOVEEEEEEEEEEEEEEEE!!!!
 
   useEffect(() => {
     deviceId &&
@@ -35,20 +39,33 @@ const PageLayout = (props: {
         },
         "*"
       );
+    deviceId &&
+      window.postMessage(
+        {
+          setAvatarUrl:
+            "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+        },
+        "*"
+      );
   }, [deviceId]);
+
+  useEffect(() => {
+    window.postMessage(
+      {
+        setAvatarUrl:
+          "https://ursorassets.s3.eu-west-1.amazonaws.com/pingu_profile.jpg",
+      },
+      "*"
+    );
+  }, []);
 
   return (
     <>
       {!props.mobile ? <Navbar selected={props.headerButtonId} /> : null}
+      {!deviceId ? (
+        <ConnectBar mobile={!!props.mobile} openConnect={props.openConnect} />
+      ) : null}
       <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
-        {!deviceId ? (
-          <Stack px={OVERALL_X_PADDING}>
-            <ConnectBar
-              mobile={!!props.mobile}
-              openConnect={props.openConnect}
-            />
-          </Stack>
-        ) : null}
         {props.children}
       </Stack>
       {landingViewOpen ? (

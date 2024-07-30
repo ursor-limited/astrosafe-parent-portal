@@ -97,7 +97,9 @@ const FolderPageDesktopBody = (props: {
     >
       <Stack pl="48px" spacing="24px" pb="32px">
         <DevicesSection
-          title={`${props.devices.length} Devices have access to this Folder`}
+          title={`${props.devices.length} ${
+            props.devices.length === 1 ? "Device has" : "Devices have"
+          } access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
@@ -189,7 +191,7 @@ const FolderPageDesktopBody = (props: {
                   ...columns.map((column, i) => (
                     <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                       {column.map((x, j) => (
-                        <Stack key={x.content.id}>
+                        <Stack key={x.content.url}>
                           <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
                             {x.type === "link" ? (
                               <LinkCard

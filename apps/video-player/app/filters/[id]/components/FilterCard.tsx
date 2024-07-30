@@ -5,10 +5,10 @@ import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import ProfileImageRow from "./ProfileImageRow";
-import { IFilter } from "../../contents/common";
+import { IFilter, IGroupFilter } from "../../contents/common";
 
 const FilterCard = (
-  props: IFilter & { deviceImageUrls: string[]; isMobile?: boolean }
+  props: IGroupFilter & { deviceImageUrls: string[]; isMobile?: boolean }
 ) => (
   <Stack
     height="213px"
@@ -22,7 +22,7 @@ const FilterCard = (
   >
     <Stack spacing="12px">
       <Stack direction="row" spacing="4px" alignItems="center">
-        <Typography variant={props.isMobile ? "medium" : "h5"}>
+        <Typography bold variant={props.isMobile ? "medium" : "h5"}>
           {props.title}
         </Typography>
         <VerifiedIcon height="20px" width="20px" />
@@ -34,16 +34,14 @@ const FilterCard = (
         >
           <Stack spacing="4px" direction="row" alignItems="center">
             <ListUnorderedIcon width="12px" height="12px" />
-            <div>{`${props.filterCategoryWhitelist?.length ?? 0} ${
-              props.filterCategoryWhitelist?.length === 1
-                ? "Category"
-                : "Categories"
+            <div>{`${props.whitelistedCategories ?? 0} ${
+              props.whitelistedCategories === 1 ? "Category" : "Categories"
             } allowed`}</div>
           </Stack>
           <Stack spacing="4px" direction="row" alignItems="center">
             <StopIcon width="12px" height="12px" />
-            <div>{`${props.filterWordBlacklist?.length ?? 0} blocked ${
-              props.filterWordBlacklist?.length === 1 ? "word" : "words"
+            <div>{`${props.blacklistedWords ?? 0} blocked ${
+              props.blacklistedWords === 1 ? "word" : "words"
             }`}</div>
           </Stack>
         </Stack>

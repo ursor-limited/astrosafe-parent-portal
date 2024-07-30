@@ -9,11 +9,12 @@ import FilterIcon from "@/images/icons/FilterIcon.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
-import { getAbsoluteUrl } from "@/app/api";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
+import { IEnrichedDevice } from "../contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -67,7 +68,7 @@ export const DeviceCardBrowsingStatusSection = (props: {
       >
         <GlobeIcon height="20px" width="20px" />
         <Typography bold color={PALETTE.secondary.grey[5]}>
-          Browsing is enabled
+          {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
         </Typography>
       </Stack>
       <AstroSwitch
@@ -92,13 +93,6 @@ export const DeviceCardScreenTimeSection = (props: {
         spacing="8px"
         width="100%"
       >
-        <Typography bold color={PALETTE.secondary.purple[2]}>
-          {`${Math.floor(
-            (props.totalTime - props.elapsedTime) / 3600
-          )}h ${Math.floor(
-            ((props.totalTime - props.elapsedTime) % 3600) / 60
-          )}m`}
-        </Typography>
         <Stack
           flex={1}
           height="11px"
@@ -108,13 +102,16 @@ export const DeviceCardScreenTimeSection = (props: {
         >
           <Stack
             height="100%"
-            width={`${
-              (100 * (props.totalTime - props.elapsedTime)) / props.totalTime
-            }%`}
+            width={`${(100 * props.elapsedTime) / props.totalTime}%`}
             bgcolor={PALETTE.secondary.purple[1]}
             borderRadius="6px"
           />
         </Stack>
+        <Typography bold color={PALETTE.secondary.grey[3]}>
+          {`${Math.floor(
+            (props.totalTime - props.elapsedTime) / 60
+          )}h ${Math.floor((props.totalTime - props.elapsedTime) % 60)}m`}
+        </Typography>
       </Stack>
       <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
         View
@@ -177,7 +174,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 );
 
 const DeviceCard = (
-  props: IDevice & {
+  props: IEnrichedDevice & {
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -187,6 +184,10 @@ const DeviceCard = (
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  useEffect(
+    () => setBrowsingEnabled(!!props.config?.browsingAllowed),
+    [props.config?.browsingAllowed]
+  );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
@@ -288,15 +289,18 @@ const DeviceCard = (
                 faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
               />
               <DeviceCardScreenTimeSection
-                totalTime={5004}
-                elapsedTime={4020}
+                totalTime={props.screenTime?.allowed ?? 0}
+                elapsedTime={props.screenTime?.current ?? 0}
                 onClickView={() =>
                   router.push(`/profiles/${props.id}?tab=limits`)
                 }
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
-                flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+                flipBrowsingEnabled={() => {
+                  setBrowsingEnabled(!browsingEnabled);
+                  ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+                }}
               />
             </Stack>
             <Stack

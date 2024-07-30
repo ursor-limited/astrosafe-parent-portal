@@ -8,12 +8,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
-import DevicePageContentTab, {
-  IContentBucket,
-  IGroupContentBucket,
-} from "../components/ContentTab";
 import ApiController from "@/app/api";
-import PageLayout from "@/app/components/PageLayout";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ProfilePageDesktopBody from "./body-desktop";
@@ -21,6 +16,8 @@ import DeviceRenameDialog from "../../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../../components/DeviceDisconnectDialog";
 import ProfilePageMobileBody from "./body-mobile";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard";
+import { IGroupContentBucket } from "@/app/folders/contents/common";
+import { IEnrichedDevice } from "../../contents/common";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -31,9 +28,10 @@ export default function ProfilePage(props: {
   isMobile: boolean;
   tab?: AstroAccountTab;
 }) {
-  const [device, setDevice] = useState<IDevice | undefined>();
+  const [device, setDevice] = useState<IEnrichedDevice | undefined>();
   const loadDevice = useCallback(
-    () => ApiController.getDevice(props.deviceId).then((d) => setDevice(d)),
+    () =>
+      ApiController.getEnrichedDevice(props.deviceId).then((d) => setDevice(d)),
     [props.deviceId]
   );
   useEffect(() => {
@@ -105,12 +103,12 @@ export default function ProfilePage(props: {
       kallback: () => setRenameDialogOpen(true),
       icon: PencilIcon,
     },
-    {
-      text: "Disconnect",
-      kallback: () => setDisconnectDialogOpen(true),
-      icon: PlugIcon,
-      color: PALETTE.system.red,
-    },
+    // {
+    //   text: "Disconnect",
+    //   kallback: () => setDisconnectDialogOpen(true),
+    //   icon: PlugIcon,
+    //   color: PALETTE.system.red,
+    // },
   ];
 
   return device ? (

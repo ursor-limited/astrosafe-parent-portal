@@ -8,9 +8,9 @@ const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
   props: Omit<IVideo, "createdAt"> & {
-    favorite: boolean;
-    setFavorite: () => void;
-    onClick: () => void;
+    favorite?: boolean;
+    setFavorite?: () => void;
+    onClick?: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
     onUpdate?: () => void;

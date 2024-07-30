@@ -15,9 +15,10 @@ import LinkCard from "../components/LinkCard";
 import ChannelCard from "../components/ChannelCard";
 import ApiController, { getAbsoluteUrl } from "../api";
 import VideoCard from "../components/VideoCard";
-import PlatformCard from "../components/PlatformCard";
+import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
+import CreationAnimationDialog from "./CreationAnimationDialog";
 
 export const DUMMY_DEVICE_ID = 1;
 
@@ -40,7 +41,7 @@ export interface ILink extends IContent {
 }
 export interface IChannel extends IContent {
   profileUrl: string;
-  backgroundUrl: string;
+  bannerUrl: string;
 }
 export interface IVideo extends IContent {
   thumbnailUrl: string;
@@ -124,7 +125,7 @@ export default function HomePageContents(props: {
     undefined
   );
 
-  const [services, setServices] = useState<IFilterUrl[]>([]);
+  const [services, setServices] = useState<IApp[]>([]);
   // useEffect(() => {
   //   deviceId &&
   //     ApiController.getDeviceServices(deviceId).then((s) => setServices(s));
@@ -189,6 +190,9 @@ export default function HomePageContents(props: {
     );
   }, [nColumns, currentFolderContents]);
 
+  const [creationAnimationDialogOpen, setCreationAnimationDialogOpen] =
+    useState<boolean>(false);
+
   const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
     useState<boolean>(true);
 
@@ -214,9 +218,9 @@ export default function HomePageContents(props: {
                 ...services.map((a, i) => (
                   <Stack key={a.id} onClick={() => setSelectedFolderId(a.id)}>
                     <UrsorFadeIn duration={1200} delay={i * 70}>
-                      <PlatformCard
+                      <AppCard
                         key={a.id}
-                        platform={a}
+                        app={a}
                         clickCallback={() => router.push(getAbsoluteUrl(a.url))}
                       />
                     </UrsorFadeIn>
@@ -318,7 +322,7 @@ export default function HomePageContents(props: {
                 </Stack>
               ) : (
                 <Stack
-                  height="457px"
+                  height={props.mobile ? undefined : "457px"}
                   justifyContent="center"
                   alignItems="center"
                   spacing="13px"
@@ -329,14 +333,16 @@ export default function HomePageContents(props: {
                     height={152}
                     alt="empty state illustration"
                   />
-                  <Stack width="444px">
+                  <Stack
+                    width={props.mobile ? "100%" : "444px"}
+                    alignItems="center"
+                  >
                     <Typography
                       color={PALETTE.secondary.grey[3]}
                       sx={{ textAlign: "center" }}
                       bold
                     >
-                      This Folder is currently empty. Click one of the buttons
-                      above to add Content to the assigned Devices.
+                      This Folder is currently empty.
                     </Typography>
                   </Stack>
                 </Stack>
@@ -345,6 +351,15 @@ export default function HomePageContents(props: {
           </Stack>
         </Stack>
       </PageLayout>
+      <CreationAnimationDialog
+        open={creationAnimationDialogOpen}
+        onClose={() => setCreationAnimationDialogOpen(false)}
+        onNext={() => {
+          setAvatarSelectionDialogOpen(true);
+          setCreationAnimationDialogOpen(false);
+        }}
+        isMobile={props.mobile}
+      />
       <AvatarSelectionDialog
         open={avatarSelectionDialogOpen}
         onClose={() => setAvatarSelectionDialogOpen(false)}
@@ -352,6 +367,7 @@ export default function HomePageContents(props: {
           setAvatarSelectionDialogOpen(false);
           setDeviceReadyDialogOpen(true);
         }}
+        isMobile={props.mobile}
       />
       <DeviceReadyDialog
         open={deviceReadyDialogOpen}

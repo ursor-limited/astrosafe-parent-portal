@@ -23,12 +23,8 @@ const ChannelCreationDialog = (props: {
 }) => {
   const [title, setTitle] = useState<string>("");
   const [url, setUrl] = useState<string>("");
-  const [profileUrl, setProfileUrl] = useState<string>(
-    "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
-  );
-  const [bannerUrl, setBannerUrl] = useState<string>(
-    "https://ursorassets.s3.eu-west-1.amazonaws.com/signupScreenshot.png"
-  );
+  const [profileUrl, setProfileUrl] = useState<string>("");
+  const [bannerUrl, setBannerUrl] = useState<string>("");
   useEffect(() => {
     props.updateDetails && setTitle(props.updateDetails?.channel.title);
     props.updateDetails && setUrl(props.updateDetails?.channel.url);

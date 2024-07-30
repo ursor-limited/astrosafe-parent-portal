@@ -16,6 +16,13 @@ import NotificationContext from "@/app/components/NotificationContext";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
+export interface IFilterException {
+  url: string;
+  title: string;
+  favicon: string;
+  createdAt: string;
+}
+
 export interface IDevice {
   id: number;
   name: string;
@@ -29,6 +36,13 @@ export interface IDevice {
   createdAt: string;
 }
 
+export interface IDeviceConfig {
+  browsingAllowed: boolean;
+  videoAllowed: boolean;
+  timeLimitsEnabled: boolean;
+  allowedTimesEnabled: boolean;
+}
+
 export default function FilterPage(props: {
   isMobile: boolean;
   filterId: number;
@@ -40,9 +54,9 @@ export default function FilterPage(props: {
     ApiController.getFilter(props.filterId).then(setFilter);
   }, [props.filterId]);
 
-  const [whitelistExceptions, setWhitelistExceptions] = useState<IFilterUrl[]>(
-    []
-  );
+  const [whitelistExceptions, setWhitelistExceptions] = useState<
+    IFilterException[]
+  >([]);
   const loadWhitelistExceptions = useCallback(
     () =>
       ApiController.getWhitelistExceptions(props.filterId).then(
@@ -54,9 +68,9 @@ export default function FilterPage(props: {
     loadWhitelistExceptions();
   }, [loadWhitelistExceptions]);
 
-  const [blacklistExceptions, setBlacklistExceptions] = useState<IFilterUrl[]>(
-    []
-  );
+  const [blacklistExceptions, setBlacklistExceptions] = useState<
+    IFilterException[]
+  >([]);
   const loadBlacklistExceptions = useCallback(
     () =>
       ApiController.getBlacklistExceptions(props.filterId).then(
@@ -242,6 +256,8 @@ export default function FilterPage(props: {
           open={addDeviceDialogOpen}
           groupId={DUMMY_GROUP_ID}
           onClose={() => setAddDeviceDialogOpen(false)}
+          title="Apply to a Device"
+          subtitle={["Replace a Device's current Filter", "with this one."]}
           addedDevices={devices}
           onAdd={(id) => {
             ApiController.addFilterToDevice(props.filterId, id).then(() => {

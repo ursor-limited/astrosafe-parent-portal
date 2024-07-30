@@ -8,18 +8,29 @@ import DeviceConnectDialog from "../components/DeviceConnectDialog";
 import DownloadDialog from "../components/DownloadDialog";
 import ApiController from "../../api";
 import { DUMMY_GROUP_ID } from "../../filters/contents/body-desktop";
-import { IDevice } from "../../filters/[id]/contents/common";
+import { IDevice, IDeviceConfig } from "../../filters/[id]/contents/common";
 import AllDevicesPageDesktopBody from "./desktop-body";
 import AllDevicesPageMobileBody from "./mobile-body";
+import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
+export type IEnrichedDevice = IDevice & {
+  online?: boolean;
+  screenTime?: {
+    allowed: number;
+    current: number;
+  };
+  timeLimits?: ITimeLimit[];
+  allowedTimes?: IAllowedTime[];
+  config?: IDeviceConfig;
+};
+
 export default function AllDevicesPage(props: { isMobile: boolean }) {
-  const [devices, setDevices] = useState<IDevice[]>([]);
+  const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
     ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
   }, []);
-  const router = useRouter();
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice["id"] | undefined
   >();

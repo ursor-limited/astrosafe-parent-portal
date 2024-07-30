@@ -15,6 +15,7 @@ import _ from "lodash";
 import { IFilterUrl } from "../../contents/common";
 import FilterWhitelistExceptionDialog from "./FilterWhitelistExceptionDialog";
 import ApiController from "@/app/api";
+import { IFilterException } from "../contents/common";
 
 export interface IAllowedSitesTableRowItems {
   title: string;
@@ -23,7 +24,7 @@ export interface IAllowedSitesTableRowItems {
 }
 
 const FilterPageAllowedSitesSection = (props: {
-  allowedSites: IFilterUrl[];
+  allowedSites: IFilterException[];
   add: (url: string) => void;
   isMobile?: boolean;
 }) => {
@@ -33,14 +34,11 @@ const FilterPageAllowedSitesSection = (props: {
       displayName: "Title",
       sortable: true,
       newTag: true,
-      getAvatar: (id) => {
+      getAvatar: (i) => {
         return (
           <Stack minWidth="20px" borderRadius="100%" overflow="hidden">
             <Image
-              src={
-                props.allowedSites.find((s) => s.id.toString() === id)
-                  ?.imageUrl ?? ""
-              }
+              src={props.allowedSites[parseInt(i)]?.favicon ?? ""}
               height={20}
               width={20}
               alt="allowed site favicon"
@@ -69,8 +67,8 @@ const FilterPageAllowedSitesSection = (props: {
   useEffect(() => {
     (async () => {
       const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
-        props.allowedSites?.map((a) => ({
-          id: a.id.toString(),
+        props.allowedSites?.map((a, i) => ({
+          id: i.toString(),
           items: {
             title: a.title ?? "",
             url: a.url,
@@ -90,32 +88,32 @@ const FilterPageAllowedSitesSection = (props: {
   const [filteredRows, setFilteredRows] = useState<
     IUrsorTableRow<IAllowedSitesTableRowItems>[]
   >([]);
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
   useEffect(() => {
     setFilteredRows(
       rows.filter((row) =>
-        searchValue
+        inputValue
           ? [row.items.title, row.items.url.replace("www.", "")]
               .join("_")
               .toLowerCase()
-              .includes(searchValue.toLowerCase())
+              .includes(inputValue.toLowerCase())
           : true
       )
     );
-  }, [rows, searchValue]);
+  }, [rows, inputValue]);
 
   const [sortedColumn, setSortedColumn] = useState<string>("createdAt");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   useEffect(() => {
     if (!filteredRows) return;
     const sorted = _.sortBy(
-      filteredRows,
+      rows,
       (row) =>
         //@ts-ignore
         row.items?.[sortedColumn]?.toLowerCase()
     );
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
-  }, [filteredRows, sortDirection, sortedColumn]);
+  }, [rows, sortDirection, sortedColumn]);
 
   const [confirmationDialogOpen, setConfirmationDialogOpen] =
     useState<boolean>(false);
@@ -132,50 +130,53 @@ const FilterPageAllowedSitesSection = (props: {
       >
         <Stack spacing="20px">
           <UrsorInputField
-            value={searchValue}
+            value={inputValue}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setSearchValue(event.target.value)
+              setInputValue(event.target.value)
             }
-            onEnterKey={() => {
-              () => setConfirmationDialogOpen(true);
-            }}
+            onEnterKey={() => setConfirmationDialogOpen(true)}
             placeholder="Add a URL"
             width="100%"
             leftAlign
             boldValue
           />
-          <UrsorTable
-            columns={TABLE_COLUMNS}
-            rows={sortedRows}
-            defaultSortedByColumn="createdAt"
-            defaultSortedAscending
-            selectedSort={sortedColumn}
-            ascending={sortDirection === "asc"}
-            sortSelectionCallback={(columnId) => {
-              if (columnId === sortedColumn) {
-                setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-              } else {
-                setSortedColumn(columnId);
-                setSortDirection("asc");
-              }
-            }}
-            noHeaderGradient
-            getActionButtonItems={(id) => [
-              {
-                icon: TrashcanIcon,
-                text: "Delete",
-                kallback: () => null,
-                color: PALETTE.system.red,
-              },
-            ]}
-            rowClickCallback={(id) => null}
-          />
+          {sortedRows.length > 0 ? (
+            <UrsorTable
+              columns={TABLE_COLUMNS}
+              rows={sortedRows}
+              defaultSortedByColumn="createdAt"
+              defaultSortedAscending
+              selectedSort={sortedColumn}
+              ascending={sortDirection === "asc"}
+              sortSelectionCallback={(columnId) => {
+                if (columnId === sortedColumn) {
+                  setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+                } else {
+                  setSortedColumn(columnId);
+                  setSortDirection("asc");
+                }
+              }}
+              noHeaderGradient
+              getActionButtonItems={(id) => [
+                {
+                  icon: TrashcanIcon,
+                  text: "Delete",
+                  kallback: () => null,
+                  color: PALETTE.system.red,
+                },
+              ]}
+              rowClickCallback={(id) => null}
+            />
+          ) : null}
         </Stack>
       </AstroBentoCard>
       <FilterWhitelistExceptionDialog
         open={confirmationDialogOpen}
         onClose={() => setConfirmationDialogOpen(false)}
-        onSubmit={() => props.add(searchValue)}
+        onSubmit={() => {
+          props.add(inputValue);
+          setInputValue("");
+        }}
       />
     </>
   );

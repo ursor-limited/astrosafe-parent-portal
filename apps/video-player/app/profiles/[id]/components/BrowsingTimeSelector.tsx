@@ -1,8 +1,9 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import { ITimeLimit } from "./LimitsTab";
+import { IAllowedTime } from "./LimitsTab";
 import _ from "lodash";
+import dayjs from "dayjs";
 
 const DISPLAY_INTERVAL = 2; // hours
 const MIN = 4;
@@ -132,8 +133,8 @@ const BrowsingTimeSelectorRange = (props: {
 };
 
 const BrowsingTimeSelector = (props: {
-  times?: ITimeLimit[];
-  setTimes: (id: ITimeLimit["id"], start: number, end: number) => void;
+  times?: IAllowedTime[];
+  setTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
 }) => {
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -181,9 +182,27 @@ const BrowsingTimeSelector = (props: {
             lineLeftX={lineLeftX}
             dragInterval={dragInterval}
             mouseX={mouseX}
-            start={timeLimit.startTime}
-            end={timeLimit.endTime}
-            setTimes={(start, end) => props.setTimes(timeLimit.id, start, end)}
+            start={
+              dayjs(timeLimit.startTime).hour() +
+              dayjs(timeLimit.startTime).minute() / 60
+            }
+            end={
+              dayjs(timeLimit.endTime).hour() +
+              dayjs(timeLimit.endTime).minute() / 60
+            }
+            setTimes={(start, end) =>
+              props.setTimes(
+                timeLimit.id,
+                dayjs(timeLimit.startTime)
+                  .hour(Math.floor(start / 24))
+                  .minute((start % 24) * 60)
+                  .toISOString(),
+                dayjs(timeLimit.endTime)
+                  .hour(Math.floor(end / 24))
+                  .minute((end % 24) * 60)
+                  .toISOString()
+              )
+            }
           />
         ))}
         <Stack flex={1} justifyContent="space-between" direction="row">

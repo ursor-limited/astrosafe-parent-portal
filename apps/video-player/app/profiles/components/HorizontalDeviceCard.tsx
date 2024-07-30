@@ -22,6 +22,7 @@ import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import ApiController from "@/app/api";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
+import { IEnrichedDevice } from "../contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -129,8 +130,12 @@ export const DeviceCardFilterSection = (props: {
   );
 };
 
-const HorizontalDeviceCard = (props: IDevice) => {
+const HorizontalDeviceCard = (props: IEnrichedDevice) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  useEffect(
+    () => setBrowsingEnabled(!!props.config?.browsingAllowed),
+    [props.config?.browsingAllowed]
+  );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
@@ -172,14 +177,17 @@ const HorizontalDeviceCard = (props: IDevice) => {
             faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
           />
           <DeviceCardScreenTimeSection
-            totalTime={5004}
-            elapsedTime={4020}
+            totalTime={props.screenTime?.allowed ?? 0}
+            elapsedTime={props.screenTime?.current ?? 0}
             onClickView={() => router.push(`/profiles/${props.id}?tab=limits`)}
           />
           <DeviceCardFilterSection selectedFilter={1} />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
-            flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+            flipBrowsingEnabled={() => {
+              setBrowsingEnabled(!browsingEnabled);
+              ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+            }}
           />
         </Stack>
       </Stack>

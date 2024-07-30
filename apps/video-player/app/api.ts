@@ -1,6 +1,6 @@
 import { IUser } from "./account/contents/common";
 import { IGroup } from "./folders/[id]/contents/common";
-import { IDevice } from "./filters/[id]/contents/common";
+import { IDevice, IFilterException } from "./filters/[id]/contents/common";
 import {
   IFilter,
   IFilterCategory,
@@ -12,6 +12,9 @@ import {
   ILink,
   IVideo,
 } from "./profiles/[id]/components/ContentTab";
+import _ from "lodash";
+import { IRequestedSite } from "./profiles/[id]/components/LimitsTab";
+import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 
 export interface IVideo_DEPRECATED {
   id: string;
@@ -70,6 +73,17 @@ const put = (route: string, body: any) =>
     }
   );
 
+const patch = (route: string, body: any) =>
+  fetch(
+    //@ts-ignore
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
+
 const dellete = (route: string) =>
   fetch(
     //@ts-ignore
@@ -79,30 +93,21 @@ const dellete = (route: string) =>
     }
   );
 
-// const api = axios.create({
-//   //@ts-ignore
-//   baseURL: BACKEND_URLS[process.env.REACT_APP_BUILD_ENV],
-// });
-
-// api.interceptors.response.use(
-//   (response: AxiosResponse) => response,
-//   (error: AxiosError) => {
-//     Sentry.captureException(error);
-//     throw error;
-//   }
-// );
-
-// axiosRetry(api, {
-//   retries: 3, // number of retries
-//   retryDelay: (retryCount: number) => {
-//     console.log(`retry attempt: ${retryCount}`);
-//     return retryCount * 2000; // time interval between retries
-//   },
-// });
-
 class ApiController {
   static async getDevice(id: number) {
     return get(`devices/${id}`).then((response: any) => response.json());
+  }
+
+  static async getEnrichedDevice(id: number) {
+    return get(
+      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+    ).then((response: any) => response.json());
+  }
+
+  static async getDeviceWithTimesAndConfig(id: number) {
+    return get(
+      `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true&includeConfig=true`
+    ).then((response: any) => response.json());
   }
 
   static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
@@ -110,9 +115,9 @@ class ApiController {
   }
 
   static async getGroupDevices(id: IGroup["id"]) {
-    return get(`devices?groupId=${id}`).then((response: any) =>
-      response.json()
-    );
+    return get(
+      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+    ).then((response: any) => response.json());
   }
 
   static async getFolderDevices(id: IContentBucket["id"]) {
@@ -122,8 +127,8 @@ class ApiController {
   }
 
   static async getDeviceFolders(id: IDevice["id"]) {
-    return get(`content/buckets?deviceId=${id}`).then((response: any) =>
-      response.json()
+    return get(`content/buckets?deviceId=${id}&includePreview=true`).then(
+      (response: any) => response.json()
     );
   }
 
@@ -255,7 +260,7 @@ class ApiController {
   }
 
   static async getGroupUsers(id: IUser["id"]) {
-    return get(`users/${id}`).then((response: any) => response.json());
+    return get(`users?groupId=${id}`).then((response: any) => response.json());
   }
 
   static async createUser(email: IUser["email"]) {
@@ -313,18 +318,31 @@ class ApiController {
     );
   }
 
+  static async removeWhitelistException(
+    filterId: IFilter["id"],
+    url: IFilterException["url"]
+  ) {
+    return get(`filters/${filterId}/whitelist/exceptions/${url}`).then(
+      (response: any) => response.json()
+    );
+  }
+
   static async addWhitelistException(
     filterId: IFilter["id"],
-    domain: IFilterUrl["url"]
+    url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/whitelist/exceptions`, { domain });
+    return post(`filters/${filterId}/whitelist/exceptions`, {
+      url: getAbsoluteUrl(cleanUrl(url)),
+    });
   }
 
   static async addBlacklistException(
     filterId: IFilter["id"],
-    domain: IFilterUrl["url"]
+    url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/blacklist/exceptions`, { domain });
+    return post(`filters/${filterId}/blacklist/exceptions`, {
+      url: getAbsoluteUrl(cleanUrl(url)),
+    });
   }
 
   static async addWhitelistCategory(
@@ -355,6 +373,60 @@ class ApiController {
 
   static async removeBlockedSearchWord(filterId: IFilter["id"], word: string) {
     return dellete(`filters/${filterId}/blacklist/words/${word}`);
+  }
+
+  static async getRequestedSites(deviceId: IDevice["id"]) {
+    return get(`devices/${deviceId}/requests`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async approveRequestedSite(id: IRequestedSite["id"]) {
+    return post(`devices/requests/${id}/approve`, {});
+  }
+
+  static async denyRequestedSite(id: IRequestedSite["id"]) {
+    return dellete(`devices/requests/${id}/deny`);
+  }
+
+  static async getLinkPreview(url: ILink["url"]) {
+    return get(`content/links/preview/${url}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async getVideoPreview(url: ILink["url"]) {
+    return get(`content/videos/preview/${url}`).then((response: any) =>
+      response.json()
+    );
+  }
+
+  static async setTimeLimit(
+    limitId: number,
+    timeLimit: number
+  ) {
+    return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
+  }
+
+  static async flipBrowsingAllowed(
+    deviceId: IDevice["id"],
+    browsingAllowed: boolean
+  ) {
+    return patch(`devices/${deviceId}/configs/browsing`, { browsingAllowed });
+  }
+
+  static async getQRCode(groupId: IGroup["id"]) {
+    return post(`groups/${groupId}/devices/qrcode`,{}).then((response: any) =>
+      response.text()
+    );
+  }
+
+  static async flipTimeLimitsEnabled(deviceId: IDevice['id'], enabled: boolean) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, { timeLimitsEnabled: enabled })
+  }
+
+  static async flipAllowedTimesEnabled(deviceId: IDevice['id'], enabled: boolean) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, { allowedTimesEnabled: enabled })
   }
 }
 

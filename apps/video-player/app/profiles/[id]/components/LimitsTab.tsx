@@ -1,27 +1,31 @@
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
-import AstroToggleCard from "@/app/filters/[id]/components/AstroToggleCard";
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import GlobeIcon from "@/images/icons/GlobeIcon.svg";
-import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
-import TimeMinusIcon from "@/images/icons/TimeMinusIcon.svg";
-import TimePlusIcon from "@/images/icons/TimePlusIcon.svg";
-import AstroDropdownCard from "./AstroDropdownCard";
-import BrowsingTimeSelector from "./BrowsingTimeSelector";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import RequestedSitesSection from "./RequestedSitesSection";
-import { IFilterUrl } from "@/app/filters/contents/common";
+import ApiController from "@/app/api";
+import { IDevice, IDeviceConfig } from "@/app/filters/[id]/contents/common";
+import { IEnrichedDevice } from "../../contents/common";
+import TimeLimitsSection from "./TimeLimitsSection";
+import BrowsingTimesSection from "./BrowsingTimesSection";
+
+export interface IRequestedSite {
+  id: number;
+  url: string;
+  title: string;
+  faviconUrl: string;
+}
 
 export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
-const DEFAULT_START = 10;
-const DEFAULT_END = 16;
-const DEFAULT_DAILY_LIMIT = 2;
-const DAILY_LIMIT_INCREMENT = 0.25;
+const DEFAULT_START = "10:00:00.000Z";
+const DEFAULT_END = "16:00:00.000Z";
+const DEFAULT_DAILY_LIMIT = 120;
+const DAILY_LIMIT_INCREMENT = 15; // minutes
 
 const DUMMY_FILTERS = [
   {
@@ -83,107 +87,76 @@ const DUMMY_SEARCHES = [
 
 export interface ITimeLimit {
   id: number;
-  deviceId: number;
   day: number;
-  startTime: number; // currently in hours, 0 - 24 //////////////////////////////////////////////
-  endTime: number;
-  dailyLimit: number;
+  allowedMinutes: number;
 }
 
-const getDefaultTimeLimit = (day: ITimeLimit["day"]) => ({
+export interface IAllowedTime {
+  id: number;
+  day: number;
+  startTime: string;
+  endTime: string;
+}
+
+const getDefaultTimeLimit = (day: IAllowedTime["day"]) => ({
   id: Math.round(Math.random() * 10000),
-  deviceId: 1,
   day,
   startTime: DEFAULT_START,
   endTime: DEFAULT_END,
   dailyLimit: DEFAULT_DAILY_LIMIT,
 });
 
-const DUMMY_TIME_LIMITS: ITimeLimit[] = [
-  getDefaultTimeLimit(0),
-  getDefaultTimeLimit(1),
-  getDefaultTimeLimit(2),
-  getDefaultTimeLimit(3),
-  getDefaultTimeLimit(4),
-  getDefaultTimeLimit(5),
-  getDefaultTimeLimit(6),
-];
+const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
+  const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
+  const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
+  const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
+  useEffect(() => {
+    ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(
+      (d: IEnrichedDevice) => {
+        setAllowedTimes(d.allowedTimes as IAllowedTime[]);
+        setTimeLimits(d.timeLimits as ITimeLimit[]);
+        setDeviceConfig(d.config as IDeviceConfig);
+      }
+    );
+  }, [props.deviceId]);
 
-const DevicePageSettingsTab = () => {
-  const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
-  const [videoEnabled, setVideoEnabled] = useState<boolean>(false);
-  const [selectedFilter, setSelectedFilter] = useState<string>(
-    DUMMY_FILTERS[0].id
+  const addTimeLimit = (day: IAllowedTime["day"]) =>
+    setAllowedTimes([...allowedTimes, getDefaultTimeLimit(day)]);
+
+  const reset = (day: IAllowedTime["day"]) =>
+    setAllowedTimes([
+      ...allowedTimes.filter((t) => t.day !== day),
+      getDefaultTimeLimit(day),
+    ]);
+
+  const [allowedTimesEnabled, setAllowedTimesEnabled] =
+    useState<boolean>(false);
+  const [timeLimitsEnabled, setTimeLimitsEnabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    !_.isUndefined(deviceConfig?.allowedTimesEnabled) &&
+      setAllowedTimesEnabled(deviceConfig?.allowedTimesEnabled);
+    !_.isUndefined(deviceConfig?.timeLimitsEnabled) &&
+      setTimeLimitsEnabled(deviceConfig?.timeLimitsEnabled);
+  }, [deviceConfig]);
+
+  const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([]);
+  const loadRequestedSites = useCallback(
+    () =>
+      ApiController.getRequestedSites(props.deviceId).then(setRequestedSites),
+    [props.deviceId]
   );
-  const [selectedSearch, setSelectedSearch] = useState<string>(
-    DUMMY_SEARCHES[0].id
-  );
-  const [times, setTimes] = useState<ITimeLimit[]>(DUMMY_TIME_LIMITS);
-
-  const addTimeLimit = (day: ITimeLimit["day"]) =>
-    setTimes([...times, getDefaultTimeLimit(day)]);
-
-  const reset = (day: ITimeLimit["day"]) =>
-    setTimes([...times.filter((t) => t.day !== day), getDefaultTimeLimit(day)]);
-
-  const [schedulesEnabled, setSchedulesEnabled] = useState<boolean>(false);
-
-  const [dailyLimits, setDailyLimits] = useState<number[]>([
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-    DEFAULT_DAILY_LIMIT,
-  ]);
-
-  const [dailyLimitsEnabled, setDailyLimitsEnabled] = useState<boolean>(false);
-
-  const [requestedSites, setRequestedSites] = useState<IFilterUrl[]>([
-    {
-      id: 0,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).pnghttps://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title:
-        "NintendoNintendoNintendoNintendoNintendoNintendo mNintendoNintendoNintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 1,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 2,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-    {
-      id: 3,
-      url: "https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+627405+(2).png",
-      title: "Nintendo",
-      imageUrl:
-        "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-      createdAt: "2024-05-04",
-      groupId: 1,
-    },
-  ]);
+  useEffect(() => {
+    loadRequestedSites();
+  }, [loadRequestedSites]);
 
   return (
     <Stack spacing="24px" pb="33px">
       {requestedSites.length > 0 ? (
-        <RequestedSitesSection sites={requestedSites} />
+        <RequestedSitesSection
+          sites={requestedSites}
+          onUpdate={loadRequestedSites}
+        />
       ) : null}
       {/* <Typography variant="h5">Device controls</Typography> */}
       {/* <Stack direction="row" spacing="24px">
@@ -262,143 +235,93 @@ const DevicePageSettingsTab = () => {
       </Stack> */}
       <Stack direction="row" spacing="24px">
         <Stack width="70%">
-          <AstroBentoCard
-            title="Allowed browsing time"
-            subtitle="Select when you want the Browser to be online. Turn this off to remove schedules."
-            info={{
-              title: "Buu",
-              body: "Maybe not the best char in Smash Bros, but Kirby is defo much better than Jigglypuff.",
-            }}
-            notCollapsible
-            topRightStuff={
+          <BrowsingTimesSection
+            topRightElement={
               <AstroSwitch
-                on={schedulesEnabled}
-                callback={() => setSchedulesEnabled(!schedulesEnabled)}
+                on={allowedTimesEnabled}
+                callback={() => {
+                  setAllowedTimesEnabled(!allowedTimesEnabled);
+                  ApiController.flipAllowedTimesEnabled(
+                    props.deviceId,
+                    !allowedTimesEnabled
+                  );
+                }}
               />
             }
-          >
-            {times ? (
-              <Stack spacing="36px" pb="12px">
-                {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map(
-                  (day, i) => (
-                    <Stack key={day} direction="row" alignItems="center">
-                      <Stack width="120px">
-                        <Typography bold color={PALETTE.secondary.grey[3]}>
-                          {_.capitalize(day)}
-                        </Typography>
-                      </Stack>
-                      <BrowsingTimeSelector
-                        times={times.filter((t) => t.day === i)}
-                        setTimes={(id, startTime, endTime) =>
-                          setTimes(
-                            times.map((t) =>
-                              t.id === id ? { ...t, startTime, endTime } : t
-                            )
-                          )
-                        }
-                      />
-                      <Stack pl="60px" direction="row" spacing="8px">
-                        <UrsorButton
-                          size="small"
-                          variant="secondary"
-                          backgroundColor="rgb(255,255,255)"
-                          onClick={() => addTimeLimit(i)}
-                        >
-                          Add
-                        </UrsorButton>
-                        <UrsorButton
-                          size="small"
-                          variant="secondary"
-                          backgroundColor={PALETTE.secondary.grey[1]}
-                          borderColor={PALETTE.secondary.grey[1]}
-                          onClick={() => reset(i)}
-                        >
-                          Reset
-                        </UrsorButton>
-                      </Stack>
-                    </Stack>
-                  )
-                )}
-              </Stack>
-            ) : null}
-          </AstroBentoCard>
+            allowedTimes={allowedTimes}
+            setAllowedTimes={(day, startTime, endTime) =>
+              setAllowedTimes(
+                allowedTimes.map((t) =>
+                  t.id === day ? { ...t, startTime, endTime } : t
+                )
+              )
+            }
+            addTimeLimit={addTimeLimit}
+            reset={reset}
+          />
         </Stack>
-        <AstroBentoCard
-          title="Daily limits"
-          subtitle="Set a daily browsing limit"
-          notCollapsible
-          info={{
-            title: "Buu",
-            body: "Maybe not the best char in Smash Bros, but Kirby is defo much better than Jigglypuff.",
-          }}
-          topRightStuff={
+        <TimeLimitsSection
+          topRightElement={
             <AstroSwitch
-              on={dailyLimitsEnabled}
-              callback={() => setDailyLimitsEnabled(!dailyLimitsEnabled)}
+              on={timeLimitsEnabled}
+              callback={() => {
+                setTimeLimitsEnabled(!timeLimitsEnabled);
+                ApiController.flipTimeLimitsEnabled(
+                  props.deviceId,
+                  !timeLimitsEnabled
+                );
+              }}
             />
           }
-        >
-          <Stack spacing="36px" pb="12px">
-            {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
-              <Stack
-                key={day}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography
-                  variant="large"
-                  bold
-                  color={PALETTE.secondary.grey[3]}
-                >
-                  {_.capitalize(day)}
-                </Typography>
-                <Stack direction="row" spacing="6px" alignItems="center">
-                  <Stack
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.6 },
-                      transition: "0.2s",
-                    }}
-                    onClick={() =>
-                      setDailyLimits([
-                        ...dailyLimits.slice(0, i),
-                        Math.max(0, dailyLimits[i] - DAILY_LIMIT_INCREMENT),
-                        ...dailyLimits.slice(i + 1),
-                      ])
-                    }
-                  >
-                    <TimeMinusIcon height="20px" width="20px" />
-                  </Stack>
-                  <Stack width="80px" alignItems="center">
-                    <Typography variant="large" bold>{`${Math.floor(
-                      dailyLimits[i]
-                    )}:${60 * (dailyLimits[i] % 1) || "00"} hr`}</Typography>
-                  </Stack>
-                  <Stack
-                    sx={{
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.6 },
-                      transition: "0.2s",
-                    }}
-                    onClick={() =>
-                      setDailyLimits([
-                        ...dailyLimits.slice(0, i),
-                        Math.min(20, dailyLimits[i] + DAILY_LIMIT_INCREMENT),
-                        ...dailyLimits.slice(i + 1),
-                      ])
-                    }
-                  >
-                    <TimePlusIcon height="20px" width="20px" />
-                  </Stack>
-                </Stack>
-              </Stack>
-            ))}
-          </Stack>
-        </AstroBentoCard>
+          timeLimits={timeLimits}
+          increment={(day) => {
+            const limitId = timeLimits.find((l) => l.day === day)?.id;
+            if (limitId) {
+              setTimeLimits(
+                timeLimits.map((l) =>
+                  l.day === day
+                    ? {
+                        id: limitId,
+                        day: l.day,
+                        allowedMinutes:
+                          l.allowedMinutes + DAILY_LIMIT_INCREMENT,
+                      }
+                    : l
+                )
+              );
+              ApiController.setTimeLimit(
+                limitId,
+                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
+                  DAILY_LIMIT_INCREMENT
+              );
+            }
+          }}
+          decrement={(day) => {
+            const limitId = timeLimits.find((l) => l.day === day)?.id;
+            if (limitId) {
+              setTimeLimits(
+                timeLimits.map((l) =>
+                  l.day === day
+                    ? {
+                        id: limitId,
+                        day: l.day,
+                        allowedMinutes:
+                          l.allowedMinutes - DAILY_LIMIT_INCREMENT,
+                      }
+                    : l
+                )
+              );
+              ApiController.setTimeLimit(
+                limitId,
+                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
+                  DAILY_LIMIT_INCREMENT
+              );
+            }
+          }}
+        />
       </Stack>
     </Stack>
   );
 };
 
-export default DevicePageSettingsTab;
+export default DevicePageLimitsTab;

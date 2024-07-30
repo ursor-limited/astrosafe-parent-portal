@@ -48,8 +48,8 @@ const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
   onClick?: () => void;
-  favorite: boolean;
-  flipFavorite: () => void;
+  favorite?: boolean;
+  flipFavorite?: () => void;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -64,15 +64,21 @@ const ContentCard = (props: {
       boxSizing="border-box"
       overflow="hidden"
     >
-      <Stack
-        position="absolute"
-        zIndex={3}
-        right="12px"
-        top="12px"
-        onClick={props.flipFavorite}
-      >
-        <FavoriteStar id={props.id} type={props.type} filled={props.favorite} />
-      </Stack>
+      {props.flipFavorite ? (
+        <Stack
+          position="absolute"
+          zIndex={3}
+          right="12px"
+          top="12px"
+          onClick={props.flipFavorite}
+        >
+          <FavoriteStar
+            id={props.id}
+            type={props.type}
+            filled={!!props.favorite}
+          />
+        </Stack>
+      ) : null}
       <Stack
         onClick={props.onClick}
         sx={{

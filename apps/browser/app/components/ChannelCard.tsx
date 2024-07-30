@@ -7,9 +7,9 @@ const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
   props: Omit<IChannel, "createdAt"> & {
-    favorite: boolean;
-    setFavorite: () => void;
-    onClick: () => void;
+    favorite?: boolean;
+    setFavorite?: () => void;
+    onClick?: () => void;
     noPointerEvents?: boolean;
     onDelete?: () => void;
     onUpdate?: () => void;
@@ -34,14 +34,14 @@ const ChannelCard = (
         boxShadow="0 0 4px rgba(0,0,0,0.08)"
       >
         <Image
-          src={props.backgroundUrl}
+          src={props.bannerUrl}
           style={{
             objectFit: "cover",
             justifyContent: "center",
             alignItems: "center",
           }}
           fill
-          alt="image card image"
+          alt="channel card image"
         />
         {props.profileUrl ? (
           <Stack

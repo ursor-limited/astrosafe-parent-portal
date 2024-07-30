@@ -1,9 +1,9 @@
 import React from "react";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
-import OnBoardingFlow from "./OnboardingFlow";
 import { Stack } from "@mui/system";
 import { PALETTE } from "ui";
+import OnBoardingFlow from "./contents/common";
 
 async function OnBoardingPage({
   params,

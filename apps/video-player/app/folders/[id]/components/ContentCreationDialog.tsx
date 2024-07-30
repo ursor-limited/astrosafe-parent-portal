@@ -22,6 +22,7 @@ export interface IContentCreationDialogProps {
   setTitle: (title: IFilterUrl["title"]) => void;
   url: IFilterUrl["url"];
   setUrl: (url: IFilterUrl["url"]) => void;
+  onUrlFieldBlur: () => void;
   closeCallback: () => void;
   onSubmit?: () => void;
   editing?: boolean;
@@ -69,6 +70,7 @@ export default function ContentCreationDialog(
                 }}
                 leftAlign
                 width="100%"
+                onBlur={props.onUrlFieldBlur}
               />
             </LabeledInputField>
             <LabeledInputField label="Title">

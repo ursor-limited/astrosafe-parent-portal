@@ -1,29 +1,26 @@
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { OVERALL_X_PADDING } from "./PageLayout";
-import SchoolJoiningDialog from "./SchoolJoiningDialog";
-import ChevronRight from "@/images/icons/ChevronRight.svg";
 import { useEffect, useState } from "react";
+import LoginToParentPortalDialog from "../home/LoginToParentPortalDialog";
+import MobileLoginToParentPortalDialog from "../home/MobileLoginToParentPortalDialog copy";
 
 const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
-  const [schoolJoiningDialogOpen, setSchoolJoiningDialogOpen] =
-    useState<boolean>(false);
   useEffect(
-    () => setSchoolJoiningDialogOpen(!!props.openConnect),
+    () => setParentPortalDialogOpen(!!props.openConnect),
     [props.openConnect]
   );
+  const [parentPortalDialogOpen, setParentPortalDialogOpen] =
+    useState<boolean>(false);
   return (
     <>
       <Stack
-        maxHeight="52px"
-        borderRadius="12px"
+        height="44px"
+        maxHeight="44px"
         direction="row"
-        //border={`2px solid ${PALETTE.secondary.purple[2]}`}
+        px="20px"
         justifyContent="space-between"
         alignItems="center"
-        px={OVERALL_X_PADDING}
-        p={props.mobile ? "16px" : undefined}
-        bgcolor={PALETTE.system.orange}
+        bgcolor={PALETTE.secondary.purple[1]}
         sx={{
           svg: {
             path: {
@@ -31,39 +28,30 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
             },
           },
         }}
-        onClick={() => setSchoolJoiningDialogOpen(true)}
+        onClick={() => setParentPortalDialogOpen(true)}
       >
         <Typography
-          variant={props.mobile ? "small" : "large"}
+          variant={props.mobile ? "normal" : "large"}
           bold
           color="rgb(255,255,255)"
         >
-          Connect to a group for a safe experience
+          Set up your parent portal
         </Typography>
-        <ChevronRight width="20px" height="20px" />
-        {/* <Stack direction="row" spacing="12px">
-          <UrsorButton
-            variant="secondary"
-            size="small"
-            width={props.mobile ? "100%" : undefined}
-          >
-            Get a plan
-          </UrsorButton>
-          <UrsorButton
-            variant="tertiary"
-            dark
-            size="small"
-            width={props.mobile ? "100%" : undefined}
-            onClick={() => setSchoolJoiningDialogOpen(true)}
-          >
-            Connect
-          </UrsorButton>
-        </Stack> */}
+        <UrsorButton size="small" dark fontColor={PALETTE.secondary.purple[1]}>
+          Connect
+        </UrsorButton>
       </Stack>
-      <SchoolJoiningDialog
-        open={schoolJoiningDialogOpen}
-        closeCallback={() => setSchoolJoiningDialogOpen(false)}
-      />
+      {props.mobile ? (
+        <MobileLoginToParentPortalDialog
+          open={parentPortalDialogOpen}
+          onClose={() => setParentPortalDialogOpen(false)}
+        />
+      ) : (
+        <LoginToParentPortalDialog
+          open={parentPortalDialogOpen}
+          onClose={() => setParentPortalDialogOpen(false)}
+        />
+      )}
     </>
   );
 };

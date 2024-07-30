@@ -9,7 +9,7 @@ import _ from "lodash";
 import DynamicCardGrid from "../../components/DynamicCardGrid";
 import { useRouter } from "next/navigation";
 import FilterCard from "../[id]/components/FilterCard";
-import { IFilter } from "./common";
+import { IGroupFilter } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 
 export const GRID_SPACING = "20px";
@@ -17,7 +17,7 @@ export const GRID_SPACING = "20px";
 export const DUMMY_GROUP_ID = 1;
 
 export default function AllFiltersPageMobileBody(props: {
-  filters: IFilter[];
+  filters: IGroupFilter[];
   setCreateFilterDialogOpen: () => void;
 }) {
   const router = useRouter();
@@ -52,13 +52,7 @@ export default function AllFiltersPageMobileBody(props: {
             <UrsorFadeIn duration={800} delay={i * 150}>
               <FilterCard
                 {...f}
-                deviceImageUrls={[
-                  "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                  "https://ursorassets.s3.eu-west-1.amazonaws.com/boo!.webp",
-                  "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                  "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                  "https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg",
-                ]}
+                deviceImageUrls={f.profileAvatarUrls}
                 isMobile
               />
             </UrsorFadeIn>
