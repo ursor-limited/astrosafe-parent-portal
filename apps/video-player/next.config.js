@@ -5,22 +5,28 @@ module.exports = withSvgr({
   reactStrictMode: true,
   transpilePackages: ["ui"],
   images: {
-    domains: [
-      "https://www.astrosafe.co",
-      "https://www.astrosafe.co/_next/image",
-      "https://astrosafe.co",
-      "https://dev.astrosafe.co",
-      "https://astro-monorepo-canvas.vercel.app",
-      "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
-      "ursorassets.s3.eu-west-1.amazonaws.com",
-      "ursorimagespublic.s3.us-east-1.amazonaws.com",
-      "i.ytimg.com",
-      'i3.ytimg.com',
-      "assets-global.website-files.com",
-      "images.unsplash.com",
-      "static01.nyt.com",
-      "www.google.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
+    // domains: [
+    //   "https://www.astrosafe.co",
+    //   "https://www.astrosafe.co/_next/image",
+    //   "https://astrosafe.co",
+    //   "https://dev.astrosafe.co",
+    //   "https://astro-monorepo-canvas.vercel.app",
+    //   "https://astro-monorepo-canvas-git-dev-astros-afe.vercel.app",
+    //   "ursorassets.s3.eu-west-1.amazonaws.com",
+    //   "ursorimagespublic.s3.us-east-1.amazonaws.com",
+    //   "i.ytimg.com",
+    //   'i3.ytimg.com',
+    //   "assets-global.website-files.com",
+    //   "images.unsplash.com",
+    //   "static01.nyt.com",
+    //   "www.google.com",
+    // ],
   },
   assetPrefix:
     process.env.VERCEL_ENV === "production"
