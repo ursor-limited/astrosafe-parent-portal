@@ -7,7 +7,7 @@ import { useLocalStorage } from "usehooks-ts";
 import LandingView from "./LandingView";
 import dynamic from "next/dynamic";
 import MobileLandingView from "./MobileLandingView";
-import useNativeDeviceId from "./useDeviceId";
+import useNativeDeviceId from "./useNativeDeviceId";
 
 const DynamicallyLoadedPortal = dynamic(
   () => import("./DynamicallyLoadedPortal"),
@@ -28,6 +28,8 @@ const PageLayout = (props: {
     undefined
   );
   const [landingViewOpen, setLandingViewOpen] = useState<boolean>(false);
+
+  useEffect(() => setDeviceId(1), []); // TODO: REMOVEEEEEEEEEEEEEEEE!!!!
 
   useEffect(() => {
     deviceId &&

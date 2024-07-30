@@ -104,9 +104,9 @@ class ApiController {
     ).then((response: any) => response.json());
   }
 
-  static async getDeviceWithTimes(id: number) {
+  static async getDeviceWithTimesAndConfig(id: number) {
     return get(
-      `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true`
+      `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true&includeConfig=true`
     ).then((response: any) => response.json());
   }
 
@@ -419,6 +419,14 @@ class ApiController {
     return post(`groups/${groupId}/devices/qrcode`,{}).then((response: any) =>
       response.text()
     );
+  }
+
+  static async flipTimeLimitsEnabled(deviceId: IDevice['id'], enabled: boolean) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, { timeLimitsEnabled: enabled })
+  }
+
+  static async flipAllowedTimesEnabled(deviceId: IDevice['id'], enabled: boolean) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, { allowedTimesEnabled: enabled })
   }
 }
 

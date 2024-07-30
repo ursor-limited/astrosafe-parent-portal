@@ -9,7 +9,7 @@ import UrsorDialog from "./UrsorDialog";
 import UrsorFadeIn from "./UrsorFadeIn";
 import _ from "lodash";
 import { isMobile } from "react-device-detect";
-import useNativeDeviceId from "./useDeviceId";
+import useNativeDeviceId from "./useNativeDeviceId";
 
 const JOIN_CODE_LENGTH = 6;
 const FAILURE_DURATION = 2000;

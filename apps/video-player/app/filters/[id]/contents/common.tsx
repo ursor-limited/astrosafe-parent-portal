@@ -39,6 +39,8 @@ export interface IDevice {
 export interface IDeviceConfig {
   browsingAllowed: boolean;
   videoAllowed: boolean;
+  timeLimitsEnabled: boolean;
+  allowedTimesEnabled: boolean;
 }
 
 export default function FilterPage(props: {

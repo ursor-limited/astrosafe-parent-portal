@@ -8,7 +8,7 @@ import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import RequestedSitesSection from "./RequestedSitesSection";
 import ApiController from "@/app/api";
-import { IDevice } from "@/app/filters/[id]/contents/common";
+import { IDevice, IDeviceConfig } from "@/app/filters/[id]/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 import TimeLimitsSection from "./TimeLimitsSection";
 import BrowsingTimesSection from "./BrowsingTimesSection";
@@ -109,11 +109,13 @@ const getDefaultTimeLimit = (day: IAllowedTime["day"]) => ({
 const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
   const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
   const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
+  const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
   useEffect(() => {
-    ApiController.getDeviceWithTimes(props.deviceId).then(
+    ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(
       (d: IEnrichedDevice) => {
         setAllowedTimes(d.allowedTimes as IAllowedTime[]);
         setTimeLimits(d.timeLimits as ITimeLimit[]);
+        setDeviceConfig(d.config as IDeviceConfig);
       }
     );
   }, [props.deviceId]);
@@ -127,11 +129,16 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
       getDefaultTimeLimit(day),
     ]);
 
-  const [schedulesEnabled, setSchedulesEnabled] = useState<boolean>(false);
+  const [allowedTimesEnabled, setAllowedTimesEnabled] =
+    useState<boolean>(false);
+  const [timeLimitsEnabled, setTimeLimitsEnabled] = useState<boolean>(false);
 
-  //const [dailyLimits, setDailyLimits] = useState<number[]>([]);
-
-  const [dailyLimitsEnabled, setDailyLimitsEnabled] = useState<boolean>(false);
+  useEffect(() => {
+    !_.isUndefined(deviceConfig?.allowedTimesEnabled) &&
+      setAllowedTimesEnabled(deviceConfig?.allowedTimesEnabled);
+    !_.isUndefined(deviceConfig?.timeLimitsEnabled) &&
+      setTimeLimitsEnabled(deviceConfig?.timeLimitsEnabled);
+  }, [deviceConfig]);
 
   const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([]);
   const loadRequestedSites = useCallback(
@@ -231,8 +238,14 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
           <BrowsingTimesSection
             topRightElement={
               <AstroSwitch
-                on={schedulesEnabled}
-                callback={() => setSchedulesEnabled(!schedulesEnabled)}
+                on={allowedTimesEnabled}
+                callback={() => {
+                  setAllowedTimesEnabled(!allowedTimesEnabled);
+                  ApiController.flipAllowedTimesEnabled(
+                    props.deviceId,
+                    !allowedTimesEnabled
+                  );
+                }}
               />
             }
             allowedTimes={allowedTimes}
@@ -250,8 +263,14 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
         <TimeLimitsSection
           topRightElement={
             <AstroSwitch
-              on={dailyLimitsEnabled}
-              callback={() => setDailyLimitsEnabled(!dailyLimitsEnabled)}
+              on={timeLimitsEnabled}
+              callback={() => {
+                setTimeLimitsEnabled(!timeLimitsEnabled);
+                ApiController.flipTimeLimitsEnabled(
+                  props.deviceId,
+                  !timeLimitsEnabled
+                );
+              }}
             />
           }
           timeLimits={timeLimits}
