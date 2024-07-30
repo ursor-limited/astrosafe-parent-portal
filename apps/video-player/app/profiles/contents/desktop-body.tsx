@@ -2,21 +2,19 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import PageLayout from "@/app/components/PageLayout";
 import { Stack } from "@mui/system";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
-import PlugIcon from "@/images/icons/PlugIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
 import ArrowUpRightIcon from "@/images/icons/ArrowUpRight.svg";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import DeviceInstructionsView from "../components/DeviceInstructionsView";
 import UrsorActionButton from "@/app/components/UrsorActionButton";
-import { PALETTE } from "ui";
 import { useRouter } from "next/navigation";
 import DeviceCard from "../components/DeviceCard";
 import QRCodeView from "../components/QRCodeView";
 import { useEffect } from "react";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
+import { IEnrichedDevice } from "./common";
 
 const AllDevicesPageDesktopBody = (props: {
-  devices: IDevice[];
+  devices: IEnrichedDevice[];
   setConnectDialogOpen: () => void;
   // setDownloadDialogOpen: () => void;
   setRenameDeviceDialogId: (id: IDevice["id"]) => void;

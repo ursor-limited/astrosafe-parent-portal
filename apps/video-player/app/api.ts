@@ -8,7 +8,6 @@ import {
 } from "./filters/contents/common";
 import {
   IChannel,
-  IContent,
   IContentBucket,
   ILink,
   IVideo,
@@ -82,30 +81,21 @@ const dellete = (route: string) =>
     }
   );
 
-// const api = axios.create({
-//   //@ts-ignore
-//   baseURL: BACKEND_URLS[process.env.REACT_APP_BUILD_ENV],
-// });
-
-// api.interceptors.response.use(
-//   (response: AxiosResponse) => response,
-//   (error: AxiosError) => {
-//     Sentry.captureException(error);
-//     throw error;
-//   }
-// );
-
-// axiosRetry(api, {
-//   retries: 3, // number of retries
-//   retryDelay: (retryCount: number) => {
-//     console.log(`retry attempt: ${retryCount}`);
-//     return retryCount * 2000; // time interval between retries
-//   },
-// });
-
 class ApiController {
   static async getDevice(id: number) {
     return get(`devices/${id}`).then((response: any) => response.json());
+  }
+
+  static async getEnrichedDevice(id: number) {
+    return get(
+      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+    ).then((response: any) => response.json());
+  }
+
+  static async getDeviceWithTimes(id: number) {
+    return get(
+      `devices/${id}?includeTimeLimits=true&includeAllowedTimes=true`
+    ).then((response: any) => response.json());
   }
 
   static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
@@ -113,9 +103,9 @@ class ApiController {
   }
 
   static async getGroupDevices(id: IGroup["id"]) {
-    return get(`devices?groupId=${id}`).then((response: any) =>
-      response.json()
-    );
+    return get(
+      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+    ).then((response: any) => response.json());
   }
 
   static async getFolderDevices(id: IContentBucket["id"]) {
@@ -125,8 +115,8 @@ class ApiController {
   }
 
   static async getDeviceFolders(id: IDevice["id"]) {
-    return get(`content/buckets?deviceId=${id}&includePreview=true`).then((response: any) =>
-      response.json()
+    return get(`content/buckets?deviceId=${id}&includePreview=true`).then(
+      (response: any) => response.json()
     );
   }
 
@@ -320,14 +310,20 @@ class ApiController {
     filterId: IFilter["id"],
     url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/whitelist/exceptions`, { url, title: _.uniqueId() });
+    return post(`filters/${filterId}/whitelist/exceptions`, {
+      url,
+      title: _.uniqueId(),
+    });
   }
 
   static async addBlacklistException(
     filterId: IFilter["id"],
     url: IFilterUrl["url"]
   ) {
-    return post(`filters/${filterId}/blacklist/exceptions`,  { url, title: _.uniqueId() });
+    return post(`filters/${filterId}/blacklist/exceptions`, {
+      url,
+      title: _.uniqueId(),
+    });
   }
 
   static async addWhitelistCategory(
@@ -367,23 +363,31 @@ class ApiController {
   }
 
   static async approveRequestedSite(id: IRequestedSite["id"]) {
-    return post(`devices/requests/${id}/approve`, {})
+    return post(`devices/requests/${id}/approve`, {});
   }
 
   static async denyRequestedSite(id: IRequestedSite["id"]) {
-    return dellete(`devices/requests/${id}/deny`)
+    return dellete(`devices/requests/${id}/deny`);
   }
 
-  static async getLinkPreview(url: ILink['url']) {
+  static async getLinkPreview(url: ILink["url"]) {
     return get(`content/links/preview/${url}`).then((response: any) =>
       response.json()
     );
   }
 
-  static async getVideoPreview(url: ILink['url']) {
+  static async getVideoPreview(url: ILink["url"]) {
     return get(`content/videos/preview/${url}`).then((response: any) =>
       response.json()
     );
+  }
+
+  static async setTimeLimit(
+    deviceId: IDevice["id"],
+    day: number,
+    timeLimit: number
+  ) {
+    return put(`devices/configs/screentime/limits/${day + 1}`, { timeLimit });
   }
 }
 

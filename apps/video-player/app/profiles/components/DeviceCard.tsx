@@ -9,11 +9,12 @@ import FilterIcon from "@/images/icons/FilterIcon.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
 import { getAbsoluteUrl } from "@/app/api";
+import { IEnrichedDevice } from "../contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -108,10 +109,8 @@ export const DeviceCardScreenTimeSection = (props: {
         </Stack>
         <Typography bold color={PALETTE.secondary.grey[3]}>
           {`${Math.floor(
-            (props.totalTime - props.elapsedTime) / 3600
-          )}h ${Math.floor(
-            ((props.totalTime - props.elapsedTime) % 3600) / 60
-          )}m`}
+            (props.totalTime - props.elapsedTime) / 60
+          )}h ${Math.floor((props.totalTime - props.elapsedTime) % 60)}m`}
         </Typography>
       </Stack>
       <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
@@ -175,7 +174,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 );
 
 const DeviceCard = (
-  props: IDevice & {
+  props: IEnrichedDevice & {
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -185,6 +184,10 @@ const DeviceCard = (
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  useEffect(
+    () => setBrowsingEnabled(!!props.config?.browsingAllowed),
+    [props.config?.browsingAllowed]
+  );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
@@ -286,8 +289,8 @@ const DeviceCard = (
                 faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
               />
               <DeviceCardScreenTimeSection
-                totalTime={5004}
-                elapsedTime={4020}
+                totalTime={props.screenTime?.allowed ?? 0}
+                elapsedTime={props.screenTime?.current ?? 0}
                 onClickView={() =>
                   router.push(`/profiles/${props.id}?tab=limits`)
                 }

@@ -13,9 +13,10 @@ import { AstroAccountTab } from "./common";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import { IGroupContentBucket } from "@/app/folders/contents/common";
+import { IEnrichedDevice } from "../../contents/common";
 
 const ProfilePageDesktopBody = (props: {
-  device: IDevice;
+  device: IEnrichedDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
   folders: IGroupContentBucket[];

@@ -35,6 +35,11 @@ export interface IDevice {
   createdAt: string;
 }
 
+export interface IDeviceConfig {
+  browsingAllowed: boolean;
+  videoAllowed: boolean;
+}
+
 export default function FilterPage(props: {
   isMobile: boolean;
   filterId: number;
