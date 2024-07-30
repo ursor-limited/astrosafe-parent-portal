@@ -16,20 +16,6 @@ import _ from "lodash";
 import { IRequestedSite } from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 
-export interface IVideo_DEPRECATED {
-  id: string;
-  creatorId: string;
-  url: string;
-  title: string;
-  description?: string;
-  thumbnailUrl?: string;
-  startTime?: number;
-  endTime?: number;
-  comments: IVideoComment[];
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IVideoComment {
   id: string;
   value: string;

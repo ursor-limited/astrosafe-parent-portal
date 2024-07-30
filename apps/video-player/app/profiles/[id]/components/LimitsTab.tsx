@@ -1,4 +1,3 @@
-import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
@@ -134,10 +133,12 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
   const [timeLimitsEnabled, setTimeLimitsEnabled] = useState<boolean>(false);
 
   useEffect(() => {
-    !_.isUndefined(deviceConfig?.allowedTimesEnabled) &&
-      setAllowedTimesEnabled(deviceConfig?.allowedTimesEnabled);
-    !_.isUndefined(deviceConfig?.timeLimitsEnabled) &&
-      setTimeLimitsEnabled(deviceConfig?.timeLimitsEnabled);
+    if (deviceConfig) {
+      !_.isUndefined(deviceConfig?.allowedTimesEnabled) &&
+        setAllowedTimesEnabled(deviceConfig.allowedTimesEnabled);
+      !_.isUndefined(deviceConfig?.timeLimitsEnabled) &&
+        setTimeLimitsEnabled(deviceConfig.timeLimitsEnabled);
+    }
   }, [deviceConfig]);
 
   const [requestedSites, setRequestedSites] = useState<IRequestedSite[]>([]);
