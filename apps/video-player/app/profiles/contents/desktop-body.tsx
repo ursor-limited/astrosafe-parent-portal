@@ -47,7 +47,7 @@ const AllDevicesPageDesktopBody = (props: {
       scrollable
     >
       <Stack px="50px" flex={1} pb="31px">
-        {props.devices.length > 0 ? (
+        {false ? (
           <DynamicCardGrid cardWidth="355px" rowGap="20px" columnGap="20px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={d.id} duration={i * 90}>

@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
-import { getAbsoluteUrl } from "@/app/api";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
@@ -297,7 +297,10 @@ const DeviceCard = (
               />
               <DeviceCardBrowsingStatusSection
                 browsingEnabled={browsingEnabled}
-                flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+                flipBrowsingEnabled={() => {
+                  setBrowsingEnabled(!browsingEnabled);
+                  ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+                }}
               />
             </Stack>
             <Stack

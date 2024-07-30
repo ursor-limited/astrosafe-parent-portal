@@ -59,16 +59,16 @@ const FilterPageBlockedSitesSection = (props: {
   useEffect(() => {
     (async () => {
       const linkRows: IUrsorTableRow<IAllowedSitesTableRowItems>[] =
-        props.blockedSites?.map((a, i) => ({
+        props.blockedSites?.map((b, i) => ({
           id: i.toString(),
           items: {
-            title: a.title ?? "",
-            url: a.url,
-            createdAt: "",
+            title: b.title ?? "",
+            url: b.url,
+            createdAt: b.createdAt,
           },
           tags: [],
           disabled: false,
-          url: a.url,
+          url: b.url,
         })) || [];
       setRows(linkRows);
     })();

@@ -20,6 +20,7 @@ export interface IFilterException {
   url: string;
   title: string;
   favicon: string;
+  createdAt: string;
 }
 
 export interface IDevice {

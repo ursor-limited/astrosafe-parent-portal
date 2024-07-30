@@ -132,6 +132,10 @@ export const DeviceCardFilterSection = (props: {
 
 const HorizontalDeviceCard = (props: IEnrichedDevice) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
+  useEffect(
+    () => setBrowsingEnabled(!!props.config?.browsingAllowed),
+    [props.config?.browsingAllowed]
+  );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
@@ -180,7 +184,10 @@ const HorizontalDeviceCard = (props: IEnrichedDevice) => {
           <DeviceCardFilterSection selectedFilter={1} />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
-            flipBrowsingEnabled={() => setBrowsingEnabled(!browsingEnabled)}
+            flipBrowsingEnabled={() => {
+              setBrowsingEnabled(!browsingEnabled);
+              ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+            }}
           />
         </Stack>
       </Stack>

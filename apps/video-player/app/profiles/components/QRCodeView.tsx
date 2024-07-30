@@ -1,8 +1,15 @@
+import ApiController from "@/app/api";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
 import { Stack } from "@mui/system";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
 
 const QRCodeView = () => {
+  const [image, setImage] = useState<string>("");
+  useEffect(() => {
+    ApiController.getQRCode(DUMMY_GROUP_ID).then(setImage);
+  }, []);
   return (
     <Stack
       justifyContent="center"
@@ -56,12 +63,7 @@ const QRCodeView = () => {
             Scan and download the browser on your kids device
           </Typography>
         </Stack>
-        <Image
-          src="https://ursorassets.s3.eu-west-1.amazonaws.com/QR.png"
-          width={237}
-          height={237}
-          alt="qr"
-        />
+        {image ? <Image src={image} width={237} height={237} alt="qr" /> : null}
         <UrsorButton dark variant="tertiary">
           Or follow this link
         </UrsorButton>

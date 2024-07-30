@@ -67,12 +67,12 @@ export default function FilterPageDesktopBody(props: {
             )
           }
         /> */}
-        <FilterPageCategoriesSection
+        {/* <FilterPageCategoriesSection
           filter={props.filter}
           categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
-        />
+        /> */}
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
           add={props.addWhitelistException}

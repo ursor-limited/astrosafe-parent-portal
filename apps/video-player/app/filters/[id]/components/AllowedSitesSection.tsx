@@ -72,7 +72,7 @@ const FilterPageAllowedSitesSection = (props: {
           items: {
             title: a.title ?? "",
             url: a.url,
-            createdAt: "",
+            createdAt: a.createdAt,
           },
           tags: [],
           disabled: false,

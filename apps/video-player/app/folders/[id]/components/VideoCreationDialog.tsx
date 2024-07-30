@@ -39,8 +39,7 @@ const VideoCreationDialog = (props: {
     )
       .then((result) => {
         result.title && !manuallyChangedTitle && setTitle(result.title);
-        result.thumbnailUrls?.[0]?.url &&
-          setThumbnailUrl(result.thumbnailUrls?.[0]?.url);
+        result.thumbnailUrl && setThumbnailUrl(result.thumbnailUrl);
       })
       .catch(() => null);
   };

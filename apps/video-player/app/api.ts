@@ -1,6 +1,6 @@
 import { IUser } from "./account/contents/common";
 import { IGroup } from "./folders/[id]/contents/common";
-import { IDevice } from "./filters/[id]/contents/common";
+import { IDevice, IFilterException } from "./filters/[id]/contents/common";
 import {
   IFilter,
   IFilterCategory,
@@ -67,6 +67,17 @@ const put = (route: string, body: any) =>
     `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
     {
       method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
+
+const patch = (route: string, body: any) =>
+  fetch(
+    //@ts-ignore
+    `${BACKEND_URLS[process.env.NEXT_PUBLIC_VERCEL_ENV]}/${route}`,
+    {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     }
@@ -306,13 +317,21 @@ class ApiController {
     );
   }
 
+  static async removeWhitelistException(
+    filterId: IFilter["id"],
+    url: IFilterException["url"]
+  ) {
+    return get(`filters/${filterId}/whitelist/exceptions/${url}`).then(
+      (response: any) => response.json()
+    );
+  }
+
   static async addWhitelistException(
     filterId: IFilter["id"],
     url: IFilterUrl["url"]
   ) {
     return post(`filters/${filterId}/whitelist/exceptions`, {
       url,
-      title: _.uniqueId(),
     });
   }
 
@@ -322,7 +341,6 @@ class ApiController {
   ) {
     return post(`filters/${filterId}/blacklist/exceptions`, {
       url,
-      title: _.uniqueId(),
     });
   }
 
@@ -388,6 +406,19 @@ class ApiController {
     timeLimit: number
   ) {
     return put(`devices/configs/screentime/limits/${day + 1}`, { timeLimit });
+  }
+
+  static async flipBrowsingAllowed(
+    deviceId: IDevice["id"],
+    browsingAllowed: boolean
+  ) {
+    return patch(`devices/${deviceId}/configs/browsing`, { browsingAllowed });
+  }
+
+  static async getQRCode(groupId: IGroup["id"]) {
+    return post(`groups/${groupId}/devices/qrcode`,{}).then((response: any) =>
+      response.text()
+    );
   }
 }
 
