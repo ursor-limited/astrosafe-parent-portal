@@ -191,10 +191,10 @@ export default function HomePageContents(props: {
   }, [nColumns, currentFolderContents]);
 
   const [creationAnimationDialogOpen, setCreationAnimationDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
     useState<boolean>(false);

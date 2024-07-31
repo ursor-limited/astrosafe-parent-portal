@@ -86,7 +86,7 @@ class ApiController {
 
   static async getEnrichedDevice(id: number) {
     return get(
-      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestSearch=true`
     ).then((response: any) => response.json());
   }
 
