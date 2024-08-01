@@ -68,7 +68,6 @@ const RequestedSitesSection = (props: {
   onUpdate: () => void;
 }) => {
   const notificationCtx = useContext(NotificationContext);
-  console.log(props.sites);
   return (
     <AstroBentoCard title={`${props.sites.length} requested sites`}>
       <Stack spacing="12px">

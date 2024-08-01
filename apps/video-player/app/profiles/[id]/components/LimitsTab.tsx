@@ -11,12 +11,12 @@ import { IDevice, IDeviceConfig } from "@/app/filters/[id]/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 import TimeLimitsSection from "./TimeLimitsSection";
 import BrowsingTimesSection from "./BrowsingTimesSection";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 
-export const getISODateString = (hours: number, minutes: number) =>
-  dayjs.utc().hour(hours).minute(minutes).toISOString();
+export const getISODateString = (day: number, hours: number, minutes: number) =>
+  dayjs.utc().day(day).hour(hours).minute(minutes).second(0).toISOString();
 
 export interface IRequestedSite {
   id: number;
@@ -25,7 +25,7 @@ export interface IRequestedSite {
   faviconUrl: string;
 }
 
-export type Weekday = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
+export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 
 const DEFAULT_START = "10:00:00.000Z";
 const DEFAULT_END = "16:00:00.000Z";
@@ -106,40 +106,40 @@ export interface IAllowedTime {
 const getDefaultTimeLimit = (day: IAllowedTime["day"]) => ({
   id: Math.round(Math.random() * 10000),
   day,
-  startTime: DEFAULT_START,
-  endTime: DEFAULT_END,
-  dailyLimit: DEFAULT_DAILY_LIMIT,
+  startTime: getISODateString(day, 0, 0),
+  endTime: getISODateString(day, 24, 0),
 });
 
 const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
   const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
   const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
   const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
+  const loadData = useCallback(
+    () =>
+      ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(
+        (d: IEnrichedDevice) => {
+          setAllowedTimes(d.allowedTimes as IAllowedTime[]);
+          setTimeLimits(d.timeLimits as ITimeLimit[]);
+          setDeviceConfig(d.config as IDeviceConfig);
+        }
+      ),
+    [props.deviceId]
+  );
   useEffect(() => {
-    ApiController.getDeviceWithTimesAndConfig(props.deviceId).then(
-      (d: IEnrichedDevice) => {
-        setAllowedTimes(d.allowedTimes as IAllowedTime[]);
-        setTimeLimits(d.timeLimits as ITimeLimit[]);
-        setDeviceConfig(d.config as IDeviceConfig);
-      }
-    );
-  }, [props.deviceId]);
+    loadData();
+  }, [loadData]);
 
   const addAllowedTime = (day: IAllowedTime["day"]) => {
-    setAllowedTimes([...allowedTimes, getDefaultTimeLimit(day)]);
     ApiController.addAllowedTime(
       props.deviceId,
       day,
-      getISODateString(0, 0),
-      getISODateString(24, 0)
-    );
+      getISODateString(day, 10, 0),
+      getISODateString(day, 14, 0)
+    ).then(loadData);
   };
 
   const reset = (day: IAllowedTime["day"]) => {
-    setAllowedTimes([
-      ...allowedTimes.filter((t) => t.day !== day),
-      getDefaultTimeLimit(day),
-    ]);
+    ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
   };
 
   const [allowedTimesEnabled, setAllowedTimesEnabled] =

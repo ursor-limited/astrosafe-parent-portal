@@ -8,13 +8,13 @@ import CheckboxIcon from "@/images/icons/CheckboxIcon.svg";
 import EmptyCheckboxIcon from "@/images/icons/EmptyCheckboxIcon.svg";
 import { PALETTE, Typography } from "ui";
 import InfoButton from "@/app/components/InfoButton";
-import { IGroupContentBucket } from "../../contents/common";
+import { IEnrichedContentBucket } from "../../contents/common";
 import { IChannel } from "@/app/profiles/[id]/components/ContentTab";
 
 const ChannelCreationDialog = (props: {
   open: boolean;
   onClose: () => void;
-  folderId: IGroupContentBucket["id"];
+  folderId: IEnrichedContentBucket["id"];
   creationCallback: () => void;
   updateDetails?: {
     channel: IChannel;

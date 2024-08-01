@@ -13,7 +13,10 @@ import {
   IVideo,
 } from "./profiles/[id]/components/ContentTab";
 import _ from "lodash";
-import { IAllowedTime, IRequestedSite } from "./profiles/[id]/components/LimitsTab";
+import {
+  IAllowedTime,
+  IRequestedSite,
+} from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 
 export interface IVideoComment {
@@ -147,9 +150,9 @@ class ApiController {
     );
   }
 
-  static async getGroupFolders(id: number) {
-    return get(`content/buckets/group/${id}`).then((response: any) =>
-      response.json()
+  static async getEnrichedFolders(id: number) {
+    return get(`content/buckets?groupId=${id}&includePreview=true`).then(
+      (response: any) => response.json()
     );
   }
 
@@ -387,28 +390,41 @@ class ApiController {
     );
   }
 
-  static async setTimeLimit(
-    limitId: number,
-    timeLimit: number
-  ) {
+  static async setTimeLimit(limitId: number, timeLimit: number) {
     return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
   }
 
   static async addAllowedTime(
-    deviceId: IDevice['id'],
+    deviceId: IDevice["id"],
     day: IAllowedTime["day"],
-    startTime: IAllowedTime['startTime'],
-    endTime: IAllowedTime['endTime'],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
   ) {
-    return post(`devices/${deviceId}/config/screentime/allowed`, { day, startTime, endTime });
+    return post(`devices/${deviceId}/config/screentime/allowed`, {
+      startTime,
+      endTime,
+    });
   }
 
   static async changeAllowedTime(
-    id: IAllowedTime['id'],
-    startTime: IAllowedTime['startTime'],
-    endTime: IAllowedTime['endTime'],
+    id: IAllowedTime["id"],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
   ) {
-    return patch(`devices/configs/screentime/allowed/${id}`, { startTime, endTime });
+    return patch(`devices/configs/screentime/allowed/${id}`, {
+      startTime,
+      endTime,
+    });
+  }
+
+  static async resetAllowedTimes(
+    deviceId: IDevice["id"],
+    day: IAllowedTime["day"]
+  ) {
+    return put(
+      `devices/${deviceId}/config/screentime/allowed/reset?day=${day}`,
+      {}
+    );
   }
 
   static async flipBrowsingAllowed(
@@ -419,17 +435,27 @@ class ApiController {
   }
 
   static async getQRCode(groupId: IGroup["id"]) {
-    return post(`groups/${groupId}/devices/qrcode`,{}).then((response: any) =>
+    return post(`groups/${groupId}/devices/qrcode`, {}).then((response: any) =>
       response.text()
     );
   }
 
-  static async flipTimeLimitsEnabled(deviceId: IDevice['id'], enabled: boolean) {
-    return patch(`devices/${deviceId}/config/screentime/toggle`, { timeLimitsEnabled: enabled })
+  static async flipTimeLimitsEnabled(
+    deviceId: IDevice["id"],
+    enabled: boolean
+  ) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, {
+      timeLimitsEnabled: enabled,
+    });
   }
 
-  static async flipAllowedTimesEnabled(deviceId: IDevice['id'], enabled: boolean) {
-    return patch(`devices/${deviceId}/config/screentime/toggle`, { allowedTimesEnabled: enabled })
+  static async flipAllowedTimesEnabled(
+    deviceId: IDevice["id"],
+    enabled: boolean
+  ) {
+    return patch(`devices/${deviceId}/config/screentime/toggle`, {
+      allowedTimesEnabled: enabled,
+    });
   }
 }
 

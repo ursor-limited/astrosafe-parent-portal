@@ -30,8 +30,8 @@ const BrowsingTimesSection = (props: {
     >
       {props.allowedTimes ? (
         <Stack spacing="36px" pb="12px">
-          {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => {
-            const times = props.allowedTimes.filter((t) => t.day === i + 1);
+          {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => {
+            const times = props.allowedTimes.filter((t) => t.day === i);
             return (
               <Stack key={day} direction="row" alignItems="center">
                 <Stack width="120px">
@@ -64,7 +64,7 @@ const BrowsingTimesSection = (props: {
                     variant="secondary"
                     backgroundColor={PALETTE.secondary.grey[1]}
                     borderColor={PALETTE.secondary.grey[1]}
-                    onClick={() => props.reset(i + 1)}
+                    onClick={() => props.reset(i)}
                   >
                     Reset
                   </UrsorButton>

@@ -3,13 +3,13 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
-import { IGroupContentBucket } from "./common";
+import { IEnrichedContentBucket } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { UrsorButton } from "ui";
 import FolderCard from "@/app/profiles/[id]/components/FolderCard";
 
 const AllFoldersPageMobileBody = (props: {
-  folders: IGroupContentBucket[];
+  folders: IEnrichedContentBucket[];
   createFolder: () => void;
 }) => {
   const router = useRouter();
@@ -36,8 +36,8 @@ const AllFoldersPageMobileBody = (props: {
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
-                thumbnailUrls={f.thumbnailUrls}
-                avatarUrls={f.avatarUrls}
+                // thumbnailUrls={f.thumbnailUrls}
+                // avatarUrls={f.avatarUrls}
               />
             </UrsorFadeIn>
           ))}

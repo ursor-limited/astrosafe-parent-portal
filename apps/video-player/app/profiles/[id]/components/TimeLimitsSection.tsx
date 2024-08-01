@@ -23,7 +23,7 @@ const TimeLimitsSection = (props: {
     topRightStuff={props.topRightElement}
   >
     <Stack spacing="36px" pb="12px">
-      {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
+      {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
         <Stack
           key={day}
           direction="row"

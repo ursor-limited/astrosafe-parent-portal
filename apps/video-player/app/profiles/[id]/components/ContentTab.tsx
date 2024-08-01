@@ -56,7 +56,7 @@ const DevicePageContentTab = (props: { folders: IEnrichedContentBucket[] }) => {
               key={f.id}
               {...f}
               clickCallback={() => router.push(`/folders/${f.id}`)}
-              thumbnailUrls={f.thumbnailUrls}
+              //thumbnailUrls={f.preview.thumbnailUrls}
             />
           </UrsorFadeIn>
         ))}

@@ -106,8 +106,6 @@ const AccountPage = (props: { isMobile: boolean }) => {
     loadUsers();
   }, [loadUsers]);
 
-  console.log(allUsers, "alalalalalla");
-
   return user ? (
     <>
       {props.isMobile ? (
