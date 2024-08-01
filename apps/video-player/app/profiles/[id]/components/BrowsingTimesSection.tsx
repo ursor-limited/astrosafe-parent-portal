@@ -7,7 +7,11 @@ import { IAllowedTime } from "./LimitsTab";
 
 const BrowsingTimesSection = (props: {
   allowedTimes: IAllowedTime[];
-  setAllowedTimes: (day: number, startTime: string, endTime: string) => void;
+  setAllowedTimes: (
+    id: IAllowedTime["id"],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
+  ) => void;
   addTimeLimit: (day: number) => void;
   reset: (day: number) => void;
   topRightElement?: React.ReactNode;

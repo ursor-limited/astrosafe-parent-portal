@@ -263,13 +263,14 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
               />
             }
             allowedTimes={allowedTimes}
-            setAllowedTimes={(day, startTime, endTime) =>
+            setAllowedTimes={(id, startTime, endTime) => {
               setAllowedTimes(
                 allowedTimes.map((t) =>
-                  t.id === day ? { ...t, startTime, endTime } : t
+                  t.id === id ? { ...t, startTime, endTime } : t
                 )
-              )
-            }
+              );
+              ApiController.changeAllowedTime(id, startTime, endTime);
+            }}
             addTimeLimit={addAllowedTime}
             reset={reset}
           />

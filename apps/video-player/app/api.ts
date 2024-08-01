@@ -403,6 +403,14 @@ class ApiController {
     return post(`devices/${deviceId}/config/screentime/allowed`, { day, startTime, endTime });
   }
 
+  static async changeAllowedTime(
+    id: IAllowedTime['id'],
+    startTime: IAllowedTime['startTime'],
+    endTime: IAllowedTime['endTime'],
+  ) {
+    return patch(`devices/configs/screentime/allowed/${id}`, { startTime, endTime });
+  }
+
   static async flipBrowsingAllowed(
     deviceId: IDevice["id"],
     browsingAllowed: boolean

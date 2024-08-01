@@ -6,7 +6,7 @@ import _ from "lodash";
 import dayjs from "dayjs";
 
 const DISPLAY_INTERVAL = 2; // hours
-const MIN = 4;
+const MIN = 0;
 const MAX = 24;
 const DRAG_INTERVAL = 0.25; // hours
 
