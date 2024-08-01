@@ -71,7 +71,7 @@ const RequestedSitesSection = (props: {
   return (
     <AstroBentoCard title={`${props.sites.length} requested sites`}>
       <Stack spacing="12px">
-        {props.sites.map((s) => (
+        {props.sites.slice(0, 3).map((s) => (
           <RequestedSiteRow
             key={s.id}
             {...s}

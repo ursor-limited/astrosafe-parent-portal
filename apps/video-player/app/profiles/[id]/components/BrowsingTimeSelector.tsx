@@ -1,13 +1,13 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import { IAllowedTime } from "./LimitsTab";
+import { IAllowedTime, getISODateString } from "./LimitsTab";
 import _ from "lodash";
 import dayjs from "dayjs";
 
 const DISPLAY_INTERVAL = 2; // hours
-const MIN = 4;
-const MAX = 24;
+// const MIN = 0;
+// const MAX = 24;
 const DRAG_INTERVAL = 0.25; // hours
 
 const BrowsingTimeSelectorRange = (props: {
@@ -26,8 +26,8 @@ const BrowsingTimeSelectorRange = (props: {
   const [dot2X, setDot2X] = useState<number>(0);
   useEffect(() => {
     if (_.isNumber(props.start) && _.isNumber(props.end)) {
-      setDot1X((props.lineWidth * (props.start - MIN)) / (MAX - MIN));
-      setDot2X((props.lineWidth * (props.end - MIN)) / (MAX - MIN));
+      setDot1X((props.lineWidth * props.start) / 24);
+      setDot2X((props.lineWidth * props.end) / 24);
     }
   }, [props.start, props.end, props.lineWidth]);
 
@@ -60,8 +60,8 @@ const BrowsingTimeSelectorRange = (props: {
       setDraggingDot1(false);
       setDraggingDot2(false);
       props.setTimes(
-        (Math.min(dot1X, dot2X) / props.lineWidth) * (MAX - MIN) + MIN,
-        (Math.max(dot1X, dot2X) / props.lineWidth) * (MAX - MIN) + MIN
+        Math.max(0, (Math.min(dot1X, dot2X) / props.lineWidth) * 24),
+        Math.min(24, (Math.max(dot1X, dot2X) / props.lineWidth) * 24)
       );
     }
   }, [dot1X, dot2X, props.lineWidth, draggingDot1, draggingDot2]);
@@ -120,7 +120,6 @@ const BrowsingTimeSelectorRange = (props: {
         position="absolute"
         left={Math.min(dot1X, dot2X)}
         width={Math.abs(dot2X - dot1X)}
-        //bgcolor={PALETTE.secondary.purple[2]}
         height="4px"
         zIndex={2}
         sx={{
@@ -161,7 +160,7 @@ const BrowsingTimeSelector = (props: {
 
   const [dragInterval, setDragInterval] = useState<number>(1); // px
   useEffect(
-    () => setDragInterval((lineWidth * DRAG_INTERVAL) / (MAX - MIN)),
+    () => setDragInterval((lineWidth * DRAG_INTERVAL) / 24),
     [lineWidth]
   );
 
@@ -175,44 +174,51 @@ const BrowsingTimeSelector = (props: {
         ref={setLineRef}
         position="relative"
       >
-        {props.times?.map((timeLimit, i) => (
-          <BrowsingTimeSelectorRange
-            key={i}
-            lineWidth={lineWidth}
-            lineLeftX={lineLeftX}
-            dragInterval={dragInterval}
-            mouseX={mouseX}
-            start={
-              dayjs(timeLimit.startTime).hour() +
-              dayjs(timeLimit.startTime).minute() / 60
-            }
-            end={
-              dayjs(timeLimit.endTime).hour() +
-              dayjs(timeLimit.endTime).minute() / 60
-            }
-            setTimes={(start, end) =>
-              props.setTimes(
-                timeLimit.id,
-                dayjs(timeLimit.startTime)
-                  .hour(Math.floor(start / 24))
-                  .minute((start % 24) * 60)
-                  .toISOString(),
-                dayjs(timeLimit.endTime)
-                  .hour(Math.floor(end / 24))
-                  .minute((end % 24) * 60)
-                  .toISOString()
-              )
-            }
-          />
-        ))}
+        {props.times?.map((timeLimit, i) => {
+          const decimalStartTime =
+            dayjs(timeLimit.startTime).utc().hour() +
+            dayjs(timeLimit.startTime).utc().minute() / 60;
+          const decimalEndTime =
+            dayjs(timeLimit.endTime).utc().hour() +
+            dayjs(timeLimit.endTime).utc().minute() / 60;
+          const endTimeIsMidnight =
+            dayjs(timeLimit.endTime).utc().day() >
+            dayjs(timeLimit.startTime).utc().day();
+          return (
+            <BrowsingTimeSelectorRange
+              key={i}
+              lineWidth={lineWidth}
+              lineLeftX={lineLeftX}
+              dragInterval={dragInterval}
+              mouseX={mouseX}
+              start={decimalStartTime}
+              end={endTimeIsMidnight ? 24 : decimalEndTime}
+              setTimes={(start, end) => {
+                return props.setTimes(
+                  timeLimit.id,
+                  getISODateString(
+                    timeLimit.day,
+                    Math.floor(start),
+                    Math.floor((start % 1) * 60)
+                  ),
+                  getISODateString(
+                    timeLimit.day,
+                    Math.floor(end),
+                    Math.floor((end % 1) * 60)
+                  )
+                );
+              }}
+            />
+          );
+        })}
         <Stack flex={1} justifyContent="space-between" direction="row">
-          {[...Array(1 + (MAX - MIN) / DISPLAY_INTERVAL).keys()].map((i) => (
+          {[...Array(1 + 24 / DISPLAY_INTERVAL).keys()].map((i) => (
             <Stack
               key={i}
               height="4px"
               width="2px"
               bgcolor={
-                i > 0 && i < (MAX - MIN) / DISPLAY_INTERVAL
+                i > 0 && i < 24 / DISPLAY_INTERVAL
                   ? PALETTE.secondary.grey[3]
                   : undefined
               }
@@ -224,10 +230,8 @@ const BrowsingTimeSelector = (props: {
                 sx={{ transform: "translateX(-50%)" }}
               >
                 <Typography variant="tiny" bold>{`${
-                  (MIN + i * DISPLAY_INTERVAL) % 12 || 12
-                }:00${
-                  MIN + i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"
-                }`}</Typography>
+                  (i * DISPLAY_INTERVAL) % 12 || 12
+                }:00${i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"}`}</Typography>
               </Stack>
             </Stack>
           ))}

@@ -109,8 +109,6 @@ const DevicesTable = () => {
     setSortedRows(sortDirection === "asc" ? _.reverse(sorted.slice()) : sorted);
   }, [rows, sortDirection, sortedColumn]);
 
-  console.log(sortedRows);
-
   return (
     <UrsorTable
       columns={TABLE_COLUMNS}

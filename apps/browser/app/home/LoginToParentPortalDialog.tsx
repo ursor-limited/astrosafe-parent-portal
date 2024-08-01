@@ -4,8 +4,27 @@ import { BACKDROP_STYLE } from "../components/UrsorDialog";
 import { Stack } from "@mui/system";
 import PinPad, { SHOW_RED_DURATION } from "../components/PinPad";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
+type LoginToParentPortalJourney =
+  | "account"
+  | "banner"
+  | "timeLimit"
+  | "siteRequest"
+  | "contentRequest";
+
+const ILLUSTRATION_URLS: Record<LoginToParentPortalJourney, string> = {
+  account: "https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png",
+  banner: "https://ursorassets.s3.eu-west-1.amazonaws.com/pinBanner.png",
+  timeLimit: "https://ursorassets.s3.eu-west-1.amazonaws.com/pinTimeLimit.png",
+  siteRequest:
+    "https://ursorassets.s3.eu-west-1.amazonaws.com/pinLockedContent.png",
+  contentRequest:
+    "https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png",
+};
 
 const LoginToParentPortalDialog = (props: {
+  journey: LoginToParentPortalJourney;
   open: boolean;
   onClose: () => void;
 }) => {
@@ -58,13 +77,20 @@ const LoginToParentPortalDialog = (props: {
       }}
     >
       <Stack direction="row" spacing="36px" flex={1}>
-        <Stack flex={1} justifyContent="space-between">
+        <Stack flex={1}>
           <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
             {displayIncorrectnessTitle
               ? "Incorrect pin, please try again"
               : "Log in to your Parent Portal and connect your Device"}
           </Typography>
-          <Stack height="300px" bgcolor={PALETTE.secondary.grey[2]} />
+          <Stack flex={1} alignItems="center" justifyContent="center">
+            <Image
+              src={ILLUSTRATION_URLS[props.journey]}
+              height={245}
+              width={298}
+              alt="what was my pin?"
+            />
+          </Stack>
         </Stack>
         <Stack flex={1} alignItems="center" spacing="32px">
           <Typography sx={{ textAlign: "center" }} variant="h5">

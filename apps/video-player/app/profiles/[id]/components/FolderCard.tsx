@@ -11,7 +11,7 @@ import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
-import { IGroupContentBucket } from "@/app/folders/contents/common";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 
 export const spin = keyframes`
   from {
@@ -23,7 +23,7 @@ export const spin = keyframes`
 `;
 
 const FolderCard = (
-  props: IGroupContentBucket & {
+  props: IEnrichedContentBucket & {
     clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
@@ -194,12 +194,12 @@ const FolderCard = (
                   },
                   backgroundSize: "cover",
                   backgroundPosition: "center",
-                  backgroundImage: props.thumbnailUrls?.[0]
-                    ? `url(${props.thumbnailUrls[0]})`
+                  backgroundImage: props.preview?.thumbnailUrls?.[0]
+                    ? `url(${props.preview.thumbnailUrls[0]})`
                     : undefined,
                 }}
               >
-                {!props.thumbnailUrls?.[0] ? (
+                {!props.preview?.thumbnailUrls?.[0] ? (
                   <Stack
                     sx={{
                       animation: `${spin} 9s linear`,
@@ -224,12 +224,12 @@ const FolderCard = (
                     },
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    backgroundImage: props.thumbnailUrls?.[1]
-                      ? `url(${props.thumbnailUrls[1]})`
+                    backgroundImage: props.preview?.thumbnailUrls?.[1]
+                      ? `url(${props.preview.thumbnailUrls[1]})`
                       : undefined,
                   }}
                 >
-                  {!props.thumbnailUrls?.[1] ? (
+                  {!props.preview?.thumbnailUrls?.[1] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 12s linear`,
@@ -254,12 +254,12 @@ const FolderCard = (
                     },
                     backgroundSize: "cover",
                     backgroundPosition: "center",
-                    backgroundImage: props.thumbnailUrls?.[2]
-                      ? `url(${props.thumbnailUrls[2]})`
+                    backgroundImage: props.preview?.thumbnailUrls?.[2]
+                      ? `url(${props.preview?.thumbnailUrls[2]})`
                       : undefined,
                   }}
                 >
-                  {!props.thumbnailUrls?.[2] ? (
+                  {!props.preview?.thumbnailUrls?.[2] ? (
                     <Stack
                       sx={{
                         animation: `${spin} 4s linear`,
@@ -280,8 +280,11 @@ const FolderCard = (
                   </Typography>
                 </Stack>
               </Stack>
-              {props.avatarUrls ? (
-                <ProfileImageRow imageUrls={props.avatarUrls} />
+              {props.preview?.avatarUrls ? (
+                <ProfileImageRow
+                  imageUrls={props.preview.avatarUrls}
+                  deviceCount={props.preview.deviceCount.devices ?? 0}
+                />
               ) : null}
             </Stack>
           </Stack>

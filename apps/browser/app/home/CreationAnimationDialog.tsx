@@ -10,8 +10,9 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { getRemoveTopCardAnimation } from "../onboarding/contents/views/content-selection/card-stack";
+import Confetti from "./Confetti";
 
-const CARD_PERIOD = 2500;
+const CARD_PERIOD = 3000;
 
 export const getCardHover = (distance: number) => keyframes`
 from {
@@ -37,30 +38,44 @@ export interface ICreationAnimationCardProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
-const CreationAnimationCard = (props: ICreationAnimationCardProps) => (
-  <Stack
-    width="355px"
-    height="176px"
-    borderRadius="12px"
-    bgcolor={props.color}
-    justifyContent="center"
-    alignItems="center"
-    spacing="12px"
-    boxShadow={"0 0 16px rgb(0,0,0,0.17)"}
-    sx={{
-      svg: {
-        path: {
-          fill: "rgba(255,255,255,0.84)",
+const CreationAnimationCard = (
+  props: ICreationAnimationCardProps & { showConfetti: boolean }
+) => (
+  <Stack position="relative">
+    {props.showConfetti ? (
+      <Stack position="absolute" left="-70px" top={0}>
+        <Confetti side="left" />
+      </Stack>
+    ) : null}
+    <Stack
+      width="355px"
+      height="176px"
+      borderRadius="12px"
+      bgcolor={props.color}
+      justifyContent="center"
+      alignItems="center"
+      spacing="12px"
+      boxShadow={"0 0 16px rgb(0,0,0,0.17)"}
+      sx={{
+        svg: {
+          path: {
+            fill: "rgba(255,255,255,0.84)",
+          },
         },
-      },
-    }}
-  >
-    <Stack height="100px" justifyContent="center">
-      <props.icon height="66px" width="66px" />
+      }}
+    >
+      <Stack height="100px" justifyContent="center">
+        <props.icon height="66px" width="66px" />
+      </Stack>
+      <Typography variant="large" bold color="rgba(255,255,255,0.84)">
+        {props.title}
+      </Typography>
     </Stack>
-    <Typography variant="large" bold color="rgba(255,255,255,0.84)">
-      {props.title}
-    </Typography>
+    {props.showConfetti ? (
+      <Stack position="absolute" right="-70px" top={0}>
+        <Confetti side="right" />
+      </Stack>
+    ) : null}
   </Stack>
 );
 
@@ -115,7 +130,7 @@ const CreationAnimationDialog = (props: {
 
   useEffect(() => {
     stackIndex === CREATION_ANIMATION_CARDS.length && setStackIndex(0);
-    setInterval(props.onNext, 500);
+    //setInterval(props.onNext, 500);
   }, [stackIndex]);
 
   return (
@@ -148,7 +163,6 @@ const CreationAnimationDialog = (props: {
         >
           <Stack
             width="240px"
-            height="60px"
             sx={{
               background: `linear-gradient(${PALETTE.secondary.purple[2]}, ${PALETTE.secondary.blue[2]})`,
               "-webkit-text-fill-color": "transparent",
@@ -219,7 +233,11 @@ const CreationAnimationDialog = (props: {
                         animationIterationCount: "infinite",
                       }}
                     >
-                      <CreationAnimationCard key={i} {...c} />
+                      <CreationAnimationCard
+                        key={i}
+                        {...c}
+                        showConfetti={effectiveIndex === 0}
+                      />
                     </Stack>
                   </Stack>
                 </Stack>

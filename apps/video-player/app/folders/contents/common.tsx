@@ -11,19 +11,21 @@ import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 
 const DEFAULT_TITLE = "Untitled Folder";
 
-export interface IGroupContentBucket {
+export interface IEnrichedContentBucket {
   id: IContentBucket["id"];
   title: IContentBucket["id"];
-  deviceCount: number;
-  thumbnailUrls: string[];
-  avatarUrls: IDevice["profileAvatarUrl"][];
+  preview: {
+    deviceCount: { devices: number };
+    thumbnailUrls: string[];
+    avatarUrls: IDevice["profileAvatarUrl"][];
+  };
 }
 
 const AllFoldersPage = (props: { isMobile: boolean }) => {
   const router = useRouter();
-  const [folders, setFolders] = useState<IGroupContentBucket[]>([]);
+  const [folders, setFolders] = useState<IEnrichedContentBucket[]>([]);
   useEffect(() => {
-    ApiController.getGroupFolders(DUMMY_GROUP_ID).then((f) => setFolders(f));
+    ApiController.getEnrichedFolders(DUMMY_GROUP_ID).then((f) => setFolders(f));
   }, []);
   const createFolder = () =>
     ApiController.createFolder(DEFAULT_TITLE, DUMMY_GROUP_ID).then((id) =>

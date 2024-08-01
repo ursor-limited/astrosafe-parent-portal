@@ -16,7 +16,7 @@ import DeviceRenameDialog from "../../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../../components/DeviceDisconnectDialog";
 import ProfilePageMobileBody from "./body-mobile";
 import { DEVICE_TYPE_DISPLAY_NAMES } from "../../components/DeviceCard";
-import { IGroupContentBucket } from "@/app/folders/contents/common";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 
 export type DeviceType = "chrome" | "android" | "ios";
@@ -49,7 +49,7 @@ export default function ProfilePage(props: {
     ApiController.getGroupDevices(DUMMY_GROUP_ID).then((d) => setAllDevices(d));
   }, []);
 
-  const [folders, setFolders] = useState<IGroupContentBucket[]>([]);
+  const [folders, setFolders] = useState<IEnrichedContentBucket[]>([]);
   useEffect(() => {
     ApiController.getDeviceFolders(props.deviceId).then(setFolders);
   }, [props.deviceId]);

@@ -2,8 +2,12 @@ import { Stack } from "@mui/system";
 import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
+import { IDevice } from "../contents/common";
 
-const ProfileImageRow = (props: { imageUrls: string[] }) => (
+const ProfileImageRow = (props: {
+  imageUrls: IDevice["profileAvatarUrl"][];
+  deviceCount: number;
+}) => (
   <Stack direction="row" spacing="4px" height="42px">
     {props.imageUrls.length > 0 ? (
       <>
@@ -22,7 +26,7 @@ const ProfileImageRow = (props: { imageUrls: string[] }) => (
             </Stack>
           ))}
         </Stack>
-        {props.imageUrls.length > 3 ? (
+        {props.deviceCount > 3 ? (
           <Stack
             height="63px"
             direction="row"
@@ -41,7 +45,7 @@ const ProfileImageRow = (props: { imageUrls: string[] }) => (
               variant="small"
               bold
               color={PALETTE.secondary.grey[4]}
-            >{`+${props.imageUrls.length - 3}`}</Typography>
+            >{`+${props.deviceCount - 3}`}</Typography>
             <PeopleIcon height="12px" width="12px" />
           </Stack>
         ) : null}

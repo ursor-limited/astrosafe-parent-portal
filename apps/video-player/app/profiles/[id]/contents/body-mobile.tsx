@@ -15,13 +15,13 @@ import MobilePageLayout from "@/app/components/MobilePageLayout";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
-import { IGroupContentBucket } from "@/app/folders/contents/common";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
-  folders: IGroupContentBucket[];
+  folders: IEnrichedContentBucket[];
   tab?: AstroAccountTab;
 }) => {
   const router = useRouter();

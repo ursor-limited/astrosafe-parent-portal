@@ -61,7 +61,10 @@ const FilterCard = (
     >
       <LockIcon height="171px" width="171px" />
     </Stack>
-    <ProfileImageRow imageUrls={props.deviceImageUrls} />
+    <ProfileImageRow
+      imageUrls={props.deviceImageUrls}
+      deviceCount={props.devices}
+    />
   </Stack>
 );
 
