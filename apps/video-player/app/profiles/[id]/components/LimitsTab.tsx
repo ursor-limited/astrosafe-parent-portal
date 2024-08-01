@@ -11,6 +11,7 @@ import { IDevice, IDeviceConfig } from "@/app/filters/[id]/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 import TimeLimitsSection from "./TimeLimitsSection";
 import BrowsingTimesSection from "./BrowsingTimesSection";
+import dayjs from "dayjs";
 
 export interface IRequestedSite {
   id: number;
@@ -119,8 +120,15 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
     );
   }, [props.deviceId]);
 
-  const addTimeLimit = (day: IAllowedTime["day"]) =>
+  const addAllowedTime = (day: IAllowedTime["day"]) => {
     setAllowedTimes([...allowedTimes, getDefaultTimeLimit(day)]);
+    ApiController.addAllowedTime(
+      props.deviceId,
+      day,
+      dayjs(allowedTimes[0].startTime).hour(0).minute(0).toISOString(),
+      dayjs(allowedTimes[0].startTime).hour(24).minute(0).toISOString()
+    );
+  };
 
   const reset = (day: IAllowedTime["day"]) =>
     setAllowedTimes([
@@ -257,7 +265,7 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
                 )
               )
             }
-            addTimeLimit={addTimeLimit}
+            addTimeLimit={addAllowedTime}
             reset={reset}
           />
         </Stack>

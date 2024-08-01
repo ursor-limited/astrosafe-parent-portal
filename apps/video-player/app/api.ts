@@ -13,7 +13,7 @@ import {
   IVideo,
 } from "./profiles/[id]/components/ContentTab";
 import _ from "lodash";
-import { IRequestedSite } from "./profiles/[id]/components/LimitsTab";
+import { IAllowedTime, IRequestedSite } from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
 
 export interface IVideoComment {
@@ -392,6 +392,15 @@ class ApiController {
     timeLimit: number
   ) {
     return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
+  }
+
+  static async addAllowedTime(
+    deviceId: IDevice['id'],
+    day: IAllowedTime["day"],
+    startTime: IAllowedTime['startTime'],
+    endTime: IAllowedTime['endTime'],
+  ) {
+    return post(`devices/${deviceId}/config/screentime/allowed`, { day, startTime, endTime });
   }
 
   static async flipBrowsingAllowed(

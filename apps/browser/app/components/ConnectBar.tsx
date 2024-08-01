@@ -10,7 +10,7 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
     [props.openConnect]
   );
   const [parentPortalDialogOpen, setParentPortalDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
   return (
     <>
       <Stack
@@ -37,7 +37,12 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
         >
           Set up your parent portal
         </Typography>
-        <UrsorButton size="small" dark fontColor={PALETTE.secondary.purple[1]}>
+        <UrsorButton
+          size="small"
+          dark
+          fontColor={PALETTE.secondary.purple[1]}
+          onClick={() => setParentPortalDialogOpen(true)}
+        >
           Connect
         </UrsorButton>
       </Stack>

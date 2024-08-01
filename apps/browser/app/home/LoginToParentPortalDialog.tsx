@@ -4,6 +4,7 @@ import { BACKDROP_STYLE } from "../components/UrsorDialog";
 import { Stack } from "@mui/system";
 import PinPad, { SHOW_RED_DURATION } from "../components/PinPad";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const LoginToParentPortalDialog = (props: {
   open: boolean;
@@ -58,13 +59,20 @@ const LoginToParentPortalDialog = (props: {
       }}
     >
       <Stack direction="row" spacing="36px" flex={1}>
-        <Stack flex={1} justifyContent="space-between">
+        <Stack flex={1}>
           <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
             {displayIncorrectnessTitle
               ? "Incorrect pin, please try again"
               : "Log in to your Parent Portal and connect your Device"}
           </Typography>
-          <Stack height="300px" bgcolor={PALETTE.secondary.grey[2]} />
+          <Stack flex={1} alignItems="center" justifyContent="center">
+            <Image
+              src="https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png"
+              height={245}
+              width={298}
+              alt="what was my pin?"
+            />
+          </Stack>
         </Stack>
         <Stack flex={1} alignItems="center" spacing="32px">
           <Typography sx={{ textAlign: "center" }} variant="h5">
