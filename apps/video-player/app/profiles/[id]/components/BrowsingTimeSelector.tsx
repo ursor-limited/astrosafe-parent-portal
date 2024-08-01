@@ -1,7 +1,7 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
-import { IAllowedTime } from "./LimitsTab";
+import { IAllowedTime, getISODateString } from "./LimitsTab";
 import _ from "lodash";
 import dayjs from "dayjs";
 
@@ -193,14 +193,14 @@ const BrowsingTimeSelector = (props: {
             setTimes={(start, end) =>
               props.setTimes(
                 timeLimit.id,
-                dayjs(timeLimit.startTime)
-                  .hour(Math.floor(start / 24))
-                  .minute((start % 24) * 60)
-                  .toISOString(),
-                dayjs(timeLimit.endTime)
-                  .hour(Math.floor(end / 24))
-                  .minute((end % 24) * 60)
-                  .toISOString()
+                getISODateString(
+                  Math.floor(start / 24),
+                  Math.floor((start % 24) * 60)
+                ),
+                getISODateString(
+                  Math.floor(end / 24),
+                  Math.floor((end % 24) * 60)
+                )
               )
             }
           />

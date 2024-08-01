@@ -135,11 +135,12 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
     );
   };
 
-  const reset = (day: IAllowedTime["day"]) =>
+  const reset = (day: IAllowedTime["day"]) => {
     setAllowedTimes([
       ...allowedTimes.filter((t) => t.day !== day),
       getDefaultTimeLimit(day),
     ]);
+  };
 
   const [allowedTimesEnabled, setAllowedTimesEnabled] =
     useState<boolean>(false);
