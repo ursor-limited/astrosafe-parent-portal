@@ -3,6 +3,7 @@ import { Stack } from "@mui/system";
 import FolderCard from "./FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 
 export type AstroContent = "video" | "channel" | "link";
 
@@ -35,14 +36,6 @@ export interface IVideo extends IContent {
 }
 export interface ILesson extends IContent {
   imageUrls: string[];
-}
-
-export interface IEnrichedContentBucket {
-  id: IContentBucket["id"];
-  title: IContentBucket["id"];
-  thumbnailUrls: string[];
-  avatarUrls: string[];
-  deviceCount: number;
 }
 
 const DevicePageContentTab = (props: { folders: IEnrichedContentBucket[] }) => {
