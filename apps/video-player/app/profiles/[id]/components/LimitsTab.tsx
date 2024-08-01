@@ -12,6 +12,11 @@ import { IEnrichedDevice } from "../../contents/common";
 import TimeLimitsSection from "./TimeLimitsSection";
 import BrowsingTimesSection from "./BrowsingTimesSection";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
+
+export const getISODateString = (hours: number, minutes: number) =>
+  dayjs.utc().hour(hours).minute(minutes).toISOString();
 
 export interface IRequestedSite {
   id: number;
@@ -125,8 +130,8 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
     ApiController.addAllowedTime(
       props.deviceId,
       day,
-      dayjs(allowedTimes[0].startTime).hour(0).minute(0).toISOString(),
-      dayjs(allowedTimes[0].startTime).hour(24).minute(0).toISOString()
+      getISODateString(0, 0),
+      getISODateString(24, 0)
     );
   };
 
