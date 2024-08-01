@@ -55,6 +55,7 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
         <LoginToParentPortalDialog
           open={parentPortalDialogOpen}
           onClose={() => setParentPortalDialogOpen(false)}
+          journey="banner"
         />
       )}
     </>

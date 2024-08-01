@@ -6,7 +6,25 @@ import PinPad, { SHOW_RED_DURATION } from "../components/PinPad";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+type LoginToParentPortalJourney =
+  | "account"
+  | "banner"
+  | "timeLimit"
+  | "siteRequest"
+  | "contentRequest";
+
+const ILLUSTRATION_URLS: Record<LoginToParentPortalJourney, string> = {
+  account: "https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png",
+  banner: "https://ursorassets.s3.eu-west-1.amazonaws.com/pinBanner.png",
+  timeLimit: "https://ursorassets.s3.eu-west-1.amazonaws.com/pinTimeLimit.png",
+  siteRequest:
+    "https://ursorassets.s3.eu-west-1.amazonaws.com/pinLockedContent.png",
+  contentRequest:
+    "https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png",
+};
+
 const LoginToParentPortalDialog = (props: {
+  journey: LoginToParentPortalJourney;
   open: boolean;
   onClose: () => void;
 }) => {
@@ -67,7 +85,7 @@ const LoginToParentPortalDialog = (props: {
           </Typography>
           <Stack flex={1} alignItems="center" justifyContent="center">
             <Image
-              src="https://ursorassets.s3.eu-west-1.amazonaws.com/wondering.png"
+              src={ILLUSTRATION_URLS[props.journey]}
               height={245}
               width={298}
               alt="what was my pin?"
