@@ -14,6 +14,7 @@ import AddDeviceDialog from "@/app/folders/[id]/components/AddDeviceDialog";
 import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import FilterRenameDialog from "../components/FilterRenameDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -49,11 +50,13 @@ export default function FilterPage(props: {
   filterId: number;
 }) {
   const [filter, setFilter] = useState<IFilter | undefined>();
-  // const [blockedSites, setBlockedSites] = useState<IFilterUrl[]>([]);
-  // const [allowedSites, setAllowedSites] = useState<IFilterUrl[]>([]);
+  const loadFilter = useCallback(
+    () => ApiController.getFilter(props.filterId).then(setFilter),
+    [props.filterId]
+  );
   useEffect(() => {
-    ApiController.getFilter(props.filterId).then(setFilter);
-  }, [props.filterId]);
+    loadFilter();
+  }, [loadFilter]);
 
   const [whitelistExceptions, setWhitelistExceptions] = useState<
     IFilterException[]
@@ -283,6 +286,14 @@ export default function FilterPage(props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle="If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default."
         onSubmit={deleteFilter}
+      />
+      <FilterRenameDialog
+        open={renameDialogOpen}
+        onClose={() => setRenameDialogOpen(false)}
+        name={filter.title}
+        onSubmit={(name) =>
+          ApiController.renameFilter(props.filterId, name).then(loadFilter)
+        }
       />
     </>
   ) : null;

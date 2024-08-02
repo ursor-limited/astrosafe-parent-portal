@@ -274,6 +274,10 @@ class ApiController {
     return get(`filters/${id}`).then((response: any) => response.json());
   }
 
+  static async renameFilter(id: IFilter["id"], name: IFilter["title"]) {
+    return patch(`filters/${id}/rename`, { name });
+  }
+
   static async getGroupFilters(id: IGroup["id"]) {
     return get(`filters?groupId=${id}`).then((response: any) =>
       response.json()

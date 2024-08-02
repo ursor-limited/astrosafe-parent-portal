@@ -92,3 +92,6 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
     </>
   );
 }
+
+// copy for deletion dialog:
+// If you delete this device all of the configurations, browsing history, and insights will be lost.  The browser on this device will also be reset and have to be set up again.
