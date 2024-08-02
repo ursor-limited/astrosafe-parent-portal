@@ -1,10 +1,7 @@
-import PageLayout from "@/app/components/PageLayout";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { Stack } from "@mui/system";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PALETTE, Typography } from "ui";
-import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
@@ -31,7 +28,10 @@ const ProfilePageMobileBody = (props: {
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
       <Stack overflow="scroll">
-        <HorizontalDeviceCard {...props.device} />
+        <HorizontalDeviceCard
+          {...props.device}
+          onClickViewScreenTime={() => setSelectedTab("limits")}
+        />
       </Stack>
       <Stack minHeight="24px" alignItems="center">
         <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
