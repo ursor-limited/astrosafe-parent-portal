@@ -49,7 +49,6 @@ export const DeviceCardBrowsingStatusSection = (props: {
   flipBrowsingEnabled: () => void;
 }) => {
   const [setRef, size] = useElementSize();
-  console.log(size);
   return (
     <Stack ref={setRef} flex={1}>
       <DeviceCardSection title="Browsing status">
