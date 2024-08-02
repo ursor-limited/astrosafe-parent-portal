@@ -312,45 +312,45 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
           increment={(day) => {
             const limitId = timeLimits.find((l) => l.day === day)?.id;
             if (limitId) {
-              setTimeLimits(
-                timeLimits.map((l) =>
-                  l.day === day
-                    ? {
-                        id: limitId,
-                        day: l.day,
-                        allowedMinutes:
-                          l.allowedMinutes + DAILY_LIMIT_INCREMENT,
-                      }
-                    : l
-                )
-              );
-              ApiController.setTimeLimit(
-                limitId,
+              // setTimeLimits(
+              //   timeLimits.map((l) =>
+              //     l.day === day
+              //       ? {
+              //           id: limitId,
+              //           day: l.day,
+              //           allowedMinutes:
+              //             l.allowedMinutes + DAILY_LIMIT_INCREMENT,
+              //         }
+              //       : l
+              //   )
+              // );
+              const newLimit =
                 (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
-                  DAILY_LIMIT_INCREMENT
-              );
+                DAILY_LIMIT_INCREMENT;
+              newLimit <= 24 &&
+                ApiController.setTimeLimit(limitId, newLimit).then(loadData);
             }
           }}
           decrement={(day) => {
             const limitId = timeLimits.find((l) => l.day === day)?.id;
             if (limitId) {
-              setTimeLimits(
-                timeLimits.map((l) =>
-                  l.day === day
-                    ? {
-                        id: limitId,
-                        day: l.day,
-                        allowedMinutes:
-                          l.allowedMinutes - DAILY_LIMIT_INCREMENT,
-                      }
-                    : l
-                )
-              );
-              ApiController.setTimeLimit(
-                limitId,
+              // setTimeLimits(
+              //   timeLimits.map((l) =>
+              //     l.day === day
+              //       ? {
+              //           id: limitId,
+              //           day: l.day,
+              //           allowedMinutes:
+              //             l.allowedMinutes - DAILY_LIMIT_INCREMENT,
+              //         }
+              //       : l
+              //   )
+              // );
+              const newLimit =
                 (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
-                  DAILY_LIMIT_INCREMENT
-              );
+                DAILY_LIMIT_INCREMENT;
+              newLimit >= 0 &&
+                ApiController.setTimeLimit(limitId, newLimit).then(loadData);
             }
           }}
         />

@@ -44,7 +44,7 @@ const TimeLimitsSection = (props: {
             >
               <TimeMinusIcon height="20px" width="20px" />
             </Stack>
-            <Stack width="80px" alignItems="center">
+            <Stack width="86px" alignItems="center">
               <Typography variant="large" bold>{`${Math.floor(
                 Math.min(
                   (props.timeLimits.find((l) => l.day === i)?.allowedMinutes ??
