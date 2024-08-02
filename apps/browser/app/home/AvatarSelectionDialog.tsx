@@ -51,12 +51,13 @@ const AvatarSelectionDialog = (props: {
       onClose={props.onClose}
       PaperProps={{
         style: {
-          width: 746,
-          height: 590,
+          width: 766,
+          maxWidth: 766,
           borderRadius: 32,
           padding: "32px",
+          boxSizing: "border-box",
           paddingBottom: 0,
-          margin: props.isMobile ? "16px" : undefined,
+          margin: props.isMobile ? "16px" : 0,
           background: PALETTE.secondary.grey[1],
         },
       }}
@@ -65,21 +66,26 @@ const AvatarSelectionDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack flex={1} overflow="hidden">
+      <Stack
+        flex={1}
+        // overflow="hidden"
+      >
         <Stack
-          spacing={props.isMobile ? "28px" : "40px"}
+          spacing={props.isMobile ? "24px" : "32px"}
           justifyContent="center"
           alignItems="center"
           pt="16px"
-          overflow="hidden"
+          // overflow="hidden"
         >
-          <Stack width="240px" height="60px">
+          <Stack width="600px">
             <Typography
               variant={props.isMobile ? "h5" : "h4"}
               sx={{ textAlign: "center" }}
               color={PALETTE.secondary.grey[5]}
             >
-              Create your personal profile
+              {
+                "Grown-ups, step aside! It's time for your kids to create their profile"
+              }
             </Typography>
           </Stack>
           <UrsorInputField
@@ -93,8 +99,11 @@ const AvatarSelectionDialog = (props: {
             backgroundColor="rgb(255,255,255)"
             paddingLeft="0"
           />
-          <Stack position="relative" overflow="hidden">
-            <Stack
+          <Stack
+            position="relative"
+            // overflow="hidden"
+          >
+            {/* <Stack
               position="absolute"
               bottom={0}
               left={0}
@@ -111,14 +120,14 @@ const AvatarSelectionDialog = (props: {
                 transform: "translateY(1px)",
               }}
               zIndex={2}
-            />
+            /> */}
             <Stack
-              overflow="scroll"
-              ref={setGridRef}
-              onScroll={handleScroll}
+              // ref={setGridRef}
+              // onScroll={handleScroll}
               pt="10px"
+              alignItems="center"
             >
-              <Grid gap="26px" container justifyContent="center">
+              <Grid gap="16px" container justifyContent="center" width="83%">
                 {[
                   <Stack
                     key="initials"
@@ -133,11 +142,11 @@ const AvatarSelectionDialog = (props: {
                     <Stack
                       borderRadius="100%"
                       bgcolor={PALETTE.secondary.blue[4]}
-                      overflow="hidden"
+                      // overflow="hidden"
                       alignItems="center"
                       justifyContent="center"
-                      height={props.isMobile ? 64 : 90}
-                      width={props.isMobile ? 64 : 90}
+                      height={props.isMobile ? 36 : 42}
+                      width={props.isMobile ? 36 : 42}
                       onClick={() => {
                         setInitialsAvatar(true);
                         //setColor(c);
@@ -146,7 +155,8 @@ const AvatarSelectionDialog = (props: {
                     >
                       <Typography
                         color="rgb(255,255,255)"
-                        variant={props.isMobile ? "h5" : "h4"}
+                        bold
+                        variant={props.isMobile ? "tiny" : "small"}
                       >
                         {getInitials(name)}
                       </Typography>
@@ -163,10 +173,10 @@ const AvatarSelectionDialog = (props: {
                         alignItems="center"
                       >
                         <Stack
-                          minWidth={props.isMobile ? "70px" : "100px"}
-                          minHeight={props.isMobile ? "70px" : "100px"}
+                          minWidth={props.isMobile ? 40 : 46}
+                          minHeight={props.isMobile ? 40 : 46}
                           borderRadius="100%"
-                          border={`${props.isMobile ? 3 : 5}px solid ${
+                          border={`${props.isMobile ? 2 : 3}px solid ${
                             PALETTE.secondary.purple[1]
                           }`}
                         />
@@ -193,11 +203,11 @@ const AvatarSelectionDialog = (props: {
                       >
                         <Stack
                           borderRadius="100%"
-                          overflow="hidden"
+                          // overflow="hidden"
                           alignItems="center"
                           justifyContent="center"
-                          height={props.isMobile ? 64 : 90}
-                          width={props.isMobile ? 64 : 90}
+                          height={props.isMobile ? 36 : 42}
+                          width={props.isMobile ? 36 : 42}
                           onClick={() => {
                             setInitialsAvatar(false);
                             // setColor(a.color);
@@ -207,8 +217,8 @@ const AvatarSelectionDialog = (props: {
                         >
                           <Image
                             src={`${AVATAR_IMAGE_URL_BASE}${i}.png`}
-                            height={props.isMobile ? 64 : 90}
-                            width={props.isMobile ? 64 : 90}
+                            height={props.isMobile ? 36 : 42}
+                            width={props.isMobile ? 36 : 42}
                             alt="avatar"
                           />
                         </Stack>
@@ -226,10 +236,10 @@ const AvatarSelectionDialog = (props: {
                             alignItems="center"
                           >
                             <Stack
-                              minWidth={props.isMobile ? "70px" : "100px"}
-                              minHeight={props.isMobile ? "70px" : "100px"}
+                              minWidth={props.isMobile ? 40 : 46}
+                              minHeight={props.isMobile ? 40 : 46}
                               borderRadius="100%"
-                              border={`${props.isMobile ? 3 : 5}px solid ${
+                              border={`${props.isMobile ? 2 : 3}px solid ${
                                 PALETTE.secondary.purple[1]
                               }`}
                             />

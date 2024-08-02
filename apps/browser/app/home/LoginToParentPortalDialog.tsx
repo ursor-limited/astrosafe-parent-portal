@@ -76,7 +76,7 @@ const LoginToParentPortalDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack direction="row" spacing="36px" flex={1}>
+      <Stack direction="row" spacing="18px" flex={1}>
         <Stack flex={1}>
           <Typography variant="h4" color={PALETTE.secondary.purple[2]}>
             {displayIncorrectnessTitle
@@ -92,6 +92,7 @@ const LoginToParentPortalDialog = (props: {
             />
           </Stack>
         </Stack>
+        <Stack height="100%" width="2px" bgcolor={PALETTE.secondary.grey[2]} />
         <Stack flex={1} alignItems="center" spacing="32px">
           <Typography sx={{ textAlign: "center" }} variant="h5">
             Enter you pin

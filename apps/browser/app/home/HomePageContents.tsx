@@ -194,7 +194,7 @@ export default function HomePageContents(props: {
     useState<boolean>(false);
 
   const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
     useState<boolean>(false);

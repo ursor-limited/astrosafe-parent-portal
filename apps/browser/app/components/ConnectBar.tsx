@@ -10,7 +10,7 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
     [props.openConnect]
   );
   const [parentPortalDialogOpen, setParentPortalDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   return (
     <>
       <Stack
@@ -28,7 +28,6 @@ const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
             },
           },
         }}
-        onClick={() => setParentPortalDialogOpen(true)}
       >
         <Typography
           variant={props.mobile ? "normal" : "large"}
