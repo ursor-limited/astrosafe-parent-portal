@@ -134,6 +134,7 @@ const BrowsingTimeSelectorRange = (props: {
 const BrowsingTimeSelector = (props: {
   times?: IAllowedTime[];
   setTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
+  smallerLabelFont?: boolean;
 }) => {
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -229,9 +230,13 @@ const BrowsingTimeSelector = (props: {
                 bottom="-20px"
                 sx={{ transform: "translateX(-50%)" }}
               >
-                <Typography variant="tiny" bold>{`${
-                  (i * DISPLAY_INTERVAL) % 12 || 12
-                }:00${i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"}`}</Typography>
+                <Typography
+                  sx={{ fontSize: props.smallerLabelFont ? 8 : 10 }}
+                  variant="tiny"
+                  bold
+                >{`${(i * DISPLAY_INTERVAL) % 12 || 12}:00${
+                  i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"
+                }`}</Typography>
               </Stack>
             </Stack>
           ))}

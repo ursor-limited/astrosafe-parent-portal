@@ -1,12 +1,12 @@
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
-import BrowsingTimeSelector from "./BrowsingTimeSelector";
+import BrowsingTimeSelector from "./AllowedTimeSelector";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import _ from "lodash";
 import { IAllowedTime } from "./LimitsTab";
 import dayjs from "dayjs";
 
-const BrowsingTimesSection = (props: {
+const AllowedTimesSection = (props: {
   allowedTimes: IAllowedTime[];
   setAllowedTimes: (
     id: IAllowedTime["id"],
@@ -16,6 +16,7 @@ const BrowsingTimesSection = (props: {
   addTimeLimit: (day: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
+  smallerLabelFont?: boolean;
 }) => {
   return (
     <AstroBentoCard
@@ -42,6 +43,7 @@ const BrowsingTimesSection = (props: {
                 <BrowsingTimeSelector
                   times={times}
                   setTimes={props.setAllowedTimes}
+                  smallerLabelFont={props.smallerLabelFont}
                 />
                 <Stack pl="60px" direction="row" spacing="8px">
                   <UrsorButton
@@ -78,4 +80,4 @@ const BrowsingTimesSection = (props: {
   );
 };
 
-export default BrowsingTimesSection;
+export default AllowedTimesSection;

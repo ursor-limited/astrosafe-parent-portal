@@ -10,9 +10,10 @@ import ApiController from "@/app/api";
 import { IDevice, IDeviceConfig } from "@/app/filters/[id]/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
 import TimeLimitsSection from "./TimeLimitsSection";
-import BrowsingTimesSection from "./BrowsingTimesSection";
+import AllowedTimesSection from "./AllowedTimesSection";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
+import { useWindowSize } from "usehooks-ts";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -31,6 +32,9 @@ const DEFAULT_START = "10:00:00.000Z";
 const DEFAULT_END = "16:00:00.000Z";
 const DEFAULT_DAILY_LIMIT = 120;
 const DAILY_LIMIT_INCREMENT = 15; // minutes
+
+const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
+const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1365;
 
 const DUMMY_FILTERS = [
   {
@@ -165,6 +169,27 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
     loadRequestedSites();
   }, [loadRequestedSites]);
 
+  const { width } = useWindowSize();
+
+  const [
+    allowedTimesLabelsSmallerFontSize,
+    setAllowedTimesLabelsSmallerFontSize,
+  ] = useState<boolean>(false);
+  useEffect(
+    () =>
+      setAllowedTimesLabelsSmallerFontSize(
+        width < ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD &&
+          width > SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD
+      ),
+    [width]
+  );
+
+  const [switchToColumn, setSwitchToColumn] = useState<boolean>(false);
+  useEffect(
+    () => setSwitchToColumn(width < SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD),
+    [width]
+  );
+
   return (
     <Stack spacing="24px" pb="33px">
       {requestedSites.length > 0 ? (
@@ -248,9 +273,9 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
           </Stack>
         </AstroBentoCard>
       </Stack> */}
-      <Stack direction="row" spacing="24px">
-        <Stack width="70%">
-          <BrowsingTimesSection
+      <Stack direction={switchToColumn ? "column" : "row"} spacing="24px">
+        <Stack width={switchToColumn ? undefined : "70%"}>
+          <AllowedTimesSection
             topRightElement={
               <AstroSwitch
                 on={allowedTimesEnabled}
@@ -274,6 +299,7 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
             }}
             addTimeLimit={addAllowedTime}
             reset={reset}
+            smallerLabelFont={allowedTimesLabelsSmallerFontSize}
           />
         </Stack>
         <TimeLimitsSection
