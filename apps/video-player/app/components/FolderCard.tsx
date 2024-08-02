@@ -12,6 +12,11 @@ import ArrowUpRight from "@/images/icons/ArrowUpRight.svg";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import { SECONDARY_COLOR_ORDER } from "@/app/components/PaletteButton";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
+import ApiController from "@/app/api";
+import FolderRenameDialog from "@/app/folders/[id]/components/FolderRenameDialog";
+import { IContentBucket } from "../profiles/[id]/components/ContentTab";
+import NotificationContext from "@/app/components/NotificationContext";
+import { FOLDER_DELETION_DIALOG_SUBTITLE } from "../folders/[id]/contents/common";
 
 export const spin = keyframes`
   from {
@@ -47,11 +52,24 @@ const FolderCard = (
 
   const [hovering, setHovering] = useState<boolean>(false);
 
-  //const orangeBorderOn = useOrangeBorder(props.updatedAt);
-
   const router = useRouter();
+  const notificationCtx = useContext(NotificationContext);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const deleteFolder = () =>
+    ApiController.removeFolder(props.id).then(() => {
+      props.deletionCallback?.();
+      notificationCtx.negativeSuccess("Removed Folder");
+    });
+
+  const [renameDialogOpen, setRenameDialogOpen] = useState<boolean>(false);
+
+  const renameFolder = (title: IContentBucket["title"]) =>
+    ApiController.renameFolder(props.id, title).then(() => {
+      props.editingCallback?.();
+      notificationCtx.success("Renamed Folder");
+    });
 
   return (
     <>
@@ -112,15 +130,14 @@ const FolderCard = (
         {props.editingCallback && props.deletionCallback ? (
           <Stack
             position="absolute"
-            top="11px"
-            right="11px"
+            top="163px"
+            right="3px"
             zIndex={2}
             // onClick={() => router.push(`/lesson/${props.canonicalUrl}`)}
           >
             <UrsorActionButton
               size="32px"
               iconSize="16px"
-              notClickable
               actions={[
                 {
                   text: "Open",
@@ -129,7 +146,7 @@ const FolderCard = (
                 },
                 {
                   text: "Edit",
-                  kallback: () => props.editingCallback?.(),
+                  kallback: () => setRenameDialogOpen(true),
                   icon: PencilIcon,
                 },
                 {
@@ -273,12 +290,13 @@ const FolderCard = (
               </Stack>
             </Stack>
             <Stack px="4px">
-              <Stack alignItems="space-between" flex={1} minHeight="58px">
-                <Stack pt="8px">
+              <Stack direction="row" flex={1} minHeight="58px">
+                <Stack pt="8px" flex={1}>
                   <Typography bold variant="medium" maxLines={2}>
                     {props.title}
                   </Typography>
                 </Stack>
+                <Stack minWidth="27px" />
               </Stack>
               {props.preview?.avatarUrls ? (
                 <ProfileImageRow
@@ -294,8 +312,15 @@ const FolderCard = (
         open={deletionDialogOpen}
         type="Folder"
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle="Not sure if we need some copy here too."
-        onSubmit={() => null}
+        subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
+        onSubmit={deleteFolder}
+      />
+      <FolderRenameDialog
+        open={renameDialogOpen}
+        onClose={() => setRenameDialogOpen(false)}
+        name={props.title ?? ""}
+        onSubmit={renameFolder}
+        isMobile={false}
       />
     </>
   );

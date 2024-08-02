@@ -5,11 +5,12 @@ import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "./common";
-import FolderCard from "@/app/profiles/[id]/components/FolderCard";
+import FolderCard from "@/app/components/FolderCard";
 
 const AllFoldersPageDesktopBody = (props: {
   folders: IEnrichedContentBucket[];
   createFolder: () => void;
+  onUpdate: () => void;
 }) => {
   const router = useRouter();
   return (
@@ -33,8 +34,8 @@ const AllFoldersPageDesktopBody = (props: {
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
-                // thumbnailUrls={f.preview.thumbnailUrls}
-                // avatarUrls={f.preview.avatarUrls}
+                editingCallback={props.onUpdate}
+                deletionCallback={props.onUpdate}
               />
             </UrsorFadeIn>
           ))}

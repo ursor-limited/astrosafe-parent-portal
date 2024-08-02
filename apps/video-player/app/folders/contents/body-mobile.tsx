@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { UrsorButton } from "ui";
-import FolderCard from "@/app/profiles/[id]/components/FolderCard";
+import FolderCard from "@/app/components/FolderCard";
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];
   createFolder: () => void;
+  onUpdate: () => void;
 }) => {
   const router = useRouter();
   return (
@@ -36,8 +37,6 @@ const AllFoldersPageMobileBody = (props: {
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
-                // thumbnailUrls={f.thumbnailUrls}
-                // avatarUrls={f.avatarUrls}
               />
             </UrsorFadeIn>
           ))}

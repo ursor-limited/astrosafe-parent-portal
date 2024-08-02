@@ -30,7 +30,9 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import DeletionDialog from "@/app/components/DeletionDialog";
-import FolderCreationDialog from "../components/FolderCreationDialog";
+
+export const FOLDER_DELETION_DIALOG_SUBTITLE =
+  "If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.";
 
 export interface IGroup {
   id: number;
@@ -352,7 +354,7 @@ export default function FolderPage(props: {
         open={deletionDialogOpen}
         type="Folder"
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle="If you delete this Folder all of the content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices."
+        subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
         onSubmit={deleteFolder}
       />
     </>
