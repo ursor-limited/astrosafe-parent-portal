@@ -144,6 +144,10 @@ class ApiController {
     );
   }
 
+  static async removeFolder(id: IContentBucket["id"]) {
+    return dellete(`content/buckets/${id}`);
+  }
+
   static async getFolder(id: number) {
     return get(`content/buckets/${id}`).then((response: any) =>
       response.json()

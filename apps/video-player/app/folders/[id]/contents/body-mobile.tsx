@@ -23,6 +23,7 @@ import {
   ILink,
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
+import { IActionPopupItem } from "@/app/components/ActionPopup";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -31,7 +32,6 @@ const FolderPageMobileBody = (props: {
   allFolders: IContentBucket[];
   devices: IDevice[];
   setCreationDialogOpen: (type: AstroContent) => void;
-  onEditFolder: () => void;
   loadFolderAndContents: () => void;
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
@@ -43,24 +43,13 @@ const FolderPageMobileBody = (props: {
   setVideoEditingDialogId: (id: IVideo["id"]) => void;
   setChannelEditingDialogId: (id: IChannel["id"]) => void;
   titleRow: ITitleRowItem[];
+  actions: IActionPopupItem[];
 }) => {
   return (
     <MobilePageLayout
       titleRow={props.titleRow}
       selectedPage="content"
-      actions={[
-        {
-          text: "Edit name",
-          kallback: props.onEditFolder,
-          icon: PencilIcon,
-        },
-        {
-          text: "Delete",
-          kallback: () => null,
-          icon: TrashcanIcon,
-          color: PALETTE.system.red,
-        },
-      ]}
+      actions={props.actions}
     >
       <Stack spacing="24px" pb="32px">
         <MobileDevicesSection

@@ -14,8 +14,6 @@ import { useEffect, useState } from "react";
 import _ from "lodash";
 import useColumnWidth from "@/app/components/useColumnWidth";
 import { useRouter } from "next/navigation";
-import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
-import PencilIcon from "@/images/icons/Pencil.svg";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import { IDevice } from "@/app/filters/[id]/contents/common";
@@ -29,6 +27,7 @@ import {
 import { useWindowSize } from "usehooks-ts";
 import { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { IActionPopupItem } from "@/app/components/ActionPopup";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 
@@ -39,7 +38,6 @@ const FolderPageDesktopBody = (props: {
   allFolders: IContentBucket[];
   devices: IDevice[];
   setCreationDialogOpen: (type: AstroContent) => void;
-  onEditFolder: () => void;
   loadFolderAndContents: () => void;
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
@@ -51,6 +49,7 @@ const FolderPageDesktopBody = (props: {
   setVideoEditingDialogId: (id: IVideo["id"]) => void;
   setChannelEditingDialogId: (id: IChannel["id"]) => void;
   titleRow: ITitleRowItem[];
+  actions: IActionPopupItem[];
 }) => {
   const { nColumns, setColumnsContainerRef } = useColumnWidth(400, 350, 510);
   const [columns, setColumns] = useState<IContentCard[][]>([]);
@@ -74,24 +73,7 @@ const FolderPageDesktopBody = (props: {
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"
-      actions={[
-        {
-          text: "Edit name",
-          kallback: props.onEditFolder,
-          icon: PencilIcon,
-        },
-        // {
-        //   text: "Duplicate",
-        //   kallback: () => null,
-        //   icon: DuplicateIcon,
-        // },
-        {
-          text: "Delete",
-          kallback: () => null,
-          icon: TrashcanIcon,
-          color: PALETTE.system.red,
-        },
-      ]}
+      actions={props.actions}
       maxWidth={834}
       scrollable
     >
