@@ -17,6 +17,7 @@ const AllowedTimesSection = (props: {
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
+  halveLabelFrequency?: boolean;
 }) => {
   return (
     <AstroBentoCard
@@ -44,6 +45,7 @@ const AllowedTimesSection = (props: {
                   times={times}
                   setTimes={props.setAllowedTimes}
                   smallerLabelFont={props.smallerLabelFont}
+                  halveLabelFrequency={props.halveLabelFrequency}
                 />
                 <Stack pl="60px" direction="row" spacing="8px">
                   <UrsorButton

@@ -135,6 +135,7 @@ const BrowsingTimeSelector = (props: {
   times?: IAllowedTime[];
   setTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
   smallerLabelFont?: boolean;
+  halveLabelFrequency?: boolean;
 }) => {
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -213,7 +214,11 @@ const BrowsingTimeSelector = (props: {
           );
         })}
         <Stack flex={1} justifyContent="space-between" direction="row">
-          {[...Array(1 + 24 / DISPLAY_INTERVAL).keys()].map((i) => (
+          {[
+            ...Array(
+              1 + 24 / (DISPLAY_INTERVAL * (props.halveLabelFrequency ? 2 : 1))
+            ).keys(),
+          ].map((i) => (
             <Stack
               key={i}
               height="4px"

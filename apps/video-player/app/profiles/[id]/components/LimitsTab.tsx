@@ -35,6 +35,7 @@ const DAILY_LIMIT_INCREMENT = 15; // minutes
 
 const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
 const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1365;
+const HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD = 1080;
 
 const DUMMY_FILTERS = [
   {
@@ -190,6 +191,16 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
     [width]
   );
 
+  const [halveLabelFrequency, setHalveLabelFrequency] =
+    useState<boolean>(false);
+  useEffect(
+    () =>
+      setHalveLabelFrequency(
+        width < HALVE_LABEL_FREQUENCY_WINDOW_WIDTH_THRESHOLD
+      ),
+    [width]
+  );
+
   return (
     <Stack spacing="24px" pb="33px">
       {requestedSites.length > 0 ? (
@@ -300,6 +311,7 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
             addTimeLimit={addAllowedTime}
             reset={reset}
             smallerLabelFont={allowedTimesLabelsSmallerFontSize}
+            halveLabelFrequency={halveLabelFrequency}
           />
         </Stack>
         <TimeLimitsSection
