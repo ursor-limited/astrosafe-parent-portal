@@ -13,6 +13,7 @@ import ApiController from "@/app/api";
 import AddDeviceDialog from "@/app/folders/[id]/components/AddDeviceDialog";
 import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
 import NotificationContext from "@/app/components/NotificationContext";
+import DeletionDialog from "@/app/components/DeletionDialog";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -135,7 +136,7 @@ export default function FilterPage(props: {
     // },
     {
       text: "Delete",
-      kallback: () => null,
+      kallback: () => setDeletionDialogOpen(true),
       icon: TrashcanIcon,
       color: PALETTE.system.red,
     },
@@ -161,6 +162,13 @@ export default function FilterPage(props: {
     useState<boolean>(false);
 
   const notificationCtx = useContext(NotificationContext);
+
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const deleteFilter = () =>
+    ApiController.removeFilter(props.filterId).then(() =>
+      router.push("/filters")
+    );
 
   return filter ? (
     <>
@@ -269,6 +277,13 @@ export default function FilterPage(props: {
           isMobile={props.isMobile}
         />
       ) : null}
+      <DeletionDialog
+        open={deletionDialogOpen}
+        type="Filter"
+        onClose={() => setDeletionDialogOpen(false)}
+        subtitle="If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default."
+        onSubmit={deleteFilter}
+      />
     </>
   ) : null;
 }

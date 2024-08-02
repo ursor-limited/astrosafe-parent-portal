@@ -7,11 +7,11 @@ import { LabeledInputField } from "ui/labeled-input-field";
 import _ from "lodash";
 import { AstroContent } from "../profiles/[id]/components/ContentTab";
 
-const INPUT_PHRASE = "yes";
+const INPUT_PHRASE = "delete";
 
 const DeletionDialog = (props: {
   open: boolean;
-  type: AstroContent | "Folder";
+  type: AstroContent | "Folder" | "Filter";
   onClose: () => void;
   onSubmit: () => void;
   subtitle: string;
@@ -25,9 +25,15 @@ const DeletionDialog = (props: {
       title="Are you sure?"
       subtitle={[props.subtitle]}
       width="422px"
-      height="432px"
+      dynamicHeight
     >
-      <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
+      <Stack
+        flex={1}
+        width="100%"
+        height="100%"
+        justifyContent="space-between"
+        spacing="32px"
+      >
         <LabeledInputField
           label={`Type "${INPUT_PHRASE}" to delete this ${_.capitalize(
             props.type
@@ -38,7 +44,7 @@ const DeletionDialog = (props: {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setInputValue(event.target.value)
             }
-            placeholder="yes"
+            placeholder={INPUT_PHRASE}
             width="100%"
             leftAlign
           />

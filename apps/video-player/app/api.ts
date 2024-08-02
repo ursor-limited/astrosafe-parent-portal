@@ -262,6 +262,10 @@ class ApiController {
     );
   }
 
+  static async removeFilter(id: IFilter["id"]) {
+    return dellete(`filters/${id}`);
+  }
+
   static async getFilter(id: IFilter["id"]) {
     return get(`filters/${id}`).then((response: any) => response.json());
   }
