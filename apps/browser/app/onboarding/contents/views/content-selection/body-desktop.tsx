@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import { PlusButton, XButton } from "./common";
 import CardStack from "./card-stack";
 import { Typography } from "ui";
+import { fadeIn } from "@/app/components/UrsorDialog";
 
 const ContentSelectionViewDesktopBody = (props: {
   cards: React.ReactNode[];
@@ -54,11 +55,21 @@ const ContentSelectionViewDesktopBody = (props: {
           >
             <XButton />
           </Stack>
-          <CardStack
-            cards={props.cards}
-            stackIndex={stackIndex}
-            latestDecision={latestDecision}
-          />
+          <Stack
+            width="630px"
+            sx={{
+              opacity: 0,
+              animation: `${fadeIn} 0.3s ease-out`,
+              animationDelay: "0.5s",
+              animationFillMode: "forwards",
+            }}
+          >
+            <CardStack
+              cards={props.cards}
+              stackIndex={stackIndex}
+              latestDecision={latestDecision}
+            />
+          </Stack>
           <Stack
             onClick={() => {
               setStackIndex(stackIndex + 1);
