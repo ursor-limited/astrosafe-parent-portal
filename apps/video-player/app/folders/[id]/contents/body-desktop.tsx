@@ -37,7 +37,7 @@ const FolderPageDesktopBody = (props: {
   contents: IContentCard[];
   allFolders: IContentBucket[];
   devices: IDevice[];
-  setCreationDialogOpen: (type: AstroContent) => void;
+  setContentCreationDialogOpen: (type: AstroContent) => void;
   loadFolderAndContents: () => void;
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
@@ -146,7 +146,9 @@ const FolderPageDesktopBody = (props: {
             {["link", "video", "channel"].map((c) => (
               <Stack
                 key={c}
-                onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+                onClick={() =>
+                  props.setContentCreationDialogOpen(c as AstroContent)
+                }
                 flex={1}
               >
                 <AddContentButton

@@ -8,6 +8,7 @@ import { IDevice } from "../../filters/[id]/contents/common";
 import AllFoldersPageDesktopBody from "./body-desktop";
 import AllFoldersPageMobileBody from "./body-mobile";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
+import FolderCreationDialog from "../[id]/components/FolderCreationDialog";
 
 const DEFAULT_TITLE = "Untitled Folder";
 
@@ -27,14 +28,31 @@ const AllFoldersPage = (props: { isMobile: boolean }) => {
   useEffect(() => {
     ApiController.getEnrichedFolders(DUMMY_GROUP_ID).then((f) => setFolders(f));
   }, []);
-  const createFolder = () =>
-    ApiController.createFolder(DEFAULT_TITLE, DUMMY_GROUP_ID).then((id) =>
+  const createFolder = (title: IContentBucket["title"]) =>
+    ApiController.createFolder(title, DUMMY_GROUP_ID).then((id) =>
       router.push(`/folders/${id}`)
     );
-  return props.isMobile ? (
-    <AllFoldersPageMobileBody folders={folders} createFolder={createFolder} />
-  ) : (
-    <AllFoldersPageDesktopBody folders={folders} createFolder={createFolder} />
+  const [creationDialogOpen, setCreationDialogOpen] = useState<boolean>(false);
+  return (
+    <>
+      {props.isMobile ? (
+        <AllFoldersPageMobileBody
+          folders={folders}
+          createFolder={() => setCreationDialogOpen(true)}
+        />
+      ) : (
+        <AllFoldersPageDesktopBody
+          folders={folders}
+          createFolder={() => setCreationDialogOpen(true)}
+        />
+      )}
+      <FolderCreationDialog
+        open={creationDialogOpen}
+        onClose={() => setCreationDialogOpen(false)}
+        onSubmit={createFolder}
+        isMobile={props.isMobile}
+      />
+    </>
   );
 };
 

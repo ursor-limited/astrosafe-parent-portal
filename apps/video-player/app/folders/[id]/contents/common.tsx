@@ -30,6 +30,7 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import DeletionDialog from "@/app/components/DeletionDialog";
+import FolderCreationDialog from "../components/FolderCreationDialog";
 
 export interface IGroup {
   id: number;
@@ -120,7 +121,7 @@ export default function FolderPage(props: {
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
     useState<boolean>(false);
 
-  const [creationDialogOpen, setCreationDialogOpen] = useState<
+  const [contentCreationDialogOpen, setContentCreationDialogOpen] = useState<
     AstroContent | undefined
   >();
 
@@ -192,7 +193,7 @@ export default function FolderPage(props: {
           contents={filteredContents}
           allFolders={allFolders}
           devices={devices}
-          setCreationDialogOpen={setCreationDialogOpen}
+          setCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
             setAddDeviceDialogOpen(true);
@@ -218,7 +219,7 @@ export default function FolderPage(props: {
           contents={filteredContents}
           allFolders={allFolders}
           devices={devices}
-          setCreationDialogOpen={setCreationDialogOpen}
+          setContentCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
             setAddDeviceDialogOpen(true);
@@ -268,30 +269,30 @@ export default function FolderPage(props: {
         }
         isMobile={props.isMobile}
       />
-      {creationDialogOpen ? (
-        creationDialogOpen === "video" ? (
+      {contentCreationDialogOpen ? (
+        contentCreationDialogOpen === "video" ? (
           <VideoCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
           />
-        ) : creationDialogOpen === "link" ? (
+        ) : contentCreationDialogOpen === "link" ? (
           <LinkCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
           />
-        ) : creationDialogOpen === "channel" ? (
+        ) : contentCreationDialogOpen === "channel" ? (
           <ChannelCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
