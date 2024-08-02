@@ -17,8 +17,8 @@ const TimeLimitsSection = (props: {
     subtitle="Set a daily browsing limit"
     notCollapsible
     info={{
-      title: "Buu",
-      body: "Maybe not the best char in Smash Bros, but Kirby is defo much better than Jigglypuff.",
+      title: "Setting your daily limits",
+      body: "This is the total amount of time you are happy with being spent on the Browser for the specific day. Turn this off to remove all time limits.",
     }}
     topRightStuff={props.topRightElement}
   >

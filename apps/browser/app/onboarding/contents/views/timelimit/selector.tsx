@@ -7,6 +7,7 @@ const TimeLimitSlider = (props: {
   setValue: (newValue: number) => void;
   barHeight?: string;
   circleSize?: string;
+  step?: number;
 }) => (
   <Stack
     sx={{
@@ -34,6 +35,7 @@ const TimeLimitSlider = (props: {
       onChange={(event: Event, newValue: number | number[]) => {
         props.setValue(newValue as number);
       }}
+      step={props.step}
     />
   </Stack>
 );
@@ -45,6 +47,7 @@ const TimeLimitSelector = (props: {
   circleSize?: string;
   spacing?: string;
   setValue: (newValue: number) => void;
+  step?: number;
 }) => {
   return (
     <Stack spacing={props.spacing || "16px"} width={props.width}>
@@ -53,7 +56,7 @@ const TimeLimitSelector = (props: {
         setValue={props.setValue}
         barHeight={props.barHeight}
         circleSize={props.circleSize}
-        //width={props.width}
+        step={props.step}
       />
       <Stack direction="row" justifyContent="space-between">
         <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>

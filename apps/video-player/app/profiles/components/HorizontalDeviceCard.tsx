@@ -130,7 +130,9 @@ export const DeviceCardFilterSection = (props: {
   );
 };
 
-const HorizontalDeviceCard = (props: IEnrichedDevice) => {
+const HorizontalDeviceCard = (
+  props: IEnrichedDevice & { onClickViewScreenTime: () => void }
+) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
   useEffect(
     () => setBrowsingEnabled(!!props.config?.browsingAllowed),
@@ -179,7 +181,7 @@ const HorizontalDeviceCard = (props: IEnrichedDevice) => {
           <DeviceCardScreenTimeSection
             totalTime={props.screenTime?.allowed ?? 0}
             elapsedTime={props.screenTime?.current ?? 0}
-            onClickView={() => router.push(`/profiles/${props.id}?tab=limits`)}
+            onClickView={props.onClickViewScreenTime}
           />
           <DeviceCardFilterSection selectedFilter={1} />
           <DeviceCardBrowsingStatusSection

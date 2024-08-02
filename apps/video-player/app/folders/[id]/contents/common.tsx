@@ -4,7 +4,8 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import CirclePlayIcon from "@/images/icons/CirclePlay.svg";
 import LinkIcon from "@/images/icons/LinkIcon.svg";
 import VideoCameraIcon from "@/images/icons/VideoCameraIcon.svg";
-import { Stack } from "@mui/system";
+import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
+import PencilIcon from "@/images/icons/Pencil.svg";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import { useRouter } from "next/navigation";
@@ -28,6 +29,10 @@ import {
   ILink,
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
+import DeletionDialog from "@/app/components/DeletionDialog";
+
+export const FOLDER_DELETION_DIALOG_SUBTITLE =
+  "If you delete this Folder all of the Content within the Folder will also be deleted and it will no longer be accessible on the assigned Devices.";
 
 export interface IGroup {
   id: number;
@@ -118,7 +123,7 @@ export default function FolderPage(props: {
   const [addDeviceDialogOpen, setAddDeviceDialogOpen] =
     useState<boolean>(false);
 
-  const [creationDialogOpen, setCreationDialogOpen] = useState<
+  const [contentCreationDialogOpen, setContentCreationDialogOpen] = useState<
     AstroContent | undefined
   >();
 
@@ -155,6 +160,32 @@ export default function FolderPage(props: {
     },
   ];
 
+  const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+
+  const deleteFolder = () =>
+    ApiController.removeFolder(props.folderId).then(() =>
+      router.push("/folders")
+    );
+
+  const actions = [
+    {
+      text: "Edit name",
+      kallback: () => setFolderRenameDialogOpen(true),
+      icon: PencilIcon,
+    },
+    // {
+    //   text: "Duplicate",
+    //   kallback: () => null,
+    //   icon: DuplicateIcon,
+    // },
+    {
+      text: "Delete",
+      kallback: () => setDeletionDialogOpen(true),
+      icon: TrashcanIcon,
+      color: PALETTE.system.red,
+    },
+  ];
+
   return (
     <>
       {props.isMobile ? (
@@ -164,8 +195,7 @@ export default function FolderPage(props: {
           contents={filteredContents}
           allFolders={allFolders}
           devices={devices}
-          setCreationDialogOpen={setCreationDialogOpen}
-          onEditFolder={() => setFolderRenameDialogOpen(true)}
+          setCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
             setAddDeviceDialogOpen(true);
@@ -182,6 +212,7 @@ export default function FolderPage(props: {
           setVideoEditingDialogId={setVideoEditingDialogId}
           setChannelEditingDialogId={setChannelEditingDialogId}
           titleRow={titleRow}
+          actions={actions}
         />
       ) : (
         <FolderPageDesktopBody
@@ -190,8 +221,7 @@ export default function FolderPage(props: {
           contents={filteredContents}
           allFolders={allFolders}
           devices={devices}
-          setCreationDialogOpen={setCreationDialogOpen}
-          onEditFolder={() => setFolderRenameDialogOpen(true)}
+          setContentCreationDialogOpen={setContentCreationDialogOpen}
           loadFolderAndContents={loadFolderAndContents}
           setAddDeviceDialogOpen={() => {
             setAddDeviceDialogOpen(true);
@@ -208,6 +238,7 @@ export default function FolderPage(props: {
           setVideoEditingDialogId={setVideoEditingDialogId}
           setChannelEditingDialogId={setChannelEditingDialogId}
           titleRow={titleRow}
+          actions={actions}
         />
       )}
       {devices ? (
@@ -240,30 +271,30 @@ export default function FolderPage(props: {
         }
         isMobile={props.isMobile}
       />
-      {creationDialogOpen ? (
-        creationDialogOpen === "video" ? (
+      {contentCreationDialogOpen ? (
+        contentCreationDialogOpen === "video" ? (
           <VideoCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
           />
-        ) : creationDialogOpen === "link" ? (
+        ) : contentCreationDialogOpen === "link" ? (
           <LinkCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
           />
-        ) : creationDialogOpen === "channel" ? (
+        ) : contentCreationDialogOpen === "channel" ? (
           <ChannelCreationDialog
             open={true}
             onClose={() => {
-              setCreationDialogOpen(undefined);
+              setContentCreationDialogOpen(undefined);
             }}
             folderId={props.folderId}
             creationCallback={loadFolderAndContents}
@@ -319,6 +350,13 @@ export default function FolderPage(props: {
           }}
         />
       ) : null}
+      <DeletionDialog
+        open={deletionDialogOpen}
+        type="Folder"
+        onClose={() => setDeletionDialogOpen(false)}
+        subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
+        onSubmit={deleteFolder}
+      />
     </>
   );
 }

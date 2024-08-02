@@ -83,7 +83,6 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
         },
         ".react-calendar__month-view__weekdays__weekday": {
           color: PALETTE.font.dark,
-          fontFamily: "__Rubik_5c20f6",
           fontSize: 13,
           fontWeight: 500,
           //opacity: 0.8,
@@ -103,7 +102,6 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
           color: PALETTE.font.dark,
           background: "none",
           border: "none",
-          fontFamily: "__Rubik_5c20f6",
           fontSize: 15,
         },
         ".react-calendar__navigation__arrow": {

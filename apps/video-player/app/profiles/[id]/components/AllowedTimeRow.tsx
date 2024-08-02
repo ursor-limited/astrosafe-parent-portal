@@ -1,6 +1,6 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { IAllowedTime, getISODateString } from "./LimitsTab";
 import _ from "lodash";
 import dayjs from "dayjs";
@@ -9,6 +9,8 @@ const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;
 // const MAX = 24;
 const DRAG_INTERVAL = 0.25; // hours
+
+const MIN_ALLOWED_TIME_ADDITION_PERIOD = 0.75; // hour
 
 const BrowsingTimeSelectorRange = (props: {
   lineWidth: number;
@@ -134,6 +136,8 @@ const BrowsingTimeSelectorRange = (props: {
 const BrowsingTimeSelector = (props: {
   times?: IAllowedTime[];
   setTimes: (id: IAllowedTime["id"], start: string, end: string) => void;
+  smallerLabelFont?: boolean;
+  halveLabelFrequency?: boolean;
 }) => {
   const [lineRef, setLineRef] = useState<HTMLElement | null>(null);
   const [lineWidth, setLineWidth] = useState<number>(0);
@@ -212,7 +216,11 @@ const BrowsingTimeSelector = (props: {
           );
         })}
         <Stack flex={1} justifyContent="space-between" direction="row">
-          {[...Array(1 + 24 / DISPLAY_INTERVAL).keys()].map((i) => (
+          {[
+            ...Array(
+              1 + 24 / (DISPLAY_INTERVAL * (props.halveLabelFrequency ? 2 : 1))
+            ).keys(),
+          ].map((i) => (
             <Stack
               key={i}
               height="4px"
@@ -229,9 +237,13 @@ const BrowsingTimeSelector = (props: {
                 bottom="-20px"
                 sx={{ transform: "translateX(-50%)" }}
               >
-                <Typography variant="tiny" bold>{`${
-                  (i * DISPLAY_INTERVAL) % 12 || 12
-                }:00${i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"}`}</Typography>
+                <Typography
+                  sx={{ fontSize: props.smallerLabelFont ? 8 : 10 }}
+                  variant="tiny"
+                  bold
+                >{`${(i * DISPLAY_INTERVAL) % 12 || 12}:00${
+                  i * DISPLAY_INTERVAL >= 12 ? "pm" : "am"
+                }`}</Typography>
               </Stack>
             </Stack>
           ))}
@@ -241,4 +253,114 @@ const BrowsingTimeSelector = (props: {
   );
 };
 
-export default BrowsingTimeSelector;
+const AllowedTimeRow = (props: {
+  dayName: string;
+  times: IAllowedTime[];
+  addAllowedTime: (startTime: number, endTime: number) => void;
+  reset: () => void;
+  setAllowedTimes: (
+    id: IAllowedTime["id"],
+    startTime: IAllowedTime["startTime"],
+    endTime: IAllowedTime["endTime"]
+  ) => void;
+  smallerLabelFont?: boolean;
+  halveLabelFrequency?: boolean;
+}) => {
+  const [newSegmentTimes, setNewSegmentTimes] = useState<
+    [number, number] | null
+  >(null);
+  const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([]);
+  useEffect(
+    () => setSortedTimes(_.sortBy(props.times, (t) => new Date(t.startTime))),
+    [props.times]
+  );
+  useEffect(() => {
+    if (sortedTimes && sortedTimes.length > 0) {
+      var possibleStartTime = 0;
+      var possibleEndTime =
+        dayjs(sortedTimes[0].startTime).utc().hour() +
+        (dayjs(sortedTimes[0].startTime).utc().minute() - 30) / 60;
+      var finalizedStartTime;
+      var finalizedEndTime;
+      for (let i = 0; i < sortedTimes.length + 1; i++) {
+        if (
+          possibleStartTime < possibleEndTime &&
+          possibleEndTime - possibleStartTime >=
+            MIN_ALLOWED_TIME_ADDITION_PERIOD
+        ) {
+          finalizedStartTime = possibleStartTime;
+          finalizedEndTime = possibleEndTime;
+          break;
+        } else if (i + 1 < sortedTimes.length) {
+          possibleStartTime =
+            dayjs(sortedTimes[i].endTime).utc().hour() +
+            (dayjs(sortedTimes[i].endTime).utc().minute() + 30) / 60;
+          possibleEndTime =
+            dayjs(sortedTimes[i + 1].startTime)
+              .utc()
+              .hour() +
+            (dayjs(sortedTimes[i + 1].startTime)
+              .utc()
+              .minute() -
+              30) /
+              60;
+        } else if (
+          i + 1 === sortedTimes.length &&
+          dayjs(sortedTimes[i].endTime).utc().hour() > 0 // if the end time's hour is 0 at this point, it is at midnight so there is no space
+        ) {
+          possibleStartTime =
+            dayjs(sortedTimes[i].endTime).utc().hour() +
+            (dayjs(sortedTimes[i].endTime).utc().minute() + 30) / 60;
+          possibleEndTime = 24;
+        }
+      }
+      if (_.isNumber(finalizedStartTime) && finalizedEndTime) {
+        setNewSegmentTimes([finalizedStartTime, finalizedEndTime]);
+      } else {
+        setNewSegmentTimes(null);
+      }
+    }
+  }, [sortedTimes]);
+  console.log(newSegmentTimes);
+  return (
+    <Stack direction="row" alignItems="center">
+      <Stack width="120px">
+        <Typography bold color={PALETTE.secondary.grey[3]}>
+          {_.capitalize(props.dayName)}
+        </Typography>
+      </Stack>
+      <BrowsingTimeSelector
+        times={sortedTimes}
+        setTimes={props.setAllowedTimes}
+        smallerLabelFont={props.smallerLabelFont}
+        halveLabelFrequency={props.halveLabelFrequency}
+      />
+      <Stack pl="60px" direction="row" spacing="8px">
+        <UrsorButton
+          size="small"
+          variant="secondary"
+          backgroundColor="rgb(255,255,255)"
+          onClick={() => {
+            newSegmentTimes &&
+              props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
+            setNewSegmentTimes(null);
+          }}
+          disabled={!newSegmentTimes}
+        >
+          Add
+        </UrsorButton>
+        <UrsorButton
+          size="small"
+          variant="secondary"
+          backgroundColor={PALETTE.secondary.grey[1]}
+          borderColor={PALETTE.secondary.grey[1]}
+          onClick={props.reset}
+        >
+          Reset
+        </UrsorButton>
+      </Stack>
+    </Stack>
+  );
+};
+
+export default AllowedTimeRow;

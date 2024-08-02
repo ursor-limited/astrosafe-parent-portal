@@ -144,6 +144,10 @@ class ApiController {
     );
   }
 
+  static async removeFolder(id: IContentBucket["id"]) {
+    return dellete(`content/buckets/${id}`);
+  }
+
   static async getFolder(id: number) {
     return get(`content/buckets/${id}`).then((response: any) =>
       response.json()
@@ -262,8 +266,16 @@ class ApiController {
     );
   }
 
+  static async removeFilter(id: IFilter["id"]) {
+    return dellete(`filters/${id}`);
+  }
+
   static async getFilter(id: IFilter["id"]) {
     return get(`filters/${id}`).then((response: any) => response.json());
+  }
+
+  static async renameFilter(id: IFilter["id"], name: IFilter["title"]) {
+    return patch(`filters/${id}/rename`, { name });
   }
 
   static async getGroupFilters(id: IGroup["id"]) {

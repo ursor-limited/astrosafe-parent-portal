@@ -36,6 +36,7 @@ const TimeLimitViewMobileBody = (props: { onNext: () => void }) => {
           barHeight="20px"
           circleSize="30px"
           spacing="0px"
+          step={100 * (15 / (5 * 60))}
         />
       </Stack>
     </MobileOnBoardingViewLayout>

@@ -11,7 +11,9 @@ const AstroSwitch = (props: {
   return (
     <Stack
       height={props.small ? "16px" : "28px"}
+      minHeight={props.small ? "16px" : "28px"}
       width={props.small ? "34px" : "60px"}
+      minWidth={props.small ? "34px" : "60px"}
       bgcolor={props.on ? PALETTE.system.green : PALETTE.secondary.grey[3]}
       borderRadius={props.small ? "8px" : "20px"}
       px="2px"

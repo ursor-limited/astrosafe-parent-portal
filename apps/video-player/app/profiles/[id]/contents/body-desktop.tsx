@@ -38,7 +38,10 @@ const ProfilePageDesktopBody = (props: {
       scrollable
     >
       <Stack pl="48px">
-        <HorizontalDeviceCard {...props.device} />
+        <HorizontalDeviceCard
+          {...props.device}
+          onClickViewScreenTime={() => setSelectedTab("limits")}
+        />
         <Stack flex={1} height="56px" minHeight="56px" justifyContent="center">
           <Stack
             height="1px"

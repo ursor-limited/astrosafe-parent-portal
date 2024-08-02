@@ -15,6 +15,7 @@ import { IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
+import { useElementSize } from "usehooks-ts";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -46,38 +47,50 @@ export const DeviceCardSection = (props: {
 export const DeviceCardBrowsingStatusSection = (props: {
   browsingEnabled: boolean;
   flipBrowsingEnabled: () => void;
-}) => (
-  <DeviceCardSection title="Browsing status">
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      spacing="6px"
-    >
-      <Stack
-        spacing="8px"
-        direction="row"
-        alignItems="center"
-        sx={{
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[4],
-            },
-          },
-        }}
-      >
-        <GlobeIcon height="20px" width="20px" />
-        <Typography bold color={PALETTE.secondary.grey[5]}>
-          {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
-        </Typography>
-      </Stack>
-      <AstroSwitch
-        on={props.browsingEnabled}
-        callback={props.flipBrowsingEnabled}
-      />
+}) => {
+  const [setRef, size] = useElementSize();
+  return (
+    <Stack ref={setRef} flex={1}>
+      <DeviceCardSection title="Browsing status">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing="6px"
+        >
+          <Stack
+            spacing="8px"
+            direction="row"
+            alignItems="center"
+            sx={{
+              svg: {
+                path: {
+                  fill: PALETTE.secondary.grey[4],
+                },
+              },
+            }}
+          >
+            {(size.width ?? 0) > 276 ? (
+              <GlobeIcon height="20px" width="20px" />
+            ) : null}
+            <Typography
+              bold
+              color={PALETTE.secondary.grey[5]}
+              maxLines={1}
+              sx={{ maxWidth: "100%", minWidth: 0 }}
+            >
+              {`Browsing is ${props.browsingEnabled ? "enabled" : "disabled"}`}
+            </Typography>
+          </Stack>
+          <AstroSwitch
+            on={props.browsingEnabled}
+            callback={props.flipBrowsingEnabled}
+          />
+        </Stack>
+      </DeviceCardSection>
     </Stack>
-  </DeviceCardSection>
-);
+  );
+};
 
 export const DeviceCardScreenTimeSection = (props: {
   totalTime: number;

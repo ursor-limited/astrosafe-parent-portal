@@ -1,6 +1,6 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { Stack } from "@mui/system";
-import FolderCard from "./FolderCard";
+import FolderCard from "../../../components/FolderCard";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";

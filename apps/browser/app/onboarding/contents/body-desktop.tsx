@@ -44,7 +44,7 @@ const ConfigurationStepButton = (props: {
 const OnboardingFlowDesktopBody = () => {
   const [stepCategory, setStepCategory] =
     useState<OnboardingStepCategory>("intro");
-  const [stepIndex, setStepIndex] = useState<number>(2);
+  const [stepIndex, setStepIndex] = useState<number>(7);
   useEffect(
     () => setStepCategory(STEP_COMPONENTS[stepIndex].category),
     [stepIndex]

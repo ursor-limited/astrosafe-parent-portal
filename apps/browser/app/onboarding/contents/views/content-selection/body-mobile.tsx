@@ -4,6 +4,7 @@ import { PlusButton, XButton } from "./common";
 import CardStack from "./card-stack";
 import { Typography } from "ui";
 import { MobileOnBoardingViewLayout } from "../../layout/mobile";
+import { fadeIn } from "@/app/components/UrsorDialog";
 
 const ContentSelectionViewMobileBody = (props: {
   cards: React.ReactNode[];
@@ -25,7 +26,13 @@ const ContentSelectionViewMobileBody = (props: {
           direction="row"
           alignItems="center"
           height="300px"
-          sx={{ transform: "translateY(-36px)" }}
+          sx={{
+            transform: "translateY(-36px)",
+            opacity: 0,
+            animation: `${fadeIn} 0.3s ease-out`,
+            animationDelay: "0.4s",
+            animationFillMode: "forwards",
+          }}
         >
           <CardStack
             cards={props.cards}

@@ -33,6 +33,7 @@ const TimeLimitViewDesktopBody = (props: { onNext: () => void }) => {
           width="546px"
           value={selectorValue}
           setValue={setSelectorValue}
+          step={100 * (15 / (5 * 60))}
         />
       </Stack>
     </DesktopOnBoardingViewLayout>

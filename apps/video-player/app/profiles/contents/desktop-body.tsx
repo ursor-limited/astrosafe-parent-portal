@@ -9,7 +9,6 @@ import UrsorActionButton from "@/app/components/UrsorActionButton";
 import { useRouter } from "next/navigation";
 import DeviceCard from "../components/DeviceCard";
 import QRCodeView from "../components/QRCodeView";
-import { useEffect } from "react";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { IEnrichedDevice } from "./common";
 
@@ -21,11 +20,11 @@ const AllDevicesPageDesktopBody = (props: {
   setDisconnectDialogOpen: (id: IDevice["id"]) => void;
 }) => {
   const router = useRouter();
-  useEffect(() => {
-    new WebSocket(
-      "wss://api.astrosafe.co/sessions/groups/1?deviceId=2&isDevice=true"
-    );
-  }, []);
+  // useEffect(() => {
+  //   new WebSocket(
+  //     "wss://api.astrosafe.co/sessions/groups/1?deviceId=2&isDevice=true"
+  //   );
+  // }, []);
   return (
     <PageLayout
       title="My Kids"
@@ -46,7 +45,7 @@ const AllDevicesPageDesktopBody = (props: {
       maxWidth={834}
       scrollable
     >
-      <Stack px="50px" flex={1} pb="31px">
+      <Stack pl="50px" flex={1} pb="31px">
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="355px" rowGap="20px" columnGap="20px">
             {props.devices.map((d, i) => (
@@ -84,7 +83,7 @@ const AllDevicesPageDesktopBody = (props: {
             ))}
           </DynamicCardGrid>
         ) : (
-          <UrsorFadeIn delay={500} duration={800}>
+          <UrsorFadeIn delay={600} duration={800}>
             <QRCodeView />
           </UrsorFadeIn>
         )}
