@@ -20,6 +20,7 @@ const ProfilePageMobileBody = (props: {
   actions: IActionPopupItem[];
   folders: IEnrichedContentBucket[];
   tab?: AstroAccountTab;
+  onUpdateDevice: () => void;
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
@@ -31,6 +32,7 @@ const ProfilePageMobileBody = (props: {
         <HorizontalDeviceCard
           {...props.device}
           onClickViewScreenTime={() => setSelectedTab("limits")}
+          onUpdate={props.onUpdateDevice}
         />
       </Stack>
       <Stack minHeight="24px" alignItems="center">

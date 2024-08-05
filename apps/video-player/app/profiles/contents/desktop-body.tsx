@@ -11,9 +11,11 @@ import DeviceCard from "../components/DeviceCard";
 import QRCodeView from "../components/QRCodeView";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { IEnrichedDevice } from "./common";
+import { IFilter } from "@/app/filters/contents/common";
 
 const AllDevicesPageDesktopBody = (props: {
   devices: IEnrichedDevice[];
+  filters: IFilter[];
   setConnectDialogOpen: () => void;
   // setDownloadDialogOpen: () => void;
   setRenameDeviceDialogId: (id: IDevice["id"]) => void;
@@ -22,7 +24,7 @@ const AllDevicesPageDesktopBody = (props: {
   const router = useRouter();
   // useEffect(() => {
   //   new WebSocket(
-  //     "wss://api.astrosafe.co/sessions/groups/1?deviceId=2&isDevice=true"
+  //     "wss://api.astrosafe.co/sessions/groups/1?deviceId=1&isDevice=true"
   //   );
   // }, []);
   return (
@@ -54,6 +56,9 @@ const AllDevicesPageDesktopBody = (props: {
                   {...d}
                   showBrowsing
                   url="nintendo.com/bopioijgorfrifunrifjni"
+                  filterName={
+                    props.filters.find((f) => f.id === d.filterId)?.title ?? ""
+                  }
                   button={
                     <UrsorActionButton
                       size="18px"

@@ -36,6 +36,7 @@ export interface IDevice {
   favorites: number[];
   requestedSites: IFilterUrl[];
   createdAt: string;
+  filterId: IFilter["id"];
 }
 
 export interface IDeviceConfig {

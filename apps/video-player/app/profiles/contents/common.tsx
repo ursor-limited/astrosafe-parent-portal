@@ -12,6 +12,7 @@ import { IDevice, IDeviceConfig } from "../../filters/[id]/contents/common";
 import AllDevicesPageDesktopBody from "./desktop-body";
 import AllDevicesPageMobileBody from "./mobile-body";
 import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
+import { IFilter } from "@/app/filters/contents/common";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -31,6 +32,10 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
   useEffect(() => {
     ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
   }, []);
+  const [filters, setFilters] = useState<IFilter[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setFilters);
+  }, []);
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice["id"] | undefined
   >();
@@ -44,16 +49,16 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
       {props.isMobile ? (
         <AllDevicesPageMobileBody
           devices={devices}
+          filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
-          //setDownloadDialogOpen={() => setDownloadDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
           setDisconnectDialogOpen={setDisconnectDeviceDialogId}
         />
       ) : (
         <AllDevicesPageDesktopBody
           devices={devices}
+          filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
-          //setDownloadDialogOpen={() => setDownloadDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
           setDisconnectDialogOpen={setDisconnectDeviceDialogId}
         />

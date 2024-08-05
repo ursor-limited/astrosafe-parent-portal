@@ -11,7 +11,7 @@ import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IFilterUrl } from "@/app/filters/contents/common";
+import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
@@ -188,6 +188,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 
 const DeviceCard = (
   props: IEnrichedDevice & {
+    filterName: IFilter["title"];
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -289,7 +290,7 @@ const DeviceCard = (
               }}
             >
               <FilterIcon height="16px" width="16px" />
-              <Typography maxLines={1}>Explorer Filter</Typography>
+              <Typography maxLines={1}>{props.filterName}</Typography>
             </Stack>
           </Stack>
         </Stack>

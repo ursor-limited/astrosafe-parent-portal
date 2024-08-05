@@ -120,6 +120,7 @@ export default function ProfilePage(props: {
           actions={actions}
           folders={folders}
           tab={props.tab}
+          onUpdateDevice={loadDevice}
         />
       ) : (
         <ProfilePageDesktopBody
@@ -128,6 +129,7 @@ export default function ProfilePage(props: {
           actions={actions}
           folders={folders}
           tab={props.tab}
+          onUpdateDevice={loadDevice}
         />
       )}
       <DeviceRenameDialog
