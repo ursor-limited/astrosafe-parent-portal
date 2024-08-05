@@ -266,8 +266,8 @@ class ApiController {
     );
   }
 
-  static async changeFilterName(id: IFilter['id'], title: IFilter["title"]) {
-    return patch(`filters/${id}`, { title })
+  static async changeFilterName(id: IFilter["id"], title: IFilter["title"]) {
+    return patch(`filters/${id}`, { title });
   }
 
   static async removeFilter(id: IFilter["id"]) {
@@ -323,8 +323,10 @@ class ApiController {
     filterId: IFilter["id"],
     url: IFilterException["url"]
   ) {
-    return get(`filters/${filterId}/whitelist/exceptions/${url}`).then(
-      (response: any) => response.json()
+    return dellete(
+      `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
+        getAbsoluteUrl(cleanUrl(url))
+      )}`
     );
   }
 
@@ -335,6 +337,17 @@ class ApiController {
     return post(`filters/${filterId}/whitelist/exceptions`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
+  }
+
+  static async removeBlacklistException(
+    filterId: IFilter["id"],
+    url: IFilterException["url"]
+  ) {
+    return dellete(
+      `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
+        getAbsoluteUrl(cleanUrl(url))
+      )}`
+    );
   }
 
   static async addBlacklistException(

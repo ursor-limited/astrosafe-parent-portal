@@ -216,6 +216,16 @@ export default function FilterPage(props: {
               loadBlacklistExceptions
             )
           }
+          removeWhitelistException={(url: string) =>
+            ApiController.removeWhitelistException(props.filterId, url).then(
+              loadWhitelistExceptions
+            )
+          }
+          removeBlacklistException={(url: string) =>
+            ApiController.removeBlacklistException(props.filterId, url).then(
+              loadBlacklistExceptions
+            )
+          }
         />
       ) : (
         <FilterPageDesktopBody
@@ -258,6 +268,16 @@ export default function FilterPage(props: {
           }
           addBlacklistException={(url: string) =>
             ApiController.addBlacklistException(props.filterId, url).then(
+              loadBlacklistExceptions
+            )
+          }
+          removeWhitelistException={(url: string) =>
+            ApiController.removeWhitelistException(props.filterId, url).then(
+              loadWhitelistExceptions
+            )
+          }
+          removeBlacklistException={(url: string) =>
+            ApiController.removeBlacklistException(props.filterId, url).then(
               loadBlacklistExceptions
             )
           }

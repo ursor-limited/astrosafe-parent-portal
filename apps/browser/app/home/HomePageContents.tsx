@@ -20,6 +20,9 @@ import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 import CreationAnimationDialog from "./CreationAnimationDialog";
 
+export const cleanUrl = (url: string) =>
+  url.replace("http://", "").replace("https://", "").replace("www.", "");
+
 export const DUMMY_DEVICE_ID = 1;
 
 export type AstroContent = "video" | "channel" | "link";
@@ -276,7 +279,11 @@ export default function HomePageContents(props: {
                               {x.type === "link" ? (
                                 <LinkCard
                                   {...(x.details as ILink)}
-                                  onClick={() => null}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
@@ -291,7 +298,11 @@ export default function HomePageContents(props: {
                               ) : x.type === "video" ? (
                                 <VideoCard
                                   {...(x.details as IVideo)}
-                                  onClick={() => null}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
@@ -306,7 +317,11 @@ export default function HomePageContents(props: {
                               ) : x.type === "channel" ? (
                                 <ChannelCard
                                   {...(x.details as IChannel)}
-                                  onClick={() => null}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
@@ -327,31 +342,33 @@ export default function HomePageContents(props: {
                   ]}
                 </Stack>
               ) : (
-                <Stack
-                  height={props.mobile ? "100%" : "457px"}
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing="13px"
-                >
-                  <Image
-                    src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
-                    width={179}
-                    height={152}
-                    alt="empty state illustration"
-                  />
+                <UrsorFadeIn delay={600} duration={800}>
                   <Stack
-                    width={props.mobile ? "100%" : "444px"}
+                    height={props.mobile ? "100%" : "457px"}
+                    justifyContent="center"
                     alignItems="center"
+                    spacing="13px"
                   >
-                    <Typography
-                      color={PALETTE.secondary.grey[3]}
-                      sx={{ textAlign: "center" }}
-                      bold
+                    <Image
+                      src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                      width={179}
+                      height={152}
+                      alt="empty state illustration"
+                    />
+                    <Stack
+                      width={props.mobile ? "100%" : "444px"}
+                      alignItems="center"
                     >
-                      This Folder is currently empty.
-                    </Typography>
+                      <Typography
+                        color={PALETTE.secondary.grey[3]}
+                        sx={{ textAlign: "center" }}
+                        bold
+                      >
+                        This Folder is currently empty.
+                      </Typography>
+                    </Stack>
                   </Stack>
-                </Stack>
+                </UrsorFadeIn>
               )}
             </Stack>
           </Stack>

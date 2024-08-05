@@ -26,6 +26,7 @@ export interface IAllowedSitesTableRowItems {
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterException[];
   add: (url: string) => void;
+  delete: (url: IFilterException["url"]) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -157,11 +158,12 @@ const FilterPageAllowedSitesSection = (props: {
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={(id) => [
+              getActionButtonItems={(i) => [
                 {
                   icon: TrashcanIcon,
                   text: "Delete",
-                  kallback: () => null,
+                  kallback: () =>
+                    props.delete(props.allowedSites[parseInt(i)].url),
                   color: PALETTE.system.red,
                 },
               ]}

@@ -12,8 +12,9 @@ import {
   ILesson,
   ILink,
   IVideo,
+  cleanUrl,
 } from "../home/HomePageContents";
-import ApiController from "../api";
+import ApiController, { getAbsoluteUrl } from "../api";
 import useColumnWidth from "../components/useColumnWidth";
 import PageLayout, { OVERALL_X_PADDING } from "../components/PageLayout";
 import { PALETTE, Typography } from "ui";
@@ -102,7 +103,11 @@ export default function FavoritesPageContents(props: {
                             {x.type === "link" ? (
                               <LinkCard
                                 {...(x.details as ILink)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.details.url))
+                                  )
+                                }
                                 favorite={
                                   !unfavorited.find(
                                     (f) =>
@@ -117,7 +122,11 @@ export default function FavoritesPageContents(props: {
                             ) : x.type === "video" ? (
                               <VideoCard
                                 {...(x.details as IVideo)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.details.url))
+                                  )
+                                }
                                 favorite={
                                   !unfavorited.find(
                                     (f) =>
@@ -132,7 +141,11 @@ export default function FavoritesPageContents(props: {
                             ) : x.type === "channel" ? (
                               <ChannelCard
                                 {...(x.details as IChannel)}
-                                onClick={() => null}
+                                onClick={() =>
+                                  router.push(
+                                    getAbsoluteUrl(cleanUrl(x.details.url))
+                                  )
+                                }
                                 favorite={
                                   !unfavorited.find(
                                     (f) =>
@@ -153,31 +166,33 @@ export default function FavoritesPageContents(props: {
                 ]}
               </Stack>
             ) : (
-              <Stack
-                height={props.mobile ? "100%" : "457px"}
-                justifyContent="center"
-                alignItems="center"
-                spacing="13px"
-              >
-                <Image
-                  src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
-                  width={179}
-                  height={152}
-                  alt="empty state illustration"
-                />
+              <UrsorFadeIn delay={600} duration={800}>
                 <Stack
-                  width={props.mobile ? "100%" : "444px"}
+                  height={props.mobile ? "100%" : "457px"}
+                  justifyContent="center"
                   alignItems="center"
+                  spacing="13px"
                 >
-                  <Typography
-                    color={PALETTE.secondary.grey[3]}
-                    sx={{ textAlign: "center" }}
-                    bold
+                  <Image
+                    src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                    width={179}
+                    height={152}
+                    alt="empty state illustration"
+                  />
+                  <Stack
+                    width={props.mobile ? "100%" : "444px"}
+                    alignItems="center"
                   >
-                    You have no Favorites yet.
-                  </Typography>
+                    <Typography
+                      color={PALETTE.secondary.grey[3]}
+                      sx={{ textAlign: "center" }}
+                      bold
+                    >
+                      You have no Favorites yet.
+                    </Typography>
+                  </Stack>
                 </Stack>
-              </Stack>
+              </UrsorFadeIn>
             )}
           </Stack>
         </Stack>
