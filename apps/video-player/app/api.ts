@@ -266,16 +266,16 @@ class ApiController {
     );
   }
 
+  static async changeFilterName(id: IFilter['id'], title: IFilter["title"]) {
+    return patch(`filters/${id}`, { title })
+  }
+
   static async removeFilter(id: IFilter["id"]) {
     return dellete(`filters/${id}`);
   }
 
   static async getFilter(id: IFilter["id"]) {
     return get(`filters/${id}`).then((response: any) => response.json());
-  }
-
-  static async renameFilter(id: IFilter["id"], name: IFilter["title"]) {
-    return patch(`filters/${id}/rename`, { name });
   }
 
   static async getGroupFilters(id: IGroup["id"]) {

@@ -293,7 +293,7 @@ export default function FilterPage(props: {
         onClose={() => setRenameDialogOpen(false)}
         name={filter.title}
         onSubmit={(name) =>
-          ApiController.renameFilter(props.filterId, name).then(loadFilter)
+          ApiController.changeFilterName(props.filterId, name).then(loadFilter)
         }
       />
     </>

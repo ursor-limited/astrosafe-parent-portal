@@ -49,7 +49,7 @@ export interface IGroupFilter {
   id: IFilter["id"];
   title: IFilter["title"];
   profileAvatarUrls: IDevice["profileAvatarUrl"][];
-  devices: number;
+  deviceCount: number;
   whitelistedCategories: number;
   blacklistedWords: number;
 }

@@ -188,7 +188,7 @@ export const DeviceCardCurrentUrlSection = (props: {
 
 const DeviceCard = (
   props: IEnrichedDevice & {
-    filterName: IFilter["title"];
+    filterName?: IFilter["title"];
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -277,21 +277,23 @@ const DeviceCard = (
                 {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
               </Typography>
             </Stack>
-            <Stack
-              direction="row"
-              spacing="8px"
-              alignItems="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: PALETTE.system.orange,
+            {props.filterName ? (
+              <Stack
+                direction="row"
+                spacing="8px"
+                alignItems="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.system.orange,
+                    },
                   },
-                },
-              }}
-            >
-              <FilterIcon height="16px" width="16px" />
-              <Typography maxLines={1}>{props.filterName}</Typography>
-            </Stack>
+                }}
+              >
+                <FilterIcon height="16px" width="16px" />
+                <Typography maxLines={1}>{props.filterName}</Typography>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         {!props.noExtras ? (
