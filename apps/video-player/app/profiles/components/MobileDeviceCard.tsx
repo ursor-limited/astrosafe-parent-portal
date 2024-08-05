@@ -264,13 +264,18 @@ const MobileDeviceCard = (
                 alt="device profile"
               />
             </Stack>
-            <Typography bold maxLines={1} sx={{ wordBreak: "break-all" }}>
+            <Typography
+              variant="small"
+              bold
+              maxLines={1}
+              sx={{ wordBreak: "break-all" }}
+            >
               {props.name}
             </Typography>
           </Stack>
 
           {!props.noExtras ? (
-            <Stack spacing="12px" flex={1}>
+            <Stack spacing="9px" flex={1}>
               <MobileDeviceCardRow
                 text={DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
                 icon={PhoneIcon}
