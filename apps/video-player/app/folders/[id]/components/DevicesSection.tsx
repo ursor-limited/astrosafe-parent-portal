@@ -125,6 +125,7 @@ const DevicesSection = (props: {
           props.onAdd();
           setDevicesGridDialogOpen(false);
         }}
+        onRemove={setRemovalConfirmationDialogId}
       />
       {removalConfirmationDialogId ? (
         <DeviceRemovalConfirmationDialog

@@ -16,6 +16,7 @@ const AllDevicesDialog = (props: {
   open: boolean;
   onClose: () => void;
   onAdd: () => void;
+  onRemove: (id: IDevice["id"]) => void;
   devices: IDevice[];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -80,11 +81,11 @@ const AllDevicesDialog = (props: {
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
               <DeviceCard
                 {...d}
-                // button={
-                //   <Stack onClick={() => null}>
-                //     <XIcon height={16} width={16} />
-                //   </Stack>
-                // }
+                button={
+                  <Stack onClick={() => props.onRemove(d.id)}>
+                    <XIcon height={16} width={16} />
+                  </Stack>
+                }
                 hideToggles
                 noExtras
               />
