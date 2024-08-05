@@ -226,8 +226,8 @@ const MobileDeviceCard = (
       >
         <Stack
           position="absolute"
-          top="28px"
-          right="15px"
+          top="12px"
+          right="12px"
           sx={{
             cursor: "pointer",
             "&:hover": { opacity: 0.6 },
@@ -275,7 +275,7 @@ const MobileDeviceCard = (
           </Stack>
 
           {!props.noExtras ? (
-            <Stack spacing="9px" flex={1}>
+            <Stack spacing="8px" flex={1}>
               <MobileDeviceCardRow
                 text={DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
                 icon={PhoneIcon}

@@ -214,7 +214,7 @@ const DeviceCard = (
       >
         <Stack
           position="absolute"
-          top="28px"
+          top="20px"
           right="15px"
           sx={{
             cursor: "pointer",

@@ -29,7 +29,7 @@ const AllowedTimesSection = (props: {
   >
     {props.allowedTimes ? (
       <Stack spacing="36px" pb="12px">
-        {["sun"].map((day, i) => (
+        {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
           <AllowedTimeRow
             key={day}
             dayName={day}
