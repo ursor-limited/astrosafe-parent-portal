@@ -32,6 +32,15 @@ to {
 }
 `;
 
+export const loadingBarExtend = keyframes`
+from {
+  width: 0;
+}
+to {
+  width: 100%
+}
+`;
+
 export interface ICreationAnimationCardProps {
   title: string;
   color: string;
@@ -141,7 +150,7 @@ const CreationAnimationDialog = (props: {
       PaperProps={{
         style: {
           width: 746,
-          height: 512,
+          height: 500,
           borderRadius: 32,
           padding: "32px",
           paddingBottom: 0,
@@ -154,7 +163,7 @@ const CreationAnimationDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack height="100%">
+      <Stack height="100%" pb="32px">
         <Stack
           spacing="40px"
           justifyContent="center"
@@ -244,6 +253,27 @@ const CreationAnimationDialog = (props: {
               );
             })
           )}
+        </Stack>
+        <Stack pt="32px">
+          <Stack
+            height="24px"
+            borderRadius="30px"
+            bgcolor={PALETTE.secondary.grey[2]}
+            overflow="hidden"
+          >
+            <Stack
+              height="100%"
+              width={0}
+              bgcolor={PALETTE.secondary.purple[1]}
+              borderRadius="30px"
+              sx={{
+                transition: "0.5s",
+                animation: `${loadingBarExtend} ${
+                  CREATION_ANIMATION_CARDS.length * CARD_PERIOD
+                }ms linear`,
+              }}
+            />
+          </Stack>
         </Stack>
       </Stack>
     </Dialog>
