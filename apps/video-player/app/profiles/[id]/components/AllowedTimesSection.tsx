@@ -29,14 +29,16 @@ const AllowedTimesSection = (props: {
   >
     {props.allowedTimes ? (
       <Stack spacing="36px" pb="12px">
-        {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
+        {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
           <AllowedTimeRow
             key={day}
             dayName={day}
-            times={props.allowedTimes.filter((t) => t.day === i)}
-            reset={() => props.reset(i)}
+            times={props.allowedTimes.filter((t) =>
+              day === "sun" ? t.day === 0 : t.day === i + 1
+            )}
+            reset={() => props.reset(day === "sun" ? 0 : i + 1)}
             addAllowedTime={(startTime, endTime) =>
-              props.addTimeLimit(i, startTime, endTime)
+              props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
             setAllowedTimes={props.setAllowedTimes}
           />
