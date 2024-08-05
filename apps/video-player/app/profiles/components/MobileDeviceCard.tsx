@@ -237,12 +237,17 @@ const MobileDeviceCard = (
         >
           {props.button}
         </Stack>
-        <Stack spacing="20px" direction="row" alignItems="center">
+        <Stack
+          spacing="20px"
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
           <Stack
             spacing="8px"
             position="relative"
             alignItems="center"
-            width="91px"
+            width={props.noExtras ? undefined : "91px"}
           >
             <Stack
               minHeight="80px"

@@ -10,8 +10,10 @@ import { useState } from "react";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
-import DeviceCard from "@/app/profiles/components/DeviceCard";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
+import DeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
+import ApiController from "@/app/api";
+import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 
 const MobileDevicesSection = (props: {
   title: string;
@@ -25,17 +27,26 @@ const MobileDevicesSection = (props: {
   const [devicesGridDialogOpen, setDevicesGridDialogOpen] =
     useState<boolean>(false);
 
+  const [removalConfirmationDialogId, setRemovalConfirmationDialogId] =
+    useState<number | undefined>();
+
+  // const removeDevice = (id: IDevice["id"]) =>
+  //   ApiController.removeFolderFromDevice(props.folderId, id);
+  // .then(
+  //     props.onRemove
+  //   );
+
   return (
     <>
       <AstroBentoCard title={props.title} notCollapsible isMobile>
         {props.devices.length > 0 ? (
-          <Stack spacing="8px">
+          <DynamicCardGrid cardWidth="150px" rowGap="12px" columnGap="12px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <MobileDeviceCard
                   {...d}
                   button={
-                    <Stack onClick={() => props.onRemove(d.id)}>
+                    <Stack onClick={() => setRemovalConfirmationDialogId(d.id)}>
                       <XIcon height={16} width={16} />
                     </Stack>
                   }
@@ -43,7 +54,7 @@ const MobileDevicesSection = (props: {
                 />
               </UrsorFadeIn>
             ))}
-          </Stack>
+          </DynamicCardGrid>
         ) : (
           <Stack
             height="90px"
@@ -100,9 +111,9 @@ const MobileDevicesSection = (props: {
         </Stack>
       </AstroBentoCard>
       <MobileAllDevicesDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have access to this Folder`}
+        title={`${props.devices.length} ${
+          props.devices.length === 1 ? "Device has" : "Devices have"
+        } access to this Folder`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
@@ -110,7 +121,19 @@ const MobileDevicesSection = (props: {
           props.onAdd();
           setDevicesGridDialogOpen(false);
         }}
+        onRemove={setRemovalConfirmationDialogId}
       />
+      {removalConfirmationDialogId ? (
+        <DeviceRemovalConfirmationDialog
+          open={true}
+          onClose={() => setRemovalConfirmationDialogId(undefined)}
+          onSubmit={() => props.onRemove(removalConfirmationDialogId)}
+          deviceName={
+            props.devices.find((d) => d.id === removalConfirmationDialogId)
+              ?.name ?? ""
+          }
+        />
+      ) : null}
     </>
   );
 };

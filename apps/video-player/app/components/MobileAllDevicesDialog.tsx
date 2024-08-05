@@ -8,7 +8,6 @@ import { Dialog } from "@mui/material";
 import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
-import DeviceCard from "../profiles/components/DeviceCard";
 import MobileDeviceCard from "../profiles/components/MobileDeviceCard";
 import DynamicCardGrid from "./DynamicCardGrid";
 
@@ -17,6 +16,7 @@ const MobileAllDevicesDialog = (props: {
   open: boolean;
   onClose: () => void;
   onAdd: () => void;
+  onRemove: (id: IDevice["id"]) => void;
   devices: IDevice[];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -78,13 +78,13 @@ const MobileAllDevicesDialog = (props: {
             iconSize="18px"
           />
         </Stack>
-        <DynamicCardGrid cardWidth="100px" columnGap="12px" rowGap="12px">
+        <DynamicCardGrid cardWidth="150px" columnGap="12px" rowGap="12px">
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
               <MobileDeviceCard
                 {...d}
                 button={
-                  <Stack onClick={() => null}>
+                  <Stack onClick={() => props.onRemove(d.id)}>
                     <XIcon height={16} width={16} />
                   </Stack>
                 }

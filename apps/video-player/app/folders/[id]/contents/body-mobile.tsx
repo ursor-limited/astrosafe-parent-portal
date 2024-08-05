@@ -53,7 +53,9 @@ const FolderPageMobileBody = (props: {
     >
       <Stack spacing="24px" pb="32px">
         <MobileDevicesSection
-          title={`${props.devices.length} Devices have access to this Folder`}
+          title={`${props.devices.length} ${
+            props.devices.length === 1 ? "Device has" : "Devices have"
+          } access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
