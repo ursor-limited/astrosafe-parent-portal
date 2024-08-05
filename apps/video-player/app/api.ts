@@ -307,19 +307,19 @@ class ApiController {
     return post(`filters/${filterId}/devices`, { deviceId });
   }
 
-  static async getWhitelistExceptions(filterId: IFilter["id"]) {
+  static async getBlockedSites(filterId: IFilter["id"]) {
     return get(`filters/${filterId}/whitelist/exceptions`).then(
       (response: any) => response.json()
     );
   }
 
-  static async getBlacklistExceptions(filterId: IFilter["id"]) {
+  static async getAllowedSites(filterId: IFilter["id"]) {
     return get(`filters/${filterId}/blacklist/exceptions`).then(
       (response: any) => response.json()
     );
   }
 
-  static async removeWhitelistException(
+  static async removeBlockedSite(
     filterId: IFilter["id"],
     url: IFilterException["url"]
   ) {
@@ -330,16 +330,13 @@ class ApiController {
     );
   }
 
-  static async addWhitelistException(
-    filterId: IFilter["id"],
-    url: IFilterUrl["url"]
-  ) {
+  static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
     return post(`filters/${filterId}/whitelist/exceptions`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
 
-  static async removeBlacklistException(
+  static async removeAllowedSite(
     filterId: IFilter["id"],
     url: IFilterException["url"]
   ) {
@@ -350,10 +347,7 @@ class ApiController {
     );
   }
 
-  static async addBlacklistException(
-    filterId: IFilter["id"],
-    url: IFilterUrl["url"]
-  ) {
+  static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
     return post(`filters/${filterId}/blacklist/exceptions`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });

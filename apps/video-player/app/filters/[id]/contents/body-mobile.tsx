@@ -31,10 +31,10 @@ export default function FilterPageMobileBody(props: {
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
-  addWhitelistException: (url: IFilterUrl["url"]) => void;
-  addBlacklistException: (url: IFilterUrl["url"]) => void;
-  removeWhitelistException: (url: IFilterUrl["url"]) => void;
-  removeBlacklistException: (url: IFilterUrl["url"]) => void;
+  addBlockedSite: (url: IFilterUrl["url"]) => void;
+  addAllowedSite: (url: IFilterUrl["url"]) => void;
+  removeBlockedSite: (url: IFilterUrl["url"]) => void;
+  removeAllowedSite: (url: IFilterUrl["url"]) => void;
 }) {
   return (
     <MobilePageLayout
@@ -74,14 +74,14 @@ export default function FilterPageMobileBody(props: {
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
-          add={props.addWhitelistException}
-          delete={props.removeWhitelistException}
+          add={props.addAllowedSite}
+          delete={props.removeAllowedSite}
           isMobile
         />
         <FilterPageBlockedSitesSection
           blockedSites={props.blockedSites}
-          add={props.addBlacklistException}
-          delete={props.removeBlacklistException}
+          add={props.addBlockedSite}
+          delete={props.removeBlockedSite}
           isMobile
         />
         <FilterPageSearchWordsSection

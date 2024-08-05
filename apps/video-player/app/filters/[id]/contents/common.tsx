@@ -59,33 +59,23 @@ export default function FilterPage(props: {
     loadFilter();
   }, [loadFilter]);
 
-  const [whitelistExceptions, setWhitelistExceptions] = useState<
-    IFilterException[]
-  >([]);
-  const loadWhitelistExceptions = useCallback(
-    () =>
-      ApiController.getWhitelistExceptions(props.filterId).then(
-        setWhitelistExceptions
-      ),
+  const [blockedSites, setBlockedSites] = useState<IFilterException[]>([]);
+  const loadBlockedSites = useCallback(
+    () => ApiController.getBlockedSites(props.filterId).then(setBlockedSites),
     [props.filterId]
   );
   useEffect(() => {
-    loadWhitelistExceptions();
-  }, [loadWhitelistExceptions]);
+    loadBlockedSites();
+  }, [loadBlockedSites]);
 
-  const [blacklistExceptions, setBlacklistExceptions] = useState<
-    IFilterException[]
-  >([]);
-  const loadBlacklistExceptions = useCallback(
-    () =>
-      ApiController.getBlacklistExceptions(props.filterId).then(
-        setBlacklistExceptions
-      ),
+  const [allowedSites, setAllowedSites] = useState<IFilterException[]>([]);
+  const loadAllowedSites = useCallback(
+    () => ApiController.getAllowedSites(props.filterId).then(setAllowedSites),
     [props.filterId]
   );
   useEffect(() => {
-    loadBlacklistExceptions();
-  }, [loadBlacklistExceptions]);
+    loadAllowedSites();
+  }, [loadAllowedSites]);
 
   const [categories, setCategories] = useState<IFilterCategory[]>([]);
   useEffect(() => {
@@ -191,8 +181,8 @@ export default function FilterPage(props: {
           actions={actions}
           categories={categories}
           allowedCategories={allowedCategories}
-          allowedSites={whitelistExceptions}
-          blockedSites={blacklistExceptions}
+          allowedSites={allowedSites}
+          blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
           addToBlockedSearchWords={(word) => {
             setBlockedSearchWords([...blockedSearchWords, word]);
@@ -206,24 +196,24 @@ export default function FilterPage(props: {
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
-          addWhitelistException={(url: string) =>
-            ApiController.addWhitelistException(props.filterId, url).then(
-              loadWhitelistExceptions
+          addBlockedSite={(url: string) =>
+            ApiController.addBlockedSite(props.filterId, url).then(
+              loadBlockedSites
             )
           }
-          addBlacklistException={(url: string) =>
-            ApiController.addBlacklistException(props.filterId, url).then(
-              loadBlacklistExceptions
+          addAllowedSite={(url: string) =>
+            ApiController.addAllowedSite(props.filterId, url).then(
+              loadAllowedSites
             )
           }
-          removeWhitelistException={(url: string) =>
-            ApiController.removeWhitelistException(props.filterId, url).then(
-              loadWhitelistExceptions
+          removeBlockedSite={(url: string) =>
+            ApiController.removeBlockedSite(props.filterId, url).then(
+              loadBlockedSites
             )
           }
-          removeBlacklistException={(url: string) =>
-            ApiController.removeBlacklistException(props.filterId, url).then(
-              loadBlacklistExceptions
+          removeAllowedSite={(url: string) =>
+            ApiController.removeAllowedSite(props.filterId, url).then(
+              loadAllowedSites
             )
           }
         />
@@ -246,8 +236,8 @@ export default function FilterPage(props: {
           actions={actions}
           categories={categories}
           allowedCategories={allowedCategories}
-          allowedSites={whitelistExceptions}
-          blockedSites={blacklistExceptions}
+          allowedSites={allowedSites}
+          blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
           addToBlockedSearchWords={(word) => {
             setBlockedSearchWords([...blockedSearchWords, word]);
@@ -261,24 +251,24 @@ export default function FilterPage(props: {
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
-          addWhitelistException={(url: string) =>
-            ApiController.addWhitelistException(props.filterId, url).then(
-              loadWhitelistExceptions
+          addBlockedSite={(url: string) =>
+            ApiController.addBlockedSite(props.filterId, url).then(
+              loadBlockedSites
             )
           }
-          addBlacklistException={(url: string) =>
-            ApiController.addBlacklistException(props.filterId, url).then(
-              loadBlacklistExceptions
+          addAllowedSite={(url: string) =>
+            ApiController.addAllowedSite(props.filterId, url).then(
+              loadAllowedSites
             )
           }
-          removeWhitelistException={(url: string) =>
-            ApiController.removeWhitelistException(props.filterId, url).then(
-              loadWhitelistExceptions
+          removeBlockedSite={(url: string) =>
+            ApiController.removeBlockedSite(props.filterId, url).then(
+              loadBlockedSites
             )
           }
-          removeBlacklistException={(url: string) =>
-            ApiController.removeBlacklistException(props.filterId, url).then(
-              loadBlacklistExceptions
+          removeAllowedSite={(url: string) =>
+            ApiController.removeAllowedSite(props.filterId, url).then(
+              loadAllowedSites
             )
           }
         />
