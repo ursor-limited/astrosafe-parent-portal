@@ -65,7 +65,13 @@ const PageLayout = (props: {
       {!deviceId ? (
         <ConnectBar mobile={!!props.mobile} openConnect={props.openConnect} />
       ) : null}
-      <Stack spacing="20px" height="100%" overflow="scroll" pt="20px">
+      <Stack
+        spacing="20px"
+        height="100%"
+        overflow="scroll"
+        pt="20px"
+        boxSizing="border-box"
+      >
         {props.children}
       </Stack>
       {landingViewOpen ? (

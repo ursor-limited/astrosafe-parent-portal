@@ -33,7 +33,7 @@ export interface IContent {
 
 export interface IContentCard {
   type: AstroContent;
-  content: IContent;
+  details: IContent;
 }
 
 export interface ILink extends IContent {
@@ -162,18 +162,18 @@ export default function HomePageContents(props: {
             [
               ...f.links.map((l) => ({
                 type: "link" as AstroContent,
-                content: l,
+                details: l,
               })),
               ...f.videos.map((v) => ({
                 type: "video" as AstroContent,
-                content: v,
+                details: v,
               })),
               ...f.channels.map((c) => ({
                 type: "channel" as AstroContent,
-                content: c,
+                details: c,
               })),
             ],
-            (c) => c.content.createdAt
+            (c) => c.details.createdAt
           )
         );
       }),
@@ -268,54 +268,54 @@ export default function HomePageContents(props: {
                     ...columns.map((column, i) => (
                       <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                         {column.map((x, j) => (
-                          <Stack key={x.content.id}>
+                          <Stack key={x.details.id}>
                             <UrsorFadeIn
                               delay={300 + (j * 150 + i * 80)}
                               duration={800}
                             >
                               {x.type === "link" ? (
                                 <LinkCard
-                                  {...(x.content as ILink)}
+                                  {...(x.details as ILink)}
                                   onClick={() => null}
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "link"
                                     )
                                   }
                                   flipFavorite={() =>
-                                    flipFavorite(x.content.id, "link")
+                                    flipFavorite(x.details.id, "link")
                                   }
                                 />
                               ) : x.type === "video" ? (
                                 <VideoCard
-                                  {...(x.content as IVideo)}
+                                  {...(x.details as IVideo)}
                                   onClick={() => null}
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "video"
                                     )
                                   }
                                   setFavorite={() =>
-                                    flipFavorite(x.content.id, "video")
+                                    flipFavorite(x.details.id, "video")
                                   }
                                 />
                               ) : x.type === "channel" ? (
                                 <ChannelCard
-                                  {...(x.content as IChannel)}
+                                  {...(x.details as IChannel)}
                                   onClick={() => null}
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "channel"
                                     )
                                   }
                                   setFavorite={() =>
-                                    flipFavorite(x.content.id, "channel")
+                                    flipFavorite(x.details.id, "channel")
                                   }
                                 />
                               ) : null}
