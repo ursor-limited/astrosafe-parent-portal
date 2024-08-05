@@ -62,7 +62,7 @@ class ApiController {
     );
   }
   static async getDeviceFolders(id: IDevice["id"]) {
-    return get(`devices/${id}/content/buckets`).then((response: any) =>
+    return get(`content/buckets?deviceId=${id}`).then((response: any) =>
       response.json()
     );
   }

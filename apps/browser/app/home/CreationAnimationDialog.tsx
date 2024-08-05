@@ -10,7 +10,12 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import { getRemoveTopCardAnimation } from "../onboarding/contents/views/content-selection/card-stack";
-import Confetti from "./Confetti";
+import dynamic from "next/dynamic";
+
+const Confetti = dynamic(
+  () => import("./Confetti"),
+  { ssr: false } // not including this component on server-side due to its dependence on 'document'
+);
 
 const CARD_PERIOD = 3000;
 

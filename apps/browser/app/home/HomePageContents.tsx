@@ -115,6 +115,12 @@ export default function HomePageContents(props: {
     }
   };
 
+  useEffect(() => {
+    new WebSocket(
+      "wss://api.astrosafe.co/sessions/groups/1?deviceId=1&isDevice=true"
+    );
+  }, []);
+
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     1
@@ -132,10 +138,10 @@ export default function HomePageContents(props: {
   // }, [deviceId]);
 
   const [folders, setFolders] = useState<IContentBucket[] | undefined>();
-  // useEffect(() => {
-  //   deviceId &&
-  //     ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
-  // }, [deviceId]);
+  useEffect(() => {
+    deviceId &&
+      ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
+  }, [deviceId]);
 
   const [selectedFolderId, setSelectedFolderId] = useState<
     IContentBucket["id"] | undefined
@@ -191,7 +197,7 @@ export default function HomePageContents(props: {
   }, [nColumns, currentFolderContents]);
 
   const [creationAnimationDialogOpen, setCreationAnimationDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   const [avatarSelectionDialogOpen, setAvatarSelectionDialogOpen] =
     useState<boolean>(false);
@@ -206,7 +212,7 @@ export default function HomePageContents(props: {
         mobile={props.mobile}
         openConnect={props.openConnect}
       >
-        <Stack spacing="20px">
+        <Stack spacing="20px" flex={1}>
           <Stack overflow="scroll" height="162px">
             <Stack
               direction="row"
@@ -322,7 +328,7 @@ export default function HomePageContents(props: {
                 </Stack>
               ) : (
                 <Stack
-                  height={props.mobile ? undefined : "457px"}
+                  height={props.mobile ? "100%" : "457px"}
                   justifyContent="center"
                   alignItems="center"
                   spacing="13px"
