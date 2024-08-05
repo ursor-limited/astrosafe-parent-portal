@@ -27,6 +27,7 @@ const TitleRowItemCore = (
         setOpen(true);
         props.callback?.();
       }}
+      alignItems="center"
     >
       {props.image}
       <Stack justifyContent="center">
@@ -51,7 +52,10 @@ const TitleRowItemCore = (
         </Stack>
       ) : null}
       {props.options && props.options.length > 0 ? (
-        <ChevronDown height="32px" width="32px" />
+        <ChevronDown
+          height={props.isMobile ? "24px" : "32px"}
+          width={props.isMobile ? "24px" : "32px"}
+        />
       ) : null}
     </Stack>
   );

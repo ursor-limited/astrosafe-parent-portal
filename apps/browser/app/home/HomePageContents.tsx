@@ -206,7 +206,7 @@ export default function HomePageContents(props: {
     useState<boolean>(false);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   return (
     <>

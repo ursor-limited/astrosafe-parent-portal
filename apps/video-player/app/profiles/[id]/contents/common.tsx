@@ -65,8 +65,8 @@ export default function ProfilePage(props: {
         <Stack position="relative" borderRadius="100%">
           <Stack borderRadius="100%" overflow="hidden">
             <Image
-              height={36}
-              width={36}
+              height={props.isMobile ? 24 : 36}
+              width={props.isMobile ? 24 : 36}
               src={device?.profileAvatarUrl ?? ""}
               alt="profile avatar"
             />
@@ -91,9 +91,10 @@ export default function ProfilePage(props: {
         imageUrl: d.profileAvatarUrl,
         callback: () => router.push(`/profiles/${d.id}`),
       })),
-      label: device?.deviceType
-        ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]
-        : undefined,
+      label:
+        !props.isMobile && device?.deviceType
+          ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]
+          : undefined,
     },
   ];
 

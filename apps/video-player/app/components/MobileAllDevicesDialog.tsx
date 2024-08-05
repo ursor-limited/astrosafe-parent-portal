@@ -8,6 +8,7 @@ import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
 import DeviceCard from "../profiles/components/DeviceCard";
+import MobileDeviceCard from "../profiles/components/MobileDeviceCard";
 
 const MobileAllDevicesDialog = (props: {
   title: string;
@@ -87,14 +88,14 @@ const MobileAllDevicesDialog = (props: {
         <Stack spacing="12px">
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-              <DeviceCard
+              <MobileDeviceCard
                 {...d}
                 button={
                   <Stack onClick={() => null}>
                     <XIcon height={16} width={16} />
                   </Stack>
                 }
-                hideToggles
+                noExtras
               />
             </UrsorFadeIn>
           ))}

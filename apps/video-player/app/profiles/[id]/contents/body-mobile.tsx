@@ -13,6 +13,7 @@ import DevicePageLimitsTab from "../components/LimitsTab";
 import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
+import MobileDeviceCard from "../../components/MobileDeviceCard";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -29,7 +30,7 @@ const ProfilePageMobileBody = (props: {
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
       <Stack overflow="scroll">
-        <HorizontalDeviceCard
+        <MobileDeviceCard
           {...props.device}
           onClickViewScreenTime={() => setSelectedTab("limits")}
           onUpdate={props.onUpdateDevice}

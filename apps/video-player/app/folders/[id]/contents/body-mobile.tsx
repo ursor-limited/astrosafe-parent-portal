@@ -91,12 +91,7 @@ const FolderPageMobileBody = (props: {
             variant="medium"
             bold
           >{`${props.contents.length} pieces of Content in this Folder`}</Typography>
-          <Stack
-            direction="row"
-            spacing="12px"
-            alignItems="center"
-            width="fit-content"
-          >
+          <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
               value={props.searchValue ?? ""}
               callback={(value: string) => {

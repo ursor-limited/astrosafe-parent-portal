@@ -11,6 +11,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
+import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
 
 const MobileDevicesSection = (props: {
   title: string;
@@ -31,15 +32,14 @@ const MobileDevicesSection = (props: {
           <Stack spacing="8px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-                <DeviceCard
+                <MobileDeviceCard
                   {...d}
                   button={
                     <Stack onClick={() => props.onRemove(d.id)}>
                       <XIcon height={16} width={16} />
                     </Stack>
                   }
-                  hideToggles
-                  small
+                  noExtras
                 />
               </UrsorFadeIn>
             ))}
