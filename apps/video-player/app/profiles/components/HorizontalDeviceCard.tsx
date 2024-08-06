@@ -185,8 +185,15 @@ const HorizontalDeviceCard = (
         </Stack>
         <Stack spacing="12px" direction="row" flex={1}>
           <DeviceCardCurrentUrlSection
-            url="nintendo.com"
-            title="Got to bind this up with API"
+            url={props.latestBrowsing}
+            title={props.latestBrowsing}
+            disabled={
+              !browsingEnabled
+                ? "browsingDisabled"
+                : !props.online
+                ? "offline"
+                : undefined
+            }
             faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
           />
           <DeviceCardScreenTimeSection

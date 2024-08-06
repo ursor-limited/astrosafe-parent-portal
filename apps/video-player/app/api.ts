@@ -89,7 +89,7 @@ class ApiController {
 
   static async getEnrichedDevice(id: number) {
     return get(
-      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestSearch=true`
+      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json());
   }
 
@@ -103,9 +103,9 @@ class ApiController {
     return put(`devices/${id}`, { name });
   }
 
-  static async getGroupDevices(id: IGroup["id"]) {
+  static async getGroupEnrichedDevices(id: IGroup["id"]) {
     return get(
-      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json());
   }
 

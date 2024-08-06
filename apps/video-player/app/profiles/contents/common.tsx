@@ -25,6 +25,7 @@ export type IEnrichedDevice = IDevice & {
   timeLimits?: ITimeLimit[];
   allowedTimes?: IAllowedTime[];
   config?: IDeviceConfig;
+  latestBrowsing?: string;
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
@@ -39,7 +40,7 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
 
   const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
+    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then(setDevices);
   }, []);
   const [filters, setFilters] = useState<IFilter[]>([]);
   useEffect(() => {

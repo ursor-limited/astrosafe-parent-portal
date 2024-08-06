@@ -54,7 +54,9 @@ export default function ProfilePage(props: {
 
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(DUMMY_GROUP_ID).then((d) => setAllDevices(d));
+    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then((d) =>
+      setAllDevices(d)
+    );
   }, []);
 
   const [deviceFolders, setDeviceFolders] = useState<IEnrichedContentBucket[]>(
@@ -70,7 +72,6 @@ export default function ProfilePage(props: {
   useEffect(() => {
     loadFolders();
   }, [loadFolders]);
-  console.log(deviceFolders, "lslsl");
 
   const titleRow = [
     {

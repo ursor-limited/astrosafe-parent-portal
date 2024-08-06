@@ -21,7 +21,9 @@ const AddDeviceDialog = (props: {
   const [searchValue, setSearchValue] = useState<string>("");
   const [allDevices, setAllDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(props.groupId).then((d) => setAllDevices(d));
+    ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
+      setAllDevices(d)
+    );
   }, [props.groupId]);
 
   const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([]);

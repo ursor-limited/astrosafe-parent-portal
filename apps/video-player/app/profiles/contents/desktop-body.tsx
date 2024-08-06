@@ -22,11 +22,6 @@ const AllDevicesPageDesktopBody = (props: {
   setDisconnectDialogOpen: (id: IDevice["id"]) => void;
 }) => {
   const router = useRouter();
-  // useEffect(() => {
-  //   new WebSocket(
-  //     "wss://api.astrosafe.co/sessions/groups/1?deviceId=1&isDevice=true"
-  //   );
-  // }, []);
   return (
     <PageLayout
       title="My Kids"
@@ -55,7 +50,6 @@ const AllDevicesPageDesktopBody = (props: {
                 <DeviceCard
                   {...d}
                   showBrowsing
-                  url="nintendo.com/bopioijgorfrifunrifjni"
                   filterName={
                     props.filters.find((f) => f.id === d.filterId)?.title ?? ""
                   }
