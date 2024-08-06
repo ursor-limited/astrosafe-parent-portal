@@ -13,7 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
-import FolderDeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
+import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
 
 const DevicesSection = (props: {
   title: string;
@@ -21,6 +21,7 @@ const DevicesSection = (props: {
   folderId: IContentBucket["id"];
   onAdd: () => void;
   onRemove: () => void;
+  isMobile?: boolean;
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
 
@@ -136,6 +137,7 @@ const DevicesSection = (props: {
             props.devices.find((d) => d.id === removalConfirmationDialogId)
               ?.name ?? ""
           }
+          isMobile={props.isMobile}
         />
       ) : null}
     </>

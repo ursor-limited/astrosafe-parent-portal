@@ -8,9 +8,9 @@ import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import { PALETTE } from "ui";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController from "@/app/api";
-import FolderDeviceRemovalConfirmationDialog from "@/app/folders/[id]/components/DeviceRemovalConfirmationDialog";
 import { useContext, useState } from "react";
 import NotificationContext from "@/app/components/NotificationContext";
+import FolderDeviceRemovalConfirmationDialog from "@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog";
 
 export type AstroContent = "video" | "channel" | "link";
 

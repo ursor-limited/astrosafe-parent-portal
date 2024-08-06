@@ -16,7 +16,7 @@ const AllDevicesDialog = (props: {
   open: boolean;
   onClose: () => void;
   onAdd: () => void;
-  onRemove: (id: IDevice["id"]) => void;
+  onRemove?: (id: IDevice["id"]) => void;
   devices: IDevice[];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -82,9 +82,11 @@ const AllDevicesDialog = (props: {
               <DeviceCard
                 {...d}
                 button={
-                  <Stack onClick={() => props.onRemove(d.id)}>
-                    <XIcon height={16} width={16} />
-                  </Stack>
+                  props.onRemove ? (
+                    <Stack onClick={() => props.onRemove!(d.id)}>
+                      <XIcon height={16} width={16} />
+                    </Stack>
+                  ) : undefined
                 }
                 hideToggles
                 noExtras
