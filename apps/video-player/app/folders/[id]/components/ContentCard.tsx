@@ -26,6 +26,7 @@ const ContentCard = (props: {
   noMenu?: boolean;
   onDelete: () => void;
   onOpenEditingDialog: () => void;
+  isMobile?: boolean;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -137,6 +138,7 @@ const ContentCard = (props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle="Not sure if we need some copy here too."
         onSubmit={props.onDelete}
+        isMobile={props.isMobile}
       />
     </>
   );

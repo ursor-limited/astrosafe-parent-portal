@@ -132,6 +132,7 @@ const MobileDevicesSection = (props: {
             props.devices.find((d) => d.id === removalConfirmationDialogId)
               ?.name ?? ""
           }
+          isMobile
         />
       ) : null}
     </>

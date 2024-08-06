@@ -38,7 +38,10 @@ export interface ILesson extends IContent {
   imageUrls: string[];
 }
 
-const DevicePageContentTab = (props: { folders: IEnrichedContentBucket[] }) => {
+const DevicePageContentTab = (props: {
+  folders: IEnrichedContentBucket[];
+  isMobile?: boolean;
+}) => {
   const router = useRouter();
   return (
     <Stack pt="20px">
@@ -49,6 +52,7 @@ const DevicePageContentTab = (props: { folders: IEnrichedContentBucket[] }) => {
               key={f.id}
               {...f}
               clickCallback={() => router.push(`/folders/${f.id}`)}
+              isMobile={props.isMobile}
               //thumbnailUrls={f.preview.thumbnailUrls}
             />
           </UrsorFadeIn>

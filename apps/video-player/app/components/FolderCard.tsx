@@ -33,6 +33,7 @@ const FolderCard = (
     editingCallback?: () => void;
     deletionCallback?: () => void;
     strongShadow?: boolean;
+    isMobile?: boolean;
   }
 ) => {
   const [stackCard1Color, setStackCard1Color] = useState<string>("#ffffff");
@@ -314,6 +315,7 @@ const FolderCard = (
         onClose={() => setDeletionDialogOpen(false)}
         subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
         onSubmit={deleteFolder}
+        isMobile={props.isMobile}
       />
       <FolderRenameDialog
         open={renameDialogOpen}

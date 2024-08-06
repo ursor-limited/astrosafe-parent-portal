@@ -297,6 +297,7 @@ export default function FilterPage(props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle="If you delete this Filter all of the Category configurations, blocked search terms, and blocked and allowed sites will be lost. Any Device still connected to this Filter will be set to the default."
         onSubmit={deleteFilter}
+        isMobile={props.isMobile}
       />
       <FilterRenameDialog
         open={renameDialogOpen}

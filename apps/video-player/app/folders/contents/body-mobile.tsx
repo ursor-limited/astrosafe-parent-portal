@@ -37,6 +37,7 @@ const AllFoldersPageMobileBody = (props: {
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
+                isMobile
               />
             </UrsorFadeIn>
           ))}

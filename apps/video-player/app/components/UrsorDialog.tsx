@@ -18,6 +18,7 @@ const WIDTH = "926px";
 const HEIGHT = "630px";
 export const BORDER_RADIUS = "24px";
 export const PADDING = "32px";
+export const PADDING_MOBILE = "20px";
 const BUTTON_WIDTH = "280px";
 export const DEFAULT_FADEIN_DURATION = 400;
 const LONG_FADEIN_DURATION = 2000;
@@ -153,7 +154,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
     >
       <Stack
         position="relative"
-        p={props.noPadding ? undefined : PADDING}
+        p={
+          props.noPadding
+            ? undefined
+            : props.isMobile
+            ? PADDING_MOBILE
+            : PADDING
+        }
         px={props.paddingX}
         py={props.paddingY}
         pt={props.paddingTop}
@@ -164,8 +171,8 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         {props.backButtonCallback ? (
           <Box
             position="absolute"
-            top={PADDING}
-            left={PADDING}
+            top={props.isMobile ? PADDING_MOBILE : PADDING}
+            left={props.isMobile ? PADDING_MOBILE : PADDING}
             onClick={props.backButtonCallback}
             sx={{
               cursor: "pointer",
@@ -193,11 +200,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         <Stack
           flex={1}
           spacing={
-            props.isMobile
-              ? undefined
-              : props.bunchedUpContent
-              ? "12px"
-              : "25px"
+            props.isMobile ? "24px" : props.bunchedUpContent ? "12px" : "25px"
           }
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
@@ -234,10 +237,11 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                     <Stack
                       position="absolute"
                       right={
-                        props.xButtonRight || (props.isMobile ? "-17px" : 0)
+                        props.xButtonRight || (props.isMobile ? undefined : 0)
                       }
                       top={
-                        props.xButtonTop || (props.isMobile ? "-16px" : "17px")
+                        props.xButtonTop ||
+                        (props.isMobile ? undefined : "17px")
                       }
                     >
                       {props.onCloseCallback ? (

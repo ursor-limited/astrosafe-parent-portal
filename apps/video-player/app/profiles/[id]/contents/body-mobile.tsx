@@ -65,7 +65,7 @@ const ProfilePageMobileBody = (props: {
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab />
         ) : selectedTab === "content" ? (
-          <DevicePageContentTab folders={props.folders} />
+          <DevicePageContentTab folders={props.folders} isMobile />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} />
         ) : null}

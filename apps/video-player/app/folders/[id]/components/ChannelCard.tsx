@@ -15,6 +15,7 @@ const ChannelCard = (
     onDelete?: () => void;
     onUpdate?: () => void;
     onOpenEditingDialog?: () => void;
+    isMobile?: boolean;
   }
 ) => {
   return (
@@ -26,6 +27,7 @@ const ChannelCard = (
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
+      isMobile={props.isMobile}
     >
       <Stack
         height={IMAGE_HEIGHT}

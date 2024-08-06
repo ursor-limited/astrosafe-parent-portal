@@ -16,6 +16,7 @@ const VideoCard = (
     onDelete?: () => void;
     onUpdate?: () => void;
     onOpenEditingDialog?: () => void;
+    isMobile?: boolean;
   }
 ) => {
   return (
@@ -27,6 +28,7 @@ const VideoCard = (
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
+      isMobile={props.isMobile}
     >
       <Stack
         height={IMAGE_HEIGHT}

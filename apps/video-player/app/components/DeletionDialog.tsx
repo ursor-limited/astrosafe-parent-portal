@@ -15,6 +15,7 @@ const DeletionDialog = (props: {
   onClose: () => void;
   onSubmit: () => void;
   subtitle: string;
+  isMobile?: boolean;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const notificationCtx = useContext(NotificationContext);
@@ -26,6 +27,7 @@ const DeletionDialog = (props: {
       subtitle={[props.subtitle]}
       width="422px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Stack
         flex={1}

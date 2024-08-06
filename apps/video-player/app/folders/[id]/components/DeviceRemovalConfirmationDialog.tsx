@@ -8,6 +8,7 @@ const DeviceRemovalConfirmationDialog = (props: {
   onClose: () => void;
   onSubmit: () => void;
   deviceName: IDevice["name"];
+  isMobile?: boolean;
 }) => {
   return (
     <UrsorDialog
@@ -16,6 +17,7 @@ const DeviceRemovalConfirmationDialog = (props: {
       title="Are you sure?"
       width="446px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Typography sx={{ textAlign: "center" }}>
         {`Removing ${props.deviceName} from this Folder means that its Content will no
