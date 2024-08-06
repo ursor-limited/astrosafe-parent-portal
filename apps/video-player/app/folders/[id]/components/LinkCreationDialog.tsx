@@ -93,6 +93,7 @@ const LinkCreationDialog = (props: {
           thumbnailUrl={thumbnailUrl}
           onClick={() => null}
           noPointerEvents
+          noMenu
         />
       </Stack>
     </ContentCreationDialog>

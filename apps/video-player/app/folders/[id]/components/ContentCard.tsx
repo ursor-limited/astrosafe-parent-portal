@@ -23,6 +23,7 @@ const ContentCard = (props: {
   title: IContent["title"];
   onClick?: () => void;
   noPointerEvents?: boolean;
+  noMenu?: boolean;
   onDelete: () => void;
   onOpenEditingDialog: () => void;
   children: React.ReactNode;
@@ -42,25 +43,27 @@ const ContentCard = (props: {
         overflow="hidden"
       >
         <Stack position="absolute" right="2px" bottom="32px">
-          <UrsorActionButton
-            notClickable={props.noPointerEvents}
-            iconSize="16px"
-            size="26px"
-            background="transparent"
-            actions={[
-              {
-                text: "Edit",
-                kallback: props.onOpenEditingDialog,
-                icon: PencilIcon,
-              },
-              {
-                text: "Delete",
-                kallback: () => setDeletionDialogOpen(true),
-                icon: TrashcanIcon,
-                color: PALETTE.system.red,
-              },
-            ]}
-          />
+          {!props.noMenu ? (
+            <UrsorActionButton
+              notClickable={props.noPointerEvents}
+              iconSize="16px"
+              size="26px"
+              background="transparent"
+              actions={[
+                {
+                  text: "Edit",
+                  kallback: props.onOpenEditingDialog,
+                  icon: PencilIcon,
+                },
+                {
+                  text: "Delete",
+                  kallback: () => setDeletionDialogOpen(true),
+                  icon: TrashcanIcon,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          ) : null}
         </Stack>
         {/* <Stack
           position="absolute"

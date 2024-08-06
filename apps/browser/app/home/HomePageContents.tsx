@@ -118,12 +118,6 @@ export default function HomePageContents(props: {
     }
   };
 
-  useEffect(() => {
-    new WebSocket(
-      "wss://api.astrosafe.co/sessions/groups/1?deviceId=1&isDevice=true"
-    );
-  }, []);
-
   const [deviceId, setDeviceId] = useLocalStorage<number | undefined>(
     "deviceId",
     1

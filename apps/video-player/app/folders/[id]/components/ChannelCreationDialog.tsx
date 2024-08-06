@@ -139,6 +139,7 @@ const ChannelCreationDialog = (props: {
           bannerUrl={bannerUrl}
           onClick={() => null}
           noPointerEvents
+          noMenu
         />
       </Stack>
     </ContentCreationDialog>

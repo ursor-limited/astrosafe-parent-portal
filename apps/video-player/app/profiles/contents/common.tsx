@@ -28,6 +28,16 @@ export type IEnrichedDevice = IDevice & {
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+    );
+    console.log("fuck");
+    socket.addEventListener("message", (event) => {
+      console.log("Boo", event.data);
+    });
+  }, []);
+
   const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
     ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);

@@ -63,6 +63,7 @@ export interface IUrsorDialogProps {
   paddingY?: string;
   paddingTop?: string;
   xButtonRight?: string;
+  xButtonTop?: string;
   longFadeIn?: boolean;
   bunchedUpContent?: boolean;
   scrollable?: boolean;
@@ -191,7 +192,13 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
         ) : null}
         <Stack
           flex={1}
-          spacing={props.bunchedUpContent ? "12px" : "25px"}
+          spacing={
+            props.isMobile
+              ? undefined
+              : props.bunchedUpContent
+              ? "12px"
+              : "25px"
+          }
           justifyContent={props.bunchedUpContent ? undefined : "space-between"}
           alignItems="center"
           sx={_.isNumber(props.step) ? animation : null}
@@ -201,7 +208,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
           props.supertitle ||
           props.onCloseCallback ? (
             <Stack
-              spacing={props.isMobile ? "6px" : "12px"}
+              spacing={props.isMobile ? "0px" : "12px"}
               width="100%"
               alignItems="center"
               textAlign="center"
@@ -226,8 +233,12 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                   >
                     <Stack
                       position="absolute"
-                      right={props.isMobile ? "-17px" : props.xButtonRight ?? 0}
-                      top={props.isMobile ? "-16px" : "17px"}
+                      right={
+                        props.xButtonRight || (props.isMobile ? "-17px" : 0)
+                      }
+                      top={
+                        props.xButtonTop || (props.isMobile ? "-16px" : "17px")
+                      }
                     >
                       {props.onCloseCallback ? (
                         <Box
@@ -242,7 +253,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                             zIndex: Z_INDEX,
                           }}
                         >
-                          <X height={props.isMobile ? "22px" : "27px"} />
+                          <X height={props.isMobile ? "26px" : "27px"} />
                         </Box>
                       ) : null}
                     </Stack>

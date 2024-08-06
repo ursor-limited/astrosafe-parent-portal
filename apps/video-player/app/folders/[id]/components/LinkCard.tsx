@@ -11,6 +11,7 @@ const LinkCard = (
   props: Omit<ILink, "createdAt"> & {
     onClick: () => void;
     noPointerEvents?: boolean;
+    noMenu?: boolean;
     onDelete?: () => void;
     onOpenEditingDialog?: () => void;
   }
@@ -21,6 +22,7 @@ const LinkCard = (
       title={props.title}
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
+      noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
     >

@@ -115,7 +115,10 @@ export const DeviceCardScreenTimeSection = (props: {
         >
           <Stack
             height="100%"
-            width={`${(100 * props.elapsedTime) / props.totalTime}%`}
+            width={`${Math.min(
+              100,
+              (100 * props.elapsedTime) / props.totalTime
+            )}%`}
             bgcolor={PALETTE.secondary.purple[1]}
             borderRadius="6px"
           />
@@ -233,25 +236,50 @@ const DeviceCard = (
           alignItems="center"
           width="94%"
         >
-          <Stack
-            minHeight={props.small ? "40px" : "92px"}
-            minWidth={props.small ? "40px" : "92px"}
-            borderRadius="100%"
-            overflow="hidden"
-            bgcolor={props.backgroundColor}
-            onClick={onClick}
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
-            }}
-          >
-            <Image
-              src={props.profileAvatarUrl}
-              height={props.small ? 40 : 92}
-              width={props.small ? 40 : 92}
-              alt="device profile"
-            />
+          <Stack position="relative">
+            <Stack
+              minHeight={props.small ? "40px" : "92px"}
+              minWidth={props.small ? "40px" : "92px"}
+              borderRadius="100%"
+              overflow="hidden"
+              bgcolor={props.backgroundColor}
+              onClick={onClick}
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
+              }}
+            >
+              <Image
+                src={props.profileAvatarUrl}
+                height={props.small ? 40 : 92}
+                width={props.small ? 40 : 92}
+                alt="device profile"
+              />
+            </Stack>
+            {props.online ? (
+              <Stack
+                position="absolute"
+                bottom={-2}
+                right={-2}
+                height="22px"
+                width="22px"
+                borderRadius="100%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={PALETTE.secondary.green[4]}
+                border={`2px solid rgb(255,255,255)`}
+                sx={{
+                  svg: {
+                    path: {
+                      fill: "rgb(255,255,255)",
+                    },
+                  },
+                }}
+              >
+                <GlobeIcon height="12px" width="12px" />
+              </Stack>
+            ) : null}
           </Stack>
           <Stack justifyContent="center" spacing="4px">
             <Stack

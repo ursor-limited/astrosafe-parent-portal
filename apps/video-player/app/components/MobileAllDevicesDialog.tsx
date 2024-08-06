@@ -97,11 +97,9 @@ const MobileAllDevicesDialog = (props: {
       <UrsorButton
         dark
         variant="tertiary"
-        size="small"
         onClick={props.onAdd}
         width="100%"
         endIcon={PlusIcon}
-        iconSize={15}
       >
         Add Device
       </UrsorButton>

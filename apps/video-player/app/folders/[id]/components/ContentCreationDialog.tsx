@@ -43,10 +43,13 @@ export default function ContentCreationDialog(
       }`}
       dynamicHeight
       noPadding={isMobile}
+      xButtonRight="20px"
+      xButtonTop="1px"
+      paddingTop="24px"
+      isMobile={isMobile}
     >
       <Stack
-        pt="16px"
-        p="16px"
+        p="24px"
         boxSizing="border-box"
         flex={1}
         width="100%"
@@ -97,11 +100,13 @@ export default function ContentCreationDialog(
               </Stack>
             ) : null}
           </Stack>
-          <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
-          <Stack width="299px">{props.children}</Stack>
+          {!isMobile ? (
+            <Stack width="1px" bgcolor={PALETTE.secondary.grey[2]} />
+          ) : null}
+          <Stack width={isMobile ? "100%" : "299px"}>{props.children}</Stack>
         </Stack>
         <UrsorButton
-          width="358px"
+          width={isMobile ? "100%" : "358px"}
           dark
           variant="tertiary"
           onClick={props.onSubmit}
