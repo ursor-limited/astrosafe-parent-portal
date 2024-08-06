@@ -121,6 +121,12 @@ class ApiController {
     );
   }
 
+  static async getGroupFolders(id: IGroup["id"]) {
+    return get(`content/buckets?groupId=${id}`).then((response: any) =>
+      response.json()
+    );
+  }
+
   static async addFolderToDevice(
     folderId: IContentBucket["id"],
     deviceId: IDevice["id"]

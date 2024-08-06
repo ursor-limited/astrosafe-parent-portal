@@ -11,7 +11,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
-import DeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
+import FolderDeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
 import ApiController from "@/app/api";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 
@@ -129,7 +129,7 @@ const MobileDevicesSection = (props: {
         onRemove={setRemovalConfirmationDialogId}
       />
       {removalConfirmationDialogId ? (
-        <DeviceRemovalConfirmationDialog
+        <FolderDeviceRemovalConfirmationDialog
           open={true}
           onClose={() => setRemovalConfirmationDialogId(undefined)}
           onSubmit={() => props.onRemove(removalConfirmationDialogId)}

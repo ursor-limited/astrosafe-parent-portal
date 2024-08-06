@@ -3,7 +3,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { Stack } from "@mui/system";
 import { Typography, UrsorButton } from "ui";
 
-const DeviceRemovalConfirmationDialog = (props: {
+const FolderDeviceRemovalConfirmationDialog = (props: {
   open: boolean;
   onClose: () => void;
   onSubmit: () => void;
@@ -25,7 +25,7 @@ const DeviceRemovalConfirmationDialog = (props: {
           {props.deviceName}
         </Typography>
         <Typography sx={{ textAlign: "center" }}>
-          from this Folder means that its Content will no longer be accessible
+          from this Folder means that its Contents will no longer be accessible
           on that Device. Are you sure you want to remove it?
         </Typography>
       </Stack>
@@ -55,4 +55,4 @@ const DeviceRemovalConfirmationDialog = (props: {
   );
 };
 
-export default DeviceRemovalConfirmationDialog;
+export default FolderDeviceRemovalConfirmationDialog;

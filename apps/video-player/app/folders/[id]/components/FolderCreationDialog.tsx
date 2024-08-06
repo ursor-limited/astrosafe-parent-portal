@@ -19,6 +19,7 @@ const FolderCreationDialog = (props: {
       subtitle={["Choose a name for", "your Folder."]}
       width="422px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Stack
         flex={1}

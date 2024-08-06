@@ -13,7 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
-import DeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
+import FolderDeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
 
 const DevicesSection = (props: {
   title: string;
@@ -128,7 +128,7 @@ const DevicesSection = (props: {
         onRemove={setRemovalConfirmationDialogId}
       />
       {removalConfirmationDialogId ? (
-        <DeviceRemovalConfirmationDialog
+        <FolderDeviceRemovalConfirmationDialog
           open={true}
           onClose={() => setRemovalConfirmationDialogId(undefined)}
           onSubmit={() => removeDevice(removalConfirmationDialogId)}

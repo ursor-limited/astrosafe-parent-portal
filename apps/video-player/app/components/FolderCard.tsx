@@ -17,6 +17,7 @@ import FolderRenameDialog from "@/app/folders/[id]/components/FolderRenameDialog
 import { IContentBucket } from "../profiles/[id]/components/ContentTab";
 import NotificationContext from "@/app/components/NotificationContext";
 import { FOLDER_DELETION_DIALOG_SUBTITLE } from "../folders/[id]/contents/common";
+import { IActionPopupItem } from "./ActionPopup";
 
 export const spin = keyframes`
   from {
@@ -32,6 +33,7 @@ const FolderCard = (
     clickCallback?: () => void;
     editingCallback?: () => void;
     deletionCallback?: () => void;
+    extraActions?: IActionPopupItem[];
     strongShadow?: boolean;
     isMobile?: boolean;
   }
@@ -142,7 +144,7 @@ const FolderCard = (
               actions={[
                 {
                   text: "Open",
-                  kallback: () => router.push(`/content/${props.id}`),
+                  kallback: () => router.push(`/folders/${props.id}`),
                   icon: ArrowUpRight,
                 },
                 {
@@ -156,6 +158,7 @@ const FolderCard = (
                   icon: TrashcanIcon,
                   color: PALETTE.system.red,
                 },
+                ...(props.extraActions || []),
               ]}
             />
           </Stack>
