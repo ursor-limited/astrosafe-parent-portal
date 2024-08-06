@@ -179,6 +179,7 @@ const FilterPageAllowedSitesSection = (props: {
           props.add(inputValue);
           setInputValue("");
         }}
+        isMobile={props.isMobile}
       />
     </>
   );

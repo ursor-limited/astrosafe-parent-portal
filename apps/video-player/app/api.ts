@@ -476,6 +476,10 @@ class ApiController {
       allowedTimesEnabled: enabled,
     });
   }
+
+  static async checkUrlTEST(url: string) {
+    return get(`devices/1/browse/${encodeURIComponent(url)}`);
+  }
 }
 
 export default ApiController;

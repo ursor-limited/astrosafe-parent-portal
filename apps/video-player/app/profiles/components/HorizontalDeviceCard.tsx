@@ -8,7 +8,7 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   DeviceCardBrowsingStatusSection,
@@ -23,6 +23,7 @@ import ApiController from "@/app/api";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
 import { IEnrichedDevice } from "../contents/common";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -145,8 +146,11 @@ const HorizontalDeviceCard = (
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
 
+  const notificationCtx = useContext(NotificationContext);
   const changeFilter = (id: IFilter["id"]) =>
-    ApiController.addFilterToDevice(id, props.id).then(props.onUpdate);
+    ApiController.addFilterToDevice(id, props.id)
+      .then(props.onUpdate)
+      .then(() => notificationCtx.success("Changed Filter"));
   return (
     <AstroCard>
       <Stack direction="row" alignItems="center" px="16px" spacing="20px">

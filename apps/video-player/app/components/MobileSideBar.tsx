@@ -61,7 +61,7 @@ const MobileSideBar = (props: {
         sx={{
           pointerEvents: props.open ? undefined : "none",
           opacity: props.open ? 1 : 0,
-          transition: "0.6s",
+          transition: "0.5s",
           backdropFilter: "blur(2px)",
         }}
         zIndex={999}
@@ -77,7 +77,7 @@ const MobileSideBar = (props: {
         boxSizing="border-box"
         sx={{
           transform: `translateX(${props.open ? 0 : "-100%"})`,
-          transition: "0.6s",
+          transition: "0.5s",
         }}
         zIndex={1000}
       >

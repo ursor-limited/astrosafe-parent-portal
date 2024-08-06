@@ -72,7 +72,7 @@ const AddDeviceDialog = (props: {
             bold
             sx={{ textAlign: "center" }}
           >
-            This Filter has been applied to all of your Devices.
+            This Content Folder is on all of your Devices
           </Typography>
         </Stack>
       ) : (

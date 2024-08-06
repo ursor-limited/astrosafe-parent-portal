@@ -19,10 +19,16 @@ const DeviceRemovalConfirmationDialog = (props: {
       dynamicHeight
       isMobile={props.isMobile}
     >
-      <Typography sx={{ textAlign: "center" }}>
-        {`Removing ${props.deviceName} from this Folder means that its Content will no
-        longer be accessible on that Device. Are you sure you want to remove it?`}
-      </Typography>
+      <Stack alignItems="center" spacing="2px">
+        <Typography sx={{ textAlign: "center" }}>Removing</Typography>
+        <Typography sx={{ textAlign: "center" }} bold>
+          {props.deviceName}
+        </Typography>
+        <Typography sx={{ textAlign: "center" }}>
+          from this Folder means that its Content will no longer be accessible
+          on that Device. Are you sure you want to remove it?
+        </Typography>
+      </Stack>
       <Stack pt="20px" flex={1} width="100%" height="100%" spacing="12px">
         <UrsorButton
           dark

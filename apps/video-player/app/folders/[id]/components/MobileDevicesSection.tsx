@@ -104,6 +104,11 @@ const MobileDevicesSection = (props: {
             size="small"
             endIcon={PlusIcon}
             onClick={props.onAdd}
+            // onClick={() =>
+            //   ApiController.checkUrlTEST("http://hs.com").then((x) =>
+            //     console.log(x, "ssss")
+            //   )
+            // }
             width="100%"
           >
             Add Device

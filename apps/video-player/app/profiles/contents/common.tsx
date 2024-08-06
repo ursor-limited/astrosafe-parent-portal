@@ -32,7 +32,6 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
     const socket = new WebSocket(
       `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
     );
-    console.log("fuck");
     socket.addEventListener("message", (event) => {
       console.log("Boo", event.data);
     });

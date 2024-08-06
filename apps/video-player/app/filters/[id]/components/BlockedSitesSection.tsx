@@ -171,6 +171,7 @@ const FilterPageBlockedSitesSection = (props: {
           props.add(inputValue);
           setInputValue("");
         }}
+        isMobile={props.isMobile}
       />
     </>
   );

@@ -8,6 +8,7 @@ const FilterWhitelistExceptionDialog = (props: {
   open: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  isMobile?: boolean;
 }) => {
   return (
     <UrsorDialog
@@ -19,6 +20,7 @@ const FilterWhitelistExceptionDialog = (props: {
       ]}
       width="422px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
         <Stack

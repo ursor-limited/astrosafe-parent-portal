@@ -27,7 +27,7 @@ const TitleRowItemCore = (
         setOpen(true);
         props.callback?.();
       }}
-      alignItems="center"
+      alignItems="flex-end"
     >
       {props.image}
       <Stack justifyContent="center">
@@ -42,7 +42,7 @@ const TitleRowItemCore = (
         </Typography>
       </Stack>
       {props.label ? (
-        <Stack justifyContent="flex-end">
+        <Stack justifyContent="flex-end" height="100%">
           <Typography
             variant={props.isMobile ? "tiny" : "normal"}
             color={PALETTE.secondary.grey[4]}
