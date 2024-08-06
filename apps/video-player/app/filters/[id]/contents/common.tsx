@@ -164,19 +164,60 @@ export default function FilterPage(props: {
       router.push("/filters")
     );
 
+  const flipCategory = (id: IFilterCategory["categoryId"]) => {
+    if (allowedCategories.includes(id)) {
+      setAllowedCategories(allowedCategories.filter((sid) => sid !== id));
+      ApiController.removeWhitelistCategory(props.filterId, id);
+    } else {
+      setAllowedCategories([...allowedCategories, id]);
+      ApiController.addWhitelistCategory(props.filterId, id);
+    }
+  };
+
+  const addToBlockedSearchWords = (word: string) => {
+    setBlockedSearchWords([...blockedSearchWords, word]);
+    ApiController.addBlockedSearchWord(props.filterId, word);
+  };
+
+  const removeFromBlockedSearchWords = (word: string) => {
+    setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word));
+    ApiController.removeBlockedSearchWord(props.filterId, word);
+  };
+
+  const addBlockedSite = (url: string) =>
+    ApiController.addBlockedSite(props.filterId, url)
+      .then(loadBlockedSites)
+      .then(() => notificationCtx.success("Added blocked site."));
+
+  const addAllowedSite = (url: string) =>
+    ApiController.addAllowedSite(props.filterId, url)
+      .then(loadAllowedSites)
+      .then(() => notificationCtx.success("Added allowed site."));
+
+  const removeBlockedSite = (url: string) =>
+    ApiController.removeBlockedSite(props.filterId, url)
+      .then(loadBlockedSites)
+      .then(() => notificationCtx.negativeSuccess("Removed blocked site."));
+
+  const removeAllowedSite = (url: string) =>
+    ApiController.removeAllowedSite(props.filterId, url)
+      .then(loadAllowedSites)
+      .then(() => notificationCtx.negativeSuccess("Removed allowed site."));
+
+  const applyFilterToDevice = (id: IDevice["id"]) =>
+    ApiController.addFilterToDevice(props.filterId, id).then(() => {
+      setAddDeviceDialogOpen(false);
+      loadDevices();
+      notificationCtx.success("Applied this Filter to Device.");
+    });
+
   return filter ? (
     <>
       {props.isMobile ? (
         <FilterPageMobileBody
           filterId={props.filterId}
           filter={filter}
-          flipCategory={(id) =>
-            setAllowedCategories(
-              allowedCategories.includes(id)
-                ? allowedCategories.filter((sid) => sid !== id)
-                : [...allowedCategories, id]
-            )
-          }
+          flipCategory={(id) => flipCategory}
           devices={devices}
           actions={actions}
           categories={categories}
@@ -184,54 +225,22 @@ export default function FilterPage(props: {
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
-          addToBlockedSearchWords={(word) => {
-            setBlockedSearchWords([...blockedSearchWords, word]);
-            ApiController.addBlockedSearchWord(props.filterId, word);
-          }}
-          removeFromBlockedSearchWords={(word) => {
-            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word));
-            ApiController.removeBlockedSearchWord(props.filterId, word);
-          }}
-          setExceptionDialogOpen={(url) => setExceptionDialogOpen(true)}
+          addToBlockedSearchWords={addToBlockedSearchWords}
+          removeFromBlockedSearchWords={removeFromBlockedSearchWords}
+          setExceptionDialogOpen={() => setExceptionDialogOpen(true)}
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
-          addBlockedSite={(url: string) =>
-            ApiController.addBlockedSite(props.filterId, url).then(
-              loadBlockedSites
-            )
-          }
-          addAllowedSite={(url: string) =>
-            ApiController.addAllowedSite(props.filterId, url).then(
-              loadAllowedSites
-            )
-          }
-          removeBlockedSite={(url: string) =>
-            ApiController.removeBlockedSite(props.filterId, url).then(
-              loadBlockedSites
-            )
-          }
-          removeAllowedSite={(url: string) =>
-            ApiController.removeAllowedSite(props.filterId, url).then(
-              loadAllowedSites
-            )
-          }
+          addBlockedSite={addBlockedSite}
+          addAllowedSite={addAllowedSite}
+          removeBlockedSite={removeBlockedSite}
+          removeAllowedSite={removeAllowedSite}
         />
       ) : (
         <FilterPageDesktopBody
           filterId={props.filterId}
           filter={filter}
-          flipCategory={(id) => {
-            if (allowedCategories.includes(id)) {
-              setAllowedCategories(
-                allowedCategories.filter((sid) => sid !== id)
-              );
-              ApiController.removeWhitelistCategory(props.filterId, id);
-            } else {
-              setAllowedCategories([...allowedCategories, id]);
-              ApiController.addWhitelistCategory(props.filterId, id);
-            }
-          }}
+          flipCategory={flipCategory}
           devices={devices}
           actions={actions}
           categories={categories}
@@ -239,38 +248,16 @@ export default function FilterPage(props: {
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
-          addToBlockedSearchWords={(word) => {
-            setBlockedSearchWords([...blockedSearchWords, word]);
-            ApiController.addBlockedSearchWord(props.filterId, word);
-          }}
-          removeFromBlockedSearchWords={(word) => {
-            setBlockedSearchWords(blockedSearchWords.filter((w) => w !== word));
-            ApiController.removeBlockedSearchWord(props.filterId, word);
-          }}
-          setExceptionDialogOpen={(url) => setExceptionDialogOpen(true)}
+          addToBlockedSearchWords={addToBlockedSearchWords}
+          removeFromBlockedSearchWords={removeFromBlockedSearchWords}
+          setExceptionDialogOpen={() => setExceptionDialogOpen(true)}
           titleRow={titleRow}
           onRemoveDevice={loadDevices}
           setAddDeviceDialogOpen={() => setAddDeviceDialogOpen(true)}
-          addBlockedSite={(url: string) =>
-            ApiController.addBlockedSite(props.filterId, url).then(
-              loadBlockedSites
-            )
-          }
-          addAllowedSite={(url: string) =>
-            ApiController.addAllowedSite(props.filterId, url).then(
-              loadAllowedSites
-            )
-          }
-          removeBlockedSite={(url: string) =>
-            ApiController.removeBlockedSite(props.filterId, url).then(
-              loadBlockedSites
-            )
-          }
-          removeAllowedSite={(url: string) =>
-            ApiController.removeAllowedSite(props.filterId, url).then(
-              loadAllowedSites
-            )
-          }
+          addBlockedSite={addBlockedSite}
+          addAllowedSite={addAllowedSite}
+          removeBlockedSite={removeBlockedSite}
+          removeAllowedSite={removeAllowedSite}
         />
       )}
       {devices ? (
@@ -281,13 +268,7 @@ export default function FilterPage(props: {
           title="Apply to a Device"
           subtitle={["Replace a Device's current Filter", "with this one."]}
           addedDevices={devices}
-          onAdd={(id) => {
-            ApiController.addFilterToDevice(props.filterId, id).then(() => {
-              setAddDeviceDialogOpen(false);
-              loadDevices();
-              notificationCtx.success("Applied this Filter to Device.");
-            });
-          }}
+          onAdd={applyFilterToDevice}
           isMobile={props.isMobile}
         />
       ) : null}

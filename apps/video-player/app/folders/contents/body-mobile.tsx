@@ -37,6 +37,8 @@ const AllFoldersPageMobileBody = (props: {
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
+                editingCallback={props.onUpdate}
+                deletionCallback={props.onUpdate}
                 isMobile
               />
             </UrsorFadeIn>

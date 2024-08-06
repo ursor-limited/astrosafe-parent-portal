@@ -9,7 +9,11 @@ export interface IInfoButtonProps {
   body: string;
 }
 
-const InfoButton = (props: { title: string; body: string }) => {
+const InfoButton = (props: {
+  title: string;
+  body: string;
+  rightAlign?: boolean;
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <UrsorPopover
@@ -30,7 +34,7 @@ const InfoButton = (props: { title: string; body: string }) => {
         </Stack>
       }
       closeCallback={() => setOpen(false)}
-      placement="left"
+      placement={props.rightAlign ? "right" : "left"}
       noPadding
       zIndex={9999}
     >

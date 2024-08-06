@@ -141,6 +141,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setLinkEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : x.type === "video" ? (
                         <VideoCard
@@ -150,6 +151,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setVideoEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : x.type === "channel" ? (
                         <ChannelCard
@@ -159,6 +161,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setChannelEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : null}
                     </UrsorFadeIn>

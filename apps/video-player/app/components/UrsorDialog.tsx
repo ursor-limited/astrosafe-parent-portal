@@ -277,7 +277,7 @@ export default function UrsorDialog(props: IUrsorDialogProps) {
                 </Stack>
               ) : null}
               {props.subtitle ? (
-                <Stack alignItems="center">
+                <Stack alignItems="center" pt="6px">
                   {windowWidth < 750 ? (
                     <Typography
                       variant={props.isMobile ? "normal" : "medium"}

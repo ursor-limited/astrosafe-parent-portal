@@ -120,6 +120,7 @@ const ChannelCreationDialog = (props: {
               <InfoButton
                 title="Boo"
                 body="Kirby is so much better than Jigglypuff"
+                rightAlign
               />
             </Stack>
           </Stack>

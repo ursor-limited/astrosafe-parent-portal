@@ -356,6 +356,7 @@ export default function FolderPage(props: {
         onClose={() => setDeletionDialogOpen(false)}
         subtitle={FOLDER_DELETION_DIALOG_SUBTITLE}
         onSubmit={deleteFolder}
+        isMobile={props.isMobile}
       />
     </>
   );

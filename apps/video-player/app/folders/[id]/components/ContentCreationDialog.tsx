@@ -42,14 +42,9 @@ export default function ContentCreationDialog(
         CONTENT_DISPLAY_NAMES[props.type]
       }`}
       dynamicHeight
-      noPadding={isMobile}
-      xButtonRight="20px"
-      xButtonTop="1px"
-      paddingTop="24px"
       isMobile={isMobile}
     >
       <Stack
-        p="24px"
         boxSizing="border-box"
         flex={1}
         width="100%"
