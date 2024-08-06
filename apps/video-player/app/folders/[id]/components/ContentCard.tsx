@@ -136,7 +136,10 @@ const ContentCard = (props: {
         open={deletionDialogOpen}
         type={props.type}
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle="If you delete this Folder all of the Contents within the Folder will also be deleted and it will no longer be accessible on the assigned Devices."
+        subtitle={`Are you sure that you want to get rid of this ${_.capitalize(
+          props.type
+        )}?`}
+        noConfirmation
         onSubmit={props.onDelete}
         isMobile={props.isMobile}
       />

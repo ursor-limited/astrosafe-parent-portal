@@ -175,7 +175,7 @@ const FolderPageDesktopBody = (props: {
                   ...columns.map((column, i) => (
                     <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                       {column.map((x, j) => (
-                        <Stack key={x.content.url}>
+                        <Stack key={`${x.content.id}${x.type}`}>
                           <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
                             {x.type === "link" ? (
                               <LinkCard

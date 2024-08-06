@@ -131,7 +131,7 @@ const FolderPageMobileBody = (props: {
             {props.contents.length > 0 ? (
               <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
-                  <Stack key={x.content.id}>
+                  <Stack key={`${x.content.id}${x.type}`}>
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === "link" ? (
                         <LinkCard
