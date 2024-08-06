@@ -2,18 +2,21 @@ import { Stack } from "@mui/system";
 import { IDevice } from "../filters/[id]/contents/common";
 import UrsorFadeIn from "./UrsorFadeIn";
 import XIcon from "@/images/icons/X.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { BACKDROP_STYLE, BORDER_RADIUS } from "./UrsorDialog";
 import { Dialog } from "@mui/material";
 import { Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import { SearchInput } from "./SearchInput";
-import DeviceCard from "../profiles/components/DeviceCard";
+import MobileDeviceCard from "../profiles/components/MobileDeviceCard";
+import DynamicCardGrid from "./DynamicCardGrid";
 
 const MobileAllDevicesDialog = (props: {
   title: string;
   open: boolean;
   onClose: () => void;
   onAdd: () => void;
+  onRemove: (id: IDevice["id"]) => void;
   devices: IDevice[];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -47,7 +50,7 @@ const MobileAllDevicesDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack spacing="32px">
+      <Stack spacing="32px" flex={1}>
         <Stack
           justifyContent="space-between"
           alignItems="center"
@@ -66,40 +69,40 @@ const MobileAllDevicesDialog = (props: {
               <XIcon height="22px" width="22px" />
             </Stack>
           </Stack>
-          <Stack direction="row" spacing="12px" alignItems="center">
-            <UrsorButton
-              dark
-              variant="tertiary"
-              size="small"
-              onClick={props.onAdd}
-            >
-              Add Device
-            </UrsorButton>
-            <SearchInput
-              value={searchValue}
-              callback={setSearchValue}
-              clearCallback={() => setSearchValue("")}
-              grey
-              fullWidth
-            />
-          </Stack>
+          <SearchInput
+            value={searchValue}
+            callback={setSearchValue}
+            clearCallback={() => setSearchValue("")}
+            grey
+            fullWidth
+            iconSize="18px"
+          />
         </Stack>
-        <Stack spacing="12px">
+        <DynamicCardGrid cardWidth="150px" columnGap="12px" rowGap="12px">
           {filteredDevices.map((d, i) => (
             <UrsorFadeIn key={i} duration={800} delay={i * 150}>
-              <DeviceCard
+              <MobileDeviceCard
                 {...d}
                 button={
-                  <Stack onClick={() => null}>
+                  <Stack onClick={() => props.onRemove(d.id)}>
                     <XIcon height={16} width={16} />
                   </Stack>
                 }
-                hideToggles
+                noExtras
               />
             </UrsorFadeIn>
           ))}
-        </Stack>
+        </DynamicCardGrid>
       </Stack>
+      <UrsorButton
+        dark
+        variant="tertiary"
+        onClick={props.onAdd}
+        width="100%"
+        endIcon={PlusIcon}
+      >
+        Add Device
+      </UrsorButton>
     </Dialog>
   );
 };

@@ -8,7 +8,7 @@ import GlobeIcon from "@/images/icons/GlobeIcon.svg";
 import CheckCircleFillIcon from "@/images/icons/CheckCircleFillIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   DeviceCardBrowsingStatusSection,
@@ -23,6 +23,7 @@ import ApiController from "@/app/api";
 import UrsorPopover from "@/app/components/UrsorPopover";
 import AstroSettingCard from "@/app/filters/[id]/components/AstroSettingCard";
 import { IEnrichedDevice } from "../contents/common";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -31,7 +32,8 @@ export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
 };
 
 export const DeviceCardFilterSection = (props: {
-  selectedFilter: IFilter["id"];
+  filterId: IFilter["id"];
+  changeFilter: (id: IFilter["id"]) => void;
 }) => {
   const [allFilters, setAllFilters] = useState<IFilter[]>([]);
   useEffect(() => {
@@ -47,15 +49,15 @@ export const DeviceCardFilterSection = (props: {
             <Stack
               key={i}
               sx={{
-                opacity: props.selectedFilter != f.id ? 0.6 : 1,
-                pointerEvents:
-                  props.selectedFilter == f.id ? "none" : undefined,
+                opacity: props.filterId != f.id ? 0.6 : 1,
+                pointerEvents: props.filterId == f.id ? "none" : undefined,
                 cursor: "pointer",
                 "&:hover": { opacity: 0.7 },
                 transition: "0.2s",
               }}
               onClick={() => {
                 setOpen(false);
+                props.changeFilter(f.id);
               }}
             >
               <AstroSettingCard
@@ -74,12 +76,12 @@ export const DeviceCardFilterSection = (props: {
                 }
                 title={f.title}
                 rightContent={
-                  props.selectedFilter == f.id ? (
+                  props.filterId == f.id ? (
                     <CheckCircleFillIcon height="24px" width="24px" />
                   ) : undefined
                 }
                 textColor={
-                  props.selectedFilter == f.id
+                  props.filterId == f.id
                     ? PALETTE.secondary.purple[2]
                     : undefined
                 }
@@ -119,7 +121,7 @@ export const DeviceCardFilterSection = (props: {
                 <FilterIcon direction="row" height="20px" width="20px" />
               </Stack>
               <Typography bold color={PALETTE.secondary.grey[5]}>
-                {allFilters?.find((f) => f.id == props.selectedFilter)?.title}
+                {allFilters?.find((f) => f.id == props.filterId)?.title}
               </Typography>
             </Stack>
             <ChevronDownIcon height="20px" width="20px" />
@@ -131,7 +133,10 @@ export const DeviceCardFilterSection = (props: {
 };
 
 const HorizontalDeviceCard = (
-  props: IEnrichedDevice & { onClickViewScreenTime: () => void }
+  props: IEnrichedDevice & {
+    onClickViewScreenTime: () => void;
+    onUpdate: () => void;
+  }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
   useEffect(
@@ -140,6 +145,12 @@ const HorizontalDeviceCard = (
   );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
+
+  const notificationCtx = useContext(NotificationContext);
+  const changeFilter = (id: IFilter["id"]) =>
+    ApiController.addFilterToDevice(id, props.id)
+      .then(props.onUpdate)
+      .then(() => notificationCtx.success("Changed Filter"));
   return (
     <AstroCard>
       <Stack direction="row" alignItems="center" px="16px" spacing="20px">
@@ -174,8 +185,15 @@ const HorizontalDeviceCard = (
         </Stack>
         <Stack spacing="12px" direction="row" flex={1}>
           <DeviceCardCurrentUrlSection
-            url="nintendo.com"
-            title="Got to bind this up with API"
+            url={props.latestBrowsing}
+            title={props.latestBrowsing}
+            disabled={
+              !browsingEnabled
+                ? "browsingDisabled"
+                : !props.online
+                ? "offline"
+                : undefined
+            }
             faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
           />
           <DeviceCardScreenTimeSection
@@ -183,7 +201,10 @@ const HorizontalDeviceCard = (
             elapsedTime={props.screenTime?.current ?? 0}
             onClickView={props.onClickViewScreenTime}
           />
-          <DeviceCardFilterSection selectedFilter={1} />
+          <DeviceCardFilterSection
+            filterId={props.filterId}
+            changeFilter={changeFilter}
+          />
           <DeviceCardBrowsingStatusSection
             browsingEnabled={browsingEnabled}
             flipBrowsingEnabled={() => {

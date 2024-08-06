@@ -14,6 +14,7 @@ export const SearchInput = (props: {
   fullWidth?: boolean;
   height?: string;
   grey?: boolean;
+  iconSize?: string;
 }) => {
   const [active, setActive] = useState(false);
   const [hovering, setHovering] = useState(false);
@@ -43,7 +44,10 @@ export const SearchInput = (props: {
       onMouseLeave={() => setHovering(false)}
       boxShadow={props.shadow ? "0 0 16px rgba(0,0,0,0.03)" : undefined}
     >
-      <SearchIcon width="24px" height="24px" />
+      <SearchIcon
+        width={props.iconSize || "24px"}
+        height={props.iconSize || "24px"}
+      />
       <Input
         style={{
           textAlign: "left",

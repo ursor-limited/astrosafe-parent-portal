@@ -3,58 +3,60 @@ import { SearchInput } from "@/app/components/SearchInput";
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
 import { useEffect, useState } from "react";
-import { PALETTE, Typography } from "ui";
-import { IGroup } from "../contents/common";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import Image from "next/image";
+import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-desktop";
+import { IContentBucket } from "./ContentTab";
+import { IGroup } from "@/app/folders/[id]/contents/common";
+import { IEnrichedContentBucket } from "@/app/folders/contents/common";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 
-const AddDeviceDialog = (props: {
-  title: string;
-  subtitle: string[];
+const AddFolderDialog = (props: {
   open: boolean;
   onClose: () => void;
   onAdd: (id: IDevice["id"]) => void;
-  addedDevices: IDevice[];
-  groupId: IGroup["id"];
+  openCreateNewDialog: () => void;
+  addedFolders: IEnrichedContentBucket[];
   isMobile?: boolean;
+  groupId: IGroup["id"];
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
-  const [allDevices, setAllDevices] = useState<IDevice[]>([]);
+  const [allFolders, setAllFolders] = useState<IContentBucket[]>([]);
   useEffect(() => {
-    ApiController.getGroupEnrichedDevices(props.groupId).then((d) =>
-      setAllDevices(d)
-    );
+    ApiController.getGroupFolders(props.groupId).then((d) => setAllFolders(d));
   }, [props.groupId]);
 
-  const [nonAddedDevices, setNonAddedDevices] = useState<IDevice[]>([]);
+  const [nonAddedFolders, setNonAddedFolders] = useState<IContentBucket[]>([]);
   useEffect(
     () =>
-      setNonAddedDevices(
-        allDevices.filter(
-          (d) => !props.addedDevices.find((device) => device.id === d.id)
+      setNonAddedFolders(
+        allFolders.filter(
+          (d) => !props.addedFolders.find((device) => device.id === d.id)
         )
       ),
-    [allDevices, props.addedDevices]
+    [allFolders, props.addedFolders]
   );
 
-  const [filteredDevices, setFilteredDevices] = useState<IDevice[]>([]);
+  const [filteredFolders, setFilteredFolders] = useState<IContentBucket[]>([]);
   useEffect(
     () =>
-      setFilteredDevices(
-        nonAddedDevices.filter(
+      setFilteredFolders(
+        nonAddedFolders.filter(
           (d) =>
             !searchValue ||
-            d.name.toLowerCase().includes(searchValue.toLowerCase())
+            d.title.toLowerCase().includes(searchValue.toLowerCase())
         )
       ),
-    [nonAddedDevices, searchValue]
+    [nonAddedFolders, searchValue]
   );
   return (
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
-      title={props.title}
-      subtitle={props.subtitle}
+      title="Add a Folder"
+      subtitle={[
+        "Add all of the Content from the selected Folder to this Device. Or create a new one.",
+      ]}
       width="434px"
       height={props.isMobile ? "76%" : undefined}
       isMobile={props.isMobile}
@@ -67,19 +69,19 @@ const AddDeviceDialog = (props: {
         height="41px"
         grey
       />
-      {nonAddedDevices.length === 0 ? (
+      {nonAddedFolders.length === 0 ? (
         <Stack flex={1} justifyContent="center" width="66%">
           <Typography
             color={PALETTE.secondary.grey[3]}
             bold
             sx={{ textAlign: "center" }}
           >
-            This Content Folder is on all of your Devices
+            All of your Content Folders are already on this Device.
           </Typography>
         </Stack>
       ) : (
-        <Stack pt="16px" spacing="16px" width="100%">
-          {filteredDevices.map((d) => (
+        <Stack pt="16px" spacing="16px" width="100%" flex={1}>
+          {filteredFolders.map((d) => (
             <Stack
               key={d.id}
               direction="row"
@@ -92,7 +94,7 @@ const AddDeviceDialog = (props: {
               }}
               onClick={() => props.onAdd(d.id)}
             >
-              <Stack
+              {/* <Stack
                 borderRadius="100%"
                 overflow="hidden"
                 minWidth={23}
@@ -104,16 +106,25 @@ const AddDeviceDialog = (props: {
                   width={23}
                   alt="avatar"
                 />
-              </Stack>
+              </Stack> */}
               <Typography maxLines={1} bold>
-                {d.name}
+                {d.title}
               </Typography>
             </Stack>
           ))}
         </Stack>
       )}
+      <UrsorButton
+        dark
+        variant="tertiary"
+        endIcon={PlusIcon}
+        width="100%"
+        onClick={props.openCreateNewDialog}
+      >
+        Create new
+      </UrsorButton>
     </UrsorDialog>
   );
 };
 
-export default AddDeviceDialog;
+export default AddFolderDialog;

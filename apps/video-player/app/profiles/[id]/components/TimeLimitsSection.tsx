@@ -1,10 +1,8 @@
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
 import _ from "lodash";
-import { PALETTE, Typography } from "ui";
 import { ITimeLimit } from "./LimitsTab";
-import TimeMinusIcon from "@/images/icons/TimeMinusIcon.svg";
-import TimePlusIcon from "@/images/icons/TimePlusIcon.svg";
+import TimeLimitRow from "./TimeLimitRow";
 
 const TimeLimitsSection = (props: {
   timeLimits: ITimeLimit[];
@@ -24,52 +22,17 @@ const TimeLimitsSection = (props: {
   >
     <Stack spacing="36px" pb="12px">
       {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
-        <Stack
+        <TimeLimitRow
           key={day}
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="large" bold color={PALETTE.secondary.grey[3]}>
-            {_.capitalize(day)}
-          </Typography>
-          <Stack direction="row" spacing="6px" alignItems="center">
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
-              }}
-              onClick={() => props.decrement(i)}
-            >
-              <TimeMinusIcon height="20px" width="20px" />
-            </Stack>
-            <Stack width="80px" alignItems="center">
-              <Typography variant="large" bold>{`${Math.floor(
-                Math.min(
-                  (props.timeLimits.find((l) => l.day === i)?.allowedMinutes ??
-                    0) / 60
-                )
-              )}:${
-                (props.timeLimits.find((l) => l.day === i)?.allowedMinutes ??
-                  0) % 60 || "00"
-              } hr`}</Typography>
-            </Stack>
-            <Stack
-              sx={{
-                cursor: "pointer",
-                "&:hover": { opacity: 0.6 },
-                transition: "0.2s",
-              }}
-              onClick={() => props.increment(i)}
-            >
-              <TimePlusIcon height="20px" width="20px" />
-            </Stack>
-          </Stack>
-        </Stack>
+          dayName={day}
+          decrement={() => props.decrement(i)}
+          increment={() => props.increment(i)}
+          allowedMinutes={
+            props.timeLimits.find((l) => l.day === i)?.allowedMinutes ?? 0
+          }
+        />
       ))}
     </Stack>
   </AstroBentoCard>
 );
-
 export default TimeLimitsSection;

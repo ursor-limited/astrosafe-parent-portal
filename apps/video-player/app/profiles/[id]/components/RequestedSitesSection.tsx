@@ -69,7 +69,10 @@ const RequestedSitesSection = (props: {
 }) => {
   const notificationCtx = useContext(NotificationContext);
   return (
-    <AstroBentoCard title={`${props.sites.length} requested sites`}>
+    <Stack spacing="12px">
+      <Typography variant="large" bold>{`${props.sites.length} requested site${
+        props.sites.length === 1 ? "" : "s"
+      }`}</Typography>
       <Stack spacing="12px">
         {props.sites.slice(0, 3).map((s) => (
           <RequestedSiteRow
@@ -90,7 +93,7 @@ const RequestedSitesSection = (props: {
           />
         ))}
       </Stack>
-    </AstroBentoCard>
+    </Stack>
   );
 };
 

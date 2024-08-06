@@ -12,6 +12,7 @@ import { IDevice, IDeviceConfig } from "../../filters/[id]/contents/common";
 import AllDevicesPageDesktopBody from "./desktop-body";
 import AllDevicesPageMobileBody from "./mobile-body";
 import { IAllowedTime, ITimeLimit } from "../[id]/components/LimitsTab";
+import { IFilter } from "@/app/filters/contents/common";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -24,12 +25,26 @@ export type IEnrichedDevice = IDevice & {
   timeLimits?: ITimeLimit[];
   allowedTimes?: IAllowedTime[];
   config?: IDeviceConfig;
+  latestBrowsing?: string;
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+    );
+    socket.addEventListener("message", (event) => {
+      console.log("Boo", event.data);
+    });
+  }, []);
+
   const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(DUMMY_GROUP_ID).then(setDevices);
+    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then(setDevices);
+  }, []);
+  const [filters, setFilters] = useState<IFilter[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then(setFilters);
   }, []);
   const [renameDeviceDialogId, setRenameDeviceDialogId] = useState<
     IDevice["id"] | undefined
@@ -44,16 +59,16 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
       {props.isMobile ? (
         <AllDevicesPageMobileBody
           devices={devices}
+          filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
-          //setDownloadDialogOpen={() => setDownloadDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
           setDisconnectDialogOpen={setDisconnectDeviceDialogId}
         />
       ) : (
         <AllDevicesPageDesktopBody
           devices={devices}
+          filters={filters}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
-          //setDownloadDialogOpen={() => setDownloadDialogOpen(true)}
           setRenameDeviceDialogId={setRenameDeviceDialogId}
           setDisconnectDialogOpen={setDisconnectDeviceDialogId}
         />
@@ -92,6 +107,3 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
     </>
   );
 }
-
-// copy for deletion dialog:
-// If you delete this device all of the configurations, browsing history, and insights will be lost.  The browser on this device will also be reset and have to be set up again.

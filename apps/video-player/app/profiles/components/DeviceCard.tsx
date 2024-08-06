@@ -11,11 +11,12 @@ import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { IFilterUrl } from "@/app/filters/contents/common";
+import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 import { useElementSize } from "usehooks-ts";
+import { cleanUrl } from "../[id]/components/MobileInsightsTab";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -30,6 +31,7 @@ export const DeviceCardSection = (props: {
   <Stack
     flex={1}
     height="72px"
+    minHeight="72px"
     boxSizing="border-box"
     px="12px"
     py="10px"
@@ -115,7 +117,10 @@ export const DeviceCardScreenTimeSection = (props: {
         >
           <Stack
             height="100%"
-            width={`${(100 * props.elapsedTime) / props.totalTime}%`}
+            width={`${Math.min(
+              100,
+              (100 * props.elapsedTime) / props.totalTime
+            )}%`}
             bgcolor={PALETTE.secondary.purple[1]}
             borderRadius="6px"
           />
@@ -134,60 +139,90 @@ export const DeviceCardScreenTimeSection = (props: {
 );
 
 export const DeviceCardCurrentUrlSection = (props: {
-  url: IFilterUrl["url"];
-  title: IFilterUrl["title"];
-  faviconUrl: IFilterUrl["imageUrl"];
-}) => (
-  <DeviceCardSection title="Browsing status">
-    <Link
-      href={getAbsoluteUrl(props.url)}
+  url?: IFilterUrl["url"];
+  title?: IFilterUrl["title"];
+  disabled?: "offline" | "browsingDisabled";
+  faviconUrl?: IFilterUrl["imageUrl"];
+}) => {
+  const router = useRouter();
+  return (
+    <DeviceCardSection title="Currently visiting">
+      {/* <Link
+      href={props.url ? getAbsoluteUrl(props.url) : undefined}
       target="_blank"
       style={{
         textDecoration: "none",
       }}
-    >
+    > */}
       <Stack
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         spacing="8px"
-        sx={{
-          cursor: "pointer",
-          transition: "0.2s",
-          "&:hover": { opacity: 0.7 },
-          svg: {
-            path: {
-              fill: PALETTE.secondary.purple[2],
-            },
-          },
-        }}
+        sx={
+          !props.disabled
+            ? {
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.7 },
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.purple[2],
+                  },
+                },
+              }
+            : undefined
+        }
+        onClick={
+          !props.disabled
+            ? () => router.push(getAbsoluteUrl(cleanUrl(props.url!)))
+            : undefined
+        }
       >
         <Stack direction="row" spacing="8px">
-          <Stack
-            height="20px"
-            width="20px"
-            borderRadius="5px"
-            overflow="hidden"
+          {!props.disabled && props.faviconUrl ? (
+            <Stack
+              height="20px"
+              width="20px"
+              borderRadius="5px"
+              overflow="hidden"
+            >
+              <Image
+                src={props.faviconUrl}
+                height={20}
+                width={20}
+                alt="favicon"
+              />
+            </Stack>
+          ) : null}
+          <Typography
+            bold
+            color={
+              props.disabled
+                ? PALETTE.secondary.grey[4]
+                : PALETTE.secondary.purple[2]
+            }
+            maxLines={1}
           >
-            <Image
-              src={props.faviconUrl}
-              height={20}
-              width={20}
-              alt="favicon"
-            />
-          </Stack>
-          <Typography bold color={PALETTE.secondary.purple[2]} maxLines={1}>
-            {props.title}
+            {props.disabled === "browsingDisabled"
+              ? "Currently locked"
+              : props.disabled === "offline"
+              ? "Offline"
+              : props.title}
           </Typography>
         </Stack>
-        <LinkExternalIcon height="20px" width="20px" />
+        {!props.disabled ? (
+          <LinkExternalIcon height="20px" width="20px" />
+        ) : null}
       </Stack>
-    </Link>
-  </DeviceCardSection>
-);
+      {/* </Link> */}
+    </DeviceCardSection>
+  );
+};
 
 const DeviceCard = (
   props: IEnrichedDevice & {
+    filterName?: IFilter["title"];
     hideToggles?: boolean;
     showBrowsing?: boolean;
     url?: string;
@@ -213,7 +248,7 @@ const DeviceCard = (
       >
         <Stack
           position="absolute"
-          top="28px"
+          top="20px"
           right="15px"
           sx={{
             cursor: "pointer",
@@ -232,25 +267,50 @@ const DeviceCard = (
           alignItems="center"
           width="94%"
         >
-          <Stack
-            minHeight={props.small ? "40px" : "92px"}
-            minWidth={props.small ? "40px" : "92px"}
-            borderRadius="100%"
-            overflow="hidden"
-            bgcolor={props.backgroundColor}
-            onClick={onClick}
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
-            }}
-          >
-            <Image
-              src={props.profileAvatarUrl}
-              height={props.small ? 40 : 92}
-              width={props.small ? 40 : 92}
-              alt="device profile"
-            />
+          <Stack position="relative">
+            <Stack
+              minHeight={props.small ? "40px" : "92px"}
+              minWidth={props.small ? "40px" : "92px"}
+              borderRadius="100%"
+              overflow="hidden"
+              bgcolor={props.backgroundColor}
+              onClick={onClick}
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
+              }}
+            >
+              <Image
+                src={props.profileAvatarUrl}
+                height={props.small ? 40 : 92}
+                width={props.small ? 40 : 92}
+                alt="device profile"
+              />
+            </Stack>
+            {props.online ? (
+              <Stack
+                position="absolute"
+                bottom={-2}
+                right={-2}
+                height="22px"
+                width="22px"
+                borderRadius="100%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={PALETTE.secondary.green[4]}
+                border={`2px solid rgb(255,255,255)`}
+                sx={{
+                  svg: {
+                    path: {
+                      fill: "rgb(255,255,255)",
+                    },
+                  },
+                }}
+              >
+                <GlobeIcon height="12px" width="12px" />
+              </Stack>
+            ) : null}
           </Stack>
           <Stack justifyContent="center" spacing="4px">
             <Stack
@@ -276,29 +336,38 @@ const DeviceCard = (
                 {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
               </Typography>
             </Stack>
-            <Stack
-              direction="row"
-              spacing="8px"
-              alignItems="center"
-              sx={{
-                svg: {
-                  path: {
-                    fill: PALETTE.system.orange,
+            {props.filterName ? (
+              <Stack
+                direction="row"
+                spacing="8px"
+                alignItems="center"
+                sx={{
+                  svg: {
+                    path: {
+                      fill: PALETTE.system.orange,
+                    },
                   },
-                },
-              }}
-            >
-              <FilterIcon height="16px" width="16px" />
-              <Typography maxLines={1}>Explorer Filter</Typography>
-            </Stack>
+                }}
+              >
+                <FilterIcon height="16px" width="16px" />
+                <Typography maxLines={1}>{props.filterName}</Typography>
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         {!props.noExtras ? (
           <>
             <Stack spacing="12px" pt="20px">
               <DeviceCardCurrentUrlSection
-                url="nintendo.com"
-                title="Got to bind this up with API"
+                url={props.latestBrowsing}
+                disabled={
+                  !browsingEnabled
+                    ? "browsingDisabled"
+                    : !props.online
+                    ? "offline"
+                    : undefined
+                }
+                title={props.latestBrowsing}
                 faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
               />
               <DeviceCardScreenTimeSection

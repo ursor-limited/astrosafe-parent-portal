@@ -63,7 +63,7 @@ const FilterCard = (
     </Stack>
     <ProfileImageRow
       imageUrls={props.deviceImageUrls}
-      deviceCount={props.devices}
+      deviceCount={props.deviceCount}
     />
   </Stack>
 );

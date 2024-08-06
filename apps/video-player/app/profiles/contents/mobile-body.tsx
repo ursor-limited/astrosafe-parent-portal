@@ -10,9 +10,11 @@ import { PALETTE, UrsorButton } from "ui";
 import { useRouter } from "next/navigation";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import DeviceCard from "../components/DeviceCard";
+import { IFilter } from "@/app/filters/contents/common";
 
 const AllDevicesPageMobileBody = (props: {
   devices: IDevice[];
+  filters: IFilter[];
   setConnectDialogOpen: () => void;
   //setDownloadDialogOpen: () => void;
   setRenameDeviceDialogId: (id: IDevice["id"]) => void;
@@ -73,6 +75,9 @@ const AllDevicesPageMobileBody = (props: {
                 {...d}
                 showBrowsing
                 url="got to bind this url up too"
+                filterName={
+                  props.filters.find((f) => f.id === d.filterId)?.title ?? ""
+                }
                 button={
                   <UrsorActionButton
                     size="16px"

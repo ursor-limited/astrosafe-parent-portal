@@ -1,7 +1,7 @@
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
-import { PALETTE, Typography } from "ui";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import AstroTabSwitch from "../components/AstroTabSwitch";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
@@ -10,9 +10,10 @@ import { useState } from "react";
 import { AstroAccountTab } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import DevicePageLimitsTab from "../components/LimitsTab";
-import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
+import MobileDeviceCard from "../../components/MobileDeviceCard";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -20,6 +21,9 @@ const ProfilePageMobileBody = (props: {
   actions: IActionPopupItem[];
   folders: IEnrichedContentBucket[];
   tab?: AstroAccountTab;
+  onUpdateDevice: () => void;
+  onUpdateFolders: () => void;
+  openAddFolderDialog: () => void;
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
@@ -27,12 +31,11 @@ const ProfilePageMobileBody = (props: {
   );
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
-      <Stack overflow="scroll">
-        <HorizontalDeviceCard
-          {...props.device}
-          onClickViewScreenTime={() => setSelectedTab("limits")}
-        />
-      </Stack>
+      <MobileDeviceCard
+        {...props.device}
+        onClickViewScreenTime={() => setSelectedTab("limits")}
+        onUpdate={props.onUpdateDevice}
+      />
       <Stack minHeight="24px" alignItems="center">
         <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
       </Stack>
@@ -59,10 +62,29 @@ const ProfilePageMobileBody = (props: {
             },
           ]}
         />
+        {selectedTab === "content" ? (
+          <UrsorButton
+            dark
+            variant="tertiary"
+            size="small"
+            endIcon={PlusIcon}
+            iconSize={18}
+            onClick={props.openAddFolderDialog}
+            width="100%"
+          >
+            Add Folder
+          </UrsorButton>
+        ) : null}
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab />
         ) : selectedTab === "content" ? (
-          <DevicePageContentTab folders={props.folders} />
+          <DevicePageContentTab
+            deviceId={props.device.id}
+            deviceName={props.device.name}
+            folders={props.folders}
+            isMobile
+            onUpdate={props.onUpdateFolders}
+          />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} />
         ) : null}

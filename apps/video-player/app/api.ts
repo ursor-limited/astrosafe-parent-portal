@@ -89,7 +89,7 @@ class ApiController {
 
   static async getEnrichedDevice(id: number) {
     return get(
-      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestSearch=true`
+      `devices/${id}?includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json());
   }
 
@@ -103,9 +103,9 @@ class ApiController {
     return put(`devices/${id}`, { name });
   }
 
-  static async getGroupDevices(id: IGroup["id"]) {
+  static async getGroupEnrichedDevices(id: IGroup["id"]) {
     return get(
-      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true`
+      `devices?groupId=${id}&includeScreenTime=true&includeConfig=true&includeTimeLimits=true&includeAllowedTimes=true&includeOnlineStatus=true&includeLatestBrowsing=true`
     ).then((response: any) => response.json());
   }
 
@@ -118,6 +118,12 @@ class ApiController {
   static async getDeviceFolders(id: IDevice["id"]) {
     return get(`content/buckets?deviceId=${id}&includePreview=true`).then(
       (response: any) => response.json()
+    );
+  }
+
+  static async getGroupFolders(id: IGroup["id"]) {
+    return get(`content/buckets?groupId=${id}`).then((response: any) =>
+      response.json()
     );
   }
 
@@ -266,16 +272,16 @@ class ApiController {
     );
   }
 
+  static async changeFilterName(id: IFilter["id"], title: IFilter["title"]) {
+    return patch(`filters/${id}`, { title });
+  }
+
   static async removeFilter(id: IFilter["id"]) {
     return dellete(`filters/${id}`);
   }
 
   static async getFilter(id: IFilter["id"]) {
     return get(`filters/${id}`).then((response: any) => response.json());
-  }
-
-  static async renameFilter(id: IFilter["id"], name: IFilter["title"]) {
-    return patch(`filters/${id}/rename`, { name });
   }
 
   static async getGroupFilters(id: IGroup["id"]) {
@@ -307,40 +313,47 @@ class ApiController {
     return post(`filters/${filterId}/devices`, { deviceId });
   }
 
-  static async getWhitelistExceptions(filterId: IFilter["id"]) {
+  static async getBlockedSites(filterId: IFilter["id"]) {
     return get(`filters/${filterId}/whitelist/exceptions`).then(
       (response: any) => response.json()
     );
   }
 
-  static async getBlacklistExceptions(filterId: IFilter["id"]) {
+  static async getAllowedSites(filterId: IFilter["id"]) {
     return get(`filters/${filterId}/blacklist/exceptions`).then(
       (response: any) => response.json()
     );
   }
 
-  static async removeWhitelistException(
+  static async removeBlockedSite(
     filterId: IFilter["id"],
     url: IFilterException["url"]
   ) {
-    return get(`filters/${filterId}/whitelist/exceptions/${url}`).then(
-      (response: any) => response.json()
+    return dellete(
+      `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
+        getAbsoluteUrl(cleanUrl(url))
+      )}`
     );
   }
 
-  static async addWhitelistException(
-    filterId: IFilter["id"],
-    url: IFilterUrl["url"]
-  ) {
+  static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
     return post(`filters/${filterId}/whitelist/exceptions`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
 
-  static async addBlacklistException(
+  static async removeAllowedSite(
     filterId: IFilter["id"],
-    url: IFilterUrl["url"]
+    url: IFilterException["url"]
   ) {
+    return dellete(
+      `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
+        getAbsoluteUrl(cleanUrl(url))
+      )}`
+    );
+  }
+
+  static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
     return post(`filters/${filterId}/blacklist/exceptions`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
@@ -468,6 +481,10 @@ class ApiController {
     return patch(`devices/${deviceId}/config/screentime/toggle`, {
       allowedTimesEnabled: enabled,
     });
+  }
+
+  static async checkUrlTEST(url: string) {
+    return get(`devices/1/browse/${encodeURIComponent(url)}`);
   }
 }
 

@@ -14,7 +14,9 @@ const DeletionDialog = (props: {
   type: AstroContent | "Folder" | "Filter";
   onClose: () => void;
   onSubmit: () => void;
+  noConfirmation?: boolean;
   subtitle: string;
+  isMobile?: boolean;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const notificationCtx = useContext(NotificationContext);
@@ -26,6 +28,7 @@ const DeletionDialog = (props: {
       subtitle={[props.subtitle]}
       width="422px"
       dynamicHeight
+      isMobile={props.isMobile}
     >
       <Stack
         flex={1}
@@ -34,27 +37,29 @@ const DeletionDialog = (props: {
         justifyContent="space-between"
         spacing="32px"
       >
-        <LabeledInputField
-          label={`Type "${INPUT_PHRASE}" to delete this ${_.capitalize(
-            props.type
-          )}`}
-        >
-          <UrsorInputField
-            value={inputValue}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setInputValue(event.target.value)
-            }
-            placeholder={INPUT_PHRASE}
-            width="100%"
-            leftAlign
-          />
-        </LabeledInputField>
+        {!props.noConfirmation ? (
+          <LabeledInputField
+            label={`Type "${INPUT_PHRASE}" to delete this ${_.capitalize(
+              props.type
+            )}`}
+          >
+            <UrsorInputField
+              value={inputValue}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setInputValue(event.target.value)
+              }
+              placeholder={INPUT_PHRASE}
+              width="100%"
+              leftAlign
+            />
+          </LabeledInputField>
+        ) : null}
         <Stack spacing="8px" width="100%">
           <UrsorButton
             dark
             variant="tertiary"
             width="100%"
-            disabled={inputValue !== INPUT_PHRASE}
+            disabled={!props.noConfirmation && inputValue !== INPUT_PHRASE}
             onClick={() => {
               props.onSubmit();
               notificationCtx.negativeSuccess(

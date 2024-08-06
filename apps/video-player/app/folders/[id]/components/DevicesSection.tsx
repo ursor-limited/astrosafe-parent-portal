@@ -13,7 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
-import DeviceRemovalConfirmationDialog from "./DeviceRemovalConfirmationDialog";
+import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
 
 const DevicesSection = (props: {
   title: string;
@@ -21,6 +21,7 @@ const DevicesSection = (props: {
   folderId: IContentBucket["id"];
   onAdd: () => void;
   onRemove: () => void;
+  isMobile?: boolean;
 }) => {
   const [hoveringOnButton, setHoveringOnButton] = useState<boolean>(false);
 
@@ -67,7 +68,7 @@ const DevicesSection = (props: {
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
             {props.devices.map((d, i) => (
-              <UrsorFadeIn key={i} duration={800} delay={i * 150}>
+              <UrsorFadeIn key={d.id} duration={800} delay={i * 150}>
                 <DeviceCard
                   {...d}
                   button={
@@ -125,9 +126,10 @@ const DevicesSection = (props: {
           props.onAdd();
           setDevicesGridDialogOpen(false);
         }}
+        onRemove={setRemovalConfirmationDialogId}
       />
       {removalConfirmationDialogId ? (
-        <DeviceRemovalConfirmationDialog
+        <FolderDeviceRemovalConfirmationDialog
           open={true}
           onClose={() => setRemovalConfirmationDialogId(undefined)}
           onSubmit={() => removeDevice(removalConfirmationDialogId)}
@@ -135,6 +137,7 @@ const DevicesSection = (props: {
             props.devices.find((d) => d.id === removalConfirmationDialogId)
               ?.name ?? ""
           }
+          isMobile={props.isMobile}
         />
       ) : null}
     </>

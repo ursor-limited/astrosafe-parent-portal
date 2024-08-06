@@ -1,8 +1,6 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { AstroBentoCard } from "./AstroBentoCard";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import XIcon from "@/images/icons/X.svg";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
 import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton, UrsorInputField } from "ui";

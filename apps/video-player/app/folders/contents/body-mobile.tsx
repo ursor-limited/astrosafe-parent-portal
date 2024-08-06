@@ -31,12 +31,15 @@ const AllFoldersPageMobileBody = (props: {
       }
     >
       <Stack pt="20px">
-        <Stack spacing="12px">
+        <Stack spacing="36px">
           {props.folders.map((f, i) => (
             <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
               <FolderCard
                 {...f}
                 clickCallback={() => router.push(`/folders/${f.id}`)}
+                editingCallback={props.onUpdate}
+                deletionCallback={props.onUpdate}
+                isMobile
               />
             </UrsorFadeIn>
           ))}

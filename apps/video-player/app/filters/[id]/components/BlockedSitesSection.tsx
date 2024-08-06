@@ -17,7 +17,8 @@ import { IFilterException } from "../contents/common";
 
 const FilterPageBlockedSitesSection = (props: {
   blockedSites: IFilterException[];
-  add: (url: string) => void;
+  add: (url: IFilterException["url"]) => void;
+  delete: (url: IFilterException["url"]) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -149,11 +150,12 @@ const FilterPageBlockedSitesSection = (props: {
                 }
               }}
               noHeaderGradient
-              getActionButtonItems={(id) => [
+              getActionButtonItems={(i) => [
                 {
                   icon: TrashcanIcon,
                   text: "Delete",
-                  kallback: () => null,
+                  kallback: () =>
+                    props.delete(props.blockedSites[parseInt(i)].url),
                   color: PALETTE.system.red,
                 },
               ]}
@@ -169,6 +171,7 @@ const FilterPageBlockedSitesSection = (props: {
           props.add(inputValue);
           setInputValue("");
         }}
+        isMobile={props.isMobile}
       />
     </>
   );

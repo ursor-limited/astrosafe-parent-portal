@@ -53,7 +53,9 @@ const FolderPageMobileBody = (props: {
     >
       <Stack spacing="24px" pb="32px">
         <MobileDevicesSection
-          title={`${props.devices.length} Devices have access to this Folder`}
+          title={`${props.devices.length} ${
+            props.devices.length === 1 ? "Device has" : "Devices have"
+          } access to this Folder`}
           devices={props.devices}
           folderId={props.folderId}
           onAdd={props.setAddDeviceDialogOpen}
@@ -91,12 +93,7 @@ const FolderPageMobileBody = (props: {
             variant="medium"
             bold
           >{`${props.contents.length} pieces of Content in this Folder`}</Typography>
-          <Stack
-            direction="row"
-            spacing="12px"
-            alignItems="center"
-            width="fit-content"
-          >
+          <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
               value={props.searchValue ?? ""}
               callback={(value: string) => {
@@ -134,7 +131,7 @@ const FolderPageMobileBody = (props: {
             {props.contents.length > 0 ? (
               <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
-                  <Stack key={x.content.id}>
+                  <Stack key={`${x.content.id}${x.type}`}>
                     <UrsorFadeIn delay={i * 80} duration={800}>
                       {x.type === "link" ? (
                         <LinkCard
@@ -144,6 +141,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setLinkEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : x.type === "video" ? (
                         <VideoCard
@@ -153,6 +151,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setVideoEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : x.type === "channel" ? (
                         <ChannelCard
@@ -162,6 +161,7 @@ const FolderPageMobileBody = (props: {
                           onOpenEditingDialog={() =>
                             props.setChannelEditingDialogId(x.content.id)
                           }
+                          isMobile
                         />
                       ) : null}
                     </UrsorFadeIn>

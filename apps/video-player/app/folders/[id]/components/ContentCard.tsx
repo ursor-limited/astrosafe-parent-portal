@@ -23,8 +23,10 @@ const ContentCard = (props: {
   title: IContent["title"];
   onClick?: () => void;
   noPointerEvents?: boolean;
+  noMenu?: boolean;
   onDelete: () => void;
   onOpenEditingDialog: () => void;
+  isMobile?: boolean;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
@@ -42,25 +44,27 @@ const ContentCard = (props: {
         overflow="hidden"
       >
         <Stack position="absolute" right="2px" bottom="32px">
-          <UrsorActionButton
-            notClickable={props.noPointerEvents}
-            iconSize="16px"
-            size="26px"
-            background="transparent"
-            actions={[
-              {
-                text: "Edit",
-                kallback: props.onOpenEditingDialog,
-                icon: PencilIcon,
-              },
-              {
-                text: "Delete",
-                kallback: () => setDeletionDialogOpen(true),
-                icon: TrashcanIcon,
-                color: PALETTE.system.red,
-              },
-            ]}
-          />
+          {!props.noMenu ? (
+            <UrsorActionButton
+              notClickable={props.noPointerEvents}
+              iconSize="16px"
+              size="26px"
+              background="transparent"
+              actions={[
+                {
+                  text: "Edit",
+                  kallback: props.onOpenEditingDialog,
+                  icon: PencilIcon,
+                },
+                {
+                  text: "Delete",
+                  kallback: () => setDeletionDialogOpen(true),
+                  icon: TrashcanIcon,
+                  color: PALETTE.system.red,
+                },
+              ]}
+            />
+          ) : null}
         </Stack>
         {/* <Stack
           position="absolute"
@@ -132,8 +136,12 @@ const ContentCard = (props: {
         open={deletionDialogOpen}
         type={props.type}
         onClose={() => setDeletionDialogOpen(false)}
-        subtitle="Not sure if we need some copy here too."
+        subtitle={`Are you sure that you want to get rid of this ${_.capitalize(
+          props.type
+        )}?`}
+        noConfirmation
         onSubmit={props.onDelete}
+        isMobile={props.isMobile}
       />
     </>
   );

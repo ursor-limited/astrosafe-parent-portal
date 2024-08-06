@@ -24,7 +24,9 @@ interface IDevicesTableRowItems {
 const DevicesTable = () => {
   const [devices, setDevices] = useState<IDevice[]>([]);
   useEffect(() => {
-    ApiController.getGroupDevices(DUMMY_GROUP_ID).then((d) => setDevices(d));
+    ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then((d) =>
+      setDevices(d)
+    );
   }, []);
 
   const TABLE_COLUMNS: IUrsorTableColumn[] = [

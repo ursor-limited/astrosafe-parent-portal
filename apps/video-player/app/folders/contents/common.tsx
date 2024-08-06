@@ -16,7 +16,7 @@ export interface IEnrichedContentBucket {
   id: IContentBucket["id"];
   title: IContentBucket["title"];
   preview: {
-    deviceCount: { devices: number };
+    deviceCount: number;
     thumbnailUrls: string[];
     avatarUrls: IDevice["profileAvatarUrl"][];
   };

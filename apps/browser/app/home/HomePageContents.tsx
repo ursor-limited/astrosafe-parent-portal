@@ -20,6 +20,9 @@ import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 import CreationAnimationDialog from "./CreationAnimationDialog";
 
+export const cleanUrl = (url: string) =>
+  url.replace("http://", "").replace("https://", "").replace("www.", "");
+
 export const DUMMY_DEVICE_ID = 1;
 
 export type AstroContent = "video" | "channel" | "link";
@@ -33,7 +36,7 @@ export interface IContent {
 
 export interface IContentCard {
   type: AstroContent;
-  content: IContent;
+  details: IContent;
 }
 
 export interface ILink extends IContent {
@@ -132,10 +135,10 @@ export default function HomePageContents(props: {
   // }, [deviceId]);
 
   const [folders, setFolders] = useState<IContentBucket[] | undefined>();
-  // useEffect(() => {
-  //   deviceId &&
-  //     ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
-  // }, [deviceId]);
+  useEffect(() => {
+    deviceId &&
+      ApiController.getDeviceFolders(deviceId).then((f) => setFolders(f));
+  }, [deviceId]);
 
   const [selectedFolderId, setSelectedFolderId] = useState<
     IContentBucket["id"] | undefined
@@ -156,18 +159,18 @@ export default function HomePageContents(props: {
             [
               ...f.links.map((l) => ({
                 type: "link" as AstroContent,
-                content: l,
+                details: l,
               })),
               ...f.videos.map((v) => ({
                 type: "video" as AstroContent,
-                content: v,
+                details: v,
               })),
               ...f.channels.map((c) => ({
                 type: "channel" as AstroContent,
-                content: c,
+                details: c,
               })),
             ],
-            (c) => c.content.createdAt
+            (c) => c.details.createdAt
           )
         );
       }),
@@ -197,7 +200,7 @@ export default function HomePageContents(props: {
     useState<boolean>(false);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   return (
     <>
@@ -206,7 +209,7 @@ export default function HomePageContents(props: {
         mobile={props.mobile}
         openConnect={props.openConnect}
       >
-        <Stack spacing="20px">
+        <Stack spacing="20px" flex={1}>
           <Stack overflow="scroll" height="162px">
             <Stack
               direction="row"
@@ -262,54 +265,66 @@ export default function HomePageContents(props: {
                     ...columns.map((column, i) => (
                       <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                         {column.map((x, j) => (
-                          <Stack key={x.content.id}>
+                          <Stack key={x.details.id}>
                             <UrsorFadeIn
                               delay={300 + (j * 150 + i * 80)}
                               duration={800}
                             >
                               {x.type === "link" ? (
                                 <LinkCard
-                                  {...(x.content as ILink)}
-                                  onClick={() => null}
+                                  {...(x.details as ILink)}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "link"
                                     )
                                   }
                                   flipFavorite={() =>
-                                    flipFavorite(x.content.id, "link")
+                                    flipFavorite(x.details.id, "link")
                                   }
                                 />
                               ) : x.type === "video" ? (
                                 <VideoCard
-                                  {...(x.content as IVideo)}
-                                  onClick={() => null}
+                                  {...(x.details as IVideo)}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "video"
                                     )
                                   }
                                   setFavorite={() =>
-                                    flipFavorite(x.content.id, "video")
+                                    flipFavorite(x.details.id, "video")
                                   }
                                 />
                               ) : x.type === "channel" ? (
                                 <ChannelCard
-                                  {...(x.content as IChannel)}
-                                  onClick={() => null}
+                                  {...(x.details as IChannel)}
+                                  onClick={() =>
+                                    router.push(
+                                      getAbsoluteUrl(cleanUrl(x.details.url))
+                                    )
+                                  }
                                   favorite={
                                     !!favorites.find(
                                       (f) =>
-                                        f.id === x.content.id &&
+                                        f.id === x.details.id &&
                                         f.type === "channel"
                                     )
                                   }
                                   setFavorite={() =>
-                                    flipFavorite(x.content.id, "channel")
+                                    flipFavorite(x.details.id, "channel")
                                   }
                                 />
                               ) : null}
@@ -321,31 +336,33 @@ export default function HomePageContents(props: {
                   ]}
                 </Stack>
               ) : (
-                <Stack
-                  height={props.mobile ? undefined : "457px"}
-                  justifyContent="center"
-                  alignItems="center"
-                  spacing="13px"
-                >
-                  <Image
-                    src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
-                    width={179}
-                    height={152}
-                    alt="empty state illustration"
-                  />
+                <UrsorFadeIn delay={600} duration={800}>
                   <Stack
-                    width={props.mobile ? "100%" : "444px"}
+                    height={props.mobile ? "100%" : "457px"}
+                    justifyContent="center"
                     alignItems="center"
+                    spacing="13px"
                   >
-                    <Typography
-                      color={PALETTE.secondary.grey[3]}
-                      sx={{ textAlign: "center" }}
-                      bold
+                    <Image
+                      src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                      width={179}
+                      height={152}
+                      alt="empty state illustration"
+                    />
+                    <Stack
+                      width={props.mobile ? "100%" : "444px"}
+                      alignItems="center"
                     >
-                      This Folder is currently empty.
-                    </Typography>
+                      <Typography
+                        color={PALETTE.secondary.grey[3]}
+                        sx={{ textAlign: "center" }}
+                        bold
+                      >
+                        This Folder is currently empty.
+                      </Typography>
+                    </Stack>
                   </Stack>
-                </Stack>
+                </UrsorFadeIn>
               )}
             </Stack>
           </Stack>

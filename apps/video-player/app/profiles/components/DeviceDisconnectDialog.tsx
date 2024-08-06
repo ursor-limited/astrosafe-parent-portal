@@ -20,7 +20,7 @@ const DeviceDisconnectDialog = (props: {
       onCloseCallback={props.onClose}
       title="Are you sure?"
       subtitle={[
-        "Disconnecting this Device means it loses access to your Filters and Folders, and will be reset back to the default settings.",
+        "If you delete this Device, all of the configurations, browsing history, and insights will be lost. The Browser on this Device will also be reset and has to be set up again.",
       ]}
       width="422px"
       height="432px"

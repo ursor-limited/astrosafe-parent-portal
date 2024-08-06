@@ -12,9 +12,11 @@ const VideoCard = (
   props: Omit<IVideo, "createdAt"> & {
     onClick: () => void;
     noPointerEvents?: boolean;
+    noMenu?: boolean;
     onDelete?: () => void;
     onUpdate?: () => void;
     onOpenEditingDialog?: () => void;
+    isMobile?: boolean;
   }
 ) => {
   return (
@@ -23,8 +25,10 @@ const VideoCard = (
       title={props.title}
       onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
+      noMenu={props.noMenu}
       onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
+      isMobile={props.isMobile}
     >
       <Stack
         height={IMAGE_HEIGHT}

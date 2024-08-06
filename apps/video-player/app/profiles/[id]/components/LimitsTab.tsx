@@ -35,7 +35,7 @@ export interface IRequestedSite {
 
 export type Weekday = "sun" | "mon" | "tue" | "wed" | "thu" | "fri" | "sat";
 
-const DAILY_LIMIT_INCREMENT = 15; // minutes
+export const DAILY_LIMIT_INCREMENT = 15; // minutes
 
 const ALLOWED_TIMES_LABELS_SMALLER_FONT_SIZE_WINDOW_WIDTH_THRESHOLD = 1536;
 const SWITCH_TO_COLUMN_WINDOW_WIDTH_THRESHOLD = 1365;

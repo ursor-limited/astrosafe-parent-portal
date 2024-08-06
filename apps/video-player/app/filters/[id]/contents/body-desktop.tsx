@@ -30,8 +30,10 @@ export default function FilterPageDesktopBody(props: {
   titleRow: ITitleRowItem[];
   setAddDeviceDialogOpen: () => void;
   onRemoveDevice: () => void;
-  addWhitelistException: (url: IFilterUrl["url"]) => void;
-  addBlacklistException: (url: IFilterUrl["url"]) => void;
+  addBlockedSite: (url: IFilterUrl["url"]) => void;
+  addAllowedSite: (url: IFilterUrl["url"]) => void;
+  removeBlockedSite: (url: IFilterUrl["url"]) => void;
+  removeAllowedSite: (url: IFilterUrl["url"]) => void;
 }) {
   return (
     <PageLayout
@@ -58,11 +60,13 @@ export default function FilterPageDesktopBody(props: {
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}
-          add={props.addWhitelistException}
+          add={props.addAllowedSite}
+          delete={props.removeAllowedSite}
         />
         <FilterPageBlockedSitesSection
           blockedSites={props.blockedSites}
-          add={props.addBlacklistException}
+          add={props.addBlockedSite}
+          delete={props.removeBlockedSite}
         />
         <FilterPageSearchWordsSection
           blockedSearchWords={props.blockedSearchWords}

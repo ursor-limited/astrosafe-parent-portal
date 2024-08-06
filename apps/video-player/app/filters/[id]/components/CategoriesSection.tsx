@@ -73,6 +73,12 @@ const FilterPageCategoriesSection = (props: {
             justifyContent="space-between"
             alignItems="center"
             direction="row"
+            onClick={() => props.flipCategory(c.categoryId)}
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.7 },
+            }}
           >
             <Stack justifyContent="space-between">
               <Stack spacing="16px" alignItems="center" direction="row">
@@ -83,7 +89,7 @@ const FilterPageCategoriesSection = (props: {
             </Stack>
             <AstroSwitch
               on={props.allowedCategories.includes(c.categoryId)}
-              callback={() => props.flipCategory(c.categoryId)}
+              callback={() => null}
             />
           </Stack>
         </UrsorFadeIn>

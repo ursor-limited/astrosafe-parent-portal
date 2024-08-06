@@ -27,7 +27,7 @@ const AvatarSelectionDialog = (props: {
   isMobile?: boolean;
 }) => {
   const [name, setName] = useState<string>("");
-  const [initialsAvatar, setInitialsAvatar] = useState<boolean>(false);
+  const [initialsAvatar, setInitialsAvatar] = useState<boolean>(true);
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [color, setColor] = useState<string | undefined>();
   const [selectedAvatarIndex, setSelectedAvatarIndex] = useState<
@@ -51,12 +51,13 @@ const AvatarSelectionDialog = (props: {
       onClose={props.onClose}
       PaperProps={{
         style: {
-          width: 746,
-          height: 590,
+          width: 766,
+          maxWidth: 766,
           borderRadius: 32,
           padding: "32px",
+          boxSizing: "border-box",
           paddingBottom: 0,
-          margin: props.isMobile ? "16px" : undefined,
+          margin: props.isMobile ? "16px" : 0,
           background: PALETTE.secondary.grey[1],
         },
       }}
@@ -65,22 +66,102 @@ const AvatarSelectionDialog = (props: {
         ".MuiBackdrop-root": BACKDROP_STYLE,
       }}
     >
-      <Stack flex={1} overflow="hidden">
+      <Stack
+        flex={1}
+        // overflow="hidden"
+      >
         <Stack
-          spacing={props.isMobile ? "28px" : "40px"}
+          spacing={props.isMobile ? "24px" : "32px"}
           justifyContent="center"
           alignItems="center"
           pt="16px"
-          overflow="hidden"
+          // overflow="hidden"
         >
-          <Stack width="240px" height="60px">
+          <Stack width="600px">
             <Typography
               variant={props.isMobile ? "h5" : "h4"}
               sx={{ textAlign: "center" }}
               color={PALETTE.secondary.grey[5]}
             >
-              Create your personal profile
+              {
+                "Grown-ups, step aside! It's time for your kids to create their profile"
+              }
             </Typography>
+          </Stack>
+          <Stack
+            minWidth="342px"
+            height="94px"
+            borderRadius="10px"
+            boxShadow="0 0 38px rgba(0,0,0,0.13)"
+            bgcolor="rgb(255,255,255)"
+            overflow="hidden"
+            // sx={{
+            //   outline: `2px solid rgb(255,255,255)`,
+            // }}
+          >
+            <Stack
+              flex={1}
+              sx={{
+                background: `linear-gradient(60deg, ${alpha(
+                  PALETTE.secondary.orange[3],
+                  0.08
+                )}, ${alpha(PALETTE.secondary.purple[2], 0.08)})`,
+              }}
+              direction="row"
+              spacing="21px"
+              width="100%"
+              alignItems="center"
+              px="18px"
+              boxSizing="border-box"
+            >
+              <Stack
+                borderRadius="100%"
+                overflow="hidden"
+                alignItems="center"
+                justifyContent="center"
+                height={props.isMobile ? 58 : 79}
+                width={props.isMobile ? 58 : 79}
+              >
+                <Stack
+                  height={props.isMobile ? 58 : 79}
+                  width={props.isMobile ? 58 : 79}
+                  borderRadius="100%"
+                  overflow="hidden"
+                  bgcolor={PALETTE.secondary.orange[3]}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {initialsAvatar ? (
+                    <Typography bold variant="h4" color="rgb(255,255,255)">
+                      {getInitials(name)}
+                    </Typography>
+                  ) : selectedAvatarIndex ? (
+                    <Image
+                      src={`${AVATAR_IMAGE_URL_BASE}${selectedAvatarIndex}.png`}
+                      height={props.isMobile ? 58 : 79}
+                      width={props.isMobile ? 58 : 79}
+                      alt="avatar"
+                    />
+                  ) : null}
+                </Stack>
+              </Stack>
+              <Stack>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color={PALETTE.secondary.grey[3]}
+                  bold
+                >
+                  Name:
+                </Typography>
+                <Typography
+                  bold
+                  sx={{ fontSize: 16 }}
+                  color={name ? undefined : PALETTE.secondary.grey[4]}
+                >
+                  {name || "Your name!"}
+                </Typography>
+              </Stack>
+            </Stack>
           </Stack>
           <UrsorInputField
             value={name}
@@ -93,8 +174,11 @@ const AvatarSelectionDialog = (props: {
             backgroundColor="rgb(255,255,255)"
             paddingLeft="0"
           />
-          <Stack position="relative" overflow="hidden">
-            <Stack
+          <Stack
+            position="relative"
+            // overflow="hidden"
+          >
+            {/* <Stack
               position="absolute"
               bottom={0}
               left={0}
@@ -111,14 +195,14 @@ const AvatarSelectionDialog = (props: {
                 transform: "translateY(1px)",
               }}
               zIndex={2}
-            />
+            /> */}
             <Stack
-              overflow="scroll"
-              ref={setGridRef}
-              onScroll={handleScroll}
+              // ref={setGridRef}
+              // onScroll={handleScroll}
               pt="10px"
+              alignItems="center"
             >
-              <Grid gap="26px" container justifyContent="center">
+              <Grid gap="16px" container justifyContent="center" width="83%">
                 {[
                   <Stack
                     key="initials"
@@ -132,12 +216,12 @@ const AvatarSelectionDialog = (props: {
                   >
                     <Stack
                       borderRadius="100%"
-                      bgcolor={PALETTE.secondary.blue[4]}
-                      overflow="hidden"
+                      bgcolor={PALETTE.secondary.orange[3]}
+                      // overflow="hidden"
                       alignItems="center"
                       justifyContent="center"
-                      height={props.isMobile ? 64 : 90}
-                      width={props.isMobile ? 64 : 90}
+                      height={props.isMobile ? 36 : 42}
+                      width={props.isMobile ? 36 : 42}
                       onClick={() => {
                         setInitialsAvatar(true);
                         //setColor(c);
@@ -146,7 +230,8 @@ const AvatarSelectionDialog = (props: {
                     >
                       <Typography
                         color="rgb(255,255,255)"
-                        variant={props.isMobile ? "h5" : "h4"}
+                        bold
+                        variant={props.isMobile ? "tiny" : "small"}
                       >
                         {getInitials(name)}
                       </Typography>
@@ -163,10 +248,10 @@ const AvatarSelectionDialog = (props: {
                         alignItems="center"
                       >
                         <Stack
-                          minWidth={props.isMobile ? "70px" : "100px"}
-                          minHeight={props.isMobile ? "70px" : "100px"}
+                          minWidth={props.isMobile ? 40 : 46}
+                          minHeight={props.isMobile ? 40 : 46}
                           borderRadius="100%"
-                          border={`${props.isMobile ? 3 : 5}px solid ${
+                          border={`${props.isMobile ? 2 : 3}px solid ${
                             PALETTE.secondary.purple[1]
                           }`}
                         />
@@ -193,11 +278,11 @@ const AvatarSelectionDialog = (props: {
                       >
                         <Stack
                           borderRadius="100%"
-                          overflow="hidden"
+                          // overflow="hidden"
                           alignItems="center"
                           justifyContent="center"
-                          height={props.isMobile ? 64 : 90}
-                          width={props.isMobile ? 64 : 90}
+                          height={props.isMobile ? 36 : 42}
+                          width={props.isMobile ? 36 : 42}
                           onClick={() => {
                             setInitialsAvatar(false);
                             // setColor(a.color);
@@ -207,8 +292,8 @@ const AvatarSelectionDialog = (props: {
                         >
                           <Image
                             src={`${AVATAR_IMAGE_URL_BASE}${i}.png`}
-                            height={props.isMobile ? 64 : 90}
-                            width={props.isMobile ? 64 : 90}
+                            height={props.isMobile ? 36 : 42}
+                            width={props.isMobile ? 36 : 42}
                             alt="avatar"
                           />
                         </Stack>
@@ -226,10 +311,10 @@ const AvatarSelectionDialog = (props: {
                             alignItems="center"
                           >
                             <Stack
-                              minWidth={props.isMobile ? "70px" : "100px"}
-                              minHeight={props.isMobile ? "70px" : "100px"}
+                              minWidth={props.isMobile ? 40 : 46}
+                              minHeight={props.isMobile ? 40 : 46}
                               borderRadius="100%"
-                              border={`${props.isMobile ? 3 : 5}px solid ${
+                              border={`${props.isMobile ? 2 : 3}px solid ${
                                 PALETTE.secondary.purple[1]
                               }`}
                             />
