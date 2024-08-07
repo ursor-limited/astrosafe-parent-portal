@@ -4,13 +4,12 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import { IAllowedTime, getISODateString } from "./LimitsTab";
 import _ from "lodash";
 import dayjs from "dayjs";
+import useNewSegmentTimes from "./useNewSegmentTimes";
 
 const DISPLAY_INTERVAL = 2; // hours
 // const MIN = 0;
 // const MAX = 24;
 const DRAG_INTERVAL = 0.25; // hours
-
-const MIN_ALLOWED_TIME_ADDITION_PERIOD = 0.75; // hour
 
 const BrowsingTimeSelectorRange = (props: {
   lineWidth: number;
@@ -266,61 +265,13 @@ const AllowedTimeRow = (props: {
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
 }) => {
-  const [newSegmentTimes, setNewSegmentTimes] = useState<
-    [number, number] | null
-  >(null);
   const [sortedTimes, setSortedTimes] = useState<IAllowedTime[]>([]);
   useEffect(
     () => setSortedTimes(_.sortBy(props.times, (t) => new Date(t.startTime))),
     [props.times]
   );
-  useEffect(() => {
-    if (sortedTimes && sortedTimes.length > 0) {
-      var possibleStartTime = 0;
-      var possibleEndTime =
-        dayjs(sortedTimes[0].startTime).utc().hour() +
-        (dayjs(sortedTimes[0].startTime).utc().minute() - 30) / 60;
-      var finalizedStartTime;
-      var finalizedEndTime;
-      for (let i = 0; i < sortedTimes.length + 1; i++) {
-        if (
-          possibleStartTime < possibleEndTime &&
-          possibleEndTime - possibleStartTime >=
-            MIN_ALLOWED_TIME_ADDITION_PERIOD
-        ) {
-          finalizedStartTime = possibleStartTime;
-          finalizedEndTime = possibleEndTime;
-          break;
-        } else if (i + 1 < sortedTimes.length) {
-          possibleStartTime =
-            dayjs(sortedTimes[i].endTime).utc().hour() +
-            (dayjs(sortedTimes[i].endTime).utc().minute() + 30) / 60;
-          possibleEndTime =
-            dayjs(sortedTimes[i + 1].startTime)
-              .utc()
-              .hour() +
-            (dayjs(sortedTimes[i + 1].startTime)
-              .utc()
-              .minute() -
-              30) /
-              60;
-        } else if (
-          i + 1 === sortedTimes.length &&
-          dayjs(sortedTimes[i].endTime).utc().hour() > 0 // if the end time's hour is 0 at this point, it is at midnight so there is no space
-        ) {
-          possibleStartTime =
-            dayjs(sortedTimes[i].endTime).utc().hour() +
-            (dayjs(sortedTimes[i].endTime).utc().minute() + 30) / 60;
-          possibleEndTime = 24;
-        }
-      }
-      if (_.isNumber(finalizedStartTime) && finalizedEndTime) {
-        setNewSegmentTimes([finalizedStartTime, finalizedEndTime]);
-      } else {
-        setNewSegmentTimes(null);
-      }
-    }
-  }, [sortedTimes]);
+  const { newSegmentTimes, clearNewSegmentTimes } =
+    useNewSegmentTimes(sortedTimes);
   return (
     <Stack direction="row" alignItems="center">
       <Stack width="120px">
@@ -342,7 +293,7 @@ const AllowedTimeRow = (props: {
           onClick={() => {
             newSegmentTimes &&
               props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
-            setNewSegmentTimes(null);
+            clearNewSegmentTimes();
           }}
           disabled={!newSegmentTimes}
         >

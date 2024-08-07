@@ -82,7 +82,7 @@ const AllDevicesPageDesktopBody = (props: {
             ))}
           </DynamicCardGrid>
         ) : (
-          <UrsorFadeIn delay={600} duration={800}>
+          <UrsorFadeIn delay={700} duration={800}>
             <QRCodeView />
           </UrsorFadeIn>
         )}

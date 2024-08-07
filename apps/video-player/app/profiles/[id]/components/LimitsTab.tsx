@@ -285,7 +285,7 @@ const DevicePageLimitsTab = (props: {
                 />
               }
               allowedTimes={allowedTimes}
-              setAllowedTimes={(id, startTime, endTime) => {
+              setAllowedTime={(id, startTime, endTime) => {
                 setAllowedTimes(
                   allowedTimes.map((t) =>
                     t.id === id ? { ...t, startTime, endTime } : t
@@ -293,6 +293,7 @@ const DevicePageLimitsTab = (props: {
                 );
                 ApiController.changeAllowedTime(id, startTime, endTime);
               }}
+              removeAllowedTime={() => null}
               addTimeLimit={addAllowedTime}
               reset={reset}
               smallerLabelFont={allowedTimesLabelsSmallerFontSize}

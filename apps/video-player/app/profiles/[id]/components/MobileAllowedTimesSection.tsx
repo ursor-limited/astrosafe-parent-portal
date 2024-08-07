@@ -4,6 +4,7 @@ import { Stack } from "@mui/system";
 import _ from "lodash";
 import { IAllowedTime } from "./LimitsTab";
 import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
+
 // const AllowedTimesSectionTimeSelector = () => {
 //   const [open, setOpen] = useState<boolean>(false);
 //   return (
@@ -23,11 +24,12 @@ import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 
 const MobileAllowedTimesSection = (props: {
   allowedTimes: IAllowedTime[];
-  setAllowedTimes: (
+  setAllowedTime: (
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
   ) => void;
+  removeAllowedTime: (id: IAllowedTime["id"]) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
@@ -45,11 +47,11 @@ const MobileAllowedTimesSection = (props: {
     topRightStuff={props.topRightElement}
   >
     {props.allowedTimes ? (
-      <Stack spacing="36px" pb="12px">
+      <Stack spacing="18px" pb="12px">
         {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
           <MobileAllowedTimeRow
             key={day}
-            dayName={day}
+            day={day === "sun" ? 0 : i + 1}
             times={props.allowedTimes.filter((t) =>
               day === "sun" ? t.day === 0 : t.day === i + 1
             )}
@@ -57,7 +59,8 @@ const MobileAllowedTimesSection = (props: {
             addAllowedTime={(startTime, endTime) =>
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
-            setAllowedTimes={props.setAllowedTimes}
+            setAllowedTime={props.setAllowedTime}
+            removeAllowedTime={props.removeAllowedTime}
           />
         ))}
       </Stack>

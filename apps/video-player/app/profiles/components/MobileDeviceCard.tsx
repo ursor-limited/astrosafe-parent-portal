@@ -47,9 +47,14 @@ export const MobileDeviceCardFilterRow = (props: {
                 setOpen(false);
                 props.changeFilter(f.id);
               }}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
             >
               <Typography variant="small">{f.title}</Typography>
-              <CheckCircleFillIcon height="16px" width="16px" />
+              {props.filterId === f.id ? (
+                <CheckCircleFillIcon height="16px" width="16px" />
+              ) : null}
             </Stack>
           ))}
         </Stack>
