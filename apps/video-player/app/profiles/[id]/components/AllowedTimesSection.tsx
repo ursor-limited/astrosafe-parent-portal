@@ -18,7 +18,7 @@ const AllowedTimesSection = (props: {
   halveLabelFrequency?: boolean;
 }) => (
   <AstroBentoCard
-    title="Allowed browsing time"
+    title="Time scheduler"
     subtitle="Select when you want the Browser to be online. Turn this off to remove schedules."
     info={{
       title: "Set when the Browser can be used",

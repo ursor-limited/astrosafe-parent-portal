@@ -1,95 +1,25 @@
+import React from "react";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import { IAllowedTime } from "./LimitsTab";
-import { PALETTE, Typography } from "ui";
-import dayjs from "dayjs";
-import PencilIcon from "@/images/icons/Pencil.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-
-const DAY_FULL_NAMES = {
-  mon: "Monday",
-  tue: "Tuesday",
-  wed: "Wednesday",
-  thu: "Thursday",
-  fri: "Friday",
-  sat: "Saturday",
-  sun: "Sunday",
-};
-
-const MobileAllowedTimeRow = (props: {
-  dayName: string;
-  times: IAllowedTime[];
-  addAllowedTime: (startTime: number, endTime: number) => void;
-  reset: () => void;
-  setAllowedTimes: (
-    id: IAllowedTime["id"],
-    startTime: IAllowedTime["startTime"],
-    endTime: IAllowedTime["endTime"]
-  ) => void;
-  smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
-}) => {
-  return (
-    <Stack spacing="4px">
-      <Typography bold color={PALETTE.secondary.grey[3]}>
-        {/* @ts-ignore */}
-        {DAY_FULL_NAMES[props.dayName]}
-      </Typography>
-      {props.times.map((t) => (
-        <Stack
-          key={t.id}
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Stack
-            borderRadius="8px"
-            bgcolor={PALETTE.secondary.grey[1]}
-            alignItems="center"
-            direction="row"
-            height="39px"
-            px="14px"
-            boxSizing="border-box"
-            spacing="10px"
-            width="fit-content"
-          >
-            <Stack alignItems="center" direction="row" spacing="5px">
-              <Typography bold>
-                {dayjs(t.startTime).format("HH:mma")}
-              </Typography>
-              <PencilIcon height="16px" width="16px" />
-            </Stack>
-            <Typography bold color={PALETTE.secondary.grey[3]}>
-              to
-            </Typography>
-            <Stack alignItems="center" direction="row" spacing="5px">
-              <Typography bold>{dayjs(t.endTime).format("HH:mma")}</Typography>
-              <PencilIcon height="16px" width="16px" />
-            </Stack>
-          </Stack>
-          <Stack
-            width="30px"
-            height="30px"
-            bgcolor={PALETTE.secondary.purple[2]}
-            borderRadius="100%"
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-              svg: {
-                path: {
-                  fill: "rgb(255,255,255)",
-                },
-              },
-            }}
-          >
-            <PlusIcon height="20px" width="20px" />
-          </Stack>
-        </Stack>
-      ))}
-    </Stack>
-  );
-};
+import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
+// const AllowedTimesSectionTimeSelector = () => {
+//   const [open, setOpen] = useState<boolean>(false);
+//   return (
+//     <UrsorPopover
+//       open={open}
+//       content={<Stack></Stack>}
+//       closeCallback={() => setOpen(false)}
+//       placement=''
+//     >
+//       <Stack alignItems="center" direction="row" spacing="5px">
+//         <Typography bold>{dayjs(t.startTime).format("HH:mma")}</Typography>
+//         <PencilIcon height="16px" width="16px" />
+//       </Stack>
+//     </UrsorPopover>
+//   );
+// };
 
 const MobileAllowedTimesSection = (props: {
   allowedTimes: IAllowedTime[];
@@ -105,7 +35,7 @@ const MobileAllowedTimesSection = (props: {
   halveLabelFrequency?: boolean;
 }) => (
   <AstroBentoCard
-    title="Allowed browsing time"
+    title="Time scheduler"
     subtitle="Select when you want the Browser to be online. Turn this off to remove schedules."
     info={{
       title: "Set when the Browser can be used",
