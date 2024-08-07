@@ -298,6 +298,7 @@ const DevicePageLimitsTab = (props: {
               reset={reset}
               smallerLabelFont={allowedTimesLabelsSmallerFontSize}
               halveLabelFrequency={halveLabelFrequency}
+              disabled={!allowedTimesEnabled}
             />
           ) : (
             <AllowedTimesSection
@@ -326,6 +327,7 @@ const DevicePageLimitsTab = (props: {
               reset={reset}
               smallerLabelFont={allowedTimesLabelsSmallerFontSize}
               halveLabelFrequency={halveLabelFrequency}
+              disabled={!allowedTimesEnabled}
             />
           )}
         </Stack>
@@ -387,6 +389,7 @@ const DevicePageLimitsTab = (props: {
               );
             }
           }}
+          disabled={!timeLimitsEnabled}
         />
       </Stack>
     </Stack>

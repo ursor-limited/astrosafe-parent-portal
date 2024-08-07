@@ -35,6 +35,7 @@ const MobileAllowedTimesSection = (props: {
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
+  disabled: boolean;
 }) => (
   <AstroBentoCard
     title="Time scheduler"
@@ -47,7 +48,15 @@ const MobileAllowedTimesSection = (props: {
     topRightStuff={props.topRightElement}
   >
     {props.allowedTimes ? (
-      <Stack spacing="18px" pb="12px">
+      <Stack
+        spacing="18px"
+        pb="12px"
+        sx={{
+          opacity: props.disabled ? 0.4 : 1,
+          pointerEvents: props.disabled ? "none" : undefined,
+          transition: "0.2s",
+        }}
+      >
         {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
           <MobileAllowedTimeRow
             key={day}

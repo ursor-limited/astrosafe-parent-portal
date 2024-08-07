@@ -9,6 +9,7 @@ const TimeLimitsSection = (props: {
   decrement: (day: number) => void;
   increment: (day: number) => void;
   topRightElement?: React.ReactNode;
+  disabled: boolean;
 }) => (
   <AstroBentoCard
     title="Daily limits"
@@ -20,7 +21,15 @@ const TimeLimitsSection = (props: {
     }}
     topRightStuff={props.topRightElement}
   >
-    <Stack spacing="36px" pb="12px">
+    <Stack
+      spacing="36px"
+      pb="12px"
+      sx={{
+        opacity: props.disabled ? 0.4 : 1,
+        pointerEvents: props.disabled ? "none" : undefined,
+        transition: "0.2s",
+      }}
+    >
       {["sun", "mon", "tue", "wed", "thu", "fri", "sat"].map((day, i) => (
         <TimeLimitRow
           key={day}
