@@ -9,7 +9,7 @@ const IMAGE_HEIGHT = 227;
 
 const LinkCard = (
   props: Omit<ILink, "createdAt"> & {
-    onClick: () => void;
+    // onClick: () => void;
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -21,7 +21,7 @@ const LinkCard = (
     <ContentCard
       type="link"
       title={props.title}
-      onClick={props.onClick}
+      // onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}

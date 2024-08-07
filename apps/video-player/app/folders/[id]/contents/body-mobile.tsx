@@ -15,7 +15,7 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import ApiController from "@/app/api";
+import ApiController, { getAbsoluteUrl } from "@/app/api";
 import {
   AstroContent,
   IChannel,
@@ -24,6 +24,8 @@ import {
   IVideo,
 } from "@/app/profiles/[id]/components/ContentTab";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
+import Link from "next/link";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -132,39 +134,45 @@ const FolderPageMobileBody = (props: {
               <Stack flex={1} spacing="12px">
                 {props.contents.map((x, i) => (
                   <Stack key={`${x.content.id}${x.type}`}>
-                    <UrsorFadeIn delay={i * 80} duration={800}>
-                      {x.type === "link" ? (
-                        <LinkCard
-                          {...(x.content as ILink)}
-                          onClick={() => null}
-                          onDelete={props.loadFolderAndContents}
-                          onOpenEditingDialog={() =>
-                            props.setLinkEditingDialogId(x.content.id)
-                          }
-                          isMobile
-                        />
-                      ) : x.type === "video" ? (
-                        <VideoCard
-                          {...(x.content as IVideo)}
-                          onClick={() => null}
-                          onDelete={props.loadFolderAndContents}
-                          onOpenEditingDialog={() =>
-                            props.setVideoEditingDialogId(x.content.id)
-                          }
-                          isMobile
-                        />
-                      ) : x.type === "channel" ? (
-                        <ChannelCard
-                          {...(x.content as IChannel)}
-                          onClick={() => null}
-                          onDelete={props.loadFolderAndContents}
-                          onOpenEditingDialog={() =>
-                            props.setChannelEditingDialogId(x.content.id)
-                          }
-                          isMobile
-                        />
-                      ) : null}
-                    </UrsorFadeIn>
+                    <Link
+                      href={getAbsoluteUrl(cleanUrl(x.content.url))}
+                      target="_blank"
+                      style={{
+                        textDecoration: "none",
+                      }}
+                      rel="noreferrer"
+                    >
+                      <UrsorFadeIn delay={i * 80} duration={800}>
+                        {x.type === "link" ? (
+                          <LinkCard
+                            {...(x.content as ILink)}
+                            onDelete={props.loadFolderAndContents}
+                            onOpenEditingDialog={() =>
+                              props.setLinkEditingDialogId(x.content.id)
+                            }
+                            isMobile
+                          />
+                        ) : x.type === "video" ? (
+                          <VideoCard
+                            {...(x.content as IVideo)}
+                            onDelete={props.loadFolderAndContents}
+                            onOpenEditingDialog={() =>
+                              props.setVideoEditingDialogId(x.content.id)
+                            }
+                            isMobile
+                          />
+                        ) : x.type === "channel" ? (
+                          <ChannelCard
+                            {...(x.content as IChannel)}
+                            onDelete={props.loadFolderAndContents}
+                            onOpenEditingDialog={() =>
+                              props.setChannelEditingDialogId(x.content.id)
+                            }
+                            isMobile
+                          />
+                        ) : null}
+                      </UrsorFadeIn>
+                    </Link>
                   </Stack>
                 ))}
               </Stack>

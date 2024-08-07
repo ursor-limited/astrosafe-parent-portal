@@ -86,7 +86,7 @@ const ProfilePageMobileBody = (props: {
             onUpdate={props.onUpdateFolders}
           />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab deviceId={props.device.id} />
+          <DevicePageLimitsTab deviceId={props.device.id} isMobile />
         ) : null}
       </Stack>
     </MobilePageLayout>

@@ -321,7 +321,6 @@ const AllowedTimeRow = (props: {
       }
     }
   }, [sortedTimes]);
-  console.log(newSegmentTimes);
   return (
     <Stack direction="row" alignItems="center">
       <Stack width="120px">

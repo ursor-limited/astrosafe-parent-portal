@@ -138,7 +138,6 @@ const ChannelCreationDialog = (props: {
           url={url}
           profileUrl={profileUrl}
           bannerUrl={bannerUrl}
-          onClick={() => null}
           noPointerEvents
           noMenu
         />

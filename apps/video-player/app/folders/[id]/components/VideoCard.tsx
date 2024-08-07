@@ -10,7 +10,7 @@ const IMAGE_HEIGHT = 144;
 
 const VideoCard = (
   props: Omit<IVideo, "createdAt"> & {
-    onClick: () => void;
+    // onClick: () => void;
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -23,7 +23,7 @@ const VideoCard = (
     <ContentCard
       type="video"
       title={props.title}
-      onClick={props.onClick}
+      // onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteVideo(props.id).then(props.onDelete)}

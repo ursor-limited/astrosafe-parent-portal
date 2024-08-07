@@ -288,7 +288,7 @@ const DeviceCard = (
                 alt="device profile"
               />
             </Stack>
-            {props.online ? (
+            {props.online && browsingEnabled ? (
               <Stack
                 position="absolute"
                 bottom={-2}

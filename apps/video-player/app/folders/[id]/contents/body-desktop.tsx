@@ -28,6 +28,7 @@ import { useWindowSize } from "usehooks-ts";
 import { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
+import Link from "next/link";
 
 const SINGLE_COLUMN_WINDOW_WIDTH_THRESHOLD = 1134;
 
@@ -176,48 +177,52 @@ const FolderPageDesktopBody = (props: {
                     <Stack key={i} flex={1} spacing="20px" overflow="hidden">
                       {column.map((x, j) => (
                         <Stack key={`${x.content.id}${x.type}`}>
-                          <UrsorFadeIn delay={j * 150 + i * 80} duration={800}>
-                            {x.type === "link" ? (
-                              <LinkCard
-                                {...(x.content as ILink)}
-                                onClick={() =>
-                                  router.push(
-                                    getAbsoluteUrl(cleanUrl(x.content.url))
-                                  )
-                                }
-                                onDelete={props.loadFolderAndContents}
-                                onOpenEditingDialog={() =>
-                                  props.setLinkEditingDialogId(x.content.id)
-                                }
-                              />
-                            ) : x.type === "video" ? (
-                              <VideoCard
-                                {...(x.content as IVideo)}
-                                onClick={() =>
-                                  router.push(
-                                    getAbsoluteUrl(cleanUrl(x.content.url))
-                                  )
-                                }
-                                onDelete={props.loadFolderAndContents}
-                                onOpenEditingDialog={() =>
-                                  props.setVideoEditingDialogId(x.content.id)
-                                }
-                              />
-                            ) : x.type === "channel" ? (
-                              <ChannelCard
-                                {...(x.content as IChannel)}
-                                onClick={() =>
-                                  router.push(
-                                    getAbsoluteUrl(cleanUrl(x.content.url))
-                                  )
-                                }
-                                onDelete={props.loadFolderAndContents}
-                                onOpenEditingDialog={() =>
-                                  props.setChannelEditingDialogId(x.content.id)
-                                }
-                              />
-                            ) : null}
-                          </UrsorFadeIn>
+                          <Link
+                            href={getAbsoluteUrl(cleanUrl(x.content.url))}
+                            target="_blank"
+                            style={{
+                              textDecoration: "none",
+                            }}
+                            rel="noreferrer"
+                          >
+                            <UrsorFadeIn
+                              delay={j * 150 + i * 80}
+                              duration={800}
+                            >
+                              {x.type === "link" ? (
+                                <LinkCard
+                                  {...(x.content as ILink)}
+                                  onDelete={props.loadFolderAndContents}
+                                  onOpenEditingDialog={() =>
+                                    props.setLinkEditingDialogId(x.content.id)
+                                  }
+                                />
+                              ) : x.type === "video" ? (
+                                <VideoCard
+                                  {...(x.content as IVideo)}
+                                  onDelete={props.loadFolderAndContents}
+                                  onOpenEditingDialog={() =>
+                                    props.setVideoEditingDialogId(x.content.id)
+                                  }
+                                />
+                              ) : x.type === "channel" ? (
+                                <ChannelCard
+                                  {...(x.content as IChannel)}
+                                  // onClick={() =>
+                                  //   router.push(
+                                  //     getAbsoluteUrl(cleanUrl(x.content.url))
+                                  //   )
+                                  // }
+                                  onDelete={props.loadFolderAndContents}
+                                  onOpenEditingDialog={() =>
+                                    props.setChannelEditingDialogId(
+                                      x.content.id
+                                    )
+                                  }
+                                />
+                              ) : null}
+                            </UrsorFadeIn>
+                          </Link>
                         </Stack>
                       ))}
                     </Stack>

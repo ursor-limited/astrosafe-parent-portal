@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
@@ -14,6 +13,7 @@ import AllowedTimesSection from "./AllowedTimesSection";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useWindowSize } from "usehooks-ts";
+import MobileAllowedTimesSection from "./MobileAllowedTimesSection";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -88,7 +88,10 @@ export interface IAllowedTime {
   endTime: string;
 }
 
-const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
+const DevicePageLimitsTab = (props: {
+  deviceId: IDevice["id"];
+  isMobile?: boolean;
+}) => {
   const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
   const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
   const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
@@ -267,33 +270,63 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
       </Stack> */}
       <Stack direction={switchToColumn ? "column" : "row"} spacing="24px">
         <Stack width={switchToColumn ? undefined : "70%"}>
-          <AllowedTimesSection
-            topRightElement={
-              <AstroSwitch
-                on={allowedTimesEnabled}
-                callback={() => {
-                  setAllowedTimesEnabled(!allowedTimesEnabled);
-                  ApiController.flipAllowedTimesEnabled(
-                    props.deviceId,
-                    !allowedTimesEnabled
-                  );
-                }}
-              />
-            }
-            allowedTimes={allowedTimes}
-            setAllowedTimes={(id, startTime, endTime) => {
-              setAllowedTimes(
-                allowedTimes.map((t) =>
-                  t.id === id ? { ...t, startTime, endTime } : t
-                )
-              );
-              ApiController.changeAllowedTime(id, startTime, endTime);
-            }}
-            addTimeLimit={addAllowedTime}
-            reset={reset}
-            smallerLabelFont={allowedTimesLabelsSmallerFontSize}
-            halveLabelFrequency={halveLabelFrequency}
-          />
+          {props.isMobile ? (
+            <MobileAllowedTimesSection
+              topRightElement={
+                <AstroSwitch
+                  on={allowedTimesEnabled}
+                  callback={() => {
+                    setAllowedTimesEnabled(!allowedTimesEnabled);
+                    ApiController.flipAllowedTimesEnabled(
+                      props.deviceId,
+                      !allowedTimesEnabled
+                    );
+                  }}
+                />
+              }
+              allowedTimes={allowedTimes}
+              setAllowedTimes={(id, startTime, endTime) => {
+                setAllowedTimes(
+                  allowedTimes.map((t) =>
+                    t.id === id ? { ...t, startTime, endTime } : t
+                  )
+                );
+                ApiController.changeAllowedTime(id, startTime, endTime);
+              }}
+              addTimeLimit={addAllowedTime}
+              reset={reset}
+              smallerLabelFont={allowedTimesLabelsSmallerFontSize}
+              halveLabelFrequency={halveLabelFrequency}
+            />
+          ) : (
+            <AllowedTimesSection
+              topRightElement={
+                <AstroSwitch
+                  on={allowedTimesEnabled}
+                  callback={() => {
+                    setAllowedTimesEnabled(!allowedTimesEnabled);
+                    ApiController.flipAllowedTimesEnabled(
+                      props.deviceId,
+                      !allowedTimesEnabled
+                    );
+                  }}
+                />
+              }
+              allowedTimes={allowedTimes}
+              setAllowedTimes={(id, startTime, endTime) => {
+                setAllowedTimes(
+                  allowedTimes.map((t) =>
+                    t.id === id ? { ...t, startTime, endTime } : t
+                  )
+                );
+                ApiController.changeAllowedTime(id, startTime, endTime);
+              }}
+              addTimeLimit={addAllowedTime}
+              reset={reset}
+              smallerLabelFont={allowedTimesLabelsSmallerFontSize}
+              halveLabelFrequency={halveLabelFrequency}
+            />
+          )}
         </Stack>
         <TimeLimitsSection
           topRightElement={

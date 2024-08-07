@@ -162,25 +162,50 @@ const HorizontalDeviceCard = (
           alignItems="center"
           boxSizing="border-box"
         >
-          <Stack
-            minHeight="70px"
-            minWidth="70px"
-            borderRadius="100%"
-            overflow="hidden"
-            bgcolor={props.backgroundColor}
-            onClick={onClick}
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.6 },
-            }}
-          >
-            <Image
-              src={props.profileAvatarUrl}
-              height={70}
-              width={70}
-              alt="device profile"
-            />
+          <Stack position="relative">
+            <Stack
+              minHeight="70px"
+              minWidth="70px"
+              borderRadius="100%"
+              overflow="hidden"
+              bgcolor={props.backgroundColor}
+              onClick={onClick}
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.6 },
+              }}
+            >
+              <Image
+                src={props.profileAvatarUrl}
+                height={70}
+                width={70}
+                alt="device profile"
+              />
+            </Stack>
+            {props.online && browsingEnabled ? (
+              <Stack
+                position="absolute"
+                bottom={-2}
+                right={-2}
+                height="22px"
+                width="22px"
+                borderRadius="100%"
+                justifyContent="center"
+                alignItems="center"
+                bgcolor={PALETTE.secondary.green[4]}
+                border={`2px solid rgb(255,255,255)`}
+                sx={{
+                  svg: {
+                    path: {
+                      fill: "rgb(255,255,255)",
+                    },
+                  },
+                }}
+              >
+                <GlobeIcon height="12px" width="12px" />
+              </Stack>
+            ) : null}
           </Stack>
         </Stack>
         <Stack spacing="12px" direction="row" flex={1}>
