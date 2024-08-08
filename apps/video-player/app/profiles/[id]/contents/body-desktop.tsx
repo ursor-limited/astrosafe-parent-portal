@@ -84,18 +84,6 @@ const ProfilePageDesktopBody = (props: {
               },
             ]}
           />
-          {selectedTab === "content" ? (
-            <UrsorButton
-              dark
-              variant="tertiary"
-              size="small"
-              endIcon={PlusIcon}
-              iconSize={18}
-              onClick={props.openAddFolderDialog}
-            >
-              Add Folder
-            </UrsorButton>
-          ) : null}
         </Stack>
         {selectedTab === "insights" ? (
           <DevicePageInsightsTab deviceId={props.device.id} />
@@ -105,6 +93,7 @@ const ProfilePageDesktopBody = (props: {
             deviceName={props.device.name}
             folders={props.folders}
             onUpdate={props.onUpdateFolders}
+            openAddFolderDialog={props.openAddFolderDialog}
           />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} />

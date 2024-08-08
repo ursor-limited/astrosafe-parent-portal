@@ -5,14 +5,15 @@ import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
-import { PALETTE, Typography } from "ui";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
+import { PALETTE, Typography, UrsorButton } from "ui";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController from "@/app/api";
 import { useContext, useState } from "react";
 import NotificationContext from "@/app/components/NotificationContext";
 import FolderDeviceRemovalConfirmationDialog from "@/app/folders/[id]/components/FolderDeviceRemovalConfirmationDialog";
-import { EmptyStateIllustration } from "@/app/components/EmptyStateIllustration";
 import Image from "next/image";
+import ProfilePageTabLayout from "../components/ProfilePageTabLayout";
 
 export type AstroContent = "video" | "channel" | "link";
 
@@ -53,6 +54,7 @@ const DevicePageContentTab = (props: {
   onUpdate: () => void;
   deviceId: IDevice["id"];
   deviceName: IDevice["name"];
+  openAddFolderDialog: () => void;
 }) => {
   const router = useRouter();
   const [
@@ -61,7 +63,24 @@ const DevicePageContentTab = (props: {
   ] = useState<number | undefined>();
   const notificationCtx = useContext(NotificationContext);
   return (
-    <>
+    <ProfilePageTabLayout
+      title={`${props.folders.length} Content Folder${
+        props.folders.length === 1 ? "" : "s"
+      }`}
+      rightSideElement={
+        <UrsorButton
+          dark
+          variant="tertiary"
+          size="small"
+          endIcon={PlusIcon}
+          iconSize={18}
+          onClick={props.openAddFolderDialog}
+        >
+          Add Folder
+        </UrsorButton>
+      }
+      explanation="Mario Kario 64 is the first game of the Super Mario franchise to let more than two people play simultaneously. It is also the first Mario Kart game to use three-dimensional graphics for its environment design, such as the addition of elevation, advanced collision physics, expanded camera controls, real walls that can obscure views, and increased aesthetic fidelity."
+    >
       {props.folders.length > 0 ? (
         <Stack pt="20px">
           <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
@@ -112,9 +131,8 @@ const DevicePageContentTab = (props: {
                   sx={{ textAlign: "center" }}
                   bold
                 >
-                  There is no Content currently assigned to this Device. Click
-                  the Add a Folder button to choose an existing Folder of
-                  Content or create a new one.
+                  There is no Content currently assigned to this Device. Add an
+                  existing Folder or create a new one.
                 </Typography>
               </Stack>
             </Stack>
@@ -139,7 +157,7 @@ const DevicePageContentTab = (props: {
           isMobile={props.isMobile}
         />
       ) : null}
-    </>
+    </ProfilePageTabLayout>
   );
 };
 
