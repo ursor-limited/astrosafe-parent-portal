@@ -131,8 +131,8 @@ const DevicePageContentTab = (props: {
                   sx={{ textAlign: "center" }}
                   bold
                 >
-                  There is no Content currently assigned to this Device. Add an
-                  existing Folder or create a new one.
+                  There is no Content currently assigned to this Device. Add a
+                  Folder to get started.
                 </Typography>
               </Stack>
             </Stack>

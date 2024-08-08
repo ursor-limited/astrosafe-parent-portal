@@ -112,10 +112,9 @@ export interface IDayScreenTime {
 
 const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([]);
-  const [timeSpent, setTimeSpent] = useState<number>(0);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0); // days from today
-  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(7);
-  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(0);
+  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0);
+  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6);
   const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([]);
   useEffect(() => {
     ApiController.getStats(
@@ -133,6 +132,22 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       );
     });
   }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex]);
+
+  const [timeSpent, setTimeSpent] = useState<number>(0);
+  useEffect(
+    () =>
+      setTimeSpent(
+        times.find(
+          (t) =>
+            t.date ===
+            dayjs()
+              .utc()
+              .subtract(selectedDayIndex, "days")
+              .format("YYYY-MM-DD")
+        )?.screenTime ?? 0
+      ),
+    [times, selectedDayIndex]
+  );
 
   useEffect(() => {
     if (selectedDayIndex < 4) {
@@ -195,8 +210,8 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       <Stack height="290px" spacing="28px" direction="row">
         <Stack width="54%" flex={1}>
           <AstroBentoCard
-            title={`${Math.floor(timeSpent / 3600)}h ${Math.floor(
-              (timeSpent % 3600) / 60
+            title={`${Math.floor(timeSpent / 60)}h ${Math.floor(
+              timeSpent
             )}m spent on screen`}
             notCollapsible
           >

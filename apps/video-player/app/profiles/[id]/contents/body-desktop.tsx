@@ -76,10 +76,10 @@ const ProfilePageDesktopBody = (props: {
                 text: "Apps",
                 id: "apps",
               },
-              {
-                text: "Insights",
-                id: "insights",
-              },
+              // {
+              //   text: "Insights",
+              //   id: "insights",
+              // },
               {
                 text: "Limits",
                 id: "limits",
