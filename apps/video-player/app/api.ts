@@ -497,10 +497,11 @@ class ApiController {
   static async getApps(
     deviceId: IDevice["id"],
     pageIndex: number,
-    pageSize: number
+    pageSize: number,
+    categoryId?: IFilterCategory['categoryId']
   ) {
     return get(
-      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}`
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${categoryId ? `&categoryId=${categoryId}` : ''}`
     ).then((response: any) => response.json());
   }
 

@@ -11,70 +11,81 @@ const AppToggleCard = (
   props: IApp & {
     callback: () => void;
   }
-) => (
-  <Stack
-    bgcolor="rgb(255,255,255)"
-    borderRadius="12px"
-    border={`1px solid ${PALETTE.secondary.grey[2]}`}
-    p="16px"
-    boxSizing="border-box"
-    alignItems="space-between"
-    justifyContent="center"
-    height="130px"
-  >
-    <Stack justifyContent="space-between" spacing="12px" flex={1}>
-      <Stack justifyContent="space-between" direction="row" alignItems="center">
-        <Stack spacing="16px" direction="row">
-          <Stack position="relative">
-            {props.enabled ? (
+) => {
+  console.log(props, "dkkdkdkdkdkdk");
+  return (
+    <Stack
+      bgcolor="rgb(255,255,255)"
+      borderRadius="12px"
+      border={`1px solid ${PALETTE.secondary.grey[2]}`}
+      p="16px"
+      boxSizing="border-box"
+      alignItems="space-between"
+      justifyContent="center"
+      height="130px"
+    >
+      <Stack justifyContent="space-between" spacing="12px" flex={1}>
+        <Stack
+          justifyContent="space-between"
+          direction="row"
+          alignItems="center"
+        >
+          <Stack spacing="16px" direction="row">
+            <Stack position="relative">
+              {props.enabled ? (
+                <Stack
+                  position="absolute"
+                  top="-6px"
+                  right="-10px"
+                  width="20px"
+                  height="20px"
+                  bgcolor={PALETTE.secondary.green[4]}
+                  sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
+                  borderRadius="100%"
+                  overflow="hidden"
+                  border="1.5px solid white"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <CheckIcon width="12px" height="12px" />
+                </Stack>
+              ) : null}
               <Stack
-                position="absolute"
-                top="-6px"
-                right="-10px"
-                width="20px"
-                height="20px"
-                bgcolor={PALETTE.secondary.green[4]}
-                sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
-                borderRadius="100%"
+                borderRadius="8px"
                 overflow="hidden"
-                border="1.5px solid white"
-                justifyContent="center"
-                alignItems="center"
+                boxShadow="0 0 16px rgba(0,0,0,0.08)"
               >
-                <CheckIcon width="12px" height="12px" />
+                <Image
+                  src={props.imageUrl}
+                  height={41}
+                  width={41}
+                  alt="platform image"
+                />
               </Stack>
-            ) : null}
-            <Stack
-              borderRadius="8px"
-              overflow="hidden"
-              boxShadow="0 0 16px rgba(0,0,0,0.08)"
-            >
-              <Image
-                src={props.imageUrl}
-                height={41}
-                width={41}
-                alt="platform image"
-              />
+            </Stack>
+            <Stack>
+              <Typography maxLines={1} bold>
+                {props.title}
+              </Typography>
+              <Typography
+                variant="small"
+                bold
+                color={PALETTE.secondary.grey[3]}
+              >
+                {cleanUrl(props.url).replace(/\/$/, "")}
+              </Typography>
             </Stack>
           </Stack>
-          <Stack>
-            <Typography maxLines={1} bold>
-              {props.title}
-            </Typography>
-            <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
-              {cleanUrl(props.url).replace(/\/$/, "")}
-            </Typography>
-          </Stack>
+          <AstroSwitch on={props.enabled} callback={props.callback} />
         </Stack>
-        <AstroSwitch on={props.enabled} callback={props.callback} />
-      </Stack>
-      <Stack flex={1}>
-        <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
-          {props.description}
-        </Typography>
+        <Stack flex={1}>
+          <Typography variant="small" bold color={PALETTE.secondary.grey[3]}>
+            {props.description}
+          </Typography>
+        </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
 export default AppToggleCard;

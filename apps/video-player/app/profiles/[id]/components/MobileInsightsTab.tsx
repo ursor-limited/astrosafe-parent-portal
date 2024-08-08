@@ -6,22 +6,61 @@ import Image from "next/image";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import _ from "lodash";
 import AstroTimeChart from "./AstroTimeChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
 import Link from "next/link";
 import CalendarButton from "@/app/components/CalendarButton";
-import { DUMMY_DOMAIN_URLS } from "./InsightsTab";
+import { DUMMY_DOMAIN_URLS, IDayScreenTime, IVisitedSite } from "./InsightsTab";
 import MobileHistorySection from "./MobileHistorySection";
+import MostVisitedSitesSection from "./MostVisitedSitesSection";
+import ApiController from "@/app/api";
+import { IDevice } from "@/app/filters/[id]/contents/common";
 dayjs.extend(advancedFormat);
 
 export const cleanUrl = (url: string) =>
   url.replace("http://", "").replace("https://", "").replace("www.", "");
 
-const DevicePageMobileInsightsTab = () => {
-  const [timeSpent, setTimeSpent] = useState<number>(59083);
-  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0);
+const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
+  const [times, setTimes] = useState<IDayScreenTime[]>([]);
+  const [timeSpent, setTimeSpent] = useState<number>(0);
+  const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0); // days from today
+  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(7);
+  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(0);
+  const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([]);
+  useEffect(() => {
+    ApiController.getStats(
+      props.deviceId,
+      dayjs().utc().subtract(rangeStartDayIndex, "days").format("YYYY-MM-DD"),
+      dayjs().utc().subtract(rangeEndDayIndex, "days").format("YYYY-MM-DD")
+    ).then((stats) => {
+      setTimes(stats.screenTime);
+      setVisitedSites(
+        _.sortBy(
+          stats.visitedWebsites?.[stats.visitedWebsites.length - 1]?.websites ||
+            [],
+          (t) => t.screenTime
+        )
+      );
+    });
+  }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex]);
+
+  useEffect(() => {
+    if (selectedDayIndex < 4) {
+      const shiftNDays = selectedDayIndex - 3;
+      setRangeStartDayIndex(selectedDayIndex + 3 - shiftNDays);
+      setRangeEndDayIndex(Math.max(0, shiftNDays));
+      // }
+      // else if (times.length - selectedDayIndex < 4) {
+      //   const shiftNDays = times.length - 1 - selectedDayIndex;
+      //   setRangeStartDayIndex(Math.min(times.length - 1, selectedDayIndex + 3));
+      //   setRangeEndDayIndex(selectedDayIndex - 6 + shiftNDays);
+    } else {
+      setRangeStartDayIndex(selectedDayIndex + 3);
+      setRangeEndDayIndex(selectedDayIndex - 3);
+    }
+  }, [selectedDayIndex, times]);
   return (
     <>
       <Stack spacing="12px">
@@ -87,17 +126,21 @@ const DevicePageMobileInsightsTab = () => {
             boxSizing="border-box"
           >
             <AstroTimeChart
-              selectedDayIndex={selectedDayIndex}
-              setSelectedDayIndex={setSelectedDayIndex}
-              times={[4, 5, 6, 1, 3, 5, 2, 0.5, 3, 7, 8, 1, 3]}
-              barWidth={20}
+              times={times}
+              selected={dayjs()
+                .utc()
+                .subtract(selectedDayIndex)
+                .format("YYYY-MM-DD")}
+              setSelectedDatetime={(datetime) =>
+                dayjs().utc().diff(datetime, "days")
+              }
               labelFontSize="small"
               barsXPadding={12}
             />
           </Stack>
         </AstroBentoCard>
 
-        <AstroBentoCard
+        {/* <AstroBentoCard
           title="Most visited sites today"
           notCollapsible
           paddingBottom="0"
@@ -193,7 +236,10 @@ const DevicePageMobileInsightsTab = () => {
               </Stack>
             ))}
           </Stack>
-        </AstroBentoCard>
+        </AstroBentoCard> */}
+        <Stack flex={1}>
+          <MostVisitedSitesSection sites={visitedSites} />
+        </Stack>
 
         <MobileHistorySection domainUrls={DUMMY_DOMAIN_URLS} />
       </Stack>
