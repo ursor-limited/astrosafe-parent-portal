@@ -5,6 +5,12 @@ import ChevronIcon from "@/images/icons/ChevronLeftIcon.svg";
 import { PALETTE } from "ui";
 import dayjs from "dayjs";
 import DynamicContainer from "./DynamicContainer";
+import { Rubik } from "next/font/google";
+
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: "variable",
+});
 
 export interface IUrsorCalendarProps {
   value: Date;
@@ -36,28 +42,12 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
           color: PALETTE.font.dark,
           transition: "0.2s",
           borderRadius: "100%",
-          // width: "30px !important",
           height: "42px",
           border: "none",
           fontSize: 15,
           background: "transparent",
-          // "> abbr": {
-          //   paddingTop: "10px",
-          //   paddingBottom: "10px",
-          //   paddingRight: "15px",
-          //   paddingLeft: "15px",
-          //   borderRadius: "100%",
-          // },
+          fontFamily: "inherit",
           "&:hover": {
-            // "> abbr": {
-            //   width: "36px",
-            //   height: "34px",
-            //   display: "flex",
-            //   justifyContent: "center",
-            //   alignItems: "center",
-            //   borderRadius: "100%",
-            //   background: alpha(PALETTE.secondary.purple[2], 0.15),
-            // },
             opacity: 0.7,
           },
           cursor: "pointer",
@@ -103,6 +93,7 @@ export default function UrsorCalendar(props: IUrsorCalendarProps) {
           background: "none",
           border: "none",
           fontSize: 15,
+          fontFamily: "inherit",
         },
         ".react-calendar__navigation__arrow": {
           display: "flex",

@@ -24,10 +24,9 @@ export const cleanUrl = (url: string) =>
 
 const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
   const [times, setTimes] = useState<IDayScreenTime[]>([]);
-  const [timeSpent, setTimeSpent] = useState<number>(0);
   const [selectedDayIndex, setSelectedDayIndex] = useState<number>(0); // days from today
-  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(7);
-  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(0);
+  const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(0);
+  const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(6);
   const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([]);
   useEffect(() => {
     ApiController.getStats(
@@ -45,6 +44,22 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       );
     });
   }, [props.deviceId, rangeStartDayIndex, rangeEndDayIndex]);
+
+  const [timeSpent, setTimeSpent] = useState<number>(0);
+  useEffect(
+    () =>
+      setTimeSpent(
+        times.find(
+          (t) =>
+            t.date ===
+            dayjs()
+              .utc()
+              .subtract(selectedDayIndex, "days")
+              .format("YYYY-MM-DD")
+        )?.screenTime ?? 0
+      ),
+    [times, selectedDayIndex]
+  );
 
   useEffect(() => {
     if (selectedDayIndex < 4) {
@@ -111,8 +126,8 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         </Stack>
 
         <AstroBentoCard
-          title={`${Math.floor(timeSpent / 3600)}h ${Math.floor(
-            (timeSpent % 3600) / 60
+          title={`${Math.floor(timeSpent / 60)}h ${Math.floor(
+            timeSpent % 60
           )}m spent on screen`}
           notCollapsible
           isMobile
@@ -242,7 +257,6 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         <Stack flex={1}>
           <MostVisitedSitesSection sites={visitedSites} isMobile />
         </Stack>
-
         <MobileHistorySection domainUrls={DUMMY_DOMAIN_URLS} />
       </Stack>
       {/* <MobileAllDevicesDialog
