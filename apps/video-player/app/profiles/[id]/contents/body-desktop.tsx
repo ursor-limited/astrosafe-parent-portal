@@ -14,17 +14,19 @@ import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import DevicePageAppsTab, { IApp } from "../components/AppsTab";
 
 const ProfilePageDesktopBody = (props: {
   device: IEnrichedDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
   folders: IEnrichedContentBucket[];
+  // apps: IApp[];
   tab?: AstroAccountTab;
   onUpdateDevice: () => void;
   onUpdateFolders: () => void;
   openAddFolderDialog: () => void;
+  // flipAppEnabled: (id: IApp["id"]) => void;
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
@@ -74,37 +76,28 @@ const ProfilePageDesktopBody = (props: {
                 text: "Apps",
                 id: "apps",
               },
-              {
-                text: "Insights",
-                id: "insights",
-              },
+              // {
+              //   text: "Insights",
+              //   id: "insights",
+              // },
               {
                 text: "Limits",
                 id: "limits",
               },
             ]}
           />
-          {selectedTab === "content" ? (
-            <UrsorButton
-              dark
-              variant="tertiary"
-              size="small"
-              endIcon={PlusIcon}
-              iconSize={18}
-              onClick={props.openAddFolderDialog}
-            >
-              Add Folder
-            </UrsorButton>
-          ) : null}
         </Stack>
         {selectedTab === "insights" ? (
-          <DevicePageInsightsTab />
+          <DevicePageInsightsTab deviceId={props.device.id} />
+        ) : selectedTab === "apps" ? (
+          <DevicePageAppsTab deviceId={props.device.id} />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
             deviceName={props.device.name}
             folders={props.folders}
             onUpdate={props.onUpdateFolders}
+            openAddFolderDialog={props.openAddFolderDialog}
           />
         ) : selectedTab === "limits" ? (
           <DevicePageLimitsTab deviceId={props.device.id} />

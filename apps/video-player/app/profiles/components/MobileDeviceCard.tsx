@@ -47,9 +47,14 @@ export const MobileDeviceCardFilterRow = (props: {
                 setOpen(false);
                 props.changeFilter(f.id);
               }}
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
             >
               <Typography variant="small">{f.title}</Typography>
-              <CheckCircleFillIcon height="16px" width="16px" />
+              {props.filterId === f.id ? (
+                <CheckCircleFillIcon height="16px" width="16px" />
+              ) : null}
             </Stack>
           ))}
         </Stack>
@@ -249,25 +254,50 @@ const MobileDeviceCard = (
             alignItems="center"
             width={props.noExtras ? undefined : "91px"}
           >
-            <Stack
-              minHeight="80px"
-              minWidth="80px"
-              borderRadius="100%"
-              overflow="hidden"
-              bgcolor={props.backgroundColor}
-              onClick={onClick}
-              sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.6 },
-              }}
-            >
-              <Image
-                src={props.profileAvatarUrl}
-                height={80}
-                width={80}
-                alt="device profile"
-              />
+            <Stack position="relative">
+              <Stack
+                minHeight="80px"
+                minWidth="80px"
+                borderRadius="100%"
+                overflow="hidden"
+                bgcolor={props.backgroundColor}
+                onClick={onClick}
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.6 },
+                }}
+              >
+                <Image
+                  src={props.profileAvatarUrl}
+                  height={80}
+                  width={80}
+                  alt="device profile"
+                />
+              </Stack>
+              {props.online && browsingEnabled ? (
+                <Stack
+                  position="absolute"
+                  bottom={-2}
+                  right={-2}
+                  height="22px"
+                  width="22px"
+                  borderRadius="100%"
+                  justifyContent="center"
+                  alignItems="center"
+                  bgcolor={PALETTE.secondary.green[4]}
+                  border={`2px solid rgb(255,255,255)`}
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: "rgb(255,255,255)",
+                      },
+                    },
+                  }}
+                >
+                  <GlobeIcon height="12px" width="12px" />
+                </Stack>
+              ) : null}
             </Stack>
             <Typography
               variant="small"
@@ -291,13 +321,17 @@ const MobileDeviceCard = (
               >
                 <MobileDeviceCardRow
                   text={`${Math.floor(
-                    ((props.screenTime?.allowed ?? 0) -
-                      (props.screenTime?.current ?? 0)) /
-                      60
+                    Math.max(
+                      0,
+                      (props.screenTime?.allowed ?? 0) -
+                        (props.screenTime?.current ?? 0)
+                    ) / 60
                   )}h ${Math.floor(
-                    ((props.screenTime?.allowed ?? 0) -
-                      (props.screenTime?.current ?? 0)) %
-                      60
+                    Math.max(
+                      0,
+                      (props.screenTime?.allowed ?? 0) -
+                        (props.screenTime?.current ?? 0)
+                    ) % 60
                   )}m left`}
                   icon={ClockIcon}
                   iconColor={PALETTE.secondary.purple[1]}

@@ -7,6 +7,7 @@ import ApiController from "@/app/api";
 import { useRouter } from "next/navigation";
 import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 import { IDevice } from "../[id]/contents/common";
+import _ from "lodash";
 
 export interface IFilterCategory {
   categoryId: number;
@@ -42,6 +43,7 @@ export interface IFilter {
   filterCategoryWhitelist: IFilterCategory[];
   allowedSiteExceptions: IFilterUrl[];
   blockedSiteExceptions: IFilterUrl[];
+  official: boolean;
   groupId: number;
 }
 
@@ -57,7 +59,9 @@ export interface IGroupFilter {
 const AllFiltersPage = (props: { isMobile: boolean }) => {
   const [filters, setFilters] = useState<IGroupFilter[]>([]);
   useEffect(() => {
-    ApiController.getGroupFilters(DUMMY_GROUP_ID).then((f) => setFilters(f));
+    ApiController.getGroupFilters(DUMMY_GROUP_ID).then((filtahs) =>
+      setFilters(_.sortBy(filtahs, (f) => f.id))
+    );
   }, []);
   const [filterCreationDialogOpen, setFilterCreationDialogOpen] =
     useState<boolean>(false);

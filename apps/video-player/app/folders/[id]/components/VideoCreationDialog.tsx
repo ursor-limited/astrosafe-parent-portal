@@ -93,7 +93,6 @@ const VideoCreationDialog = (props: {
           title={title}
           url={url}
           thumbnailUrl={thumbnailUrl}
-          onClick={() => null}
           noPointerEvents
           noMenu
         />

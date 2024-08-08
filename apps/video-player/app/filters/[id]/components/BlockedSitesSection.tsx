@@ -17,8 +17,8 @@ import { IFilterException } from "../contents/common";
 
 const FilterPageBlockedSitesSection = (props: {
   blockedSites: IFilterException[];
-  add: (url: IFilterException["url"]) => void;
-  delete: (url: IFilterException["url"]) => void;
+  add: (url: IFilterException["domain"]) => void;
+  delete: (url: IFilterException["domain"]) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -41,8 +41,8 @@ const FilterPageBlockedSitesSection = (props: {
       },
     },
     {
-      name: "url",
-      displayName: "URL",
+      name: "domain",
+      displayName: "Domain",
       sortable: true,
     },
     {
@@ -64,12 +64,12 @@ const FilterPageBlockedSitesSection = (props: {
           id: i.toString(),
           items: {
             title: b.title ?? "",
-            url: b.url,
+            domain: b.domain,
             createdAt: b.createdAt,
           },
           tags: [],
           disabled: false,
-          url: b.url,
+          url: b.domain,
         })) || [];
       setRows(linkRows);
     })();
@@ -86,7 +86,7 @@ const FilterPageBlockedSitesSection = (props: {
     setFilteredRows(
       rows.filter((row) =>
         inputValue
-          ? [row.items.title, row.items.url.replace("www.", "")]
+          ? [row.items.title, row.items.domain.replace("www.", "")]
               .join("_")
               .toLowerCase()
               .includes(inputValue.toLowerCase())
@@ -155,7 +155,7 @@ const FilterPageBlockedSitesSection = (props: {
                   icon: TrashcanIcon,
                   text: "Delete",
                   kallback: () =>
-                    props.delete(props.blockedSites[parseInt(i)].url),
+                    props.delete(props.blockedSites[parseInt(i)].domain),
                   color: PALETTE.system.red,
                 },
               ]}

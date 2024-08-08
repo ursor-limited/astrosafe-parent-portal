@@ -1,16 +1,35 @@
+import React from "react";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import { Stack } from "@mui/system";
 import _ from "lodash";
 import { IAllowedTime } from "./LimitsTab";
-import AllowedTimeRow from "./AllowedTimeRow";
+import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 
-const AllowedTimesSection = (props: {
+// const AllowedTimesSectionTimeSelector = () => {
+//   const [open, setOpen] = useState<boolean>(false);
+//   return (
+//     <UrsorPopover
+//       open={open}
+//       content={<Stack></Stack>}
+//       closeCallback={() => setOpen(false)}
+//       placement=''
+//     >
+//       <Stack alignItems="center" direction="row" spacing="5px">
+//         <Typography bold>{dayjs(t.startTime).format("HH:mma")}</Typography>
+//         <PencilIcon height="16px" width="16px" />
+//       </Stack>
+//     </UrsorPopover>
+//   );
+// };
+
+const MobileAllowedTimesSection = (props: {
   allowedTimes: IAllowedTime[];
-  setAllowedTimes: (
+  setAllowedTime: (
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
   ) => void;
+  removeAllowedTime: (id: IAllowedTime["id"]) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
@@ -30,7 +49,7 @@ const AllowedTimesSection = (props: {
   >
     {props.allowedTimes ? (
       <Stack
-        spacing="36px"
+        spacing="18px"
         pb="12px"
         sx={{
           opacity: props.disabled ? 0.4 : 1,
@@ -39,9 +58,9 @@ const AllowedTimesSection = (props: {
         }}
       >
         {["mon", "tue", "wed", "thu", "fri", "sat", "sun"].map((day, i) => (
-          <AllowedTimeRow
+          <MobileAllowedTimeRow
             key={day}
-            dayName={day}
+            day={day === "sun" ? 0 : i + 1}
             times={props.allowedTimes.filter((t) =>
               day === "sun" ? t.day === 0 : t.day === i + 1
             )}
@@ -49,7 +68,8 @@ const AllowedTimesSection = (props: {
             addAllowedTime={(startTime, endTime) =>
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
-            setAllowedTimes={props.setAllowedTimes}
+            setAllowedTime={props.setAllowedTime}
+            removeAllowedTime={props.removeAllowedTime}
           />
         ))}
       </Stack>
@@ -57,4 +77,4 @@ const AllowedTimesSection = (props: {
   </AstroBentoCard>
 );
 
-export default AllowedTimesSection;
+export default MobileAllowedTimesSection;

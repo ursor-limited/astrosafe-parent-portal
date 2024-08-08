@@ -9,7 +9,7 @@ const IMAGE_HEIGHT = 160;
 
 const ChannelCard = (
   props: Omit<IChannel, "createdAt"> & {
-    onClick: () => void;
+    // onClick: () => void;
     noPointerEvents?: boolean;
     noMenu?: boolean;
     onDelete?: () => void;
@@ -22,7 +22,7 @@ const ChannelCard = (
     <ContentCard
       type="channel"
       title={props.title}
-      onClick={props.onClick}
+      // onClick={props.onClick}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}

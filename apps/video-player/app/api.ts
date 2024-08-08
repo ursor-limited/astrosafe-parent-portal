@@ -18,6 +18,7 @@ import {
   IRequestedSite,
 } from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
+import { IApp } from "./profiles/[id]/components/AppsTab";
 
 export interface IVideoComment {
   id: string;
@@ -327,7 +328,7 @@ class ApiController {
 
   static async removeBlockedSite(
     filterId: IFilter["id"],
-    url: IFilterException["url"]
+    url: IFilterException["domain"]
   ) {
     return dellete(
       `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
@@ -344,7 +345,7 @@ class ApiController {
 
   static async removeAllowedSite(
     filterId: IFilter["id"],
-    url: IFilterException["url"]
+    url: IFilterException["domain"]
   ) {
     return dellete(
       `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
@@ -483,8 +484,33 @@ class ApiController {
     });
   }
 
-  static async checkUrlTEST(url: string) {
-    return get(`devices/1/browse/${encodeURIComponent(url)}`);
+  static async getStats(
+    deviceId: IDevice["id"],
+    startDate: string,
+    endDate: string
+  ) {
+    return get(
+      `devices/${deviceId}/statistics?startDate=${startDate}&endDate=${endDate}`
+    ).then((response: any) => response.json());
+  }
+
+  static async getApps(
+    deviceId: IDevice["id"],
+    pageIndex: number,
+    pageSize: number,
+    categoryId?: IFilterCategory['categoryId']
+  ) {
+    return get(
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${categoryId ? `&categoryId=${categoryId}` : ''}`
+    ).then((response: any) => response.json());
+  }
+
+  static async enableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
+    return post(`devices/${deviceId}/apps/${appId}/enable`, {});
+  }
+
+  static async disableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
+    return dellete(`devices/${deviceId}/apps/${appId}/disable`);
   }
 }
 

@@ -31,15 +31,19 @@ const ProfilePageMobileBody = (props: {
   );
   return (
     <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
-      <MobileDeviceCard
-        {...props.device}
-        onClickViewScreenTime={() => setSelectedTab("limits")}
-        onUpdate={props.onUpdateDevice}
-      />
-      <Stack minHeight="24px" alignItems="center">
-        <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
-      </Stack>
-      <Stack spacing="24px">
+      <Stack spacing="24px" flex={1}>
+        <MobileDeviceCard
+          {...props.device}
+          onClickViewScreenTime={() => setSelectedTab("limits")}
+          onUpdate={props.onUpdateDevice}
+        />
+        <Stack width="100%" alignItems="center" justifyContent="center">
+          <Stack
+            height="1px"
+            width="100%"
+            bgcolor={PALETTE.secondary.grey[2]}
+          />
+        </Stack>
         <AstroTabSwitch
           select={(id) => setSelectedTab(id as AstroAccountTab)}
           selected={selectedTab}
@@ -62,21 +66,8 @@ const ProfilePageMobileBody = (props: {
             },
           ]}
         />
-        {selectedTab === "content" ? (
-          <UrsorButton
-            dark
-            variant="tertiary"
-            size="small"
-            endIcon={PlusIcon}
-            iconSize={18}
-            onClick={props.openAddFolderDialog}
-            width="100%"
-          >
-            Add Folder
-          </UrsorButton>
-        ) : null}
         {selectedTab === "insights" ? (
-          <DevicePageMobileInsightsTab />
+          <DevicePageMobileInsightsTab deviceId={props.device.id} />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
@@ -84,9 +75,10 @@ const ProfilePageMobileBody = (props: {
             folders={props.folders}
             isMobile
             onUpdate={props.onUpdateFolders}
+            openAddFolderDialog={props.openAddFolderDialog}
           />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab deviceId={props.device.id} />
+          <DevicePageLimitsTab deviceId={props.device.id} isMobile />
         ) : null}
       </Stack>
     </MobilePageLayout>

@@ -4,52 +4,34 @@ import _ from "lodash";
 import { useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import { UrsorTypographyVariant } from "ui/typography";
+import { IDayScreenTime } from "./InsightsTab";
 
-const daysN = 7;
-const hoursInterval = 2;
+const yInterval = 1; // hours
 const TIME_LIMIT = 6;
 
 const AstroTimeChart = (props: {
-  times: number[];
-  selectedDayIndex: number;
-  setSelectedDayIndex: (i: number) => void;
+  times: IDayScreenTime[];
+  selected: IDayScreenTime["date"];
+  setSelectedDatetime: (datetime: IDayScreenTime["date"]) => void;
   barWidth?: number;
   labelFontSize?: UrsorTypographyVariant;
   barsXPadding?: number;
 }) => {
-  const [maxTime, setMaxTime] = useState<number>(0);
+  const [maxTime, setMaxTime] = useState<number>(0); // minutes
   useEffect(
-    () => setMaxTime(_.max(props.times) ?? props.times[0]),
+    () =>
+      setMaxTime(
+        _.max(props.times.map((t) => t.screenTime)) ??
+          props.times[0]?.screenTime
+      ),
     [props.times]
   );
-  const [yRange, setYRange] = useState<number>(0);
+  const [nHorizontalLines, setNHorizontalLines] = useState<number>(1);
   useEffect(
-    () => setYRange((Math.ceil(maxTime / hoursInterval) + 1) * hoursInterval),
+    () => setNHorizontalLines(Math.ceil(maxTime / (60 * yInterval)) + 1),
     [maxTime]
   );
-  const [dateIndexRange, setDateIndexRange] = useState<[number, number]>([
-    0, 7,
-  ]);
-  useEffect(() => {
-    if (props.selectedDayIndex < 4) {
-      const shiftNDays = props.selectedDayIndex - 3;
-      setDateIndexRange([
-        Math.max(0, shiftNDays),
-        props.selectedDayIndex + 3 - shiftNDays,
-      ]);
-    } else if (props.times.length - props.selectedDayIndex < 4) {
-      const shiftNDays = props.times.length - 1 - props.selectedDayIndex;
-      setDateIndexRange([
-        props.selectedDayIndex - 6 + shiftNDays,
-        Math.min(props.times.length - 1, props.selectedDayIndex + 3),
-      ]);
-    } else {
-      setDateIndexRange([
-        props.selectedDayIndex - 3,
-        props.selectedDayIndex + 3,
-      ]);
-    }
-  }, [props.selectedDayIndex, props.times]);
+  console.log(props.times, maxTime, "alaooso");
   return (
     <Stack
       flex={1}
@@ -59,7 +41,7 @@ const AstroTimeChart = (props: {
     >
       <Stack top={0} left={0} width="100%" height="100%" position="absolute">
         <Stack flex={1} justifyContent="space-between" pb="28px">
-          {[...Array(1 + yRange / hoursInterval).keys()].map((i) => (
+          {_.reverse([...Array(nHorizontalLines + 1).keys()]).map((i) => (
             <Stack
               key={i}
               height="2px"
@@ -71,11 +53,10 @@ const AstroTimeChart = (props: {
                 width="30px"
                 right="-42px"
                 position="absolute"
-                // alignItems="center"
                 sx={{ transform: "translateY(-50%)" }}
               >
                 <Typography bold color={PALETTE.secondary.grey[3]}>{`${
-                  i * hoursInterval
+                  i * yInterval
                 }h`}</Typography>
               </Stack>
             </Stack>
@@ -83,107 +64,107 @@ const AstroTimeChart = (props: {
         </Stack>
       </Stack>
       <Stack direction="row" flex={1} justifyContent="space-between" zIndex={2}>
-        {_.reverse(
-          _.range(dateIndexRange[0], dateIndexRange[1] + 1).map((dayIndex) => (
+        {props.times.map((dayTime, i) => (
+          <Stack
+            key={dayTime.date}
+            alignItems="center"
+            width="60px"
+            justifyContent="flex-end"
+            spacing="6px"
+            sx={
+              props.selected !== dayTime.date
+                ? {
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.7 },
+                    transition: "0.2s",
+                  }
+                : null
+            }
+            onClick={() => props.setSelectedDatetime(dayTime.date)}
+          >
             <Stack
-              key={dayIndex}
-              alignItems="center"
-              width="60px"
-              justifyContent="flex-end"
-              spacing="6px"
-              sx={
-                props.selectedDayIndex !== dayIndex
-                  ? {
-                      cursor: "pointer",
-                      "&:hover": { opacity: 0.7 },
-                      transition: "0.2s",
-                    }
-                  : null
+              height={`${
+                (100 * dayTime.screenTime) / (yInterval * nHorizontalLines)
+              }%`}
+              width={props.barWidth ?? "32px"}
+              borderRadius="4px 4px 0 0"
+              bgcolor={
+                props.selected === dayTime.date
+                  ? PALETTE.secondary.purple[2]
+                  : PALETTE.secondary.grey[2]
               }
-              onClick={() => props.setSelectedDayIndex(dayIndex)}
+              sx={{
+                transition: "0.2s",
+              }}
+              position="relative"
             >
+              {dayTime.timeLimitReached ? (
+                <Stack
+                  position="absolute"
+                  left={0}
+                  right={0}
+                  margin="0 auto"
+                  width={0}
+                  overflow="visible"
+                  alignItems="center"
+                >
+                  <Stack
+                    width="50px"
+                    justifyContent="center"
+                    position="absolute"
+                    top="-25px"
+                    sx={
+                      {
+                        // transform: `translateX(-${
+                        //   props.limitReachedXTranslation ?? "8.5"
+                        // }px)`,
+                      }
+                    }
+                  >
+                    <Typography
+                      variant="tiny"
+                      bold
+                      color={PALETTE.secondary.grey[3]}
+                      sx={{
+                        textAlign: "center",
+                      }}
+                    >
+                      Limit reached
+                    </Typography>
+                  </Stack>
+                </Stack>
+              ) : null}
+            </Stack>
+
+            <Stack>
+              <Typography
+                bold
+                color={
+                  props.selected === dayTime.date
+                    ? undefined
+                    : PALETTE.secondary.grey[3]
+                }
+                variant={props.labelFontSize ?? "normal"}
+              >
+                {dayjs(dayTime.date).format(
+                  dayjs().utc().diff(dayTime.date, "days") < 7 ? "ddd" : "MM/DD"
+                )}
+              </Typography>
               <Stack
-                height={`${(100 * props.times[dayIndex]) / yRange}%`}
-                width={props.barWidth ?? "32px"}
-                borderRadius="4px 4px 0 0"
+                width="100%"
+                height="2px"
                 bgcolor={
-                  props.selectedDayIndex === dayIndex
+                  props.selected === dayTime.date
                     ? PALETTE.secondary.purple[2]
-                    : PALETTE.secondary.grey[2]
+                    : undefined
                 }
                 sx={{
                   transition: "0.2s",
                 }}
-                position="relative"
-              >
-                {props.times[dayIndex] >= TIME_LIMIT ? (
-                  <Stack
-                    position="absolute"
-                    left={0}
-                    right={0}
-                    margin="0 auto"
-                    width={0}
-                    overflow="visible"
-                    alignItems="center"
-                  >
-                    <Stack
-                      width="50px"
-                      justifyContent="center"
-                      position="absolute"
-                      top="-25px"
-                      sx={
-                        {
-                          // transform: `translateX(-${
-                          //   props.limitReachedXTranslation ?? "8.5"
-                          // }px)`,
-                        }
-                      }
-                    >
-                      <Typography
-                        variant="tiny"
-                        bold
-                        color={PALETTE.secondary.grey[3]}
-                        sx={{
-                          textAlign: "center",
-                        }}
-                      >
-                        Limit reached
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                ) : null}
-              </Stack>
-
-              <Stack>
-                <Typography
-                  bold
-                  color={
-                    props.selectedDayIndex === dayIndex
-                      ? undefined
-                      : PALETTE.secondary.grey[3]
-                  }
-                  variant={props.labelFontSize ?? "normal"}
-                >
-                  {dayjs()
-                    .subtract(dayIndex, "days")
-                    .format(dayIndex < 7 ? "ddd" : "MM/DD")}
-                </Typography>
-                <Stack
-                  width="100%"
-                  height="2px"
-                  bgcolor={
-                    props.selectedDayIndex === dayIndex
-                      ? PALETTE.secondary.purple[2]
-                      : undefined
-                  }
-                  sx={{
-                    transition: "0.2s",
-                  }}
-                />
-              </Stack>
+              />
             </Stack>
-          ))
-        )}
+          </Stack>
+        ))}
       </Stack>
     </Stack>
   );

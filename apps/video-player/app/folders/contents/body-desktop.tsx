@@ -30,7 +30,7 @@ const AllFoldersPageDesktopBody = (props: {
       scrollable
     >
       {props.folders.length > 0 ? (
-        <Stack pt="20px" pl="51px">
+        <Stack pt="20px" pb="33px" pl="51px">
           <DynamicCardGrid cardWidth="292px" rowGap="40px" columnGap="20px">
             {props.folders.map((f, i) => (
               <UrsorFadeIn key={f.id} duration={800} delay={i * 90}>

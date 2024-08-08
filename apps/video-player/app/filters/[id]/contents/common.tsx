@@ -19,7 +19,7 @@ import FilterRenameDialog from "../components/FilterRenameDialog";
 export type DeviceType = "chrome" | "android" | "ios";
 
 export interface IFilterException {
-  url: string;
+  domain: string;
   title: string;
   favicon: string;
   createdAt: string;

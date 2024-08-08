@@ -80,21 +80,22 @@ const AddFolderDialog = (props: {
           </Typography>
         </Stack>
       ) : (
-        <Stack pt="16px" spacing="16px" width="100%" flex={1}>
-          {filteredFolders.map((d) => (
-            <Stack
-              key={d.id}
-              direction="row"
-              spacing="8px"
-              px="8px"
-              sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
-              }}
-              onClick={() => props.onAdd(d.id)}
-            >
-              {/* <Stack
+        <Stack overflow="scroll" flex={1} width="100%">
+          <Stack pt="16px" spacing="16px" width="100%" flex={1} pb="12px">
+            {filteredFolders.map((d) => (
+              <Stack
+                key={d.id}
+                direction="row"
+                spacing="8px"
+                px="8px"
+                sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
+                }}
+                onClick={() => props.onAdd(d.id)}
+              >
+                {/* <Stack
                 borderRadius="100%"
                 overflow="hidden"
                 minWidth={23}
@@ -107,11 +108,12 @@ const AddFolderDialog = (props: {
                   alt="avatar"
                 />
               </Stack> */}
-              <Typography maxLines={1} bold>
-                {d.title}
-              </Typography>
-            </Stack>
-          ))}
+                <Typography maxLines={1} bold>
+                  {d.title}
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
         </Stack>
       )}
       <UrsorButton

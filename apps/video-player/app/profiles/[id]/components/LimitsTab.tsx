@@ -1,7 +1,6 @@
 import { Stack } from "@mui/system";
 import { useCallback, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import FilterIcon from "@/images/icons/FilterIcon.svg";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import _ from "lodash";
 import AstroSwitch from "@/app/components/AstroSwitch";
@@ -14,6 +13,8 @@ import AllowedTimesSection from "./AllowedTimesSection";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useWindowSize } from "usehooks-ts";
+import MobileAllowedTimesSection from "./MobileAllowedTimesSection";
+import ProfilePageTabLayout from "./ProfilePageTabLayout";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -88,7 +89,10 @@ export interface IAllowedTime {
   endTime: string;
 }
 
-const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
+const DevicePageLimitsTab = (props: {
+  deviceId: IDevice["id"];
+  isMobile?: boolean;
+}) => {
   const [allowedTimes, setAllowedTimes] = useState<IAllowedTime[]>([]);
   const [timeLimits, setTimeLimits] = useState<ITimeLimit[]>([]);
   const [deviceConfig, setDeviceConfig] = useState<IDeviceConfig | undefined>();
@@ -183,15 +187,19 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
   );
 
   return (
-    <Stack spacing="24px" pb="33px">
-      {requestedSites.length > 0 ? (
-        <RequestedSitesSection
-          sites={requestedSites}
-          onUpdate={loadRequestedSites}
-        />
-      ) : null}
-      {/* <Typography variant="h5">Device controls</Typography> */}
-      {/* <Stack direction="row" spacing="24px">
+    <ProfilePageTabLayout
+      title="Limits"
+      explanation="The Legend of Zelda: Ocarina of Time is the fifth main installment of The Legend of Zelda series and the first to be released for the Nintendo 64. It was one of the most highly anticipated games of its age, and is listed among the greatest video games ever created by numerous websites and magazines."
+    >
+      <Stack spacing="24px" pb="33px">
+        {requestedSites.length > 0 ? (
+          <RequestedSitesSection
+            sites={requestedSites}
+            onUpdate={loadRequestedSites}
+          />
+        ) : null}
+        {/* <Typography variant="h5">Device controls</Typography> */}
+        {/* <Stack direction="row" spacing="24px">
         <AstroBentoCard
           title="General settings"
           subtitle="Control features for your Browser"
@@ -265,97 +273,132 @@ const DevicePageLimitsTab = (props: { deviceId: IDevice["id"] }) => {
           </Stack>
         </AstroBentoCard>
       </Stack> */}
-      <Stack direction={switchToColumn ? "column" : "row"} spacing="24px">
-        <Stack width={switchToColumn ? undefined : "70%"}>
-          <AllowedTimesSection
+        <Stack direction={switchToColumn ? "column" : "row"} spacing="24px">
+          <Stack width={switchToColumn ? undefined : "70%"}>
+            {props.isMobile ? (
+              <MobileAllowedTimesSection
+                topRightElement={
+                  <AstroSwitch
+                    on={allowedTimesEnabled}
+                    callback={() => {
+                      setAllowedTimesEnabled(!allowedTimesEnabled);
+                      ApiController.flipAllowedTimesEnabled(
+                        props.deviceId,
+                        !allowedTimesEnabled
+                      );
+                    }}
+                  />
+                }
+                allowedTimes={allowedTimes}
+                setAllowedTime={(id, startTime, endTime) => {
+                  setAllowedTimes(
+                    allowedTimes.map((t) =>
+                      t.id === id ? { ...t, startTime, endTime } : t
+                    )
+                  );
+                  ApiController.changeAllowedTime(id, startTime, endTime);
+                }}
+                removeAllowedTime={() => null}
+                addTimeLimit={addAllowedTime}
+                reset={reset}
+                smallerLabelFont={allowedTimesLabelsSmallerFontSize}
+                halveLabelFrequency={halveLabelFrequency}
+                disabled={!allowedTimesEnabled}
+              />
+            ) : (
+              <AllowedTimesSection
+                topRightElement={
+                  <AstroSwitch
+                    on={allowedTimesEnabled}
+                    callback={() => {
+                      setAllowedTimesEnabled(!allowedTimesEnabled);
+                      ApiController.flipAllowedTimesEnabled(
+                        props.deviceId,
+                        !allowedTimesEnabled
+                      );
+                    }}
+                  />
+                }
+                allowedTimes={allowedTimes}
+                setAllowedTimes={(id, startTime, endTime) => {
+                  setAllowedTimes(
+                    allowedTimes.map((t) =>
+                      t.id === id ? { ...t, startTime, endTime } : t
+                    )
+                  );
+                  ApiController.changeAllowedTime(id, startTime, endTime);
+                }}
+                addTimeLimit={addAllowedTime}
+                reset={reset}
+                smallerLabelFont={allowedTimesLabelsSmallerFontSize}
+                halveLabelFrequency={halveLabelFrequency}
+                disabled={!allowedTimesEnabled}
+              />
+            )}
+          </Stack>
+          <TimeLimitsSection
             topRightElement={
               <AstroSwitch
-                on={allowedTimesEnabled}
+                on={timeLimitsEnabled}
                 callback={() => {
-                  setAllowedTimesEnabled(!allowedTimesEnabled);
-                  ApiController.flipAllowedTimesEnabled(
+                  setTimeLimitsEnabled(!timeLimitsEnabled);
+                  ApiController.flipTimeLimitsEnabled(
                     props.deviceId,
-                    !allowedTimesEnabled
+                    !timeLimitsEnabled
                   );
                 }}
               />
             }
-            allowedTimes={allowedTimes}
-            setAllowedTimes={(id, startTime, endTime) => {
-              setAllowedTimes(
-                allowedTimes.map((t) =>
-                  t.id === id ? { ...t, startTime, endTime } : t
-                )
-              );
-              ApiController.changeAllowedTime(id, startTime, endTime);
+            timeLimits={timeLimits}
+            increment={(day) => {
+              const limitId = timeLimits.find((l) => l.day === day)?.id;
+              if (limitId) {
+                setTimeLimits(
+                  timeLimits.map((l) =>
+                    l.day === day
+                      ? {
+                          id: limitId,
+                          day: l.day,
+                          allowedMinutes:
+                            l.allowedMinutes + DAILY_LIMIT_INCREMENT,
+                        }
+                      : l
+                  )
+                );
+                ApiController.setTimeLimit(
+                  limitId,
+                  (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
+                    DAILY_LIMIT_INCREMENT
+                );
+              }
             }}
-            addTimeLimit={addAllowedTime}
-            reset={reset}
-            smallerLabelFont={allowedTimesLabelsSmallerFontSize}
-            halveLabelFrequency={halveLabelFrequency}
+            decrement={(day) => {
+              const limitId = timeLimits.find((l) => l.day === day)?.id;
+              if (limitId) {
+                setTimeLimits(
+                  timeLimits.map((l) =>
+                    l.day === day
+                      ? {
+                          id: limitId,
+                          day: l.day,
+                          allowedMinutes:
+                            l.allowedMinutes - DAILY_LIMIT_INCREMENT,
+                        }
+                      : l
+                  )
+                );
+                ApiController.setTimeLimit(
+                  limitId,
+                  (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
+                    DAILY_LIMIT_INCREMENT
+                );
+              }
+            }}
+            disabled={!timeLimitsEnabled}
           />
         </Stack>
-        <TimeLimitsSection
-          topRightElement={
-            <AstroSwitch
-              on={timeLimitsEnabled}
-              callback={() => {
-                setTimeLimitsEnabled(!timeLimitsEnabled);
-                ApiController.flipTimeLimitsEnabled(
-                  props.deviceId,
-                  !timeLimitsEnabled
-                );
-              }}
-            />
-          }
-          timeLimits={timeLimits}
-          increment={(day) => {
-            const limitId = timeLimits.find((l) => l.day === day)?.id;
-            if (limitId) {
-              setTimeLimits(
-                timeLimits.map((l) =>
-                  l.day === day
-                    ? {
-                        id: limitId,
-                        day: l.day,
-                        allowedMinutes:
-                          l.allowedMinutes + DAILY_LIMIT_INCREMENT,
-                      }
-                    : l
-                )
-              );
-              ApiController.setTimeLimit(
-                limitId,
-                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) +
-                  DAILY_LIMIT_INCREMENT
-              );
-            }
-          }}
-          decrement={(day) => {
-            const limitId = timeLimits.find((l) => l.day === day)?.id;
-            if (limitId) {
-              setTimeLimits(
-                timeLimits.map((l) =>
-                  l.day === day
-                    ? {
-                        id: limitId,
-                        day: l.day,
-                        allowedMinutes:
-                          l.allowedMinutes - DAILY_LIMIT_INCREMENT,
-                      }
-                    : l
-                )
-              );
-              ApiController.setTimeLimit(
-                limitId,
-                (timeLimits.find((l) => l.day === day)?.allowedMinutes ?? 0) -
-                  DAILY_LIMIT_INCREMENT
-              );
-            }
-          }}
-        />
       </Stack>
-    </Stack>
+    </ProfilePageTabLayout>
   );
 };
 

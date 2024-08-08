@@ -91,7 +91,6 @@ const LinkCreationDialog = (props: {
           title={title}
           url={url}
           thumbnailUrl={thumbnailUrl}
-          onClick={() => null}
           noPointerEvents
           noMenu
         />
