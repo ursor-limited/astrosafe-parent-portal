@@ -2,20 +2,17 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import Image from "next/image";
 import { AstroBentoCard } from "@/app/filters/[id]/components/AstroBentoCard";
 import _ from "lodash";
 import AstroTimeChart from "./AstroTimeChart";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";
-import HistorySection from "./HistorySection";
-import Link from "next/link";
+import HistorySection, { IHistoryItem } from "./HistorySection";
 import CalendarButton from "@/app/components/CalendarButton";
 import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
 import { DUMMY_GROUP_ID } from "@/app/filters/contents/body-mobile";
 import ApiController from "@/app/api";
-import AllMostVisitedSitesDialog from "./AllMostVisitedSitesDialog";
 import MostVisitedSitesSection from "./MostVisitedSitesSection";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 dayjs.extend(advancedFormat);
@@ -184,8 +181,14 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
                 ? "Today"
                 : selectedDayIndex === 1
                 ? "Yesterday"
-                : `${dayjs().subtract(selectedDayIndex, "days").format("dddd")}`
-            }, ${dayjs().subtract(selectedDayIndex, "days").format("Do MMMM")}`}
+                : `${dayjs()
+                    .utc()
+                    .subtract(selectedDayIndex, "days")
+                    .format("dddd")}`
+            }, ${dayjs()
+              .utc()
+              .subtract(selectedDayIndex, "days")
+              .format("Do MMMM")}`}
           </Typography>
           <Stack
             sx={{
@@ -201,7 +204,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           </Stack>
         </Stack>
         <CalendarButton
-          value={dayjs().subtract(selectedDayIndex, "days").toDate()}
+          value={dayjs().utc().subtract(selectedDayIndex, "days").toDate()}
           setValue={(date: Date) =>
             setSelectedDayIndex(dayjs().diff(date, "days"))
           }
@@ -211,7 +214,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         <Stack width="54%" flex={1}>
           <AstroBentoCard
             title={`${Math.floor(timeSpent / 60)}h ${Math.floor(
-              timeSpent
+              timeSpent % 60
             )}m spent on screen`}
             notCollapsible
           >
@@ -243,7 +246,13 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           <MostVisitedSitesSection sites={visitedSites} />
         </Stack>
       </Stack>
-      <HistorySection domainUrls={DUMMY_DOMAIN_URLS} />
+      <HistorySection
+        deviceId={props.deviceId}
+        date={dayjs()
+          .utc()
+          .subtract(selectedDayIndex, "days")
+          .format("YYYY-MM-DD")}
+      />
     </Stack>
   );
 };

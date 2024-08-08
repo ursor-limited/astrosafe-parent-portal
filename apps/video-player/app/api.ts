@@ -494,6 +494,17 @@ class ApiController {
     ).then((response: any) => response.json());
   }
 
+  static async getHistory(
+    deviceId: IDevice["id"],
+    date: string,
+    pageIndex: number,
+    pageSize: number,
+  ) {
+    return get(
+      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}`
+    ).then((response: any) => response.json());
+  }
+
   static async getApps(
     deviceId: IDevice["id"],
     pageIndex: number,
