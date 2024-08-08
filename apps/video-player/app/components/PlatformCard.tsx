@@ -34,10 +34,10 @@ const PlatformCard = (props: IPlatformCardProps) => {
     >
       <Stack
         sx={{
-          backgroundImage: `url(${props.app.logoUrl})`,
+          backgroundImage: `url(${props.app.imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center center",
-          backgroundColor: props.app.logoUrl.includes(
+          backgroundColor: props.app.imageUrl.includes(
             PLACEHOLDER_IMAGE_URL_COMMON_SECTION
           )
             ? PALETTE.secondary.grey[2]
