@@ -79,6 +79,7 @@ const DevicePageContentTab = (props: {
           Add Folder
         </UrsorButton>
       }
+      mobile={props.isMobile}
       explanation="Mario Kario 64 is the first game of the Super Mario franchise to let more than two people play simultaneously. It is also the first Mario Kart game to use three-dimensional graphics for its environment design, such as the addition of elevation, advanced collision physics, expanded camera controls, real walls that can obscure views, and increased aesthetic fidelity."
     >
       {props.folders.length > 0 ? (

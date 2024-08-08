@@ -13,6 +13,7 @@ const AllMostVisitedSitesDialog = (props: {
   open: boolean;
   onClose: () => void;
   sites: IVisitedSite[];
+  isMobile?: boolean;
 }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [filteredSites, setFilteredSites] = useState<IVisitedSite[]>([]);
@@ -50,11 +51,13 @@ const AllMostVisitedSitesDialog = (props: {
     >
       <Stack spacing="32px">
         <Stack
-          direction="row"
+          direction={props.isMobile ? "column" : "row"}
           justifyContent="space-between"
-          alignItems="center"
+          spacing={props.isMobile ? "6px" : undefined}
         >
-          <Typography variant="h5">Most visited sites today</Typography>
+          <Typography bold variant={props.isMobile ? "large" : "h5"}>
+            Most visited sites today
+          </Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
               value={searchValue}

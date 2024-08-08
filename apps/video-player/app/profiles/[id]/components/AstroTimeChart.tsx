@@ -31,7 +31,6 @@ const AstroTimeChart = (props: {
     () => setNHorizontalLines(Math.ceil(maxTime / (60 * yInterval)) + 1),
     [maxTime]
   );
-  console.log(props.times, maxTime, "alaooso");
   return (
     <Stack
       flex={1}

@@ -14,6 +14,7 @@ import DevicePageMobileInsightsTab from "../components/MobileInsightsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import MobileDeviceCard from "../../components/MobileDeviceCard";
 import PlusIcon from "@/images/icons/PlusIcon.svg";
+import DevicePageAppsTab from "../components/AppsTab";
 
 const ProfilePageMobileBody = (props: {
   device: IDevice;
@@ -68,17 +69,19 @@ const ProfilePageMobileBody = (props: {
         />
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab deviceId={props.device.id} />
+        ) : selectedTab === "apps" ? (
+          <DevicePageAppsTab deviceId={props.device.id} />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
             deviceName={props.device.name}
             folders={props.folders}
-            isMobile
             onUpdate={props.onUpdateFolders}
             openAddFolderDialog={props.openAddFolderDialog}
+            isMobile
           />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab deviceId={props.device.id} isMobile />
+          <DevicePageLimitsTab deviceId={props.device.id} />
         ) : null}
       </Stack>
     </MobilePageLayout>

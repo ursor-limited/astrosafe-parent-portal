@@ -125,18 +125,20 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
             py="8px"
             boxSizing="border-box"
           >
-            <AstroTimeChart
-              times={times}
-              selected={dayjs()
-                .utc()
-                .subtract(selectedDayIndex)
-                .format("YYYY-MM-DD")}
-              setSelectedDatetime={(datetime) =>
-                dayjs().utc().diff(datetime, "days")
-              }
-              labelFontSize="small"
-              barsXPadding={12}
-            />
+            {times.length > 0 ? (
+              <AstroTimeChart
+                times={times}
+                selected={dayjs()
+                  .utc()
+                  .subtract(selectedDayIndex)
+                  .format("YYYY-MM-DD")}
+                setSelectedDatetime={(datetime) =>
+                  dayjs().utc().diff(datetime, "days")
+                }
+                labelFontSize="small"
+                barsXPadding={12}
+              />
+            ) : null}
           </Stack>
         </AstroBentoCard>
 
@@ -238,7 +240,7 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
           </Stack>
         </AstroBentoCard> */}
         <Stack flex={1}>
-          <MostVisitedSitesSection sites={visitedSites} />
+          <MostVisitedSitesSection sites={visitedSites} isMobile />
         </Stack>
 
         <MobileHistorySection domainUrls={DUMMY_DOMAIN_URLS} />
