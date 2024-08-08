@@ -14,17 +14,19 @@ import HorizontalDeviceCard from "../../components/HorizontalDeviceCard";
 import DevicePageLimitsTab from "../components/LimitsTab";
 import { IEnrichedContentBucket } from "@/app/folders/contents/common";
 import { IEnrichedDevice } from "../../contents/common";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
+import DevicePageAppsTab, { IApp } from "../components/AppsTab";
 
 const ProfilePageDesktopBody = (props: {
   device: IEnrichedDevice;
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
   folders: IEnrichedContentBucket[];
+  // apps: IApp[];
   tab?: AstroAccountTab;
   onUpdateDevice: () => void;
   onUpdateFolders: () => void;
   openAddFolderDialog: () => void;
+  // flipAppEnabled: (id: IApp["id"]) => void;
 }) => {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState<AstroAccountTab>(
@@ -87,6 +89,8 @@ const ProfilePageDesktopBody = (props: {
         </Stack>
         {selectedTab === "insights" ? (
           <DevicePageInsightsTab deviceId={props.device.id} />
+        ) : selectedTab === "apps" ? (
+          <DevicePageAppsTab deviceId={props.device.id} />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}

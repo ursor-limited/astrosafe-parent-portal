@@ -22,6 +22,7 @@ import AddFolderDialog from "../components/AddFolderDialog";
 import NotificationContext from "@/app/components/NotificationContext";
 import FolderCreationDialog from "@/app/folders/[id]/components/FolderCreationDialog";
 import { IContentBucket } from "../components/ContentTab";
+import { IApp } from "../components/AppsTab";
 
 export type DeviceType = "chrome" | "android" | "ios";
 

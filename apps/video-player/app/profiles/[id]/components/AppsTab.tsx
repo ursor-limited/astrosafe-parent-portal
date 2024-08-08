@@ -1,83 +1,82 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import DesktopIcon from "@/images/icons/DesktopIcon.svg";
+import PlusIcon from "@/images/icons/PlusIcon.svg";
 import CheckIcon from "@/images/icons/CheckIcon.svg";
 import { AstroBentoCard } from "../../../filters/[id]/components/AstroBentoCard";
 import { FilterLegend } from "../../../filters/[id]/components/CategoriesSection";
-import AstroToggleCard from "../../../filters/[id]/components/AstroToggleCard";
+import AppToggleCard from "../components/AppToggleCard";
 import { Stack } from "@mui/system";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { PALETTE } from "ui";
+import { PALETTE, UrsorButton } from "ui";
 import { IFilterUrl } from "../../../filters/contents/common";
+import ProfilePageTabLayout from "./ProfilePageTabLayout";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import { useEffect, useState } from "react";
+import ApiController from "@/app/api";
+import AstroCard from "@/app/filters/[id]/components/AstroCard";
+import _ from "lodash";
+
+const PAGE_SIZE = 20;
+
+export interface IAppCategory {
+  id: number;
+  title: string;
+}
 
 export interface IApp {
   id: number;
   title: string;
   url: string;
-  logoUrl: string;
+  imageUrl: string;
+  categoryId: IAppCategory["id"];
   description: string;
+  enabled: boolean;
 }
 
-const AppsTab = (props: {
-  apps: IApp[];
-  allowedServices: IFilterUrl["id"][];
-  flipService: (id: number) => void;
-}) => (
-  <AstroBentoCard
-    icon={DesktopIcon}
-    title={`${props.apps.length} allowed Service${
-      props.apps.length === 1 ? "" : "s"
-    }`}
-    subtitle="Turn the switch on to allow the Category to be browsed on the assigned Devices."
-    topRightStuff={<FilterLegend />}
-  >
-    <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-      {props.apps.map((a, i) => (
-        <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
-          <AstroToggleCard
-            on={props.allowedServices.includes(a.id)}
-            callback={() => props.flipService(a.id)}
-            title={a.title}
-            image={
-              <Stack position="relative">
-                {props.allowedServices.includes(a.id) ? (
-                  <Stack
-                    position="absolute"
-                    top="-6px"
-                    right="-10px"
-                    width="20px"
-                    height="20px"
-                    bgcolor={PALETTE.secondary.green[4]}
-                    sx={{ svg: { path: { fill: "rgb(255,255,255)" } } }}
-                    borderRadius="100%"
-                    overflow="hidden"
-                    border="1.5px solid white"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <CheckIcon width="12px" height="12px" />
-                  </Stack>
-                ) : null}
-                <Stack
-                  borderRadius="8px"
-                  overflow="hidden"
-                  boxShadow="0 0 16px rgba(0,0,0,0.08)"
-                >
-                  <Image
-                    src={a.logoUrl}
-                    height={41}
-                    width={41}
-                    alt="platform image"
+const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [apps, setApps] = useState<IApp[]>([]);
+  useEffect(() => {
+    ApiController.getApps(props.deviceId, pageIndex + 1, PAGE_SIZE).then(
+      (apps_) => setApps(_.sortBy(apps_, (a) => a.id))
+    );
+  }, [props.deviceId, pageIndex]);
+  return (
+    <ProfilePageTabLayout
+      title="Apps"
+      rightSideElement={<FilterLegend />}
+      explanation="Donkey Kong 64 is a sequel to the Donkey Kong Country trilogy and is so far the only game in the series without the word 'Country' in the title alongside Chunky Kong's only significant video game appearance. It received generally positive reviews with an average score of 88% according to gamerankings."
+    >
+      <Stack pb="32px">
+        <AstroCard>
+          <Stack p="16px">
+            <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+              {apps.map((a, i) => (
+                <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
+                  <AppToggleCard
+                    {...a}
+                    callback={() => {
+                      setApps(
+                        apps.map((app) =>
+                          app.id === a.id
+                            ? { ...app, enabled: !app.enabled }
+                            : app
+                        )
+                      );
+                      (a.enabled
+                        ? ApiController.disableApp
+                        : ApiController.enableApp)(props.deviceId, a.id);
+                    }}
                   />
-                </Stack>
-              </Stack>
-            }
-            key={a.id}
-          />
-        </UrsorFadeIn>
-      ))}
-    </DynamicCardGrid>
-  </AstroBentoCard>
-);
+                </UrsorFadeIn>
+              ))}
+            </DynamicCardGrid>
+          </Stack>
+        </AstroCard>
+      </Stack>
+    </ProfilePageTabLayout>
+  );
+};
 
-export default AppsTab;
+export default DevicePageAppsTab;

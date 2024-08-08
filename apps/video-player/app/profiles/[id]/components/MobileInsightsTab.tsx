@@ -12,7 +12,7 @@ import advancedFormat from "dayjs/plugin/advancedFormat.js";
 import HistorySection from "./HistorySection";
 import Link from "next/link";
 import CalendarButton from "@/app/components/CalendarButton";
-import { DUMMY_DOMAIN_URLS, DUMMY_MOST_VISITED } from "./InsightsTab";
+import { DUMMY_DOMAIN_URLS } from "./InsightsTab";
 import MobileHistorySection from "./MobileHistorySection";
 dayjs.extend(advancedFormat);
 

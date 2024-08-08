@@ -18,6 +18,7 @@ import {
   IRequestedSite,
 } from "./profiles/[id]/components/LimitsTab";
 import { cleanUrl } from "./profiles/[id]/components/MobileInsightsTab";
+import { IApp } from "./profiles/[id]/components/AppsTab";
 
 export interface IVideoComment {
   id: string;
@@ -491,6 +492,24 @@ class ApiController {
     return get(
       `devices/${deviceId}/statistics?startDate=${startDate}&endDate=${endDate}`
     ).then((response: any) => response.json());
+  }
+
+  static async getApps(
+    deviceId: IDevice["id"],
+    pageIndex: number,
+    pageSize: number
+  ) {
+    return get(
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}`
+    ).then((response: any) => response.json());
+  }
+
+  static async enableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
+    return post(`devices/${deviceId}/apps/${appId}/enable`, {});
+  }
+
+  static async disableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
+    return dellete(`devices/${deviceId}/apps/${appId}/disable`);
   }
 }
 

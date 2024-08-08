@@ -117,7 +117,6 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
   const [rangeEndDayIndex, setRangeEndDayIndex] = useState<number>(7);
   const [rangeStartDayIndex, setRangeStartDayIndex] = useState<number>(0);
   const [visitedSites, setVisitedSites] = useState<IVisitedSite[]>([]);
-  console.log(visitedSites);
   useEffect(() => {
     ApiController.getStats(
       props.deviceId,
