@@ -327,7 +327,7 @@ class ApiController {
 
   static async removeBlockedSite(
     filterId: IFilter["id"],
-    url: IFilterException["url"]
+    url: IFilterException["domain"]
   ) {
     return dellete(
       `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
@@ -344,7 +344,7 @@ class ApiController {
 
   static async removeAllowedSite(
     filterId: IFilter["id"],
-    url: IFilterException["url"]
+    url: IFilterException["domain"]
   ) {
     return dellete(
       `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
@@ -483,8 +483,14 @@ class ApiController {
     });
   }
 
-  static async checkUrlTEST(url: string) {
-    return get(`devices/1/browse/${encodeURIComponent(url)}`);
+  static async getStats(
+    deviceId: IDevice["id"],
+    startDate: string,
+    endDate: string
+  ) {
+    return get(
+      `devices/${deviceId}/statistics?startDate=${startDate}&endDate=${endDate}`
+    ).then((response: any) => response.json());
   }
 }
 

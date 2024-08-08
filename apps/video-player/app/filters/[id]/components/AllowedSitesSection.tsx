@@ -19,14 +19,14 @@ import { IFilterException } from "../contents/common";
 
 export interface IAllowedSitesTableRowItems {
   title: string;
-  url: string;
+  domain: string;
   createdAt: string;
 }
 
 const FilterPageAllowedSitesSection = (props: {
   allowedSites: IFilterException[];
   add: (url: string) => void;
-  delete: (url: IFilterException["url"]) => void;
+  delete: (url: IFilterException["domain"]) => void;
   isMobile?: boolean;
 }) => {
   const TABLE_COLUMNS: IUrsorTableColumn[] = [
@@ -49,8 +49,8 @@ const FilterPageAllowedSitesSection = (props: {
       },
     },
     {
-      name: "url",
-      displayName: "URL",
+      name: "domain",
+      displayName: "Domain",
       sortable: true,
     },
     {
@@ -72,12 +72,12 @@ const FilterPageAllowedSitesSection = (props: {
           id: i.toString(),
           items: {
             title: a.title ?? "",
-            url: a.url,
+            domain: a.domain,
             createdAt: a.createdAt,
           },
           tags: [],
           disabled: false,
-          url: a.url,
+          url: a.domain,
         })) || [];
       setRows(linkRows);
     })();
@@ -94,7 +94,7 @@ const FilterPageAllowedSitesSection = (props: {
     setFilteredRows(
       rows.filter((row) =>
         inputValue
-          ? [row.items.title, row.items.url.replace("www.", "")]
+          ? [row.items.title, row.items.domain.replace("www.", "")]
               .join("_")
               .toLowerCase()
               .includes(inputValue.toLowerCase())
@@ -163,7 +163,7 @@ const FilterPageAllowedSitesSection = (props: {
                   icon: TrashcanIcon,
                   text: "Delete",
                   kallback: () =>
-                    props.delete(props.allowedSites[parseInt(i)].url),
+                    props.delete(props.allowedSites[parseInt(i)].domain),
                   color: PALETTE.system.red,
                 },
               ]}

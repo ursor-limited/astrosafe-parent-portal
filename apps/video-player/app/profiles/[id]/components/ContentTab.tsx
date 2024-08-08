@@ -89,35 +89,37 @@ const DevicePageContentTab = (props: {
           </DynamicCardGrid>
         </Stack>
       ) : (
-        <UrsorFadeIn delay={600} duration={800}>
-          <Stack
-            height={props.isMobile ? "100%" : "457px"}
-            justifyContent="center"
-            alignItems="center"
-            spacing="13px"
-          >
-            <Image
-              src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
-              width={props.isMobile ? 179 : 230}
-              height={props.isMobile ? 152 : 195}
-              alt="empty state illustration"
-            />
+        <Stack flex={1} justifyContent="center" alignItems="center">
+          <UrsorFadeIn delay={600} duration={800}>
             <Stack
-              width={props.isMobile ? "100%" : "304px"}
+              height={props.isMobile ? "100%" : "457px"}
+              justifyContent="center"
               alignItems="center"
+              spacing="13px"
             >
-              <Typography
-                color={PALETTE.secondary.grey[3]}
-                sx={{ textAlign: "center" }}
-                bold
+              <Image
+                src="https://ursorassets.s3.eu-west-1.amazonaws.com/Frame+427321506.png"
+                width={props.isMobile ? 179 : 230}
+                height={props.isMobile ? 152 : 195}
+                alt="empty state illustration"
+              />
+              <Stack
+                width={props.isMobile ? "100%" : "304px"}
+                alignItems="center"
               >
-                There is no Content currently assigned to this Device. Click the
-                Add a Folder button to choose an existing Folder of Content or
-                create a new one.
-              </Typography>
+                <Typography
+                  color={PALETTE.secondary.grey[3]}
+                  sx={{ textAlign: "center" }}
+                  bold
+                >
+                  There is no Content currently assigned to this Device. Click
+                  the Add a Folder button to choose an existing Folder of
+                  Content or create a new one.
+                </Typography>
+              </Stack>
             </Stack>
-          </Stack>
-        </UrsorFadeIn>
+          </UrsorFadeIn>
+        </Stack>
       )}
       {folderDeviceRemovalConfirmationDialogId ? (
         <FolderDeviceRemovalConfirmationDialog

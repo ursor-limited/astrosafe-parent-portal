@@ -321,13 +321,17 @@ const MobileDeviceCard = (
               >
                 <MobileDeviceCardRow
                   text={`${Math.floor(
-                    ((props.screenTime?.allowed ?? 0) -
-                      (props.screenTime?.current ?? 0)) /
-                      60
+                    Math.max(
+                      0,
+                      (props.screenTime?.allowed ?? 0) -
+                        (props.screenTime?.current ?? 0)
+                    ) / 60
                   )}h ${Math.floor(
-                    ((props.screenTime?.allowed ?? 0) -
-                      (props.screenTime?.current ?? 0)) %
-                      60
+                    Math.max(
+                      0,
+                      (props.screenTime?.allowed ?? 0) -
+                        (props.screenTime?.current ?? 0)
+                    ) % 60
                   )}m left`}
                   icon={ClockIcon}
                   iconColor={PALETTE.secondary.purple[1]}

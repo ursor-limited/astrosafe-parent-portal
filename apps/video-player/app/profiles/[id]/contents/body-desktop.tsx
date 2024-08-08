@@ -98,7 +98,7 @@ const ProfilePageDesktopBody = (props: {
           ) : null}
         </Stack>
         {selectedTab === "insights" ? (
-          <DevicePageInsightsTab />
+          <DevicePageInsightsTab deviceId={props.device.id} />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}

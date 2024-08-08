@@ -210,8 +210,8 @@ const HorizontalDeviceCard = (
         </Stack>
         <Stack spacing="12px" direction="row" flex={1}>
           <DeviceCardCurrentUrlSection
-            url={props.latestBrowsing}
-            title={props.latestBrowsing}
+            url={props.latestBrowsing?.url}
+            title={props.latestBrowsing?.title}
             disabled={
               !browsingEnabled
                 ? "browsingDisabled"
@@ -219,7 +219,7 @@ const HorizontalDeviceCard = (
                 ? "offline"
                 : undefined
             }
-            faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
+            faviconUrl={props.latestBrowsing?.faviconUrl}
           />
           <DeviceCardScreenTimeSection
             totalTime={props.screenTime?.allowed ?? 0}

@@ -114,6 +114,7 @@ export const DeviceCardScreenTimeSection = (props: {
           bgcolor={PALETTE.secondary.grey[2]}
           borderRadius="6px"
           position="relative"
+          overflow="hidden"
         >
           <Stack
             height="100%"
@@ -127,8 +128,10 @@ export const DeviceCardScreenTimeSection = (props: {
         </Stack>
         <Typography bold color={PALETTE.secondary.grey[3]}>
           {`${Math.floor(
-            (props.totalTime - props.elapsedTime) / 60
-          )}h ${Math.floor((props.totalTime - props.elapsedTime) % 60)}m`}
+            Math.max(0, props.totalTime - props.elapsedTime) / 60
+          )}h ${Math.floor(
+            Math.max(0, props.totalTime - props.elapsedTime) % 60
+          )}m`}
         </Typography>
       </Stack>
       <UrsorButton variant="secondary" size="small" onClick={props.onClickView}>
@@ -240,25 +243,22 @@ const DeviceCard = (
   const onClick = () => router.push(`/profiles/${props.id}`);
   return (
     <AstroCard>
-      <Stack
-        p="20px"
-        pb={props.noExtras ? undefined : 0}
-        boxSizing="border-box"
-        position="relative"
-      >
-        <Stack
-          position="absolute"
-          top="20px"
-          right="15px"
-          sx={{
-            cursor: "pointer",
-            "&:hover": { opacity: 0.6 },
-            transition: "0.2s",
-          }}
-          zIndex={2}
-        >
-          {props.button}
-        </Stack>
+      <Stack p="20px" boxSizing="border-box" position="relative" spacing="20px">
+        {props.button ? (
+          <Stack
+            position="absolute"
+            top="20px"
+            right="15px"
+            sx={{
+              cursor: "pointer",
+              "&:hover": { opacity: 0.6 },
+              transition: "0.2s",
+            }}
+            zIndex={2}
+          >
+            {props.button}
+          </Stack>
+        ) : null}
         <Stack
           direction="row"
           spacing="8px"
@@ -357,9 +357,9 @@ const DeviceCard = (
         </Stack>
         {!props.noExtras ? (
           <>
-            <Stack spacing="12px" pt="20px">
+            <Stack spacing="12px">
               <DeviceCardCurrentUrlSection
-                url={props.latestBrowsing}
+                url={props.latestBrowsing?.url}
                 disabled={
                   !browsingEnabled
                     ? "browsingDisabled"
@@ -367,8 +367,8 @@ const DeviceCard = (
                     ? "offline"
                     : undefined
                 }
-                title={props.latestBrowsing}
-                faviconUrl="https://ursorassets.s3.eu-west-1.amazonaws.com/lele_profile.jpg"
+                title={props.latestBrowsing?.title}
+                faviconUrl={props.latestBrowsing?.faviconUrl}
               />
               <DeviceCardScreenTimeSection
                 totalTime={props.screenTime?.allowed ?? 0}
@@ -385,7 +385,8 @@ const DeviceCard = (
                 }}
               />
             </Stack>
-            <Stack
+
+            {/* <Stack
               minHeight="70px"
               sx={{
                 cursor: "pointer",
@@ -402,9 +403,18 @@ const DeviceCard = (
                 Go to Device
               </Typography>
               <ChevronRightIcon height="16px" width="16px" />
-            </Stack>
+            </Stack> */}
           </>
         ) : null}
+        <UrsorButton
+          variant="secondary"
+          endIcon={ChevronRightIcon}
+          onClick={() => router.push(`/profiles/${props.id}`)}
+          width="100%"
+          backgroundColor="white"
+        >
+          Go to Device
+        </UrsorButton>
       </Stack>
     </AstroCard>
   );

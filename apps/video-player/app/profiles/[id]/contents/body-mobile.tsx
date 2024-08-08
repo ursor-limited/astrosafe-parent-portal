@@ -39,7 +39,7 @@ const ProfilePageMobileBody = (props: {
       <Stack minHeight="24px" alignItems="center">
         <Stack height="1px" bgcolor={PALETTE.secondary.grey[1]}></Stack>
       </Stack>
-      <Stack spacing="24px">
+      <Stack spacing="24px" flex={1}>
         <AstroTabSwitch
           select={(id) => setSelectedTab(id as AstroAccountTab)}
           selected={selectedTab}

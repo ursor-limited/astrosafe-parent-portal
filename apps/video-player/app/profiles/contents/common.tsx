@@ -25,7 +25,11 @@ export type IEnrichedDevice = IDevice & {
   timeLimits?: ITimeLimit[];
   allowedTimes?: IAllowedTime[];
   config?: IDeviceConfig;
-  latestBrowsing?: string;
+  latestBrowsing?: {
+    url: string;
+    title: string;
+    faviconUrl: string;
+  } | null;
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
