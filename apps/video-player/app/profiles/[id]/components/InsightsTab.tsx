@@ -127,7 +127,7 @@ const DevicePageInsightsTab = (props: { deviceId: IDevice["id"] }) => {
       setTimes(stats.screenTime);
       setVisitedSites(
         _.sortBy(
-          stats.visitedWebsites?.[stats.visitedWebsites.length - 2]?.websites ||
+          stats.visitedWebsites?.[stats.visitedWebsites.length - 1]?.websites ||
             [],
           (t) => t.screenTime
         )

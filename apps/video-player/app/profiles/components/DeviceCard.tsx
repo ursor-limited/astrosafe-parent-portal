@@ -5,6 +5,7 @@ import { PALETTE, Typography, UrsorButton } from "ui";
 import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
 import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import GlobeIcon from "@/images/icons/GlobeIcon.svg";
+import StrikeThroughGlobeIcon from "@/images/icons/StrikeThroughGlobeIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
@@ -288,29 +289,35 @@ const DeviceCard = (
                 alt="device profile"
               />
             </Stack>
-            {props.online && browsingEnabled ? (
-              <Stack
-                position="absolute"
-                bottom={-2}
-                right={-2}
-                height="22px"
-                width="22px"
-                borderRadius="100%"
-                justifyContent="center"
-                alignItems="center"
-                bgcolor={PALETTE.secondary.green[4]}
-                border={`2px solid rgb(255,255,255)`}
-                sx={{
-                  svg: {
-                    path: {
-                      fill: "rgb(255,255,255)",
-                    },
+            <Stack
+              position="absolute"
+              bottom={-2}
+              right={-2}
+              height="22px"
+              width="22px"
+              borderRadius="100%"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor={
+                props.online && browsingEnabled
+                  ? PALETTE.secondary.green[4]
+                  : PALETTE.secondary.grey[3]
+              }
+              border={`2px solid rgb(255,255,255)`}
+              sx={{
+                svg: {
+                  path: {
+                    fill: "rgb(255,255,255)",
                   },
-                }}
-              >
+                },
+              }}
+            >
+              {props.online && browsingEnabled ? (
                 <GlobeIcon height="12px" width="12px" />
-              </Stack>
-            ) : null}
+              ) : (
+                <StrikeThroughGlobeIcon height="12px" width="12px" />
+              )}
+            </Stack>
           </Stack>
           <Stack justifyContent="center" spacing="4px">
             <Stack
