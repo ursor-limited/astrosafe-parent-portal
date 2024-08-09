@@ -19,6 +19,7 @@ import AppCard, { IApp } from "../components/AppCard";
 import DeviceReadyDialog from "./DeviceReadyDialog";
 import AvatarSelectionDialog from "./AvatarSelectionDialog";
 import CreationAnimationDialog from "./CreationAnimationDialog";
+import LoginToParentPortalDialog from "./LoginToParentPortalDialog";
 
 export const cleanUrl = (url: string) =>
   url.replace("http://", "").replace("https://", "").replace("www.", "");
@@ -389,11 +390,6 @@ export default function HomePageContents(props: {
       <DeviceReadyDialog
         open={deviceReadyDialogOpen}
         onClose={() => setDeviceReadyDialogOpen(false)}
-      />
-      <LoginToParentPortalDialog
-        open={parentPortalDialogOpen}
-        onClose={() => setParentPortalDialogOpen(false)}
-        journey="banner"
       />
     </>
   );

@@ -145,10 +145,12 @@ export default function FilterPage(props: {
     },
     {
       text: filter?.title ?? "",
-      options: allFilters.map((d) => ({
-        text: d.title,
-        callback: () => router.push(`/filters/${d.id}`),
-      })),
+      options: allFilters
+        .filter((f) => f.id !== props.filterId)
+        .map((f) => ({
+          text: f.title,
+          callback: () => router.push(`/filters/${f.id}`),
+        })),
     },
   ];
 

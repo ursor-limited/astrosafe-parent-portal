@@ -106,11 +106,13 @@ export default function ProfilePage(props: {
           ) : null}
         </Stack>
       ),
-      options: allDevices.map((d) => ({
-        text: d.name,
-        imageUrl: d.profileAvatarUrl,
-        callback: () => router.push(`/profiles/${d.id}`),
-      })),
+      options: allDevices
+        .filter((d) => d.id !== props.deviceId)
+        .map((d) => ({
+          text: d.name,
+          imageUrl: d.profileAvatarUrl,
+          callback: () => router.push(`/profiles/${d.id}`),
+        })),
       label:
         !props.isMobile && device?.deviceType
           ? DEVICE_TYPE_DISPLAY_NAMES[device.deviceType as DeviceType]

@@ -299,14 +299,22 @@ const MobileDeviceCard = (
                 </Stack>
               ) : null}
             </Stack>
-            <Typography
-              variant="small"
-              bold
-              maxLines={1}
-              sx={{ wordBreak: "break-all" }}
-            >
-              {props.name}
-            </Typography>
+            <Stack spacing="2px" alignItems="center">
+              <Typography
+                variant="small"
+                bold
+                maxLines={1}
+                sx={{ wordBreak: "break-all" }}
+              >
+                {props.name}
+              </Typography>
+              <Stack direction="row" spacing="6px" alignItems="center">
+                <PhoneIcon height="16px" width="16px" />
+                <Typography maxLines={1}>
+                  {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
+                </Typography>
+              </Stack>
+            </Stack>
           </Stack>
 
           {!props.noExtras ? (

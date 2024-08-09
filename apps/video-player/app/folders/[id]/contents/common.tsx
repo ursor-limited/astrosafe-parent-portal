@@ -128,6 +128,9 @@ export default function FolderPage(props: {
   >();
 
   const [allFolders, setFolders] = useState<IContentBucket[]>([]);
+  useEffect(() => {
+    ApiController.getGroupFolders(DUMMY_GROUP_ID).then(setFolders);
+  }, []);
 
   const [folderRenameDialogOpen, setFolderRenameDialogOpen] =
     useState<boolean>(false);
@@ -153,10 +156,12 @@ export default function FolderPage(props: {
     },
     {
       text: folder?.title ?? "",
-      options: allFolders.map((d) => ({
-        text: d.title,
-        callback: () => router.push(`/folders/${d.id}`),
-      })),
+      options: allFolders
+        .filter((f) => f.id !== props.folderId)
+        .map((f) => ({
+          text: f.title,
+          callback: () => router.push(`/folders/${f.id}`),
+        })),
     },
   ];
 
