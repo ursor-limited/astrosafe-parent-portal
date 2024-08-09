@@ -87,7 +87,7 @@ const BrowsingTimeSelectorRange = (props: {
             }}
             height="14px"
             width="14px"
-            bgcolor={PALETTE.secondary.purple[2]}
+            bgcolor={PALETTE.secondary.blue[2]}
             borderRadius="100%"
             onMouseDown={(e) => {
               setDraggingDot1(true);
@@ -123,9 +123,10 @@ const BrowsingTimeSelectorRange = (props: {
         width={Math.abs(dot2X - dot1X)}
         height="4px"
         zIndex={2}
+        bgcolor={PALETTE.secondary.blue[1]}
         sx={{
           pointerEvents: "none",
-          background: `linear-gradient(90deg, ${PALETTE.secondary.purple[1]}, ${PALETTE.secondary.blue[1]})`,
+          //  background: `linear-gradient(90deg, ${PALETTE.secondary.purple[1]}, ${PALETTE.secondary.blue[1]})`,
         }}
       />
     </>

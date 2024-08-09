@@ -56,7 +56,12 @@ const RequestedSiteRow = (
       </Stack>
     </Stack>
     <Stack direction="row" spacing="6px">
-      <UrsorButton size="small" onClick={props.onApprove}>
+      <UrsorButton
+        dark
+        variant="tertiary"
+        size="small"
+        onClick={props.onApprove}
+      >
         Approve
       </UrsorButton>
       <UrsorButton
