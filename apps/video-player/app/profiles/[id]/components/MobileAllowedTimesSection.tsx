@@ -34,7 +34,6 @@ const MobileAllowedTimesSection = (props: {
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
-  halveLabelFrequency?: boolean;
   disabled: boolean;
 }) => (
   <AstroBentoCard

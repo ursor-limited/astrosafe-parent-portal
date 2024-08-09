@@ -50,6 +50,7 @@ const AllowedTimesSection = (props: {
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
             setAllowedTimes={props.setAllowedTimes}
+            halveLabelFrequency={props.halveLabelFrequency}
           />
         ))}
       </Stack>

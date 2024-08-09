@@ -11,7 +11,7 @@ const FilterCard = (
   props: IGroupFilter & { deviceImageUrls: string[]; isMobile?: boolean }
 ) => (
   <Stack
-    height="213px"
+    height={props.isMobile ? "172px" : "213px"}
     borderRadius="12px"
     bgcolor={props.official ? "#EDEAFF" : "rgb(255,255,255)"}
     p="16px"
@@ -49,8 +49,8 @@ const FilterCard = (
     </Stack>
     <Stack
       position="absolute"
-      right={0}
-      top="75px"
+      right={props.isMobile ? 13 : 0}
+      top={props.isMobile ? "56px" : "75px"}
       sx={{
         svg: {
           path: {
@@ -59,7 +59,10 @@ const FilterCard = (
         },
       }}
     >
-      <LockIcon height="171px" width="171px" />
+      <LockIcon
+        height={props.isMobile ? "146px" : "171px"}
+        width={props.isMobile ? "146px" : "171px"}
+      />
     </Stack>
     <ProfileImageRow
       imageUrls={props.deviceImageUrls}
