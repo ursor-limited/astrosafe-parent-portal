@@ -74,22 +74,6 @@ const FolderPageMobileBody = (props: {
             bgcolor={PALETTE.secondary.grey[2]}
           />
         </Stack>
-        <Stack spacing="12px">
-          {["link", "video", "channel"].map((c) => (
-            <Stack
-              key={c}
-              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
-              flex={1}
-            >
-              <AddContentButton
-                key={c as AstroContent}
-                onClick={() => null}
-                {...CONTENT_BRANDING[c as AstroContent]}
-                fullWidth
-              />
-            </Stack>
-          ))}
-        </Stack>
         <Stack justifyContent="space-between" spacing="8px">
           <Typography variant="medium" bold>{`${props.contents.length} item ${
             props.contents.length ? "" : "s"
@@ -121,6 +105,23 @@ const FolderPageMobileBody = (props: {
             />
           </Stack>
         </Stack>
+        <Stack spacing="12px">
+          {["link", "video", "channel"].map((c) => (
+            <Stack
+              key={c}
+              onClick={() => props.setCreationDialogOpen(c as AstroContent)}
+              flex={1}
+            >
+              <AddContentButton
+                key={c as AstroContent}
+                onClick={() => null}
+                {...CONTENT_BRANDING[c as AstroContent]}
+                fullWidth
+              />
+            </Stack>
+          ))}
+        </Stack>
+
         <Stack
           bgcolor="rgb(255,255,255)"
           borderRadius="12px"
