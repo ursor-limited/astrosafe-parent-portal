@@ -1,15 +1,16 @@
 import { Stack } from "@mui/system";
-import TitleRow, { ITitleRowItem } from "./TitleRow";
+import MobileTitleRow from "./MobileTitleRow";
 import UrsorActionButton from "./UrsorActionButton";
 import { IActionPopupItem } from "./ActionPopup";
 import React, { useState } from "react";
 import { Typography } from "ui";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
 import MobileSideBar, { AstroPage } from "./MobileSideBar";
+import { ITitleRowItem } from "./TitleRow";
 
 const MobilePageLayout = (props: {
   title?: string;
-  titleRow?: ITitleRowItem[];
+  titleRow?: ITitleRowItem;
   actions?: IActionPopupItem[];
   topRightElement?: React.ReactNode;
   selectedPage: AstroPage;
@@ -43,9 +44,7 @@ const MobilePageLayout = (props: {
                 {props.title}
               </Typography>
             ) : null}
-            {props.titleRow ? (
-              <TitleRow items={props.titleRow} isMobile />
-            ) : null}
+            {props.titleRow ? <MobileTitleRow item={props.titleRow} /> : null}
           </Stack>
           {props.topRightElement}
           {props.actions ? (

@@ -42,6 +42,7 @@ export default function ContentCreationDialog(
         CONTENT_DISPLAY_NAMES[props.type]
       }`}
       dynamicHeight
+      maxWidth="780px"
       isMobile={isMobile}
     >
       <Stack

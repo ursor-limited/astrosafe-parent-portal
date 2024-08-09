@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DeviceRenameDialog from "../components/DeviceRenameDialog";
 import DeviceDisconnectDialog from "../components/DeviceDisconnectDialog";
@@ -33,15 +33,6 @@ export type IEnrichedDevice = IDevice & {
 };
 
 export default function AllDevicesPage(props: { isMobile: boolean }) {
-  useEffect(() => {
-    const socket = new WebSocket(
-      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
-    );
-    socket.addEventListener("message", (event) => {
-      console.log("Boo", event.data);
-    });
-  }, []);
-
   const [devices, setDevices] = useState<IEnrichedDevice[]>([]);
   useEffect(() => {
     ApiController.getGroupEnrichedDevices(DUMMY_GROUP_ID).then(setDevices);
@@ -58,6 +49,30 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
     IDevice["id"] | undefined
   >();
   const [downloadDialogOpen, setDownloadDialogOpen] = useState<boolean>(false);
+
+  const setDeviceOnlineStatus = useCallback(
+    (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
+      deviceId &&
+        setDevices(
+          devices.map((device) =>
+            device.id === deviceId ? { ...device, online } : device
+          )
+        );
+    },
+    [devices]
+  );
+
+  useEffect(() => {
+    const socket = new WebSocket(
+      `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+    );
+    socket.addEventListener("message", (event) => {
+      if (!event.data) return;
+      const data = JSON.parse(event.data);
+      setDeviceOnlineStatus(data.userId, data.online);
+    });
+  }, [setDeviceOnlineStatus]);
+
   return (
     <>
       {props.isMobile ? (

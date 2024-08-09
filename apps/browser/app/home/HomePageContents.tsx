@@ -200,7 +200,7 @@ export default function HomePageContents(props: {
     useState<boolean>(false);
 
   const [deviceReadyDialogOpen, setDeviceReadyDialogOpen] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   return (
     <>
@@ -389,6 +389,11 @@ export default function HomePageContents(props: {
       <DeviceReadyDialog
         open={deviceReadyDialogOpen}
         onClose={() => setDeviceReadyDialogOpen(false)}
+      />
+      <LoginToParentPortalDialog
+        open={parentPortalDialogOpen}
+        onClose={() => setParentPortalDialogOpen(false)}
+        journey="banner"
       />
     </>
   );

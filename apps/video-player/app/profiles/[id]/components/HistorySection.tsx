@@ -13,7 +13,7 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "./MobileInsightsTab";
 
-const PAGE_LENGTH = 40;
+export const PAGE_LENGTH = 40;
 
 export interface IHistoryItem {
   url: string;
@@ -147,7 +147,7 @@ const HistoryDomainRow = (props: IDomainGroup) => {
   );
 };
 
-interface ISimplisticDomainGroup {
+export interface ISimplisticDomainGroup {
   domain: string;
   rows: IHistoryItem[];
 }

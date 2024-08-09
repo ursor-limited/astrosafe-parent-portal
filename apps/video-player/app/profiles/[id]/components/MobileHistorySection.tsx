@@ -5,86 +5,105 @@ import Image from "next/image";
 import { PALETTE, Typography } from "ui";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DynamicContainer from "@/app/components/DynamicContainer";
 import Link from "next/link";
-import { IFilterDomain, IFilterUrl } from "@/app/filters/contents/common";
+import {
+  IDomainGroup,
+  IHistoryItem,
+  ISimplisticDomainGroup,
+  PAGE_LENGTH,
+} from "./HistorySection";
+import ApiController from "@/app/api";
+import { IDevice } from "@/app/filters/[id]/contents/common";
+import _ from "lodash";
+import { cleanUrl } from "./MobileInsightsTab";
 
-const MobileHistoryRow = (props: {
-  faviconUrl: IFilterUrl["imageUrl"];
-  datetime: IFilterUrl["createdAt"];
-  title: IFilterUrl["title"];
-  url: IFilterUrl["url"];
-  time: number;
-}) => (
-  <Stack direction="row" spacing="12px" alignItems="center">
-    <Stack spacing="4px">
-      <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-        {dayjs(props.datetime).format("ss:mm:HHa")}
-      </Typography>
-      <Stack
-        direction="row"
-        spacing="4px"
-        alignItems="center"
-        sx={{
-          svg: {
-            path: {
-              fill: PALETTE.secondary.grey[4],
+const MobileHistoryRow = (props: IHistoryItem) => {
+  const [duration, setDuration] = useState<number>(0); // seconds
+  useEffect(
+    () =>
+      setDuration(
+        dayjs(props.finishedAt).utc().diff(props.searchedAt, "seconds")
+      ),
+    [props.searchedAt, props.finishedAt]
+  );
+  return (
+    <Stack direction="row" spacing="12px" alignItems="center">
+      <Stack spacing="4px">
+        <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
+          {dayjs(props.searchedAt).utc().format("HH:mm:HHa")}
+        </Typography>
+        <Stack
+          direction="row"
+          spacing="4px"
+          alignItems="center"
+          sx={{
+            svg: {
+              path: {
+                fill: PALETTE.secondary.grey[4],
+              },
             },
-          },
-        }}
-      >
-        <ClockIcon height="12px" width="12px" />
-        <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
-          {`${Math.floor(props.time / 3600)}h ${Math.floor(
-            (props.time % 3600) / 60
-          )}`}
-        </Typography>
-      </Stack>
-    </Stack>
-    <Stack direction="row" spacing="8px" alignItems="center">
-      <Stack
-        borderRadius="100%"
-        overflow="hidden"
-        minHeight="36px"
-        minWidth="36px"
-      >
-        <Image
-          height={36}
-          width={36}
-          src={props.faviconUrl}
-          alt="favicon url"
-        />
-      </Stack>
-      <Stack>
-        <Typography variant="small" bold>
-          {props.title}
-        </Typography>
-        <Link
-          href={props.url}
-          target="_blank"
-          style={{ textDecoration: "none" }}
+          }}
         >
-          <Stack
-            sx={{
-              cursor: "pointer",
-              transition: "0.2s",
-              "&:hover": { opacity: 0.7 },
-            }}
+          <ClockIcon height="12px" width="12px" />
+          <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
+            {duration < 60
+              ? `${duration}s`
+              : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
+                  (duration % (60 * 60)) / 60
+                )}m`}
+          </Typography>
+        </Stack>
+      </Stack>
+      <Stack direction="row" spacing="8px" alignItems="center">
+        <Stack
+          borderRadius="6px"
+          overflow="hidden"
+          minHeight="32px"
+          minWidth="32px"
+          boxShadow="0 0 12px rgba(0,0,0,0.1)"
+        >
+          <Image
+            height={32}
+            width={32}
+            src={props.faviconUrl}
+            alt="favicon url"
+          />
+        </Stack>
+        <Stack>
+          <Typography variant="small" bold maxLines={1}>
+            {props.title}
+          </Typography>
+          <Link
+            href={props.url}
+            target="_blank"
+            style={{ textDecoration: "none" }}
           >
-            <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-              {props.url}
-            </Typography>
-          </Stack>
-        </Link>
+            <Stack
+              sx={{
+                cursor: "pointer",
+                transition: "0.2s",
+                "&:hover": { opacity: 0.7 },
+              }}
+            >
+              <Typography
+                variant="tiny"
+                bold
+                color={PALETTE.secondary.grey[4]}
+                maxLines={1}
+              >
+                {cleanUrl(props.url).replace(/\/$/, "")}
+              </Typography>
+            </Stack>
+          </Link>
+        </Stack>
       </Stack>
     </Stack>
-  </Stack>
-);
+  );
+};
 
-const HistoryDomainRow = (props: {
-  domain: IFilterDomain & { time: number };
-}) => {
+const HistoryDomainRow = (props: IDomainGroup) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <DynamicContainer duration={650} fullWidth>
@@ -100,16 +119,12 @@ const HistoryDomainRow = (props: {
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          <MobileHistoryRow
-            title={props.domain.title}
-            time={props.domain.time}
-            url={props.domain.domain}
-            faviconUrl={props.domain.faviconUrl}
-            datetime={props.domain.urls[0]?.createdAt ?? ""}
-          />
+          <MobileHistoryRow {...props.domain} />
           <Stack
             sx={{
               svg: {
+                transform: `rotate(${expanded ? 180 : 0}deg)`,
+                transition: "0.2s",
                 path: {
                   fill: PALETTE.secondary.grey[4],
                 },
@@ -129,14 +144,8 @@ const HistoryDomainRow = (props: {
             py="12px"
             spacing="16px"
           >
-            {props.domain.urls.map((url, i) => (
-              <MobileHistoryRow
-                key={i}
-                {...url}
-                faviconUrl={url.imageUrl}
-                datetime={url.createdAt}
-                time={3459}
-              />
+            {props.rows.map((row, i) => (
+              <MobileHistoryRow key={i} {...row} />
             ))}
           </Stack>
         ) : null}
@@ -146,13 +155,60 @@ const HistoryDomainRow = (props: {
 };
 
 const MobileHistorySection = (props: {
-  domainUrls: (IFilterDomain & { time: number })[];
+  deviceId: IDevice["id"];
+  date: string;
 }) => {
+  const [historyPageIndex, setHistoryPageIndex] = useState<number>(0);
+  const [history, setHistory] = useState<IHistoryItem[]>([]);
+  useEffect(() => {
+    ApiController.getHistory(
+      props.deviceId,
+      props.date,
+      historyPageIndex + 1,
+      PAGE_LENGTH
+    ).then((response) => setHistory(response.history));
+  }, [props.deviceId, props.date, historyPageIndex]);
+
+  const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
+  useEffect(() => {
+    const simplisticDomainGroups: ISimplisticDomainGroup[] = _.reduce(
+      history,
+      (acc, cur) => {
+        const currentDomain = new URL(cur.url).hostname;
+        const latestGroup = acc[acc.length - 1];
+
+        const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
+        if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
+
+        const latestDomain = latestGroup?.domain;
+        return currentDomain === latestDomain
+          ? [
+              ...acc.slice(-1),
+              { domain: latestDomain, rows: [...latestGroup.rows, cur] },
+            ]
+          : [...acc, { domain: currentDomain, rows: [cur] }];
+      },
+      [] as ISimplisticDomainGroup[]
+    );
+    setDomainGroups(
+      simplisticDomainGroups.map((dg) => ({
+        domain: {
+          url: dg.domain,
+          title: dg.rows[0]?.title ?? "",
+          faviconUrl: dg.rows[0]?.faviconUrl ?? "",
+          searchedAt: dg.rows[0]?.searchedAt ?? "",
+          finishedAt: dg.rows[dg.rows.length - 1]?.finishedAt ?? "",
+        },
+        rows: dg.rows,
+      }))
+    );
+  }, [history]);
+
   return (
-    <AstroBentoCard title="Browser history" notCollapsible isMobile>
+    <AstroBentoCard title="Browser history" notCollapsible>
       <Stack spacing="16px">
-        {props.domainUrls.map((d) => (
-          <HistoryDomainRow key={d.id} domain={d} />
+        {domainGroups.map((dg, i) => (
+          <HistoryDomainRow key={i} {...dg} />
         ))}
       </Stack>
     </AstroBentoCard>

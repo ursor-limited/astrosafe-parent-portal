@@ -5,7 +5,7 @@ import VerifiedIcon from "@/images/icons/VerifiedIcon.svg";
 import StopIcon from "@/images/icons/StopIcon.svg";
 import LockIcon from "@/images/icons/LockIcon.svg";
 import ProfileImageRow from "./ProfileImageRow";
-import { IFilter, IGroupFilter } from "../../contents/common";
+import { IGroupFilter } from "../../contents/common";
 
 const FilterCard = (
   props: IGroupFilter & { deviceImageUrls: string[]; isMobile?: boolean }
@@ -13,7 +13,7 @@ const FilterCard = (
   <Stack
     height="213px"
     borderRadius="12px"
-    bgcolor="#EDEAFF"
+    bgcolor={props.official ? "#EDEAFF" : "rgb(255,255,255)"}
     p="16px"
     boxSizing="border-box"
     justifyContent="space-between"

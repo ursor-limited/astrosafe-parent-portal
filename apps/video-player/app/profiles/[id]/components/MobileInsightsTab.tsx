@@ -257,7 +257,13 @@ const DevicePageMobileInsightsTab = (props: { deviceId: IDevice["id"] }) => {
         <Stack flex={1}>
           <MostVisitedSitesSection sites={visitedSites} isMobile />
         </Stack>
-        <MobileHistorySection domainUrls={DUMMY_DOMAIN_URLS} />
+        <MobileHistorySection
+          deviceId={props.deviceId}
+          date={dayjs()
+            .utc()
+            .subtract(selectedDayIndex, "days")
+            .format("YYYY-MM-DD")}
+        />
       </Stack>
       {/* <MobileAllDevicesDialog
         title={`${props.devices.length} Device${

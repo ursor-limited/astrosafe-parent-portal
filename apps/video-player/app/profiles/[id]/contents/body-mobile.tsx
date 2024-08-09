@@ -31,7 +31,10 @@ const ProfilePageMobileBody = (props: {
     props.tab ?? "content"
   );
   return (
-    <MobilePageLayout titleRow={props.titleRow} selectedPage="profiles">
+    <MobilePageLayout
+      titleRow={props.titleRow.slice(-1)[0]}
+      selectedPage="profiles"
+    >
       <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
           {...props.device}
@@ -81,7 +84,7 @@ const ProfilePageMobileBody = (props: {
             isMobile
           />
         ) : selectedTab === "limits" ? (
-          <DevicePageLimitsTab deviceId={props.device.id} />
+          <DevicePageLimitsTab deviceId={props.device.id} isMobile />
         ) : null}
       </Stack>
     </MobilePageLayout>

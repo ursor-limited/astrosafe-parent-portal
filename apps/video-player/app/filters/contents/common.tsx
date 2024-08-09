@@ -50,6 +50,7 @@ export interface IFilter {
 export interface IGroupFilter {
   id: IFilter["id"];
   title: IFilter["title"];
+  official: IFilter["official"];
   profileAvatarUrls: IDevice["profileAvatarUrl"][];
   deviceCount: number;
   whitelistedCategories: number;
@@ -84,7 +85,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
         onClose={() => setFilterCreationDialogOpen(false)}
         onSubmit={(title: IFilter["title"]) =>
           ApiController.createFilter(DUMMY_GROUP_ID, title).then((f) =>
-            router.push(`/filters/${f.id}`)
+            router.push(`/filters/${f.filterId}`)
           )
         }
       />
