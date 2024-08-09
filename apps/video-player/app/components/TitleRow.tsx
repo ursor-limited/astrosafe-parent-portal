@@ -10,7 +10,12 @@ import Image from "next/image";
 export interface ITitleRowItem {
   text: string;
   image?: React.ReactNode;
-  options?: { text: string; imageUrl?: string; callback: () => void }[];
+  options?: {
+    text: string;
+    imageUrl?: string;
+    image?: React.ReactNode;
+    callback: () => void;
+  }[];
   label?: string; // a small grey text between the actual text and the chevron
   callback?: () => void;
 }
@@ -77,16 +82,17 @@ const TitleRowItemCore = (
               }}
               onClick={o.callback}
             >
-              {o.imageUrl ? (
-                <Stack borderRadius="100%" overflow="hidden">
-                  <Image
-                    src={o.imageUrl}
-                    height={20}
-                    width={20}
-                    alt="option image"
-                  />
-                </Stack>
-              ) : null}
+              {o.image ||
+                (o.imageUrl ? (
+                  <Stack borderRadius="100%" overflow="hidden">
+                    <Image
+                      src={o.imageUrl}
+                      height={20}
+                      width={20}
+                      alt="option image"
+                    />
+                  </Stack>
+                ) : null)}
               <Typography bold>{o.text}</Typography>
             </Stack>
           ))}

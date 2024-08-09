@@ -10,7 +10,7 @@ import { IDevice, IFilterException } from "./common";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { ITitleRowItem } from "@/app/components/TitleRow";
-import MobileDevicesSection from "@/app/folders/[id]/components/MobileDevicesSection";
+import MobileFilterDevicesSection from "../components/MobileFilterDevicesSection";
 import ApiController from "@/app/api";
 import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
 
@@ -35,23 +35,21 @@ export default function FilterPageMobileBody(props: {
   addAllowedSite: (url: IFilterUrl["url"]) => void;
   removeBlockedSite: (url: IFilterUrl["url"]) => void;
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
   return (
     <MobilePageLayout
       actions={props.actions}
-      titleRow={props.titleRow}
+      titleRow={props.titleRow.slice(-1)[0]}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">
-        <MobileDevicesSection
-          title={`Filter applied to ${props.devices.length} Devices.`}
+        <MobileFilterDevicesSection
           devices={props.devices}
-          folderId={props.filterId}
           onAdd={props.setAddDeviceDialogOpen}
-          onRemove={(id: IDevice["id"]) =>
-            ApiController.removeFolderFromDevice(props.filterId, id).then(
-              props.onRemoveDevice
-            )
+          onRemove={props.onRemoveDevice}
+          openChangeFilterDialogForDevice={
+            props.openChangeFilterDialogForDevice
           }
         />
         {/* <FilterPageServicesSection

@@ -233,6 +233,7 @@ const DeviceCard = (
     url?: string;
     button?: React.ReactNode;
     small?: boolean;
+    onClick?: () => void;
     noExtras?: boolean;
   }
 ) => {
@@ -270,6 +271,7 @@ const DeviceCard = (
           height={props.small ? "58px" : "90px"}
           alignItems="center"
           width="94%"
+          onClick={props.onClick}
         >
           <Stack position="relative">
             <Stack

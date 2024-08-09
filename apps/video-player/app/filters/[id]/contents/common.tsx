@@ -4,6 +4,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import TrashcanIcon from "@/images/icons/TrashcanIcon.svg";
 import PencilIcon from "@/images/icons/Pencil.svg";
+import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { PALETTE } from "ui";
 import FilterPageDesktopBody from "./body-desktop";
 import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
@@ -15,6 +16,8 @@ import { DUMMY_GROUP_ID } from "../../contents/body-mobile";
 import NotificationContext from "@/app/components/NotificationContext";
 import DeletionDialog from "@/app/components/DeletionDialog";
 import FilterRenameDialog from "../components/FilterRenameDialog";
+import ChangeFilterDialog from "../components/ChangeFilterDialog";
+import { Stack } from "@mui/system";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -149,6 +152,21 @@ export default function FilterPage(props: {
         .filter((f) => f.id !== props.filterId)
         .map((f) => ({
           text: f.title,
+          image: (
+            <Stack
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.orange[3],
+                  },
+                },
+              }}
+              height="16px"
+              width="16px"
+            >
+              <FilterIcon height="16px" width="16px" />
+            </Stack>
+          ),
           callback: () => router.push(`/filters/${f.id}`),
         })),
     },
@@ -160,6 +178,8 @@ export default function FilterPage(props: {
   const notificationCtx = useContext(NotificationContext);
 
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
+  const [changeFilterDialogOpenForDevice, setChangeFilterDialogOpenForDevice] =
+    useState<IDevice | undefined>();
 
   const deleteFilter = () =>
     ApiController.removeFilter(props.filterId).then(() =>
@@ -237,6 +257,7 @@ export default function FilterPage(props: {
           addAllowedSite={addAllowedSite}
           removeBlockedSite={removeBlockedSite}
           removeAllowedSite={removeAllowedSite}
+          openChangeFilterDialogForDevice={setChangeFilterDialogOpenForDevice}
         />
       ) : (
         <FilterPageDesktopBody
@@ -260,6 +281,7 @@ export default function FilterPage(props: {
           addAllowedSite={addAllowedSite}
           removeBlockedSite={removeBlockedSite}
           removeAllowedSite={removeAllowedSite}
+          openChangeFilterDialogForDevice={setChangeFilterDialogOpenForDevice}
         />
       )}
       {devices ? (
@@ -290,6 +312,28 @@ export default function FilterPage(props: {
           ApiController.changeFilterName(props.filterId, name).then(loadFilter)
         }
       />
+      {changeFilterDialogOpenForDevice ? (
+        <ChangeFilterDialog
+          open
+          onClose={() => setChangeFilterDialogOpenForDevice(undefined)}
+          submitChange={(id) =>
+            ApiController.addFilterToDevice(
+              id,
+              changeFilterDialogOpenForDevice.id
+            )
+              .then(loadDevices)
+              .then(() =>
+                notificationCtx.success(
+                  `${changeFilterDialogOpenForDevice.name} changed to new Filter`
+                )
+              )
+          }
+          currentFilterId={props.filterId}
+          groupId={DUMMY_GROUP_ID}
+          deviceName={changeFilterDialogOpenForDevice.name}
+          isMobile={props.isMobile}
+        />
+      ) : null}
     </>
   ) : null;
 }

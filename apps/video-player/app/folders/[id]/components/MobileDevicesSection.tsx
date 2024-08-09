@@ -11,7 +11,6 @@ import { IDevice } from "@/app/filters/[id]/contents/common";
 import { IContentBucket } from "@/app/profiles/[id]/components/ContentTab";
 import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
-import ApiController from "@/app/api";
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import FolderDeviceRemovalConfirmationDialog from "./FolderDeviceRemovalConfirmationDialog";
 

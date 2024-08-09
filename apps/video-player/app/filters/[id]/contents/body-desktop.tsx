@@ -6,7 +6,7 @@ import FilterPageCategoriesSection from "../components/CategoriesSection";
 import FilterPageAllowedSitesSection from "../components/AllowedSitesSection";
 import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "../components/SearchWordsSection";
-import FilterPageDevicesSection from "../components/DevicesSection";
+import FilterPageDevicesSection from "../components/FilterDevicesSection";
 import PageLayout from "@/app/components/PageLayout";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
@@ -34,6 +34,7 @@ export default function FilterPageDesktopBody(props: {
   addAllowedSite: (url: IFilterUrl["url"]) => void;
   removeBlockedSite: (url: IFilterUrl["url"]) => void;
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
+  openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
   return (
     <PageLayout
@@ -51,6 +52,9 @@ export default function FilterPageDesktopBody(props: {
           devices={props.devices}
           onAdd={props.setAddDeviceDialogOpen}
           onRemove={props.onRemoveDevice}
+          openChangeFilterDialogForDevice={
+            props.openChangeFilterDialogForDevice
+          }
         />
         <FilterPageCategoriesSection
           filter={props.filter}
