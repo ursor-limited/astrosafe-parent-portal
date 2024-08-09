@@ -241,6 +241,11 @@ const HorizontalDeviceCard = (
             flipBrowsingEnabled={() => {
               setBrowsingEnabled(!browsingEnabled);
               ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+              notificationCtx.success(
+                `Browsing is now ${
+                  !browsingEnabled ? "enabled" : "disabled"
+                } on ${props.name}`
+              );
             }}
           />
         </Stack>

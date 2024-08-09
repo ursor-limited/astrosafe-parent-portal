@@ -49,7 +49,7 @@ const FolderPageMobileBody = (props: {
 }) => {
   return (
     <MobilePageLayout
-      titleRow={props.titleRow}
+      titleRow={props.titleRow.slice(-1)[0]}
       selectedPage="content"
       actions={props.actions}
     >
@@ -91,10 +91,9 @@ const FolderPageMobileBody = (props: {
           ))}
         </Stack>
         <Stack justifyContent="space-between" spacing="8px">
-          <Typography
-            variant="medium"
-            bold
-          >{`${props.contents.length} pieces of Content in this Folder`}</Typography>
+          <Typography variant="medium" bold>{`${props.contents.length} item ${
+            props.contents.length ? "" : "s"
+          } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
               value={props.searchValue ?? ""}

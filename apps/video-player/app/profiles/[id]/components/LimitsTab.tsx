@@ -1,5 +1,5 @@
 import { Stack } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import SearchIcon from "@/images/icons/SearchIcon.svg";
 import _ from "lodash";
@@ -15,6 +15,7 @@ import utc from "dayjs/plugin/utc";
 import { useWindowSize } from "usehooks-ts";
 import MobileAllowedTimesSection from "./MobileAllowedTimesSection";
 import ProfilePageTabLayout from "./ProfilePageTabLayout";
+import NotificationContext from "@/app/components/NotificationContext";
 dayjs.extend(utc);
 
 export const getISODateString = (day: number, hours: number, minutes: number) =>
@@ -186,6 +187,8 @@ const DevicePageLimitsTab = (props: {
     [width]
   );
 
+  const notificationCtx = useContext(NotificationContext);
+
   return (
     <ProfilePageTabLayout
       title="Limits"
@@ -316,6 +319,11 @@ const DevicePageLimitsTab = (props: {
                         props.deviceId,
                         !allowedTimesEnabled
                       );
+                      notificationCtx.success(
+                        `Switched allowed times ${
+                          allowedTimesEnabled ? "off" : "on"
+                        } on this Device`
+                      );
                     }}
                   />
                 }
@@ -345,6 +353,11 @@ const DevicePageLimitsTab = (props: {
                   ApiController.flipTimeLimitsEnabled(
                     props.deviceId,
                     !timeLimitsEnabled
+                  );
+                  notificationCtx.success(
+                    `Switched time limits ${
+                      timeLimitsEnabled ? "off" : "on"
+                    } on this Device`
                   );
                 }}
               />

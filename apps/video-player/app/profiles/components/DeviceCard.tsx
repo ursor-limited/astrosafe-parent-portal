@@ -10,7 +10,7 @@ import FilterIcon from "@/images/icons/FilterIcon.svg";
 import LinkExternalIcon from "@/images/icons/LinkExternalIcon.svg";
 import { DeviceType, IDevice } from "../../filters/[id]/contents/common";
 import AstroSwitch from "@/app/components/AstroSwitch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IFilter, IFilterUrl } from "@/app/filters/contents/common";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { IEnrichedDevice } from "../contents/common";
 import { useElementSize } from "usehooks-ts";
 import { cleanUrl } from "../[id]/components/MobileInsightsTab";
+import NotificationContext from "@/app/components/NotificationContext";
 
 export const DEVICE_TYPE_DISPLAY_NAMES: Record<DeviceType, string> = {
   android: "Android",
@@ -242,9 +243,11 @@ const DeviceCard = (
   );
   const router = useRouter();
   const onClick = () => router.push(`/profiles/${props.id}`);
+
+  const notificationCtx = useContext(NotificationContext);
   return (
     <AstroCard>
-      <Stack p="20px" boxSizing="border-box" position="relative" spacing="20px">
+      <Stack p="20px" boxSizing="border-box" position="relative">
         {props.button ? (
           <Stack
             position="absolute"
@@ -364,7 +367,7 @@ const DeviceCard = (
         </Stack>
         {!props.noExtras ? (
           <>
-            <Stack spacing="12px">
+            <Stack spacing="12px" pt="20px">
               <DeviceCardCurrentUrlSection
                 url={props.latestBrowsing?.url}
                 disabled={
@@ -389,6 +392,11 @@ const DeviceCard = (
                 flipBrowsingEnabled={() => {
                   setBrowsingEnabled(!browsingEnabled);
                   ApiController.flipBrowsingAllowed(props.id, !browsingEnabled);
+                  notificationCtx.success(
+                    `Browsing is now ${
+                      !browsingEnabled ? "enabled" : "disabled"
+                    } on ${props.name}`
+                  );
                 }}
               />
             </Stack>
@@ -411,17 +419,19 @@ const DeviceCard = (
               </Typography>
               <ChevronRightIcon height="16px" width="16px" />
             </Stack> */}
+            <Stack pt="20px">
+              <UrsorButton
+                variant="secondary"
+                endIcon={ChevronRightIcon}
+                onClick={() => router.push(`/profiles/${props.id}`)}
+                width="100%"
+                backgroundColor="white"
+              >
+                Go to Device
+              </UrsorButton>
+            </Stack>
           </>
         ) : null}
-        <UrsorButton
-          variant="secondary"
-          endIcon={ChevronRightIcon}
-          onClick={() => router.push(`/profiles/${props.id}`)}
-          width="100%"
-          backgroundColor="white"
-        >
-          Go to Device
-        </UrsorButton>
       </Stack>
     </AstroCard>
   );

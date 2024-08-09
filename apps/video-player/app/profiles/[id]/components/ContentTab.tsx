@@ -94,15 +94,15 @@ const DevicePageContentTab = (props: {
                   isMobile={props.isMobile}
                   editingCallback={props.onUpdate}
                   deletionCallback={props.onUpdate}
-                  extraActions={[
-                    {
-                      text: "Remove Device",
-                      kallback: () =>
-                        setFolderDeviceRemovalConfirmationDialogId(f.id),
-                      icon: PhoneIcon,
-                      color: PALETTE.system.red,
-                    },
-                  ]}
+                  // extraActions={[
+                  //   {
+                  //     text: "Remove Device",
+                  //     kallback: () =>
+                  //       setFolderDeviceRemovalConfirmationDialogId(f.id),
+                  //     icon: PhoneIcon,
+                  //     color: PALETTE.system.red,
+                  //   },
+                  // ]}
                 />
               </UrsorFadeIn>
             ))}
