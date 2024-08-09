@@ -53,13 +53,13 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
   const setDeviceOnlineStatus = useCallback(
     (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
       deviceId &&
-        setDevices(
-          devices.map((device) =>
+        setDevices((prev) =>
+          prev.map((device) =>
             device.id === deviceId ? { ...device, online } : device
           )
         );
     },
-    [devices]
+    []
   );
 
   useEffect(() => {
@@ -100,6 +100,7 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
             ApiController.renameDevice(renameDeviceDialogId, name).then();
             setRenameDeviceDialogId(undefined);
           }}
+          name={devices.find((d) => d.id === renameDeviceDialogId)?.name ?? ""}
         />
       ) : null}
       {disconnectDeviceDialogId ? (

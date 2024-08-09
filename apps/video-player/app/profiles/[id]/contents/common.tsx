@@ -173,6 +173,7 @@ export default function ProfilePage(props: {
           ApiController.renameDevice(props.deviceId, name).then(loadDevice);
           setRenameDialogOpen(false);
         }}
+        name={device.name ?? ""}
       />
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}
