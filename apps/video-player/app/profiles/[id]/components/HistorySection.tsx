@@ -36,7 +36,7 @@ const HistoryRow = (props: IHistoryItem) => {
     <Stack direction="row" spacing="40px" alignItems="center">
       <Stack width="94px">
         <Typography bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("HH:mm:HHa")}
+          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
         </Typography>
       </Stack>
       <Stack direction="row" spacing="8px" alignItems="center">

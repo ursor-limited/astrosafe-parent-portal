@@ -2,7 +2,7 @@
 
 import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
-import PhoneIcon from "@/images/icons/PhoneIcon.svg";
+import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import BookIcon from "@/images/icons/BookIcon.svg";
 import VersionsIcon from "@/images/icons/VersionsIcon.svg";
@@ -21,7 +21,7 @@ export const astroPages = [
 ] as const;
 export type AstroPage = (typeof astroPages)[number];
 const PAGE_ICONS: Record<AstroPage, React.FC<React.SVGProps<SVGSVGElement>>> = {
-  profiles: PhoneIcon,
+  profiles: PeopleIcon,
   filters: FilterIcon,
   content: BookIcon,
   lessons: VersionsIcon,

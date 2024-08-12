@@ -32,7 +32,7 @@ const MobileHistoryRow = (props: IHistoryItem) => {
     <Stack direction="row" spacing="12px" alignItems="center">
       <Stack spacing="4px">
         <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
-          {dayjs(props.searchedAt).utc().format("HH:mm:HHa")}
+          {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
         </Typography>
         <Stack
           direction="row"

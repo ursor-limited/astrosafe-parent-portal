@@ -27,7 +27,7 @@ const JourneyCard = (props: { journey: IJourney; mobile?: boolean }) => (
           {!props.mobile ? (
             <Stack width="70px">
               <Typography bold color={PALETTE.secondary.grey[3]}>
-                {dayjs(x.timestamp).format("HH:mm a")}
+                {dayjs(x.timestamp).format("hh:mm a")}
               </Typography>
             </Stack>
           ) : null}
@@ -78,7 +78,7 @@ const JourneyCard = (props: { journey: IJourney; mobile?: boolean }) => (
                     color={PALETTE.secondary.grey[3]}
                     variant="tiny"
                   >
-                    {dayjs(x.timestamp).format("HH:mm a")}
+                    {dayjs(x.timestamp).format("hh:mm a")}
                   </Typography>
                   <Typography
                     bold

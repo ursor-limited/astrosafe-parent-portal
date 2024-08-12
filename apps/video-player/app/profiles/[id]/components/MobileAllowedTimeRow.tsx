@@ -37,7 +37,7 @@ const TimeSelectionColumn = (props: {
   return (
     <Stack spacing="12px" alignItems="center">
       <Typography bold variant="h5" color={PALETTE.secondary.grey[5]}>
-        {dayjs(props.time).utc().format("HH:mma")}
+        {dayjs(props.time).utc().format("hh:mma")}
       </Typography>
       <Stack position="relative" overflow="hidden">
         <Stack
@@ -99,7 +99,7 @@ const TimeSelectionColumn = (props: {
                       .minute(0)
                       .millisecond(0)
                       .add(i * 15, "minutes")
-                      .format("HH:mm a")}
+                      .format("hh:mm a")}
                   </Typography>
                 </Stack>
               )),
@@ -192,7 +192,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
       >
         <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.startTime).utc().format("HH:mma")}
+            {dayjs(props.startTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>
@@ -201,7 +201,7 @@ const MobileAllowedTimeRowDisplayButton = (props: {
         </Typography>
         <Stack alignItems="center" direction="row" spacing="5px">
           <Typography bold>
-            {dayjs(props.endTime).utc().format("HH:mma")}
+            {dayjs(props.endTime).utc().format("hh:mma")}
           </Typography>
           {/* <PencilIcon height="16px" width="16px" /> */}
         </Stack>

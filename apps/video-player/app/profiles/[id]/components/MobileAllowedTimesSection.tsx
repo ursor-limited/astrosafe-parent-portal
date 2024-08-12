@@ -15,7 +15,7 @@ import MobileAllowedTimeRow from "./MobileAllowedTimeRow";
 //       placement=''
 //     >
 //       <Stack alignItems="center" direction="row" spacing="5px">
-//         <Typography bold>{dayjs(t.startTime).format("HH:mma")}</Typography>
+//         <Typography bold>{dayjs(t.startTime).format("hh:mma")}</Typography>
 //         <PencilIcon height="16px" width="16px" />
 //       </Stack>
 //     </UrsorPopover>
