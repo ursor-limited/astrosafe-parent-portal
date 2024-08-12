@@ -272,18 +272,20 @@ const MobileAllowedTimeRow = (props: {
                   props.setRangeTimes(t.id, t.startTime, time)
                 }
               />
-              <Stack
-                sx={{
-                  svg: {
-                    path: {
-                      fill: PALETTE.system.red,
+              {sortedTimes.length > 1 ? (
+                <Stack
+                  sx={{
+                    svg: {
+                      path: {
+                        fill: PALETTE.system.red,
+                      },
                     },
-                  },
-                }}
-                onClick={() => props.deleteRange(t.id)}
-              >
-                <XIcon height="20px" width="20px" />
-              </Stack>
+                  }}
+                  onClick={() => props.deleteRange(t.id)}
+                >
+                  <XIcon height="20px" width="20px" />
+                </Stack>
+              ) : null}
             </Stack>
           ))}
         </Stack>
