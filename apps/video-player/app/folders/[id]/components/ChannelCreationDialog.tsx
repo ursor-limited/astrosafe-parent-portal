@@ -140,6 +140,7 @@ const ChannelCreationDialog = (props: {
           bannerUrl={bannerUrl}
           noPointerEvents
           noMenu
+          twoLineTitleSectionHeight
         />
       </Stack>
     </ContentCreationDialog>

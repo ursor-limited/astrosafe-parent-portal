@@ -18,6 +18,7 @@ import { useUserContext } from "../../components/UserContext";
 import ApiController from "../../api";
 import AccountPageDesktopBody from "./body-desktop";
 import AccountPageMobileBody from "./body-mobile";
+import TroomiManagePlanDialog from "../components/TroomiManagePlanDialog";
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
@@ -30,7 +31,12 @@ export interface IUser {
   createdAt: string;
 }
 
-export type AstroPlanState = "freeTrial";
+export type AstroPlanState = "freeTrial" | "troomi";
+
+export const PLAN_DISPLAY_NAMES: Record<AstroPlanState, string> = {
+  freeTrial: "Free trial",
+  troomi: "Troomi Plan",
+};
 
 export const PLAN_BANNER_ITEMS: Record<
   AstroPlanState,
@@ -48,6 +54,16 @@ export const PLAN_BANNER_ITEMS: Record<
     {
       icon: ClockIcon,
       text: "X days left",
+    },
+  ],
+  troomi: [
+    {
+      icon: PhoneIcon,
+      text: "Connect up to 10 Devices",
+    },
+    {
+      icon: PeopleIcon,
+      text: "Add unlimited parents or teachers",
     },
   ],
 };
@@ -88,7 +104,7 @@ export const UserInitialsCircle = (props: {
 const AccountPage = (props: { isMobile: boolean }) => {
   const user = useUserContext().user;
 
-  const [planState, setPlanState] = useState<AstroPlanState>("freeTrial");
+  const [planState, setPlanState] = useState<AstroPlanState>("troomi");
 
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState<boolean>(false);
@@ -106,6 +122,14 @@ const AccountPage = (props: { isMobile: boolean }) => {
     loadUsers();
   }, [loadUsers]);
 
+  const [troomiManagePlanDialogOpen, setTroomiManagePlanDialogOpen] =
+    useState<boolean>(false);
+
+  const MANAGE_PLAN_CALLBACKS: Record<AstroPlanState, () => void> = {
+    freeTrial: () => null,
+    troomi: () => setTroomiManagePlanDialogOpen(true),
+  };
+
   return user ? (
     <>
       {props.isMobile ? (
@@ -117,6 +141,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
           setEditDialogOpen={() => setEditDialogOpen(true)}
           setInviteDialogOpen={() => setInviteDialogOpen(true)}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
+          onManagePlan={() => MANAGE_PLAN_CALLBACKS[planState]()}
         />
       ) : (
         <AccountPageDesktopBody
@@ -127,6 +152,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
           setEditDialogOpen={() => setEditDialogOpen(true)}
           setInviteDialogOpen={() => setInviteDialogOpen(true)}
           setConnectDialogOpen={() => setConnectDialogOpen(true)}
+          onManagePlan={() => MANAGE_PLAN_CALLBACKS[planState]()}
         />
       )}
       <EditProfileDialog
@@ -154,6 +180,10 @@ const AccountPage = (props: { isMobile: boolean }) => {
       <UpgradeDialog
         open={upgradeDialogOpen}
         closeCallback={() => setUpgradeDialogOpen(false)}
+      />
+      <TroomiManagePlanDialog
+        open={troomiManagePlanDialogOpen}
+        onClose={() => setTroomiManagePlanDialogOpen(false)}
       />
     </>
   ) : (

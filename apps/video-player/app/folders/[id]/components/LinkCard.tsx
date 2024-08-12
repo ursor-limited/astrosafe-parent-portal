@@ -15,6 +15,7 @@ const LinkCard = (
     onDelete?: () => void;
     onOpenEditingDialog?: () => void;
     isMobile?: boolean;
+    twoLineTitleSectionHeight?: boolean;
   }
 ) => {
   return (
@@ -27,6 +28,7 @@ const LinkCard = (
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}
       onOpenEditingDialog={() => props.onOpenEditingDialog?.()}
       isMobile={props.isMobile}
+      twoLineTitleSectionHeight={props.twoLineTitleSectionHeight}
     >
       <Stack
         height={IMAGE_HEIGHT}

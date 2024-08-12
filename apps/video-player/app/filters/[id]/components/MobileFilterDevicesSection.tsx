@@ -129,7 +129,6 @@ const FilterPageDevicesSection = (props: {
         onClose={() => setDevicesGridDialogOpen(false)}
         onAdd={() => {
           props.onAdd();
-          setDevicesGridDialogOpen(false);
         }}
       />
     </>

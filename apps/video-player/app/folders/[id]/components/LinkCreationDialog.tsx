@@ -93,6 +93,7 @@ const LinkCreationDialog = (props: {
           thumbnailUrl={thumbnailUrl}
           noPointerEvents
           noMenu
+          twoLineTitleSectionHeight
         />
       </Stack>
     </ContentCreationDialog>

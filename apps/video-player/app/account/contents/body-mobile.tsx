@@ -12,6 +12,7 @@ import {
   AstroPlanState,
   IUser,
   PLAN_BANNER_ITEMS,
+  PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from "./common";
@@ -29,6 +30,7 @@ const AccountPageMobileBody = (props: {
   setInviteDialogOpen: () => void;
   setConnectDialogOpen: () => void;
   planState: AstroPlanState;
+  onManagePlan: () => void;
 }) => (
   <MobilePageLayout
     title="My Account"
@@ -142,7 +144,7 @@ const AccountPageMobileBody = (props: {
             justifyContent="space-between"
           >
             <Typography variant="large" bold color="rgb(255,255,255)">
-              Free trial
+              {PLAN_DISPLAY_NAMES[props.planState]}
             </Typography>
             <UrsorButton
               dark

@@ -11,6 +11,7 @@ import {
   AstroPlanState,
   IUser,
   PLAN_BANNER_ITEMS,
+  PLAN_DISPLAY_NAMES,
   UserInitialsCircle,
   VIBRANT_GRADIENT,
 } from "./common";
@@ -30,6 +31,7 @@ const AccountPageDesktopBody = (props: {
   setInviteDialogOpen: () => void;
   setConnectDialogOpen: () => void;
   planState: AstroPlanState;
+  onManagePlan: () => void;
 }) => {
   const { width } = useWindowSize();
   return (
@@ -122,7 +124,7 @@ const AccountPageDesktopBody = (props: {
               <UrsorButton
                 size="small"
                 variant="secondary"
-                onClick={() => null}
+                onClick={props.onManagePlan}
                 endIcon={ChevronRightIcon}
                 iconSize={14}
               >
@@ -140,7 +142,7 @@ const AccountPageDesktopBody = (props: {
               flex={1}
             >
               <Typography variant="h4" color="rgb(255,255,255)">
-                Free trial
+                {PLAN_DISPLAY_NAMES[props.planState]}
               </Typography>
               <Stack direction="row" alignItems="center" spacing="24px">
                 <Stack flex={1}>

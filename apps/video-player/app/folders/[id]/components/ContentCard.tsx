@@ -27,10 +27,10 @@ const ContentCard = (props: {
   onDelete: () => void;
   onOpenEditingDialog: () => void;
   isMobile?: boolean;
+  twoLineTitleSectionHeight?: boolean;
   children: React.ReactNode;
 }) => {
   const Icon = CONTENT_BRANDING[props.type].icon;
-  const [pinned, setPinned] = useState<boolean>(false);
   const [deletionDialogOpen, setDeletionDialogOpen] = useState<boolean>(false);
   return (
     <>
@@ -66,35 +66,6 @@ const ContentCard = (props: {
             />
           ) : null}
         </Stack>
-        {/* <Stack
-          position="absolute"
-          right="18px"
-          top="18px"
-          height="28px"
-          width="28px"
-          bgcolor="rgb(255,255,255)"
-          borderRadius="100%"
-          justifyContent="center"
-          alignItems="center"
-          boxShadow="0 0 16px rgba(0,0,0,0.08)"
-          zIndex={2}
-          sx={{
-            "&:hover": { transform: "scale(1.1)" },
-            transition: "0.2s",
-            cursor: "pointer",
-            svg: {
-              fill: PALETTE.secondary.purple[2],
-            },
-            pointerEvents: props.noPointerEvents ? "none" : undefined,
-          }}
-          onClick={() => setPinned(!pinned)}
-        >
-          {pinned ? (
-            <FilledPinIcon height="14px" width="14px" />
-          ) : (
-            <PinIcon height="14px" width="14px" />
-          )}
-        </Stack> */}
         <Stack
           onClick={props.onClick}
           sx={{
@@ -105,7 +76,10 @@ const ContentCard = (props: {
           spacing="6px"
         >
           {props.children}
-          <Stack width="calc(100% - 24px)" minHeight="24px">
+          <Stack
+            width="calc(100% - 24px)"
+            minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
+          >
             <Typography bold maxLines={2}>
               {props.title}
             </Typography>
