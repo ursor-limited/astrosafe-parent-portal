@@ -206,6 +206,7 @@ const MobileDeviceCard = (
   props: IEnrichedDevice & {
     showBrowsing?: boolean;
     noExtras?: boolean;
+    noDeviceTypeUnderAvatar?: boolean;
     onUpdate?: () => void;
     onClickViewScreenTime?: () => void;
     button?: React.ReactNode;
@@ -310,12 +311,14 @@ const MobileDeviceCard = (
               >
                 {props.name}
               </Typography>
-              <Stack direction="row" spacing="6px" alignItems="center">
-                <PhoneIcon height="16px" width="16px" />
-                <Typography maxLines={1}>
-                  {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
-                </Typography>
-              </Stack>
+              {!props.noDeviceTypeUnderAvatar ? (
+                <Stack direction="row" spacing="6px" alignItems="center">
+                  <PhoneIcon height="16px" width="16px" />
+                  <Typography maxLines={1}>
+                    {DEVICE_TYPE_DISPLAY_NAMES[props.deviceType]}
+                  </Typography>
+                </Stack>
+              ) : null}
             </Stack>
           </Stack>
 

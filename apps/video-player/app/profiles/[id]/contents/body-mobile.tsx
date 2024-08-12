@@ -34,12 +34,14 @@ const ProfilePageMobileBody = (props: {
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
       selectedPage="profiles"
+      actions={props.actions}
     >
       <Stack spacing="24px" flex={1}>
         <MobileDeviceCard
           {...props.device}
           onClickViewScreenTime={() => setSelectedTab("limits")}
           onUpdate={props.onUpdateDevice}
+          noDeviceTypeUnderAvatar
         />
         <Stack width="100%" alignItems="center" justifyContent="center">
           <Stack
