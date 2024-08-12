@@ -178,12 +178,13 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
         const latestGroup = acc[acc.length - 1];
 
         const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
+        console.log("aaoaoal", latestUrl, acc);
         if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
         const latestDomain = latestGroup?.domain;
         return currentDomain === latestDomain
           ? [
-              ...acc.slice(-1),
+              ...acc.slice(0, -1),
               { domain: latestDomain, rows: [...latestGroup.rows, cur] },
             ]
           : [...acc, { domain: currentDomain, rows: [cur] }];
