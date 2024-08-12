@@ -120,7 +120,7 @@ const AccountPageMobileBody = (props: {
           <UrsorButton
             size="small"
             variant="secondary"
-            onClick={() => null}
+            onClick={props.onManagePlan}
             endIcon={ChevronRightIcon}
             iconSize={14}
           >
@@ -146,18 +146,20 @@ const AccountPageMobileBody = (props: {
             <Typography variant="large" bold color="rgb(255,255,255)">
               {PLAN_DISPLAY_NAMES[props.planState]}
             </Typography>
-            <UrsorButton
-              dark
-              endIcon={VerifiedIcon}
-              size="small"
-              backgroundColor="rgb(255,255,255)"
-              fontColor={PALETTE.primary.navy}
-              hoverOpacity={0.7}
-              onClick={props.setUpgradeDialogOpen}
-              iconSize={16}
-            >
-              Upgrade
-            </UrsorButton>
+            {props.planState !== "troomi" ? (
+              <UrsorButton
+                dark
+                endIcon={VerifiedIcon}
+                size="small"
+                backgroundColor="rgb(255,255,255)"
+                fontColor={PALETTE.primary.navy}
+                hoverOpacity={0.7}
+                onClick={props.setUpgradeDialogOpen}
+                iconSize={16}
+              >
+                Upgrade
+              </UrsorButton>
+            ) : null}
           </Stack>
           <Stack pt="12px" direction="row" alignItems="center" spacing="24px">
             <Stack flex={1}>

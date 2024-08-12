@@ -167,18 +167,20 @@ const AccountPageDesktopBody = (props: {
                     </Stack>
                   ))}
                 </Stack>
-                <Stack height="100%" justifyContent="flex-end">
-                  <UrsorButton
-                    dark
-                    endIcon={VerifiedIcon}
-                    backgroundColor="rgb(255,255,255)"
-                    fontColor={PALETTE.primary.navy}
-                    hoverOpacity={0.7}
-                    onClick={props.setUpgradeDialogOpen}
-                  >
-                    Upgrade
-                  </UrsorButton>
-                </Stack>
+                {props.planState !== "troomi" ? (
+                  <Stack height="100%" justifyContent="flex-end">
+                    <UrsorButton
+                      dark
+                      endIcon={VerifiedIcon}
+                      backgroundColor="rgb(255,255,255)"
+                      fontColor={PALETTE.primary.navy}
+                      hoverOpacity={0.7}
+                      onClick={props.setUpgradeDialogOpen}
+                    >
+                      Upgrade
+                    </UrsorButton>
+                  </Stack>
+                ) : null}
               </Stack>
             </Stack>
           </AstroBentoCard>

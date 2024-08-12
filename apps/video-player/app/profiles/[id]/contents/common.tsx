@@ -172,7 +172,9 @@ export default function ProfilePage(props: {
         open={renameDialogOpen}
         onClose={() => setRenameDialogOpen(false)}
         onSubmit={(name) => {
-          ApiController.renameDevice(props.deviceId, name).then(loadDevice);
+          ApiController.renameDevice(props.deviceId, name)
+            .then(loadDevice)
+            .then(() => notificationCtx.success("Renamed Device"));
           setRenameDialogOpen(false);
         }}
         name={device.name ?? ""}

@@ -11,6 +11,7 @@ const EditProfileDialog = (props: {
   nickName: IUser["displayName"];
   onSave: (name: IUser["realName"], nickname: IUser["displayName"]) => void;
   onClose: () => void;
+  isMobile?: boolean;
 }) => {
   const [nickname, setNickname] = useState<IUser["displayName"]>("");
   const [name, setName] = useState<IUser["realName"]>("");
@@ -24,18 +25,24 @@ const EditProfileDialog = (props: {
       onCloseCallback={props.onClose}
       title="Edit profile"
       width="586px"
-      height="390px"
+      height={props.isMobile ? undefined : "390px"}
+      dynamicHeight={props.isMobile}
       xButtonRight="34px"
+      isMobile={props.isMobile}
     >
       <Stack spacing="40px" alignItems="center" width="100%">
         <Stack
-          direction="row"
+          direction={props.isMobile ? "column" : "row"}
           spacing="24px"
-          alignItems="flex-end"
+          alignItems={props.isMobile ? "center" : "flex-end"}
           width="100%"
         >
           <UserInitialsCircle name={name ?? ""} />
-          <Stack spacing="24px" flex={1}>
+          <Stack
+            spacing="24px"
+            flex={1}
+            width={props.isMobile ? "100%" : undefined}
+          >
             <LabeledInputField label="Name">
               <UrsorInputField
                 value={name}
@@ -63,7 +70,7 @@ const EditProfileDialog = (props: {
         <UrsorButton
           dark
           variant="tertiary"
-          width="358px"
+          width={props.isMobile ? "100%" : "358px"}
           onClick={() => props.onSave(name, nickname)}
         >
           Save

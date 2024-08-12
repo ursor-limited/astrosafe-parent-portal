@@ -18,9 +18,11 @@ const TroomiManagePlanDialog = (props: {
         text: "Got it",
         callback: props.onClose,
       }}
-      title="Change plan"
-      subtitle={["If you want to change your plan", "contact Troomi."]}
-      width="422px"
+      title="Contact us"
+      subtitle={[
+        "Please email hello@astrosafe.co if you want to update or change your AstroSafe subscription which comes with your Troomi plan.",
+      ]}
+      width="482px"
       dynamicHeight
       isMobile={props.isMobile}
     >

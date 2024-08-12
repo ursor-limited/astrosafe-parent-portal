@@ -102,7 +102,7 @@ class ApiController {
   }
 
   static async renameDevice(id: IDevice["id"], name: IDevice["name"]) {
-    return put(`devices/${id}`, { name });
+    return patch(`devices/${id}`, { name });
   }
 
   static async getGroupEnrichedDevices(id: IGroup["id"]) {

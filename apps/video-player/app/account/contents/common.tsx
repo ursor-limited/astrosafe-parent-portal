@@ -171,6 +171,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
             .then(userCtx.refresh)
             .then(() => setEditDialogOpen(false))
         }
+        isMobile={props.isMobile}
       />
       <InviteDialog
         open={inviteDialogOpen}
@@ -196,6 +197,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
       <TroomiManagePlanDialog
         open={troomiManagePlanDialogOpen}
         onClose={() => setTroomiManagePlanDialogOpen(false)}
+        isMobile={props.isMobile}
       />
     </>
   ) : (
