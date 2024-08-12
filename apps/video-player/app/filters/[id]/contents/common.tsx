@@ -7,7 +7,12 @@ import PencilIcon from "@/images/icons/Pencil.svg";
 import FilterIcon from "@/images/icons/FilterIcon.svg";
 import { PALETTE } from "ui";
 import FilterPageDesktopBody from "./body-desktop";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterCategory,
+  IFilterCategoryGroup,
+  IFilterUrl,
+} from "../../contents/common";
 import { useRouter } from "next/navigation";
 import FilterPageMobileBody from "./body-mobile";
 import ApiController from "@/app/api";
@@ -80,7 +85,7 @@ export default function FilterPage(props: {
     loadAllowedSites();
   }, [loadAllowedSites]);
 
-  const [categories, setCategories] = useState<IFilterCategory[]>([]);
+  const [categories, setCategories] = useState<IFilterCategoryGroup[]>([]);
   useEffect(() => {
     ApiController.getAllFilterCategories().then(setCategories);
   }, []);
@@ -133,7 +138,13 @@ export default function FilterPage(props: {
     // },
     {
       text: "Delete",
-      kallback: () => setDeletionDialogOpen(true),
+      kallback: () => {
+        devices.length > 0
+          ? notificationCtx.negativeSuccess(
+              "Cannot delete a Filter that is applied to Devices."
+            )
+          : setDeletionDialogOpen(true);
+      },
       icon: TrashcanIcon,
       color: PALETTE.system.red,
     },
@@ -242,7 +253,7 @@ export default function FilterPage(props: {
           flipCategory={(id) => flipCategory}
           devices={devices}
           actions={actions}
-          categories={categories}
+          categoryGroups={categories}
           allowedCategories={allowedCategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
@@ -266,7 +277,7 @@ export default function FilterPage(props: {
           flipCategory={flipCategory}
           devices={devices}
           actions={actions}
-          categories={categories}
+          categoryGroups={categories}
           allowedCategories={allowedCategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}

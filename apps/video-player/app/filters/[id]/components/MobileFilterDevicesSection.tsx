@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AllDevicesDialog from "@/app/components/AllDevicesDialog";
 import DeviceCard from "@/app/profiles/components/DeviceCard";
+import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
 
 const FilterPageDevicesSection = (props: {
   devices: IDevice[];
@@ -32,6 +33,7 @@ const FilterPageDevicesSection = (props: {
             ? "Filter applied to this Device"
             : `Filter applied to these ${props.devices.length ?? 0} Devices`
         }
+        isMobile
         notCollapsible
         topRightStuff={
           <Stack direction="row" spacing="12px">
@@ -58,7 +60,7 @@ const FilterPageDevicesSection = (props: {
         }
       >
         {props.devices.length > 0 ? (
-          <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
+          <DynamicCardGrid cardWidth="150px" rowGap="12px" columnGap="12px">
             {props.devices.map((d, i) => (
               <UrsorFadeIn key={i} duration={800} delay={i * 150}>
                 <Stack
@@ -68,7 +70,7 @@ const FilterPageDevicesSection = (props: {
                     transition: "0.2s",
                   }}
                 >
-                  <DeviceCard
+                  <MobileDeviceCard
                     {...d}
                     button={
                       <Stack

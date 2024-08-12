@@ -209,6 +209,7 @@ const MobileDeviceCard = (
     onUpdate?: () => void;
     onClickViewScreenTime?: () => void;
     button?: React.ReactNode;
+    onClick?: () => void;
   }
 ) => {
   const [browsingEnabled, setBrowsingEnabled] = useState<boolean>(false);
@@ -247,6 +248,7 @@ const MobileDeviceCard = (
           direction="row"
           justifyContent="center"
           alignItems="center"
+          onClick={props.onClick}
         >
           <Stack
             spacing="8px"

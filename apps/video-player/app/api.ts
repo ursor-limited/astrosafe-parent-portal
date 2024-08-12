@@ -315,13 +315,13 @@ class ApiController {
   }
 
   static async getBlockedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/whitelist/exceptions`).then(
+    return get(`filters/${filterId}/whitelist`).then(
       (response: any) => response.json()
     );
   }
 
   static async getAllowedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/blacklist/exceptions`).then(
+    return get(`filters/${filterId}/blacklist`).then(
       (response: any) => response.json()
     );
   }
@@ -331,14 +331,14 @@ class ApiController {
     url: IFilterException["domain"]
   ) {
     return dellete(
-      `filters/${filterId}/whitelist/exceptions/${encodeURIComponent(
+      `filters/${filterId}/whitelist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     );
   }
 
   static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
-    return post(`filters/${filterId}/whitelist/exceptions`, {
+    return post(`filters/${filterId}/whitelist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }
@@ -348,14 +348,14 @@ class ApiController {
     url: IFilterException["domain"]
   ) {
     return dellete(
-      `filters/${filterId}/blacklist/exceptions/${encodeURIComponent(
+      `filters/${filterId}/blacklist/${encodeURIComponent(
         getAbsoluteUrl(cleanUrl(url))
       )}`
     );
   }
 
   static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
-    return post(`filters/${filterId}/blacklist/exceptions`, {
+    return post(`filters/${filterId}/blacklist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }

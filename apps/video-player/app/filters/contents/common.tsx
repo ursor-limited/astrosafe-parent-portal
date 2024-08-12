@@ -9,8 +9,16 @@ import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 import { IDevice } from "../[id]/contents/common";
 import _ from "lodash";
 
-export interface IFilterCategory {
+export interface IFilterCategoryGroup {
   categoryId: number;
+  title: string;
+  permanentlyBlocked: boolean;
+  categories: IFilterCategory[];
+}
+
+export interface IFilterCategory {
+  id: number;
+  categoryId: IFilterCategoryGroup["categoryId"];
   title: string;
 }
 

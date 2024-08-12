@@ -4,12 +4,17 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterCategory,
+  IFilterCategoryGroup,
+  IFilterUrl,
+} from "../../contents/common";
 import { FilterLegend } from "./CategoriesSection";
 
 const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter;
-  categories: IFilterCategory[];
+  categoryGroups: IFilterCategoryGroup[];
   allowedCategories: IFilterUrl["id"][];
   flipCategory: (id: number) => void;
 }) => (
@@ -25,7 +30,7 @@ const MobileFilterPageCategoriesSection = (props: {
       <Stack alignItems="flex-end">
         <FilterLegend small />
       </Stack>
-      {props.categories.map((c, i) => (
+      {props.categoryGroups.map((c, i) => (
         <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 80}>
           <Stack
             height="50px"

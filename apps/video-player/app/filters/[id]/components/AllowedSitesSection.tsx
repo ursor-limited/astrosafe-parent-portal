@@ -53,12 +53,17 @@ const FilterPageAllowedSitesSection = (props: {
       displayName: "Domain",
       sortable: true,
     },
-    {
-      name: "createdAt",
-      displayName: "Added on",
-      sortable: true,
-      itemDisplay: (createdAt) => dayjs(createdAt).format("MM/DD/YYYY"),
-    },
+    ...(props.isMobile
+      ? []
+      : [
+          {
+            name: "createdAt",
+            displayName: "Added on",
+            sortable: true,
+            itemDisplay: (createdAt: IFilterUrl["createdAt"]) =>
+              dayjs(createdAt).format("MM/DD/YYYY"),
+          },
+        ]),
   ];
 
   const [rows, setRows] = useState<
@@ -168,6 +173,7 @@ const FilterPageAllowedSitesSection = (props: {
                 },
               ]}
               rowClickCallback={(id) => null}
+              titleColumnWidth="20%"
             />
           ) : null}
         </Stack>

@@ -2,7 +2,7 @@ import { Stack } from "@mui/system";
 import { PALETTE, Typography, UrsorButton } from "ui";
 import { useEffect, useState } from "react";
 import LoginToParentPortalDialog from "../home/LoginToParentPortalDialog";
-import MobileLoginToParentPortalDialog from "../home/MobileLoginToParentPortalDialog copy";
+import MobileLoginToParentPortalDialog from "../home/MobileLoginToParentPortalDialog";
 
 const ConnectBar = (props: { mobile: boolean; openConnect?: boolean }) => {
   useEffect(

@@ -10,13 +10,18 @@ import FilterPageDevicesSection from "../components/FilterDevicesSection";
 import PageLayout from "@/app/components/PageLayout";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterCategory,
+  IFilterCategoryGroup,
+  IFilterUrl,
+} from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
   filter: IFilter;
-  categories: IFilterCategory[];
+  categoryGroups: IFilterCategoryGroup[];
   allowedCategories: IFilterCategory["categoryId"][];
   flipCategory: (id: IFilterCategory["categoryId"]) => void;
   allowedSites: IFilterException[];
@@ -58,7 +63,7 @@ export default function FilterPageDesktopBody(props: {
         />
         <FilterPageCategoriesSection
           filter={props.filter}
-          categories={props.categories}
+          categoryGroups={props.categoryGroups}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
         />

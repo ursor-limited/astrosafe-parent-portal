@@ -7,17 +7,21 @@ import FilterPageBlockedSitesSection from "../components/BlockedSitesSection";
 import FilterPageSearchWordsSection from "../components/SearchWordsSection";
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
-import { IFilter, IFilterCategory, IFilterUrl } from "../../contents/common";
+import {
+  IFilter,
+  IFilterCategory,
+  IFilterCategoryGroup,
+  IFilterUrl,
+} from "../../contents/common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import MobileFilterDevicesSection from "../components/MobileFilterDevicesSection";
-import ApiController from "@/app/api";
 import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
-  categories: IFilterCategory[];
+  categoryGroups: IFilterCategoryGroup[];
   allowedCategories: IFilterCategory["categoryId"][];
   flipCategory: (id: IFilterCategory["categoryId"]) => void;
   allowedSites: IFilterException[];
@@ -66,7 +70,7 @@ export default function FilterPageMobileBody(props: {
         /> */}
         <MobileFilterPageCategoriesSection
           filter={props.filter}
-          categories={props.categories}
+          categoryGroups={props.categoryGroups}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
         />

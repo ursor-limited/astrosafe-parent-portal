@@ -30,6 +30,7 @@ const MobileLoginToParentPortalDialog = (props: {
     <UrsorDialog
       open={props.open}
       onCloseCallback={props.onClose}
+      noCloseButton
       title={
         displayIncorrectnessTitle
           ? "Incorrect pin, please try again"
@@ -48,14 +49,11 @@ const MobileLoginToParentPortalDialog = (props: {
           onRemove={() => setPin(pin.slice(0, -1))}
           wrong={wrong}
           dark
+          gap="20px"
+          keySize="62px"
+          spacing="30px"
         />
-        <Stack
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.7 },
-          }}
-        >
+        <Stack py="12px">
           <Typography sx={{ textAlign: "center" }} bold>
             Forgot your pin?
           </Typography>
