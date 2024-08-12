@@ -11,14 +11,12 @@ import { IDevice } from "../contents/common";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AllDevicesDialog from "@/app/components/AllDevicesDialog";
-import DeviceCard from "@/app/profiles/components/DeviceCard";
 import MobileDeviceCard from "@/app/profiles/components/MobileDeviceCard";
+import MobileAllDevicesDialog from "@/app/components/MobileAllDevicesDialog";
 
-const FilterPageDevicesSection = (props: {
+const MobileFilterPageDevicesSection = (props: {
   devices: IDevice[];
   onAdd: () => void;
-  onRemove: () => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) => {
   const router = useRouter();
@@ -120,19 +118,21 @@ const FilterPageDevicesSection = (props: {
           </Stack>
         )}
       </AstroBentoCard>
-      <AllDevicesDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have this Filter applied.`}
+      <MobileAllDevicesDialog
+        title={`${props.devices.length} ${
+          props.devices.length === 1 ? "Device has" : "Devices have"
+        } this Filter applied`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={() => {
-          props.onAdd();
+        onAdd={props.onAdd}
+        onRemove={(id) => {
+          const device = props.devices.find((d) => d.id === id);
+          device && props.openChangeFilterDialogForDevice(device);
         }}
       />
     </>
   );
 };
 
-export default FilterPageDevicesSection;
+export default MobileFilterPageDevicesSection;

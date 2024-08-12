@@ -7,6 +7,7 @@ const AstroSwitch = (props: {
   compromise?: boolean;
   callback: () => void;
   small?: boolean;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
 }) => {
   const [hovering, setHovering] = useState<boolean>(false);
   return (
@@ -56,8 +57,17 @@ const AstroSwitch = (props: {
               ? 17
               : 32
           }px)`,
+          svg: {
+            path: {
+              fill: PALETTE.secondary.grey[3],
+            },
+          },
         }}
-      />
+        justifyContent="center"
+        alignItems="center"
+      >
+        {props.icon ? <props.icon height="14px" width="14px" /> : null}
+      </Stack>
     </Stack>
   );
 };

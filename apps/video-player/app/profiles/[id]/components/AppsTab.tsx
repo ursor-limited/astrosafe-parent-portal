@@ -10,13 +10,17 @@ import { Stack } from "@mui/system";
 import Image from "next/image";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import { PALETTE, Typography, UrsorButton } from "ui";
-import { IFilterCategory, IFilterUrl } from "../../../filters/contents/common";
+import {
+  IFilterSubcategory,
+  IFilterUrl,
+} from "../../../filters/contents/common";
 import ProfilePageTabLayout from "./ProfilePageTabLayout";
 import { IDevice } from "@/app/filters/[id]/contents/common";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ApiController from "@/app/api";
 import AstroCard from "@/app/filters/[id]/components/AstroCard";
 import _ from "lodash";
+import NotificationContext from "@/app/components/NotificationContext";
 
 const PAGE_SIZE = 20;
 
@@ -39,7 +43,7 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
   const [selectedCategory, setSelectedCategory] = useState<
     number | undefined
   >();
-  const [categories, setCategories] = useState<IFilterCategory[]>([]);
+  const [categories, setCategories] = useState<IFilterSubcategory[]>([]);
   useEffect(() => {
     ApiController.getAllFilterCategories().then(setCategories);
   }, []);
@@ -60,6 +64,8 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
       setNPages(response.pages);
     });
   }, [props.deviceId, pageIndex, selectedCategory]);
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <ProfilePageTabLayout
@@ -147,7 +153,14 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                       );
                       (a.enabled
                         ? ApiController.disableApp
-                        : ApiController.enableApp)(props.deviceId, a.id);
+                        : ApiController.enableApp)(props.deviceId, a.id).then(
+                        () =>
+                          notificationCtx.success(
+                            a.enabled
+                              ? `Disabled ${a.title}`
+                              : `Enabled ${a.title}`
+                          )
+                      );
                     }}
                   />
                 </UrsorFadeIn>

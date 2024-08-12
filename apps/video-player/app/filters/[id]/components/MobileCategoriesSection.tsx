@@ -6,18 +6,18 @@ import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
   IFilterUrl,
 } from "../../contents/common";
 import { FilterLegend } from "./CategoriesSection";
 
 const MobileFilterPageCategoriesSection = (props: {
   filter: IFilter;
-  categoryGroups: IFilterCategoryGroup[];
+  categories: IFilterCategory[];
   allowedCategories: IFilterUrl["id"][];
   flipCategory: (id: number) => void;
-  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
+  flipSubcategory: (id: IFilterCategory["categoryId"]) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
@@ -31,7 +31,7 @@ const MobileFilterPageCategoriesSection = (props: {
       <Stack alignItems="flex-end">
         <FilterLegend small />
       </Stack>
-      {props.categoryGroups.map((c, i) => (
+      {props.categories.map((c, i) => (
         <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 80}>
           <Stack
             height="50px"

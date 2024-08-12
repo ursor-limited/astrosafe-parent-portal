@@ -9,23 +9,23 @@ import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
   IFilterUrl,
 } from "../../contents/common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { ITitleRowItem } from "@/app/components/TitleRow";
-import MobileFilterDevicesSection from "../components/MobileFilterDevicesSection";
+import MobileFilterPageDevicesSection from "../components/MobileFilterDevicesSection";
 import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
 import { useRouter } from "next/navigation";
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
-  categoryGroups: IFilterCategoryGroup[];
-  allowedCategories: IFilterCategory["id"][];
-  flipCategory: (id: IFilterCategory["id"]) => void;
-  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
+  categories: IFilterCategory[];
+  allowedCategories: IFilterSubcategory["id"][];
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -52,10 +52,9 @@ export default function FilterPageMobileBody(props: {
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">
-        <MobileFilterDevicesSection
+        <MobileFilterPageDevicesSection
           devices={props.devices}
           onAdd={props.setAddDeviceDialogOpen}
-          onRemove={props.onRemoveDevice}
           openChangeFilterDialogForDevice={
             props.openChangeFilterDialogForDevice
           }
@@ -74,10 +73,10 @@ export default function FilterPageMobileBody(props: {
         /> */}
         <MobileFilterPageCategoriesSection
           filter={props.filter}
-          categoryGroups={props.categoryGroups}
+          categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
-          flipCategoryGroup={props.flipCategoryGroup}
+          flipSubcategory={props.flipSubcategory}
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}

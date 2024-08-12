@@ -9,16 +9,16 @@ import FilterCreationDialog from "../[id]/components/FilterCreationDialog";
 import { IDevice } from "../[id]/contents/common";
 import _ from "lodash";
 
-export interface IFilterCategoryGroup {
+export interface IFilterCategory {
   categoryId: number;
   title: string;
   permanentlyBlocked: boolean;
-  categories: IFilterCategory[];
+  subCategories: IFilterSubcategory[];
 }
 
-export interface IFilterCategory {
+export interface IFilterSubcategory {
   id: number;
-  categoryId: IFilterCategoryGroup["categoryId"];
+  categoryId: IFilterCategory["categoryId"];
   title: string;
 }
 
@@ -48,7 +48,7 @@ export interface IFilter {
   id: number;
   title: string;
   filterWordBlacklist: IFilterBlacklistedWord[];
-  filterCategoryWhitelist: IFilterCategory[];
+  filterCategoryWhitelist: IFilterSubcategory[];
   allowedSiteExceptions: IFilterUrl[];
   blockedSiteExceptions: IFilterUrl[];
   official: boolean;

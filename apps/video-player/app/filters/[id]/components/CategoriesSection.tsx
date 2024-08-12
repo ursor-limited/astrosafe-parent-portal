@@ -2,15 +2,15 @@ import DynamicCardGrid from "@/app/components/DynamicCardGrid";
 import { AstroBentoCard } from "./AstroBentoCard";
 import ThumbsUpIcon from "@/images/icons/ThumbsUpIcon.svg";
 import ChevronDownIcon from "@/images/icons/ChevronDown.svg";
+import LockIcon from "@/images/icons/LockIcon.svg";
 import { Stack } from "@mui/system";
 import { DynamicContainer, PALETTE, Typography } from "ui";
 import AstroSwitch from "@/app/components/AstroSwitch";
 import UrsorFadeIn from "@/app/components/UrsorFadeIn";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
-  IFilterUrl,
 } from "../../contents/common";
 import AstroCard from "./AstroCard";
 import { useEffect, useState } from "react";
@@ -71,11 +71,11 @@ export const FilterLegend = (props: { small?: boolean }) => (
   </Stack>
 );
 
-const CategoryGroupCard = (
-  props: IFilterCategoryGroup & {
-    flipCategory: (id: IFilterCategory["id"]) => void;
-    flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
-    allowedCategories: IFilterCategory["id"][];
+const CategoryCard = (
+  props: IFilterCategory & {
+    flipCategory: (id: IFilterCategory["categoryId"]) => void;
+    flipSubcategory: (id: IFilterSubcategory["id"]) => void;
+    allowedCategories: IFilterSubcategory["id"][];
   }
 ) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -83,13 +83,15 @@ const CategoryGroupCard = (
   useEffect(
     () =>
       setStatus(
-        props.categories.every((c) => props.allowedCategories.includes(c.id))
+        props.subCategories.every((c) => props.allowedCategories.includes(c.id))
           ? "on"
-          : props.categories.some((c) => props.allowedCategories.includes(c.id))
+          : props.subCategories.some((c) =>
+              props.allowedCategories.includes(c.id)
+            )
           ? "custom"
           : "off"
       ),
-    [props.categories, props.allowedCategories]
+    [props.subCategories, props.allowedCategories]
   );
   return (
     <AstroCard key={props.categoryId}>
@@ -111,11 +113,18 @@ const CategoryGroupCard = (
               </Typography>
             </Stack>
             <Stack direction="row" spacing="20px">
-              <AstroSwitch
-                on={status === "on"}
-                compromise={status === "custom"}
-                callback={() => props.flipCategoryGroup(props.categoryId)}
-              />
+              <Stack
+                sx={{
+                  pointerEvents: props.permanentlyBlocked ? "none" : undefined,
+                }}
+              >
+                <AstroSwitch
+                  on={status === "on"}
+                  compromise={status === "custom"}
+                  callback={() => props.flipCategory(props.categoryId)}
+                  icon={props.permanentlyBlocked ? LockIcon : undefined}
+                />
+              </Stack>
               <Stack
                 sx={{
                   transform: `rotate(${collapsed ? 0 : 180}deg)`,
@@ -131,8 +140,8 @@ const CategoryGroupCard = (
           </Stack>
           {!collapsed ? (
             <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-              {props.categories.map((c, i) => (
-                <UrsorFadeIn key={c.categoryId} duration={800} delay={i * 40}>
+              {props.subCategories.map((sc, i) => (
+                <UrsorFadeIn key={sc.id} duration={800} delay={i * 40}>
                   <Stack
                     height="72px"
                     bgcolor="rgb(255,255,255)"
@@ -143,23 +152,27 @@ const CategoryGroupCard = (
                     justifyContent="space-between"
                     alignItems="center"
                     direction="row"
-                    onClick={() => props.flipCategory(c.id)}
+                    onClick={() => props.flipSubcategory(sc.id)}
                     sx={{
                       cursor: "pointer",
                       transition: "0.2s",
                       "&:hover": { opacity: 0.7 },
+                      pointerEvents: props.permanentlyBlocked
+                        ? "none"
+                        : undefined,
                     }}
                   >
                     <Stack justifyContent="space-between">
                       <Stack spacing="16px" alignItems="center" direction="row">
                         <Typography maxLines={1} bold>
-                          {c.title}
+                          {sc.title}
                         </Typography>
                       </Stack>
                     </Stack>
                     <AstroSwitch
-                      on={props.allowedCategories.includes(c.id)}
+                      on={props.allowedCategories.includes(sc.id)}
                       callback={() => null}
+                      icon={props.permanentlyBlocked ? LockIcon : undefined}
                     />
                   </Stack>
                 </UrsorFadeIn>
@@ -174,10 +187,10 @@ const CategoryGroupCard = (
 
 const FilterPageCategoriesSection = (props: {
   filter: IFilter;
-  categoryGroups: IFilterCategoryGroup[];
-  allowedCategories: IFilterCategory["id"][];
-  flipCategory: (id: IFilterCategory["id"]) => void;
-  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
+  categories: IFilterCategory[];
+  allowedCategories: IFilterSubcategory["id"][];
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
@@ -188,12 +201,12 @@ const FilterPageCategoriesSection = (props: {
     topRightStuff={<FilterLegend />}
   >
     <Stack spacing="20px">
-      {props.categoryGroups.map((cg) => (
-        <CategoryGroupCard
+      {props.categories.map((cg) => (
+        <CategoryCard
           key={cg.categoryId}
           {...cg}
           flipCategory={props.flipCategory}
-          flipCategoryGroup={props.flipCategoryGroup}
+          flipSubcategory={props.flipSubcategory}
           allowedCategories={props.allowedCategories}
         />
       ))}

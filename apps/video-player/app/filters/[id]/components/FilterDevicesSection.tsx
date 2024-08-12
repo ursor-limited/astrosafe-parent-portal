@@ -118,14 +118,16 @@ const FilterPageDevicesSection = (props: {
         )}
       </AstroBentoCard>
       <AllDevicesDialog
-        title={`${props.devices.length} Device${
-          props.devices.length === 1 ? "" : "s"
-        } have this Filter applied.`}
+        title={`${props.devices.length} ${
+          props.devices.length === 1 ? "Device has" : "Devices have"
+        } this Filter applied`}
         devices={props.devices.slice(0, 4)}
         open={devicesGridDialogOpen}
         onClose={() => setDevicesGridDialogOpen(false)}
-        onAdd={() => {
-          props.onAdd();
+        onAdd={props.onAdd}
+        onRemove={(id) => {
+          const device = props.devices.find((d) => d.id === id);
+          device && props.openChangeFilterDialogForDevice(device);
         }}
       />
     </>

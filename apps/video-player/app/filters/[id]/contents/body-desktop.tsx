@@ -12,8 +12,8 @@ import { IActionPopupItem } from "@/app/components/ActionPopup";
 import { IDevice, IFilterException } from "./common";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
   IFilterUrl,
 } from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
@@ -22,10 +22,10 @@ import { useRouter } from "next/navigation";
 export default function FilterPageDesktopBody(props: {
   filterId: number;
   filter: IFilter;
-  categoryGroups: IFilterCategoryGroup[];
-  allowedCategories: IFilterCategory["id"][];
-  flipCategory: (id: IFilterCategory["id"]) => void;
-  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
+  categories: IFilterCategory[];
+  allowedCategories: IFilterSubcategory["id"][];
+  flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  flipSubcategory: (id: IFilterSubcategory["id"]) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -66,10 +66,10 @@ export default function FilterPageDesktopBody(props: {
         />
         <FilterPageCategoriesSection
           filter={props.filter}
-          categoryGroups={props.categoryGroups}
+          categories={props.categories}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
-          flipCategoryGroup={props.flipCategoryGroup}
+          flipSubcategory={props.flipSubcategory}
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}

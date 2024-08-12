@@ -3,8 +3,8 @@ import { IGroup } from "./folders/[id]/contents/common";
 import { IDevice, IFilterException } from "./filters/[id]/contents/common";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
   IFilterUrl,
 } from "./filters/contents/common";
 import {
@@ -361,37 +361,37 @@ class ApiController {
     });
   }
 
-  static async addWhitelistCategory(
+  static async addWhitelistSubcategory(
     filterId: IFilter["id"],
-    categoryId: IFilterCategory["categoryId"]
+    id: IFilterSubcategory["id"]
   ) {
     return post(`filters/${filterId}/whitelist/categories`, {
-      categoryId: categoryId.toString(),
+      categoryId: id.toString(),
+    });
+  }
+
+  static async removeWhitelistSubcategory(
+    filterId: IFilter["id"],
+    id: IFilterSubcategory["id"]
+  ) {
+    return dellete(`filters/${filterId}/whitelist/categories/${id}`);
+  }
+
+  static async addWhitelistCategory(
+    filterId: IFilter["id"],
+    id: IFilterCategory["categoryId"]
+  ) {
+    return post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
+      categoryId: id.toString(),
     });
   }
 
   static async removeWhitelistCategory(
     filterId: IFilter["id"],
-    categoryId: IFilterCategory["categoryId"]
-  ) {
-    return dellete(`filters/${filterId}/whitelist/categories/${categoryId}`);
-  }
-
-  static async addWhitelistCategoryGroup(
-    filterId: IFilter["id"],
-    categoryGroupId: IFilterCategoryGroup["categoryId"]
-  ) {
-    return post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
-      categoryId: categoryGroupId.toString(),
-    });
-  }
-
-  static async removeWhitelistCategoryGroup(
-    filterId: IFilter["id"],
-    categoryGroupId: IFilterCategoryGroup["categoryId"]
+    id: IFilterCategory["categoryId"]
   ) {
     return dellete(
-      `filters/${filterId}/whitelist/categories/${categoryGroupId}`
+      `filters/${filterId}/whitelist/categories/${id}?isGroup=true`
     );
   }
 
@@ -536,7 +536,7 @@ class ApiController {
     deviceId: IDevice["id"],
     pageIndex: number,
     pageSize: number,
-    categoryId?: IFilterCategory["categoryId"]
+    categoryId?: IFilterSubcategory["categoryId"]
   ) {
     return get(
       `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${

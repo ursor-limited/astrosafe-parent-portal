@@ -9,8 +9,8 @@ import { PALETTE } from "ui";
 import FilterPageDesktopBody from "./body-desktop";
 import {
   IFilter,
+  IFilterSubcategory,
   IFilterCategory,
-  IFilterCategoryGroup,
   IFilterUrl,
 } from "../../contents/common";
 import { useRouter } from "next/navigation";
@@ -86,19 +86,17 @@ export default function FilterPage(props: {
     loadAllowedSites();
   }, [loadAllowedSites]);
 
-  const [categoryGroups, setCategoryGroups] = useState<IFilterCategoryGroup[]>(
-    []
-  );
+  const [categories, setCategories] = useState<IFilterCategory[]>([]);
   useEffect(() => {
-    ApiController.getAllFilterCategories().then(setCategoryGroups);
+    ApiController.getAllFilterCategories().then(setCategories);
   }, []);
 
-  const [allowedCategories, setAllowedCategories] = useState<
-    IFilterCategory["categoryId"][]
+  const [allowedSubcategories, setAllowedSubcategories] = useState<
+    IFilterSubcategory["id"][]
   >([]);
   useEffect(() => {
     ApiController.getFilterCategories(props.filterId).then((response) =>
-      setAllowedCategories(response.map((x: any) => x.categoryId))
+      setAllowedSubcategories(response.map((x: any) => x.categoryId))
     );
   }, [props.filterId]);
 
@@ -200,29 +198,31 @@ export default function FilterPage(props: {
       router.push("/filters")
     );
 
-  const flipCategory = (id: IFilterCategory["categoryId"]) => {
-    if (allowedCategories.includes(id)) {
-      setAllowedCategories(allowedCategories.filter((sid) => sid !== id));
-      ApiController.removeWhitelistCategory(props.filterId, id);
+  const flipSubcategory = (id: IFilterSubcategory["id"]) => {
+    if (allowedSubcategories.includes(id)) {
+      setAllowedSubcategories(allowedSubcategories.filter((sid) => sid !== id));
+      ApiController.removeWhitelistSubcategory(props.filterId, id);
     } else {
-      setAllowedCategories([...allowedCategories, id]);
-      ApiController.addWhitelistCategory(props.filterId, id);
+      setAllowedSubcategories([...allowedSubcategories, id]);
+      ApiController.addWhitelistSubcategory(props.filterId, id);
     }
   };
 
-  const flipCategoryGroup = (id: IFilterCategoryGroup["categoryId"]) => {
-    const groupCategoryIds = categoryGroups
+  const flipCategory = (id: IFilterCategory["categoryId"]) => {
+    const subcategoryIds = categories
       .find((cg) => cg.categoryId === id)
-      ?.categories.map((c) => c.id);
-    if (!groupCategoryIds) return;
-    if (groupCategoryIds?.every((cid) => allowedCategories.includes(cid))) {
-      setAllowedCategories(
-        allowedCategories.filter((acid) => !groupCategoryIds.includes(acid))
+      ?.subCategories.map((c) => c.id);
+    if (!subcategoryIds) return;
+    if (subcategoryIds?.every((cid) => allowedSubcategories.includes(cid))) {
+      setAllowedSubcategories(
+        allowedSubcategories.filter((acid) => !subcategoryIds.includes(acid))
       );
-      ApiController.removeWhitelistCategoryGroup(props.filterId, id);
+      ApiController.removeWhitelistCategory(props.filterId, id);
     } else {
-      setAllowedCategories(_.uniq([...allowedCategories, ...groupCategoryIds]));
-      ApiController.addWhitelistCategoryGroup(props.filterId, id);
+      setAllowedSubcategories(
+        _.uniq([...allowedSubcategories, ...subcategoryIds])
+      );
+      ApiController.addWhitelistCategory(props.filterId, id);
     }
   };
 
@@ -270,11 +270,11 @@ export default function FilterPage(props: {
           filterId={props.filterId}
           filter={filter}
           flipCategory={flipCategory}
-          flipCategoryGroup={flipCategoryGroup}
+          flipSubcategory={flipSubcategory}
           devices={devices}
           actions={actions}
-          categoryGroups={categoryGroups}
-          allowedCategories={allowedCategories}
+          categories={categories}
+          allowedCategories={allowedSubcategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
@@ -295,11 +295,11 @@ export default function FilterPage(props: {
           filterId={props.filterId}
           filter={filter}
           flipCategory={flipCategory}
-          flipCategoryGroup={flipCategoryGroup}
+          flipSubcategory={flipSubcategory}
           devices={devices}
           actions={actions}
-          categoryGroups={categoryGroups}
-          allowedCategories={allowedCategories}
+          categories={categories}
+          allowedCategories={allowedSubcategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
           blockedSearchWords={blockedSearchWords}
