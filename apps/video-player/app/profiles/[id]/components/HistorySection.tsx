@@ -34,11 +34,17 @@ const HistoryRow = (props: IHistoryItem) => {
   );
   return (
     <Stack direction="row" spacing="40px" alignItems="center">
-      <Typography bold color={PALETTE.secondary.grey[4]}>
-        {dayjs(props.searchedAt).utc().format("HH:mm:HHa")}
-      </Typography>
+      <Stack width="94px">
+        <Typography bold color={PALETTE.secondary.grey[4]}>
+          {dayjs(props.searchedAt).utc().format("HH:mm:HHa")}
+        </Typography>
+      </Stack>
       <Stack direction="row" spacing="8px" alignItems="center">
-        <Stack borderRadius="100%" overflow="hidden">
+        <Stack
+          borderRadius="3px"
+          overflow="hidden"
+          boxShadow="0 0 10px rgba(0,0,0,0.1)"
+        >
           <Image
             height={20}
             width={20}
