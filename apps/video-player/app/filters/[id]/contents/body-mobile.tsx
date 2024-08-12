@@ -22,8 +22,9 @@ export default function FilterPageMobileBody(props: {
   filterId: number;
   filter: IFilter;
   categoryGroups: IFilterCategoryGroup[];
-  allowedCategories: IFilterCategory["categoryId"][];
-  flipCategory: (id: IFilterCategory["categoryId"]) => void;
+  allowedCategories: IFilterCategory["id"][];
+  flipCategory: (id: IFilterCategory["id"]) => void;
+  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
   allowedSites: IFilterException[];
   blockedSites: IFilterException[];
   blockedSearchWords: string[];
@@ -73,6 +74,7 @@ export default function FilterPageMobileBody(props: {
           categoryGroups={props.categoryGroups}
           allowedCategories={props.allowedCategories}
           flipCategory={props.flipCategory}
+          flipCategoryGroup={props.flipCategoryGroup}
         />
         <FilterPageAllowedSitesSection
           allowedSites={props.allowedSites}

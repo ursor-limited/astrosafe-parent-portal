@@ -4,6 +4,7 @@ import { IDevice, IFilterException } from "./filters/[id]/contents/common";
 import {
   IFilter,
   IFilterCategory,
+  IFilterCategoryGroup,
   IFilterUrl,
 } from "./filters/contents/common";
 import {
@@ -315,14 +316,14 @@ class ApiController {
   }
 
   static async getBlockedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/whitelist`).then(
-      (response: any) => response.json()
+    return get(`filters/${filterId}/whitelist`).then((response: any) =>
+      response.json()
     );
   }
 
   static async getAllowedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/blacklist`).then(
-      (response: any) => response.json()
+    return get(`filters/${filterId}/blacklist`).then((response: any) =>
+      response.json()
     );
   }
 
@@ -374,6 +375,24 @@ class ApiController {
     categoryId: IFilterCategory["categoryId"]
   ) {
     return dellete(`filters/${filterId}/whitelist/categories/${categoryId}`);
+  }
+
+  static async addWhitelistCategoryGroup(
+    filterId: IFilter["id"],
+    categoryGroupId: IFilterCategoryGroup["categoryId"]
+  ) {
+    return post(`filters/${filterId}/whitelist/categories?isGroup=true`, {
+      categoryId: categoryGroupId.toString(),
+    });
+  }
+
+  static async removeWhitelistCategoryGroup(
+    filterId: IFilter["id"],
+    categoryGroupId: IFilterCategoryGroup["categoryId"]
+  ) {
+    return dellete(
+      `filters/${filterId}/whitelist/categories/${categoryGroupId}`
+    );
   }
 
   static async getBlockedSearchWords(filterId: IFilter["id"]) {
@@ -498,7 +517,7 @@ class ApiController {
     deviceId: IDevice["id"],
     date: string,
     pageIndex: number,
-    pageSize: number,
+    pageSize: number
   ) {
     return get(
       `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}`
@@ -509,10 +528,12 @@ class ApiController {
     deviceId: IDevice["id"],
     pageIndex: number,
     pageSize: number,
-    categoryId?: IFilterCategory['categoryId']
+    categoryId?: IFilterCategory["categoryId"]
   ) {
     return get(
-      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${categoryId ? `&categoryId=${categoryId}` : ''}`
+      `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
+        categoryId ? `&categoryId=${categoryId}` : ""
+      }`
     ).then((response: any) => response.json());
   }
 

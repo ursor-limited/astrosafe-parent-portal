@@ -23,6 +23,7 @@ import DeletionDialog from "@/app/components/DeletionDialog";
 import FilterRenameDialog from "../components/FilterRenameDialog";
 import ChangeFilterDialog from "../components/ChangeFilterDialog";
 import { Stack } from "@mui/system";
+import _ from "lodash";
 
 export type DeviceType = "chrome" | "android" | "ios";
 
@@ -85,17 +86,19 @@ export default function FilterPage(props: {
     loadAllowedSites();
   }, [loadAllowedSites]);
 
-  const [categories, setCategories] = useState<IFilterCategoryGroup[]>([]);
+  const [categoryGroups, setCategoryGroups] = useState<IFilterCategoryGroup[]>(
+    []
+  );
   useEffect(() => {
-    ApiController.getAllFilterCategories().then(setCategories);
+    ApiController.getAllFilterCategories().then(setCategoryGroups);
   }, []);
 
   const [allowedCategories, setAllowedCategories] = useState<
     IFilterCategory["categoryId"][]
   >([]);
   useEffect(() => {
-    ApiController.getFilterCategories(props.filterId).then(
-      setAllowedCategories
+    ApiController.getFilterCategories(props.filterId).then((response) =>
+      setAllowedCategories(response.map((x: any) => x.categoryId))
     );
   }, [props.filterId]);
 
@@ -207,6 +210,22 @@ export default function FilterPage(props: {
     }
   };
 
+  const flipCategoryGroup = (id: IFilterCategoryGroup["categoryId"]) => {
+    const groupCategoryIds = categoryGroups
+      .find((cg) => cg.categoryId === id)
+      ?.categories.map((c) => c.id);
+    if (!groupCategoryIds) return;
+    if (groupCategoryIds?.every((cid) => allowedCategories.includes(cid))) {
+      setAllowedCategories(
+        allowedCategories.filter((acid) => !groupCategoryIds.includes(acid))
+      );
+      ApiController.removeWhitelistCategoryGroup(props.filterId, id);
+    } else {
+      setAllowedCategories(_.uniq([...allowedCategories, ...groupCategoryIds]));
+      ApiController.addWhitelistCategoryGroup(props.filterId, id);
+    }
+  };
+
   const addToBlockedSearchWords = (word: string) => {
     setBlockedSearchWords([...blockedSearchWords, word]);
     ApiController.addBlockedSearchWord(props.filterId, word);
@@ -250,10 +269,11 @@ export default function FilterPage(props: {
         <FilterPageMobileBody
           filterId={props.filterId}
           filter={filter}
-          flipCategory={(id) => flipCategory}
+          flipCategory={flipCategory}
+          flipCategoryGroup={flipCategoryGroup}
           devices={devices}
           actions={actions}
-          categoryGroups={categories}
+          categoryGroups={categoryGroups}
           allowedCategories={allowedCategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}
@@ -275,9 +295,10 @@ export default function FilterPage(props: {
           filterId={props.filterId}
           filter={filter}
           flipCategory={flipCategory}
+          flipCategoryGroup={flipCategoryGroup}
           devices={devices}
           actions={actions}
-          categoryGroups={categories}
+          categoryGroups={categoryGroups}
           allowedCategories={allowedCategories}
           allowedSites={allowedSites}
           blockedSites={blockedSites}

@@ -13,7 +13,7 @@ import {
   IFilterUrl,
 } from "../../contents/common";
 import AstroCard from "./AstroCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const FilterLegend = (props: { small?: boolean }) => (
   <Stack direction="row" spacing="20px">
@@ -57,10 +57,23 @@ export const FilterLegend = (props: { small?: boolean }) => (
 const CategoryGroupCard = (
   props: IFilterCategoryGroup & {
     flipCategory: (id: IFilterCategory["id"]) => void;
+    flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
     allowedCategories: IFilterCategory["id"][];
   }
 ) => {
   const [collapsed, setCollapsed] = useState<boolean>(true);
+  const [status, setStatus] = useState<"on" | "off" | "custom">("off");
+  useEffect(
+    () =>
+      setStatus(
+        props.categories.every((c) => props.allowedCategories.includes(c.id))
+          ? "on"
+          : props.categories.some((c) => props.allowedCategories.includes(c.id))
+          ? "custom"
+          : "off"
+      ),
+    [props.categories, props.allowedCategories]
+  );
   return (
     <AstroCard key={props.categoryId}>
       <DynamicContainer duration={600}>
@@ -82,10 +95,9 @@ const CategoryGroupCard = (
             </Stack>
             <Stack direction="row" spacing="20px">
               <AstroSwitch
-                on={props.categories.every((c) =>
-                  props.allowedCategories.includes(c.id)
-                )}
-                callback={() => null}
+                on={status === "on"}
+                compromise={status === "custom"}
+                callback={() => props.flipCategoryGroup(props.categoryId)}
               />
               <Stack
                 sx={{
@@ -114,7 +126,7 @@ const CategoryGroupCard = (
                     justifyContent="space-between"
                     alignItems="center"
                     direction="row"
-                    onClick={() => props.flipCategory(c.categoryId)}
+                    onClick={() => props.flipCategory(c.id)}
                     sx={{
                       cursor: "pointer",
                       transition: "0.2s",
@@ -129,7 +141,7 @@ const CategoryGroupCard = (
                       </Stack>
                     </Stack>
                     <AstroSwitch
-                      on={props.allowedCategories.includes(c.categoryId)}
+                      on={props.allowedCategories.includes(c.id)}
                       callback={() => null}
                     />
                   </Stack>
@@ -148,6 +160,7 @@ const FilterPageCategoriesSection = (props: {
   categoryGroups: IFilterCategoryGroup[];
   allowedCategories: IFilterCategory["id"][];
   flipCategory: (id: IFilterCategory["id"]) => void;
+  flipCategoryGroup: (id: IFilterCategoryGroup["categoryId"]) => void;
 }) => (
   <AstroBentoCard
     icon={ThumbsUpIcon}
@@ -163,6 +176,7 @@ const FilterPageCategoriesSection = (props: {
           key={cg.categoryId}
           {...cg}
           flipCategory={props.flipCategory}
+          flipCategoryGroup={props.flipCategoryGroup}
           allowedCategories={props.allowedCategories}
         />
       ))}
