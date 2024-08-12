@@ -59,6 +59,7 @@ export interface IUrsorPopoverProps {
   flip?: boolean;
   top?: boolean;
   flexButton?: boolean;
+  // fullWidth?: boolean;
   children: React.ReactNode; // the button
 }
 

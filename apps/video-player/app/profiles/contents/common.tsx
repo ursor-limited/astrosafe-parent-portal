@@ -66,11 +66,17 @@ export default function AllDevicesPage(props: { isMobile: boolean }) {
     const socket = new WebSocket(
       `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
     );
-    socket.addEventListener("message", (event) => {
+    const handleMessage = (event: any) => {
       if (!event.data) return;
       const data = JSON.parse(event.data);
-      setDeviceOnlineStatus(data.userId, data.online);
-    });
+      console.log(data);
+      data.deviceId && setDeviceOnlineStatus(data.deviceId, data.online);
+    };
+    socket.addEventListener("message", handleMessage);
+    return () => {
+      socket.removeEventListener("message", handleMessage); // Remove the event listener
+      // socket.close(); // Close the WebSocket connection
+    };
   }, [setDeviceOnlineStatus]);
 
   return (

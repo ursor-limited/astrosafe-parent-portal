@@ -266,7 +266,7 @@ const DeviceCard = (
         ) : null}
         <Stack
           direction="row"
-          spacing="8px"
+          spacing="18px"
           position="relative"
           height={props.small ? "58px" : "90px"}
           alignItems="center"
@@ -275,8 +275,8 @@ const DeviceCard = (
         >
           <Stack position="relative">
             <Stack
-              minHeight={props.small ? "40px" : "92px"}
-              minWidth={props.small ? "40px" : "92px"}
+              minHeight={props.small ? "40px" : "84px"}
+              minWidth={props.small ? "40px" : "84px"}
               borderRadius="100%"
               overflow="hidden"
               bgcolor={props.backgroundColor}
@@ -289,8 +289,8 @@ const DeviceCard = (
             >
               <Image
                 src={props.profileAvatarUrl}
-                height={props.small ? 40 : 92}
-                width={props.small ? 40 : 92}
+                height={props.small ? 40 : 84}
+                width={props.small ? 40 : 84}
                 alt="device profile"
               />
             </Stack>
@@ -354,12 +354,16 @@ const DeviceCard = (
                 spacing="8px"
                 alignItems="center"
                 sx={{
+                  cursor: "pointer",
+                  transition: "0.2s",
+                  "&:hover": { opacity: 0.7 },
                   svg: {
                     path: {
                       fill: PALETTE.system.orange,
                     },
                   },
                 }}
+                onClick={() => router.push(`/filters/${props.filterId}`)}
               >
                 <FilterIcon height="16px" width="16px" />
                 <Typography maxLines={1}>{props.filterName}</Typography>

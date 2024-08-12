@@ -128,16 +128,17 @@ export const MobileTitleRow = (props: { item: ITitleRowItem }) => {
                   }}
                   onClick={o.callback}
                 >
-                  {o.imageUrl ? (
-                    <Stack borderRadius="100%" overflow="hidden">
-                      <Image
-                        src={o.imageUrl}
-                        height={20}
-                        width={20}
-                        alt="option image"
-                      />
-                    </Stack>
-                  ) : null}
+                  {o.image ||
+                    (o.imageUrl ? (
+                      <Stack borderRadius="100%" overflow="hidden">
+                        <Image
+                          src={o.imageUrl}
+                          height={20}
+                          width={20}
+                          alt="option image"
+                        />
+                      </Stack>
+                    ) : null)}
                   <Typography bold>{o.text}</Typography>
                 </Stack>
               ))}

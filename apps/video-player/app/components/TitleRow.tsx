@@ -47,7 +47,11 @@ const TitleRowItemCore = (
         </Typography>
       </Stack>
       {props.label ? (
-        <Stack justifyContent="flex-end" height="100%">
+        <Stack
+          justifyContent="flex-end"
+          height="100%"
+          sx={{ transform: "translateY(-1px)" }}
+        >
           <Typography
             variant={props.isMobile ? "tiny" : "normal"}
             color={PALETTE.secondary.grey[4]}

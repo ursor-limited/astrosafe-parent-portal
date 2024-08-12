@@ -143,6 +143,25 @@ export default function ProfilePage(props: {
       notificationCtx.success("Created Folder and added it to the Device.");
     });
 
+  const setDeviceOnlineStatus = useCallback(
+    (deviceId: IDevice["id"], online: IEnrichedDevice["online"]) => {
+      device && deviceId === props.deviceId && setDevice({ ...device, online });
+    },
+    [props.deviceId, device]
+  );
+
+  // useEffect(() => {
+  //   const socket = new WebSocket(
+  //     `wss://api.astrosafe.co/sessions/groups/${DUMMY_GROUP_ID}`
+  //   );
+  //   socket.addEventListener("message", (event) => {
+  //     if (!event.data) return;
+  //     const data = JSON.parse(event.data);
+  //     props.deviceId === data.deviceId &&
+  //       setDeviceOnlineStatus(data.deviceId, data.online);
+  //   });
+  // }, []);
+
   return device ? (
     <>
       {props.isMobile ? (
@@ -178,6 +197,7 @@ export default function ProfilePage(props: {
           setRenameDialogOpen(false);
         }}
         name={device.name ?? ""}
+        isMobile={props.isMobile}
       />
       <DeviceDisconnectDialog
         open={disconnectDialogOpen}

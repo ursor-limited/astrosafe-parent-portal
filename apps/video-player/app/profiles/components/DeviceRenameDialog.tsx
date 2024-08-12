@@ -10,6 +10,7 @@ const DeviceRenameDialog = (props: {
   name: IDevice["name"];
   onClose: () => void;
   onSubmit: (name: string) => void;
+  isMobile?: boolean;
 }) => {
   const [name, setName] = useState<string>("");
   useEffect(() => setName(props.name), [props.name]);
@@ -20,9 +21,17 @@ const DeviceRenameDialog = (props: {
       title="Rename Device"
       subtitle={["Give this Device a new name", "of your choice."]}
       width="422px"
-      height="343px"
+      height={props.isMobile ? undefined : "343px"}
+      dynamicHeight={props.isMobile}
+      isMobile={props.isMobile}
     >
-      <Stack flex={1} width="100%" height="100%" justifyContent="space-between">
+      <Stack
+        flex={1}
+        width="100%"
+        height="100%"
+        justifyContent="space-between"
+        spacing={props.isMobile ? "12px" : undefined}
+      >
         <LabeledInputField label="Name">
           <UrsorInputField
             value={name}
