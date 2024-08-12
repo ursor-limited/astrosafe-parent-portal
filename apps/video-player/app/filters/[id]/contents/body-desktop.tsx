@@ -17,6 +17,7 @@ import {
   IFilterUrl,
 } from "../../contents/common";
 import { ITitleRowItem } from "@/app/components/TitleRow";
+import { useRouter } from "next/navigation";
 
 export default function FilterPageDesktopBody(props: {
   filterId: number;
@@ -42,10 +43,11 @@ export default function FilterPageDesktopBody(props: {
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
+  const router = useRouter();
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButton={true}
+      titleBackButtonCallback={() => router.push("/filters")}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="filters"

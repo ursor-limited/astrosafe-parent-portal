@@ -7,6 +7,7 @@ import { Typography } from "ui";
 import ThreeBarsIcon from "@/images/icons/ThreeBarsIcon.svg";
 import MobileSideBar, { AstroPage } from "./MobileSideBar";
 import { ITitleRowItem } from "./TitleRow";
+import ChevronLeftIcon from "@/images/icons/ChevronLeftIcon.svg";
 
 const MobilePageLayout = (props: {
   title?: string;
@@ -15,6 +16,7 @@ const MobilePageLayout = (props: {
   topRightElement?: React.ReactNode;
   selectedPage: AstroPage;
   header?: React.ReactNode;
+  titleBackButtonCallback?: () => void;
   children: React.ReactNode;
 }) => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(false);
@@ -39,6 +41,21 @@ const MobilePageLayout = (props: {
             <Stack onClick={() => setSideBarOpen(true)}>
               <ThreeBarsIcon height="20px" width="20px" />
             </Stack>
+            {props.titleBackButtonCallback ? (
+              <Stack width="25px">
+                <Stack
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.6 },
+                    transition: "0.2s",
+                  }}
+                  onClick={props.titleBackButtonCallback}
+                  justifyContent="center"
+                >
+                  <ChevronLeftIcon height="24px" width="24px" />
+                </Stack>
+              </Stack>
+            ) : null}
             {props.title ? (
               <Typography bold variant="medium">
                 {props.title}

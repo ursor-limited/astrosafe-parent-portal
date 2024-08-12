@@ -7,6 +7,7 @@ import { IEnrichedContentBucket } from "./common";
 import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { UrsorButton } from "ui";
 import FolderCard from "@/app/components/FolderCard";
+import { EmptyStateIllustration } from "@/app/components/EmptyStateIllustration";
 
 const AllFoldersPageMobileBody = (props: {
   folders: IEnrichedContentBucket[];
@@ -30,21 +31,27 @@ const AllFoldersPageMobileBody = (props: {
         </UrsorButton>
       }
     >
-      <Stack pt="20px">
-        <Stack spacing="36px">
-          {props.folders.map((f, i) => (
-            <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
-              <FolderCard
-                {...f}
-                clickCallback={() => router.push(`/folders/${f.id}`)}
-                editingCallback={props.onUpdate}
-                deletionCallback={props.onUpdate}
-                isMobile
-              />
-            </UrsorFadeIn>
-          ))}
+      {props.folders.length > 0 ? (
+        <Stack pt="20px">
+          <Stack spacing="36px">
+            {props.folders.map((f, i) => (
+              <UrsorFadeIn key={f.id} duration={800} delay={i * 90} fullWidth>
+                <FolderCard
+                  {...f}
+                  clickCallback={() => router.push(`/folders/${f.id}`)}
+                  editingCallback={props.onUpdate}
+                  deletionCallback={props.onUpdate}
+                  isMobile
+                />
+              </UrsorFadeIn>
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
+      ) : (
+        <EmptyStateIllustration paddingTop={20}>
+          No Folders yet
+        </EmptyStateIllustration>
+      )}
     </MobilePageLayout>
   );
 };

@@ -35,7 +35,7 @@ const ProfilePageDesktopBody = (props: {
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButton={true}
+      titleBackButtonCallback={() => router.push("/profiles")}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="devices"

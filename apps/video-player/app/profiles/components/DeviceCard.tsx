@@ -252,7 +252,7 @@ const DeviceCard = (
         {props.button ? (
           <Stack
             position="absolute"
-            top="20px"
+            top="28px"
             right="15px"
             sx={{
               cursor: "pointer",

@@ -98,7 +98,7 @@ const MobileSideBar = (props: {
         </Stack>
         <Stack justifyContent="space-between" height="100%">
           <Stack spacing="24px">
-            {["profiles", "filters", "content", "lessons"].map((page) => {
+            {["profiles", "filters", "content"].map((page) => {
               const Icon = PAGE_ICONS[page as AstroPage];
               return (
                 <Stack

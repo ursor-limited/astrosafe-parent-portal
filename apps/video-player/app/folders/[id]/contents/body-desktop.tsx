@@ -70,7 +70,7 @@ const FolderPageDesktopBody = (props: {
   return (
     <PageLayout
       titleRow={props.titleRow}
-      titleBackButton={true}
+      titleBackButtonCallback={() => router.push("/folders")}
       bodyWidth="100%"
       fullHeight
       selectedSidebarItemId="content"

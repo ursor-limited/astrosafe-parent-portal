@@ -26,6 +26,7 @@ import {
 import { IActionPopupItem } from "@/app/components/ActionPopup";
 import Link from "next/link";
 import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
+import { useRouter } from "next/navigation";
 
 const FolderPageMobileBody = (props: {
   folderId: IContentBucket["id"];
@@ -47,9 +48,11 @@ const FolderPageMobileBody = (props: {
   titleRow: ITitleRowItem[];
   actions: IActionPopupItem[];
 }) => {
+  const router = useRouter();
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/folders")}
       selectedPage="content"
       actions={props.actions}
     >

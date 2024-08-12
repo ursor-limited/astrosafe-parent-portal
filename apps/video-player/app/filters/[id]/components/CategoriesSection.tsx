@@ -51,6 +51,23 @@ export const FilterLegend = (props: { small?: boolean }) => (
         />
       </Stack>
     </Stack>
+    <Stack>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={props.small ? "7px" : "10px"}
+      >
+        <Typography variant={props.small ? "small" : "normal"} bold>
+          Custom
+        </Typography>
+        <Stack
+          height={props.small ? "12px" : "16px"}
+          width={props.small ? "12px" : "16px"}
+          borderRadius="100%"
+          bgcolor={PALETTE.system.orange}
+        />
+      </Stack>
+    </Stack>
   </Stack>
 );
 

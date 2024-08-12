@@ -17,6 +17,7 @@ import MobilePageLayout from "@/app/components/MobilePageLayout";
 import { ITitleRowItem } from "@/app/components/TitleRow";
 import MobileFilterDevicesSection from "../components/MobileFilterDevicesSection";
 import MobileFilterPageCategoriesSection from "../components/MobileCategoriesSection";
+import { useRouter } from "next/navigation";
 
 export default function FilterPageMobileBody(props: {
   filterId: number;
@@ -42,10 +43,12 @@ export default function FilterPageMobileBody(props: {
   removeAllowedSite: (url: IFilterUrl["url"]) => void;
   openChangeFilterDialogForDevice: (device: IDevice) => void;
 }) {
+  const router = useRouter();
   return (
     <MobilePageLayout
       actions={props.actions}
       titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/filters")}
       selectedPage="filters"
     >
       <Stack spacing="20px" pb="33px">

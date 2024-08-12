@@ -33,6 +33,7 @@ const ProfilePageMobileBody = (props: {
   return (
     <MobilePageLayout
       titleRow={props.titleRow.slice(-1)[0]}
+      titleBackButtonCallback={() => router.push("/profiles")}
       selectedPage="profiles"
       actions={props.actions}
     >
