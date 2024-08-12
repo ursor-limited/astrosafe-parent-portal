@@ -83,7 +83,7 @@ const DevicePageLimitsTab = (props: {
     startTime: number,
     endTime: number
   ) => {
-    ApiController.addAllowedTime(
+    ApiController.addAllowedTimeRange(
       props.deviceId,
       day,
       getISODateString(
@@ -97,6 +97,10 @@ const DevicePageLimitsTab = (props: {
 
   const reset = (day: IAllowedTime["day"]) => {
     ApiController.resetAllowedTimes(props.deviceId, day).then(loadData);
+  };
+
+  const deleteRange = (id: IAllowedTime["id"]) => {
+    ApiController.removeAllowedTimeRange(id).then(loadData);
   };
 
   const [allowedTimesEnabled, setAllowedTimesEnabled] =
@@ -265,9 +269,9 @@ const DevicePageLimitsTab = (props: {
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
                   );
-                  ApiController.changeAllowedTime(id, startTime, endTime);
+                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
                 }}
-                removeAllowedTime={() => null}
+                deleteRange={deleteRange}
                 addTimeLimit={addAllowedTime}
                 reset={reset}
                 smallerLabelFont={allowedTimesLabelsSmallerFontSize}
@@ -299,10 +303,11 @@ const DevicePageLimitsTab = (props: {
                       t.id === id ? { ...t, startTime, endTime } : t
                     )
                   );
-                  ApiController.changeAllowedTime(id, startTime, endTime);
+                  ApiController.changeAllowedTimeRange(id, startTime, endTime);
                 }}
                 addTimeLimit={addAllowedTime}
                 reset={reset}
+                deleteRange={deleteRange}
                 smallerLabelFont={allowedTimesLabelsSmallerFontSize}
                 halveLabelFrequency={halveLabelFrequency}
                 disabled={!allowedTimesEnabled}

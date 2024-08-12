@@ -439,7 +439,7 @@ class ApiController {
     return patch(`devices/configs/screentime/limits/${limitId}`, { timeLimit });
   }
 
-  static async addAllowedTime(
+  static async addAllowedTimeRange(
     deviceId: IDevice["id"],
     day: IAllowedTime["day"],
     startTime: IAllowedTime["startTime"],
@@ -451,7 +451,7 @@ class ApiController {
     });
   }
 
-  static async changeAllowedTime(
+  static async changeAllowedTimeRange(
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
@@ -460,6 +460,14 @@ class ApiController {
       startTime,
       endTime,
     });
+  }
+
+  static async removeAllowedTimeRange(
+    id: IAllowedTime["id"]
+  ) {
+    return dellete(
+      `devices/configs/screentime/allowed/${id}`
+    );
   }
 
   static async resetAllowedTimes(

@@ -39,7 +39,7 @@ const LinkCreationDialog = (props: {
     )
       .then((result) => {
         result.title && !manuallyChangedTitle && setTitle(result.title);
-        result.favicon && setThumbnailUrl(result.favicon);
+        result.faviconUrl && setThumbnailUrl(result.faviconUrl);
       })
       .catch(() => null);
   };

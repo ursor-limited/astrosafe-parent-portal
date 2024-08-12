@@ -13,6 +13,7 @@ const AllowedTimesSection = (props: {
   ) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   topRightElement?: React.ReactNode;
   smallerLabelFont?: boolean;
   halveLabelFrequency?: boolean;
@@ -45,6 +46,7 @@ const AllowedTimesSection = (props: {
             times={props.allowedTimes.filter((t) =>
               day === "sun" ? t.day === 0 : t.day === i + 1
             )}
+            deleteRange={props.deleteRange}
             reset={() => props.reset(day === "sun" ? 0 : i + 1)}
             addAllowedTime={(startTime, endTime) =>
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)

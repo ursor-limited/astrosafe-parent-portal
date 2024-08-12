@@ -224,10 +224,10 @@ const MobileAllowedTimeRowDisplayButton = (props: {
 const MobileAllowedTimeRow = (props: {
   day: IAllowedTime["day"];
   times: IAllowedTime[];
-  addAllowedTime: (startTime: number, endTime: number) => void;
-  removeAllowedTime: (id: IAllowedTime["id"]) => void;
+  addRange: (startTime: number, endTime: number) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   reset: () => void;
-  setAllowedTime: (
+  setRangeTimes: (
     id: IAllowedTime["id"],
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
@@ -265,11 +265,11 @@ const MobileAllowedTimeRow = (props: {
                 dayName={dayName}
                 startTime={t.startTime}
                 setStartTime={(time) =>
-                  props.setAllowedTime(t.id, time, t.endTime)
+                  props.setRangeTimes(t.id, time, t.endTime)
                 }
                 endTime={t.endTime}
                 setEndTime={(time) =>
-                  props.setAllowedTime(t.id, t.startTime, time)
+                  props.setRangeTimes(t.id, t.startTime, time)
                 }
               />
               <Stack
@@ -280,7 +280,7 @@ const MobileAllowedTimeRow = (props: {
                     },
                   },
                 }}
-                onClick={() => props.removeAllowedTime(t.id)}
+                onClick={() => props.deleteRange(t.id)}
               >
                 <XIcon height="20px" width="20px" />
               </Stack>
@@ -309,7 +309,7 @@ const MobileAllowedTimeRow = (props: {
             }}
             onClick={() => {
               newSegmentTimes &&
-                props.addAllowedTime(newSegmentTimes[0], newSegmentTimes[1]);
+                props.addRange(newSegmentTimes[0], newSegmentTimes[1]);
               clearNewSegmentTimes();
             }}
           >

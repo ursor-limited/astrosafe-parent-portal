@@ -29,7 +29,7 @@ const MobileAllowedTimesSection = (props: {
     startTime: IAllowedTime["startTime"],
     endTime: IAllowedTime["endTime"]
   ) => void;
-  removeAllowedTime: (id: IAllowedTime["id"]) => void;
+  deleteRange: (id: IAllowedTime["id"]) => void;
   addTimeLimit: (day: number, startTime: number, endTime: number) => void;
   reset: (day: IAllowedTime["day"]) => void;
   topRightElement?: React.ReactNode;
@@ -64,11 +64,11 @@ const MobileAllowedTimesSection = (props: {
               day === "sun" ? t.day === 0 : t.day === i + 1
             )}
             reset={() => props.reset(day === "sun" ? 0 : i + 1)}
-            addAllowedTime={(startTime, endTime) =>
+            addRange={(startTime, endTime) =>
               props.addTimeLimit(day === "sun" ? 0 : i + 1, startTime, endTime)
             }
-            setAllowedTime={props.setAllowedTime}
-            removeAllowedTime={props.removeAllowedTime}
+            setRangeTimes={props.setAllowedTime}
+            deleteRange={props.deleteRange}
           />
         ))}
       </Stack>
