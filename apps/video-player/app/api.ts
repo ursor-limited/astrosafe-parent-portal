@@ -544,6 +544,14 @@ class ApiController {
   static async disableApp(deviceId: IDevice["id"], appId: IApp["id"]) {
     return dellete(`devices/${deviceId}/apps/${appId}/disable`);
   }
+
+  static async updateUser(
+    id: IUser["id"],
+    realName: IUser["realName"],
+    displayName: IUser["displayName"]
+  ) {
+    return put(`users/${id}`, { realName, displayName });
+  }
 }
 
 export default ApiController;

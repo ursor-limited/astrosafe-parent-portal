@@ -4,7 +4,7 @@ import PhoneIcon from "@/images/icons/PhoneIcon.svg";
 import PeopleIcon from "@/images/icons/PeopleIcon.svg";
 import ClockIcon from "@/images/icons/ClockIcon.svg";
 import { Stack } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { PALETTE, Typography } from "ui";
 import _ from "lodash";
 import EditProfileDialog from "../components/EditProfileDialog";
@@ -19,6 +19,9 @@ import ApiController from "../../api";
 import AccountPageDesktopBody from "./body-desktop";
 import AccountPageMobileBody from "./body-mobile";
 import TroomiManagePlanDialog from "../components/TroomiManagePlanDialog";
+import NotificationContext from "@/app/components/NotificationContext";
+
+export const DUMMY_USER_ID = 1;
 
 export const VIBRANT_GRADIENT = `linear-gradient(0, ${PALETTE.secondary.blue[2]}, ${PALETTE.secondary.purple[2]})`;
 
@@ -102,7 +105,7 @@ export const UserInitialsCircle = (props: {
 );
 
 const AccountPage = (props: { isMobile: boolean }) => {
-  const user = useUserContext().user;
+  const userCtx = useUserContext();
 
   const [planState, setPlanState] = useState<AstroPlanState>("troomi");
 
@@ -130,11 +133,13 @@ const AccountPage = (props: { isMobile: boolean }) => {
     troomi: () => setTroomiManagePlanDialogOpen(true),
   };
 
-  return user ? (
+  const notificationCtx = useContext(NotificationContext);
+
+  return userCtx.user ? (
     <>
       {props.isMobile ? (
         <AccountPageMobileBody
-          user={user}
+          user={userCtx.user}
           allUsers={allUsers}
           planState={planState}
           setUpgradeDialogOpen={() => setUpgradeDialogOpen(true)}
@@ -145,7 +150,7 @@ const AccountPage = (props: { isMobile: boolean }) => {
         />
       ) : (
         <AccountPageDesktopBody
-          user={user}
+          user={userCtx.user}
           allUsers={allUsers}
           planState={planState}
           setUpgradeDialogOpen={() => setUpgradeDialogOpen(true)}
@@ -158,7 +163,14 @@ const AccountPage = (props: { isMobile: boolean }) => {
       <EditProfileDialog
         open={editDialogOpen}
         onClose={() => setEditDialogOpen(false)}
-        onSave={(name, nickname) => null}
+        name={userCtx.user.realName}
+        nickName={userCtx.user.displayName}
+        onSave={(name, nickname) =>
+          ApiController.updateUser(DUMMY_USER_ID, name, nickname)
+            .then(() => notificationCtx.success("Updated your details"))
+            .then(userCtx.refresh)
+            .then(() => setEditDialogOpen(false))
+        }
       />
       <InviteDialog
         open={inviteDialogOpen}

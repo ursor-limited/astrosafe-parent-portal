@@ -1,9 +1,15 @@
 "use client";
 
 import _ from "lodash";
-import React, { useContext, createContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { IUser } from "../account/contents/common";
+import { DUMMY_USER_ID, IUser } from "../account/contents/common";
 import ApiController from "../api";
 
 const hotjarVersion = 6;
@@ -35,9 +41,13 @@ export interface IUserProviderProps {
 const UserProvider = (props: IUserProviderProps) => {
   const [user, setUser] = useState<IUser | undefined>();
 
+  const loadUser = useCallback(
+    () => ApiController.getUser(DUMMY_USER_ID).then((u) => setUser(u)),
+    []
+  );
   useEffect(() => {
-    ApiController.getUser(1).then((u) => setUser(u));
-  }, []);
+    loadUser();
+  }, [loadUser]);
   const [loading, setLoading] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -172,7 +182,7 @@ const UserProvider = (props: IUserProviderProps) => {
         loading,
         loaded,
         clear: () => setUser(undefined),
-        refresh: () => null, //loadUser,
+        refresh: loadUser,
         schoolIsSubscribed: true,
       }}
     >

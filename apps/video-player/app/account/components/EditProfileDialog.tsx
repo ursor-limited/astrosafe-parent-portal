@@ -1,17 +1,23 @@
 import UrsorDialog from "@/app/components/UrsorDialog";
 import { Stack } from "@mui/system";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UrsorButton, UrsorInputField } from "ui";
 import { LabeledInputField } from "ui/labeled-input-field";
 import { IUser, UserInitialsCircle } from "../contents/common";
 
 const EditProfileDialog = (props: {
   open: boolean;
+  name: IUser["realName"];
+  nickName: IUser["displayName"];
   onSave: (name: IUser["realName"], nickname: IUser["displayName"]) => void;
   onClose: () => void;
 }) => {
-  const [nickname, setNickname] = useState<IUser["displayName"]>();
-  const [name, setName] = useState<IUser["realName"]>();
+  const [nickname, setNickname] = useState<IUser["displayName"]>("");
+  const [name, setName] = useState<IUser["realName"]>("");
+  useEffect(() => {
+    setNickname(props.nickName);
+    setName(props.name);
+  }, [props.name, props.nickName]);
   return (
     <UrsorDialog
       open={props.open}
@@ -54,7 +60,12 @@ const EditProfileDialog = (props: {
             </LabeledInputField>
           </Stack>
         </Stack>
-        <UrsorButton dark variant="tertiary" width="358px">
+        <UrsorButton
+          dark
+          variant="tertiary"
+          width="358px"
+          onClick={() => props.onSave(name, nickname)}
+        >
           Save
         </UrsorButton>
       </Stack>
