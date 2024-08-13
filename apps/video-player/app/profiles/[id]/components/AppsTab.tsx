@@ -53,23 +53,23 @@ const DevicePageAppsTab = (props: {
   const [pageIndex, setPageIndex] = useState<number>(0);
   useEffect(() => setPageIndex(0), [selectedCategory]);
 
+  const [searchValue, setSearchValue] = useState<string>("");
   const [apps, setApps] = useState<IApp[]>([]);
+  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
+
   useEffect(() => {
     ApiController.getApps(
       props.deviceId,
       pageIndex + 1,
       PAGE_SIZE,
-      selectedCategory
+      selectedCategory,
+      searchValue
     ).then((response) => {
       setApps(_.sortBy(response.apps, (a) => a.id));
       setNPages(response.pages);
     });
-  }, [props.deviceId, pageIndex, selectedCategory]);
+  }, [props.deviceId, pageIndex, selectedCategory, searchValue]);
 
-  const notificationCtx = useContext(NotificationContext);
-
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
   useEffect(
     () =>
       setFilteredApps(
@@ -81,6 +81,8 @@ const DevicePageAppsTab = (props: {
       ),
     [apps, searchValue]
   );
+
+  const notificationCtx = useContext(NotificationContext);
 
   return (
     <ProfilePageTabLayout

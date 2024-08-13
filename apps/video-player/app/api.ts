@@ -462,12 +462,8 @@ class ApiController {
     });
   }
 
-  static async removeAllowedTimeRange(
-    id: IAllowedTime["id"]
-  ) {
-    return dellete(
-      `devices/configs/screentime/allowed/${id}`
-    );
+  static async removeAllowedTimeRange(id: IAllowedTime["id"]) {
+    return dellete(`devices/configs/screentime/allowed/${id}`);
   }
 
   static async resetAllowedTimes(
@@ -525,10 +521,13 @@ class ApiController {
     deviceId: IDevice["id"],
     date: string,
     pageIndex: number,
-    pageSize: number
+    pageSize: number,
+    searchTerm?: string
   ) {
     return get(
-      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}`
+      `devices/${deviceId}/history?date=${date}&page=${pageIndex}&limit=${pageSize}${
+        searchTerm ? `&search=${searchTerm}` : ""
+      }`
     ).then((response: any) => response.json());
   }
 
@@ -536,12 +535,13 @@ class ApiController {
     deviceId: IDevice["id"],
     pageIndex: number,
     pageSize: number,
-    categoryId?: IFilterSubcategory["categoryId"]
+    categoryId?: IFilterSubcategory["categoryId"],
+    searchTerm?: string
   ) {
     return get(
       `devices/${deviceId}/apps?page=${pageIndex}&limit=${pageSize}${
-        categoryId ? `&categoryId=${categoryId}` : ""
-      }`
+        searchTerm ? `&search=${searchTerm}` : ""
+      }${categoryId ? `&categoryId=${categoryId}` : ""}`
     ).then((response: any) => response.json());
   }
 
