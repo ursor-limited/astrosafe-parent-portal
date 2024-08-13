@@ -429,7 +429,7 @@ class ApiController {
     );
   }
 
-  static async getVideoPreview(url: ILink["url"]) {
+  static async getVideoPreview(url: IVideo["url"]) {
     return get(`content/videos/preview/${url}`).then((response: any) =>
       response.json()
     );

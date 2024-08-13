@@ -15,7 +15,6 @@ const PageSelector = (props: {
       spacing="4px"
       alignItems="center"
       justifyContent="center"
-      py="20px"
     >
       {[
         <Stack

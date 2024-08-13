@@ -36,7 +36,10 @@ export interface IApp {
   enabled: boolean;
 }
 
-const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
+const DevicePageAppsTab = (props: {
+  deviceId: IDevice["id"];
+  isMobile?: boolean;
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<
     number | undefined
   >();
@@ -82,9 +85,14 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
   return (
     <ProfilePageTabLayout
       title="Apps"
-      rightSideElement={<FilterLegend />}
+      rightSideElement={!props.isMobile ? <FilterLegend /> : undefined}
       explanation="Donkey Kong 64 is a sequel to the Donkey Kong Country trilogy and is so far the only game in the series without the word 'Country' in the title alongside Chunky Kong's only significant video game appearance. It received generally positive reviews with an average score of 88% according to gamerankings."
     >
+      {props.isMobile ? (
+        <Stack alignItems="flex-end">
+          <FilterLegend small={props.isMobile} />
+        </Stack>
+      ) : null}
       <Stack pb="32px">
         <AstroCard>
           <Stack px="16px" pt="16px" justifyContent="center">
@@ -188,11 +196,13 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                 </UrsorFadeIn>
               ))}
             </DynamicCardGrid>
-            <PageSelector
-              pageIndex={pageIndex}
-              setPageIndex={setPageIndex}
-              nPages={nPages}
-            />
+            <Stack py="20px">
+              <PageSelector
+                pageIndex={pageIndex}
+                setPageIndex={setPageIndex}
+                nPages={nPages}
+              />
+            </Stack>
           </Stack>
         </AstroCard>
       </Stack>

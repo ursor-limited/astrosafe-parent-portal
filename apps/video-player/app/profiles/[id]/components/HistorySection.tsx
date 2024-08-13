@@ -14,7 +14,7 @@ import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "./MobileInsightsTab";
 import PageSelector from "@/app/components/PageSelector";
 
-export const PAGE_LENGTH = 50;
+export const PAGE_LENGTH = 55;
 
 export interface IHistoryItem {
   url: string;
@@ -223,11 +223,13 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
         ))}
       </Stack>
       {nPages > 1 ? (
-        <PageSelector
-          pageIndex={pageIndex}
-          setPageIndex={setPageIndex}
-          nPages={nPages}
-        />
+        <Stack pt="24px" pb="9px">
+          <PageSelector
+            pageIndex={pageIndex}
+            setPageIndex={setPageIndex}
+            nPages={nPages}
+          />
+        </Stack>
       ) : null}
     </AstroBentoCard>
   );

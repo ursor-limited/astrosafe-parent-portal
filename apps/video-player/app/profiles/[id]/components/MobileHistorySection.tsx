@@ -18,6 +18,7 @@ import ApiController from "@/app/api";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import _ from "lodash";
 import { cleanUrl } from "./MobileInsightsTab";
+import PageSelector from "@/app/components/PageSelector";
 
 const MobileHistoryRow = (props: IHistoryItem) => {
   const [duration, setDuration] = useState<number>(0); // seconds
@@ -30,7 +31,7 @@ const MobileHistoryRow = (props: IHistoryItem) => {
   );
   return (
     <Stack direction="row" spacing="12px" alignItems="center">
-      <Stack spacing="4px">
+      {/* <Stack spacing="4px">
         <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
           {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
         </Typography>
@@ -55,48 +56,86 @@ const MobileHistoryRow = (props: IHistoryItem) => {
                 )}m`}
           </Typography>
         </Stack>
-      </Stack>
-      <Stack direction="row" spacing="8px" alignItems="center">
+      </Stack> */}
+      <Stack direction="row" spacing="12px" alignItems="center">
         <Stack
-          borderRadius="6px"
+          borderRadius="8px"
           overflow="hidden"
-          minHeight="32px"
-          minWidth="32px"
+          minHeight="42px"
+          minWidth="42px"
           boxShadow="0 0 12px rgba(0,0,0,0.1)"
         >
           <Image
-            height={32}
-            width={32}
+            height={42}
+            width={42}
             src={props.faviconUrl}
             alt="favicon url"
           />
         </Stack>
-        <Stack>
-          <Typography variant="small" bold maxLines={1}>
-            {props.title}
-          </Typography>
-          <Link
-            href={props.url}
-            target="_blank"
-            style={{ textDecoration: "none" }}
-          >
-            <Stack
+        <Stack justifyContent="space-between">
+          <Stack direction="row" spacing="8px" alignItems="center">
+            <Typography
+              bold
+              maxLines={1}
               sx={{
-                cursor: "pointer",
-                transition: "0.2s",
-                "&:hover": { opacity: 0.7 },
+                wordBreak: "break-all",
               }}
             >
-              <Typography
-                variant="tiny"
-                bold
-                color={PALETTE.secondary.grey[4]}
-                maxLines={1}
-              >
-                {cleanUrl(props.url).replace(/\/$/, "")}
+              {props.title}
+            </Typography>
+            <Link
+              href={props.url}
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              <Stack minWidth="20%">
+                <Typography
+                  bold
+                  color={PALETTE.secondary.grey[3]}
+                  maxLines={1}
+                  sx={{
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {cleanUrl(props.url).replace(/\/$/, "")}
+                </Typography>
+              </Stack>
+            </Link>
+          </Stack>
+
+          <Stack direction="row" spacing="8px" alignItems="center">
+            <Typography variant="tiny" bold color={PALETTE.secondary.grey[4]}>
+              {dayjs(props.searchedAt).utc().format("hh:mm:HHa")}
+            </Typography>
+            <Typography
+              bold
+              sx={{ lineHeight: "100%" }}
+              color={PALETTE.secondary.grey[4]}
+            >
+              -
+            </Typography>
+            <Stack
+              direction="row"
+              spacing="4px"
+              alignItems="center"
+              sx={{
+                svg: {
+                  path: {
+                    fill: PALETTE.secondary.grey[4],
+                  },
+                },
+              }}
+            >
+              <ClockIcon height="12px" width="12px" />
+              <Typography variant="tiny" color={PALETTE.secondary.grey[4]} bold>
+                {duration < 60
+                  ? `${duration}s`
+                  : `${Math.floor(duration / (60 * 60))}h ${Math.floor(
+                      (duration % (60 * 60)) / 60
+                    )}m`}
               </Typography>
             </Stack>
-          </Link>
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
@@ -158,16 +197,20 @@ const MobileHistorySection = (props: {
   deviceId: IDevice["id"];
   date: string;
 }) => {
-  const [historyPageIndex, setHistoryPageIndex] = useState<number>(0);
+  const [nPages, setNPages] = useState<number>(1);
+  const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
       props.date,
-      historyPageIndex + 1,
+      pageIndex + 1,
       PAGE_LENGTH
-    ).then((response) => setHistory(response.history));
-  }, [props.deviceId, props.date, historyPageIndex]);
+    ).then((response) => {
+      setHistory(response.history);
+      setNPages(response.pages);
+    });
+  }, [props.deviceId, props.date, pageIndex]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
   useEffect(() => {
@@ -183,7 +226,7 @@ const MobileHistorySection = (props: {
         const latestDomain = latestGroup?.domain;
         return currentDomain === latestDomain
           ? [
-              ...acc.slice(-1),
+              ...acc.slice(0, -1),
               { domain: latestDomain, rows: [...latestGroup.rows, cur] },
             ]
           : [...acc, { domain: currentDomain, rows: [cur] }];
@@ -211,6 +254,15 @@ const MobileHistorySection = (props: {
           <HistoryDomainRow key={i} {...dg} />
         ))}
       </Stack>
+      {nPages > 1 ? (
+        <Stack pt="24px" pb="9px">
+          <PageSelector
+            pageIndex={pageIndex}
+            setPageIndex={setPageIndex}
+            nPages={nPages}
+          />
+        </Stack>
+      ) : null}
     </AstroBentoCard>
   );
 };

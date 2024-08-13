@@ -76,7 +76,7 @@ const ProfilePageMobileBody = (props: {
         {selectedTab === "insights" ? (
           <DevicePageMobileInsightsTab deviceId={props.device.id} />
         ) : selectedTab === "apps" ? (
-          <DevicePageAppsTab deviceId={props.device.id} />
+          <DevicePageAppsTab deviceId={props.device.id} isMobile />
         ) : selectedTab === "content" ? (
           <DevicePageContentTab
             deviceId={props.device.id}
