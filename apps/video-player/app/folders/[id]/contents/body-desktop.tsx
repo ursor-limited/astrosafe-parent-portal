@@ -100,7 +100,7 @@ const FolderPageDesktopBody = (props: {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="large" bold>{`${props.contents.length} item ${
+          <Typography variant="large" bold>{`${props.contents.length} item${
             props.contents.length ? "" : "s"
           } in this Folder`}</Typography>
           <Stack

@@ -12,8 +12,9 @@ import _ from "lodash";
 import { IDevice } from "@/app/filters/[id]/contents/common";
 import ApiController, { getAbsoluteUrl } from "@/app/api";
 import { cleanUrl } from "./MobileInsightsTab";
+import PageSelector from "@/app/components/PageSelector";
 
-export const PAGE_LENGTH = 40;
+export const PAGE_LENGTH = 50;
 
 export interface IHistoryItem {
   url: string;
@@ -164,16 +165,20 @@ export interface IDomainGroup {
 }
 
 const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
-  const [historyPageIndex, setHistoryPageIndex] = useState<number>(0);
+  const [nPages, setNPages] = useState<number>(1);
+  const [pageIndex, setPageIndex] = useState<number>(0);
   const [history, setHistory] = useState<IHistoryItem[]>([]);
   useEffect(() => {
     ApiController.getHistory(
       props.deviceId,
       props.date,
-      historyPageIndex + 1,
+      pageIndex + 1,
       PAGE_LENGTH
-    ).then((response) => setHistory(response.history));
-  }, [props.deviceId, props.date, historyPageIndex]);
+    ).then((response) => {
+      setHistory(response.history);
+      setNPages(response.pages);
+    });
+  }, [props.deviceId, props.date, pageIndex]);
 
   const [domainGroups, setDomainGroups] = useState<IDomainGroup[]>([]);
   useEffect(() => {
@@ -184,7 +189,6 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
         const latestGroup = acc[acc.length - 1];
 
         const latestUrl = latestGroup?.rows[latestGroup.rows.length - 1].url;
-        console.log("aaoaoal", latestUrl, acc);
         if (latestUrl === cur.url) return acc; // don't show multiple rows with the same url in sequence, which happens when a device is locked and unlocked
 
         const latestDomain = latestGroup?.domain;
@@ -218,6 +222,13 @@ const HistorySection = (props: { deviceId: IDevice["id"]; date: string }) => {
           <HistoryDomainRow key={i} {...dg} />
         ))}
       </Stack>
+      {nPages > 1 ? (
+        <PageSelector
+          pageIndex={pageIndex}
+          setPageIndex={setPageIndex}
+          nPages={nPages}
+        />
+      ) : null}
     </AstroBentoCard>
   );
 };

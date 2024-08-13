@@ -316,35 +316,18 @@ class ApiController {
   }
 
   static async getBlockedSites(filterId: IFilter["id"]) {
-    return get(`filters/${filterId}/whitelist`).then((response: any) =>
-      response.json()
-    );
-  }
-
-  static async getAllowedSites(filterId: IFilter["id"]) {
     return get(`filters/${filterId}/blacklist`).then((response: any) =>
       response.json()
     );
   }
 
-  static async removeBlockedSite(
-    filterId: IFilter["id"],
-    url: IFilterException["domain"]
-  ) {
-    return dellete(
-      `filters/${filterId}/whitelist/${encodeURIComponent(
-        getAbsoluteUrl(cleanUrl(url))
-      )}`
+  static async getAllowedSites(filterId: IFilter["id"]) {
+    return get(`filters/${filterId}/whitelist`).then((response: any) =>
+      response.json()
     );
   }
 
-  static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
-    return post(`filters/${filterId}/whitelist`, {
-      url: getAbsoluteUrl(cleanUrl(url)),
-    });
-  }
-
-  static async removeAllowedSite(
+  static async removeBlockedSite(
     filterId: IFilter["id"],
     url: IFilterException["domain"]
   ) {
@@ -355,8 +338,25 @@ class ApiController {
     );
   }
 
-  static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
+  static async addBlockedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
     return post(`filters/${filterId}/blacklist`, {
+      url: getAbsoluteUrl(cleanUrl(url)),
+    });
+  }
+
+  static async removeAllowedSite(
+    filterId: IFilter["id"],
+    url: IFilterException["domain"]
+  ) {
+    return dellete(
+      `filters/${filterId}/whitelist/${encodeURIComponent(
+        getAbsoluteUrl(cleanUrl(url))
+      )}`
+    );
+  }
+
+  static async addAllowedSite(filterId: IFilter["id"], url: IFilterUrl["url"]) {
+    return post(`filters/${filterId}/whitelist`, {
       url: getAbsoluteUrl(cleanUrl(url)),
     });
   }

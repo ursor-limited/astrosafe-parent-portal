@@ -1,9 +1,4 @@
 import DynamicCardGrid from "@/app/components/DynamicCardGrid";
-import DesktopIcon from "@/images/icons/DesktopIcon.svg";
-import PlusIcon from "@/images/icons/PlusIcon.svg";
-import ChevronLeftIcon from "@/images/icons/ChevronLeft.svg";
-import ChevronRightIcon from "@/images/icons/ChevronRight.svg";
-import { AstroBentoCard } from "../../../filters/[id]/components/AstroBentoCard";
 import { FilterLegend } from "../../../filters/[id]/components/CategoriesSection";
 import AppToggleCard from "../components/AppToggleCard";
 import { Stack } from "@mui/system";
@@ -21,6 +16,8 @@ import ApiController from "@/app/api";
 import AstroCard from "@/app/filters/[id]/components/AstroCard";
 import _ from "lodash";
 import NotificationContext from "@/app/components/NotificationContext";
+import PageSelector from "../../../components/PageSelector";
+import { SearchInput } from "@/app/components/SearchInput";
 
 const PAGE_SIZE = 20;
 
@@ -68,6 +65,20 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
 
   const notificationCtx = useContext(NotificationContext);
 
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [filteredApps, setFilteredApps] = useState<IApp[]>([]);
+  useEffect(
+    () =>
+      setFilteredApps(
+        apps.filter(
+          (d) =>
+            !searchValue ||
+            d.title.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      ),
+    [apps, searchValue]
+  );
+
   return (
     <ProfilePageTabLayout
       title="Apps"
@@ -77,46 +88,19 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
       <Stack pb="32px">
         <AstroCard>
           <Stack px="16px" pt="16px" justifyContent="center">
-            <Stack overflow="scroll">
-              <Stack direction="row" spacing="12px" pb="20px">
-                {[
-                  <Stack
-                    key="all"
-                    height="32px"
-                    borderRadius="6px"
-                    bgcolor={PALETTE.secondary.grey[1]}
-                    justifyContent="center"
-                    alignItems="center"
-                    px="12px"
-                    onClick={() => setSelectedCategory(undefined)}
-                    sx={{
-                      cursor: "pointer",
-                      transition: "0.2s",
-                      "&:hover": { opacity: 0.7 },
-                    }}
-                  >
-                    <Typography
-                      bold
-                      sx={{ fontSize: 14, whiteSpace: "nowrap" }}
-                      color={
-                        _.isUndefined(selectedCategory)
-                          ? PALETTE.secondary.purple[2]
-                          : undefined
-                      }
-                    >
-                      All
-                    </Typography>
-                  </Stack>,
-                  ...categories.map((c) => (
+            <Stack direction="row" spacing="12px">
+              <Stack overflow="scroll">
+                <Stack direction="row" spacing="12px" pb="20px">
+                  {[
                     <Stack
-                      key={c.categoryId}
+                      key="all"
                       height="32px"
                       borderRadius="6px"
                       bgcolor={PALETTE.secondary.grey[1]}
                       justifyContent="center"
                       alignItems="center"
                       px="12px"
-                      onClick={() => setSelectedCategory(c.categoryId)}
+                      onClick={() => setSelectedCategory(undefined)}
                       sx={{
                         cursor: "pointer",
                         transition: "0.2s",
@@ -127,26 +111,63 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                         bold
                         sx={{ fontSize: 14, whiteSpace: "nowrap" }}
                         color={
-                          selectedCategory === c.categoryId
+                          _.isUndefined(selectedCategory)
                             ? PALETTE.secondary.purple[2]
                             : undefined
                         }
                       >
-                        {c.title}
+                        All
                       </Typography>
-                    </Stack>
-                  )),
-                ]}
+                    </Stack>,
+                    ...categories.map((c) => (
+                      <Stack
+                        key={c.categoryId}
+                        height="32px"
+                        borderRadius="6px"
+                        bgcolor={PALETTE.secondary.grey[1]}
+                        justifyContent="center"
+                        alignItems="center"
+                        px="12px"
+                        onClick={() => setSelectedCategory(c.categoryId)}
+                        sx={{
+                          cursor: "pointer",
+                          transition: "0.2s",
+                          "&:hover": { opacity: 0.7 },
+                        }}
+                      >
+                        <Typography
+                          bold
+                          sx={{ fontSize: 14, whiteSpace: "nowrap" }}
+                          color={
+                            selectedCategory === c.categoryId
+                              ? PALETTE.secondary.purple[2]
+                              : undefined
+                          }
+                        >
+                          {c.title}
+                        </Typography>
+                      </Stack>
+                    )),
+                  ]}
+                </Stack>
+              </Stack>
+              <Stack pt="2px">
+                <SearchInput
+                  value={searchValue}
+                  callback={setSearchValue}
+                  clearCallback={() => setSearchValue("")}
+                  grey
+                />
               </Stack>
             </Stack>
             <DynamicCardGrid cardWidth="292px" rowGap="8px" columnGap="20px">
-              {apps.map((a, i) => (
+              {filteredApps.map((a, i) => (
                 <UrsorFadeIn key={a.id} duration={800} delay={i * 80}>
                   <AppToggleCard
                     {...a}
                     callback={() => {
                       setApps(
-                        apps.map((app) =>
+                        filteredApps.map((app) =>
                           app.id === a.id
                             ? { ...app, enabled: !app.enabled }
                             : app
@@ -167,79 +188,11 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                 </UrsorFadeIn>
               ))}
             </DynamicCardGrid>
-            <Stack
-              direction="row"
-              spacing="4px"
-              alignItems="center"
-              justifyContent="center"
-              py="20px"
-            >
-              {[
-                <Stack
-                  key="left"
-                  sx={{
-                    cursor: "pointer",
-                    transition: "0.2s",
-                    "&:hover": { opacity: 0.7 },
-                    pointerEvents: pageIndex === 0 ? "none" : undefined,
-                    opacity: pageIndex === 0 ? 0.3 : 1,
-                  }}
-                  onClick={() => setPageIndex(pageIndex - 1)}
-                  width="30px"
-                  height="30px"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ChevronLeftIcon height="15px" width="15px" />
-                </Stack>,
-                ...[...Array(nPages).keys()].map((i) => (
-                  <Stack
-                    key={i}
-                    sx={{
-                      cursor: "pointer",
-                      transition: "0.2s",
-                      "&:hover": { opacity: 0.7 },
-                      pointerEvents: pageIndex === i ? "none" : undefined,
-                    }}
-                    onClick={() => setPageIndex(i)}
-                    width="30px"
-                    height="30px"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Typography
-                      bold
-                      sx={{ fontSize: 14 }}
-                      color={
-                        i === pageIndex
-                          ? PALETTE.secondary.purple[2]
-                          : PALETTE.secondary.grey[3]
-                      }
-                    >
-                      {i + 1}
-                    </Typography>
-                  </Stack>
-                )),
-                <Stack
-                  key="right"
-                  sx={{
-                    cursor: "pointer",
-                    transition: "0.2s",
-                    "&:hover": { opacity: 0.7 },
-                    pointerEvents:
-                      pageIndex === nPages - 1 ? "none" : undefined,
-                    opacity: pageIndex === nPages - 1 ? 0.3 : 1,
-                  }}
-                  onClick={() => setPageIndex(pageIndex + 1)}
-                  width="30px"
-                  height="30px"
-                  justifyContent="center"
-                  alignItems="center"
-                >
-                  <ChevronRightIcon height="15px" width="15px" />
-                </Stack>,
-              ]}
-            </Stack>
+            <PageSelector
+              pageIndex={pageIndex}
+              setPageIndex={setPageIndex}
+              nPages={nPages}
+            />
           </Stack>
         </AstroCard>
       </Stack>

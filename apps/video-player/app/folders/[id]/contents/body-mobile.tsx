@@ -78,7 +78,7 @@ const FolderPageMobileBody = (props: {
           />
         </Stack>
         <Stack justifyContent="space-between" spacing="8px">
-          <Typography variant="medium" bold>{`${props.contents.length} item ${
+          <Typography variant="medium" bold>{`${props.contents.length} item${
             props.contents.length ? "" : "s"
           } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
