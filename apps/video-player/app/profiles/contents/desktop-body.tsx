@@ -46,7 +46,7 @@ const AllDevicesPageDesktopBody = (props: {
         {props.devices.length > 0 ? (
           <DynamicCardGrid cardWidth="355px" rowGap="20px" columnGap="20px">
             {props.devices.map((d, i) => (
-              <UrsorFadeIn key={d.id} duration={i * 90}>
+              <UrsorFadeIn key={d.id} delay={i * 100} duration={800}>
                 <DeviceCard
                   {...d}
                   showBrowsing
