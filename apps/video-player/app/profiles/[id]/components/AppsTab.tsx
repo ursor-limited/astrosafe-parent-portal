@@ -51,6 +51,7 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
   const [nPages, setNPages] = useState<number>(1);
 
   const [pageIndex, setPageIndex] = useState<number>(0);
+  useEffect(() => setPageIndex(0), [selectedCategory]);
 
   const [apps, setApps] = useState<IApp[]>([]);
   useEffect(() => {
@@ -168,7 +169,7 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
             </DynamicCardGrid>
             <Stack
               direction="row"
-              spacing="22px"
+              spacing="4px"
               alignItems="center"
               justifyContent="center"
               py="20px"
@@ -184,6 +185,10 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                     opacity: pageIndex === 0 ? 0.3 : 1,
                   }}
                   onClick={() => setPageIndex(pageIndex - 1)}
+                  width="30px"
+                  height="30px"
+                  justifyContent="center"
+                  alignItems="center"
                 >
                   <ChevronLeftIcon height="15px" width="15px" />
                 </Stack>,
@@ -197,6 +202,10 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                       pointerEvents: pageIndex === i ? "none" : undefined,
                     }}
                     onClick={() => setPageIndex(i)}
+                    width="30px"
+                    height="30px"
+                    justifyContent="center"
+                    alignItems="center"
                   >
                     <Typography
                       bold
@@ -222,6 +231,10 @@ const DevicePageAppsTab = (props: { deviceId: IDevice["id"] }) => {
                     opacity: pageIndex === nPages - 1 ? 0.3 : 1,
                   }}
                   onClick={() => setPageIndex(pageIndex + 1)}
+                  width="30px"
+                  height="30px"
+                  justifyContent="center"
+                  alignItems="center"
                 >
                   <ChevronRightIcon height="15px" width="15px" />
                 </Stack>,
