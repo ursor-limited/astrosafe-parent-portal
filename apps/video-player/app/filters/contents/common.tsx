@@ -96,6 +96,7 @@ const AllFiltersPage = (props: { isMobile: boolean }) => {
             router.push(`/filters/${f.filterId}`)
           )
         }
+        isMobile={props.isMobile}
       />
     </>
   );

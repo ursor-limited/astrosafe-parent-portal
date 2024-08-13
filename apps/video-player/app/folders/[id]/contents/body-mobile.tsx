@@ -79,7 +79,7 @@ const FolderPageMobileBody = (props: {
         </Stack>
         <Stack justifyContent="space-between" spacing="8px">
           <Typography variant="medium" bold>{`${props.contents.length} item${
-            props.contents.length ? "" : "s"
+            props.contents.length === 1 ? "" : "s"
           } in this Folder`}</Typography>
           <Stack direction="row" spacing="12px" alignItems="center">
             <SearchInput
@@ -90,6 +90,7 @@ const FolderPageMobileBody = (props: {
               clearCallback={() => props.setSearchValue("")}
               shadow
               fullWidth
+              iconSize="18px"
             />
             <SortButton
               noText

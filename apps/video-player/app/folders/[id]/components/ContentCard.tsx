@@ -11,6 +11,9 @@ import {
   AstroContent,
   IContent,
 } from "@/app/profiles/[id]/components/ContentTab";
+import Link from "next/link";
+import { getAbsoluteUrl } from "@/app/api";
+import { cleanUrl } from "@/app/profiles/[id]/components/MobileInsightsTab";
 
 export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
   video: "Video",
@@ -21,6 +24,7 @@ export const CONTENT_DISPLAY_NAMES: Record<AstroContent, string> = {
 const ContentCard = (props: {
   type: AstroContent;
   title: IContent["title"];
+  url: IContent["url"];
   onClick?: () => void;
   noPointerEvents?: boolean;
   noMenu?: boolean;
@@ -42,6 +46,7 @@ const ContentCard = (props: {
         p="4px"
         boxSizing="border-box"
         overflow="hidden"
+        sx={{ pointerEvents: props.noPointerEvents ? "none" : undefined }}
       >
         <Stack position="absolute" right="2px" bottom="32px">
           {!props.noMenu ? (
@@ -66,45 +71,56 @@ const ContentCard = (props: {
             />
           ) : null}
         </Stack>
-        <Stack
-          onClick={props.onClick}
-          sx={{
-            cursor: "pointer",
-            transition: "0.2s",
-            "&:hover": { opacity: 0.6 },
+        <Link
+          href={getAbsoluteUrl(cleanUrl(props.url))}
+          target="_blank"
+          style={{
+            textDecoration: "none",
           }}
-          spacing="6px"
+          rel="noreferrer"
         >
-          {props.children}
           <Stack
-            width="calc(100% - 24px)"
-            minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
+            onClick={props.onClick}
+            sx={{
+              cursor: "pointer",
+              transition: "0.2s",
+              "&:hover": { opacity: 0.6 },
+            }}
+            spacing="6px"
           >
-            <Typography bold maxLines={2}>
-              {props.title}
-            </Typography>
-          </Stack>
-          <Stack
-            height="24px"
-            px="8px"
-            alignItems="center"
-            sx={{ svg: { path: { fill: CONTENT_BRANDING[props.type].color } } }}
-            bgcolor={PALETTE.secondary.grey[1]}
-            direction="row"
-            spacing="8px"
-            borderRadius="12px"
-            width="fit-content"
-          >
-            <Icon height="16px" width="16px" />
-            <Typography
-              variant="tiny"
-              bold
-              color={CONTENT_BRANDING[props.type].color}
+            {props.children}
+            <Stack
+              width="calc(100% - 24px)"
+              minHeight={props.twoLineTitleSectionHeight ? "44px" : "24px"}
             >
-              {CONTENT_DISPLAY_NAMES[props.type]}
-            </Typography>
+              <Typography bold maxLines={2}>
+                {props.title}
+              </Typography>
+            </Stack>
+            <Stack
+              height="24px"
+              px="8px"
+              alignItems="center"
+              sx={{
+                svg: { path: { fill: CONTENT_BRANDING[props.type].color } },
+              }}
+              bgcolor={PALETTE.secondary.grey[1]}
+              direction="row"
+              spacing="8px"
+              borderRadius="12px"
+              width="fit-content"
+            >
+              <Icon height="16px" width="16px" />
+              <Typography
+                variant="tiny"
+                bold
+                color={CONTENT_BRANDING[props.type].color}
+              >
+                {CONTENT_DISPLAY_NAMES[props.type]}
+              </Typography>
+            </Stack>
           </Stack>
-        </Stack>
+        </Link>
       </Stack>
       <DeletionDialog
         open={deletionDialogOpen}

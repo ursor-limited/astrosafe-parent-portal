@@ -23,7 +23,7 @@ const ChannelCard = (
     <ContentCard
       type="channel"
       title={props.title}
-      // onClick={props.onClick}
+      url={props.url}
       noPointerEvents={props.noPointerEvents}
       noMenu={props.noMenu}
       onDelete={() => ApiController.deleteLink(props.id).then(props.onDelete)}

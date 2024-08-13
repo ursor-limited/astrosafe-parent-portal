@@ -64,7 +64,7 @@ const AddDeviceDialog = (props: {
         callback={setSearchValue}
         clearCallback={() => setSearchValue("")}
         fullWidth
-        height="41px"
+        iconSize="18px"
         grey
       />
       {nonAddedDevices.length === 0 ? (
